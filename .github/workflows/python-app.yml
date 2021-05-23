@@ -1,0 +1,78 @@
+name: Build Windows Game
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Install Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install requirements
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r requirements.txt
+      - name: Run PyInstaller
+        run: |
+          pyinstaller -F game.py
+      - name: Buildi Game Config
+        run: |
+          python buildconfig.py
+      - name: Buildi Game Cache
+        run: |
+          python init_data.py
+      - name: Copy Game Files
+        run: |
+          Copy-Item data dist/ -Recurse
+          Copy-Item config.ini dist/
+          Copy-Item LICENSE dist/
+          Copy-Item README.md dist/
+          Copy-Item image dist/ -Recurse
+          Copy-Item update.log dist/
+          Copy-Item behavior.csv dist/
+          Copy-Item premise.csv dist/
+          Copy-Item state_machine.csv dist/
+          Copy-Item package.json dist/
+          Rename-Item dist dieloli
+      - name: Pack Game Files
+        run: |
+          Compress-Archive -Path dieloli -DestinationPath dieloli.zip
+      - uses: actions/upload-artifact@master
+        with:
+          name: Windows
+          path: dieloli.zip
+      - name: Read Version
+        id: version
+        uses: ashley-taylor/read-json-property-action@v1.0
+        with:
+          path: package.json
+          property: version
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: Past.${{steps.version.outputs.value}}
+          release_name: Past ${{steps.version.outputs.value}}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/dieloli.zip
+          asset_name: dieloli_windows.zip
+          asset_content_type: application/zip

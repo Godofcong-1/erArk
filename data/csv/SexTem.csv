@@ -1,0 +1,9 @@
+cid,name,has_man_organ,has_woman_organ,region
+性别id,性别名称,是否有男性器官,是否有女性器官,随机npc生成性别权重
+int,str,bool,bool,int
+0,1,0,0,0
+性别对应描述和性别器官模板,,,,
+0,男,1,0,499
+1,女,0,1,499
+2,扶她,1,1,1
+3,无性,0,0,1

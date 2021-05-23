@@ -1,0 +1,17 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情npcid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,6,0,{PlayerNickName}独自练习了一会儿钢琴
+1,6,0,{PlayerNickName}一边弹钢琴一边轻声哼唱着
+2,6,0,{PlayerNickName}独自在音乐活动室中制造着噪音
+3,6,0,{PlayerNickName}指尖在琴键起舞的姿态让大家都安静了下来
+4,6,0,{PlayerNickName}无视了四周嘈杂的声音\n独自在角落里忘我的弹奏着
+5,6,0,像是想要向谁证明自己的能力似的\n{PlayerNickName}奋力的敲打着琴键
+6,6,0,{PlayerNickName}奋力的敲打着琴键\n巨大的噪音引起了{TargetName}强烈的不满
+7,6,0,{PlayerNickName}认真的练习着还十分生疏的旋律
+8,6,0,{Name}沉浸在自己的世界里静静的弹奏着钢琴
+9,6,0,{Name}纤细的手指正在琴键上飞舞
+10,6,0,{Name}弹奏了一首曲子
+11,6,0,{Name}正努力的练习着演奏

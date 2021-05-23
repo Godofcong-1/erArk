@@ -1,0 +1,10 @@
+cid,occupation,age_region,region
+区间id,职业,年龄段,权重区间
+int,str,int,int
+0,0,0,0
+学生和老师的年龄段生成权重区间配置,,,
+0,student,0,50
+1,student,1,50
+2,teacher,2,67
+3,teacher,3,26
+4,teacher,4,7

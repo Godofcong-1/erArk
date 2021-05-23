@@ -1,0 +1,12 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情npcid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,4,0,{NickName}吃掉了{FoodName}
+1,4,0,{NickName}将{FoodName}吃掉了
+2,4,0,{NickName}吃了一些{FoodName}
+3,4,0,{NickName}吃了一些{FoodName}\n如春药一般的绝赞美味!\n{NickName}沉浸在了食物带来的快乐之中
+4,4,0,{Name}吃掉了{FoodName}
+5,4,0,{Name}将{FoodName}吃掉了
+6,4,0,{Name}吃了一些{FoodName}

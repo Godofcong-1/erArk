@@ -1,0 +1,8 @@
+cid,name,ture_bar,null_bar,width
+比例条id,比例条名字,进度条图片,背景条图片,图片绘制宽度
+int,str,str,str,int
+0,0,0,0,0
+比例条名字对应的状态图片和绘制宽度,,,,
+0,HitPointbar,hpbar_true,hpbar_null,1
+1,ManaPointbar,mpbar_true,mpbar_null,1
+2,engravingemptybar,engravingemptybar_true,engravingemptybar_null,2

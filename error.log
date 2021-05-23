@@ -1,0 +1,88 @@
+Traceback (most recent call last):
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 41, in creator_character_panel
+    game_start()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 54, in game_start
+    course.init_character_knowledge()
+AttributeError: module 'Script.Design.course' has no attribute 'init_character_knowledge'
+Traceback (most recent call last):
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 42, in creator_character_panel
+    if confirm_character_attr_panel():
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 72, in confirm_character_attr_panel
+    now_attr_panel.draw()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_character_info_panel.py", line 100, in draw
+    self.draw_data[self.now_panel].draw()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_character_info_panel.py", line 143, in draw
+    label.draw()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_character_info_panel.py", line 433, in draw
+    info_draw.set([self.dormitory_text, self.classroom_text, self.officeroom_text], self.width, 3)
+AttributeError: 'CharacterRoomText' object has no attribute 'classroom_text'
+Traceback (most recent call last):
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\see_map_flow.py", line 14, in see_map_flow
+    now_panel.draw()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_map_panel.py", line 132, in draw
+    now_move_menu.update(self.now_map, index)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_map_panel.py", line 406, in update
+    self.handle_panel.update()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Moudle\panel.py", line 659, in update
+    value_draw = self.draw_type(value, value_width, is_button, self.num_button, index)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Panel\see_map_panel.py", line 444, in __init__
+    path_text = attr_text.get_scene_path_text(text)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\attr_text.py", line 95, in get_scene_path_text
+    map_name = cache.map_data[now_map_map_system_str].map_name
+KeyError: '1\\3'
+Traceback (most recent call last):
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 37, in creator_character_panel
+    character_handle.init_character_list()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\character_handle.py", line 33, in init_character_list
+    index_character_average_value()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\character_handle.py", line 65, in index_character_average_value
+    age_tem = attr_calculation.judge_age_group(character_data.age)
+AttributeError: 'Character' object has no attribute 'age'
+Traceback (most recent call last):
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 41, in creator_character_panel
+    game_start()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\UI\Flow\creator_character_flow.py", line 50, in game_start
+    character_handle.init_character_dormitory()
+  File "d:\Game\era\dieloli-Past.2021.5.3.3 - 副本\Script\Design\character_handle.py", line 294, in init_character_dormitory
+    teacher_dormitory = {x: 0 for x in sorted(constant.place_data["TeacherDormitory"], key=lambda x: x[0])}
+KeyError: 'TeacherDormitory'

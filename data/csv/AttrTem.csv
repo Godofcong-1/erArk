@@ -1,0 +1,9 @@
+cid,sex,age_tem,hit_point_tem,mana_point_tem,sex_experience,weight_tem,body_fat_tem
+模板id,性别,年龄模板id,HP模板id,MP模板id,性经验模板id,体重模板id,体脂率模板id
+int,int,int,int,int,int,int,int
+0,0,0,0,0,0,0,0
+性别对应的角色各项基础属性模板,,,,,,,
+0,0,2,1,1,0,1,1
+1,1,2,1,1,0,1,1
+2,2,2,1,1,0,1,1
+3,3,2,1,1,0,1,1

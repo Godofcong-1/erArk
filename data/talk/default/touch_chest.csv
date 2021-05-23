@@ -1,0 +1,13 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情npcid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,15,0,{PlayerNickName}伸出手想要去抓{TargetName}的胸部\n手被{TargetName}拍开了
+1,15,0,「嗯？」\n{TargetName}冷冷的瞪了{PlayerNickName}一眼
+2,15,0,「女生会对男生的胸部感兴趣吗？」\n{TargetName}露出了困扰的表情
+3,15,0,「滚！」\n{TargetName}瞪了{PlayerNickName}一眼后便转过身去
+4,15,0,{TargetName}主动将自己的搓衣板贴紧{PlayerNickName}的手掌\n「是{PlayerNickName}的话……没问题的！」\n{TargetName}抓住了{PlayerNickName}的手臂，双手使劲帮助{PlayerNickName}揉蹭自己的胸口
+5,15,0,{PlayerNickName}熟练的搓弄着{TargetName}的胸口\n看着{TargetName}红着脸十分难受的扭动着身体的样子\n{PlayerNickName}的嘴角不禁微微扬起
+6,15,0,{TargetName}娇小的身体在{PlayerNickName}的抚摸下不停的颤抖着
+7,16,0,{Name}痴迷地抚摸着{PlayerNickName}的身体

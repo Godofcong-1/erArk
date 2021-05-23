@@ -1,0 +1,12 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情npcid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,18,0,{PlayerNickName}拿起书看了一会儿
+1,18,0,{PlayerNickName}假装看了会儿书
+2,18,0,{PlayerNickName}打着哈欠将书扔到一旁
+3,18,0,{PlayerNickName}认真的复习了一会儿功课
+4,18,0,{Name}假装看了会儿书
+5,18,0,{Name}拿起书看了一会儿
+6,18,0,{Name}认真的复习了一会儿功课

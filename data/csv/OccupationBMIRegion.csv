@@ -1,0 +1,17 @@
+cid,occupation,bmi_type,region
+区间id,职业,bmi类型,权重区间
+int,str,int,int
+0,0,0,0
+学生和老师各自肥胖率配置,,,
+0,student,0,23
+1,student,1,45
+2,student,2,10
+3,student,3,14
+4,student,4,6
+5,student,5,2
+6,teacher,0,10
+7,teacher,1,28
+8,teacher,2,17
+9,teacher,3,37
+10,teacher,4,6
+11,teacher,5,2
