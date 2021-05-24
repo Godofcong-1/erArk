@@ -10,13 +10,14 @@ normal_config.init_normal_config()
 
 
 from Script.Core import get_text
-from Script.Config import game_config, name_config
+from Script.Config import game_config, name_config, character_config
 
 _: FunctionType = get_text._
 """ 翻译api """
 
 game_config.init()
 name_config.init_name_data()
+character_config.init_character_tem_data()
 
 
 from Script.Config import map_config

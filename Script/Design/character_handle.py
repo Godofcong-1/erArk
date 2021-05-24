@@ -14,7 +14,7 @@ from Script.Design import (
     attr_text,
     character,
 )
-from Script.Config import game_config, normal_config
+from Script.Config import game_config, normal_config, character_config
 
 
 cache: game_type.Cache = cache_control.cache
@@ -114,10 +114,10 @@ def init_character_tem():
     """
     初始化角色模板数据
     """
-    init_random_npc_data()
-    npc_data = cache.random_npc_list
-    numpy.random.shuffle(npc_data)
-    cache.npc_tem_data = npc_data
+    #init_random_npc_data()
+    #npc_data = cache.random_npc_list
+    #numpy.random.shuffle(npc_data)
+    cache.npc_tem_data = character_config.character_tem_list
 
 
 random_npc_max = normal_config.config_normal.random_npc_max
