@@ -28,11 +28,11 @@ def init_attr(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.language[character_data.mother_tongue] = 10000
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
-    character_data.end_age = attr_calculation.get_end_age(character_data.sex)
-    character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
+    # character_data.end_age = attr_calculation.get_end_age(character_data.sex)
+    # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     bmi = attr_calculation.get_bmi(character_data.weight_tem)
-    character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
-    character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
+    # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
+    # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
     character_data.measurements = attr_calculation.get_measurements(
         character_data.sex,
         character_data.height.now_height,
@@ -43,13 +43,13 @@ def init_attr(character_id: int):
     character_data.sex_experience = attr_calculation.get_sex_experience(
         character_data.sex_experience_tem, character_data.sex
     )
-    default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
-    for clothing_id in default_clothing_data:
-        clothing_data = default_clothing_data[clothing_id]
-        character_data.clothing.setdefault(clothing_id, {})
-        character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
-        character_data.clothing_data.setdefault(clothing_data.tem_id, set())
-        character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
+    # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
+    # for clothing_id in default_clothing_data:
+    #     clothing_data = default_clothing_data[clothing_id]
+    #     character_data.clothing.setdefault(clothing_id, {})
+    #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
+    #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
+    #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
     chest_tem_config = game_config.config_chest[character_data.chest_tem]
     if chest_tem_config.weight_fix:
         fix_weight = value_handle.get_gauss_rand(

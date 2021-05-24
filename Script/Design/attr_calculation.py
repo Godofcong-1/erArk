@@ -19,16 +19,28 @@ def get_age_tem_list() -> list:
     return list(game_config.config_age_tem.keys())
 
 
-def get_age(tem_name: int) -> int:
+def get_age(character_id: int) -> int:
     """
-    按年龄模板id随机生成年龄数据
+    按人物id获得对应年龄数据
     Keyword arguments:
-    tem_name -- 年龄模板id
+    character_id -- 年龄模板id
     """
-    tem_data = game_config.config_age_tem[tem_name]
-    max_age = tem_data.max_age
-    mini_age = tem_data.min_age
-    return random.randint(mini_age, max_age)
+    print("game_config.config_age_tem :",game_config.config_age_tem)
+    print("character_id :",character_id)
+    print("game_config.config_age_tem[character_id] :",game_config.config_age_tem[character_id])
+    tem_data = game_config.config_age_tem[character_id].Age
+    return tem_data
+
+# def get_age(tem_name: int) -> int:
+#     """
+#     按年龄模板id随机生成年龄数据
+#     Keyword arguments:
+#     tem_name -- 年龄模板id
+#     """
+#     tem_data = game_config.config_age_tem[tem_name]
+#     max_age = tem_data.max_age
+#     mini_age = tem_data.min_age
+#     return random.randint(mini_age, max_age)
 
 
 def get_end_age(sex: int) -> int:
@@ -127,7 +139,7 @@ def get_rand_npc_birthday(age: int):
     now_year = cache.game_time.year
     now_month = cache.game_time.month
     now_day = cache.game_time.day
-    birth_year = now_year - age
+    birth_year = now_year - int(age)
     birthday = game_time.get_rand_day_for_year(birth_year)
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)

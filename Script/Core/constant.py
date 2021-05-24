@@ -186,8 +186,8 @@ class Panel:
     """ 食物背包面板 """
     ITEM_SHOP = 6
     """ 道具商店面板 """
-    VIEW_SCHOOL_TIMETABLE = 7
-    """ 查看课程表 """
+    # VIEW_SCHOOL_TIMETABLE = 7
+    # """ 查看课程表 """
 
 
 class Premise:
@@ -674,8 +674,8 @@ class Instruct:
     """ 教课 """
     SELF_STUDY = 0
     """ 自习 """
-    VIEW_THE_SCHOOL_TIMETABLE = 0
-    """ 查看课程表 """
+    # VIEW_THE_SCHOOL_TIMETABLE = 0
+    # """ 查看课程表 """
     SEE_ATTR = 0
     """ 查看属性 """
     SEE_OWNER_ATTR = 0

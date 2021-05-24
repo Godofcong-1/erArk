@@ -191,23 +191,24 @@ def input_setting_panel() -> bool:
     Return arguments:
     bool -- 完成角色创建流程
     """
-    character_data = cache.character_data[0]
-    ask_list = [_("是"), _("否")]
-    button_panel = panel.OneMessageAndSingleColumnButton()
-    button_panel.set(
-        ask_list,
-        _("是否需要设置详细属性呢？将会随机抽取十道题目供{character_nick_name}进行选择。").format(
-            character_nick_name=character_data.nick_name
-        ),
-    )
-    return_list = button_panel.get_return_list()
-    line_feed_draw.draw()
-    line.draw()
-    button_panel.draw()
-    ans = flow_handle.askfor_all(return_list.keys())
-    if int(ans):
-        return 1
-    return input_setting_now()
+    # character_data = cache.character_data[0]
+    # ask_list = [_("是"), _("否")]
+    # button_panel = panel.OneMessageAndSingleColumnButton()
+    # button_panel.set(
+        # ask_list,
+        # _("是否需要设置详细属性呢？将会随机抽取十道题目供{character_nick_name}进行选择。").format(
+        #     character_nick_name=character_data.nick_name
+        # ),
+    # )
+    # return_list = button_panel.get_return_list()
+    # line_feed_draw.draw()
+    # line.draw()
+    # button_panel.draw()
+    # ans = flow_handle.askfor_all(return_list.keys())
+    # if int(ans):
+    #     return 1
+    # return input_setting_now()
+    return 1
 
 
 def input_setting_now() -> bool:

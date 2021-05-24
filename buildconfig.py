@@ -158,7 +158,7 @@ def build_character_config(file_path:str,file_name:str):
                     config_po += 'msgstr ""\n\n'
         character_data[file_id] = now_data
 
-
+# print("进入buildconfig.py了")
 file_list = os.listdir(config_dir)
 index = 0
 for i in file_list:
@@ -194,6 +194,7 @@ for i in character_file_list:
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)
 
+# print("处理到Character.json了")
 data_path = os.path.join("data","Character.json")
 with open(data_path,"w",encoding="utf-8") as character_data_file:
     json.dump(character_data,character_data_file,ensure_ascii=0)

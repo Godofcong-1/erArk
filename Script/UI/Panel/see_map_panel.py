@@ -43,8 +43,8 @@ class SeeMapPanel:
         """绘制对象"""
         move_menu_panel_data = {
             0: MapSceneNameDraw(self.now_map, self.width),
-            1: GlobalSceneNamePanel(self.now_map, self.width),
-            2: SocialSceneNamePanel(self.now_map, self.width),
+            1: UsefulSceneNamePanel(self.now_map, self.width),
+            2: entertainmentSceneNamePanel(self.now_map, self.width),
             3: CollectionSceneNamePanel(self.now_map, self.width),
         }
         move_menu_panel = MoveMenuPanel(self.width)
@@ -334,9 +334,9 @@ class MapSceneNameDraw:
         character_move.own_charcter_move(scene_path)
 
 
-class GlobalSceneNamePanel:
+class UsefulSceneNamePanel:
     """
-    绘制公共快捷寻路场景按钮列表
+    绘制功能地点快捷寻路场景按钮列表
     Keyword arguments:
     now_map -- 地图路径
     width -- 绘制宽度
@@ -358,7 +358,7 @@ class GlobalSceneNamePanel:
 
     def get_path_list(self) -> list:
         """
-        获取公共场景路径列表
+        获取功能地点场景路径列表
         Return arguments:
         list -- 路径列表
         """
@@ -467,9 +467,9 @@ class ScenePathNameMoveDraw:
         character_move.own_charcter_move(self.scene_path)
 
 
-class SocialSceneNamePanel:
+class entertainmentSceneNamePanel:
     """
-    绘制社交对象所在场景快捷寻路按钮列表
+    绘制娱乐地点对象所在场景快捷寻路按钮列表
     Keyword arguments:
     now_map -- 地图路径
     width -- 绘制宽度
