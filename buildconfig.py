@@ -11,6 +11,8 @@ config_def_str = ""
 config_po = "\n"
 msgData = set()
 class_data = set()
+character_dir = os.path.join("data","character")
+character_data = {}
 
 
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
@@ -136,6 +138,27 @@ def build_scene_config(data_path):
             build_scene_config(now_path)
 
 
+def build_character_config(file_path:str,file_name:str):
+    global config_po
+    with open(file_path,encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        file_id = file_name.split(".")[0]
+        now_data = {}
+        i = 0
+        for row in now_read:
+            if not i:
+                i += 1
+                continue
+            i += 1
+            now_data[row["key"]] = row["value"]
+            if row["get_text"]:
+                if row["value"] not in msgData:
+                    config_po += f"#: Character:{file_id}\n"
+                    config_po += "msgid" + " " + '"' + row["value"] + '"' + "\n"
+                    config_po += 'msgstr ""\n\n'
+        character_data[file_id] = now_data
+
+
 file_list = os.listdir(config_dir)
 index = 0
 for i in file_list:
@@ -163,8 +186,17 @@ for i in target_file_list:
         now_f = os.path.join(now_dir, f)
         build_csv_config(now_f, f, 0, 1)
 
+character_file_list = os.listdir(character_dir)
+for i in character_file_list:
+    now_path = os.path.join(character_dir,i)
+    build_character_config(now_path,i)
+
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)
+
+data_path = os.path.join("data","Character.json")
+with open(data_path,"w",encoding="utf-8") as character_data_file:
+    json.dump(character_data,character_data_file,ensure_ascii=0)
 
 config_path = os.path.join("Script", "Config", "config_def.py")
 config_def_str += "\n"
