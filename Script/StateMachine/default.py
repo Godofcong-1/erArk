@@ -268,7 +268,7 @@ def character_move_to_music_room(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     to_cafeteria = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["MusicClassroom"])
+        random.choice(constant.place_data["Musicroom"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_cafeteria)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
