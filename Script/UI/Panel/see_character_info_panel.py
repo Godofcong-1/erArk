@@ -235,7 +235,7 @@ class CharacterInfoHead:
             if 0 in character_data.social_contact_data:
                 social = character_data.social_contact_data[0]
             social_text = game_config.config_social_type[social].name
-            message = _("No.{character_id} 姓名:{character_name} 性别:{sex_text} 关系:{social_text}").format(
+            message = _("No.{character_id} 姓名:{character_name} 性别:{sex_text} ").format(
                 character_id=character_id,
                 character_name=character_data.name,
                 sex_text=sex_text,
@@ -243,7 +243,7 @@ class CharacterInfoHead:
             )
         else:
             message = _(
-                "No.{character_id} 姓名:{character_name} 称呼:{character_nick_name} 性别:{sex_text}"
+                "姓名:{character_name}"
             ).format(
                 character_id=character_id,
                 character_name=character_data.name,
@@ -251,10 +251,10 @@ class CharacterInfoHead:
                 sex_text=sex_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 2
+        message_draw.width = width / 4
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
-        hp_draw.width = width / 2
+        hp_draw.width = width / 4
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
@@ -263,7 +263,7 @@ class CharacterInfoHead:
             _("体力"),
         )
         mp_draw = draw.InfoBarDraw()
-        mp_draw.width = width / 2
+        mp_draw.width = width / 4
         mp_draw.scale = 0.8
         mp_draw.set(
             "ManaPointbar",
@@ -273,8 +273,8 @@ class CharacterInfoHead:
         )
         status_text = game_config.config_status[character_data.state].name
         status_draw = draw.CenterDraw()
-        status_draw.width = width / 2
-        status_draw.text = _("状态:{status_text}").format(status_text=status_text)
+        status_draw.width = width / 4
+        status_draw.text = _("状态:暂无").format(status_text=status_text)
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
             (message_draw, hp_draw),
             (status_draw, mp_draw),
