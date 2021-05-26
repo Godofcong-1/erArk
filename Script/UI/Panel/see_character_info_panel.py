@@ -235,20 +235,20 @@ class CharacterInfoHead:
             if 0 in character_data.social_contact_data:
                 social = character_data.social_contact_data[0]
             social_text = game_config.config_social_type[social].name
-            message = _("No.{character_id} 姓名:{character_name} 性别:{sex_text} ").format(
-                character_id=character_id,
+            message = _("{character_name}（好感度：  0，信赖度：  0） ").format(
+                # character_id=character_id,
                 character_name=character_data.name,
-                sex_text=sex_text,
-                social_text=social_text,
+                # sex_text=sex_text,
+                # social_text=social_text,
             )
         else:
             message = _(
-                "姓名:{character_name}"
+                "{character_name}"
             ).format(
-                character_id=character_id,
+                # character_id=character_id,
                 character_name=character_data.name,
-                character_nick_name=character_data.nick_name,
-                sex_text=sex_text,
+                # character_nick_name=character_data.nick_name,
+                # sex_text=sex_text,
             )
         message_draw = draw.CenterDraw()
         message_draw.width = width / 4
@@ -274,7 +274,7 @@ class CharacterInfoHead:
         status_text = game_config.config_status[character_data.state].name
         status_draw = draw.CenterDraw()
         status_draw.width = width / 4
-        status_draw.text = _("状态:暂无").format(status_text=status_text)
+        status_draw.text = _(" ").format(status_text=status_text)
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
             (message_draw, hp_draw),
             (status_draw, mp_draw),
@@ -974,7 +974,8 @@ class SeeCharacterInfoByNameDrawInScene:
         """ 按钮返回值 """
         character_data: game_type.Character = cache.character_data[self.character_id]
         sex_text = game_config.config_sex_tem[character_data.sex].name
-        character_name = character_data.name + f"({sex_text})"
+        character_name = character_data.name
+        # character_name = character_data.name + f"({sex_text})"
         name_draw = draw.NormalDraw()
         if is_button:
             if num_button:
