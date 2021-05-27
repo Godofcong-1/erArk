@@ -194,13 +194,14 @@ class InScenePanel:
             #         line_feed.draw()
             #     else:
             #         label.draw()
+            #↓以下为状态栏的内容↓#
             character_status_draw_list = []
             if character_data.target_character_id:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width / 2, 3, 0
+                    character_data.cid, self.width / 2, 9, 0
                 )
                 target_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.target_character_id, self.width, 6, 0
+                    character_data.target_character_id, self.width, 9, 0
                 )
                 now_line = len(character_status_draw.draw_list)
                 if len(target_status_draw.draw_list) > now_line:
@@ -224,7 +225,7 @@ class InScenePanel:
                     # character_status_draw_list.append((t_draw))
             else:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width, 6
+                    character_data.cid, self.width, 9
                 )
                 character_status_draw_list = character_status_draw.draw_list
             for label in character_status_draw_list:

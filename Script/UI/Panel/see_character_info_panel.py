@@ -170,28 +170,36 @@ class SeeCharacterStatusPanel:
         for status_type in game_config.config_character_state_type_data:
             type_data = game_config.config_character_state_type[status_type]
             type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
+            # print("type_data.name :",type_data.name)
             self.draw_list.append(type_line)
             type_set = game_config.config_character_state_type_data[status_type]
             status_text_list = []
             for status_id in type_set:
+                # print("status_id :",status_id)
+                # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
+                # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
                 if status_type == 0:
                     if character_data.sex == 0:
-                        if status_id in {2, 3, 6}:
+                        if status_id in {2, 3, 7, 8}:
                             continue
                     elif character_data.sex == 1:
                         if status_id == 5:
                             continue
                     elif character_data.sex == 3:
-                        if status_id in {2, 3, 5, 6}:
+                        if status_id in {2, 3, 5, 7, 8}:
                             continue
                 status_text = game_config.config_character_state[status_id].name
                 status_value = 0
                 if status_id in character_data.status:
                     status_value = character_data.status[status_id]
+                # if status_id in character_data.status:
+                #     status_value = character_data.status[status_id]
                 status_value = round(status_value)
-                status_value = attr_text.get_value_text(status_value)
-                now_text = f"{status_text}:{status_value}"
+                status_value = int(attr_text.get_value_text(status_value))
+                now_text = f"  {status_text}:lv0 {status_value}"
+                # print("status_value :",status_value)
                 status_text_list.append(now_text)
+                # print("status_text_list :",status_text_list)
             if self.center_status:
                 now_draw = panel.CenterDrawTextListPanel()
             else:
