@@ -2,6 +2,7 @@ import csv
 import os
 import json
 import datetime
+import ast
 
 config_dir = os.path.join("data", "csv")
 talk_dir = os.path.join("data", "talk")
@@ -144,13 +145,21 @@ def build_character_config(file_path:str,file_name:str):
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
         now_data = {}
+        # now_type_data = {}
         i = 0
         for row in now_read:
             if not i:
                 i += 1
                 continue
             i += 1
-            now_data[row["key"]] = row["value"]
+            if row["type"] == 'int':
+                now_data[row["key"]] = int(row["value"])
+            elif row["type"] == 'str':
+                now_data[row["key"]] = str(row["value"])
+            elif row["type"] == 'dict':
+                now_data[row["key"]] = ast.literal_eval(row["value"])
+            else:
+                now_data[row["key"]] = row["value"]
             if row["get_text"]:
                 if row["value"] not in msgData:
                     config_po += f"#: Character:{file_id}\n"
