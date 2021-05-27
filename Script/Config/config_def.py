@@ -23,14 +23,6 @@ class AgeTem:
     min_age: int
     """ 最小年龄 """
 
-class AgeTem_1:
-    """ 编号对应年龄的模板 """
-
-    No: int
-    """ 模板id """
-    Age: int
-    """ 年龄 """
-
 
 class AttrTem:
     """ 性别对应的角色各项基础属性模板 """

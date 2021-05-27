@@ -57,6 +57,9 @@ class NpcTem:
         """ 母语 """
         self.SexExperienceTem: str = ""
         """ 性经验模板 """
+        #以下为新加
+        self.Favorability: str = {}
+        """ 好感度模板 """
 
 
 class Measurements:

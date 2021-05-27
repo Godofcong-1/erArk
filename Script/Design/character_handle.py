@@ -85,7 +85,8 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character = game_type.Character()
     now_character.cid = character_id
     now_character.name = character_tem.Name
-    now_character.sex = int(character_tem.Sex)
+    now_character.sex = character_tem.Sex
+    now_character.favorability = attr_calculation.get_Favorability()
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
     # print("character_id=",character_id)
@@ -95,7 +96,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     if character_tem.Age != "":
         # print("character_tem = ",character_tem)
         # print("character_tem.Age = ",character_tem.Age)
-        now_character.age = int(character_tem.Age)
+        now_character.age = character_tem.Age
         # now_character.age = attr_calculation.get_age(character_tem.Age)
     if character_tem.Weight != "":
         now_character.weight_tem = character_tem.Weight

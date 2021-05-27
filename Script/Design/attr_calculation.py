@@ -31,6 +31,12 @@ def get_age(character_id: int) -> int:
     tem_data = game_config.config_age_tem[character_id].Age
     return tem_data
 
+def get_Favorability() -> dict:
+    """
+    直接将初始好感归为{0:0}
+    """
+    return {0:0}
+
 # def get_age(tem_name: int) -> int:
 #     """
 #     按年龄模板id随机生成年龄数据
@@ -399,3 +405,4 @@ def judge_chest_group(chest: float) -> int:
         if chest >= chest_tem.min_value and chest < chest_tem.max_value:
             return chest_tem_id
     return 0
+
