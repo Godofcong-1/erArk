@@ -382,6 +382,35 @@ def judge_grade(experience: int) -> str:
         grade = "EX"
     return grade
 
+def get_status_level(value: int) -> int:
+    """
+    按状态数值评定数字等级
+    Keyword arguments:
+    value -- 属性数值
+    Return arguments:
+    int -- 数字评级
+    """
+    level = ""
+    if value < 100:
+        level = "0"
+    elif value < 500:
+        level = "1"
+    elif value < 1000:
+        level = "2"
+    elif value < 2000:
+        level = "3"
+    elif value < 3000:
+        level = "4"
+    elif value < 5000:
+        level = "5"
+    elif value < 10000:
+        level = "6"
+    elif value < 20000:
+        level = "7"
+    elif value >= 20000:
+        level = "8"
+    return level
+
 
 def judge_age_group(age: int) -> int:
     """
