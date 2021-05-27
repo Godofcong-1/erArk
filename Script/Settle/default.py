@@ -96,7 +96,7 @@ def handle_add_interaction_favoravility(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id:
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return
@@ -263,7 +263,7 @@ def handle_add_social_favorability(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id:
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return
@@ -299,7 +299,7 @@ def handle_add_intimacy_favorability(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id:
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return
@@ -350,7 +350,7 @@ def handle_add_intimate_favorability(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id:
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return
@@ -1131,6 +1131,8 @@ def handle_target_add_favorability_for_eloquence(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
     if character_data.dead:
         return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -1253,6 +1255,8 @@ def handle_target_add_favorability_for_performance(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
     if character_data.dead:
         return
     target_id = character_data.target_character_id
@@ -1292,6 +1296,8 @@ def handle_target_add_favorability_for_sing(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
     if character_data.dead:
         return
     target_id = character_data.target_character_id
@@ -1331,6 +1337,8 @@ def handle_target_add_favorability_for_play_music(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
     if character_data.dead:
         return
     target_id = character_data.target_character_id
@@ -1372,6 +1380,8 @@ def handle_target_add_favorability_for_target_interest(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
     if character_data.dead:
         return
     target_id = character_data.target_character_id
