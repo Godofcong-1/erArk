@@ -60,6 +60,8 @@ class NpcTem:
         #以下为新加
         self.Favorability: str = {}
         """ 好感度模板 """
+        self.Trust: int = 0
+        """ 信赖度模板 """
 
 
 class Measurements:
@@ -471,6 +473,8 @@ class Character:
         """ 指定角色上次扣除好感时间 """
         self.favorability: Dict[int, int] = {}
         """ 角色好感度数据 角色id:好感度 """
+        self.trust: int = 0
+        """ 角色信赖度数据 """
         self.food_bag: Dict[UUID, Food] = {}
         """ 角色持有的食物数据 """
         self.target_character_id: int = 0

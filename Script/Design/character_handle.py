@@ -86,9 +86,11 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.cid = character_id
     now_character.name = character_tem.Name
     now_character.sex = character_tem.Sex
-    now_character.favorability = attr_calculation.get_Favorability()
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
+    now_character.favorability = attr_calculation.get_Favorability()
+    now_character.trust = character_tem.Trust
+    now_character.trust = attr_calculation.get_Trust()
     # print("character_id=",character_id)
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":

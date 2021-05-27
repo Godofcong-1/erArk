@@ -237,10 +237,11 @@ class CharacterInfoHead:
             social_text = game_config.config_social_type[social].name
             favorability = character_data.favorability
             # print("favorability =",favorability)
-            message = _("{character_name}（好感度： {favorability}，信赖度： 0） ").format(
+            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}） ").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 favorability=int(character_data.favorability[0]),
+                trust=character_data.trust,
                 # sex_text=sex_text,
                 # social_text=social_text,
             )

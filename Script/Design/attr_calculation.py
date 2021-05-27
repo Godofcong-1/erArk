@@ -37,6 +37,12 @@ def get_Favorability() -> dict:
     """
     return {0:0}
 
+def get_Trust() -> dict:
+    """
+    直接将初始信赖归为0
+    """
+    return 0
+
 # def get_age(tem_name: int) -> int:
 #     """
 #     按年龄模板id随机生成年龄数据
