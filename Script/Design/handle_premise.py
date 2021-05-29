@@ -1126,8 +1126,8 @@ def handle_excelled_at_singing(character_id: int) -> int:
     return weight
 
 
-@add_premise(constant.Premise.IN_MUSIC_CLASSROOM)
-def handle_in_music_classroom(character_id: int) -> int:
+@add_premise(constant.Premise.IN_MUSIC_ROOM)
+def handle_in_music_room(character_id: int) -> int:
     """
     校验角色是否处于音乐活动室中
     Keyword arguments:

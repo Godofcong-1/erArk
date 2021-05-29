@@ -120,7 +120,7 @@ class StateMachine:
     PLAY_PIANO = 13
     """ 弹钢琴 """
     MOVE_TO_MUSIC_ROOM = 14
-    """ 移动至音乐活动室 """
+    """ 移动至音乐室 """
     SINGING = 15
     """ 唱歌 """
     SING_RAND_CHARACTER = 16
@@ -329,8 +329,8 @@ class Premise:
     """ 擅长演奏 """
     EXCELLED_AT_SINGING = 67
     """ 擅长演唱 """
-    IN_MUSIC_CLASSROOM = 68
-    """ 处于音乐活动室 """
+    IN_MUSIC_ROOM = 68
+    """ 处于音乐室 """
     NO_EXCELLED_AT_SINGING = 69
     """ 不擅长演唱 """
     SCENE_NO_HAVE_OTHER_CHARACTER = 70
@@ -607,28 +607,42 @@ class BehaviorEffect:
 class InstructType:
     """指令类型"""
 
-    DIALOGUE = 0
-    """ 对话 """
-    ACTIVE = 1
-    """ 主动 """
-    PASSIVE = 2
-    """ 被动 """
-    PERFORM = 3
-    """ 表演 """
+    # DIALOGUE = 0
+    # """ 对话 """
+    # ACTIVE = 1
+    # """ 主动 """
+    # PASSIVE = 2
+    # """ 被动 """
+    # PERFORM = 3
+    # """ 表演 """
+    # OBSCENITY = 4
+    # """ 猥亵 """
+    # PLAY = 5
+    # """ 娱乐 """
+    # BATTLE = 6
+    # """ 战斗 """
+    # STUDY = 7
+    # """ 学习 """
+    # REST = 8
+    # """ 休息 """
+    # SEX = 9
+    # """ 性爱 """
+    # SYSTEM = 10
+    # """ 系统 """
+
+    #以下为改变#
+    SYSTEM = 0
+    """ 系统 """
+    DAILY = 1
+    """ 日常 """
+    PLAY = 2
+    """ 娱乐 """
+    WORK = 3
+    """ 工作 """
     OBSCENITY = 4
     """ 猥亵 """
-    PLAY = 5
-    """ 娱乐 """
-    BATTLE = 6
-    """ 战斗 """
-    STUDY = 7
-    """ 学习 """
-    REST = 8
-    """ 休息 """
-    SEX = 9
+    SEX = 5
     """ 性爱 """
-    SYSTEM = 10
-    """ 系统 """
 
 
 class Instruct:

@@ -357,6 +357,9 @@ class SeeInstructPanel:
         now_group = value_handle.list_of_groups(now_draw_list, 5)
         now_draw.draw_list = now_group
         now_draw.draw()
+        line_feed.draw()
+        line = draw.LineDraw("-.-", self.width)
+        line.draw()
 
     def change_filter(self, now_type: int):
         """

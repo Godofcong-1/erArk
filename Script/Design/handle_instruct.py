@@ -72,7 +72,7 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
     return decorator
 
 
-@add_instruct(constant.Instruct.REST, constant.InstructType.REST, _("休息"), {})
+@add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), {})
 def handle_rest():
     """处理休息指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -84,20 +84,20 @@ def handle_rest():
 
 
 @add_instruct(
-    constant.Instruct.BUY_FOOD, constant.InstructType.ACTIVE, _("购买食物"), {constant.Premise.IN_CAFETERIA}
+    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"), {constant.Premise.IN_CAFETERIA}
 )
 def handle_buy_food():
     """处理购买食物指令"""
     cache.now_panel_id = constant.Panel.FOOD_SHOP
 
 
-@add_instruct(constant.Instruct.EAT, constant.InstructType.ACTIVE, _("进食"), {constant.Premise.HAVE_FOOD})
+@add_instruct(constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"), {constant.Premise.HAVE_FOOD})
 def handle_eat():
     """处理进食指令"""
     cache.now_panel_id = constant.Panel.FOOD_BAG
 
 
-@add_instruct(constant.Instruct.MOVE, constant.InstructType.ACTIVE, _("移动"), {})
+@add_instruct(constant.Instruct.MOVE, constant.InstructType.DAILY, _("移动"), {})
 def handle_move():
     """处理移动指令"""
     cache.now_panel_id = constant.Panel.SEE_MAP
@@ -124,7 +124,7 @@ def handle_see_owner_attr():
 
 
 @add_instruct(
-    constant.Instruct.CHAT, constant.InstructType.DIALOGUE, _("闲聊"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.CHAT, constant.InstructType.DAILY, _("闲聊"), {constant.Premise.HAVE_TARGET}
 )
 def handle_chat():
     """处理闲聊指令"""
@@ -137,14 +137,14 @@ def handle_chat():
 
 
 @add_instruct(
-    constant.Instruct.BUY_ITEM, constant.InstructType.ACTIVE, _("购买道具"), {constant.Premise.IN_SHOP}
+    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"), {constant.Premise.IN_SHOP}
 )
 def handle_buy_item():
     """处理购买道具指令"""
     cache.now_panel_id = constant.Panel.ITEM_SHOP
 
 
-@add_instruct(constant.Instruct.SINGING, constant.InstructType.PERFORM, _("唱歌"), {})
+@add_instruct(constant.Instruct.SINGING, constant.InstructType.PLAY, _("唱歌"), {})
 def handle_singing():
     """处理唱歌指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -157,9 +157,9 @@ def handle_singing():
 
 @add_instruct(
     constant.Instruct.PLAY_PIANO,
-    constant.InstructType.PERFORM,
+    constant.InstructType.PLAY,
     _("弹钢琴"),
-    {constant.Premise.IN_MUSIC_CLASSROOM},
+    {constant.Premise.IN_MUSIC_ROOM},
 )
 def handle_play_piano():
     """处理弹钢琴指令"""
@@ -194,7 +194,7 @@ def handle_save():
     now_panel.draw()
 
 
-@add_instruct(constant.Instruct.SLEEP, constant.InstructType.REST, _("睡觉"), {constant.Premise.IN_DORMITORY})
+@add_instruct(constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"), {constant.Premise.IN_DORMITORY})
 def handle_sleep():
     """处理睡觉指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -207,7 +207,7 @@ def handle_sleep():
 
 
 @add_instruct(
-    constant.Instruct.DRINK_SPRING, constant.InstructType.ACTIVE, _("喝泉水"), {constant.Premise.IN_FOUNTAIN}
+    constant.Instruct.DRINK_SPRING, constant.InstructType.DAILY, _("喝泉水"), {constant.Premise.IN_FOUNTAIN}
 )
 def handle_drink_spring():
     """处理喝泉水指令"""
@@ -240,7 +240,7 @@ def handle_drink_spring():
 
 
 @add_instruct(
-    constant.Instruct.EMBRACE, constant.InstructType.ACTIVE, _("拥抱"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.EMBRACE, constant.InstructType.DAILY, _("拥抱"), {constant.Premise.HAVE_TARGET}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -270,7 +270,7 @@ def handle_kiss():
 
 @add_instruct(
     constant.Instruct.HAND_IN_HAND,
-    constant.InstructType.ACTIVE,
+    constant.InstructType.DAILY,
     _("牵手"),
     {constant.Premise.HAVE_TARGET},
 )
@@ -387,7 +387,7 @@ def handle_un_collection_system():
 
 @add_instruct(
     constant.Instruct.ATTEND_CLASS,
-    constant.InstructType.STUDY,
+    constant.InstructType.WORK,
     _("上课"),
     {
         constant.Premise.ATTEND_CLASS_TODAY,
@@ -426,7 +426,7 @@ def handle_attend_class():
 
 @add_instruct(
     constant.Instruct.TEACH_A_LESSON,
-    constant.InstructType.STUDY,
+    constant.InstructType.WORK,
     _("教课"),
     {
         constant.Premise.ATTEND_CLASS_TODAY,
@@ -463,7 +463,7 @@ def handle_teach_a_lesson():
 
 @add_instruct(
     constant.Instruct.PLAY_GUITAR,
-    constant.InstructType.PERFORM,
+    constant.InstructType.PLAY,
     _("弹吉他"),
     {constant.Premise.HAVE_GUITAR},
 )
@@ -479,7 +479,7 @@ def handle_play_guitar():
 
 @add_instruct(
     constant.Instruct.SELF_STUDY,
-    constant.InstructType.STUDY,
+    constant.InstructType.WORK,
     _("自习"),
     {
         constant.Premise.IN_CLASSROOM,
