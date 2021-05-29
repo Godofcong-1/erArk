@@ -256,11 +256,11 @@ class CharacterInfoHead:
             )
         else:
             message = _(
-                "{character_name}"
+                "{character_name}{character_nick_name}"
             ).format(
                 # character_id=character_id,
                 character_name=character_data.name,
-                # character_nick_name=character_data.nick_name,
+                character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
             )
         message_draw = draw.CenterDraw()

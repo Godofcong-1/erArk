@@ -101,7 +101,7 @@ def input_name_panel() -> bool:
     """
     character_data = cache.character_data[0]
     ask_name_panel = panel.AskForOneMessage()
-    ask_name_panel.set(_("你能回忆起自己的名字吗？"), 10)
+    ask_name_panel.set(_("你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"), 10)
     line_feed_draw.draw()
     line.draw()
     not_num_error = draw.NormalDraw()
@@ -136,25 +136,27 @@ def input_nick_name_panel() -> bool:
     """
     create_judge = 0
     character_data = cache.character_data[0]
-    ask_nick_name_panel = panel.AskForOneMessage()
-    ask_nick_name_panel.set(_("该怎么称呼{character_name}好呢？").format(character_name=character_data.name), 10)
-    line_feed_draw.draw()
-    line.draw()
-    not_num_error = draw.NormalDraw()
-    not_num_error.text = _("角色昵称不能为纯数字，请重新输入")
-    not_system_error = draw.NormalDraw()
-    not_system_error.text = _("角色昵称不能为系统保留字，请重新输入")
-    while 1:
-        nick_name = ask_nick_name_panel.draw()
-        if nick_name.isdigit():
-            not_num_error.draw()
-            continue
-        if nick_name in get_text.translation_values or nick_name in get_text.translation._catalog:
-            not_system_error.draw()
-            continue
-        character_data.nick_name = nick_name
-        create_judge = input_sex_panel()
-        break
+    # ask_nick_name_panel = panel.AskForOneMessage()
+    # ask_nick_name_panel.set(_("该怎么称呼{character_name}好呢？").format(character_name=character_data.name), 10)
+    # line_feed_draw.draw()
+    # line.draw()
+    # not_num_error = draw.NormalDraw()
+    # not_num_error.text = _("角色昵称不能为纯数字，请重新输入")
+    # not_system_error = draw.NormalDraw()
+    # not_system_error.text = _("角色昵称不能为系统保留字，请重新输入")
+    # while 1:
+    #     nick_name = ask_nick_name_panel.draw()
+    #     if nick_name.isdigit():
+    #         not_num_error.draw()
+    #         continue
+    #     if nick_name in get_text.translation_values or nick_name in get_text.translation._catalog:
+    #         not_system_error.draw()
+    #         continue
+    #     character_data.nick_name = nick_name
+    #     create_judge = input_sex_panel()
+    #     break
+    character_data.nick_name = "博士"
+    create_judge = input_sex_panel()
     return create_judge
 
 
@@ -168,7 +170,7 @@ def input_sex_panel() -> bool:
     sex_list = [game_config.config_sex_tem[x].name for x in game_config.config_sex_tem] + [_("随机")]
     button_panel = panel.OneMessageAndSingleColumnButton()
     button_panel.set(
-        sex_list, _("那么{character_nick_name}的性别是？").format(character_nick_name=character_data.nick_name)
+        sex_list, _("那么{character_name}{character_nick_name}的性别是？").format(character_name=character_data.name,character_nick_name=character_data.nick_name)
     )
     return_list = button_panel.get_return_list()
     line_feed_draw.draw()
