@@ -97,7 +97,7 @@ def handle_eat():
     cache.now_panel_id = constant.Panel.FOOD_BAG
 
 
-@add_instruct(constant.Instruct.MOVE, constant.InstructType.DAILY, _("移动"), {})
+@add_instruct(constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"), {})
 def handle_move():
     """处理移动指令"""
     cache.now_panel_id = constant.Panel.SEE_MAP
@@ -124,10 +124,10 @@ def handle_see_owner_attr():
 
 
 @add_instruct(
-    constant.Instruct.CHAT, constant.InstructType.DAILY, _("闲聊"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"), {constant.Premise.HAVE_TARGET}
 )
 def handle_chat():
-    """处理闲聊指令"""
+    """处理聊天指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     character_data.behavior.duration = 10
@@ -240,7 +240,7 @@ def handle_drink_spring():
 
 
 @add_instruct(
-    constant.Instruct.EMBRACE, constant.InstructType.DAILY, _("拥抱"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"), {constant.Premise.HAVE_TARGET}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -270,7 +270,7 @@ def handle_kiss():
 
 @add_instruct(
     constant.Instruct.HAND_IN_HAND,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("牵手"),
     {constant.Premise.HAVE_TARGET},
 )
@@ -316,62 +316,62 @@ def handle_touch_chest():
     update.game_update_flow(10)
 
 
-@add_instruct(
-    constant.Instruct.COLLECTION_CHARACTER,
-    constant.InstructType.SYSTEM,
-    _("收藏角色"),
-    {constant.Premise.TARGET_IS_NOT_COLLECTION, constant.Premise.TARGET_NO_PLAYER},
-)
-def handle_collection_character():
-    """处理收藏角色指令"""
-    character_data: game_type.Character = cache.character_data[0]
-    target_character_id = character_data.target_character_id
-    if target_character_id not in character_data.collection_character:
-        character_data.collection_character.add(target_character_id)
+# @add_instruct(
+#     constant.Instruct.COLLECTION_CHARACTER,
+#     constant.InstructType.SYSTEM,
+#     _("收藏角色"),
+#     {constant.Premise.TARGET_IS_NOT_COLLECTION, constant.Premise.TARGET_NO_PLAYER},
+# )
+# def handle_collection_character():
+#     """处理收藏角色指令"""
+#     character_data: game_type.Character = cache.character_data[0]
+#     target_character_id = character_data.target_character_id
+#     if target_character_id not in character_data.collection_character:
+#         character_data.collection_character.add(target_character_id)
 
 
-@add_instruct(
-    constant.Instruct.UN_COLLECTION_CHARACTER,
-    constant.InstructType.SYSTEM,
-    _("取消收藏"),
-    {constant.Premise.TARGET_IS_COLLECTION, constant.Premise.TARGET_NO_PLAYER},
-)
-def handle_un_collection_character():
-    """处理取消指令"""
-    character_data: game_type.Character = cache.character_data[0]
-    target_character_id = character_data.target_character_id
-    if target_character_id in character_data.collection_character:
-        character_data.collection_character.remove(target_character_id)
+# @add_instruct(
+#     constant.Instruct.UN_COLLECTION_CHARACTER,
+#     constant.InstructType.SYSTEM,
+#     _("取消收藏"),
+#     {constant.Premise.TARGET_IS_COLLECTION, constant.Premise.TARGET_NO_PLAYER},
+# )
+# def handle_un_collection_character():
+#     """处理取消指令"""
+#     character_data: game_type.Character = cache.character_data[0]
+#     target_character_id = character_data.target_character_id
+#     if target_character_id in character_data.collection_character:
+#         character_data.collection_character.remove(target_character_id)
 
 
-@add_instruct(
-    constant.Instruct.COLLECTION_SYSTEM,
-    constant.InstructType.SYSTEM,
-    _("启用收藏模式"),
-    {constant.Premise.UN_COLLECTION_SYSTEM},
-)
-def handle_collection_system():
-    """处理启用收藏模式指令"""
-    cache.is_collection = 1
-    now_draw = draw.WaitDraw()
-    now_draw.width = width
-    now_draw.text = _("\n现在只会显示被收藏的角色的信息了！\n")
-    now_draw.draw()
+# @add_instruct(
+#     constant.Instruct.COLLECTION_SYSTEM,
+#     constant.InstructType.SYSTEM,
+#     _("启用收藏模式"),
+#     {constant.Premise.UN_COLLECTION_SYSTEM},
+# )
+# def handle_collection_system():
+#     """处理启用收藏模式指令"""
+#     cache.is_collection = 1
+#     now_draw = draw.WaitDraw()
+#     now_draw.width = width
+#     now_draw.text = _("\n现在只会显示被收藏的角色的信息了！\n")
+#     now_draw.draw()
 
 
-@add_instruct(
-    constant.Instruct.UN_COLLECTION_SYSTEM,
-    constant.InstructType.SYSTEM,
-    _("关闭收藏模式"),
-    {constant.Premise.IS_COLLECTION_SYSTEM},
-)
-def handle_un_collection_system():
-    """处理关闭收藏模式指令"""
-    cache.is_collection = 0
-    now_draw = draw.WaitDraw()
-    now_draw.width = width
-    now_draw.text = _("\n现在会显示所有角色的信息了！\n")
-    now_draw.draw()
+# @add_instruct(
+#     constant.Instruct.UN_COLLECTION_SYSTEM,
+#     constant.InstructType.SYSTEM,
+#     _("关闭收藏模式"),
+#     {constant.Premise.IS_COLLECTION_SYSTEM},
+# )
+# def handle_un_collection_system():
+#     """处理关闭收藏模式指令"""
+#     cache.is_collection = 0
+#     now_draw = draw.WaitDraw()
+#     now_draw.width = width
+#     now_draw.text = _("\n现在会显示所有角色的信息了！\n")
+#     now_draw.draw()
 
 
 # @add_instruct(
@@ -498,3 +498,149 @@ def handle_self_study():
     character_data.state = constant.CharacterStatus.STATUS_SELF_STUDY
     character_data.behavior.course_id = now_course
     update.game_update_flow(10)
+
+
+#进入自加阶段#
+
+@add_instruct(
+    constant.Instruct.WAIT,
+    constant.InstructType.DAILY,
+    _("等待五分钟"),
+    {},
+)
+def handle_make_tea():
+    """处理等待五分钟指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.MAKE_TEA,
+    constant.InstructType.DAILY,
+    _("泡茶"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理泡茶指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.MAKE_TEA_ADD,
+    constant.InstructType.DAILY,
+    _("泡茶（加料）"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理泡茶（加料）指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.MAKE_FOOD,
+    constant.InstructType.DAILY,
+    _("做饭"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """做饭"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.FOLLOWED,
+    constant.InstructType.DAILY,
+    _("使跟随"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理使跟随指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.APOLOGIZE,
+    constant.InstructType.DAILY,
+    _("道歉"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理道歉指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.LISTEN_COMPLAINT,
+    constant.InstructType.DAILY,
+    _("听牢骚"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理听牢骚指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.PRAY,
+    constant.InstructType.DAILY,
+    _("祈愿"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理祈愿指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.LISTEN_MISSION,
+    constant.InstructType.DAILY,
+    _("听取委托"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理听取委托指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.COLLCET_PANTY,
+    constant.InstructType.DAILY,
+    _("收起内裤"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理收起内裤指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.CONFESSION,
+    constant.InstructType.DAILY,
+    _("告白"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_tea():
+    """处理告白指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)

@@ -16,7 +16,7 @@ class CharacterStatus:
     STATUS_EAT = 4
     """ 进食状态 """
     STATUS_CHAT = 5
-    """ 闲聊状态 """
+    """ 聊天状态 """
     STATUS_PLAY_PIANO = 6
     """ 弹钢琴 """
     STATUS_SINGING = 7
@@ -59,7 +59,7 @@ class Behavior:
     EAT = 4
     """ 进食 """
     CHAT = 5
-    """ 闲聊 """
+    """ 聊天 """
     PLAY_PIANO = 6
     """ 弹钢琴 """
     SINGING = 7
@@ -102,7 +102,7 @@ class StateMachine:
     EAT_BAG_RAND_FOOD = 4
     """ 食用背包内随机食物 """
     CHAT_RAND_CHARACTER = 5
-    """ 和场景里随机对象闲聊 """
+    """ 和场景里随机对象聊天 """
     WEAR_CLEAN_UNDERWEAR = 6
     """ 穿干净的上衣 """
     WEAR_CLEAN_UNDERPANTS = 7
@@ -647,19 +647,58 @@ class InstructType:
 
 class Instruct:
     """指令id"""
-
+    #日常#
+    WAIT = 0
+    """ 等待五分钟 """
     CHAT = 0
-    """ 闲聊 """
+    """ 聊天 """
+    MAKE_TEA = 0
+    """ 泡茶 """
+    MAKE_TEA_ADD = 0
+    """ 泡茶（加料） """
+    MAKE_FOOD = 0
+    """ 做饭 """
+    EAT = 0
+    """ 进食 """
     REST = 0
     """ 休息 """
     SLEEP = 0
     """ 睡觉 """
+    BUY_ITEM = 0
+    """ 购买道具 """
+    DRINK_SPRING = 0
+    """ 喝泉水 """
+    BUY_FOOD = 0
+    """ 购买食物 """
+    FOLLOWED = 0
+    """ 使跟随 """
+    APOLOGIZE = 0
+    """ 道歉 """
+    LISTEN_COMPLAINT = 0
+    """ 听牢骚 """
+    PRAY = 0
+    """ 祈愿 """
+    LISTEN_MISSION = 0
+    """ 听取委托 """
+    COLLCET_PANTY = 0
+    """ 收起内裤 """
+    CONFESSION = 0
+    """ 告白 """
+    #娱乐#
     SINGING = 0
     """ 唱歌 """
     PLAY_PIANO = 0
     """ 弹钢琴 """
     PLAY_GUITAR = 0
     """ 弹吉他 """
+    #工作#
+    ATTEND_CLASS = 0
+    """ 上课 """
+    TEACH_A_LESSON = 0
+    """ 教课 """
+    SELF_STUDY = 0
+    """ 自习 """
+    #猥亵#
     TOUCH_HEAD = 0
     """ 摸头 """
     TOUCH_CHEST = 0
@@ -672,38 +711,27 @@ class Instruct:
     """ 拥抱 """
     KISS = 0
     """ 亲吻 """
-    EAT = 0
-    """ 进食 """
-    DRINK_SPRING = 0
-    """ 喝泉水 """
-    BUY_FOOD = 0
-    """ 购买食物 """
-    BUY_ITEM = 0
-    """ 购买道具 """
+    #性爱#
+    #系统#
     MOVE = 0
     """ 移动 """
-    ATTEND_CLASS = 0
-    """ 上课 """
-    TEACH_A_LESSON = 0
-    """ 教课 """
-    SELF_STUDY = 0
-    """ 自习 """
-    # VIEW_THE_SCHOOL_TIMETABLE = 0
-    # """ 查看课程表 """
     SEE_ATTR = 0
     """ 查看属性 """
     SEE_OWNER_ATTR = 0
     """ 查看自身属性 """
-    COLLECTION_CHARACTER = 0
-    """ 收藏角色 """
-    UN_COLLECTION_CHARACTER = 0
-    """ 取消收藏 """
-    COLLECTION_SYSTEM = 0
-    """ 启用收藏模式 """
-    UN_COLLECTION_SYSTEM = 0
-    """ 关闭收藏模式 """
+    # VIEW_THE_SCHOOL_TIMETABLE = 0
+    # """ 查看课程表 """
+    # COLLECTION_CHARACTER = 0
+    # """ 收藏角色 """
+    # UN_COLLECTION_CHARACTER = 0
+    # """ 取消收藏 """
+    # COLLECTION_SYSTEM = 0
+    # """ 启用收藏模式 """
+    # UN_COLLECTION_SYSTEM = 0
+    # """ 关闭收藏模式 """
     SAVE = 0
     """ 读写存档 """
+
 
 
 i = 0
