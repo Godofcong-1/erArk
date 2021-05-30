@@ -288,12 +288,14 @@ class SeeInstructPanel:
         fix_draw.text = " " * fix_width
         fix_draw.draw()
         for now_type in cache.instruct_filter:
+            if now_type == constant.InstructType.SYSTEM:
+                continue
             now_config = game_config.config_instruct_type[now_type]
             if cache.instruct_filter[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / len(cache.instruct_filter),
+                    self.width / (len(cache.instruct_filter) - 1),
                     " ",
                     "onbutton",
                     "standard",
@@ -304,11 +306,11 @@ class SeeInstructPanel:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / len(cache.instruct_filter),
+                    self.width / (len(cache.instruct_filter) - 1),
                     cmd_func=self.change_filter,
                     args=(now_type,),
                 )
-            now_button.width = int(self.width / len(cache.instruct_filter))
+            now_button.width = int(self.width / (len(cache.instruct_filter) - 1))
             self.return_list.append(now_button.return_text)
             now_button.draw()
         line_feed.draw()
@@ -317,7 +319,7 @@ class SeeInstructPanel:
         now_instruct_list = []
         now_premise_data = {}
         for now_type in cache.instruct_filter:
-            if cache.instruct_filter[now_type] and now_type in constant.instruct_type_data:
+            if cache.instruct_filter[now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
                     premise_judge = 0
                     if instruct in constant.instruct_premise_data:
@@ -339,6 +341,7 @@ class SeeInstructPanel:
         now_instruct_list.sort()
         instruct_group = value_handle.list_of_groups(now_instruct_list, 5)
         now_draw_list = []
+        system_draw_list = []
         for instruct_list in instruct_group:
             for instruct_id in instruct_list:
                 instruct_name = constant.handle_instruct_name_data[instruct_id]
@@ -347,19 +350,27 @@ class SeeInstructPanel:
                 now_draw = draw.LeftButton(
                     now_text,
                     str(instruct_id),
-                    int(self.width / len(instruct_group)),
+                    int(self.width / 5),
                     cmd_func=self.handle_instruct,
                     args=(instruct_id,),
                 )
-                now_draw_list.append(now_draw)
+                if instruct_id in constant.instruct_type_data[constant.InstructType.SYSTEM]:
+                    system_draw_list.append(now_draw)
+                else:
+                    now_draw_list.append(now_draw)
                 self.return_list.append(now_draw.return_text)
-        now_draw = panel.VerticalDrawTextListGroup(self.width)
-        now_group = value_handle.list_of_groups(now_draw_list, 5)
-        now_draw.draw_list = now_group
+        now_draw = panel.DrawTextListPanel()
+        now_draw.set(now_draw_list,self.width,5)
+        #now_draw = panel.VerticalDrawTextListGroup(self.width)
+        #now_group = value_handle.list_of_groups(now_draw_list, 5)
+        #now_draw.draw_list = now_group
         now_draw.draw()
         line_feed.draw()
         line = draw.LineDraw("-.-", self.width)
         line.draw()
+        system_draw = panel.DrawTextListPanel()
+        system_draw.set(system_draw_list,self.width,5)
+        system_draw.draw()
 
     def change_filter(self, now_type: int):
         """
