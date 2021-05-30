@@ -1126,8 +1126,8 @@ def handle_excelled_at_singing(character_id: int) -> int:
     return weight
 
 
-@add_premise(constant.Premise.IN_MUSIC_CLASSROOM)
-def handle_in_music_classroom(character_id: int) -> int:
+@add_premise(constant.Premise.IN_MUSIC_ROOM)
+def handle_in_music_room(character_id: int) -> int:
     """
     校验角色是否处于音乐活动室中
     Keyword arguments:
@@ -1139,7 +1139,7 @@ def handle_in_music_classroom(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "MusicClassroom":
+    if now_scene_data.scene_tag == "Musicroom":
         return 1
     return 0
 

@@ -40,6 +40,7 @@ class InScenePanel:
     def draw(self):
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
+        # print("character_data :",character_data)
         title_draw = draw.TitleLineDraw(_("场景"), self.width)
         scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -69,6 +70,7 @@ class InScenePanel:
             else:
                 character_list = list(character_set)
             character_handle_panel.text_list = character_list
+            # print("character_handle_panel.text_list :",character_handle_panel.text_list)
             if character_data.target_character_id not in scene_data.character_list:
                 character_data.target_character_id = 0
             if not character_data.target_character_id and len(character_list):
@@ -106,6 +108,7 @@ class InScenePanel:
                 ask_list.extend(character_handle_panel.return_list)
                 line_draw = draw.LineDraw("-.-", self.width)
                 line_draw.draw()
+            #↓角色信息面板↓#
             character_info_draw_list = []
             if character_data.target_character_id:
                 character_head_draw = see_character_info_panel.CharacterInfoHead(
@@ -120,77 +123,85 @@ class InScenePanel:
                 target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
                 target_head_draw_list[0].text += " " + target_head_draw_list[2].text
                 del target_head_draw_list[2]
-                character_info_draw_list = list(zip(character_head_draw_list, target_head_draw_list))
+                for value_tuple in character_head_draw_list:
+                    value_tuple.draw()
+                line_feed.draw()
+                for value_tuple in target_head_draw_list:
+                    value_tuple.draw()
+                line_feed.draw()
+                # character_info_draw_list = list(zip(character_head_draw_list, target_head_draw_list))
             else:
                 character_head_draw = see_character_info_panel.CharacterInfoHead(
                     character_data.cid, self.width
                 )
                 character_info_draw_list = character_head_draw.draw_list
-            for value_tuple in character_info_draw_list:
-                for value in value_tuple:
-                    value.draw()
-                line_feed.draw()
-            character_clothing_draw_list = []
-            if character_data.target_character_id:
-                character_clothing_draw = see_character_info_panel.CharacterWearClothingList(
-                    0, self.width / 2, 2
-                )
-                target_clothing_draw = see_character_info_panel.CharacterWearClothingList(
-                    character_data.target_character_id, self.width / 2 - 1, 2
-                )
-                now_line = len(character_clothing_draw.draw_list)
-                if len(target_clothing_draw.draw_list) > now_line:
-                    now_line = len(target_clothing_draw.draw_list)
-                for i in range(now_line):
-                    c_draw = None
-                    if i in range(len(character_clothing_draw.draw_list)):
-                        c_draw = character_clothing_draw.draw_list[i]
-                    else:
-                        c_draw = draw.NormalDraw()
-                        c_draw.text = " " * int(self.width / 2)
-                        c_draw.width = self.width / 2
-                    t_draw = None
-                    if i in range(len(target_clothing_draw.draw_list)):
-                        t_draw = target_clothing_draw.draw_list[i]
-                    else:
-                        t_draw = draw.NormalDraw()
-                        t_draw.text = " " * int(self.width / 2 - 1)
-                        t_draw.width = self.width / 2 - 1
-                    character_clothing_draw_list.append((c_draw, t_draw))
-            else:
-                character_clothing_draw_list = see_character_info_panel.CharacterWearClothingList(
-                    0, self.width, 4
-                ).draw_list
-            for label in character_clothing_draw_list:
-                if isinstance(label, tuple):
-                    index = 0
-                    for value in label:
-                        if isinstance(value, list):
-                            for value_draw in value:
-                                value_draw.draw()
-                        else:
-                            value.line_feed = 0
-                            value.draw()
-                        if not index:
-                            fix_draw = draw.NormalDraw()
-                            fix_draw.width = 1
-                            fix_draw.text = "|"
-                            fix_draw.draw()
-                            index = 1
-                    line_feed.draw()
-                elif isinstance(label, list):
-                    for value in label:
+                for value_tuple in character_info_draw_list:
+                    for value in value_tuple:
                         value.draw()
-                    line_feed.draw()
-                else:
-                    label.draw()
+                    # line_feed.draw()
+                line_feed.draw()
+            # character_clothing_draw_list = []
+            # if character_data.target_character_id:
+            #     character_clothing_draw = see_character_info_panel.CharacterWearClothingList(
+            #         0, self.width / 2, 2
+            #     )
+            #     target_clothing_draw = see_character_info_panel.CharacterWearClothingList(
+            #         character_data.target_character_id, self.width / 2 - 1, 2
+            #     )
+            #     now_line = len(character_clothing_draw.draw_list)
+            #     if len(target_clothing_draw.draw_list) > now_line:
+            #         now_line = len(target_clothing_draw.draw_list)
+            #     for i in range(now_line):
+            #         c_draw = None
+            #         if i in range(len(character_clothing_draw.draw_list)):
+            #             c_draw = character_clothing_draw.draw_list[i]
+            #         else:
+            #             c_draw = draw.NormalDraw()
+            #             c_draw.text = " " * int(self.width / 2)
+            #             c_draw.width = self.width / 2
+            #         t_draw = None
+            #         if i in range(len(target_clothing_draw.draw_list)):
+            #             t_draw = target_clothing_draw.draw_list[i]
+            #         else:
+            #             t_draw = draw.NormalDraw()
+            #             t_draw.text = " " * int(self.width / 2 - 1)
+            #             t_draw.width = self.width / 2 - 1
+            #         character_clothing_draw_list.append((c_draw, t_draw))
+            # else:
+            #     character_clothing_draw_list = see_character_info_panel.CharacterWearClothingList(
+            #         0, self.width, 4
+            #     ).draw_list
+            # for label in character_clothing_draw_list:
+            #     if isinstance(label, tuple):
+            #         index = 0
+            #         for value in label:
+            #             if isinstance(value, list):
+            #                 for value_draw in value:
+            #                     value_draw.draw()
+            #             else:
+            #                 value.line_feed = 0
+            #                 value.draw()
+            #             if not index:
+            #                 fix_draw = draw.NormalDraw()
+            #                 fix_draw.width = 1
+            #                 fix_draw.text = "|"
+            #                 fix_draw.draw()
+            #                 index = 1
+            #         line_feed.draw()
+            #     elif isinstance(label, list):
+            #         for value in label:
+            #             value.draw()
+            #         line_feed.draw()
+            #     else:
+            #         label.draw()
+            #↓以下为状态栏的内容↓#
             character_status_draw_list = []
             if character_data.target_character_id:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width / 2, 3, 0
+                    character_data.cid, self.width / 2, 9, 0
                 )
                 target_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.target_character_id, self.width / 2 - 1, 3, 0
+                    character_data.target_character_id, self.width, 9, 0
                 )
                 now_line = len(character_status_draw.draw_list)
                 if len(target_status_draw.draw_list) > now_line:
@@ -210,10 +221,11 @@ class InScenePanel:
                         t_draw = draw.NormalDraw()
                         t_draw.text = " " * int(self.width / 2 - 1)
                         t_draw.width = self.width / 2 - 1
-                    character_status_draw_list.append((c_draw, t_draw))
+                    character_status_draw_list = target_status_draw.draw_list
+                    # character_status_draw_list.append((t_draw))
             else:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width, 6
+                    character_data.cid, self.width, 9
                 )
                 character_status_draw_list = character_status_draw.draw_list
             for label in character_status_draw_list:
@@ -345,6 +357,9 @@ class SeeInstructPanel:
         now_group = value_handle.list_of_groups(now_draw_list, 5)
         now_draw.draw_list = now_group
         now_draw.draw()
+        line_feed.draw()
+        line = draw.LineDraw("-.-", self.width)
+        line.draw()
 
     def change_filter(self, now_type: int):
         """

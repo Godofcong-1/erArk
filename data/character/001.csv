@@ -1,0 +1,6 @@
+key,type,value,get_text,info
+键,类型,值,多语言化处理,备注
+No,int,1,0,
+Name,str,阿米娅,1,姓名
+Sex,int,1,0,女
+Age,int,14,0,少女

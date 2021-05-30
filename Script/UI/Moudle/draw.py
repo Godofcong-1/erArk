@@ -569,7 +569,7 @@ class LittleTitleLineDraw:
         title_draw.width = self.width
         title_draw.text = self.title
         title_draw.style = self.title_style
-        line_a_width = int(self.width / 4) - len(title_draw)
+        line_a_width = int(self.width / 16) - len(title_draw)
         if line_a_width < 0:
             line_a_width = 0
         line_a = NormalDraw()

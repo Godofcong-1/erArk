@@ -4,10 +4,15 @@ from Script.Config import config_def
 from Script.Core import json_handle, get_text
 
 
+
 data_path = os.path.join("data", "data.json")
 """ 原始json数据文件路径 """
+character_path = os.path.join("data", "Character.json")
+""" 原始角色数据文件路径 """
 config_data = {}
 """ 原始json数据 """
+character_data = {}
+""" 原始角色数据 """
 config_age_judge_sex_experience_tem: Dict[int, config_def.AgeJudgeSexExperienceTem] = {}
 """ 不同性别不同年龄段对应生成不同性经验模板的权重 """
 config_age_judge_sex_experience_tem_data: Dict[int, Dict[int, Dict[int, int]]] = {}
@@ -262,9 +267,10 @@ config_weight_tem: Dict[int, config_def.WeightTem] = {}
 
 
 def load_data_json():
-    """载入data.json内配置数据"""
-    global config_data
+    """载入data.json与character.json内配置数据"""
+    global config_data,character_data
     config_data = json_handle.load_json(data_path)
+    character_data = json_handle.load_json(character_path)
 
 
 def translate_data(data: dict):
@@ -299,11 +305,26 @@ def load_age_judge_sex_experience_tem_data():
 def load_age_tem():
     """载入各年龄段对应年龄范围模板"""
     now_data = config_data["AgeTem"]
-    translate_data(now_data)
+    # print("now_data =",now_data)
     for tem_data in now_data["data"]:
+        # print("tem_data:",tem_data)
         now_tem = config_def.AgeTem()
+        # print("now_tem:",now_tem)
         now_tem.__dict__ = tem_data
         config_age_tem[now_tem.cid] = now_tem
+        # print("config_age_tem:",config_age_tem)
+        # print()
+
+    # now_data_1 = character_data
+    # # print("now_data_1 =",now_data_1)
+    # # translate_data(now_data_1)
+    # for tem_data in now_data_1:
+    #     # print("now_data_1[tem_data]:",now_data_1[tem_data])
+    #     now_tem = config_def.AgeTem_1()
+    #     now_tem.__dict__ = now_data_1[tem_data]
+    #     config_age_tem[now_tem.No] = now_tem
+    #     # print("config_age_tem:",config_age_tem)
+    #     # print()
 
 
 def load_attr_tem():

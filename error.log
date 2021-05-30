@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "c:\code\erArk\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "c:\code\erArk\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "c:\code\erArk\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "c:\code\erArk\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "c:\code\erArk\Script\UI\Flow\view_school_timetable_flow.py", line 13, in view_school_timetable
+    now_panel = view_school_timetable_panel.SchoolTimeTablePanel(width)
+AttributeError: module 'Script.UI.Panel.view_school_timetable_panel' has no attribute 'SchoolTimeTablePanel'

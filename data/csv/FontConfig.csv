@@ -24,7 +24,7 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 18,levels,#ff0000,,,,,,,,等级评定S字体
 19,levelex,#a020f0,,,,,,,,等级评定EX字体
 20,littletitle,#ff00ff,,,,,,,,小标题字体
-21,sontitle,#00ff00,,,,,,,,子标题字体
+21,sontitle,#f3715c,,,,,,,,子标题字体
 22,solarperiod,#003e54,,,,,,,,节气字体
 23,season,#f0ffff,,,,,,,,季节字体
 24,moon,#d6ecf0,,,,,,,,月相

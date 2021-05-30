@@ -19,16 +19,40 @@ def get_age_tem_list() -> list:
     return list(game_config.config_age_tem.keys())
 
 
-def get_age(tem_name: int) -> int:
+def get_age(character_id: int) -> int:
     """
-    按年龄模板id随机生成年龄数据
+    按人物id获得对应年龄数据
     Keyword arguments:
-    tem_name -- 年龄模板id
+    character_id -- 年龄模板id
     """
-    tem_data = game_config.config_age_tem[tem_name]
-    max_age = tem_data.max_age
-    mini_age = tem_data.min_age
-    return random.randint(mini_age, max_age)
+    print("game_config.config_age_tem :",game_config.config_age_tem)
+    print("character_id :",character_id)
+    print("game_config.config_age_tem[character_id] :",game_config.config_age_tem[character_id])
+    tem_data = game_config.config_age_tem[character_id].Age
+    return tem_data
+
+def get_Favorability() -> dict:
+    """
+    直接将初始好感归为{0:0}
+    """
+    return {0:0}
+
+def get_Trust() -> dict:
+    """
+    直接将初始信赖归为0
+    """
+    return 0
+
+# def get_age(tem_name: int) -> int:
+#     """
+#     按年龄模板id随机生成年龄数据
+#     Keyword arguments:
+#     tem_name -- 年龄模板id
+#     """
+#     tem_data = game_config.config_age_tem[tem_name]
+#     max_age = tem_data.max_age
+#     mini_age = tem_data.min_age
+#     return random.randint(mini_age, max_age)
 
 
 def get_end_age(sex: int) -> int:
@@ -127,7 +151,7 @@ def get_rand_npc_birthday(age: int):
     now_year = cache.game_time.year
     now_month = cache.game_time.month
     now_day = cache.game_time.day
-    birth_year = now_year - age
+    birth_year = now_year - int(age)
     birthday = game_time.get_rand_day_for_year(birth_year)
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)
@@ -358,6 +382,35 @@ def judge_grade(experience: int) -> str:
         grade = "EX"
     return grade
 
+def get_status_level(value: int) -> int:
+    """
+    按状态数值评定数字等级
+    Keyword arguments:
+    value -- 属性数值
+    Return arguments:
+    int -- 数字评级
+    """
+    level = ""
+    if value < 100:
+        level = "0"
+    elif value < 500:
+        level = "1"
+    elif value < 1000:
+        level = "2"
+    elif value < 2000:
+        level = "3"
+    elif value < 3000:
+        level = "4"
+    elif value < 5000:
+        level = "5"
+    elif value < 10000:
+        level = "6"
+    elif value < 20000:
+        level = "7"
+    elif value >= 20000:
+        level = "8"
+    return level
+
 
 def judge_age_group(age: int) -> int:
     """
@@ -387,3 +440,4 @@ def judge_chest_group(chest: float) -> int:
         if chest >= chest_tem.min_value and chest < chest_tem.max_value:
             return chest_tem_id
     return 0
+

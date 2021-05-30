@@ -2,6 +2,7 @@ import csv
 import os
 import json
 import datetime
+import ast
 
 config_dir = os.path.join("data", "csv")
 talk_dir = os.path.join("data", "talk")
@@ -144,13 +145,21 @@ def build_character_config(file_path:str,file_name:str):
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
         now_data = {}
+        # now_type_data = {}
         i = 0
         for row in now_read:
             if not i:
                 i += 1
                 continue
             i += 1
-            now_data[row["key"]] = row["value"]
+            if row["type"] == 'int':
+                now_data[row["key"]] = int(row["value"])
+            elif row["type"] == 'str':
+                now_data[row["key"]] = str(row["value"])
+            elif row["type"] == 'dict':
+                now_data[row["key"]] = ast.literal_eval(row["value"])
+            else:
+                now_data[row["key"]] = row["value"]
             if row["get_text"]:
                 if row["value"] not in msgData:
                     config_po += f"#: Character:{file_id}\n"
@@ -158,7 +167,7 @@ def build_character_config(file_path:str,file_name:str):
                     config_po += 'msgstr ""\n\n'
         character_data[file_id] = now_data
 
-
+# print("进入buildconfig.py了")
 file_list = os.listdir(config_dir)
 index = 0
 for i in file_list:
@@ -194,6 +203,7 @@ for i in character_file_list:
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)
 
+# print("处理到Character.json了")
 data_path = os.path.join("data","Character.json")
 with open(data_path,"w",encoding="utf-8") as character_data_file:
     json.dump(character_data,character_data_file,ensure_ascii=0)

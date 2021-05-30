@@ -65,7 +65,7 @@ class GameTimeInfoPanel:
         now_judge = game_time.judge_attend_class_today(0)
         attend_class = _("(休息)")
         if now_judge:
-            attend_class = _("(上学)")
+            attend_class = _("(工作日)")
         attend_class += " "
         attend_class_draw = draw.NormalDraw()
         attend_class_draw.text = attend_class

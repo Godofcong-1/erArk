@@ -170,28 +170,37 @@ class SeeCharacterStatusPanel:
         for status_type in game_config.config_character_state_type_data:
             type_data = game_config.config_character_state_type[status_type]
             type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
+            # print("type_data.name :",type_data.name)
             self.draw_list.append(type_line)
             type_set = game_config.config_character_state_type_data[status_type]
             status_text_list = []
             for status_id in type_set:
+                # print("status_id :",status_id)
+                # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
+                # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
                 if status_type == 0:
                     if character_data.sex == 0:
-                        if status_id in {2, 3, 6}:
+                        if status_id in {2, 3, 7, 8}:
                             continue
                     elif character_data.sex == 1:
                         if status_id == 5:
                             continue
                     elif character_data.sex == 3:
-                        if status_id in {2, 3, 5, 6}:
+                        if status_id in {2, 3, 5, 7, 8}:
                             continue
                 status_text = game_config.config_character_state[status_id].name
                 status_value = 0
                 if status_id in character_data.status:
                     status_value = character_data.status[status_id]
+                # if status_id in character_data.status:
+                #     status_value = character_data.status[status_id]
                 status_value = round(status_value)
-                status_value = attr_text.get_value_text(status_value)
-                now_text = f"{status_text}:{status_value}"
+                status_value = int(attr_text.get_value_text(status_value))
+                status_level = attr_calculation.get_status_level(status_value)
+                now_text = f"  {status_text}:lv{status_level} {status_value}"
+                # print("status_value :",status_value)
                 status_text_list.append(now_text)
+                # print("status_text_list :",status_text_list)
             if self.center_status:
                 now_draw = panel.CenterDrawTextListPanel()
             else:
@@ -235,26 +244,30 @@ class CharacterInfoHead:
             if 0 in character_data.social_contact_data:
                 social = character_data.social_contact_data[0]
             social_text = game_config.config_social_type[social].name
-            message = _("No.{character_id} 姓名:{character_name} 性别:{sex_text} 关系:{social_text}").format(
-                character_id=character_id,
+            favorability = character_data.favorability
+            # print("favorability =",favorability)
+            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}） ").format(
+                # character_id=character_id,
                 character_name=character_data.name,
-                sex_text=sex_text,
-                social_text=social_text,
+                favorability=int(character_data.favorability[0]),
+                trust=character_data.trust,
+                # sex_text=sex_text,
+                # social_text=social_text,
             )
         else:
             message = _(
-                "No.{character_id} 姓名:{character_name} 称呼:{character_nick_name} 性别:{sex_text}"
+                "{character_name}{character_nick_name}"
             ).format(
-                character_id=character_id,
+                # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
-                sex_text=sex_text,
+                # sex_text=sex_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 2
+        message_draw.width = width / 4
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
-        hp_draw.width = width / 2
+        hp_draw.width = width / 4
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
@@ -263,7 +276,7 @@ class CharacterInfoHead:
             _("体力"),
         )
         mp_draw = draw.InfoBarDraw()
-        mp_draw.width = width / 2
+        mp_draw.width = width / 4
         mp_draw.scale = 0.8
         mp_draw.set(
             "ManaPointbar",
@@ -273,8 +286,8 @@ class CharacterInfoHead:
         )
         status_text = game_config.config_status[character_data.state].name
         status_draw = draw.CenterDraw()
-        status_draw.width = width / 2
-        status_draw.text = _("状态:{status_text}").format(status_text=status_text)
+        status_draw.width = width / 4
+        status_draw.text = _(" ").format(status_text=status_text)
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
             (message_draw, hp_draw),
             (status_draw, mp_draw),
@@ -974,7 +987,8 @@ class SeeCharacterInfoByNameDrawInScene:
         """ 按钮返回值 """
         character_data: game_type.Character = cache.character_data[self.character_id]
         sex_text = game_config.config_sex_tem[character_data.sex].name
-        character_name = character_data.name + f"({sex_text})"
+        character_name = character_data.name
+        # character_name = character_data.name + f"({sex_text})"
         name_draw = draw.NormalDraw()
         if is_button:
             if num_button:

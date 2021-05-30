@@ -29,6 +29,7 @@ def init_character_list():
     id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
     npc_data_iter = iter(cache.npc_tem_data)
     for now_id, now_npc_data in zip(id_list, npc_data_iter):
+        # print("now_id=",now_id,". now_npc_data:",now_npc_data)
         init_character(now_id, now_npc_data)
     index_character_average_value()
     calculate_the_average_value_of_each_attribute_of_each_age_group()
@@ -62,16 +63,16 @@ def index_character_average_value():
     """
     for character_id in cache.character_data:
         character_data = cache.character_data[character_id]
-        age_tem = attr_calculation.judge_age_group(character_data.age)
-        cache.total_height_by_age.setdefault(age_tem, {})
-        cache.total_height_by_age[age_tem].setdefault(character_data.sex, 0)
-        cache.total_height_by_age[age_tem][character_data.sex] += character_data.height.now_height
-        cache.total_number_of_people_of_all_ages.setdefault(age_tem, {})
-        cache.total_number_of_people_of_all_ages[age_tem].setdefault(character_data.sex, 0)
-        cache.total_number_of_people_of_all_ages[age_tem][character_data.sex] += 1
-        cache.total_bodyfat_by_age.setdefault(age_tem, {})
-        cache.total_bodyfat_by_age[age_tem].setdefault(character_data.sex, 0)
-        cache.total_bodyfat_by_age[age_tem][character_data.sex] += character_data.bodyfat
+        # age_tem = attr_calculation.judge_age_group(character_data.age)
+        # cache.total_height_by_age.setdefault(age_tem, {})
+        # cache.total_height_by_age[age_tem].setdefault(character_data.sex, 0)
+        # cache.total_height_by_age[age_tem][character_data.sex] += character_data.height.now_height
+        # cache.total_number_of_people_of_all_ages.setdefault(age_tem, {})
+        # cache.total_number_of_people_of_all_ages[age_tem].setdefault(character_data.sex, 0)
+        # cache.total_number_of_people_of_all_ages[age_tem][character_data.sex] += 1
+        # cache.total_bodyfat_by_age.setdefault(age_tem, {})
+        # cache.total_bodyfat_by_age[age_tem].setdefault(character_data.sex, 0)
+        # cache.total_bodyfat_by_age[age_tem][character_data.sex] += character_data.bodyfat
 
 
 def init_character(character_id: int, character_tem: game_type.NpcTem):
@@ -87,10 +88,18 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.sex = character_tem.Sex
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
+    now_character.favorability = attr_calculation.get_Favorability()
+    now_character.trust = character_tem.Trust
+    now_character.trust = attr_calculation.get_Trust()
+    # print("character_id=",character_id)
+    # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":
         now_character.mother_tongue = character_tem.MotherTongue
     if character_tem.Age != "":
-        now_character.age = attr_calculation.get_age(character_tem.Age)
+        # print("character_tem = ",character_tem)
+        # print("character_tem.Age = ",character_tem.Age)
+        now_character.age = character_tem.Age
+        # now_character.age = attr_calculation.get_age(character_tem.Age)
     if character_tem.Weight != "":
         now_character.weight_tem = character_tem.Weight
     if character_tem.SexExperienceTem != "":
@@ -117,6 +126,7 @@ def init_character_tem():
     #init_random_npc_data()
     #npc_data = cache.random_npc_list
     #numpy.random.shuffle(npc_data)
+    # print("初始化角色模板数据")
     cache.npc_tem_data = character_config.character_tem_list
 
 
@@ -250,93 +260,110 @@ def get_rand_npc_age_tem(age_judge: str) -> int:
 def init_character_dormitory():
     """
     分配角色宿舍
-    小于18岁，男生分配到男生宿舍，女生分配到女生宿舍，按宿舍楼层和角色年龄，从下往上，从小到大分配，其他性别分配到地下室，大于18岁，教师宿舍混居
+    暂定先全部到控制中枢的走廊
     """
-    character_sex_data = {
-        "Man": {
-            character_id: cache.character_data[character_id].age
-            for character_id in cache.character_data
-            if cache.character_data[character_id].age <= 18 and cache.character_data[character_id].sex == 0
-        },
-        "Woman": {
-            character_id: cache.character_data[character_id].age
-            for character_id in cache.character_data
-            if cache.character_data[character_id].age <= 18 and cache.character_data[character_id].sex == 1
-        },
-        "Other": {
-            character_id: cache.character_data[character_id].age
-            for character_id in cache.character_data
-            if cache.character_data[character_id].age <= 18
-            and cache.character_data[character_id].sex not in {0, 1}
-        },
-        "Teacher": {
-            character_id: cache.character_data[character_id].age
-            for character_id in cache.character_data
-            if cache.character_data[character_id].age > 18
-        },
+    dormitory = {
+        key: constant.place_data[key] for key in constant.place_data if "Firstplace" in key
     }
-    man_max = len(character_sex_data["Man"])
-    woman_max = len(character_sex_data["Woman"])
-    other_max = len(character_sex_data["Other"])
-    teacher_max = len(character_sex_data["Teacher"])
-    character_sex_data["Man"] = [
-        k[0] for k in sorted(character_sex_data["Man"].items(), key=lambda x: x[1])
-    ]
-    character_sex_data["Woman"] = [
-        k[0] for k in sorted(character_sex_data["Woman"].items(), key=lambda x: x[1])
-    ]
-    character_sex_data["Other"] = [
-        k[0] for k in sorted(character_sex_data["Other"].items(), key=lambda x: x[1])
-    ]
-    character_sex_data["Teacher"] = [
-        k[0] for k in sorted(character_sex_data["Teacher"].items(), key=lambda x: x[1])
-    ]
-    teacher_dormitory = {x: 0 for x in sorted(constant.place_data["TeacherDormitory"], key=lambda x: x[0])}
-    male_dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "MaleDormitory" in key
+    dormitory = {
+        x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
     }
-    female_dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "FemaleDormitory" in key
-    }
-    male_dormitory = {
-        x: 0 for j in [k[1] for k in sorted(male_dormitory.items(), key=lambda x: x[0])] for x in j
-    }
-    female_dormitory = {
-        x: 0 for j in [k[1] for k in sorted(female_dormitory.items(), key=lambda x: x[0])] for x in j
-    }
-    basement = {x: 0 for x in constant.place_data["Basement"]}
-    male_dormitoryMax = len(male_dormitory.keys())
-    female_dormitoryMax = len(female_dormitory.keys())
-    teacher_dormitoryMax = len(teacher_dormitory)
-    basement_max = len(basement)
-    single_room_man = math.ceil(man_max / male_dormitoryMax)
-    single_room_woman = math.ceil(woman_max / female_dormitoryMax)
-    single_room_basement = math.ceil(other_max / basement_max)
-    single_room_teacher = math.ceil(teacher_max / teacher_dormitoryMax)
-    for character_id in character_sex_data["Man"]:
-        now_room = list(male_dormitory.keys())[0]
+    # print("dormitory :",dormitory)
+    for character_id in cache.character_data:
+        now_room = list(dormitory.keys())[0]
         cache.character_data[character_id].dormitory = now_room
-        male_dormitory[now_room] += 1
-        if male_dormitory[now_room] >= single_room_man:
-            del male_dormitory[now_room]
-    for character_id in character_sex_data["Woman"]:
-        now_room = list(female_dormitory.keys())[0]
-        cache.character_data[character_id].dormitory = now_room
-        female_dormitory[now_room] += 1
-        if female_dormitory[now_room] >= single_room_woman:
-            del female_dormitory[now_room]
-    for character_id in character_sex_data["Other"]:
-        now_room = list(basement.keys())[0]
-        cache.character_data[character_id].dormitory = now_room
-        basement[now_room] += 1
-        if basement[now_room] >= single_room_basement:
-            del basement[now_room]
-    for character_id in character_sex_data["Teacher"]:
-        now_room = list(teacher_dormitory.keys())[0]
-        cache.character_data[character_id].dormitory = now_room
-        teacher_dormitory[now_room] += 1
-        if teacher_dormitory[now_room] >= single_room_teacher:
-            del teacher_dormitory[now_room]
+
+
+# def init_character_dormitory():
+#     """
+#     分配角色宿舍
+#     小于18岁，男生分配到男生宿舍，女生分配到女生宿舍，按宿舍楼层和角色年龄，从下往上，从小到大分配，其他性别分配到地下室，大于18岁，教师宿舍混居
+#     """
+#     character_sex_data = {
+#         "Man": {
+#             character_id: cache.character_data[character_id].age
+#             for character_id in cache.character_data
+#             if cache.character_data[character_id].age <= 18 and cache.character_data[character_id].sex == 0
+#         },
+#         "Woman": {
+#             character_id: cache.character_data[character_id].age
+#             for character_id in cache.character_data
+#             if cache.character_data[character_id].age <= 18 and cache.character_data[character_id].sex == 1
+#         },
+#         "Other": {
+#             character_id: cache.character_data[character_id].age
+#             for character_id in cache.character_data
+#             if cache.character_data[character_id].age <= 18
+#             and cache.character_data[character_id].sex not in {0, 1}
+#         },
+#         "Teacher": {
+#             character_id: cache.character_data[character_id].age
+#             for character_id in cache.character_data
+#             if cache.character_data[character_id].age > 18
+#         },
+#     }
+#     man_max = len(character_sex_data["Man"])
+#     woman_max = len(character_sex_data["Woman"])
+#     other_max = len(character_sex_data["Other"])
+#     teacher_max = len(character_sex_data["Teacher"])
+#     character_sex_data["Man"] = [
+#         k[0] for k in sorted(character_sex_data["Man"].items(), key=lambda x: x[1])
+#     ]
+#     character_sex_data["Woman"] = [
+#         k[0] for k in sorted(character_sex_data["Woman"].items(), key=lambda x: x[1])
+#     ]
+#     character_sex_data["Other"] = [
+#         k[0] for k in sorted(character_sex_data["Other"].items(), key=lambda x: x[1])
+#     ]
+#     character_sex_data["Teacher"] = [
+#         k[0] for k in sorted(character_sex_data["Teacher"].items(), key=lambda x: x[1])
+#     ]
+#     teacher_dormitory = {x: 0 for x in sorted(constant.place_data["TeacherDormitory"], key=lambda x: x[0])}
+#     male_dormitory = {
+#         key: constant.place_data[key] for key in constant.place_data if "MaleDormitory" in key
+#     }
+#     female_dormitory = {
+#         key: constant.place_data[key] for key in constant.place_data if "FemaleDormitory" in key
+#     }
+#     male_dormitory = {
+#         x: 0 for j in [k[1] for k in sorted(male_dormitory.items(), key=lambda x: x[0])] for x in j
+#     }
+#     female_dormitory = {
+#         x: 0 for j in [k[1] for k in sorted(female_dormitory.items(), key=lambda x: x[0])] for x in j
+#     }
+#     basement = {x: 0 for x in constant.place_data["Basement"]}
+#     male_dormitoryMax = len(male_dormitory.keys())
+#     female_dormitoryMax = len(female_dormitory.keys())
+#     teacher_dormitoryMax = len(teacher_dormitory)
+#     basement_max = len(basement)
+#     single_room_man = math.ceil(man_max / male_dormitoryMax)
+#     single_room_woman = math.ceil(woman_max / female_dormitoryMax)
+#     single_room_basement = math.ceil(other_max / basement_max)
+#     single_room_teacher = math.ceil(teacher_max / teacher_dormitoryMax)
+#     for character_id in character_sex_data["Man"]:
+#         now_room = list(male_dormitory.keys())[0]
+#         cache.character_data[character_id].dormitory = now_room
+#         male_dormitory[now_room] += 1
+#         if male_dormitory[now_room] >= single_room_man:
+#             del male_dormitory[now_room]
+#     for character_id in character_sex_data["Woman"]:
+#         now_room = list(female_dormitory.keys())[0]
+#         cache.character_data[character_id].dormitory = now_room
+#         female_dormitory[now_room] += 1
+#         if female_dormitory[now_room] >= single_room_woman:
+#             del female_dormitory[now_room]
+#     for character_id in character_sex_data["Other"]:
+#         now_room = list(basement.keys())[0]
+#         cache.character_data[character_id].dormitory = now_room
+#         basement[now_room] += 1
+#         if basement[now_room] >= single_room_basement:
+#             del basement[now_room]
+#     for character_id in character_sex_data["Teacher"]:
+#         now_room = list(teacher_dormitory.keys())[0]
+#         cache.character_data[character_id].dormitory = now_room
+#         teacher_dormitory[now_room] += 1
+#         if teacher_dormitory[now_room] >= single_room_teacher:
+#             del teacher_dormitory[now_room]
 
 
 def init_character_position():
@@ -345,6 +372,7 @@ def init_character_position():
         character_position = cache.character_data[character_id].position
         character_dormitory = cache.character_data[character_id].dormitory
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
+        # print("character_dormitory = ",character_dormitory)
         map_handle.character_move_scene(character_position, character_dormitory, character_id)
 
 
