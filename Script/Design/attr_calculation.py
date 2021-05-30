@@ -25,9 +25,9 @@ def get_age(character_id: int) -> int:
     Keyword arguments:
     character_id -- 年龄模板id
     """
-    print("game_config.config_age_tem :",game_config.config_age_tem)
-    print("character_id :",character_id)
-    print("game_config.config_age_tem[character_id] :",game_config.config_age_tem[character_id])
+    # print("game_config.config_age_tem :",game_config.config_age_tem)
+    # print("character_id :",character_id)
+    # print("game_config.config_age_tem[character_id] :",game_config.config_age_tem[character_id])
     tem_data = game_config.config_age_tem[character_id].Age
     return tem_data
 
@@ -395,20 +395,24 @@ def get_status_level(value: int) -> int:
         level = "0"
     elif value < 500:
         level = "1"
-    elif value < 1000:
-        level = "2"
-    elif value < 2000:
-        level = "3"
     elif value < 3000:
-        level = "4"
-    elif value < 5000:
-        level = "5"
+        level = "2"
     elif value < 10000:
+        level = "3"
+    elif value < 30000:
+        level = "4"
+    elif value < 60000:
+        level = "5"
+    elif value < 100000:
         level = "6"
-    elif value < 20000:
+    elif value < 150000:
         level = "7"
-    elif value >= 20000:
+    elif value < 250000:
         level = "8"
+    elif value < 400000:
+        level = "9"
+    elif value >= 400000:
+        level = "10"
     return level
 
 
