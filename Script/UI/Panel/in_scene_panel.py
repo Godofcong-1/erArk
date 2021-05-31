@@ -251,6 +251,15 @@ class InScenePanel:
                     line_feed.draw()
                 else:
                     label.draw()
+            #以下为图片面板#
+            line_draw = draw.LineDraw("-.-", self.width)
+            line_draw.draw()
+            fix_draw = draw.CharaDraw()
+            fix_draw.width = 10
+            fix_draw.set(1)
+            fix_draw.draw()
+            line_feed.draw()
+            #以下为指令面板#
             see_instruct_panel.draw()
             ask_list.extend(see_instruct_panel.return_list)
             flow_handle.askfor_all(ask_list)

@@ -1,0 +1,7 @@
+cid,chara_id,image_name,width
+图片id,角色id,图片名字,图片绘制宽度
+int,int,str,int
+0,0,0,0
+角色ID对应的角色图片和绘制宽度,,,
+0,1,char_001,10
+1,2,char_002,10
