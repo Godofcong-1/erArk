@@ -413,6 +413,50 @@ class Button:
             )
 
 
+class ImageButton:
+    """
+    图片按钮绘制
+    Keyword arguments:
+    text -- 图片id
+    return_text -- 点击按钮响应文本
+    width -- 按钮的文本宽度(自己定义，对齐函数以其为参照)
+    cmd_func -- 按钮响应事件函数
+    args -- 传给事件响应函数的参数列表
+    """
+
+    def __init__(
+        self,
+        text: str,
+        return_text: str,
+        width:int,
+        cmd_func=None,
+        args=(),
+    ):
+        """初始化绘制对象"""
+        self.text: str = text
+        """ 按钮文本 """
+        self.return_text: str = return_text
+        """ 点击按钮响应文本 """
+        self.width: int = 0
+        """ 按钮文本的最大宽度 """
+        self.cmd_func: FunctionType = cmd_func
+        """ 按钮响应事件函数 """
+        self.args = args
+        """ 传给事件响应函数的参数列表 """
+
+    def __len__(self) -> int:
+        """
+        获取图片的绘制宽度
+        Return arguments:
+        int -- 绘制宽度
+        """
+        return self.width
+
+    def draw(self):
+        """绘制按钮"""
+        py_cmd.pimagecmd(self.text,self.return_text,self.cmd_func,self.args)
+
+
 class CenterButton:
     """
     居中按钮绘制
