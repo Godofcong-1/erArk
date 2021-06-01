@@ -143,6 +143,9 @@ send_order_state = False
 # when false, send 'skip'; when true, send cmd
 
 
+from Script.Core import era_image
+
+
 def send_input(*args):
     """
     发送一条指令
@@ -200,17 +203,15 @@ def read_queue():
                 temp["italic"],
             )
         if "image" in json_data:
-            from Script.Core import era_image
-
-            era_image.print_image(
-                json_data["image"]["image_name"],
-            )
+            textbox.image_create("end",image=era_image.image_data[json_data["image"]["image_name"]])
 
         for c in json_data["content"]:
             if c["type"] == "text":
                 now_print(c["text"], style=tuple(c["style"]))
             if c["type"] == "cmd":
                 io_print_cmd(c["text"], c["num"], c["normal_style"], c["on_style"])
+            if c["type"] == "image_cmd":
+                io_print_image_cmd(c["text"], c["num"])
             if "\n" in c["text"]:
                 if textbox.get("1.0", END).count("\n") > normal_config.config_normal.text_hight * 10:
                     textbox.delete("1.0", str(normal_config.config_normal.text_hight * 5) + ".0")
@@ -370,12 +371,9 @@ def clear_order():
     order.set("")
 
 
-# ############################################################
-
 cmd_tag_map = {}
 
 
-# 命令生成函数
 def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_style="onbutton"):
     """
     打印一条指令
@@ -393,9 +391,7 @@ def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_styl
     cmd_tag_map[cmd_number] = cmd_tag_name
 
     def send_cmd(*args):
-        """
-        发送命令
-        """
+        """发送命令"""
         global send_order_state
         send_order_state = True
         order.set(cmd_number)
@@ -439,6 +435,35 @@ def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_styl
     textbox.tag_bind(cmd_tag_name, "<Enter>", enter_func)
     textbox.tag_bind(cmd_tag_name, "<Leave>", leave_func)
     print_cmd(cmd_str, style=(cmd_tag_name, normal_style))
+
+
+def io_print_image_cmd(cmd_str: str, cmd_number: int):
+    """
+    打印一个图片按钮
+    Keyword arguments:
+    cmd_str -- 图片id
+    cmd_number -- 点击图片响应数字
+    """
+    global cmd_tag_map
+    cmd_tag_name = str(uuid.uuid1())
+    textbox.tag_configure(cmd_tag_name)
+    if cmd_number in cmd_tag_map:
+        io_clear_cmd(cmd_number)
+    cmd_tag_map[cmd_number] = cmd_tag_name
+
+    def send_cmd(*args):
+        """发送命令"""
+        global send_order_state
+        send_order_state = True
+        order.set(cmd_number)
+        textbox.configure(cursor="")
+        send_input(order)
+
+    index = str(float(textbox.index("end")) - 1)
+    textbox.image_create(index, image=era_image.image_data[cmd_str])
+    textbox.tag_add(cmd_tag_name, index, "{0} + 1 char".format(index))
+    textbox.tag_bind(cmd_tag_name, "<1>", send_cmd)
+    see_end()
 
 
 # 清除命令函数

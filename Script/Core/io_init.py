@@ -256,9 +256,6 @@ def clear_order():
     put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
-# ############################################################
-
-# 命令生成函数
 def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_style="onbutton"):
     """
     打印一条指令
@@ -273,7 +270,22 @@ def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_styl
     put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
-# 清除命令函数
+def io_print_image_cmd(cmd_str: str, cmd_number: int):
+    """
+    打印图片指令
+    Keyword arguments:
+    cmd_str -- 命令文本
+    cmd_number -- 命令数字
+    """
+    json_str = new_json()
+    data = {}
+    data["type"] = "image_cmd"
+    data["text"] = cmd_str
+    data["num"] = cmd_number
+    json_str["content"].append(data)
+    put_queue(json.dumps(json_str, ensure_ascii=False))
+
+
 def io_clear_cmd(*cmd_numbers: int):
     """
     清除命令

@@ -42,6 +42,29 @@ def pcmd(
     flow_handle.print_cmd(cmd_str, cmd_id, cmd_func, arg, kw, normal_style, on_style)
 
 
+def pimagecmd(
+    cmd_str: str,
+    cmd_id: str,
+    cmd_func=flow_handle.null_func,
+    arg=(),
+    kw={},
+):
+    """
+    打印图片按钮
+    Keyword arguments:
+    cmd_str -- 命令对应文字
+    cmd_id -- 命令响应文本
+    cmd_func -- 命令函数
+    arg -- 传给命令函数的顺序参数
+    kw -- 传给命令函数的字典参数
+    """
+    cache.text_wait = float(normal_config.config_normal.text_wait)
+    global last_char
+    if len(cmd_str) > 0:
+        last_char = cmd_str[-1:]
+    flow_handle.print_image_cmd(cmd_str, cmd_id, cmd_func, arg, kw)
+
+
 unused_cmd_num = 500
 
 

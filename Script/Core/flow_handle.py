@@ -145,6 +145,27 @@ def print_cmd(
     return cmd_str
 
 
+def print_image_cmd(
+    cmd_str,
+    cmd_number,
+    cmd_func=null_func,
+    arg=(),
+    kw={},
+):
+    """
+    绘制图片按钮
+    Keyword arguments:
+    cmd_str -- 命令对应文字
+    cmd_id -- 命令响应文本
+    cmd_func -- 命令函数
+    arg -- 传给命令函数的顺序参数
+    kw -- 传给命令函数的字典参数
+    """
+    bind_cmd(cmd_number, cmd_func, arg, kw)
+    io_init.io_print_image_cmd(cmd_str, cmd_number)
+    return cmd_str
+
+
 def cmd_clear(*number):
     """
     清楚绑定命令
