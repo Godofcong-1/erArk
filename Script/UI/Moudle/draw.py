@@ -12,6 +12,7 @@ from Script.Core import (
 from Script.Config import game_config
 
 bar_list = set(game_config.config_bar_data.keys())
+chara_list = set(game_config.config_image_data.keys())
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
@@ -150,6 +151,9 @@ class BarDraw:
             if self.width > 1:
                 proportion = int(value / max_value * self.width)
             fix_bar = int(self.width - proportion)
+            # print("bar_id =",bar_id)
+            # print("game_config.config_bar_data[bar_id] =",game_config.config_bar_data[bar_id])
+            # print("game_config.config_bar[game_config.config_bar_data[bar_id]] =",game_config.config_bar[game_config.config_bar_data[bar_id]])
             style_data = game_config.config_bar[game_config.config_bar_data[bar_id]]
             for i in range(proportion):
                 now_draw = ImageDraw(style_data.ture_bar)
@@ -173,9 +177,106 @@ class BarDraw:
         """
         return len(self.draw_list)
 
+class CharaDraw:
+    """人物图片绘制"""
+
+    def __init__(self):
+        """初始化绘制对象"""
+        self.width = 0
+        """ 人物最大长度 """
+        self.chara_id = ""
+        """ 人物类型id """
+        self.draw_list: List[ImageDraw] = []
+        """ 人物绘制对象列表 """
+
+    def set(self, chara_id: int):
+        """
+        设置人物数据
+        Keyword arguments:
+        chara_id -- 人物id
+        max_value -- 最大数值
+        value -- 当前数值
+        """
+        if self.width > 0:
+            # print("chara_id =",chara_id)
+            # print("game_config.config_image_data[chara_id] =",game_config.config_image_data[chara_id])
+            # print("game_config.config_image[game_config.config_image_data[chara_id]] =",game_config.config_image[game_config.config_image_data[chara_id]])
+            style_data = game_config.config_image[game_config.config_image_data[chara_id]]
+            now_draw = ImageDraw(style_data.image_name)
+            now_draw.width = style_data.width
+            self.draw_list.append(now_draw)
+
+    def draw(self):
+        """绘制人物"""
+        for bar in self.draw_list:
+            bar.draw()
+
+    def __len__(self) -> int:
+        """
+        获取人物长度
+        Return arguments:
+        int -- 人物长度
+        """
+        return len(self.draw_list)
+
 
 class InfoBarDraw:
     """带有文本和数值描述的比例条 例: 生命:[图片](2000/2000)"""
+
+    def __init__(self):
+        """初始化绘制对象"""
+        self.width: int = 0
+        """ 比例条最大长度 """
+        self.bar_id: str = ""
+        """ 比例条类型id """
+        self.text: str = ""
+        """ 比例条描述文本 """
+        self.draw_list: List[ImageDraw] = []
+        """ 比例条绘制对象列表 """
+        self.scale: float = 1
+        """ 比例条绘制区域占比 """
+        self.max_value: int = 0
+        """ 最大数值 """
+        self.value: int = 0
+        """ 当前数值 """
+
+    def set(self, bar_id: str, max_value: int, value: int, text: str):
+        """
+        设置比例条数据
+        Keyword arguments:
+        bar_id -- 比例条id
+        max_value -- 最大数值
+        value -- 当前数值
+        text -- 描述文本
+        """
+        self.text = text
+        self.max_value = max_value
+        self.value = value
+        now_max_width = int(self.width * self.scale)
+        info_draw = NormalDraw()
+        info_draw.width = int(now_max_width / 3)
+        info_draw.text = f"{text}["
+        value_draw = NormalDraw()
+        value_draw.width = int(now_max_width / 3)
+        value_draw.text = f"]({value}/{max_value})"
+        self.bar_id = bar_id
+        bar_draw = BarDraw()
+        bar_draw.width = now_max_width - len(info_draw) - len(value_draw)
+        bar_draw.set(self.bar_id, max_value, value)
+        fix_width = int((self.width - now_max_width) / 2)
+        fix_draw = NormalDraw()
+        fix_draw.text = " " * fix_width
+        fix_draw.width = fix_width
+        self.draw_list = [fix_draw, info_draw, bar_draw, value_draw, fix_draw]
+
+    def draw(self):
+        """绘制比例条"""
+        for bar in self.draw_list:
+            bar.draw()
+
+
+class InfoCharaDraw:
+    """带有文本的人物图像 例: [阿米娅]:[图片]"""
 
     def __init__(self):
         """初始化绘制对象"""
@@ -595,14 +696,22 @@ class CenterDraw(NormalDraw):
     def draw(self):
         """绘制文本"""
         self.width = int(self.width)
+        print("int(len(self)) :",int(len(self)))
+        print("int(self.width) :",int(self.width))
+        print("self.text :",self.text)
         if int(len(self)) > int(self.width):
+            print("第一个分支")
             now_text = ""
             if self.width > 0:
                 for i in self.text:
+                    print("i :",i)
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
+                        print("now_text（中间的第一次） :",now_text)
                         now_text += i
+                        print("now_text（中间的第二次） :",now_text)
                     break
                 now_text = now_text[:-2] + "~"
+            print("now_text（第一次） :",now_text)
             io_init.era_print(now_text, self.style)
         elif int(len(self)) > int(self.width) - 1:
             now_text = " " + self.text
@@ -612,7 +721,39 @@ class CenterDraw(NormalDraw):
             now_text = text_handle.align(self.text, "center", 0, 1, self.width)
         if int(len(self)) < int(self.width):
             now_text += " " * (int(self.width) - text_handle.get_text_index(now_text))
+        print("now_text（第二次） :",now_text)
         io_init.era_print(now_text, self.style)
+
+class CenterDraw_Image(NormalDraw):
+    """居中绘制图片_现阶段为立绘限定"""
+
+    def __gt__(self, other) -> bool:
+        return int(len(self)) > int(len(other))
+
+    def draw(self):
+        """绘制图片"""
+        self.width = int(self.width)
+        print("int(len(self)) :",int(len(self)))
+        print("int(self.width) :",int(self.width))
+        if int(len(self)) > int(self.width):
+            print("第一个分支")
+            now_image = ""
+            if self.width > 0:
+                for i in self.text:
+                    if text_handle.get_text_index(now_image) + text_handle.get_text_index(i) < self.width:
+                        now_image += i
+                    break
+                now_image = now_image[:-2] + "~"
+            io_init.era_print(now_image)
+        elif int(len(self)) > int(self.width) - 1:
+            now_image = " " + self.text
+        elif int(len(self)) > int(self.width) - 2:
+            now_image = " " + self.text + " "
+        else:
+            now_image = text_handle.align(self.text, "center", 0, 1, self.width)
+        if int(len(self)) < int(self.width):
+            now_image += " " * (int(self.width) - text_handle.get_text_index(now_image))
+        io_init.era_print(now_image)
 
 
 class CenterMergeDraw:

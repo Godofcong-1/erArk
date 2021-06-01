@@ -198,10 +198,10 @@ class InScenePanel:
             character_status_draw_list = []
             if character_data.target_character_id:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width / 2, 9, 0
+                    character_data.cid, self.width / 2, 9, 0, 0
                 )
                 target_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.target_character_id, self.width, 9, 0
+                    character_data.target_character_id, self.width, 9, 0, 0
                 )
                 now_line = len(character_status_draw.draw_list)
                 if len(target_status_draw.draw_list) > now_line:
@@ -225,7 +225,7 @@ class InScenePanel:
                     # character_status_draw_list.append((t_draw))
             else:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width, 9
+                    character_data.cid, self.width, 9, 0
                 )
                 character_status_draw_list = character_status_draw.draw_list
             for label in character_status_draw_list:
@@ -251,6 +251,15 @@ class InScenePanel:
                     line_feed.draw()
                 else:
                     label.draw()
+            #以下为图片面板#
+            line_draw = draw.LineDraw("-.-", self.width)
+            line_draw.draw()
+            fix_draw = draw.CharaDraw()
+            fix_draw.width = 10
+            fix_draw.set(1)
+            fix_draw.draw()
+            line_feed.draw()
+            #以下为指令面板#
             see_instruct_panel.draw()
             ask_list.extend(see_instruct_panel.return_list)
             flow_handle.askfor_all(ask_list)

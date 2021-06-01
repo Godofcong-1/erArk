@@ -74,7 +74,7 @@ def confirm_character_attr_panel():
         ask_list.extend(now_attr_panel.return_list)
         now_line = draw.LineDraw("~", width)
         now_line.draw()
-        askfor_list = [_("就这样开始新的人生吧"), _("重头再来一次")]
+        askfor_list = [_("就这样开始新的人生吧"), _("重新设定")]
         start_id = 0
         now_id_judge = 0
         now_id_list = []

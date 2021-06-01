@@ -117,6 +117,19 @@ class CharacterStateType:
     """ 类型名 """
 
 
+class Chara_image:
+    """ 角色ID对应的角色图片和绘制宽度 """
+
+    cid: int
+    """ 图片id """
+    chara_id: int
+    """ 角色id """
+    image_name: str
+    """ 图片名字 """
+    width: int
+    """ 图片绘制宽度 """
+
+
 class ChestTem:
     """ 罩杯对应范围和生成权重 """
 
