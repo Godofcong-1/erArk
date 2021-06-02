@@ -10,7 +10,7 @@ class Ability:
 
 
 class AbilityType:
-    """ 角色状态类型 """
+    """ 角色能力类型 """
 
     cid: int
     """ 类型id """
@@ -257,6 +257,15 @@ class EndAgeTem:
     """ 性别id """
     end_age: int
     """ 平均寿命 """
+
+
+class Experience:
+    """ 经验名字 """
+
+    cid: int
+    """ 经验id """
+    name: str
+    """ 经验名 """
 
 
 class FontConfig:

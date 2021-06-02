@@ -53,6 +53,16 @@ def get_ability_zero(ability_dict) -> dict:
             ability_list[ability] = 0
     return ability_list
 
+def get_experience_zero(experience_dict) -> dict:
+    """
+    检查初始经验，将为空的项补为0
+    """
+    experience_list = experience_dict
+    for experience in game_config.config_experience:
+        if experience not in experience_dict:
+            experience_list[experience] = 0
+    return experience_list
+
 # def get_age(tem_name: int) -> int:
 #     """
 #     按年龄模板id随机生成年龄数据

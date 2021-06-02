@@ -64,6 +64,8 @@ class NpcTem:
         """ 信赖度模板 """
         self.Ability: Dict[int,int] = {}
         """ 能力预设 """
+        self.Experience: Dict[int,int] = {}
+        """ 经验预设 """
 
 
 class Measurements:
@@ -501,6 +503,8 @@ class Character:
         """ 最后一次结算饥饿的时间 """
         self.ability:Dict[int,int] = {}
         """ 角色能力类型 """
+        self.experience:Dict[int,int] = {}
+        """ 角色经验 """
 
 
 class TeacherTimeTable:

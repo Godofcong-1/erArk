@@ -94,6 +94,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.trust = attr_calculation.get_Trust_zero()
     # print("character_tem.Ability :",character_tem.Ability)
     now_character.ability = character_tem.Ability
+    now_character.experience = character_tem.Experience
     # print("character_id=",character_id)
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":

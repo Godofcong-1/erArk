@@ -24,6 +24,10 @@ def init_character_tem_data():
                 now_k = int(k.lstrip("A|"))
                 # print("now_k :",now_k)
                 now_tem.Ability[now_k] = v
+            elif k.startswith("E|"):
+                now_k = int(k.lstrip("E|"))
+                # print("now_k :",now_k)
+                now_tem.Experience[now_k] = v
             else:
                 now_tem.__dict__[k] = v
         character_tem_list.append(now_tem)

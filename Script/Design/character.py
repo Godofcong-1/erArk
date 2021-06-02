@@ -47,6 +47,7 @@ def init_attr(character_id: int):
     )
     # print("character_data.ability（前） ：",character_data.ability)
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
+    # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     # print("character_data.ability（后） ：",character_data.ability)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:

@@ -190,6 +190,8 @@ config_ability_type_data: Dict[int, Set] = {}
 """
 config_ability: Dict[int,config_def.Ability] = {}
 """ 能力类型表 """
+config_experience: Dict[int, config_def.Experience] = {}
+""" 经验配置 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
 config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
@@ -320,6 +322,16 @@ def load_ability_type_data():
         config_ability[now_tem.cid] = now_tem
         config_ability_type_data.setdefault(now_tem.ability_type, set())
         config_ability_type_data[now_tem.ability_type].add(now_tem.cid)
+
+
+def load_experience():
+    """载入经验数据"""
+    now_data = config_data["Experience"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Experience()
+        now_tem.__dict__ = tem_data
+        config_experience[now_tem.cid] = now_tem
 
 
 def load_age_judge_sex_experience_tem_data():
@@ -1073,6 +1085,7 @@ def init():
     load_clothing_use_type()
     load_course()
     load_course_skill_experience()
+    load_experience()
     load_end_age_tem()
     load_font_data()
     load_food_data()
