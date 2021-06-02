@@ -13,6 +13,8 @@ config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
+config_ability_type: Dict[int,config_def.Ability] = {}
+""" 能力类型表 """
 config_age_judge_sex_experience_tem: Dict[int, config_def.AgeJudgeSexExperienceTem] = {}
 """ 不同性别不同年龄段对应生成不同性经验模板的权重 """
 config_age_judge_sex_experience_tem_data: Dict[int, Dict[int, Dict[int, int]]] = {}
@@ -296,6 +298,16 @@ def translate_data(data: dict):
         for key in now_data:
             if data["gettext"][key]:
                 now_data[key] = get_text._(now_data[key])
+
+
+def load_ability_type():
+    """载入能力类型配置数据"""
+    now_data = config_data["Ability"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Ability()
+        now_tem.__dict__ = tem_data
+        config_ability_type[now_tem.cid] = now_tem
 
 
 def load_age_judge_sex_experience_tem_data():
@@ -1038,6 +1050,7 @@ def load_weight_tem():
 def init():
     """初始化游戏配置数据"""
     load_data_json()
+    load_ability_type()
     load_age_judge_sex_experience_tem_data()
     load_age_tem()
     load_attr_tem()

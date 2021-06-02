@@ -18,5 +18,10 @@ def init_character_tem_data():
         now_data = character_config_data[character_name]
         for k in now_data:
             v = get_text._(now_data[k])
-            now_tem.__dict__[k] = v
+            if k.startswith("V|"):
+                a = ""
+                now_k = int(a.lstrip("V|"))
+                now_tem.Ability[now_k] = a
+            else:
+                now_tem.__dict__[k] = v
         character_tem_list.append(now_tem)
