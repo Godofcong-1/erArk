@@ -783,9 +783,9 @@ class CharacterablText:
                             if ability_id in {2, 3, 4, 6, 7}:
                                 continue
                     now_draw = draw.NormalDraw()
-                    now_draw_1 = draw.NormalDraw()
                     now_draw_value = draw.NormalDraw()
                     now_draw.text = game_config.config_ability[ability_id].name
+                    now_draw_1 = draw.NormalDraw()
                     now_draw_1.text = " "
                     now_draw_1.width = 1
                     now_draw.width = width / len(type_set)
@@ -795,8 +795,14 @@ class CharacterablText:
                     now_draw_value.text = str(now_exp)
                     level_draw = draw.ExpLevelDraw(now_exp)
                     # new_draw = draw.CenterMergeDraw(width / len(type_set))
-                    new_draw = draw.LeftMergeDraw(width / 8)
+                    new_draw = draw.LeftMergeDraw(width / 10)
+                    new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw)
+                    new_draw.draw_list.append(now_draw_1)
+                    # if type == 0 or type == 1:
+                    #     new_draw.draw_list.append(now_draw_1)
+                    # if type == 3 or type == 5:
+                    #     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(level_draw)
                     new_draw.draw_list.append(now_draw_1)
@@ -804,8 +810,9 @@ class CharacterablText:
                     self.draw_list.append(new_draw)
     def draw(self):
         """绘制对象"""
-        line = draw.LineDraw(".", self.width)
-        line.draw()
+        if self.type == 0:
+            line = draw.LineDraw(".", self.width)
+            line.draw()
         for value in self.draw_list:
             value.draw()
         line_feed.draw()
