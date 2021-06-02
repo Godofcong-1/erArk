@@ -740,22 +740,22 @@ class CenterDraw(NormalDraw):
     def draw(self):
         """绘制文本"""
         self.width = int(self.width)
-        print("int(len(self)) :",int(len(self)))
-        print("int(self.width) :",int(self.width))
-        print("self.text :",self.text)
+        # print("int(len(self)) :",int(len(self)))
+        # print("int(self.width) :",int(self.width))
+        # print("self.text :",self.text)
         if int(len(self)) > int(self.width):
-            print("第一个分支")
+            # print("第一个分支")
             now_text = ""
             if self.width > 0:
                 for i in self.text:
                     print("i :",i)
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        print("now_text（中间的第一次） :",now_text)
+                        # print("now_text（中间的第一次） :",now_text)
                         now_text += i
-                        print("now_text（中间的第二次） :",now_text)
+                        # print("now_text（中间的第二次） :",now_text)
                     break
                 now_text = now_text[:-2] + "~"
-            print("now_text（第一次） :",now_text)
+            # print("now_text（第一次） :",now_text)
             io_init.era_print(now_text, self.style)
         elif int(len(self)) > int(self.width) - 1:
             now_text = " " + self.text
@@ -765,7 +765,7 @@ class CenterDraw(NormalDraw):
             now_text = text_handle.align(self.text, "center", 0, 1, self.width)
         if int(len(self)) < int(self.width):
             now_text += " " * (int(self.width) - text_handle.get_text_index(now_text))
-        print("now_text（第二次） :",now_text)
+        # print("now_text（第二次） :",now_text)
         io_init.era_print(now_text, self.style)
 
 class CenterDraw_Image(NormalDraw):

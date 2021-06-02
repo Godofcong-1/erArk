@@ -121,15 +121,13 @@ class SeeCharacterFirstPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         # room_draw = CharacterRoomText(character_id, width)
-        # sex_experience_draw = CharacterSexExperienceText(character_id, width)
-        sex_experience_draw_2 = CharacterSexExperienceText_2(character_id, width)
+        sex_experience_draw = CharacterSexExperienceText(character_id, width)
         # see_status_draw_3 = SeeCharacterStatusPanel(character_id, width, 8, 3)
         # see_status_draw_4 = SeeCharacterStatusPanel(character_id, width, 8, 4)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             # room_draw,
-            # sex_experience_draw,
-            sex_experience_draw_2,
+            sex_experience_draw,
             # see_status_draw_3,
             # see_status_draw_4,
         ]
@@ -623,22 +621,25 @@ class CharacterSexExperienceText:
         organ_list = game_config.config_organ_data[sex_tem] | game_config.config_organ_data[2]
         for organ in organ_list:
             if organ!= 8:
-                # print("organ :",organ)
                 now_draw = draw.NormalDraw()
+                now_draw_1 = draw.NormalDraw()
+                now_draw_2 = draw.NormalDraw()
+                now_draw_value = draw.NormalDraw()
                 now_draw.text = self.experience_text_data[organ]
-                # print("now_draw.text :",now_draw.text)
+                now_draw_1.text = " "
+                now_draw_2.text = "  "
                 now_draw.width = width / len(organ_list)
                 now_exp = 0
                 if organ in character_data.sex_experience:
                     now_exp = character_data.sex_experience[organ]
-                    # print("now_exp :",now_exp)
+                now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
                 new_draw = draw.CenterMergeDraw(width / len(organ_list))
                 new_draw.draw_list.append(now_draw)
+                new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(level_draw)
-                # print(level_draw)
-                # new_draw.draw_list.append('  ')
-                # new_draw.draw_list.append(str(now_exp))
+                new_draw.draw_list.append(now_draw_2)
+                new_draw.draw_list.append(now_draw_value)
                 self.draw_list.append(new_draw)
 
     def draw(self):
@@ -648,9 +649,9 @@ class CharacterSexExperienceText:
         for value in self.draw_list:
             value.draw()
 
-class CharacterSexExperienceText_2:
+class CharacterablText:
     """
-    角色性经验信息面板_2
+    角色能力面板
     Keyword arguments:
     character_id -- 角色id
     width -- 最大宽度
@@ -659,51 +660,52 @@ class CharacterSexExperienceText_2:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         self.character_id = character_id
-        """ 要绘制的角色id """
+        """ 绘制的角色id """
         self.width = width
         """ 当前最大可绘制宽度 """
         character_data = cache.character_data[self.character_id]
-        sex_tem = character_data.sex in (0, 3)
-        # print("character_data.sex :",character_data.sex)
-        # print("sex_tem :",sex_tem)
-        organ_list = game_config.config_organ_data[sex_tem] | game_config.config_organ_data[2]
-        level_draw={}
-        level_exp={}
+        self.abl_experience_text_data = {
+            0: _("Ｎ感觉:"),
+            1: _("Ｂ感觉:"),
+            2: _("Ｃ感觉:"),
+            3: _("Ｐ感觉:"),
+            4: _("Ｖ感觉:"),
+            5: _("Ａ感觉:"),
+            6: _("Ｕ感觉:"),
+            7: _("Ｗ感觉:"),
+        }
+        """ 性器官感度描述 """
+        self.draw_list: List[draw.NormalDraw()] = []
+        """ 绘制对象列表 """
+        organ_list = game_config.config_abi_data[0]
         for organ in organ_list:
+            now_draw = draw.NormalDraw()
+            now_draw_1 = draw.NormalDraw()
+            now_draw_2 = draw.NormalDraw()
+            now_draw_value = draw.NormalDraw()
+            now_draw.text = self.abl_experience_text_data[organ]
+            now_draw_1.text = " "
+            now_draw_2.text = "  "
+            now_draw.width = width / len(organ_list)
             now_exp = 0
             if organ in character_data.sex_experience:
-                # print("organ :",organ)
                 now_exp = character_data.sex_experience[organ]
-                level_draw[organ] = attr_calculation.judge_grade(now_exp)
-                level_exp[organ] = now_exp
-                # print("level_draw[organ] :",level_draw[organ])
-                # print("level_exp[organ] :",level_exp[organ])
-        N_text = _("Ｎ感觉: ") + str(level_draw[0]) +_("  ") + str(level_exp[0])
-        B_text = _("Ｂ感觉: ") + str(level_draw[1]) +_("  ") + str(level_exp[1])
-        if not sex_tem:
-            C_text = _("Ｃ感觉: ") + str(level_draw[2]) +_("  ") + str(level_exp[2])
-        if sex_tem:
-            P_text = _("Ｐ感觉: ") + str(level_draw[3]) +_("  ") + str(level_exp[3])
-        if not sex_tem:
-            V_text = _("Ｖ感觉: ") + str(level_draw[4]) +_("  ") + str(level_exp[4])
-        A_text = _("Ａ感觉: ") + str(level_draw[5]) +_("  ") + str(level_exp[5])
-        U_text = _("Ｕ感觉: ") + str(level_draw[6]) +_("  ") + str(level_exp[6])
-        if not sex_tem:
-            W_text = _("Ｗ感觉: ") + str(level_draw[7]) +_("  ") + str(level_exp[7])
-        if sex_tem:
-            self.info_list = [N_text, B_text, P_text, A_text, U_text]
-        if not sex_tem:
-            self.info_list = [N_text, B_text, C_text, V_text, A_text, U_text, W_text]
-        """ 绘制的文本列表 """
+            now_draw_value.text = str(now_exp)
+            level_draw = draw.ExpLevelDraw(now_exp)
+            new_draw = draw.CenterMergeDraw(width / len(organ_list))
+            new_draw.draw_list.append(now_draw)
+            new_draw.draw_list.append(now_draw_1)
+            new_draw.draw_list.append(level_draw)
+            new_draw.draw_list.append(now_draw_2)
+            new_draw.draw_list.append(now_draw_value)
+            self.draw_list.append(new_draw)
 
     def draw(self):
-        """绘制面板"""
+        """绘制对象"""
         line = draw.LineDraw(".", self.width)
         line.draw()
-        info_draw = panel.CenterDrawTextListPanel()
-        info_draw.set(self.info_list, self.width, 7)
-        info_draw.draw()
-
+        for value in self.draw_list:
+            value.draw()
 
 
 class SeeCharacterKnowledgePanel:
@@ -1116,6 +1118,52 @@ class SeeCharacterInfoByNameDrawInScene:
             character_name = text_handle.align(character_name, "center", 0, 1, self.width)
             name_draw.text = character_name
             self.draw_text = character_name
+        name_draw.width = self.width
+        self.now_draw = name_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        if isinstance(self.now_draw, draw.NormalDraw):
+            self.now_draw.style = "onbutton"
+        self.now_draw.draw()
+
+    def see_character(self):
+        """切换目标角色"""
+        cache.character_data[0].target_character_id = self.character_id
+        py_cmd.clr_cmd()
+
+class SeeCharacterInfoByimageDrawInScene:
+    """场景中点击后切换目标角色的角色立绘按钮对象"""
+
+    def __init__(self, text: str, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.character_id: int = int(text)
+        """ 角色id """
+        self.draw_text: str = ""
+        """ 角色名绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.is_button: bool = is_button
+        """ 绘制按钮 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+        character_data: game_type.Character = cache.character_data[self.character_id]
+        # sex_text = game_config.config_sex_tem[character_data.sex].name
+        character_name = character_data.name
+        # character_name = character_data.name + f"({sex_text})"
+        button_text = f"{character_name}"
+        name_draw = draw.ImageButton(
+                    button_text, self.button_return, self.width, cmd_func=self.see_character
+                )
+        character_name = f"[{character_name}]"
+        character_name = text_handle.align(character_name, "center", 0, 1, self.width)
+        name_draw.text = character_name
+        self.draw_text = character_name
         name_draw.width = self.width
         self.now_draw = name_draw
         """ 绘制的对象 """
