@@ -1,3 +1,4 @@
+from Script.UI.Flow import creator_character_flow
 from uuid import UUID
 from typing import Tuple, List
 from types import FunctionType
@@ -121,13 +122,30 @@ class SeeCharacterFirstPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         # room_draw = CharacterRoomText(character_id, width)
-        sex_experience_draw = CharacterSexExperienceText(character_id, width)
+        # sex_experience_draw = CharacterSexExperienceText(character_id, width)
+        # abi_experience_draw = CharacterablText(character_id, width, 0, 3)
+        abi_experience_draw_0 = CharacterablText(character_id, width, 0)
+        abi_experience_draw_1 = CharacterablText(character_id, width, 1)
+        abi_experience_draw_2 = CharacterablText(character_id, width, 2)
+        abi_experience_draw_3 = CharacterablText(character_id, width, 3)
+        abi_experience_draw_4 = CharacterablText(character_id, width, 4)
+        abi_experience_draw_5 = CharacterablText(character_id, width, 5)
+        abi_experience_draw_6 = CharacterablText(character_id, width, 6)
+        
         # see_status_draw_3 = SeeCharacterStatusPanel(character_id, width, 8, 3)
         # see_status_draw_4 = SeeCharacterStatusPanel(character_id, width, 8, 4)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             # room_draw,
-            sex_experience_draw,
+            # sex_experience_draw,
+            # abi_experience_draw,
+            abi_experience_draw_0,
+            abi_experience_draw_1,
+            abi_experience_draw_2,
+            abi_experience_draw_3,
+            abi_experience_draw_4,
+            abi_experience_draw_5,
+            abi_experience_draw_6,
             # see_status_draw_3,
             # see_status_draw_4,
         ]
@@ -203,6 +221,8 @@ class SeeCharacterStatusPanel:
         self.type_number = type_number
         """ 显示的状态类型 """
         character_data = cache.character_data[character_id]
+        # print("game_config.config_character_state_type :",game_config.config_character_state_type)
+        # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
         for status_type in game_config.config_character_state_type_data:
             if status_type == type_number:
                 type_data = game_config.config_character_state_type[status_type]
@@ -635,6 +655,8 @@ class CharacterSexExperienceText:
                 now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
                 new_draw = draw.CenterMergeDraw(width / len(organ_list))
+                # print("width :",width)
+                # print("len(organ_list) :",len(organ_list))
                 new_draw.draw_list.append(now_draw)
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(level_draw)
@@ -649,6 +671,79 @@ class CharacterSexExperienceText:
         for value in self.draw_list:
             value.draw()
 
+class CharacterablText_1:
+    """
+    角色能力面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, character_id: int, width: int, type: int, column: int):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 绘制的角色id """
+        self.width = width
+        """ 当前最大可绘制宽度 """
+        self.type = type
+        """ 当前绘制类型 """
+        self.column = column
+        """ 每行状态最大个数 """
+        character_data = cache.character_data[self.character_id]
+        """ 能力数据 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制对象列表 """
+        ability_list = game_config.config_ability_type_data
+        # print("ability_list :",ability_list)
+        for anility_type in ability_list:
+        # if anility_type == type:
+            type_data = game_config.config_ability_type[anility_type]
+            type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
+            self.draw_list.append(type_line)
+            type_set = ability_list[anility_type]
+            ability_text_list = []
+            for ability_id in type_set:
+                if anility_type == 0:
+                    if character_data.sex == 0:
+                        if ability_id in {2, 4, 6, 7}:
+                            continue
+                    elif character_data.sex == 1:
+                        if ability_id == 3:
+                            continue
+                    elif character_data.sex == 3:
+                        if ability_id in {2, 3, 4, 6, 7}:
+                            continue
+                now_draw = draw.NormalDraw()
+                now_draw_1 = draw.NormalDraw()
+                now_draw_value = draw.NormalDraw()
+                now_draw.text = game_config.config_ability[ability_id].name
+                now_draw_1.text = " "
+                now_draw_1.width = 1
+                now_draw.width = width / len(type_set)
+                now_exp = 0
+                if anility_type in character_data.ability:
+                    now_exp = character_data.ability[ability_id]
+                now_draw_value.text = str(now_exp)
+                # level_draw = draw.ExpLevelDraw(now_exp)
+                level_draw = attr_calculation.judge_grade(now_exp)
+                now_text = f"  {now_draw.text}:{level_draw} {now_exp}"
+                ability_text_list.append(now_text)
+            now_draw = panel.LeftDrawTextListPanel()
+            now_draw.set(ability_text_list, self.width, self.column)
+            self.draw_list.extend(now_draw.draw_list)
+    def draw(self):
+        """绘制对象"""
+        line_feed.draw()
+        line = draw.LineDraw(".", self.width)
+        line.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
 class CharacterablText:
     """
     角色能力面板
@@ -657,55 +752,63 @@ class CharacterablText:
     width -- 最大宽度
     """
 
-    def __init__(self, character_id: int, width: int):
+    def __init__(self, character_id: int, width: int, type: int):
         """初始化绘制对象"""
         self.character_id = character_id
         """ 绘制的角色id """
         self.width = width
         """ 当前最大可绘制宽度 """
+        self.type = type
+        """ 当前绘制类型 """
+        # self.column = column
+        # """ 每行状态最大个数 """
         character_data = cache.character_data[self.character_id]
-        self.abl_experience_text_data = {
-            0: _("Ｎ感觉:"),
-            1: _("Ｂ感觉:"),
-            2: _("Ｃ感觉:"),
-            3: _("Ｐ感觉:"),
-            4: _("Ｖ感觉:"),
-            5: _("Ａ感觉:"),
-            6: _("Ｕ感觉:"),
-            7: _("Ｗ感觉:"),
-        }
         """ 性器官感度描述 """
         self.draw_list: List[draw.NormalDraw()] = []
         """ 绘制对象列表 """
-        organ_list = game_config.config_abi_data[0]
-        for organ in organ_list:
-            now_draw = draw.NormalDraw()
-            now_draw_1 = draw.NormalDraw()
-            now_draw_2 = draw.NormalDraw()
-            now_draw_value = draw.NormalDraw()
-            now_draw.text = self.abl_experience_text_data[organ]
-            now_draw_1.text = " "
-            now_draw_2.text = "  "
-            now_draw.width = width / len(organ_list)
-            now_exp = 0
-            if organ in character_data.sex_experience:
-                now_exp = character_data.sex_experience[organ]
-            now_draw_value.text = str(now_exp)
-            level_draw = draw.ExpLevelDraw(now_exp)
-            new_draw = draw.CenterMergeDraw(width / len(organ_list))
-            new_draw.draw_list.append(now_draw)
-            new_draw.draw_list.append(now_draw_1)
-            new_draw.draw_list.append(level_draw)
-            new_draw.draw_list.append(now_draw_2)
-            new_draw.draw_list.append(now_draw_value)
-            self.draw_list.append(new_draw)
-
+        ability_list = game_config.config_ability_type_data
+        # print("ability_list :",ability_list)
+        for anility_type in ability_list:
+            if anility_type == type:
+                type_set = ability_list[anility_type]
+                for ability_id in type_set:
+                    if anility_type == 0:
+                        if character_data.sex == 0:
+                            if ability_id in {2, 4, 6, 7}:
+                                continue
+                        elif character_data.sex == 1:
+                            if ability_id == 3:
+                                continue
+                        elif character_data.sex == 3:
+                            if ability_id in {2, 3, 4, 6, 7}:
+                                continue
+                    now_draw = draw.NormalDraw()
+                    now_draw_1 = draw.NormalDraw()
+                    now_draw_value = draw.NormalDraw()
+                    now_draw.text = game_config.config_ability[ability_id].name
+                    now_draw_1.text = " "
+                    now_draw_1.width = 1
+                    now_draw.width = width / len(type_set)
+                    now_exp = 0
+                    if anility_type in character_data.ability:
+                        now_exp = character_data.ability[ability_id]
+                    now_draw_value.text = str(now_exp)
+                    level_draw = draw.ExpLevelDraw(now_exp)
+                    # new_draw = draw.CenterMergeDraw(width / len(type_set))
+                    new_draw = draw.LeftMergeDraw(width / 8)
+                    new_draw.draw_list.append(now_draw)
+                    new_draw.draw_list.append(now_draw_1)
+                    new_draw.draw_list.append(level_draw)
+                    new_draw.draw_list.append(now_draw_1)
+                    new_draw.draw_list.append(now_draw_value)
+                    self.draw_list.append(new_draw)
     def draw(self):
         """绘制对象"""
         line = draw.LineDraw(".", self.width)
         line.draw()
         for value in self.draw_list:
             value.draw()
+        line_feed.draw()
 
 
 class SeeCharacterKnowledgePanel:

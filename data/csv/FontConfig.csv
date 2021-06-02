@@ -14,7 +14,7 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 8,nullcmd,#292421,,,,,,,,不可用按钮字体
 9,hp,#e71b64,,,,,,,,字符串血条字体
 10,mp,#f0ffff,,,,,,,,字符串蓝条字体
-11,levelg,#292421,,,,,,,,等级评定G字体
+11,levelg,#D2B48C,,,,,,,,等级评定G字体
 12,levelf,#f0ffff,,,,,,,,等级评定F字体
 13,levele,#00ff00,,,,,,,,等级评定E字体
 14,leveld,#f7eed6,,,,,,,,等级评定D字体
