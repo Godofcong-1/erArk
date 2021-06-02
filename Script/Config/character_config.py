@@ -20,8 +20,8 @@ def init_character_tem_data():
             # print("k :",k)
             v = get_text._(now_data[k])
             # print("v :",v)
-            if k.startswith("V|"):
-                now_k = int(k.lstrip("V|"))
+            if k.startswith("A|"):
+                now_k = int(k.lstrip("A|"))
                 # print("now_k :",now_k)
                 now_tem.Ability[now_k] = v
             else:

@@ -44,7 +44,7 @@ class SeeCharacterInfoPanel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel: str = _("属性")
+        self.now_panel: str = _("属性（第一页）")
         """ 当前的属性页id """
         self.character_id: int = character_id
         """ 要绘制的角色id """
@@ -52,23 +52,23 @@ class SeeCharacterInfoPanel:
         """ 当前面板监听的按钮列表 """
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
-        see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
-        see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
-        see_item_draw = see_item_info_panel.SeeCharacterItemBagPanel(character_id, width)
-        see_knowledge_draw = SeeCharacterKnowledgePanel(character_id, width)
-        see_language_draw = SeeCharacterLanguagePanel(character_id, width)
-        see_nature_draw = SeeCharacterNaturePanel(character_id, width)
-        see_social_draw = SeeCharacterSocialContact(character_id, width)
+        # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
+        # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
+        # see_item_draw = see_item_info_panel.SeeCharacterItemBagPanel(character_id, width)
+        # see_knowledge_draw = SeeCharacterKnowledgePanel(character_id, width)
+        # see_language_draw = SeeCharacterLanguagePanel(character_id, width)
+        # see_nature_draw = SeeCharacterNaturePanel(character_id, width)
+        # see_social_draw = SeeCharacterSocialContact(character_id, width)
         self.draw_data = {
             _("属性（第一页）"): main_first_draw,
             _("属性"): main_attr_draw,
-            _("状态"): see_status_draw,
-            _("服装"): see_clothing_draw,
-            _("道具"): see_item_draw,
-            _("技能"): see_knowledge_draw,
-            _("语言"): see_language_draw,
-            _("性格"): see_nature_draw,
-            _("社交"): see_social_draw,
+            # _("状态"): see_status_draw,
+            # _("服装"): see_clothing_draw,
+            # _("道具"): see_item_draw,
+            # _("技能"): see_knowledge_draw,
+            # _("语言"): see_language_draw,
+            # _("性格"): see_nature_draw,
+            # _("社交"): see_social_draw,
         }
         """ 按钮文本对应属性面板 """
         self.handle_panel = panel.CenterDrawButtonListPanel()
@@ -766,8 +766,13 @@ class CharacterabiText:
         """ 性器官感度描述 """
         self.draw_list: List[draw.NormalDraw()] = []
         """ 绘制对象列表 """
+        self.title_list: List[draw.NormalDraw()] = []
+        """ 绘制标题列表 """
         ability_list = game_config.config_ability_type_data
         # print("ability_list :",ability_list)
+        title_text = "能力"
+        type_line = draw.LittleTitleLineDraw(title_text, width, ":")
+        self.title_list.append(type_line)
         for anility_type in ability_list:
             if anility_type == type:
                 type_set = ability_list[anility_type]
@@ -790,11 +795,11 @@ class CharacterabiText:
                     now_draw_1.width = 1
                     now_draw.width = width / len(type_set)
                     now_exp = 0
-                    print("角色能力面板：character_id :",character_id)
-                    print("ability_id :",ability_id)
-                    print("anility_type :",anility_type)
-                    print("character_data.ability :",character_data.ability)
-                    print("character_data.ability[ability_id] :",character_data.ability[ability_id])
+                    # print("角色能力面板：character_id :",character_id)
+                    # print("ability_id :",ability_id)
+                    # print("anility_type :",anility_type)
+                    # print("character_data.ability :",character_data.ability)
+                    # print("character_data.ability[ability_id] :",character_data.ability[ability_id])
                     now_exp = character_data.ability[ability_id]
                     now_draw_value.text = str(now_exp)
                     level_draw = draw.ExpLevelDraw(now_exp)
@@ -811,8 +816,8 @@ class CharacterabiText:
     def draw(self):
         """绘制对象"""
         if self.type == 0:
-            line = draw.LineDraw(".", self.width)
-            line.draw()
+            for value in self.title_list:
+                value.draw()
         for value in self.draw_list:
             value.draw()
         line_feed.draw()
@@ -1346,7 +1351,7 @@ class SeeCharacterInfoHandle:
             _("[下一人]"), _("下一人"), self.width / 3, cmd_func=self.next_character
         )
         back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
-        now_panel_id = _("属性")
+        now_panel_id = _("属性（第一页）")
         while 1:
             self.return_list = []
             now_character_panel = SeeCharacterInfoPanel(self.character_id, self.width)
