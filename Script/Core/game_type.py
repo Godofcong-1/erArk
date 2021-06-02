@@ -62,6 +62,8 @@ class NpcTem:
         """ 好感度模板 """
         self.Trust: int = 0
         """ 信赖度模板 """
+        self.Ability: str = ""
+        """ 能力模板 """
 
 
 class Measurements:
@@ -387,6 +389,10 @@ class Character:
         """ 角色的性经验数据 """
         self.sex_grade: Dict[str, str] = {}
         """ 角色的性等级描述数据 """
+        self.abi: Dict[int, int] = {}
+        """ 角色的能力数据 """
+        self.abi_grade: Dict[str, str] = {}
+        """ 角色的能力等级描述数据 """
         self.state: int = 0
         """ 角色当前状态 """
         self.engraving: Dict[str, int] = {}
