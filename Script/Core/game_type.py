@@ -62,8 +62,8 @@ class NpcTem:
         """ 好感度模板 """
         self.Trust: int = 0
         """ 信赖度模板 """
-        self.Ability: str = ""
-        """ 能力模板 """
+        self.Ability: Dict[int,int] = {}
+        """ 能力预设 """
 
 
 class Measurements:
@@ -499,6 +499,8 @@ class Character:
         """ 收藏的角色列表 """
         self.last_hunger_time: datetime.datetime = None
         """ 最后一次结算饥饿的时间 """
+        self.ability:Dict[int,int] = {}
+        """ 角色能力类型 """
 
 
 class TeacherTimeTable:
