@@ -123,14 +123,14 @@ class SeeCharacterFirstPanel:
         head_draw = CharacterInfoHead(character_id, width)
         # room_draw = CharacterRoomText(character_id, width)
         # sex_experience_draw = CharacterSexExperienceText(character_id, width)
-        # abi_experience_draw = CharacterablText(character_id, width, 0, 3)
-        abi_experience_draw_0 = CharacterablText(character_id, width, 0)
-        abi_experience_draw_1 = CharacterablText(character_id, width, 1)
-        abi_experience_draw_2 = CharacterablText(character_id, width, 2)
-        abi_experience_draw_3 = CharacterablText(character_id, width, 3)
-        abi_experience_draw_4 = CharacterablText(character_id, width, 4)
-        abi_experience_draw_5 = CharacterablText(character_id, width, 5)
-        abi_experience_draw_6 = CharacterablText(character_id, width, 6)
+        # abi_draw = CharacterabiText(character_id, width, 0, 3)
+        abi_draw_0 = CharacterabiText(character_id, width, 0)
+        abi_draw_1 = CharacterabiText(character_id, width, 1)
+        abi_draw_2 = CharacterabiText(character_id, width, 2)
+        abi_draw_3 = CharacterabiText(character_id, width, 3)
+        abi_draw_4 = CharacterabiText(character_id, width, 4)
+        abi_draw_5 = CharacterabiText(character_id, width, 5)
+        abi_draw_6 = CharacterabiText(character_id, width, 6)
         
         # see_status_draw_3 = SeeCharacterStatusPanel(character_id, width, 8, 3)
         # see_status_draw_4 = SeeCharacterStatusPanel(character_id, width, 8, 4)
@@ -138,14 +138,14 @@ class SeeCharacterFirstPanel:
             head_draw,
             # room_draw,
             # sex_experience_draw,
-            # abi_experience_draw,
-            abi_experience_draw_0,
-            abi_experience_draw_1,
-            abi_experience_draw_2,
-            abi_experience_draw_3,
-            abi_experience_draw_4,
-            abi_experience_draw_5,
-            abi_experience_draw_6,
+            # abi_draw,
+            abi_draw_0,
+            abi_draw_1,
+            abi_draw_2,
+            abi_draw_3,
+            abi_draw_4,
+            abi_draw_5,
+            abi_draw_6,
             # see_status_draw_3,
             # see_status_draw_4,
         ]
@@ -671,7 +671,7 @@ class CharacterSexExperienceText:
         for value in self.draw_list:
             value.draw()
 
-class CharacterablText_1:
+class CharacterabiText_1:
     """
     角色能力面板
     Keyword arguments:
@@ -744,7 +744,7 @@ class CharacterablText_1:
             else:
                 label.draw()
 
-class CharacterablText:
+class CharacterabiText:
     """
     角色能力面板
     Keyword arguments:
@@ -790,8 +790,12 @@ class CharacterablText:
                     now_draw_1.width = 1
                     now_draw.width = width / len(type_set)
                     now_exp = 0
-                    if anility_type in character_data.ability:
-                        now_exp = character_data.ability[ability_id]
+                    print("角色能力面板：character_id :",character_id)
+                    print("ability_id :",ability_id)
+                    print("anility_type :",anility_type)
+                    print("character_data.ability :",character_data.ability)
+                    print("character_data.ability[ability_id] :",character_data.ability[ability_id])
+                    now_exp = character_data.ability[ability_id]
                     now_draw_value.text = str(now_exp)
                     level_draw = draw.ExpLevelDraw(now_exp)
                     # new_draw = draw.CenterMergeDraw(width / len(type_set))
@@ -799,10 +803,6 @@ class CharacterablText:
                     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw)
                     new_draw.draw_list.append(now_draw_1)
-                    # if type == 0 or type == 1:
-                    #     new_draw.draw_list.append(now_draw_1)
-                    # if type == 3 or type == 5:
-                    #     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(level_draw)
                     new_draw.draw_list.append(now_draw_1)

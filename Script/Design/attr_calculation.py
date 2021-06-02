@@ -31,17 +31,27 @@ def get_age(character_id: int) -> int:
     tem_data = game_config.config_age_tem[character_id].Age
     return tem_data
 
-def get_Favorability() -> dict:
+def get_Favorability_zero() -> dict:
     """
     直接将初始好感归为{0:0}
     """
     return {0:0}
 
-def get_Trust() -> dict:
+def get_Trust_zero() -> dict:
     """
     直接将初始信赖归为0
     """
     return 0
+
+def get_ability_zero(ability_dict) -> dict:
+    """
+    检查初始能力，将为空的项补为0
+    """
+    ability_list = ability_dict
+    for ability in game_config.config_ability:
+        if ability not in ability_dict:
+            ability_list[ability] = 0
+    return ability_list
 
 # def get_age(tem_name: int) -> int:
 #     """

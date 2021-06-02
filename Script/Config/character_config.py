@@ -17,11 +17,13 @@ def init_character_tem_data():
         now_tem = game_type.NpcTem()
         now_data = character_config_data[character_name]
         for k in now_data:
+            # print("k :",k)
             v = get_text._(now_data[k])
+            # print("v :",v)
             if k.startswith("V|"):
-                a = ""
                 now_k = int(k.lstrip("V|"))
-                now_tem.Ability[now_k] = a
+                # print("now_k :",now_k)
+                now_tem.Ability[now_k] = v
             else:
                 now_tem.__dict__[k] = v
         character_tem_list.append(now_tem)

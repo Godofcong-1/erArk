@@ -25,6 +25,8 @@ def init_attr(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    # print("进入第二步的init_attr")
+    # print("进入第二步的character_id :",character_id)
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.language[character_data.mother_tongue] = 10000
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
@@ -43,6 +45,9 @@ def init_attr(character_id: int):
     character_data.sex_experience = attr_calculation.get_sex_experience(
         character_data.sex_experience_tem, character_data.sex
     )
+    # print("character_data.ability（前） ：",character_data.ability)
+    character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
+    # print("character_data.ability（后） ：",character_data.ability)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
