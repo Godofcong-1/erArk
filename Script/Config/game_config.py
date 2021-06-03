@@ -192,6 +192,8 @@ config_ability: Dict[int,config_def.Ability] = {}
 """ 能力类型表 """
 config_experience: Dict[int, config_def.Experience] = {}
 """ 经验配置 """
+config_juel: Dict[int, config_def.Juel] = {}
+""" 经验配置 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
 config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
@@ -332,6 +334,16 @@ def load_experience():
         now_tem = config_def.Experience()
         now_tem.__dict__ = tem_data
         config_experience[now_tem.cid] = now_tem
+
+
+def load_juel():
+    """载入宝珠数据"""
+    now_data = config_data["Juel"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Juel()
+        now_tem.__dict__ = tem_data
+        config_juel[now_tem.cid] = now_tem
 
 
 def load_age_judge_sex_experience_tem_data():
@@ -1095,6 +1107,7 @@ def init():
     load_hitpoint_tem()
     load_instruct_type()
     load_item()
+    load_juel()
     load_knowledge()
     load_knowledge_type()
     load_language_tem()

@@ -134,6 +134,7 @@ class SeeCharacterFirstPanel:
         abi_draw_5 = CharacterabiText(character_id, width, 5)
         abi_draw_6 = CharacterabiText(character_id, width, 6)
         experience_draw = CharacterExperienceText(character_id, width,8, 0)
+        juel_draw = CharacterJuelText(character_id, width,8, 0)
         
         # see_status_draw_3 = SeeCharacterStatusPanel(character_id, width, 8, 3)
         # see_status_draw_4 = SeeCharacterStatusPanel(character_id, width, 8, 4)
@@ -151,6 +152,7 @@ class SeeCharacterFirstPanel:
             abi_draw_5,
             abi_draw_6,
             experience_draw,
+            juel_draw,
             # see_status_draw_3,
             # see_status_draw_4,
         ]
@@ -907,7 +909,7 @@ class CharacterExperienceText:
             experience_value = 0
             if experience_id in character_data.experience:
                 experience_value = character_data.experience[experience_id]
-                now_text = f"  {experience_text}:{experience_value}"
+                now_text = f" {experience_text}:{experience_value}"
                 experience_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
@@ -934,6 +936,71 @@ class CharacterExperienceText:
             line_feed.draw()
             if count == 0:
                 line_feed.draw()
+
+class CharacterJuelText:
+    """
+    显示角色宝珠面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "宝珠"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        juel_text_list = []
+        for juel_id in game_config.config_juel:
+            if character_data.sex == 0:
+                if juel_id in {2, 4, 7}:
+                    continue
+            elif character_data.sex == 1:
+                if juel_id == {3}:
+                    continue
+            elif character_data.sex == 3:
+                if juel_id in {2, 3, 4, 7}:
+                    continue
+            juel_text = game_config.config_juel[juel_id].name
+            juel_value = 0
+            if juel_id in character_data.juel:
+                juel_value = character_data.juel[juel_id]
+            now_text = f" {juel_text}:{juel_value}"
+            juel_text_list.append(now_text)
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(juel_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        # title_draw = draw.TitleLineDraw(_("人物状态"), self.width)
+        # title_draw.draw()
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
 
 
 

@@ -66,6 +66,8 @@ class NpcTem:
         """ 能力预设 """
         self.Experience: Dict[int,int] = {}
         """ 经验预设 """
+        self.Juel: Dict[int,int] = {}
+        """ 宝珠预设 """
 
 
 class Measurements:
@@ -505,6 +507,8 @@ class Character:
         """ 角色能力类型 """
         self.experience:Dict[int,int] = {}
         """ 角色经验 """
+        self.juel:Dict[int,int] = {}
+        """ 角色宝珠 """
 
 
 class TeacherTimeTable:

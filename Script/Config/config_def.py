@@ -382,6 +382,15 @@ class Item:
     """ 描述 """
 
 
+class Juel:
+    """ 珠名字 """
+
+    cid: int
+    """ 珠id """
+    name: str
+    """ 珠名 """
+
+
 class Knowledge:
     """ 技能配置信息 """
 

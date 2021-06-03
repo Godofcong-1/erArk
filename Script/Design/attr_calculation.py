@@ -63,6 +63,16 @@ def get_experience_zero(experience_dict) -> dict:
             experience_list[experience] = 0
     return experience_list
 
+def get_juel_zero(juel_dict) -> dict:
+    """
+    检查初始宝珠，将为空的项补为0
+    """
+    juel_list = juel_dict
+    for juel in game_config.config_juel:
+        if juel not in juel_dict:
+            juel_list[juel] = 0
+    return juel_list
+
 # def get_age(tem_name: int) -> int:
 #     """
 #     按年龄模板id随机生成年龄数据
