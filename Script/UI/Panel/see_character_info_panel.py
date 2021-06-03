@@ -1,3 +1,4 @@
+from itertools import count
 from Script.UI.Flow import creator_character_flow
 from uuid import UUID
 from typing import Tuple, List
@@ -920,13 +921,19 @@ class CharacterExperienceText:
         # title_draw = draw.TitleLineDraw(_("人物状态"), self.width)
         # title_draw.draw()
         line_feed.draw()
+        count = 0
         for label in self.draw_list:
             if isinstance(label, list):
                 for value in label:
                     value.draw()
+                    count += 1
                 line_feed.draw()
             else:
                 label.draw()
+        if count <= 8:
+            line_feed.draw()
+            if count == 0:
+                line_feed.draw()
 
 
 
