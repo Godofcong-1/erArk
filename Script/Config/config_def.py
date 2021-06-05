@@ -721,6 +721,17 @@ class SunTime:
     """ 太阳时间名 """
 
 
+class Talent:
+    """ 素质对应类型和文字描述 """
+
+    cid: int
+    """ 素质id """
+    Talent_type: int
+    """ 类型(0:职业,1:种族,2:性素质,3:身体素质,4:精神素质,5:技术素质,6:其他素质) """
+    name: str
+    """ 名字 """
+
+
 class WaistHipProportion:
     """ 不同肥胖程度腰臀比例差值配置 """
 
