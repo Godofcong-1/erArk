@@ -35,7 +35,7 @@ class CharacterStatus:
     """ 死亡 """
     STATUS_STROKE = 14
     """ 抚摸 """
-    STATUS_TOUCH_CHEST = 15
+    STATUS_TOUCH_BREAST = 15
     """ 摸胸 """
     STATUS_TEACHING = 16
     """ 教学 """
@@ -78,7 +78,7 @@ class Behavior:
     """ 死亡 """
     STROKE = 14
     """ 抚摸 """
-    TOUCH_CHEST = 15
+    TOUCH_BREAST = 15
     """ 摸胸 """
     TEACHING = 16
     """ 教学 """
@@ -652,6 +652,8 @@ class Instruct:
     """ 等待五分钟 """
     CHAT = 0
     """ 聊天 """
+    STROKE = 0
+    """ 身体接触 """
     MAKE_TEA = 0
     """ 泡茶 """
     MAKE_TEA_ADD = 0
@@ -666,8 +668,6 @@ class Instruct:
     """ 睡觉 """
     BUY_ITEM = 0
     """ 购买道具 """
-    DRINK_SPRING = 0
-    """ 喝泉水 """
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOWED = 0
@@ -678,40 +678,211 @@ class Instruct:
     """ 听牢骚 """
     PRAY = 0
     """ 祈愿 """
-    LISTEN_MISSION = 0
-    """ 听取委托 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
+    ASK_DATE = 0
+    """ 邀请约会 """
     CONFESSION = 0
     """ 告白 """
-    #娱乐#
+    DRINK_ALCOHOL = 0
+    """ 劝酒 """
     SINGING = 0
     """ 唱歌 """
-    PLAY_PIANO = 0
-    """ 弹钢琴 """
-    PLAY_GUITAR = 0
-    """ 弹吉他 """
+    PLAY_INSTRUMENT = 0
+    """ 演奏乐器 """
     #工作#
-    ATTEND_CLASS = 0
-    """ 上课 """
-    TEACH_A_LESSON = 0
-    """ 教课 """
-    SELF_STUDY = 0
-    """ 自习 """
+    OFFICIAL_WORK = 0
+    """ 处理公务 """
+    BATTLE_COMMAND = 0
+    """ 指挥作战 """
+    LISTEN_MISSION = 0
+    """ 听取委托 """
     #猥亵#
     TOUCH_HEAD = 0
     """ 摸头 """
-    TOUCH_CHEST = 0
+    TOUCH_BREAST = 0
     """ 摸胸 """
-    STROKE = 0
-    """ 抚摸 """
+    TOUCH_BUTTOCKS = 0
+    """ 摸屁股 """
+    TOUCH_EARS = 0
+    """ 摸耳朵 """
+    TOUCH_HORN = 0
+    """ 摸角 """
+    TOUCH_TAIL = 0
+    """ 摸尾巴 """
+    TOUCH_RING = 0
+    """ 摸光环 """
+    TOUCH_WING = 0
+    """ 摸光翼 """
     HAND_IN_HAND = 0
     """ 牵手 """
     EMBRACE = 0
     """ 拥抱 """
     KISS = 0
     """ 亲吻 """
+    LAP_PILLOW = 0
+    """ 膝枕 """
+    RAISE_SKIRT = 0
+    """ 掀起裙子 """
+    TOUCH_CLITORIS = 0
+    """ 阴蒂爱抚 """
+    TOUCH_VAGINA = 0
+    """ 手指插入（V） """
+    TOUCH_ANUS = 0
+    """ 手指插入（A） """
     #性爱#
+    MAKING_OUT = 0
+    """ 身体爱抚 """
+    KISS_H = 0
+    """ 接吻 """
+    BREAST_CARESS = 0
+    """ 胸爱抚 """
+    TWIDDLE_NIPPLES = 0
+    """ 玩弄乳头 """
+    BREAST_SUCKING = 0
+    """ 舔吸乳头 """
+    CLIT_CARESS = 0
+    """ 阴蒂爱抚 """
+    OPEN_LABIA = 0
+    """ 掰开阴唇 """
+    OPEN_ANUS = 0
+    """ 掰开肛门 """
+    CUNNILINGUS = 0
+    """ 舔阴 """
+    LICK_ANAL = 0
+    """ 舔肛 """
+    FINGER_INSERTION = 0
+    """ 手指插入 """
+    ANAL_CARESS = 0
+    """ 肛门爱抚 """
+    MAKE_MASTUREBATE = 0
+    """ 让对方自慰 """
+    MAKE_LICK_ANAL = 0
+    """ 让对方舔肛门 """
+    DO_NOTHING = 0
+    """ 什么也不做 """
+    SEDECU = 0
+    """ 诱惑 """
+    NIPPLE_CLAMP = 0
+    """ 乳头夹 """
+    NIPPLES_LOVE_EGG = 0
+    """ 乳头跳蛋 """
+    CLIT_CLAMP = 0
+    """ 阴蒂夹 """
+    CLIT_LOVE_EGG = 0
+    """ 阴蒂跳蛋 """
+    ELECTRIC_MESSAGE_STICK = 0
+    """ 电动按摩棒 """
+    VIBRATOR_INSERTION = 0
+    """ 震动棒 """
+    VIBRATOR_INSERTION_ANAL = 0
+    """ 肛门振动棒 """
+    MILKING_MACHINE = 0
+    """ 搾乳机 """
+    URINE_COLLECTOR = 0
+    """ 采尿器 """
+    BONDAGE = 0
+    """ 绳子 """
+    PATCH = 0
+    """ 眼罩 """
+    PUT_CONDOM = 0
+    """ 避孕套 """
+    BIRTH_CONTROL_PILLS = 0
+    """ 避孕药 """
+    BODY_LUBRICANT = 0
+    """ 润滑液 """
+    PHILTER = 0
+    """ 媚药 """
+    DIURETICS = 0
+    """ 利尿剂 """
+    SLEEPING_PILLS = 0
+    """ 睡眠药 """
+    HANDJOB = 0
+    """ 手交 """
+    BLOWJOB = 0
+    """ 口交 """
+    PAIZURI = 0
+    """ 乳交 """
+    FOOTJOB = 0
+    """ 足交 """
+    HAIRJOB = 0
+    """ 发交 """
+    AXILLAJOB = 0
+    """ 腋交 """
+    RUB_BUTTOCK = 0
+    """ 素股 """
+    HAND_BLOWJOB = 0
+    """ 手交口交 """
+    TITS_BLOWJOB = 0
+    """ 乳交口交 """
+    FOCUS_BLOWJOB = 0
+    """ 真空口交 """
+    DEEP_THROAT = 0
+    """ 深喉插入 """
+    SIXTY_NINE = 0
+    """ 六九式 """
+    NORMAL_SEX = 0
+    """ 正常位 """
+    BACK_SEX = 0
+    """ 背后位 """
+    RIDING_SEX = 0
+    """ 骑乘位 """
+    FACE_SEAT_SEX = 0
+    """ 对面座位 """
+    BACK_SEAT_SEX = 0
+    """ 背面座位 """
+    FACE_STAND_SEX = 0
+    """ 对面立位 """
+    BACK_STAND_SEX = 0
+    """ 背面立位 """
+    STIMULATE_G_POINT = 0
+    """ 刺激G点 """
+    WOMB_OS_CARESS = 0
+    """ 玩弄子宫口 """
+    WOMB_INSERTION = 0
+    """ 插入子宫 """
+    NORMAL_ANAL_SEX = 0
+    """ 正常位肛交 """
+    BACK_ANAL_SEX = 0
+    """ 后背位肛交 """
+    RIDING_ANAL_SEX = 0
+    """ 骑乘位肛交 """
+    FACE_SEAT_ANAL_SEX = 0
+    """ 对面座位肛交 """
+    BACK_SEAT_ANAL_SEX = 0
+    """ 背面座位肛交 """
+    FACE_STAND_ANAL_SEX = 0
+    """ 对面立位肛交 """
+    BACK_STAND_ANAL_SEX = 0
+    """ 背面立位肛交 """
+    STIMULATE_SIGMOID_COLON = 0
+    """ 玩弄s状结肠 """
+    STIMULATE_VAGINA = 0
+    """ 隔着刺激阴道 """
+    DOUBLE_PENETRATION = 0
+    """ 二穴插入 """
+    URETHRAL_SWAB = 0
+    """ 尿道棉棒 """
+    PISSING_PLAY = 0
+    """ 放尿play """
+    URETHRAL_INSERTION = 0
+    """ 尿道插入 """
+    BEAT_BREAST = 0
+    """ 打胸部 """
+    SPANKING = 0
+    """ 打屁股 """
+    SHAME_PLAY = 0
+    """ 羞耻play """
+    BUNDLED_PLAY = 0
+    """ 拘束play """
+    TAKE_SHOWER = 0
+    """ 淋浴 """
+    BUBBLE_BATH = 0
+    """ 泡泡浴 """
+    CHANGE_TOP_AND_BOTTOM = 0
+    """ 交给对方 """
+    GIVE_BLOWJOB = 0
+    """ 给对方口交 """
     #系统#
     MOVE = 0
     """ 移动 """
@@ -719,6 +890,17 @@ class Instruct:
     """ 查看属性 """
     SEE_OWNER_ATTR = 0
     """ 查看自身属性 """
+    ITEM = 0
+    """ 道具 """
+    SAVE = 0
+    """ 读写存档 """
+
+    # ATTEND_CLASS = 0
+    # """ 上课 """
+    # TEACH_A_LESSON = 0
+    # """ 教课 """
+    # SELF_STUDY = 0
+    # """ 自习 """
     # VIEW_THE_SCHOOL_TIMETABLE = 0
     # """ 查看课程表 """
     # COLLECTION_CHARACTER = 0
@@ -729,8 +911,13 @@ class Instruct:
     # """ 启用收藏模式 """
     # UN_COLLECTION_SYSTEM = 0
     # """ 关闭收藏模式 """
-    SAVE = 0
-    """ 读写存档 """
+    # DRINK_SPRING = 0
+    # """ 喝泉水 """
+    # #娱乐#
+    # PLAY_PIANO = 0
+    # """ 弹钢琴 """
+    # PLAY_GUITAR = 0
+    # """ 弹吉他 """
 
 
 
