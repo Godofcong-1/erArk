@@ -1,3 +1,4 @@
+from os import name
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
@@ -65,10 +66,12 @@ class InScenePanel:
                 continue
             character_set = scene_data.character_list.copy()
             character_set.remove(0)
+            print("character_set :",character_set)
             if cache.is_collection:
                 character_list = [i for i in character_set if i in character_data.collection_character]
             else:
                 character_list = list(character_set)
+                print("character_list :",character_list)
             character_handle_panel.text_list = character_list
             # print("character_handle_panel.text_list :",character_handle_panel.text_list)
             if character_data.target_character_id not in scene_data.character_list:
@@ -259,8 +262,9 @@ class InScenePanel:
             # fix_draw.set(1)
             # fix_draw.draw()
             # line_feed.draw()
-            flow_handle.print_image_cmd("凯尔希","凯尔希_图")
-            flow_handle.print_image_cmd("阿米娅","阿米娅_图")
+            for cid in character_set:
+                character_data = cache.character_data[cid]
+                flow_handle.print_image_cmd(character_data.name,"立绘按钮")
             line_feed.draw()
             #以下为指令面板#
             see_instruct_panel.draw()
