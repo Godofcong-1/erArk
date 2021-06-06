@@ -127,13 +127,7 @@ class SeeCharacterFirstPanel:
         # sex_experience_draw = CharacterSexExperienceText(character_id, width)
         # abi_draw = CharacterabiText(character_id, width, 0, 3)
         Talent_draw = CharacterTalentText(character_id, width,8, 0)
-        abi_draw_0 = CharacterabiText(character_id, width, 0)
-        abi_draw_1 = CharacterabiText(character_id, width, 1)
-        abi_draw_2 = CharacterabiText(character_id, width, 2)
-        abi_draw_3 = CharacterabiText(character_id, width, 3)
-        abi_draw_4 = CharacterabiText(character_id, width, 4)
-        abi_draw_5 = CharacterabiText(character_id, width, 5)
-        abi_draw_6 = CharacterabiText(character_id, width, 6)
+        abi_draw = CharacterabiText(character_id, width)
         experience_draw = CharacterExperienceText(character_id, width,8, 0)
         juel_draw = CharacterJuelText(character_id, width,8, 0)
         
@@ -146,13 +140,7 @@ class SeeCharacterFirstPanel:
             # room_draw,
             # sex_experience_draw,
             # abi_draw,
-            abi_draw_0,
-            abi_draw_1,
-            abi_draw_2,
-            abi_draw_3,
-            abi_draw_4,
-            abi_draw_5,
-            abi_draw_6,
+            abi_draw,
             experience_draw,
             juel_draw,
             # see_status_draw_3,
@@ -761,7 +749,7 @@ class CharacterabiText:
     width -- 最大宽度
     """
 
-    def __init__(self, character_id: int, width: int, type: int):
+    def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         self.character_id = character_id
         """ 绘制的角色id """
@@ -780,52 +768,58 @@ class CharacterabiText:
         ability_list = game_config.config_ability_type_data
         title_text = "能力"
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
-        self.title_list.append(type_line)
+        self.draw_list.append(type_line)
+        #进入能力大类#
         for anility_type in ability_list:
-            if anility_type == type:
-                type_set = ability_list[anility_type]
-                for ability_id in type_set:
-                    if anility_type == 0:
-                        if character_data.sex == 0:
-                            if ability_id in {2, 4, 6, 7}:
-                                continue
-                        elif character_data.sex == 1:
-                            if ability_id == 3:
-                                continue
-                        elif character_data.sex == 3:
-                            if ability_id in {2, 3, 4, 6, 7}:
-                                continue
-                    now_draw = draw.NormalDraw()
-                    now_draw_value = draw.NormalDraw()
-                    now_draw.text = game_config.config_ability[ability_id].name
-                    now_draw_1 = draw.NormalDraw()
-                    now_draw_1.text = " "
-                    now_draw_1.width = 1
-                    now_draw.width = width / len(type_set)
-                    now_exp = 0
-                    now_exp = character_data.ability[ability_id]
-                    now_draw_value.text = str(now_exp)
-                    level_draw = draw.ExpLevelDraw(now_exp)
-                    new_draw = draw.LeftMergeDraw(width / 10)
+            # if anility_type == type:
+            type_set = ability_list[anility_type]
+            for ability_id in type_set:
+                if anility_type == 0:
+                    #去掉与性别不符的感度#
+                    if character_data.sex == 0:
+                        if ability_id in {2, 4, 6, 7}:
+                            continue
+                    elif character_data.sex == 1:
+                        if ability_id == 3:
+                            continue
+                    elif character_data.sex == 3:
+                        if ability_id in {2, 3, 4, 6, 7}:
+                            continue
+                now_draw = draw.NormalDraw()
+                now_draw_value = draw.NormalDraw()
+                now_draw.text = game_config.config_ability[ability_id].name
+                #这个_1是为了补空格让格式对齐#
+                now_draw_1 = draw.NormalDraw()
+                now_draw_1.text = " "
+                now_draw_1.width = 1
+                now_draw.width = width / len(type_set)
+                now_exp = 0
+                now_exp = character_data.ability[ability_id]
+                now_draw_value.text = str(now_exp)
+                level_draw = draw.ExpLevelDraw(now_exp)
+                new_draw = draw.LeftMergeDraw(width / 10)
+                new_draw.draw_list.append(now_draw_1)
+                new_draw.draw_list.append(now_draw)
+                new_draw.draw_list.append(now_draw_1)
+                #根据不同的类型补不同数量的空格#
+                if anility_type != 2 and anility_type != 4 and anility_type != 6:
                     new_draw.draw_list.append(now_draw_1)
-                    new_draw.draw_list.append(now_draw)
                     new_draw.draw_list.append(now_draw_1)
-                    if anility_type != 2 and anility_type != 4 and anility_type != 6:
+                    if anility_type == 3 or anility_type == 5:
                         new_draw.draw_list.append(now_draw_1)
                         new_draw.draw_list.append(now_draw_1)
-                        if anility_type == 3 or anility_type == 5:
-                            new_draw.draw_list.append(now_draw_1)
-                            new_draw.draw_list.append(now_draw_1)
-                    new_draw.draw_list.append(level_draw)
-                    new_draw.draw_list.append(now_draw_1)
-                    new_draw.draw_list.append(now_draw_value)
-                    self.draw_list.append(new_draw)
+                new_draw.draw_list.append(level_draw)
+                new_draw.draw_list.append(now_draw_1)
+                new_draw.draw_list.append(now_draw_value)
+                self.draw_list.append(new_draw)
+            if anility_type != 6:
+                new_draw_n = draw.NormalDraw()
+                new_draw_n.text = "\n"
+                new_draw_n.width = 1
+                self.draw_list.append(new_draw_n)
     def draw(self):
         """绘制对象"""
         line_feed.draw()
-        if self.type == 0:
-            for value in self.title_list:
-                value.draw()
         for value in self.draw_list:
             value.draw()
 
