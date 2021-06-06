@@ -68,6 +68,12 @@ class NpcTem:
         """ 经验预设 """
         self.Juel: Dict[int,int] = {}
         """ 宝珠预设 """
+        self.Profession: str = ""
+        """ 职业预设 """
+        self.Race: str = ""
+        """ 种族预设 """
+        self.Talent: Dict[int,int] = {}
+        """ 素质预设 """
 
 
 class Measurements:
@@ -509,6 +515,12 @@ class Character:
         """ 角色经验 """
         self.juel:Dict[int,int] = {}
         """ 角色宝珠 """
+        self.profession: int = 0
+        """ 角色职业 """
+        self.race: int = 0
+        """ 角色种族 """
+        self.talent:Dict[int,int] = {}
+        """ 角色素质 """
 
 
 class TeacherTimeTable:

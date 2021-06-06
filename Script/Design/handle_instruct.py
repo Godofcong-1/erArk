@@ -977,3 +977,16 @@ def handle_finger_insertion():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.ANAL_CARESS,
+    constant.InstructType.SEX,
+    _("肛门爱抚"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_anal_caress():
+    """处理肛门爱抚指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)

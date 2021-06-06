@@ -84,18 +84,20 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     """
     # print("进入init_character")
     # print("生成阶段，character_id :",character_id)
+    # print("character_id=",character_id)
     now_character = game_type.Character()
     now_character.cid = character_id
     now_character.name = character_tem.Name
     now_character.sex = character_tem.Sex
+    now_character.profession= character_tem.Profession
+    now_character.race= character_tem.Race
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
     now_character.favorability = attr_calculation.get_Favorability_zero()
     now_character.trust = attr_calculation.get_Trust_zero()
-    # print("character_tem.Ability :",character_tem.Ability)
     now_character.ability = character_tem.Ability
     now_character.experience = character_tem.Experience
-    # print("character_id=",character_id)
+    now_character.talent = character_tem.Talent
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":
         now_character.mother_tongue = character_tem.MotherTongue

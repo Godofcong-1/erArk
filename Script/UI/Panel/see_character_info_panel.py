@@ -126,6 +126,7 @@ class SeeCharacterFirstPanel:
         # room_draw = CharacterRoomText(character_id, width)
         # sex_experience_draw = CharacterSexExperienceText(character_id, width)
         # abi_draw = CharacterabiText(character_id, width, 0, 3)
+        Talent_draw = CharacterTalentText(character_id, width,8, 0)
         abi_draw_0 = CharacterabiText(character_id, width, 0)
         abi_draw_1 = CharacterabiText(character_id, width, 1)
         abi_draw_2 = CharacterabiText(character_id, width, 2)
@@ -141,6 +142,7 @@ class SeeCharacterFirstPanel:
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             image_draw,
+            Talent_draw,
             # room_draw,
             # sex_experience_draw,
             # abi_draw,
@@ -937,6 +939,84 @@ class CharacterExperienceText:
             if count == 0:
                 line_feed.draw()
 
+class CharacterTalentText:
+    """
+    显示角色素质面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        profession_text = game_config.config_profession[character_data.profession].name
+        race_text = game_config.config_race[character_data.race].name
+        type_data = "素质"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        talent_list = game_config.config_talent_type_data
+        # print("进入for之前")
+        conut = 0
+        for talent_type in talent_list:
+            type_data = game_config.config_talent_type[talent_type]
+            type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
+            # print("type_data.name :",type_data.name)
+            type_set = talent_list[talent_type]
+            talent_text_list = []
+            if conut == 0:
+                message_profession = _(" 职业    ：[{profession_text}]").format(
+                    profession_text=profession_text,
+                )
+                talent_text_list.append(message_profession)
+                message_race = _("\n 种族    ：[{race_text}]").format(
+                    race_text=race_text,
+                )
+                talent_text_list.append(message_race)
+                conut = 1
+            race_type = type_data.name
+            if talent_type == 0:
+                message_race = f"\n {race_type}  ："
+            else:
+                message_race = f"\n {race_type}："
+            for talent_id in type_set:
+                talent_text = game_config.config_talent[talent_id].name
+                if talent_id in character_data.talent:
+                    now_text = f"[{talent_text}]"
+                    message_race += now_text
+            talent_text_list.append(message_race)
+            if self.center_status:
+                now_draw = panel.CenterDrawTextListPanel()
+            else:
+                now_draw = panel.LeftDrawTextListPanel()
+            now_draw.set(talent_text_list, self.width, self.column)
+            self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                # line_feed.draw()
+            else:
+                label.draw()
+
 class CharacterJuelText:
     """
     显示角色宝珠面板对象
@@ -991,8 +1071,6 @@ class CharacterJuelText:
 
     def draw(self):
         """绘制面板"""
-        # title_draw = draw.TitleLineDraw(_("人物状态"), self.width)
-        # title_draw.draw()
         line_feed.draw()
         for label in self.draw_list:
             if isinstance(label, list):

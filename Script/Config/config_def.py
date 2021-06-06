@@ -535,6 +535,24 @@ class Organ:
     """ 名字 """
 
 
+class Profession:
+    """ 职业类型名称 """
+
+    cid: int
+    """ 职业id """
+    name: str
+    """ 职业名 """
+
+
+class Race:
+    """ 种族类型名称 """
+
+    cid: int
+    """ 种族id """
+    name: str
+    """ 种族名 """
+
+
 class Recipes:
     """ 菜谱配置 """
 
@@ -727,9 +745,18 @@ class Talent:
     cid: int
     """ 素质id """
     Talent_type: int
-    """ 类型(0:职业,1:种族,2:性素质,3:身体素质,4:精神素质,5:技术素质,6:其他素质) """
+    """ 类型(0:性素质,1:身体素质,2:精神素质,3:技术素质,4:其他素质) """
     name: str
     """ 名字 """
+
+
+class TalentType:
+    """ 角色能力类型 """
+
+    cid: int
+    """ 类型id """
+    name: str
+    """ 类型名 """
 
 
 class WaistHipProportion:

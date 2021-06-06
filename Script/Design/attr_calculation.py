@@ -73,6 +73,15 @@ def get_juel_zero(juel_dict) -> dict:
             juel_list[juel] = 0
     return juel_list
 
+def get_Dr_talent_zero(juel_dict) -> dict:
+    """
+    检查是否是0号角色，将特定项补为0
+    """
+    juel_list = juel_dict
+    juel_list[4] = 1
+    juel_list[5] = 1
+    return juel_list
+
 # def get_age(tem_name: int) -> int:
 #     """
 #     按年龄模板id随机生成年龄数据

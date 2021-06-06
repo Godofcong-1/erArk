@@ -28,6 +28,9 @@ def init_character_tem_data():
                 now_k = int(k.lstrip("E|"))
                 # print("now_k :",now_k)
                 now_tem.Experience[now_k] = v
+            elif k.startswith("T|"):
+                now_k = int(k.lstrip("T|"))
+                now_tem.Talent[now_k] = 1
             else:
                 now_tem.__dict__[k] = v
         character_tem_list.append(now_tem)

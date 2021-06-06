@@ -48,6 +48,8 @@ def init_attr(character_id: int):
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
+    if character_id == 0 :
+        character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
