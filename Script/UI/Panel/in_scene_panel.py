@@ -66,12 +66,10 @@ class InScenePanel:
                 continue
             character_set = scene_data.character_list.copy()
             character_set.remove(0)
-            print("character_set :",character_set)
             if cache.is_collection:
                 character_list = [i for i in character_set if i in character_data.collection_character]
             else:
                 character_list = list(character_set)
-                print("character_list :",character_list)
             character_handle_panel.text_list = character_list
             # print("character_handle_panel.text_list :",character_handle_panel.text_list)
             if character_data.target_character_id not in scene_data.character_list:
@@ -262,7 +260,9 @@ class InScenePanel:
             # fix_draw.set(1)
             # fix_draw.draw()
             # line_feed.draw()
-            for cid in character_set:
+            character_image_list=character_list
+            character_image_list.reverse()
+            for cid in character_image_list:
                 character_data = cache.character_data[cid]
                 flow_handle.print_image_cmd(character_data.name,"立绘按钮")
             line_feed.draw()

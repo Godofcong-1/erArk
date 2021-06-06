@@ -812,6 +812,7 @@ class CharacterabiText:
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(now_draw_value)
                 self.draw_list.append(new_draw)
+            #只有不是最后一个类型就补个换行#
             if anility_type != 6:
                 new_draw_n = draw.NormalDraw()
                 new_draw_n.text = "\n"
