@@ -193,8 +193,8 @@ class Panel:
 class Premise:
     """前提id"""
 
-    # IS_PLAYER = "sys_0"
-    # """ 是玩家角色 """
+    IS_PLAYER = "sys_0"
+    """ 是玩家角色 """
     # NO_PLAYER = "sys_1"
     # """ 不是玩家角色 """
     HAVE_TARGET = "sys_2"
@@ -212,8 +212,8 @@ class Premise:
     """ 交互对象不是玩家 """
     TARGET_IS_PLAYER = "33"
     """ 目标是玩家角色 """
-    IS_PLAYER = "37"
-    """ 是玩家角色 """
+    # IS_PLAYER = "37"
+    # """ 是玩家角色 """
     NO_PLAYER = "38"
     """ 不是玩家角色 """
 
