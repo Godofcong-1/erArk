@@ -28,8 +28,6 @@ config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
 """ 比例条名字对应比例条id """
-config_image: Dict[int, config_def.Chara_image] = {}
-""" 人物图片配置数据 """
 config_image_data: Dict[int, int] = {}
 """ 人物图片对应图片id """
 config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
@@ -461,17 +459,7 @@ def load_bar_data():
         config_bar_data[now_bar.name] = now_bar.cid
 
 
-def load_chara_image_data():
-    """载入人物图片配置数据"""
-    now_data = config_data["Chara_image"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_chara_image = config_def.Chara_image()
-        now_chara_image.__dict__ = tem_data
-        config_image[now_chara_image.cid] = now_chara_image
-        config_image_data[now_chara_image.chara_id] = now_chara_image.cid
-        # print("now_chara_image :",now_chara_image)
-        # print("tem_data :",tem_data)
+
 
 
 def load_behavior_effect_data():
@@ -1135,7 +1123,6 @@ def init():
     load_age_tem()
     load_attr_tem()
     load_bar_data()
-    load_chara_image_data()
     load_behavior_effect_data()
     load_body_fat_tem()
     load_book_data()

@@ -137,19 +137,6 @@ class CharacterStateType:
     """ 类型名 """
 
 
-class Chara_image:
-    """ 角色ID对应的角色图片和绘制宽度 """
-
-    cid: int
-    """ 图片id """
-    chara_id: str
-    """ 角色id """
-    image_name: str
-    """ 图片名字 """
-    width: int
-    """ 图片绘制宽度 """
-
-
 class ChestTem:
     """ 罩杯对应范围和生成权重 """
 
@@ -708,7 +695,7 @@ class StatureDescriptionPremise:
     """ 配表id """
     stature_type: int
     """ 描述文本id """
-    premise: int
+    premise: str
     """ 前提id """
 
 
@@ -797,7 +784,7 @@ class TalkPremise:
     """ 配表id """
     talk_id: str
     """ 所属口上id """
-    premise: int
+    premise: str
     """ 前提id """
 
 

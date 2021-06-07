@@ -12,7 +12,7 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-def add_premise(premise: int) -> FunctionType:
+def add_premise(premise: str) -> FunctionType:
     """
     添加前提
     Keyword arguments:
@@ -32,7 +32,7 @@ def add_premise(premise: int) -> FunctionType:
     return decoraror
 
 
-def handle_premise(premise: int, character_id: int) -> int:
+def handle_premise(premise: str, character_id: int) -> int:
     """
     调用前提id对应的前提处理函数
     Keyword arguments:
@@ -533,43 +533,43 @@ def handle_target_age_similar(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_SIMILAR)
-def handle_target_average_height_similar(character_id: int) -> int:
-    """
-    校验角色目标身高是否与平均身高相差不大
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    average_height = cache.average_height_by_age[age_tem][target_data.sex]
-    if (
-        target_data.height.now_height >= average_height * 0.95
-        and target_data.height.now_height <= average_height * 1.05
-    ):
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_SIMILAR)
+# def handle_target_average_height_similar(character_id: int) -> int:
+#     """
+#     校验角色目标身高是否与平均身高相差不大
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     average_height = cache.average_height_by_age[age_tem][target_data.sex]
+#     if (
+#         target_data.height.now_height >= average_height * 0.95
+#         and target_data.height.now_height <= average_height * 1.05
+#     ):
+#         return 1
+#     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_LOW)
-def handle_target_average_height_low(character_id: int) -> int:
-    """
-    校验角色目标的身高是否低于平均身高
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    average_height = cache.average_height_by_age[age_tem][target_data.sex]
-    if target_data.height.now_height <= average_height * 0.95:
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_LOW)
+# def handle_target_average_height_low(character_id: int) -> int:
+#     """
+#     校验角色目标的身高是否低于平均身高
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     average_height = cache.average_height_by_age[age_tem][target_data.sex]
+#     if target_data.height.now_height <= average_height * 0.95:
+#         return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_PLAYER)

@@ -18,10 +18,12 @@ def handle_talk(character_id: int):
     behavior_id = character_data.behavior.behavior_id
     now_talk_data = {}
     now_premise_data = {}
+    #检测是否是收藏模式#
     if cache.is_collection and character_id:
         player_data: game_type.Character = cache.character_data[0]
         if character_id not in player_data.collection_character:
             return
+    #检测是否与玩家处于同一位置#
     if (
         character_data.position != cache.character_data[0].position
         and character_data.behavior.move_src != cache.character_data[0].position
