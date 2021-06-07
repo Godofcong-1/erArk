@@ -1378,7 +1378,7 @@ def handle_hyposthenia(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_weight = int((character_data.HP_max - character_data.hit_point) / 5)
+    now_weight = int((character_data.hit_point_max - character_data.hit_point) / 5)
     now_weight += int((character_data.mana_point_max - character_data.mana_point) / 10)
     return now_weight
 
@@ -1393,7 +1393,7 @@ def handle_physical_strenght(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_weight = int((character_data.HP_max / 2 - character_data.hit_point) / 5)
+    now_weight = int((character_data.hit_point_max / 2 - character_data.hit_point) / 5)
     now_weight += int((character_data.mana_point_max / 2 - character_data.mana_point) / 10)
     if now_weight < 0:
         now_weight = 0
@@ -1874,21 +1874,21 @@ def handle_target_is_woman(character_id: int) -> int:
     return target_data.sex == 1
 
 
-@add_premise(constant.Premise.TARGET_IS_NAKED)
-def handle_target_is_naked(character_id: int) -> int:
-    """
-    校验交互对象是否一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    for i in target_data.put_on:
-        if isinstance(target_data.put_on[i], UUID):
-            return 0
-    return 1
+# @add_premise(constant.Premise.TARGET_IS_NAKED)
+# def handle_target_is_naked(character_id: int) -> int:
+#     """
+#     校验交互对象是否一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     for i in target_data.put_on:
+#         if isinstance(target_data.put_on[i], UUID):
+#             return 0
+#     return 1
 
 
 @add_premise(constant.Premise.TARGET_CLITORIS_LEVEL_IS_HIGHT)
@@ -2209,20 +2209,20 @@ def handle_teacher_in_classroom(character_id: int) -> int:
     return not handle_teacher_no_in_classroom(character_id)
 
 
-@add_premise(constant.Premise.IS_NAKED)
-def handle_is_naked(character_id: int) -> int:
-    """
-    校验角色是否一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    for i in character_data.put_on:
-        if isinstance(character_data.put_on[i], UUID):
-            return 0
-    return 1
+# @add_premise(constant.Premise.IS_NAKED)
+# def handle_is_naked(character_id: int) -> int:
+#     """
+#     校验角色是否一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     for i in character_data.put_on:
+#         if isinstance(character_data.put_on[i], UUID):
+#             return 0
+#     return 1
 
 
 @add_premise(constant.Premise.IS_BEYOND_FRIENDSHIP_TARGET_IN_SCENE)
@@ -2616,22 +2616,22 @@ def handle_no_in_grove(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.NAKED_CHARACTER_IN_SCENE)
-def handle_naked_character_in_scene(character_id: int) -> int:
-    """
-    校验场景中是否有人一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path]
-    for now_character in scene_data.character_list:
-        if handle_is_naked(now_character):
-            return 1
-    return 0
+# @add_premise(constant.Premise.NAKED_CHARACTER_IN_SCENE)
+# def handle_naked_character_in_scene(character_id: int) -> int:
+#     """
+#     校验场景中是否有人一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
+#     scene_data: game_type.Scene = cache.scene_data[scene_path]
+#     for now_character in scene_data.character_list:
+#         if handle_is_naked(now_character):
+#             return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_SING)

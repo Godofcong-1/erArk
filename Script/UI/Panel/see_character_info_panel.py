@@ -327,7 +327,7 @@ class CharacterInfoHead:
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
-            int(character_data.HP_max),
+            int(character_data.hit_point_max),
             int(character_data.hit_point),
             _("体力"),
         )
@@ -1673,7 +1673,7 @@ class GetUpCharacterInfoDraw:
         sex_config = game_config.config_sex_tem[character_data.sex]
         sex_text = _(f"性别:{sex_config.name}")
         age_text = _(f"年龄:{character_data.age}岁")
-        hit_point_text = _(f"体力:({character_data.hit_point}/{character_data.HP_max})")
+        hit_point_text = _(f"体力:({character_data.hit_point}/{character_data.hit_point_max})")
         mana_point_text = _(f"气力:({character_data.mana_point}/{character_data.mana_point_max})")
         now_text = f"{id_text} {character_name} {sex_text} {age_text} {hit_point_text} {mana_point_text}"
         if is_button:

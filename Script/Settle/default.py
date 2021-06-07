@@ -44,9 +44,9 @@ def handle_add_small_hit_point(
         return
     add_hit_point = add_time * 40
     character_data.hit_point += add_hit_point
-    if character_data.hit_point > character_data.HP_max:
-        add_hit_point -= character_data.hit_point - character_data.HP_max
-        character_data.hit_point = character_data.HP_max
+    if character_data.hit_point > character_data.hit_point_max:
+        add_hit_point -= character_data.hit_point - character_data.hit_point_max
+        character_data.hit_point = character_data.hit_point_max
     change_data.hit_point += add_hit_point
 
 
@@ -722,9 +722,9 @@ def handle_add_medium_hit_point(
         return
     add_hit_point = add_time * 100
     character_data.hit_point += add_hit_point
-    if character_data.hit_point > character_data.HP_max:
-        add_hit_point -= character_data.hit_point - character_data.HP_max
-        character_data.hit_point = character_data.HP_max
+    if character_data.hit_point > character_data.hit_point_max:
+        add_hit_point -= character_data.hit_point - character_data.hit_point_max
+        character_data.hit_point = character_data.hit_point_max
     change_data.hit_point += add_hit_point
 
 

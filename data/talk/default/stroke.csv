@@ -6,7 +6,6 @@ str,int,int,str
 0,14,0,{TargetName}满脸厌恶地拍开了{PlayerNickName}的手
 1,14,0,{TargetName}冷冷的盯着{PlayerNickName}\n{PlayerNickName}只好悻悻地收回了手
 2,14,0,{TargetName}冷冷的看了眼{PlayerNickName}伸出的手\n{PlayerNickName}被{TargetName}一脚踹倒在了地上
-3,14,0,{TargetName}狠狠的打了{PlayerNickName}一巴掌后一脚将{PlayerNickName}踹翻在地
 4,14,0,{TargetName}一把拍开了{PlayerNickName}的手，并朝着{PlayerNickName}的脸吐了口口水
 5,14,0,「真恶心」\n{TargetName}满脸厌恶地躲开了{PlayerNickName}的手
 6,14,0,「你想做什么？」\n{TargetName}冷冷地抓住了{PlayerNickName}的手

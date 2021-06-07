@@ -19,12 +19,8 @@ str,int,int,str
 13,5,0,{Name}专心的和{PlayerNickName}分享着自己新写的故事\n{Name}可爱的样子让{PlayerNickName}渐渐看入了神
 14,5,0,{Name}拿出了绘板，一边快速的画着简笔画，一边给{PlayerNickName}说着小故事
 15,5,0,{PlayerNickName}笑着帮{TargetName}分析了今天的星座运势
-16,5,0,{PlayerNickName}和{TargetName}坦诚相对\n{PlayerNickName}一边装作若无其事的和{TargetName}聊着天，一边暗自打量着{TargetName}的大小
-17,5,0,「快把衣服穿上！」\n看见一丝不挂的{PlayerNickName}\n{TargetName}一边将脸转开，一边紧张的催促着
-18,5,0,「变态！」\n看见一丝不挂的{PlayerNickName}，{TargetName}毫不犹豫的一巴掌打了过来
-19,5,0,趁着{PlayerNickName}熟睡\n{Name}伸手握住{PlayerNickName}的小弟弟，坏笑着给{PlayerNickName}的小弟弟讲起了故事
 20,5,0,和{TargetName}一起倚靠在栏杆上，一边看着圆月一边聊着天\n{TargetName}将头靠在了{PlayerNickName}的肩上
-21,5,0,{Name}愤愤不平的和{PlayerNickName}吐槽着食堂的物价
+21,5,0,{Name}和{PlayerNickName}吐槽着食堂的物价
 22,5,0,完全没有在意{PlayerNickName}在说什么\n{TargetName}只感觉自己的心扑通扑通跳个不停
 23,5,0,和{TargetName}一起聊着今天的天气
 24,5,0,拉着{TargetName}闲聊了一会儿
