@@ -193,21 +193,21 @@ class Panel:
 class Premise:
     """前提id"""
 
-    # IS_PLAYER = sys_0
+    # IS_PLAYER = "sys_0"
     # """ 是玩家角色 """
-    # NO_PLAYER = sys_1
+    # NO_PLAYER = "sys_1"
     # """ 不是玩家角色 """
-    # HAVE_TARGET = sys_2
-    # """ 拥有交互对象 """
-    # HAVE_NO_TARGET = sys_3
+    HAVE_TARGET = "sys_2"
+    """ 拥有交互对象 """
+    # HAVE_NO_TARGET = "sys_3"
     # """ 没有交互对象 """
-    # TARGET_IS_PLAYER = sys_4
+    # TARGET_IS_PLAYER = "sys_4"
     # """ 目标是玩家角色 """
-    # TARGET_NO_PLAYER = sys_5
+    # TARGET_NO_PLAYER = "sys_5"
     # """ 交互对象不是玩家 """
 
-    HAVE_TARGET = "8"
-    """ 拥有交互对象 """
+    # HAVE_TARGET = "8"
+    # """ 拥有交互对象 """
     TARGET_NO_PLAYER = "9"
     """ 交互对象不是玩家 """
     TARGET_IS_PLAYER = "33"
