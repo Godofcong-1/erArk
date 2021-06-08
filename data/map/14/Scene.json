@@ -1,5 +1,5 @@
 {
-  "SceneName":"医疗区入口",
-  "InOutDoor":"In",
-  "SceneTag":"Door"
+  "SceneName":"工程部入口",
+  "InOutDoor":"Out",
+  "SceneTag":"BasketballCourtA"
 }
