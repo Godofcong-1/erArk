@@ -23,6 +23,7 @@ from Script.Design import (
     cooking,
 )
 from Script.Config import game_config, normal_config
+from Script.UI.Moudle import panel, draw
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -178,8 +179,10 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     character_data.status[28] += hunger_time * 0.02
     character_data.last_hunger_time = now_time
     if time_judge:
-        settle_behavior.handle_settle_behavior(character_id, end_time)
+        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
         talk.handle_talk(character_id)
+        if now_panel != None:
+            now_panel.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
     if time_judge == 1:
