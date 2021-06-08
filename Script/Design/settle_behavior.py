@@ -49,21 +49,26 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         now_judge = True
     if len(status_data.sex_experience):
         now_judge = True
+    if len(status_data.experience):
+        now_judge = True
     if len(status_data.target_change) and not character_id:
         now_judge = True
     if now_judge:
         now_text_list = []
         now_draw = draw.NormalDraw()
-        now_draw.text = "\n" + now_character_data.name + ": "
+        if now_character_data.cid == 0:
+            now_draw.text = "\n" + now_character_data.name + now_character_data.nick_name + ": "
+        else:
+            now_draw.text = "\n" + now_character_data.name + ": "
         now_draw.width = width
         now_draw.draw()
         if status_data.hit_point and round(status_data.hit_point, 2) != 0:
             now_text_list.append(
-                _("体力:") + text_handle.number_to_symbol_string(round(status_data.hit_point, 2))
+                _("体力:") + text_handle.number_to_symbol_string(int(status_data.hit_point))
             )
         if status_data.mana_point and round(status_data.mana_point, 2) != 0:
             now_text_list.append(
-                _("气力:") + text_handle.number_to_symbol_string(round(status_data.mana_point, 2))
+                _("气力:") + text_handle.number_to_symbol_string(int(status_data.mana_point))
             )
         if len(status_data.status):
             now_text_list.extend(
@@ -95,6 +100,15 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                     for i in status_data.sex_experience
                 ]
             )
+        if len(status_data.experience):
+            now_text_list.extend(
+                [
+                    game_config.config_experience[i].name
+                    + _("经验:")
+                    + text_handle.number_to_symbol_string(int(status_data.experience[i]))
+                    for i in status_data.experience
+                ]
+            )
         if len(status_data.target_change):
             for target_character_id in status_data.target_change:
                 if character_id and target_character_id:
@@ -104,9 +118,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 now_text = f"\n{target_data.name}:"
                 judge = 0
                 if target_change.favorability:
-                    now_text += _(" 对{character_name}好感").format(
-                        character_name=now_character_data.name
-                    ) + text_handle.number_to_symbol_string(round(target_change.favorability, 2))
+                    now_text += _(" 对{character_name}{character_nick_name}好感").format(
+                        character_name=now_character_data.name,
+                        character_nick_name=now_character_data.nick_name
+                    ) + text_handle.number_to_symbol_string(int(target_change.favorability))
                     judge = 1
                 if target_change.new_social != target_change.old_social:
                     now_text += (
@@ -123,7 +138,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                                 " "
                                 + game_config.config_character_state[status_id].name
                                 + text_handle.number_to_symbol_string(
-                                    round(target_change.status[status_id], 2)
+                                    int(target_change.status[status_id])
                                 )
                             )
                             judge = 1
@@ -136,6 +151,18 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                                 + _("经验:")
                                 + text_handle.number_to_symbol_string(
                                     round(target_change.sex_experience[organ], 2)
+                                )
+                            )
+                            judge = 1
+                if len(target_change.experience):
+                    for experience_id in target_change.experience:
+                        if target_change.experience[experience_id]:
+                            now_text += (
+                                " "
+                                + game_config.config_organ[experience_id].name
+                                + _("经验:")
+                                + text_handle.number_to_symbol_string(
+                                    int(target_change.experience[experience_id])
                                 )
                             )
                             judge = 1

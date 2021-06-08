@@ -446,7 +446,7 @@ def handle_add_small_eloquence_experience(
     now_time: datetime.datetime,
 ):
     """
-    增加少量口才技能经验
+    增加少量对话技能经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -458,11 +458,10 @@ def handle_add_small_eloquence_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.knowledge.setdefault(12, 0)
-    experience = 0.01 * add_time * character_data.knowledge_interest[12]
-    character_data.knowledge[12] += experience
-    change_data.knowledge.setdefault(12, 0)
-    change_data.knowledge[12] += experience
+    character_data.experience.setdefault(80, 0)
+    character_data.experience[80] += 1
+    change_data.experience.setdefault(80, 0)
+    change_data.experience[80] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_PERFORM_EXPERIENCE)
@@ -1401,3 +1400,35 @@ def handle_target_add_favorability_for_target_interest(
         if target_data.language_interest[language] > 1:
             if language in character_data.language:
                 now_add_favorability += character_data.language[language] / 10
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
+def handle_target_add_small_friendly(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加少量好意
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust

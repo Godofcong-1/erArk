@@ -62,7 +62,7 @@ class SeeCharacterInfoPanel:
         # see_social_draw = SeeCharacterSocialContact(character_id, width)
         self.draw_data = {
             _("属性（第一页）"): main_first_draw,
-            _("属性"): main_attr_draw,
+            _("属性（第二页）"): main_attr_draw,
             # _("状态"): see_status_draw,
             # _("服装"): see_clothing_draw,
             # _("道具"): see_item_draw,
@@ -239,9 +239,6 @@ class SeeCharacterStatusPanel:
                                 continue
                         elif character_data.sex == 1:
                             if status_id == 5:
-                                continue
-                        elif character_data.sex == 3:
-                            if status_id in {2, 3, 5, 7, 8}:
                                 continue
                     status_text = game_config.config_character_state[status_id].name
                     status_value = 0
@@ -707,9 +704,6 @@ class CharacterabiText_1:
                     elif character_data.sex == 1:
                         if ability_id == 3:
                             continue
-                    elif character_data.sex == 3:
-                        if ability_id in {2, 3, 4, 6, 7}:
-                            continue
                 now_draw = draw.NormalDraw()
                 now_draw_1 = draw.NormalDraw()
                 now_draw_value = draw.NormalDraw()
@@ -774,17 +768,13 @@ class CharacterabiText:
             # if anility_type == type:
             type_set = ability_list[anility_type]
             for ability_id in type_set:
-                if anility_type == 0:
-                    #去掉与性别不符的感度#
-                    if character_data.sex == 0:
-                        if ability_id in {2, 4, 6, 7}:
-                            continue
-                    elif character_data.sex == 1:
-                        if ability_id == 3:
-                            continue
-                    elif character_data.sex == 3:
-                        if ability_id in {2, 3, 4, 6, 7}:
-                            continue
+                #去掉与性别不符的感度#
+                if character_data.sex == 0:
+                    if ability_id in {2, 4, 7, 9, 12, 34, 39}:
+                        continue
+                elif character_data.sex == 1:
+                    if ability_id == 3:
+                        continue
                 now_draw = draw.NormalDraw()
                 now_draw_value = draw.NormalDraw()
                 now_draw.text = game_config.config_ability[ability_id].name
@@ -898,9 +888,6 @@ class CharacterExperienceText:
                     continue
             elif character_data.sex == 1:
                 if experience_id == {3,13,21,73}:
-                    continue
-            elif character_data.sex == 3:
-                if experience_id in {2, 4, 7, 12, 14, 17, 20, 22, 26, 51, 54, 55, 58, 72, 74 ,77, 86, 100, 101, 102, 103, 104, 105, 106,3,13,21,73}:
                     continue
             experience_text = game_config.config_experience[experience_id].name
             experience_value = 0
@@ -1047,9 +1034,6 @@ class CharacterJuelText:
                     continue
             elif character_data.sex == 1:
                 if juel_id == {3}:
-                    continue
-            elif character_data.sex == 3:
-                if juel_id in {2, 3, 4, 7}:
                     continue
             juel_text = game_config.config_juel[juel_id].name
             juel_value = 0
@@ -1669,13 +1653,13 @@ class GetUpCharacterInfoDraw:
         """ 按钮返回值 """
         character_data = cache.character_data[self.text]
         character_name = character_data.name
-        id_text = f"No.{self.text}"
+        # id_text = f"No.{self.text}"
         sex_config = game_config.config_sex_tem[character_data.sex]
-        sex_text = _(f"性别:{sex_config.name}")
-        age_text = _(f"年龄:{character_data.age}岁")
+        # sex_text = _(f"性别:{sex_config.name}")
+        # age_text = _(f"年龄:{character_data.age}岁")
         hit_point_text = _(f"体力:({character_data.hit_point}/{character_data.hit_point_max})")
         mana_point_text = _(f"气力:({character_data.mana_point}/{character_data.mana_point_max})")
-        now_text = f"{id_text} {character_name} {sex_text} {age_text} {hit_point_text} {mana_point_text}"
+        now_text = f" {character_name} {hit_point_text} {mana_point_text}"
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(self.button_id)

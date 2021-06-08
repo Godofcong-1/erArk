@@ -693,6 +693,8 @@ class TargetChange:
         """ 好感度变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
+        self.experience: Dict[int, int] = {}
+        """ 经验变化 """
 
 
 class CharacterStatusChange:
@@ -713,3 +715,7 @@ class CharacterStatusChange:
         """ 互动目标状态变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
+        self.ability: Dict[int, int] = {}
+        """ 能力变化 """
+        self.experience: Dict[int, int] = {}
+        """ 经验变化 """

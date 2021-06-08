@@ -262,9 +262,9 @@ class InScenePanel:
             # line_feed.draw()
             character_image_list=character_list
             character_image_list.reverse()
-            for cid in character_image_list:
-                character_data = cache.character_data[cid]
-                flow_handle.print_image_cmd(character_data.name,"立绘按钮")
+            for image_cid in character_image_list:
+                image_character_data = cache.character_data[image_cid]
+                flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
             line_feed.draw()
             #以下为指令面板#
             see_instruct_panel.draw()

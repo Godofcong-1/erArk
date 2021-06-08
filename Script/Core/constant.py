@@ -561,7 +561,7 @@ class BehaviorEffect:
     ADD_SMALL_SING_EXPERIENCE = 10
     """ 增加少量唱歌技能经验 """
     ADD_SMALL_ELOQUENCE_EXPERIENCE = 11
-    """ 增加少量口才技能经验 """
+    """ 增加少量话术技能经验 """
     ADD_SMALL_PLAY_MUSIC_EXPERIENCE = 12
     """ 增加少量演奏技能经验 """
     ADD_SMALL_PERFORM_EXPERIENCE = 13
@@ -616,6 +616,8 @@ class BehaviorEffect:
     """ 按演奏技能增加交互对象好感 """
     TARGET_ADD_FAVORABILITY_FOR_TARGET_INTEREST = 38
     """ 按交互对象兴趣增加交互对象好感 """
+    TARGET_ADD_SMALL_FRIENDLY = 40
+    """ 交互对象增加少量好意 """
 
 
 class InstructType:
