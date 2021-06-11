@@ -735,6 +735,8 @@ class Talent:
     """ 类型(0:性素质,1:身体素质,2:精神素质,3:技术素质,4:其他素质) """
     name: str
     """ 名字 """
+    info: str
+    """ 备注说明 """
 
 
 class TalentType:

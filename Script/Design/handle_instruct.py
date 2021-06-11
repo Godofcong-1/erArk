@@ -990,3 +990,16 @@ def handle_anal_caress():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.MAKE_MASTUREBATE,
+    constant.InstructType.SEX,
+    _("让对方自慰"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_make_masturebate():
+    """处理让对方自慰指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
