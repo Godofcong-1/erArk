@@ -52,6 +52,7 @@ class SeeCharacterInfoPanel:
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
+        main_second_draw = SeeCharacterSecondPanel(character_id, width)
         main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
@@ -62,7 +63,8 @@ class SeeCharacterInfoPanel:
         # see_social_draw = SeeCharacterSocialContact(character_id, width)
         self.draw_data = {
             _("属性（第一页）"): main_first_draw,
-            _("属性（第二页）"): main_attr_draw,
+            _("属性（第二页）"): main_second_draw,
+            _("属性（原）"): main_attr_draw,
             # _("状态"): see_status_draw,
             # _("服装"): see_clothing_draw,
             # _("道具"): see_item_draw,
@@ -123,28 +125,40 @@ class SeeCharacterFirstPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         image_draw = CharacterImage(character_id, width)
-        # room_draw = CharacterRoomText(character_id, width)
-        # sex_experience_draw = CharacterSexExperienceText(character_id, width)
-        # abi_draw = CharacterabiText(character_id, width, 0, 3)
         Talent_draw = CharacterTalentText(character_id, width,8, 0)
         abi_draw = CharacterabiText(character_id, width)
-        experience_draw = CharacterExperienceText(character_id, width,8, 0)
-        juel_draw = CharacterJuelText(character_id, width,8, 0)
-        
-        # see_status_draw_3 = SeeCharacterStatusPanel(character_id, width, 8, 3)
-        # see_status_draw_4 = SeeCharacterStatusPanel(character_id, width, 8, 4)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             image_draw,
             Talent_draw,
-            # room_draw,
-            # sex_experience_draw,
-            # abi_draw,
             abi_draw,
+        ]
+        """ 绘制的面板列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            label.draw()
+
+class SeeCharacterSecondPanel:
+    """
+    显示角色属性面板第二页对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    """
+
+    def __init__(self, character_id: int, width: int):
+        """初始化绘制对象"""
+        head_draw = CharacterInfoHead(character_id, width)
+        experience_draw = CharacterExperienceText(character_id, width,8, 0)
+        juel_draw = CharacterJuelText(character_id, width,8, 0)
+        self.draw_list: List[draw.NormalDraw] = [
+            head_draw,
             experience_draw,
             juel_draw,
-            # see_status_draw_3,
-            # see_status_draw_4,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
