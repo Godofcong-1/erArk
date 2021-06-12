@@ -618,6 +618,50 @@ class BehaviorEffect:
     """ 按交互对象兴趣增加交互对象好感 """
     TARGET_ADD_SMALL_FRIENDLY = 40
     """ 交互对象增加少量好意 """
+    TARGET_ADD_SMALL_N_FEEL = 41
+    """ 交互对象增加少量Ｎ快 """
+    TARGET_ADD_SMALL_B_FEEL = 42
+    """ 交互对象增加少量Ｂ快 """
+    TARGET_ADD_SMALL_V_FEEL = 43
+    """ 交互对象增加少量Ｖ快 """
+    TARGET_ADD_SMALL_C_FEEL = 44
+    """ 交互对象增加少量Ｃ快 """
+    TARGET_ADD_SMALL_A_FEEL = 45
+    """ 交互对象增加少量Ａ快 """
+    TARGET_ADD_SMALL_P_FEEL = 46
+    """ 交互对象增加少量Ｐ快 """
+    TARGET_ADD_SMALL_U_FEEL = 47
+    """ 交互对象增加少量Ｕ快 """
+    TARGET_ADD_SMALL_W_FEEL = 48
+    """ 交互对象增加少量Ｗ快 """
+    TARGET_ADD_SMALL_V_LUBRICATION = 49
+    """ 交互对象增加少量Ｖ润 """
+    TARGET_ADD_SMALL_A_LUBRICATION = 50
+    """ 交互对象增加少量Ａ润 """
+    TARGET_ADD_SMALL_LEARN = 51
+    """ 交互对象增加少量习得 """
+    TARGET_ADD_SMALL_RESPECT = 52
+    """ 交互对象增加少量恭顺 """
+    TARGET_ADD_SMALL_FRIENDLY = 53
+    """ 交互对象增加少量好意 """
+    TARGET_ADD_SMALL_DESIRE = 54
+    """ 交互对象增加少量欲情 """
+    TARGET_ADD_SMALL_HAPPY = 55
+    """ 交互对象增加少量快乐 """
+    TARGET_ADD_SMALL_LEAD = 56
+    """ 交互对象增加少量先导 """
+    TARGET_ADD_SMALL_SUBMIT = 57
+    """ 交互对象增加少量屈服 """
+    TARGET_ADD_SMALL_SHY = 58
+    """ 交互对象增加少量羞耻 """
+    TARGET_ADD_SMALL_PAIN = 59
+    """ 交互对象增加少量苦痛 """
+    TARGET_ADD_SMALL_TERROR = 60
+    """ 交互对象增加少量恐怖 """
+    TARGET_ADD_SMALL_DEPRESSION = 61
+    """ 交互对象增加少量抑郁 """
+    TARGET_ADD_SMALL_DISGUST = 62
+    """ 交互对象增加少量反感 """
 
 
 class InstructType:
