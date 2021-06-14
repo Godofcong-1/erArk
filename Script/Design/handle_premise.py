@@ -136,8 +136,8 @@ def handle_hunger(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.status.setdefault(27, 0)
-    if character_data.status[27] > 15:
-        return math.floor(character_data.status[27]) * 10
+    # if character_data.status[27] > 15:
+    #     return math.floor(character_data.status[27]) * 10
     return 0
 
 
@@ -641,7 +641,7 @@ def handle_target_put_on_skirt(character_id: int) -> int:
 @add_premise(constant.Premise.IS_PLAYER)
 def handle_is_player(character_id: int) -> int:
     """
-    校验是否是玩家角色
+    校验指令使用人是否是玩家角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -655,7 +655,7 @@ def handle_is_player(character_id: int) -> int:
 @add_premise(constant.Premise.NO_PLAYER)
 def handle_no_player(character_id: int) -> int:
     """
-    校验是否不是玩家角色
+    校验指令使用人是否不是玩家角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

@@ -266,10 +266,10 @@ def get_rand_npc_age_tem(age_judge: str) -> int:
 def init_character_dormitory():
     """
     分配角色宿舍
-    暂定先全部到控制中枢的走廊
+    暂定先全部到博士办公室
     """
     dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "Firstplace" in key
+        key: constant.place_data[key] for key in constant.place_data if "Dr_office" in key
     }
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j

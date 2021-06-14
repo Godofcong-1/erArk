@@ -46,7 +46,7 @@ def init_character_behavior():
             if character_id in cache.over_behavior_character:
                 continue
             character_behavior(character_id, cache.game_time)
-            judge_character_dead(character_id)
+            # judge_character_dead(character_id)
         update_cafeteria()
     t2 = time.time()
     print(t2 - t1)
@@ -120,28 +120,28 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
             cache.character_data[character_id].behavior.start_time = next_time
 
 
-def judge_character_dead(character_id: int):
-    """
-    校验角色状态并处死角色
-    Keyword arguments:
-    character_id -- 角色id
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        if character_id not in cache.over_behavior_character:
-            cache.over_behavior_character.add(character_id)
-        return
-    character_data.status.setdefault(27, 0)
-    character_data.status.setdefault(28, 0)
-    if (
-        character_data.status[27] >= 100
-        or character_data.status[28] >= 100
-        or character_data.hit_point <= 0
-    ):
-        character_data.dead = 1
-        character_data.state = 13
-        if character_id not in cache.over_behavior_character:
-            cache.over_behavior_character.add(character_id)
+# def judge_character_dead(character_id: int):
+#     """
+#     校验角色状态并处死角色
+#     Keyword arguments:
+#     character_id -- 角色id
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if character_data.dead:
+#         if character_id not in cache.over_behavior_character:
+#             cache.over_behavior_character.add(character_id)
+#         return
+#     character_data.status.setdefault(27, 0)
+#     character_data.status.setdefault(28, 0)
+#     if (
+#         character_data.status[27] >= 100
+#         or character_data.status[28] >= 100
+#         or character_data.hit_point <= 0
+#     ):
+#         character_data.dead = 1
+#         character_data.state = 13
+#         if character_id not in cache.over_behavior_character:
+#             cache.over_behavior_character.add(character_id)
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
@@ -169,15 +169,15 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         character_data.behavior.start_time = end_time
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         return 1
-    last_hunger_time = start_time
-    if character_data.last_hunger_time is not None:
-        last_hunger_time = character_data.last_hunger_time
-    hunger_time = int((now_time - last_hunger_time).seconds / 60)
-    character_data.status.setdefault(27, 0)
-    character_data.status.setdefault(28, 0)
-    character_data.status[27] += hunger_time * 0.02
-    character_data.status[28] += hunger_time * 0.02
-    character_data.last_hunger_time = now_time
+    # last_hunger_time = start_time
+    # if character_data.last_hunger_time is not None:
+    #     last_hunger_time = character_data.last_hunger_time
+    # hunger_time = int((now_time - last_hunger_time).seconds / 60)
+    # character_data.status.setdefault(27, 0)
+    # character_data.status.setdefault(28, 0)
+    # character_data.status[27] += hunger_time * 0.02
+    # character_data.status[28] += hunger_time * 0.02
+    # character_data.last_hunger_time = now_time
     if time_judge:
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
         talk.handle_talk(character_id)
