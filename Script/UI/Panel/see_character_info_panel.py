@@ -261,7 +261,7 @@ class SeeCharacterStatusPanel:
                     # if status_id in character_data.status:
                     #     status_value = character_data.status[status_id]
                     status_value = round(status_value)
-                    status_value = int(attr_text.get_value_text(status_value))
+                    # status_value = int(attr_text.get_value_text(status_value))
                     status_level = attr_calculation.get_status_level(status_value)
                     now_text = f"  {status_text}:lv{status_level} {status_value}"
                     # print("status_value :",status_value)
