@@ -43,6 +43,8 @@ class CharacterStatus:
     """ 弹吉他 """
     STATUS_SELF_STUDY = 18
     """ 自习 """
+    STATUS_WAIT = 20
+    """ 待机状态 """
 
 
 class Behavior:
@@ -88,87 +90,101 @@ class Behavior:
     """ 自习 """
     MAKE_TEA = 20
     """ 泡茶 """
+    WAIT = 40
+    """ 待机 """
 
 
 class StateMachine:
     """状态机id"""
 
-    MOVE_TO_CLASS = 0
-    """ 移动到所属教室 """
-    MOVE_TO_RAND_CAFETERIA = 1
-    """ 移动到随机取餐区 """
-    BUY_RAND_FOOD_AT_CAFETERIA = 2
-    """ 在取餐区购买随机食物 """
-    MOVE_TO_RAND_RESTAURANT = 3
-    """ 移动至随机就餐区 """
-    EAT_BAG_RAND_FOOD = 4
-    """ 食用背包内随机食物 """
-    CHAT_RAND_CHARACTER = 5
-    """ 和场景里随机对象聊天 """
-    WEAR_CLEAN_UNDERWEAR = 6
-    """ 穿干净的上衣 """
-    WEAR_CLEAN_UNDERPANTS = 7
-    """ 穿干净的内裤 """
-    WEAR_CLEAN_BRA = 8
-    """ 穿干净的胸罩 """
-    WEAR_CLEAN_PANTS = 9
-    """ 穿干净的裤子 """
-    WEAR_CLEAN_SKIRT = 10
-    """ 穿干净的短裙 """
-    WEAR_CLEAN_SHOES = 11
-    """ 穿干净的鞋子 """
-    WEAR_CLEAN_SOCKS = 12
-    """ 穿干净的袜子 """
-    PLAY_PIANO = 13
-    """ 弹钢琴 """
+    WAIT_5_MIN = 0
+    """ 原地待机5分钟 """
+    WAIT_10_MIN = 1
+    """ 原地待机10分钟 """
+    WAIT_30_MIN = 2
+    """ 原地待机30分钟 """
+    REST = 4
+    """ 休息一会儿 """
+    SLEEP = 5
+    """ 睡觉 """
+    MOVE_TO_RAND_SCENE = 10
+    """ 移动至随机场景 """
+    MOVE_TO_DORMITORY = 11
+    """ 移动至所属宿舍 """
+    MOVE_TO_TOILET = 12
+    """ 去洗手间 """
+    MOVE_TO_DR_OFFICE = 13
+    """ 移动至博士办公室 """
     MOVE_TO_MUSIC_ROOM = 14
     """ 移动至音乐室 """
-    SINGING = 15
-    """ 唱歌 """
-    SING_RAND_CHARACTER = 16
-    """ 唱歌给场景里随机对象听 """
-    PLAY_PIANO_RAND_CHARACTER = 17
-    """ 弹奏钢琴给场景里随机对象听 """
-    TOUCH_HEAD_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 18
-    """ 对场景中抱有超越友谊想法的随机对象摸头 """
-    MOVE_TO_DORMITORY = 19
-    """ 移动至所属宿舍 """
-    SLEEP = 20
-    """ 睡觉 """
-    REST = 21
-    """ 休息一会儿 """
-    MOVE_TO_RAND_SCENE = 22
-    """ 移动至随机场景 """
-    EMBRACE_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 23
-    """ 对场景中抱有超越友谊想法的随机对象拥抱 """
-    KISS_TO_LIKE_TARGET_IN_SCENE = 24
-    """ 和场景中自己喜欢的随机对象接吻 """
-    MOVE_TO_LIKE_TARGET_SCENE = 25
-    """ 移动至随机某个自己喜欢的人所在场景 """
-    HAND_IN_HAND_TO_LIKE_TARGET_IN_SCENE = 26
-    """ 牵住场景中自己喜欢的随机对象的手 """
-    KISS_TO_NO_FIRST_KISS_TARGET_IN_SCENE = 27
-    """ 和场景中自己喜欢的还是初吻的随机对象接吻 """
-    MOVE_TO_NO_FIRST_KISS_LIKE_TARGET_SCENE = 28
-    """ 移动至喜欢的还是初吻的人所在的场景 """
-    DRINK_RAND_DRINKS = 29
-    """ 饮用背包内随机饮料 """
-    BUY_RAND_DRINKS_AT_CAFETERIA = 30
-    """ 在取餐区购买随机饮料 """
-    ATTEND_CLASS = 31
-    """ 在教室上课 """
-    TEACH_A_LESSON = 32
-    """ 在教室教课 """
-    MOVE_TO_GROVE = 33
-    """ 移动至加工站入口场景 """
-    MOVE_TO_ITEM_SHOP = 34
-    """ 移动至训练场入口场景 """
-    BUY_GUITAR = 35
-    """ 购买吉他 """
-    PLAY_GUITAR = 36
-    """ 弹吉他 """
-    SELF_STUDY = 37
-    """ 自习 """
+    CHAT_RAND_CHARACTER = 20
+    """ 和场景里随机对象聊天 """
+    STROKE_RAND_CHARACTER = 21
+    """ 和场景里随机对象身体接触 """
+    # MOVE_TO_CLASS = 0
+    # """ 移动到所属教室 """
+    # MOVE_TO_RAND_CAFETERIA = 1
+    # """ 移动到随机取餐区 """
+    # BUY_RAND_FOOD_AT_CAFETERIA = 2
+    # """ 在取餐区购买随机食物 """
+    # MOVE_TO_RAND_RESTAURANT = 3
+    # """ 移动至随机就餐区 """
+    # EAT_BAG_RAND_FOOD = 4
+    # """ 食用背包内随机食物 """
+    # WEAR_CLEAN_UNDERWEAR = 6
+    # """ 穿干净的上衣 """
+    # WEAR_CLEAN_UNDERPANTS = 7
+    # """ 穿干净的内裤 """
+    # WEAR_CLEAN_BRA = 8
+    # """ 穿干净的胸罩 """
+    # WEAR_CLEAN_PANTS = 9
+    # """ 穿干净的裤子 """
+    # WEAR_CLEAN_SKIRT = 10
+    # """ 穿干净的短裙 """
+    # WEAR_CLEAN_SHOES = 11
+    # """ 穿干净的鞋子 """
+    # WEAR_CLEAN_SOCKS = 12
+    # """ 穿干净的袜子 """
+    # PLAY_PIANO = 13
+    # """ 弹钢琴 """
+    # SINGING = 15
+    # """ 唱歌 """
+    # SING_RAND_CHARACTER = 16
+    # """ 唱歌给场景里随机对象听 """
+    # PLAY_PIANO_RAND_CHARACTER = 17
+    # """ 弹奏钢琴给场景里随机对象听 """
+    # TOUCH_HEAD_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 18
+    # """ 对场景中抱有超越友谊想法的随机对象摸头 """
+    # EMBRACE_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 23
+    # """ 对场景中抱有超越友谊想法的随机对象拥抱 """
+    # KISS_TO_LIKE_TARGET_IN_SCENE = 24
+    # """ 和场景中自己喜欢的随机对象接吻 """
+    # MOVE_TO_LIKE_TARGET_SCENE = 25
+    # """ 移动至随机某个自己喜欢的人所在场景 """
+    # HAND_IN_HAND_TO_LIKE_TARGET_IN_SCENE = 26
+    # """ 牵住场景中自己喜欢的随机对象的手 """
+    # KISS_TO_NO_FIRST_KISS_TARGET_IN_SCENE = 27
+    # """ 和场景中自己喜欢的还是初吻的随机对象接吻 """
+    # MOVE_TO_NO_FIRST_KISS_LIKE_TARGET_SCENE = 28
+    # """ 移动至喜欢的还是初吻的人所在的场景 """
+    # DRINK_RAND_DRINKS = 29
+    # """ 饮用背包内随机饮料 """
+    # BUY_RAND_DRINKS_AT_CAFETERIA = 30
+    # """ 在取餐区购买随机饮料 """
+    # ATTEND_CLASS = 31
+    # """ 在教室上课 """
+    # TEACH_A_LESSON = 32
+    # """ 在教室教课 """
+    # MOVE_TO_GROVE = 33
+    # """ 移动至加工站入口场景 """
+    # MOVE_TO_ITEM_SHOP = 34
+    # """ 移动至训练场入口场景 """
+    # BUY_GUITAR = 35
+    # """ 购买吉他 """
+    # PLAY_GUITAR = 36
+    # """ 弹吉他 """
+    # SELF_STUDY = 37
+    # """ 自习 """
 
 
 class Panel:
@@ -196,21 +212,55 @@ class Premise:
     """前提id"""
 
     IS_PLAYER = "sys_0"
-    """ 是玩家角色 """
+    """ 玩家触发的该指令 """
     NO_PLAYER = "sys_1"
-    """ 不是玩家角色 """
+    """ NPC触发的该指令 """
     HAVE_TARGET = "sys_2"
     """ 拥有交互对象 """
     HAVE_NO_TARGET = "sys_3"
     """ 没有交互对象 """
     TARGET_IS_PLAYER = "sys_4"
-    """ 目标是玩家角色 """
+    """ 交互对象是玩家角色 """
     TARGET_NO_PLAYER = "sys_5"
     """ 交互对象不是玩家 """
     IS_MAN = "sex_0"
-    """ 角色是男性 """
+    """ 触发该指令的是男性 """
     IS_WOMAN = "sex_1"
-    """ 角色是女性 """
+    """ 触发该指令的是女性 """
+
+    IN_PLAYER_SCENE = "place_0"
+    """ 与玩家处于相同地点 """
+    IN_PLAYER_ZONE = "place_1"
+    """ 与玩家处于相同大区域 """
+    PLAYER_COME_SCENE = "place_2"
+    """ 玩家来到该角色所在的地点 """
+    PLAYER_COME_ZONE = "place_3"
+    """ 玩家来到该角色所在的区域 """
+    PLAYER_LEAVE_SCENE = "place_4"
+    """ 玩家离开该角色所在的地点 """
+    PLAYER_LEAVE_ZONE = "place_5"
+    """ 玩家离开该角色所在的区域 """
+    TATGET_COME_SCENE = "place_6"
+    """ 该角色来到玩家所在的地点 """
+    TATGET_COME_ZONE = "place_7"
+    """ 该角色来到玩家所在的区域 """
+    TATGET_LEAVE_SCENE = "place_8"
+    """ 该角色离开玩家所在的地点 """
+    TATGET_LEAVE_ZONE = "place_9"
+    """ 该角色离开玩家所在的区域 """
+    SCENE_ONLY_TWO = "place_10"
+    """ 该地点仅有玩家和该角色 """
+    SCENE_OVER_TWO = "place_11"
+    """ 该地点里有除了玩家和该角色之外的人 """
+    LEAVE_PLAYER_SCENE = "40"
+    """ 离开玩家所在场景 """
+    SCENE_HAVE_OTHER_CHARACTER = "48"
+    """ 场景中有自己外的其他NPC角色 """
+    HYPOSTHENIA = "83"
+    """ 体力不足 """
+    PHYSICAL_STRENGHT = "84"
+    """ 体力充沛 """
+
 
     IN_CAFETERIA = "0"
     """ 处于取餐区 """
@@ -272,10 +322,6 @@ class Premise:
     """ 目标没穿上衣 """
     TARGET_NOT_PUT_ON_SKIRT = "36"
     """ 目标没穿短裙 """
-    IN_PLAYER_SCENE = "39"
-    """ 与玩家处于相同场景 """
-    LEAVE_PLAYER_SCENE = "40"
-    """ 离开玩家所在场景 """
     TARGET_IS_ADORE = "41"
     """ 目标是爱慕对象 """
     TARGET_IS_ADMIRE = "42"
@@ -290,8 +336,6 @@ class Premise:
     """ 对目标抱有超越友谊的想法 """
     IS_BEYOND_FRIENDSHIP_TARGET = "47"
     """ 目标对自己抱有超越友谊的想法 """
-    SCENE_HAVE_OTHER_CHARACTER = "48"
-    """ 场景中有自己外的其他角色 """
     NO_WEAR_UNDERWEAR = "49"
     """ 没穿上衣 """
     NO_WEAR_UNDERPANTS = "50"
@@ -360,10 +404,6 @@ class Premise:
     """ 目标比自己高 """
     BEYOND_FRIENDSHIP_TARGET_IN_SCENE = "82"
     """ 对场景中某个角色抱有超越友谊的想法 """
-    HYPOSTHENIA = "83"
-    """ 体力不足 """
-    PHYSICAL_STRENGHT = "84"
-    """ 体力充沛 """
     IS_INDULGE = "85"
     """ 是一个放纵的人 """
     IN_FOUNTAIN = "86"

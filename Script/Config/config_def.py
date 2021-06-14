@@ -894,8 +894,8 @@ class TargetEffect:
     """ 配表id """
     target_id: str
     """ 所属目标id """
-    effect_id: int
-    """ 达成的效果id """
+    effect_id: str
+    """ 达成的效果id（即达成的前提id） """
 
 
 class TargetPremise:
@@ -905,7 +905,7 @@ class TargetPremise:
     """ 配表id """
     target_id: str
     """ 所属目标id """
-    premise_id: int
+    premise_id: str
     """ 所需前提id """
 
 
