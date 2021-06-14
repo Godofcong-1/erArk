@@ -77,7 +77,7 @@ class Behavior:
     DEAD = 13
     """ 死亡 """
     STROKE = 14
-    """ 抚摸 """
+    """ 身体接触 """
     TOUCH_BREAST = 15
     """ 摸胸 """
     TEACHING = 16
@@ -86,6 +86,8 @@ class Behavior:
     """ 弹吉他 """
     SELF_STUDY = 18
     """ 自习 """
+    MAKE_TEA = 20
+    """ 泡茶 """
 
 
 class StateMachine:
@@ -603,7 +605,7 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_ELOQUENCE_EXPERIENCE = 31
     """ 交互对象增加少量口才技能经验 """
     TARGET_ADD_FAVORABILITY_FOR_ELOQUENCE = 32
-    """ 按口才技能增加交互对象好感 """
+    """ 按话术技能增加交互对象好感 """
     ADD_SMALL_ATTEND_CLASS_EXPERIENCE = 33
     """ 按学习课程增加少量对应技能经验 """
     ADD_STUDENTS_COURSE_EXPERIENCE_FOR_IN_CLASS_ROOM = 34
@@ -639,13 +641,13 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_A_LUBRICATION = 50
     """ 交互对象增加少量Ａ润 """
     TARGET_ADD_SMALL_LEARN = 51
-    """ 交互对象增加少量习得 """
+    """ 交互对象增加少量习得（技巧补正） """
     TARGET_ADD_SMALL_RESPECT = 52
-    """ 交互对象增加少量恭顺 """
+    """ 交互对象增加少量恭顺（顺从补正） """
     TARGET_ADD_SMALL_FRIENDLY = 53
-    """ 交互对象增加少量好意 """
+    """ 交互对象增加少量好意（亲密补正） """
     TARGET_ADD_SMALL_DESIRE = 54
-    """ 交互对象增加少量欲情 """
+    """ 交互对象增加少量欲情（欲望补正） """
     TARGET_ADD_SMALL_HAPPY = 55
     """ 交互对象增加少量快乐 """
     TARGET_ADD_SMALL_LEAD = 56
@@ -662,6 +664,8 @@ class BehaviorEffect:
     """ 交互对象增加少量抑郁 """
     TARGET_ADD_SMALL_DISGUST = 62
     """ 交互对象增加少量反感 """
+    TARGET_ADD_ADJUST_BY_TALK = 100
+    """ 交互对象根据玩家的话术技能进行好感度、好意、欲情、快乐调整 """
 
 
 class InstructType:

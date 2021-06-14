@@ -427,32 +427,97 @@ def get_status_level(value: int) -> int:
     Keyword arguments:
     value -- 属性数值
     Return arguments:
-    int -- 数字评级
+    level -- 数字评级
     """
-    level = ""
     if value < 100:
-        level = "0"
+        level = 0
     elif value < 500:
-        level = "1"
+        level = 1
     elif value < 3000:
-        level = "2"
+        level = 2
     elif value < 10000:
-        level = "3"
+        level = 3
     elif value < 30000:
-        level = "4"
+        level = 4
     elif value < 60000:
-        level = "5"
+        level = 5
     elif value < 100000:
-        level = "6"
+        level = 6
     elif value < 150000:
-        level = "7"
+        level = 7
     elif value < 250000:
-        level = "8"
+        level = 8
     elif value < 400000:
-        level = "9"
+        level = 9
     elif value >= 400000:
-        level = "10"
+        level = 10
     return level
+
+
+def get_ability_level(value: int) -> int:
+    """
+    按能力数值评定数字等级
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    level -- 数字评级
+    """
+    if value < 100:
+        level = 0
+    elif value < 500:
+        level = 1
+    elif value < 3000:
+        level = 2
+    elif value < 10000:
+        level = 3
+    elif value < 30000:
+        level = 4
+    elif value < 60000:
+        level = 5
+    elif value < 100000:
+        level = 6
+    elif value < 150000:
+        level = 7
+    elif value < 250000:
+        level = 8
+    elif value < 400000:
+        level = 9
+    elif value >= 400000:
+        level = 10
+    return level
+
+def get_ability_adjust(value: int) -> int:
+    """
+    按能力数值评定修正比例
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 0.2
+    elif level == 1:
+        just = 0.4
+    elif level == 2:
+        just = 0.7
+    elif level == 3:
+        just = 1.0
+    elif level == 4:
+        just = 1.4
+    elif level == 5:
+        just = 1.8
+    elif level == 6:
+        just = 2.3
+    elif level == 7:
+        just = 2.8
+    elif level == 8:
+        just = 3.4
+    elif level == 9:
+        just = 4.0
+    elif level == 10:
+        just = 5.0
+    return just
 
 
 def judge_age_group(age: int) -> int:
