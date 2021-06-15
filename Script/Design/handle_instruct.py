@@ -661,32 +661,32 @@ def handle_drink_alcohol():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
-@add_instruct(
-    constant.Instruct.SINGING,
-    constant.InstructType.DAILY,
-    _("唱歌"),
-    {})
-def handle_singing():
-    """处理唱歌指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 5
-    character_data.behavior.behavior_id = constant.Behavior.SINGING
-    character_data.state = constant.CharacterStatus.STATUS_SINGING
-    update.game_update_flow(5)
+# @add_instruct(
+#     constant.Instruct.SINGING,
+#     constant.InstructType.DAILY,
+#     _("唱歌"),
+#     {})
+# def handle_singing():
+#     """处理唱歌指令"""
+#     character.init_character_behavior_start_time(0, cache.game_time)
+#     character_data = cache.character_data[0]
+#     character_data.behavior.duration = 5
+#     character_data.behavior.behavior_id = constant.Behavior.SINGING
+#     character_data.state = constant.CharacterStatus.STATUS_SINGING
+#     update.game_update_flow(5)
 
-@add_instruct(
-    constant.Instruct.PLAY_INSTRUMENT,
-    constant.InstructType.DAILY,
-    _("演奏乐器"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_play_instrument():
-    """处理演奏乐器指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+# @add_instruct(
+#     constant.Instruct.PLAY_INSTRUMENT,
+#     constant.InstructType.DAILY,
+#     _("演奏乐器"),
+#     {constant.Premise.HAVE_TARGET},
+# )
+# def handle_play_instrument():
+#     """处理演奏乐器指令"""
+#     character.init_character_behavior_start_time(0, cache.game_time)
+#     character_data: game_type.Character = cache.character_data[0]
+#     character_data.behavior.duration = 5
+#     update.game_update_flow(5)
 
 #以下为猥亵#
 @add_instruct(

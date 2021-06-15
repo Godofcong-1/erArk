@@ -790,10 +790,10 @@ class Instruct:
     """ 告白 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
-    SINGING = 0
-    """ 唱歌 """
-    PLAY_INSTRUMENT = 0
-    """ 演奏乐器 """
+    # SINGING = 0
+    # """ 唱歌 """
+    # PLAY_INSTRUMENT = 0
+    # """ 演奏乐器 """
     #工作#
     OFFICIAL_WORK = 0
     """ 处理公务 """
