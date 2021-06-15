@@ -194,6 +194,7 @@ def handle_sleep():
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(480)
+    # cache.now_panel_id = constant.Panel.GET_UP
 
 
 # @add_instruct(

@@ -206,6 +206,8 @@ class Panel:
     """ 道具商店面板 """
     # VIEW_SCHOOL_TIMETABLE = 7
     # """ 查看课程表 """
+    GET_UP = 7
+    """ 起床面板 """
 
 
 class Premise:
@@ -227,6 +229,11 @@ class Premise:
     """ 触发该指令的是男性 """
     IS_WOMAN = "sex_1"
     """ 触发该指令的是女性 """
+
+    HIGH_5 = "high_5"
+    """ 优先度为5的空白前提 """
+    HIGH_10 = "high_10"
+    """ 优先度为10的空白前提 """
 
     IN_PLAYER_SCENE = "place_0"
     """ 与玩家处于相同地点 """
@@ -768,8 +775,6 @@ class Instruct:
     """ 进食 """
     REST = 0
     """ 休息 """
-    SLEEP = 0
-    """ 睡觉 """
     BUY_ITEM = 0
     """ 购买道具 """
     BUY_FOOD = 0
@@ -990,6 +995,8 @@ class Instruct:
     #系统#
     MOVE = 0
     """ 移动 """
+    SLEEP = 0
+    """ 睡觉 """
     SEE_ATTR = 0
     """ 查看属性 """
     SEE_OWNER_ATTR = 0
