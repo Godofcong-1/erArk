@@ -5,5 +5,5 @@ str,int,int,str
 口上配置数据,,,
 0,14,0,{Name}{PlayerNickName}装作不经意地尝试与{TargetName}进行身体接触
 1,14,0,{Name}{PlayerNickName}不着声色地蹭了一下{TargetName}的手背
-2,14,0,{Name}{PlayerNickName}的腿碰到了{TargetName}的小腿
+2,14,0,{Name}{PlayerNickName}碰到了{TargetName}的小腿
 3,14,0,{Name}不经意地碰了一下{TargetName}{PlayerNickName}的手

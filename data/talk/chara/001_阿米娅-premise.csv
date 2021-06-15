@@ -4,11 +4,6 @@ str,str,str
 0,0,0
 口上前提表,,
 0,0,sys_0
-1,0,sys_2
+1,0,high_5
 2,1,sys_0
-3,1,sys_2
-4,2,sys_0
-5,2,sys_2
-6,3,sys_4
-7,3,sys_1
-8,3,place_0
+3,1,high_5
