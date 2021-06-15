@@ -406,4 +406,13 @@ class SeeInstructPanel:
         instruct_id -- 指令id
         """
         py_cmd.clr_cmd()
+        #加个指令名称绘制#
+        instruct_name = constant.handle_instruct_name_data[instruct_id]
+        now_draw_1 = draw.NormalDraw()
+        now_draw_1.text = f"{instruct_name}\n"
+        now_draw_1.width = 8
+        now_draw_1.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        #加个指令名称绘制#
         handle_instruct.handle_instruct(instruct_id)
