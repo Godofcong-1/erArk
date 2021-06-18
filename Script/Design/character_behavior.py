@@ -1,7 +1,5 @@
 import random
 import datetime
-import time
-import numpy
 from uuid import UUID
 from types import FunctionType
 from typing import Dict
@@ -23,7 +21,6 @@ from Script.Design import (
     cooking,
 )
 from Script.Config import game_config, normal_config
-from Script.UI.Moudle import panel, draw
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -38,7 +35,6 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
-    t1 = time.time()
     while 1:
         if len(cache.over_behavior_character) >= len(cache.character_data):
             break
@@ -48,8 +44,6 @@ def init_character_behavior():
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
         update_cafeteria()
-    t2 = time.time()
-    print(t2 - t1)
     cache.over_behavior_character = set()
 
 

@@ -31,6 +31,13 @@ def handle_talk(character_id: int):
         return
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
+            talk_config = game_config.config_talk[talk_id]
+            if talk_config.adv_id != 0:
+                target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+                print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
+                if character_data.adv != talk_config.adv_id:
+                    if target_data.adv != talk_config.adv_id:
+                        continue
             now_weight = 1
             if talk_id in game_config.config_talk_premise_data:
                 now_weight = 0
