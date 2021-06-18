@@ -541,20 +541,20 @@ def handle_target_same_sex(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_AGE_SIMILAR)
-def handle_target_age_similar(character_id: int) -> int:
-    """
-    校验角色目标对像是否与自己年龄相差不大
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    if character_data.age >= target_data.age - 2 and character_data.age <= target_data.age + 2:
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AGE_SIMILAR)
+# def handle_target_age_similar(character_id: int) -> int:
+#     """
+#     校验角色目标对像是否与自己年龄相差不大
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     if character_data.age >= target_data.age - 2 and character_data.age <= target_data.age + 2:
+#         return 1
+#     return 0
 
 
 # @add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_SIMILAR)
@@ -611,23 +611,23 @@ def handle_target_is_player(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERGAE_STATURE_SIMILAR)
-def handle_target_average_stature_similar(character_id: int) -> int:
-    """
-    校验角色目体型高是否与平均体型相差不大
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    if age_tem in cache.average_bodyfat_by_age:
-        average_bodyfat = cache.average_bodyfat_by_age[age_tem][target_data.sex]
-        if target_data.bodyfat >= average_bodyfat * 0.95 and target_data.bodyfat <= average_bodyfat * 1.05:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERGAE_STATURE_SIMILAR)
+# def handle_target_average_stature_similar(character_id: int) -> int:
+#     """
+#     校验角色目体型高是否与平均体型相差不大
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     if age_tem in cache.average_bodyfat_by_age:
+#         average_bodyfat = cache.average_bodyfat_by_age[age_tem][target_data.sex]
+#         if target_data.bodyfat >= average_bodyfat * 0.95 and target_data.bodyfat <= average_bodyfat * 1.05:
+#             return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_NOT_PUT_ON_UNDERWEAR)
@@ -1116,38 +1116,38 @@ def handle_chest_is_not_cliff(character_id: int) -> int:
     return attr_calculation.judge_chest_group(character_data.chest.now_chest)
 
 
-@add_premise(constant.Premise.EXCELLED_AT_PLAY_MUSIC)
-def handle_excelled_at_play_music(character_id: int) -> int:
-    """
-    校验角色是否擅长演奏乐器
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[25]
-    if 25 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[25])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.EXCELLED_AT_PLAY_MUSIC)
+# def handle_excelled_at_play_music(character_id: int) -> int:
+#     """
+#     校验角色是否擅长演奏乐器
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[25]
+#     if 25 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[25])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.EXCELLED_AT_SINGING)
-def handle_excelled_at_singing(character_id: int) -> int:
-    """
-    校验角色是否擅长演唱
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[15]
-    if 15 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[15])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.EXCELLED_AT_SINGING)
+# def handle_excelled_at_singing(character_id: int) -> int:
+#     """
+#     校验角色是否擅长演唱
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[15]
+#     if 15 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[15])
+#         return weight * level
+#     return weight
 
 
 @add_premise(constant.Premise.IN_MUSIC_ROOM)
@@ -1355,20 +1355,20 @@ def handle_no_beyond_friendship_target(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_IS_HEIGHT)
-def handle_target_is_height(character_id: int) -> int:
-    """
-    校验角色目标身高是否与平均身高相差不大
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.height.now_height >= character_data.height.now_height * 1.05:
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_IS_HEIGHT)
+# def handle_target_is_height(character_id: int) -> int:
+#     """
+#     校验角色目标身高是否与平均身高相差不大
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     if target_data.height.now_height >= character_data.height.now_height * 1.05:
+#         return 1
+#     return 0
 
 
 @add_premise(constant.Premise.BEYOND_FRIENDSHIP_TARGET_IN_SCENE)
@@ -2321,180 +2321,180 @@ def handle_have_students_in_classroom(character_id: int) -> int:
     return len(class_data & now_scene_data.character_list)
 
 
-@add_premise(constant.Premise.GOOD_AT_ELOQUENCE)
-def handle_good_at_eloquence(character_id: int) -> int:
-    """
-    校验角色是否擅长口才
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[12]
-    if 12 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[12])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.GOOD_AT_ELOQUENCE)
+# def handle_good_at_eloquence(character_id: int) -> int:
+#     """
+#     校验角色是否擅长口才
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[12]
+#     if 12 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[12])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.GOOD_AT_LITERATURE)
-def handle_good_at_literature(character_id: int) -> int:
-    """
-    校验角色是否擅长文学
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[2]
-    if 2 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[2])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.GOOD_AT_LITERATURE)
+# def handle_good_at_literature(character_id: int) -> int:
+#     """
+#     校验角色是否擅长文学
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[2]
+#     if 2 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[2])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.GOOD_AT_WRITING)
-def handle_good_at_writing(character_id: int) -> int:
-    """
-    校验角色是否擅长写作
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[28]
-    if 28 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[28])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.GOOD_AT_WRITING)
+# def handle_good_at_writing(character_id: int) -> int:
+#     """
+#     校验角色是否擅长写作
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[28]
+#     if 28 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[28])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.GOOD_AT_DRAW)
-def handle_good_at_draw(character_id: int) -> int:
-    """
-    校验角色是否擅长绘画
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[13]
-    if 13 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[13])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.GOOD_AT_DRAW)
+# def handle_good_at_draw(character_id: int) -> int:
+#     """
+#     校验角色是否擅长绘画
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[13]
+#     if 13 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[13])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.GOOD_AT_ART)
-def handle_good_at_art(character_id: int) -> int:
-    """
-    校验角色是否擅长艺术
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 1 + character_data.knowledge_interest[5]
-    if 5 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[5])
-        return weight * level
-    return weight
+# @add_premise(constant.Premise.GOOD_AT_ART)
+# def handle_good_at_art(character_id: int) -> int:
+#     """
+#     校验角色是否擅长艺术
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 1 + character_data.knowledge_interest[5]
+#     if 5 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[5])
+#         return weight * level
+#     return weight
 
 
-@add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_RELIGION)
-def handle_target_little_knowledge_of_religion(character_id: int) -> int:
-    """
-    校验交互对象是否对宗教一知半解
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if 7 in target_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(target_data.knowledge[7])
-        if level <= 2:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_RELIGION)
+# def handle_target_little_knowledge_of_religion(character_id: int) -> int:
+#     """
+#     校验交互对象是否对宗教一知半解
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     if 7 in target_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(target_data.knowledge[7])
+#         if level <= 2:
+#             return 1
+#     return 0
 
 
-@add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_FAITH)
-def handle_target_little_knowledge_of_faith(character_id: int) -> int:
-    """
-    校验交互对象是否对信仰一知半解
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if 8 in target_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(target_data.knowledge[8])
-        if level <= 2:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_FAITH)
+# def handle_target_little_knowledge_of_faith(character_id: int) -> int:
+#     """
+#     校验交互对象是否对信仰一知半解
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     if 8 in target_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(target_data.knowledge[8])
+#         if level <= 2:
+#             return 1
+#     return 0
 
 
-@add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_ASTRONOMY)
-def handle_target_little_knowledge_of_astronomy(character_id: int) -> int:
-    """
-    校验交互对象是否对天文学一知半解
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if 53 in target_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(target_data.knowledge[53])
-        if level <= 2:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_ASTRONOMY)
+# def handle_target_little_knowledge_of_astronomy(character_id: int) -> int:
+#     """
+#     校验交互对象是否对天文学一知半解
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     if 53 in target_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(target_data.knowledge[53])
+#         if level <= 2:
+#             return 1
+#     return 0
 
 
-@add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_ASTROLOGY)
-def handle_target_little_knowledge_of_astrology(character_id: int) -> int:
-    """
-    校验交互对象是否对占星学一知半解
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if 75 in target_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(target_data.knowledge[75])
-        if level <= 2:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_LITTLE_KNOWLEDGE_OF_ASTROLOGY)
+# def handle_target_little_knowledge_of_astrology(character_id: int) -> int:
+#     """
+#     校验交互对象是否对占星学一知半解
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     if 75 in target_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(target_data.knowledge[75])
+#         if level <= 2:
+#             return 1
+#     return 0
 
 
-@add_premise(constant.Premise.RICH_EXPERIENCE_IN_SEX)
-def handle_rich_experience_in_sex(character_id: int) -> int:
-    """
-    校验角色是否性经验丰富
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_exp = 0
-    for i in character_data.sex_experience:
-        now_exp += character_data.sex_experience[i]
-    now_level = attr_calculation.get_experience_level_weight(now_exp)
-    if now_level > 4:
-        return now_level - 4
-    return 0
+# @add_premise(constant.Premise.RICH_EXPERIENCE_IN_SEX)
+# def handle_rich_experience_in_sex(character_id: int) -> int:
+#     """
+#     校验角色是否性经验丰富
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     now_exp = 0
+#     for i in character_data.sex_experience:
+#         now_exp += character_data.sex_experience[i]
+#     now_level = attr_calculation.get_experience_level_weight(now_exp)
+#     if now_level > 4:
+#         return now_level - 4
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_SLEEP)
@@ -2561,21 +2561,21 @@ def handle_is_staraightforward(character_id: int) -> int:
     return character_data.nature[13] >= 50
 
 
-@add_premise(constant.Premise.NO_GOOD_AT_ELOQUENCE)
-def handle_no_good_at_eloquence(character_id: int) -> int:
-    """
-    校验角色是否不擅长口才
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    weight = 8
-    if 12 in character_data.knowledge:
-        level = attr_calculation.get_experience_level_weight(character_data.knowledge[12])
-        return 8 - level
-    return weight
+# @add_premise(constant.Premise.NO_GOOD_AT_ELOQUENCE)
+# def handle_no_good_at_eloquence(character_id: int) -> int:
+#     """
+#     校验角色是否不擅长口才
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     weight = 8
+#     if 12 in character_data.knowledge:
+#         level = attr_calculation.get_experience_level_weight(character_data.knowledge[12])
+#         return 8 - level
+#     return weight
 
 
 @add_premise(constant.Premise.TARGET_NO_EXPERIENCE_IN_SEX)

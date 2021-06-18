@@ -113,10 +113,6 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     if character_tem.SexExperienceTem != "":
         if character_tem.SexExperienceTem != "Rand":
             now_character.sex_experience_tem = character_tem.SexExperienceTem
-        else:
-            now_character.sex_experience_tem = get_rand_npc_sex_experience_tem(
-                now_character.age, now_character.sex
-            )
     if character_tem.BodyFat:
         now_character.bodyfat_tem = character_tem.BodyFat
     else:
@@ -168,17 +164,11 @@ def create_random_npc(id) -> dict:
     age_weight_tem = age_weight_regin_data[now_age_weight_regin]
     random_npc_sex = get_rand_npc_sex()
     random_npc_name = attr_text.get_random_name_for_sex(random_npc_sex)
-    random_npc_age_tem = get_rand_npc_age_tem(age_weight_tem)
-    fat_tem = get_rand_npc_fat_tem(age_weight_tem)
-    body_fat_tem = get_rand_npc_body_fat_tem(age_weight_tem, fat_tem)
     random_npc_new_data = game_type.NpcTem()
     random_npc_new_data.Name = random_npc_name
     random_npc_new_data.Sex = random_npc_sex
-    random_npc_new_data.Age = random_npc_age_tem
     random_npc_new_data.Position = ["0"]
     random_npc_new_data.AdvNpc = 0
-    random_npc_new_data.Weight = fat_tem
-    random_npc_new_data.BodyFat = body_fat_tem
     random_npc_new_data.SexExperienceTem = "Rand"
     if random_npc_sex in {1, 2}:
         random_npc_new_data.Chest = attr_calculation.get_rand_npc_chest_tem()
@@ -202,67 +192,6 @@ def get_rand_npc_sex() -> int:
     now_weight = random.randint(0, sex_weight_max - 1)
     weight_regin = value_handle.get_next_value_for_list(now_weight, sex_weight_regin_list)
     return sex_weight_regin_data[weight_regin]
-
-
-def get_rand_npc_fat_tem(age_judge: str) -> int:
-    """
-    按人群年龄段体重分布比例随机生成重模板
-    Keyword arguments:
-    age_judge -- 职业(student:学生,teacher:老师)
-    Return arguments:
-    int -- 体重模板id
-    """
-    now_fat_weight_data = game_config.config_occupation_bmi_region_data[age_judge]
-    now_fat_tem = value_handle.get_random_for_weight(now_fat_weight_data)
-    return now_fat_tem
-
-
-def get_rand_npc_sex_experience_tem(age: int, sex: int) -> int:
-    """
-    按年龄范围随机获取性经验模板
-    Keyword arguments:
-    age -- 年龄
-    sex -- 性别
-    Return arguments:
-    int -- 性经验模板id
-    """
-    age_judge_sex_experience_tem_data = game_config.config_age_judge_sex_experience_tem_data
-    if sex == 3:
-        sex = 1
-    if sex == 2:
-        sex = 0
-    now_tem_data = age_judge_sex_experience_tem_data[sex]
-    age_region_list = [int(i) for i in now_tem_data.keys()]
-    age_region = value_handle.get_old_value_for_list(age, age_region_list)
-    age_region_data = now_tem_data[age_region]
-    return value_handle.get_random_for_weight(age_region_data)
-
-
-body_fat_weight_data = game_config.config_occupation_bodyfat_region_data
-
-
-def get_rand_npc_body_fat_tem(age_judge: str, bmi_tem: int) -> int:
-    """
-    按职业和体重随机生成体脂率模板
-    Keyword arguments:
-    age_judge -- 职业(student:学生,teacher:老师)
-    bmi_tem -- bmi模板
-    """
-    # now_body_fat_data = game_config.config_occupation_bodyfat_region_data[age_judge][bmi_tem]
-    return bmi_tem
-
-
-def get_rand_npc_age_tem(age_judge: str) -> int:
-    """
-    按职业断随机生成npc年龄段id
-    Keyword arguments:
-    age_judge -- 职业(student:学生,teacher:老师)
-    Return arguments:
-    int -- 年龄段id
-    """
-    now_age_weight_data = game_config.config_occupation_age_region_data[age_judge]
-    now_age_tem = value_handle.get_random_for_weight(now_age_weight_data)
-    return now_age_tem
 
 
 def init_character_dormitory():

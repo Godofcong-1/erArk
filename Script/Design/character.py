@@ -32,19 +32,8 @@ def init_attr(character_id: int):
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
     # character_data.end_age = attr_calculation.get_end_age(character_data.sex)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
-    bmi = attr_calculation.get_bmi(character_data.weight_tem)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
     # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
-    character_data.measurements = attr_calculation.get_measurements(
-        character_data.sex,
-        character_data.height.now_height,
-        character_data.weight,
-        character_data.bodyfat,
-        character_data.bodyfat_tem,
-    )
-    character_data.sex_experience = attr_calculation.get_sex_experience(
-        character_data.sex_experience_tem, character_data.sex
-    )
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
@@ -61,13 +50,6 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    chest_tem_config = game_config.config_chest[character_data.chest_tem]
-    if chest_tem_config.weight_fix:
-        fix_weight = value_handle.get_gauss_rand(
-            chest_tem_config.weight_fix - 0.5, chest_tem_config.weight_fix + 0.5
-        )
-        character_data.weight += fix_weight
-    character_data.chest = attr_calculation.get_chest(character_data.chest_tem, character_data.birthday)
     new_nature = nature.get_random_nature()
     for nature_id in new_nature:
         if nature_id not in character_data.nature:

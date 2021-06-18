@@ -18,53 +18,6 @@ class AbilityType:
     """ 类型名 """
 
 
-class AgeJudgeSexExperienceTem:
-    """ 不同性别不同年龄段对应生成不同性经验模板的权重 """
-
-    cid: int
-    """ 模板id """
-    sex: int
-    """ 性别类型 """
-    age: int
-    """ 年龄段 """
-    sex_exp_tem: int
-    """ 性经验模板 """
-    weight: int
-    """ 权重 """
-
-
-class AgeTem:
-    """ 不同年龄段模板的年龄范围 """
-
-    cid: int
-    """ 模板id """
-    max_age: int
-    """ 最大年龄 """
-    min_age: int
-    """ 最小年龄 """
-
-
-class AttrTem:
-    """ 性别对应的角色各项基础属性模板 """
-
-    cid: int
-    """ 模板id """
-    sex: int
-    """ 性别 """
-    age_tem: int
-    """ 年龄模板id """
-    hit_point_tem: int
-    """ HP模板id """
-    mana_point_tem: int
-    """ MP模板id """
-    sex_experience: int
-    """ 性经验模板id """
-    weight_tem: int
-    """ 体重模板id """
-    body_fat_tem: int
-    """ 体脂率模板id """
-
-
 class BarConfig:
     """ 比例条名字对应的状态图片和绘制宽度 """
 
@@ -89,21 +42,6 @@ class BehaviorEffect:
     """ 行为id """
     effect_id: int
     """ 结算器id """
-
-
-class BodyFatTem:
-    """ 按性别划分的体脂率模板和范围 """
-
-    cid: int
-    """ 模板id """
-    sex_type: int
-    """ 性别类型 0:男,1:女 """
-    sub_type: int
-    """ 体脂率子类型 """
-    min_value: float
-    """ 最小值 """
-    max_value: float
-    """ 最大值 """
 
 
 class Book:
@@ -135,23 +73,6 @@ class CharacterStateType:
     """ 类型id """
     name: str
     """ 类型名 """
-
-
-class ChestTem:
-    """ 罩杯对应范围和生成权重 """
-
-    cid: int
-    """ 模板id """
-    min_value: float
-    """ 最小值 """
-    max_value: float
-    """ 最大值 """
-    weight_fix: float
-    """ 体重修正 """
-    weight: int
-    """ 权重 """
-    info: str
-    """ 描述 """
 
 
 class ClothingEvaluate:
@@ -218,21 +139,6 @@ class Course:
     """ 课程id """
     name: str
     """ 名字 """
-
-
-class CourseSkillExperience:
-    """ 课程获取技能经验配置 """
-
-    cid: int
-    """ 配置id """
-    course: int
-    """ 课程类型 """
-    skill_type: int
-    """ 技能类型0:知识1语言 """
-    skill: int
-    """ 技能id """
-    experience: float
-    """ 经验 """
 
 
 class EndAgeTem:
@@ -325,19 +231,6 @@ class FoodQualityWeight:
     """ 权重 """
 
 
-class HeightTem:
-    """ 身高预期权值模板 """
-
-    cid: int
-    """ 模板id """
-    sex: int
-    """ 性别id """
-    max_value: float
-    """ 最大值 """
-    min_value: float
-    """ 最小值 """
-
-
 class HitPointTem:
     """ hp模板对应平均值 """
 
@@ -376,41 +269,6 @@ class Juel:
     """ 珠id """
     name: str
     """ 珠名 """
-
-
-class Knowledge:
-    """ 技能配置信息 """
-
-    cid: int
-    """ 技能id """
-    name: str
-    """ 名字 """
-    type: int
-    """ 类型 """
-
-
-class KnowledgeType:
-    """ 技能类型配置信息 """
-
-    cid: int
-    """ 技能类型id """
-    name: str
-    """ 名字 """
-
-
-class Language:
-    """ 语言配置信息 """
-
-    cid: int
-    """ 语言id """
-    name: str
-    """ 名字 """
-    difficulty: int
-    """ 学习难度 """
-    family: int
-    """ 语族 """
-    info: str
-    """ 描述 """
 
 
 class ManaPointTem:
@@ -468,47 +326,6 @@ class NatureTag:
     """ 正面倾向 """
     bad: str
     """ 负面倾向 """
-
-
-class OccupationAgeRegion:
-    """ 学生和老师的年龄段生成权重区间配置 """
-
-    cid: int
-    """ 区间id """
-    occupation: str
-    """ 职业 """
-    age_region: int
-    """ 年龄段 """
-    region: int
-    """ 权重区间 """
-
-
-class OccupationBMIRegion:
-    """ 学生和老师各自肥胖率配置 """
-
-    cid: int
-    """ 区间id """
-    occupation: str
-    """ 职业 """
-    bmi_type: int
-    """ bmi类型 """
-    region: int
-    """ 权重区间 """
-
-
-class OccupationBodyFatRegion:
-    """ 年龄段下体重对应各体脂率范围权重 """
-
-    cid: int
-    """ 模板id """
-    occupation: str
-    """ 职业 """
-    bmi_id: int
-    """ 体重模板 """
-    bodyfat_type: int
-    """ 体脂率模板 """
-    region: int
-    """ 权重区间 """
 
 
 class Organ:
@@ -625,34 +442,6 @@ class Season:
     """ 季节名 """
 
 
-class SexExperience:
-    """ 性经验丰富程度模板对应器官性经验模板 """
-
-    cid: int
-    """ 表id """
-    sex_exp_type: int
-    """ 性经验丰富程度大类 """
-    organ_id: int
-    """ 器官id """
-    exp_tem: int
-    """ 经验模板 """
-
-
-class SexExperienceTem:
-    """ 器官类型性经验丰富程度对应经验范围 """
-
-    cid: int
-    """ 模板id """
-    sex_exp_tem_type: int
-    """ 器官类型 """
-    sub_type: int
-    """ 子类型 """
-    max_exp: int
-    """ 最大经验 """
-    min_exp: int
-    """ 最小经验 """
-
-
 class SexTem:
     """ 性别对应描述和性别器官模板 """
 
@@ -686,26 +475,6 @@ class SolarPeriod:
     """ 节气名 """
     season: int
     """ 所属季节id """
-
-
-class StatureDescriptionPremise:
-    """ 身材描述文本依赖前提配置 """
-
-    cid: int
-    """ 配表id """
-    stature_type: int
-    """ 描述文本id """
-    premise: str
-    """ 前提id """
-
-
-class StatureDescriptionText:
-    """ 角色身材描述文本 """
-
-    cid: int
-    """ 描述文本id """
-    text: str
-    """ 文本 """
 
 
 class Status:
@@ -748,17 +517,6 @@ class TalentType:
     """ 类型名 """
 
 
-class WaistHipProportion:
-    """ 不同肥胖程度腰臀比例差值配置 """
-
-    cid: int
-    """ 比例id """
-    weitht_tem: int
-    """ 肥胖程度模板id """
-    value: float
-    """ 差值比 """
-
-
 class WeekDay:
     """ 星期描述配置 """
 
@@ -766,17 +524,6 @@ class WeekDay:
     """ 周id """
     name: str
     """ 描述 """
-
-
-class WeightTem:
-    """ 体重模板对应体重范围 """
-
-    cid: int
-    """ 模板id """
-    min_value: float
-    """ 最小值 """
-    max_value: float
-    """ 最大值 """
 
 
 class TalkPremise:

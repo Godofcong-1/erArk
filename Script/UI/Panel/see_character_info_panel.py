@@ -180,20 +180,20 @@ class SeeCharacterMainAttrPanel:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
-        stature_draw = CharacterStatureText(character_id, width)
+        # stature_draw = CharacterStatureText(character_id, width)
         room_draw = CharacterRoomText(character_id, width)
         birthday_draw = CharacterBirthdayText(character_id, width)
-        sture_info_draw = CharacterStatureInfoText(character_id, width)
-        measurement_draw = CharacterMeasurementsText(character_id, width)
-        sex_experience_draw = CharacterSexExperienceText(character_id, width)
+        # sture_info_draw = CharacterStatureInfoText(character_id, width)
+        # measurement_draw = CharacterMeasurementsText(character_id, width)
+        # sex_experience_draw = CharacterSexExperienceText(character_id, width)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
-            stature_draw,
+            # stature_draw,
             room_draw,
             birthday_draw,
-            sture_info_draw,
-            measurement_draw,
-            sex_experience_draw,
+            # sture_info_draw,
+            # measurement_draw,
+            # sex_experience_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []

@@ -10,8 +10,6 @@ def init_character_interest():
     """
     初始化全部角色兴趣/精力/天赋数值分配
     """
-    language_skills = list(game_config.config_language.keys())
-    knowledge_skills = list(game_config.config_knowledge.keys())
     for character in cache.character_data:
         numpy.random.shuffle(knowledge_skills)
         numpy.random.shuffle(language_skills)

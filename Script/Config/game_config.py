@@ -13,17 +13,6 @@ config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
-config_age_judge_sex_experience_tem: Dict[int, config_def.AgeJudgeSexExperienceTem] = {}
-""" 不同性别不同年龄段对应生成不同性经验模板的权重 """
-config_age_judge_sex_experience_tem_data: Dict[int, Dict[int, Dict[int, int]]] = {}
-"""
-不同性别不同年龄段对应生成不同性经验模板的配置数据
-性别:年龄段:性经验模板:权重
-"""
-config_age_tem: Dict[int, config_def.AgeTem] = {}
-""" 年龄段年龄范围模板 """
-config_attr_tem: Dict[int, config_def.AttrTem] = {}
-""" 性别对应角色各项基础属性模板 """
 config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
@@ -34,13 +23,6 @@ config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
 """ 行为结算器配置 """
 config_behavior_effect_data: Dict[int, Set] = {}
 """ 行为所包含的结算器id数据 """
-config_body_fat_tem: Dict[int, config_def.BodyFatTem] = {}
-""" 按性别划分的体脂率模板和范围 """
-config_body_fat_tem_data: Dict[int, Dict[int, int]] = {}
-"""
-性别划分的体脂率模板对应范围数据
-性别:体脂率范围:体脂率范围配置id
-"""
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
@@ -49,8 +31,6 @@ config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
 """ 角色状态类型配表数据 """
 config_character_state_type_data: Dict[int, Set] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
-config_chest: Dict[int, config_def.ChestTem] = {}
-""" 罩杯配置数据 """
 config_clothing_evaluate: Dict[int, config_def.ClothingEvaluate] = {}
 """ 服装评价配置数据 """
 config_clothing_evaluate_list: List[str] = []
@@ -70,22 +50,6 @@ config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
 config_course: Dict[int, config_def.Course] = {}
 """ 课程配置数据 """
-config_course_skill_experience: Dict[int, config_def.CourseSkillExperience] = {}
-""" 课程获取技能经验配置 """
-config_course_knowledge_experience_data: Dict[int, Dict[int, float]] = {}
-"""
-课程获取知识技能经验配置数据
-课程id:技能id:经验数量
-"""
-config_course_language_experience_data: Dict[int, Dict[int, float]] = {}
-"""
-课程获取语言技能经验配置数据
-课程id:技能id:经验数量
-"""
-config_end_age_tem: Dict[int, config_def.EndAgeTem] = {}
-""" 最终年龄范围配置模板 """
-config_end_age_tem_sex_data: Dict[int, int] = {}
-""" 各性别最终年龄范围配置数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -106,10 +70,6 @@ config_food_quality_weight_data: Dict[int, Dict[int, int]] = {}
 烹饪技能等级制造食物品质权重表
 技能等级:食物品质:权重
 """
-config_height_tem: Dict[int, config_def.HeightTem] = {}
-""" 身高预期值模板 """
-config_height_tem_sex_data: Dict[int, config_def.HeightTem] = {}
-""" 性别对应身高预期值模板 """
 config_hitpoint_tem: Dict[int, config_def.HitPointTem] = {}
 """ HP模板对应平均值 """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
@@ -120,22 +80,6 @@ config_item_tag_data: Dict[str, Set] = {}
 """
 道具标签配置数据
 标签:道具id集合
-"""
-config_knowledge: Dict[int, config_def.Knowledge] = {}
-""" 知识技能配置 """
-config_knowledge_type: Dict[int, config_def.KnowledgeType] = {}
-""" 知识技能类型配置 """
-config_knowledge_type_data: Dict[int, Set] = {}
-"""
-知识技能类型配置数据
-类型id:类型下技能集合
-"""
-config_language: Dict[int, config_def.Language] = {}
-""" 语言技能配置数据 """
-config_language_family_data: Dict[int, Set] = {}
-"""
-语言技能谱系配置数据
-谱系id:语言id集合
 """
 config_manapoint_tem: Dict[int, config_def.ManaPointTem] = {}
 """ MP模板对应平均值 """
@@ -151,27 +95,6 @@ config_nature_tag: Dict[int, config_def.NatureTag] = {}
 """ 性格标签配置数据 """
 config_nature_tag_data: Dict[int, Set] = {}
 """ 性格标签下性格id配置数据 """
-config_occupation_age_region: Dict[int, config_def.OccupationAgeRegion] = {}
-""" 学生和老师各自年龄段生成概率配置 """
-config_occupation_age_region_data: Dict[str, Dict[int, int]] = {}
-"""
-学生和老师各自年龄段生成概率配置
-职业id:年龄段:权重
-"""
-config_occupation_bmi_region: Dict[int, config_def.OccupationBMIRegion] = {}
-""" 学生和老师各自bmi范围权重配置 """
-config_occupation_bmi_region_data: Dict[str, Dict[int, int]] = {}
-"""
-学生和老师各自bmi范围权重配置数据
-职业id:bmi模板id:权重区间
-"""
-config_occupation_bodyfat_region: Dict[int, config_def.OccupationBodyFatRegion] = {}
-""" 学生和老师各自体脂率范围配置 """
-config_occupation_bodyfat_region_data: Dict[str, Dict[int, Dict[int, int]]] = {}
-"""
-学生和老师各自肥胖率配置数据
-职业id:体重范围:体脂率范围:权重区间
-"""
 config_organ: Dict[int, config_def.Organ] = {}
 """ 器官种类配置 """
 config_organ_data: Dict[int, Set] = {}
@@ -231,20 +154,6 @@ config_school_session_data: Dict[int, Dict[int, int]] = {}
 """
 config_season: Dict[int, config_def.Season] = {}
 """ 季节配置数据 """
-config_sex_experience: Dict[int, config_def.SexExperience] = {}
-""" 性经验丰富程度模板对应器官性经验模板 """
-config_sex_experience_data: Dict[int, Dict[int, int]] = {}
-"""
-性经验丰富程度模板对应器官经验模板
-丰富程度模板id:器官id:器官经验模板id
-"""
-config_sex_experience_tem: Dict[int, config_def.SexExperienceTem] = {}
-""" 器官类型性经验丰富程度对应经验范围 """
-config_sex_experience_tem_data: Dict[int, Dict[int, int]] = {}
-"""
-器官类型性经验丰富程度对应经验范围数据
-器官id:性经验丰富程度id:配表id
-"""
 config_sex_tem: Dict[int, config_def.SexTem] = {}
 """ 性别对应描述和性别器官模板 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
@@ -258,12 +167,6 @@ config_social_type: Dict[int, config_def.SocialType] = {}
 """ 关系类型配置数据 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
-config_stature_description_premise: Dict[int, config_def.StatureDescriptionPremise] = {}
-""" 身材描述文本前提配置 """
-config_stature_description_premise_data: Dict[int, Set] = {}
-""" 身材描述文本前提配置数据 """
-config_stature_description_text: Dict[int, config_def.StatureDescriptionText] = {}
-""" 身材描述文本配置数据 """
 config_status: Dict[int, config_def.Status] = {}
 """ 角色状态类型配置数据 """
 config_talk: Dict[int, config_def.Talk] = {}
@@ -286,12 +189,8 @@ config_target_premise: Dict[int, config_def.TargetPremise] = {}
 """ 目标前提配置 """
 config_target_premise_data: Dict[int, Set] = {}
 """ 目标前提配置数据 """
-config_waist_hip_proportion: Dict[int, config_def.WaistHipProportion] = {}
-""" 不同肥胖程度腰臀比例差值配置 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
-config_weight_tem: Dict[int, config_def.WeightTem] = {}
-""" 体重模板对应体重范围 """
 
 
 def load_data_json():
@@ -396,56 +295,6 @@ def load_talent_type_data():
         config_talent_type_data[now_tem.Talent_type].add(now_tem.cid)
 
 
-def load_age_judge_sex_experience_tem_data():
-    """载入不同性别不同年龄段对应生成不同性经验模板的权重"""
-    now_data = config_data["AgeJudgeSexExperienceTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.AgeJudgeSexExperienceTem()
-        now_tem.__dict__ = tem_data
-        config_age_judge_sex_experience_tem[now_tem.cid] = now_tem
-        config_age_judge_sex_experience_tem_data.setdefault(now_tem.sex, {})
-        config_age_judge_sex_experience_tem_data[now_tem.sex].setdefault(now_tem.age, {})
-        config_age_judge_sex_experience_tem_data[now_tem.sex][now_tem.age][
-            now_tem.sex_exp_tem
-        ] = now_tem.weight
-
-
-def load_age_tem():
-    """载入各年龄段对应年龄范围模板"""
-    now_data = config_data["AgeTem"]
-    # print("now_data =",now_data)
-    for tem_data in now_data["data"]:
-        # print("tem_data:",tem_data)
-        now_tem = config_def.AgeTem()
-        # print("now_tem:",now_tem)
-        now_tem.__dict__ = tem_data
-        config_age_tem[now_tem.cid] = now_tem
-        # print("config_age_tem:",config_age_tem)
-        # print()
-
-    # now_data_1 = character_data
-    # # print("now_data_1 =",now_data_1)
-    # # translate_data(now_data_1)
-    # for tem_data in now_data_1:
-    #     # print("now_data_1[tem_data]:",now_data_1[tem_data])
-    #     now_tem = config_def.AgeTem_1()
-    #     now_tem.__dict__ = now_data_1[tem_data]
-    #     config_age_tem[now_tem.No] = now_tem
-    #     # print("config_age_tem:",config_age_tem)
-    #     # print()
-
-
-def load_attr_tem():
-    """载入性别对应角色各项基础属性模板"""
-    now_data = config_data["AttrTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.AttrTem()
-        now_tem.__dict__ = tem_data
-        config_attr_tem[now_tem.cid] = now_tem
-
-
 def load_bar_data():
     """载入比例条配置数据"""
     now_data = config_data["BarConfig"]
@@ -459,9 +308,6 @@ def load_bar_data():
         config_bar_data[now_bar.name] = now_bar.cid
 
 
-
-
-
 def load_behavior_effect_data():
     """载入行为结算器配置"""
     now_data = config_data["BehaviorEffect"]
@@ -472,18 +318,6 @@ def load_behavior_effect_data():
         config_behavior_effect[now_tem.cid] = now_tem
         config_behavior_effect_data.setdefault(now_tem.behavior_id, set())
         config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
-
-
-def load_body_fat_tem():
-    """载入按性别划分的体脂率模板和范围配置数据"""
-    now_data = config_data["BodyFatTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.BodyFatTem()
-        now_tem.__dict__ = tem_data
-        config_body_fat_tem[now_tem.cid] = now_tem
-        config_body_fat_tem_data.setdefault(now_tem.sex_type, {})
-        config_body_fat_tem_data[now_tem.sex_type][now_tem.sub_type] = now_tem.cid
 
 
 def load_book_data():
@@ -516,16 +350,6 @@ def load_character_state_type_data():
         now_tem = config_def.CharacterStateType()
         now_tem.__dict__ = tem_data
         config_character_state_type[now_tem.cid] = now_tem
-
-
-def load_chest_tem_data():
-    """载入罩杯配置数据"""
-    now_data = config_data["ChestTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_chest = config_def.ChestTem()
-        now_chest.__dict__ = tem_data
-        config_chest[now_chest.cid] = now_chest
 
 
 def load_clothing_evaluate():
@@ -592,33 +416,6 @@ def load_course():
         config_course[now_tem.cid] = now_tem
 
 
-def load_course_skill_experience():
-    """载入课程获取技能经验配置数据"""
-    now_data = config_data["CourseSkillExperience"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.CourseSkillExperience()
-        now_tem.__dict__ = tem_data
-        config_course_skill_experience[now_tem.cid] = now_tem
-        if now_tem.skill_type:
-            config_course_language_experience_data.setdefault(now_tem.course, {})
-            config_course_language_experience_data[now_tem.course][now_tem.skill] = now_tem.experience
-        else:
-            config_course_knowledge_experience_data.setdefault(now_tem.course, {})
-            config_course_knowledge_experience_data[now_tem.course][now_tem.skill] = now_tem.experience
-
-
-def load_end_age_tem():
-    """载入最终年龄范围配置模板"""
-    now_data = config_data["EndAgeTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.EndAgeTem()
-        now_tem.__dict__ = tem_data
-        config_end_age_tem[now_tem.cid] = now_tem
-        config_end_age_tem_sex_data[now_tem.sex] = now_tem.end_age
-
-
 def load_font_data():
     """载入字体配置数据"""
     now_data = config_data["FontConfig"]
@@ -664,17 +461,6 @@ def load_food_quality_weight():
         config_food_quality_weight_data[now_tem.level][now_tem.quality] = now_tem.weight
 
 
-def load_height_tem():
-    """载入身高预期值模板"""
-    now_data = config_data["HeightTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.HeightTem()
-        now_tem.__dict__ = tem_data
-        config_height_tem[now_tem.cid] = now_tem
-        config_height_tem_sex_data[now_tem.sex] = now_tem
-
-
 def load_hitpoint_tem():
     """载入hp模板对应平均值配置数据"""
     now_data = config_data["HitPointTem"]
@@ -705,40 +491,6 @@ def load_item():
         config_item[now_tem.cid] = now_tem
         config_item_tag_data.setdefault(now_tem.tag, set())
         config_item_tag_data[now_tem.tag].add(now_tem.cid)
-
-
-def load_knowledge():
-    """载入知识技能配置数据"""
-    now_data = config_data["Knowledge"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Knowledge()
-        now_tem.__dict__ = tem_data
-        config_knowledge[now_tem.cid] = now_tem
-        config_knowledge_type_data.setdefault(now_tem.type, set())
-        config_knowledge_type_data[now_tem.type].add(now_tem.cid)
-
-
-def load_knowledge_type():
-    """载入知识技能类型配置数据"""
-    now_data = config_data["KnowledgeType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.KnowledgeType()
-        now_tem.__dict__ = tem_data
-        config_knowledge_type[now_tem.cid] = now_tem
-
-
-def load_language_tem():
-    """载入语言技能配置数据"""
-    now_data = config_data["Language"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Language()
-        now_tem.__dict__ = tem_data
-        config_language[now_tem.cid] = now_tem
-        config_language_family_data.setdefault(now_tem.family, set())
-        config_language_family_data[now_tem.family].add(now_tem.cid)
 
 
 def load_manapoint_tem():
@@ -795,45 +547,6 @@ def load_nature_tag():
         config_nature_tag[now_tem.cid] = now_tem
 
 
-def load_occupation_age_region():
-    """载入学生和老师各自年龄段生成权重配置数据"""
-    now_data = config_data["OccupationAgeRegion"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.OccupationAgeRegion()
-        now_tem.__dict__ = tem_data
-        config_occupation_age_region[now_tem.cid] = now_tem
-        config_occupation_age_region_data.setdefault(now_tem.occupation, {})
-        config_occupation_age_region_data[now_tem.occupation][now_tem.age_region] = now_tem.region
-
-
-def load_occupation_bmi_region():
-    """载入学生和老师各自bmi范围权重配置"""
-    now_data = config_data["OccupationBMIRegion"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.OccupationBMIRegion()
-        now_tem.__dict__ = tem_data
-        config_occupation_bmi_region[now_tem.cid] = now_tem
-        config_occupation_bmi_region_data.setdefault(now_tem.occupation, {})
-        config_occupation_bmi_region_data[now_tem.occupation][now_tem.bmi_type] = now_tem.region
-
-
-def load_occupation_bodyfat_region():
-    """载入学生和老师各自体致率配置数据"""
-    now_data = config_data["OccupationBodyFatRegion"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.OccupationBodyFatRegion()
-        now_tem.__dict__ = tem_data
-        config_occupation_bodyfat_region[now_tem.cid] = now_tem
-        config_occupation_bodyfat_region_data.setdefault(now_tem.occupation, {})
-        config_occupation_bodyfat_region_data[now_tem.occupation].setdefault(now_tem.bmi_id, {})
-        config_occupation_bodyfat_region_data[now_tem.occupation][now_tem.bmi_id][
-            now_tem.bodyfat_type
-        ] = now_tem.region
-
-
 def load_organ_data():
     """载入器官种类配置"""
     now_data = config_data["Organ"]
@@ -844,9 +557,6 @@ def load_organ_data():
         config_organ[now_tem.cid] = now_tem
         config_organ_data.setdefault(now_tem.organ_type, set())
         config_organ_data[now_tem.organ_type].add(now_tem.cid)
-
-
-
 
 
 def load_recipes():
@@ -927,30 +637,6 @@ def load_season():
         config_season[now_tem.cid] = now_tem
 
 
-def load_sex_experience():
-    """载入性经验丰富模板对应器官性经验模板配置数据"""
-    now_data = config_data["SexExperience"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SexExperience()
-        now_tem.__dict__ = tem_data
-        config_sex_experience[now_tem.cid] = now_tem
-        config_sex_experience_data.setdefault(now_tem.sex_exp_type, {})
-        config_sex_experience_data[now_tem.sex_exp_type][now_tem.organ_id] = now_tem.exp_tem
-
-
-def load_sex_experience_tem():
-    """载入器官类型性经验丰富程度对应经验范围"""
-    now_data = config_data["SexExperienceTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SexExperienceTem()
-        now_tem.__dict__ = tem_data
-        config_sex_experience_tem[now_tem.cid] = now_tem
-        config_sex_experience_tem_data.setdefault(now_tem.sex_exp_tem_type, {})
-        config_sex_experience_tem_data[now_tem.sex_exp_tem_type][now_tem.sub_type] = now_tem.cid
-
-
 def load_sex_tem():
     """载入性别对应描述和性别器官模板数据"""
     now_data = config_data["SexTem"]
@@ -980,28 +666,6 @@ def load_solar_period():
         now_tem = config_def.SolarPeriod()
         now_tem.__dict__ = tem_data
         config_solar_period[now_tem.cid] = now_tem
-
-
-def load_stature_description_premise():
-    """载入身材描述文本前提配置数据"""
-    now_data = config_data["StatureDescriptionPremise"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.StatureDescriptionPremise()
-        now_tem.__dict__ = tem_data
-        config_stature_description_premise[now_tem.cid] = now_tem
-        config_stature_description_premise_data.setdefault(now_tem.stature_type, set())
-        config_stature_description_premise_data[now_tem.stature_type].add(now_tem.premise)
-
-
-def load_stature_description_text():
-    """载入身材描述文本配置数据"""
-    now_data = config_data["StatureDescriptionText"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.StatureDescriptionText()
-        now_tem.__dict__ = tem_data
-        config_stature_description_text[now_tem.cid] = now_tem
 
 
 def load_status():
@@ -1084,16 +748,6 @@ def load_target_premise():
         config_target_premise_data[now_tem.target_id].add(now_tem.premise_id)
 
 
-def load_waist_hip_proportion():
-    """载入不同肥胖程度腰臀比例差值配置"""
-    now_data = config_data["WaistHipProportion"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.WaistHipProportion()
-        now_tem.__dict__ = tem_data
-        config_waist_hip_proportion[now_tem.cid] = now_tem
-
-
 def load_week_day():
     """载入星期描述文本配置数据"""
     now_data = config_data["WeekDay"]
@@ -1104,60 +758,36 @@ def load_week_day():
         config_week_day[now_tem.cid] = now_tem
 
 
-def load_weight_tem():
-    """载入体重模板对应体重范围"""
-    now_data = config_data["WeightTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.WeightTem()
-        now_tem.__dict__ = tem_data
-        config_weight_tem[now_tem.cid] = now_tem
-
-
 def init():
     """初始化游戏配置数据"""
     load_data_json()
     load_ability_type()
     load_ability_type_data()
-    load_age_judge_sex_experience_tem_data()
-    load_age_tem()
-    load_attr_tem()
     load_bar_data()
     load_behavior_effect_data()
-    load_body_fat_tem()
     load_book_data()
     load_character_state_data()
     load_character_state_type_data()
-    load_chest_tem_data()
     load_clothing_evaluate()
     load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
     load_course()
-    load_course_skill_experience()
     load_experience()
-    load_end_age_tem()
     load_font_data()
     load_food_data()
     load_food_feel_data()
     load_food_quality_weight()
-    load_height_tem()
     load_hitpoint_tem()
     load_instruct_type()
     load_item()
     load_juel()
-    load_knowledge()
-    load_knowledge_type()
-    load_language_tem()
     load_manapoint_tem()
     load_moon()
     load_move_menu_type()
     load_nature()
     load_nature_tag()
-    load_occupation_age_region()
-    load_occupation_bmi_region()
-    load_occupation_bodyfat_region()
     load_organ_data()
     load_profession()
     load_race()
@@ -1168,13 +798,9 @@ def init():
     load_school_phase_course()
     load_school_session()
     load_season()
-    load_sex_experience()
-    load_sex_experience_tem()
     load_sex_tem()
     load_social_type()
     load_solar_period()
-    load_stature_description_premise()
-    load_stature_description_text()
     load_status()
     load_sun_time()
     load_talk()
@@ -1184,6 +810,4 @@ def init():
     load_target()
     load_target_effect()
     load_target_premise()
-    load_waist_hip_proportion()
     load_week_day()
-    load_weight_tem()
