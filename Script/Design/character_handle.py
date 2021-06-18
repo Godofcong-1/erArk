@@ -98,6 +98,8 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.ability = character_tem.Ability
     now_character.experience = character_tem.Experience
     now_character.talent = character_tem.Talent
+    now_character.hit_point_max = character_tem.Hp
+    now_character.mana_point_max = character_tem.Mp
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":
         now_character.mother_tongue = character_tem.MotherTongue

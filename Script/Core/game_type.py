@@ -74,6 +74,10 @@ class NpcTem:
         """ 种族预设 """
         self.Talent: Dict[int,int] = {}
         """ 素质预设 """
+        self.Hp: int = 0
+        """ HP预设 """
+        self.Mp: int = 0
+        """ MP预设 """
 
 
 class Measurements:
