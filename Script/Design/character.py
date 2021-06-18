@@ -25,6 +25,8 @@ def init_attr(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    # print("进入第二步的init_attr")
+    # print("进入第二步的character_id :",character_id)
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.language[character_data.mother_tongue] = 10000
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
@@ -43,6 +45,15 @@ def init_attr(character_id: int):
     character_data.sex_experience = attr_calculation.get_sex_experience(
         character_data.sex_experience_tem, character_data.sex
     )
+    character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
+    # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
+    character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
+    if character_id == 0 :
+        character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
+        character_data.hit_point_max = attr_calculation.get_max_hit_point(character_data.hit_point_tem)
+        character_data.mana_point_max = attr_calculation.get_max_mana_point(character_data.mana_point_tem)
+    character_data.hit_point = character_data.hit_point_max
+    character_data.mana_point = character_data.mana_point_max
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
@@ -57,10 +68,6 @@ def init_attr(character_id: int):
         )
         character_data.weight += fix_weight
     character_data.chest = attr_calculation.get_chest(character_data.chest_tem, character_data.birthday)
-    character_data.HP_max = attr_calculation.get_max_hit_point(character_data.hit_point_tem)
-    character_data.hit_point = character_data.HP_max
-    character_data.mana_point_max = attr_calculation.get_max_mana_point(character_data.mana_point_tem)
-    character_data.mana_point = character_data.mana_point_max
     new_nature = nature.get_random_nature()
     for nature_id in new_nature:
         if nature_id not in character_data.nature:

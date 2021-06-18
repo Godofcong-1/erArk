@@ -82,16 +82,24 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     character_id -- 角色id
     character_tem -- 角色生成模板数据
     """
+    # print("进入init_character")
+    # print("生成阶段，character_id :",character_id)
+    # print("character_id=",character_id)
     now_character = game_type.Character()
     now_character.cid = character_id
     now_character.name = character_tem.Name
     now_character.sex = character_tem.Sex
+    now_character.profession= character_tem.Profession
+    now_character.race= character_tem.Race
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
-    now_character.favorability = attr_calculation.get_Favorability()
-    now_character.trust = character_tem.Trust
-    now_character.trust = attr_calculation.get_Trust()
-    # print("character_id=",character_id)
+    now_character.favorability = attr_calculation.get_Favorability_zero()
+    now_character.trust = attr_calculation.get_Trust_zero()
+    now_character.ability = character_tem.Ability
+    now_character.experience = character_tem.Experience
+    now_character.talent = character_tem.Talent
+    now_character.hit_point_max = character_tem.Hp
+    now_character.mana_point_max = character_tem.Mp
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":
         now_character.mother_tongue = character_tem.MotherTongue
@@ -260,10 +268,10 @@ def get_rand_npc_age_tem(age_judge: str) -> int:
 def init_character_dormitory():
     """
     分配角色宿舍
-    暂定先全部到控制中枢的走廊
+    暂定先全部到博士房间
     """
     dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "Firstplace" in key
+        key: constant.place_data[key] for key in constant.place_data if "Dr_room" in key
     }
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j

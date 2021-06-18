@@ -64,6 +64,20 @@ class NpcTem:
         """ 信赖度模板 """
         self.Ability: Dict[int,int] = {}
         """ 能力预设 """
+        self.Experience: Dict[int,int] = {}
+        """ 经验预设 """
+        self.Juel: Dict[int,int] = {}
+        """ 宝珠预设 """
+        self.Profession: str = ""
+        """ 职业预设 """
+        self.Race: str = ""
+        """ 种族预设 """
+        self.Talent: Dict[int,int] = {}
+        """ 素质预设 """
+        self.Hp: int = 0
+        """ HP预设 """
+        self.Mp: int = 0
+        """ MP预设 """
 
 
 class Measurements:
@@ -389,10 +403,6 @@ class Character:
         """ 角色的性经验数据 """
         self.sex_grade: Dict[str, str] = {}
         """ 角色的性等级描述数据 """
-        self.abi: Dict[int, int] = {}
-        """ 角色的能力数据 """
-        self.abi_grade: Dict[str, str] = {}
-        """ 角色的能力等级描述数据 """
         self.state: int = 0
         """ 角色当前状态 """
         self.engraving: Dict[str, int] = {}
@@ -501,6 +511,16 @@ class Character:
         """ 最后一次结算饥饿的时间 """
         self.ability:Dict[int,int] = {}
         """ 角色能力类型 """
+        self.experience:Dict[int,int] = {}
+        """ 角色经验 """
+        self.juel:Dict[int,int] = {}
+        """ 角色宝珠 """
+        self.profession: int = 0
+        """ 角色职业 """
+        self.race: int = 0
+        """ 角色种族 """
+        self.talent:Dict[int,int] = {}
+        """ 角色素质 """
 
 
 class TeacherTimeTable:
@@ -673,6 +693,8 @@ class TargetChange:
         """ 好感度变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
+        self.experience: Dict[int, int] = {}
+        """ 经验变化 """
 
 
 class CharacterStatusChange:
@@ -693,3 +715,7 @@ class CharacterStatusChange:
         """ 互动目标状态变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
+        self.ability: Dict[int, int] = {}
+        """ 能力变化 """
+        self.experience: Dict[int, int] = {}
+        """ 经验变化 """

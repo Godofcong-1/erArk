@@ -13,8 +13,6 @@ config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
-config_ability_type: Dict[int,config_def.Ability] = {}
-""" 能力类型表 """
 config_age_judge_sex_experience_tem: Dict[int, config_def.AgeJudgeSexExperienceTem] = {}
 """ 不同性别不同年龄段对应生成不同性经验模板的权重 """
 config_age_judge_sex_experience_tem_data: Dict[int, Dict[int, Dict[int, int]]] = {}
@@ -30,8 +28,6 @@ config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
 """ 比例条名字对应比例条id """
-config_image: Dict[int, config_def.Chara_image] = {}
-""" 人物图片配置数据 """
 config_image_data: Dict[int, int] = {}
 """ 人物图片对应图片id """
 config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
@@ -183,13 +179,32 @@ config_organ_data: Dict[int, Set] = {}
 性别对应器官列表配置数据
 性别 0:女 1:男 2: 通用
 """
-config_abi: Dict[int, config_def.Ability] = {}
+config_ability_type: Dict[int, config_def.AbilityType] = {}
 """ 能力种类配置 """
-config_abi_data: Dict[int, Set] = {}
+config_ability_type_data: Dict[int, Set] = {}
 """
 类型对应能力列表配置数据
 类型 0:感觉,1:扩张,2:刻印,3:基础
 """
+config_ability: Dict[int,config_def.Ability] = {}
+""" 能力类型表 """
+config_experience: Dict[int, config_def.Experience] = {}
+""" 经验配置 """
+config_juel: Dict[int, config_def.Juel] = {}
+""" 宝珠配置 """
+config_profession: Dict[int, config_def.Profession] = {}
+""" 职业配置 """
+config_race: Dict[int, config_def.Race] = {}
+""" 种族配置 """
+config_talent_type: Dict[int, config_def.TalentType] = {}
+""" 素质种类配置 """
+config_talent_type_data: Dict[int, Set] = {}
+"""
+类型对应素质列表配置数据
+类型 0:性素质,1:身体素质,2:精神素质,3:技术素质,4:其他素质
+"""
+config_talent: Dict[int,config_def.Talent] = {}
+""" 素质类型表 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
 config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
@@ -301,13 +316,84 @@ def translate_data(data: dict):
 
 
 def load_ability_type():
+    """载入能力类型具体配置数据（按能力类型分类）"""
+    now_data = config_data["AbilityType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Ability()
+        now_tem.__dict__ = tem_data
+        config_ability_type[now_tem.cid] = now_tem
+
+
+def load_ability_type_data():
     """载入能力类型配置数据"""
     now_data = config_data["Ability"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.Ability()
         now_tem.__dict__ = tem_data
-        config_ability_type[now_tem.cid] = now_tem
+        config_ability[now_tem.cid] = now_tem
+        config_ability_type_data.setdefault(now_tem.ability_type, set())
+        config_ability_type_data[now_tem.ability_type].add(now_tem.cid)
+
+
+def load_experience():
+    """载入经验数据"""
+    now_data = config_data["Experience"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Experience()
+        now_tem.__dict__ = tem_data
+        config_experience[now_tem.cid] = now_tem
+
+
+def load_juel():
+    """载入宝珠数据"""
+    now_data = config_data["Juel"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Juel()
+        now_tem.__dict__ = tem_data
+        config_juel[now_tem.cid] = now_tem
+
+def load_profession():
+    """载入职业数据"""
+    now_data = config_data["Profession"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Profession()
+        now_tem.__dict__ = tem_data
+        config_profession[now_tem.cid] = now_tem
+
+def load_race():
+    """载入职业数据"""
+    now_data = config_data["Race"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Race()
+        now_tem.__dict__ = tem_data
+        config_race[now_tem.cid] = now_tem
+
+def load_talent_type():
+    """载入素质类型具体配置数据（按能力类型分类）"""
+    now_data = config_data["TalentType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Talent()
+        now_tem.__dict__ = tem_data
+        config_talent_type[now_tem.cid] = now_tem
+
+
+def load_talent_type_data():
+    """载入素质类型配置数据"""
+    now_data = config_data["Talent"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Talent()
+        now_tem.__dict__ = tem_data
+        config_talent[now_tem.cid] = now_tem
+        config_talent_type_data.setdefault(now_tem.Talent_type, set())
+        config_talent_type_data[now_tem.Talent_type].add(now_tem.cid)
 
 
 def load_age_judge_sex_experience_tem_data():
@@ -373,17 +459,7 @@ def load_bar_data():
         config_bar_data[now_bar.name] = now_bar.cid
 
 
-def load_chara_image_data():
-    """载入人物图片配置数据"""
-    now_data = config_data["Chara_image"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_chara_image = config_def.Chara_image()
-        now_chara_image.__dict__ = tem_data
-        config_image[now_chara_image.cid] = now_chara_image
-        config_image_data[now_chara_image.chara_id] = now_chara_image.cid
-        # print("now_chara_image :",now_chara_image)
-        # print("tem_data :",tem_data)
+
 
 
 def load_behavior_effect_data():
@@ -770,16 +846,7 @@ def load_organ_data():
         config_organ_data[now_tem.organ_type].add(now_tem.cid)
 
 
-def load_abl_data():
-    """载入能力种类配置"""
-    now_data = config_data["Ability"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Ability()
-        now_tem.__dict__ = tem_data
-        config_abi[now_tem.cid] = now_tem
-        config_abi_data.setdefault(now_tem.ability_type, set())
-        config_abi_data[now_tem.ability_type].add(now_tem.cid)
+
 
 
 def load_recipes():
@@ -1051,11 +1118,11 @@ def init():
     """初始化游戏配置数据"""
     load_data_json()
     load_ability_type()
+    load_ability_type_data()
     load_age_judge_sex_experience_tem_data()
     load_age_tem()
     load_attr_tem()
     load_bar_data()
-    load_chara_image_data()
     load_behavior_effect_data()
     load_body_fat_tem()
     load_book_data()
@@ -1069,6 +1136,7 @@ def init():
     load_clothing_use_type()
     load_course()
     load_course_skill_experience()
+    load_experience()
     load_end_age_tem()
     load_font_data()
     load_food_data()
@@ -1078,6 +1146,7 @@ def init():
     load_hitpoint_tem()
     load_instruct_type()
     load_item()
+    load_juel()
     load_knowledge()
     load_knowledge_type()
     load_language_tem()
@@ -1090,7 +1159,8 @@ def init():
     load_occupation_bmi_region()
     load_occupation_bodyfat_region()
     load_organ_data()
-    load_abl_data()
+    load_profession()
+    load_race()
     load_recipes()
     load_recipes_formula()
     load_recipes_formula_type()
@@ -1109,6 +1179,8 @@ def init():
     load_sun_time()
     load_talk()
     load_talk_premise()
+    load_talent_type()
+    load_talent_type_data()
     load_target()
     load_target_effect()
     load_target_premise()

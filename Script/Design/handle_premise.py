@@ -12,7 +12,7 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-def add_premise(premise: int) -> FunctionType:
+def add_premise(premise: str) -> FunctionType:
     """
     添加前提
     Keyword arguments:
@@ -32,7 +32,7 @@ def add_premise(premise: int) -> FunctionType:
     return decoraror
 
 
-def handle_premise(premise: int, character_id: int) -> int:
+def handle_premise(premise: str, character_id: int) -> int:
     """
     调用前提id对应的前提处理函数
     Keyword arguments:
@@ -136,8 +136,8 @@ def handle_hunger(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.status.setdefault(27, 0)
-    if character_data.status[27] > 15:
-        return math.floor(character_data.status[27]) * 10
+    # if character_data.status[27] > 15:
+    #     return math.floor(character_data.status[27]) * 10
     return 0
 
 
@@ -501,6 +501,30 @@ def handle_is_woman(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HIGH_5)
+def handle_high_5(character_id: int) -> int:
+    """
+    优先度为5的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 5
+
+
+@add_premise(constant.Premise.HIGH_10)
+def handle_high_10(character_id: int) -> int:
+    """
+    优先度为10的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 10
+
+
 @add_premise(constant.Premise.TARGET_SAME_SEX)
 def handle_target_same_sex(character_id: int) -> int:
     """
@@ -533,43 +557,43 @@ def handle_target_age_similar(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_SIMILAR)
-def handle_target_average_height_similar(character_id: int) -> int:
-    """
-    校验角色目标身高是否与平均身高相差不大
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    average_height = cache.average_height_by_age[age_tem][target_data.sex]
-    if (
-        target_data.height.now_height >= average_height * 0.95
-        and target_data.height.now_height <= average_height * 1.05
-    ):
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_SIMILAR)
+# def handle_target_average_height_similar(character_id: int) -> int:
+#     """
+#     校验角色目标身高是否与平均身高相差不大
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     average_height = cache.average_height_by_age[age_tem][target_data.sex]
+#     if (
+#         target_data.height.now_height >= average_height * 0.95
+#         and target_data.height.now_height <= average_height * 1.05
+#     ):
+#         return 1
+#     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_LOW)
-def handle_target_average_height_low(character_id: int) -> int:
-    """
-    校验角色目标的身高是否低于平均身高
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    average_height = cache.average_height_by_age[age_tem][target_data.sex]
-    if target_data.height.now_height <= average_height * 0.95:
-        return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERAGE_HEIGHT_LOW)
+# def handle_target_average_height_low(character_id: int) -> int:
+#     """
+#     校验角色目标的身高是否低于平均身高
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     average_height = cache.average_height_by_age[age_tem][target_data.sex]
+#     if target_data.height.now_height <= average_height * 0.95:
+#         return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_PLAYER)
@@ -641,7 +665,7 @@ def handle_target_put_on_skirt(character_id: int) -> int:
 @add_premise(constant.Premise.IS_PLAYER)
 def handle_is_player(character_id: int) -> int:
     """
-    校验是否是玩家角色
+    校验指令使用人是否是玩家角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -655,7 +679,7 @@ def handle_is_player(character_id: int) -> int:
 @add_premise(constant.Premise.NO_PLAYER)
 def handle_no_player(character_id: int) -> int:
     """
-    校验是否不是玩家角色
+    校验指令使用人是否不是玩家角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1378,7 +1402,7 @@ def handle_hyposthenia(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_weight = int((character_data.HP_max - character_data.hit_point) / 5)
+    now_weight = int((character_data.hit_point_max - character_data.hit_point) / 5)
     now_weight += int((character_data.mana_point_max - character_data.mana_point) / 10)
     return now_weight
 
@@ -1393,7 +1417,7 @@ def handle_physical_strenght(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_weight = int((character_data.HP_max / 2 - character_data.hit_point) / 5)
+    now_weight = int((character_data.hit_point_max / 2 - character_data.hit_point) / 5)
     now_weight += int((character_data.mana_point_max / 2 - character_data.mana_point) / 10)
     if now_weight < 0:
         now_weight = 0
@@ -1874,21 +1898,21 @@ def handle_target_is_woman(character_id: int) -> int:
     return target_data.sex == 1
 
 
-@add_premise(constant.Premise.TARGET_IS_NAKED)
-def handle_target_is_naked(character_id: int) -> int:
-    """
-    校验交互对象是否一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    for i in target_data.put_on:
-        if isinstance(target_data.put_on[i], UUID):
-            return 0
-    return 1
+# @add_premise(constant.Premise.TARGET_IS_NAKED)
+# def handle_target_is_naked(character_id: int) -> int:
+#     """
+#     校验交互对象是否一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     for i in target_data.put_on:
+#         if isinstance(target_data.put_on[i], UUID):
+#             return 0
+#     return 1
 
 
 @add_premise(constant.Premise.TARGET_CLITORIS_LEVEL_IS_HIGHT)
@@ -2209,20 +2233,20 @@ def handle_teacher_in_classroom(character_id: int) -> int:
     return not handle_teacher_no_in_classroom(character_id)
 
 
-@add_premise(constant.Premise.IS_NAKED)
-def handle_is_naked(character_id: int) -> int:
-    """
-    校验角色是否一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    for i in character_data.put_on:
-        if isinstance(character_data.put_on[i], UUID):
-            return 0
-    return 1
+# @add_premise(constant.Premise.IS_NAKED)
+# def handle_is_naked(character_id: int) -> int:
+#     """
+#     校验角色是否一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     for i in character_data.put_on:
+#         if isinstance(character_data.put_on[i], UUID):
+#             return 0
+#     return 1
 
 
 @add_premise(constant.Premise.IS_BEYOND_FRIENDSHIP_TARGET_IN_SCENE)
@@ -2616,22 +2640,22 @@ def handle_no_in_grove(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.NAKED_CHARACTER_IN_SCENE)
-def handle_naked_character_in_scene(character_id: int) -> int:
-    """
-    校验场景中是否有人一丝不挂
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path]
-    for now_character in scene_data.character_list:
-        if handle_is_naked(now_character):
-            return 1
-    return 0
+# @add_premise(constant.Premise.NAKED_CHARACTER_IN_SCENE)
+# def handle_naked_character_in_scene(character_id: int) -> int:
+#     """
+#     校验场景中是否有人一丝不挂
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
+#     scene_data: game_type.Scene = cache.scene_data[scene_path]
+#     for now_character in scene_data.character_list:
+#         if handle_is_naked(now_character):
+#             return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_SING)

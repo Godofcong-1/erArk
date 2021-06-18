@@ -1,5 +1,5 @@
 {
-  "SceneName":"禁闭室入口",
-  "InOutDoor":"Out",
-  "SceneTag":"Scenery"
+  "SceneName":"机库入口",
+  "InOutDoor":"In",
+  "SceneTag":"Door"
 }

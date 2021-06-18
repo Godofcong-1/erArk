@@ -1,5 +1,5 @@
 {
-  "SceneName":"训练场入口",
+  "SceneName":"警卫室入口",
   "InOutDoor":"In",
-  "SceneTag":"Shop"
+  "SceneTag":"Door"
 }

@@ -1,3 +1,4 @@
+from os import name
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
@@ -259,8 +260,11 @@ class InScenePanel:
             # fix_draw.set(1)
             # fix_draw.draw()
             # line_feed.draw()
-            flow_handle.print_image_cmd("凯尔希","凯尔希_图")
-            flow_handle.print_image_cmd("阿米娅","阿米娅_图")
+            character_image_list=character_list
+            character_image_list.reverse()
+            for image_cid in character_image_list:
+                image_character_data = cache.character_data[image_cid]
+                flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
             line_feed.draw()
             #以下为指令面板#
             see_instruct_panel.draw()
@@ -402,4 +406,13 @@ class SeeInstructPanel:
         instruct_id -- 指令id
         """
         py_cmd.clr_cmd()
+        #加个指令名称绘制#
+        instruct_name = constant.handle_instruct_name_data[instruct_id]
+        now_draw_1 = draw.NormalDraw()
+        now_draw_1.text = f"{instruct_name}\n"
+        now_draw_1.width = 8
+        now_draw_1.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        #加个指令名称绘制#
         handle_instruct.handle_instruct(instruct_id)

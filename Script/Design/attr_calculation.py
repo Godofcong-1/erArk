@@ -31,17 +31,56 @@ def get_age(character_id: int) -> int:
     tem_data = game_config.config_age_tem[character_id].Age
     return tem_data
 
-def get_Favorability() -> dict:
+def get_Favorability_zero() -> dict:
     """
     直接将初始好感归为{0:0}
     """
     return {0:0}
 
-def get_Trust() -> dict:
+def get_Trust_zero() -> dict:
     """
     直接将初始信赖归为0
     """
     return 0
+
+def get_ability_zero(ability_dict) -> dict:
+    """
+    检查初始能力，将为空的项补为0
+    """
+    ability_list = ability_dict
+    for ability in game_config.config_ability:
+        if ability not in ability_dict:
+            ability_list[ability] = 0
+    return ability_list
+
+def get_experience_zero(experience_dict) -> dict:
+    """
+    检查初始经验，将为空的项补为0
+    """
+    experience_list = experience_dict
+    for experience in game_config.config_experience:
+        if experience not in experience_dict:
+            experience_list[experience] = 0
+    return experience_list
+
+def get_juel_zero(juel_dict) -> dict:
+    """
+    检查初始宝珠，将为空的项补为0
+    """
+    juel_list = juel_dict
+    for juel in game_config.config_juel:
+        if juel not in juel_dict:
+            juel_list[juel] = 0
+    return juel_list
+
+def get_Dr_talent_zero(juel_dict) -> dict:
+    """
+    检查是否是0号角色，将特定项补为0
+    """
+    juel_list = juel_dict
+    juel_list[4] = 1
+    juel_list[5] = 1
+    return juel_list
 
 # def get_age(tem_name: int) -> int:
 #     """
@@ -388,32 +427,97 @@ def get_status_level(value: int) -> int:
     Keyword arguments:
     value -- 属性数值
     Return arguments:
-    int -- 数字评级
+    level -- 数字评级
     """
-    level = ""
     if value < 100:
-        level = "0"
+        level = 0
     elif value < 500:
-        level = "1"
+        level = 1
     elif value < 3000:
-        level = "2"
+        level = 2
     elif value < 10000:
-        level = "3"
+        level = 3
     elif value < 30000:
-        level = "4"
+        level = 4
     elif value < 60000:
-        level = "5"
+        level = 5
     elif value < 100000:
-        level = "6"
+        level = 6
     elif value < 150000:
-        level = "7"
+        level = 7
     elif value < 250000:
-        level = "8"
+        level = 8
     elif value < 400000:
-        level = "9"
+        level = 9
     elif value >= 400000:
-        level = "10"
+        level = 10
     return level
+
+
+def get_ability_level(value: int) -> int:
+    """
+    按能力数值评定数字等级
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    level -- 数字评级
+    """
+    if value < 100:
+        level = 0
+    elif value < 500:
+        level = 1
+    elif value < 3000:
+        level = 2
+    elif value < 10000:
+        level = 3
+    elif value < 30000:
+        level = 4
+    elif value < 60000:
+        level = 5
+    elif value < 100000:
+        level = 6
+    elif value < 150000:
+        level = 7
+    elif value < 250000:
+        level = 8
+    elif value < 400000:
+        level = 9
+    elif value >= 400000:
+        level = 10
+    return level
+
+def get_ability_adjust(value: int) -> int:
+    """
+    按能力数值评定修正比例
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 0.2
+    elif level == 1:
+        just = 0.4
+    elif level == 2:
+        just = 0.7
+    elif level == 3:
+        just = 1.0
+    elif level == 4:
+        just = 1.4
+    elif level == 5:
+        just = 1.8
+    elif level == 6:
+        just = 2.3
+    elif level == 7:
+        just = 2.8
+    elif level == 8:
+        just = 3.4
+    elif level == 9:
+        just = 4.0
+    elif level == 10:
+        just = 5.0
+    return just
 
 
 def judge_age_group(age: int) -> int:

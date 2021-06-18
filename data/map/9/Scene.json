@@ -1,5 +1,5 @@
 {
-  "SceneName":"文职办公部入口",
+  "SceneName":"医疗区入口",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Door"
 }

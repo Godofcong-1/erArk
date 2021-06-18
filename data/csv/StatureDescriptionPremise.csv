@@ -1,6 +1,6 @@
 cid,stature_type,premise
 配表id,描述文本id,前提id
-int,int,int
+int,int,str
 0,0,0
 身材描述文本依赖前提配置,,
 0,0,28

@@ -1,5 +1,5 @@
 {
-  "SceneName":"生活娱乐区入口",
-  "InOutDoor":"Out",
-  "SceneTag":"Square"
+  "SceneName":"控制中枢入口",
+  "InOutDoor":"In",
+  "SceneTag":"Door"
 }
