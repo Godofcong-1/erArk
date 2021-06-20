@@ -1074,255 +1074,6 @@ class CharacterJuelText:
                 label.draw()
 
 
-
-class SeeCharacterKnowledgePanel:
-    """
-    查看角色技能面板
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 绘制宽度
-    """
-
-    def __init__(self, character_id: int, width: int):
-        """初始化绘制对象"""
-        self.character_id = character_id
-        """ 要绘制的角色id """
-        self.width = width
-        """ 面板最大宽度 """
-        self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的文本列表 """
-        self.return_list: List[str] = []
-        """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[character_id]
-        for skill_type in game_config.config_knowledge_type_data:
-            skill_set = game_config.config_knowledge_type_data[skill_type]
-            type_config = game_config.config_knowledge_type[skill_type]
-            type_draw = draw.LittleTitleLineDraw(type_config.name, self.width, ":")
-            self.draw_list.append(type_draw)
-            now_list = []
-            skill_group = value_handle.list_of_groups(list(skill_set), 3)
-            for skill_list in skill_group:
-                for skill in skill_list:
-                    skill_config = game_config.config_knowledge[skill]
-                    skill_draw = draw.CenterMergeDraw(int(self.width / len(skill_group)))
-                    now_text_draw = draw.NormalDraw()
-                    now_text_draw.text = skill_config.name
-                    now_text_draw.width = text_handle.get_text_index(skill_config.name)
-                    now_exp = 0
-                    if skill in character_data.knowledge:
-                        now_exp = character_data.knowledge[skill]
-                    now_level_draw = draw.ExpLevelDraw(now_exp)
-                    skill_draw.draw_list.append(now_text_draw)
-                    skill_draw.draw_list.append(now_level_draw)
-                    skill_draw.width = int(self.width / len(skill_group))
-                    now_list.append(skill_draw)
-            self.draw_list.append(now_list)
-
-    def draw(self):
-        """绘制对象"""
-        title_draw = draw.TitleLineDraw(_("人物技能"), self.width)
-        title_draw.draw()
-        for value in self.draw_list:
-            if isinstance(value, list):
-                now_draw = panel.VerticalDrawTextListGroup(self.width)
-                now_group = value_handle.list_of_groups(value, 3)
-                now_draw.draw_list = now_group
-                now_draw.draw()
-            else:
-                value.draw()
-
-
-class SeeCharacterLanguagePanel:
-    """
-    查看角色语言面板
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 绘制宽度
-    """
-
-    def __init__(self, character_id: int, width: int):
-        """初始化绘制对象"""
-        self.character_id: int = character_id
-        """ 要绘制的角色id """
-        self.width: int = width
-        """ 面板最大宽度 """
-        self.return_list: List[str] = []
-        """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[character_id]
-        language_list = list(game_config.config_language.keys())
-        language_text_list = []
-        for language in language_list:
-            now_exp = 0
-            if language in character_data.language:
-                now_exp = character_data.language[language]
-            language_text_list.append((language, now_exp))
-        self.handle_panel = panel.PageHandlePanel(
-            language_text_list, LanguageNameDraw, 20, 6, width, 1, 1, 0, ""
-        )
-        """ 页面控制对象 """
-
-    def draw(self):
-        title_draw = draw.TitleLineDraw(_("人物语言"), self.width)
-        title_draw.draw()
-        self.handle_panel.update()
-        self.handle_panel.draw()
-        self.return_list = self.handle_panel.return_list
-
-
-class LanguageNameDraw:
-    """
-    按语言id绘制语言名
-    Keyword arguments:
-    text -- 语言的配置数据 tuple[语言id,经验]
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮的id
-    """
-
-    def __init__(self, text: str, width: int, is_button: bool, num_button: bool, button_id: int):
-        """初始化绘制对象"""
-        self.language_id: int = text[0]
-        """ 语言id """
-        self.language_exp: int = text[1]
-        """ 语言经验 """
-        self.draw_text: str = ""
-        """ 语言名绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.is_button: bool = is_button
-        """ 绘制按钮 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-        self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的对象列表 """
-        language_config = game_config.config_language[self.language_id]
-        language_name = language_config.name
-        name_draw = draw.NormalDraw()
-        name_draw.width = self.width
-        if is_button:
-            button_text = ""
-            if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text} {language_name}:"
-                name_draw = draw.Button(button_text, self.button_return, cmd_func=self.see_language_info)
-            else:
-                button_text = f"{language_name}:"
-                name_draw = draw.Button(button_text, language_name, cmd_func=self.see_language_info)
-                self.button_return = language_name
-        else:
-            name_draw.text = f"{language_name}:"
-        level_draw = draw.ExpLevelDraw(self.language_exp)
-        name_draw.width = self.width - len(level_draw)
-        self.draw_list = [name_draw, level_draw]
-
-    def draw(self):
-        """绘制对象"""
-        now_draw = draw.CenterMergeDraw(self.width)
-        now_draw.draw_list = self.draw_list
-        now_draw.draw()
-
-    def see_language_info(self):
-        """绘制语言描述信息"""
-        now_draw = LanguageInfoDraw(self.language_id, window_width)
-        now_draw.draw()
-
-
-class LanguageInfoDraw:
-    """
-    按语言id绘制语言数据
-    Keyword arguments:
-    cid -- 语言id
-    width -- 最大绘制宽度
-    """
-
-    def __init__(self, cid: int, width: int):
-        """绘制语言信息"""
-        self.cid: int = int(cid)
-        """ 语言的配表id """
-        self.width: int = width
-        """ 最大宽度 """
-
-    def draw(self):
-        """绘制道具信息"""
-        py_cmd.clr_cmd()
-        language_config = game_config.config_language[self.cid]
-        language_draw = draw.WaitDraw()
-        language_draw.text = f"{language_config.name}:{language_config.info}\n"
-        language_draw.width = self.width
-        language_draw.draw()
-
-
-class SeeCharacterNaturePanel:
-    """
-    显示角色性格面板对象
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 绘制宽度
-    """
-
-    def __init__(self, character_id: int, width: int):
-        """初始化绘制对象"""
-        self.character_id: int = character_id
-        """ 要绘制的角色id """
-        self.width: int = width
-        """ 面板最大宽度 """
-        self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的文本列表 """
-        self.return_list: List[str] = []
-        """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[character_id]
-        for nature_type in game_config.config_nature_tag:
-            type_config = game_config.config_nature_tag[nature_type]
-            nature_set = game_config.config_nature_tag_data[nature_type]
-            type_value = 0
-            nature_draw_list = []
-            nature_group = value_handle.list_of_groups(list(nature_set), 1)
-            for nature_list in nature_group:
-                for nature_id in nature_list:
-                    nature_config = game_config.config_nature[nature_id]
-                    nature_value = 0
-                    if nature_id in character_data.nature:
-                        nature_value = character_data.nature[nature_id]
-                    type_value += nature_value
-                    good_judge = False
-                    if nature_value >= 50:
-                        good_judge = True
-                    nature_draw = draw.CenterDraw()
-                    if good_judge:
-                        nature_draw.text = nature_config.good
-                    else:
-                        nature_draw.text = nature_config.bad
-                    nature_draw.width = int(self.width / len(nature_group))
-                    nature_draw_list.append(nature_draw)
-            judge_value = len(nature_set) * 100 / 2
-            nature_type_text = ""
-            if type_value >= judge_value:
-                nature_type_text = type_config.good
-            else:
-                nature_type_text = type_config.bad
-            nature_draw = draw.LittleTitleLineDraw(nature_type_text, self.width, ":")
-            self.draw_list.append(nature_draw)
-            self.draw_list.append(nature_draw_list)
-
-    def draw(self):
-        """绘制对象"""
-        title_draw = draw.TitleLineDraw(_("人物性格"), self.width)
-        title_draw.draw()
-        for value in self.draw_list:
-            if isinstance(value, list):
-                now_draw = panel.VerticalDrawTextListGroup(self.width)
-                now_group = value_handle.list_of_groups(value, 1)
-                now_draw.draw_list = now_group
-                now_draw.draw()
-            else:
-                value.draw()
-
-
 class SeeCharacterSocialContact:
     """
     显示角色社交关系面板对象
@@ -1766,3 +1517,82 @@ class SeeCharacterInfoInScenePanel:
         """绘制对象"""
         self.handle_panel.draw()
         cache.now_panel_id = constant.Panel.IN_SCENE
+
+class Character_abi_up:
+    """
+    角色能力上升面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, character_id: int, width: int):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 绘制的角色id """
+        self.width = width
+        """ 当前最大可绘制宽度 """
+        self.type = type
+        """ 当前绘制类型 """
+        # self.column = column
+        # """ 每行状态最大个数 """
+        character_data = cache.character_data[self.character_id]
+        """ 性器官感度描述 """
+        self.draw_list: List[draw.NormalDraw()] = []
+        """ 绘制对象列表 """
+        self.title_list: List[draw.NormalDraw()] = []
+        """ 绘制标题列表 """
+        ability_list = game_config.config_ability_type_data
+        title_text = "能力"
+        type_line = draw.LittleTitleLineDraw(title_text, width, ":")
+        self.draw_list.append(type_line)
+        #进入能力大类#
+        for anility_type in ability_list:
+            # if anility_type == type:
+            type_set = ability_list[anility_type]
+            for ability_id in type_set:
+                #去掉与性别不符的感度#
+                if character_data.sex == 0:
+                    if ability_id in {2, 4, 7, 9, 12, 34, 39}:
+                        continue
+                elif character_data.sex == 1:
+                    if ability_id == 3:
+                        continue
+                now_draw = draw.NormalDraw()
+                now_draw_value = draw.NormalDraw()
+                now_draw.text = game_config.config_ability[ability_id].name
+                #这个_1是为了补空格让格式对齐#
+                now_draw_1 = draw.NormalDraw()
+                now_draw_1.text = " "
+                now_draw_1.width = 1
+                now_draw.width = width / len(type_set)
+                now_exp = 0
+                now_exp = character_data.ability[ability_id]
+                now_draw_value.text = str(now_exp)
+                level_draw = draw.ExpLevelDraw(now_exp)
+                new_draw = draw.LeftMergeDraw(width / 10)
+                new_draw.draw_list.append(now_draw_1)
+                new_draw.draw_list.append(now_draw)
+                new_draw.draw_list.append(now_draw_1)
+                #根据不同的类型补不同数量的空格#
+                if anility_type != 2 and anility_type != 4 and anility_type != 6:
+                    new_draw.draw_list.append(now_draw_1)
+                    new_draw.draw_list.append(now_draw_1)
+                    if anility_type == 3 or anility_type == 5:
+                        new_draw.draw_list.append(now_draw_1)
+                        new_draw.draw_list.append(now_draw_1)
+                new_draw.draw_list.append(level_draw)
+                new_draw.draw_list.append(now_draw_1)
+                new_draw.draw_list.append(now_draw_value)
+                self.draw_list.append(new_draw)
+            #只有不是最后一个类型就补个换行#
+            if anility_type != 6:
+                new_draw_n = draw.NormalDraw()
+                new_draw_n.text = "\n"
+                new_draw_n.width = 1
+                self.draw_list.append(new_draw_n)
+    def draw(self):
+        """绘制对象"""
+        line_feed.draw()
+        for value in self.draw_list:
+            value.draw()

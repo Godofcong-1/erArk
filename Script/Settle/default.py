@@ -1702,15 +1702,15 @@ def handle_target_add_small_a_lubrication(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(9, 0)
-    now_lust = target_data.status[9]
+    target_data.status.setdefault(8, 0)
+    now_lust = target_data.status[8]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[9] += now_add_lust
+    target_data.status[8] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(9, 0)
-    target_change.status[9] += now_add_lust
+    target_change.status.setdefault(8, 0)
+    target_change.status[8] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
@@ -1733,17 +1733,17 @@ def handle_target_add_small_learn(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(10, 0)
-    now_lust = target_data.status[10]
+    target_data.status.setdefault(9, 0)
+    now_lust = target_data.status[9]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     now_add_lust *= adjust
-    target_data.status[10] += now_add_lust
+    target_data.status[9] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(10, 0)
-    target_change.status[10] += now_add_lust
+    target_change.status.setdefault(9, 0)
+    target_change.status[9] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
 def handle_target_add_small_repect(
@@ -1766,17 +1766,17 @@ def handle_target_add_small_repect(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(11, 0)
-    now_lust = target_data.status[11]
+    target_data.status.setdefault(10, 0)
+    now_lust = target_data.status[10]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[20])
     now_add_lust *= adjust
-    target_data.status[11] += now_add_lust
+    target_data.status[10] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(11, 0)
-    target_change.status[11] += now_add_lust
+    target_change.status.setdefault(10, 0)
+    target_change.status[10] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
 def handle_target_add_small_friendly(
@@ -1799,17 +1799,17 @@ def handle_target_add_small_friendly(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status.setdefault(11, 0)
+    now_lust = target_data.status[11]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status.setdefault(11, 0)
+    target_change.status[11] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
 def handle_target_add_small_desire(
@@ -1832,17 +1832,17 @@ def handle_target_add_small_desire(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(13, 0)
-    now_lust = target_data.status[13]
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
     now_add_lust *= adjust
-    target_data.status[13] += now_add_lust
+    target_data.status[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(13, 0)
-    target_change.status[13] += now_add_lust
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
 def handle_target_add_small_happy(
@@ -1865,15 +1865,15 @@ def handle_target_add_small_happy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(14, 0)
-    now_lust = target_data.status[14]
+    target_data.status.setdefault(13, 0)
+    now_lust = target_data.status[13]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[14] += now_add_lust
+    target_data.status[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(14, 0)
-    target_change.status[14] += now_add_lust
+    target_change.status.setdefault(13, 0)
+    target_change.status[13] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
 def handle_target_add_small_lead(
@@ -1896,15 +1896,15 @@ def handle_target_add_small_lead(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(15, 0)
-    now_lust = target_data.status[15]
+    target_data.status.setdefault(14, 0)
+    now_lust = target_data.status[14]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[15] += now_add_lust
+    target_data.status[14] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(15, 0)
-    target_change.status[15] += now_add_lust
+    target_change.status.setdefault(14, 0)
+    target_change.status[14] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
 def handle_target_add_small_submit(
@@ -1927,15 +1927,15 @@ def handle_target_add_small_submit(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(16, 0)
-    now_lust = target_data.status[16]
+    target_data.status.setdefault(15, 0)
+    now_lust = target_data.status[15]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[16] += now_add_lust
+    target_data.status[15] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(16, 0)
-    target_change.status[16] += now_add_lust
+    target_change.status.setdefault(15, 0)
+    target_change.status[15] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SHY)
 def handle_target_add_small_shy(
@@ -1958,15 +1958,15 @@ def handle_target_add_small_shy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(17, 0)
-    now_lust = target_data.status[17]
+    target_data.status.setdefault(16, 0)
+    now_lust = target_data.status[16]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[17] += now_add_lust
+    target_data.status[16] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(17, 0)
-    target_change.status[17] += now_add_lust
+    target_change.status.setdefault(16, 0)
+    target_change.status[16] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
 def handle_target_add_small_pain(
@@ -1989,15 +1989,15 @@ def handle_target_add_small_pain(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(18, 0)
-    now_lust = target_data.status[18]
+    target_data.status.setdefault(17, 0)
+    now_lust = target_data.status[17]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[18] += now_add_lust
+    target_data.status[17] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(18, 0)
-    target_change.status[18] += now_add_lust
+    target_change.status.setdefault(17, 0)
+    target_change.status[17] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
 def handle_target_add_small_terror(
@@ -2020,15 +2020,15 @@ def handle_target_add_small_terror(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(19, 0)
-    now_lust = target_data.status[19]
+    target_data.status.setdefault(18, 0)
+    now_lust = target_data.status[18]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[19] += now_add_lust
+    target_data.status[18] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(19, 0)
-    target_change.status[19] += now_add_lust
+    target_change.status.setdefault(18, 0)
+    target_change.status[18] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
 def handle_target_add_small_depression(
@@ -2051,15 +2051,15 @@ def handle_target_add_small_depression(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(20, 0)
-    now_lust = target_data.status[20]
+    target_data.status.setdefault(19, 0)
+    now_lust = target_data.status[19]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[20] += now_add_lust
+    target_data.status[19] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(20, 0)
-    target_change.status[20] += now_add_lust
+    target_change.status.setdefault(19, 0)
+    target_change.status[19] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
 def handle_target_add_small_disgust(
@@ -2082,15 +2082,15 @@ def handle_target_add_small_disgust(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(21, 0)
-    now_lust = target_data.status[21]
+    target_data.status.setdefault(20, 0)
+    now_lust = target_data.status[20]
     now_lust_multiple = 10 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[21] += now_add_lust
+    target_data.status[20] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(21, 0)
-    target_change.status[21] += now_add_lust
+    target_change.status.setdefault(20, 0)
+    target_change.status[20] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_ADJUST_BY_TALK)
 def handle_target_add_just_by_talk(

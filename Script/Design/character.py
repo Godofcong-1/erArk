@@ -152,9 +152,12 @@ def judge_character_in_class_time(character_id: int) -> bool:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
+    # print("character_data.behavior.start_time :",character_data.behavior.start_time)
+    # print("cache.game_time :",cache.game_time)
     if now_time is None:
         now_time = cache.game_time
     now_time_value = now_time.hour * 100 + now_time.minute
+    # print("now_time_value :",now_time_value)
     if character_data.age <= 18:
         school_id = 0
         if character_data.age in range(13, 16):
@@ -176,3 +179,24 @@ def judge_character_in_class_time(character_id: int) -> bool:
         if timetable.time <= now_time_value and timetable.end_time >= now_time_value:
             return 1
     return 0
+
+def judge_character_time_over_24(character_id: int) -> bool:
+    """
+    校验角色的时间是否已过24点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    if cache.game_time.day == (now_time.day + 1):
+        return 1
+    elif cache.game_time.month == (now_time.month + 1):
+        return 1
+    elif cache.game_time.year == (now_time.year + 1):
+        return 1
+    else:
+        return 0
