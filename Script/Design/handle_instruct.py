@@ -144,6 +144,17 @@ def handle_buy_item():
     cache.now_panel_id = constant.Panel.ITEM_SHOP
 
 
+@add_instruct(
+    constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), {constant.Premise.HAVE_TARGET}
+)
+def handle_abl_up():
+    """处理属性上升"""
+    see_character_info_panel.line_feed.draw()
+    now_draw = see_character_info_panel.Character_abi_up_main_Handle(
+        cache.character_data[0].target_character_id, width
+    )
+    now_draw.draw()
+
 
 # @add_instruct(
 #     constant.Instruct.PLAY_PIANO,
@@ -194,7 +205,6 @@ def handle_sleep():
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(480)
-    # cache.now_panel_id = constant.Panel.GET_UP
 
 
 # @add_instruct(

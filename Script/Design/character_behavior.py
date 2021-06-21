@@ -19,6 +19,7 @@ from Script.Design import (
     talk,
     map_handle,
     cooking,
+    attr_calculation
 )
 from Script.Config import game_config, normal_config
 
@@ -84,6 +85,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
+    if character_id != 0:
+        if character.judge_character_time_over_24(character_id):
+            judge_character_juel(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -271,3 +275,35 @@ def search_target(
         value_weight = value_handle.get_rand_value_for_value_region(target_data.keys())
         return random.choice(list(target_data[value_weight])), value_weight, 1
     return "", 0, 0
+
+def judge_character_juel(character_id: int) -> int:
+    """
+    校验角色状态并结算为珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    type_set = game_config.config_character_state_type_data[0]
+    for status_id in type_set:
+        # print("status_type :",status_type)
+        # print("status_id :",status_id)
+        # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
+        # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
+        if character_data.sex == 0:
+            if status_id in {2, 3, 7, 8}:
+                continue
+        elif character_data.sex == 1:
+            if status_id == 5:
+                continue
+        status_value = 0
+        if status_id in character_data.status:
+            status_value = character_data.status[status_id]
+            # print("status_value :",status_value)
+        if status_value != 0:
+            add_juel = attr_calculation.get_juel(status_value)
+            character_data.juel[status_id] += add_juel
+            juel_text = game_config.config_juel[status_id].name
+            # print("宝珠名：",juel_text,"。增加了 :",add_juel)
+    return 1

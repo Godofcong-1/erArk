@@ -32,19 +32,8 @@ def init_attr(character_id: int):
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
     # character_data.end_age = attr_calculation.get_end_age(character_data.sex)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
-    bmi = attr_calculation.get_bmi(character_data.weight_tem)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
     # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
-    character_data.measurements = attr_calculation.get_measurements(
-        character_data.sex,
-        character_data.height.now_height,
-        character_data.weight,
-        character_data.bodyfat,
-        character_data.bodyfat_tem,
-    )
-    character_data.sex_experience = attr_calculation.get_sex_experience(
-        character_data.sex_experience_tem, character_data.sex
-    )
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
@@ -61,13 +50,6 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    chest_tem_config = game_config.config_chest[character_data.chest_tem]
-    if chest_tem_config.weight_fix:
-        fix_weight = value_handle.get_gauss_rand(
-            chest_tem_config.weight_fix - 0.5, chest_tem_config.weight_fix + 0.5
-        )
-        character_data.weight += fix_weight
-    character_data.chest = attr_calculation.get_chest(character_data.chest_tem, character_data.birthday)
     new_nature = nature.get_random_nature()
     for nature_id in new_nature:
         if nature_id not in character_data.nature:
@@ -170,9 +152,12 @@ def judge_character_in_class_time(character_id: int) -> bool:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
+    # print("character_data.behavior.start_time :",character_data.behavior.start_time)
+    # print("cache.game_time :",cache.game_time)
     if now_time is None:
         now_time = cache.game_time
     now_time_value = now_time.hour * 100 + now_time.minute
+    # print("now_time_value :",now_time_value)
     if character_data.age <= 18:
         school_id = 0
         if character_data.age in range(13, 16):
@@ -194,3 +179,24 @@ def judge_character_in_class_time(character_id: int) -> bool:
         if timetable.time <= now_time_value and timetable.end_time >= now_time_value:
             return 1
     return 0
+
+def judge_character_time_over_24(character_id: int) -> bool:
+    """
+    校验角色的时间是否已过24点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    if cache.game_time.day == (now_time.day + 1):
+        return 1
+    elif cache.game_time.month == (now_time.month + 1):
+        return 1
+    elif cache.game_time.year == (now_time.year + 1):
+        return 1
+    else:
+        return 0

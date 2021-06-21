@@ -50,7 +50,7 @@ def game_start():
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
     course.init_phase_course_hour()
-    interest.init_character_interest()
+    # interest.init_character_interest()
     # course.init_character_knowledge()
     # course.init_class_teacher()
     # course.init_class_time_table()
