@@ -831,7 +831,7 @@ class Characterabi_show_Text:
                 new_draw_n.text = "\n"
                 new_draw_n.width = 1
                 new_draw_n.draw()
-        yrn = flow_handle.askfor_all(self.return_list)
+        #yrn = flow_handle.askfor_all(self.return_list)
 
 
 class Characterabi_cmd_Text:
@@ -944,7 +944,7 @@ class CharacterExperienceText:
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         experience_text_list = []
-        for experience_id in game_config.config_experience:            
+        for experience_id in game_config.config_experience:
             if character_data.sex == 0:
                 if experience_id in {2, 4, 7, 12, 14, 17, 20, 22, 26, 51, 54, 55, 58, 72, 74 ,77, 86, 100, 101, 102, 103, 104, 105, 106}:
                     continue
@@ -1696,3 +1696,5 @@ class Character_abi_up_frist_Handle:
         """绘制面板"""
         for label in self.draw_list:
             label.draw()
+            if "return_list" in label.__dict__:
+                self.return_list.extend(label.return_list)
