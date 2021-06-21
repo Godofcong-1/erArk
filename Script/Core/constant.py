@@ -1006,6 +1006,8 @@ class Instruct:
     """ 道具 """
     SAVE = 0
     """ 读写存档 """
+    ABL_UP = 0
+    """ 属性升级 """
 
     # ATTEND_CLASS = 0
     # """ 上课 """

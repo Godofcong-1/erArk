@@ -128,6 +128,13 @@ config_talent_type_data: Dict[int, Set] = {}
 """
 config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
+config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
+""" 根据能力id和等级来判断前提编号 """
+config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
+"""
+根据前提编号来判断具体的前提数据
+需求id:[类型,类型子id,需求值]
+"""
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
 config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
@@ -234,6 +241,34 @@ def load_ability_type_data():
         config_ability[now_tem.cid] = now_tem
         config_ability_type_data.setdefault(now_tem.ability_type, set())
         config_ability_type_data[now_tem.ability_type].add(now_tem.cid)
+
+
+def load_ability_up_type():
+    """根据能力id和等级来判断前提编号"""
+    now_data = config_data["AbilityUpType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.AbilityUpType()
+        now_tem.__dict__ = tem_data
+        config_ability_up_type[now_tem.cid] = now_tem
+
+
+def load_ability_up_data():
+    """载入根据前提编号来判断具体的前提数据"""
+    now_data = config_data["AbilityUp"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.AbilityUp()
+        now_tem.__dict__ = tem_data
+        config_ability_up_data.setdefault(now_tem.ability_id, {})
+        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.cid, {})
+        config_ability_up_data[now_tem.ability_id][now_tem.cid] = now_tem
+        # print("tem_data :",tem_data)
+        # print("now_tem.cid :",now_tem.cid)
+        # print("now_tem.ability_id :",now_tem.ability_id)
+        # print("config_ability_up_data[now_tem.ability_id] :",config_ability_up_data[now_tem.ability_id])
+        # print("config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type :",config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type)
+        # print()
 
 
 def load_experience():
@@ -763,6 +798,8 @@ def init():
     load_data_json()
     load_ability_type()
     load_ability_type_data()
+    load_ability_up_type()
+    load_ability_up_data()
     load_bar_data()
     load_behavior_effect_data()
     load_book_data()

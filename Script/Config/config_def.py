@@ -18,6 +18,32 @@ class AbilityType:
     """ 类型名 """
 
 
+class AbilityUp:
+    """ 能力对应类型和文字描述 """
+
+    cid: int
+    """ 编号id """
+    ability_id: int
+    """ 对应的升级需求id """
+    need_type: str
+    """ 需求类型 """
+    need_type_id: int
+    """ 需求类型的子id """
+    value: int
+    """ 需求值 """
+
+
+class AbilityUpType:
+    """ 能力对应类型和文字描述 """
+
+    cid: int
+    """ 升级id """
+    ability_id: int
+    """ 能力id """
+    now_level: int
+    """ 当前等级 """
+
+
 class BarConfig:
     """ 比例条名字对应的状态图片和绘制宽度 """
 
