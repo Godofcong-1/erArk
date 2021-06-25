@@ -908,6 +908,7 @@ class Characterabi_cmd_Text:
                 self.return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
             py_cmd.clr_cmd()
+            line_feed.draw()
             if yrn == back_draw.return_text:
                 break
 
@@ -1122,6 +1123,7 @@ class Charactertal_cmd_Text:
                 self.return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
             py_cmd.clr_cmd()
+            line_feed.draw()
             if yrn == back_draw.return_text:
                 break
 
