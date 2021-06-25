@@ -684,10 +684,8 @@ class BehaviorEffect:
     """ 交互对象增加少量Ｕ快 """
     TARGET_ADD_SMALL_W_FEEL = 48
     """ 交互对象增加少量Ｗ快 """
-    TARGET_ADD_SMALL_V_LUBRICATION = 49
-    """ 交互对象增加少量Ｖ润 """
-    TARGET_ADD_SMALL_A_LUBRICATION = 50
-    """ 交互对象增加少量Ａ润 """
+    TARGET_ADD_SMALL_LUBRICATION = 49
+    """ 交互对象增加少量润滑（欲望补正） """
     TARGET_ADD_SMALL_LEARN = 51
     """ 交互对象增加少量习得（技巧补正） """
     TARGET_ADD_SMALL_RESPECT = 52
@@ -697,21 +695,21 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_DESIRE = 54
     """ 交互对象增加少量欲情（欲望补正） """
     TARGET_ADD_SMALL_HAPPY = 55
-    """ 交互对象增加少量快乐 """
+    """ 交互对象增加少量快乐（快乐刻印补正） """
     TARGET_ADD_SMALL_LEAD = 56
-    """ 交互对象增加少量先导 """
+    """ 交互对象增加少量先导（侍奉补正） """
     TARGET_ADD_SMALL_SUBMIT = 57
-    """ 交互对象增加少量屈服 """
+    """ 交互对象增加少量屈服（屈服刻印补正） """
     TARGET_ADD_SMALL_SHY = 58
-    """ 交互对象增加少量羞耻 """
+    """ 交互对象增加少量羞耻（露出补正） """
     TARGET_ADD_SMALL_PAIN = 59
-    """ 交互对象增加少量苦痛 """
+    """ 交互对象增加少量苦痛（苦痛刻印补正） """
     TARGET_ADD_SMALL_TERROR = 60
-    """ 交互对象增加少量恐怖 """
+    """ 交互对象增加少量恐怖（恐怖刻印补正） """
     TARGET_ADD_SMALL_DEPRESSION = 61
     """ 交互对象增加少量抑郁 """
     TARGET_ADD_SMALL_DISGUST = 62
-    """ 交互对象增加少量反感 """
+    """ 交互对象增加少量反感（反发刻印补正） """
     TARGET_ADD_ADJUST_BY_TALK = 100
     """ 交互对象根据玩家的话术技能进行好感度、好意、欲情、快乐调整 """
 
