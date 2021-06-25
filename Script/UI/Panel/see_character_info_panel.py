@@ -1094,6 +1094,14 @@ class Charactertal_cmd_Text:
                     button_text = "需要经验 :" + experience_name + "至少为" + str(need_value) + "\n"
                     if self.character_data.experience[need_type_id] < need_value:
                         judge = 0
+                elif need_type == "F":
+                    button_text = "需要好感至少为" + str(need_value) + "\n"
+                    if self.character_data.favorability[0] < need_value:
+                        judge = 0
+                elif need_type == "F":
+                    button_text = "需要信赖至少为" + str(need_value) + "%\n"
+                    if self.character_data.trust < need_value:
+                        judge = 0
                 now_draw = draw.NormalDraw()
                 now_draw.text = button_text
                 now_draw.draw()
