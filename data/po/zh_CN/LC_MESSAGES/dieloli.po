@@ -309,7 +309,7 @@ msgstr ""
 
 #: Script/UI/Panel/see_character_info_panel.py:1148
 #, python-brace-format
-msgid "体力:({character_data.hit_point}/{character_data.HP_max})"
+msgid "体力:({character_data.hit_point}/{character_data.hit_point_max})"
 msgstr ""
 
 #: Script/UI/Panel/see_character_info_panel.py:1149
