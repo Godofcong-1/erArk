@@ -129,10 +129,15 @@ config_talent_type_data: Dict[int, Set] = {}
 config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
 config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
-""" 根据能力id和等级来判断前提编号 """
+""" 根据能力id和等级来判断升级的前提编号 """
 config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 """
-根据前提编号来判断具体的前提数据
+载入根据前提编号来判断具体的能力升级的具体前提数据
+需求id:[类型,类型子id,需求值]
+"""
+config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
+"""
+载入根据前提编号来判断具体的素质升级的具体前提数据
 需求id:[类型,类型子id,需求值]
 """
 config_recipes: Dict[int, config_def.Recipes] = {}
@@ -244,7 +249,7 @@ def load_ability_type_data():
 
 
 def load_ability_up_type():
-    """根据能力id和等级来判断前提编号"""
+    """根据能力id和等级来判断升级的前提编号"""
     now_data = config_data["AbilityUpType"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
@@ -254,7 +259,7 @@ def load_ability_up_type():
 
 
 def load_ability_up_data():
-    """载入根据前提编号来判断具体的前提数据"""
+    """载入根据前提编号来判断具体的能力升级的具体前提数据"""
     now_data = config_data["AbilityUp"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
@@ -269,6 +274,17 @@ def load_ability_up_data():
         # print("config_ability_up_data[now_tem.ability_id] :",config_ability_up_data[now_tem.ability_id])
         # print("config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type :",config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type)
         # print()
+
+def load_talent_up_data():
+    """载入根据前提编号来判断具体的素质升级的具体前提数据"""
+    now_data = config_data["TalentUp"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.TalentUp()
+        now_tem.__dict__ = tem_data
+        config_talent_up_data.setdefault(now_tem.talent_id, {})
+        config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
+        config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
 
 
 def load_experience():
@@ -844,6 +860,7 @@ def init():
     load_talk_premise()
     load_talent_type()
     load_talent_type_data()
+    load_talent_up_data()
     load_target()
     load_target_effect()
     load_target_premise()

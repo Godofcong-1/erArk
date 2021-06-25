@@ -543,6 +543,21 @@ class TalentType:
     """ 类型名 """
 
 
+class TalentUp:
+    """ 能力对应类型和文字描述 """
+
+    cid: int
+    """ 编号id """
+    talent_id: int
+    """ 对应的升级需求id """
+    need_type: str
+    """ 需求类型 """
+    need_type_id: int
+    """ 需求类型的子id """
+    value: int
+    """ 需求值 """
+
+
 class WeekDay:
     """ 星期描述配置 """
 
