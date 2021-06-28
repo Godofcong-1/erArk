@@ -30,7 +30,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     if behavior_id in game_config.config_behavior_effect_data:
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
-    change_character_favorability_for_time(character_id, now_time)
+    #注释掉了会按不交流的时间自动扣好感的系统#
+    # change_character_favorability_for_time(character_id, now_time)
     change_character_social(character_id, status_data)
     now_judge = False
     if character_id:

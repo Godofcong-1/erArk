@@ -521,6 +521,8 @@ class Character:
         """ 角色种族 """
         self.talent:Dict[int,int] = {}
         """ 角色素质 """
+        self.talk_count : int = 0
+        """ 角色谈话计数器 """
 
 
 class TeacherTimeTable:

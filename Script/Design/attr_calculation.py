@@ -34,6 +34,26 @@ def get_ability_zero(ability_dict) -> dict:
             ability_list[ability] = 0
     return ability_list
 
+def get_status_zero(status_dict) -> dict:
+    """
+    检查初始能力，将为空的项补为0
+    """
+    status_list = status_dict
+    for status in game_config.config_character_state:
+        if status not in status_dict:
+            status_list[status] = 0
+    return status_list
+
+def get_talent_zero(talent_dict) -> dict:
+    """
+    检查初始能力，将为空的项补为0
+    """
+    talent_list = talent_dict
+    for talent in game_config.config_talent:
+        if talent not in talent_dict:
+            talent_list[talent] = 0
+    return talent_list
+
 def get_experience_zero(experience_dict) -> dict:
     """
     检查初始经验，将为空的项补为0

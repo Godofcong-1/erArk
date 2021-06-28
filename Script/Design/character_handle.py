@@ -334,29 +334,29 @@ def add_favorability(
     if target_change is not None:
         target_change.status.setdefault(12, 0)
     old_add_favorability = now_add_favorability
-    if 12 in target_data.status:
-        disgust = target_data.status[12]
-        if disgust:
-            if now_add_favorability >= disgust:
-                now_add_favorability -= disgust
-                target_data.status[12] = 0
-                if now_add_favorability:
-                    target_data.favorability[character_id] += now_add_favorability
-                    if target_change is not None:
-                        target_change.favorability += now_add_favorability
-                del target_data.status[12]
-            else:
-                target_data.status[12] -= now_add_favorability
-                if target_change is not None:
-                    target_change.status[12] -= now_add_favorability
-        else:
-            target_data.favorability[character_id] += now_add_favorability
-            if target_change is not None:
-                target_change.favorability += now_add_favorability
-    else:
-        target_data.favorability[character_id] += now_add_favorability
-        if target_change is not None:
-            target_change.favorability += now_add_favorability
+    # if 12 in target_data.status:
+    #     disgust = target_data.status[12]
+    #     if disgust:
+    #         if now_add_favorability >= disgust:
+    #             now_add_favorability -= disgust
+    #             target_data.status[12] = 0
+    #             if now_add_favorability:
+    #                 target_data.favorability[character_id] += now_add_favorability
+    #                 if target_change is not None:
+    #                     target_change.favorability += now_add_favorability
+    #             del target_data.status[12]
+    #         else:
+    #             target_data.status[12] -= now_add_favorability
+    #             if target_change is not None:
+    #                 target_change.status[12] -= now_add_favorability
+    #     else:
+    #         target_data.favorability[character_id] += now_add_favorability
+    #         if target_change is not None:
+    #             target_change.favorability += now_add_favorability
+    # else:
+    target_data.favorability[character_id] += now_add_favorability
+    if target_change is not None:
+        target_change.favorability += now_add_favorability
     target_data.social_contact_last_cut_down_time[character_id] = now_time
     if target_change is not None:
         add_favorability(target_id, character_id, old_add_favorability, None, now_time)

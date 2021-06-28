@@ -1295,7 +1295,7 @@ class CharacterTalentText:
                 message_race = f"\n {race_type}："
             for talent_id in type_set:
                 talent_text = game_config.config_talent[talent_id].name
-                if talent_id in character_data.talent:
+                if character_data.talent[talent_id]:
                     now_text = f"[{talent_text}]"
                     message_race += now_text
             talent_text_list.append(message_race)
