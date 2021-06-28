@@ -438,32 +438,6 @@ def handle_add_small_play_music_experience(
     change_data.knowledge[25] += experience
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_ELOQUENCE_EXPERIENCE)
-def handle_add_small_eloquence_experience(
-    character_id: int,
-    add_time: int,
-    change_data: game_type.CharacterStatusChange,
-    now_time: datetime.datetime,
-):
-    """
-    增加少量对话技能经验
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    character_data.experience.setdefault(80, 0)
-    character_data.experience[80] += 1
-    change_data.experience.setdefault(80, 0)
-    change_data.experience[80] += 1
-
-
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_PERFORM_EXPERIENCE)
 def handle_add_small_perform_experience(
     character_id: int,
