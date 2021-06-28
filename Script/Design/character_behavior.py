@@ -300,6 +300,7 @@ def judge_character_juel(character_id: int) -> int:
         status_value = 0
         if status_id in character_data.status:
             status_value = character_data.status[status_id]
+            cache.character_data[character_id].status[status_id] = 0
             # print("status_value :",status_value)
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
