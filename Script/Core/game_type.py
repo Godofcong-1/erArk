@@ -691,6 +691,8 @@ class TargetChange:
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
+        self.trust: int = 0
+        """ 信赖度变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
         self.experience: Dict[int, int] = {}

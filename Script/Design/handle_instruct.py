@@ -517,32 +517,32 @@ def handle_wait():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.MAKE_TEA,
+    constant.Instruct.MAKE_COFFEE,
     constant.InstructType.DAILY,
-    _("泡茶"),
+    _("冲咖啡"),
     {constant.Premise.HAVE_TARGET},
 )
-def handle_make_tea():
-    """处理泡茶指令"""
+def handle_make_coffee():
+    """处理冲咖啡指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 15
-    character_data.behavior.behavior_id = constant.Behavior.MAKE_TEA
-    character_data.state = constant.CharacterStatus.STATUS_MAKE_TEA
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE
     update.game_update_flow(15)
 
 @add_instruct(
-    constant.Instruct.MAKE_TEA_ADD,
+    constant.Instruct.MAKE_COFFEE_ADD,
     constant.InstructType.DAILY,
-    _("泡茶（加料）"),
+    _("冲咖啡（加料）"),
     {constant.Premise.HAVE_TARGET},
 )
-def handle_make_tea_add():
-    """处理泡茶（加料）指令"""
+def handle_make_coffee_add():
+    """处理冲咖啡（加料）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 15
+    update.game_update_flow(15)
 
 @add_instruct(
     constant.Instruct.MAKE_FOOD,

@@ -43,10 +43,8 @@ class CharacterStatus:
     """ 弹吉他 """
     STATUS_SELF_STUDY = 18
     """ 自习 """
-    STATUS_MAKE_TEA = 20
-    """ 泡茶 """
-    STATUS_WAIT = 40
-    """ 待机状态 """
+    STATUS_MAKE_COFFEE = 20
+    """ 冲咖啡 """
 
 
 class Behavior:
@@ -90,10 +88,8 @@ class Behavior:
     """ 弹吉他 """
     SELF_STUDY = 18
     """ 自习 """
-    MAKE_TEA = 20
-    """ 泡茶 """
-    WAIT = 40
-    """ 待机 """
+    MAKE_COFFEE = 20
+    """ 泡咖啡 """
 
 
 class StateMachine:
@@ -602,8 +598,8 @@ class BehaviorEffect:
     """ 减少少量气力 """
     MOVE_TO_TARGET_SCENE = 5
     """ 移动至目标场景 """
-    EAT_FOOD = 6
-    """ 食用指定食物 """
+    ADD_SMALL_TRUST = 6
+    """ 增加基础互动信赖 """
     ADD_SOCIAL_FAVORABILITY = 7
     """ 增加社交关系好感 """
     ADD_INTIMACY_FAVORABILITY = 8
@@ -666,8 +662,6 @@ class BehaviorEffect:
     """ 按演奏技能增加交互对象好感 """
     TARGET_ADD_FAVORABILITY_FOR_TARGET_INTEREST = 38
     """ 按交互对象兴趣增加交互对象好感 """
-    TARGET_ADD_SMALL_FRIENDLY = 40
-    """ 交互对象增加少量好意 """
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快 """
     TARGET_ADD_SMALL_B_FEEL = 42
@@ -710,12 +704,10 @@ class BehaviorEffect:
     """ 交互对象增加少量抑郁 """
     TARGET_ADD_SMALL_DISGUST = 62
     """ 交互对象增加少量反感（反发刻印补正） """
-    TARGET_ADD_ADJUST_BY_TALK = 100
-    """ 交互对象根据玩家的话术技能进行好感度、好意、欲情、快乐调整 """
-    ADD_SMALL_ELOQUENCE_EXPERIENCE = 11
-    """ 增加1会话经验 """
-    ADD_1_COOK_EXPERIENCE = 201
-    """ 增加1料理经验 """
+    TALK_ADD_ADJUST = 100
+    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整 """
+    COFFEE_ADD_ADJUST = 101
+    """ （冲咖啡用）根据发起者的料理技能进行好感度、信赖、恭顺、好意调整 """
     ADD_1_N_EXPERIENCE = 200
     """ 增加1N经验 """
     ADD_1_B_EXPERIENCE = 201
@@ -916,10 +908,10 @@ class Instruct:
     """ 聊天 """
     STROKE = 0
     """ 身体接触 """
-    MAKE_TEA = 0
-    """ 泡茶 """
-    MAKE_TEA_ADD = 0
-    """ 泡茶（加料） """
+    MAKE_COFFEE = 0
+    """ 冲咖啡 """
+    MAKE_COFFEE_ADD = 0
+    """ 冲咖啡（加料） """
     MAKE_FOOD = 0
     """ 做饭 """
     EAT = 0

@@ -705,6 +705,36 @@ def handle_in_player_scene(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.SCENE_ONLY_TWO)
+def handle_scene_only_two(character_id: int) -> int:
+    """
+    该地点仅有玩家和该角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    return len(scene_data.character_list) <= 2
+
+
+@add_premise(constant.Premise.SCENE_OVER_TWO)
+def handle_scene_over_two(character_id: int) -> int:
+    """
+    该地点里有除了玩家和该角色之外的人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    return len(scene_data.character_list) > 2
+
+
 @add_premise(constant.Premise.LEAVE_PLAYER_SCENE)
 def handle_leave_player_scene(character_id: int) -> int:
     """
