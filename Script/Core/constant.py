@@ -720,9 +720,9 @@ class BehaviorEffect:
     """ 增加1N经验 """
     ADD_1_B_EXPERIENCE = 201
     """ 增加1B经验 """
-    ADD_1_P_EXPERIENCE = 202
+    ADD_1_C_EXPERIENCE = 202
     """ 增加1C经验 """
-    ADD_1_B_EXPERIENCE = 203
+    ADD_1_P_EXPERIENCE = 203
     """ 增加1P经验 """
     ADD_1_V_EXPERIENCE = 204
     """ 增加1V经验 """

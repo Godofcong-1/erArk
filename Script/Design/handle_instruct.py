@@ -526,8 +526,10 @@ def handle_make_tea():
     """处理泡茶指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 15
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_TEA
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_TEA
+    update.game_update_flow(15)
 
 @add_instruct(
     constant.Instruct.MAKE_TEA_ADD,
