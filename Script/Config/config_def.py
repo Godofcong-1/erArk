@@ -330,30 +330,6 @@ class MoveMenuType:
     """ 名字 """
 
 
-class Nature:
-    """ 性格倾向配置 """
-
-    cid: int
-    """ 性格id """
-    nature_type: int
-    """ 类型 """
-    good: str
-    """ 正面倾向 """
-    bad: str
-    """ 负面倾向 """
-
-
-class NatureTag:
-    """ 性格倾向标签 """
-
-    cid: int
-    """ 性格标签id """
-    good: str
-    """ 正面倾向 """
-    bad: str
-    """ 负面倾向 """
-
-
 class Organ:
     """ 器官对应性别限定和文字描述 """
 

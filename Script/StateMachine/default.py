@@ -164,6 +164,7 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    character_data.behavior.duration += 15
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)

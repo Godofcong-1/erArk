@@ -89,12 +89,6 @@ config_moon_data: Dict[int, Set] = {}
 """ 月相类型对应配置id集合 """
 config_move_menu_type: Dict[int, config_def.MoveMenuType] = {}
 """ 移动菜单过滤类型配置 """
-config_nature: Dict[int, config_def.Nature] = {}
-""" 性格配置数据 """
-config_nature_tag: Dict[int, config_def.NatureTag] = {}
-""" 性格标签配置数据 """
-config_nature_tag_data: Dict[int, Set] = {}
-""" 性格标签下性格id配置数据 """
 config_organ: Dict[int, config_def.Organ] = {}
 """ 器官种类配置 """
 config_organ_data: Dict[int, Set] = {}
@@ -576,28 +570,6 @@ def load_move_menu_type():
         config_move_menu_type[now_tem.cid] = now_tem
 
 
-def load_nature():
-    """载入性格配置数据"""
-    now_data = config_data["Nature"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Nature()
-        now_tem.__dict__ = tem_data
-        config_nature[now_tem.cid] = now_tem
-        config_nature_tag_data.setdefault(now_tem.nature_type, set())
-        config_nature_tag_data[now_tem.nature_type].add(now_tem.cid)
-
-
-def load_nature_tag():
-    """载入性格标签配置数据"""
-    now_data = config_data["NatureTag"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.NatureTag()
-        now_tem.__dict__ = tem_data
-        config_nature_tag[now_tem.cid] = now_tem
-
-
 def load_organ_data():
     """载入器官种类配置"""
     now_data = config_data["Organ"]
@@ -839,8 +811,6 @@ def init():
     load_manapoint_tem()
     load_moon()
     load_move_menu_type()
-    load_nature()
-    load_nature_tag()
     load_organ_data()
     load_profession()
     load_race()

@@ -928,7 +928,7 @@ class Instruct:
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOWED = 0
-    """ 使跟随 """
+    """ 请求同行 """
     APOLOGIZE = 0
     """ 道歉 """
     LISTEN_COMPLAINT = 0

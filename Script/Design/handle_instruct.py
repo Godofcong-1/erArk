@@ -567,11 +567,11 @@ def handle_make_food():
 @add_instruct(
     constant.Instruct.FOLLOWED,
     constant.InstructType.DAILY,
-    _("使跟随"),
+    _("请求同行"),
     {constant.Premise.HAVE_TARGET},
 )
 def handle_followed():
-    """处理使跟随指令"""
+    """处理请求同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5

@@ -52,10 +52,10 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    new_nature = nature.get_random_nature()
-    for nature_id in new_nature:
-        if nature_id not in character_data.nature:
-            character_data.nature[nature_id] = new_nature[nature_id]
+    # new_nature = nature.get_random_nature()
+    # for nature_id in new_nature:
+    #     if nature_id not in character_data.nature:
+    #         character_data.nature[nature_id] = new_nature[nature_id]
     # init_class(character_data)
 
 
