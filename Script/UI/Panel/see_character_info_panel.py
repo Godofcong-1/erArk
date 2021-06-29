@@ -45,7 +45,7 @@ class SeeCharacterInfoPanel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel: str = _("属性（第一页）")
+        self.now_panel: str = _("素质与能力")
         """ 当前的属性页id """
         self.character_id: int = character_id
         """ 要绘制的角色id """
@@ -53,7 +53,7 @@ class SeeCharacterInfoPanel:
         """ 当前面板监听的按钮列表 """
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_second_draw = SeeCharacterSecondPanel(character_id, width)
-        main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
+        # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
         # see_item_draw = see_item_info_panel.SeeCharacterItemBagPanel(character_id, width)
@@ -62,9 +62,9 @@ class SeeCharacterInfoPanel:
         # see_nature_draw = SeeCharacterNaturePanel(character_id, width)
         # see_social_draw = SeeCharacterSocialContact(character_id, width)
         self.draw_data = {
-            _("属性（第一页）"): main_first_draw,
-            _("属性（第二页）"): main_second_draw,
-            _("属性（原）"): main_attr_draw,
+            _("素质与能力"): main_first_draw,
+            _("经验与宝珠"): main_second_draw,
+            # _("属性（原）"): main_attr_draw,
             # _("状态"): see_status_draw,
             # _("服装"): see_clothing_draw,
             # _("道具"): see_item_draw,
@@ -1658,7 +1658,7 @@ class SeeCharacterInfoHandle:
             _("[下一人]"), _("下一人"), self.width / 3, cmd_func=self.next_character
         )
         back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
-        now_panel_id = _("属性（第一页）")
+        now_panel_id = _("素质与能力")
         while 1:
             self.return_list = []
             now_character_panel = SeeCharacterInfoPanel(self.character_id, self.width)

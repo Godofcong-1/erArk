@@ -45,6 +45,8 @@ class CharacterStatus:
     """ 自习 """
     STATUS_MAKE_COFFEE = 20
     """ 冲咖啡 """
+    STATUS_CHAT_FAILED = 21
+    """ 谈话次数过多的状态 """
 
 
 class Behavior:
@@ -90,6 +92,9 @@ class Behavior:
     """ 自习 """
     MAKE_COFFEE = 20
     """ 泡咖啡 """
+    CHAT_FAILED = 21
+    """ 谈话次数过多而失败 """
+
 
 
 class StateMachine:

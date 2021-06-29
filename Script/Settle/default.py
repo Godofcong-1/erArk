@@ -2144,6 +2144,9 @@ def handle_talk_add_adjust(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(14, 0)
     target_change.status[14] += now_add_lust
+    #记录谈话时间#
+    target_data.talk_time = now_time
+    # print("聊天计数器时间变为 ：",target_data.talk_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.COFFEE_ADD_ADJUST)

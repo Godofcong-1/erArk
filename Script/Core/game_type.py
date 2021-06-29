@@ -522,7 +522,9 @@ class Character:
         self.talent:Dict[int,int] = {}
         """ 角色素质 """
         self.talk_count : int = 0
-        """ 角色谈话计数器 """
+        """ 角色聊天次数计数器 """
+        self.talk_time: datetime.datetime = None
+        """ 角色上次聊天时间 """
 
 
 class TeacherTimeTable:

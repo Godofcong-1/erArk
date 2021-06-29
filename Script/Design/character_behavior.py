@@ -85,9 +85,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
-    if character_id != 0:
-        if character.judge_character_time_over_24(character_id):
-            judge_character_juel(character_id)
+    #24点之后结算状态为珠#
+    if character.judge_character_time_over_24(character_id):
+        judge_character_juel(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):

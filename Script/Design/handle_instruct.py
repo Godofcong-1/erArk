@@ -131,8 +131,15 @@ def handle_chat():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     character_data.behavior.duration = 5
-    character_data.behavior.behavior_id = constant.Behavior.CHAT
-    character_data.state = constant.CharacterStatus.STATUS_CHAT
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.talk_count > character_data.ability[25] + 1:
+        character_data.behavior.behavior_id = constant.Behavior.CHAT_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_CHAT_FAILED
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.CHAT
+        character_data.state = constant.CharacterStatus.STATUS_CHAT
+    target_data.talk_count += 1
+    # print("聊天计数器+1，现在为 ：",target_data.talk_count)
     update.game_update_flow(5)
 
 
