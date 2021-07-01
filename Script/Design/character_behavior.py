@@ -55,8 +55,9 @@ def update_cafeteria():
         food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
         for food_id in food_list:
             food: game_type.Food = food_list[food_id]
-            if food.eat:
-                food_judge = 0
+            # if food.eat:
+                # food_judge = 0
+            food_judge = 0
             break
         if not food_judge:
             break

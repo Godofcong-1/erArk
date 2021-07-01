@@ -54,22 +54,6 @@ config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
 """ 字体名字对应字体id """
-config_food: Dict[int, config_def.Food] = {}
-""" 食材配置数据 """
-config_food_feel: Dict[int, config_def.FoodFeel] = {}
-""" 食材效果配置 """
-config_food_feel_data: Dict[int, Dict[int, int]] = {}
-"""
-食材效果配置数据
-食材id:效果id:效果
-"""
-config_food_quality_weight: Dict[int, config_def.FoodQualityWeight] = {}
-""" 烹饪技能等级制造食物品质权重配置 """
-config_food_quality_weight_data: Dict[int, Dict[int, int]] = {}
-"""
-烹饪技能等级制造食物品质权重表
-技能等级:食物品质:权重
-"""
 config_hitpoint_tem: Dict[int, config_def.HitPointTem] = {}
 """ HP模板对应平均值 """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
@@ -136,12 +120,6 @@ config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
-config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
-""" 菜谱配方配置 """
-config_recipes_formula_type: Dict[int, config_def.RecipesFormulaType] = {}
-""" 菜谱配方材料类型配置 """
-config_recipes_formula_data: Dict[int, Dict[int, Set]] = {}
-""" 菜谱配方材料配置数据 """
 config_school: Dict[int, config_def.School] = {}
 """ 学校配置数据 """
 config_school_phase_course: Dict[int, config_def.SchoolPhaseCourse] = {}
@@ -472,40 +450,6 @@ def load_font_data():
         config_font_data[now_font.name] = now_font.cid
 
 
-def load_food_data():
-    """载入食材配置数据"""
-    now_data = config_data["Food"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Food()
-        now_tem.__dict__ = tem_data
-        config_food[now_tem.cid] = now_tem
-
-
-def load_food_feel_data():
-    """载入食材效果配置数据"""
-    now_data = config_data["FoodFeel"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.FoodFeel()
-        now_tem.__dict__ = tem_data
-        config_food_feel[now_tem.cid] = now_tem
-        config_food_feel_data.setdefault(now_tem.food_id, {})
-        config_food_feel_data[now_tem.food_id][now_tem.feel_id] = now_tem.feel_value * 10
-
-
-def load_food_quality_weight():
-    """载入烹饪技能等级制造食物品质权重配置数据"""
-    now_data = config_data["FoodQualityWeight"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.FoodQualityWeight()
-        now_tem.__dict__ = tem_data
-        config_food_quality_weight[now_tem.cid] = now_tem
-        config_food_quality_weight_data.setdefault(now_tem.level, {})
-        config_food_quality_weight_data[now_tem.level][now_tem.quality] = now_tem.weight
-
-
 def load_hitpoint_tem():
     """载入hp模板对应平均值配置数据"""
     now_data = config_data["HitPointTem"]
@@ -590,29 +534,6 @@ def load_recipes():
         now_tem = config_def.Recipes()
         now_tem.__dict__ = tem_data
         config_recipes[now_tem.cid] = now_tem
-
-
-def load_recipes_formula():
-    """载入菜谱配方配置"""
-    now_data = config_data["RecipesFormula"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.RecipesFormula()
-        now_tem.__dict__ = tem_data
-        config_recipes_formula[now_tem.cid] = now_tem
-        config_recipes_formula_data.setdefault(now_tem.recipe_id, {})
-        config_recipes_formula_data[now_tem.recipe_id].setdefault(now_tem.formula_type, set())
-        config_recipes_formula_data[now_tem.recipe_id][now_tem.formula_type].add(now_tem.food_id)
-
-
-def load_recipes_formula_type():
-    """载入菜谱配方材料类型配置数据"""
-    now_data = config_data["RecipesFormulaType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.RecipesFormulaType()
-        now_tem.__dict__ = tem_data
-        config_recipes_formula_type[now_tem.cid] = now_tem
 
 
 def load_school():
@@ -801,9 +722,6 @@ def init():
     load_course()
     load_experience()
     load_font_data()
-    load_food_data()
-    load_food_feel_data()
-    load_food_quality_weight()
     load_hitpoint_tem()
     load_instruct_type()
     load_item()
@@ -815,8 +733,6 @@ def init():
     load_profession()
     load_race()
     load_recipes()
-    load_recipes_formula()
-    load_recipes_formula_type()
     load_school()
     load_school_phase_course()
     load_school_session()

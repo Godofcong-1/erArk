@@ -47,6 +47,8 @@ class CharacterStatus:
     """ 冲咖啡 """
     STATUS_CHAT_FAILED = 21
     """ 谈话次数过多的状态 """
+    STATUS_MAKE_FOOD = 22
+    """ 做饭 """
 
 
 class Behavior:
@@ -94,6 +96,8 @@ class Behavior:
     """ 泡咖啡 """
     CHAT_FAILED = 21
     """ 谈话次数过多而失败 """
+    MAKE_FOOD = 22
+    """ 做饭 """
 
 
 
@@ -273,6 +277,10 @@ class Premise:
     PHYSICAL_STRENGHT = "84"
     """ 体力充沛 """
 
+    IN_KITCHEN = "in_kit"
+    """ 在厨房 """
+    IN_DINING_HALL = "in_din"
+    """ 在食堂 """
 
     IN_CAFETERIA = "0"
     """ 处于取餐区 """
@@ -713,6 +721,8 @@ class BehaviorEffect:
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整 """
     COFFEE_ADD_ADJUST = 101
     """ （冲咖啡用）根据发起者的料理技能进行好感度、信赖、恭顺、好意调整 """
+    EAT_FOOD = 102
+    """ 进食指定食物 """
     ADD_1_N_EXPERIENCE = 200
     """ 增加1N经验 """
     ADD_1_B_EXPERIENCE = 201

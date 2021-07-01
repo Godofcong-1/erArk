@@ -153,7 +153,7 @@ def handle_have_food(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     food_index = 0
     for food_id in character_data.food_bag:
-        if character_data.food_bag[food_id].eat and 27 in character_data.food_bag[food_id].feel:
+        if character_data.food_bag[food_id]:
             food_index += 1
     return food_index
 
@@ -403,6 +403,41 @@ def handle_in_shop(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if now_scene_data.scene_tag == "Shop":
+        return 1
+    return 0
+
+@add_premise(constant.Premise.IN_KITCHEN)
+def handle_in_kitchen(character_id: int) -> int:
+    """
+    校验角色是否在厨房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Kitchen":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_DINING_HALL)
+def handle_in_dining_hall(character_id: int) -> int:
+    """
+    校验角色是否在食堂中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Dining_hall":
         return 1
     return 0
 

@@ -84,7 +84,7 @@ def handle_rest():
 
 
 @add_instruct(
-    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"), {constant.Premise.IN_CAFETERIA}
+    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"), {constant.Premise.IN_DINING_HALL}
 )
 def handle_buy_food():
     """处理购买食物指令"""
@@ -555,14 +555,17 @@ def handle_make_coffee_add():
     constant.Instruct.MAKE_FOOD,
     constant.InstructType.DAILY,
     _("做饭"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.IN_KITCHEN,
+},
 )
 def handle_make_food():
     """做饭"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
+    update.game_update_flow(60)
 
 @add_instruct(
     constant.Instruct.FOLLOWED,

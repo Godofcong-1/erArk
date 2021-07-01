@@ -153,11 +153,11 @@ def character_move_to_toilet(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["toilet_man"])
+        random.choice(constant.place_data["Toilet_man"])
     )
     elif character_data.sex == 1:
         to_toilet = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["toilet_woman"])
+        random.choice(constant.place_data["Toilet_woman"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_toilet)
     character_data.behavior.behavior_id = constant.Behavior.MOVE

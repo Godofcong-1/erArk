@@ -37,7 +37,8 @@ class FoodBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("食物背包"), self.width)
-        food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
+        food_type_list = [_("主食")]
+        # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         food_id_list = list(
             cooking.get_character_food_bag_type_list_buy_food_type(0, self.now_panel).items()
         )
@@ -199,34 +200,34 @@ class EatFoodByFoodNameDraw:
         """ 按钮返回值 """
         name_draw = draw.NormalDraw()
         food_data: game_type.Food = cache.character_data[0].food_bag[self.text]
-        quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
+        # quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
         food_name = ""
         if food_data.recipe != -1:
             food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
             food_name = food_recipe.name
-        else:
-            food_config = game_config.config_food[food_data.id]
-            food_name = food_config.name
-        hunger_text = _("热量:")
-        if 27 in food_data.feel:
-            hunger_text = f"{hunger_text}{round(food_data.feel[27],2)}"
-        else:
-            hunger_text = f"{hunger_text}0.00"
-        thirsty_text = _("水份:")
-        if 28 in food_data.feel:
-            thirsty_text = f"{thirsty_text}{round(food_data.feel[28],2)}"
-        else:
-            thirsty_text = f"{thirsty_text}0.00"
-        food_name = (
-            food_name
-            + f" {hunger_text} {thirsty_text} "
-            + _("重量:")
-            + str(round(food_data.weight, 2))
-            + _("克")
-            + " "
-            + _("品质:")
-            + quality_text_data[food_data.quality]
-        )
+        # else:
+        #     food_config = game_config.config_food[food_data.id]
+        #     food_name = food_config.name
+        # hunger_text = _("热量:")
+        # if 27 in food_data.feel:
+        #     hunger_text = f"{hunger_text}{round(food_data.feel[27],2)}"
+        # else:
+        #     hunger_text = f"{hunger_text}0.00"
+        # thirsty_text = _("水份:")
+        # if 28 in food_data.feel:
+        #     thirsty_text = f"{thirsty_text}{round(food_data.feel[28],2)}"
+        # else:
+        #     thirsty_text = f"{thirsty_text}0.00"
+        # food_name = (
+        #     food_name
+        #     + f" {hunger_text} {thirsty_text} "
+        #     + _("重量:")
+        #     + str(round(food_data.weight, 2))
+        #     + _("克")
+        #     + " "
+        #     + _("品质:")
+        #     + quality_text_data[food_data.quality]
+        # )
         index_text = text_handle.id_index(button_id)
         button_text = f"{index_text}{food_name}"
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.eat_food)
