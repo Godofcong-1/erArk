@@ -43,6 +43,7 @@ class Make_food_Panel:
         food_type_list = [_("主食")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
+        cooking.init_makefood_data()
         while 1:
             py_cmd.clr_cmd()
             food_name_list = list(
@@ -91,7 +92,7 @@ class Make_food_Panel:
         food_type -- 要切换的食物类型
         """
         self.now_panel = food_type
-        food_name_list = list(cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items())
+        food_name_list = list(cooking.get_cook_level_food_type(self.now_panel).items())
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
@@ -126,7 +127,6 @@ class SeeFoodListByFoodNameDraw:
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
-        self.make_food_data: Dict[str, Dict[UUID, game_type.Food]] = {}
         name_draw = draw.NormalDraw()
         if is_button:
             if num_button:
@@ -149,19 +149,7 @@ class SeeFoodListByFoodNameDraw:
             self.draw_text = name_draw.text
         self.now_draw = name_draw
         """ 绘制的对象 """
-        recipe_data = cache.recipe_data
-        character_data = cache.character_data[0]
-        food_list = {}
-        # print("进入for之前")
-        for recipes_id in recipe_data:
-            # print("进入for recipes_id:",recipes_id)
-            if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
-                # print("recipes_id :",recipes_id)
-                # print("cache.recipe_data[recipes_id].name :",cache.recipe_data[recipes_id].name)
-                # print("recipe_data[recipes_id].difficulty :",recipe_data[recipes_id].difficulty)
-                new_food = cooking.cook(food_list, recipes_id, 5, "")
-                self.make_food_data.setdefault(str(recipes_id), {})
-                self.make_food_data[str(recipes_id)][new_food.uid] = new_food
+
 
     def draw(self):
         """绘制对象"""
@@ -170,35 +158,30 @@ class SeeFoodListByFoodNameDraw:
     def see_food_shop_food_list(self):
         """按食物名字显示食物商店的食物列表"""
         title_draw = draw.TitleLineDraw(self.text, window_width)
-        # print("self.cid :",self.cid)
-        # print("self.make_food_data :",self.make_food_data)
-        # for x in self.make_food_data:
-        #     if self.cid = self.make_food_data[0]:
-        #         now_food_list = 
-        now_food_list = [(self.cid, x) for x in self.make_food_data[str(self.cid)]]
+        now_food_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
         # now_food_list = [(self.cid, x) for x in self.make_food_data[self.cid]]
         page_handle = panel.PageHandlePanel(
-            now_food_list, BuyFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
+            now_food_list, MakeFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
-        while 1:
-            return_list = []
-            title_draw.draw()
-            page_handle.update()
-            page_handle.draw()
-            return_list.extend(page_handle.return_list)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-            # page_handle.text_list = [(self.cid, x) for x in self.make_food_data[str(self.cid)]]
+        # while 1:
+        return_list = []
+        title_draw.draw()
+        page_handle.update()
+        page_handle.draw()
+        return_list.extend(page_handle.return_list)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        # if yrn == back_draw.return_text:
+        #     break
+        page_handle.text_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
 
 
-class BuyFoodByFoodNameDraw:
+class MakeFoodByFoodNameDraw:
     """
-    点击后可购买食物的食物名字按钮对象
+    点击后可制作食物的食物名字按钮对象
     Keyword arguments:
     text -- 食物id
     width -- 最大宽度
@@ -228,8 +211,8 @@ class BuyFoodByFoodNameDraw:
         name_draw = draw.NormalDraw()
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
         food_name = ""
-        if isinstance(self.cid, int):
-            food_recipe: game_type.Recipes = cache.recipe_data[self.cid]
+        if isinstance(self.cid, str):
+            food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
             food_name = food_recipe.name
         index_text = text_handle.id_index(button_id)
         button_text = f"{index_text}{food_name}"
@@ -247,4 +230,4 @@ class BuyFoodByFoodNameDraw:
         """玩家购买食物"""
         # print("self.text :",self.text)
         # print("self.cid :",self.cid)
-        cache.character_data[0].food_bag[self.text] = cache.recipe_data[self.cid]
+        cache.character_data[0].food_bag[self.text] = cache.makefood_data[self.cid][self.text]

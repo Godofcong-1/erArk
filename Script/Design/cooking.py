@@ -256,6 +256,19 @@ def init_restaurant_data():
             break
 
 
+def init_makefood_data():
+    """初始化做饭区内的食物数据"""
+    recipe_data = cache.recipe_data
+    character_data = cache.character_data[0]
+    food_list = {}
+    cache.makefood_data = {}
+    for recipes_id in recipe_data:
+        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
+            new_food = cook(food_list, recipes_id, 5, "")
+            cache.makefood_data.setdefault(str(recipes_id), {})
+            cache.makefood_data[str(recipes_id)][new_food.uid] = new_food
+
+
 def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type: str) -> Dict[str, Set]:
     """
     获取角色背包内指定类型的食物种类
@@ -401,14 +414,12 @@ def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
     dict -- 食物列表 食物id:食物名字
     """
     food_list = {}
-    recipe_data = cache.recipe_data
-    character_data = cache.character_data[0]
-    for recipes_id in recipe_data:
-        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
-            # print("recipes_id :",recipes_id)
-            # print("cache.recipe_data[recipes_id].name :",cache.recipe_data[recipes_id].name)
-            # print("recipe_data[recipes_id].difficulty :",recipe_data[recipes_id].difficulty)
-            food_list[recipes_id] = cache.recipe_data[recipes_id].name
-
-
+    for food_id in cache.makefood_data:
+        if not len(cache.makefood_data[food_id]):
+            continue
+        if food_type == _("主食"):
+            now_food_uid = list(cache.makefood_data[food_id].keys())[0]
+            now_food: game_type.Food = cache.makefood_data[food_id][now_food_uid]
+            if now_food.recipe != -1:
+                food_list[food_id] = cache.recipe_data[int(food_id)].name
     return food_list

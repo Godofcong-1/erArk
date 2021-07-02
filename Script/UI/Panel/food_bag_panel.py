@@ -158,20 +158,20 @@ class SeeFoodListByFoodNameDraw:
         page_handle = panel.PageHandlePanel(
             self.uid_list, EatFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
-        while 1:
-            if cache.now_panel_id != constant.Panel.FOOD_BAG:
-                break
-            return_list = []
-            title_draw.draw()
-            page_handle.update()
-            page_handle.draw()
-            return_list.extend(page_handle.return_list)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
+        # while 1:
+        #     if cache.now_panel_id != constant.Panel.FOOD_BAG:
+        #         break
+        return_list = []
+        title_draw.draw()
+        page_handle.update()
+        page_handle.draw()
+        return_list.extend(page_handle.return_list)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+            # if yrn == back_draw.return_text:
+            #     break
 
 
 class EatFoodByFoodNameDraw:

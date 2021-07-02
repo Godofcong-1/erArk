@@ -675,6 +675,11 @@ class Cache:
         食堂内贩卖的食物数据
         食物名字:食物唯一id:食物对象
         """
+        self.makefood_data: Dict[str, Dict[UUID, Food]] = {}
+        """
+        做饭区的食物数据
+        食物名字:食物唯一id:食物对象
+        """
         self.npc_name_data: Set = set()
         """ 已有的npc姓名集合 """
         self.school_longitude: float = 0
