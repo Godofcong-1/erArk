@@ -159,20 +159,20 @@ class SeeFoodListByFoodNameDraw:
         page_handle = panel.PageHandlePanel(
             now_food_list, BuyFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
-        while 1:
-            return_list = []
-            title_draw.draw()
-            page_handle.update()
-            page_handle.draw()
-            return_list.extend(page_handle.return_list)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-            page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
+        # while 1:
+        return_list = []
+        title_draw.draw()
+        page_handle.update()
+        page_handle.draw()
+        return_list.extend(page_handle.return_list)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        # if yrn == back_draw.return_text:
+        #     break
+        page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
 
 
 class BuyFoodByFoodNameDraw:

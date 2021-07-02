@@ -43,6 +43,7 @@ def close_window():
 # 显示主框架
 game_name = normal_config.config_normal.game_name
 root = Tk()
+# normal_config.config_normal.window_width = root.maxsize()[0]
 screen_weight = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 if normal_config.config_normal.window_width + 30 > screen_weight:
