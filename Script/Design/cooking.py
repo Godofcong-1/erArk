@@ -391,3 +391,24 @@ def get_restaurant_food_type_list_buy_food_type(food_type: str) -> Dict[uuid.UUI
         #         if food_config.seasoning:
         #             food_list[food_id] = food_config.name
     return food_list
+
+def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
+    """
+    获取可以烹饪的的食物种类
+    Keyword arguments:
+    food_type -- 食物类型
+    Return arguments:
+    dict -- 食物列表 食物id:食物名字
+    """
+    food_list = {}
+    recipe_data = cache.recipe_data
+    character_data = cache.character_data[0]
+    for recipes_id in recipe_data:
+        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
+            # print("recipes_id :",recipes_id)
+            # print("cache.recipe_data[recipes_id].name :",cache.recipe_data[recipes_id].name)
+            # print("recipe_data[recipes_id].difficulty :",recipe_data[recipes_id].difficulty)
+            food_list[recipes_id] = cache.recipe_data[recipes_id].name
+
+
+    return food_list

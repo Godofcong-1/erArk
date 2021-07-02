@@ -561,11 +561,7 @@ def handle_make_coffee_add():
 def handle_make_food():
     """做饭"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
-    character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
-    update.game_update_flow(60)
+    cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 @add_instruct(
     constant.Instruct.FOLLOWED,

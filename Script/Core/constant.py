@@ -213,8 +213,10 @@ class Panel:
     """ 道具商店面板 """
     # VIEW_SCHOOL_TIMETABLE = 7
     # """ 查看课程表 """
-    GET_UP = 7
-    """ 起床面板 """
+    # GET_UP = 7
+    # """ 起床面板 """
+    MAKE_FOOD = 7
+    """ 做饭面板 """
 
 
 class Premise:

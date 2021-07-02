@@ -9,8 +9,8 @@ _: FunctionType = get_text._
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-@handle_panel.add_panel(constant.Panel.GET_UP)
-def get_up_flow():
-    """ 起床面板 """
-    now_panel = get_up_panel.GetUpPanel(0,width)
-    now_panel.draw()
+# @handle_panel.add_panel(constant.Panel.GET_UP)
+# def get_up_flow():
+#     """ 起床面板 """
+#     now_panel = get_up_panel.GetUpPanel(0,width)
+#     now_panel.draw()
