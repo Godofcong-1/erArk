@@ -54,22 +54,6 @@ config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
 """ 字体名字对应字体id """
-config_food: Dict[int, config_def.Food] = {}
-""" 食材配置数据 """
-config_food_feel: Dict[int, config_def.FoodFeel] = {}
-""" 食材效果配置 """
-config_food_feel_data: Dict[int, Dict[int, int]] = {}
-"""
-食材效果配置数据
-食材id:效果id:效果
-"""
-config_food_quality_weight: Dict[int, config_def.FoodQualityWeight] = {}
-""" 烹饪技能等级制造食物品质权重配置 """
-config_food_quality_weight_data: Dict[int, Dict[int, int]] = {}
-"""
-烹饪技能等级制造食物品质权重表
-技能等级:食物品质:权重
-"""
 config_hitpoint_tem: Dict[int, config_def.HitPointTem] = {}
 """ HP模板对应平均值 """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
@@ -89,12 +73,6 @@ config_moon_data: Dict[int, Set] = {}
 """ 月相类型对应配置id集合 """
 config_move_menu_type: Dict[int, config_def.MoveMenuType] = {}
 """ 移动菜单过滤类型配置 """
-config_nature: Dict[int, config_def.Nature] = {}
-""" 性格配置数据 """
-config_nature_tag: Dict[int, config_def.NatureTag] = {}
-""" 性格标签配置数据 """
-config_nature_tag_data: Dict[int, Set] = {}
-""" 性格标签下性格id配置数据 """
 config_organ: Dict[int, config_def.Organ] = {}
 """ 器官种类配置 """
 config_organ_data: Dict[int, Set] = {}
@@ -129,20 +107,19 @@ config_talent_type_data: Dict[int, Set] = {}
 config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
 config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
-""" 根据能力id和等级来判断前提编号 """
+""" 根据能力id和等级来判断升级的前提编号 """
 config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 """
-根据前提编号来判断具体的前提数据
+载入根据前提编号来判断具体的能力升级的具体前提数据
+需求id:[类型,类型子id,需求值]
+"""
+config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
+"""
+载入根据前提编号来判断具体的素质升级的具体前提数据
 需求id:[类型,类型子id,需求值]
 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
-config_recipes_formula: Dict[int, config_def.RecipesFormula] = {}
-""" 菜谱配方配置 """
-config_recipes_formula_type: Dict[int, config_def.RecipesFormulaType] = {}
-""" 菜谱配方材料类型配置 """
-config_recipes_formula_data: Dict[int, Dict[int, Set]] = {}
-""" 菜谱配方材料配置数据 """
 config_school: Dict[int, config_def.School] = {}
 """ 学校配置数据 """
 config_school_phase_course: Dict[int, config_def.SchoolPhaseCourse] = {}
@@ -244,7 +221,7 @@ def load_ability_type_data():
 
 
 def load_ability_up_type():
-    """根据能力id和等级来判断前提编号"""
+    """根据能力id和等级来判断升级的前提编号"""
     now_data = config_data["AbilityUpType"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
@@ -254,7 +231,7 @@ def load_ability_up_type():
 
 
 def load_ability_up_data():
-    """载入根据前提编号来判断具体的前提数据"""
+    """载入根据前提编号来判断具体的能力升级的具体前提数据"""
     now_data = config_data["AbilityUp"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
@@ -269,6 +246,17 @@ def load_ability_up_data():
         # print("config_ability_up_data[now_tem.ability_id] :",config_ability_up_data[now_tem.ability_id])
         # print("config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type :",config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type)
         # print()
+
+def load_talent_up_data():
+    """载入根据前提编号来判断具体的素质升级的具体前提数据"""
+    now_data = config_data["TalentUp"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.TalentUp()
+        now_tem.__dict__ = tem_data
+        config_talent_up_data.setdefault(now_tem.talent_id, {})
+        config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
+        config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
 
 
 def load_experience():
@@ -462,40 +450,6 @@ def load_font_data():
         config_font_data[now_font.name] = now_font.cid
 
 
-def load_food_data():
-    """载入食材配置数据"""
-    now_data = config_data["Food"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Food()
-        now_tem.__dict__ = tem_data
-        config_food[now_tem.cid] = now_tem
-
-
-def load_food_feel_data():
-    """载入食材效果配置数据"""
-    now_data = config_data["FoodFeel"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.FoodFeel()
-        now_tem.__dict__ = tem_data
-        config_food_feel[now_tem.cid] = now_tem
-        config_food_feel_data.setdefault(now_tem.food_id, {})
-        config_food_feel_data[now_tem.food_id][now_tem.feel_id] = now_tem.feel_value * 10
-
-
-def load_food_quality_weight():
-    """载入烹饪技能等级制造食物品质权重配置数据"""
-    now_data = config_data["FoodQualityWeight"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.FoodQualityWeight()
-        now_tem.__dict__ = tem_data
-        config_food_quality_weight[now_tem.cid] = now_tem
-        config_food_quality_weight_data.setdefault(now_tem.level, {})
-        config_food_quality_weight_data[now_tem.level][now_tem.quality] = now_tem.weight
-
-
 def load_hitpoint_tem():
     """载入hp模板对应平均值配置数据"""
     now_data = config_data["HitPointTem"]
@@ -560,28 +514,6 @@ def load_move_menu_type():
         config_move_menu_type[now_tem.cid] = now_tem
 
 
-def load_nature():
-    """载入性格配置数据"""
-    now_data = config_data["Nature"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Nature()
-        now_tem.__dict__ = tem_data
-        config_nature[now_tem.cid] = now_tem
-        config_nature_tag_data.setdefault(now_tem.nature_type, set())
-        config_nature_tag_data[now_tem.nature_type].add(now_tem.cid)
-
-
-def load_nature_tag():
-    """载入性格标签配置数据"""
-    now_data = config_data["NatureTag"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.NatureTag()
-        now_tem.__dict__ = tem_data
-        config_nature_tag[now_tem.cid] = now_tem
-
-
 def load_organ_data():
     """载入器官种类配置"""
     now_data = config_data["Organ"]
@@ -602,29 +534,6 @@ def load_recipes():
         now_tem = config_def.Recipes()
         now_tem.__dict__ = tem_data
         config_recipes[now_tem.cid] = now_tem
-
-
-def load_recipes_formula():
-    """载入菜谱配方配置"""
-    now_data = config_data["RecipesFormula"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.RecipesFormula()
-        now_tem.__dict__ = tem_data
-        config_recipes_formula[now_tem.cid] = now_tem
-        config_recipes_formula_data.setdefault(now_tem.recipe_id, {})
-        config_recipes_formula_data[now_tem.recipe_id].setdefault(now_tem.formula_type, set())
-        config_recipes_formula_data[now_tem.recipe_id][now_tem.formula_type].add(now_tem.food_id)
-
-
-def load_recipes_formula_type():
-    """载入菜谱配方材料类型配置数据"""
-    now_data = config_data["RecipesFormulaType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.RecipesFormulaType()
-        now_tem.__dict__ = tem_data
-        config_recipes_formula_type[now_tem.cid] = now_tem
 
 
 def load_school():
@@ -813,9 +722,6 @@ def init():
     load_course()
     load_experience()
     load_font_data()
-    load_food_data()
-    load_food_feel_data()
-    load_food_quality_weight()
     load_hitpoint_tem()
     load_instruct_type()
     load_item()
@@ -823,14 +729,10 @@ def init():
     load_manapoint_tem()
     load_moon()
     load_move_menu_type()
-    load_nature()
-    load_nature_tag()
     load_organ_data()
     load_profession()
     load_race()
     load_recipes()
-    load_recipes_formula()
-    load_recipes_formula_type()
     load_school()
     load_school_phase_course()
     load_school_session()
@@ -844,6 +746,7 @@ def init():
     load_talk_premise()
     load_talent_type()
     load_talent_type_data()
+    load_talent_up_data()
     load_target()
     load_target_effect()
     load_target_premise()

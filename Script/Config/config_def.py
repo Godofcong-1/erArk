@@ -214,49 +214,6 @@ class FontConfig:
     """ 备注 """
 
 
-class Food:
-    """ 食材配置数据 """
-
-    cid: int
-    """ 食材id """
-    name: str
-    """ 食材名字 """
-    cook: bool
-    """ 可烹饪 """
-    eat: bool
-    """ 可食用 """
-    seasoning: bool
-    """ 可作为调料 """
-    fruit: bool
-    """ 是水果 """
-
-
-class FoodFeel:
-    """ 食材效果配置数据 """
-
-    cid: int
-    """ 表id """
-    food_id: int
-    """ 所属食材id """
-    feel_id: int
-    """ 效果id """
-    feel_value: float
-    """ 效果数值 """
-
-
-class FoodQualityWeight:
-    """ 烹饪技能等级制造食物品质权重配置 """
-
-    cid: int
-    """ 配置表id """
-    level: int
-    """ 烹饪技能等级 """
-    quality: int
-    """ 食物品质 """
-    weight: int
-    """ 权重 """
-
-
 class HitPointTem:
     """ hp模板对应平均值 """
 
@@ -330,30 +287,6 @@ class MoveMenuType:
     """ 名字 """
 
 
-class Nature:
-    """ 性格倾向配置 """
-
-    cid: int
-    """ 性格id """
-    nature_type: int
-    """ 类型 """
-    good: str
-    """ 正面倾向 """
-    bad: str
-    """ 负面倾向 """
-
-
-class NatureTag:
-    """ 性格倾向标签 """
-
-    cid: int
-    """ 性格标签id """
-    good: str
-    """ 正面倾向 """
-    bad: str
-    """ 负面倾向 """
-
-
 class Organ:
     """ 器官对应性别限定和文字描述 """
 
@@ -392,28 +325,8 @@ class Recipes:
     """ 菜谱名字 """
     time: int
     """ 烹饪时间 """
-
-
-class RecipesFormula:
-    """ 菜谱配方配置 """
-
-    cid: int
-    """ 配方id """
-    recipe_id: int
-    """ 所属菜谱id """
-    formula_type: int
-    """ 配方类型 """
-    food_id: int
-    """ 食材id """
-
-
-class RecipesFormulaType:
-    """ 菜谱配方类型 """
-
-    cid: int
-    """ 表id """
-    name: str
-    """ 菜谱配方名字 """
+    difficulty: int
+    """ 烹饪难度 """
 
 
 class School:
@@ -543,6 +456,21 @@ class TalentType:
     """ 类型名 """
 
 
+class TalentUp:
+    """ 能力对应类型和文字描述 """
+
+    cid: int
+    """ 编号id """
+    talent_id: int
+    """ 对应的升级需求id """
+    need_type: str
+    """ 需求类型 """
+    need_type_id: int
+    """ 需求类型的子id """
+    value: int
+    """ 需求值 """
+
+
 class WeekDay:
     """ 星期描述配置 """
 
@@ -574,6 +502,24 @@ class Talk:
     """ 口上限定的剧情npcid """
     context: str
     """ 口上内容 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

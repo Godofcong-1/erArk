@@ -43,8 +43,12 @@ class CharacterStatus:
     """ 弹吉他 """
     STATUS_SELF_STUDY = 18
     """ 自习 """
-    STATUS_WAIT = 20
-    """ 待机状态 """
+    STATUS_MAKE_COFFEE = 20
+    """ 冲咖啡 """
+    STATUS_CHAT_FAILED = 21
+    """ 谈话次数过多的状态 """
+    STATUS_MAKE_FOOD = 22
+    """ 做饭 """
 
 
 class Behavior:
@@ -88,10 +92,13 @@ class Behavior:
     """ 弹吉他 """
     SELF_STUDY = 18
     """ 自习 """
-    MAKE_TEA = 20
-    """ 泡茶 """
-    WAIT = 40
-    """ 待机 """
+    MAKE_COFFEE = 20
+    """ 泡咖啡 """
+    CHAT_FAILED = 21
+    """ 谈话次数过多而失败 """
+    MAKE_FOOD = 22
+    """ 做饭 """
+
 
 
 class StateMachine:
@@ -206,8 +213,10 @@ class Panel:
     """ 道具商店面板 """
     # VIEW_SCHOOL_TIMETABLE = 7
     # """ 查看课程表 """
-    GET_UP = 7
-    """ 起床面板 """
+    # GET_UP = 7
+    # """ 起床面板 """
+    MAKE_FOOD = 7
+    """ 做饭面板 """
 
 
 class Premise:
@@ -270,6 +279,10 @@ class Premise:
     PHYSICAL_STRENGHT = "84"
     """ 体力充沛 """
 
+    IN_KITCHEN = "in_kit"
+    """ 在厨房 """
+    IN_DINING_HALL = "in_din"
+    """ 在食堂 """
 
     IN_CAFETERIA = "0"
     """ 处于取餐区 """
@@ -600,8 +613,8 @@ class BehaviorEffect:
     """ 减少少量气力 """
     MOVE_TO_TARGET_SCENE = 5
     """ 移动至目标场景 """
-    EAT_FOOD = 6
-    """ 食用指定食物 """
+    ADD_SMALL_TRUST = 6
+    """ 增加基础互动信赖 """
     ADD_SOCIAL_FAVORABILITY = 7
     """ 增加社交关系好感 """
     ADD_INTIMACY_FAVORABILITY = 8
@@ -610,8 +623,6 @@ class BehaviorEffect:
     """ 增加私密行为好感(关系不足3则增加反感) """
     ADD_SMALL_SING_EXPERIENCE = 10
     """ 增加少量唱歌技能经验 """
-    ADD_SMALL_ELOQUENCE_EXPERIENCE = 11
-    """ 增加少量话术技能经验 """
     ADD_SMALL_PLAY_MUSIC_EXPERIENCE = 12
     """ 增加少量演奏技能经验 """
     ADD_SMALL_PERFORM_EXPERIENCE = 13
@@ -666,8 +677,6 @@ class BehaviorEffect:
     """ 按演奏技能增加交互对象好感 """
     TARGET_ADD_FAVORABILITY_FOR_TARGET_INTEREST = 38
     """ 按交互对象兴趣增加交互对象好感 """
-    TARGET_ADD_SMALL_FRIENDLY = 40
-    """ 交互对象增加少量好意 """
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快 """
     TARGET_ADD_SMALL_B_FEEL = 42
@@ -684,10 +693,8 @@ class BehaviorEffect:
     """ 交互对象增加少量Ｕ快 """
     TARGET_ADD_SMALL_W_FEEL = 48
     """ 交互对象增加少量Ｗ快 """
-    TARGET_ADD_SMALL_V_LUBRICATION = 49
-    """ 交互对象增加少量Ｖ润 """
-    TARGET_ADD_SMALL_A_LUBRICATION = 50
-    """ 交互对象增加少量Ａ润 """
+    TARGET_ADD_SMALL_LUBRICATION = 49
+    """ 交互对象增加少量润滑（欲望补正） """
     TARGET_ADD_SMALL_LEARN = 51
     """ 交互对象增加少量习得（技巧补正） """
     TARGET_ADD_SMALL_RESPECT = 52
@@ -697,23 +704,175 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_DESIRE = 54
     """ 交互对象增加少量欲情（欲望补正） """
     TARGET_ADD_SMALL_HAPPY = 55
-    """ 交互对象增加少量快乐 """
+    """ 交互对象增加少量快乐（快乐刻印补正） """
     TARGET_ADD_SMALL_LEAD = 56
-    """ 交互对象增加少量先导 """
+    """ 交互对象增加少量先导（侍奉补正） """
     TARGET_ADD_SMALL_SUBMIT = 57
-    """ 交互对象增加少量屈服 """
+    """ 交互对象增加少量屈服（屈服刻印补正） """
     TARGET_ADD_SMALL_SHY = 58
-    """ 交互对象增加少量羞耻 """
+    """ 交互对象增加少量羞耻（露出补正） """
     TARGET_ADD_SMALL_PAIN = 59
-    """ 交互对象增加少量苦痛 """
+    """ 交互对象增加少量苦痛（苦痛刻印补正） """
     TARGET_ADD_SMALL_TERROR = 60
-    """ 交互对象增加少量恐怖 """
+    """ 交互对象增加少量恐怖（恐怖刻印补正） """
     TARGET_ADD_SMALL_DEPRESSION = 61
     """ 交互对象增加少量抑郁 """
     TARGET_ADD_SMALL_DISGUST = 62
-    """ 交互对象增加少量反感 """
-    TARGET_ADD_ADJUST_BY_TALK = 100
-    """ 交互对象根据玩家的话术技能进行好感度、好意、欲情、快乐调整 """
+    """ 交互对象增加少量反感（反发刻印补正） """
+    TALK_ADD_ADJUST = 100
+    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整 """
+    COFFEE_ADD_ADJUST = 101
+    """ （冲咖啡用）根据发起者的料理技能进行好感度、信赖、恭顺、好意调整 """
+    EAT_FOOD = 102
+    """ 进食指定食物 """
+    ADD_1_N_EXPERIENCE = 200
+    """ 增加1N经验 """
+    ADD_1_B_EXPERIENCE = 201
+    """ 增加1B经验 """
+    ADD_1_C_EXPERIENCE = 202
+    """ 增加1C经验 """
+    ADD_1_P_EXPERIENCE = 203
+    """ 增加1P经验 """
+    ADD_1_V_EXPERIENCE = 204
+    """ 增加1V经验 """
+    ADD_1_A_EXPERIENCE = 205
+    """ 增加1A经验 """
+    ADD_1_U_EXPERIENCE = 206
+    """ 增加1U经验 """
+    ADD_1_W_EXPERIENCE = 207
+    """ 增加1W经验 """
+    ADD_1_NClimax_EXPERIENCE = 210
+    """ 增加1N绝顶经验 """
+    ADD_1_BClimax_EXPERIENCE = 211
+    """ 增加1B绝顶经验 """
+    ADD_1_CClimax_EXPERIENCE = 212
+    """ 增加1C绝顶经验 """
+    ADD_1_PClimax_EXPERIENCE = 213
+    """ 增加1P绝顶经验 """
+    ADD_1_VClimax_EXPERIENCE = 214
+    """ 增加1V绝顶经验 """
+    ADD_1_AClimax_EXPERIENCE = 215
+    """ 增加1A绝顶经验 """
+    ADD_1_UClimax_EXPERIENCE = 216
+    """ 增加1U绝顶经验 """
+    ADD_1_WClimax_EXPERIENCE = 217
+    """ 增加1W绝顶经验 """
+    ADD_1_Climax_EXPERIENCE = 220
+    """ 增加1绝顶经验 """
+    ADD_1_Cumming_EXPERIENCE = 221
+    """ 增加1射精经验 """
+    ADD_1_Milking_EXPERIENCE = 222
+    """ 增加1喷乳经验 """
+    ADD_1_Peeing_EXPERIENCE = 223
+    """ 增加1放尿经验 """
+    ADD_1_Cums_EXPERIENCE = 224
+    """ 增加1精液经验 """
+    ADD_1_CumsDrink_EXPERIENCE = 225
+    """ 增加1饮精经验 """
+    ADD_1_Creampie_EXPERIENCE = 226
+    """ 增加1膣射经验 """
+    ADD_1_AnalCums_EXPERIENCE = 227
+    """ 增加1肛射经验 """
+    ADD_1_plServe_EXPERIENCE = 230
+    """ 增加1奉仕快乐经验 """
+    ADD_1_Love_EXPERIENCE = 231
+    """ 增加1爱情经验 """
+    ADD_1_plPain_EXPERIENCE = 232
+    """ 增加1苦痛快乐经验 """
+    ADD_1_plSadism_EXPERIENCE = 233
+    """ 增加1嗜虐快乐经验 """
+    ADD_1_plExhibit_EXPERIENCE = 234
+    """ 增加1露出快乐经验 """
+    ADD_1_Kiss_EXPERIENCE = 240
+    """ 增加1接吻经验 """
+    ADD_1_Handjob_EXPERIENCE = 241
+    """ 增加1手淫经验 """
+    ADD_1_Blowjob_EXPERIENCE = 242
+    """ 增加1口淫经验 """
+    ADD_1_Paizuri_EXPERIENCE = 243
+    """ 增加1乳交经验 """
+    ADD_1_Footjob_EXPERIENCE = 244
+    """ 增加1足交经验 """
+    ADD_1_Hairjob_EXPERIENCE = 245
+    """ 增加1发交经验 """
+    ADD_1_Masterbate_EXPERIENCE = 246
+    """ 增加1自慰经验 """
+    ADD_1_bdsmMasterbate_EXPERIENCE = 247
+    """ 增加1调教自慰经验 """
+    ADD_1_Toys_EXPERIENCE = 248
+    """ 增加1道具使用经验 """
+    ADD_1_Tiedup_EXPERIENCE = 249
+    """ 增加1紧缚经验 """
+    ADD_1_Insert_EXPERIENCE = 250
+    """ 增加1插入经验 """
+    ADD_1_sexV_EXPERIENCE = 251
+    """ 增加1V性交经验 """
+    ADD_1_sexA_EXPERIENCE = 252
+    """ 增加1A性交经验 """
+    ADD_1_sexU_EXPERIENCE = 253
+    """ 增加1U性交经验 """
+    ADD_1_sexW_EXPERIENCE = 254
+    """ 增加1W性交经验 """
+    ADD_1_expandV_EXPERIENCE = 255
+    """ 增加1V扩张经验 """
+    ADD_1_expandA_EXPERIENCE = 256
+    """ 增加1A扩张经验 """
+    ADD_1_expandU_EXPERIENCE = 257
+    """ 增加1U扩张经验 """
+    ADD_1_expandW_EXPERIENCE = 258
+    """ 增加1W扩张经验 """
+    ADD_1_TWRape_EXPERIENCE = 259
+    """ 增加1时奸经验 """
+    ADD_1_SlumberRape_EXPERIENCE = 260
+    """ 增加1睡奸经验 """
+    ADD_1_Abnormal_EXPERIENCE = 261
+    """ 增加1异常经验 """
+    ADD_1_UnconsciouslyN_EXPERIENCE = 270
+    """ 增加1无意识N经验 """
+    ADD_1_UnconsciouslyB_EXPERIENCE = 271
+    """ 增加1无意识B经验 """
+    ADD_1_UnconsciouslyC_EXPERIENCE = 272
+    """ 增加1无意识C经验 """
+    ADD_1_UnconsciouslyP_EXPERIENCE = 273
+    """ 增加1无意识P经验 """
+    ADD_1_UnconsciouslyV_EXPERIENCE = 274
+    """ 增加1无意识V经验 """
+    ADD_1_UnconsciouslyA_EXPERIENCE = 275
+    """ 增加1无意识A经验 """
+    ADD_1_UnconsciouslyU_EXPERIENCE = 276
+    """ 增加1无意识U经验 """
+    ADD_1_UnconsciouslyW_EXPERIENCE = 277
+    """ 增加1无意识W经验 """
+    ADD_1_UnconsciouslyClimax_EXPERIENCE = 278
+    """ 增加1无意识绝顶经验 """
+    ADD_1_Chat_EXPERIENCE = 280
+    """ 增加1对话经验 """
+    ADD_1_Combat_EXPERIENCE = 281
+    """ 增加1战斗经验 """
+    ADD_1_Learn_EXPERIENCE = 282
+    """ 增加1学习经验 """
+    ADD_1_Cooking_EXPERIENCE = 283
+    """ 增加1料理经验 """
+    ADD_1_Date_EXPERIENCE = 284
+    """ 增加1约会经验 """
+    ADD_1_Music_EXPERIENCE = 285
+    """ 增加1音乐经验 """
+    ADD_1_GiveBirth_EXPERIENCE = 286
+    """ 增加1出产经验 """
+    ADD_1_ForwardClimax_EXPERIENCE = 300
+    """ 增加1正面位绝顶经验 """
+    ADD_1_BackClimax_EXPERIENCE = 301
+    """ 增加1后入位绝顶经验 """
+    ADD_1_RideClimax_EXPERIENCE = 302
+    """ 增加1骑乘位绝顶经验 """
+    ADD_1_FSeatClimax_EXPERIENCE = 303
+    """ 增加1对面座位绝顶经验 """
+    ADD_1_BSeatClimax_EXPERIENCE = 304
+    """ 增加1背面座位绝顶经验 """
+    ADD_1_FStandClimax_EXPERIENCE = 305
+    """ 增加1对面立位绝顶经验 """
+    ADD_1_BStandClimax_EXPERIENCE = 306
+    """ 增加1背面立位绝顶经验 """
 
 
 class InstructType:
@@ -766,10 +925,10 @@ class Instruct:
     """ 聊天 """
     STROKE = 0
     """ 身体接触 """
-    MAKE_TEA = 0
-    """ 泡茶 """
-    MAKE_TEA_ADD = 0
-    """ 泡茶（加料） """
+    MAKE_COFFEE = 0
+    """ 冲咖啡 """
+    MAKE_COFFEE_ADD = 0
+    """ 冲咖啡（加料） """
     MAKE_FOOD = 0
     """ 做饭 """
     EAT = 0
@@ -781,7 +940,7 @@ class Instruct:
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOWED = 0
-    """ 使跟随 """
+    """ 请求同行 """
     APOLOGIZE = 0
     """ 道歉 """
     LISTEN_COMPLAINT = 0

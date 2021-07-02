@@ -110,26 +110,30 @@ class Food:
     def __init__(self):
         self.id: str = ""
         """ 食物配置表id """
+        self.name: str = ""
+        """ 食物名字 """
         self.uid: UUID = None
         """ 食物对象的唯一id """
-        self.quality: int = 0
-        """ 食物品质 """
-        self.weight: int = 0
-        """ 食物重量 """
-        self.feel: dict = {}
-        """ 食物效果 """
-        self.maker: str = ""
-        """ 食物制作者 """
+        # self.quality: int = 0
+        # """ 食物品质 """
+        # self.weight: int = 0
+        # """ 食物重量 """
+        # self.feel: dict = {}
+        # """ 食物效果 """
+        # self.maker: str = ""
+        # """ 食物制作者 """
         self.recipe: int = -1
         """ 食谱id """
-        self.cook: bool = False
-        """ 可烹饪 """
-        self.eat: bool = False
-        """ 可食用 """
-        self.seasoning: bool = False
-        """ 可作为调料 """
-        self.fruit: bool = False
-        """ 是否是水果 """
+        # self.cook: bool = False
+        # """ 可烹饪 """
+        # self.eat: bool = False
+        # """ 可食用 """
+        self.drink: bool = False
+        """ 可作为饮料 """
+        # self.seasoning: bool = False
+        # """ 可作为调料 """
+        # self.fruit: bool = False
+        # """ 是否是水果 """
 
 
 class Recipes:
@@ -140,12 +144,14 @@ class Recipes:
         """ 菜谱名字 """
         self.time: int = 0
         """ 标准烹饪时间 """
-        self.base: list = []
-        """ 烹饪所使用的主食材 """
-        self.ingredients: list = []
-        """ 烹饪所使用的辅食材 """
-        self.seasoning: list = []
-        """ 烹饪所使用的调料 """
+        self.difficulty: int = 0
+        """ 烹饪难度 """
+        # self.base: list = []
+        # """ 烹饪所使用的主食材 """
+        # self.ingredients: list = []
+        # """ 烹饪所使用的辅食材 """
+        # self.seasoning: list = []
+        # """ 烹饪所使用的调料 """
 
 
 class NormalConfig:
@@ -521,6 +527,10 @@ class Character:
         """ 角色种族 """
         self.talent:Dict[int,int] = {}
         """ 角色素质 """
+        self.talk_count : int = 0
+        """ 角色聊天次数计数器 """
+        self.talk_time: datetime.datetime = None
+        """ 角色上次聊天时间 """
 
 
 class TeacherTimeTable:
@@ -691,6 +701,8 @@ class TargetChange:
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
+        self.trust: int = 0
+        """ 信赖度变化 """
         self.sex_experience: Dict[int, int] = {}
         """ 性经验变化 """
         self.experience: Dict[int, int] = {}

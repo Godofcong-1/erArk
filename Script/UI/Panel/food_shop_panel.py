@@ -40,7 +40,8 @@ class FoodShopPanel:
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         scene_name = cache.scene_data[scene_position_str].scene_name
         title_draw = draw.TitleLineDraw(scene_name, self.width)
-        food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
+        food_type_list = [_("主食")]
+        # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
@@ -205,37 +206,10 @@ class BuyFoodByFoodNameDraw:
         """ 按钮返回值 """
         name_draw = draw.NormalDraw()
         food_data: game_type.Food = cache.restaurant_data[self.cid][self.text]
-        quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
         food_name = ""
         if isinstance(self.cid, str):
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
             food_name = food_recipe.name
-        else:
-            food_config = game_config.config_food[self.cid]
-            food_name = food_config.name
-        hunger_text = _("热量:")
-        if 27 in food_data.feel:
-            hunger_text = f"{hunger_text}{round(food_data.feel[27],2)}"
-        else:
-            hunger_text = f"{hunger_text}0.00"
-        thirsty_text = _("水份:")
-        if 28 in food_data.feel:
-            thirsty_text = f"{thirsty_text}{round(food_data.feel[28],2)}"
-        else:
-            thirsty_text = f"{thirsty_text}0.00"
-        price = round(1 + sum(food_data.feel.values()) * food_data.quality, 2)
-        food_name = (
-            food_name
-            + f" {hunger_text} {thirsty_text} "
-            + _("重量:")
-            + str(round(food_data.weight, 2))
-            + _("克")
-            + " "
-            + _("品质:")
-            + quality_text_data[food_data.quality]
-            + " "
-            + _("售价:" + str(price))
-        )
         index_text = text_handle.id_index(button_id)
         button_text = f"{index_text}{food_name}"
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)

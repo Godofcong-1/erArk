@@ -35,7 +35,9 @@ def init_attr(character_id: int):
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
     # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
-    # character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
+    character_data.status = attr_calculation.get_status_zero(character_data.status)
+    character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
+    character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
@@ -50,10 +52,10 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    new_nature = nature.get_random_nature()
-    for nature_id in new_nature:
-        if nature_id not in character_data.nature:
-            character_data.nature[nature_id] = new_nature[nature_id]
+    # new_nature = nature.get_random_nature()
+    # for nature_id in new_nature:
+    #     if nature_id not in character_data.nature:
+    #         character_data.nature[nature_id] = new_nature[nature_id]
     # init_class(character_data)
 
 
@@ -102,7 +104,7 @@ def character_rest_to_time(character_id: int, need_time: int):
 
 def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
     """
-    按角色性格和关系计算最终增加的好感值
+    按角色当前状态、素质和能力计算最终增加的好感值
     Keyword arguments:
     character_id -- 角色id
     target_character_id -- 目标角色id
@@ -113,33 +115,105 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
     fix = 1.0
-    for i in {0, 1, 2, 5, 13, 14, 15, 16}:
-        now_fix = 0
-        if character_data.nature[i] > 50:
-            nature_value = character_data.nature[i] - 50
-            now_fix -= nature_value / 50
-        else:
-            now_fix += character_data.nature[i] / 50
-        if target_data.nature[i] > 50:
-            nature_value = target_data.nature[i] - 50
-            if now_fix < 0:
-                now_fix *= -1
-                now_fix += nature_value / 50
-                now_fix = now_fix / 2
-            else:
-                now_fix += nature_value / 50
-        else:
-            nature_value = target_data.nature[i]
-            if now_fix < 0:
-                now_fix += nature_value / 50
-            else:
-                now_fix -= nature_value / 50
-                now_fix = now_fix / 2
-        fix += now_fix
-    if character_id in target_data.social_contact_data:
-        fix += target_data.social_contact_data[character_id]
+    #状态相关计算#
+
+    #恭顺、好意、欲情、快乐每级+0.1倍#
+    for i in {10, 11, 12, 13}:
+        status_level = attr_calculation.get_status_level(target_data.status[i])
+        fix += status_level*0.1
+    #羞耻、苦痛每级-0.1倍#
+    for i in {16, 17}:
+        status_level = attr_calculation.get_status_level(target_data.status[i])
+        fix -= status_level*0.2
+    #恐怖、抑郁、反感每级-0.4倍#
+    for i in {18, 19, 20}:
+        status_level = attr_calculation.get_status_level(target_data.status[i])
+        fix -= status_level*0.4
+
+    #能力相关计算#
+    #亲密、快乐刻印、屈服刻印每级+0.2倍#
+    for i in {13, 14, 21}:
+        status_level = attr_calculation.get_status_level(target_data.ability[i])
+        fix += status_level*0.2
+    #苦痛刻印、恐怖刻印每级-0.3倍#
+    for i in {15, 17}:
+        status_level = attr_calculation.get_status_level(target_data.ability[i])
+        fix -= status_level*0.3
+    #反发刻印每级-1.0倍#
+    for i in {18}:
+        status_level = attr_calculation.get_status_level(target_data.ability[i])
+        fix -= status_level*1.0
+    
+    #素质相关计算#
+    #爱情与隶属系加成0.5~2.0#
+    if target_data.talent[10] or target_data.talent[15]:
+        fix += 0.5
+    if target_data.talent[11] or target_data.talent[16]:
+        fix += 1.0
+    if target_data.talent[12] or target_data.talent[17]:
+        fix += 1.5
+    if target_data.talent[13] or target_data.talent[18]:
+        fix += 2.0
+    #受精、妊娠、育儿均+0.5#
+    if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
+        fix += 0.5
+    #感情缺乏-0.2#
+    if target_data.talent[223]:
+        fix -= 0.2
+    #讨厌男性-0.2#
+    if target_data.talent[227]:
+        fix -= 0.2
+    #博士信息素每级+0.5#
+    if character_data.talent[304]:
+        fix += 0.5
+    if character_data.talent[305]:
+        fix += 1.0
+    if character_data.talent[306]:
+        fix += 1.5
     favorability *= fix
     return favorability
+
+
+# def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
+#     """
+#     按角色性格和关系计算最终增加的好感值
+#     Keyword arguments:
+#     character_id -- 角色id
+#     target_character_id -- 目标角色id
+#     favorability -- 基础好感值
+#     Return arguments:
+#     int -- 最终的好感值
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[target_character_id]
+#     fix = 1.0
+#     for i in {0, 1, 2, 5, 13, 14, 15, 16}:
+#         now_fix = 0
+#         if character_data.nature[i] > 50:
+#             nature_value = character_data.nature[i] - 50
+#             now_fix -= nature_value / 50
+#         else:
+#             now_fix += character_data.nature[i] / 50
+#         if target_data.nature[i] > 50:
+#             nature_value = target_data.nature[i] - 50
+#             if now_fix < 0:
+#                 now_fix *= -1
+#                 now_fix += nature_value / 50
+#                 now_fix = now_fix / 2
+#             else:
+#                 now_fix += nature_value / 50
+#         else:
+#             nature_value = target_data.nature[i]
+#             if now_fix < 0:
+#                 now_fix += nature_value / 50
+#             else:
+#                 now_fix -= nature_value / 50
+#                 now_fix = now_fix / 2
+#         fix += now_fix
+#     if character_id in target_data.social_contact_data:
+#         fix += target_data.social_contact_data[character_id]
+#     favorability *= fix
+#     return favorability
 
 
 def judge_character_in_class_time(character_id: int) -> bool:

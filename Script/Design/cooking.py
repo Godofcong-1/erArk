@@ -17,53 +17,37 @@ def init_recipes():
     cache.recipe_data = {}
     for recipe_id in game_config.config_recipes:
         recipe_data = game_config.config_recipes[recipe_id]
-        recipe_formula_data = game_config.config_recipes_formula_data[recipe_id]
-        base = []
-        if 0 in recipe_formula_data:
-            base = list(recipe_formula_data[0])
-        ingredients = []
-        if 1 in recipe_formula_data:
-            ingredients = list(recipe_formula_data[1])
-        seasoning = []
-        if 2 in recipe_formula_data:
-            seasoning = list(recipe_formula_data[2])
         recipe = create_recipe(
             recipe_data.name,
             recipe_data.time,
-            base,
-            ingredients,
-            seasoning,
+            recipe_data.difficulty,
         )
         cache.recipe_data[len(cache.recipe_data)] = recipe
 
 
-def create_recipe(name: str, time: int, base: list, ingredients: list, seasoning: list) -> Recipes:
+def create_recipe(name: str, time: int, difficulty: int) -> Recipes:
     """
     创建菜谱对象
     Keyword arguments:
     name -- 菜谱名字
     time -- 烹饪用时
-    base -- 主食材列表
-    ingredients -- 辅食材列表
-    seasoning -- 调料列表
+    difficulty -- 烹饪难度
     Return arguments:
     Recipes -- 菜谱对象
     """
     recipe = Recipes()
     recipe.name = name
     recipe.time = time
-    recipe.base = base
-    recipe.ingredients = ingredients
-    recipe.seasoning = seasoning
+    recipe.difficulty = difficulty
     return recipe
 
 
 def create_food(
     food_id: str,
-    food_quality: int,
-    food_weight: int,
-    food_feel={},
-    food_maker="",
+    # food_quality: int,
+    # food_weight: int,
+    # food_feel={},
+    # food_maker="",
     food_recipe=-1,
 ) -> Food:
     """
@@ -81,25 +65,23 @@ def create_food(
     food = Food()
     food.id = food_id
     food.uid = uuid.uuid4()
-    food.quality = food_quality
-    food.weight = food_weight
-    if food_id != "" and food_feel == {}:
-        food_config = game_config.config_food[food_id]
-        if food_id in game_config.config_food_feel_data:
-            food_feel_data = game_config.config_food_feel_data[food_id]
-            for feel in food_feel_data:
-                food.feel.setdefault(feel, 0)
-                food.feel[feel] += food_feel_data[feel] / 100 * food.weight
-        food.cook = food_config.cook
-        food.eat = food_config.eat
-        food.seasoning = food_config.seasoning
-        food.fruit = food_config.fruit
-    else:
-        food.feel = food_feel
-        food.eat = 1
-        food.cook = 0
-        food.seasoning = 0
-    food.maker = food_maker
+    # if food_id != "":
+    #     food_config = game_config.config_food[food_id]
+    #     if food_id in game_config.config_food_feel_data:
+    #         food_feel_data = game_config.config_food_feel_data[food_id]
+    #         for feel in food_feel_data:
+    #             food.feel.setdefault(feel, 0)
+    #             food.feel[feel] += food_feel_data[feel] / 100 * food.weight
+    #     food.cook = food_config.cook
+    #     food.eat = food_config.eat
+    #     food.seasoning = food_config.seasoning
+    #     food.fruit = food_config.fruit
+    # else:
+    #     food.feel = food_feel
+    #     food.eat = 1
+    #     food.cook = 0
+    #     food.seasoning = 0
+    # food.maker = food_maker
     food.recipe = food_recipe
     return food
 
@@ -164,116 +146,111 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
     recipe = cache.recipe_data[recipe_id]
     cook_judge = True
     feel_data = {}
-    quality_data = game_config.config_food_quality_weight_data[cook_level]
-    now_quality = int(value_handle.get_random_for_weight(quality_data))
-    now_weight = 0
-    for food in recipe.base:
-        if food not in food_data:
-            cook_judge = False
-            break
-        now_food = food_data[food]
-        rand_weight = random.randint(75, 125)
-        if now_food.weight < rand_weight:
-            cook_judge = False
-            break
-        for feel in now_food.feel:
-            feel_data.setdefault(feel, 0)
-            feel_data[feel] += now_food.feel[feel] / now_food.weight * rand_weight
-        now_food.weight -= rand_weight
-        now_weight += rand_weight
-    if not cook_judge:
-        return create_food(65, now_quality, now_weight, [])
-    for food in recipe.ingredients:
-        if food not in food_data:
-            cook_judge = False
-            break
-        now_food = food_data[food]
-        rand_weight = random.randint(25, 75)
-        if now_food.weight < rand_weight:
-            cook_judge = False
-            break
-        for feel in now_food.feel:
-            feel_data.setdefault(feel, 0)
-            feel_data[feel] += now_food.feel[feel] / now_food.weight * rand_weight
-        now_food.weight -= rand_weight
-        now_weight += rand_weight
-    if not cook_judge:
-        return create_food(65, now_quality, now_weight, [])
-    for food in recipe.seasoning:
-        if food not in food_data:
-            cook_judge = False
-            break
-        now_food = food_data[food]
-        rand_weight = random.randint(3, 7)
-        if now_food.weight < rand_weight:
-            cook_judge = False
-            break
-        for feel in now_food.feel:
-            feel_data.setdefault(feel, 0)
-            now_feel_num = now_food.feel[feel] / now_food.weight * rand_weight
-            feel_data[feel] += now_feel_num
-            now_food.feel[feel] -= now_feel_num
-        now_food.weight -= rand_weight
-        now_weight += rand_weight
-    if not cook_judge:
-        return create_food(65, now_quality, now_weight, [])
-    return create_food("", now_quality, now_weight, feel_data, maker, recipe_id)
+    # quality_data = game_config.config_food_quality_weight_data[cook_level]
+    # now_quality = int(value_handle.get_random_for_weight(quality_data))
+    # now_weight = 0
+    # for food in recipe.base:
+    #     if food not in food_data:
+    #         cook_judge = False
+    #         break
+    #     now_food = food_data[food]
+    #     rand_weight = random.randint(75, 125)
+    #     if now_food.weight < rand_weight:
+    #         cook_judge = False
+    #         break
+    #     for feel in now_food.feel:
+    #         feel_data.setdefault(feel, 0)
+    #         feel_data[feel] += now_food.feel[feel] / now_food.weight * rand_weight
+    #     now_food.weight -= rand_weight
+    #     now_weight += rand_weight
+    # if not cook_judge:
+    #     return create_food(65, now_quality, now_weight, [])
+    # for food in recipe.ingredients:
+    #     if food not in food_data:
+    #         cook_judge = False
+    #         break
+    #     now_food = food_data[food]
+    #     rand_weight = random.randint(25, 75)
+    #     if now_food.weight < rand_weight:
+    #         cook_judge = False
+    #         break
+    #     for feel in now_food.feel:
+    #         feel_data.setdefault(feel, 0)
+    #         feel_data[feel] += now_food.feel[feel] / now_food.weight * rand_weight
+    #     now_food.weight -= rand_weight
+    #     now_weight += rand_weight
+    # if not cook_judge:
+    #     return create_food(65, now_quality, now_weight, [])
+    # for food in recipe.seasoning:
+    #     if food not in food_data:
+    #         cook_judge = False
+    #         break
+    #     now_food = food_data[food]
+    #     rand_weight = random.randint(3, 7)
+    #     if now_food.weight < rand_weight:
+    #         cook_judge = False
+    #         break
+    #     for feel in now_food.feel:
+    #         feel_data.setdefault(feel, 0)
+    #         now_feel_num = now_food.feel[feel] / now_food.weight * rand_weight
+    #         feel_data[feel] += now_feel_num
+    #         now_food.feel[feel] -= now_feel_num
+    #     now_food.weight -= rand_weight
+    #     now_weight += rand_weight
+    # if not cook_judge:
+    #     return create_food(65, now_quality, now_weight, [])
+    return create_food("", recipe_id)
 
 
 def init_restaurant_data():
     """初始化餐馆内的食物数据"""
     cache.restaurant_data = {}
     max_people = len(cache.character_data)
-    food_config_data = game_config.config_food
-    for food_id in food_config_data:
-        food = create_rand_food(food_id, max_people * 100)
-        cache.restaurant_data.setdefault(food_id, {})
-        cache.restaurant_data[food_id][food.uid] = food
     cook_index = 0
     while 1:
         recipes_id = random.randint(0, len(cache.recipe_data) - 1)
         food_list = {}
-        recipes = cache.recipe_data[recipes_id]
-        food_judge = True
-        for food_id in recipes.base:
-            if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-                food_judge = False
-                break
-            food_id_list = list(cache.restaurant_data[food_id].keys())
-            now_food_id = food_id_list[0]
-            now_food = cache.restaurant_data[food_id][now_food_id]
-            food_list[now_food.id] = now_food
-        if not food_judge:
-            continue
-        for food_id in recipes.ingredients:
-            if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-                food_judge = False
-                break
-            food_id_list = list(cache.restaurant_data[food_id].keys())
-            now_food_id = food_id_list[0]
-            now_food = cache.restaurant_data[food_id][now_food_id]
-            food_list[now_food.id] = now_food
-        if not food_judge:
-            continue
-        for food_id in recipes.seasoning:
-            if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-                food_judge = False
-                break
-            food_id_list = list(cache.restaurant_data[food_id].keys())
-            now_food_id = food_id_list[0]
-            now_food = cache.restaurant_data[food_id][now_food_id]
-            food_list[now_food.id] = now_food
-        if not food_judge:
-            continue
+        # recipes = cache.recipe_data[recipes_id]
+        # food_judge = True
+        # for food_id in recipes.base:
+        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
+        #         food_judge = False
+        #         break
+        #     food_id_list = list(cache.restaurant_data[food_id].keys())
+        #     now_food_id = food_id_list[0]
+        #     now_food = cache.restaurant_data[food_id][now_food_id]
+        #     food_list[now_food.id] = now_food
+        # if not food_judge:
+        #     continue
+        # for food_id in recipes.ingredients:
+        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
+        #         food_judge = False
+        #         break
+        #     food_id_list = list(cache.restaurant_data[food_id].keys())
+        #     now_food_id = food_id_list[0]
+        #     now_food = cache.restaurant_data[food_id][now_food_id]
+        #     food_list[now_food.id] = now_food
+        # if not food_judge:
+        #     continue
+        # for food_id in recipes.seasoning:
+        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
+        #         food_judge = False
+        #         break
+        #     food_id_list = list(cache.restaurant_data[food_id].keys())
+        #     now_food_id = food_id_list[0]
+        #     now_food = cache.restaurant_data[food_id][now_food_id]
+        #     food_list[now_food.id] = now_food
+        # if not food_judge:
+        #     continue
         new_food = cook(food_list, recipes_id, 5, "")
         cache.restaurant_data.setdefault(str(recipes_id), {})
         cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
-        for food_id in food_list:
-            now_food = food_list[food_id]
-            if now_food.weight <= 0:
-                del cache.restaurant_data[now_food.id][now_food.uid]
-            else:
-                cache.restaurant_data[now_food.id][now_food.uid] = now_food
+        # for food_id in food_list:
+        #     now_food = food_list[food_id]
+        #     if now_food.weight <= 0:
+        #         del cache.restaurant_data[now_food.id][now_food.uid]
+        #     else:
+        #         cache.restaurant_data[now_food.id][now_food.uid] = now_food
         cook_index += 1
         if cook_index == max_people:
             break
@@ -292,58 +269,58 @@ def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type:
     character_data = cache.character_data[character_id]
     for food_uid in character_data.food_bag:
         food_data: Food = character_data.food_bag[food_uid]
-        if food_data.id in game_config.config_food_feel_data:
-            food_feel_data = game_config.config_food_feel_data[food_data.id]
-        else:
-            food_feel_data = {}
+        # if food_data.id in game_config.config_food_feel_data:
+        #     food_feel_data = game_config.config_food_feel_data[food_data.id]
+        # else:
+        #     food_feel_data = {}
         if food_type == _("主食"):
             if food_data.recipe != -1:
                 food_name = cache.recipe_data[food_data.recipe].name
                 food_list.setdefault(food_name, set())
                 food_list[food_name].add(food_uid)
-        elif food_type == _("零食"):
-            if food_data.recipe == -1:
-                food_config = game_config.config_food[food_data.id]
-                if food_config.eat:
-                    food_name = food_config.name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
-        elif food_type == _("饮品"):
-            if food_data.recipe == -1:
-                if (
-                    28 in food_feel_data
-                    and not food_config.fruit
-                    and food_config.eat
-                    and (27 not in food_feel_data or food_feel_data[28] > food_feel_data[27])
-                ):
-                    food_name = food_config.name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
-            else:
-                if 28 in food_data.feel and (
-                    27 not in food_data.feel or food_data.feel[28] > food_data.feel[27]
-                ):
-                    food_name = cache.recipe_data[food_data.recipe].name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
-        elif food_type == _("水果"):
-            if food_data.recipe == -1:
-                if food_config.fruit:
-                    food_name = food_config.name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
-        elif food_type == _("食材"):
-            if food_data.recipe == -1:
-                if food_config.cook:
-                    food_name = food_config.name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
-        elif food_type == _("调料"):
-            if food_data.recipe == -1:
-                if food_config.seasoning:
-                    food_name = food_config.name
-                    food_list.setdefault(food_name, set())
-                    food_list[food_name].add(food_uid)
+        # elif food_type == _("零食"):
+        #     if food_data.recipe == -1:
+        #         food_config = game_config.config_food[food_data.id]
+        #         if food_config.eat:
+        #             food_name = food_config.name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
+        # elif food_type == _("饮品"):
+        #     if food_data.recipe == -1:
+        #         if (
+        #             28 in food_feel_data
+        #             and not food_config.fruit
+        #             and food_config.eat
+        #             and (27 not in food_feel_data or food_feel_data[28] > food_feel_data[27])
+        #         ):
+        #             food_name = food_config.name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
+        #     else:
+        #         if 28 in food_data.feel and (
+        #             27 not in food_data.feel or food_data.feel[28] > food_data.feel[27]
+        #         ):
+        #             food_name = cache.recipe_data[food_data.recipe].name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
+        # elif food_type == _("水果"):
+        #     if food_data.recipe == -1:
+        #         if food_config.fruit:
+        #             food_name = food_config.name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
+        # elif food_type == _("食材"):
+        #     if food_data.recipe == -1:
+        #         if food_config.cook:
+        #             food_name = food_config.name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
+        # elif food_type == _("调料"):
+        #     if food_data.recipe == -1:
+        #         if food_config.seasoning:
+        #             food_name = food_config.name
+        #             food_list.setdefault(food_name, set())
+        #             food_list[food_name].add(food_uid)
     return food_list
 
 
@@ -364,53 +341,74 @@ def get_restaurant_food_type_list_buy_food_type(food_type: str) -> Dict[uuid.UUI
             now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
             if now_food.recipe != -1:
                 food_list[food_id] = cache.recipe_data[int(food_id)].name
-        elif food_type == _("零食"):
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-            if now_food.recipe == -1:
-                food_config = game_config.config_food[food_id]
-                if food_config.eat:
-                    food_list[food_id] = food_config.name
-        elif food_type == _("饮品"):
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-            if now_food.recipe == -1:
-                food_config = game_config.config_food[food_id]
-                if food_id in game_config.config_food_feel_data:
-                    food_feel_data = game_config.config_food_feel_data[food_id]
-                    if (
-                        28 in food_feel_data
-                        and (not food_config.fruit)
-                        and food_config.eat
-                        and ((27 not in food_feel_data) or (food_feel_data[28] > food_feel_data[27]))
-                    ):
-                        food_list[food_id] = food_config.name
-            else:
-                now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-                now_food = cache.restaurant_data[food_id][now_food_uid]
-                if 28 in now_food.feel and (
-                    27 not in now_food.feel or now_food.feel[28] > now_food.feel[27]
-                ):
-                    food_list[food_id] = cache.recipe_data[int(food_id)].name
-        elif food_type == _("水果"):
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-            if now_food.recipe == -1:
-                food_config = game_config.config_food[now_food.id]
-                if food_config.fruit:
-                    food_list[food_id] = food_config.name
-        elif food_type == "食材":
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-            if now_food.recipe == -1:
-                food_config = game_config.config_food[now_food.id]
-                if food_config.cook:
-                    food_list[food_id] = food_config.name
-        elif food_type == "调料":
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-            if now_food.recipe == -1:
-                food_config = game_config.config_food[now_food.id]
-                if food_config.seasoning:
-                    food_list[food_id] = food_config.name
+        # elif food_type == _("零食"):
+        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+        #     if now_food.recipe == -1:
+        #         food_config = game_config.config_food[food_id]
+        #         if food_config.eat:
+        #             food_list[food_id] = food_config.name
+        # elif food_type == _("饮品"):
+        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+        #     if now_food.recipe == -1:
+        #         food_config = game_config.config_food[food_id]
+        #         if food_id in game_config.config_food_feel_data:
+        #             food_feel_data = game_config.config_food_feel_data[food_id]
+        #             if (
+        #                 28 in food_feel_data
+        #                 and (not food_config.fruit)
+        #                 and food_config.eat
+        #                 and ((27 not in food_feel_data) or (food_feel_data[28] > food_feel_data[27]))
+        #             ):
+        #                 food_list[food_id] = food_config.name
+        #     else:
+        #         now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #         now_food = cache.restaurant_data[food_id][now_food_uid]
+        #         if 28 in now_food.feel and (
+        #             27 not in now_food.feel or now_food.feel[28] > now_food.feel[27]
+        #         ):
+        #             food_list[food_id] = cache.recipe_data[int(food_id)].name
+        # elif food_type == _("水果"):
+        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+        #     if now_food.recipe == -1:
+        #         food_config = game_config.config_food[now_food.id]
+        #         if food_config.fruit:
+        #             food_list[food_id] = food_config.name
+        # elif food_type == "食材":
+        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+        #     if now_food.recipe == -1:
+        #         food_config = game_config.config_food[now_food.id]
+        #         if food_config.cook:
+        #             food_list[food_id] = food_config.name
+        # elif food_type == "调料":
+        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
+        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+        #     if now_food.recipe == -1:
+        #         food_config = game_config.config_food[now_food.id]
+        #         if food_config.seasoning:
+        #             food_list[food_id] = food_config.name
+    return food_list
+
+def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
+    """
+    获取可以烹饪的的食物种类
+    Keyword arguments:
+    food_type -- 食物类型
+    Return arguments:
+    dict -- 食物列表 食物id:食物名字
+    """
+    food_list = {}
+    recipe_data = cache.recipe_data
+    character_data = cache.character_data[0]
+    for recipes_id in recipe_data:
+        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
+            # print("recipes_id :",recipes_id)
+            # print("cache.recipe_data[recipes_id].name :",cache.recipe_data[recipes_id].name)
+            # print("recipe_data[recipes_id].difficulty :",recipe_data[recipes_id].difficulty)
+            food_list[recipes_id] = cache.recipe_data[recipes_id].name
+
+
     return food_list

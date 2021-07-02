@@ -55,8 +55,9 @@ def update_cafeteria():
         food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
         for food_id in food_list:
             food: game_type.Food = food_list[food_id]
-            if food.eat:
-                food_judge = 0
+            # if food.eat:
+                # food_judge = 0
+            food_judge = 0
             break
         if not food_judge:
             break
@@ -85,9 +86,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
-    if character_id != 0:
-        if character.judge_character_time_over_24(character_id):
-            judge_character_juel(character_id)
+    #24点之后结算状态为珠#
+    if character.judge_character_time_over_24(character_id):
+        judge_character_juel(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -300,6 +301,7 @@ def judge_character_juel(character_id: int) -> int:
         status_value = 0
         if status_id in character_data.status:
             status_value = character_data.status[status_id]
+            cache.character_data[character_id].status[status_id] = 0
             # print("status_value :",status_value)
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
