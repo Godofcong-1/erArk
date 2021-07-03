@@ -712,10 +712,14 @@ class CharacterabiText:
         for anility_type in ability_list:
             # if anility_type == type:
             type_set = ability_list[anility_type]
+            #去掉玩家的若干能力#
+            if self.character_id == 0:
+                if anility_type in {0, 1, 2, 6}:
+                    continue
             for ability_id in type_set:
-                #去掉与性别不符的感度#
+                #去掉与性别不符的能力#
                 if character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 34, 39}:
+                    if ability_id in {2, 4, 7, 9, 12, 33, 34, 39}:
                         continue
                 elif character_data.sex == 1:
                     if ability_id == 3:
