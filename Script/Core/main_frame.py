@@ -460,9 +460,9 @@ def io_print_image_cmd(cmd_str: str, cmd_number: int):
         textbox.configure(cursor="")
         send_input(order)
 
-    index = str(float(textbox.index("end")) - 1)
+    index:str = textbox.index("end -1c")
     textbox.image_create(index, image=era_image.image_data[cmd_str])
-    textbox.tag_add(cmd_tag_name, index, "{0} + 1 char".format(index))
+    textbox.tag_add(cmd_tag_name,index, "{0} + 1 char".format(index))
     textbox.tag_bind(cmd_tag_name, "<1>", send_cmd)
     see_end()
 

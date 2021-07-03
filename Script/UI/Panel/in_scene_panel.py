@@ -109,6 +109,10 @@ class InScenePanel:
                 ask_list.extend(character_handle_panel.return_list)
                 line_draw = draw.LineDraw("-.-", self.width)
                 line_draw.draw()
+            now_draw_character_list = []
+            for page_draw in character_handle_panel.draw_list:
+                if "character_id" in page_draw.__dict__:
+                    now_draw_character_list.append(page_draw.character_id)
             #↓角色信息面板↓#
             character_info_draw_list = []
             if character_data.target_character_id:
@@ -260,11 +264,16 @@ class InScenePanel:
             # fix_draw.set(1)
             # fix_draw.draw()
             # line_feed.draw()
+            character_image_list_draw = CharacterImageListDraw(self.width,now_draw_character_list)
+            character_image_list_draw.draw()
+            ask_list.extend(character_image_list_draw.return_list)
+            """
             character_image_list=character_list
             character_image_list.reverse()
             for image_cid in character_image_list:
                 image_character_data = cache.character_data[image_cid]
                 flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
+            """
             line_feed.draw()
             #以下为指令面板#
             see_instruct_panel.draw()
@@ -416,3 +425,66 @@ class SeeInstructPanel:
         line.draw()
         #加个指令名称绘制#
         handle_instruct.handle_instruct(instruct_id)
+
+
+class CharacterImageListDraw:
+    """
+    查看角色图片列表
+    Keyword arguments:
+    width -- 绘制宽度
+    character_list -- 绘制的角色列表
+    """
+
+    def __init__(self, width: int,character_list:List[int]):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 最大绘制宽度 """
+        self.character_list: List[int] = character_list
+        """ 绘制的角色列表 """
+        self.return_list: List[str] = []
+        """ 返回的按钮列表 """
+
+    def draw(self):
+        """绘制列表"""
+        head_width = len(self.character_list) * 16
+        center_fix = text_handle.align("*"* head_width,"center",1,1)
+        fix_draw = draw.NormalDraw()
+        fix_draw.width = self.width
+        fix_draw.text = center_fix
+        fix_draw.draw()
+        self.return_list = []
+        for now_character in self.character_list:
+            now_draw = CharacterImageButton(now_character,self.width)
+            now_draw.draw()
+            self.return_list.append(now_draw.return_text)
+
+
+class CharacterImageButton:
+    """
+    角色图片按钮
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    """
+
+    def __init__(self,character_id:int,width:int):
+        """初始化绘制对象"""
+        self.character_id: int = character_id
+        """ 角色id """
+        self.width:int = width
+        """ 绘制宽度 """
+        self.return_text = ""
+        """ 返回的按钮 """
+
+    def draw(self):
+        """绘制图片对象"""
+        character_data:game_type.Character = cache.character_data[self.character_id]
+        now_draw = draw.ImageButton(character_data.name,character_data.name+"头像",self.width,self.change_target)
+        now_draw.draw()
+        self.return_text = character_data.name+"头像"
+
+    def change_target(self):
+        """改变玩家当前交互对象"""
+        player_data:game_type.Character = cache.character_data[0]
+        if self.character_id:
+            player_data.target_character_id = self.character_id
