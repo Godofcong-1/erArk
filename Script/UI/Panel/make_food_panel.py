@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking
+from Script.Design import map_handle, cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -208,16 +208,24 @@ class MakeFoodByFoodNameDraw:
         """ 按钮返回值 """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
+        self.make_food_time: int = 0
+        """ 做饭所需时间 """
+        # self.draw_effect_draw = draw.NormalDraw()
+        # """ 做饭效果绘制 """
+        self.food_name: str = ""
+        """ 食物名字 """
         name_draw = draw.NormalDraw()
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
-        food_name = ""
+        # draw_effect_text = ""
         if isinstance(self.cid, str):
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
-            food_name = food_recipe.name
+            self.food_name = food_recipe.name
+            self.make_food_time = food_recipe.time
+            # draw_effect_text += "制作用时" + self.make_food_time + "分钟\n"
         index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{food_name}"
+        button_text = f"{index_text}{self.food_name}"
         # print("index_text :",index_text)
-        # print("food_name :",food_name)
+        # print("self.make_food_time :",self.make_food_time)
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.make_food)
         self.now_draw = name_draw
         """ 绘制的对象 """
@@ -225,9 +233,17 @@ class MakeFoodByFoodNameDraw:
     def draw(self):
         """绘制对象"""
         self.now_draw.draw()
+        # self.draw_effect_draw.draw()
 
     def make_food(self):
-        """玩家购买食物"""
-        # print("self.text :",self.text)
-        # print("self.cid :",self.cid)
-        cache.character_data[0].food_bag[self.text] = cache.makefood_data[self.cid][self.text]
+        """玩家制作食物"""
+        update.game_update_flow(0)
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.food_bag[self.text] = cache.makefood_data[self.cid][self.text]
+        character_data.behavior.food_name = self.food_name
+        character_data.behavior.make_food_time = self.make_food_time
+        character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
+        character_data.behavior.duration = self.make_food_time
+        character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
+        update.game_update_flow(self.make_food_time)
+        cache.now_panel_id = constant.Panel.IN_SCENE

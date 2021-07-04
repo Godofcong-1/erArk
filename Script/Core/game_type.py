@@ -299,6 +299,8 @@ class Behavior:
         """ 前提结算用:进食行为消耗的食物品质 """
         self.course_id: int = 0
         """ 上课时所学/教的课程 """
+        self.make_food_time: int = 0
+        """ 前提结算用:做饭指令用时 """
 
 
 class Map:

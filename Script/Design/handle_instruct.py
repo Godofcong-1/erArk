@@ -1,3 +1,4 @@
+from Script.UI.Flow.make_food_flow import make_food_flow
 import random
 import time
 import queue
@@ -560,7 +561,6 @@ def handle_make_coffee_add():
 )
 def handle_make_food():
     """做饭"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 @add_instruct(

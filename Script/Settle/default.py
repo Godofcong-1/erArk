@@ -8,6 +8,7 @@ from Script.Design import (
     attr_calculation,
     game_time,
     cooking,
+    update,
 )
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -252,16 +253,52 @@ def handle_eat_food(
         food: game_type.Food = character_data.behavior.eat_food
         food_name = ""
         food_name = cache.recipe_data[food.recipe].name
-        # target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        # if target_data.cid:
-        #     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        #     target_change = change_data.target_change[target_data.cid]
-        #     add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        #     character_handle.add_favorability(
-        #         character_id, target_data.cid, add_favorability, target_change, now_time
-        #     )
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if target_data.cid:
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change = change_data.target_change[target_data.cid]
+            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
+            character_handle.add_favorability(
+                character_id, target_data.cid, add_favorability, target_change, now_time
+            )
         del character_data.food_bag[food.uid]
         character_data.behavior.food_name = food_name
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MAKE_FOOD)
+def handle_make_food(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    制作指定食物
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.behavior.eat_food is not None:
+        food: game_type.Food = character_data.behavior.eat_food
+        food_name = ""
+        make_food_time = 0
+        food_name = cache.recipe_data[food.recipe].name
+        make_food_time = cache.recipe_data[food.recipe].time
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if target_data.cid:
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change = change_data.target_change[target_data.cid]
+            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
+            character_handle.add_favorability(
+                character_id, target_data.cid, add_favorability, target_change, now_time
+            )
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)

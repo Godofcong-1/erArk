@@ -75,6 +75,7 @@ def handle_talk(character_id: int):
         now_talk_text = now_talk_text.format(
             NickName=character_data.nick_name,
             FoodName=character_data.behavior.food_name,
+            MakeFoodTime=character_data.behavior.make_food_time,
             Name=character_data.name,
             SceneName=scene_name,
             PlayerNickName=player_data.nick_name,
