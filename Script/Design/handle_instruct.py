@@ -85,20 +85,29 @@ def handle_rest():
 
 
 @add_instruct(
-    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"), {constant.Premise.IN_DINING_HALL}
+    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
+    {constant.Premise.IN_DINING_HALL,
+    constant.Premise.NOT_H}
 )
 def handle_buy_food():
     """处理购买食物指令"""
     cache.now_panel_id = constant.Panel.FOOD_SHOP
 
 
-@add_instruct(constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"), {constant.Premise.HAVE_FOOD})
+@add_instruct(
+    constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"),
+    {constant.Premise.HAVE_FOOD,
+    constant.Premise.NOT_H}
+)
 def handle_eat():
     """处理进食指令"""
     cache.now_panel_id = constant.Panel.FOOD_BAG
 
 
-@add_instruct(constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"), {})
+@add_instruct(
+    constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
+    {constant.Premise.NOT_H}
+)
 def handle_move():
     """处理移动指令"""
     cache.now_panel_id = constant.Panel.SEE_MAP
@@ -125,7 +134,9 @@ def handle_see_owner_attr():
 
 
 @add_instruct(
-    constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_chat():
     """处理聊天指令"""
@@ -145,7 +156,9 @@ def handle_chat():
 
 
 @add_instruct(
-    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"), {constant.Premise.IN_SHOP}
+    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"),
+    {constant.Premise.IN_SHOP,
+    constant.Premise.NOT_H}
 )
 def handle_buy_item():
     """处理购买道具指令"""
@@ -184,7 +197,8 @@ def handle_abl_up():
     constant.Instruct.TOUCH_HEAD,
     constant.InstructType.OBSCENITY,
     _("摸头"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_head():
     """处理摸头指令"""
@@ -203,7 +217,11 @@ def handle_save():
     now_panel.draw()
 
 
-@add_instruct(constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"), {constant.Premise.IN_DORMITORY})
+@add_instruct(
+    constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
+    {constant.Premise.IN_DORMITORY,
+    constant.Premise.NOT_H}
+    )
 def handle_sleep():
     """处理睡觉指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -249,7 +267,9 @@ def handle_sleep():
 
 
 @add_instruct(
-    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -265,7 +285,8 @@ def handle_embrace():
     constant.Instruct.KISS,
     constant.InstructType.OBSCENITY,
     _("亲吻"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_kiss():
     """处理亲吻指令"""
@@ -281,7 +302,8 @@ def handle_kiss():
     constant.Instruct.HAND_IN_HAND,
     constant.InstructType.OBSCENITY,
     _("牵手"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_handle_in_handle():
     """处理牵手指令"""
@@ -297,7 +319,8 @@ def handle_handle_in_handle():
     constant.Instruct.STROKE,
     constant.InstructType.DAILY,
     _("身体接触"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_stroke():
     """处理身体接触指令"""
@@ -313,7 +336,8 @@ def handle_stroke():
     constant.Instruct.TOUCH_BREAST,
     constant.InstructType.OBSCENITY,
     _("摸胸"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_breast():
     """处理摸胸指令"""
@@ -515,7 +539,7 @@ def handle_touch_breast():
     constant.Instruct.WAIT,
     constant.InstructType.DAILY,
     _("等待五分钟"),
-    {},
+    {constant.Premise.NOT_H},
 )
 def handle_wait():
     """处理等待五分钟指令"""
@@ -528,7 +552,8 @@ def handle_wait():
     constant.Instruct.MAKE_COFFEE,
     constant.InstructType.DAILY,
     _("冲咖啡"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_make_coffee():
     """处理冲咖啡指令"""
@@ -543,7 +568,8 @@ def handle_make_coffee():
     constant.Instruct.MAKE_COFFEE_ADD,
     constant.InstructType.DAILY,
     _("冲咖啡（加料）"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_make_coffee_add():
     """处理冲咖啡（加料）指令"""
@@ -567,7 +593,8 @@ def handle_make_food():
     constant.Instruct.FOLLOWED,
     constant.InstructType.DAILY,
     _("请求同行"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_followed():
     """处理请求同行指令"""
@@ -580,7 +607,8 @@ def handle_followed():
     constant.Instruct.APOLOGIZE,
     constant.InstructType.DAILY,
     _("道歉"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_apologize():
     """处理道歉指令"""
@@ -593,7 +621,8 @@ def handle_apologize():
     constant.Instruct.LISTEN_COMPLAINT,
     constant.InstructType.DAILY,
     _("听牢骚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
@@ -606,7 +635,8 @@ def handle_listen_complaint():
     constant.Instruct.PRAY,
     constant.InstructType.DAILY,
     _("祈愿"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_pray():
     """处理祈愿指令"""
@@ -619,7 +649,8 @@ def handle_pray():
     constant.Instruct.LISTEN_MISSION,
     constant.InstructType.WORK,
     _("听取委托"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_listen_mission():
     """处理听取委托指令"""
@@ -632,7 +663,8 @@ def handle_listen_mission():
     constant.Instruct.COLLCET_PANTY,
     constant.InstructType.DAILY,
     _("收起内裤"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_collect_panty():
     """处理收起内裤指令"""
@@ -645,7 +677,8 @@ def handle_collect_panty():
     constant.Instruct.ASK_DATE,
     constant.InstructType.DAILY,
     _("邀请约会"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_ask_date():
     """处理邀请约会指令"""
@@ -658,7 +691,8 @@ def handle_ask_date():
     constant.Instruct.CONFESSION,
     constant.InstructType.DAILY,
     _("告白"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_confession():
     """处理告白指令"""
@@ -671,7 +705,8 @@ def handle_confession():
     constant.Instruct.DRINK_ALCOHOL,
     constant.InstructType.DAILY,
     _("劝酒"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_drink_alcohol():
     """处理劝酒指令"""
@@ -685,7 +720,8 @@ def handle_drink_alcohol():
     constant.Instruct.DO_H,
     constant.InstructType.DAILY,
     _("邀请H"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_do_h():
     """处理邀请H指令"""
@@ -702,6 +738,23 @@ def handle_do_h():
         now_draw.width = width
         now_draw.text = _("\n进入H模式失败\n")
         now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.STOP_H,
+    constant.InstructType.DAILY,
+    _("H结束"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_do_h():
+    """处理H结束指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    cache.is_H = 0
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束H模式\n")
+    now_draw.draw()
 
 # @add_instruct(
 #     constant.Instruct.SINGING,
@@ -736,7 +789,8 @@ def handle_do_h():
     constant.Instruct.TOUCH_BUTTOCKS,
     constant.InstructType.OBSCENITY,
     _("摸屁股"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_buttocks():
     """处理摸屁股指令"""
@@ -749,7 +803,8 @@ def handle_touch_buttocks():
     constant.Instruct.TOUCH_EARS,
     constant.InstructType.OBSCENITY,
     _("摸耳朵"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_ears():
     """处理摸耳朵指令"""
@@ -762,7 +817,8 @@ def handle_touch_ears():
     constant.Instruct.TOUCH_HORN,
     constant.InstructType.OBSCENITY,
     _("摸角"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_horn():
     """处理摸角指令"""
@@ -775,7 +831,8 @@ def handle_touch_horn():
     constant.Instruct.TOUCH_TAIL,
     constant.InstructType.OBSCENITY,
     _("摸尾巴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_tail():
     """处理摸尾巴指令"""
@@ -788,7 +845,8 @@ def handle_touch_tail():
     constant.Instruct.TOUCH_RING,
     constant.InstructType.OBSCENITY,
     _("摸光环"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_ring():
     """处理摸光环指令"""
@@ -801,7 +859,8 @@ def handle_touch_ring():
     constant.Instruct.TOUCH_WING,
     constant.InstructType.OBSCENITY,
     _("摸光翼"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_wing():
     """处理摸光翼指令"""
@@ -814,7 +873,8 @@ def handle_touch_wing():
     constant.Instruct.LAP_PILLOW,
     constant.InstructType.OBSCENITY,
     _("膝枕"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_lap_pillow():
     """处理膝枕指令"""
@@ -827,7 +887,8 @@ def handle_lap_pillow():
     constant.Instruct.RAISE_SKIRT,
     constant.InstructType.OBSCENITY,
     _("掀起裙子"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_raise_skirt():
     """处理掀起裙子指令"""
@@ -840,7 +901,8 @@ def handle_raise_skirt():
     constant.Instruct.TOUCH_CLITORIS,
     constant.InstructType.OBSCENITY,
     _("阴蒂爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
@@ -853,7 +915,8 @@ def handle_touch_clitoris():
     constant.Instruct.TOUCH_VAGINA,
     constant.InstructType.OBSCENITY,
     _("手指插入（V）"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_vagina():
     """处理手指插入（V）指令"""
@@ -866,7 +929,8 @@ def handle_touch_vagina():
     constant.Instruct.TOUCH_ANUS,
     constant.InstructType.OBSCENITY,
     _("手指插入（A）"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_anus():
     """处理手指插入（A）指令"""
@@ -882,7 +946,8 @@ def handle_touch_anus():
     constant.Instruct.MAKING_OUT,
     constant.InstructType.SEX,
     _("身体爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_making_out():
     """处理身体爱抚指令"""
@@ -895,7 +960,8 @@ def handle_making_out():
     constant.Instruct.KISS_H,
     constant.InstructType.SEX,
     _("接吻"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_kiss_h():
     """处理接吻指令"""
@@ -908,7 +974,8 @@ def handle_kiss_h():
     constant.Instruct.BREAST_CARESS,
     constant.InstructType.SEX,
     _("胸爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_breast_caress():
     """处理胸爱抚指令"""
@@ -921,7 +988,8 @@ def handle_breast_caress():
     constant.Instruct.TWIDDLE_NIPPLES,
     constant.InstructType.SEX,
     _("玩弄乳头"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_twiddle_nipples():
     """处理玩弄乳头指令"""
@@ -934,7 +1002,8 @@ def handle_twiddle_nipples():
     constant.Instruct.BREAST_SUCKING,
     constant.InstructType.SEX,
     _("舔吸乳头"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_breast_sucking():
     """处理舔吸乳头指令"""
@@ -947,7 +1016,8 @@ def handle_breast_sucking():
     constant.Instruct.CLIT_CARESS,
     constant.InstructType.SEX,
     _("阴蒂爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_cilt_caress():
     """处理阴蒂爱抚指令"""
@@ -960,7 +1030,8 @@ def handle_cilt_caress():
     constant.Instruct.OPEN_LABIA,
     constant.InstructType.SEX,
     _("掰开阴唇"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_open_labia():
     """处理掰开阴唇指令"""
@@ -973,7 +1044,8 @@ def handle_open_labia():
     constant.Instruct.OPEN_ANUS,
     constant.InstructType.SEX,
     _("掰开肛门"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_open_anus():
     """处理掰开肛门指令"""
@@ -986,7 +1058,8 @@ def handle_open_anus():
     constant.Instruct.CUNNILINGUS,
     constant.InstructType.SEX,
     _("舔阴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_cunnilingus():
     """处理舔阴指令"""
@@ -999,7 +1072,8 @@ def handle_cunnilingus():
     constant.Instruct.LICK_ANAL,
     constant.InstructType.SEX,
     _("舔肛"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_lict_anal():
     """处理舔肛指令"""
@@ -1012,7 +1086,8 @@ def handle_lict_anal():
     constant.Instruct.FINGER_INSERTION,
     constant.InstructType.SEX,
     _("手指插入"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_finger_insertion():
     """处理手指插入指令"""
@@ -1025,7 +1100,8 @@ def handle_finger_insertion():
     constant.Instruct.ANAL_CARESS,
     constant.InstructType.SEX,
     _("肛门爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_anal_caress():
     """处理肛门爱抚指令"""
@@ -1038,7 +1114,8 @@ def handle_anal_caress():
     constant.Instruct.MAKE_MASTUREBATE,
     constant.InstructType.SEX,
     _("让对方自慰"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_make_masturebate():
     """处理让对方自慰指令"""
@@ -1051,7 +1128,8 @@ def handle_make_masturebate():
     constant.Instruct.MAKE_LICK_ANAL,
     constant.InstructType.SEX,
     _("让对方舔肛门"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_make_lick_anal():
     """处理让对方舔肛门指令"""
@@ -1064,7 +1142,8 @@ def handle_make_lick_anal():
     constant.Instruct.DO_NOTHING,
     constant.InstructType.SEX,
     _("什么也不做"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_do_nothing():
     """处理什么也不做指令"""
@@ -1077,7 +1156,8 @@ def handle_do_nothing():
     constant.Instruct.SEDECU,
     constant.InstructType.SEX,
     _("诱惑"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_sedecu():
     """处理诱惑指令"""
@@ -1090,7 +1170,8 @@ def handle_sedecu():
     constant.Instruct.NIPPLE_CLAMP,
     constant.InstructType.SEX,
     _("乳头夹"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_nipple_clamp():
     """处理乳头夹指令"""
@@ -1103,7 +1184,8 @@ def handle_nipple_clamp():
     constant.Instruct.NIPPLES_LOVE_EGG,
     constant.InstructType.SEX,
     _("乳头跳蛋"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_nipples_love_egg():
     """处理乳头跳蛋指令"""
@@ -1116,7 +1198,8 @@ def handle_nipples_love_egg():
     constant.Instruct.CLIT_CLAMP,
     constant.InstructType.SEX,
     _("阴蒂夹"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_clit_clamp():
     """处理阴蒂夹指令"""
@@ -1129,7 +1212,8 @@ def handle_clit_clamp():
     constant.Instruct.CLIT_LOVE_EGG,
     constant.InstructType.SEX,
     _("阴蒂跳蛋"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_clit_love_egg():
     """处理阴蒂跳蛋指令"""
@@ -1142,7 +1226,8 @@ def handle_clit_love_egg():
     constant.Instruct.ELECTRIC_MESSAGE_STICK,
     constant.InstructType.SEX,
     _("电动按摩棒"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_electric_message_stick():
     """处理电动按摩棒指令"""
@@ -1155,7 +1240,8 @@ def handle_electric_message_stick():
     constant.Instruct.VIBRATOR_INSERTION,
     constant.InstructType.SEX,
     _("震动棒"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_vibrator_insertion():
     """处理震动棒指令"""
@@ -1168,7 +1254,8 @@ def handle_vibrator_insertion():
     constant.Instruct.VIBRATOR_INSERTION_ANAL,
     constant.InstructType.SEX,
     _("肛门振动棒"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_vibrator_insertion_anal():
     """处理肛门振动棒指令"""
@@ -1181,7 +1268,8 @@ def handle_vibrator_insertion_anal():
     constant.Instruct.MILKING_MACHINE,
     constant.InstructType.SEX,
     _("搾乳机"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_milking_machine():
     """处理搾乳机指令"""
@@ -1194,7 +1282,8 @@ def handle_milking_machine():
     constant.Instruct.URINE_COLLECTOR,
     constant.InstructType.SEX,
     _("采尿器"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urine_collector():
     """处理采尿器指令"""
@@ -1207,7 +1296,8 @@ def handle_urine_collector():
     constant.Instruct.BONDAGE,
     constant.InstructType.SEX,
     _("绳子"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bondage():
     """处理绳子指令"""
@@ -1220,7 +1310,8 @@ def handle_bondage():
     constant.Instruct.PATCH,
     constant.InstructType.SEX,
     _("眼罩"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_patch():
     """处理眼罩指令"""
@@ -1233,7 +1324,8 @@ def handle_patch():
     constant.Instruct.PUT_CONDOM,
     constant.InstructType.SEX,
     _("避孕套"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_put_condom():
     """处理避孕套指令"""
@@ -1246,7 +1338,8 @@ def handle_put_condom():
     constant.Instruct.BIRTH_CONTROL_PILLS,
     constant.InstructType.SEX,
     _("避孕药"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_birth_control_pills():
     """处理避孕药指令"""
@@ -1259,7 +1352,8 @@ def handle_birth_control_pills():
     constant.Instruct.BODY_LUBRICANT,
     constant.InstructType.SEX,
     _("润滑液"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_body_lubricant():
     """处理润滑液指令"""
@@ -1272,7 +1366,8 @@ def handle_body_lubricant():
     constant.Instruct.PHILTER,
     constant.InstructType.SEX,
     _("媚药"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_philter():
     """处理媚药指令"""
@@ -1285,7 +1380,8 @@ def handle_philter():
     constant.Instruct.DIURETICS,
     constant.InstructType.SEX,
     _("利尿剂"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_diuretics():
     """处理利尿剂指令"""
@@ -1298,7 +1394,8 @@ def handle_diuretics():
     constant.Instruct.SLEEPING_PILLS,
     constant.InstructType.SEX,
     _("睡眠药"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_sleeping_pills():
     """处理睡眠药指令"""
@@ -1311,7 +1408,8 @@ def handle_sleeping_pills():
     constant.Instruct.HANDJOB,
     constant.InstructType.SEX,
     _("手交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_handjob():
     """处理手交指令"""
@@ -1324,7 +1422,8 @@ def handle_handjob():
     constant.Instruct.BLOWJOB,
     constant.InstructType.SEX,
     _("口交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_blowjob():
     """处理口交指令"""
@@ -1337,7 +1436,8 @@ def handle_blowjob():
     constant.Instruct.PAIZURI,
     constant.InstructType.SEX,
     _("乳交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_paizuri():
     """处理乳交指令"""
@@ -1350,7 +1450,8 @@ def handle_paizuri():
     constant.Instruct.FOOTJOB,
     constant.InstructType.SEX,
     _("足交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_footjob():
     """处理足交指令"""
@@ -1363,7 +1464,8 @@ def handle_footjob():
     constant.Instruct.HAIRJOB,
     constant.InstructType.SEX,
     _("发交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_hairjob():
     """处理发交指令"""
@@ -1376,7 +1478,8 @@ def handle_hairjob():
     constant.Instruct.AXILLAJOB,
     constant.InstructType.SEX,
     _("腋交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_axillajob():
     """处理腋交指令"""
@@ -1389,7 +1492,8 @@ def handle_axillajob():
     constant.Instruct.RUB_BUTTOCK,
     constant.InstructType.SEX,
     _("素股"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_rub_buttock():
     """处理素股指令"""
@@ -1402,7 +1506,8 @@ def handle_rub_buttock():
     constant.Instruct.HAND_BLOWJOB,
     constant.InstructType.SEX,
     _("手交口交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_hand_blowjob():
     """处理手交口交指令"""
@@ -1415,7 +1520,8 @@ def handle_hand_blowjob():
     constant.Instruct.TITS_BLOWJOB,
     constant.InstructType.SEX,
     _("乳交口交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_tits_blowjob():
     """处理乳交口交指令"""
@@ -1428,7 +1534,8 @@ def handle_tits_blowjob():
     constant.Instruct.FOCUS_BLOWJOB,
     constant.InstructType.SEX,
     _("真空口交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_focus_blowjob():
     """处理真空口交指令"""
@@ -1441,7 +1548,8 @@ def handle_focus_blowjob():
     constant.Instruct.DEEP_THROAT,
     constant.InstructType.SEX,
     _("深喉插入"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_deep_throat():
     """处理深喉插入指令"""
@@ -1454,7 +1562,8 @@ def handle_deep_throat():
     constant.Instruct.SIXTY_NINE,
     constant.InstructType.SEX,
     _("六九式"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_sixty_nine():
     """处理六九式指令"""
@@ -1467,7 +1576,8 @@ def handle_sixty_nine():
     constant.Instruct.NORMAL_SEX,
     constant.InstructType.SEX,
     _("正常位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_normal_sex():
     """处理正常位指令"""
@@ -1480,7 +1590,8 @@ def handle_normal_sex():
     constant.Instruct.BACK_SEX,
     constant.InstructType.SEX,
     _("背后位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_sex():
     """处理背后位指令"""
@@ -1493,7 +1604,8 @@ def handle_back_sex():
     constant.Instruct.RIDING_SEX,
     constant.InstructType.SEX,
     _("骑乘位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_riding_sex():
     """处理骑乘位指令"""
@@ -1506,7 +1618,8 @@ def handle_riding_sex():
     constant.Instruct.FACE_SEAT_SEX,
     constant.InstructType.SEX,
     _("对面座位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_seat_sex():
     """处理对面座位指令"""
@@ -1519,7 +1632,8 @@ def handle_face_seat_sex():
     constant.Instruct.BACK_SEAT_SEX,
     constant.InstructType.SEX,
     _("背面座位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_seat_sex():
     """处理背面座位指令"""
@@ -1532,7 +1646,8 @@ def handle_back_seat_sex():
     constant.Instruct.FACE_STAND_SEX,
     constant.InstructType.SEX,
     _("对面立位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_stand_sex():
     """处理对面立位指令"""
@@ -1545,7 +1660,8 @@ def handle_face_stand_sex():
     constant.Instruct.BACK_STAND_SEX,
     constant.InstructType.SEX,
     _("背面立位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_stand_sex():
     """处理背面立位指令"""
@@ -1558,7 +1674,8 @@ def handle_back_stand_sex():
     constant.Instruct.STIMULATE_G_POINT,
     constant.InstructType.SEX,
     _("刺激G点"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_stimulate_g_point():
     """处理刺激G点指令"""
@@ -1571,7 +1688,8 @@ def handle_stimulate_g_point():
     constant.Instruct.WOMB_OS_CARESS,
     constant.InstructType.SEX,
     _("玩弄子宫口"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
@@ -1584,7 +1702,8 @@ def handle_womb_os_caress():
     constant.Instruct.WOMB_INSERTION,
     constant.InstructType.SEX,
     _("插入子宫"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_womb_insertion():
     """处理插入子宫指令"""
@@ -1597,7 +1716,8 @@ def handle_womb_insertion():
     constant.Instruct.NORMAL_ANAL_SEX,
     constant.InstructType.SEX,
     _("正常位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_normal_anal_sex():
     """处理正常位肛交指令"""
@@ -1610,7 +1730,8 @@ def handle_normal_anal_sex():
     constant.Instruct.BACK_ANAL_SEX,
     constant.InstructType.SEX,
     _("后背位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_anal_sex():
     """处理后背位肛交指令"""
@@ -1623,7 +1744,8 @@ def handle_back_anal_sex():
     constant.Instruct.RIDING_ANAL_SEX,
     constant.InstructType.SEX,
     _("骑乘位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
@@ -1636,7 +1758,8 @@ def handle_riding_anal_sex():
     constant.Instruct.FACE_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
     _("对面座位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
@@ -1649,7 +1772,8 @@ def handle_face_seat_anal_sex():
     constant.Instruct.BACK_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
     _("背面座位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
@@ -1662,7 +1786,8 @@ def handle_back_seat_anal_sex():
     constant.Instruct.FACE_STAND_ANAL_SEX,
     constant.InstructType.SEX,
     _("对面立位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
@@ -1675,7 +1800,8 @@ def handle_face_stand_anal_sex():
     constant.Instruct.BACK_STAND_ANAL_SEX,
     constant.InstructType.SEX,
     _("背面立位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
@@ -1688,7 +1814,8 @@ def handle_back_stand_anal_sex():
     constant.Instruct.STIMULATE_SIGMOID_COLON,
     constant.InstructType.SEX,
     _("玩弄s状结肠"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
@@ -1701,7 +1828,8 @@ def handle_stimulate_sigmoid_colon():
     constant.Instruct.STIMULATE_VAGINA,
     constant.InstructType.SEX,
     _("隔着刺激阴道"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
@@ -1714,7 +1842,8 @@ def handle_stimulate_vagina():
     constant.Instruct.DOUBLE_PENETRATION,
     constant.InstructType.SEX,
     _("二穴插入"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_double_penetration():
     """处理二穴插入指令"""
@@ -1727,7 +1856,8 @@ def handle_double_penetration():
     constant.Instruct.URETHRAL_SWAB,
     constant.InstructType.SEX,
     _("尿道棉棒"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urethral_swab():
     """处理尿道棉棒指令"""
@@ -1740,7 +1870,8 @@ def handle_urethral_swab():
     constant.Instruct.PISSING_PLAY,
     constant.InstructType.SEX,
     _("放尿play"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_pissing_play():
     """处理放尿play指令"""
@@ -1753,7 +1884,8 @@ def handle_pissing_play():
     constant.Instruct.URETHRAL_INSERTION,
     constant.InstructType.SEX,
     _("尿道插入"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urethral_insertion():
     """处理尿道插入指令"""
@@ -1766,7 +1898,8 @@ def handle_urethral_insertion():
     constant.Instruct.BEAT_BREAST,
     constant.InstructType.SEX,
     _("打胸部"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_beat_breast():
     """处理打胸部指令"""
@@ -1779,7 +1912,8 @@ def handle_beat_breast():
     constant.Instruct.SPANKING,
     constant.InstructType.SEX,
     _("打屁股"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_spanking():
     """处理打屁股指令"""
@@ -1792,7 +1926,8 @@ def handle_spanking():
     constant.Instruct.SHAME_PLAY,
     constant.InstructType.SEX,
     _("羞耻play"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_shame_play():
     """处理羞耻play指令"""
@@ -1805,7 +1940,8 @@ def handle_shame_play():
     constant.Instruct.BUNDLED_PLAY,
     constant.InstructType.SEX,
     _("拘束play"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bundled_play():
     """处理拘束play指令"""
@@ -1818,7 +1954,8 @@ def handle_bundled_play():
     constant.Instruct.TAKE_SHOWER,
     constant.InstructType.SEX,
     _("淋浴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_take_shower():
     """处理淋浴指令"""
@@ -1831,7 +1968,8 @@ def handle_take_shower():
     constant.Instruct.BUBBLE_BATH,
     constant.InstructType.SEX,
     _("泡泡浴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bubble_bath():
     """处理泡泡浴指令"""
@@ -1844,7 +1982,8 @@ def handle_bubble_bath():
     constant.Instruct.CHANGE_TOP_AND_BOTTOM,
     constant.InstructType.SEX,
     _("交给对方"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_change_top_and_bottom():
     """处理交给对方指令"""
@@ -1857,7 +1996,8 @@ def handle_change_top_and_bottom():
     constant.Instruct.GIVE_BLOWJOB,
     constant.InstructType.SEX,
     _("给对方口交"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_give_blowjob():
     """处理给对方口交指令"""

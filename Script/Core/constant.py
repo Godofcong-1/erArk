@@ -963,6 +963,8 @@ class Instruct:
     """ 劝酒 """
     DO_H = 0
     """ 邀请H """
+    STOP_H = 0
+    """ H结束 """
     # SINGING = 0
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0
