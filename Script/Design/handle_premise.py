@@ -2047,6 +2047,30 @@ def handle_un_collection_system(character_id: int) -> int:
     return not cache.is_collection
 
 
+@add_premise(constant.Premise.IS_H)
+def handle_is_h(character_id: int) -> int:
+    """
+    校验玩家是否已启用H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.is_H
+
+
+@add_premise(constant.Premise.NOT_H)
+def handle_not_h(character_id: int) -> int:
+    """
+    校验玩家是否未启用H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not cache.is_H
+
+
 @add_premise(constant.Premise.TARGET_IS_COLLECTION)
 def handle_target_is_collection(character_id: int) -> int:
     """

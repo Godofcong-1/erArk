@@ -1,0 +1,8 @@
+cid,instruct_name,need_type,value
+编号id,对应的指令名字,需求类型（D为日常，S为性爱）,需求值
+int,str,str,int
+0,0,0,1
+每个指令的实行值判定数据,,
+0,DO_H,S,350
+1,CONFESSION,D,25
+2,ASK_DATE,D,20

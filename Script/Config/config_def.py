@@ -223,6 +223,19 @@ class HitPointTem:
     """ 最大值 """
 
 
+class InstructJudge:
+    """ 每个指令的实行值判定数据 """
+
+    cid: int
+    """ 编号id """
+    instruct_name: str
+    """ 对应的指令名字 """
+    need_type: str
+    """ 需求类型（D为日常，S为性爱） """
+    value: int
+    """ 需求值 """
+
+
 class InstructType:
     """ 指令类型配置 """
 

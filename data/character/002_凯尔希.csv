@@ -1,6 +1,6 @@
 key,type,value,get_text,info
 键,类型,值,多语言化处理,备注
-AdvNpc,int,2,0,0
+AdvNpc,int,2,0,干员编号
 Name,str,凯尔希,1,姓名
 Sex,int,1,0,女
 Age,int,0,0,年龄未知

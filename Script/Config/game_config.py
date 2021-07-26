@@ -118,6 +118,8 @@ config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
 载入根据前提编号来判断具体的素质升级的具体前提数据
 需求id:[类型,类型子id,需求值]
 """
+config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
+""" 每个指令的实行值判定数据 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
 config_school: Dict[int, config_def.School] = {}
@@ -257,6 +259,16 @@ def load_talent_up_data():
         config_talent_up_data.setdefault(now_tem.talent_id, {})
         config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
         config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
+
+
+def load_instruct_judge_data():
+    """每个指令的实行值判定数据"""
+    now_data = config_data["InstructJudge"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.InstructJudge()
+        now_tem.__dict__ = tem_data
+        config_instruct_judge_data[now_tem.cid] = now_tem
 
 
 def load_experience():
@@ -724,6 +736,7 @@ def init():
     load_font_data()
     load_hitpoint_tem()
     load_instruct_type()
+    load_instruct_judge_data()
     load_item()
     load_juel()
     load_manapoint_tem()

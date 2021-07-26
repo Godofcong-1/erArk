@@ -680,6 +680,29 @@ def handle_drink_alcohol():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
+
+@add_instruct(
+    constant.Instruct.DO_H,
+    constant.InstructType.DAILY,
+    _("邀请H"),
+    {constant.Premise.HAVE_TARGET},
+)
+def handle_do_h():
+    """处理邀请H指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"DO_H"):
+        cache.is_H = 1
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入H模式\n")
+        now_draw.draw()
+    else:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入H模式失败\n")
+        now_draw.draw()
+
 # @add_instruct(
 #     constant.Instruct.SINGING,
 #     constant.InstructType.DAILY,
@@ -708,6 +731,7 @@ def handle_drink_alcohol():
 #     update.game_update_flow(5)
 
 #以下为猥亵#
+
 @add_instruct(
     constant.Instruct.TOUCH_BUTTOCKS,
     constant.InstructType.OBSCENITY,

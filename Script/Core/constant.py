@@ -234,6 +234,10 @@ class Premise:
     """ 交互对象是玩家角色 """
     TARGET_NO_PLAYER = "sys_5"
     """ 交互对象不是玩家 """
+    IS_H = "sys_6"
+    """ 当前为H模式 """
+    NOT_H = "sys_7"
+    """ 当前不是H模式 """
     IS_MAN = "sex_0"
     """ 触发该指令的是男性 """
     IS_WOMAN = "sex_1"
@@ -957,6 +961,8 @@ class Instruct:
     """ 告白 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
+    DO_H = 0
+    """ 邀请H """
     # SINGING = 0
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0
