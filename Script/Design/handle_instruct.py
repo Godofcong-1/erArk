@@ -590,17 +590,39 @@ def handle_make_food():
     cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 @add_instruct(
-    constant.Instruct.FOLLOWED,
+    constant.Instruct.FOLLOW,
     constant.InstructType.DAILY,
     _("请求同行"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.NOT_FOLLOW},
 )
 def handle_followed():
     """处理请求同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.talent[400] = 1
+    # print("进入同行模式")
+    # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.END_FOLLOW,
+    constant.InstructType.DAILY,
+    _("结束同行"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.IS_FOLLOW},
+)
+def handle_end_followed():
+    """处理结束同行指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.talent[400] = 0
     update.game_update_flow(5)
 
 @add_instruct(

@@ -1031,8 +1031,8 @@ def handle_is_beyond_friendship_target(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.SCENE_HAVE_OTHER_CHARACTER)
-def handle_scene_have_other_target(character_id: int) -> int:
+@add_premise(constant.Premise.SCENE_OVER_TWO)
+def handle_scene_over_two(character_id: int) -> int:
     """
     校验场景里是否有其他角色
     Keyword arguments:
@@ -2187,6 +2187,34 @@ def handle_not_h(character_id: int) -> int:
     int -- 权重
     """
     return not cache.is_H
+
+
+@add_premise(constant.Premise.IS_FOLLOW)
+def handle_is_follow(character_id: int) -> int:
+    """
+    校验交互对象是否正跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[400]
+
+
+@add_premise(constant.Premise.NOT_FOLLOW)
+def handle_not_follow(character_id: int) -> int:
+    """
+    校验交互对象是否没有跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[400]
 
 
 @add_premise(constant.Premise.TARGET_IS_COLLECTION)

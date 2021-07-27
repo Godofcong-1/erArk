@@ -2239,3 +2239,4 @@ def handle_coffee_add_adjust(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(20, 0)
     target_change.status[20] += now_add_lust
+

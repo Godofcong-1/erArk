@@ -49,6 +49,8 @@ class CharacterStatus:
     """ 谈话次数过多的状态 """
     STATUS_MAKE_FOOD = 22
     """ 做饭 """
+    STATUS_FOLLOW = 23
+    """ NPC跟随玩家 """
 
 
 class Behavior:
@@ -98,6 +100,8 @@ class Behavior:
     """ 谈话次数过多而失败 """
     MAKE_FOOD = 22
     """ 做饭 """
+    FOLLOW = 23
+    """ 让NPC跟随玩家 """
 
 
 
@@ -114,6 +118,8 @@ class StateMachine:
     """ 休息一会儿 """
     SLEEP = 5
     """ 睡觉 """
+    FOLLOW = 6
+    """ 跟随玩家 """
     MOVE_TO_RAND_SCENE = 10
     """ 移动至随机场景 """
     MOVE_TO_DORMITORY = 11
@@ -234,14 +240,18 @@ class Premise:
     """ 交互对象是玩家角色 """
     TARGET_NO_PLAYER = "sys_5"
     """ 交互对象不是玩家 """
-    IS_H = "is_h"
-    """ 当前为H模式 """
-    NOT_H = "not_h"
-    """ 当前不是H模式 """
     IS_MAN = "sex_0"
     """ 触发该指令的是男性 """
     IS_WOMAN = "sex_1"
     """ 触发该指令的是女性 """
+    IS_H = "is_h"
+    """ 当前为H模式 """
+    NOT_H = "not_h"
+    """ 当前不是H模式 """
+    IS_FOLLOW = "is_follow"
+    """ 当前正跟随玩家 """
+    NOT_FOLLOW = "not_follow"
+    """ 当前没跟随玩家 """
 
     HIGH_5 = "high_5"
     """ 优先度为5的空白前提 """
@@ -963,8 +973,10 @@ class Instruct:
     """ 购买道具 """
     BUY_FOOD = 0
     """ 购买食物 """
-    FOLLOWED = 0
+    FOLLOW = 0
     """ 请求同行 """
+    END_FOLLOW = 0
+    """ 结束同行 """
     APOLOGIZE = 0
     """ 道歉 """
     LISTEN_COMPLAINT = 0

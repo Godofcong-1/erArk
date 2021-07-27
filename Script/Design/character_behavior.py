@@ -19,7 +19,8 @@ from Script.Design import (
     talk,
     map_handle,
     cooking,
-    attr_calculation
+    attr_calculation,
+    character_move
 )
 from Script.Config import game_config, normal_config
 
@@ -89,6 +90,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     #24点之后结算状态为珠#
     if character.judge_character_time_over_24(character_id):
         judge_character_juel(character_id)
+    #处理跟随#
+    if character_id != 0:
+        judge_character_follow(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -292,6 +296,7 @@ def judge_character_juel(character_id: int) -> int:
         # print("status_id :",status_id)
         # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
         # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
+        #去掉性别里不存在的状态
         if character_data.sex == 0:
             if status_id in {2, 3, 7, 8}:
                 continue
@@ -299,13 +304,36 @@ def judge_character_juel(character_id: int) -> int:
             if status_id == 5:
                 continue
         status_value = 0
+        #获得状态值并清零
         if status_id in character_data.status:
             status_value = character_data.status[status_id]
             cache.character_data[character_id].status[status_id] = 0
             # print("status_value :",status_value)
+        #只要状态值不为0就结算为对应珠
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
             character_data.juel[status_id] += add_juel
-            juel_text = game_config.config_juel[status_id].name
+            # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
+    return 1
+    
+def judge_character_follow(character_id: int) -> int:
+    """
+    维持跟随状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # print("开始检测是否为跟随")
+    if character_data.talent[400]:
+        # print("检测到跟随，NPC编号为：",character_id)
+        to_dr = cache.character_data[0].position
+        _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+        # print("开始移动，路径为：",move_path,"，时间为：",move_time)
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
     return 1
