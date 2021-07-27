@@ -162,30 +162,30 @@ def get_experience_level_weight(experience: int) -> int:
 
 def judge_grade(experience: int) -> str:
     """
-    按经验数值评定等级
+    按能力数值评定等级
     Keyword arguments:
-    experience -- 经验数值
+    experience -- 能力数值
     Return arguments:
     str -- 评级
     """
     grade = ""
-    if experience < 100:
+    if experience <= 0:
         grade = "G"
-    elif experience < 500:
+    elif experience == 1:
         grade = "F"
-    elif experience < 1000:
+    elif experience == 2:
         grade = "E"
-    elif experience < 2000:
+    elif experience == 3:
         grade = "D"
-    elif experience < 3000:
+    elif experience == 4:
         grade = "C"
-    elif experience < 5000:
+    elif experience == 5:
         grade = "B"
-    elif experience < 10000:
+    elif experience == 6:
         grade = "A"
-    elif experience < 20000:
+    elif experience == 7:
         grade = "S"
-    elif experience >= 20000:
+    elif experience >= 8:
         grade = "EX"
     return grade
 
