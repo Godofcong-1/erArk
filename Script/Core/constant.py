@@ -278,6 +278,16 @@ class Premise:
     """ 场景中有自己外的其他NPC角色 """
     SCENE_NO_HAVE_OTHER_CHARACTER = "70"
     """ 场景中没有有自己外的其他角色 """
+
+    LOVE_1 = "love_1"
+    """ 思慕,爱情系第一阶段 """
+    LOVE_2 = "love_2"
+    """ 恋慕,爱情系第二阶段 """
+    LOVE_3 = "love_3"
+    """ 恋人,爱情系第三阶段 """
+    LOVE_4 = "love_4"
+    """ 爱侣,爱情系第四阶段 """
+
     HYPOSTHENIA = "83"
     """ 体力不足 """
     PHYSICAL_STRENGHT = "84"

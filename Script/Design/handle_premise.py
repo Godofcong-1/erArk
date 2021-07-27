@@ -560,6 +560,65 @@ def handle_high_10(character_id: int) -> int:
     return 10
 
 
+@add_premise(constant.Premise.LOVE_1)
+def handle_love_1(character_id: int) -> int:
+    """
+    校验角色是否是思慕,爱情系第一阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[10]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LOVE_2)
+def handle_love_2(character_id: int) -> int:
+    """
+    校验角色是否是恋慕,爱情系第二阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[11]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LOVE_3)
+def handle_love_3(character_id: int) -> int:
+    """
+    校验角色是否是恋人,爱情系第三阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[12]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LOVE_4)
+def handle_love_4(character_id: int) -> int:
+    """
+    校验角色是否是爱侣,爱情系第四阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[13]:
+        return 1
+    return 0
+
 @add_premise(constant.Premise.TARGET_SAME_SEX)
 def handle_target_same_sex(character_id: int) -> int:
     """
