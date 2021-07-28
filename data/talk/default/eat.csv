@@ -3,5 +3,5 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,4,0,{NickName}吃掉了{FoodName}
-1,4,0,{NickName}将{FoodName}吃掉了
+0,108,0,{NickName}吃掉了{FoodName}
+1,108,0,{NickName}将{FoodName}吃掉了

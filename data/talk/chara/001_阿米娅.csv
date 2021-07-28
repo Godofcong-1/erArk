@@ -3,5 +3,5 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,5,1,和{TargetName}一起聊了一下最近新加入的干员的情况
-1,5,1,和{TargetName}谈了谈物资的储备问题
+0,101,1,和{TargetName}一起聊了一下最近新加入的干员的情况
+1,101,1,和{TargetName}谈了谈物资的储备问题

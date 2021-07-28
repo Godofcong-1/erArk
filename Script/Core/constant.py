@@ -60,49 +60,41 @@ class Behavior:
     """ 发呆 """
     MOVE = 1
     """ 移动 """
-    REST = 2
-    """ 休息 """
-    ATTEND_CLASS = 3
-    """ 上课 """
-    EAT = 4
-    """ 进食 """
-    CHAT = 5
+    CHAT = 101
     """ 聊天 """
-    PLAY_PIANO = 6
-    """ 弹钢琴 """
-    SINGING = 7
-    """ 唱歌 """
-    SLEEP = 9
-    """ 睡觉 """
-    EMBRACE = 10
-    """ 拥抱 """
-    KISS = 11
-    """ 亲吻 """
-    HAND_IN_HAND = 12
-    """ 牵手 """
-    DEAD = 13
-    """ 死亡 """
-    STROKE = 14
-    """ 身体接触 """
-    TOUCH_BREAST = 15
-    """ 摸胸 """
-    TEACHING = 16
-    """ 教学 """
-    PLAY_GUITAR = 17
-    """ 弹吉他 """
-    SELF_STUDY = 18
-    """ 自习 """
-    MAKE_COFFEE = 20
-    """ 泡咖啡 """
-    CHAT_FAILED = 21
+    CHAT_FAILED = 102
     """ 谈话次数过多而失败 """
-    MAKE_FOOD = 22
+    STROKE = 103
+    """ 身体接触 """
+    MAKE_COFFEE = 104
+    """ 泡咖啡 """
+    MAKE_FOOD = 107
     """ 做饭 """
-    FOLLOW = 23
+    EAT = 108
+    """ 进食 """
+    REST = 110
+    """ 休息 """
+    SLEEP = 111
+    """ 睡觉 """
+    FOLLOW = 115
     """ 让NPC跟随玩家 """
-    TOUCH_HEAD = 30
+    TOUCH_HEAD = 301
     """ 摸头 """
+    TOUCH_BREAST = 302
+    """ 摸胸 """
+    HAND_IN_HAND = 309
+    """ 牵手 """
+    EMBRACE = 310
+    """ 拥抱 """
+    KISS = 311
+    """ 亲吻 """
 
+    # PLAY_PIANO = 6
+    # """ 弹钢琴 """
+    # SINGING = 7
+    # """ 唱歌 """
+    # DEAD = 13
+    # """ 死亡 """
 
 
 class StateMachine:

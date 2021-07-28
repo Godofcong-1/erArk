@@ -3,8 +3,8 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,22,0,{NickName}花了{MakeFoodTime}分钟制作了简单的{FoodName}
-1,22,0,{NickName}花了{MakeFoodTime}分钟制作了看起来不错的{FoodName}
-2,22,0,{NickName}花了{MakeFoodTime}分钟制作了十分丰盛的{FoodName}
-3,22,0,{NickName}花了{MakeFoodTime}分钟制作了精致的{FoodName}
-4,22,0,{NickName}花了{MakeFoodTime}分钟制作了好吃的{FoodName}
+0,107,0,{NickName}花了{MakeFoodTime}分钟制作了简单的{FoodName}
+1,107,0,{NickName}花了{MakeFoodTime}分钟制作了看起来不错的{FoodName}
+2,107,0,{NickName}花了{MakeFoodTime}分钟制作了十分丰盛的{FoodName}
+3,107,0,{NickName}花了{MakeFoodTime}分钟制作了精致的{FoodName}
+4,107,0,{NickName}花了{MakeFoodTime}分钟制作了好吃的{FoodName}
