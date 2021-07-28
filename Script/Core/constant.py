@@ -9,48 +9,40 @@ class CharacterStatus:
     """ 休闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
-    STATUS_REST = 2
-    """ 休息状态 """
-    STATUS_ATTEND_CLASS = 3
-    """ 上课状态 """
-    STATUS_EAT = 4
-    """ 进食状态 """
-    STATUS_CHAT = 5
+    STATUS_CHAT = 101
     """ 聊天状态 """
-    STATUS_PLAY_PIANO = 6
-    """ 弹钢琴 """
-    STATUS_SINGING = 7
-    """ 唱歌 """
-    STATUS_TOUCH_HEAD = 8
-    """ 摸头 """
-    STATUS_SLEEP = 9
-    """ 睡觉 """
-    STATUS_EMBRACE = 10
-    """ 拥抱 """
-    STATUS_KISS = 11
-    """ 亲吻 """
-    STATUS_HAND_IN_HAND = 12
-    """ 牵手 """
-    STATUS_DEAD = 13
-    """ 死亡 """
-    STATUS_STROKE = 14
-    """ 抚摸 """
-    STATUS_TOUCH_BREAST = 15
-    """ 摸胸 """
-    STATUS_TEACHING = 16
-    """ 教学 """
-    STATUS_PLAY_GUITAR = 17
-    """ 弹吉他 """
-    STATUS_SELF_STUDY = 18
-    """ 自习 """
-    STATUS_MAKE_COFFEE = 20
-    """ 冲咖啡 """
-    STATUS_CHAT_FAILED = 21
+    STATUS_CHAT_FAILED = 102
     """ 谈话次数过多的状态 """
-    STATUS_MAKE_FOOD = 22
+    STATUS_STROKE = 103
+    """ 身体接触 """
+    STATUS_MAKE_COFFEE = 104
+    """ 泡咖啡 """
+    STATUS_MAKE_FOOD = 107
     """ 做饭 """
-    STATUS_FOLLOW = 23
+    STATUS_EAT = 108
+    """ 进食状态 """
+    STATUS_REST = 110
+    """ 休息状态 """
+    STATUS_SLEEP = 111
+    """ 睡觉 """
+    STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
+    STATUS_TOUCH_HEAD = 301
+    """ 摸头 """
+    STATUS_TOUCH_BREAST = 302
+    """ 摸胸 """
+    STATUS_HAND_IN_HAND = 309
+    """ 牵手 """
+    STATUS_EMBRACE = 310
+    """ 拥抱 """
+    STATUS_KISS = 311
+    """ 亲吻 """
+    # STATUS_TEACHING = 16
+    # """ 教学 """
+    # STATUS_PLAY_GUITAR = 17
+    # """ 弹吉他 """
+    # STATUS_SELF_STUDY = 18
+    # """ 自习 """
 
 
 class Behavior:
