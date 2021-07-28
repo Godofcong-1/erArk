@@ -972,26 +972,26 @@ def handle_eat_spring_food(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.IS_HUMOR_MAN)
-def handle_is_humor_man(character_id: int) -> int:
-    """
-    校验角色是否是一个幽默的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    value = 0
-    character_data: game_type.Character = cache.character_data[character_id]
-    for i in {0, 1, 2, 5, 13, 14, 15, 16}:
-        nature = character_data.nature[i]
-        if nature > 50:
-            value -= nature - 50
-        else:
-            value += 50 - nature
-    if value < 0:
-        value = 0
-    return value
+# @add_premise(constant.Premise.IS_HUMOR_MAN)
+# def handle_is_humor_man(character_id: int) -> int:
+#     """
+#     校验角色是否是一个幽默的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     value = 0
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     for i in {0, 1, 2, 5, 13, 14, 15, 16}:
+#         nature = character_data.nature[i]
+#         if nature > 50:
+#             value -= nature - 50
+#         else:
+#             value += 50 - nature
+#     if value < 0:
+#         value = 0
+#     return value
 
 
 @add_premise(constant.Premise.TARGET_IS_BEYOND_FRIENDSHIP)
@@ -1447,43 +1447,43 @@ def handle_arrogant_height(character_id: int) -> int:
     return int(character_data.status[15] / 10)
 
 
-@add_premise(constant.Premise.IS_LIVELY)
-def handle_is_lively(character_id: int) -> int:
-    """
-    校验角色是否是一个活跃的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[0] >= 50
+# @add_premise(constant.Premise.IS_LIVELY)
+# def handle_is_lively(character_id: int) -> int:
+#     """
+#     校验角色是否是一个活跃的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[0] >= 50
 
 
-@add_premise(constant.Premise.IS_INFERIORITY)
-def handle_is_inferiority(character_id: int) -> int:
-    """
-    校验角色是否是一个自卑的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[16] < 50
+# @add_premise(constant.Premise.IS_INFERIORITY)
+# def handle_is_inferiority(character_id: int) -> int:
+#     """
+#     校验角色是否是一个自卑的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[16] < 50
 
 
-@add_premise(constant.Premise.IS_AUTONOMY)
-def handle_is_autonomy(character_id: int) -> int:
-    """
-    校验角色是否是一个自律的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[7] >= 50
+# @add_premise(constant.Premise.IS_AUTONOMY)
+# def handle_is_autonomy(character_id: int) -> int:
+#     """
+#     校验角色是否是一个自律的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[7] >= 50
 
 
 @add_premise(constant.Premise.SCENE_CHARACTER_ONLY_PLAYER_AND_ONE)
@@ -1504,17 +1504,17 @@ def handle_scene_character_only_player_and_one(character_id: int) -> int:
     return len(now_scene_data.character_list) == 2
 
 
-@add_premise(constant.Premise.IS_SOLITARY)
-def handle_is_solitary(character_id: int) -> int:
-    """
-    校验角色是否是一个孤僻的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[1] < 50
+# @add_premise(constant.Premise.IS_SOLITARY)
+# def handle_is_solitary(character_id: int) -> int:
+#     """
+#     校验角色是否是一个孤僻的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[1] < 50
 
 
 @add_premise(constant.Premise.NO_BEYOND_FRIENDSHIP_TARGET)
@@ -1607,17 +1607,17 @@ def handle_physical_strenght(character_id: int) -> int:
     return now_weight
 
 
-@add_premise(constant.Premise.IS_INDULGE)
-def handle_is_indulge(character_id: int) -> int:
-    """
-    校验角色是否是一个放纵的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[7] < 50
+# @add_premise(constant.Premise.IS_INDULGE)
+# def handle_is_indulge(character_id: int) -> int:
+#     """
+#     校验角色是否是一个放纵的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[7] < 50
 
 
 @add_premise(constant.Premise.IN_FOUNTAIN)
@@ -1633,18 +1633,18 @@ def handle_in_fountain(character_id: int) -> int:
     return character_data.position == ["8"]
 
 
-@add_premise(constant.Premise.TARGET_IS_SOLITARY)
-def handle_target_is_solitary(character_id: int) -> int:
-    """
-    校验交互对象是否是一个孤僻的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[1] < 50
+# @add_premise(constant.Premise.TARGET_IS_SOLITARY)
+# def handle_target_is_solitary(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个孤僻的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[1] < 50
 
 
 @add_premise(constant.Premise.TARGET_CHEST_IS_CLIFF)
@@ -1661,18 +1661,18 @@ def handle__target_chest_is_cliff(character_id: int) -> int:
     return not attr_calculation.judge_chest_group(target_data.chest.now_chest)
 
 
-@add_premise(constant.Premise.IS_ENTHUSIASM)
-def handle_is_enthusiasm(character_id: int) -> int:
-    """
-    校验角色是否是一个热情的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[15] >= 50
+# @add_premise(constant.Premise.IS_ENTHUSIASM)
+# def handle_is_enthusiasm(character_id: int) -> int:
+#     """
+#     校验角色是否是一个热情的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[15] >= 50
 
 
 @add_premise(constant.Premise.TARGET_ADMIRE)
@@ -1860,87 +1860,87 @@ def handle_target_is_student(character_id: int) -> int:
     return target_data.age <= 18
 
 
-@add_premise(constant.Premise.TARGET_IS_ASTUTE)
-def handle_target_is_astute(character_id: int) -> int:
-    """
-    校验交互对象是否是一个机敏的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[11] >= 50
+# @add_premise(constant.Premise.TARGET_IS_ASTUTE)
+# def handle_target_is_astute(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个机敏的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[11] >= 50
 
 
-@add_premise(constant.Premise.TARGET_IS_INFERIORITY)
-def handle_target_is_inferiority(character_id: int) -> int:
-    """
-    校验交互对象是否是一个自卑的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[16] < 50
+# @add_premise(constant.Premise.TARGET_IS_INFERIORITY)
+# def handle_target_is_inferiority(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个自卑的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[16] < 50
 
 
-@add_premise(constant.Premise.TARGET_IS_ENTHUSIASM)
-def handle_target_is_enthusiasm(character_id: int) -> int:
-    """
-    校验交互对象是否是一个热情的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[15] >= 50
+# @add_premise(constant.Premise.TARGET_IS_ENTHUSIASM)
+# def handle_target_is_enthusiasm(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个热情的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[15] >= 50
 
 
-@add_premise(constant.Premise.TARGET_IS_SELF_CONFIDENCE)
-def handle_target_is_self_confidence(character_id: int) -> int:
-    """
-    校验交互对象是否是一个自信的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[16] >= 50
+# @add_premise(constant.Premise.TARGET_IS_SELF_CONFIDENCE)
+# def handle_target_is_self_confidence(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个自信的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[16] >= 50
 
 
-@add_premise(constant.Premise.IS_ASTUTE)
-def handle_is_astute(character_id: int) -> int:
-    """
-    校验是否是一个机敏的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[11] >= 50
+# @add_premise(constant.Premise.IS_ASTUTE)
+# def handle_is_astute(character_id: int) -> int:
+#     """
+#     校验是否是一个机敏的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[11] >= 50
 
 
-@add_premise(constant.Premise.TARGET_IS_HEAVY_FEELING)
-def handle_target_is_heavy_feeling(character_id: int) -> int:
-    """
-    校验交互对象是否是一个重情的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[5] >= 50
+# @add_premise(constant.Premise.TARGET_IS_HEAVY_FEELING)
+# def handle_target_is_heavy_feeling(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个重情的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[5] >= 50
 
 
 @add_premise(constant.Premise.TARGET_NO_FIRST_HAND_IN_HAND)
@@ -1970,17 +1970,17 @@ def handle_no_first_hand_in_hand(character_id: int) -> int:
     return character_data.first_hand_in_hand == -1
 
 
-@add_premise(constant.Premise.IS_HEAVY_FEELING)
-def handle_is_heavy_feeling(character_id: int) -> int:
-    """
-    校验是否是一个重情的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[5] >= 50
+# @add_premise(constant.Premise.IS_HEAVY_FEELING)
+# def handle_is_heavy_feeling(character_id: int) -> int:
+#     """
+#     校验是否是一个重情的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[5] >= 50
 
 
 @add_premise(constant.Premise.HAVE_LIKE_TARGET_NO_FIRST_KISS)
@@ -2003,18 +2003,18 @@ def handle_have_like_target_no_first_kiss(character_id: int) -> int:
     return character_index
 
 
-@add_premise(constant.Premise.TARGET_IS_APATHY)
-def handle_target_is_apathy(character_id: int) -> int:
-    """
-    校验交互对象是否是一个冷漠的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.nature[15] < 50
+# @add_premise(constant.Premise.TARGET_IS_APATHY)
+# def handle_target_is_apathy(character_id: int) -> int:
+#     """
+#     校验交互对象是否是一个冷漠的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     return target_data.nature[15] < 50
 
 
 @add_premise(constant.Premise.TARGET_UNARMED_COMBAT_IS_HIGHT)
@@ -2783,17 +2783,17 @@ def handle_tonight_is_full_moon(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.IS_STARAIGHTFORWARD)
-def handle_is_staraightforward(character_id: int) -> int:
-    """
-    校验角色是否是一个爽直的人
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.nature[13] >= 50
+# @add_premise(constant.Premise.IS_STARAIGHTFORWARD)
+# def handle_is_staraightforward(character_id: int) -> int:
+#     """
+#     校验角色是否是一个爽直的人
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     return character_data.nature[13] >= 50
 
 
 # @add_premise(constant.Premise.NO_GOOD_AT_ELOQUENCE)
