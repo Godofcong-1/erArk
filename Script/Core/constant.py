@@ -72,8 +72,6 @@ class Behavior:
     """ 弹钢琴 """
     SINGING = 7
     """ 唱歌 """
-    TOUCH_HEAD = 8
-    """ 摸头 """
     SLEEP = 9
     """ 睡觉 """
     EMBRACE = 10
@@ -102,6 +100,8 @@ class Behavior:
     """ 做饭 """
     FOLLOW = 23
     """ 让NPC跟随玩家 """
+    TOUCH_HEAD = 30
+    """ 摸头 """
 
 
 

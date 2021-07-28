@@ -193,23 +193,6 @@ def handle_abl_up():
 #     update.game_update_flow(30)
 
 
-@add_instruct(
-    constant.Instruct.TOUCH_HEAD,
-    constant.InstructType.OBSCENITY,
-    _("摸头"),
-    {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
-)
-def handle_touch_head():
-    """处理摸头指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 2
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
-    update.game_update_flow(2)
-
-
 @add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), {})
 def handle_save():
     """处理读写存档指令"""
@@ -806,6 +789,23 @@ def handle_do_h():
 #     update.game_update_flow(5)
 
 #以下为猥亵#
+
+@add_instruct(
+    constant.Instruct.TOUCH_HEAD,
+    constant.InstructType.OBSCENITY,
+    _("摸头"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_touch_head():
+    """处理摸头指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 2
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
+    update.game_update_flow(2)
+
 
 @add_instruct(
     constant.Instruct.TOUCH_BUTTOCKS,
