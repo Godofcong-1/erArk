@@ -129,14 +129,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                         character_nick_name=now_character_data.nick_name
                     ) + text_handle.number_to_symbol_string(int(target_change.favorability))
                     judge = 1
-                if target_change.new_social != target_change.old_social:
-                    now_text += (
-                        " "
-                        + game_config.config_social_type[target_change.old_social].name
-                        + "->"
-                        + game_config.config_social_type[target_change.new_social].name
-                    )
+                if target_change.trust:
+                    now_text += _("\n  对{character_name}{character_nick_name}信赖").format(
+                        character_name=now_character_data.name,
+                        character_nick_name=now_character_data.nick_name
+                    ) + text_handle.number_to_symbol_string(float(target_change.trust))
                     judge = 1
+                # if target_change.new_social != target_change.old_social:
+                #     now_text += (
+                #         " "
+                #         + game_config.config_social_type[target_change.old_social].name
+                #         + "->"
+                #         + game_config.config_social_type[target_change.new_social].name
+                #     )
+                #     judge = 1
                 if len(target_change.status):
                     for status_id in target_change.status:
                         if target_change.status[status_id]:
