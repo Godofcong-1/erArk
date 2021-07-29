@@ -163,12 +163,16 @@ def handle_sub_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit * 3
+    #体力不足0时锁为1#
     if character_data.hit_point >= sub_hit:
         character_data.hit_point -= sub_hit
         change_data.hit_point -= sub_hit
     else:
         change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 0
+        character_data.hit_point = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SUB_SMALL_MANA_POINT)
