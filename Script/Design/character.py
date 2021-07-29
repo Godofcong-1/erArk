@@ -205,6 +205,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     #好感判定#
     favorability = target_data.favorability[0]
     judge_favorability = 0
+    if favorability < 100:
+        judge_favorability -= 20
     if favorability < 1000:
         judge_favorability += 0
     elif favorability <3000:
@@ -237,7 +239,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_trust
     calculation_text += "信赖修正("+ str(judge_trust) +")+"
     #状态修正，好意(11)和欲情(12)修正#
-    judge_status = target_data.status[11] + target_data.status[12]
+    judge_status = int(target_data.status[11] + target_data.status[12])
     judge += judge_status
     if judge_status:
         calculation_text += "状态修正("+ str(judge_status) +")+"

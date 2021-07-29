@@ -317,7 +317,7 @@ class CharacterInfoHead:
                 # character_id=character_id,
                 character_name=character_data.name,
                 favorability=int(character_data.favorability[0]),
-                trust=character_data.trust,
+                trust=round(character_data.trust,1),
                 # sex_text=sex_text,
                 # social_text=social_text,
             )
