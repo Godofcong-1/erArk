@@ -185,15 +185,6 @@ class FontConfig:
     """ 备注 """
 
 
-class HitPointTem:
-    """ hp模板对应平均值 """
-
-    cid: int
-    """ 模板id """
-    max_value: int
-    """ 最大值 """
-
-
 class InstructJudge:
     """ 每个指令的实行值判定数据 """
 
@@ -236,15 +227,6 @@ class Juel:
     """ 珠id """
     name: str
     """ 珠名 """
-
-
-class ManaPointTem:
-    """ mp模板对应平均值 """
-
-    cid: int
-    """ 模板id """
-    max_value: int
-    """ 最大值 """
 
 
 class Moon:
@@ -335,15 +317,6 @@ class SexTem:
     """ 是否有女性器官 """
     region: int
     """ 随机npc生成性别权重 """
-
-
-class SocialType:
-    """ 关系类型配置 """
-
-    cid: int
-    """ 关系id """
-    name: str
-    """ 名字 """
 
 
 class SolarPeriod:

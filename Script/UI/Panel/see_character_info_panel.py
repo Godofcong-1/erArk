@@ -310,9 +310,6 @@ class CharacterInfoHead:
             social = 0
             if 0 in character_data.social_contact_data:
                 social = character_data.social_contact_data[0]
-            social_text = game_config.config_social_type[social].name
-            favorability = character_data.favorability
-            # print("favorability =",favorability)
             message = _("{character_name}（好感度： {favorability}，信赖度： {trust}%） ").format(
                 # character_id=character_id,
                 character_name=character_data.name,
@@ -1382,59 +1379,59 @@ class CharacterJuelText:
                 label.draw()
 
 
-class SeeCharacterSocialContact:
-    """
-    显示角色社交关系面板对象
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 绘制宽度
-    """
+# class SeeCharacterSocialContact:
+#     """
+#     显示角色社交关系面板对象
+#     Keyword arguments:
+#     character_id -- 角色id
+#     width -- 绘制宽度
+#     """
 
-    def __init__(self, character_id: int, width: int):
-        """初始化绘制对象"""
-        self.character_id: int = character_id
-        """ 要绘制的角色id """
-        self.width: int = width
-        """ 面板最大宽度 """
-        self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的文本列表 """
-        self.return_list: List[str] = []
-        """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[self.character_id]
-        for social_type in game_config.config_social_type:
-            if not social_type:
-                continue
-            type_config = game_config.config_social_type[social_type]
-            type_draw = draw.LittleTitleLineDraw(type_config.name, self.width, ":")
-            self.draw_list.append(type_draw)
-            now_draw = draw.CenterDraw()
-            if social_type in character_data.social_contact and len(
-                character_data.social_contact[social_type]
-            ):
-                character_list = list(character_data.social_contact[social_type])
-                now_draw = panel.PageHandlePanel(
-                    character_list, SeeCharacterInfoByNameDraw, 10, 5, self.width, 1, 1, 0
-                )
-            else:
-                now_draw.text = _("空无一人")
-                now_draw.width = self.width
-            self.draw_list.append(now_draw)
-            self.draw_list.append(line_feed)
+#     def __init__(self, character_id: int, width: int):
+#         """初始化绘制对象"""
+#         self.character_id: int = character_id
+#         """ 要绘制的角色id """
+#         self.width: int = width
+#         """ 面板最大宽度 """
+#         self.draw_list: List[draw.NormalDraw] = []
+#         """ 绘制的文本列表 """
+#         self.return_list: List[str] = []
+#         """ 当前面板监听的按钮列表 """
+#         character_data = cache.character_data[self.character_id]
+#         for social_type in game_config.config_social_type:
+#             if not social_type:
+#                 continue
+#             type_config = game_config.config_social_type[social_type]
+#             type_draw = draw.LittleTitleLineDraw(type_config.name, self.width, ":")
+#             self.draw_list.append(type_draw)
+#             now_draw = draw.CenterDraw()
+#             if social_type in character_data.social_contact and len(
+#                 character_data.social_contact[social_type]
+#             ):
+#                 character_list = list(character_data.social_contact[social_type])
+#                 now_draw = panel.PageHandlePanel(
+#                     character_list, SeeCharacterInfoByNameDraw, 10, 5, self.width, 1, 1, 0
+#                 )
+#             else:
+#                 now_draw.text = _("空无一人")
+#                 now_draw.width = self.width
+#             self.draw_list.append(now_draw)
+#             self.draw_list.append(line_feed)
 
-    def draw(self):
-        title_draw = draw.TitleLineDraw(_("人物社交"), self.width)
-        title_draw.draw()
-        self.return_list = []
-        now_start_id = 0
-        for value in self.draw_list:
-            if isinstance(value, panel.PageHandlePanel):
-                value.button_start_id = now_start_id
-                value.update()
-                value.draw()
-                self.return_list.extend(value.return_list)
-                now_start_id = len(self.return_list)
-            else:
-                value.draw()
+#     def draw(self):
+#         title_draw = draw.TitleLineDraw(_("人物社交"), self.width)
+#         title_draw.draw()
+#         self.return_list = []
+#         now_start_id = 0
+#         for value in self.draw_list:
+#             if isinstance(value, panel.PageHandlePanel):
+#                 value.button_start_id = now_start_id
+#                 value.update()
+#                 value.draw()
+#                 self.return_list.extend(value.return_list)
+#                 now_start_id = len(self.return_list)
+#             else:
+#                 value.draw()
 
 
 class SeeCharacterInfoByNameDraw:

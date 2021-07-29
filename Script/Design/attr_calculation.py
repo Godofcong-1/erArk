@@ -100,36 +100,6 @@ def get_rand_npc_birthday(age: int):
     return birthday
 
 
-def get_max_hit_point(tem_id: int) -> int:
-    """
-    获取最大hp值
-    Keyword arguments:
-    tem_id -- hp模板id
-    Return arguments:
-    int -- 最大hp值
-    """
-    tem_data = game_config.config_hitpoint_tem[tem_id]
-    max_hit_point = tem_data.max_value
-    add_value = value_handle.get_gauss_rand(0, 500)
-    impairment = value_handle.get_gauss_rand(0, 500)
-    return max_hit_point + add_value - impairment
-
-
-def get_max_mana_point(tem_id: int) -> int:
-    """
-    获取最大mp值
-    Keyword arguments:
-    tem_id -- mp模板
-    Return arguments:
-    int -- 最大mp值
-    """
-    tem_data = game_config.config_manapoint_tem[tem_id]
-    max_mana_point = tem_data.max_value
-    add_value = value_handle.get_gauss_rand(0, 500)
-    impairment = value_handle.get_gauss_rand(0, 500)
-    return max_mana_point + add_value - impairment
-
-
 def get_experience_level_weight(experience: int) -> int:
     """
     按经验计算技能等级权重

@@ -42,8 +42,8 @@ def init_attr(character_id: int):
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
-        character_data.hit_point_max = attr_calculation.get_max_hit_point(character_data.hit_point_tem)
-        character_data.mana_point_max = attr_calculation.get_max_mana_point(character_data.mana_point_tem)
+        character_data.hit_point_max = 2000
+        character_data.mana_point_max = 2000
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)

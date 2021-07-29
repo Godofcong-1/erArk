@@ -165,7 +165,7 @@ def handle_sub_small_hit_point(
         return
     #气力为0时体力消耗3倍#
     if character_data.mana_point == 0:
-        sub_hit * 3
+        sub_hit *= 3
     #体力不足0时锁为1#
     if character_data.hit_point >= sub_hit:
         character_data.hit_point -= sub_hit

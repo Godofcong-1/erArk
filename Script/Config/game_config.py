@@ -48,8 +48,6 @@ config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
 """ 字体名字对应字体id """
-config_hitpoint_tem: Dict[int, config_def.HitPointTem] = {}
-""" HP模板对应平均值 """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
 """ 指令类型配置 """
 config_item: Dict[int, config_def.Item] = {}
@@ -59,8 +57,6 @@ config_item_tag_data: Dict[str, Set] = {}
 道具标签配置数据
 标签:道具id集合
 """
-config_manapoint_tem: Dict[int, config_def.ManaPointTem] = {}
-""" MP模板对应平均值 """
 config_moon: Dict[int, config_def.Moon] = {}
 """ 月相配置 """
 config_moon_data: Dict[int, Set] = {}
@@ -127,8 +123,6 @@ config_random_npc_sex_region: Dict[int, int] = {}
 生成随机npc时性别权重
 性别:权重
 """
-config_social_type: Dict[int, config_def.SocialType] = {}
-""" 关系类型配置数据 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
 config_status: Dict[int, config_def.Status] = {}
@@ -419,16 +413,6 @@ def load_font_data():
         config_font_data[now_font.name] = now_font.cid
 
 
-def load_hitpoint_tem():
-    """载入hp模板对应平均值配置数据"""
-    now_data = config_data["HitPointTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.HitPointTem()
-        now_tem.__dict__ = tem_data
-        config_hitpoint_tem[now_tem.cid] = now_tem
-
-
 def load_instruct_type():
     """载入指令类型配置数据"""
     now_data = config_data["InstructType"]
@@ -449,16 +433,6 @@ def load_item():
         config_item[now_tem.cid] = now_tem
         config_item_tag_data.setdefault(now_tem.tag, set())
         config_item_tag_data[now_tem.tag].add(now_tem.cid)
-
-
-def load_manapoint_tem():
-    """载入mp模板对应平均值配置数据"""
-    now_data = config_data["ManaPointTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.ManaPointTem()
-        now_tem.__dict__ = tem_data
-        config_manapoint_tem[now_tem.cid] = now_tem
 
 
 def load_moon():
@@ -524,16 +498,6 @@ def load_sex_tem():
         now_tem.__dict__ = tem_data
         config_sex_tem[now_tem.cid] = now_tem
         config_random_npc_sex_region[now_tem.cid] = now_tem.region
-
-
-def load_social_type():
-    """载入社交关系配置数据"""
-    now_data = config_data["SocialType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SocialType()
-        now_tem.__dict__ = tem_data
-        config_social_type[now_tem.cid] = now_tem
 
 
 def load_solar_period():
@@ -654,12 +618,10 @@ def init():
     load_clothing_use_type()
     load_experience()
     load_font_data()
-    load_hitpoint_tem()
     load_instruct_type()
     load_instruct_judge_data()
     load_item()
     load_juel()
-    load_manapoint_tem()
     load_moon()
     load_move_menu_type()
     load_organ_data()
@@ -668,7 +630,6 @@ def init():
     load_recipes()
     load_season()
     load_sex_tem()
-    load_social_type()
     load_solar_period()
     load_status()
     load_sun_time()
