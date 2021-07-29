@@ -5,7 +5,7 @@ from uuid import UUID
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type
-from Script.Design import map_handle, game_time, attr_calculation, character, course
+from Script.Design import map_handle, game_time, attr_calculation, character
 from Script.Config import game_config
 
 cache: game_type.Cache = cache_control.cache
@@ -2320,61 +2320,61 @@ def handle_attend_class_today(character_id: int) -> int:
     return game_time.judge_attend_class_today(character_id)
 
 
-@add_premise(constant.Premise.APPROACHING_CLASS_TIME)
-def handle_approaching_class_time(character_id: int) -> int:
-    """
-    校验角色是否临近上课时间
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time: datetime.datetime = character_data.behavior.start_time
-    now_time_value = now_time.hour * 100 + now_time.minute
-    next_time = 0
-    if character_data.age <= 18:
-        school_id = 0
-        if character_data.age in range(13, 16):
-            school_id = 1
-        elif character_data.age in range(16, 19):
-            school_id = 2
-        for session_id in game_config.config_school_session_data[school_id]:
-            session_config = game_config.config_school_session[session_id]
-            if session_config.start_time > now_time_value:
-                if next_time == 0 or session_config.start_time < next_time:
-                    next_time = session_config.start_time
-        if next_time == 0:
-            return 0
-    if character_id in cache.teacher_school_timetable:
-        now_week = now_time.weekday()
-        timetable_list: List[game_type.TeacherTimeTable] = cache.teacher_school_timetable[character_id]
-        for timetable in timetable_list:
-            if timetable.week_day != now_week:
-                continue
-            if timetable.time > now_time_value:
-                if next_time == 0 or timetable.time < next_time:
-                    next_time = timetable.time
-        if next_time == 0:
-            return 0
-    next_value = int(next_time / 100) * 60 + next_time % 100
-    now_value = int(now_time_value / 100) * 60 + now_time_value % 100
-    add_time = next_value - now_value
-    if add_time > 30:
-        return 0
-    return 3000 / (add_time * 10)
+# @add_premise(constant.Premise.APPROACHING_CLASS_TIME)
+# def handle_approaching_class_time(character_id: int) -> int:
+#     """
+#     校验角色是否临近上课时间
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     now_time: datetime.datetime = character_data.behavior.start_time
+#     now_time_value = now_time.hour * 100 + now_time.minute
+#     next_time = 0
+#     if character_data.age <= 18:
+#         school_id = 0
+#         if character_data.age in range(13, 16):
+#             school_id = 1
+#         elif character_data.age in range(16, 19):
+#             school_id = 2
+#         for session_id in game_config.config_school_session_data[school_id]:
+#             session_config = game_config.config_school_session[session_id]
+#             if session_config.start_time > now_time_value:
+#                 if next_time == 0 or session_config.start_time < next_time:
+#                     next_time = session_config.start_time
+#         if next_time == 0:
+#             return 0
+#     if character_id in cache.teacher_school_timetable:
+#         now_week = now_time.weekday()
+#         timetable_list: List[game_type.TeacherTimeTable] = cache.teacher_school_timetable[character_id]
+#         for timetable in timetable_list:
+#             if timetable.week_day != now_week:
+#                 continue
+#             if timetable.time > now_time_value:
+#                 if next_time == 0 or timetable.time < next_time:
+#                     next_time = timetable.time
+#         if next_time == 0:
+#             return 0
+#     next_value = int(next_time / 100) * 60 + next_time % 100
+#     now_value = int(now_time_value / 100) * 60 + now_time_value % 100
+#     add_time = next_value - now_value
+#     if add_time > 30:
+#         return 0
+#     return 3000 / (add_time * 10)
 
 
-@add_premise(constant.Premise.IN_CLASS_TIME)
-def handle_in_class_time(character_id: int) -> int:
-    """
-    校验角色是否处于上课时间
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    return character.judge_character_in_class_time(character_id) * 500
+# @add_premise(constant.Premise.IN_CLASS_TIME)
+# def handle_in_class_time(character_id: int) -> int:
+#     """
+#     校验角色是否处于上课时间
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     return character.judge_character_in_class_time(character_id) * 500
 
 
 @add_premise(constant.Premise.NO_IN_CLASSROOM)
@@ -2394,50 +2394,50 @@ def handle_no_in_classroom(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TEACHER_NO_IN_CLASSROOM)
-def handle_teacher_no_in_classroom(character_id: int) -> int:
-    """
-    校验角色所属班级的老师是否不在教室中
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    if not game_time.judge_attend_class_today(character_id):
-        return 1
-    character_data: game_type.Character = cache.character_data[character_id]
-    # if character_data.classroom == "":
-    #     return 1
-    # classroom: game_type.Scene = cache.scene_data[character_data.classroom]
-    now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time is None:
-        now_time = cache.game_time
-    now_week = now_time.weekday()
-    school_id, phase = course.get_character_school_phase(character_id)
-    now_time_value = now_time.hour * 100 + now_time.minute
-    if now_week in cache.course_time_table_data[school_id][phase]:
-        now_course_index = 0
-        next_time = 0
-        for session_config_id in game_config.config_school_session_data[school_id]:
-            session_config = game_config.config_school_session[session_config_id]
-            if not next_time:
-                if session_config.start_time >= now_time_value:
-                    next_time = session_config.start_time
-                    now_course_index = session_config.session
-                elif session_config.end_time >= now_time_value:
-                    next_time = session_config.end_time
-                    now_course_index = session_config.session
-                continue
-            if session_config.start_time >= now_time_value and session_config.start_time < next_time:
-                next_time = session_config.start_time
-                now_course_index = session_config.session
-            elif session_config.end_time >= now_time_value and session_config.end_time < next_time:
-                next_time = session_config.start_time
-                now_course_index = session_config.session
-        if school_id not in cache.class_timetable_teacher_data:
-            return 1
-        if phase not in cache.class_timetable_teacher_data[school_id]:
-            return 1
+# @add_premise(constant.Premise.TEACHER_NO_IN_CLASSROOM)
+# def handle_teacher_no_in_classroom(character_id: int) -> int:
+#     """
+#     校验角色所属班级的老师是否不在教室中
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     if not game_time.judge_attend_class_today(character_id):
+#         return 1
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     # if character_data.classroom == "":
+#     #     return 1
+#     # classroom: game_type.Scene = cache.scene_data[character_data.classroom]
+#     now_time: datetime.datetime = character_data.behavior.start_time
+#     if now_time is None:
+#         now_time = cache.game_time
+#     now_week = now_time.weekday()
+#     school_id, phase = course.get_character_school_phase(character_id)
+#     now_time_value = now_time.hour * 100 + now_time.minute
+#     if now_week in cache.course_time_table_data[school_id][phase]:
+#         now_course_index = 0
+#         next_time = 0
+#         for session_config_id in game_config.config_school_session_data[school_id]:
+#             session_config = game_config.config_school_session[session_config_id]
+#             if not next_time:
+#                 if session_config.start_time >= now_time_value:
+#                     next_time = session_config.start_time
+#                     now_course_index = session_config.session
+#                 elif session_config.end_time >= now_time_value:
+#                     next_time = session_config.end_time
+#                     now_course_index = session_config.session
+#                 continue
+#             if session_config.start_time >= now_time_value and session_config.start_time < next_time:
+#                 next_time = session_config.start_time
+#                 now_course_index = session_config.session
+#             elif session_config.end_time >= now_time_value and session_config.end_time < next_time:
+#                 next_time = session_config.start_time
+#                 now_course_index = session_config.session
+#         if school_id not in cache.class_timetable_teacher_data:
+#             return 1
+#         if phase not in cache.class_timetable_teacher_data[school_id]:
+#             return 1
         # if character_data.classroom not in cache.class_timetable_teacher_data[school_id][phase]:
         #     return 1
         # if now_week not in cache.class_timetable_teacher_data[school_id][phase][character_data.classroom]:
@@ -2452,20 +2452,20 @@ def handle_teacher_no_in_classroom(character_id: int) -> int:
         # ][now_course_index]
         # if now_teacher not in classroom.character_list:
         #     return 1
-        return 0
-    return 1
+    #     return 0
+    # return 1
 
 
-@add_premise(constant.Premise.TEACHER_IN_CLASSROOM)
-def handle_teacher_in_classroom(character_id: int) -> int:
-    """
-    校验角色所属班级的老师是否在教室中
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    return not handle_teacher_no_in_classroom(character_id)
+# @add_premise(constant.Premise.TEACHER_IN_CLASSROOM)
+# def handle_teacher_in_classroom(character_id: int) -> int:
+#     """
+#     校验角色所属班级的老师是否在教室中
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     return not handle_teacher_no_in_classroom(character_id)
 
 
 # @add_premise(constant.Premise.IS_NAKED)

@@ -7,7 +7,6 @@ from Script.Design import (
     handle_panel,
     character,
     character_handle,
-    course,
     cooking,
     map_handle,
     interest,
@@ -49,7 +48,7 @@ def game_start():
     """初始化游戏数据"""
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
-    course.init_phase_course_hour()
+    # course.init_phase_course_hour()
     # interest.init_character_interest()
     # course.init_character_knowledge()
     # course.init_class_teacher()

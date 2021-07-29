@@ -1223,51 +1223,51 @@ def handle_add_small_attend_class_experience(
             change_data.language[language] += experience
 
 
-@settle_behavior.add_settle_behavior_effect(
-    constant.BehaviorEffect.ADD_STUDENTS_COURSE_EXPERIENCE_FOR_IN_CLASS_ROOM
-)
-def handle_add_student_course_experience_for_in_class_room(
-    character_id: int,
-    add_time: int,
-    change_data: game_type.CharacterStatusChange,
-    now_time: datetime.datetime,
-):
-    """
-    按课程增加教室内本班级学生的技能经验
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    # scene_data: game_type.Scene = cache.scene_data[character_data.classroom]
-    course = character_data.behavior.course_id
-    for now_character in (
-        # scene_data.character_list & cache.classroom_students_data[character_data.classroom]
-    ):
-        now_character_data: game_type.Character = cache.character_data[now_character]
-        if course in game_config.config_course_knowledge_experience_data:
-            knowledge_experience_data = game_config.config_course_knowledge_experience_data[course]
-            for knowledge in knowledge_experience_data:
-                character_data.knowledge.setdefault(knowledge, 0)
-                experience = character_data.knowledge[knowledge] / 1000
-                knowledge_interest = now_character_data.knowledge_interest[knowledge]
-                experience *= knowledge_interest
-                now_character_data.knowledge.setdefault(knowledge, 0)
-                now_character_data.knowledge[knowledge] += experience
-        if course in game_config.config_course_language_experience_data:
-            language_experience_data = game_config.config_course_language_experience_data[course]
-            for language in language_experience_data:
-                language_interest = character_data.language_interest[language]
-                character_data.language.setdefault(language, 0)
-                experience = character_data.language[language] / 1000 * language_interest
-                now_character_data.language.setdefault(language, 0)
-                now_character_data.language[language] += experience
+# @settle_behavior.add_settle_behavior_effect(
+#     constant.BehaviorEffect.ADD_STUDENTS_COURSE_EXPERIENCE_FOR_IN_CLASS_ROOM
+# )
+# def handle_add_student_course_experience_for_in_class_room(
+#     character_id: int,
+#     add_time: int,
+#     change_data: game_type.CharacterStatusChange,
+#     now_time: datetime.datetime,
+# ):
+#     """
+#     按课程增加教室内本班级学生的技能经验
+#     Keyword arguments:
+#     character_id -- 角色id
+#     add_time -- 结算时间
+#     change_data -- 状态变更信息记录对象
+#     now_time -- 结算的时间
+#     """
+#     if not add_time:
+#         return
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if character_data.dead:
+#         return
+#     # scene_data: game_type.Scene = cache.scene_data[character_data.classroom]
+#     course = character_data.behavior.course_id
+#     for now_character in (
+#         # scene_data.character_list & cache.classroom_students_data[character_data.classroom]
+#     ):
+#         now_character_data: game_type.Character = cache.character_data[now_character]
+#         if course in game_config.config_course_knowledge_experience_data:
+#             knowledge_experience_data = game_config.config_course_knowledge_experience_data[course]
+#             for knowledge in knowledge_experience_data:
+#                 character_data.knowledge.setdefault(knowledge, 0)
+#                 experience = character_data.knowledge[knowledge] / 1000
+#                 knowledge_interest = now_character_data.knowledge_interest[knowledge]
+#                 experience *= knowledge_interest
+#                 now_character_data.knowledge.setdefault(knowledge, 0)
+#                 now_character_data.knowledge[knowledge] += experience
+#         if course in game_config.config_course_language_experience_data:
+#             language_experience_data = game_config.config_course_language_experience_data[course]
+#             for language in language_experience_data:
+#                 language_interest = character_data.language_interest[language]
+#                 character_data.language.setdefault(language, 0)
+#                 experience = character_data.language[language] / 1000 * language_interest
+#                 now_character_data.language.setdefault(language, 0)
+#                 now_character_data.language[language] += experience
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_FAVORABILITY_FOR_PERFORMANCE)

@@ -101,15 +101,6 @@ class CharacterStateType:
     """ 类型名 """
 
 
-class ClothingEvaluate:
-    """ 服装评价描述 """
-
-    cid: int
-    """ 评价id """
-    name: str
-    """ 评价名 """
-
-
 class ClothingSuit:
     """ 套装配置数据 """
 
@@ -156,26 +147,6 @@ class ClothingUseType:
     """ 用途id """
     name: str
     """ 用途名字 """
-
-
-class Course:
-    """ 课程配置数据 """
-
-    cid: int
-    """ 课程id """
-    name: str
-    """ 名字 """
-
-
-class EndAgeTem:
-    """ 性别对应平均寿命 """
-
-    cid: int
-    """ 模板id """
-    sex: int
-    """ 性别id """
-    end_age: int
-    """ 平均寿命 """
 
 
 class Experience:
@@ -340,49 +311,6 @@ class Recipes:
     """ 烹饪时间 """
     difficulty: int
     """ 烹饪难度 """
-
-
-class School:
-    """ 学校配置 """
-
-    cid: int
-    """ 学校id """
-    name: str
-    """ 名字 """
-    day: int
-    """ 每周上课天数 """
-    min_age: int
-    """ 最小年龄 """
-    max_age: int
-    """ 最大年龄 """
-
-
-class SchoolPhaseCourse:
-    """ 各学校各年级教学科目配置 """
-
-    cid: int
-    """ 配表id """
-    school: int
-    """ 学校id """
-    phase: int
-    """ 年级 """
-    course: int
-    """ 课程id """
-
-
-class SchoolSession:
-    """ 各学校上课时间配置 """
-
-    cid: int
-    """ 配表id """
-    school_id: int
-    """ 学校id """
-    session: int
-    """ 当天课时编号 """
-    start_time: int
-    """ 开始时间 """
-    end_time: int
-    """ 结束时间 """
 
 
 class Season:

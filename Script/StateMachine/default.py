@@ -1,7 +1,7 @@
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, course
+from Script.Design import handle_state_machine, character_move, map_handle
 from Script.Core import cache_control, game_type, constant
 
 cache: game_type.Cache = cache_control.cache

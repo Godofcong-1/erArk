@@ -7,7 +7,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, cache_control, game_type, get_text, save_handle
-from Script.Design import update, character, attr_calculation, course
+from Script.Design import update, character, attr_calculation
 from Script.UI.Panel import see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw

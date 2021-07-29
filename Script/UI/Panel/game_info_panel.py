@@ -72,14 +72,14 @@ class GameTimeInfoPanel:
         attend_class_draw.width = self.width - now_width
         now_draw.draw_list.append(attend_class_draw)
         now_width += len(attend_class_draw)
-        if character.judge_character_in_class_time(0):
-            now_attend_class = _("上课时间")
-            now_attend_class += " "
-            now_attend_class_draw = draw.NormalDraw()
-            now_attend_class_draw.text = now_attend_class
-            attend_class_draw.width = self.width - now_width
-            now_width += len(now_attend_class_draw)
-            now_draw.draw_list.append(now_attend_class_draw)
+        # if character.judge_character_in_class_time(0):
+        #     now_attend_class = _("上课时间")
+        #     now_attend_class += " "
+        #     now_attend_class_draw = draw.NormalDraw()
+        #     now_attend_class_draw.text = now_attend_class
+        #     attend_class_draw.width = self.width - now_width
+        #     now_width += len(now_attend_class_draw)
+        #     now_draw.draw_list.append(now_attend_class_draw)
         self.width = now_width
         now_draw.width = self.width
         self.now_draw: draw.NormalDraw = now_draw
