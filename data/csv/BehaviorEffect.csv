@@ -3,7 +3,6 @@ cid,behavior_id,effect_id
 int,int,int
 0,0,0
 行为结算器配置,,
-0,1,4
 1,1,5
 
 100,101,2
