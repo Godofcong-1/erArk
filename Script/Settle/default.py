@@ -1094,8 +1094,8 @@ def handle_interrupt_target_activity(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    if target_data.state == constant.CharacterStatus.STATUS_DEAD:
-        return
+    # if target_data.state == constant.CharacterStatus.STATUS_DEAD:
+    #     return
     if target_data.behavior.behavior_id:
         if target_data.behavior.start_time <= character_data.behavior.start_time:
             target_end_time = game_time.get_sub_date(
