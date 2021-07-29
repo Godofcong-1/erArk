@@ -1648,9 +1648,9 @@ def handle_in_fountain(character_id: int) -> int:
 
 
 @add_premise(constant.Premise.TARGET_CHEST_IS_CLIFF)
-def handle__target_chest_is_cliff(character_id: int) -> int:
+def handle_target_chest_is_cliff(character_id: int) -> int:
     """
-    校验交互对象胸围是否是绝壁
+    交互对象胸部大小是绝壁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1659,6 +1659,104 @@ def handle__target_chest_is_cliff(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[80]
+
+
+@add_premise(constant.Premise.TARGET_CHEST_IS_SMALL)
+def handle_target_chest_is_small(character_id: int) -> int:
+    """
+    交互对象胸部大小是贫乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[81]
+
+
+@add_premise(constant.Premise.TARGET_CHEST_IS_NORMAL)
+def handle_target_chest_is_normal(character_id: int) -> int:
+    """
+    交互对象胸部大小是普乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[82]
+
+
+@add_premise(constant.Premise.TARGET_CHEST_IS_BIG)
+def handle_target_chest_is_big(character_id: int) -> int:
+    """
+    交互对象胸部大小是巨乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[83]
+
+
+@add_premise(constant.Premise.TARGET_CHEST_IS_SUPER)
+def handle_target_chest_is_super(character_id: int) -> int:
+    """
+    交互对象胸部大小是爆乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[84]
+
+
+@add_premise(constant.Premise.TARGET_BUTTOCKS_IS_SMALL)
+def handle_target_buttock_is_small(character_id: int) -> int:
+    """
+    交互对象屁股大小是小尻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[85]
+
+
+@add_premise(constant.Premise.TARGET_BUTTOCKS_IS_NORMAL)
+def handle_target_buttock_is_normal(character_id: int) -> int:
+    """
+    交互对象胸部大小是普尻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[86]
+
+
+@add_premise(constant.Premise.TARGET_BUTTOCKS_IS_BIG)
+def handle_target_buttock_is_big(character_id: int) -> int:
+    """
+    交互对象胸部大小是巨尻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[87]
 
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
