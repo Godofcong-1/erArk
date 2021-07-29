@@ -48,15 +48,15 @@ def handle_add_1_n_experience(
     change_data.experience.setdefault(0, 0)
     change_data.experience[0] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_B_EXPERIENCE)
-def handle_add_1_b_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_B_EXPERIENCE)
+def handle_target_add_1_b_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1B经验
+    交互对象增加1B经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -66,12 +66,14 @@ def handle_add_1_b_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(1, 0)
-    character_data.experience[1] += 1
-    change_data.experience.setdefault(1, 0)
-    change_data.experience[1] += 1
+    target_data.experience[1] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(1, 0)
+    target_change.experience[1] += 1
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_C_EXPERIENCE)
 def handle_add_1_c_experience(
@@ -764,15 +766,15 @@ def handle_add_1_plexhibit_experience(
     35-39留空
 """
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Kiss_EXPERIENCE)
-def handle_add_1_kiss_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Kiss_EXPERIENCE)
+def handle_target_add_1_kiss_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1接吻经验
+    交互对象增加1接吻经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -782,22 +784,24 @@ def handle_add_1_kiss_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(40, 0)
-    character_data.experience[40] += 1
-    change_data.experience.setdefault(40, 0)
-    change_data.experience[40] += 1
+    target_data.experience[40] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(40, 0)
+    target_change.experience[40] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Handjob_EXPERIENCE)
-def handle_add_1_handjob_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Handjob_EXPERIENCE)
+def handle_target_add_1_handjob_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1手淫经验
+    交互对象增加1手淫经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -807,22 +811,24 @@ def handle_add_1_handjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(41, 0)
-    character_data.experience[41] += 1
-    change_data.experience.setdefault(41, 0)
-    change_data.experience[41] += 1
+    target_data.experience[41] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(41, 0)
+    target_change.experience[41] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Blowjob_EXPERIENCE)
-def handle_add_1_blowjob_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Blowjob_EXPERIENCE)
+def handle_target_add_1_blowjob_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1口淫经验
+    交互对象增加1口淫经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -832,22 +838,24 @@ def handle_add_1_blowjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(42, 0)
-    character_data.experience[42] += 1
-    change_data.experience.setdefault(42, 0)
-    change_data.experience[42] += 1
+    target_data.experience[42] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(42, 0)
+    target_change.experience[42] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Paizuri_EXPERIENCE)
-def handle_add_1_paizuri_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Paizuri_EXPERIENCE)
+def handle_target_add_1_paizuri_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1乳交经验
+    交互对象增加1乳交经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -857,22 +865,24 @@ def handle_add_1_paizuri_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(43, 0)
-    character_data.experience[43] += 1
-    change_data.experience.setdefault(43, 0)
-    change_data.experience[43] += 1
+    target_data.experience[43] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(43, 0)
+    target_change.experience[43] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Footjob_EXPERIENCE)
-def handle_add_1_footjob_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Footjob_EXPERIENCE)
+def handle_target_add_1_footjob_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1足交经验
+    交互对象增加1足交经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -882,22 +892,24 @@ def handle_add_1_footjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(44, 0)
-    character_data.experience[44] += 1
-    change_data.experience.setdefault(44, 0)
-    change_data.experience[44] += 1
+    target_data.experience[44] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(44, 0)
+    target_change.experience[44] += 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Hairjob_EXPERIENCE)
-def handle_add_1_blowjob_experience(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Hairjob_EXPERIENCE)
+def handle_target_add_1_blowjob_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    增加1发交经验
+    交互对象增加1发交经验
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -907,12 +919,14 @@ def handle_add_1_blowjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
         return
-    character_data.experience.setdefault(45, 0)
-    character_data.experience[45] += 1
-    change_data.experience.setdefault(45, 0)
-    change_data.experience[45] += 1
+    target_data.experience[45] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(45, 0)
+    target_change.experience[45] += 1
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Masterbate_EXPERIENCE)
 def handle_add_1_masterbate_experience(
@@ -1900,3 +1914,154 @@ def handle_add_1_bstandclimax_experience(
     character_data.experience[106] += 1
     change_data.experience.setdefault(106, 0)
     change_data.experience[106] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Kiss_EXPERIENCE)
+def handle_add_1_kiss_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1接吻经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(40, 0)
+    character_data.experience[40] += 1
+    change_data.experience.setdefault(40, 0)
+    change_data.experience[40] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Handjob_EXPERIENCE)
+def handle_add_1_handjob_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1手淫经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(41, 0)
+    character_data.experience[41] += 1
+    change_data.experience.setdefault(41, 0)
+    change_data.experience[41] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Blowjob_EXPERIENCE)
+def handle_add_1_blowjob_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1口淫经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(42, 0)
+    character_data.experience[42] += 1
+    change_data.experience.setdefault(42, 0)
+    change_data.experience[42] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Paizuri_EXPERIENCE)
+def handle_add_1_paizuri_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1乳交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(43, 0)
+    character_data.experience[43] += 1
+    change_data.experience.setdefault(43, 0)
+    change_data.experience[43] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Footjob_EXPERIENCE)
+def handle_add_1_footjob_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1足交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(44, 0)
+    character_data.experience[44] += 1
+    change_data.experience.setdefault(44, 0)
+    change_data.experience[44] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Hairjob_EXPERIENCE)
+def handle_add_1_blowjob_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1发交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(45, 0)
+    character_data.experience[45] += 1
+    change_data.experience.setdefault(45, 0)
+    change_data.experience[45] += 1

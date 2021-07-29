@@ -1658,7 +1658,7 @@ def handle__target_chest_is_cliff(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not attr_calculation.judge_chest_group(target_data.chest.now_chest)
+    return target_data.talent[80]
 
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)

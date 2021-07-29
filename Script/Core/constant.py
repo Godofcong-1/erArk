@@ -290,6 +290,9 @@ class Premise:
     OBEY_4 = "obey_4"
     """ 奴隶,隶属系第四阶段 """
 
+    TARGET_CHEST_IS_CLIFF = "breast_0"
+    """ 交互对象胸部大小是绝壁 """
+
     HYPOSTHENIA = "83"
     """ 体力不足 """
     PHYSICAL_STRENGHT = "84"
@@ -422,8 +425,6 @@ class Premise:
     """ 对场景中某个角色抱有超越友谊的想法 """
     IN_FOUNTAIN = "86"
     """ 在会客室入口场景 """
-    TARGET_CHEST_IS_CLIFF = "88"
-    """ 交互对象胸围是绝壁 """
     TARGET_ADMIRE = "89"
     """ 被交互对象恋慕 """
     IS_ENTHUSIASM = "90"
@@ -737,17 +738,21 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_DISGUST = 62
     """ 交互对象增加少量反感（反发刻印补正） """
     TALK_ADD_ADJUST = 100
-    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整 """
+    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101
-    """ （冲咖啡用）根据发起者的料理技能进行好感度、信赖、恭顺、好意调整 """
+    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
     EAT_FOOD = 102
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
+    TECH_ADD_N_ADJUST = 110
+    """ 根据发起者的技巧技能进行N快、欲情调整 """
+    TECH_ADD_B_ADJUST = 111
+    """ 根据发起者的技巧技能进行B快、欲情调整 """
     ADD_1_N_EXPERIENCE = 200
     """ 增加1N经验 """
-    ADD_1_B_EXPERIENCE = 201
-    """ 增加1B经验 """
+    TARGET_ADD_1_B_EXPERIENCE = 201
+    """ 交互对象增加1B经验 """
     ADD_1_C_EXPERIENCE = 202
     """ 增加1C经验 """
     ADD_1_P_EXPERIENCE = 203
@@ -802,18 +807,18 @@ class BehaviorEffect:
     """ 增加1嗜虐快乐经验 """
     ADD_1_plExhibit_EXPERIENCE = 234
     """ 增加1露出快乐经验 """
-    ADD_1_Kiss_EXPERIENCE = 240
-    """ 增加1接吻经验 """
-    ADD_1_Handjob_EXPERIENCE = 241
-    """ 增加1手淫经验 """
-    ADD_1_Blowjob_EXPERIENCE = 242
-    """ 增加1口淫经验 """
-    ADD_1_Paizuri_EXPERIENCE = 243
-    """ 增加1乳交经验 """
-    ADD_1_Footjob_EXPERIENCE = 244
-    """ 增加1足交经验 """
-    ADD_1_Hairjob_EXPERIENCE = 245
-    """ 增加1发交经验 """
+    TARGET_ADD_1_Kiss_EXPERIENCE = 240
+    """ 交互对象增加1接吻经验 """
+    TARGET_ADD_1_Handjob_EXPERIENCE = 241
+    """ 交互对象增加1手淫经验 """
+    TARGET_ADD_1_Blowjob_EXPERIENCE = 242
+    """ 交互对象增加1口淫经验 """
+    TARGET_ADD_1_Paizuri_EXPERIENCE = 243
+    """ 交互对象增加1乳交经验 """
+    TARGET_ADD_1_Footjob_EXPERIENCE = 244
+    """ 交互对象增加1足交经验 """
+    TARGET_ADD_1_Hairjob_EXPERIENCE = 245
+    """ 交互对象增加1发交经验 """
     ADD_1_Masterbate_EXPERIENCE = 246
     """ 增加1自慰经验 """
     ADD_1_bdsmMasterbate_EXPERIENCE = 247
@@ -892,7 +897,18 @@ class BehaviorEffect:
     """ 增加1对面立位绝顶经验 """
     ADD_1_BStandClimax_EXPERIENCE = 306
     """ 增加1背面立位绝顶经验 """
-
+    ADD_1_Kiss_EXPERIENCE = 307
+    """ 增加1接吻经验 """
+    ADD_1_Handjob_EXPERIENCE = 308
+    """ 增加1手淫经验 """
+    ADD_1_Blowjob_EXPERIENCE = 309
+    """ 增加1口淫经验 """
+    ADD_1_Paizuri_EXPERIENCE = 310
+    """ 增加1乳交经验 """
+    ADD_1_Footjob_EXPERIENCE = 311
+    """ 增加1足交经验 """
+    ADD_1_Hairjob_EXPERIENCE = 312
+    """ 增加1发交经验 """
 
 class InstructType:
     """指令类型"""
