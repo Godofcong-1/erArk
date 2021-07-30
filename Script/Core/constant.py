@@ -1076,6 +1076,10 @@ class Instruct:
     """ 摸光环 """
     TOUCH_WING = 0
     """ 摸光翼 """
+    TOUCH_TENTACLE = 0
+    """ 摸触手 """
+    TOUCH_CAR = 0
+    """ 摸小车 """
     HAND_IN_HAND = 0
     """ 牵手 """
     EMBRACE = 0

@@ -845,7 +845,8 @@ def handle_touch_ears():
     constant.InstructType.OBSCENITY,
     _("摸角"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_HORN,},
 )
 def handle_touch_horn():
     """处理摸角指令"""
@@ -859,7 +860,8 @@ def handle_touch_horn():
     constant.InstructType.OBSCENITY,
     _("摸尾巴"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_TAIL,},
 )
 def handle_touch_tail():
     """处理摸尾巴指令"""
@@ -873,7 +875,8 @@ def handle_touch_tail():
     constant.InstructType.OBSCENITY,
     _("摸光环"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_RING,},
 )
 def handle_touch_ring():
     """处理摸光环指令"""
@@ -887,10 +890,43 @@ def handle_touch_ring():
     constant.InstructType.OBSCENITY,
     _("摸光翼"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_WING,},
 )
 def handle_touch_wing():
     """处理摸光翼指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.TOUCH_TENTACLE,
+    constant.InstructType.OBSCENITY,
+    _("摸触手"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_TENTACLE,},
+)
+def handle_touch_tentacle():
+    """处理摸触手指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.TOUCH_CAR,
+    constant.InstructType.OBSCENITY,
+    _("摸小车"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_CAR,},
+)
+def handle_touch_car():
+    """处理摸小车指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
