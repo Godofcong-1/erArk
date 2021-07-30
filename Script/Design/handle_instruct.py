@@ -801,7 +801,7 @@ def handle_touch_head():
     """处理摸头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
-    character_data.behavior.duration = 2
+    character_data.behavior.duration = 5
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
     update.game_update_flow(2)
@@ -819,6 +819,8 @@ def handle_touch_buttocks():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
     update.game_update_flow(5)
 
 @add_instruct(
@@ -826,13 +828,16 @@ def handle_touch_buttocks():
     constant.InstructType.OBSCENITY,
     _("摸耳朵"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_EARS,},
 )
 def handle_touch_ears():
     """处理摸耳朵指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
     update.game_update_flow(5)
 
 @add_instruct(

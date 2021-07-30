@@ -1759,6 +1759,202 @@ def handle_target_buttock_is_big(character_id: int) -> int:
     return target_data.talent[87]
 
 
+@add_premise(constant.Premise.TARGET_HAVE_NO_EARS)
+def handle_target_have_no_eras(character_id: int) -> int:
+    """
+    交互对象没有兽耳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[70]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_EARS)
+def handle_target_have_eras(character_id: int) -> int:
+    """
+    交互对象有兽耳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[70]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_HORN)
+def handle_target_have_no_horn(character_id: int) -> int:
+    """
+    交互对象没有兽角
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[71]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_HORN)
+def handle_target_have_horn(character_id: int) -> int:
+    """
+    交互对象有兽角
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[71]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_TAIL)
+def handle_target_have_no_tail(character_id: int) -> int:
+    """
+    交互对象没有兽尾
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[72]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_TAIL)
+def handle_target_have_tail(character_id: int) -> int:
+    """
+    交互对象有兽尾
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[72]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_RING)
+def handle_target_have_no_ring(character_id: int) -> int:
+    """
+    交互对象没有光环
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[73]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_RING)
+def handle_target_have_ring(character_id: int) -> int:
+    """
+    交互对象有光环
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[73]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_WING)
+def handle_target_have_no_wing(character_id: int) -> int:
+    """
+    交互对象没有光翼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[74]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_WING)
+def handle_target_have_wing(character_id: int) -> int:
+    """
+    交互对象有光翼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[74]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_TENTACLE)
+def handle_target_have_no_tentacle(character_id: int) -> int:
+    """
+    交互对象没有触手
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[75]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_TENTACLE)
+def handle_target_have_tentacle(character_id: int) -> int:
+    """
+    交互对象有触手
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[75]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_CAR)
+def handle_target_have_no_car(character_id: int) -> int:
+    """
+    交互对象没有小车
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[76]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_CAR)
+def handle_target_have_car(character_id: int) -> int:
+    """
+    交互对象有小车
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[76]
+
+
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:
 #     """

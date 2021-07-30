@@ -31,6 +31,10 @@ class CharacterStatus:
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
     """ 摸胸 """
+    STATUS_TOUCH_BUTTOCKS = 303
+    """ 摸屁股 """
+    STATUS_TOUCH_EARS = 304
+    """ 摸耳朵 """
     STATUS_HAND_IN_HAND = 309
     """ 牵手 """
     STATUS_EMBRACE = 310
@@ -74,6 +78,10 @@ class Behavior:
     """ 摸头 """
     TOUCH_BREAST = 302
     """ 摸胸 """
+    TOUCH_BUTTOCKS = 303
+    """ 摸屁股 """
+    TOUCH_EARS = 304
+    """ 摸耳朵 """
     HAND_IN_HAND = 309
     """ 牵手 """
     EMBRACE = 310
@@ -306,6 +314,35 @@ class Premise:
     """ 交互对象臀部大小是普尻 """
     TARGET_BUTTOCKS_IS_BIG = "buttock_2"
     """ 交互对象臀部大小是巨尻 """
+
+    TARGET_HAVE_NO_EARS = "ear_0"
+    """ 交互对象没有兽耳 """
+    TARGET_HAVE_EARS = "ear_1"
+    """ 交互对象有兽耳 """
+    TARGET_HAVE_NO_HORN = "horn_0"
+    """ 交互对象没有兽角 """
+    TARGET_HAVE_HORN = "horn_1"
+    """ 交互对象有兽角 """
+    TARGET_HAVE_NO_TAIL = "tail_0"
+    """ 交互对象没有兽尾 """
+    TARGET_HAVE_TAIL = "tail_1"
+    """ 交互对象有兽尾 """
+    TARGET_HAVE_NO_RING = "ring_0"
+    """ 交互对象没有光环 """
+    TARGET_HAVE_RING = "ring_1"
+    """ 交互对象有光环 """
+    TARGET_HAVE_NO_WING = "wing_0"
+    """ 交互对象没有光翼 """
+    TARGET_HAVE_WING = "wing_1"
+    """ 交互对象有光翼 """
+    TARGET_HAVE_NO_TENTACLE = "tentacle_0"
+    """ 交互对象没有触手 """
+    TARGET_HAVE_TENTACLE = "tentacle_1"
+    """ 交互对象有触手 """
+    TARGET_HAVE_NO_CAR = "car_0"
+    """ 交互对象没有小车 """
+    TARGET_HAVE_CAR = "car_1"
+    """ 交互对象有小车 """
 
     HYPOSTHENIA = "83"
     """ 体力不足 """
@@ -923,6 +960,7 @@ class BehaviorEffect:
     """ 增加1足交经验 """
     ADD_1_Hairjob_EXPERIENCE = 312
     """ 增加1发交经验 """
+
 
 class InstructType:
     """指令类型"""
