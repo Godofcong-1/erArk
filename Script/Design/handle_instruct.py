@@ -853,6 +853,8 @@ def handle_touch_horn():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
     update.game_update_flow(5)
 
 @add_instruct(
@@ -868,6 +870,8 @@ def handle_touch_tail():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
     update.game_update_flow(5)
 
 @add_instruct(
@@ -883,6 +887,8 @@ def handle_touch_ring():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
     update.game_update_flow(5)
 
 @add_instruct(
@@ -898,6 +904,8 @@ def handle_touch_wing():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
     update.game_update_flow(5)
 
 
@@ -914,6 +922,8 @@ def handle_touch_tentacle():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
     update.game_update_flow(5)
 
 
@@ -930,6 +940,8 @@ def handle_touch_car():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
     update.game_update_flow(5)
 
 @add_instruct(

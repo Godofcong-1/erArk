@@ -35,11 +35,23 @@ class CharacterStatus:
     """ 摸屁股 """
     STATUS_TOUCH_EARS = 304
     """ 摸耳朵 """
-    STATUS_HAND_IN_HAND = 309
+    STATUS_TOUCH_HORN = 305
+    """ 摸角 """
+    STATUS_TOUCH_TAIL = 306
+    """ 摸尾巴 """
+    STATUS_TOUCH_RING = 307
+    """ 摸光环 """
+    STATUS_TOUCH_WING = 308
+    """ 摸光翼 """
+    STATUS_TOUCH_TENTACLE = 309
+    """ 摸触手 """
+    STATUS_TOUCH_CAR = 310
+    """ 摸小车 """
+    STATUS_HAND_IN_HAND = 311
     """ 牵手 """
-    STATUS_EMBRACE = 310
+    STATUS_EMBRACE = 312
     """ 拥抱 """
-    STATUS_KISS = 311
+    STATUS_KISS = 313
     """ 亲吻 """
     # STATUS_TEACHING = 16
     # """ 教学 """
@@ -82,11 +94,23 @@ class Behavior:
     """ 摸屁股 """
     TOUCH_EARS = 304
     """ 摸耳朵 """
-    HAND_IN_HAND = 309
+    TOUCH_HORN = 305
+    """ 摸角 """
+    TOUCH_TAIL = 306
+    """ 摸尾巴 """
+    TOUCH_RING = 307
+    """ 摸光环 """
+    TOUCH_WING = 308
+    """ 摸光翼 """
+    TOUCH_TENTACLE = 309
+    """ 摸触手 """
+    TOUCH_CAR = 310
+    """ 摸小车 """
+    HAND_IN_HAND = 311
     """ 牵手 """
-    EMBRACE = 310
+    EMBRACE = 312
     """ 拥抱 """
-    KISS = 311
+    KISS = 313
     """ 亲吻 """
 
     # PLAY_PIANO = 6
