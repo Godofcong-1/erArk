@@ -282,23 +282,6 @@ def handle_kiss():
 
 
 @add_instruct(
-    constant.Instruct.HAND_IN_HAND,
-    constant.InstructType.OBSCENITY,
-    _("牵手"),
-    {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
-)
-def handle_handle_in_handle():
-    """处理牵手指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
-    character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
-    update.game_update_flow(10)
-
-
-@add_instruct(
     constant.Instruct.STROKE,
     constant.InstructType.DAILY,
     _("身体接触"),
@@ -943,6 +926,24 @@ def handle_touch_car():
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
     update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.HAND_IN_HAND,
+    constant.InstructType.OBSCENITY,
+    _("牵手"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_handle_in_handle():
+    """处理牵手指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
+    character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
+    update.game_update_flow(10)
+
 
 @add_instruct(
     constant.Instruct.LAP_PILLOW,

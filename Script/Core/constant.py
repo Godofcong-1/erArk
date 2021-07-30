@@ -708,26 +708,7 @@ class BehaviorEffect:
     """ 移动至目标场景 """
     ADD_SMALL_TRUST = 6
     """ 增加基础互动信赖 """
-    ADD_SOCIAL_FAVORABILITY = 7
-    """ 增加社交关系好感 """
-    ADD_INTIMACY_FAVORABILITY = 8
-    """ 增加亲密行为好感(关系不足2则增加反感) """
-    ADD_INTIMATE_FAVORABILITY = 9
-    """ 增加私密行为好感(关系不足3则增加反感) """
-    ADD_SMALL_SING_EXPERIENCE = 10
-    """ 增加少量唱歌技能经验 """
-    ADD_SMALL_PLAY_MUSIC_EXPERIENCE = 12
-    """ 增加少量演奏技能经验 """
-    ADD_SMALL_PERFORM_EXPERIENCE = 13
-    """ 增加少量表演技能经验 """
-    ADD_SMALL_CEREMONY_EXPERIENCE = 14
-    """ 增加少量礼仪技能经验 """
-    ADD_SMALL_SEX_EXPERIENCE = 15
-    """ 增加少量性爱技能经验 """
-    ADD_SMALL_MOUTH_SEX_EXPERIENCE = 16
-    """ 增加少量嘴部性爱经验 """
-    ADD_SMALL_MOUTH_HAPPY = 17
-    """ 增加少量嘴部快感 """
+
     FIRST_KISS = 18
     """ 记录初吻 """
     FIRST_HAND_IN_HAND = 19
@@ -736,40 +717,8 @@ class BehaviorEffect:
     """ 增加中量体力 """
     ADD_MEDIUM_MANA_POINT = 21
     """ 增加中量气力 """
-    TARGET_ADD_SMALL_CHEST_SEX_EXPERIENCE = 22
-    """ 交互对象增加少量胸部性爱经验 """
-    TARGET_ADD_SMALL_CHEST_HAPPY = 23
-    """ 交互对象增加少量胸部快感 """
-    TARGET_ADD_SMALL_CLITORIS_SEX_EXPERIENCE = 24
-    """ 交互对象增加少量阴蒂性爱经验 """
-    TARGET_ADD_SMALL_PENIS_SEX_EXPERIENCE = 25
-    """ 交互对象增加少量阴茎性爱经验 """
-    TARGET_ADD_SMALL_CLITORIS_HAPPY = 26
-    """ 交互对象增加少量阴蒂快感 """
-    TARGET_ADD_SMALL_PENIS_HAPPY = 27
-    """ 交互对象增加少量阴茎经验 """
-    ADD_SMALL_LUST = 28
-    """ 自身增加少量色欲 """
-    TARGET_ADD_SMALL_LUST = 29
-    """ 交互对象增加少量色欲 """
     INTERRUPT_TARGET_ACTIVITY = 30
     """ 打断交互对象活动 """
-    TARGET_ADD_SMALL_ELOQUENCE_EXPERIENCE = 31
-    """ 交互对象增加少量口才技能经验 """
-    TARGET_ADD_FAVORABILITY_FOR_ELOQUENCE = 32
-    """ 按话术技能增加交互对象好感 """
-    ADD_SMALL_ATTEND_CLASS_EXPERIENCE = 33
-    """ 按学习课程增加少量对应技能经验 """
-    # ADD_STUDENTS_COURSE_EXPERIENCE_FOR_IN_CLASS_ROOM = 34
-    # """ 按课程增加教室内本班级学生的技能经验 """
-    TARGET_ADD_FAVORABILITY_FOR_PERFORMANCE = 35
-    """ 按表演技能增加交互对象好感 """
-    TARGET_ADD_FAVORABILITY_FOR_SING = 36
-    """ 按演唱技能增加交互对象好感 """
-    TARGET_ADD_FAVORABILITY_FOR_PLAY_MUSIC = 37
-    """ 按演奏技能增加交互对象好感 """
-    TARGET_ADD_FAVORABILITY_FOR_TARGET_INTEREST = 38
-    """ 按交互对象兴趣增加交互对象好感 """
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快 """
     TARGET_ADD_SMALL_B_FEEL = 42
@@ -984,6 +933,14 @@ class BehaviorEffect:
     """ 增加1足交经验 """
     ADD_1_Hairjob_EXPERIENCE = 312
     """ 增加1发交经验 """
+
+#旧结算存档#
+    # ADD_SOCIAL_FAVORABILITY = 7
+    # """ 增加社交关系好感 """
+    # ADD_INTIMACY_FAVORABILITY = 8
+    # """ 增加亲密行为好感(关系不足2则增加反感) """
+    # ADD_INTIMATE_FAVORABILITY = 9
+    # """ 增加私密行为好感(关系不足3则增加反感) """
 
 
 class InstructType:
