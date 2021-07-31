@@ -53,6 +53,7 @@ class SeeCharacterInfoPanel:
         """ 当前面板监听的按钮列表 """
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_second_draw = SeeCharacterSecondPanel(character_id, width)
+        main_third_draw = SeeCharacterThirdPanel(character_id, width)
         # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
@@ -64,6 +65,7 @@ class SeeCharacterInfoPanel:
         self.draw_data = {
             _("素质与能力"): main_first_draw,
             _("经验与宝珠"): main_second_draw,
+            _("肉体情况"): main_third_draw,
             # _("属性（原）"): main_attr_draw,
             # _("状态"): see_status_draw,
             # _("服装"): see_clothing_draw,
@@ -159,6 +161,32 @@ class SeeCharacterSecondPanel:
             head_draw,
             experience_draw,
             juel_draw,
+        ]
+        """ 绘制的面板列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            label.draw()
+
+
+class SeeCharacterThirdPanel:
+    """
+    显示角色属性面板第三页对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    """
+
+    def __init__(self, character_id: int, width: int):
+        """初始化绘制对象"""
+        head_draw = CharacterInfoHead(character_id, width)
+        body_draw = CharacterBodyText(character_id, width,8, 0)
+        self.draw_list: List[draw.NormalDraw] = [
+            head_draw,
+            body_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -1365,6 +1393,116 @@ class CharacterJuelText:
         else:
             now_draw = panel.LeftDrawTextListPanel()
         now_draw.set(juel_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+
+class CharacterBodyText:
+    """
+    显示角色肉体面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "肉体情况"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        body_text_list = []
+        if character_id != 0:
+            #口部信息#
+            now_text = f"\n 【口】\n"
+            now_text += "  初吻情况："
+            if character_data.talent[4]:
+                now_text += "保有初吻\n"
+            else:
+                kiss_id = character_data.first_kiss_id
+                kiss_time = character_data.first_kiss_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
+                        character_name=cache.character_data[kiss_id].name,
+                        kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
+                    )
+            if character_data.ability[31] == 0:
+                now_text += "  普普通通的舌头\n"
+            if character_data.taste_semen == 0:
+                now_text += "  未品尝过精液\n"
+            body_text_list.append(now_text)
+            #胸部信息#
+            now_text = f"\n 【胸】\n"
+            body_text_list.append(now_text)
+            #指部信息#
+            now_text = f"\n 【指】\n"
+            body_text_list.append(now_text)
+            #足部信息#
+            now_text = f"\n 【足】\n"
+            body_text_list.append(now_text)
+            #膣部信息#
+            now_text = f"\n 【膣】\n"
+            now_text += "  处女情况："
+            if character_data.talent[0]:
+                now_text += "保有处女\n"
+            else:
+                sex_id = character_data.first_sex_id
+                sex_time = character_data.first_sex_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了处女\n").format(
+                        character_name=cache.character_data[sex_id].name,
+                        kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                    )
+            body_text_list.append(now_text)
+            #肛部信息#
+            now_text = f"\n 【肛】\n"
+            now_text += "  A处女情况："
+            if character_data.talent[1]:
+                now_text += "保有A处女\n"
+            else:
+                a_sex_id = character_data.first_a_sex_id
+                a_sex_time = character_data.first_a_sex_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了A处女\n").format(
+                        character_name=cache.character_data[a_sex_id].name,
+                        kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
+                    )
+            body_text_list.append(now_text)
+            #子宫信息#
+            now_text = f"\n 【宫】\n"
+            body_text_list.append(now_text)
+            #尿道信息#
+            now_text = f"\n 【尿】\n"
+            body_text_list.append(now_text)
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(body_text_list, self.width, self.column)
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):

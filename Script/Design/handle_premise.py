@@ -2016,7 +2016,7 @@ def handle_target_no_first_kiss(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.first_kiss == -1
+    return target_data.talent[4] == 1
 
 
 @add_premise(constant.Premise.NO_FIRST_KISS)
@@ -2029,7 +2029,7 @@ def handle_no_first_kiss(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.first_kiss == -1
+    return character_data.talent[4] == 1
 
 
 @add_premise(constant.Premise.IS_TARGET_FIRST_KISS)
@@ -2043,7 +2043,7 @@ def handle_is_target_first_kiss(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return character_id == target_data.first_kiss
+    return character_id == target_data.first_kiss_id
 
 
 @add_premise(constant.Premise.HAVE_OTHER_TARGET_IN_SCENE)

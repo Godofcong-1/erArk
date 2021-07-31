@@ -466,8 +466,9 @@ def handle_first_kiss(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.social_contact_data.setdefault(character_id, 0)
     if character.calculation_instuct_judege(character_id,character_data.target_character_id,"KISS"):
-        if character_data.first_kiss == -1:
-            character_data.first_kiss = target_data.cid
+        if character_data.talent[4] == 1:
+            character_data.talent[4] = 0
+            character_data.first_kiss_id = target_data.cid
             character_data.first_kiss_time = cache.game_time
             character_data.first_kiss_place = character_data.position
             if (not character_id) or (not target_data.cid):
@@ -479,8 +480,9 @@ def handle_first_kiss(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
-        if target_data.first_kiss == -1:
-            target_data.first_kiss = character_id
+        if target_data.talent[4] == 1:
+            target_data.talent[4] = 0
+            target_data.first_kiss_id = character_id
             target_data.first_kiss_time = cache.game_time
             target_data.first_kiss_place = target_data.position
             if (not character_id) or (not target_data.cid):

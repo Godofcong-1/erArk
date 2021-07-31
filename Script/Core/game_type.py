@@ -507,12 +507,30 @@ class Character:
         """ 剧情npc校验 """
         self.no_wear: bool = 0
         """ 是否不想穿衣服 """
-        self.first_kiss: int = -1
+        self.first_kiss_id: int = -1
         """ 初吻对象 -1为无 """
         self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 初吻时间 """
         self.first_kiss_place: List[str] = ["0"]
         """ 初吻地点 """
+        self.taste_semen: int = 0
+        """ 饮精ml数 """
+        self.first_sex_id: int = -1
+        """ 处女对象 -1为无 """
+        self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 处女时间 """
+        self.first_sex_place: List[str] = ["0"]
+        """ 处女地点 """
+        self.sex_semen: int = 0
+        """ V注入ml数 """
+        self.first_a_sex_id: int = -1
+        """ A处女对象 -1为无 """
+        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ A处女时间 """
+        self.first_a_sex_place: List[str] = ["0"]
+        """ A处女地点 """
+        self.a_sex_semen: int = 0
+        """ A注入ml数 """
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.dead: bool = 0
