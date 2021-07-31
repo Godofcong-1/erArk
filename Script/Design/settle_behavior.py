@@ -168,8 +168,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                             judge = 1
                 if judge:
                     now_text_list.append(now_text)
-        now_text_n = "\n"
-        now_text_list.append(now_text_n)
+        now_text_time = "\n\n  " + str(add_time) + "分钟过去了\n"
+        now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
         now_panel.set(now_text_list, width, 8)
         # now_panel.draw()
