@@ -1986,23 +1986,23 @@ def handle_target_admire(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.TARGET_AVERAGE_STATURE_HEIGHT)
-def handle_target_average_stature_height(character_id: int) -> int:
-    """
-    校验角色目体型高是否比平均体型更胖
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    age_tem = attr_calculation.judge_age_group(target_data.age)
-    if age_tem in cache.average_bodyfat_by_age:
-        average_bodyfat = cache.average_bodyfat_by_age[age_tem][target_data.sex]
-        if target_data.bodyfat > average_bodyfat * 1.05:
-            return 1
-    return 0
+# @add_premise(constant.Premise.TARGET_AVERAGE_STATURE_HEIGHT)
+# def handle_target_average_stature_height(character_id: int) -> int:
+#     """
+#     校验角色目体型高是否比平均体型更胖
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data = cache.character_data[character_id]
+#     target_data = cache.character_data[character_data.target_character_id]
+#     age_tem = attr_calculation.judge_age_group(target_data.age)
+#     if age_tem in cache.average_bodyfat_by_age:
+#         average_bodyfat = cache.average_bodyfat_by_age[age_tem][target_data.sex]
+#         if target_data.bodyfat > average_bodyfat * 1.05:
+#             return 1
+#     return 0
 
 
 @add_premise(constant.Premise.TARGET_NO_FIRST_KISS)

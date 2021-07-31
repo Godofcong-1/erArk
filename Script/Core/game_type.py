@@ -509,6 +509,10 @@ class Character:
         """ 是否不想穿衣服 """
         self.first_kiss: int = -1
         """ 初吻对象 -1为无 """
+        self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 初吻时间 """
+        self.first_kiss_place: List[str] = ["0"]
+        """ 初吻地点 """
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.dead: bool = 0

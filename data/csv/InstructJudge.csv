@@ -6,3 +6,4 @@ int,str,str,int
 0,DO_H,S,350
 1,CONFESSION,D,25
 2,ASK_DATE,D,20
+3,KISS,D,100

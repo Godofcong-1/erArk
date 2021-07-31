@@ -9,6 +9,7 @@ from Script.Design import (
     game_time,
     cooking,
     update,
+    attr_text,
 )
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -464,19 +465,31 @@ def handle_first_kiss(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.social_contact_data.setdefault(character_id, 0)
-    if target_data.social_contact_data[character_id] >= 3:
+    if character.calculation_instuct_judege(character_id,character_data.target_character_id,"KISS"):
         if character_data.first_kiss == -1:
             character_data.first_kiss = target_data.cid
+            character_data.first_kiss_time = cache.game_time
+            character_data.first_kiss_place = character_data.position
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
-                now_draw.text = _("{character_name}失去了初吻\n").format(character_name=character_data.name)
+                now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
+                    character_name=character_data.name,
+                    kiss_time = str(character_data.first_kiss_time.month) + "月" + str (character_data.first_kiss_time.day) + "日",
+                    kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
+                )
                 now_draw.width = window_width
                 now_draw.draw()
         if target_data.first_kiss == -1:
             target_data.first_kiss = character_id
+            target_data.first_kiss_time = cache.game_time
+            target_data.first_kiss_place = target_data.position
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
-                now_draw.text = _("{character_name}失去了初吻\n").format(character_name=target_data.name)
+                now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
+                    character_name=target_data.name,
+                    kiss_time = str(target_data.first_kiss_time.month) + "月" + str (target_data.first_kiss_time.day) + "日",
+                    kiss_palce = attr_text.get_scene_path_text(target_data.first_kiss_place),
+                )
                 now_draw.width = window_width
                 now_draw.draw()
 
