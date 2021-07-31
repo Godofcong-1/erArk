@@ -219,7 +219,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge_favorability += 150
     else:
         judge_favorability += 200
-    calculation_text += "好感修正("+ str(judge_favorability) +")+"
+    calculation_text += "好感修正("+ str(judge_favorability) +")"
     judge += judge_favorability
     #信赖判定#
     trust = target_data.trust
@@ -237,43 +237,43 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     else:
         judge_trust += 100
     judge += judge_trust
-    calculation_text += "信赖修正("+ str(judge_trust) +")+"
+    calculation_text += "+信赖修正("+ str(judge_trust) +")"
     #状态修正，好意(11)和欲情(12)修正#
     judge_status = int(target_data.status[11] + target_data.status[12])
     judge += judge_status
     if judge_status:
-        calculation_text += "状态修正("+ str(judge_status) +")+"
+        calculation_text += "+状态修正("+ str(judge_status) +")"
     #能力修正，亲密(21)和欲望(22)修正#
     judge_ability = target_data.ability[21]*10 + target_data.ability[22]*5
     judge += judge_ability
     if judge_ability:
-        calculation_text += "能力修正("+ str(judge_ability) +")+"
+        calculation_text += "+能力修正("+ str(judge_ability) +")"
     #刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
     judge_mark = target_data.ability[13]*20 + target_data.ability[14]*20
     judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18]*30
     judge += judge_mark
     if judge_mark:
-        calculation_text += "刻印修正("+ str(judge_mark) +")+"
+        calculation_text += "+刻印修正("+ str(judge_mark) +")"
     #陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
     judge_fall = target_data.talent[10]*30 + target_data.talent[11]*50 + target_data.talent[12]*80 + target_data.talent[13]*100 + target_data.talent[15]*30 + target_data.talent[16]*50 + target_data.talent[17]*80 + target_data.talent[18]*100
     judge += judge_fall
     if judge_fall:
-        calculation_text += "陷落修正("+ str(judge_fall) +")+"
+        calculation_text += "+陷落修正("+ str(judge_fall) +")"
     #讨厌男性修正#
     judge_hate = target_data.talent[227]*30
     judge -= judge_hate
     if judge_hate:
-        calculation_text += "讨厌男性(-"+ str(judge_hate) +")+"
+        calculation_text += "+讨厌男性(-"+ str(judge_hate) +")"
     #难以越过的底线修正#
     judge_hardlove = target_data.talent[224]*30
     judge -= judge_hardlove
     if judge_hardlove:
-        calculation_text += "难以越过的底线(-"+ str(judge_hardlove) +")+"
+        calculation_text += "+难以越过的底线(-"+ str(judge_hardlove) +")"
     #博士信息素修正#
     judge_information = character_data.talent[304]*10 + character_data.talent[305]*25 + character_data.talent[306]*50
     judge += judge_information
     if judge_information:
-        calculation_text += "博士信息素("+ str(judge_information) +")+"
+        calculation_text += "+博士信息素("+ str(judge_information) +")"
 
     calculation_text += " = " + str(judge) + "\n"
     now_draw = draw.WaitDraw()
