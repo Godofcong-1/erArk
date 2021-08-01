@@ -784,10 +784,10 @@ def handle_touch_head():
     """处理摸头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
-    update.game_update_flow(2)
+    update.game_update_flow(10)
 
 
 @add_instruct(
@@ -801,10 +801,10 @@ def handle_touch_buttocks():
     """处理摸屁股指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_EARS,
@@ -818,10 +818,10 @@ def handle_touch_ears():
     """处理摸耳朵指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_HORN,
@@ -835,10 +835,10 @@ def handle_touch_horn():
     """处理摸角指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_TAIL,
@@ -852,10 +852,10 @@ def handle_touch_tail():
     """处理摸尾巴指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_RING,
@@ -869,10 +869,10 @@ def handle_touch_ring():
     """处理摸光环指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_WING,
@@ -886,10 +886,10 @@ def handle_touch_wing():
     """处理摸光翼指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 
 @add_instruct(
@@ -904,10 +904,10 @@ def handle_touch_tentacle():
     """处理摸触手指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 
 @add_instruct(
@@ -922,10 +922,10 @@ def handle_touch_car():
     """处理摸小车指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
     character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
-    update.game_update_flow(5)
+    update.game_update_flow(10)
 
 
 @add_instruct(
@@ -956,8 +956,10 @@ def handle_lap_pillow():
     """处理膝枕指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.LAP_PILLOW
+    character_data.state = constant.CharacterStatus.STATUS_LAP_PILLOW
+    update.game_update_flow(30)
 
 @add_instruct(
     constant.Instruct.RAISE_SKIRT,
@@ -971,6 +973,8 @@ def handle_raise_skirt():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
+    character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
     update.game_update_flow(5)
 
 @add_instruct(

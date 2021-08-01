@@ -53,6 +53,10 @@ class CharacterStatus:
     """ 拥抱 """
     STATUS_KISS = 313
     """ 亲吻 """
+    STATUS_LAP_PILLOW = 314
+    """ 膝枕 """
+    STATUS_RAISE_SKIRT = 315
+    """ 掀起裙子 """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -112,6 +116,10 @@ class Behavior:
     """ 拥抱 """
     KISS = 313
     """ 亲吻 """
+    LAP_PILLOW = 314
+    """ 膝枕 """
+    RAISE_SKIRT = 315
+    """ 掀起裙子 """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """
