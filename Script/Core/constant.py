@@ -9,6 +9,8 @@ class CharacterStatus:
     """ 休闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
+    STATUS_H = 2
+    """ H状态 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -80,6 +82,8 @@ class Behavior:
     """ 发呆 """
     MOVE = 1
     """ 移动 """
+    H = 2
+    """ H """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -310,24 +314,24 @@ class Premise:
 
     IN_PLAYER_SCENE = "place_0"
     """ 与玩家处于相同地点 """
-    IN_PLAYER_ZONE = "place_1"
-    """ 与玩家处于相同大区域 """
+    # IN_PLAYER_ZONE = "place_1"
+    # """ 与玩家处于相同大区域 """
     PLAYER_COME_SCENE = "place_2"
     """ 玩家来到该角色所在的地点 """
-    PLAYER_COME_ZONE = "place_3"
-    """ 玩家来到该角色所在的区域 """
+    # PLAYER_COME_ZONE = "place_3"
+    # """ 玩家来到该角色所在的区域 """
     PLAYER_LEAVE_SCENE = "place_4"
     """ 玩家离开该角色所在的地点 """
-    PLAYER_LEAVE_ZONE = "place_5"
-    """ 玩家离开该角色所在的区域 """
+    # PLAYER_LEAVE_ZONE = "place_5"
+    # """ 玩家离开该角色所在的区域 """
     TATGET_COME_SCENE = "place_6"
     """ 该角色来到玩家所在的地点 """
-    TATGET_COME_ZONE = "place_7"
-    """ 该角色来到玩家所在的区域 """
+    # TATGET_COME_ZONE = "place_7"
+    # """ 该角色来到玩家所在的区域 """
     TATGET_LEAVE_SCENE = "place_8"
     """ 该角色离开玩家所在的地点 """
-    TATGET_LEAVE_ZONE = "place_9"
-    """ 该角色离开玩家所在的区域 """
+    # TATGET_LEAVE_ZONE = "place_9"
+    # """ 该角色离开玩家所在的区域 """
     SCENE_ONLY_TWO = "place_10"
     """ 该地点仅有玩家和该角色 """
     SCENE_OVER_TWO = "place_11"

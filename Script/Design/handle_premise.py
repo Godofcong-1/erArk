@@ -2608,25 +2608,29 @@ def handle_un_collection_system(character_id: int) -> int:
 @add_premise(constant.Premise.IS_H)
 def handle_is_h(character_id: int) -> int:
     """
-    校验玩家是否已启用H模式
+    玩家已启用H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    return cache.is_H
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.is_h
 
 
 @add_premise(constant.Premise.NOT_H)
 def handle_not_h(character_id: int) -> int:
     """
-    校验玩家是否未启用H模式
+    玩家未启用H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    return not cache.is_H
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.is_h
 
 
 @add_premise(constant.Premise.IS_FOLLOW)
@@ -2640,7 +2644,7 @@ def handle_is_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[400]
+    return target_data.is_follow
 
 
 @add_premise(constant.Premise.NOT_FOLLOW)
@@ -2654,7 +2658,7 @@ def handle_not_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not target_data.talent[400]
+    return not target_data.is_follow
 
 
 @add_premise(constant.Premise.TARGET_IS_COLLECTION)

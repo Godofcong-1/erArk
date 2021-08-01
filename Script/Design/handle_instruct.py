@@ -569,7 +569,7 @@ def handle_followed():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.talent[400] = 1
+    target_data.is_follow = 1
     # print("进入同行模式")
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
     update.game_update_flow(5)
@@ -588,7 +588,7 @@ def handle_end_followed():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.talent[400] = 0
+    target_data.is_follow = 0
     update.game_update_flow(5)
 
 @add_instruct(
@@ -715,8 +715,9 @@ def handle_do_h():
     """处理邀请H指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
     if character.calculation_instuct_judege(0,character_data.target_character_id,"DO_H"):
-        cache.is_H = 1
+        target_data.is_h = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n进入H模式\n")
@@ -738,7 +739,9 @@ def handle_do_h():
 def handle_do_h():
     """处理H结束指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    cache.is_H = 0
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.is_h = 0
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")

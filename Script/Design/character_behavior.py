@@ -78,11 +78,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         return
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
+    #空闲状态下执行可用行动#
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
             character_target_judge(character_id, now_time)
         else:
             cache.over_behavior_character.add(0)
+    #非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
@@ -90,9 +92,10 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     #24点之后结算状态为珠#
     if character.judge_character_time_over_24(character_id):
         judge_character_juel(character_id)
-    #处理跟随#
+    #处理跟随与H#
     if character_id != 0:
         judge_character_follow(character_id)
+        judge_character_h(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -316,7 +319,7 @@ def judge_character_juel(character_id: int) -> int:
             # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
     return 1
-    
+
 def judge_character_follow(character_id: int) -> int:
     """
     维持跟随状态
@@ -327,7 +330,7 @@ def judge_character_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # print("开始检测是否为跟随")
-    if character_data.talent[400]:
+    if character_data.is_follow:
         # print("检测到跟随，NPC编号为：",character_id)
         to_dr = cache.character_data[0].position
         _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
@@ -336,4 +339,18 @@ def judge_character_follow(character_id: int) -> int:
         character_data.behavior.move_target = move_path
         character_data.behavior.duration = move_time
         character_data.state = constant.CharacterStatus.STATUS_MOVE
+    return 1
+
+def judge_character_h(character_id: int) -> int:
+    """
+    维持H状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.is_h:
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
     return 1
