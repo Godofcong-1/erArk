@@ -746,9 +746,9 @@ class BehaviorEffect:
     ADD_INTERACTION_FAVORABILITY = 2
     """ 增加基础互动好感 """
     SUB_SMALL_HIT_POINT = 3
-    """ 减少少量体力 """
+    """ 双方减少少量体力 """
     SUB_SMALL_MANA_POINT = 4
-    """ 减少少量气力 """
+    """ 双方减少少量气力 """
     MOVE_TO_TARGET_SCENE = 5
     """ 移动至目标场景 """
     ADD_SMALL_TRUST = 6
@@ -990,6 +990,20 @@ class BehaviorEffect:
     """ 增加1足交经验 """
     ADD_1_Hairjob_EXPERIENCE = 312
     """ 增加1发交经验 """
+    ADD_1_Chat_EXPERIENCE = 313
+    """ 增加1对话经验 """
+    ADD_1_Combat_EXPERIENCE = 314
+    """ 增加1战斗经验 """
+    ADD_1_Learn_EXPERIENCE = 315
+    """ 增加1学习经验 """
+    ADD_1_Cooking_EXPERIENCE = 316
+    """ 增加1料理经验 """
+    ADD_1_Date_EXPERIENCE = 317
+    """ 增加1约会经验 """
+    ADD_1_Music_EXPERIENCE = 318
+    """ 增加1音乐经验 """
+    ADD_1_GiveBirth_EXPERIENCE = 319
+    """ 增加1妊娠经验 """
 
 #旧结算存档#
     # ADD_SOCIAL_FAVORABILITY = 7

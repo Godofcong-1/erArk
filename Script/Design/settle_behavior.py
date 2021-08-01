@@ -45,14 +45,14 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         now_judge = True
     if status_data.hit_point:
         now_judge = True
-    if len(status_data.knowledge):
-        now_judge = True
-    if len(status_data.language):
-        now_judge = True
+    # if len(status_data.knowledge):
+    #     now_judge = True
+    # if len(status_data.language):
+    #     now_judge = True
     if len(status_data.status):
         now_judge = True
-    if len(status_data.sex_experience):
-        now_judge = True
+    # if len(status_data.sex_experience):
+    #     now_judge = True
     if len(status_data.experience):
         now_judge = True
     if len(status_data.target_change) and not character_id:
@@ -166,6 +166,12 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                                 )
                             )
                             judge = 1
+                if target_change.hit_point and round(target_change.hit_point, 2) != 0:
+                    now_text += _("\n  体力:") + text_handle.number_to_symbol_string(int(target_change.hit_point))
+                    judge = 1
+                if target_change.mana_point and round(target_change.mana_point, 2) != 0:
+                    now_text += _("\n  气力:") + text_handle.number_to_symbol_string(int(target_change.mana_point))
+                    judge = 1
                 if judge:
                     now_text_list.append(now_text)
         now_text_time = "\n\n  " + str(add_time) + "分钟过去了\n"

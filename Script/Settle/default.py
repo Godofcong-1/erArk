@@ -151,7 +151,7 @@ def handle_sub_small_hit_point(
     now_time: datetime.datetime,
 ):
     """
-    减少少量体力
+    双方减少少量体力
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -162,6 +162,9 @@ def handle_sub_small_hit_point(
         return
     sub_hit = add_time * 5
     character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     if character_data.dead:
         return
     #气力为0时体力消耗3倍#
@@ -174,6 +177,16 @@ def handle_sub_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
+    #交互对象也同样#
+    sub_hit = add_time * 5
+    if target_data.mana_point == 0:
+        sub_hit *= 3
+    if target_data.hit_point >= sub_hit:
+        target_data.hit_point -= sub_hit
+        target_change.hit_point -= sub_hit
+    else:
+        target_change.hit_point -= target_data.hit_point
+        target_data.hit_point = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SUB_SMALL_MANA_POINT)
@@ -184,7 +197,7 @@ def handle_sub_small_mana_point(
     now_time: datetime.datetime,
 ):
     """
-    减少少量气力
+    双方减少少量气力
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -195,6 +208,9 @@ def handle_sub_small_mana_point(
         return
     sub_mana = add_time * 7.5
     character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     if character_data.dead:
         return
     if character_data.mana_point >= sub_mana:
@@ -204,8 +220,23 @@ def handle_sub_small_mana_point(
         change_data.mana_point -= character_data.mana_point
         sub_mana -= character_data.mana_point
         character_data.mana_point = 0
-        character_data.hit_point -= sub_mana / 15
-        change_data.hit_point -= sub_mana / 15
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 0
+    #交互对象也同样#
+    sub_mana = add_time * 7.5
+    if target_data.mana_point >= sub_mana:
+        target_data.mana_point -= sub_mana
+        target_change.mana_point -= sub_mana
+    else:
+        target_change.mana_point -= target_data.mana_point
+        sub_mana -= target_data.mana_point
+        target_data.mana_point = 0
+        target_data.hit_point -= sub_mana
+        target_change.hit_point -= sub_mana
+        if target_data.hit_point <= 0:
+            target_data.hit_point = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MOVE_TO_TARGET_SCENE)

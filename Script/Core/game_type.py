@@ -731,13 +731,17 @@ class Cache:
 
 
 class TargetChange:
-    """角色关系变化结构体"""
+    """交互对象角色变化结构体"""
 
     def __init__(self):
         self.old_social: int = 0
         """ 旧关系 """
         self.new_social: int = 0
         """ 新关系 """
+        self.hit_point: int = 0
+        """ hp变化 """
+        self.mana_point: int = 0
+        """ mp变化 """
         self.status: Dict[int, int] = {}
         """ 状态变化 """
         self.favorability: int = 0
