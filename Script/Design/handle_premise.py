@@ -991,6 +991,86 @@ def handle_target_leave_scene(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TIME_DAY)
+def handle_time_day(character_id: int) -> int:
+    """
+    时间:白天（6点~18点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 6 and now_time.hour <= 18:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TIME_NIGHT)
+def handle_time_night(character_id: int) -> int:
+    """
+    时间:夜晚（18点~6点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour <= 6 or now_time.hour >= 18:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TIME_MIDNIGHT)
+def handle_time_midnight(character_id: int) -> int:
+    """
+    时间:深夜（22点~2点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour <= 2 or now_time.hour >= 22:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TIME_MORNING)
+def handle_time_morning(character_id: int) -> int:
+    """
+    时间:清晨（4点~8点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 4 and now_time.hour <= 8:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TIME_MOON)
+def handle_time_moon(character_id: int) -> int:
+    """
+    时间:中午（10点~14点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 10 and now_time.hour <= 14:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.TARGET_IS_ADORE)
 def handle_target_is_adore(character_id: int) -> int:
     """
@@ -1434,10 +1514,10 @@ def handle_no_excelled_at_singing(character_id: int) -> int:
     return weight
 
 
-@add_premise(constant.Premise.SCENE_NO_HAVE_OTHER_CHARACTER)
-def handle_scene_no_have_other_character(character_id: int) -> int:
+@add_premise(constant.Premise.SCENE_ONLY_ONE)
+def handle_scene_only_one(character_id: int) -> int:
     """
-    校验场景中没有自己外的其他角色
+    该地点里没有自己外的其他角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
