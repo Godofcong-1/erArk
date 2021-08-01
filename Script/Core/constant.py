@@ -63,6 +63,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 319
     """ 手指插入（A） """
+    STATUS_MAKING_OUT = 401
+    """ 身体爱抚 """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -132,6 +134,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 319
     """ 手指插入（A） """
+    MAKING_OUT = 401
+    """ 身体爱抚 """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """
@@ -955,7 +959,7 @@ class BehaviorEffect:
     TARGET_ADD_1_Music_EXPERIENCE = 285
     """ 交互对象增加1音乐经验 """
     TARGET_ADD_1_GiveBirth_EXPERIENCE = 286
-    """ 交互对象增加1出产经验 """
+    """ 交互对象增加1妊娠经验 """
     TARGET_ADD_1_ForwardClimax_EXPERIENCE = 300
     """ 交互对象增加1正面位绝顶经验 """
     TARGET_ADD_1_BackClimax_EXPERIENCE = 301
