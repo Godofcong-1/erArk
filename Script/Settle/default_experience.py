@@ -2266,3 +2266,179 @@ def handle_add_1_blowjob_experience(
     character_data.experience[45] += 1
     change_data.experience.setdefault(45, 0)
     change_data.experience[45] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Chat_EXPERIENCE)
+def handle_add_1_chat_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1对话经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(80, 0)
+    character_data.experience[80] += 1
+    change_data.experience.setdefault(80, 0)
+    change_data.experience[80] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Combat_EXPERIENCE)
+def handle_add_1_combat_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1战斗经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(81, 0)
+    character_data.experience[81] += 1
+    change_data.experience.setdefault(81, 0)
+    change_data.experience[81] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Learn_EXPERIENCE)
+def handle_add_1_learn_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1学习经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(82, 0)
+    character_data.experience[82] += 1
+    change_data.experience.setdefault(82, 0)
+    change_data.experience[82] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Cooking_EXPERIENCE)
+def handle_add_1_cooking_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1料理经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(83, 0)
+    character_data.experience[83] += 1
+    change_data.experience.setdefault(83, 0)
+    change_data.experience[83] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Date_EXPERIENCE)
+def handle_add_1_date_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1约会经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(84, 0)
+    character_data.experience[84] += 1
+    change_data.experience.setdefault(84, 0)
+    change_data.experience[84] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Music_EXPERIENCE)
+def handle_add_1_music_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1音乐经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(85, 0)
+    character_data.experience[85] += 1
+    change_data.experience.setdefault(85, 0)
+    change_data.experience[85] += 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_GiveBirth_EXPERIENCE)
+def handle_add_1_giveBirth_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1妊娠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(86, 0)
+    character_data.experience[86] += 1
+    change_data.experience.setdefault(86, 0)
+    change_data.experience[86] += 1

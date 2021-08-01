@@ -745,10 +745,10 @@ class BehaviorEffect:
     """ 增加少量气力 """
     ADD_INTERACTION_FAVORABILITY = 2
     """ 增加基础互动好感 """
-    SUB_SMALL_HIT_POINT = 3
-    """ 双方减少少量体力 """
-    SUB_SMALL_MANA_POINT = 4
-    """ 双方减少少量气力 """
+    SUB_BOTH_SMALL_HIT_POINT = 3
+    """ 双方减少少量体力（若没有交互对象则仅减少自己） """
+    SUB_BOTH_SMALL_MANA_POINT = 4
+    """ 双方减少少量气力（若没有交互对象则仅减少自己） """
     MOVE_TO_TARGET_SCENE = 5
     """ 移动至目标场景 """
     ADD_SMALL_TRUST = 6
