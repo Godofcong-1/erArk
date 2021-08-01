@@ -685,15 +685,15 @@ def handle_target_add_small_b_feel(
     target_change.status.setdefault(1, 0)
     target_change.status[1] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
-def handle_target_add_small_v_feel(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
+def handle_target_add_small_c_feel(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量Ｖ快
+    交互对象增加少量Ｃ快
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -716,15 +716,16 @@ def handle_target_add_small_v_feel(
     target_change.status.setdefault(2, 0)
     target_change.status[2] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
-def handle_target_add_small_c_feel(
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
+def handle_target_add_small_p_feel(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量Ｃ快
+    交互对象增加少量Ｐ快
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -747,15 +748,15 @@ def handle_target_add_small_c_feel(
     target_change.status.setdefault(3, 0)
     target_change.status[3] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
-def handle_target_add_small_a_feel(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
+def handle_target_add_small_v_feel(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量Ａ快
+    交互对象增加少量Ｖ快
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -778,15 +779,15 @@ def handle_target_add_small_a_feel(
     target_change.status.setdefault(4, 0)
     target_change.status[4] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
-def handle_target_add_small_p_feel(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
+def handle_target_add_small_a_feel(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量Ｐ快
+    交互对象增加少量Ａ快
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1429,7 +1430,7 @@ def handle_tech_add_n_adjust(
     now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能进行N快、欲情调整
+    根据发起者的技巧技能对交互对象进行N快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1482,7 +1483,7 @@ def handle_tech_add_b_adjust(
     now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能进行B快、欲情调整
+    根据发起者的技巧技能对交互对象进行B快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1510,6 +1511,318 @@ def handle_tech_add_b_adjust(
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
     target_data.status[1] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_C_ADJUST)
+def handle_tech_add_c_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行C快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #C快变化#
+    target_data.status.setdefault(2, 0)
+    now_lust = target_data.status[2]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[2] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_P_ADJUST)
+def handle_tech_add_p_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行P快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #P快变化#
+    target_data.status.setdefault(3, 0)
+    now_lust = target_data.status[3]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[3] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_V_ADJUST)
+def handle_tech_add_v_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行V快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #V快变化#
+    target_data.status.setdefault(4, 0)
+    now_lust = target_data.status[4]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[4] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_A_ADJUST)
+def handle_tech_add_a_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行A快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #A快变化#
+    target_data.status.setdefault(5, 0)
+    now_lust = target_data.status[5]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[5] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_U_ADJUST)
+def handle_tech_add_u_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行U快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #U快变化#
+    target_data.status.setdefault(6, 0)
+    now_lust = target_data.status[6]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[6] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust
+    #欲情变化#
+    target_data.status.setdefault(12, 0)
+    now_lust = target_data.status[12]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(12, 0)
+    target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_W_ADJUST)
+def handle_tech_add_w_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能对交互对象进行W快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    #获取调整值#
+    character_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    #W快变化#
+    target_data.status.setdefault(7, 0)
+    now_lust = target_data.status[7]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(1, 0)

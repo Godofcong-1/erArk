@@ -57,6 +57,12 @@ class CharacterStatus:
     """ 膝枕 """
     STATUS_RAISE_SKIRT = 315
     """ 掀起裙子 """
+    STATUS_TOUCH_CLITORIS = 317
+    """ 阴蒂爱抚 """
+    STATUS_TOUCH_VAGINA = 318
+    """ 手指插入（V） """
+    STATUS_TOUCH_ANUS = 319
+    """ 手指插入（A） """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -120,6 +126,12 @@ class Behavior:
     """ 膝枕 """
     RAISE_SKIRT = 315
     """ 掀起裙子 """
+    TOUCH_CLITORIS = 317
+    """ 阴蒂爱抚 """
+    TOUCH_VAGINA = 318
+    """ 手指插入（V） """
+    TOUCH_ANUS = 319
+    """ 手指插入（A） """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """
@@ -748,14 +760,14 @@ class BehaviorEffect:
     """ 交互对象增加少量Ｎ快 """
     TARGET_ADD_SMALL_B_FEEL = 42
     """ 交互对象增加少量Ｂ快 """
-    TARGET_ADD_SMALL_V_FEEL = 43
-    """ 交互对象增加少量Ｖ快 """
-    TARGET_ADD_SMALL_C_FEEL = 44
+    TARGET_ADD_SMALL_C_FEEL = 43
     """ 交互对象增加少量Ｃ快 """
-    TARGET_ADD_SMALL_A_FEEL = 45
-    """ 交互对象增加少量Ａ快 """
-    TARGET_ADD_SMALL_P_FEEL = 46
+    TARGET_ADD_SMALL_P_FEEL = 44
     """ 交互对象增加少量Ｐ快 """
+    TARGET_ADD_SMALL_V_FEEL = 45
+    """ 交互对象增加少量Ｖ快 """
+    TARGET_ADD_SMALL_A_FEEL = 46
+    """ 交互对象增加少量Ａ快 """
     TARGET_ADD_SMALL_U_FEEL = 47
     """ 交互对象增加少量Ｕ快 """
     TARGET_ADD_SMALL_W_FEEL = 48
@@ -795,9 +807,21 @@ class BehaviorEffect:
     MAKE_FOOD = 103
     """ 制作指定食物 """
     TECH_ADD_N_ADJUST = 110
-    """ 根据发起者的技巧技能进行N快、欲情调整 """
+    """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
-    """ 根据发起者的技巧技能进行B快、欲情调整 """
+    """ 根据发起者的技巧技能对交互对象进行B快、欲情调整 """
+    TECH_ADD_C_ADJUST = 112
+    """ 根据发起者的技巧技能对交互对象进行C快、欲情调整 """
+    TECH_ADD_P_ADJUST = 113
+    """ 根据发起者的技巧技能对交互对象进行P快、欲情调整 """
+    TECH_ADD_V_ADJUST = 114
+    """ 根据发起者的技巧技能对交互对象进行V快、欲情调整 """
+    TECH_ADD_A_ADJUST = 115
+    """ 根据发起者的技巧技能对交互对象进行A快、欲情调整 """
+    TECH_ADD_U_ADJUST = 116
+    """ 根据发起者的技巧技能对交互对象进行U快、欲情调整 """
+    TECH_ADD_W_ADJUST = 117
+    """ 根据发起者的技巧技能对交互对象进行W快、欲情调整 """
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201

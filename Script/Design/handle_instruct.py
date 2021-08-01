@@ -988,6 +988,8 @@ def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CLITORIS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CLITORIS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1002,6 +1004,8 @@ def handle_touch_vagina():
     """处理手指插入（V）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_VAGINA
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_VAGINA
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1016,6 +1020,8 @@ def handle_touch_anus():
     """处理手指插入（A）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
