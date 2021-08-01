@@ -514,7 +514,7 @@ class Character:
         self.first_kiss_place: List[str] = ["0"]
         """ 初吻地点 """
         self.taste_semen: int = 0
-        """ 饮精ml数 """
+        """ 饮精精液量计数 """
         self.first_sex_id: int = -1
         """ 处女对象 -1为无 """
         self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
@@ -522,7 +522,7 @@ class Character:
         self.first_sex_place: List[str] = ["0"]
         """ 处女地点 """
         self.sex_semen: int = 0
-        """ V注入ml数 """
+        """ V注入精液量计数 """
         self.first_a_sex_id: int = -1
         """ A处女对象 -1为无 """
         self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
@@ -530,7 +530,15 @@ class Character:
         self.first_a_sex_place: List[str] = ["0"]
         """ A处女地点 """
         self.a_sex_semen: int = 0
-        """ A注入ml数 """
+        """ A注入精液量计数 """
+        self.breast_semen: int = 0
+        """ 胸部精液量计数 """
+        self.hand_semen: int = 0
+        """ 手部精液ml数 """
+        self.foot_semen: int = 0
+        """ 脚部精液ml数 """
+        self.urethral_semen: int = 0
+        """ 尿道精液ml数 """
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.dead: bool = 0

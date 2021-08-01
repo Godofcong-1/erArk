@@ -1457,12 +1457,18 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             #胸部信息#
             now_text = f"\n 【胸】\n"
+            if character_data.breast_semen == 0:
+                now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #指部信息#
             now_text = f"\n 【指】\n"
+            if character_data.hand_semen == 0:
+                now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #足部信息#
             now_text = f"\n 【足】\n"
+            if character_data.foot_semen == 0:
+                now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #膣部信息#
             now_text = f"\n 【膣】\n"
@@ -1477,12 +1483,14 @@ class CharacterBodyText:
                         kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
                         kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
                     )
+            if character_data.sex_semen == 0:
+                now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #肛部信息#
             now_text = f"\n 【肛】\n"
-            now_text += "  A处女情况："
+            now_text += "  后庭处女情况："
             if character_data.talent[1]:
-                now_text += "保有A处女\n"
+                now_text += "保有后庭处女\n"
             else:
                 a_sex_id = character_data.first_a_sex_id
                 a_sex_time = character_data.first_a_sex_time
@@ -1491,12 +1499,18 @@ class CharacterBodyText:
                         kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
                         kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
                     )
+            if character_data.a_sex_semen == 0:
+                now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #子宫信息#
             now_text = f"\n 【宫】\n"
+            if character_data.experience[86] == 0:
+                now_text += "  未怀孕过\n"
             body_text_list.append(now_text)
             #尿道信息#
             now_text = f"\n 【尿】\n"
+            if character_data.urethral_semen == 0:
+                now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
