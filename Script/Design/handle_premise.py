@@ -560,6 +560,90 @@ def handle_high_10(character_id: int) -> int:
     return 10
 
 
+@add_premise(constant.Premise.HP_LOW)
+def handle_hp_low(character_id: int) -> int:
+    """
+    角色体力低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.hit_point / character_data.hit_point_max
+    if value < 0.3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.HP_HIGH)
+def handle_hp_high(character_id: int) -> int:
+    """
+    角色体力高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.hit_point / character_data.hit_point_max
+    if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.MP_0)
+def handle_mp_0(character_id: int) -> int:
+    """
+    角色气力为0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.mana_point
+    if value == 0:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant.Premise.MP_LOW)
+def handle_mp_low(character_id: int) -> int:
+    """
+    角色气力低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.mana_point / character_data.mana_point_max
+    if value < 0.3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.MP_HIGH)
+def handle_hp_high(character_id: int) -> int:
+    """
+    角色气力高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.mana_point / character_data.mana_point_max
+    if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant.Premise.LOVE_1)
 def handle_love_1(character_id: int) -> int:
     """
@@ -870,7 +954,7 @@ def handle_scene_only_two(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    return len(scene_data.character_list) <= 2
+    return len(scene_data.character_list) == 2
 
 
 @add_premise(constant.Premise.SCENE_OVER_TWO)
@@ -888,8 +972,8 @@ def handle_scene_over_two(character_id: int) -> int:
     return len(scene_data.character_list) > 2
 
 
-@add_premise(constant.Premise.LEAVE_PLAYER_SCENE)
-def handle_leave_player_scene(character_id: int) -> int:
+@add_premise(constant.Premise.TATGET_LEAVE_SCENE)
+def handle_target_leave_scene(character_id: int) -> int:
     """
     校验角色是否是从玩家场景离开
     Keyword arguments:
@@ -1029,24 +1113,6 @@ def handle_is_beyond_friendship_target(character_id: int) -> int:
     ):
         return target_data.social_contact_data[character_id]
     return 0
-
-
-@add_premise(constant.Premise.SCENE_OVER_TWO)
-def handle_scene_over_two(character_id: int) -> int:
-    """
-    校验场景里是否有其他角色
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path]
-    now_weight = (len(scene_data.character_list) - 1) / 10
-    if now_weight > 0 and now_weight < 1:
-        now_weight = 1
-    return now_weight
 
 
 @add_premise(constant.Premise.NO_WEAR_UNDERWEAR)
