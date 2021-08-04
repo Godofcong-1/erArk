@@ -628,7 +628,7 @@ def handle_mp_low(character_id: int) -> int:
 
 
 @add_premise(constant.Premise.MP_HIGH)
-def handle_hp_high(character_id: int) -> int:
+def handle_mp_high(character_id: int) -> int:
     """
     角色气力高于70%
     Keyword arguments:
@@ -638,6 +638,95 @@ def handle_hp_high(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     value = character_data.mana_point / character_data.mana_point_max
+    if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HP_LOW)
+def handle_target_hp_low(character_id: int) -> int:
+    """
+    交互对象体力低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.hit_point / target_data.hit_point_max
+    if value < 0.3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HP_HIGH)
+def handle_target_hp_high(character_id: int) -> int:
+    """
+    交互对象体力高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.hit_point / target_data.hit_point_max
+    if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_MP_0)
+def handle_target_mp_0(character_id: int) -> int:
+    """
+    交互对象气力为0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.mana_point
+    if value == 0:
+        return 1
+    else:
+        return 0
+
+@add_premise(constant.Premise.TARGET_MP_LOW)
+def handle_target_mp_low(character_id: int) -> int:
+    """
+    交互对象气力低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.mana_point / target_data.mana_point_max
+    if value < 0.3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_MP_HIGH)
+def handle_target_mp_high(character_id: int) -> int:
+    """
+    交互对象气力高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.mana_point / target_data.mana_point_max
     if value > 0.7:
         return 1
     else:
@@ -1371,6 +1460,87 @@ def handle_target_same_sex(character_id: int) -> int:
     if target_data.sex == character_data.sex:
         return 1
     return 0
+
+
+@add_premise(constant.Premise.TARGET_NO_FIRST_KISS)
+def handle_target_no_first_kiss(character_id: int) -> int:
+    """
+    校验交互对象是否初吻还在
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[4] == 1
+
+@add_premise(constant.Premise.TARGET_HAVE_FIRST_KISS)
+def handle_target_have_first_kiss(character_id: int) -> int:
+    """
+    校验交互对象是否初吻不在了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[4] == 1
+
+
+@add_premise(constant.Premise.TARGET_NO_VIRGIN)
+def handle_target_no_virgin(character_id: int) -> int:
+    """
+    校验交互对象是否非处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[0] == 1
+
+@add_premise(constant.Premise.TARGET_HAVE_VIRGIN)
+def handle_target_have_virgin(character_id: int) -> int:
+    """
+    校验交互对象是否是处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[0] == 1
+
+
+@add_premise(constant.Premise.TARGET_NO_A_VIRGIN)
+def handle_target_no_a_virgin(character_id: int) -> int:
+    """
+    校验交互对象是否非A处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[1] == 1
+
+@add_premise(constant.Premise.TARGET_HAVE_A_VIRGIN)
+def handle_target_have_a_virgin(character_id: int) -> int:
+    """
+    校验交互对象是否是A处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[1] == 1
 
 
 # @add_premise(constant.Premise.TARGET_AGE_SIMILAR)
@@ -2746,20 +2916,6 @@ def handle_target_admire(character_id: int) -> int:
 #     return 0
 
 
-@add_premise(constant.Premise.TARGET_NO_FIRST_KISS)
-def handle_target_no_first_kiss(character_id: int) -> int:
-    """
-    校验交互对象是否初吻还在
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[4] == 1
-
-
 @add_premise(constant.Premise.NO_FIRST_KISS)
 def handle_no_first_kiss(character_id: int) -> int:
     """
@@ -2816,19 +2972,6 @@ def handle_no_have_other_target_in_scene(character_id: int) -> int:
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     return len(scene_data.character_list) <= 2
 
-
-@add_premise(constant.Premise.TARGET_HAVE_FIRST_KISS)
-def handle_target_have_first_kiss(character_id: int) -> int:
-    """
-    校验交互对象是否初吻不在了
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.first_kiss != -1
 
 
 @add_premise(constant.Premise.HAVE_FIRST_KISS)
