@@ -67,6 +67,24 @@ class CharacterStatus:
     """ 手指插入（A） """
     STATUS_MAKING_OUT = 401
     """ 身体爱抚 """
+    STATUS_KISS_H = 402
+    """ 接吻 """
+    STATUS_BREAST_CARESS = 403
+    """ 胸爱抚 """
+    STATUS_TWIDDLE_NIPPLES = 404
+    """ 玩弄乳头 """
+    STATUS_BREAST_SUCKING = 405
+    """ 舔吸乳头 """
+    STATUS_CLIT_CARESS = 406
+    """ 阴蒂爱抚 """
+    STATUS_OPEN_LABIA = 407
+    """ 掰开阴唇 """
+    STATUS_OPEN_ANUS = 408
+    """ 掰开肛门 """
+    STATUS_CUNNILINGUS = 409
+    """ 舔阴 """
+    STATUS_LICK_ANAL = 410
+    """ 舔肛 """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -140,6 +158,24 @@ class Behavior:
     """ 手指插入（A） """
     MAKING_OUT = 401
     """ 身体爱抚 """
+    KISS_H = 402
+    """ 接吻 """
+    BREAST_CARESS = 403
+    """ 胸爱抚 """
+    TWIDDLE_NIPPLES = 404
+    """ 玩弄乳头 """
+    BREAST_SUCKING = 405
+    """ 舔吸乳头 """
+    CLIT_CARESS = 406
+    """ 阴蒂爱抚 """
+    OPEN_LABIA = 407
+    """ 掰开阴唇 """
+    OPEN_ANUS = 408
+    """ 掰开肛门 """
+    CUNNILINGUS = 409
+    """ 舔阴 """
+    LICK_ANAL = 410
+    """ 舔肛 """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """

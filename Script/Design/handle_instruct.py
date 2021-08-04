@@ -1058,8 +1058,10 @@ def handle_kiss_h():
     """处理接吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.KISS_H
+    character_data.state = constant.CharacterStatus.STATUS_KISS_H
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BREAST_CARESS,
@@ -1072,8 +1074,10 @@ def handle_breast_caress():
     """处理胸爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BREAST_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_BREAST_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TWIDDLE_NIPPLES,
@@ -1086,8 +1090,10 @@ def handle_twiddle_nipples():
     """处理玩弄乳头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.TWIDDLE_NIPPLES
+    character_data.state = constant.CharacterStatus.STATUS_TWIDDLE_NIPPLES
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BREAST_SUCKING,
@@ -1100,8 +1106,10 @@ def handle_breast_sucking():
     """处理舔吸乳头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BREAST_SUCKING
+    character_data.state = constant.CharacterStatus.STATUS_BREAST_SUCKING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CLIT_CARESS,
@@ -1114,8 +1122,10 @@ def handle_cilt_caress():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.OPEN_LABIA,
@@ -1128,8 +1138,10 @@ def handle_open_labia():
     """处理掰开阴唇指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.OPEN_LABIA
+    character_data.state = constant.CharacterStatus.STATUS_OPEN_LABIA
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.OPEN_ANUS,
@@ -1142,8 +1154,10 @@ def handle_open_anus():
     """处理掰开肛门指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.OPEN_ANUS
+    character_data.state = constant.CharacterStatus.STATUS_OPEN_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CUNNILINGUS,
@@ -1156,8 +1170,10 @@ def handle_cunnilingus():
     """处理舔阴指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CUNNILINGUS
+    character_data.state = constant.CharacterStatus.STATUS_CUNNILINGUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.LICK_ANAL,
@@ -1170,8 +1186,10 @@ def handle_lict_anal():
     """处理舔肛指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.LICK_ANAL
+    character_data.state = constant.CharacterStatus.STATUS_LICK_ANAL
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FINGER_INSERTION,
