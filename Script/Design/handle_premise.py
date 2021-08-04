@@ -644,121 +644,613 @@ def handle_hp_high(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant.Premise.LOVE_1)
-def handle_love_1(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_1)
+def handle_cook_1(character_id: int) -> int:
     """
-    校验角色是否是思慕,爱情系第一阶段
+    校验角色是否料理技能==1
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[10]:
+    if character_data.ability[28] == 1:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.LOVE_2)
-def handle_love_2(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_2)
+def handle_cook_2(character_id: int) -> int:
     """
-    校验角色是否是恋慕,爱情系第二阶段
+    校验角色是否料理技能==2
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[11]:
+    if character_data.ability[28] == 2:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.LOVE_3)
-def handle_love_3(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_3)
+def handle_cook_3(character_id: int) -> int:
     """
-    校验角色是否是恋人,爱情系第三阶段
+    校验角色是否料理技能==3
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[12]:
+    if character_data.ability[28] == 3:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.LOVE_4)
-def handle_love_4(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_4)
+def handle_cook_4(character_id: int) -> int:
     """
-    校验角色是否是爱侣,爱情系第四阶段
+    校验角色是否料理技能==4
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[13]:
-        return 1
-    return 0
-
-@add_premise(constant.Premise.OBEY_1)
-def handle_obey_1(character_id: int) -> int:
-    """
-    校验角色是否是屈从,隶属系第一阶段
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    if character_data.talent[15]:
+    if character_data.ability[28] == 4:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.OBEY_2)
-def handle_obey_2(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_LE_1)
+def handle_cook_le_1(character_id: int) -> int:
     """
-    校验角色是否是驯服,隶属系第二阶段
+    校验角色是否料理技能<=1
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[16]:
+    if character_data.ability[28] <= 1:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.OBEY_3)
-def handle_obey_3(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_GE_3)
+def handle_cook_ge_3(character_id: int) -> int:
     """
-    校验角色是否是妄信,隶属系第三阶段
+    校验角色是否料理技能>=3
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[17]:
+    if character_data.ability[28] >= 3:
         return 1
     return 0
 
 
-@add_premise(constant.Premise.OBEY_4)
-def handle_obey_4(character_id: int) -> int:
+@add_premise(constant.Premise.COOK_GE_5)
+def handle_cook_ge_3(character_id: int) -> int:
     """
-    校验角色是否是奴隶,隶属系第四阶段
+    校验角色是否料理技能>=5
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.talent[18]:
+    if character_data.ability[28] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_1)
+def handle_music_1(character_id: int) -> int:
+    """
+    校验角色是否音乐技能==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_2)
+def handle_music_2(character_id: int) -> int:
+    """
+    校验角色是否音乐技能==2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_3)
+def handle_music_3(character_id: int) -> int:
+    """
+    校验角色是否音乐技能==3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_4)
+def handle_music_4(character_id: int) -> int:
+    """
+    校验角色是否音乐技能==4
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_LE_1)
+def handle_music_le_1(character_id: int) -> int:
+    """
+    校验角色是否音乐技能<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_GE_3)
+def handle_music_ge_3(character_id: int) -> int:
+    """
+    校验角色是否音乐技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.MUSIC_GE_5)
+def handle_music_ge_3(character_id: int) -> int:
+    """
+    校验角色是否音乐技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[29] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_DESIRE_GE_5)
+def handle_target_desire_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否欲望技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[22] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_DESIRE_GE_7)
+def handle_target_desire_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否欲望技能>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[22] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_1)
+def handle_target_cook_1(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_2)
+def handle_target_cook_2(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能==2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_3)
+def handle_target_cook_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能==3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_4)
+def handle_target_cook_4(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能==4
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_LE_1)
+def handle_target_cook_le_1(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_GE_3)
+def handle_target_cook_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_GE_5)
+def handle_target_cook_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] >= 5:
+        return 1
+    return 0
+
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_1)
+def handle_target_music_1(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_2)
+def handle_target_music_2(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能==2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_3)
+def handle_target_music_3(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能==3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_4)
+def handle_target_music_4(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能==4
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_LE_1)
+def handle_target_music_le_1(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_GE_3)
+def handle_target_music_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_MUSIC_GE_5)
+def handle_target_music_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否音乐技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[29] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_FALL)
+def handle_target_not_fall(character_id: int) -> int:
+    """
+    角色无陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    for i in {10,11,12,13,15,16,17,18}:
+        if target_data.talent[i]:
+            return 0
+    return 1
+
+
+@add_premise(constant.Premise.TARGET_LOVE_1)
+def handle_target_love_1(character_id: int) -> int:
+    """
+    校验交互对象是否是思慕,爱情系第一阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[10]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_LOVE_2)
+def handle_target_love_2(character_id: int) -> int:
+    """
+    校验交互对象是否是恋慕,爱情系第二阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[11]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_LOVE_3)
+def handle_target_love_3(character_id: int) -> int:
+    """
+    校验交互对象是否是恋人,爱情系第三阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[12]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_LOVE_4)
+def handle_target_love_4(character_id: int) -> int:
+    """
+    校验交互对象是否是爱侣,爱情系第四阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[13]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.TARGET_OBEY_1)
+def handle_target_obey_1(character_id: int) -> int:
+    """
+    校验交互对象是否是屈从,隶属系第一阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[15]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_OBEY_2)
+def handle_target_obey_2(character_id: int) -> int:
+    """
+    校验交互对象是否是驯服,隶属系第二阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[16]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_OBEY_3)
+def handle_target_obey_3(character_id: int) -> int:
+    """
+    校验交互对象是否是妄信,隶属系第三阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[17]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_OBEY_4)
+def handle_target_obey_4(character_id: int) -> int:
+    """
+    校验交互对象是否是奴隶,隶属系第四阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[18]:
         return 1
     return 0
 
