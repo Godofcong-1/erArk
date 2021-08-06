@@ -1130,12 +1130,12 @@ def handle_cilt_caress():
 @add_instruct(
     constant.Instruct.OPEN_LABIA,
     constant.InstructType.SEX,
-    _("掰开阴唇"),
+    _("掰开阴唇观察"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_open_labia():
-    """处理掰开阴唇指令"""
+    """处理掰开阴唇观察指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.OPEN_LABIA
@@ -1146,12 +1146,12 @@ def handle_open_labia():
 @add_instruct(
     constant.Instruct.OPEN_ANUS,
     constant.InstructType.SEX,
-    _("掰开肛门"),
+    _("掰开肛门观察"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_open_anus():
-    """处理掰开肛门指令"""
+    """处理掰开肛门观察指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.OPEN_ANUS
@@ -1194,58 +1194,66 @@ def handle_lict_anal():
 @add_instruct(
     constant.Instruct.FINGER_INSERTION,
     constant.InstructType.SEX,
-    _("手指插入"),
+    _("手指插入(V)"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_finger_insertion():
-    """处理手指插入指令"""
+    """处理手指插入(V)指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FINGER_INSERTION
+    character_data.state = constant.CharacterStatus.STATUS_FINGER_INSERTION
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.ANAL_CARESS,
     constant.InstructType.SEX,
-    _("肛门爱抚"),
+    _("手指插入(A)"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_anal_caress():
-    """处理肛门爱抚指令"""
+    """处理手指插入(A)指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.ANAL_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_ANAL_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.MAKE_MASTUREBATE,
     constant.InstructType.SEX,
-    _("让对方自慰"),
+    _("命令对方自慰"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_make_masturebate():
-    """处理让对方自慰指令"""
+    """处理命令对方自慰指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_MASTUREBATE
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_MASTUREBATE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.MAKE_LICK_ANAL,
     constant.InstructType.SEX,
-    _("让对方舔肛门"),
+    _("命令对方舔自己肛门"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_make_lick_anal():
-    """处理让对方舔肛门指令"""
+    """处理命令对方舔自己肛门指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_LICK_ANAL
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_LICK_ANAL
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
     
 @add_instruct(
     constant.Instruct.DO_NOTHING,
@@ -1258,22 +1266,26 @@ def handle_do_nothing():
     """处理什么也不做指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.DO_NOTHING
+    character_data.state = constant.CharacterStatus.STATUS_DO_NOTHING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.SEDECU,
     constant.InstructType.SEX,
-    _("诱惑"),
+    _("诱惑对方"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
 def handle_sedecu():
-    """处理诱惑指令"""
+    """处理诱惑对方指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.SEDECU
+    character_data.state = constant.CharacterStatus.STATUS_SEDECU
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.NIPPLE_CLAMP,

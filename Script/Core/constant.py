@@ -85,6 +85,18 @@ class CharacterStatus:
     """ 舔阴 """
     STATUS_LICK_ANAL = 410
     """ 舔肛 """
+    STATUS_FINGER_INSERTION = 411
+    """ 手指插入(V) """
+    STATUS_ANAL_CARESS = 412
+    """ 手指插入(A) """
+    STATUS_MAKE_MASTUREBATE = 413
+    """ 命令对方自慰 """
+    STATUS_MAKE_LICK_ANAL = 414
+    """ 命令对方舔自己肛门 """
+    STATUS_DO_NOTHING = 415
+    """ 什么也不做 """
+    STATUS_SEDECU = 416
+    """ 诱惑对方 """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -169,13 +181,25 @@ class Behavior:
     CLIT_CARESS = 406
     """ 阴蒂爱抚 """
     OPEN_LABIA = 407
-    """ 掰开阴唇 """
+    """ 掰开阴唇观察 """
     OPEN_ANUS = 408
-    """ 掰开肛门 """
+    """ 掰开肛门观察 """
     CUNNILINGUS = 409
     """ 舔阴 """
     LICK_ANAL = 410
     """ 舔肛 """
+    FINGER_INSERTION = 411
+    """ 手指插入(V) """
+    ANAL_CARESS = 412
+    """ 手指插入(A) """
+    MAKE_MASTUREBATE = 413
+    """ 命令对方自慰 """
+    MAKE_LICK_ANAL = 414
+    """ 命令对方舔自己肛门 """
+    DO_NOTHING = 415
+    """ 什么也不做 """
+    SEDECU = 416
+    """ 诱惑对方 """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """
@@ -1296,21 +1320,21 @@ class Instruct:
     CLIT_CARESS = 0
     """ 阴蒂爱抚 """
     OPEN_LABIA = 0
-    """ 掰开阴唇 """
+    """ 掰开阴唇观察 """
     OPEN_ANUS = 0
-    """ 掰开肛门 """
+    """ 掰开肛门观察 """
     CUNNILINGUS = 0
     """ 舔阴 """
     LICK_ANAL = 0
     """ 舔肛 """
     FINGER_INSERTION = 0
-    """ 手指插入 """
+    """ 手指插入(V) """
     ANAL_CARESS = 0
-    """ 肛门爱抚 """
+    """ 手指插入(A) """
     MAKE_MASTUREBATE = 0
-    """ 让对方自慰 """
+    """ 命令对方自慰 """
     MAKE_LICK_ANAL = 0
-    """ 让对方舔肛门 """
+    """ 命令对方舔自己肛门 """
     DO_NOTHING = 0
     """ 什么也不做 """
     SEDECU = 0
