@@ -1333,6 +1333,35 @@ def handle_target_add_small_disgust(
     target_change.status.setdefault(20, 0)
     target_change.status[20] += now_add_lust
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_P_FEEL)
+def handle_add_small_p_feel(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    自身增加少量Ｐ快
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.status.setdefault(3, 0)
+    now_lust = character_data.status[3]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    character_data.status[3] += now_add_lust
+    change_data.status.setdefault(3, 0)
+    change_data.status[3] += now_add_lust
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
     character_id: int,
@@ -1356,7 +1385,6 @@ def handle_talk_add_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1420,7 +1448,6 @@ def handle_coffee_add_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1478,7 +1505,6 @@ def handle_tech_add_n_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1531,7 +1557,6 @@ def handle_tech_add_b_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1583,7 +1608,6 @@ def handle_tech_add_c_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1635,7 +1659,6 @@ def handle_tech_add_p_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1687,7 +1710,6 @@ def handle_tech_add_v_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1739,7 +1761,6 @@ def handle_tech_add_a_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1791,7 +1812,6 @@ def handle_tech_add_u_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1843,7 +1863,6 @@ def handle_tech_add_w_adjust(
         return
     if character_data.dead:
         return
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
     #获取调整值#
@@ -1871,3 +1890,43 @@ def handle_tech_add_w_adjust(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
     target_change.status[12] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
+def handle_tech_add_pl_p_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据对交互对象的技巧技能对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+    #获取调整值#
+    target_data.ability.setdefault(19, 0)
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[19])
+    #P快变化#
+    character_data.status.setdefault(3, 0)
+    now_lust = character_data.status[3]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    character_data.status[3] += now_add_lust
+    change_data.target_change.setdefault(character_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[character_data.cid]
+    target_change.status.setdefault(1, 0)
+    target_change.status[1] += now_add_lust

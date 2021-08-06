@@ -1460,8 +1460,37 @@ def handle_target_add_1_abnormal_experience(
     target_change.experience.setdefault(61, 0)
     target_change.experience[61] += 1
 
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Axillajob_EXPERIENCE)
+def handle_target_add_1_axillajob_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加1腋交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.experience.setdefault(62, 0)
+    target_data.experience[62] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(62, 0)
+    target_change.experience[62] += 1
+
 """
-    62-69留空
+    63-69留空
 """
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_UnconsciouslyN_EXPERIENCE)

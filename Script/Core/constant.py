@@ -97,6 +97,30 @@ class CharacterStatus:
     """ 什么也不做 """
     STATUS_SEDECU = 416
     """ 诱惑对方 """
+    STATUS_HANDJOB = 420
+    """ 手交 """
+    STATUS_BLOWJOB = 421
+    """ 口交 """
+    STATUS_PAIZURI = 422
+    """ 乳交 """
+    STATUS_FOOTJOB = 423
+    """ 足交 """
+    STATUS_HAIRJOB = 424
+    """ 发交 """
+    STATUS_AXILLAJOB = 425
+    """ 腋交 """
+    STATUS_RUB_BUTTOCK = 426
+    """ 素股 """
+    STATUS_HAND_BLOWJOB = 427
+    """ 手交口交 """
+    STATUS_TITS_BLOWJOB = 428
+    """ 乳交口交 """
+    STATUS_FOCUS_BLOWJOB = 429
+    """ 真空口交 """
+    STATUS_DEEP_THROAT = 430
+    """ 深喉插入 """
+    STATUS_SIXTY_NINE = 431
+    """ 六九式 """
     # STATUS_TEACHING = 16
     # """ 教学 """
     # STATUS_PLAY_GUITAR = 17
@@ -200,6 +224,30 @@ class Behavior:
     """ 什么也不做 """
     SEDECU = 416
     """ 诱惑对方 """
+    HANDJOB = 420
+    """ 手交 """
+    BLOWJOB = 421
+    """ 口交 """
+    PAIZURI = 422
+    """ 乳交 """
+    FOOTJOB = 423
+    """ 足交 """
+    HAIRJOB = 424
+    """ 发交 """
+    AXILLAJOB = 425
+    """ 腋交 """
+    RUB_BUTTOCK = 426
+    """ 素股 """
+    HAND_BLOWJOB = 427
+    """ 手交口交 """
+    TITS_BLOWJOB = 428
+    """ 乳交口交 """
+    FOCUS_BLOWJOB = 429
+    """ 真空口交 """
+    DEEP_THROAT = 430
+    """ 深喉插入 """
+    SIXTY_NINE = 431
+    """ 六九式 """
 
     # PLAY_PIANO = 6
     # """ 弹钢琴 """
@@ -964,6 +1012,8 @@ class BehaviorEffect:
     """ 交互对象增加少量抑郁 """
     TARGET_ADD_SMALL_DISGUST = 62
     """ 交互对象增加少量反感（反发刻印补正） """
+    ADD_SMALL_P_FEEL = 70
+    """ 自身增加少量Ｐ快 """
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101
@@ -988,6 +1038,8 @@ class BehaviorEffect:
     """ 根据发起者的技巧技能对交互对象进行U快、欲情调整 """
     TECH_ADD_W_ADJUST = 117
     """ 根据发起者的技巧技能对交互对象进行W快、欲情调整 """
+    TECH_ADD_PL_P_ADJUST = 120
+    """ 根据对交互对象的技巧技能对发起者进行P快调整 """
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201
@@ -1090,6 +1142,8 @@ class BehaviorEffect:
     """ 交互对象增加1睡奸经验 """
     TARGET_ADD_1_Abnormal_EXPERIENCE = 261
     """ 交互对象增加1异常经验 """
+    TARGET_ADD_1_Axillajob_EXPERIENCE = 262
+    """ 交互对象增加1腋交经验 """
     TARGET_ADD_1_UnconsciouslyN_EXPERIENCE = 270
     """ 交互对象增加1无意识N经验 """
     TARGET_ADD_1_UnconsciouslyB_EXPERIENCE = 271
@@ -1339,40 +1393,6 @@ class Instruct:
     """ 什么也不做 """
     SEDECU = 0
     """ 诱惑 """
-    NIPPLE_CLAMP = 0
-    """ 乳头夹 """
-    NIPPLES_LOVE_EGG = 0
-    """ 乳头跳蛋 """
-    CLIT_CLAMP = 0
-    """ 阴蒂夹 """
-    CLIT_LOVE_EGG = 0
-    """ 阴蒂跳蛋 """
-    ELECTRIC_MESSAGE_STICK = 0
-    """ 电动按摩棒 """
-    VIBRATOR_INSERTION = 0
-    """ 震动棒 """
-    VIBRATOR_INSERTION_ANAL = 0
-    """ 肛门振动棒 """
-    MILKING_MACHINE = 0
-    """ 搾乳机 """
-    URINE_COLLECTOR = 0
-    """ 采尿器 """
-    BONDAGE = 0
-    """ 绳子 """
-    PATCH = 0
-    """ 眼罩 """
-    PUT_CONDOM = 0
-    """ 避孕套 """
-    BIRTH_CONTROL_PILLS = 0
-    """ 避孕药 """
-    BODY_LUBRICANT = 0
-    """ 润滑液 """
-    PHILTER = 0
-    """ 媚药 """
-    DIURETICS = 0
-    """ 利尿剂 """
-    SLEEPING_PILLS = 0
-    """ 睡眠药 """
     HANDJOB = 0
     """ 手交 """
     BLOWJOB = 0
@@ -1397,6 +1417,42 @@ class Instruct:
     """ 深喉插入 """
     SIXTY_NINE = 0
     """ 六九式 """
+    BIRTH_CONTROL_PILLS = 0
+    """ 避孕药 """
+    BODY_LUBRICANT = 0
+    """ 润滑液 """
+    PHILTER = 0
+    """ 媚药 """
+    ENEMAS = 0
+    """ 灌肠液 """
+    DIURETICS = 0
+    """ 利尿剂 """
+    SLEEPING_PILLS = 0
+    """ 睡眠药 """
+    NIPPLE_CLAMP = 0
+    """ 乳头夹 """
+    NIPPLES_LOVE_EGG = 0
+    """ 乳头跳蛋 """
+    CLIT_CLAMP = 0
+    """ 阴蒂夹 """
+    CLIT_LOVE_EGG = 0
+    """ 阴蒂跳蛋 """
+    ELECTRIC_MESSAGE_STICK = 0
+    """ 电动按摩棒 """
+    VIBRATOR_INSERTION = 0
+    """ 震动棒 """
+    VIBRATOR_INSERTION_ANAL = 0
+    """ 肛门振动棒 """
+    MILKING_MACHINE = 0
+    """ 搾乳机 """
+    URINE_COLLECTOR = 0
+    """ 采尿器 """
+    BONDAGE = 0
+    """ 绳子 """
+    PATCH = 0
+    """ 眼罩 """
+    PUT_CONDOM = 0
+    """ 避孕套 """
     NORMAL_SEX = 0
     """ 正常位 """
     BACK_SEX = 0
