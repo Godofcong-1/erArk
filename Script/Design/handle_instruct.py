@@ -718,6 +718,7 @@ def handle_do_h():
     target_data = cache.character_data[character_data.target_character_id]
     if character.calculation_instuct_judege(0,character_data.target_character_id,"DO_H"):
         target_data.is_h = 1
+        target_data.is_follow = 0
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n进入H模式\n")
@@ -742,6 +743,7 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     target_data.is_h = 0
+    target_data.is_follow = 1
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")
@@ -1404,7 +1406,8 @@ def handle_rub_buttock():
     constant.InstructType.SEX,
     _("手交口交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB},
 )
 def handle_hand_blowjob():
     """处理手交口交指令"""
@@ -1420,7 +1423,8 @@ def handle_hand_blowjob():
     constant.InstructType.SEX,
     _("乳交口交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_PAIZURI},
 )
 def handle_tits_blowjob():
     """处理乳交口交指令"""
@@ -1436,7 +1440,8 @@ def handle_tits_blowjob():
     constant.InstructType.SEX,
     _("真空口交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB},
 )
 def handle_focus_blowjob():
     """处理真空口交指令"""
@@ -1452,7 +1457,8 @@ def handle_focus_blowjob():
     constant.InstructType.SEX,
     _("深喉插入"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB},
 )
 def handle_deep_throat():
     """处理深喉插入指令"""
@@ -1468,7 +1474,8 @@ def handle_deep_throat():
     constant.InstructType.SEX,
     _("六九式"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_CUNNILINGUS},
 )
 def handle_sixty_nine():
     """处理六九式指令"""

@@ -82,29 +82,29 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                     for i in status_data.status
                 ]
             )
-        if len(status_data.knowledge):
-            now_text_list.extend(
-                [
-                    f"\n  {game_config.config_knowledge[i].name}:{attr_text.get_value_text(status_data.knowledge[i])}"
-                    for i in status_data.knowledge
-                ]
-            )
-        if len(status_data.language):
-            now_text_list.extend(
-                [
-                    f"\n  {game_config.config_language[i].name}:{attr_text.get_value_text(status_data.language[i])}"
-                    for i in status_data.language
-                ]
-            )
-        if len(status_data.sex_experience):
-            now_text_list.extend(
-                [
-                    game_config.config_organ[i].name
-                    + _("经验:")
-                    + text_handle.number_to_symbol_string(round(status_data.sex_experience[i], 2))
-                    for i in status_data.sex_experience
-                ]
-            )
+        # if len(status_data.knowledge):
+        #     now_text_list.extend(
+        #         [
+        #             f"\n  {game_config.config_knowledge[i].name}:{attr_text.get_value_text(status_data.knowledge[i])}"
+        #             for i in status_data.knowledge
+        #         ]
+        #     )
+        # if len(status_data.language):
+        #     now_text_list.extend(
+        #         [
+        #             f"\n  {game_config.config_language[i].name}:{attr_text.get_value_text(status_data.language[i])}"
+        #             for i in status_data.language
+        #         ]
+        #     )
+        # if len(status_data.sex_experience):
+        #     now_text_list.extend(
+        #         [
+        #             game_config.config_organ[i].name
+        #             + _("经验:")
+        #             + text_handle.number_to_symbol_string(round(status_data.sex_experience[i], 2))
+        #             for i in status_data.sex_experience
+        #         ]
+        #     )
         if len(status_data.experience):
             now_text_list.extend(
                 [

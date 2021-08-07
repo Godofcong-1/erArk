@@ -625,6 +625,14 @@ class Premise:
     TARGET_HAVE_CAR = "car_1"
     """ 交互对象有小车 """
 
+    LAST_CMD_BLOWJOB = "last_cmd_blowjob"
+    """ 前一指令为口交 """
+    LAST_CMD_BLOWJOB_OR_HANDJOB = "last_cmd_blowjob_or_handjob"
+    """ 前一指令为口交或手交 """
+    LAST_CMD_BLOWJOB_OR_PAIZURI = "last_cmd_blowjob_or_paizuri"
+    """ 前一指令为口交或乳交 """
+    LAST_CMD_BLOWJOB_OR_CUNNILINGUS = "last_cmd_blowjob_or_cunnilingus"
+    """ 前一指令为口交或舔阴 """
 
 
     HYPOSTHENIA = "83"
