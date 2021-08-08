@@ -78,6 +78,8 @@ class NpcTem:
         """ HP预设 """
         self.Mp: int = 0
         """ MP预设 """
+        self.Dormitory: int = 0
+        """ 宿舍预设 """
 
 
 class Measurements:

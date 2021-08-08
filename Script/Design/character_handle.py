@@ -100,6 +100,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.talent = character_tem.Talent
     now_character.hit_point_max = character_tem.Hp
     now_character.mana_point_max = character_tem.Mp
+    now_character.dormitory = character_tem.Dormitory
     # now_character.age = attr_calculation.get_age(character_id)
     if character_tem.MotherTongue != "":
         now_character.mother_tongue = character_tem.MotherTongue
@@ -197,19 +198,36 @@ def get_rand_npc_sex() -> int:
 def init_character_dormitory():
     """
     分配角色宿舍
-    暂定先全部到博士房间
+    玩家分配到博士房间，角色分配到csv里所写的宿舍名所对应的房间坐标
     """
-    dormitory = {
+    Dr_room = {
         key: constant.place_data[key] for key in constant.place_data if "Dr_room" in key
+    }
+    Dr_room = {
+        x: 0 for j in [k[1] for k in sorted(Dr_room.items(), key=lambda x: x[0])] for x in j
+    }
+    dormitory = {
+        key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
     }
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
     }
+    # print("Dr_room :",Dr_room)
     # print("dormitory :",dormitory)
+    # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
     for character_id in cache.character_data:
-        now_room = list(dormitory.keys())[0]
-        cache.character_data[character_id].dormitory = now_room
-
+        # print("character_id :",character_id)
+        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
+        if character_id == 0:
+            now_room = list(Dr_room.keys())[0]
+            cache.character_data[character_id].dormitory = now_room
+        else:
+            # print("list(dormitory.keys()) :",list(dormitory.keys()))
+            for n in list(dormitory.keys()):
+                print("n :",n)
+                if cache.scene_data[n].scene_name == cache.character_data[character_id].dormitory:
+                    cache.character_data[character_id].dormitory = n
+        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
 
 # def init_character_dormitory():
 #     """
