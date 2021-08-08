@@ -224,7 +224,7 @@ def init_character_dormitory():
         else:
             # print("list(dormitory.keys()) :",list(dormitory.keys()))
             for n in list(dormitory.keys()):
-                print("n :",n)
+                # print("n :",n)
                 if cache.scene_data[n].scene_name == cache.character_data[character_id].dormitory:
                     cache.character_data[character_id].dormitory = n
         # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
