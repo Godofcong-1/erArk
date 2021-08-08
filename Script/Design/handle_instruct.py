@@ -165,6 +165,13 @@ def handle_buy_item():
     cache.now_panel_id = constant.Panel.ITEM_SHOP
 
 
+@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), {})
+def handle_save():
+    """处理读写存档指令"""
+    now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
+    now_panel.draw()
+
+
 @add_instruct(
     constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), {constant.Premise.HAVE_TARGET}
 )
@@ -175,6 +182,12 @@ def handle_abl_up():
         cache.character_data[0].target_character_id, width
     )
     now_draw.draw()
+
+
+@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.SYSTEM, _("查找与召集干员"), {})
+def handle_find_and_call_npc():
+    """处理查找与召集干员指令"""
+    cache.now_panel_id = constant.Panel.FIND_CALL
 
 
 # @add_instruct(
@@ -191,13 +204,6 @@ def handle_abl_up():
 #     character_data.behavior.behavior_id = constant.Behavior.PLAY_PIANO
 #     character_data.state = constant.CharacterStatus.STATUS_PLAY_PIANO
 #     update.game_update_flow(30)
-
-
-@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), {})
-def handle_save():
-    """处理读写存档指令"""
-    now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
-    now_panel.draw()
 
 
 @add_instruct(

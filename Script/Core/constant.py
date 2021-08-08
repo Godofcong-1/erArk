@@ -375,6 +375,8 @@ class Panel:
     # """ 起床面板 """
     MAKE_FOOD = 7
     """ 做饭面板 """
+    FIND_CALL = 8
+    """ 查询与召集面板 """
 
 
 class Premise:
@@ -1538,6 +1540,8 @@ class Instruct:
     """ 读写存档 """
     ABL_UP = 0
     """ 属性升级 """
+    FIND_AND_CALL_NPC = 0
+    """ 查找与召集干员 """
 
     # ATTEND_CLASS = 0
     # """ 上课 """
