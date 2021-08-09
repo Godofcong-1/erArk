@@ -498,7 +498,7 @@ def handle_first_kiss(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.social_contact_data.setdefault(character_id, 0)
-    if character.calculation_instuct_judege(character_id,character_data.target_character_id,"KISS"):
+    if character.calculation_instuct_judege(character_id,character_data.target_character_id,"亲吻"):
         if character_data.talent[4] == 1:
             character_data.talent[4] = 0
             character_data.first_kiss_id = target_data.cid
@@ -557,6 +557,108 @@ def handle_first_hand_in_hand(
             character_data.first_kiss = target_data.cid
         if target_data.first_hand_in_hand == -1:
             target_data.first_kiss = character_id
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_SEX)
+def handle_first_sex(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录处女
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.social_contact_data.setdefault(character_id, 0)
+    if character.calculation_instuct_judege(character_id,character_data.target_character_id,"性交"):
+        if character_data.talent[5] == 1:
+            character_data.talent[5] = 0
+            character_data.first_sex_id = target_data.cid
+            character_data.first_sex_time = cache.game_time
+            character_data.first_sex_place = character_data.position
+            if (not character_id) or (not target_data.cid):
+                now_draw = draw.NormalDraw()
+                now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
+                    character_name=character_data.name,
+                    sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
+                    sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                )
+                now_draw.width = window_width
+                now_draw.draw()
+        if target_data.talent[0] == 1:
+            target_data.talent[0] = 0
+            target_data.first_sex_id = character_id
+            target_data.first_sex_time = cache.game_time
+            target_data.first_sex_place = target_data.position
+            if (not character_id) or (not target_data.cid):
+                now_draw = draw.NormalDraw()
+                now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
+                    character_name=target_data.name,
+                    sex_time = str(target_data.first_sex_time.month) + "月" + str (target_data.first_sex_time.day) + "日",
+                    sex_palce = attr_text.get_scene_path_text(target_data.first_sex_place),
+                )
+                now_draw.width = window_width
+                now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
+def handle_first_a_sex(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录A处女
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.social_contact_data.setdefault(character_id, 0)
+    if character.calculation_instuct_judege(character_id,character_data.target_character_id,"A性交"):
+        if character_data.talent[5] == 1:
+            character_data.talent[5] = 0
+            character_data.first_sex_id = target_data.cid
+            character_data.first_sex_time = cache.game_time
+            character_data.first_sex_place = character_data.position
+            if (not character_id) or (not target_data.cid):
+                now_draw = draw.NormalDraw()
+                now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
+                    character_name=character_data.name,
+                    sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
+                    sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                )
+                now_draw.width = window_width
+                now_draw.draw()
+        if target_data.talent[1] == 1:
+            target_data.talent[1] = 0
+            target_data.first_a_sex_id = character_id
+            target_data.first_a_sex_time = cache.game_time
+            target_data.first_a_sex_place = target_data.position
+            if (not character_id) or (not target_data.cid):
+                now_draw = draw.NormalDraw()
+                now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
+                    character_name=target_data.name,
+                    a_sex_time = str(target_data.first_a_sex_time.month) + "月" + str (target_data.first_a_sex_time.day) + "日",
+                    a_sex_palce = attr_text.get_scene_path_text(target_data.first_a_sex_place),
+                )
+                now_draw.width = window_width
+                now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)

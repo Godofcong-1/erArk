@@ -281,10 +281,10 @@ def handle_kiss():
     """处理亲吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 2
+    character_data.behavior.duration = 5
     character_data.behavior.behavior_id = constant.Behavior.KISS
     character_data.state = constant.CharacterStatus.STATUS_KISS
-    update.game_update_flow(2)
+    update.game_update_flow(5)
 
 
 @add_instruct(
@@ -722,7 +722,7 @@ def handle_do_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0,character_data.target_character_id,"DO_H"):
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
         target_data.is_h = 1
         target_data.is_follow = 0
         now_draw = draw.WaitDraw()

@@ -866,6 +866,10 @@ class BehaviorEffect:
     """ 增加中量体力 """
     ADD_MEDIUM_MANA_POINT = 21
     """ 增加中量气力 """
+    FIRST_SEX = 22
+    """ 记录处女 """
+    FIRST_A_SEX = 23
+    """ 记录A处女 """
     INTERRUPT_TARGET_ACTIVITY = 30
     """ 打断交互对象活动 """
     TARGET_ADD_SMALL_N_FEEL = 41

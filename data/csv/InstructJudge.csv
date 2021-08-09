@@ -3,7 +3,11 @@ cid,instruct_name,need_type,value
 int,str,str,int
 0,0,0,1
 每个指令的实行值判定数据,,
-0,DO_H,S,350
-1,CONFESSION,D,25
-2,ASK_DATE,D,20
-3,KISS,D,100
+0,H模式,S,350
+1,告白,D,250
+2,约会,D,150
+3,亲吻,D,200
+4,性交,S,500
+5,A性交,S,700
+6,初级骚扰,D,150
+7,严重骚扰,D,500
