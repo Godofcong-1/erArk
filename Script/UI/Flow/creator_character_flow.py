@@ -9,7 +9,6 @@ from Script.Design import (
     character_handle,
     cooking,
     map_handle,
-    interest,
     attr_calculation,
 )
 from Script.UI.Moudle import panel, draw

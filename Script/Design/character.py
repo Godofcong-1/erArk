@@ -10,7 +10,6 @@ from Script.Core import (
 from Script.Design import (
     attr_calculation,
     clothing,
-    nature,
 )
 from Script.Config import game_config
 from Script.UI.Moudle import draw
@@ -29,12 +28,9 @@ def init_attr(character_id: int):
     # print("进入第二步的init_attr")
     # print("进入第二步的character_id :",character_id)
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.language[character_data.mother_tongue] = 10000
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
-    # character_data.end_age = attr_calculation.get_end_age(character_data.sex)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
-    # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     character_data.status = attr_calculation.get_status_zero(character_data.status)
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
@@ -53,23 +49,7 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    # new_nature = nature.get_random_nature()
-    # for nature_id in new_nature:
-    #     if nature_id not in character_data.nature:
-    #         character_data.nature[nature_id] = new_nature[nature_id]
     # init_class(character_data)
-
-
-# def init_class(character_data: game_type.Character):
-#     """
-#     初始化角色班级
-#     character_data -- 角色对象
-#     """
-#     if character_data.age <= 18 and character_data.age >= 7:
-#         class_grade = str(character_data.age - 6)
-#         character_data.classroom = random.choice(constant.place_data["Classroom_" + class_grade])
-#         cache.classroom_students_data.setdefault(character_data.classroom, set())
-#         cache.classroom_students_data[character_data.classroom].add(character_data.cid)
 
 
 def init_character_behavior_start_time(character_id: int, now_time: datetime.datetime):
@@ -326,44 +306,6 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 #     favorability *= fix
 #     return favorability
 
-
-def judge_character_in_class_time(character_id: int) -> bool:
-    """
-    校验角色是否处于上课时间
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time: datetime.datetime = character_data.behavior.start_time
-    # print("character_data.behavior.start_time :",character_data.behavior.start_time)
-    # print("cache.game_time :",cache.game_time)
-    if now_time is None:
-        now_time = cache.game_time
-    now_time_value = now_time.hour * 100 + now_time.minute
-    # print("now_time_value :",now_time_value)
-    if character_data.age <= 18:
-        school_id = 0
-        if character_data.age in range(13, 16):
-            school_id = 1
-        elif character_data.age in range(16, 19):
-            school_id = 2
-        for session_id in game_config.config_school_session_data[school_id]:
-            session_config = game_config.config_school_session[session_id]
-            if now_time_value >= session_config.start_time and now_time_value <= session_config.end_time:
-                return 1
-        return 0
-    if character_id not in cache.teacher_school_timetable:
-        return 0
-    now_week = now_time.weekday()
-    timetable_list: List[game_type.TeacherTimeTable] = cache.teacher_school_timetable[character_id]
-    for timetable in timetable_list:
-        if timetable.week_day != now_week:
-            continue
-        if timetable.time <= now_time_value and timetable.end_time >= now_time_value:
-            return 1
-    return 0
 
 def judge_character_time_over_24(character_id: int) -> bool:
     """

@@ -121,12 +121,6 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
-    # STATUS_TEACHING = 16
-    # """ 教学 """
-    # STATUS_PLAY_GUITAR = 17
-    # """ 弹吉他 """
-    # STATUS_SELF_STUDY = 18
-    # """ 自习 """
 
 
 class Behavior:
@@ -249,13 +243,6 @@ class Behavior:
     SIXTY_NINE = 431
     """ 六九式 """
 
-    # PLAY_PIANO = 6
-    # """ 弹钢琴 """
-    # SINGING = 7
-    # """ 唱歌 """
-    # DEAD = 13
-    # """ 死亡 """
-
 
 class StateMachine:
     """状态机id"""
@@ -369,10 +356,6 @@ class Panel:
     """ 食物背包面板 """
     ITEM_SHOP = 6
     """ 道具商店面板 """
-    # VIEW_SCHOOL_TIMETABLE = 7
-    # """ 查看课程表 """
-    # GET_UP = 7
-    # """ 起床面板 """
     MAKE_FOOD = 7
     """ 做饭面板 """
     FIND_CALL = 8
@@ -856,101 +839,6 @@ class Premise:
     NO_IN_ITEM_SHOP = "162"
     """ 在训练场入口中 """
 
-    #旧前提存档#
-    # HAVE_TARGET = "8"
-    # """ 拥有交互对象 """
-    # TARGET_NO_PLAYER = "9"
-    # """ 交互对象不是玩家 """
-    # TARGET_AGE_SIMILAR = "30"
-    # """ 目标与自身年龄相差不大 """
-    # TARGET_AVERAGE_HEIGHT_SIMILAR = "31"
-    # """ 目标身高与平均身高相差不大 """
-    # TARGET_AVERAGE_HEIGHT_LOW = "32"
-    # """ 目标身高低于平均身高 """
-    # TARGET_IS_PLAYER = "33"
-    # """ 目标是玩家角色 """
-    # TARGET_AVERGAE_STATURE_SIMILAR = "34"
-    # """ 目标体型与平均体型相差不大 """
-    # IS_PLAYER = "37"
-    # """ 是玩家角色 """
-    # NO_PLAYER = "38"
-    # """ 不是玩家角色 """
-    # EXCELLED_AT_PLAY_MUSIC = "66"
-    # """ 擅长演奏 """
-    # EXCELLED_AT_SINGING = "67"
-    # """ 擅长演唱 """
-    # TARGET_IS_HEIGHT = "81"
-    # """ 目标比自己高 """
-    # TARGET_AVERAGE_STATURE_HEIGHT = "91"
-    # """ 目标体型比平均体型更胖 """
-    # TARGET_IS_NAKED = "118"
-    # """ 交互对象一丝不挂 """
-    # APPROACHING_CLASS_TIME = "131"
-    # """ 临近上课时间 """
-    # IN_CLASS_TIME = "132"
-    # """ 处于上课时间 """
-    # TEACHER_NO_IN_CLASSROOM = "134"
-    # """ 角色所属班级的老师不在教室中 """
-    # IS_NAKED = "136"
-    # """ 角色一丝不挂 """
-    # GOOD_AT_ELOQUENCE = "139"
-    # """ 角色擅长口才 """
-    # GOOD_AT_LITERATURE = "140"
-    # """ 角色擅长文学 """
-    # GOOD_AT_WRITING = "141"
-    # """ 角色擅长写作 """
-    # GOOD_AT_DRAW = "142"
-    # """ 角色擅长绘画 """
-    # GOOD_AT_ART = "143"
-    # """ 角色擅长艺术 """
-    # TARGET_LITTLE_KNOWLEDGE_OF_RELIGION = "144"
-    # """ 交互对象对宗教一知半解 """
-    # TARGET_LITTLE_KNOWLEDGE_OF_FAITH = "145"
-    # """ 交互对象对信仰一知半解 """
-    # TARGET_LITTLE_KNOWLEDGE_OF_ASTRONOMY = "146"
-    # """ 交互对象对天文学一知半解 """
-    # TARGET_LITTLE_KNOWLEDGE_OF_ASTROLOGY = "147"
-    # """ 交互对象对占星学一知半解 """
-    # RICH_EXPERIENCE_IN_SEX = "148"
-    # """ 角色性经验丰富 """
-    # NO_GOOD_AT_ELOQUENCE = "153"
-    # """ 角色不擅长口才 """
-    # NAKED_CHARACTER_IN_SCENE = "158"
-    # """ 场景中有人一丝不挂 """
-
-    # IS_HUMOR_MAN = "45"
-    # """ 是一个幽默的人 """
-    # IS_LIVELY = "75"
-    # """ 是一个活跃的人 """
-    # IS_INFERIORITY = "76"
-    # """ 是一个自卑的人 """
-    # IS_AUTONOMY = "77"
-    # """ 是一个自律的人 """
-    # IS_SOLITARY = "79"
-    # """ 是一个孤僻的人 """
-    # IS_INDULGE = "85"
-    # """ 是一个放纵的人 """
-    # TARGET_IS_SOLITARY = "87"
-    # """ 交互对象是一个孤僻的人 """
-    # TARGET_IS_ASTUTE = "102"
-    # """ 交互对象是一个机敏的人 """
-    # TARGET_IS_INFERIORITY = "103"
-    # """ 交互对象是一个自卑的人 """
-    # TARGET_IS_ENTHUSIASM = "104"
-    # """ 交互对象是一个热情的人 """
-    # TARGET_IS_SELF_CONFIDENCE = "105"
-    # """ 交互对象是一个自信的人 """
-    # IS_ASTUTE = "106"
-    # """ 是一个机敏的人 """
-    # TARGET_IS_HEAVY_FEELING = "107"
-    # """ 交互对象是一个重情的人 """
-    # IS_HEAVY_FEELING = "110"
-    # """ 是一个重情的人 """
-    # TARGET_IS_APATHY = "113"
-    # """ 交互对象是一个冷漠的人 """
-    # IS_STARAIGHTFORWARD = "152"
-    # """ 是一个爽直的人 """
-
 
 class BehaviorEffect:
     """行为结算效果函数"""
@@ -1239,30 +1127,6 @@ class BehaviorEffect:
 class InstructType:
     """指令类型"""
 
-    # DIALOGUE = 0
-    # """ 对话 """
-    # ACTIVE = 1
-    # """ 主动 """
-    # PASSIVE = 2
-    # """ 被动 """
-    # PERFORM = 3
-    # """ 表演 """
-    # OBSCENITY = 4
-    # """ 猥亵 """
-    # PLAY = 5
-    # """ 娱乐 """
-    # BATTLE = 6
-    # """ 战斗 """
-    # STUDY = 7
-    # """ 学习 """
-    # REST = 8
-    # """ 休息 """
-    # SEX = 9
-    # """ 性爱 """
-    # SYSTEM = 10
-    # """ 系统 """
-
-    #以下为改变#
     SYSTEM = 0
     """ 系统 """
     DAILY = 1
@@ -1542,30 +1406,6 @@ class Instruct:
     """ 属性升级 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
-
-    # ATTEND_CLASS = 0
-    # """ 上课 """
-    # TEACH_A_LESSON = 0
-    # """ 教课 """
-    # SELF_STUDY = 0
-    # """ 自习 """
-    # VIEW_THE_SCHOOL_TIMETABLE = 0
-    # """ 查看课程表 """
-    # COLLECTION_CHARACTER = 0
-    # """ 收藏角色 """
-    # UN_COLLECTION_CHARACTER = 0
-    # """ 取消收藏 """
-    # COLLECTION_SYSTEM = 0
-    # """ 启用收藏模式 """
-    # UN_COLLECTION_SYSTEM = 0
-    # """ 关闭收藏模式 """
-    # DRINK_SPRING = 0
-    # """ 喝泉水 """
-    # #娱乐#
-    # PLAY_PIANO = 0
-    # """ 弹钢琴 """
-    # PLAY_GUITAR = 0
-    # """ 弹吉他 """
 
 
 

@@ -47,16 +47,12 @@ class NpcTem:
         """ npc出生位置(已废弃) """
         self.AdvNpc: int = 0
         """ 剧情npc校验 """
-        self.Weight: str = ""
-        """ 体重模板 """
-        self.BodyFat: str = ""
-        """ 体脂率模板 """
-        self.Chest: int = 0
-        """ 罩杯模板 """
-        self.MotherTongue: str = ""
-        """ 母语 """
-        self.SexExperienceTem: str = ""
-        """ 性经验模板 """
+        # self.Weight: str = ""
+        # """ 体重模板 """
+        # self.BodyFat: str = ""
+        # """ 体脂率模板 """
+        # self.Chest: int = 0
+        # """ 罩杯模板 """
         #以下为新加
         self.Favorability: str = {}
         """ 好感度模板 """
@@ -82,28 +78,28 @@ class NpcTem:
         """ 宿舍预设 """
 
 
-class Measurements:
-    """三围数据结构体"""
+# class Measurements:
+#     """三围数据结构体"""
 
-    def __init__(self):
-        self.bust: float = 0
-        """ 胸围 """
-        self.waist: float = 0
-        """ 腰围 """
-        self.hip: float = 0
-        """ 臀围 """
+#     def __init__(self):
+#         self.bust: float = 0
+#         """ 胸围 """
+#         self.waist: float = 0
+#         """ 腰围 """
+#         self.hip: float = 0
+#         """ 臀围 """
 
 
-class Chest:
-    """胸围差数据结构体"""
+# class Chest:
+#     """胸围差数据结构体"""
 
-    def __init__(self):
-        self.target_chest: int = 0
-        """ 预期最终胸围差 """
-        self.now_chest: int = 0
-        """ 当前胸围差 """
-        self.sub_chest: int = 0
-        """ 每日胸围差增量 """
+#     def __init__(self):
+#         self.target_chest: int = 0
+#         """ 预期最终胸围差 """
+#         self.now_chest: int = 0
+#         """ 当前胸围差 """
+#         self.sub_chest: int = 0
+#         """ 每日胸围差增量 """
 
 
 class Food:
@@ -209,10 +205,6 @@ class NormalConfig:
     """ 知识产权共享协议链接 """
     random_npc_max: int
     """ 最大随机npc数量 """
-    proportion_teacher: int
-    """ 生成教师权重 """
-    proportion_student: int
-    """ 生成学生权重 """
     insceneseeplayer_max: int
     """ 场景单页显示角色数上限 """
     seecharacterclothes_max: int
@@ -263,20 +255,20 @@ class Clothing:
         """ 穿戴部位 """
 
 
-class Height:
-    """身高数据结构体"""
+# class Height:
+#     """身高数据结构体"""
 
-    def __init__(self):
-        self.now_height: float = 0
-        """ 当前身高 """
-        self.growth_height: float = 0
-        """ 每日身高增量 """
-        self.expect_age: int = 0
-        """ 预期结束身高增长年龄 """
-        self.development_age: int = 0
-        """ 预期发育期结束时间 """
-        self.expect_height: float = 0
-        """ 预期的最终身高 """
+#     def __init__(self):
+#         self.now_height: float = 0
+#         """ 当前身高 """
+#         self.growth_height: float = 0
+#         """ 每日身高增量 """
+#         self.expect_age: int = 0
+#         """ 预期结束身高增长年龄 """
+#         self.development_age: int = 0
+#         """ 预期发育期结束时间 """
+#         self.expect_height: float = 0
+#         """ 预期的最终身高 """
 
 
 class Behavior:
@@ -299,8 +291,6 @@ class Behavior:
         """ 前提结算用:进食行为消耗的食物名字 """
         self.food_quality: int = 0
         """ 前提结算用:进食行为消耗的食物品质 """
-        self.course_id: int = 0
-        """ 上课时所学/教的课程 """
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
 
@@ -395,12 +385,6 @@ class Character:
         """ 角色性别 """
         self.age: int = 17
         """ 角色年龄 """
-        self.end_age: int = 74
-        """ 角色预期寿命 """
-        self.intimate: int = 0
-        """ 角色与玩家的亲密度 """
-        self.graces: int = 0
-        """ 角色的魅力值 """
         self.hit_point_max: int = 0
         """ 角色最大HP """
         self.hit_point: int = 0
@@ -409,14 +393,8 @@ class Character:
         """ 角色最大MP """
         self.mana_point: int = 0
         """ 角色当前MP """
-        self.sex_experience: Dict[int, int] = {}
-        """ 角色的性经验数据 """
-        self.sex_grade: Dict[str, str] = {}
-        """ 角色的性等级描述数据 """
         self.state: int = 0
         """ 角色当前状态 """
-        self.engraving: Dict[str, int] = {}
-        """ 角色的刻印数据 """
         self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
         """
         角色拥有的服装数据
@@ -429,55 +407,26 @@ class Character:
         """
         self.item: Set = set()
         """ 角色拥有的道具id集合 """
-        self.height: Height = Height()
-        """ 角色的身高数据 """
-        self.weight: float = 0
-        """ 角色的体重数据 """
-        self.measurements: Measurements = Measurements()
-        """ 角色的三围数据 """
+        # self.height: Height = Height()
+        # """ 角色的身高数据 """
+        # self.measurements: Measurements = Measurements()
+        # """ 角色的三围数据 """
         self.behavior: Behavior = Behavior()
         """ 角色当前行为状态数据 """
         self.gold: int = 0
         """ 角色所持金钱数据 """
         self.position: List[str] = ["0"]
         """ 角色当前坐标数据 """
-        self.classroom: str = ""
-        """ 角色所属班级坐标 """
         self.officeroom: List[str] = []
         """ 角色所属办公室坐标 """
-        self.knowledge: Dict[int, int] = {}
-        """ 角色知识技能等级数据 """
-        self.language: Dict[int, int] = {}
-        """
-        角色语言技能等级数据
-        语言id:经验
-        """
-        self.mother_tongue: int = 0
-        """ 角色母语 """
-        self.knowledge_interest: Dict[int, int] = {}
-        """ 角色天赋数据 """
-        self.language_interest: Dict[int, int] = {}
-        """ 角色语言天赋数据 """
         self.dormitory: str = ""
         """ 角色宿舍坐标 """
         self.birthday: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色生日数据 """
-        self.weight_tem: int = 1
-        """ 角色体重模板 """
-        self.bodyfat_tem: int = 1
-        """ 角色体脂率模板 """
-        self.bodyfat: int = 0
-        """ 角色体脂率数据 """
-        self.sex_experience_tem: int = 0
-        """ 角色性经验模板 """
         self.clothing_tem: int = 0
         """ 角色生成服装模板 """
-        self.chest_tem: int = 0
-        """ 角色罩杯模板 """
-        self.chest: Chest = Chest()
-        """ 角色罩杯数据 """
-        self.nature: Dict[int, int] = {}
-        """ 角色性格数据 """
+        # self.chest_tem: int = 0
+        # """ 角色罩杯模板 """
         self.status: Dict[int, int] = {}
         """ 角色状态数据 状态id:状态数值 """
         self.put_on: Dict[int, UUID] = {}
@@ -571,24 +520,6 @@ class Character:
         """ 正跟随玩家 """
 
 
-class TeacherTimeTable:
-    """教师上课时间数据结构体"""
-
-    def __init__(self):
-        self.class_room: List[str] = []
-        """ 上课教室 """
-        self.week_day: int = 0
-        """ 周几 """
-        self.class_times: int = 0
-        """ 第几节课 """
-        self.course: int = 0
-        """ 科目 """
-        self.time: int = 0
-        """ 上课时间 """
-        self.end_time: int = 0
-        """ 下课时间 """
-
-
 class Cache:
     """游戏缓存数据结构体"""
 
@@ -627,71 +558,8 @@ class Cache:
         """ 游戏时间 """
         self.now_panel_id: int = 0
         """ 当前游面板id """
-        self.course_data: Dict[int, Dict[int, Dict[int, int]]] = {}
-        """
-        各个学校各年级各科目课时数据
-        学校id:年级:科目id:每周课时
-        """
-        self.course_time_table_data: Dict[int, Dict[int, Dict[int, Dict[int, int]]]] = {}
-        """
-        各个学校各年级课程表数据
-        学校id:年级:周几:第几节课:科目id
-        """
-        self.course_school_phase_knowledge_experience: Dict[int, Dict[int, Dict[int, Dict[int, int]]]] = {}
-        """
-        各个学校各学年各技能理论增长经验总量
-        学校id:年级:课程:技能:经验
-        """
-        self.course_school_phase_language_experience: Dict[int, Dict[int, Dict[int, Dict[int, int]]]] = {}
-        """
-        各个学校各学年各语言理论增长经验总量
-        学校id:年级:课程:语言:经验
-        """
-        self.teacher_course_experience: Dict[int, Dict[int, int]] = {}
-        """
-        教师科目经验
-        科目id:教师id:经验
-        """
-        self.classroom_teacher_data: Dict[str, Dict[str, Dict[int, Set]]] = {}
-        """
-        各班级各科目教师配置数据
-        年级房间标签(Classroom_n):教室路径:科目id:教师集合
-        """
-        self.teacher_school_timetable: Dict[int, List[TeacherTimeTable]] = {}
-        """
-        各老师每周上课数据
-        老师id:上课数据列表
-        """
-        self.teacher_class_week_day_data: Dict[int, Set] = {}
-        """ 各老师每周工作日集合 """
-        self.class_timetable_teacher_data: Dict[int, Dict[int, Dict[str, Dict[int, Dict[int, int]]]]] = {}
-        """
-        各学校各班级上课时间对应教师数据
-        学校id:年级id:班级id:星期:课时:老师id
-        """
-        self.teacher_class_time_table: Dict[
-            int, Dict[int, Dict[int, Dict[int, Dict[int, Dict[str, int]]]]]
-        ] = {}
-        """
-        各班级各老师上课时间表
-        周几:学校id:年级id:上课时间:教师id:教室id:科目
-        """
-        self.teacher_phase_table: Dict[int, int] = {}
-        """ 各老师所在年级 """
-        self.classroom_students_data: Dict[str, Set[str]] = {}
-        """ 各班级学生集合 """
         self.old_character_id: int = 0
         """ 离开场景面板前在场景中查看的角色id """
-        self.total_number_of_people_of_all_ages: Dict[str, int] = {}
-        """ 各年龄段总人数 """
-        self.total_bodyfat_by_age: dict = {}
-        """ 各年龄段总体脂率 """
-        self.average_bodyfat_by_age: dict = {}
-        """ 各年龄段平均体脂率 """
-        self.total_height_by_age: dict = {}
-        """ 各年龄段总身高 """
-        self.average_height_by_age: dict = {}
-        """ 各年龄段平均身高 """
         self.text_wait: int = 0
         """ 绘制文本输出等待时间 """
         self.map_data: Dict[str, Map] = {}
@@ -702,8 +570,6 @@ class Cache:
         """ 随机npc数据 """
         self.wear_item_type_data: dict = {}
         """ 可穿戴道具类型数据 """
-        self.course_time_status: dict = {}
-        """ 当前上课时间状态 """
         self.over_behavior_character: Set = set()
         """ 本次update中已结束结算的npc """
         self.recipe_data: Dict[int, Recipes] = {}
@@ -736,10 +602,6 @@ class TargetChange:
     """交互对象角色变化结构体"""
 
     def __init__(self):
-        self.old_social: int = 0
-        """ 旧关系 """
-        self.new_social: int = 0
-        """ 新关系 """
         self.hit_point: int = 0
         """ hp变化 """
         self.mana_point: int = 0
@@ -750,8 +612,6 @@ class TargetChange:
         """ 好感度变化 """
         self.trust: int = 0
         """ 信赖度变化 """
-        self.sex_experience: Dict[int, int] = {}
-        """ 性经验变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
 

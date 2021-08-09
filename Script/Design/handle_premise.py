@@ -2878,8 +2878,7 @@ def handle_last_cmd_blowjob(character_id: int) -> int:
     len_input = cache.input_cache
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
-    last_cmd = int(last_cmd)
-    if len_input and (last_cmd == constant.Instruct.BLOWJOB):
+    if len_input and (last_cmd == str(constant.Instruct.BLOWJOB)):
         return 1
     return 0
 
@@ -2896,9 +2895,8 @@ def handle_last_cmd_blowjob_or_handjob(character_id: int) -> int:
     len_input = cache.input_cache
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
-    last_cmd = int(last_cmd)
     if len_input:
-        if (last_cmd == constant.Instruct.BLOWJOB) or (last_cmd == constant.Instruct.HANDJOB):
+        if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.HANDJOB)):
             return 1
     return 0
 
@@ -2915,9 +2913,8 @@ def handle_last_cmd_blowjob_or_paizuri(character_id: int) -> int:
     len_input = cache.input_cache
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
-    last_cmd = int(last_cmd)
     if len_input:
-        if (last_cmd == constant.Instruct.BLOWJOB) or (last_cmd == constant.Instruct.PAIZURI):
+        if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.PAIZURI)):
             return 1
     return 0
 
@@ -2934,9 +2931,8 @@ def handle_last_cmd_blowjob_or_cunnilingus(character_id: int) -> int:
     len_input = cache.input_cache
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
-    last_cmd = int(last_cmd)
     if len_input:
-        if (last_cmd == constant.Instruct.BLOWJOB) or (last_cmd == constant.Instruct.CUNNILINGUS):
+        if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.CUNNILINGUS)):
             return 1
     return 0
 
