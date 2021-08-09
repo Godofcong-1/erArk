@@ -585,6 +585,7 @@ def handle_first_sex(
             character_data.first_sex_id = target_data.cid
             character_data.first_sex_time = cache.game_time
             character_data.first_sex_place = character_data.position
+            character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
                 now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
@@ -599,6 +600,7 @@ def handle_first_sex(
             target_data.first_sex_id = character_id
             target_data.first_sex_time = cache.game_time
             target_data.first_sex_place = target_data.position
+            target_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
                 now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
@@ -636,6 +638,7 @@ def handle_first_a_sex(
             character_data.first_sex_id = target_data.cid
             character_data.first_sex_time = cache.game_time
             character_data.first_sex_place = character_data.position
+            character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
                 now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
@@ -650,6 +653,7 @@ def handle_first_a_sex(
             target_data.first_a_sex_id = character_id
             target_data.first_a_sex_time = cache.game_time
             target_data.first_a_sex_place = target_data.position
+            character_data.first_a_sex_posture = cache.input_cache[len(cache.input_cache)-1]
             if (not character_id) or (not target_data.cid):
                 now_draw = draw.NormalDraw()
                 now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
