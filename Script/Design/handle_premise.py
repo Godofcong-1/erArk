@@ -2937,6 +2937,56 @@ def handle_last_cmd_blowjob_or_cunnilingus(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_SEX)
+def handle_last_cmd_sex(character_id: int) -> int:
+    """
+    前一指令为V性交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.NORMAL_SEX),str(constant.Instruct.BACK_SEX),str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.FACE_SEAT_SEX),str(constant.Instruct.BACK_SEAT_SEX),
+        str(constant.Instruct.FACE_STAND_SEX),str(constant.Instruct.BACK_STAND_SEX),
+        str(constant.Instruct.STIMULATE_G_POINT),str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_A_SEX)
+def handle_last_cmd_a_sex(character_id: int) -> int:
+    """
+    前一指令为A性交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.NORMAL_ANAL_SEX),str(constant.Instruct.BACK_ANAL_SEX),str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.FACE_SEAT_ANAL_SEX),str(constant.Instruct.BACK_SEAT_ANAL_SEX),
+        str(constant.Instruct.FACE_STAND_ANAL_SEX),str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.STIMULATE_SIGMOID_COLON),str(constant.Instruct.STIMULATE_VAGINA)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:
 #     """

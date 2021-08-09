@@ -135,6 +135,12 @@ class CharacterStatus:
     """ 对面立位 """
     STATUS_BACK_STAND_SEX = 507
     """ 背面立位 """
+    STATUS_STIMULATE_G_POINT = 511
+    """ 刺激G点 """
+    STATUS_WOMB_OS_CARESS = 512
+    """ 玩弄子宫口 """
+    STATUS_WOMB_INSERTION = 513
+    """ 插入子宫 """
 
 
 class Behavior:
@@ -270,6 +276,12 @@ class Behavior:
     """ 对面立位 """
     BACK_STAND_SEX = 507
     """ 背面立位 """
+    STIMULATE_G_POINT = 511
+    """ 刺激G点 """
+    WOMB_OS_CARESS = 512
+    """ 玩弄子宫口 """
+    WOMB_INSERTION = 513
+    """ 插入子宫 """
 
 
 class StateMachine:
@@ -646,6 +658,10 @@ class Premise:
     """ 前一指令为口交或乳交 """
     LAST_CMD_BLOWJOB_OR_CUNNILINGUS = "last_cmd_blowjob_or_cunnilingus"
     """ 前一指令为口交或舔阴 """
+    LAST_CMD_SEX = "last_cmd_sex"
+    """ 前一指令为V性交 """
+    LAST_CMD_A_SEX = "last_cmd_a_sex"
+    """ 前一指令为A性交 """
 
 
     HYPOSTHENIA = "83"
