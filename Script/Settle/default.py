@@ -1724,8 +1724,8 @@ def handle_tech_add_c_adjust(
     target_data.status[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(2, 0)
+    target_change.status[2] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -1775,8 +1775,8 @@ def handle_tech_add_p_adjust(
     target_data.status[3] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(3, 0)
+    target_change.status[3] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -1826,8 +1826,8 @@ def handle_tech_add_v_adjust(
     target_data.status[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(4, 0)
+    target_change.status[4] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -1877,8 +1877,8 @@ def handle_tech_add_a_adjust(
     target_data.status[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(5, 0)
+    target_change.status[5] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -1928,8 +1928,8 @@ def handle_tech_add_u_adjust(
     target_data.status[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(6, 0)
+    target_change.status[6] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -1979,8 +1979,8 @@ def handle_tech_add_w_adjust(
     target_data.status[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(7, 0)
+    target_change.status[7] += now_add_lust
     #欲情变化#
     target_data.status.setdefault(12, 0)
     now_lust = target_data.status[12]
@@ -2030,5 +2030,46 @@ def handle_tech_add_pl_p_adjust(
     character_data.status[3] += now_add_lust
     change_data.target_change.setdefault(character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[character_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status.setdefault(3, 0)
+    target_change.status[3] += now_add_lust
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)
+def handle_target_lubrication_adjust_add_pain(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    根据交互对象的润滑情况对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        return
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+    #获取调整值#
+    target_data.status.setdefault(8, 0)
+    adjust = attr_calculation.get_pain_adjust(target_data.status[8])
+    #苦痛变化#
+    target_data.status.setdefault(17, 0)
+    now_lust = target_data.status[17]
+    now_lust_multiple = 100 + now_lust / 10
+    now_add_lust = add_time + now_lust_multiple
+    now_add_lust *= adjust
+    target_data.status[17] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status.setdefault(17, 0)
+    target_change.status[17] += now_add_lust

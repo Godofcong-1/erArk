@@ -1755,8 +1755,10 @@ def handle_normal_sex():
     """处理正常位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
+    character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_SEX,
@@ -1769,8 +1771,10 @@ def handle_back_sex():
     """处理背后位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.RIDING_SEX,
@@ -1783,8 +1787,10 @@ def handle_riding_sex():
     """处理骑乘位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.RIDING_SEX
+    character_data.state = constant.CharacterStatus.STATUS_RIDING_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_SEX,
@@ -1797,8 +1803,10 @@ def handle_face_seat_sex():
     """处理对面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_SEX
+    character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_SEAT_SEX,
@@ -1811,8 +1819,10 @@ def handle_back_seat_sex():
     """处理背面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_STAND_SEX,
@@ -1825,8 +1835,10 @@ def handle_face_stand_sex():
     """处理对面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_SEX
+    character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_STAND_SEX,
@@ -1839,8 +1851,10 @@ def handle_back_stand_sex():
     """处理背面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.STIMULATE_G_POINT,

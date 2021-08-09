@@ -290,3 +290,38 @@ def get_juel(value: int) -> int:
     elif level == 10:
         juel = round(5.0*value)
     return juel
+
+
+def get_pain_adjust(value: int) -> int:
+    """
+    按润滑程度修正苦痛值比例
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 10.0
+    elif level == 1:
+        just = 6.0
+    elif level == 2:
+        just = 3.4
+    elif level == 3:
+        just = 2.8
+    elif level == 4:
+        just = 2.3
+    elif level == 5:
+        just = 1.8
+    elif level == 6:
+        just = 1.4
+    elif level == 7:
+        just = 1.0
+    elif level == 8:
+        just = 0.7
+    elif level == 9:
+        just = 0.4
+    elif level == 10:
+        just = 0.2
+    return just
+

@@ -121,6 +121,20 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
+    STATUS_NORMAL_SEX = 501
+    """ 正常位 """
+    STATUS_BACK_SEX = 502
+    """ 背后位 """
+    STATUS_RIDING_SEX = 503
+    """ 骑乘位 """
+    STATUS_FACE_SEAT_SEX = 504
+    """ 对面座位 """
+    STATUS_BACK_SEAT_SEX = 505
+    """ 背面座位 """
+    STATUS_FACE_STAND_SEX = 506
+    """ 对面立位 """
+    STATUS_BACK_STAND_SEX = 507
+    """ 背面立位 """
 
 
 class Behavior:
@@ -242,6 +256,20 @@ class Behavior:
     """ 深喉插入 """
     SIXTY_NINE = 431
     """ 六九式 """
+    NORMAL_SEX = 501
+    """ 正常位 """
+    BACK_SEX = 502
+    """ 背后位 """
+    RIDING_SEX = 503
+    """ 骑乘位 """
+    FACE_SEAT_SEX = 504
+    """ 对面座位 """
+    BACK_SEAT_SEX = 505
+    """ 背面座位 """
+    FACE_STAND_SEX = 506
+    """ 对面立位 """
+    BACK_STAND_SEX = 507
+    """ 背面立位 """
 
 
 class StateMachine:
@@ -941,7 +969,9 @@ class BehaviorEffect:
     TECH_ADD_W_ADJUST = 117
     """ 根据发起者的技巧技能对交互对象进行W快、欲情调整 """
     TECH_ADD_PL_P_ADJUST = 120
-    """ 根据对交互对象的技巧技能对发起者进行P快调整 """
+    """ 根据交互对象的技巧技能对发起者进行P快调整 """
+    TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
+    """ 根据交互对象的润滑情况对其进行苦痛调整 """
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201
@@ -1118,6 +1148,8 @@ class BehaviorEffect:
     """ 增加1音乐经验 """
     ADD_1_GiveBirth_EXPERIENCE = 319
     """ 增加1妊娠经验 """
+    ADD_1_Insert_EXPERIENCE = 320
+    """ 增加1插入经验 """
 
 #旧结算存档#
     # ADD_SOCIAL_FAVORABILITY = 7

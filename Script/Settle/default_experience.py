@@ -2471,3 +2471,29 @@ def handle_add_1_giveBirth_experience(
     character_data.experience[86] += 1
     change_data.experience.setdefault(86, 0)
     change_data.experience[86] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Insert_EXPERIENCE)
+def handle_add_1_insert_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1插入经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(50, 0)
+    character_data.experience[50] += 1
+    change_data.experience.setdefault(50, 0)
+    change_data.experience[50] += 1
