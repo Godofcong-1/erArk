@@ -282,8 +282,12 @@ def handle_kiss():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    character_data.behavior.behavior_id = constant.Behavior.KISS
-    character_data.state = constant.CharacterStatus.STATUS_KISS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"亲吻"):
+        character_data.behavior.behavior_id = constant.Behavior.KISS
+        character_data.state = constant.CharacterStatus.STATUS_KISS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
     update.game_update_flow(5)
 
 

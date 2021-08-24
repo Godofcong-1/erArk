@@ -1199,6 +1199,69 @@ def handle_target_music_ge_3(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant.Premise.TARGET_INTIMACY_8)
+def handle_target_intimacy_8(character_id: int) -> int:
+    """
+    校验交互对象是否亲密==8
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[21] == 8:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_INTIMACY_LE_1)
+def handle_target_intimacy_le_1(character_id: int) -> int:
+    """
+    校验交互对象是否亲密<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[21] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_INTIMACY_GE_3)
+def handle_target_intimacy_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否亲密>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[21] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_INTIMACY_GE_5)
+def handle_target_intimacy_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否亲密>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[21] >= 5:
+        return 1
+    return 0
+
 
 @add_premise(constant.Premise.TARGET_NOT_FALL)
 def handle_target_not_fall(character_id: int) -> int:
@@ -2864,6 +2927,286 @@ def handle_target_have_car(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[76]
+
+
+@add_premise(constant.Premise.TARGET_NOT_PATIENT)
+def handle_target_not_patient(character_id: int) -> int:
+    """
+    交互对象不是源石病感染者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[150]
+
+
+@add_premise(constant.Premise.TARGET_IS_PATIENT)
+def handle_target_is_patient(character_id: int) -> int:
+    """
+    交互对象是源石病感染者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[150]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_CRYSTAL)
+def handle_target_have_no_crystal(character_id: int) -> int:
+    """
+    交互对象没有体表源石结晶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[162]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_CRYSTAL)
+def handle_target_have_crystal(character_id: int) -> int:
+    """
+    交互对象有体表源石结晶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[162]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_DILIGENT)
+def handle_target_have_no_diligent(character_id: int) -> int:
+    """
+    交互对象非勤劳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[200]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_DILIGENT)
+def handle_target_have_diligent(character_id: int) -> int:
+    """
+    交互对象勤劳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[200]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_LAZY)
+def handle_target_have_no_lazy(character_id: int) -> int:
+    """
+    交互对象非懒散
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[201]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_LAZY)
+def handle_target_have_lazy(character_id: int) -> int:
+    """
+    交互对象懒散
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[201]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_FRAGILE)
+def handle_target_have_no_fragile(character_id: int) -> int:
+    """
+    交互对象非脆弱
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[202]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_FRAGILE)
+def handle_target_have_fragile(character_id: int) -> int:
+    """
+    交互对象脆弱
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[202]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_FORCEFUL)
+def handle_target_have_no_forceful(character_id: int) -> int:
+    """
+    交互对象非坚强
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[203]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_FORCEFUL)
+def handle_target_have_forceful(character_id: int) -> int:
+    """
+    交互对象坚强
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[203]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_ENTHUSIACTIC)
+def handle_target_have_no_enthusiactic(character_id: int) -> int:
+    """
+    交互对象非热情
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[204]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_ENTHUSIACTIC)
+def handle_target_have_enthusiactic(character_id: int) -> int:
+    """
+    交互对象热情
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[204]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_ALONE)
+def handle_target_have_no_alone(character_id: int) -> int:
+    """
+    交互对象非孤僻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[205]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_ALONE)
+def handle_target_have_alone(character_id: int) -> int:
+    """
+    交互对象孤僻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[205]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_SHAME)
+def handle_target_have_no_shame(character_id: int) -> int:
+    """
+    交互对象非羞耻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[206]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_SHAME)
+def handle_target_have_shame(character_id: int) -> int:
+    """
+    交互对象羞耻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[206]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_NO_OPEN)
+def handle_target_have_no_open(character_id: int) -> int:
+    """
+    交互对象非开放
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return not target_data.talent[207]
+
+
+@add_premise(constant.Premise.TARGET_HAVE_OPEN)
+def handle_target_have_open(character_id: int) -> int:
+    """
+    交互对象开放
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[207]
 
 
 @add_premise(constant.Premise.LAST_CMD_BLOWJOB)

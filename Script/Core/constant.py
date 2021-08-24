@@ -65,6 +65,12 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 319
     """ 手指插入（A） """
+    STATUS_KISS_FAIL = 397
+    """ 亲吻失败 """
+    STATUS_HIGH_OBSCENITY_ANUS = 398
+    """ 重度猥亵失败 """
+    STATUS_LOW_OBSCENITY_ANUS = 399
+    """ 轻度猥亵失败 """
     STATUS_MAKING_OUT = 401
     """ 身体爱抚 """
     STATUS_KISS_H = 402
@@ -206,6 +212,12 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 319
     """ 手指插入（A） """
+    KISS_FAIL = 397
+    """ 亲吻失败 """
+    HIGH_OBSCENITY_ANUS = 398
+    """ 重度猥亵失败 """
+    LOW_OBSCENITY_ANUS = 399
+    """ 轻度猥亵失败 """
     MAKING_OUT = 401
     """ 身体爱抚 """
     KISS_H = 402
@@ -527,6 +539,14 @@ class Premise:
     MUSIC_GE_5 = "music_ge_5"
     """ 自身音乐技能>=5 """
 
+    TARGET_INTIMACY_8 = "t_intimacy_8"
+    """ 交互对象亲密==8 """
+    TARGET_INTIMACY_LE_1 = "t_intimacy_le_1"
+    """ 交互对象亲密<=1 """
+    TARGET_INTIMACY_GE_3 = "t_intimacy_ge_3"
+    """ 交互对象亲密>=3 """
+    TARGET_INTIMACY_GE_5 = "t_intimacy_ge_5"
+    """ 交互对象亲密>=5 """
     TARGET_DESIRE_GE_5 = "desire_ge_5"
     """ 交互对象欲望>=5 """
     TARGET_DESIRE_GE_7 = ""
@@ -649,6 +669,50 @@ class Premise:
     """ 交互对象没有小车 """
     TARGET_HAVE_CAR = "car_1"
     """ 交互对象有小车 """
+
+    TARGET_NOT_PATIENT = "patient_0"
+    """ 交互对象不是源石病感染者 """
+    TARGET_IS_PATIENT = "patient_1"
+    """ 交互对象是源石病感染者 """
+    TARGET_HAVE_NO_CRYSTAL = "crystal_0"
+    """ 交互对象没有体表源石结晶 """
+    TARGET_HAVE_CRYSTAL = "crystal_1"
+    """ 交互对象有体表源石结晶 """
+
+    TARGET_HAVE_NO_DILIGENT = "diligent_0"
+    """ 交互对象非勤劳 """
+    TARGET_HAVE_DILIGENT = "diligent_1"
+    """ 交互对象勤劳 """
+    TARGET_HAVE_NO_LAZY = "lazy_0"
+    """ 交互对象非懒散 """
+    TARGET_HAVE_LAZY = "lazy_1"
+    """ 交互对象懒散 """
+    TARGET_HAVE_NO_FRAGILE = "fragile_0"
+    """ 交互对象非脆弱 """
+    TARGET_HAVE_FRAGILE = "fragile_1"
+    """ 交互对象脆弱 """
+    TARGET_HAVE_NO_FORCEFUL = "forceful_0"
+    """ 交互对象非坚强 """
+    TARGET_HAVE_FORCEFUL = "forceful_1"
+    """ 交互对象坚强 """
+    TARGET_HAVE_NO_ENTHUSIACTIC = "enthusiactic_0"
+    """ 交互对象非热情 """
+    TARGET_HAVE_ENTHUSIACTIC = "enthusiactic_1"
+    """ 交互对象热情 """
+    TARGET_HAVE_NO_ALONE = "alone_0"
+    """ 交互对象非孤僻 """
+    TARGET_HAVE_ALONE = "alone_1"
+    """ 交互对象孤僻 """
+    TARGET_HAVE_NO_SHAME = "shame_0"
+    """ 交互对象非羞耻 """
+    TARGET_HAVE_SHAME = "shame_1"
+    """ 交互对象羞耻 """
+    TARGET_HAVE_NO_OPEN = "open_0"
+    """ 交互对象非开放 """
+    TARGET_HAVE_OPEN = "open_1"
+    """ 交互对象开放 """
+
+
 
     LAST_CMD_BLOWJOB = "last_cmd_blowjob"
     """ 前一指令为口交 """
