@@ -1230,6 +1230,8 @@ class BehaviorEffect:
     """ 增加1妊娠经验 """
     ADD_1_Insert_EXPERIENCE = 320
     """ 增加1插入经验 """
+    ADD_1_Insert_COMMAND = 321
+    """ 增加1指挥经验 """
 
 #旧结算存档#
     # ADD_SOCIAL_FAVORABILITY = 7
