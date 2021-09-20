@@ -23,7 +23,7 @@ class AbilityUp:
 
     cid: int
     """ 编号id """
-    ability_id: int
+    ability_up_id: int
     """ 对应的升级需求id """
     need_type: str
     """ 需求类型 """
