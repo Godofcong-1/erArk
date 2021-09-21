@@ -211,9 +211,9 @@ def load_ability_up_data():
     for tem_data in now_data["data"]:
         now_tem = config_def.AbilityUp()
         now_tem.__dict__ = tem_data
-        config_ability_up_data.setdefault(now_tem.ability_id, {})
-        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.cid, {})
-        config_ability_up_data[now_tem.ability_id][now_tem.cid] = now_tem
+        config_ability_up_data.setdefault(now_tem.ability_up_id, {})
+        config_ability_up_data[now_tem.ability_up_id].setdefault(now_tem.cid, {})
+        config_ability_up_data[now_tem.ability_up_id][now_tem.cid] = now_tem
         # print("tem_data :",tem_data)
         # print("now_tem.cid :",now_tem.cid)
         # print("now_tem.ability_id :",now_tem.ability_id)

@@ -821,8 +821,12 @@ class Characterabi_show_Text:
         ability_list = game_config.config_ability_type_data
         for anility_type in ability_list:
             type_set = ability_list[anility_type]
+            #去掉刻印
+            # print("anility_type : ",anility_type)
+            if anility_type == 2:
+                continue
             for ability_id in type_set:
-                #去掉与性别不符的感度#
+                #去掉与性别不符的感度与扩张
                 if self.character_data.sex == 0:
                     if ability_id in {2, 4, 7, 9, 12, 34, 39}:
                         continue
@@ -897,24 +901,27 @@ class Characterabi_cmd_Text:
                 #匹配到能力的id与能力等级对应的前提#
                 if game_config.config_ability_up_type[abi_id].ability_id == self.ability_id and game_config.config_ability_up_type[abi_id].now_level == self.ability_level:
                     need_list = game_config.config_ability_up_data[abi_id]
+                    line = draw.LineDraw(".", self.width)
+                    line.draw()
+                    line_feed.draw()
                     for need_id in need_list:
                         need_type = need_list[need_id].need_type
                         need_type_id = need_list[need_id].need_type_id
                         need_value = need_list[need_id].value
                         if need_type == "A":
                             abi_name = game_config.config_ability[need_type_id].name
-                            button_text = "需要能力 :" + abi_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.ability[need_type_id] < need_value:
                                 judge = 0
                         elif need_type == "J":
                             juel_name = game_config.config_juel[need_type_id].name
-                            button_text = "需要宝珠 :" + juel_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.juel[need_type_id] < need_value:
                                 judge = 0
                             self.jule_dict[need_type_id] = need_value
                         elif need_type == "E":
                             experience_name = game_config.config_experience[need_type_id].name
-                            button_text = "需要经验 :" + experience_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.experience[need_type_id] < need_value:
                                 judge = 0
                         now_draw = draw.NormalDraw()
