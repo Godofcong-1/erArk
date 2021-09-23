@@ -32,10 +32,12 @@ def init_attr(character_id: int):
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
-    character_data.status = attr_calculation.get_status_zero(character_data.status)
+    character_data.status_data = attr_calculation.get_status_zero(character_data.status_data)
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
     character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
+    character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+    character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
@@ -100,15 +102,15 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
 
     #恭顺、好意、欲情、快乐每级+0.1倍#
     for i in {10, 11, 12, 13}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix += status_level*0.1
     #羞耻、苦痛每级-0.1倍#
     for i in {16, 17}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix -= status_level*0.2
     #恐怖、抑郁、反感每级-0.4倍#
     for i in {18, 19, 20}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix -= status_level*0.4
 
     #能力相关计算#
@@ -219,7 +221,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_trust
     calculation_text += "+信赖修正("+ str(judge_trust) +")"
     #状态修正，好意(11)和欲情(12)修正#
-    judge_status = int(target_data.status[11] + target_data.status[12])
+    judge_status = int(target_data.status_data[11] + target_data.status_data[12])
     judge += judge_status
     if judge_status:
         calculation_text += "+状态修正("+ str(judge_status) +")"

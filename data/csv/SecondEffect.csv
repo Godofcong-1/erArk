@@ -1,0 +1,8 @@
+cid,behavior_id,effect_id
+表id,行为id,结算器id
+int,int,int
+0,0,0
+行为结算器配置,,
+1,1,5
+
+100,101,2

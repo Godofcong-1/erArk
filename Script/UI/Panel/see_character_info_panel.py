@@ -284,8 +284,8 @@ class SeeCharacterStatusPanel:
                                 continue
                     status_text = game_config.config_character_state[status_id].name
                     status_value = 0
-                    if status_id in character_data.status:
-                        status_value = character_data.status[status_id]
+                    if status_id in character_data.status_data:
+                        status_value = character_data.status_data[status_id]
                     # if status_id in character_data.status:
                     #     status_value = character_data.status[status_id]
                     status_value = round(status_value)

@@ -3,7 +3,7 @@ import time
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text
+from Script.Design import attr_text, attr_calculation
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 
@@ -23,6 +23,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     now_time -- 结算时间
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
+    player_character_data: game_type.Character = cache.character_data[0]
     status_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
@@ -30,6 +31,12 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     if behavior_id in game_config.config_behavior_effect_data:
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+    #进行二段结算
+    # check_second_effect(character_id)
+    if player_character_data.target_character_id:
+        # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
+        # print("target_data.name :",target_data.name)
+        check_second_effect(player_character_data.target_character_id)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
@@ -339,3 +346,55 @@ def get_favorability_social(favorability: int) -> int:
     elif favorability < 80000000:
         return 4
     return 5
+
+def check_second_effect(character_id: int):
+    """
+    处理第二结算
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    #检测人物的各感度数据是否等于该人物的高潮记录程度数据
+    # print()
+    # print("进入第二结算")
+    for orgasm in range(8):
+        now_orgasm_level = attr_calculation.get_status_level(character_data.status_data[orgasm])
+        # print("当前orgasm = ",orgasm)
+        # print("当前character_data.status_data[orgasm] = ",character_data.status_data[orgasm])
+        # print("当前now_orgasm_level = ",now_orgasm_level)
+        # print("当前character_data.orgasm_level[orgasm] = ",character_data.orgasm_level[orgasm])
+        if now_orgasm_level != character_data.orgasm_level[orgasm]:
+            orgasm_effect(now_orgasm_level, character_data.orgasm_level[orgasm])
+            character_data.orgasm_level[orgasm] = now_orgasm_level
+            #仅在H模式下才计算高潮次数计数
+            if character_data.is_h == 1:
+                character_data.orgasm_count[orgasm] += 1
+    return 1
+
+def orgasm_effect(now_data: int , pre_data: int):
+    """
+    处理第二结算中的高潮结算
+    Keyword arguments:
+    now_data -- 当前高潮程度
+    pre_data -- 记录里的前高潮程度
+    """
+
+    # print()
+    # print("进入高潮结算")
+    if (now_data - pre_data) >= 3:
+        print("触发小、普、强绝顶")
+    elif (now_data - pre_data) == 2:
+        if pre_data % 3 == 0:
+            print("触发小、普绝顶")
+        elif pre_data % 3 == 1:
+            print("触发普、强绝顶")
+        elif pre_data % 3 == 2:
+            print("触发强绝顶")
+    else:
+        if pre_data % 3 == 0:
+            print("触发小绝顶")
+        elif pre_data % 3 == 1:
+            print("触发普绝顶")
+        elif pre_data % 3 == 2:
+            print("触发强绝顶")
+    return 1

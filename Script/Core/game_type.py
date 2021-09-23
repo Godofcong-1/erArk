@@ -427,7 +427,7 @@ class Character:
         """ 角色生成服装模板 """
         # self.chest_tem: int = 0
         # """ 角色罩杯模板 """
-        self.status: Dict[int, int] = {}
+        self.status_data: Dict[int, int] = {}
         """ 角色状态数据 状态id:状态数值 """
         self.put_on: Dict[int, UUID] = {}
         """
@@ -522,7 +522,10 @@ class Character:
         """ 在H模式中 """
         self.is_follow : bool = 0
         """ 正跟随玩家 """
-
+        self.orgasm_level: Dict[int,int] = {}
+        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为绝顶，3为强绝顶 """
+        self.orgasm_count: Dict[int,int] = {}
+        """ 高潮次数记录 """
 
 class Cache:
     """游戏缓存数据结构体"""

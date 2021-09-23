@@ -957,14 +957,19 @@ class BehaviorEffect:
     """ 增加少量气力 """
     ADD_INTERACTION_FAVORABILITY = 2
     """ 增加基础互动好感 """
-    SUB_BOTH_SMALL_HIT_POINT = 3
+    DOWN_BOTH_SMALL_HIT_POINT = 3
     """ 双方减少少量体力（若没有交互对象则仅减少自己） """
-    SUB_BOTH_SMALL_MANA_POINT = 4
+    DOWN_BOTH_SMALL_MANA_POINT = 4
     """ 双方减少少量气力（若没有交互对象则仅减少自己） """
     MOVE_TO_TARGET_SCENE = 5
     """ 移动至目标场景 """
     ADD_SMALL_TRUST = 6
     """ 增加基础互动信赖 """
+    ADD_BOTH_SMALL_HIT_POINT = 10
+    """ 增加双方少量体力 """
+    ADD_BOTH_SMALL_MANA_POINT = 11
+    """ 增加双方少量气力 """
+
 
     FIRST_KISS = 18
     """ 记录初吻 """
@@ -1232,6 +1237,13 @@ class BehaviorEffect:
     """ 增加1插入经验 """
     ADD_1_Insert_COMMAND = 321
     """ 增加1指挥经验 """
+
+class SecondEffect:
+    """二段结算效果函数"""
+
+    NClimax = 0
+    """ 结算N绝顶 """
+
 
 #旧结算存档#
     # ADD_SOCIAL_FAVORABILITY = 7

@@ -304,6 +304,17 @@ class Season:
     """ 季节名 """
 
 
+class SecondEffect:
+    """ 行为结算器配置 """
+
+    cid: int
+    """ 表id """
+    behavior_id: int
+    """ 行为id """
+    effect_id: int
+    """ 结算器id """
+
+
 class SexTem:
     """ 性别对应描述和性别器官模板 """
 

@@ -135,7 +135,7 @@ def handle_hunger(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.status.setdefault(27, 0)
+    character_data.status_data.setdefault(27, 0)
     # if character_data.status[27] > 15:
     #     return math.floor(character_data.status[27]) * 10
     return 0
@@ -2417,8 +2417,8 @@ def handle_arrogant_height(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.status.setdefault(15, 0)
-    return int(character_data.status[15] / 10)
+    character_data.status_data.setdefault(15, 0)
+    return int(character_data.status_data[15] / 10)
 
 
 # @add_premise(constant.Premise.IS_LIVELY)
@@ -3690,8 +3690,8 @@ def handle_target_disgust_is_hight(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.status.setdefault(12, 0)
-    return target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    return target_data.status_data[12]
 
 
 @add_premise(constant.Premise.TARGET_LUST_IS_HIGHT)
@@ -3705,8 +3705,8 @@ def handle_target_lust_is_hight(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.status.setdefault(21, 0)
-    return target_data.status[21]
+    target_data.status_data.setdefault(21, 0)
+    return target_data.status_data[21]
 
 
 @add_premise(constant.Premise.TARGET_IS_WOMAN)
@@ -3915,8 +3915,8 @@ def handle_thirsty(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.status.setdefault(28, 0)
-    return math.floor(character_data.status[28]) * 10
+    character_data.status_data.setdefault(28, 0)
+    return math.floor(character_data.status_data[28]) * 10
 
 
 @add_premise(constant.Premise.HAVE_DRINKS)
@@ -4485,8 +4485,8 @@ def handle_lust_is_hight(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.status.setdefault(21, 0)
-    return character_data.status[21]
+    character_data.status_data.setdefault(21, 0)
+    return character_data.status_data[21]
 
 
 @add_premise(constant.Premise.IN_GROVE)

@@ -74,6 +74,24 @@ def get_juel_zero(juel_dict) -> dict:
             juel_list[juel] = 0
     return juel_list
 
+def get_orgasm_level_zero(orgasm_level_dict) -> dict:
+    """
+    将绝顶水平全项归零
+    """
+    orgasm_level_list = orgasm_level_dict
+    for orgasm in range(8):
+        orgasm_level_list[orgasm] = 0
+    return orgasm_level_list
+
+def get_orgasm_count_zero(orgasm_count_dict) -> dict:
+    """
+    将绝顶次数全项归零
+    """
+    orgasm_count_list = orgasm_count_dict
+    for orgasm in range(8):
+        orgasm_count_list[orgasm] = 0
+    return orgasm_count_list
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0

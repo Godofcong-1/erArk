@@ -143,7 +143,7 @@ def handle_add_small_trust(
         target_change.trust += now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SUB_BOTH_SMALL_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
 def handle_sub_both_small_hit_point(
     character_id: int,
     add_time: int,
@@ -190,7 +190,7 @@ def handle_sub_both_small_hit_point(
             target_data.hit_point = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SUB_BOTH_SMALL_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
 def handle_sub_both_small_mana_point(
     character_id: int,
     add_time: int,
@@ -239,6 +239,86 @@ def handle_sub_both_small_mana_point(
             target_change.hit_point -= sub_mana
             if target_data.hit_point <= 0:
                 target_data.hit_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
+def handle_add_both_small_hit_point(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加双方少量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    add_hit_point = add_time * 40
+    character_data.hit_point += add_hit_point
+    if character_data.hit_point > character_data.hit_point_max:
+        add_hit_point -= character_data.hit_point - character_data.hit_point_max
+        character_data.hit_point = character_data.hit_point_max
+    change_data.hit_point += add_hit_point
+    #交互对象也同样#
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        add_hit_point = add_time * 40
+        if target_data.mana_point == 0:
+            add_hit_point /= 2
+        target_data.hit_point += add_hit_point
+        target_change.hit_point += add_hit_point
+        if target_data.hit_point >= target_data.hit_point_max:
+            target_data.hit_point = target_data.hit_point_max
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_MANA_POINT)
+def handle_add_both_small_mana_point(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加双方少量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    add_mana_point = add_time * 60
+    character_data.mana_point += add_mana_point
+    if character_data.mana_point > character_data.mana_point_max:
+        add_mana_point -= character_data.mana_point - character_data.mana_point_max
+        character_data.mana_point = character_data.mana_point_max
+    change_data.mana_point += add_mana_point
+    #交互对象也同样#
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        add_mana_point = add_time * 60
+        if target_data.mana_point == 0:
+            add_mana_point /= 2
+        target_data.mana_point += add_mana_point
+        target_change.mana_point += add_mana_point
+        if target_data.mana_point >= target_data.mana_point_max:
+            target_data.mana_point = target_data.mana_point_max
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MOVE_TO_TARGET_SCENE)
@@ -783,11 +863,11 @@ def handle_target_add_small_n_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(0, 0)
-    now_lust = target_data.status[0]
+    target_data.status_data.setdefault(0, 0)
+    now_lust = target_data.status_data[0]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[0] += now_add_lust
+    target_data.status_data[0] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(0, 0)
@@ -814,11 +894,11 @@ def handle_target_add_small_b_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(1, 0)
-    now_lust = target_data.status[1]
+    target_data.status_data.setdefault(1, 0)
+    now_lust = target_data.status_data[1]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[1] += now_add_lust
+    target_data.status_data[1] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(1, 0)
@@ -845,11 +925,11 @@ def handle_target_add_small_c_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(2, 0)
-    now_lust = target_data.status[2]
+    target_data.status_data.setdefault(2, 0)
+    now_lust = target_data.status_data[2]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[2] += now_add_lust
+    target_data.status_data[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(2, 0)
@@ -877,11 +957,11 @@ def handle_target_add_small_p_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(3, 0)
-    now_lust = target_data.status[3]
+    target_data.status_data.setdefault(3, 0)
+    now_lust = target_data.status_data[3]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[3] += now_add_lust
+    target_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(3, 0)
@@ -908,11 +988,11 @@ def handle_target_add_small_v_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(4, 0)
-    now_lust = target_data.status[4]
+    target_data.status_data.setdefault(4, 0)
+    now_lust = target_data.status_data[4]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[4] += now_add_lust
+    target_data.status_data[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(4, 0)
@@ -939,11 +1019,11 @@ def handle_target_add_small_a_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(5, 0)
-    now_lust = target_data.status[5]
+    target_data.status_data.setdefault(5, 0)
+    now_lust = target_data.status_data[5]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[5] += now_add_lust
+    target_data.status_data[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(5, 0)
@@ -970,11 +1050,11 @@ def handle_target_add_small_u_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(6, 0)
-    now_lust = target_data.status[6]
+    target_data.status_data.setdefault(6, 0)
+    now_lust = target_data.status_data[6]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[6] += now_add_lust
+    target_data.status_data[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(6, 0)
@@ -1001,11 +1081,11 @@ def handle_target_add_small_w_feel(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(7, 0)
-    now_lust = target_data.status[7]
+    target_data.status_data.setdefault(7, 0)
+    now_lust = target_data.status_data[7]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[7] += now_add_lust
+    target_data.status_data[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(7, 0)
@@ -1032,11 +1112,11 @@ def handle_target_add_small_lubrication(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(8, 0)
-    now_lust = target_data.status[8]
+    target_data.status_data.setdefault(8, 0)
+    now_lust = target_data.status_data[8]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[8] += now_add_lust
+    target_data.status_data[8] += now_add_lust
     adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
     now_add_lust *= adjust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1066,13 +1146,13 @@ def handle_target_add_small_learn(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(9, 0)
-    now_lust = target_data.status[9]
+    target_data.status_data.setdefault(9, 0)
+    now_lust = target_data.status_data[9]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     now_add_lust *= adjust
-    target_data.status[9] += now_add_lust
+    target_data.status_data[9] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(9, 0)
@@ -1099,13 +1179,13 @@ def handle_target_add_small_repect(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(10, 0)
-    now_lust = target_data.status[10]
+    target_data.status_data.setdefault(10, 0)
+    now_lust = target_data.status_data[10]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[20])
     now_add_lust *= adjust
-    target_data.status[10] += now_add_lust
+    target_data.status_data[10] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(10, 0)
@@ -1132,13 +1212,13 @@ def handle_target_add_small_friendly(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(11, 0)
-    now_lust = target_data.status[11]
+    target_data.status_data.setdefault(11, 0)
+    now_lust = target_data.status_data[11]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
     now_add_lust *= adjust
-    target_data.status[11] += now_add_lust
+    target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(11, 0)
@@ -1165,13 +1245,13 @@ def handle_target_add_small_desire(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1198,13 +1278,13 @@ def handle_target_add_small_happy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(13, 0)
-    now_lust = target_data.status[13]
+    target_data.status_data.setdefault(13, 0)
+    now_lust = target_data.status_data[13]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[13])
     now_add_lust *= adjust
-    target_data.status[13] += now_add_lust
+    target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(13, 0)
@@ -1231,13 +1311,13 @@ def handle_target_add_small_lead(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(14, 0)
-    now_lust = target_data.status[14]
+    target_data.status_data.setdefault(14, 0)
+    now_lust = target_data.status_data[14]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
     now_add_lust *= adjust
-    target_data.status[14] += now_add_lust
+    target_data.status_data[14] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(14, 0)
@@ -1264,13 +1344,13 @@ def handle_target_add_small_submit(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(15, 0)
-    now_lust = target_data.status[15]
+    target_data.status_data.setdefault(15, 0)
+    now_lust = target_data.status_data[15]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[14])
     now_add_lust *= adjust
-    target_data.status[15] += now_add_lust
+    target_data.status_data[15] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(15, 0)
@@ -1297,13 +1377,13 @@ def handle_target_add_small_shy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(16, 0)
-    now_lust = target_data.status[16]
+    target_data.status_data.setdefault(16, 0)
+    now_lust = target_data.status_data[16]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[24])
     now_add_lust *= adjust
-    target_data.status[16] += now_add_lust
+    target_data.status_data[16] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(16, 0)
@@ -1330,13 +1410,13 @@ def handle_target_add_small_pain(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(17, 0)
-    now_lust = target_data.status[17]
+    target_data.status_data.setdefault(17, 0)
+    now_lust = target_data.status_data[17]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[15])
     now_add_lust *= adjust
-    target_data.status[17] += now_add_lust
+    target_data.status_data[17] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(17, 0)
@@ -1363,13 +1443,13 @@ def handle_target_add_small_terror(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(18, 0)
-    now_lust = target_data.status[18]
+    target_data.status_data.setdefault(18, 0)
+    now_lust = target_data.status_data[18]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[15])
     now_add_lust *= adjust
-    target_data.status[18] += now_add_lust
+    target_data.status_data[18] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(18, 0)
@@ -1396,11 +1476,11 @@ def handle_target_add_small_depression(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(19, 0)
-    now_lust = target_data.status[19]
+    target_data.status_data.setdefault(19, 0)
+    now_lust = target_data.status_data[19]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    target_data.status[19] += now_add_lust
+    target_data.status_data[19] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(19, 0)
@@ -1427,13 +1507,13 @@ def handle_target_add_small_disgust(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.status.setdefault(20, 0)
-    now_lust = target_data.status[20]
+    target_data.status_data.setdefault(20, 0)
+    now_lust = target_data.status_data[20]
     now_lust_multiple = 10 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
     now_add_lust *= adjust
-    target_data.status[20] += now_add_lust
+    target_data.status_data[20] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(20, 0)
@@ -1459,11 +1539,11 @@ def handle_add_small_p_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.status.setdefault(3, 0)
-    now_lust = character_data.status[3]
+    character_data.status_data.setdefault(3, 0)
+    now_lust = character_data.status_data[3]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    character_data.status[3] += now_add_lust
+    character_data.status_data[3] += now_add_lust
     change_data.status.setdefault(3, 0)
     change_data.status[3] += now_add_lust
 
@@ -1505,23 +1585,23 @@ def handle_talk_add_adjust(
         character_id, target_data.cid, add_favorability, target_change, now_time
         )
     #好意变化#
-    target_data.status.setdefault(11, 0)
-    now_lust = target_data.status[11]
+    target_data.status_data.setdefault(11, 0)
+    now_lust = target_data.status_data[11]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[11] += now_add_lust
+    target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(11, 0)
     target_change.status[11] += now_add_lust
     #快乐变化#
-    target_data.status.setdefault(13, 0)
-    now_lust = target_data.status[13]
+    target_data.status_data.setdefault(13, 0)
+    now_lust = target_data.status_data[13]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[13] += now_add_lust
+    target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(13, 0)
@@ -1576,12 +1656,12 @@ def handle_coffee_add_adjust(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.trust += now_lust_multiple
     #好意变化#
-    target_data.status.setdefault(11, 0)
-    now_lust = target_data.status[11]
+    target_data.status_data.setdefault(11, 0)
+    now_lust = target_data.status_data[11]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[11] += now_add_lust
+    target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(11, 0)
@@ -1617,23 +1697,23 @@ def handle_tech_add_n_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #B快变化#
-    target_data.status.setdefault(0, 0)
-    now_lust = target_data.status[0]
+    target_data.status_data.setdefault(0, 0)
+    now_lust = target_data.status_data[0]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[0] += now_add_lust
+    target_data.status_data[0] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(0, 0)
     target_change.status[0] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1669,23 +1749,23 @@ def handle_tech_add_b_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #B快变化#
-    target_data.status.setdefault(1, 0)
-    now_lust = target_data.status[1]
+    target_data.status_data.setdefault(1, 0)
+    now_lust = target_data.status_data[1]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[1] += now_add_lust
+    target_data.status_data[1] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(1, 0)
     target_change.status[1] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1720,23 +1800,23 @@ def handle_tech_add_c_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #C快变化#
-    target_data.status.setdefault(2, 0)
-    now_lust = target_data.status[2]
+    target_data.status_data.setdefault(2, 0)
+    now_lust = target_data.status_data[2]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[2] += now_add_lust
+    target_data.status_data[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(2, 0)
     target_change.status[2] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1771,23 +1851,23 @@ def handle_tech_add_p_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #P快变化#
-    target_data.status.setdefault(3, 0)
-    now_lust = target_data.status[3]
+    target_data.status_data.setdefault(3, 0)
+    now_lust = target_data.status_data[3]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[3] += now_add_lust
+    target_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(3, 0)
     target_change.status[3] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1822,23 +1902,23 @@ def handle_tech_add_v_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #V快变化#
-    target_data.status.setdefault(4, 0)
-    now_lust = target_data.status[4]
+    target_data.status_data.setdefault(4, 0)
+    now_lust = target_data.status_data[4]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[4] += now_add_lust
+    target_data.status_data[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(4, 0)
     target_change.status[4] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1873,23 +1953,23 @@ def handle_tech_add_a_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #A快变化#
-    target_data.status.setdefault(5, 0)
-    now_lust = target_data.status[5]
+    target_data.status_data.setdefault(5, 0)
+    now_lust = target_data.status_data[5]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[5] += now_add_lust
+    target_data.status_data[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(5, 0)
     target_change.status[5] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1924,23 +2004,23 @@ def handle_tech_add_u_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #U快变化#
-    target_data.status.setdefault(6, 0)
-    now_lust = target_data.status[6]
+    target_data.status_data.setdefault(6, 0)
+    now_lust = target_data.status_data[6]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[6] += now_add_lust
+    target_data.status_data[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(6, 0)
     target_change.status[6] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -1975,23 +2055,23 @@ def handle_tech_add_w_adjust(
     character_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
     #W快变化#
-    target_data.status.setdefault(7, 0)
-    now_lust = target_data.status[7]
+    target_data.status_data.setdefault(7, 0)
+    now_lust = target_data.status_data[7]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[7] += now_add_lust
+    target_data.status_data[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(7, 0)
     target_change.status[7] += now_add_lust
     #欲情变化#
-    target_data.status.setdefault(12, 0)
-    now_lust = target_data.status[12]
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[12] += now_add_lust
+    target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(12, 0)
@@ -2026,12 +2106,12 @@ def handle_tech_add_pl_p_adjust(
     target_data.ability.setdefault(19, 0)
     adjust = attr_calculation.get_ability_adjust(target_data.ability[19])
     #P快变化#
-    character_data.status.setdefault(3, 0)
-    now_lust = character_data.status[3]
+    character_data.status_data.setdefault(3, 0)
+    now_lust = character_data.status_data[3]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    character_data.status[3] += now_add_lust
+    character_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[character_data.cid]
     target_change.status.setdefault(3, 0)
@@ -2064,15 +2144,15 @@ def handle_target_lubrication_adjust_add_pain(
     if target_data.dead:
         return
     #获取调整值#
-    target_data.status.setdefault(8, 0)
-    adjust = attr_calculation.get_pain_adjust(target_data.status[8])
+    target_data.status_data.setdefault(8, 0)
+    adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
     #苦痛变化#
-    target_data.status.setdefault(17, 0)
-    now_lust = target_data.status[17]
+    target_data.status_data.setdefault(17, 0)
+    now_lust = target_data.status_data[17]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
     now_add_lust *= adjust
-    target_data.status[17] += now_add_lust
+    target_data.status_data[17] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status.setdefault(17, 0)

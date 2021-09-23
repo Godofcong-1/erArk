@@ -89,9 +89,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
-    #24点之后结算状态为珠#
+    #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
+        #结算数值为珠
         judge_character_juel(character_id)
+        #高潮程度和高潮次数归零
+        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     #处理跟随与H#
     if character_id != 0:
         judge_character_follow(character_id)
@@ -308,9 +312,9 @@ def judge_character_juel(character_id: int) -> int:
                 continue
         status_value = 0
         #获得状态值并清零
-        if status_id in character_data.status:
-            status_value = character_data.status[status_id]
-            cache.character_data[character_id].status[status_id] = 0
+        if status_id in character_data.status_data:
+            status_value = character_data.status_data[status_id]
+            cache.character_data[character_id].status_data[status_id] = 0
             # print("status_value :",status_value)
         #只要状态值不为0就结算为对应珠
         if status_value != 0:
