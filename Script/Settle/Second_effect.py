@@ -24,23 +24,23 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.N_orgasm_small)
-def handle_n_orgasm_small(
-    character_id: int,
-    change_data: game_type.CharacterStatusChange,
-):
-    """
-    结算N小绝顶
-    Keyword arguments:
-    character_id -- 角色id
-    change_data -- 状态变更信息记录对象
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    #仅在H模式下才计算高潮次数计数
-    if character_data.is_h == 1:
-        character_data.orgasm_count[0] += 1
+# @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.N_orgasm_small)
+# def handle_n_orgasm_small(
+#     character_id: int,
+#     change_data: game_type.CharacterStatusChange,
+# ):
+#     """
+#     结算N小绝顶
+#     Keyword arguments:
+#     character_id -- 角色id
+#     change_data -- 状态变更信息记录对象
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if character_data.dead:
+#         return
+#     #仅在H模式下才计算高潮次数计数
+#     if character_data.is_h == 1:
+#         character_data.orgasm_count[0] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_NClimax_EXPERIENCE)
@@ -108,10 +108,12 @@ def handle_add_1_cclimax_experience(
     character_data.experience[12] += 1
     character_data.experience.setdefault(20, 0)
     character_data.experience[20] += 1
+    print("change_data.experience :",change_data.experience)
     change_data.experience.setdefault(12, 0)
     change_data.experience[12] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
+    print("change_data.experience :",change_data.experience)
 
 # @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_PClimax_EXPERIENCE)
 # def handle_add_1_pclimax_experience(

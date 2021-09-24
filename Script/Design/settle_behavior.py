@@ -36,7 +36,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     if player_character_data.target_character_id:
         # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
         # print("target_data.name :",target_data.name)
-        check_second_effect(0)
+        check_second_effect(0, status_data)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
@@ -365,16 +365,21 @@ def get_favorability_social(favorability: int) -> int:
         return 4
     return 5
 
-def check_second_effect(character_id: int):
+def check_second_effect(
+    character_id: int ,
+    change_data: game_type.CharacterStatusChange,
+):
     """
     处理第二结算
     Keyword arguments:
     character_id -- 角色id
+    change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data : game_type.Character = cache.character_data[target_character_id]
-    status_data = game_type.CharacterStatusChange()
+    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
     # print()
     # print("进入第二结算")
 
@@ -395,11 +400,15 @@ def check_second_effect(character_id: int):
     #遍历二段行为id，进行结算
     for second_behavior_id in range(len(target_character_data.second_behavior)):
         if target_character_data.second_behavior[second_behavior_id] != 0:
-            print("second_behavior_id :",second_behavior_id)
-            print("target_character_data.second_behavior[second_behavior_id] :",target_character_data.second_behavior[second_behavior_id])
+            # print("target_character_id :",target_character_id)
+            # print("second_behavior_id :",second_behavior_id)
+            # print("target_character_data.second_behavior[second_behavior_id] :",target_character_data.second_behavior[second_behavior_id])
+            #遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
-                print("effect_id :",effect_id)
-                constant.settle_second_behavior_effect_data[effect_id](character_id, status_data)
+                # print("effect_id :",effect_id)
+                constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+            #触发后该行为值归零
+            target_character_data.second_behavior[second_behavior_id] = 0
         # if behavior_id in game_config.config_behavior_effect_data:
             # for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             #     constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
@@ -425,33 +434,36 @@ def orgasm_effect(character_id: int):
         if now_data != pre_data:
             #判定触发哪些绝顶
             num = orgasm*3 #通过num值来判断是二段行为记录的哪个位置
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
             if (now_data - pre_data) >= 3:
-                print("触发小、普、强绝顶")
+                now_draw.text = _("\n触发小、普、强绝顶\n")
                 character_data.second_behavior[num] = 1
                 character_data.second_behavior[num+1] = 1
                 character_data.second_behavior[num+2] = 1
             elif (now_data - pre_data) == 2:
                 if pre_data % 3 == 0:
-                    print("触发小、普绝顶")
+                    now_draw.text = _("\n触发小、普绝顶\n")
                     character_data.second_behavior[num] = 1
                     character_data.second_behavior[num+1] = 1
                 elif pre_data % 3 == 1:
-                    print("触发普、强绝顶")
+                    now_draw.text = _("\n触发普、强绝顶\n")
                     character_data.second_behavior[num+1] = 1
                     character_data.second_behavior[num+2] = 1
                 elif pre_data % 3 == 2:
-                    print("触发强绝顶")
+                    now_draw.text = _("\n触发强绝顶\n")
                     character_data.second_behavior[num+2] = 1
             else:
                 if pre_data % 3 == 0:
-                    print("触发小绝顶")
+                    now_draw.text = _("\n触发小绝顶\n")
                     character_data.second_behavior[num] = 1
                 elif pre_data % 3 == 1:
-                    print("触发普绝顶")
+                    now_draw.text = _("\n触发普绝顶\n")
                     character_data.second_behavior[num+1] = 1
                 elif pre_data % 3 == 2:
-                    print("触发强绝顶")
+                    now_draw.text = _("\n触发强绝顶\n")
                     character_data.second_behavior[num+2] = 1
+            now_draw.draw()
             
             #刷新记录
             character_data.orgasm_level[orgasm] = now_data
