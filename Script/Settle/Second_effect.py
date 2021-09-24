@@ -108,12 +108,10 @@ def handle_add_1_cclimax_experience(
     character_data.experience[12] += 1
     character_data.experience.setdefault(20, 0)
     character_data.experience[20] += 1
-    print("change_data.experience :",change_data.experience)
     change_data.experience.setdefault(12, 0)
     change_data.experience[12] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    print("change_data.experience :",change_data.experience)
 
 # @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_PClimax_EXPERIENCE)
 # def handle_add_1_pclimax_experience(

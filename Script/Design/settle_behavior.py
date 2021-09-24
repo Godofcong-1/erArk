@@ -76,11 +76,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         now_text_list.append(now_draw.text)
         if status_data.hit_point and round(status_data.hit_point, 2) != 0:
             now_text_list.append(
-                _("\n  体力:") + text_handle.number_to_symbol_string(int(status_data.hit_point))
+                _("\n  体力") + text_handle.number_to_symbol_string(int(status_data.hit_point))
             )
         if status_data.mana_point and round(status_data.mana_point, 2) != 0:
             now_text_list.append(
-                _("\n  气力:") + text_handle.number_to_symbol_string(int(status_data.mana_point))
+                _("\n  气力") + text_handle.number_to_symbol_string(int(status_data.mana_point))
             )
         if len(status_data.status):
             now_text_list.extend(
@@ -130,6 +130,12 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 target_data: game_type.Character = cache.character_data[target_character_id]
                 now_text = f"\n{target_data.name}:"
                 judge = 0
+                if target_change.hit_point and round(target_change.hit_point, 2) != 0:
+                    now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(target_change.hit_point))
+                    judge = 1
+                if target_change.mana_point and round(target_change.mana_point, 2) != 0:
+                    now_text += _("\n  气力") + text_handle.number_to_symbol_string(int(target_change.mana_point))
+                    judge = 1
                 if target_change.favorability:
                     now_text += _("\n  对{character_name}{character_nick_name}好感").format(
                         character_name=now_character_data.name,
@@ -140,7 +146,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                     now_text += _("\n  对{character_name}{character_nick_name}信赖").format(
                         character_name=now_character_data.name,
                         character_nick_name=now_character_data.nick_name
-                    ) + text_handle.number_to_symbol_string(float(target_change.trust))
+                    ) + text_handle.number_to_symbol_string(float(target_change.trust)) + ("%")
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
@@ -173,12 +179,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                                 )
                             )
                             judge = 1
-                if target_change.hit_point and round(target_change.hit_point, 2) != 0:
-                    now_text += _("\n  体力:") + text_handle.number_to_symbol_string(int(target_change.hit_point))
-                    judge = 1
-                if target_change.mana_point and round(target_change.mana_point, 2) != 0:
-                    now_text += _("\n  气力:") + text_handle.number_to_symbol_string(int(target_change.mana_point))
-                    judge = 1
                 if judge:
                     now_text_list.append(now_text)
         now_text_time = "\n\n  " + str(add_time) + "分钟过去了\n"
