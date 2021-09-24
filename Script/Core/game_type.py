@@ -413,6 +413,8 @@ class Character:
         # """ 角色的三围数据 """
         self.behavior: Behavior = Behavior()
         """ 角色当前行为状态数据 """
+        self.second_behavior: Dict[int,int] = {}
+        """ 角色当前二段行为状态数据 """
         self.gold: int = 0
         """ 角色所持金钱数据 """
         self.position: List[str] = ["0"]
@@ -523,7 +525,7 @@ class Character:
         self.is_follow : bool = 0
         """ 正跟随玩家 """
         self.orgasm_level: Dict[int,int] = {}
-        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为绝顶，3为强绝顶 """
+        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
 

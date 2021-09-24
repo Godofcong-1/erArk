@@ -36,7 +36,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     if player_character_data.target_character_id:
         # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
         # print("target_data.name :",target_data.name)
-        check_second_effect(player_character_data.target_character_id)
+        check_second_effect(0)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
@@ -211,6 +211,24 @@ def add_settle_behavior_effect(behavior_effect_id: int):
     return decorator
 
 
+def add_settle_second_behavior_effect(second_behavior_effect_id: int):
+    """
+    添加二段行为结算处理
+    Keyword arguments:
+    second_behavior_effect_id -- 二段行为id
+    """
+
+    def decorator(func):
+        @wraps(func)
+        def return_wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        constant.settle_second_behavior_effect_data[second_behavior_effect_id] = return_wrapper
+        return return_wrapper
+
+    return decorator
+
+
 def get_cut_down_favorability_for_consume_time(consume_time: int):
     """
     从经过的时间计算出扣除的好感度
@@ -354,47 +372,86 @@ def check_second_effect(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    #检测人物的各感度数据是否等于该人物的高潮记录程度数据
+    target_character_id = character_data.target_character_id
+    target_character_data : game_type.Character = cache.character_data[target_character_id]
+    status_data = game_type.CharacterStatusChange()
     # print()
     # print("进入第二结算")
-    for orgasm in range(8):
-        now_orgasm_level = attr_calculation.get_status_level(character_data.status_data[orgasm])
-        # print("当前orgasm = ",orgasm)
-        # print("当前character_data.status_data[orgasm] = ",character_data.status_data[orgasm])
-        # print("当前now_orgasm_level = ",now_orgasm_level)
-        # print("当前character_data.orgasm_level[orgasm] = ",character_data.orgasm_level[orgasm])
-        if now_orgasm_level != character_data.orgasm_level[orgasm]:
-            orgasm_effect(now_orgasm_level, character_data.orgasm_level[orgasm])
-            character_data.orgasm_level[orgasm] = now_orgasm_level
-            #仅在H模式下才计算高潮次数计数
-            if character_data.is_h == 1:
-                character_data.orgasm_count[orgasm] += 1
-    return 1
 
-def orgasm_effect(now_data: int , pre_data: int):
+    #检测自己
+    # for orgasm in range(8):
+    #     now_orgasm_level = attr_calculation.get_status_level(character_data.status_data[orgasm])
+    #     # print("当前orgasm = ",orgasm)
+    #     # print("当前character_data.status_data[orgasm] = ",character_data.status_data[orgasm])
+    #     # print("当前now_orgasm_level = ",now_orgasm_level)
+    #     # print("当前character_data.orgasm_level[orgasm] = ",character_data.orgasm_level[orgasm])
+    #     if now_orgasm_level != character_data.orgasm_level[orgasm]:
+    #         orgasm_effect(now_orgasm_level, character_data.orgasm_level[orgasm])
+    #         character_data.orgasm_level[orgasm] = now_orgasm_level
+
+    #检测交互对象
+    orgasm_effect(target_character_id)
+
+    #遍历二段行为id，进行结算
+    for second_behavior_id in range(len(target_character_data.second_behavior)):
+        if target_character_data.second_behavior[second_behavior_id] != 0:
+            print("second_behavior_id :",second_behavior_id)
+            print("target_character_data.second_behavior[second_behavior_id] :",target_character_data.second_behavior[second_behavior_id])
+            for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                print("effect_id :",effect_id)
+                constant.settle_second_behavior_effect_data[effect_id](character_id, status_data)
+        # if behavior_id in game_config.config_behavior_effect_data:
+            # for effect_id in game_config.config_behavior_effect_data[behavior_id]:
+            #     constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+
+
+def orgasm_effect(character_id: int):
     """
     处理第二结算中的高潮结算
     Keyword arguments:
     now_data -- 当前高潮程度
     pre_data -- 记录里的前高潮程度
+    character_id -- 角色id
     """
 
     # print()
     # print("进入高潮结算")
-    if (now_data - pre_data) >= 3:
-        print("触发小、普、强绝顶")
-    elif (now_data - pre_data) == 2:
-        if pre_data % 3 == 0:
-            print("触发小、普绝顶")
-        elif pre_data % 3 == 1:
-            print("触发普、强绝顶")
-        elif pre_data % 3 == 2:
-            print("触发强绝顶")
-    else:
-        if pre_data % 3 == 0:
-            print("触发小绝顶")
-        elif pre_data % 3 == 1:
-            print("触发普绝顶")
-        elif pre_data % 3 == 2:
-            print("触发强绝顶")
-    return 1
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    #检测人物的各感度数据是否等于该人物的高潮记录程度数据
+    for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
+        pre_data = character_data.orgasm_level[orgasm]
+        if now_data != pre_data:
+            #判定触发哪些绝顶
+            num = orgasm*3 #通过num值来判断是二段行为记录的哪个位置
+            if (now_data - pre_data) >= 3:
+                print("触发小、普、强绝顶")
+                character_data.second_behavior[num] = 1
+                character_data.second_behavior[num+1] = 1
+                character_data.second_behavior[num+2] = 1
+            elif (now_data - pre_data) == 2:
+                if pre_data % 3 == 0:
+                    print("触发小、普绝顶")
+                    character_data.second_behavior[num] = 1
+                    character_data.second_behavior[num+1] = 1
+                elif pre_data % 3 == 1:
+                    print("触发普、强绝顶")
+                    character_data.second_behavior[num+1] = 1
+                    character_data.second_behavior[num+2] = 1
+                elif pre_data % 3 == 2:
+                    print("触发强绝顶")
+                    character_data.second_behavior[num+2] = 1
+            else:
+                if pre_data % 3 == 0:
+                    print("触发小绝顶")
+                    character_data.second_behavior[num] = 1
+                elif pre_data % 3 == 1:
+                    print("触发普绝顶")
+                    character_data.second_behavior[num+1] = 1
+                elif pre_data % 3 == 2:
+                    print("触发强绝顶")
+                    character_data.second_behavior[num+2] = 1
+            
+            #刷新记录
+            character_data.orgasm_level[orgasm] = now_data

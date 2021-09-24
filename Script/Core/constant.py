@@ -1079,8 +1079,8 @@ class BehaviorEffect:
     """ 交互对象增加1B绝顶经验 """
     TARGET_ADD_1_CClimax_EXPERIENCE = 212
     """ 交互对象增加1C绝顶经验 """
-    TARGET_ADD_1_PClimax_EXPERIENCE = 213
-    """ 交互对象增加1P绝顶经验 """
+    # TARGET_ADD_1_PClimax_EXPERIENCE = 213
+    # """ 交互对象增加1P绝顶经验 """
     TARGET_ADD_1_VClimax_EXPERIENCE = 214
     """ 交互对象增加1V绝顶经验 """
     TARGET_ADD_1_AClimax_EXPERIENCE = 215
@@ -1089,8 +1089,8 @@ class BehaviorEffect:
     """ 交互对象增加1U绝顶经验 """
     TARGET_ADD_1_WClimax_EXPERIENCE = 217
     """ 交互对象增加1W绝顶经验 """
-    TARGET_ADD_1_Climax_EXPERIENCE = 220
-    """ 交互对象增加1绝顶经验 """
+    # TARGET_ADD_1_Climax_EXPERIENCE = 220
+    # """ 交互对象增加1绝顶经验 """
     TARGET_ADD_1_Cumming_EXPERIENCE = 221
     """ 交互对象增加1射精经验 """
     TARGET_ADD_1_Milking_EXPERIENCE = 222
@@ -1238,11 +1238,87 @@ class BehaviorEffect:
     ADD_1_Insert_COMMAND = 321
     """ 增加1指挥经验 """
 
+class SecondBehavior:
+    """二段结算行为函数"""
+
+    N_orgasm_small = 0
+    """ 结算N小绝顶 """
+    N_orgasm_normal = 1
+    """ 结算N普绝顶 """
+    N_orgasm_strong = 2
+    """ 结算N强绝顶 """
+    B_orgasm_small = 3
+    """ 结算B小绝顶 """
+    B_orgasm_normal = 4
+    """ 结算B普绝顶 """
+    B_orgasm_strong = 5
+    """ 结算B强绝顶 """
+    C_orgasm_small = 6
+    """ 结算C小绝顶 """
+    C_orgasm_normal = 7
+    """ 结算C普绝顶 """
+    C_orgasm_strong = 8
+    """ 结算C强绝顶 """
+    P_orgasm_small = 9
+    """ 结算P小绝顶 """
+    P_orgasm_normal = 10
+    """ 结算P普绝顶 """
+    P_orgasm_strong = 11
+    """ 结算P强绝顶 """
+    V_orgasm_small = 12
+    """ 结算V小绝顶 """
+    V_orgasm_normal = 13
+    """ 结算V普绝顶 """
+    V_orgasm_strong = 14
+    """ 结算V强绝顶 """
+    A_orgasm_small = 15
+    """ 结算A小绝顶 """
+    A_orgasm_normal = 16
+    """ 结算A普绝顶 """
+    A_orgasm_strong = 17
+    """ 结算A强绝顶 """
+    U_orgasm_small = 18
+    """ 结算U小绝顶 """
+    U_orgasm_normal = 19
+    """ 结算U普绝顶 """
+    U_orgasm_strong = 20
+    """ 结算U强绝顶 """
+    W_orgasm_small = 21
+    """ 结算W小绝顶 """
+    W_orgasm_normal = 22
+    """ 结算W普绝顶 """
+    W_orgasm_strong = 23
+    """ 结算W强绝顶 """
+
+
 class SecondEffect:
     """二段结算效果函数"""
 
-    NClimax = 0
-    """ 结算N绝顶 """
+    ADD_1_NClimax_EXPERIENCE = 210
+    """ 增加1N绝顶经验 """
+    ADD_1_BClimax_EXPERIENCE = 211
+    """ 增加1B绝顶经验 """
+    ADD_1_CClimax_EXPERIENCE = 212
+    """ 增加1C绝顶经验 """
+    # ADD_1_PClimax_EXPERIENCE = 213
+    # """ 增加1P绝顶经验 """
+    ADD_1_VClimax_EXPERIENCE = 214
+    """ 增加1V绝顶经验 """
+    ADD_1_AClimax_EXPERIENCE = 215
+    """ 增加1A绝顶经验 """
+    ADD_1_UClimax_EXPERIENCE = 216
+    """ 增加1U绝顶经验 """
+    ADD_1_WClimax_EXPERIENCE = 217
+    """ 增加1W绝顶经验 """
+    # ADD_1_Climax_EXPERIENCE = 220
+    # """ 增加1绝顶经验 """
+    ADD_1_Cumming_EXPERIENCE = 221
+    """ 增加1射精经验 """
+    ADD_1_Milking_EXPERIENCE = 222
+    """ 增加1喷乳经验 """
+    ADD_1_Peeing_EXPERIENCE = 223
+    """ 增加1放尿经验 """
+
 
 
 #旧结算存档#
@@ -1581,3 +1657,5 @@ cmd_map: Dict[int, FunctionType] = {}
 """ cmd存储 """
 settle_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色行为结算处理器 处理器id:处理器 """
+settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
+""" 角色二段行为结算处理器 处理器id:处理器 """

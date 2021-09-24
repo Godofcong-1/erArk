@@ -92,6 +92,15 @@ def get_orgasm_count_zero(orgasm_count_dict) -> dict:
         orgasm_count_list[orgasm] = 0
     return orgasm_count_list
 
+def get_second_behavior_zero(second_behavior_dict) -> dict:
+    """
+    将二段行为全项归零，暂时为前24项（全部位绝顶）
+    """
+    second_behavior_list = second_behavior_dict
+    for second_behavior in range(24):
+        second_behavior_list[second_behavior] = 0
+    return second_behavior_list
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0

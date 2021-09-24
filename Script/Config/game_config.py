@@ -23,6 +23,10 @@ config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
 """ 行为结算器配置 """
 config_behavior_effect_data: Dict[int, Set] = {}
 """ 行为所包含的结算器id数据 """
+config_second_behavior_effect: Dict[int, config_def.SecondEffect] = {}
+""" 二段行为结算器配置 """
+config_second_behavior_effect_data: Dict[int, Set] = {}
+""" 二段行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
@@ -327,6 +331,18 @@ def load_behavior_effect_data():
         config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
 
+def load_second_behavior_effect_data():
+    """载入二段行为结算器配置"""
+    now_data = config_data["SecondEffect"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.SecondEffect()
+        now_tem.__dict__ = tem_data
+        config_second_behavior_effect[now_tem.cid] = now_tem
+        config_second_behavior_effect_data.setdefault(now_tem.behavior_id, set())
+        config_second_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+
+
 def load_book_data():
     """载入数据配置数据"""
     now_data = config_data["Book"]
@@ -609,6 +625,7 @@ def init():
     load_ability_up_data()
     load_bar_data()
     load_behavior_effect_data()
+    load_second_behavior_effect_data()
     load_book_data()
     load_character_state_data()
     load_character_state_type_data()

@@ -180,8 +180,10 @@ def handle_sub_both_small_hit_point(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         sub_hit = add_time * 5
+        #气力为0时体力消耗3倍
         if target_data.mana_point == 0:
             sub_hit *= 3
+        #体力不足0时锁为1
         if target_data.hit_point >= sub_hit:
             target_data.hit_point -= sub_hit
             target_change.hit_point -= sub_hit
@@ -273,10 +275,12 @@ def handle_add_both_small_hit_point(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         add_hit_point = add_time * 40
+        #如果气力=0则恢复减半
         if target_data.mana_point == 0:
             add_hit_point /= 2
         target_data.hit_point += add_hit_point
         target_change.hit_point += add_hit_point
+        #如果超过最大值则=最大值
         if target_data.hit_point >= target_data.hit_point_max:
             target_data.hit_point = target_data.hit_point_max
 
@@ -313,10 +317,12 @@ def handle_add_both_small_mana_point(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         add_mana_point = add_time * 60
+        #如果气力=0则恢复减半
         if target_data.mana_point == 0:
             add_mana_point /= 2
         target_data.mana_point += add_mana_point
         target_change.mana_point += add_mana_point
+        #如果超过最大值则=最大值
         if target_data.mana_point >= target_data.mana_point_max:
             target_data.mana_point = target_data.mana_point_max
 

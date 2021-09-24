@@ -753,7 +753,10 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     target_data.is_h = 0
+    #H结束时的处理开始
     target_data.is_follow = 1
+    target_data.orgasm_count = 0
+    #H结束时的处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")

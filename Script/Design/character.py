@@ -31,6 +31,8 @@ def init_attr(character_id: int):
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
+
+    #一系列归零函数
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     character_data.status_data = attr_calculation.get_status_zero(character_data.status_data)
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
@@ -38,10 +40,15 @@ def init_attr(character_id: int):
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
     character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+    character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
+
+    #主角HP和MP默认为2000
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
         character_data.mana_point_max = 2000
+
+    #初始所有角色的HP和MP都为max值
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)

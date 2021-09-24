@@ -96,7 +96,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         #高潮程度和高潮次数归零
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
         character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
-    #处理跟随与H#
+    #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)
         judge_character_h(character_id)
