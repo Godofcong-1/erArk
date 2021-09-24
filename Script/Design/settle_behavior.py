@@ -434,8 +434,8 @@ def orgasm_effect(character_id: int):
         if now_data != pre_data:
             #判定触发哪些绝顶
             num = orgasm*3 + 1000 #通过num值来判断是二段行为记录的哪个位置
-            now_draw = draw.WaitDraw()
-            now_draw.width = width
+            # now_draw = draw.WaitDraw()
+            # now_draw.width = width
             if (now_data - pre_data) >= 3:
                 # now_draw.text = _("\n触发小、普、强绝顶\n")
                 character_data.second_behavior[num] = 1
@@ -463,7 +463,7 @@ def orgasm_effect(character_id: int):
                 elif pre_data % 3 == 2:
                     # now_draw.text = _("\n触发强绝顶\n")
                     character_data.second_behavior[num+2] = 1
-            now_draw.draw()
+            # now_draw.draw()
             
             #刷新记录
             character_data.orgasm_level[orgasm] = now_data
