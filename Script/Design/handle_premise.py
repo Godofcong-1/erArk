@@ -536,6 +536,18 @@ def handle_is_woman(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HIGH_1)
+def handle_high_1(character_id: int) -> int:
+    """
+    优先度为1的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 5
+
+
 @add_premise(constant.Premise.HIGH_5)
 def handle_high_5(character_id: int) -> int:
     """

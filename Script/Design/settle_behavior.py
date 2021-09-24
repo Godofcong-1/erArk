@@ -408,7 +408,7 @@ def check_second_effect(
                 # print("effect_id :",effect_id)
                 constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
             #触发后该行为值归零
-            target_character_data.second_behavior[behavior_id] = 0
+            # target_character_data.second_behavior[behavior_id] = 0
         # if behavior_id in game_config.config_behavior_effect_data:
             # for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             #     constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
@@ -437,31 +437,31 @@ def orgasm_effect(character_id: int):
             now_draw = draw.WaitDraw()
             now_draw.width = width
             if (now_data - pre_data) >= 3:
-                now_draw.text = _("\n触发小、普、强绝顶\n")
+                # now_draw.text = _("\n触发小、普、强绝顶\n")
                 character_data.second_behavior[num] = 1
                 character_data.second_behavior[num+1] = 1
                 character_data.second_behavior[num+2] = 1
             elif (now_data - pre_data) == 2:
                 if pre_data % 3 == 0:
-                    now_draw.text = _("\n触发小、普绝顶\n")
+                    # now_draw.text = _("\n触发小、普绝顶\n")
                     character_data.second_behavior[num] = 1
                     character_data.second_behavior[num+1] = 1
                 elif pre_data % 3 == 1:
-                    now_draw.text = _("\n触发普、强绝顶\n")
+                    # now_draw.text = _("\n触发普、强绝顶\n")
                     character_data.second_behavior[num+1] = 1
                     character_data.second_behavior[num+2] = 1
                 elif pre_data % 3 == 2:
-                    now_draw.text = _("\n触发强绝顶\n")
+                    # now_draw.text = _("\n触发强绝顶\n")
                     character_data.second_behavior[num+2] = 1
             else:
                 if pre_data % 3 == 0:
-                    now_draw.text = _("\n触发小绝顶\n")
+                    # now_draw.text = _("\n触发小绝顶\n")
                     character_data.second_behavior[num] = 1
                 elif pre_data % 3 == 1:
-                    now_draw.text = _("\n触发普绝顶\n")
+                    # now_draw.text = _("\n触发普绝顶\n")
                     character_data.second_behavior[num+1] = 1
                 elif pre_data % 3 == 2:
-                    now_draw.text = _("\n触发强绝顶\n")
+                    # now_draw.text = _("\n触发强绝顶\n")
                     character_data.second_behavior[num+2] = 1
             now_draw.draw()
             

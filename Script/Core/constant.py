@@ -442,6 +442,8 @@ class Premise:
     NOT_FOLLOW = "not_follow"
     """ 当前没跟随玩家 """
 
+    HIGH_1 = "high_1"
+    """ 优先度为1的空白前提 """
     HIGH_5 = "high_5"
     """ 优先度为5的空白前提 """
     HIGH_10 = "high_10"
