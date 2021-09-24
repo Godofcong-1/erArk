@@ -85,33 +85,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         if len(status_data.status):
             now_text_list.extend(
                 [
-                    f"\n  {game_config.config_character_state[i].name}:{attr_text.get_value_text(status_data.status[i])}"
+                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status[i]))}"
                     for i in status_data.status
                 ]
             )
-        # if len(status_data.knowledge):
-        #     now_text_list.extend(
-        #         [
-        #             f"\n  {game_config.config_knowledge[i].name}:{attr_text.get_value_text(status_data.knowledge[i])}"
-        #             for i in status_data.knowledge
-        #         ]
-        #     )
-        # if len(status_data.language):
-        #     now_text_list.extend(
-        #         [
-        #             f"\n  {game_config.config_language[i].name}:{attr_text.get_value_text(status_data.language[i])}"
-        #             for i in status_data.language
-        #         ]
-        #     )
-        # if len(status_data.sex_experience):
-        #     now_text_list.extend(
-        #         [
-        #             game_config.config_organ[i].name
-        #             + _("经验:")
-        #             + text_handle.number_to_symbol_string(round(status_data.sex_experience[i], 2))
-        #             for i in status_data.sex_experience
-        #         ]
-        #     )
         if len(status_data.experience):
             now_text_list.extend(
                 [
@@ -384,15 +361,15 @@ def check_second_effect(
     # print("进入第二结算")
 
     #检测自己
-    # for orgasm in range(8):
-    #     now_orgasm_level = attr_calculation.get_status_level(character_data.status_data[orgasm])
-    #     # print("当前orgasm = ",orgasm)
-    #     # print("当前character_data.status_data[orgasm] = ",character_data.status_data[orgasm])
-    #     # print("当前now_orgasm_level = ",now_orgasm_level)
-    #     # print("当前character_data.orgasm_level[orgasm] = ",character_data.orgasm_level[orgasm])
-    #     if now_orgasm_level != character_data.orgasm_level[orgasm]:
-    #         orgasm_effect(now_orgasm_level, character_data.orgasm_level[orgasm])
-    #         character_data.orgasm_level[orgasm] = now_orgasm_level
+    orgasm_effect(character_id)
+
+    #遍历二段行为id，进行结算
+    for behavior_id,behavior_data in target_character_data.second_behavior.items():
+        if behavior_data != 0:
+            #遍历该二段行为的所有结算效果，挨个触发
+            for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
+                # print("effect_id :",effect_id)
+                constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
     #检测交互对象
     orgasm_effect(target_character_id)
@@ -400,18 +377,10 @@ def check_second_effect(
     #遍历二段行为id，进行结算
     for behavior_id,behavior_data in target_character_data.second_behavior.items():
         if behavior_data != 0:
-            # print("target_character_id :",target_character_id)
-            # print("second_behavior_id :",second_behavior_id)
-            # print("target_character_data.second_behavior[second_behavior_id] :",target_character_data.second_behavior[second_behavior_id])
             #遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                 # print("effect_id :",effect_id)
                 constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
-            #触发后该行为值归零
-            # target_character_data.second_behavior[behavior_id] = 0
-        # if behavior_id in game_config.config_behavior_effect_data:
-            # for effect_id in game_config.config_behavior_effect_data[behavior_id]:
-            #     constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
 
 
 def orgasm_effect(character_id: int):
