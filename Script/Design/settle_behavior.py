@@ -398,17 +398,17 @@ def check_second_effect(
     orgasm_effect(target_character_id)
 
     #遍历二段行为id，进行结算
-    for second_behavior_id in range(len(target_character_data.second_behavior)):
-        if target_character_data.second_behavior[second_behavior_id] != 0:
+    for behavior_id,behavior_data in target_character_data.second_behavior.items():
+        if behavior_data != 0:
             # print("target_character_id :",target_character_id)
             # print("second_behavior_id :",second_behavior_id)
             # print("target_character_data.second_behavior[second_behavior_id] :",target_character_data.second_behavior[second_behavior_id])
             #遍历该二段行为的所有结算效果，挨个触发
-            for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
+            for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                 # print("effect_id :",effect_id)
                 constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
             #触发后该行为值归零
-            target_character_data.second_behavior[second_behavior_id] = 0
+            target_character_data.second_behavior[behavior_id] = 0
         # if behavior_id in game_config.config_behavior_effect_data:
             # for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             #     constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
@@ -433,7 +433,7 @@ def orgasm_effect(character_id: int):
         pre_data = character_data.orgasm_level[orgasm]
         if now_data != pre_data:
             #判定触发哪些绝顶
-            num = orgasm*3 #通过num值来判断是二段行为记录的哪个位置
+            num = orgasm*3 + 1000 #通过num值来判断是二段行为记录的哪个位置
             now_draw = draw.WaitDraw()
             now_draw.width = width
             if (now_data - pre_data) >= 3:

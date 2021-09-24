@@ -29,6 +29,7 @@ def handle_talk(character_id: int):
         and character_data.behavior.move_src != cache.character_data[0].position
     ):
         return
+    #第一段行为结算的口上
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
@@ -85,3 +86,5 @@ def handle_talk(character_id: int):
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         now_draw.draw()
+
+    #第二段行为结算的口上

@@ -1241,53 +1241,53 @@ class BehaviorEffect:
 class SecondBehavior:
     """二段结算行为函数"""
 
-    N_orgasm_small = 0
+    N_orgasm_small = 1000
     """ 结算N小绝顶 """
-    N_orgasm_normal = 1
+    N_orgasm_normal = 1001
     """ 结算N普绝顶 """
-    N_orgasm_strong = 2
+    N_orgasm_strong = 1002
     """ 结算N强绝顶 """
-    B_orgasm_small = 3
+    B_orgasm_small = 1003
     """ 结算B小绝顶 """
-    B_orgasm_normal = 4
+    B_orgasm_normal = 1004
     """ 结算B普绝顶 """
-    B_orgasm_strong = 5
+    B_orgasm_strong = 1005
     """ 结算B强绝顶 """
-    C_orgasm_small = 6
+    C_orgasm_small = 1006
     """ 结算C小绝顶 """
-    C_orgasm_normal = 7
+    C_orgasm_normal = 1007
     """ 结算C普绝顶 """
-    C_orgasm_strong = 8
+    C_orgasm_strong = 1008
     """ 结算C强绝顶 """
-    P_orgasm_small = 9
+    P_orgasm_small = 1009
     """ 结算P小绝顶 """
-    P_orgasm_normal = 10
+    P_orgasm_normal = 1010
     """ 结算P普绝顶 """
-    P_orgasm_strong = 11
+    P_orgasm_strong = 1011
     """ 结算P强绝顶 """
-    V_orgasm_small = 12
+    V_orgasm_small = 1012
     """ 结算V小绝顶 """
-    V_orgasm_normal = 13
+    V_orgasm_normal = 1013
     """ 结算V普绝顶 """
-    V_orgasm_strong = 14
+    V_orgasm_strong = 1014
     """ 结算V强绝顶 """
-    A_orgasm_small = 15
+    A_orgasm_small = 1015
     """ 结算A小绝顶 """
-    A_orgasm_normal = 16
+    A_orgasm_normal = 1016
     """ 结算A普绝顶 """
-    A_orgasm_strong = 17
+    A_orgasm_strong = 1017
     """ 结算A强绝顶 """
-    U_orgasm_small = 18
+    U_orgasm_small = 1018
     """ 结算U小绝顶 """
-    U_orgasm_normal = 19
+    U_orgasm_normal = 1019
     """ 结算U普绝顶 """
-    U_orgasm_strong = 20
+    U_orgasm_strong = 1020
     """ 结算U强绝顶 """
-    W_orgasm_small = 21
+    W_orgasm_small = 1021
     """ 结算W小绝顶 """
-    W_orgasm_normal = 22
+    W_orgasm_normal = 1022
     """ 结算W普绝顶 """
-    W_orgasm_strong = 23
+    W_orgasm_strong = 1023
     """ 结算W强绝顶 """
 
 
