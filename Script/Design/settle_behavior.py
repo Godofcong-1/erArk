@@ -364,11 +364,10 @@ def check_second_effect(
     orgasm_effect(character_id)
 
     #遍历二段行为id，进行结算
-    for behavior_id,behavior_data in target_character_data.second_behavior.items():
+    for behavior_id,behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             #遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                # print("effect_id :",effect_id)
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
     #检测交互对象
@@ -396,43 +395,58 @@ def orgasm_effect(character_id: int):
     # print("进入高潮结算")
     character_data: game_type.Character = cache.character_data[character_id]
 
-    #检测人物的各感度数据是否等于该人物的高潮记录程度数据
-    for orgasm in range(8):
-        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-        pre_data = character_data.orgasm_level[orgasm]
-        if now_data != pre_data:
-            #判定触发哪些绝顶
-            num = orgasm*3 + 1000 #通过num值来判断是二段行为记录的哪个位置
-            # now_draw = draw.WaitDraw()
-            # now_draw.width = width
-            if (now_data - pre_data) >= 3:
-                # now_draw.text = _("\n触发小、普、强绝顶\n")
-                character_data.second_behavior[num] = 1
-                character_data.second_behavior[num+1] = 1
-                character_data.second_behavior[num+2] = 1
-            elif (now_data - pre_data) == 2:
-                if pre_data % 3 == 0:
-                    # now_draw.text = _("\n触发小、普绝顶\n")
+    #检测射精
+    if character_id == 0:
+        if character_data.eja_point >= character_data.eja_point_max:
+            if character_data.orgasm_level[3] % 3 == 0:
+                character_data.second_behavior[1009] = 1
+            elif character_data.orgasm_level[3] % 3 == 1:
+                character_data.second_behavior[1010] = 1
+            elif character_data.orgasm_level[3] % 3 == 2:
+                character_data.second_behavior[1010] = 1
+            character_data.orgasm_level[3] += 1
+            character_data.eja_point = 0
+    else:
+        #检测人物的各感度数据是否等于该人物的高潮记录程度数据
+        for orgasm in range(8):
+            now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
+            pre_data = character_data.orgasm_level[orgasm]
+            #跳过射精槽
+            if orgasm == 3:
+                continue
+            if now_data != pre_data:
+                #判定触发哪些绝顶
+                num = orgasm*3 + 1000 #通过num值来判断是二段行为记录的哪个位置
+                # now_draw = draw.WaitDraw()
+                # now_draw.width = width
+                if (now_data - pre_data) >= 3:
+                    # now_draw.text = _("\n触发小、普、强绝顶\n")
                     character_data.second_behavior[num] = 1
                     character_data.second_behavior[num+1] = 1
-                elif pre_data % 3 == 1:
-                    # now_draw.text = _("\n触发普、强绝顶\n")
-                    character_data.second_behavior[num+1] = 1
                     character_data.second_behavior[num+2] = 1
-                elif pre_data % 3 == 2:
-                    # now_draw.text = _("\n触发强绝顶\n")
-                    character_data.second_behavior[num+2] = 1
-            else:
-                if pre_data % 3 == 0:
-                    # now_draw.text = _("\n触发小绝顶\n")
-                    character_data.second_behavior[num] = 1
-                elif pre_data % 3 == 1:
-                    # now_draw.text = _("\n触发普绝顶\n")
-                    character_data.second_behavior[num+1] = 1
-                elif pre_data % 3 == 2:
-                    # now_draw.text = _("\n触发强绝顶\n")
-                    character_data.second_behavior[num+2] = 1
-            # now_draw.draw()
-            
-            #刷新记录
-            character_data.orgasm_level[orgasm] = now_data
+                elif (now_data - pre_data) == 2:
+                    if pre_data % 3 == 0:
+                        # now_draw.text = _("\n触发小、普绝顶\n")
+                        character_data.second_behavior[num] = 1
+                        character_data.second_behavior[num+1] = 1
+                    elif pre_data % 3 == 1:
+                        # now_draw.text = _("\n触发普、强绝顶\n")
+                        character_data.second_behavior[num+1] = 1
+                        character_data.second_behavior[num+2] = 1
+                    elif pre_data % 3 == 2:
+                        # now_draw.text = _("\n触发强绝顶\n")
+                        character_data.second_behavior[num+2] = 1
+                else:
+                    if pre_data % 3 == 0:
+                        # now_draw.text = _("\n触发小绝顶\n")
+                        character_data.second_behavior[num] = 1
+                    elif pre_data % 3 == 1:
+                        # now_draw.text = _("\n触发普绝顶\n")
+                        character_data.second_behavior[num+1] = 1
+                    elif pre_data % 3 == 2:
+                        # now_draw.text = _("\n触发强绝顶\n")
+                        character_data.second_behavior[num+2] = 1
+                # now_draw.draw()
+                
+                #刷新记录
+                character_data.orgasm_level[orgasm] = now_data

@@ -1262,11 +1262,11 @@ class SecondBehavior:
     C_orgasm_strong = 1008
     """ 结算C强绝顶 """
     P_orgasm_small = 1009
-    """ 结算P小绝顶 """
+    """ 结算射精 """
     P_orgasm_normal = 1010
-    """ 结算P普绝顶 """
+    """ 结算大量射精 """
     P_orgasm_strong = 1011
-    """ 结算P强绝顶 """
+    """ 结算超大量射精 """
     V_orgasm_small = 1012
     """ 结算V小绝顶 """
     V_orgasm_normal = 1013

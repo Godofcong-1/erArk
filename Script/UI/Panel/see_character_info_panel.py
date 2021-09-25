@@ -376,14 +376,30 @@ class CharacterInfoHead:
             int(character_data.mana_point),
             _("气力"),
         )
+        if character_id == 0:
+            ep_draw = draw.InfoBarDraw()
+            ep_draw.width = width / 4
+            ep_draw.scale = 0.8
+            ep_draw.set(
+                "EjaPointbar",
+                int(character_data.eja_point_max),
+                int(character_data.eja_point),
+                _("射精"),
+            )
         status_text = game_config.config_status[character_data.state].name
         status_draw = draw.CenterDraw()
         status_draw.width = width / 4
         status_draw.text = _(" ").format(status_text=status_text)
-        self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, hp_draw),
-            (status_draw, mp_draw),
-        ]
+        if character_id == 0:
+            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
+                (message_draw, hp_draw),
+                (status_draw, mp_draw, ep_draw),
+            ]
+        else:
+            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
+                (message_draw, hp_draw),
+                (status_draw, mp_draw),
+            ]
         """ 要绘制的面板列表 """
 
     def draw(self):

@@ -228,11 +228,11 @@ class InScenePanel:
                         t_draw.width = self.width / 2 - 1
                     character_status_draw_list = target_status_draw.draw_list
                     # character_status_draw_list.append((t_draw))
-            else:
-                character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width, 9, 0
-                )
-                character_status_draw_list = character_status_draw.draw_list
+            # else:
+                # character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
+                #     character_data.cid, self.width, 9, 0
+                # )
+                # character_status_draw_list = character_status_draw.draw_list
             for label in character_status_draw_list:
                 if isinstance(label, tuple):
                     index = 0

@@ -285,12 +285,8 @@ def handle_add_1_cumming_experience(
         return
     character_data.experience.setdefault(21, 0)
     character_data.experience[21] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
     change_data.experience.setdefault(21, 0)
     change_data.experience[21] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
     if character_data.is_h == 1:
         character_data.orgasm_count[3] += 1
 

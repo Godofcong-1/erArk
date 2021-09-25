@@ -1545,14 +1545,10 @@ def handle_add_small_p_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.status_data.setdefault(3, 0)
-    now_lust = character_data.status_data[3]
-    now_lust_multiple = 100 + now_lust / 10
+    now_lust_multiple = 100
     now_add_lust = add_time + now_lust_multiple
-    character_data.status_data[3] += now_add_lust
-    change_data.status.setdefault(3, 0)
-    change_data.status[3] += now_add_lust
-
+    character_data.eja_point += now_add_lust
+    change_data.eja_point += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
