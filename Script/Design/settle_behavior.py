@@ -82,6 +82,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             now_text_list.append(
                 _("\n  气力") + text_handle.number_to_symbol_string(int(status_data.mana_point))
             )
+        if status_data.eja_point and round(status_data.eja_point, 2) != 0:
+            now_text_list.append(
+                _("\n  射精") + text_handle.number_to_symbol_string(int(status_data.eja_point))
+            )
         if len(status_data.status):
             now_text_list.extend(
                 [
