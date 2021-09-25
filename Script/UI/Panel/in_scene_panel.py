@@ -115,35 +115,25 @@ class InScenePanel:
                     now_draw_character_list.append(page_draw.character_id)
             #↓角色信息面板↓#
             character_info_draw_list = []
+            character_head_draw = see_character_info_panel.CharacterInfoHead(
+                character_data.cid, self.width
+            )
+            target_head_draw = see_character_info_panel.CharacterInfoHead(
+                character_data.target_character_id, self.width
+            )
+            character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]
+            character_head_draw_list[0].text += " " + character_head_draw_list[2].text
+            del character_head_draw_list[2]
+            target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
+            target_head_draw_list[0].text += " " + target_head_draw_list[2].text
+            del target_head_draw_list[2]
+            for value_tuple in character_head_draw_list:
+                value_tuple.draw()
+            line_feed.draw()
+            #只有在有交互对象的情况下才绘制交互对象
             if character_data.target_character_id:
-                character_head_draw = see_character_info_panel.CharacterInfoHead(
-                    character_data.cid, self.width
-                )
-                target_head_draw = see_character_info_panel.CharacterInfoHead(
-                    character_data.target_character_id, self.width
-                )
-                character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]
-                character_head_draw_list[0].text += " " + character_head_draw_list[2].text
-                del character_head_draw_list[2]
-                target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
-                target_head_draw_list[0].text += " " + target_head_draw_list[2].text
-                del target_head_draw_list[2]
-                for value_tuple in character_head_draw_list:
-                    value_tuple.draw()
-                line_feed.draw()
                 for value_tuple in target_head_draw_list:
                     value_tuple.draw()
-                line_feed.draw()
-                # character_info_draw_list = list(zip(character_head_draw_list, target_head_draw_list))
-            else:
-                character_head_draw = see_character_info_panel.CharacterInfoHead(
-                    character_data.cid, self.width
-                )
-                character_info_draw_list = character_head_draw.draw_list
-                for value_tuple in character_info_draw_list:
-                    for value in value_tuple:
-                        value.draw()
-                    # line_feed.draw()
                 line_feed.draw()
             # character_clothing_draw_list = []
             # if character_data.target_character_id:
