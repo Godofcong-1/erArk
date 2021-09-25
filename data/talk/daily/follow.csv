@@ -4,5 +4,5 @@ str,int,int,str
 0,0,0,1
 口上配置数据,,,
 0,115,0,触发请求同行指令的地文
-1,1,0,{Name}表示了想要{TargetName}和自己一起逛逛
-2,1,0,{Name}表示了想要{TargetName}跟着自己
+1,115,0,{Name}表示了想要{TargetName}和自己一起逛逛
+2,115,0,{Name}表示了想要{TargetName}跟着自己

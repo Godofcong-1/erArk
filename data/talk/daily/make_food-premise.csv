@@ -3,13 +3,8 @@ cid,talk_id,premise
 str,str,str
 0,0,0
 口上前提表,,
-0,0,high_1
+0,0,sys_0
 1,1,sys_0
 2,2,sys_0
 3,3,sys_0
 4,4,sys_0
-5,5,sys_0
-6,6,sys_0
-7,7,sys_0
-8,8,sys_0
-9,9,sys_0

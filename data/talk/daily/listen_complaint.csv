@@ -3,5 +3,5 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,1,0,触发听牢骚指令的地文
+0,999,0,触发听牢骚指令的地文
 1,1,0,{TargetName}向{Name}表达了最近的烦心事
