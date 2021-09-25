@@ -4,15 +4,3 @@ str,int,int,str
 0,0,0,1
 口上配置数据,,,
 0,111,0,{PlayerNickName}闭上眼睛逐渐睡着了
-1,111,0,「终于可以休息了」\n{PlayerNickName}疲惫的躺下了
-2,111,0,吵闹的声音让{PlayerNickName}翻来覆去睡不着
-3,111,0,{PlayerNickName}疲惫的合上了眼睛
-4,111,0,{PlayerNickName}将头蒙在被窝里哼起了歌
-5,111,0,{PlayerNickName}躺在床上翻来覆去睡不着
-6,111,0,{PlayerNickName}躺了下去
-7,111,0,{PlayerNickName}合上了沉重的眼睛
-8,111,0,看着初升的太阳，{PlayerNickName}微笑着闭上了眼睛
-9,111,0,看着初升的太阳，{PlayerNickName}迟疑着躺下了
-10,111,0,\n{PlayerNickName}冷哼一声蒙上了被子
-11,111,0,{Name}闭上眼睛逐渐睡着了
-12,111,0,{Name}躺了下去
