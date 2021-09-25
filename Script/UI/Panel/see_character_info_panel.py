@@ -277,10 +277,10 @@ class SeeCharacterStatusPanel:
                     # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
                     if status_type == 0:
                         if character_data.sex == 0:
-                            if status_id in {2, 3, 7, 8}:
+                            if status_id in {2, 4, 7}:
                                 continue
                         elif character_data.sex == 1:
-                            if status_id == 5:
+                            if status_id == 3:
                                 continue
                     status_text = game_config.config_character_state[status_id].name
                     status_value = 0
