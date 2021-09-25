@@ -393,6 +393,10 @@ class Character:
         """ 角色最大MP """
         self.mana_point: int = 0
         """ 角色当前MP """
+        self.eja_point_max: int = 0
+        """ 角色最大射精槽 """
+        self.eja_point: int = 0
+        """ 角色当前射精槽 """
         self.state: int = 0
         """ 角色当前状态 """
         self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
@@ -633,6 +637,8 @@ class CharacterStatusChange:
         """ hp变化 """
         self.mana_point: int = 0
         """ mp变化 """
+        self.eja_point: int = 0
+        """ 射精变化 """
         self.status: Dict[int, int] = {}
         """ 状态变化 """
         self.language: Dict[int, int] = {}

@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,104,0,触发冲咖啡指令的地文
+1,104,0,{Name}为{TargetName}冲泡了速溶咖啡
+2,104,0,{Name}为{TargetName}以及在场的干员们冲泡了速溶咖啡

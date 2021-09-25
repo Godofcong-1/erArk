@@ -1,0 +1,14 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,1,0,{NickName}来到了{SceneName}
+1,1,0,{NickName}移动到了{SceneName}
+2,1,0,{NickName}走到了{SceneName}
+3,1,0,{Name}来到了{SceneName}
+4,1,0,{Name}走了过来
+5,1,0,{Name}冲着{PlayerNickName}打了个招呼
+6,1,0,{Name}朝着{SceneName}离开了
+7,1,0,{Name}去了{SceneName}
+8,1,0,{Name}前往了{SceneName}
