@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,104,0,触发冲咖啡指令的地文
+0,104,0,触发泡咖啡指令的地文
 1,104,0,{Name}为{TargetName}冲泡了速溶咖啡
 2,104,0,{Name}为{TargetName}以及在场的干员们冲泡了速溶咖啡

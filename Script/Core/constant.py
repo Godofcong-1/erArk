@@ -19,6 +19,10 @@ class CharacterStatus:
     """ 身体接触 """
     STATUS_MAKE_COFFEE = 104
     """ 泡咖啡 """
+    STATUS_MAKE_COFFEE_ADD = 105
+    """ 泡咖啡（加料） """
+    STATUS_ASK_MAKE_COFFEE = 106
+    """ 让对方泡咖啡 """
     STATUS_MAKE_FOOD = 107
     """ 做饭 """
     STATUS_EAT = 108
@@ -166,6 +170,10 @@ class Behavior:
     """ 身体接触 """
     MAKE_COFFEE = 104
     """ 泡咖啡 """
+    MAKE_COFFEE_ADD = 105
+    """ 泡咖啡（加料） """
+    ASK_MAKE_COFFEE = 106
+    """ 让对方泡咖啡 """
     MAKE_FOOD = 107
     """ 做饭 """
     EAT = 108
@@ -1035,6 +1043,8 @@ class BehaviorEffect:
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101
     """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
+    TARGET_COFFEE_ADD_ADJUST = 104
+    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
     EAT_FOOD = 102
     """ 进食指定食物 """
     MAKE_FOOD = 103
@@ -1359,9 +1369,11 @@ class Instruct:
     STROKE = 0
     """ 身体接触 """
     MAKE_COFFEE = 0
-    """ 冲咖啡 """
+    """ 泡咖啡 """
     MAKE_COFFEE_ADD = 0
-    """ 冲咖啡（加料） """
+    """ 泡咖啡（加料） """
+    ASK_MAKE_COFFEE = 0
+    """ 让对方泡咖啡 """
     MAKE_FOOD = 0
     """ 做饭 """
     EAT = 0

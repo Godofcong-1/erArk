@@ -527,12 +527,12 @@ def handle_wait():
 @add_instruct(
     constant.Instruct.MAKE_COFFEE,
     constant.InstructType.DAILY,
-    _("冲咖啡"),
+    _("泡咖啡"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
 )
 def handle_make_coffee():
-    """处理冲咖啡指令"""
+    """处理泡咖啡指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 15
@@ -543,14 +543,33 @@ def handle_make_coffee():
 @add_instruct(
     constant.Instruct.MAKE_COFFEE_ADD,
     constant.InstructType.DAILY,
-    _("冲咖啡（加料）"),
+    _("泡咖啡（加料）"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
 )
 def handle_make_coffee_add():
-    """处理冲咖啡（加料）指令"""
+    """处理泡咖啡（加料）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE_ADD
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
+    character_data.behavior.duration = 15
+    update.game_update_flow(15)
+
+
+@add_instruct(
+    constant.Instruct.ASK_MAKE_COFFEE,
+    constant.InstructType.DAILY,
+    _("让对方泡咖啡"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_ask_make_coffee():
+    """处理让对方泡咖啡指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.ASK_MAKE_COFFEE
+    character_data.state = constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE
     character_data.behavior.duration = 15
     update.game_update_flow(15)
 
