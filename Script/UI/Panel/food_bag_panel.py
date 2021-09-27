@@ -244,8 +244,8 @@ class EatFoodByFoodNameDraw:
         character_data: game_type.Character = cache.character_data[0]
         now_food = character_data.food_bag[self.text]
         character_data.behavior.behavior_id = constant.Behavior.EAT
+        character_data.state = constant.CharacterStatus.STATUS_EAT
         character_data.behavior.eat_food = now_food
         character_data.behavior.duration = 1
-        character_data.state = constant.CharacterStatus.STATUS_EAT
         update.game_update_flow(1)
         cache.now_panel_id = constant.Panel.IN_SCENE

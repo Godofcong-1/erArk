@@ -27,12 +27,16 @@ class CharacterStatus:
     """ 做饭 """
     STATUS_EAT = 108
     """ 进食状态 """
+    STATUS_BUY_FOOD = 109
+    """ 购买食物 """
     STATUS_REST = 110
     """ 休息状态 """
     STATUS_SLEEP = 111
     """ 睡觉 """
     STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
+    STATUS_END_FOLLOW = 116
+    """ NPC停止跟随玩家 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -178,12 +182,16 @@ class Behavior:
     """ 做饭 """
     EAT = 108
     """ 进食 """
+    BUY_FOOD = 109
+    """ 购买食物 """
     REST = 110
     """ 休息 """
     SLEEP = 111
     """ 睡觉 """
     FOLLOW = 115
     """ 让NPC跟随玩家 """
+    END_FOLLOW = 116
+    """ 让NPC停止跟随玩家 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
