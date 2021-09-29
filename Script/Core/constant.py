@@ -9,10 +9,6 @@ class CharacterStatus:
     """ 休闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
-    STATUS_H = 2
-    """ H状态 """
-    STATUS_END_H = 3
-    """ 结束H状态 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -39,6 +35,10 @@ class CharacterStatus:
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
     """ NPC停止跟随玩家 """
+    STATUS_H = 125
+    """ H状态 """
+    STATUS_END_H = 126
+    """ 结束H状态 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -166,10 +166,6 @@ class Behavior:
     """ 发呆 """
     MOVE = 1
     """ 移动 """
-    H = 2
-    """ H """
-    END_H = 3
-    """ 结束H """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -196,6 +192,10 @@ class Behavior:
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
     """ 让NPC停止跟随玩家 """
+    H = 125
+    """ H """
+    END_H = 126
+    """ 结束H """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -1416,7 +1416,7 @@ class Instruct:
     """ 劝酒 """
     DO_H = 0
     """ 邀请H """
-    STOP_H = 0
+    END_H = 0
     """ H结束 """
     # SINGING = 0
     # """ 唱歌 """

@@ -766,13 +766,13 @@ def handle_do_h():
 
 
 @add_instruct(
-    constant.Instruct.STOP_H,
+    constant.Instruct.END_H,
     constant.InstructType.DAILY,
     _("H结束"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
-def handle_do_h():
+def handle_end_h():
     """处理H结束指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
@@ -780,10 +780,13 @@ def handle_do_h():
     target_data.is_h = 0
     character_data.behavior.behavior_id = constant.Behavior.END_H
     character_data.state = constant.CharacterStatus.STATUS_END_H
-    #H结束时的处理开始
-    target_data.is_follow = 1
+    #H结束时的其他处理
+    #1.高潮结算归零
+    character_data.orgasm_count = 0
     target_data.orgasm_count = 0
-    #H结束时的处理完毕
+    #2.对象NPC进入跟随
+    target_data.is_follow = 1
+    #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")
