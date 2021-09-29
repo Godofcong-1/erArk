@@ -819,6 +819,26 @@ def handle_end_h():
 #     character_data.behavior.duration = 5
 #     update.game_update_flow(5)
 
+#以下为工作#
+
+@add_instruct(
+    constant.Instruct.OFFICIAL_WORK,
+    constant.InstructType.WORK,
+    _("处理公务"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_DR_OFFICE},
+)
+def handle_official_work():
+    """处理处理公务指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
+    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+    update.game_update_flow(60)
+
+
+
 #以下为猥亵#
 
 @add_instruct(

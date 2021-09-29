@@ -66,3 +66,6 @@ str,str,str
 60,29,hp_low
 61,29,mp_0
 62,29,t_hp_high
+63,30,sys_0
+64,31,sys_0
+65,32,sys_0

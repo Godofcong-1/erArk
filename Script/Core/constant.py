@@ -39,6 +39,8 @@ class CharacterStatus:
     """ H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
+    STATUS_OFFICIAL_WORK = 201
+    """ 处理公务 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -196,6 +198,8 @@ class Behavior:
     """ H """
     END_H = 126
     """ 结束H """
+    OFFICIAL_WORK = 201
+    """ 处理公务 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -520,6 +524,8 @@ class Premise:
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
     """ 在食堂 """
+    IN_DR_OFFICE = "in_dr_off"
+    """ 在博士办公室 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
