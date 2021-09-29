@@ -752,6 +752,8 @@ def handle_do_h():
     if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
         target_data.is_h = 1
         target_data.is_follow = 0
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n进入H模式\n")
@@ -776,6 +778,8 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     target_data.is_h = 0
+    character_data.behavior.behavior_id = constant.Behavior.END_H
+    character_data.state = constant.CharacterStatus.STATUS_END_H
     #H结束时的处理开始
     target_data.is_follow = 1
     target_data.orgasm_count = 0

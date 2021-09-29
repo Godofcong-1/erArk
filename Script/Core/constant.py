@@ -11,6 +11,8 @@ class CharacterStatus:
     """ 移动状态 """
     STATUS_H = 2
     """ H状态 """
+    STATUS_END_H = 3
+    """ 结束H状态 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -166,6 +168,8 @@ class Behavior:
     """ 移动 """
     H = 2
     """ H """
+    END_H = 3
+    """ 结束H """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102

@@ -59,3 +59,10 @@ str,str,str
 53,24,time_day
 54,25,sys_0
 55,26,sys_0
+56,27,sys_0
+57,28,t_hp_low
+58,28,t_mp_0
+59,28,hp_high
+60,29,hp_low
+61,29,mp_0
+62,29,t_hp_high
