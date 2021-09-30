@@ -1057,6 +1057,8 @@ class BehaviorEffect:
     """ 交互对象增加少量反感（反发刻印补正） """
     ADD_SMALL_P_FEEL = 70
     """ 自身增加少量Ｐ快 """
+    DOWN_ADD_SMALL_LEARN = 71
+    """ 双方增加少量习得（若没有交互对象则仅增加自己） """
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101

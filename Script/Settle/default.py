@@ -876,8 +876,8 @@ def handle_target_add_small_n_feel(
     target_data.status_data[0] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(0, 0)
-    target_change.status[0] += now_add_lust
+    target_change.status_data.setdefault(0, 0)
+    target_change.status_data[0] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_B_FEEL)
 def handle_target_add_small_b_feel(
@@ -907,8 +907,8 @@ def handle_target_add_small_b_feel(
     target_data.status_data[1] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status_data.setdefault(1, 0)
+    target_change.status_data[1] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
 def handle_target_add_small_c_feel(
@@ -938,8 +938,8 @@ def handle_target_add_small_c_feel(
     target_data.status_data[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(2, 0)
-    target_change.status[2] += now_add_lust
+    target_change.status_data.setdefault(2, 0)
+    target_change.status_data[2] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
@@ -970,8 +970,8 @@ def handle_target_add_small_p_feel(
     target_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(3, 0)
-    target_change.status[3] += now_add_lust
+    target_change.status_data.setdefault(3, 0)
+    target_change.status_data[3] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
 def handle_target_add_small_v_feel(
@@ -1001,8 +1001,8 @@ def handle_target_add_small_v_feel(
     target_data.status_data[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(4, 0)
-    target_change.status[4] += now_add_lust
+    target_change.status_data.setdefault(4, 0)
+    target_change.status_data[4] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
 def handle_target_add_small_a_feel(
@@ -1032,8 +1032,8 @@ def handle_target_add_small_a_feel(
     target_data.status_data[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(5, 0)
-    target_change.status[5] += now_add_lust
+    target_change.status_data.setdefault(5, 0)
+    target_change.status_data[5] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_U_FEEL)
 def handle_target_add_small_u_feel(
@@ -1063,8 +1063,8 @@ def handle_target_add_small_u_feel(
     target_data.status_data[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(6, 0)
-    target_change.status[6] += now_add_lust
+    target_change.status_data.setdefault(6, 0)
+    target_change.status_data[6] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_W_FEEL)
 def handle_target_add_small_w_feel(
@@ -1094,8 +1094,8 @@ def handle_target_add_small_w_feel(
     target_data.status_data[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(7, 0)
-    target_change.status[7] += now_add_lust
+    target_change.status_data.setdefault(7, 0)
+    target_change.status_data[7] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LUBRICATION)
 def handle_target_add_small_lubrication(
@@ -1127,8 +1127,8 @@ def handle_target_add_small_lubrication(
     now_add_lust *= adjust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(8, 0)
-    target_change.status[8] += now_add_lust
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
@@ -1161,8 +1161,8 @@ def handle_target_add_small_learn(
     target_data.status_data[9] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(9, 0)
-    target_change.status[9] += now_add_lust
+    target_change.status_data.setdefault(9, 0)
+    target_change.status_data[9] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
 def handle_target_add_small_repect(
@@ -1194,8 +1194,8 @@ def handle_target_add_small_repect(
     target_data.status_data[10] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(10, 0)
-    target_change.status[10] += now_add_lust
+    target_change.status_data.setdefault(10, 0)
+    target_change.status_data[10] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
 def handle_target_add_small_friendly(
@@ -1227,8 +1227,8 @@ def handle_target_add_small_friendly(
     target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(11, 0)
-    target_change.status[11] += now_add_lust
+    target_change.status_data.setdefault(11, 0)
+    target_change.status_data[11] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
 def handle_target_add_small_desire(
@@ -1260,8 +1260,8 @@ def handle_target_add_small_desire(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
 def handle_target_add_small_happy(
@@ -1293,8 +1293,8 @@ def handle_target_add_small_happy(
     target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(13, 0)
-    target_change.status[13] += now_add_lust
+    target_change.status_data.setdefault(13, 0)
+    target_change.status_data[13] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
 def handle_target_add_small_lead(
@@ -1326,8 +1326,8 @@ def handle_target_add_small_lead(
     target_data.status_data[14] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(14, 0)
-    target_change.status[14] += now_add_lust
+    target_change.status_data.setdefault(14, 0)
+    target_change.status_data[14] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
 def handle_target_add_small_submit(
@@ -1359,8 +1359,8 @@ def handle_target_add_small_submit(
     target_data.status_data[15] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(15, 0)
-    target_change.status[15] += now_add_lust
+    target_change.status_data.setdefault(15, 0)
+    target_change.status_data[15] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SHY)
 def handle_target_add_small_shy(
@@ -1392,8 +1392,8 @@ def handle_target_add_small_shy(
     target_data.status_data[16] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(16, 0)
-    target_change.status[16] += now_add_lust
+    target_change.status_data.setdefault(16, 0)
+    target_change.status_data[16] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
 def handle_target_add_small_pain(
@@ -1425,8 +1425,8 @@ def handle_target_add_small_pain(
     target_data.status_data[17] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(17, 0)
-    target_change.status[17] += now_add_lust
+    target_change.status_data.setdefault(17, 0)
+    target_change.status_data[17] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
 def handle_target_add_small_terror(
@@ -1458,8 +1458,8 @@ def handle_target_add_small_terror(
     target_data.status_data[18] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(18, 0)
-    target_change.status[18] += now_add_lust
+    target_change.status_data.setdefault(18, 0)
+    target_change.status_data[18] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
 def handle_target_add_small_depression(
@@ -1489,8 +1489,8 @@ def handle_target_add_small_depression(
     target_data.status_data[19] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(19, 0)
-    target_change.status[19] += now_add_lust
+    target_change.status_data.setdefault(19, 0)
+    target_change.status_data[19] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
 def handle_target_add_small_disgust(
@@ -1522,8 +1522,8 @@ def handle_target_add_small_disgust(
     target_data.status_data[20] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(20, 0)
-    target_change.status[20] += now_add_lust
+    target_change.status_data.setdefault(20, 0)
+    target_change.status_data[20] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_P_FEEL)
 def handle_add_small_p_feel(
@@ -1549,6 +1549,39 @@ def handle_add_small_p_feel(
     now_add_lust = add_time + now_lust_multiple
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_ADD_SMALL_LEARN)
+def handle_both_add_small_learn(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    双方增加少量习得（若没有交互对象则仅增加自己）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    now_lust_multiple = 100
+    now_add_lust = add_time + now_lust_multiple
+    character_data.status_data[9] += now_add_lust
+    change_data.status_data[9] += now_add_lust
+    #交互对象也同样#
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.status_data.setdefault(9, 0)
+        target_change.status_data[9] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
@@ -1595,8 +1628,8 @@ def handle_talk_add_adjust(
     target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(11, 0)
-    target_change.status[11] += now_add_lust
+    target_change.status_data.setdefault(11, 0)
+    target_change.status_data[11] += now_add_lust
     #快乐变化#
     target_data.status_data.setdefault(13, 0)
     now_lust = target_data.status_data[13]
@@ -1606,8 +1639,8 @@ def handle_talk_add_adjust(
     target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(13, 0)
-    target_change.status[13] += now_add_lust
+    target_change.status_data.setdefault(13, 0)
+    target_change.status_data[13] += now_add_lust
     #记录谈话时间#
     target_data.talk_time = now_time
     # print("聊天计数器时间变为 ：",target_data.talk_time)
@@ -1666,8 +1699,8 @@ def handle_coffee_add_adjust(
     target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(11, 0)
-    target_change.status[11] += now_add_lust
+    target_change.status_data.setdefault(11, 0)
+    target_change.status_data[11] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_COFFEE_ADD_ADJUST)
@@ -1723,8 +1756,8 @@ def handle_target_coffee_add_adjust(
     target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(11, 0)
-    target_change.status[11] += now_add_lust
+    target_change.status_data.setdefault(11, 0)
+    target_change.status_data[11] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_N_ADJUST)
@@ -1764,8 +1797,8 @@ def handle_tech_add_n_adjust(
     target_data.status_data[0] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(0, 0)
-    target_change.status[0] += now_add_lust
+    target_change.status_data.setdefault(0, 0)
+    target_change.status_data[0] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -1775,8 +1808,8 @@ def handle_tech_add_n_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_B_ADJUST)
@@ -1816,8 +1849,8 @@ def handle_tech_add_b_adjust(
     target_data.status_data[1] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(1, 0)
-    target_change.status[1] += now_add_lust
+    target_change.status_data.setdefault(1, 0)
+    target_change.status_data[1] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -1827,8 +1860,8 @@ def handle_tech_add_b_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_C_ADJUST)
 def handle_tech_add_c_adjust(
@@ -1867,8 +1900,8 @@ def handle_tech_add_c_adjust(
     target_data.status_data[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(2, 0)
-    target_change.status[2] += now_add_lust
+    target_change.status_data.setdefault(2, 0)
+    target_change.status_data[2] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -1878,8 +1911,8 @@ def handle_tech_add_c_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_P_ADJUST)
 def handle_tech_add_p_adjust(
@@ -1918,8 +1951,8 @@ def handle_tech_add_p_adjust(
     target_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(3, 0)
-    target_change.status[3] += now_add_lust
+    target_change.status_data.setdefault(3, 0)
+    target_change.status_data[3] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -1929,8 +1962,8 @@ def handle_tech_add_p_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_V_ADJUST)
 def handle_tech_add_v_adjust(
@@ -1969,8 +2002,8 @@ def handle_tech_add_v_adjust(
     target_data.status_data[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(4, 0)
-    target_change.status[4] += now_add_lust
+    target_change.status_data.setdefault(4, 0)
+    target_change.status_data[4] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -1980,8 +2013,8 @@ def handle_tech_add_v_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_A_ADJUST)
 def handle_tech_add_a_adjust(
@@ -2020,8 +2053,8 @@ def handle_tech_add_a_adjust(
     target_data.status_data[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(5, 0)
-    target_change.status[5] += now_add_lust
+    target_change.status_data.setdefault(5, 0)
+    target_change.status_data[5] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -2031,8 +2064,8 @@ def handle_tech_add_a_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_U_ADJUST)
 def handle_tech_add_u_adjust(
@@ -2071,8 +2104,8 @@ def handle_tech_add_u_adjust(
     target_data.status_data[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(6, 0)
-    target_change.status[6] += now_add_lust
+    target_change.status_data.setdefault(6, 0)
+    target_change.status_data[6] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -2082,8 +2115,8 @@ def handle_tech_add_u_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_W_ADJUST)
 def handle_tech_add_w_adjust(
@@ -2122,8 +2155,8 @@ def handle_tech_add_w_adjust(
     target_data.status_data[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(7, 0)
-    target_change.status[7] += now_add_lust
+    target_change.status_data.setdefault(7, 0)
+    target_change.status_data[7] += now_add_lust
     #欲情变化#
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -2133,8 +2166,8 @@ def handle_tech_add_w_adjust(
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(12, 0)
-    target_change.status[12] += now_add_lust
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
 def handle_tech_add_pl_p_adjust(
@@ -2173,8 +2206,8 @@ def handle_tech_add_pl_p_adjust(
     character_data.status_data[3] += now_add_lust
     change_data.target_change.setdefault(character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[character_data.cid]
-    target_change.status.setdefault(3, 0)
-    target_change.status[3] += now_add_lust
+    target_change.status_data.setdefault(3, 0)
+    target_change.status_data[3] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)
@@ -2214,5 +2247,5 @@ def handle_target_lubrication_adjust_add_pain(
     target_data.status_data[17] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status.setdefault(17, 0)
-    target_change.status[17] += now_add_lust
+    target_change.status_data.setdefault(17, 0)
+    target_change.status_data[17] += now_add_lust

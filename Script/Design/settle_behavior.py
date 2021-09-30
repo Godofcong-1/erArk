@@ -56,7 +56,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     #     now_judge = True
     # if len(status_data.language):
     #     now_judge = True
-    if len(status_data.status):
+    if len(status_data.status_data):
         now_judge = True
     # if len(status_data.sex_experience):
     #     now_judge = True
@@ -86,11 +86,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             now_text_list.append(
                 _("\n  射精") + text_handle.number_to_symbol_string(int(status_data.eja_point))
             )
-        if len(status_data.status):
+        if len(status_data.status_data):
             now_text_list.extend(
                 [
-                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status[i]))}"
-                    for i in status_data.status
+                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
+                    for i in status_data.status_data
                 ]
             )
         if len(status_data.experience):
@@ -137,14 +137,14 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 #         + game_config.config_social_type[target_change.new_social].name
                 #     )
                 #     judge = 1
-                if len(target_change.status):
-                    for status_id in target_change.status:
-                        if target_change.status[status_id]:
+                if len(target_change.status_data):
+                    for status_id in target_change.status_data:
+                        if target_change.status_data[status_id]:
                             now_text += (
                                 "\n  "
                                 + game_config.config_character_state[status_id].name
                                 + text_handle.number_to_symbol_string(
-                                    int(target_change.status[status_id])
+                                    int(target_change.status_data[status_id])
                                 )
                             )
                             judge = 1

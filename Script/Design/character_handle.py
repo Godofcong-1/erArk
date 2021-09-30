@@ -205,7 +205,7 @@ def add_favorability(
     target_data: game_type.Character = cache.character_data[target_id]
     target_data.favorability.setdefault(character_id, 0)
     if target_change is not None:
-        target_change.status.setdefault(12, 0)
+        target_change.status_data.setdefault(12, 0)
     old_add_favorability = now_add_favorability
     # if 12 in target_data.status:
     #     disgust = target_data.status[12]

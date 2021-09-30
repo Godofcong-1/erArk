@@ -619,7 +619,7 @@ class TargetChange:
         """ hp变化 """
         self.mana_point: int = 0
         """ mp变化 """
-        self.status: Dict[int, int] = {}
+        self.status_data: Dict[int, int] = {}
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
@@ -639,7 +639,7 @@ class CharacterStatusChange:
         """ mp变化 """
         self.eja_point: int = 0
         """ 射精变化 """
-        self.status: Dict[int, int] = {}
+        self.status_data: Dict[int, int] = {}
         """ 状态变化 """
         self.language: Dict[int, int] = {}
         """ 语言技能经验变化 """
