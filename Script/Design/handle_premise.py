@@ -3598,6 +3598,23 @@ def handle_last_cmd_face_seat_sex(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_BACK_SEAT_SEX)
+def handle_last_cmd_back_seat_sex(character_id: int) -> int:
+    """
+    前一指令为对面座位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.BACK_SEAT_SEX)):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_RIDING_SEX)
 def handle_last_cmd_riding_sex(character_id: int) -> int:
     """

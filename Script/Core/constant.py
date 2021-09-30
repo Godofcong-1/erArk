@@ -798,6 +798,8 @@ class Premise:
     """ 前一指令为真空口交 """
     LAST_CMD_FACE_SEAT_SEX= "last_cmd_face_seat_sex"
     """ 前一指令为对面座位 """
+    LAST_CMD_BACK_SEAT_SEX= "last_cmd_back_seat_sex"
+    """ 前一指令为对面座位 """
     LAST_CMD_RIDING_SEX= "last_cmd_riding_sex"
     """ 前一指令为骑乘位 """
 
