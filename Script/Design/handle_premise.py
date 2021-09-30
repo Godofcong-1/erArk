@@ -1460,7 +1460,7 @@ def handle_target_obey_2(character_id: int) -> int:
 @add_premise(constant.Premise.TARGET_OBEY_3)
 def handle_target_obey_3(character_id: int) -> int:
     """
-    校验交互对象是否是妄信,隶属系第三阶段
+    校验交互对象是否是宠物,隶属系第三阶段
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1525,7 +1525,7 @@ def handle_target_obey_ge_2(character_id: int) -> int:
 @add_premise(constant.Premise.TARGET_OBEY_GE_3)
 def handle_target_obey_ge_3(character_id: int) -> int:
     """
-    交互对象隶属系>=妄信
+    交互对象隶属系>=宠物
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

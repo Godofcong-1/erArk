@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,121,0,触发告白指令的地文
+0,122,0,触发告白失败指令的地文

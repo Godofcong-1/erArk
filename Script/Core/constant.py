@@ -35,6 +35,14 @@ class CharacterStatus:
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
     """ NPC停止跟随玩家 """
+    STATUS_CONFESSION = 121
+    """ 告白 """
+    STATUS_CONFESSION_FAILED = 122
+    """ 告白失败 """
+    STATUS_GIVE_NECKLACE = 123
+    """ 戴上项圈 """
+    STATUS_GIVE_NECKLACE_FAILED = 124
+    """ 戴上项圈失败 """
     STATUS_H = 125
     """ H状态 """
     STATUS_END_H = 126
@@ -194,6 +202,14 @@ class Behavior:
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
     """ 让NPC停止跟随玩家 """
+    CONFESSION = 121
+    """ 告白 """
+    CONFESSION_FAILED = 122
+    """ 告白失败 """
+    GIVE_NECKLACE = 123
+    """ 戴上项圈 """
+    GIVE_NECKLACE_FAILED = 124
+    """ 戴上项圈失败 """
     H = 125
     """ H """
     END_H = 126
@@ -629,7 +645,7 @@ class Premise:
     TARGET_OBEY_2 = "obey_2"
     """ 交互对象拥有驯服（隶属系第二阶段） """
     TARGET_OBEY_3 = "obey_3"
-    """ 交互对象拥有妄信（隶属系第三阶段） """
+    """ 交互对象拥有宠物（隶属系第三阶段） """
     TARGET_OBEY_4 = "obey_4"
     """ 交互对象拥有奴隶（隶属系第四阶段） """
     TARGET_OBEY_GE_1 = "obey_ge_1"
@@ -637,7 +653,7 @@ class Premise:
     TARGET_OBEY_GE_2 = "obey_ge_2"
     """ 交互对象隶属系>=驯服 """
     TARGET_OBEY_GE_3 = "obey_ge_3"
-    """ 交互对象隶属系>=妄信 """
+    """ 交互对象隶属系>=宠物 """
 
     TARGET_NO_FIRST_KISS = "kiss_0"
     """ 交互对象未保有初吻 """
@@ -1420,12 +1436,14 @@ class Instruct:
     """ 邀请约会 """
     CONFESSION = 0
     """ 告白 """
-    DRINK_ALCOHOL = 0
-    """ 劝酒 """
+    GIVE_NECKLACE = 0
+    """ 戴上项圈 """
     DO_H = 0
     """ 邀请H """
     END_H = 0
     """ H结束 """
+    DRINK_ALCOHOL = 0
+    """ 劝酒 """
     # SINGING = 0
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0

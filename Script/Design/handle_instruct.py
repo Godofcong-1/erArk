@@ -711,7 +711,7 @@ def handle_ask_date():
 @add_instruct(
     constant.Instruct.CONFESSION,
     constant.InstructType.DAILY,
-    _("告白_未实装"),
+    _("告白"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
 )
@@ -719,8 +719,55 @@ def handle_confession():
     """处理告白指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[11] == 1 and character.calculation_instuct_judege(0,character_data.target_character_id,"告白"):
+        character_data.behavior.behavior_id = constant.Behavior.CONFESSION
+        character_data.state = constant.CharacterStatus.STATUS_CONFESSION
+        target_data.talent[14] = 1
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\告白成功，获得了对方赠与的[信物]\n")
+        now_draw.draw()
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_CONFESSION_FAILED
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n告白失败，需要[恋慕]且满足实行值\n")
+        now_draw.draw()
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.GIVE_NECKLACE,
+    constant.InstructType.DAILY,
+    _("戴上项圈"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_give_necklace():
+    """处理戴上项圈指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[15] == 1 and character.calculation_instuct_judege(0,character_data.target_character_id,"戴上项圈"):
+        character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
+        character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
+        target_data.talent[19] = 1
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\戴上项圈成功，对方获得了[项圈]\n")
+        now_draw.draw()
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE_FAILED
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n戴上项圈失败，需要[驯服]且满足实行值\n")
+        now_draw.draw()
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.DRINK_ALCOHOL,
