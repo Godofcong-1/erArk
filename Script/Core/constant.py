@@ -640,6 +640,8 @@ class Premise:
     """ 交互对象爱情系>=恋慕 """
     TARGET_LOVE_GE_3 = "love_ge_3"
     """ 交互对象爱情系>=恋人 """
+    TARGET_LOVE_LE_2 = "love_le_2"
+    """ 交互对象爱情系<=恋慕 """
     TARGET_OBEY_1 = "obey_1"
     """ 交互对象拥有屈从（隶属系第一阶段） """
     TARGET_OBEY_2 = "obey_2"
@@ -654,6 +656,8 @@ class Premise:
     """ 交互对象隶属系>=驯服 """
     TARGET_OBEY_GE_3 = "obey_ge_3"
     """ 交互对象隶属系>=宠物 """
+    TARGET_OBEY_LE_2 = "obey_le_2"
+    """ 交互对象隶属系<=驯服 """
 
     TARGET_NO_FIRST_KISS = "kiss_0"
     """ 交互对象未保有初吻 """

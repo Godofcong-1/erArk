@@ -1425,6 +1425,23 @@ def handle_target_love_ge_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_LOVE_LE_2)
+def handle_target_love_le_2(character_id: int) -> int:
+    """
+    交互对象爱情系<=恋慕
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    for i in {12,13}:
+        if target_data.talent[i]:
+            return 0
+    return 1
+
+
 @add_premise(constant.Premise.TARGET_OBEY_1)
 def handle_target_obey_1(character_id: int) -> int:
     """
@@ -1537,6 +1554,23 @@ def handle_target_obey_ge_3(character_id: int) -> int:
         if target_data.talent[i]:
             return 1
     return 0
+
+
+@add_premise(constant.Premise.TARGET_OBEY_LE_2)
+def handle_target_obey_le_2(character_id: int) -> int:
+    """
+    交互对象隶属系<=驯服
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    for i in {17,18}:
+        if target_data.talent[i]:
+            return 0
+    return 1
 
 
 @add_premise(constant.Premise.TARGET_SAME_SEX)
