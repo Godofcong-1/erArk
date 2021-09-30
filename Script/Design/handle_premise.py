@@ -3394,6 +3394,227 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_MAKING_OUT)
+def handle_last_cmd_makeing_out(character_id: int) -> int:
+    """
+    前一指令为身体爱抚
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.MAKING_OUT)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_KISS_H)
+def handle_last_cmd_kiss_h(character_id: int) -> int:
+    """
+    前一指令为接吻（H）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.KISS_H)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_BREAST_CARESS)
+def handle_last_cmd_breast_caress(character_id: int) -> int:
+    """
+    前一指令为胸爱抚
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.BREAST_CARESS)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_MAKE_MASTUREBATE)
+def handle_last_cmd_make_masturebate(character_id: int) -> int:
+    """
+    前一指令为让对方自慰（H）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.MAKE_MASTUREBATE)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_HANDJOB)
+def handle_last_cmd_handjob(character_id: int) -> int:
+    """
+    前一指令为手交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.HANDJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_PAIZURI)
+def handle_last_cmd_paizuri(character_id: int) -> int:
+    """
+    前一指令为乳交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.PAIZURI)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_FOOTJOB)
+def handle_last_cmd_footjob(character_id: int) -> int:
+    """
+    前一指令为足交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.FOOTJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_HAND_BLOWJOB)
+def handle_last_cmd_hand_blowjob(character_id: int) -> int:
+    """
+    前一指令为手交口交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.HAND_BLOWJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_TITS_BLOWJOB)
+def handle_last_cmd_tits_blowjob(character_id: int) -> int:
+    """
+    前一指令为乳交口交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.TITS_BLOWJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_DEEP_THROAT)
+def handle_last_cmd_deep_throat(character_id: int) -> int:
+    """
+    前一指令为深喉插入
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.DEEP_THROAT)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_FOCUS_BLOWJOB)
+def handle_last_cmd_focus_blowjob(character_id: int) -> int:
+    """
+    前一指令为真空口交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.FOCUS_BLOWJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_FACE_SEAT_SEX)
+def handle_last_cmd_face_seat_sex(character_id: int) -> int:
+    """
+    前一指令为对面座位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.FACE_SEAT_SEX)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_RIDING_SEX)
+def handle_last_cmd_riding_sex(character_id: int) -> int:
+    """
+    前一指令为骑乘位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.RIDING_SEX)):
+        return 1
+    return 0
+
+
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:
 #     """
