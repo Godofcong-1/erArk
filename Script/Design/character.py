@@ -42,13 +42,14 @@ def init_attr(character_id: int):
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
 
-    #主角HP和MP默认为2000
+    #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
+        character_data.token = attr_calculation.get_token_zero(character_data.token)
 
     #初始所有角色的HP和MP都为max值
     character_data.hit_point = character_data.hit_point_max

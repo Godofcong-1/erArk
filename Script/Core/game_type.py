@@ -532,6 +532,8 @@ class Character:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
+        self.token:Dict[int,int] = {}
+        """ 信物记录 """
 
 class Cache:
     """游戏缓存数据结构体"""

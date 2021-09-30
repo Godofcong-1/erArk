@@ -62,19 +62,34 @@ class SeeCharacterInfoPanel:
         # see_language_draw = SeeCharacterLanguagePanel(character_id, width)
         # see_nature_draw = SeeCharacterNaturePanel(character_id, width)
         # see_social_draw = SeeCharacterSocialContact(character_id, width)
-        self.draw_data = {
-            _("素质与能力"): main_first_draw,
-            _("经验与宝珠"): main_second_draw,
-            _("肉体情况"): main_third_draw,
-            # _("属性（原）"): main_attr_draw,
-            # _("状态"): see_status_draw,
-            # _("服装"): see_clothing_draw,
-            # _("道具"): see_item_draw,
-            # _("技能"): see_knowledge_draw,
-            # _("语言"): see_language_draw,
-            # _("性格"): see_nature_draw,
-            # _("社交"): see_social_draw,
-        }
+        if character_id == 0:
+            self.draw_data = {
+                _("素质与能力"): main_first_draw,
+                _("经验、宝珠与信物"): main_second_draw,
+                _("肉体情况"): main_third_draw,
+                # _("属性（原）"): main_attr_draw,
+                # _("状态"): see_status_draw,
+                # _("服装"): see_clothing_draw,
+                # _("道具"): see_item_draw,
+                # _("技能"): see_knowledge_draw,
+                # _("语言"): see_language_draw,
+                # _("性格"): see_nature_draw,
+                # _("社交"): see_social_draw,
+            }
+        else:
+            self.draw_data = {
+                _("素质与能力"): main_first_draw,
+                _("经验与宝珠"): main_second_draw,
+                _("肉体情况"): main_third_draw,
+                # _("属性（原）"): main_attr_draw,
+                # _("状态"): see_status_draw,
+                # _("服装"): see_clothing_draw,
+                # _("道具"): see_item_draw,
+                # _("技能"): see_knowledge_draw,
+                # _("语言"): see_language_draw,
+                # _("性格"): see_nature_draw,
+                # _("社交"): see_social_draw,
+            }
         """ 按钮文本对应属性面板 """
         self.handle_panel = panel.CenterDrawButtonListPanel()
         """ 属性列表的控制面板 """
@@ -157,11 +172,20 @@ class SeeCharacterSecondPanel:
         head_draw = CharacterInfoHead(character_id, width)
         experience_draw = CharacterExperienceText(character_id, width,8, 0)
         juel_draw = CharacterJuelText(character_id, width,8, 0)
-        self.draw_list: List[draw.NormalDraw] = [
-            head_draw,
-            experience_draw,
-            juel_draw,
-        ]
+        if character_id == 0:
+            token_draw = CharacterTokenText(character_id, width,8, 0)
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                experience_draw,
+                juel_draw,
+                token_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                experience_draw,
+                juel_draw,
+            ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
@@ -1416,6 +1440,61 @@ class CharacterJuelText:
         else:
             now_draw = panel.LeftDrawTextListPanel()
         now_draw.set(juel_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+class CharacterTokenText:
+    """
+    显示角色信物面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "信物"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        token_text_list = []
+        for token_id in range(len(character_data.token)):
+            if token_id == 0:
+                continue
+            if character_data.token[token_id] == 1:
+                target_character_data = cache.character_data[token_id]
+                character_name = target_character_data.name
+                now_text = f" 已拥有{character_name}的信物:[信物内容]"
+                token_text_list.append(now_text)
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(token_text_list, self.width, self.column)
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):

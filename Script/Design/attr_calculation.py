@@ -101,6 +101,15 @@ def get_second_behavior_zero(second_behavior_dict) -> dict:
         second_behavior_list[second_behavior] = 0
     return second_behavior_list
 
+def get_token_zero(token_dict) -> dict:
+    """
+    直接将初始信物归为全员0
+    """
+    token_list = token_dict
+    for i in range(len(cache.npc_tem_data) + 1):
+        token_list[i] = 0
+    return token_list
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0
