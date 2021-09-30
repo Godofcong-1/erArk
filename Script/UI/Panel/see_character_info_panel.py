@@ -1482,13 +1482,14 @@ class CharacterTokenText:
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         token_text_list = []
-        for token_id in range(len(character_data.token)):
+        for token_id in range(len(character_data.token_list)):
             if token_id == 0:
                 continue
-            if character_data.token[token_id] == 1:
+            if character_data.token_list[token_id] == 1:
                 target_character_data = cache.character_data[token_id]
                 character_name = target_character_data.name
-                now_text = f" 已拥有{character_name}的信物:[信物内容]"
+                token_text = target_character_data.token_text
+                now_text = f" 已拥有{character_name}的信物:{token_text}"
                 token_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()

@@ -49,7 +49,7 @@ def init_attr(character_id: int):
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
-        character_data.token = attr_calculation.get_token_zero(character_data.token)
+        character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
 
     #初始所有角色的HP和MP都为max值
     character_data.hit_point = character_data.hit_point_max

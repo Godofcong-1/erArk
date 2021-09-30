@@ -726,7 +726,7 @@ def handle_confession():
         #将对象的恋慕转为恋人，获得角色的信物
         target_data.talent[11] = 0
         target_data.talent[12] = 1
-        character_data.token[character_data.target_character_id] = 1
+        character_data.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\告白成功，[恋慕]转为[恋人]，获得了对方赠与的[信物]\n")
@@ -761,7 +761,7 @@ def handle_give_necklace():
         target_data.talent[15] = 0
         target_data.talent[16] = 1
         target_data.talent[19] = 1
-        character_data.token[character_data.target_character_id] = 1
+        character_data.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]，获得了对方赠与的[信物]\n")

@@ -76,6 +76,8 @@ class NpcTem:
         """ MP预设 """
         self.Dormitory: int = 0
         """ 宿舍预设 """
+        self.Token: int = 0
+        """ 信物预设 """
 
 
 # class Measurements:
@@ -532,8 +534,10 @@ class Character:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
-        self.token:Dict[int,int] = {}
-        """ 信物记录 """
+        self.token_list:Dict[int,int] = {}
+        """ 玩家的信物获得记录 """
+        self.token_text: str = ""
+        """ 角色信物文本 """
 
 class Cache:
     """游戏缓存数据结构体"""
