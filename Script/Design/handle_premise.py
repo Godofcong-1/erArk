@@ -3445,6 +3445,74 @@ def handle_last_cmd_breast_caress(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_TWIDDLE_NIPPLES)
+def handle_last_cmd_twiddle_nipples(character_id: int) -> int:
+    """
+    前一指令为玩弄乳头
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.TWIDDLE_NIPPLES)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_CLIT_CARESS)
+def handle_last_cmd_clit_caress(character_id: int) -> int:
+    """
+    前一指令为阴蒂爱抚
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.CLIT_CARESS)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_FINGER_INSERTION)
+def handle_last_cmd_finger_insertion(character_id: int) -> int:
+    """
+    前一指令为手指插入(V)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.FINGER_INSERTION)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_ANAL_CARESS)
+def handle_last_cmd_anal_caress(character_id: int) -> int:
+    """
+    前一指令为手指插入(A)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.ANAL_CARESS)):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_MAKE_MASTUREBATE)
 def handle_last_cmd_make_masturebate(character_id: int) -> int:
     """
@@ -3509,6 +3577,23 @@ def handle_last_cmd_footjob(character_id: int) -> int:
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
     if len_input and (last_cmd == str(constant.Instruct.FOOTJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_RUB_BUTTOCK)
+def handle_last_cmd_rub_buttock(character_id: int) -> int:
+    """
+    前一指令为素股
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.RUB_BUTTOCK)):
         return 1
     return 0
 
@@ -3581,6 +3666,57 @@ def handle_last_cmd_focus_blowjob(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_NORMAL_SEX)
+def handle_last_cmd_normal_sex(character_id: int) -> int:
+    """
+    前一指令为正常位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.NORMAL_SEX)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_BACK_SEX)
+def handle_last_cmd_back_sex(character_id: int) -> int:
+    """
+    前一指令为背后位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.BACK_SEX)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_RIDING_SEX)
+def handle_last_cmd_riding_sex(character_id: int) -> int:
+    """
+    前一指令为骑乘位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.RIDING_SEX)):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_FACE_SEAT_SEX)
 def handle_last_cmd_face_seat_sex(character_id: int) -> int:
     """
@@ -3601,7 +3737,7 @@ def handle_last_cmd_face_seat_sex(character_id: int) -> int:
 @add_premise(constant.Premise.LAST_CMD_BACK_SEAT_SEX)
 def handle_last_cmd_back_seat_sex(character_id: int) -> int:
     """
-    前一指令为对面座位
+    前一指令为背面座位
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3615,10 +3751,10 @@ def handle_last_cmd_back_seat_sex(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.LAST_CMD_RIDING_SEX)
-def handle_last_cmd_riding_sex(character_id: int) -> int:
+@add_premise(constant.Premise.LAST_CMD_FACE_STAND_SEX)
+def handle_last_cmd_face_stand_sex(character_id: int) -> int:
     """
-    前一指令为骑乘位
+    前一指令为对面立位
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3627,7 +3763,58 @@ def handle_last_cmd_riding_sex(character_id: int) -> int:
     len_input = cache.input_cache
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
-    if len_input and (last_cmd == str(constant.Instruct.RIDING_SEX)):
+    if len_input and (last_cmd == str(constant.Instruct.FACE_STAND_SEX)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_BACK_STAND_SEX)
+def handle_last_cmd_back_stand_sex(character_id: int) -> int:
+    """
+    前一指令为背面立位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.BACK_STAND_SEX)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_STIMULATE_G_POINT)
+def handle_last_cmd_stimulate_g_point(character_id: int) -> int:
+    """
+    前一指令为刺激G点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.STIMULATE_G_POINT)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_WOMB_OS_CARESS)
+def handle_last_cmd_womb_os_caress(character_id: int) -> int:
+    """
+    前一指令为玩弄子宫口
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.WOMB_OS_CARESS)):
         return 1
     return 0
 
