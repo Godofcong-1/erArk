@@ -365,9 +365,10 @@ def check_second_effect(
     # print("进入第二结算")
 
     #检测自己
+    #1.高潮结算
     orgasm_effect(character_id)
 
-    #遍历二段行为id，进行结算
+    #2.遍历二段行为id，进行结算
     for behavior_id,behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             #遍历该二段行为的所有结算效果，挨个触发
@@ -375,9 +376,10 @@ def check_second_effect(
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
     #检测交互对象
+    #1.高潮结算
     orgasm_effect(target_character_id)
 
-    #遍历二段行为id，进行结算
+    #2.遍历二段行为id，进行结算
     for behavior_id,behavior_data in target_character_data.second_behavior.items():
         if behavior_data != 0:
             #遍历该二段行为的所有结算效果，挨个触发
@@ -385,13 +387,14 @@ def check_second_effect(
                 # print("effect_id :",effect_id)
                 constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
+    #3.刻印结算
+    mark_effect(target_character_id)
+
 
 def orgasm_effect(character_id: int):
     """
     处理第二结算中的高潮结算
     Keyword arguments:
-    now_data -- 当前高潮程度
-    pre_data -- 记录里的前高潮程度
     character_id -- 角色id
     """
 
@@ -413,6 +416,8 @@ def orgasm_effect(character_id: int):
     else:
         #检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
+            #now_data -- 当前高潮程度
+            #pre_data -- 记录里的前高潮程度
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
             pre_data = character_data.orgasm_level[orgasm]
             #跳过射精槽
@@ -454,3 +459,111 @@ def orgasm_effect(character_id: int):
                 
                 #刷新记录
                 character_data.orgasm_level[orgasm] = now_data
+
+def mark_effect(character_id: int):
+    """
+    处理第二结算中的刻印结算
+    Keyword arguments:
+    now_data -- 当前高潮程度
+    pre_data -- 记录里的前高潮程度
+    character_id -- 角色id
+    """
+
+    # print()
+    # print("进入刻印结算")
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    #快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
+    happy_count = 0
+    for orgasm in range(8):
+        happy_count += character_data.orgasm_count[orgasm]
+        #计数归零
+        character_data.orgasm_count[orgasm] = 0
+    if happy_count >= 2 and character_data.ability[13] <= 0:
+        character_data.ability[13] = 1
+        character_data.second_behavior[1030] = 1
+    elif happy_count >= 8 and character_data.ability[13] <= 1:
+        character_data.ability[13] = 2
+        character_data.second_behavior[1031] = 1
+    elif happy_count >= 16 and character_data.ability[13] <= 2:
+        character_data.ability[13] = 3
+        character_data.second_behavior[1032] = 1
+
+    #屈服刻印检测屈服+恭顺+羞耻/5，1000以上屈服1,3000以上屈服2,10000以上屈服3
+    yield_count = 0
+    yield_count += character_data.status_data[10]
+    yield_count += character_data.status_data[15]
+    yield_count += character_data.status_data[16]/5
+    if yield_count >= 1000 and character_data.ability[14] <= 0:
+        character_data.ability[14] = 1
+        character_data.second_behavior[1033] = 1
+        #至少提升为顺从1
+        if character_data.ability[20] <= 0:
+            character_data.ability[20] = 1
+    elif yield_count >= 3000 and character_data.ability[14] <= 1:
+        character_data.ability[14] = 2
+        character_data.second_behavior[1034] = 1
+        #至少提升为顺从2
+        if character_data.ability[20] <= 1:
+            character_data.ability[20] = 2
+    elif yield_count >= 10000 and character_data.ability[14] <= 2:
+        character_data.ability[14] = 3
+        character_data.second_behavior[1035] = 1
+        #至少提升为顺从3
+        if character_data.ability[20] <= 2:
+            character_data.ability[20] = 3
+
+    #苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
+    pain_count = 0
+    pain_count += character_data.status_data[17]
+    if pain_count >= 2000 and character_data.ability[15] <= 0:
+        character_data.ability[15] = 1
+        character_data.second_behavior[1036] = 1
+        #至少提升为顺从1
+        if character_data.ability[20] <= 0:
+            character_data.ability[20] = 1
+    elif pain_count >= 4000 and character_data.ability[15] <= 1:
+        character_data.ability[15] = 2
+        character_data.second_behavior[1037] = 1
+        #至少提升为顺从2
+        if character_data.ability[20] <= 1:
+            character_data.ability[20] = 2
+    elif pain_count >= 8000 and character_data.ability[15] <= 2:
+        character_data.ability[15] = 3
+        character_data.second_behavior[1038] = 1
+        #至少提升为顺从3
+        if character_data.ability[20] <= 2:
+            character_data.ability[20] = 3
+
+    #时姦刻印未实装
+
+    #恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
+    terror_count = 0
+    terror_count += character_data.status_data[18]
+    terror_count += character_data.status_data[17]/5
+    if terror_count >= 2000 and character_data.ability[17] <= 0:
+        character_data.ability[17] = 1
+        character_data.second_behavior[1042] = 1
+    elif terror_count >= 4000 and character_data.ability[17] <= 1:
+        character_data.ability[17] = 2
+        character_data.second_behavior[1043] = 1
+    elif terror_count >= 8000 and character_data.ability[17] <= 2:
+        character_data.ability[17] = 3
+        character_data.second_behavior[1044] = 1
+
+    #反发刻印检测反感+抑郁/5+恐怖/5，500反发1，1000反发2，2000反发3
+    hate_count = 0
+    hate_count += character_data.status_data[20]
+    hate_count += character_data.status_data[18]/5
+    hate_count += character_data.status_data[19]/5
+    if hate_count >= 1000 and character_data.ability[18] <= 0:
+        character_data.ability[18] = 1
+        character_data.second_behavior[1045] = 1
+    elif hate_count >= 2000 and character_data.ability[18] <= 1:
+        character_data.ability[18] = 2
+        character_data.second_behavior[1046] = 1
+    elif hate_count >= 4000 and character_data.ability[18] <= 2:
+        character_data.ability[18] = 3
+        character_data.second_behavior[1047] = 1
+
+

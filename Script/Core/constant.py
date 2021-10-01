@@ -1400,7 +1400,42 @@ class SecondBehavior:
     """ 结算W普绝顶 """
     W_orgasm_strong = 1023
     """ 结算W强绝顶 """
-
+    HAPPY_MARK_1 = 1030
+    """ 结算快乐刻印1 """
+    HAPPY_MARK_2 = 1031
+    """ 结算快乐刻印2 """
+    HAPPY_MARK_3 = 1032
+    """ 结算快乐刻印3 """
+    YIELD_MARK_1 = 1033
+    """ 结算屈服刻印1 """
+    YIELD_MARK_2 = 1034
+    """ 结算屈服刻印2 """
+    YIELD_MARK_3 = 1035
+    """ 结算屈服刻印3 """
+    PAIN_MARK_1 = 1036
+    """ 结算苦痛刻印1 """
+    PAIN_MARK_2 = 1037
+    """ 结算苦痛刻印2 """
+    PAIN_MARK_3 = 1038
+    """ 结算苦痛刻印3 """
+    TIME_MARK_1 = 1039
+    """ 结算时姦刻印1 """
+    TIME_MARK_2 = 1040
+    """ 结算时姦刻印2 """
+    TIME_MARK_3 = 1041
+    """ 结算时姦刻印3 """
+    TERROR_MARK_1 = 1042
+    """ 结算恐怖刻印1 """
+    TERROR_MARK_2 = 1043
+    """ 结算恐怖刻印2 """
+    TERROR_MARK_3 = 1044
+    """ 结算恐怖刻印3 """
+    HATE_MARK_1 = 1045
+    """ 结算反发刻印1 """
+    HATE_MARK_2 = 1046
+    """ 结算反发刻印2 """
+    HATE_MARK_3 = 1047
+    """ 结算反发刻印3 """
 
 class SecondEffect:
     """二段结算效果函数"""

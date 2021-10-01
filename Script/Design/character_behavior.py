@@ -93,9 +93,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character.judge_character_time_over_24(character_id):
         #结算数值为珠
         judge_character_juel(character_id)
-        #高潮程度和高潮次数归零
-        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-        character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+        #（已废弃）以防万一，此处的高潮程度和高潮次数归零
+        # character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        # character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)
