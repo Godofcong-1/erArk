@@ -1093,21 +1093,21 @@ class BehaviorEffect:
     INTERRUPT_TARGET_ACTIVITY = 30
     """ 打断交互对象活动 """
     TARGET_ADD_SMALL_N_FEEL = 41
-    """ 交互对象增加少量Ｎ快 """
+    """ 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42
-    """ 交互对象增加少量Ｂ快 """
+    """ 交互对象增加少量Ｂ快（B感补正） """
     TARGET_ADD_SMALL_C_FEEL = 43
-    """ 交互对象增加少量Ｃ快 """
+    """ 交互对象增加少量Ｃ快（C感补正） """
     TARGET_ADD_SMALL_P_FEEL = 44
-    """ 交互对象增加少量Ｐ快 """
+    """ 交互对象增加少量Ｐ快（P感补正） """
     TARGET_ADD_SMALL_V_FEEL = 45
-    """ 交互对象增加少量Ｖ快 """
+    """ 交互对象增加少量Ｖ快（V感补正） """
     TARGET_ADD_SMALL_A_FEEL = 46
-    """ 交互对象增加少量Ａ快 """
+    """ 交互对象增加少量Ａ快（A感补正） """
     TARGET_ADD_SMALL_U_FEEL = 47
-    """ 交互对象增加少量Ｕ快 """
+    """ 交互对象增加少量Ｕ快（U感补正） """
     TARGET_ADD_SMALL_W_FEEL = 48
-    """ 交互对象增加少量Ｗ快 """
+    """ 交互对象增加少量Ｗ快（W感补正） """
     TARGET_ADD_SMALL_LUBRICATION = 49
     """ 交互对象增加少量润滑（欲望补正） """
     TARGET_ADD_SMALL_LEARN = 51

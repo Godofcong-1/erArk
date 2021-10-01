@@ -294,6 +294,26 @@ def get_ability_adjust(value: int) -> int:
     return just
 
 
+def get_mark_debuff_adjust(value: int) -> int:
+    """
+    按刻印等级负面修正比例参数
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 1
+    elif level == 1:
+        just = 2
+    elif level == 2:
+        just = 5
+    elif level == 3:
+        just = 10
+    return just
+
+
 def get_juel(value: int) -> int:
     """
     按状态等级计算宝珠的最后值
