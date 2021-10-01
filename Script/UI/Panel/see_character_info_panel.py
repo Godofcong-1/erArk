@@ -2196,13 +2196,21 @@ class Character_abi_up_frist_Handle:
         Experience_draw = CharacterExperienceText(character_id, width,8, 0)
         abi_draw = Characterabi_show_Text(character_id, width)
         tal_draw = Character_talent_show_Text(character_id, width)
-        self.draw_list: List[draw.NormalDraw] = [
-            head_draw,
-            Juel_draw,
-            Experience_draw,
-            abi_draw,
-            tal_draw,
-        ]
+        if character_id == 0:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                Juel_draw,
+                Experience_draw,
+                abi_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                Juel_draw,
+                Experience_draw,
+                abi_draw,
+                tal_draw,
+            ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """

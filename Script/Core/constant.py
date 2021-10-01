@@ -1725,6 +1725,8 @@ class Instruct:
     """ 读写存档 """
     ABL_UP = 0
     """ 属性升级 """
+    OWNER_ABL_UP = 0
+    """ 自身属性升级 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
 

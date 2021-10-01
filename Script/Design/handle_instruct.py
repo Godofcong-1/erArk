@@ -165,7 +165,8 @@ def handle_buy_item():
     cache.now_panel_id = constant.Panel.ITEM_SHOP
 
 
-@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), {})
+@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), 
+    {constant.Premise.NOT_H})
 def handle_save():
     """处理读写存档指令"""
     now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
@@ -173,13 +174,28 @@ def handle_save():
 
 
 @add_instruct(
-    constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), 
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_abl_up():
     """处理属性上升"""
     see_character_info_panel.line_feed.draw()
     now_draw = see_character_info_panel.Character_abi_up_main_Handle(
         cache.character_data[0].target_character_id, width
+    )
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.OWNER_ABL_UP, constant.InstructType.SYSTEM, _("自身属性上升"), 
+    {constant.Premise.NOT_H}
+)
+def handle_owner_abl_up():
+    """处理自身属性上升"""
+    see_character_info_panel.line_feed.draw()
+    now_draw = see_character_info_panel.Character_abi_up_main_Handle(
+        0, width
     )
     now_draw.draw()
 
