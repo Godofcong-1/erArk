@@ -3462,6 +3462,23 @@ def handle_last_cmd_twiddle_nipples(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_BREAST_SUCKING)
+def handle_last_cmd_breast_sucking(character_id: int) -> int:
+    """
+    前一指令为舔吸乳头
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.BREAST_SUCKING)):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_CLIT_CARESS)
 def handle_last_cmd_clit_caress(character_id: int) -> int:
     """
@@ -3475,6 +3492,23 @@ def handle_last_cmd_clit_caress(character_id: int) -> int:
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
     if len_input and (last_cmd == str(constant.Instruct.CLIT_CARESS)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_CUNNILINGUS)
+def handle_last_cmd_cunnilingus(character_id: int) -> int:
+    """
+    前一指令为舔阴
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.CUNNILINGUS)):
         return 1
     return 0
 
@@ -3577,6 +3611,23 @@ def handle_last_cmd_footjob(character_id: int) -> int:
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
     if len_input and (last_cmd == str(constant.Instruct.FOOTJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.LAST_CMD_AXILLAJOB)
+def handle_last_cmd_axillajob(character_id: int) -> int:
+    """
+    前一指令为腋交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.AXILLAJOB)):
         return 1
     return 0
 
