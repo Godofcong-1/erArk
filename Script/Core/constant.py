@@ -774,6 +774,8 @@ class Premise:
     """ 前一指令为舔吸乳头 """
     LAST_CMD_CLIT_CARESS= "last_cmd_clit_caress"
     """ 前一指令为阴蒂爱抚 """
+    LAST_CMD_OPEN_LABIA= "last_cmd_open_labia"
+    """ 前一指令为掰开阴唇观察 """
     LAST_CMD_CUNNILINGUS= "last_cmd_cunnilingus"
     """ 前一指令为舔阴 """
     LAST_CMD_FINGER_INSERTION= "last_cmd_finger_insertion"

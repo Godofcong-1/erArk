@@ -3496,6 +3496,23 @@ def handle_last_cmd_clit_caress(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_OPEN_LABIA)
+def handle_last_cmd_open_labia(character_id: int) -> int:
+    """
+    前一指令为掰开阴唇观察
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    if len_input and (last_cmd == str(constant.Instruct.OPEN_LABIA)):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_CUNNILINGUS)
 def handle_last_cmd_cunnilingus(character_id: int) -> int:
     """
