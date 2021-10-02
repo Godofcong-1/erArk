@@ -173,6 +173,7 @@ def translate_data(data: dict):
     for now_data in data["data"]:
         for key in now_data:
             if data["gettext"][key]:
+                # print("now_data :",now_data)
                 now_data[key] = get_text._(now_data[key])
 
 
