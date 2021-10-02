@@ -1178,8 +1178,8 @@ def handle_making_out():
     """处理身体爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
+    character_data.behavior.behavior_id = constant.Behavior.MAKING_OUT
+    character_data.state = constant.CharacterStatus.STATUS_MAKING_OUT
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
