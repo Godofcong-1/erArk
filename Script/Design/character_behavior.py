@@ -360,14 +360,17 @@ def judge_character_follow(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     # print("开始检测是否为跟随")
     if character_data.is_follow:
-        # print("检测到跟随，NPC编号为：",character_id)
-        to_dr = cache.character_data[0].position
-        _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
-        # print("开始移动，路径为：",move_path,"，时间为：",move_time)
-        character_data.behavior.behavior_id = constant.Behavior.MOVE
-        character_data.behavior.move_target = move_path
-        character_data.behavior.duration = move_time
-        character_data.state = constant.CharacterStatus.STATUS_MOVE
+        character_data.behavior.behavior_id = constant.Behavior.FOLLOW
+        character_data.state = constant.CharacterStatus.STATUS_FOLLOW
+        if character_data.position != cache.character_data[0].position:
+            # print("检测到跟随，NPC编号为：",character_id)
+            to_dr = cache.character_data[0].position
+            _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+            # print("开始移动，路径为：",move_path,"，时间为：",move_time)
+            character_data.behavior.behavior_id = constant.Behavior.MOVE
+            character_data.behavior.move_target = move_path
+            character_data.behavior.duration = move_time
+            character_data.state = constant.CharacterStatus.STATUS_MOVE
     return 1
 
 def judge_character_h(character_id: int) -> int:
