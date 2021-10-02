@@ -42,14 +42,14 @@ jobs:
           Copy-Item premise.csv dist/
           Copy-Item state_machine.csv dist/
           Copy-Item package.json dist/
-          Rename-Item dist dieloli
+          Rename-Item dist erArk
       - name: Pack Game Files
         run: |
-          Compress-Archive -Path dieloli -DestinationPath dieloli.zip
+          Compress-Archive -Path erArk -DestinationPath erArk.zip
       - uses: actions/upload-artifact@master
         with:
           name: Windows
-          path: dieloli.zip
+          path: erArk.zip
       - name: Read Version
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
@@ -73,6 +73,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/dieloli.zip
-          asset_name: dieloli_windows.zip
+          asset_path: ${{ github.workspace }}/erArk.zip
+          asset_name: erArk_windows.zip
           asset_content_type: application/zip
