@@ -538,6 +538,9 @@ class Character:
         """ 玩家的信物获得记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
+        self.tired : bool = 0
+        """ 疲劳状态（HP=1） """
+
 
 class Cache:
     """游戏缓存数据结构体"""

@@ -73,7 +73,8 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
     return decorator
 
 
-@add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), {})
+@add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
+    {constant.Premise.NOT_H})
 def handle_rest():
     """处理休息指令"""
     character.init_character_behavior_start_time(0, cache.game_time)

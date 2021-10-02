@@ -70,6 +70,7 @@ def character_sleep(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
+    character_data.tired = 0
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
 # def character_follow(character_id: int):

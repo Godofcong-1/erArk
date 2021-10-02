@@ -489,6 +489,8 @@ class Premise:
     HIGH_10 = "high_10"
     """ 优先度为10的空白前提 """
 
+    HP_1 = "hp_1"
+    """ 自身疲劳（体力=1） """
     HP_LOW = "hp_low"
     """ 自身体力低于30% """
     HP_HIGH = "hp_high"
@@ -542,6 +544,11 @@ class Premise:
     """ 在食堂 """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
+    IN_DORMITORY = "in_dor"
+    """ 在自己宿舍中 """
+
+    NOT_IN_DORMITORY = "not_in_dor"
+    """ 不在自己宿舍中 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -939,8 +946,6 @@ class Premise:
     """ 拥有鞋子 """
     HAVE_SOCKS = "63"
     """ 拥有袜子 """
-    IN_DORMITORY = "64"
-    """ 在宿舍中 """
     CHEST_IS_NOT_CLIFF = "65"
     """ 胸围不是绝壁 """
     IN_MUSIC_ROOM = "68"
@@ -1092,6 +1097,8 @@ class BehaviorEffect:
     """ 记录A处女 """
     INTERRUPT_TARGET_ACTIVITY = 30
     """ 打断交互对象活动 """
+    NOT_TIRED = 31
+    """ 从疲劳中恢复 """
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42

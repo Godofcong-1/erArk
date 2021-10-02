@@ -22,6 +22,7 @@ from Script.Design import (
     attr_calculation,
     character_move
 )
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
 game_path = game_path_config.game_path
@@ -31,6 +32,8 @@ _: FunctionType = get_text._
 """ 翻译api """
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+width = normal_config.config_normal.text_width
+""" 屏幕宽度 """
 
 
 def init_character_behavior():
@@ -45,6 +48,7 @@ def init_character_behavior():
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
+            judge_character_tired(character_id)
         update_cafeteria()
     cache.over_behavior_character = set()
 
@@ -152,6 +156,22 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
 #         character_data.state = 13
 #         if character_id not in cache.over_behavior_character:
 #             cache.over_behavior_character.add(character_id)
+
+def judge_character_tired(character_id : int):
+    """
+    校验角色是否疲劳
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    #疲劳结算
+    if character_data.tired and (character_data.is_h or character_data.is_follow):
+        character_data.is_h = 0
+        character_data.is_follow = 0
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = character_data.name + "太累了，决定回房间睡觉 "
+        now_draw.draw()
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:

@@ -460,6 +460,34 @@ def handle_in_dr_office(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.IN_DORMITORY)
+def handle_in_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在自己宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
+    return now_position == character_data.dormitory
+
+
+@add_premise(constant.Premise.NOT_IN_DORMITORY)
+def handle_not_in_dormitory(character_id: int) -> int:
+    """
+    校验角色是否不在自己宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
+    return now_position != character_data.dormitory
+
+
 @add_premise(constant.Premise.IN_SLEEP_TIME)
 def handle_in_sleep_time(character_id: int) -> int:
     """
@@ -588,6 +616,22 @@ def handle_high_10(character_id: int) -> int:
     int -- 权重
     """
     return 10
+
+
+@add_premise(constant.Premise.HP_1)
+def handle_hp_1(character_id: int) -> int:
+    """
+    自身疲劳（体力=1）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.tired == 1:
+        return 999
+    else:
+        return 0
 
 
 @add_premise(constant.Premise.HP_LOW)
@@ -2308,20 +2352,6 @@ def handle_have_socks(character_id: int) -> int:
     if 5 in character_data.clothing and len(character_data.clothing[5]):
         return 1
     return 0
-
-
-@add_premise(constant.Premise.IN_DORMITORY)
-def handle_in_dormitory(character_id: int) -> int:
-    """
-    校验角色是否在宿舍中
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
-    return now_position == character_data.dormitory
 
 
 @add_premise(constant.Premise.CHEST_IS_NOT_CLIFF)
