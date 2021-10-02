@@ -359,7 +359,7 @@ def judge_character_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # print("开始检测是否为跟随")
-    if character_data.is_follow:
+    if character_data.is_follow and character_data.position != cache.character_data[0].position:
         # print("检测到跟随，NPC编号为：",character_id)
         to_dr = cache.character_data[0].position
         _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
