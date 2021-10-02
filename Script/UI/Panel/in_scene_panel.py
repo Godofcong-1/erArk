@@ -110,9 +110,11 @@ class InScenePanel:
                 line_draw = draw.LineDraw("-.-", self.width)
                 line_draw.draw()
             now_draw_character_list = []
-            for page_draw in character_handle_panel.draw_list:
-                if "character_id" in page_draw.__dict__:
-                    now_draw_character_list.append(page_draw.character_id)
+            now_draw_character_list = character_list
+            #（已废弃）有bug的人物绘制列表
+            # for page_draw in character_handle_panel.draw_list:
+            #     if "character_id" in page_draw.__dict__:
+            #         now_draw_character_list.append(page_draw.character_id)
             #↓角色信息面板↓#
             character_info_draw_list = []
             character_head_draw = see_character_info_panel.CharacterInfoHead(
