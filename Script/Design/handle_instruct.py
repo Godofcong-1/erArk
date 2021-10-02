@@ -1,3 +1,4 @@
+from Script.UI.Flow.make_food_flow import make_food_flow
 import random
 import time
 import queue
@@ -6,7 +7,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, cache_control, game_type, get_text, save_handle
-from Script.Design import update, character, attr_calculation, course
+from Script.Design import update, character, attr_calculation
 from Script.UI.Panel import see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -72,7 +73,8 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
     return decorator
 
 
-@add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), {})
+@add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
+    {constant.Premise.NOT_H})
 def handle_rest():
     """处理休息指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -84,20 +86,29 @@ def handle_rest():
 
 
 @add_instruct(
-    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"), {constant.Premise.IN_DINING_HALL}
+    constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
+    {constant.Premise.IN_DINING_HALL,
+    constant.Premise.NOT_H}
 )
 def handle_buy_food():
     """处理购买食物指令"""
     cache.now_panel_id = constant.Panel.FOOD_SHOP
 
 
-@add_instruct(constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"), {constant.Premise.HAVE_FOOD})
+@add_instruct(
+    constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"),
+    {constant.Premise.HAVE_FOOD,
+    constant.Premise.NOT_H}
+)
 def handle_eat():
     """处理进食指令"""
     cache.now_panel_id = constant.Panel.FOOD_BAG
 
 
-@add_instruct(constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"), {})
+@add_instruct(
+    constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
+    {constant.Premise.NOT_H}
+)
 def handle_move():
     """处理移动指令"""
     cache.now_panel_id = constant.Panel.SEE_MAP
@@ -124,7 +135,9 @@ def handle_see_owner_attr():
 
 
 @add_instruct(
-    constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_chat():
     """处理聊天指令"""
@@ -144,15 +157,27 @@ def handle_chat():
 
 
 @add_instruct(
-    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"), {constant.Premise.IN_SHOP}
+    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具_未实装"),
+    {constant.Premise.IN_SHOP,
+    constant.Premise.NOT_H}
 )
 def handle_buy_item():
     """处理购买道具指令"""
     cache.now_panel_id = constant.Panel.ITEM_SHOP
 
 
+@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), 
+    {constant.Premise.NOT_H})
+def handle_save():
+    """处理读写存档指令"""
+    now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
+    now_panel.draw()
+
+
 @add_instruct(
-    constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), 
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_abl_up():
     """处理属性上升"""
@@ -161,6 +186,25 @@ def handle_abl_up():
         cache.character_data[0].target_character_id, width
     )
     now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.OWNER_ABL_UP, constant.InstructType.SYSTEM, _("自身属性上升"), 
+    {constant.Premise.NOT_H}
+)
+def handle_owner_abl_up():
+    """处理自身属性上升"""
+    see_character_info_panel.line_feed.draw()
+    now_draw = see_character_info_panel.Character_abi_up_main_Handle(
+        0, width
+    )
+    now_draw.draw()
+
+
+@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.SYSTEM, _("查找与召集干员"), {})
+def handle_find_and_call_npc():
+    """处理查找与召集干员指令"""
+    cache.now_panel_id = constant.Panel.FIND_CALL
 
 
 # @add_instruct(
@@ -180,29 +224,10 @@ def handle_abl_up():
 
 
 @add_instruct(
-    constant.Instruct.TOUCH_HEAD,
-    constant.InstructType.OBSCENITY,
-    _("摸头"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_touch_head():
-    """处理摸头指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 2
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
-    update.game_update_flow(2)
-
-
-@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), {})
-def handle_save():
-    """处理读写存档指令"""
-    now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
-    now_panel.draw()
-
-
-@add_instruct(constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"), {constant.Premise.IN_DORMITORY})
+    constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
+    {constant.Premise.IN_DORMITORY,
+    constant.Premise.NOT_H}
+    )
 def handle_sleep():
     """处理睡觉指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
@@ -248,7 +273,9 @@ def handle_sleep():
 
 
 @add_instruct(
-    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"), {constant.Premise.HAVE_TARGET}
+    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -264,39 +291,29 @@ def handle_embrace():
     constant.Instruct.KISS,
     constant.InstructType.OBSCENITY,
     _("亲吻"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_kiss():
     """处理亲吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 2
-    character_data.behavior.behavior_id = constant.Behavior.KISS
-    character_data.state = constant.CharacterStatus.STATUS_KISS
-    update.game_update_flow(2)
-
-
-@add_instruct(
-    constant.Instruct.HAND_IN_HAND,
-    constant.InstructType.OBSCENITY,
-    _("牵手"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_handle_in_handle():
-    """处理牵手指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
-    character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
-    update.game_update_flow(10)
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"亲吻"):
+        character_data.behavior.behavior_id = constant.Behavior.KISS
+        character_data.state = constant.CharacterStatus.STATUS_KISS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
+    update.game_update_flow(5)
 
 
 @add_instruct(
     constant.Instruct.STROKE,
     constant.InstructType.DAILY,
     _("身体接触"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_stroke():
     """处理身体接触指令"""
@@ -312,7 +329,8 @@ def handle_stroke():
     constant.Instruct.TOUCH_BREAST,
     constant.InstructType.OBSCENITY,
     _("摸胸"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_breast():
     """处理摸胸指令"""
@@ -514,7 +532,7 @@ def handle_touch_breast():
     constant.Instruct.WAIT,
     constant.InstructType.DAILY,
     _("等待五分钟"),
-    {},
+    {constant.Premise.NOT_H},
 )
 def handle_wait():
     """处理等待五分钟指令"""
@@ -526,11 +544,12 @@ def handle_wait():
 @add_instruct(
     constant.Instruct.MAKE_COFFEE,
     constant.InstructType.DAILY,
-    _("冲咖啡"),
-    {constant.Premise.HAVE_TARGET},
+    _("泡咖啡"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_make_coffee():
-    """处理冲咖啡指令"""
+    """处理泡咖啡指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 15
@@ -541,13 +560,33 @@ def handle_make_coffee():
 @add_instruct(
     constant.Instruct.MAKE_COFFEE_ADD,
     constant.InstructType.DAILY,
-    _("冲咖啡（加料）"),
-    {constant.Premise.HAVE_TARGET},
+    _("泡咖啡（加料）"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_make_coffee_add():
-    """处理冲咖啡（加料）指令"""
+    """处理泡咖啡（加料）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE_ADD
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
+    character_data.behavior.duration = 15
+    update.game_update_flow(15)
+
+
+@add_instruct(
+    constant.Instruct.ASK_MAKE_COFFEE,
+    constant.InstructType.DAILY,
+    _("让对方泡咖啡"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_ask_make_coffee():
+    """处理让对方泡咖啡指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.ASK_MAKE_COFFEE
+    character_data.state = constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE
     character_data.behavior.duration = 15
     update.game_update_flow(15)
 
@@ -560,27 +599,54 @@ def handle_make_coffee_add():
 )
 def handle_make_food():
     """做饭"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 @add_instruct(
-    constant.Instruct.FOLLOWED,
+    constant.Instruct.FOLLOW,
     constant.InstructType.DAILY,
     _("请求同行"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.NOT_FOLLOW},
 )
 def handle_followed():
     """处理请求同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.FOLLOW
+    character_data.state = constant.CharacterStatus.STATUS_FOLLOW
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.is_follow = 1
+    # print("进入同行模式")
+    # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.END_FOLLOW,
+    constant.InstructType.DAILY,
+    _("结束同行"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.IS_FOLLOW},
+)
+def handle_end_followed():
+    """处理结束同行指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.END_FOLLOW
+    character_data.state = constant.CharacterStatus.STATUS_END_FOLLOW
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.is_follow = 0
     update.game_update_flow(5)
 
 @add_instruct(
     constant.Instruct.APOLOGIZE,
     constant.InstructType.DAILY,
-    _("道歉"),
-    {constant.Premise.HAVE_TARGET},
+    _("道歉_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_apologize():
     """处理道歉指令"""
@@ -592,8 +658,9 @@ def handle_apologize():
 @add_instruct(
     constant.Instruct.LISTEN_COMPLAINT,
     constant.InstructType.DAILY,
-    _("听牢骚"),
-    {constant.Premise.HAVE_TARGET},
+    _("听牢骚_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
@@ -605,8 +672,9 @@ def handle_listen_complaint():
 @add_instruct(
     constant.Instruct.PRAY,
     constant.InstructType.DAILY,
-    _("祈愿"),
-    {constant.Premise.HAVE_TARGET},
+    _("祈愿_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_pray():
     """处理祈愿指令"""
@@ -618,8 +686,9 @@ def handle_pray():
 @add_instruct(
     constant.Instruct.LISTEN_MISSION,
     constant.InstructType.WORK,
-    _("听取委托"),
-    {constant.Premise.HAVE_TARGET},
+    _("听取委托_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_listen_mission():
     """处理听取委托指令"""
@@ -631,8 +700,9 @@ def handle_listen_mission():
 @add_instruct(
     constant.Instruct.COLLCET_PANTY,
     constant.InstructType.DAILY,
-    _("收起内裤"),
-    {constant.Premise.HAVE_TARGET},
+    _("收起内裤_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_collect_panty():
     """处理收起内裤指令"""
@@ -644,8 +714,9 @@ def handle_collect_panty():
 @add_instruct(
     constant.Instruct.ASK_DATE,
     constant.InstructType.DAILY,
-    _("邀请约会"),
-    {constant.Premise.HAVE_TARGET},
+    _("邀请约会_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_ask_date():
     """处理邀请约会指令"""
@@ -658,20 +729,76 @@ def handle_ask_date():
     constant.Instruct.CONFESSION,
     constant.InstructType.DAILY,
     _("告白"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_confession():
     """处理告白指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[11] == 1 and character.calculation_instuct_judege(0,character_data.target_character_id,"告白"):
+        character_data.behavior.behavior_id = constant.Behavior.CONFESSION
+        character_data.state = constant.CharacterStatus.STATUS_CONFESSION
+        #将对象的恋慕转为恋人，获得角色的信物
+        target_data.talent[11] = 0
+        target_data.talent[12] = 1
+        character_data.token_list[character_data.target_character_id] = 1
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\告白成功，[恋慕]转为[恋人]，获得了对方赠与的[信物]\n")
+        now_draw.draw()
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_CONFESSION_FAILED
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n告白失败，需要[恋慕]且满足实行值\n")
+        now_draw.draw()
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.GIVE_NECKLACE,
+    constant.InstructType.DAILY,
+    _("戴上项圈"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_give_necklace():
+    """处理戴上项圈指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[15] == 1 and character.calculation_instuct_judege(0,character_data.target_character_id,"戴上项圈"):
+        character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
+        character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
+        #将对象的驯服转为宠物，增加项圈素质，获得角色的信物
+        target_data.talent[15] = 0
+        target_data.talent[16] = 1
+        target_data.talent[19] = 1
+        character_data.token_list[character_data.target_character_id] = 1
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]，获得了对方赠与的[信物]\n")
+        now_draw.draw()
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE_FAILED
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n戴上项圈失败，需要[驯服]且满足实行值\n")
+        now_draw.draw()
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.DRINK_ALCOHOL,
     constant.InstructType.DAILY,
-    _("劝酒"),
-    {constant.Premise.HAVE_TARGET},
+    _("劝酒_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_drink_alcohol():
     """处理劝酒指令"""
@@ -679,6 +806,62 @@ def handle_drink_alcohol():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.DO_H,
+    constant.InstructType.DAILY,
+    _("邀请H"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_do_h():
+    """处理邀请H指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
+        target_data.is_h = 1
+        target_data.is_follow = 0
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入H模式\n")
+        now_draw.draw()
+    else:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入H模式失败\n")
+        now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.END_H,
+    constant.InstructType.DAILY,
+    _("H结束"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_end_h():
+    """处理H结束指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.is_h = 0
+    character_data.behavior.behavior_id = constant.Behavior.END_H
+    character_data.state = constant.CharacterStatus.STATUS_END_H
+    #H结束时的其他处理
+    #1.高潮结算归零
+    character_data.orgasm_count = 0
+    target_data.orgasm_count = 0
+    #2.对象NPC进入跟随
+    target_data.is_follow = 1
+    #H结束时的其他处理完毕
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束H模式\n")
+    now_draw.draw()
 
 # @add_instruct(
 #     constant.Instruct.SINGING,
@@ -707,121 +890,245 @@ def handle_drink_alcohol():
 #     character_data.behavior.duration = 5
 #     update.game_update_flow(5)
 
+#以下为工作#
+
+@add_instruct(
+    constant.Instruct.OFFICIAL_WORK,
+    constant.InstructType.WORK,
+    _("处理公务"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_DR_OFFICE},
+)
+def handle_official_work():
+    """处理处理公务指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
+    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+    update.game_update_flow(60)
+
+
+
 #以下为猥亵#
+
+@add_instruct(
+    constant.Instruct.TOUCH_HEAD,
+    constant.InstructType.OBSCENITY,
+    _("摸头"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_touch_head():
+    """处理摸头指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
+    update.game_update_flow(10)
+
+
 @add_instruct(
     constant.Instruct.TOUCH_BUTTOCKS,
     constant.InstructType.OBSCENITY,
     _("摸屁股"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_buttocks():
     """处理摸屁股指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_EARS,
     constant.InstructType.OBSCENITY,
     _("摸耳朵"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_EARS,},
 )
 def handle_touch_ears():
     """处理摸耳朵指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_HORN,
     constant.InstructType.OBSCENITY,
     _("摸角"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_HORN,},
 )
 def handle_touch_horn():
     """处理摸角指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_TAIL,
     constant.InstructType.OBSCENITY,
     _("摸尾巴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_TAIL,},
 )
 def handle_touch_tail():
     """处理摸尾巴指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_RING,
     constant.InstructType.OBSCENITY,
     _("摸光环"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_RING,},
 )
 def handle_touch_ring():
     """处理摸光环指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TOUCH_WING,
     constant.InstructType.OBSCENITY,
     _("摸光翼"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_WING,},
 )
 def handle_touch_wing():
     """处理摸光翼指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.TOUCH_TENTACLE,
+    constant.InstructType.OBSCENITY,
+    _("摸触手"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_TENTACLE,},
+)
+def handle_touch_tentacle():
+    """处理摸触手指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.TOUCH_CAR,
+    constant.InstructType.OBSCENITY,
+    _("摸小车"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_HAVE_CAR,},
+)
+def handle_touch_car():
+    """处理摸小车指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HAND_IN_HAND,
+    constant.InstructType.OBSCENITY,
+    _("牵手"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_handle_in_handle():
+    """处理牵手指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
+    character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
+    update.game_update_flow(10)
+
 
 @add_instruct(
     constant.Instruct.LAP_PILLOW,
     constant.InstructType.OBSCENITY,
     _("膝枕"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_lap_pillow():
     """处理膝枕指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.LAP_PILLOW
+    character_data.state = constant.CharacterStatus.STATUS_LAP_PILLOW
+    update.game_update_flow(30)
 
 @add_instruct(
     constant.Instruct.RAISE_SKIRT,
     constant.InstructType.OBSCENITY,
     _("掀起裙子"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_raise_skirt():
     """处理掀起裙子指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
+    character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
     update.game_update_flow(5)
 
 @add_instruct(
     constant.Instruct.TOUCH_CLITORIS,
     constant.InstructType.OBSCENITY,
     _("阴蒂爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CLITORIS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CLITORIS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -829,12 +1136,15 @@ def handle_touch_clitoris():
     constant.Instruct.TOUCH_VAGINA,
     constant.InstructType.OBSCENITY,
     _("手指插入（V）"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_vagina():
     """处理手指插入（V）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_VAGINA
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_VAGINA
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -842,12 +1152,15 @@ def handle_touch_vagina():
     constant.Instruct.TOUCH_ANUS,
     constant.InstructType.OBSCENITY,
     _("手指插入（A）"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
 )
 def handle_touch_anus():
     """处理手指插入（A）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -858,215 +1171,461 @@ def handle_touch_anus():
     constant.Instruct.MAKING_OUT,
     constant.InstructType.SEX,
     _("身体爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_making_out():
     """处理身体爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
+    character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.KISS_H,
     constant.InstructType.SEX,
     _("接吻"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_kiss_h():
     """处理接吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.KISS_H
+    character_data.state = constant.CharacterStatus.STATUS_KISS_H
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BREAST_CARESS,
     constant.InstructType.SEX,
     _("胸爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_breast_caress():
     """处理胸爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BREAST_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_BREAST_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.TWIDDLE_NIPPLES,
     constant.InstructType.SEX,
     _("玩弄乳头"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_twiddle_nipples():
     """处理玩弄乳头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.TWIDDLE_NIPPLES
+    character_data.state = constant.CharacterStatus.STATUS_TWIDDLE_NIPPLES
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BREAST_SUCKING,
     constant.InstructType.SEX,
     _("舔吸乳头"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_breast_sucking():
     """处理舔吸乳头指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BREAST_SUCKING
+    character_data.state = constant.CharacterStatus.STATUS_BREAST_SUCKING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CLIT_CARESS,
     constant.InstructType.SEX,
     _("阴蒂爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_cilt_caress():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.OPEN_LABIA,
     constant.InstructType.SEX,
-    _("掰开阴唇"),
-    {constant.Premise.HAVE_TARGET},
+    _("掰开阴唇观察"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_open_labia():
-    """处理掰开阴唇指令"""
+    """处理掰开阴唇观察指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.OPEN_LABIA
+    character_data.state = constant.CharacterStatus.STATUS_OPEN_LABIA
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.OPEN_ANUS,
     constant.InstructType.SEX,
-    _("掰开肛门"),
-    {constant.Premise.HAVE_TARGET},
+    _("掰开肛门观察"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_open_anus():
-    """处理掰开肛门指令"""
+    """处理掰开肛门观察指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.OPEN_ANUS
+    character_data.state = constant.CharacterStatus.STATUS_OPEN_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CUNNILINGUS,
     constant.InstructType.SEX,
     _("舔阴"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_cunnilingus():
     """处理舔阴指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CUNNILINGUS
+    character_data.state = constant.CharacterStatus.STATUS_CUNNILINGUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.LICK_ANAL,
     constant.InstructType.SEX,
     _("舔肛"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_lict_anal():
     """处理舔肛指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.LICK_ANAL
+    character_data.state = constant.CharacterStatus.STATUS_LICK_ANAL
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FINGER_INSERTION,
     constant.InstructType.SEX,
-    _("手指插入"),
-    {constant.Premise.HAVE_TARGET},
+    _("手指插入(V)"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_finger_insertion():
-    """处理手指插入指令"""
+    """处理手指插入(V)指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FINGER_INSERTION
+    character_data.state = constant.CharacterStatus.STATUS_FINGER_INSERTION
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.ANAL_CARESS,
     constant.InstructType.SEX,
-    _("肛门爱抚"),
-    {constant.Premise.HAVE_TARGET},
+    _("手指插入(A)"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_anal_caress():
-    """处理肛门爱抚指令"""
+    """处理手指插入(A)指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.ANAL_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_ANAL_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.MAKE_MASTUREBATE,
     constant.InstructType.SEX,
-    _("让对方自慰"),
-    {constant.Premise.HAVE_TARGET},
+    _("命令对方自慰"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_make_masturebate():
-    """处理让对方自慰指令"""
+    """处理命令对方自慰指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_MASTUREBATE
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_MASTUREBATE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.MAKE_LICK_ANAL,
     constant.InstructType.SEX,
-    _("让对方舔肛门"),
-    {constant.Premise.HAVE_TARGET},
+    _("命令对方舔自己肛门"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_make_lick_anal():
-    """处理让对方舔肛门指令"""
+    """处理命令对方舔自己肛门指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_LICK_ANAL
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_LICK_ANAL
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
     
 @add_instruct(
     constant.Instruct.DO_NOTHING,
     constant.InstructType.SEX,
     _("什么也不做"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_do_nothing():
     """处理什么也不做指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.DO_NOTHING
+    character_data.state = constant.CharacterStatus.STATUS_DO_NOTHING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.SEDECU,
     constant.InstructType.SEX,
-    _("诱惑"),
-    {constant.Premise.HAVE_TARGET},
+    _("诱惑对方"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_sedecu():
-    """处理诱惑指令"""
+    """处理诱惑对方指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.SEDECU
+    character_data.state = constant.CharacterStatus.STATUS_SEDECU
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.HANDJOB,
+    constant.InstructType.SEX,
+    _("手交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_handjob():
+    """处理手交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HANDJOB
+    character_data.state = constant.CharacterStatus.STATUS_HANDJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.BLOWJOB,
+    constant.InstructType.SEX,
+    _("口交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_blowjob():
+    """处理口交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.BLOWJOB
+    character_data.state = constant.CharacterStatus.STATUS_BLOWJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.PAIZURI,
+    constant.InstructType.SEX,
+    _("乳交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_paizuri():
+    """处理乳交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.PAIZURI
+    character_data.state = constant.CharacterStatus.STATUS_PAIZURI
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.FOOTJOB,
+    constant.InstructType.SEX,
+    _("足交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_footjob():
+    """处理足交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.FOOTJOB
+    character_data.state = constant.CharacterStatus.STATUS_FOOTJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.HAIRJOB,
+    constant.InstructType.SEX,
+    _("发交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_hairjob():
+    """处理发交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HAIRJOB
+    character_data.state = constant.CharacterStatus.STATUS_HAIRJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.AXILLAJOB,
+    constant.InstructType.SEX,
+    _("腋交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_axillajob():
+    """处理腋交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.AXILLAJOB
+    character_data.state = constant.CharacterStatus.STATUS_AXILLAJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.RUB_BUTTOCK,
+    constant.InstructType.SEX,
+    _("素股"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_rub_buttock():
+    """处理素股指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.RUB_BUTTOCK
+    character_data.state = constant.CharacterStatus.STATUS_RUB_BUTTOCK
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.HAND_BLOWJOB,
+    constant.InstructType.SEX,
+    _("手交口交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB},
+)
+def handle_hand_blowjob():
+    """处理手交口交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HAND_BLOWJOB
+    character_data.state = constant.CharacterStatus.STATUS_HAND_BLOWJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.TITS_BLOWJOB,
+    constant.InstructType.SEX,
+    _("乳交口交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_PAIZURI},
+)
+def handle_tits_blowjob():
+    """处理乳交口交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TITS_BLOWJOB
+    character_data.state = constant.CharacterStatus.STATUS_TITS_BLOWJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.FOCUS_BLOWJOB,
+    constant.InstructType.SEX,
+    _("真空口交"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB},
+)
+def handle_focus_blowjob():
+    """处理真空口交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.FOCUS_BLOWJOB
+    character_data.state = constant.CharacterStatus.STATUS_FOCUS_BLOWJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.DEEP_THROAT,
+    constant.InstructType.SEX,
+    _("深喉插入"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB},
+)
+def handle_deep_throat():
+    """处理深喉插入指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.DEEP_THROAT
+    character_data.state = constant.CharacterStatus.STATUS_DEEP_THROAT
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.SIXTY_NINE,
+    constant.InstructType.SEX,
+    _("六九式"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_BLOWJOB_OR_CUNNILINGUS},
+)
+def handle_sixty_nine():
+    """处理六九式指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.SIXTY_NINE
+    character_data.state = constant.CharacterStatus.STATUS_SIXTY_NINE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.NIPPLE_CLAMP,
     constant.InstructType.SEX,
-    _("乳头夹"),
-    {constant.Premise.HAVE_TARGET},
+    _("乳头夹_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_nipple_clamp():
     """处理乳头夹指令"""
@@ -1078,8 +1637,9 @@ def handle_nipple_clamp():
 @add_instruct(
     constant.Instruct.NIPPLES_LOVE_EGG,
     constant.InstructType.SEX,
-    _("乳头跳蛋"),
-    {constant.Premise.HAVE_TARGET},
+    _("乳头跳蛋_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_nipples_love_egg():
     """处理乳头跳蛋指令"""
@@ -1091,8 +1651,9 @@ def handle_nipples_love_egg():
 @add_instruct(
     constant.Instruct.CLIT_CLAMP,
     constant.InstructType.SEX,
-    _("阴蒂夹"),
-    {constant.Premise.HAVE_TARGET},
+    _("阴蒂夹_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_clit_clamp():
     """处理阴蒂夹指令"""
@@ -1104,8 +1665,9 @@ def handle_clit_clamp():
 @add_instruct(
     constant.Instruct.CLIT_LOVE_EGG,
     constant.InstructType.SEX,
-    _("阴蒂跳蛋"),
-    {constant.Premise.HAVE_TARGET},
+    _("阴蒂跳蛋_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_clit_love_egg():
     """处理阴蒂跳蛋指令"""
@@ -1117,8 +1679,9 @@ def handle_clit_love_egg():
 @add_instruct(
     constant.Instruct.ELECTRIC_MESSAGE_STICK,
     constant.InstructType.SEX,
-    _("电动按摩棒"),
-    {constant.Premise.HAVE_TARGET},
+    _("电动按摩棒_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_electric_message_stick():
     """处理电动按摩棒指令"""
@@ -1130,8 +1693,9 @@ def handle_electric_message_stick():
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION,
     constant.InstructType.SEX,
-    _("震动棒"),
-    {constant.Premise.HAVE_TARGET},
+    _("震动棒_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_vibrator_insertion():
     """处理震动棒指令"""
@@ -1143,8 +1707,9 @@ def handle_vibrator_insertion():
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION_ANAL,
     constant.InstructType.SEX,
-    _("肛门振动棒"),
-    {constant.Premise.HAVE_TARGET},
+    _("肛门振动棒_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_vibrator_insertion_anal():
     """处理肛门振动棒指令"""
@@ -1156,8 +1721,9 @@ def handle_vibrator_insertion_anal():
 @add_instruct(
     constant.Instruct.MILKING_MACHINE,
     constant.InstructType.SEX,
-    _("搾乳机"),
-    {constant.Premise.HAVE_TARGET},
+    _("搾乳机_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_milking_machine():
     """处理搾乳机指令"""
@@ -1169,8 +1735,9 @@ def handle_milking_machine():
 @add_instruct(
     constant.Instruct.URINE_COLLECTOR,
     constant.InstructType.SEX,
-    _("采尿器"),
-    {constant.Premise.HAVE_TARGET},
+    _("采尿器_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urine_collector():
     """处理采尿器指令"""
@@ -1182,8 +1749,9 @@ def handle_urine_collector():
 @add_instruct(
     constant.Instruct.BONDAGE,
     constant.InstructType.SEX,
-    _("绳子"),
-    {constant.Premise.HAVE_TARGET},
+    _("绳子_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bondage():
     """处理绳子指令"""
@@ -1195,8 +1763,9 @@ def handle_bondage():
 @add_instruct(
     constant.Instruct.PATCH,
     constant.InstructType.SEX,
-    _("眼罩"),
-    {constant.Premise.HAVE_TARGET},
+    _("眼罩_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_patch():
     """处理眼罩指令"""
@@ -1208,8 +1777,9 @@ def handle_patch():
 @add_instruct(
     constant.Instruct.PUT_CONDOM,
     constant.InstructType.SEX,
-    _("避孕套"),
-    {constant.Premise.HAVE_TARGET},
+    _("避孕套_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_put_condom():
     """处理避孕套指令"""
@@ -1221,8 +1791,9 @@ def handle_put_condom():
 @add_instruct(
     constant.Instruct.BIRTH_CONTROL_PILLS,
     constant.InstructType.SEX,
-    _("避孕药"),
-    {constant.Premise.HAVE_TARGET},
+    _("避孕药_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_birth_control_pills():
     """处理避孕药指令"""
@@ -1234,8 +1805,9 @@ def handle_birth_control_pills():
 @add_instruct(
     constant.Instruct.BODY_LUBRICANT,
     constant.InstructType.SEX,
-    _("润滑液"),
-    {constant.Premise.HAVE_TARGET},
+    _("润滑液_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_body_lubricant():
     """处理润滑液指令"""
@@ -1247,8 +1819,9 @@ def handle_body_lubricant():
 @add_instruct(
     constant.Instruct.PHILTER,
     constant.InstructType.SEX,
-    _("媚药"),
-    {constant.Premise.HAVE_TARGET},
+    _("媚药_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_philter():
     """处理媚药指令"""
@@ -1258,10 +1831,25 @@ def handle_philter():
     update.game_update_flow(5)
 
 @add_instruct(
+    constant.Instruct.ENEMAS,
+    constant.InstructType.SEX,
+    _("灌肠液_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
+)
+def handle_enemas():
+    """处理灌肠液指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
     constant.Instruct.DIURETICS,
     constant.InstructType.SEX,
-    _("利尿剂"),
-    {constant.Premise.HAVE_TARGET},
+    _("利尿剂_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_diuretics():
     """处理利尿剂指令"""
@@ -1273,8 +1861,9 @@ def handle_diuretics():
 @add_instruct(
     constant.Instruct.SLEEPING_PILLS,
     constant.InstructType.SEX,
-    _("睡眠药"),
-    {constant.Premise.HAVE_TARGET},
+    _("睡眠药_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_sleeping_pills():
     """处理睡眠药指令"""
@@ -1284,296 +1873,174 @@ def handle_sleeping_pills():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.HANDJOB,
-    constant.InstructType.SEX,
-    _("手交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_handjob():
-    """处理手交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.BLOWJOB,
-    constant.InstructType.SEX,
-    _("口交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_blowjob():
-    """处理口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.PAIZURI,
-    constant.InstructType.SEX,
-    _("乳交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_paizuri():
-    """处理乳交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.FOOTJOB,
-    constant.InstructType.SEX,
-    _("足交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_footjob():
-    """处理足交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.HAIRJOB,
-    constant.InstructType.SEX,
-    _("发交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_hairjob():
-    """处理发交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.AXILLAJOB,
-    constant.InstructType.SEX,
-    _("腋交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_axillajob():
-    """处理腋交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.RUB_BUTTOCK,
-    constant.InstructType.SEX,
-    _("素股"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_rub_buttock():
-    """处理素股指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.HAND_BLOWJOB,
-    constant.InstructType.SEX,
-    _("手交口交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_hand_blowjob():
-    """处理手交口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.TITS_BLOWJOB,
-    constant.InstructType.SEX,
-    _("乳交口交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_tits_blowjob():
-    """处理乳交口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.FOCUS_BLOWJOB,
-    constant.InstructType.SEX,
-    _("真空口交"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_focus_blowjob():
-    """处理真空口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.DEEP_THROAT,
-    constant.InstructType.SEX,
-    _("深喉插入"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_deep_throat():
-    """处理深喉插入指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
-    constant.Instruct.SIXTY_NINE,
-    constant.InstructType.SEX,
-    _("六九式"),
-    {constant.Premise.HAVE_TARGET},
-)
-def handle_sixty_nine():
-    """处理六九式指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-@add_instruct(
     constant.Instruct.NORMAL_SEX,
     constant.InstructType.SEX,
     _("正常位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_normal_sex():
     """处理正常位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
+    character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_SEX,
     constant.InstructType.SEX,
     _("背后位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_sex():
     """处理背后位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.RIDING_SEX,
     constant.InstructType.SEX,
     _("骑乘位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_riding_sex():
     """处理骑乘位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.RIDING_SEX
+    character_data.state = constant.CharacterStatus.STATUS_RIDING_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_SEX,
     constant.InstructType.SEX,
     _("对面座位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_seat_sex():
     """处理对面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_SEX
+    character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_SEAT_SEX,
     constant.InstructType.SEX,
     _("背面座位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_seat_sex():
     """处理背面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_STAND_SEX,
     constant.InstructType.SEX,
     _("对面立位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_stand_sex():
     """处理对面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_SEX
+    character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_STAND_SEX,
     constant.InstructType.SEX,
     _("背面立位"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_stand_sex():
     """处理背面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_SEX
+    character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.STIMULATE_G_POINT,
     constant.InstructType.SEX,
     _("刺激G点"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_SEX},
 )
 def handle_stimulate_g_point():
     """处理刺激G点指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.STIMULATE_G_POINT
+    character_data.state = constant.CharacterStatus.STATUS_STIMULATE_G_POINT
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.WOMB_OS_CARESS,
     constant.InstructType.SEX,
     _("玩弄子宫口"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_SEX},
 )
 def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.WOMB_OS_CARESS
+    character_data.state = constant.CharacterStatus.STATUS_WOMB_OS_CARESS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.WOMB_INSERTION,
     constant.InstructType.SEX,
     _("插入子宫"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_SEX},
 )
 def handle_womb_insertion():
     """处理插入子宫指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.WOMB_INSERTION
+    character_data.state = constant.CharacterStatus.STATUS_WOMB_INSERTION
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.NORMAL_ANAL_SEX,
     constant.InstructType.SEX,
-    _("正常位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("正常位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_normal_anal_sex():
     """处理正常位肛交指令"""
@@ -1585,8 +2052,9 @@ def handle_normal_anal_sex():
 @add_instruct(
     constant.Instruct.BACK_ANAL_SEX,
     constant.InstructType.SEX,
-    _("后背位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("后背位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_anal_sex():
     """处理后背位肛交指令"""
@@ -1598,8 +2066,9 @@ def handle_back_anal_sex():
 @add_instruct(
     constant.Instruct.RIDING_ANAL_SEX,
     constant.InstructType.SEX,
-    _("骑乘位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("骑乘位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
@@ -1611,8 +2080,9 @@ def handle_riding_anal_sex():
 @add_instruct(
     constant.Instruct.FACE_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
-    _("对面座位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("对面座位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
@@ -1624,8 +2094,9 @@ def handle_face_seat_anal_sex():
 @add_instruct(
     constant.Instruct.BACK_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
-    _("背面座位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("背面座位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
@@ -1637,8 +2108,9 @@ def handle_back_seat_anal_sex():
 @add_instruct(
     constant.Instruct.FACE_STAND_ANAL_SEX,
     constant.InstructType.SEX,
-    _("对面立位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("对面立位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
@@ -1650,8 +2122,9 @@ def handle_face_stand_anal_sex():
 @add_instruct(
     constant.Instruct.BACK_STAND_ANAL_SEX,
     constant.InstructType.SEX,
-    _("背面立位肛交"),
-    {constant.Premise.HAVE_TARGET},
+    _("背面立位肛交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
@@ -1663,8 +2136,9 @@ def handle_back_stand_anal_sex():
 @add_instruct(
     constant.Instruct.STIMULATE_SIGMOID_COLON,
     constant.InstructType.SEX,
-    _("玩弄s状结肠"),
-    {constant.Premise.HAVE_TARGET},
+    _("玩弄s状结肠_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
@@ -1676,8 +2150,9 @@ def handle_stimulate_sigmoid_colon():
 @add_instruct(
     constant.Instruct.STIMULATE_VAGINA,
     constant.InstructType.SEX,
-    _("隔着刺激阴道"),
-    {constant.Premise.HAVE_TARGET},
+    _("隔着刺激阴道_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
@@ -1689,8 +2164,9 @@ def handle_stimulate_vagina():
 @add_instruct(
     constant.Instruct.DOUBLE_PENETRATION,
     constant.InstructType.SEX,
-    _("二穴插入"),
-    {constant.Premise.HAVE_TARGET},
+    _("二穴插入_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_double_penetration():
     """处理二穴插入指令"""
@@ -1702,8 +2178,9 @@ def handle_double_penetration():
 @add_instruct(
     constant.Instruct.URETHRAL_SWAB,
     constant.InstructType.SEX,
-    _("尿道棉棒"),
-    {constant.Premise.HAVE_TARGET},
+    _("尿道棉棒_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urethral_swab():
     """处理尿道棉棒指令"""
@@ -1715,8 +2192,9 @@ def handle_urethral_swab():
 @add_instruct(
     constant.Instruct.PISSING_PLAY,
     constant.InstructType.SEX,
-    _("放尿play"),
-    {constant.Premise.HAVE_TARGET},
+    _("放尿play_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_pissing_play():
     """处理放尿play指令"""
@@ -1728,8 +2206,9 @@ def handle_pissing_play():
 @add_instruct(
     constant.Instruct.URETHRAL_INSERTION,
     constant.InstructType.SEX,
-    _("尿道插入"),
-    {constant.Premise.HAVE_TARGET},
+    _("尿道插入_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_urethral_insertion():
     """处理尿道插入指令"""
@@ -1741,8 +2220,9 @@ def handle_urethral_insertion():
 @add_instruct(
     constant.Instruct.BEAT_BREAST,
     constant.InstructType.SEX,
-    _("打胸部"),
-    {constant.Premise.HAVE_TARGET},
+    _("打胸部_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_beat_breast():
     """处理打胸部指令"""
@@ -1755,7 +2235,8 @@ def handle_beat_breast():
     constant.Instruct.SPANKING,
     constant.InstructType.SEX,
     _("打屁股"),
-    {constant.Premise.HAVE_TARGET},
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_spanking():
     """处理打屁股指令"""
@@ -1767,8 +2248,9 @@ def handle_spanking():
 @add_instruct(
     constant.Instruct.SHAME_PLAY,
     constant.InstructType.SEX,
-    _("羞耻play"),
-    {constant.Premise.HAVE_TARGET},
+    _("羞耻play_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_shame_play():
     """处理羞耻play指令"""
@@ -1780,8 +2262,9 @@ def handle_shame_play():
 @add_instruct(
     constant.Instruct.BUNDLED_PLAY,
     constant.InstructType.SEX,
-    _("拘束play"),
-    {constant.Premise.HAVE_TARGET},
+    _("拘束play_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bundled_play():
     """处理拘束play指令"""
@@ -1793,8 +2276,9 @@ def handle_bundled_play():
 @add_instruct(
     constant.Instruct.TAKE_SHOWER,
     constant.InstructType.SEX,
-    _("淋浴"),
-    {constant.Premise.HAVE_TARGET},
+    _("淋浴_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_take_shower():
     """处理淋浴指令"""
@@ -1806,8 +2290,9 @@ def handle_take_shower():
 @add_instruct(
     constant.Instruct.BUBBLE_BATH,
     constant.InstructType.SEX,
-    _("泡泡浴"),
-    {constant.Premise.HAVE_TARGET},
+    _("泡泡浴_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_bubble_bath():
     """处理泡泡浴指令"""
@@ -1819,8 +2304,9 @@ def handle_bubble_bath():
 @add_instruct(
     constant.Instruct.CHANGE_TOP_AND_BOTTOM,
     constant.InstructType.SEX,
-    _("交给对方"),
-    {constant.Premise.HAVE_TARGET},
+    _("交给对方_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_change_top_and_bottom():
     """处理交给对方指令"""
@@ -1832,8 +2318,9 @@ def handle_change_top_and_bottom():
 @add_instruct(
     constant.Instruct.GIVE_BLOWJOB,
     constant.InstructType.SEX,
-    _("给对方口交"),
-    {constant.Premise.HAVE_TARGET},
+    _("给对方口交_未实装"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H},
 )
 def handle_give_blowjob():
     """处理给对方口交指令"""

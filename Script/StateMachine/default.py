@@ -1,7 +1,7 @@
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, course
+from Script.Design import handle_state_machine, character_move, map_handle
 from Script.Core import cache_control, game_type, constant
 
 cache: game_type.Cache = cache_control.cache
@@ -70,7 +70,17 @@ def character_sleep(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
+    character_data.tired = 0
 
+# @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
+# def character_follow(character_id: int):
+#     """
+#     跟随玩家
+#     Keyword arguments:
+#     character_id -- 角色id
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     character_data.talent[400] = 1
 
 @handle_state_machine.add_state_machine(constant.StateMachine.REST)
 def character_rest(character_id: int):
@@ -153,11 +163,11 @@ def character_move_to_toilet(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Toilet_man"])
+        random.choice(constant.place_data["Toilet_Male"])
     )
     elif character_data.sex == 1:
         to_toilet = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Toilet_woman"])
+        random.choice(constant.place_data["Toilet_Female"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_toilet)
     character_data.behavior.behavior_id = constant.Behavior.MOVE

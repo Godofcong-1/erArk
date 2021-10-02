@@ -19,8 +19,10 @@ from Script.Design import (
     talk,
     map_handle,
     cooking,
-    attr_calculation
+    attr_calculation,
+    character_move
 )
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
 game_path = game_path_config.game_path
@@ -30,6 +32,8 @@ _: FunctionType = get_text._
 """ 翻译api """
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+width = normal_config.config_normal.text_width
+""" 屏幕宽度 """
 
 
 def init_character_behavior():
@@ -44,6 +48,7 @@ def init_character_behavior():
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
+            judge_character_tired(character_id)
         update_cafeteria()
     cache.over_behavior_character = set()
 
@@ -77,18 +82,28 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         return
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
+    #空闲状态下执行可用行动#
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
             character_target_judge(character_id, now_time)
         else:
             cache.over_behavior_character.add(0)
+    #非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
-    #24点之后结算状态为珠#
+    #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
+        #结算数值为珠
         judge_character_juel(character_id)
+        #（已废弃）以防万一，此处的高潮程度和高潮次数归零
+        # character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        # character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+    #处理跟随与H模式#
+    if character_id != 0:
+        judge_character_follow(character_id)
+        judge_character_h(character_id)
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -142,6 +157,22 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
 #         if character_id not in cache.over_behavior_character:
 #             cache.over_behavior_character.add(character_id)
 
+def judge_character_tired(character_id : int):
+    """
+    校验角色是否疲劳
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    #疲劳结算
+    if character_data.tired and (character_data.is_h or character_data.is_follow):
+        character_data.is_h = 0
+        character_data.is_follow = 0
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = character_data.name + "太累了，决定回房间睡觉 "
+        now_draw.draw()
+
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
     """
@@ -182,6 +213,11 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         talk.handle_talk(character_id)
         if now_panel != None:
             now_panel.draw()
+            #进行一次暂停以便玩家看输出信息
+            wait_draw = draw.LineFeedWaitDraw()
+            wait_draw.text = "\n"
+            wait_draw.width = normal_config.config_normal.text_width
+            wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
     if time_judge == 1:
@@ -292,6 +328,7 @@ def judge_character_juel(character_id: int) -> int:
         # print("status_id :",status_id)
         # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
         # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
+        #去掉性别里不存在的状态
         if character_data.sex == 0:
             if status_id in {2, 3, 7, 8}:
                 continue
@@ -299,13 +336,50 @@ def judge_character_juel(character_id: int) -> int:
             if status_id == 5:
                 continue
         status_value = 0
-        if status_id in character_data.status:
-            status_value = character_data.status[status_id]
-            cache.character_data[character_id].status[status_id] = 0
+        #获得状态值并清零
+        if status_id in character_data.status_data:
+            status_value = character_data.status_data[status_id]
+            cache.character_data[character_id].status_data[status_id] = 0
             # print("status_value :",status_value)
+        #只要状态值不为0就结算为对应珠
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
             character_data.juel[status_id] += add_juel
-            juel_text = game_config.config_juel[status_id].name
+            # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
+    return 1
+
+def judge_character_follow(character_id: int) -> int:
+    """
+    维持跟随状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # print("开始检测是否为跟随")
+    if character_data.is_follow:
+        # print("检测到跟随，NPC编号为：",character_id)
+        to_dr = cache.character_data[0].position
+        _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+        # print("开始移动，路径为：",move_path,"，时间为：",move_time)
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
+    return 1
+
+def judge_character_h(character_id: int) -> int:
+    """
+    维持H状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.is_h:
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
     return 1

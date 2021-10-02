@@ -929,23 +929,23 @@ class ExpLevelDraw:
     def __init__(self, experience: int):
         """初始化绘制对象"""
         grade = ""
-        if experience < 50:
+        if experience <= 0:
             grade = "G"
-        elif experience < 100:
+        elif experience == 1:
             grade = "F"
-        elif experience < 200:
+        elif experience == 2:
             grade = "E"
-        elif experience < 500:
+        elif experience == 3:
             grade = "D"
-        elif experience < 1000:
+        elif experience == 4:
             grade = "C"
-        elif experience < 2000:
+        elif experience == 5:
             grade = "B"
-        elif experience < 5000:
+        elif experience == 6:
             grade = "A"
-        elif experience < 10000:
+        elif experience == 7:
             grade = "S"
-        elif experience >= 10000:
+        elif experience >= 8:
             grade = "EX"
         style = f"level{grade.lower()}"
         now_draw = NormalDraw()

@@ -23,6 +23,10 @@ config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
 """ 行为结算器配置 """
 config_behavior_effect_data: Dict[int, Set] = {}
 """ 行为所包含的结算器id数据 """
+config_second_behavior_effect: Dict[int, config_def.SecondEffect] = {}
+""" 二段行为结算器配置 """
+config_second_behavior_effect_data: Dict[int, Set] = {}
+""" 二段行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
@@ -31,10 +35,6 @@ config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
 """ 角色状态类型配表数据 """
 config_character_state_type_data: Dict[int, Set] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
-config_clothing_evaluate: Dict[int, config_def.ClothingEvaluate] = {}
-""" 服装评价配置数据 """
-config_clothing_evaluate_list: List[str] = []
-""" 服装评价配置列表 """
 config_clothing_suit: Dict[int, config_def.ClothingSuit] = {}
 """ 衣服套装配置列表 """
 config_clothing_suit_data: Dict[int, Dict[int, Set]] = {}
@@ -48,14 +48,10 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
-config_course: Dict[int, config_def.Course] = {}
-""" 课程配置数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
 """ 字体名字对应字体id """
-config_hitpoint_tem: Dict[int, config_def.HitPointTem] = {}
-""" HP模板对应平均值 """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
 """ 指令类型配置 """
 config_item: Dict[int, config_def.Item] = {}
@@ -65,8 +61,6 @@ config_item_tag_data: Dict[str, Set] = {}
 道具标签配置数据
 标签:道具id集合
 """
-config_manapoint_tem: Dict[int, config_def.ManaPointTem] = {}
-""" MP模板对应平均值 """
 config_moon: Dict[int, config_def.Moon] = {}
 """ 月相配置 """
 config_moon_data: Dict[int, Set] = {}
@@ -118,24 +112,10 @@ config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
 载入根据前提编号来判断具体的素质升级的具体前提数据
 需求id:[类型,类型子id,需求值]
 """
+config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
+""" 每个指令的实行值判定数据 """
 config_recipes: Dict[int, config_def.Recipes] = {}
 """ 菜谱配置 """
-config_school: Dict[int, config_def.School] = {}
-""" 学校配置数据 """
-config_school_phase_course: Dict[int, config_def.SchoolPhaseCourse] = {}
-""" 各学校各年级科目配置 """
-config_school_phase_course_data: Dict[int, Dict[int, Set]] = {}
-"""
-各学校各年级科目配置数据
-学校id:年级id:科目集合
-"""
-config_school_session: Dict[int, config_def.SchoolSession] = {}
-""" 学校上课时间配置 """
-config_school_session_data: Dict[int, Dict[int, int]] = {}
-"""
-学校上课时间配置数据
-学校id:课时编号:配表id
-"""
 config_season: Dict[int, config_def.Season] = {}
 """ 季节配置数据 """
 config_sex_tem: Dict[int, config_def.SexTem] = {}
@@ -147,8 +127,6 @@ config_random_npc_sex_region: Dict[int, int] = {}
 生成随机npc时性别权重
 性别:权重
 """
-config_social_type: Dict[int, config_def.SocialType] = {}
-""" 关系类型配置数据 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
 config_status: Dict[int, config_def.Status] = {}
@@ -195,6 +173,7 @@ def translate_data(data: dict):
     for now_data in data["data"]:
         for key in now_data:
             if data["gettext"][key]:
+                # print("now_data :",now_data)
                 now_data[key] = get_text._(now_data[key])
 
 
@@ -237,9 +216,9 @@ def load_ability_up_data():
     for tem_data in now_data["data"]:
         now_tem = config_def.AbilityUp()
         now_tem.__dict__ = tem_data
-        config_ability_up_data.setdefault(now_tem.ability_id, {})
-        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.cid, {})
-        config_ability_up_data[now_tem.ability_id][now_tem.cid] = now_tem
+        config_ability_up_data.setdefault(now_tem.ability_up_id, {})
+        config_ability_up_data[now_tem.ability_up_id].setdefault(now_tem.cid, {})
+        config_ability_up_data[now_tem.ability_up_id][now_tem.cid] = now_tem
         # print("tem_data :",tem_data)
         # print("now_tem.cid :",now_tem.cid)
         # print("now_tem.ability_id :",now_tem.ability_id)
@@ -257,6 +236,16 @@ def load_talent_up_data():
         config_talent_up_data.setdefault(now_tem.talent_id, {})
         config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
         config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
+
+
+def load_instruct_judge_data():
+    """每个指令的实行值判定数据"""
+    now_data = config_data["InstructJudge"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.InstructJudge()
+        now_tem.__dict__ = tem_data
+        config_instruct_judge_data[now_tem.cid] = now_tem
 
 
 def load_experience():
@@ -343,6 +332,18 @@ def load_behavior_effect_data():
         config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
 
+def load_second_behavior_effect_data():
+    """载入二段行为结算器配置"""
+    now_data = config_data["SecondEffect"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.SecondEffect()
+        now_tem.__dict__ = tem_data
+        config_second_behavior_effect[now_tem.cid] = now_tem
+        config_second_behavior_effect_data.setdefault(now_tem.behavior_id, set())
+        config_second_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+
+
 def load_book_data():
     """载入数据配置数据"""
     now_data = config_data["Book"]
@@ -373,17 +374,6 @@ def load_character_state_type_data():
         now_tem = config_def.CharacterStateType()
         now_tem.__dict__ = tem_data
         config_character_state_type[now_tem.cid] = now_tem
-
-
-def load_clothing_evaluate():
-    """载入服装评价配置数据"""
-    now_data = config_data["ClothingEvaluate"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.ClothingEvaluate()
-        now_tem.__dict__ = tem_data
-        config_clothing_evaluate[now_tem.cid] = now_tem
-        config_clothing_evaluate_list.append(now_tem.name)
 
 
 def load_clothing_suit():
@@ -429,16 +419,6 @@ def load_clothing_use_type():
         config_clothing_use_type[now_type.cid] = now_type
 
 
-def load_course():
-    """载入课程配置数据"""
-    now_data = config_data["Course"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Course()
-        now_tem.__dict__ = tem_data
-        config_course[now_tem.cid] = now_tem
-
-
 def load_font_data():
     """载入字体配置数据"""
     now_data = config_data["FontConfig"]
@@ -448,16 +428,6 @@ def load_font_data():
         now_font.__dict__ = tem_data
         config_font[now_font.cid] = now_font
         config_font_data[now_font.name] = now_font.cid
-
-
-def load_hitpoint_tem():
-    """载入hp模板对应平均值配置数据"""
-    now_data = config_data["HitPointTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.HitPointTem()
-        now_tem.__dict__ = tem_data
-        config_hitpoint_tem[now_tem.cid] = now_tem
 
 
 def load_instruct_type():
@@ -480,16 +450,6 @@ def load_item():
         config_item[now_tem.cid] = now_tem
         config_item_tag_data.setdefault(now_tem.tag, set())
         config_item_tag_data[now_tem.tag].add(now_tem.cid)
-
-
-def load_manapoint_tem():
-    """载入mp模板对应平均值配置数据"""
-    now_data = config_data["ManaPointTem"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.ManaPointTem()
-        now_tem.__dict__ = tem_data
-        config_manapoint_tem[now_tem.cid] = now_tem
 
 
 def load_moon():
@@ -536,41 +496,6 @@ def load_recipes():
         config_recipes[now_tem.cid] = now_tem
 
 
-def load_school():
-    """载入学校配置数据"""
-    now_data = config_data["School"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.School()
-        now_tem.__dict__ = tem_data
-        config_school[now_tem.cid] = now_tem
-
-
-def load_school_phase_course():
-    """载入各学校各年级课程科目配置数据"""
-    now_data = config_data["SchoolPhaseCourse"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SchoolPhaseCourse()
-        now_tem.__dict__ = tem_data
-        config_school_phase_course[now_tem.cid] = now_tem
-        config_school_phase_course_data.setdefault(now_tem.school, {})
-        config_school_phase_course_data[now_tem.school].setdefault(now_tem.phase, set())
-        config_school_phase_course_data[now_tem.school][now_tem.phase].add(now_tem.course)
-
-
-def load_school_session():
-    """载入学校上课时间配置"""
-    now_data = config_data["SchoolSession"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SchoolSession()
-        now_tem.__dict__ = tem_data
-        config_school_session[now_tem.cid] = now_tem
-        config_school_session_data.setdefault(now_tem.school_id, {})
-        config_school_session_data[now_tem.school_id][now_tem.session] = now_tem.cid
-
-
 def load_season():
     """载入季节配置"""
     now_data = config_data["Season"]
@@ -590,16 +515,6 @@ def load_sex_tem():
         now_tem.__dict__ = tem_data
         config_sex_tem[now_tem.cid] = now_tem
         config_random_npc_sex_region[now_tem.cid] = now_tem.region
-
-
-def load_social_type():
-    """载入社交关系配置数据"""
-    now_data = config_data["SocialType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SocialType()
-        now_tem.__dict__ = tem_data
-        config_social_type[now_tem.cid] = now_tem
 
 
 def load_solar_period():
@@ -711,34 +626,28 @@ def init():
     load_ability_up_data()
     load_bar_data()
     load_behavior_effect_data()
+    load_second_behavior_effect_data()
     load_book_data()
     load_character_state_data()
     load_character_state_type_data()
-    load_clothing_evaluate()
     load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
-    load_course()
     load_experience()
     load_font_data()
-    load_hitpoint_tem()
     load_instruct_type()
+    load_instruct_judge_data()
     load_item()
     load_juel()
-    load_manapoint_tem()
     load_moon()
     load_move_menu_type()
     load_organ_data()
     load_profession()
     load_race()
     load_recipes()
-    load_school()
-    load_school_phase_course()
-    load_school_session()
     load_season()
     load_sex_tem()
-    load_social_type()
     load_solar_period()
     load_status()
     load_sun_time()

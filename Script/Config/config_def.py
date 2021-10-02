@@ -4,7 +4,7 @@ class Ability:
     cid: int
     """ 能力id """
     ability_type: int
-    """ 类型(0:感觉,1:扩张,2:刻印,3:基础) """
+    """ 类型(0:感觉,1:扩张,2:刻印,3:基础,4:技能,5:性技,6:中毒) """
     name: str
     """ 名字 """
 
@@ -23,7 +23,7 @@ class AbilityUp:
 
     cid: int
     """ 编号id """
-    ability_id: int
+    ability_up_id: int
     """ 对应的升级需求id """
     need_type: str
     """ 需求类型 """
@@ -101,15 +101,6 @@ class CharacterStateType:
     """ 类型名 """
 
 
-class ClothingEvaluate:
-    """ 服装评价描述 """
-
-    cid: int
-    """ 评价id """
-    name: str
-    """ 评价名 """
-
-
 class ClothingSuit:
     """ 套装配置数据 """
 
@@ -158,26 +149,6 @@ class ClothingUseType:
     """ 用途名字 """
 
 
-class Course:
-    """ 课程配置数据 """
-
-    cid: int
-    """ 课程id """
-    name: str
-    """ 名字 """
-
-
-class EndAgeTem:
-    """ 性别对应平均寿命 """
-
-    cid: int
-    """ 模板id """
-    sex: int
-    """ 性别id """
-    end_age: int
-    """ 平均寿命 """
-
-
 class Experience:
     """ 经验名字 """
 
@@ -214,13 +185,17 @@ class FontConfig:
     """ 备注 """
 
 
-class HitPointTem:
-    """ hp模板对应平均值 """
+class InstructJudge:
+    """ 每个指令的实行值判定数据 """
 
     cid: int
-    """ 模板id """
-    max_value: int
-    """ 最大值 """
+    """ 编号id """
+    instruct_name: str
+    """ 对应的指令名字 """
+    need_type: str
+    """ 需求类型（D为日常，S为性爱） """
+    value: int
+    """ 需求值 """
 
 
 class InstructType:
@@ -252,15 +227,6 @@ class Juel:
     """ 珠id """
     name: str
     """ 珠名 """
-
-
-class ManaPointTem:
-    """ mp模板对应平均值 """
-
-    cid: int
-    """ 模板id """
-    max_value: int
-    """ 最大值 """
 
 
 class Moon:
@@ -329,49 +295,6 @@ class Recipes:
     """ 烹饪难度 """
 
 
-class School:
-    """ 学校配置 """
-
-    cid: int
-    """ 学校id """
-    name: str
-    """ 名字 """
-    day: int
-    """ 每周上课天数 """
-    min_age: int
-    """ 最小年龄 """
-    max_age: int
-    """ 最大年龄 """
-
-
-class SchoolPhaseCourse:
-    """ 各学校各年级教学科目配置 """
-
-    cid: int
-    """ 配表id """
-    school: int
-    """ 学校id """
-    phase: int
-    """ 年级 """
-    course: int
-    """ 课程id """
-
-
-class SchoolSession:
-    """ 各学校上课时间配置 """
-
-    cid: int
-    """ 配表id """
-    school_id: int
-    """ 学校id """
-    session: int
-    """ 当天课时编号 """
-    start_time: int
-    """ 开始时间 """
-    end_time: int
-    """ 结束时间 """
-
-
 class Season:
     """ 季节配置 """
 
@@ -379,6 +302,17 @@ class Season:
     """ 季节id """
     name: str
     """ 季节名 """
+
+
+class SecondEffect:
+    """ 行为结算器配置 """
+
+    cid: int
+    """ 表id """
+    behavior_id: int
+    """ 行为id """
+    effect_id: int
+    """ 结算器id """
 
 
 class SexTem:
@@ -394,15 +328,6 @@ class SexTem:
     """ 是否有女性器官 """
     region: int
     """ 随机npc生成性别权重 """
-
-
-class SocialType:
-    """ 关系类型配置 """
-
-    cid: int
-    """ 关系id """
-    name: str
-    """ 名字 """
 
 
 class SolarPeriod:
@@ -502,6 +427,732 @@ class Talk:
     """ 口上限定的剧情npcid """
     context: str
     """ 口上内容 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

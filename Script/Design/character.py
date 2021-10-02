@@ -10,9 +10,9 @@ from Script.Core import (
 from Script.Design import (
     attr_calculation,
     clothing,
-    nature,
 )
 from Script.Config import game_config
+from Script.UI.Moudle import draw
 
 
 cache: game_type.Cache = cache_control.cache
@@ -28,21 +28,30 @@ def init_attr(character_id: int):
     # print("进入第二步的init_attr")
     # print("进入第二步的character_id :",character_id)
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.language[character_data.mother_tongue] = 10000
     character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
-    # character_data.end_age = attr_calculation.get_end_age(character_data.sex)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
-    # character_data.bodyfat = attr_calculation.get_body_fat(character_data.sex, character_data.bodyfat_tem)
+
+    #一系列归零函数
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
-    character_data.status = attr_calculation.get_status_zero(character_data.status)
+    character_data.status_data = attr_calculation.get_status_zero(character_data.status_data)
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
     character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
+    character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+    character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+    character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
+
+    #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
-        character_data.hit_point_max = attr_calculation.get_max_hit_point(character_data.hit_point_tem)
-        character_data.mana_point_max = attr_calculation.get_max_mana_point(character_data.mana_point_tem)
+        character_data.hit_point_max = 2000
+        character_data.mana_point_max = 2000
+        character_data.eja_point = 0
+        character_data.eja_point_max = 1000
+        character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
+
+    #初始所有角色的HP和MP都为max值
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
@@ -52,23 +61,7 @@ def init_attr(character_id: int):
     #     character_data.clothing[clothing_id][clothing_data.uid] = clothing_data
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
-    # new_nature = nature.get_random_nature()
-    # for nature_id in new_nature:
-    #     if nature_id not in character_data.nature:
-    #         character_data.nature[nature_id] = new_nature[nature_id]
     # init_class(character_data)
-
-
-# def init_class(character_data: game_type.Character):
-#     """
-#     初始化角色班级
-#     character_data -- 角色对象
-#     """
-#     if character_data.age <= 18 and character_data.age >= 7:
-#         class_grade = str(character_data.age - 6)
-#         character_data.classroom = random.choice(constant.place_data["Classroom_" + class_grade])
-#         cache.classroom_students_data.setdefault(character_data.classroom, set())
-#         cache.classroom_students_data[character_data.classroom].add(character_data.cid)
 
 
 def init_character_behavior_start_time(character_id: int, now_time: datetime.datetime):
@@ -119,15 +112,15 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
 
     #恭顺、好意、欲情、快乐每级+0.1倍#
     for i in {10, 11, 12, 13}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix += status_level*0.1
     #羞耻、苦痛每级-0.1倍#
     for i in {16, 17}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix -= status_level*0.2
     #恐怖、抑郁、反感每级-0.4倍#
     for i in {18, 19, 20}:
-        status_level = attr_calculation.get_status_level(target_data.status[i])
+        status_level = attr_calculation.get_status_level(target_data.status_data[i])
         fix -= status_level*0.4
 
     #能力相关计算#
@@ -174,6 +167,116 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     return favorability
 
 
+def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str) -> int:
+    """
+    按角色当前状态、素质和能力计算最终该指令是否成功
+    Keyword arguments:
+    character_id -- 角色id
+    target_character_id -- 目标角色id
+    instruct_name -- 指令名字
+    Return arguments:
+    int -- 最终的好感值
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[target_character_id]
+    for judge_id in game_config.config_instruct_judge_data:
+        #匹配到能力的id与能力等级对应的前提#
+        if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:
+            judge_data = game_config.config_instruct_judge_data[judge_id]
+            judge_data_type = judge_data.need_type
+            judge_data_value = judge_data.value
+
+    if judge_data_type == "D":
+        calculation_text = "需要日常实行值至少为" + str(judge_data_value) + "\n"
+    elif judge_data_type == "S":
+        calculation_text = "需要性爱实行值至少为" + str(judge_data_value) + "\n"
+    calculation_text += "当前值为："
+
+    judge = 0
+
+    #好感判定#
+    favorability = target_data.favorability[0]
+    judge_favorability = 0
+    if favorability < 100:
+        judge_favorability -= 20
+    if favorability < 1000:
+        judge_favorability += 0
+    elif favorability <3000:
+        judge_favorability += 50
+    elif favorability <5000:
+        judge_favorability += 75
+    elif favorability <10000:
+        judge_favorability += 100
+    elif favorability <30000:
+        judge_favorability += 150
+    else:
+        judge_favorability += 200
+    calculation_text += "好感修正("+ str(judge_favorability) +")"
+    judge += judge_favorability
+    #信赖判定#
+    trust = target_data.trust
+    judge_trust = 0
+    if trust < 50:
+        judge_trust -= 50
+    elif trust <100:
+        judge_trust -= 20
+    elif trust <150:
+        judge_trust += 0
+    elif trust <200:
+        judge_trust += 30
+    elif trust <250:
+        judge_trust += 50
+    else:
+        judge_trust += 100
+    judge += judge_trust
+    calculation_text += "+信赖修正("+ str(judge_trust) +")"
+    #状态修正，好意(11)和欲情(12)修正#
+    judge_status = int(target_data.status_data[11] + target_data.status_data[12])
+    judge += judge_status
+    if judge_status:
+        calculation_text += "+状态修正("+ str(judge_status) +")"
+    #能力修正，亲密(21)和欲望(22)修正#
+    judge_ability = target_data.ability[21]*10 + target_data.ability[22]*5
+    judge += judge_ability
+    if judge_ability:
+        calculation_text += "+能力修正("+ str(judge_ability) +")"
+    #刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
+    judge_mark = target_data.ability[13]*20 + target_data.ability[14]*20
+    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18]*30
+    judge += judge_mark
+    if judge_mark:
+        calculation_text += "+刻印修正("+ str(judge_mark) +")"
+    #陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
+    judge_fall = target_data.talent[10]*30 + target_data.talent[11]*50 + target_data.talent[12]*80 + target_data.talent[13]*100 + target_data.talent[15]*30 + target_data.talent[16]*50 + target_data.talent[17]*80 + target_data.talent[18]*100
+    judge += judge_fall
+    if judge_fall:
+        calculation_text += "+陷落修正("+ str(judge_fall) +")"
+    #讨厌男性修正#
+    judge_hate = target_data.talent[227]*30
+    judge -= judge_hate
+    if judge_hate:
+        calculation_text += "+讨厌男性(-"+ str(judge_hate) +")"
+    #难以越过的底线修正#
+    judge_hardlove = target_data.talent[224]*30
+    judge -= judge_hardlove
+    if judge_hardlove:
+        calculation_text += "+难以越过的底线(-"+ str(judge_hardlove) +")"
+    #博士信息素修正#
+    judge_information = character_data.talent[304]*10 + character_data.talent[305]*25 + character_data.talent[306]*50
+    judge += judge_information
+    if judge_information:
+        calculation_text += "+博士信息素("+ str(judge_information) +")"
+
+    calculation_text += " = " + str(judge) + "\n"
+    now_draw = draw.WaitDraw()
+    now_draw.width = 1
+    now_draw.text = calculation_text
+    now_draw.draw()
+    if judge >= judge_data_value:
+        return 1
+    else:
+        return 0
+
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
 #     """
 #     按角色性格和关系计算最终增加的好感值
@@ -215,44 +318,6 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
 #     favorability *= fix
 #     return favorability
 
-
-def judge_character_in_class_time(character_id: int) -> bool:
-    """
-    校验角色是否处于上课时间
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_time: datetime.datetime = character_data.behavior.start_time
-    # print("character_data.behavior.start_time :",character_data.behavior.start_time)
-    # print("cache.game_time :",cache.game_time)
-    if now_time is None:
-        now_time = cache.game_time
-    now_time_value = now_time.hour * 100 + now_time.minute
-    # print("now_time_value :",now_time_value)
-    if character_data.age <= 18:
-        school_id = 0
-        if character_data.age in range(13, 16):
-            school_id = 1
-        elif character_data.age in range(16, 19):
-            school_id = 2
-        for session_id in game_config.config_school_session_data[school_id]:
-            session_config = game_config.config_school_session[session_id]
-            if now_time_value >= session_config.start_time and now_time_value <= session_config.end_time:
-                return 1
-        return 0
-    if character_id not in cache.teacher_school_timetable:
-        return 0
-    now_week = now_time.weekday()
-    timetable_list: List[game_type.TeacherTimeTable] = cache.teacher_school_timetable[character_id]
-    for timetable in timetable_list:
-        if timetable.week_day != now_week:
-            continue
-        if timetable.time <= now_time_value and timetable.end_time >= now_time_value:
-            return 1
-    return 0
 
 def judge_character_time_over_24(character_id: int) -> bool:
     """

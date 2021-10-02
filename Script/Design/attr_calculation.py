@@ -74,6 +74,42 @@ def get_juel_zero(juel_dict) -> dict:
             juel_list[juel] = 0
     return juel_list
 
+def get_orgasm_level_zero(orgasm_level_dict) -> dict:
+    """
+    将绝顶水平全项归零
+    """
+    orgasm_level_list = orgasm_level_dict
+    for orgasm in range(8):
+        orgasm_level_list[orgasm] = 0
+    return orgasm_level_list
+
+def get_orgasm_count_zero(orgasm_count_dict) -> dict:
+    """
+    将绝顶次数全项归零
+    """
+    orgasm_count_list = orgasm_count_dict
+    for orgasm in range(8):
+        orgasm_count_list[orgasm] = 0
+    return orgasm_count_list
+
+def get_second_behavior_zero(second_behavior_dict) -> dict:
+    """
+    将二段行为全项归零，暂时为前100项
+    """
+    second_behavior_list = second_behavior_dict
+    for second_behavior in range(1000,1100):
+        second_behavior_list[second_behavior] = 0
+    return second_behavior_list
+
+def get_token_zero(token_dict) -> dict:
+    """
+    直接将初始信物归为全员0
+    """
+    token_list = token_dict
+    for i in range(len(cache.npc_tem_data) + 1):
+        token_list[i] = 0
+    return token_list
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0
@@ -98,36 +134,6 @@ def get_rand_npc_birthday(age: int):
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)
     return birthday
-
-
-def get_max_hit_point(tem_id: int) -> int:
-    """
-    获取最大hp值
-    Keyword arguments:
-    tem_id -- hp模板id
-    Return arguments:
-    int -- 最大hp值
-    """
-    tem_data = game_config.config_hitpoint_tem[tem_id]
-    max_hit_point = tem_data.max_value
-    add_value = value_handle.get_gauss_rand(0, 500)
-    impairment = value_handle.get_gauss_rand(0, 500)
-    return max_hit_point + add_value - impairment
-
-
-def get_max_mana_point(tem_id: int) -> int:
-    """
-    获取最大mp值
-    Keyword arguments:
-    tem_id -- mp模板
-    Return arguments:
-    int -- 最大mp值
-    """
-    tem_data = game_config.config_manapoint_tem[tem_id]
-    max_mana_point = tem_data.max_value
-    add_value = value_handle.get_gauss_rand(0, 500)
-    impairment = value_handle.get_gauss_rand(0, 500)
-    return max_mana_point + add_value - impairment
 
 
 def get_experience_level_weight(experience: int) -> int:
@@ -162,30 +168,30 @@ def get_experience_level_weight(experience: int) -> int:
 
 def judge_grade(experience: int) -> str:
     """
-    按经验数值评定等级
+    按能力数值评定等级
     Keyword arguments:
-    experience -- 经验数值
+    experience -- 能力数值
     Return arguments:
     str -- 评级
     """
     grade = ""
-    if experience < 100:
+    if experience <= 0:
         grade = "G"
-    elif experience < 500:
+    elif experience == 1:
         grade = "F"
-    elif experience < 1000:
+    elif experience == 2:
         grade = "E"
-    elif experience < 2000:
+    elif experience == 3:
         grade = "D"
-    elif experience < 3000:
+    elif experience == 4:
         grade = "C"
-    elif experience < 5000:
+    elif experience == 5:
         grade = "B"
-    elif experience < 10000:
+    elif experience == 6:
         grade = "A"
-    elif experience < 20000:
+    elif experience == 7:
         grade = "S"
-    elif experience >= 20000:
+    elif experience >= 8:
         grade = "EX"
     return grade
 
@@ -288,6 +294,26 @@ def get_ability_adjust(value: int) -> int:
     return just
 
 
+def get_mark_debuff_adjust(value: int) -> int:
+    """
+    按刻印等级负面修正比例参数
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 1
+    elif level == 1:
+        just = 2
+    elif level == 2:
+        just = 5
+    elif level == 3:
+        just = 10
+    return just
+
+
 def get_juel(value: int) -> int:
     """
     按状态等级计算宝珠的最后值
@@ -320,3 +346,38 @@ def get_juel(value: int) -> int:
     elif level == 10:
         juel = round(5.0*value)
     return juel
+
+
+def get_pain_adjust(value: int) -> int:
+    """
+    按润滑程度修正苦痛值比例
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    level = get_ability_level(value)
+    if level == 0:
+        just = 10.0
+    elif level == 1:
+        just = 6.0
+    elif level == 2:
+        just = 3.4
+    elif level == 3:
+        just = 2.8
+    elif level == 4:
+        just = 2.3
+    elif level == 5:
+        just = 1.8
+    elif level == 6:
+        just = 1.4
+    elif level == 7:
+        just = 1.0
+    elif level == 8:
+        just = 0.7
+    elif level == 9:
+        just = 0.4
+    elif level == 10:
+        just = 0.2
+    return just
+

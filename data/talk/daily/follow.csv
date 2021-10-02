@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,115,0,触发请求同行指令的地文
+1,115,0,{Name}表示了想要{TargetName}和自己一起逛逛
+2,115,0,{Name}表示了想要{TargetName}跟着自己

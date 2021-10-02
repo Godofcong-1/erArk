@@ -224,3 +224,6 @@ class BuyFoodByFoodNameDraw:
         """玩家购买食物"""
         cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
         del cache.restaurant_data[self.cid][self.text]
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
+        character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD

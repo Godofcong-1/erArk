@@ -53,6 +53,7 @@ class SeeCharacterInfoPanel:
         """ 当前面板监听的按钮列表 """
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_second_draw = SeeCharacterSecondPanel(character_id, width)
+        main_third_draw = SeeCharacterThirdPanel(character_id, width)
         # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
@@ -61,18 +62,34 @@ class SeeCharacterInfoPanel:
         # see_language_draw = SeeCharacterLanguagePanel(character_id, width)
         # see_nature_draw = SeeCharacterNaturePanel(character_id, width)
         # see_social_draw = SeeCharacterSocialContact(character_id, width)
-        self.draw_data = {
-            _("素质与能力"): main_first_draw,
-            _("经验与宝珠"): main_second_draw,
-            # _("属性（原）"): main_attr_draw,
-            # _("状态"): see_status_draw,
-            # _("服装"): see_clothing_draw,
-            # _("道具"): see_item_draw,
-            # _("技能"): see_knowledge_draw,
-            # _("语言"): see_language_draw,
-            # _("性格"): see_nature_draw,
-            # _("社交"): see_social_draw,
-        }
+        if character_id == 0:
+            self.draw_data = {
+                _("素质与能力"): main_first_draw,
+                _("经验、宝珠与信物"): main_second_draw,
+                _("肉体情况"): main_third_draw,
+                # _("属性（原）"): main_attr_draw,
+                # _("状态"): see_status_draw,
+                # _("服装"): see_clothing_draw,
+                # _("道具"): see_item_draw,
+                # _("技能"): see_knowledge_draw,
+                # _("语言"): see_language_draw,
+                # _("性格"): see_nature_draw,
+                # _("社交"): see_social_draw,
+            }
+        else:
+            self.draw_data = {
+                _("素质与能力"): main_first_draw,
+                _("经验与宝珠"): main_second_draw,
+                _("肉体情况"): main_third_draw,
+                # _("属性（原）"): main_attr_draw,
+                # _("状态"): see_status_draw,
+                # _("服装"): see_clothing_draw,
+                # _("道具"): see_item_draw,
+                # _("技能"): see_knowledge_draw,
+                # _("语言"): see_language_draw,
+                # _("性格"): see_nature_draw,
+                # _("社交"): see_social_draw,
+            }
         """ 按钮文本对应属性面板 """
         self.handle_panel = panel.CenterDrawButtonListPanel()
         """ 属性列表的控制面板 """
@@ -155,10 +172,45 @@ class SeeCharacterSecondPanel:
         head_draw = CharacterInfoHead(character_id, width)
         experience_draw = CharacterExperienceText(character_id, width,8, 0)
         juel_draw = CharacterJuelText(character_id, width,8, 0)
+        if character_id == 0:
+            token_draw = CharacterTokenText(character_id, width,8, 0)
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                experience_draw,
+                juel_draw,
+                token_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                experience_draw,
+                juel_draw,
+            ]
+        """ 绘制的面板列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            label.draw()
+
+
+class SeeCharacterThirdPanel:
+    """
+    显示角色属性面板第三页对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    """
+
+    def __init__(self, character_id: int, width: int):
+        """初始化绘制对象"""
+        head_draw = CharacterInfoHead(character_id, width)
+        body_draw = CharacterBodyText(character_id, width,8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
-            experience_draw,
-            juel_draw,
+            body_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -249,15 +301,15 @@ class SeeCharacterStatusPanel:
                     # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
                     if status_type == 0:
                         if character_data.sex == 0:
-                            if status_id in {2, 3, 7, 8}:
+                            if status_id in {2, 4, 7}:
                                 continue
                         elif character_data.sex == 1:
-                            if status_id == 5:
+                            if status_id == 3:
                                 continue
                     status_text = game_config.config_character_state[status_id].name
                     status_value = 0
-                    if status_id in character_data.status:
-                        status_value = character_data.status[status_id]
+                    if status_id in character_data.status_data:
+                        status_value = character_data.status_data[status_id]
                     # if status_id in character_data.status:
                     #     status_value = character_data.status[status_id]
                     status_value = round(status_value)
@@ -310,14 +362,11 @@ class CharacterInfoHead:
             social = 0
             if 0 in character_data.social_contact_data:
                 social = character_data.social_contact_data[0]
-            social_text = game_config.config_social_type[social].name
-            favorability = character_data.favorability
-            # print("favorability =",favorability)
             message = _("{character_name}（好感度： {favorability}，信赖度： {trust}%） ").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 favorability=int(character_data.favorability[0]),
-                trust=character_data.trust,
+                trust=round(character_data.trust,1),
                 # sex_text=sex_text,
                 # social_text=social_text,
             )
@@ -351,14 +400,30 @@ class CharacterInfoHead:
             int(character_data.mana_point),
             _("气力"),
         )
+        if character_id == 0:
+            ep_draw = draw.InfoBarDraw()
+            ep_draw.width = width / 4
+            ep_draw.scale = 0.8
+            ep_draw.set(
+                "EjaPointbar",
+                int(character_data.eja_point_max),
+                int(character_data.eja_point),
+                _("射精"),
+            )
         status_text = game_config.config_status[character_data.state].name
         status_draw = draw.CenterDraw()
         status_draw.width = width / 4
         status_draw.text = _(" ").format(status_text=status_text)
-        self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, hp_draw),
-            (status_draw, mp_draw),
-        ]
+        if character_id == 0:
+            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
+                (message_draw, hp_draw),
+                (status_draw, mp_draw, ep_draw),
+            ]
+        else:
+            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
+                (message_draw, hp_draw),
+                (status_draw, mp_draw),
+            ]
         """ 要绘制的面板列表 """
 
     def draw(self):
@@ -712,10 +777,14 @@ class CharacterabiText:
         for anility_type in ability_list:
             # if anility_type == type:
             type_set = ability_list[anility_type]
+            #去掉玩家的若干能力#
+            if self.character_id == 0:
+                if anility_type in {0, 1, 2, 6}:
+                    continue
             for ability_id in type_set:
-                #去掉与性别不符的感度#
+                #去掉与性别不符的能力#
                 if character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 34, 39}:
+                    if ability_id in {2, 4, 7, 9, 12, 33, 34, 39}:
                         continue
                 elif character_data.sex == 1:
                     if ability_id == 3:
@@ -792,8 +861,12 @@ class Characterabi_show_Text:
         ability_list = game_config.config_ability_type_data
         for anility_type in ability_list:
             type_set = ability_list[anility_type]
+            #去掉刻印
+            # print("anility_type : ",anility_type)
+            if anility_type == 2:
+                continue
             for ability_id in type_set:
-                #去掉与性别不符的感度#
+                #去掉与性别不符的感度与扩张
                 if self.character_data.sex == 0:
                     if ability_id in {2, 4, 7, 9, 12, 34, 39}:
                         continue
@@ -868,24 +941,27 @@ class Characterabi_cmd_Text:
                 #匹配到能力的id与能力等级对应的前提#
                 if game_config.config_ability_up_type[abi_id].ability_id == self.ability_id and game_config.config_ability_up_type[abi_id].now_level == self.ability_level:
                     need_list = game_config.config_ability_up_data[abi_id]
+                    line = draw.LineDraw(".", self.width)
+                    line.draw()
+                    line_feed.draw()
                     for need_id in need_list:
                         need_type = need_list[need_id].need_type
                         need_type_id = need_list[need_id].need_type_id
                         need_value = need_list[need_id].value
                         if need_type == "A":
                             abi_name = game_config.config_ability[need_type_id].name
-                            button_text = "需要能力 :" + abi_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.ability[need_type_id] < need_value:
                                 judge = 0
                         elif need_type == "J":
                             juel_name = game_config.config_juel[need_type_id].name
-                            button_text = "需要宝珠 :" + juel_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.juel[need_type_id] < need_value:
                                 judge = 0
                             self.jule_dict[need_type_id] = need_value
                         elif need_type == "E":
                             experience_name = game_config.config_experience[need_type_id].name
-                            button_text = "需要经验 :" + experience_name + "至少为" + str(need_value) + "\n"
+                            button_text = "需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
                             if self.character_data.experience[need_type_id] < need_value:
                                 judge = 0
                         now_draw = draw.NormalDraw()
@@ -1377,60 +1453,240 @@ class CharacterJuelText:
             else:
                 label.draw()
 
-
-class SeeCharacterSocialContact:
+class CharacterTokenText:
     """
-    显示角色社交关系面板对象
+    显示角色信物面板对象
     Keyword arguments:
     character_id -- 角色id
     width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
     """
 
-    def __init__(self, character_id: int, width: int):
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
         """初始化绘制对象"""
-        self.character_id: int = character_id
+        self.character_id = character_id
         """ 要绘制的角色id """
-        self.width: int = width
+        self.width = width
         """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[self.character_id]
-        for social_type in game_config.config_social_type:
-            if not social_type:
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "信物"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        token_text_list = []
+        for token_id in range(len(character_data.token_list)):
+            if token_id == 0:
                 continue
-            type_config = game_config.config_social_type[social_type]
-            type_draw = draw.LittleTitleLineDraw(type_config.name, self.width, ":")
-            self.draw_list.append(type_draw)
-            now_draw = draw.CenterDraw()
-            if social_type in character_data.social_contact and len(
-                character_data.social_contact[social_type]
-            ):
-                character_list = list(character_data.social_contact[social_type])
-                now_draw = panel.PageHandlePanel(
-                    character_list, SeeCharacterInfoByNameDraw, 10, 5, self.width, 1, 1, 0
-                )
-            else:
-                now_draw.text = _("空无一人")
-                now_draw.width = self.width
-            self.draw_list.append(now_draw)
-            self.draw_list.append(line_feed)
+            if character_data.token_list[token_id] == 1:
+                target_character_data = cache.character_data[token_id]
+                character_name = target_character_data.name
+                token_text = target_character_data.token_text
+                now_text = f" 已拥有{character_name}的信物:{token_text}"
+                token_text_list.append(now_text)
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(token_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):
-        title_draw = draw.TitleLineDraw(_("人物社交"), self.width)
-        title_draw.draw()
-        self.return_list = []
-        now_start_id = 0
-        for value in self.draw_list:
-            if isinstance(value, panel.PageHandlePanel):
-                value.button_start_id = now_start_id
-                value.update()
-                value.draw()
-                self.return_list.extend(value.return_list)
-                now_start_id = len(self.return_list)
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
             else:
-                value.draw()
+                label.draw()
+
+
+class CharacterBodyText:
+    """
+    显示角色肉体面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "肉体情况"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        body_text_list = []
+        if character_id != 0:
+            #口部信息#
+            now_text = f"\n 【口】\n"
+            now_text += "  初吻情况："
+            if character_data.talent[4]:
+                now_text += "保有初吻\n"
+            else:
+                kiss_id = character_data.first_kiss_id
+                kiss_time = character_data.first_kiss_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
+                        character_name=cache.character_data[kiss_id].name,
+                        kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
+                    )
+            if character_data.ability[31] == 0:
+                now_text += "  普普通通的舌头\n"
+            if character_data.taste_semen == 0:
+                now_text += "  未品尝过精液\n"
+            body_text_list.append(now_text)
+            #胸部信息#
+            now_text = f"\n 【胸】\n"
+            if character_data.breast_semen == 0:
+                now_text += "  未淋上过精液\n"
+            body_text_list.append(now_text)
+            #指部信息#
+            now_text = f"\n 【指】\n"
+            if character_data.hand_semen == 0:
+                now_text += "  未淋上过精液\n"
+            body_text_list.append(now_text)
+            #足部信息#
+            now_text = f"\n 【足】\n"
+            if character_data.foot_semen == 0:
+                now_text += "  未淋上过精液\n"
+            body_text_list.append(now_text)
+            #膣部信息#
+            now_text = f"\n 【膣】\n"
+            now_text += "  处女情况："
+            if character_data.talent[0]:
+                now_text += "保有处女\n"
+            else:
+                sex_id = character_data.first_sex_id
+                sex_time = character_data.first_sex_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了处女\n").format(
+                        character_name=cache.character_data[sex_id].name,
+                        kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                    )
+            if character_data.sex_semen == 0:
+                now_text += "  未射入过精液\n"
+            body_text_list.append(now_text)
+            #肛部信息#
+            now_text = f"\n 【肛】\n"
+            now_text += "  后庭处女情况："
+            if character_data.talent[1]:
+                now_text += "保有后庭处女\n"
+            else:
+                a_sex_id = character_data.first_a_sex_id
+                a_sex_time = character_data.first_a_sex_time
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了A处女\n").format(
+                        character_name=cache.character_data[a_sex_id].name,
+                        kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
+                    )
+            if character_data.a_sex_semen == 0:
+                now_text += "  未射入过精液\n"
+            body_text_list.append(now_text)
+            #子宫信息#
+            now_text = f"\n 【宫】\n"
+            if character_data.experience[86] == 0:
+                now_text += "  未怀孕过\n"
+            body_text_list.append(now_text)
+            #尿道信息#
+            now_text = f"\n 【尿】\n"
+            if character_data.urethral_semen == 0:
+                now_text += "  未射入过精液\n"
+            body_text_list.append(now_text)
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(body_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+
+# class SeeCharacterSocialContact:
+#     """
+#     显示角色社交关系面板对象
+#     Keyword arguments:
+#     character_id -- 角色id
+#     width -- 绘制宽度
+#     """
+
+#     def __init__(self, character_id: int, width: int):
+#         """初始化绘制对象"""
+#         self.character_id: int = character_id
+#         """ 要绘制的角色id """
+#         self.width: int = width
+#         """ 面板最大宽度 """
+#         self.draw_list: List[draw.NormalDraw] = []
+#         """ 绘制的文本列表 """
+#         self.return_list: List[str] = []
+#         """ 当前面板监听的按钮列表 """
+#         character_data = cache.character_data[self.character_id]
+#         for social_type in game_config.config_social_type:
+#             if not social_type:
+#                 continue
+#             type_config = game_config.config_social_type[social_type]
+#             type_draw = draw.LittleTitleLineDraw(type_config.name, self.width, ":")
+#             self.draw_list.append(type_draw)
+#             now_draw = draw.CenterDraw()
+#             if social_type in character_data.social_contact and len(
+#                 character_data.social_contact[social_type]
+#             ):
+#                 character_list = list(character_data.social_contact[social_type])
+#                 now_draw = panel.PageHandlePanel(
+#                     character_list, SeeCharacterInfoByNameDraw, 10, 5, self.width, 1, 1, 0
+#                 )
+#             else:
+#                 now_draw.text = _("空无一人")
+#                 now_draw.width = self.width
+#             self.draw_list.append(now_draw)
+#             self.draw_list.append(line_feed)
+
+#     def draw(self):
+#         title_draw = draw.TitleLineDraw(_("人物社交"), self.width)
+#         title_draw.draw()
+#         self.return_list = []
+#         now_start_id = 0
+#         for value in self.draw_list:
+#             if isinstance(value, panel.PageHandlePanel):
+#                 value.button_start_id = now_start_id
+#                 value.update()
+#                 value.draw()
+#                 self.return_list.extend(value.return_list)
+#                 now_start_id = len(self.return_list)
+#             else:
+#                 value.draw()
 
 
 class SeeCharacterInfoByNameDraw:
@@ -1940,13 +2196,21 @@ class Character_abi_up_frist_Handle:
         Experience_draw = CharacterExperienceText(character_id, width,8, 0)
         abi_draw = Characterabi_show_Text(character_id, width)
         tal_draw = Character_talent_show_Text(character_id, width)
-        self.draw_list: List[draw.NormalDraw] = [
-            head_draw,
-            Juel_draw,
-            Experience_draw,
-            abi_draw,
-            tal_draw,
-        ]
+        if character_id == 0:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                Juel_draw,
+                Experience_draw,
+                abi_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                Juel_draw,
+                Experience_draw,
+                abi_draw,
+                tal_draw,
+            ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """

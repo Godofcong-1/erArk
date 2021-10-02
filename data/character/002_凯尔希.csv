@@ -1,6 +1,6 @@
 key,type,value,get_text,info
 键,类型,值,多语言化处理,备注
-AdvNpc,int,2,0,0
+AdvNpc,int,2,0,干员编号
 Name,str,凯尔希,1,姓名
 Sex,int,1,0,女
 Age,int,0,0,年龄未知
@@ -8,6 +8,8 @@ Profession,int,3,0,医疗
 Race,int,13,0,菲林
 Hp,int,2000,0,初始体力
 Mp,int,1500,0,初始气力
+Dormitory,str,宿舍101房,1,初始宿舍
+Token,str,一个奇特的怀表，从未在诸国见过的制式，上面刻有四个年份日期，以及歪歪扭扭的几个字母。
 T|0,int,1,0,处女
 T|1,int,1,0,A处女
 T|4,int,1,0,无接吻经验

@@ -41,7 +41,7 @@ class SeeSaveListPanel:
         """ 当前面板监听的按钮列表 """
         now_list = [(i, write_save) for i in range(normal_config.config_normal.max_save)]
         self.handle_panel = panel.PageHandlePanel(
-            now_list, SaveInfoDraw, normal_config.config_normal.save_page, 1, width, 1, 1, 0, "=-="
+            now_list, SaveInfoDraw, normal_config.config_normal.save_page, 1, width, 1, 1, 0, "-"
         )
         """ 页面控制对象 """
 
@@ -52,7 +52,7 @@ class SeeSaveListPanel:
                 cache.back_save_panel = 0
                 break
             line_feed.draw()
-            title_draw = draw.TitleLineDraw(_("存档列表"), self.width)
+            title_draw = draw.TitleLineDraw(_("神经连接柜"), self.width)
             title_draw.draw()
             self.return_list = []
             auto_save_draw = SaveInfoDraw(["auto", 0], self.width, 1, 0, 0)
@@ -105,7 +105,7 @@ class SaveInfoDraw:
         """ 按钮返回值 """
         self.save_exist_judge = save_handle.judge_save_file_exist(self.text)
         """ 存档位是否已存在 """
-        save_name = _("空存档位")
+        save_name = _("空槽位")
         if self.save_exist_judge:
             save_head = save_handle.load_save_info_head(self.text)
             game_time: datetime.datetime = save_head["game_time"]

@@ -1,0 +1,10 @@
+cid,talk_id,premise
+配表id,所属口上id,前提id
+str,str,str
+0,0,0
+口上前提表,,
+0,0,high_1
+1,1,sys_0
+2,2,sys_0
+3,3,sys_0
+4,4,sys_0

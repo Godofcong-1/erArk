@@ -1,0 +1,6 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,999,0,触发利尿剂指令的地文

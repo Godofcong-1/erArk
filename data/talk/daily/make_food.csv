@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,context
+口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
+str,int,int,str
+0,0,0,1
+口上配置数据,,,
+0,107,0,{NickName}花了{MakeFoodTime}分钟制作了简单的{FoodName}
+1,107,0,{NickName}花了{MakeFoodTime}分钟制作了看起来不错的{FoodName}
+2,107,0,{NickName}花了{MakeFoodTime}分钟制作了十分丰盛的{FoodName}
+3,107,0,{NickName}花了{MakeFoodTime}分钟制作了精致的{FoodName}
+4,107,0,{NickName}花了{MakeFoodTime}分钟制作了好吃的{FoodName}

@@ -49,5 +49,5 @@ def title_panel():
     elif now_key == now_list[1]:
         now_panel = see_save_info_panel.SeeSaveListPanel(width, 0)
         now_panel.draw()
-    elif now_key == now_list[3]:
+    elif now_key == now_list[2]:
         os._exit(0)
