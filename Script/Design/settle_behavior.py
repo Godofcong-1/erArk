@@ -52,14 +52,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         now_judge = True
     if status_data.hit_point:
         now_judge = True
-    # if len(status_data.knowledge):
-    #     now_judge = True
-    # if len(status_data.language):
-    #     now_judge = True
+    if status_data.eja_point:
+        now_judge = True
     if len(status_data.status_data):
         now_judge = True
-    # if len(status_data.sex_experience):
-    #     now_judge = True
     if len(status_data.experience):
         now_judge = True
     if len(status_data.target_change) and not character_id:
@@ -162,7 +158,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                             judge = 1
                 if judge:
                     now_text_list.append(now_text)
-        now_text_time = "\n\n  " + str(add_time) + "分钟过去了\n"
+        now_text_time = "\n\n  " + str(add_time) + "分钟过去了"
         now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
         now_panel.set(now_text_list, width, 8)
