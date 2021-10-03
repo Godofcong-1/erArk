@@ -1883,8 +1883,9 @@ def handle_normal_sex():
     """处理正常位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
-    character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1899,8 +1900,9 @@ def handle_back_sex():
     """处理背后位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.BACK_SEX
-    character_data.state = constant.CharacterStatus.STATUS_BACK_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1915,8 +1917,9 @@ def handle_riding_sex():
     """处理骑乘位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.RIDING_SEX
-    character_data.state = constant.CharacterStatus.STATUS_RIDING_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.RIDING_SEX
+        character_data.state = constant.CharacterStatus.STATUS_RIDING_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1931,8 +1934,9 @@ def handle_face_seat_sex():
     """处理对面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_SEX
-    character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_SEX
+        character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1947,8 +1951,9 @@ def handle_back_seat_sex():
     """处理背面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_SEX
-    character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1963,8 +1968,9 @@ def handle_face_stand_sex():
     """处理对面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_SEX
-    character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_SEX
+        character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1979,8 +1985,9 @@ def handle_back_stand_sex():
     """处理背面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_SEX
-    character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_SEX
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_SEX
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -1996,8 +2003,9 @@ def handle_stimulate_g_point():
     """处理刺激G点指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.STIMULATE_G_POINT
-    character_data.state = constant.CharacterStatus.STATUS_STIMULATE_G_POINT
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.STIMULATE_G_POINT
+        character_data.state = constant.CharacterStatus.STATUS_STIMULATE_G_POINT
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -2013,8 +2021,9 @@ def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WOMB_OS_CARESS
-    character_data.state = constant.CharacterStatus.STATUS_WOMB_OS_CARESS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.WOMB_OS_CARESS
+        character_data.state = constant.CharacterStatus.STATUS_WOMB_OS_CARESS
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
@@ -2030,8 +2039,9 @@ def handle_womb_insertion():
     """处理插入子宫指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WOMB_INSERTION
-    character_data.state = constant.CharacterStatus.STATUS_WOMB_INSERTION
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"性交"):
+        character_data.behavior.behavior_id = constant.Behavior.WOMB_INSERTION
+        character_data.state = constant.CharacterStatus.STATUS_WOMB_INSERTION
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
