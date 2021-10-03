@@ -50,6 +50,7 @@ if normal_config.config_normal.window_width + 30 > screen_weight:
     normal_config.config_normal.window_width = screen_weight - 30
 if normal_config.config_normal.window_hight + 30 > screen_height:
     normal_config.config_normal.window_hight = screen_height - 30
+#字体大小
 now_font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width) * 2
 normal_config.config_normal.font_size = now_font_size
 normal_config.config_normal.order_font_size = now_font_size - 2
