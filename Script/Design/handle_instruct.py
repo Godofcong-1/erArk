@@ -634,12 +634,12 @@ def handle_end_followed():
     """处理结束同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 1
     character_data.behavior.behavior_id = constant.Behavior.END_FOLLOW
     character_data.state = constant.CharacterStatus.STATUS_END_FOLLOW
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.is_follow = 0
-    update.game_update_flow(5)
+    update.game_update_flow(1)
 
 @add_instruct(
     constant.Instruct.APOLOGIZE,
