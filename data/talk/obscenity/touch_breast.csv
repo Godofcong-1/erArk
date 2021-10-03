@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,302,0,触发摸胸指令的地文
+0,302,0,{Name}触发了摸胸指令的地文
 1,302,0,{Name}借检查身体的由头触碰了{TargetName}的胸部\n绝壁\n是有些可怜的家伙呢
 2,302,0,{Name}借检查身体的由头触碰了{TargetName}的胸部\n有些柔软的感觉\n也算是有一点女性性征了
 3,302,0,{Name}借检查身体的由头触碰了{TargetName}的胸部\n盈盈一握\n很健康的形状呢

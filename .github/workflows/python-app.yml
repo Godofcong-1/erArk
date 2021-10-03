@@ -42,6 +42,11 @@ jobs:
           Copy-Item premise.csv dist/
           Copy-Item state_machine.csv dist/
           Copy-Item package.json dist/
+<<<<<<< HEAD
+=======
+          Copy-Item 特别说明.txt dist/
+          Copy-Item Sarasa-Mono-SC-Regular.ttf dist/
+>>>>>>> dev
           Rename-Item dist erArk
       - name: Pack Game Files
         run: |

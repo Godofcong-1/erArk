@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,105,0,触发泡咖啡（加料）指令的地文
+0,105,0,{Name}触发了泡咖啡（加料）指令的地文
 1,105,0,{Name}为{TargetName}冲泡了不明来源的速溶咖啡
 2,105,0,{Name}为{TargetName}以及在场的干员冲泡了不明来源的速溶咖啡

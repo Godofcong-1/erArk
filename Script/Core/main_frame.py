@@ -44,27 +44,34 @@ def close_window():
 game_name = normal_config.config_normal.game_name
 root = Tk()
 # normal_config.config_normal.window_width = root.maxsize()[0]
+#读取屏幕长宽
 screen_weight = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
+#如果设定长宽大于屏幕长宽，则缩小为屏幕长宽
 if normal_config.config_normal.window_width + 30 > screen_weight:
     normal_config.config_normal.window_width = screen_weight - 30
 if normal_config.config_normal.window_hight + 30 > screen_height:
     normal_config.config_normal.window_hight = screen_height - 30
+#字体大小为屏幕宽度除以行数，输入字体大小为普通字体大小-2
 now_font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width) * 2
 normal_config.config_normal.font_size = now_font_size
 normal_config.config_normal.order_font_size = now_font_size - 2
+#读取dpi
 dpi = root.winfo_fpixels("1i")
 root.tk.call("tk", "scaling", 1.0)
 root.title(game_name)
 width = normal_config.config_normal.window_width
+#根窗口左上角x坐标-当前窗口左上角x坐标
 frm_width = root.winfo_rootx() - root.winfo_x()
 win_width = width + 2 * frm_width
 height = normal_config.config_normal.window_hight
+#同理y坐标
 titlebar_height = root.winfo_rooty() - root.winfo_y()
 win_height = height + titlebar_height + frm_width
 x = root.winfo_screenwidth() // 2 - win_width // 2
 y = root.winfo_screenheight() // 2 - win_height // 2
 root.geometry("{}x{}+{}+{}".format(width, height, x, y))
+#隐藏窗口
 root.deiconify()
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -82,6 +89,10 @@ textbox = Text(
     highlightbackground=normal_config.config_normal.background,
     bd=0,
     cursor="",
+    #123分别是，\n的上行间距，自动换行行间距，\n的下行间距
+    spacing1 = 0,
+    spacing2 = 0,
+    spacing3 = 0
 )
 textbox.grid(column=0, row=0, sticky=(N, W, E, S))
 
