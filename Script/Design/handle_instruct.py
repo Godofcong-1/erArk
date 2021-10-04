@@ -852,10 +852,7 @@ def handle_end_h():
     character_data.behavior.behavior_id = constant.Behavior.END_H
     character_data.state = constant.CharacterStatus.STATUS_END_H
     #H结束时的其他处理
-    #1.高潮结算归零
-    character_data.orgasm_count = 0
-    target_data.orgasm_count = 0
-    #2.对象NPC进入跟随
+    #1.对象NPC进入跟随
     target_data.is_follow = 1
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

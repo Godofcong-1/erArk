@@ -1637,6 +1637,7 @@ def handle_both_add_small_learn(
     now_lust_multiple = 10
     now_add_lust = add_time + now_lust_multiple
     character_data.status_data[9] += now_add_lust
+    change_data.status_data.setdefault(9, 0)
     change_data.status_data[9] += now_add_lust
     #交互对象也同样#
     if character_data.target_character_id:

@@ -38,9 +38,6 @@ jobs:
           Copy-Item README.md dist/
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
-          Copy-Item behavior.csv dist/
-          Copy-Item premise.csv dist/
-          Copy-Item state_machine.csv dist/
           Copy-Item package.json dist/
           Copy-Item 特别说明.txt dist/
           Copy-Item Sarasa-Mono-SC-Regular.ttf dist/
