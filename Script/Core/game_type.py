@@ -528,6 +528,8 @@ class Character:
         """ 角色上次聊天时间 """
         self.last_move_time: datetime.datetime = None
         """ 角色上次移动的时间 """
+        self.wait_flag : bool = 0
+        """ AI行动里的原地发呆判定 """
         self.is_h : bool = 0
         """ 在H模式中 """
         self.is_follow : bool = 0

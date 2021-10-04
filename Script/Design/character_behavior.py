@@ -112,6 +112,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     Keyword arguments:
     character_id -- 角色id
     """
+    character_data: game_type.Character = cache.character_data[character_id]
     premise_data = {}
     target_weight_data = {}
     target, _, judge = search_target(
@@ -123,7 +124,12 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     )
     if judge:
         target_config = game_config.config_target[target]
-        constant.handle_state_machine_data[target_config.state_machine_id](character_id)
+        state_machine_id = target_config.state_machine_id
+        #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
+        if state_machine_id != 0:
+            character_data.wait_flag = 1
+            # print("前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+        constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)

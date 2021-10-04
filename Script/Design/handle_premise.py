@@ -513,6 +513,23 @@ def handle_have_moved(character_id: int) -> int:
     return move_flag
 
 
+@add_premise(constant.Premise.AI_WAIT)
+def handle_ai_wait(character_id: int) -> int:
+    """
+    NPC需要进行一次5分钟的等待（wait_flag = 1)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.wait_flag:
+        # print("判断到需要进行等待，character_id = ",character_id)
+        return 999
+    else:
+        return 0
+
+
 @add_premise(constant.Premise.IN_SLEEP_TIME)
 def handle_in_sleep_time(character_id: int) -> int:
     """

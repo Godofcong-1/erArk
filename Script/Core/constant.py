@@ -9,6 +9,8 @@ class CharacterStatus:
     """ 休闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
+    STATUS_WAIT = 2
+    """ 等待 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -176,6 +178,8 @@ class Behavior:
     """ 发呆 """
     MOVE = 1
     """ 移动 """
+    WAIT = 2
+    """ 等待 """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -564,6 +568,8 @@ class Premise:
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
+    AI_WAIT = "ai_wait"
+    """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """

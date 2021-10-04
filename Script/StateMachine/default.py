@@ -17,7 +17,10 @@ def character_wait_5_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.wait_flag = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_10_MIN)
@@ -28,7 +31,9 @@ def character_wait_10_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_30_MIN)
@@ -39,7 +44,9 @@ def character_wait_30_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
@@ -116,9 +123,6 @@ def character_move_to_rand_scene(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    print("移动刷新时间")
-    now_time: datetime.datetime = character_data.behavior.start_time
-    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MUSIC_ROOM)
@@ -137,9 +141,6 @@ def character_move_to_music_room(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    print("移动刷新时间")
-    now_time: datetime.datetime = character_data.behavior.start_time
-    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DR_OFFICE)
@@ -158,9 +159,6 @@ def character_move_to_dr_office(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    print("移动刷新时间")
-    now_time: datetime.datetime = character_data.behavior.start_time
-    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TOILET)
@@ -185,9 +183,6 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
     character_data.behavior.duration += 15
-    print("移动刷新时间")
-    now_time: datetime.datetime = character_data.behavior.start_time
-    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
@@ -204,9 +199,6 @@ def character_move_to_player(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    print("移动刷新时间")
-    now_time: datetime.datetime = character_data.behavior.start_time
-    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)
