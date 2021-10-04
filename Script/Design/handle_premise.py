@@ -1878,6 +1878,21 @@ def handle_in_player_scene(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_PLAYER_SCENE)
+def handle_not_in_player_scene(character_id: int) -> int:
+    """
+    校验角色是否不与玩家处于同场景中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if now_character_data.position == cache.character_data[0].position:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.SCENE_ONLY_TWO)
 def handle_scene_only_two(character_id: int) -> int:
     """

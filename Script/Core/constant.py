@@ -361,10 +361,20 @@ class StateMachine:
     """ 移动至博士办公室 """
     MOVE_TO_MUSIC_ROOM = 14
     """ 移动至音乐室 """
+    MOVE_TO_PLAYER = 15
+    """ 移动至玩家位置 """
     CHAT_RAND_CHARACTER = 20
     """ 和场景里随机对象聊天 """
     STROKE_RAND_CHARACTER = 21
     """ 和场景里随机对象身体接触 """
+    CHAT_TO_DR = 30
+    """ 和玩家聊天 """
+    STROKE_TO_DR = 31
+    """ 和玩家身体接触 """
+    MAKE_COFFEE_TO_DR = 32
+    """ 给玩家泡咖啡 """
+    MAKE_COFFEE_ADD_TO_DR = 33
+    """ 给玩家泡咖啡（加料） """
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
@@ -514,6 +524,8 @@ class Premise:
 
     IN_PLAYER_SCENE = "place_0"
     """ 与玩家处于相同地点 """
+    NOT_IN_PLAYER_SCENE = "place_1"
+    """ 与玩家不处于相同地点 """
     # IN_PLAYER_ZONE = "place_1"
     # """ 与玩家处于相同大区域 """
     PLAYER_COME_SCENE = "place_2"

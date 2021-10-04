@@ -5,6 +5,8 @@ str,str,str
 口上前提表,,
 0,0,high_1
 1,1,sys_0
-2,1,sys_0
-3,2,place_11
-4,2,sys_0
+2,2,place_11
+3,2,sys_0
+4,3,sys_1
+5,3,sys_4
+6,3,high_5
