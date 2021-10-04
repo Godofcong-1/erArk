@@ -562,6 +562,9 @@ class Premise:
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
 
+    HAVE_MOVED = "ai_moved"
+    """ NPC距离上次移动已经至少经过了1小时 """
+
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
     TIME_NIGHT = "time_night"

@@ -101,6 +101,13 @@ def get_second_behavior_zero(second_behavior_dict) -> dict:
         second_behavior_list[second_behavior] = 0
     return second_behavior_list
 
+
+def get_time_zero() -> dict:
+    """
+    时间归为游戏初始时间
+    """
+    return cache.game_time
+
 def get_token_zero(token_dict) -> dict:
     """
     直接将初始信物归为全员0

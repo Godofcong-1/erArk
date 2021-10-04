@@ -526,6 +526,8 @@ class Character:
         """ 角色聊天次数计数器 """
         self.talk_time: datetime.datetime = None
         """ 角色上次聊天时间 """
+        self.last_move_time: datetime.datetime = None
+        """ 角色上次移动的时间 """
         self.is_h : bool = 0
         """ 在H模式中 """
         self.is_follow : bool = 0

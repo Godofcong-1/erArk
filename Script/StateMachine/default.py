@@ -1,3 +1,4 @@
+import datetime
 import random
 from typing import List
 from Script.Config import game_config
@@ -115,6 +116,9 @@ def character_move_to_rand_scene(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    print("移动刷新时间")
+    now_time: datetime.datetime = character_data.behavior.start_time
+    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MUSIC_ROOM)
@@ -133,6 +137,9 @@ def character_move_to_music_room(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    print("移动刷新时间")
+    now_time: datetime.datetime = character_data.behavior.start_time
+    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DR_OFFICE)
@@ -151,6 +158,9 @@ def character_move_to_dr_office(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    print("移动刷新时间")
+    now_time: datetime.datetime = character_data.behavior.start_time
+    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TOILET)
@@ -175,6 +185,9 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
     character_data.behavior.duration += 15
+    print("移动刷新时间")
+    now_time: datetime.datetime = character_data.behavior.start_time
+    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
@@ -191,6 +204,9 @@ def character_move_to_player(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    print("移动刷新时间")
+    now_time: datetime.datetime = character_data.behavior.start_time
+    character_data.last_move_time = now_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)

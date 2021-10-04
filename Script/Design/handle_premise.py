@@ -488,6 +488,31 @@ def handle_not_in_dormitory(character_id: int) -> int:
     return now_position != character_data.dormitory
 
 
+@add_premise(constant.Premise.HAVE_MOVED)
+def handle_have_moved(character_id: int) -> int:
+    """
+    NPC距离上次移动已经至少经过了1小时
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    move_flag = 0
+    #同一天内过1小时则判定为1
+    if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
+        character_data.last_move_time = now_time
+        print("过一小时判定,character_id :",character_id)
+        move_flag = 1
+    #非同一天也判定为1
+    elif now_time.day != character_data.last_move_time.day:
+        character_data.last_move_time = now_time
+        move_flag = 1
+        print("非同一天判定")
+    return move_flag
+
+
 @add_premise(constant.Premise.IN_SLEEP_TIME)
 def handle_in_sleep_time(character_id: int) -> int:
     """
