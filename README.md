@@ -70,7 +70,7 @@ python3.9+
 字体
 ----
 本游戏界面设计依赖 Sarasa Mono SC 字体，若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
-字体文件已附在游戏文件夹下，有需要的自行安装\
+字体文件已附，有需要的自行安装\
 顺便贴一下字体的git链接[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
 可通过修改 config.ini 中的 font 项自行更改字体
 

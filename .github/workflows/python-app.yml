@@ -40,7 +40,7 @@ jobs:
           Copy-Item update.log dist/
           Copy-Item package.json dist/
           Copy-Item 特别说明.txt dist/
-          Copy-Item Sarasa-Mono-SC-Regular.ttf dist/
+          Copy-Item 等距更纱黑体 SC.ttf dist/
           Rename-Item dist erArk
       - name: Pack Game Files
         run: |
