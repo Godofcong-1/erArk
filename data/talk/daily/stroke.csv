@@ -8,5 +8,5 @@ str,int,int,str
 2,103,0,{Name}检查了{TargetName}体表的源石结晶状态
 3,103,0,{Name}以检查源石病症是否稳定为由，对{TargetName}进行了身体接触
 4,103,0,{Name}图谋着与{TargetName}的身体接触
-5,103,0,{Name}对{Name}{PlayerNickName}触发了身体接触指令的地文
+5,103,0,{Name}对{TargetName}{PlayerNickName}触发了身体接触指令的地文
 
