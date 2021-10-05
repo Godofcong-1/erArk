@@ -333,7 +333,7 @@ def judge_character_time_over_24(character_id: int) -> bool:
     judge = 0
     if now_time is None:
         now_time = cache.game_time
-    if cache.game_time.day == (now_time.day + 1) or cache.game_time.month == (now_time.month + 1) or cache.game_time.year == (now_time.year + 1):
+    if cache.game_time.day != now_time.day:
         judge = 1
     now_time = cache.game_time
     if judge:

@@ -336,10 +336,10 @@ def judge_character_juel(character_id: int) -> int:
         # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
         #去掉性别里不存在的状态
         if character_data.sex == 0:
-            if status_id in {2, 3, 7, 8}:
+            if status_id in {2, 4, 7, 8}:
                 continue
         elif character_data.sex == 1:
-            if status_id == 5:
+            if status_id == 3:
                 continue
         status_value = 0
         #获得状态值并清零
@@ -353,6 +353,9 @@ def judge_character_juel(character_id: int) -> int:
             character_data.juel[status_id] += add_juel
             # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
+    #清零其他属性
+    if character_id == 0:
+        character_data.eja_point = 0
     return 1
 
 def judge_character_follow(character_id: int) -> int:
