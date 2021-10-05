@@ -95,11 +95,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             cache.over_behavior_character.add(character_id)
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
-        #结算数值为珠
+        #1.结算数值为珠
         judge_character_juel(character_id)
-        #（已废弃）以防万一，此处的高潮程度和高潮次数归零
-        # character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-        # character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+        #2.清零射精槽
+        if character_id == 0:
+            character_data.eja_point = 0
+        #3.清零高潮程度
+        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)
@@ -353,9 +355,6 @@ def judge_character_juel(character_id: int) -> int:
             character_data.juel[status_id] += add_juel
             # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
-    #清零其他属性
-    if character_id == 0:
-        character_data.eja_point = 0
     return 1
 
 def judge_character_follow(character_id: int) -> int:
