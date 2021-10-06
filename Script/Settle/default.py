@@ -639,6 +639,8 @@ def handle_first_kiss(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #初吻的二段结算
+                target_data.second_behavior[1050] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_HAND_IN_HAND)
@@ -722,6 +724,8 @@ def handle_first_sex(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #处女的二段结算
+                target_data.second_behavior[1051] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
@@ -775,6 +779,8 @@ def handle_first_a_sex(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #处女的二段结算
+                target_data.second_behavior[1052] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)

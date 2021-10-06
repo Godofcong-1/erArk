@@ -1509,6 +1509,12 @@ class SecondBehavior:
     """ 结算反发刻印2 """
     HATE_MARK_3 = 1047
     """ 结算反发刻印3 """
+    FIRST_KISS = 1050
+    """ 结算初吻 """
+    FIRST_SEX = 1051
+    """ 结算处女 """
+    FIRST_A_SEX = 1052
+    """ 结算A处女 """
 
 class SecondEffect:
     """二段结算效果函数"""
