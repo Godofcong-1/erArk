@@ -336,7 +336,4 @@ def judge_character_time_over_24(character_id: int) -> bool:
     if cache.game_time.day != now_time.day:
         judge = 1
     now_time = cache.game_time
-    if judge:
-        return 1
-    else:
-        return 0
+    return judge

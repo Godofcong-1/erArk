@@ -19,7 +19,7 @@ str,str,str
 12,30,not_in_dor
 13,30,hp_1
 14,31,in_dor
-15,32,hp_1
+15,31,hp_1
 16,14,place_1
 18,40,place_0
 19,41,place_0
