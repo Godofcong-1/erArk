@@ -26,3 +26,5 @@ str,str,str
 20,42,place_0
 21,43,place_0
 30,7,ai_wait
+40,60,place_is_h
+41,60,not_in_dor

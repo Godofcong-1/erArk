@@ -301,6 +301,19 @@ def character_make_coffee_Add_to_dr(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.SEE_H_AND_MOVE_TO_DORMITORY)
+def character_see_h_and_move_to_dormitory(character_id: int):
+    """
+    目睹玩家和其他角色H
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.SEE_H
+    character_data.state = constant.CharacterStatus.STATUS_SEE_H
+    character_data.tired = 1
+
+
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)
 # def character_move_to_classroom(character_id: int):
 #     """

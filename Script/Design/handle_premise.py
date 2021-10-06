@@ -1965,6 +1965,31 @@ def handle_scene_over_two(character_id: int) -> int:
     return len(scene_data.character_list) > 2
 
 
+@add_premise(constant.Premise.SCENE_SOMEONE_IS_H)
+def handle_scene_someone_is_h(character_id: int) -> int:
+    """
+    该地点有其他角色在和玩家H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    #场景角色数大于2时进行检测
+    if len(scene_data.character_list) > 2 and not (character_data.is_follow or character_data.is_h):
+        #遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            #遍历非自己且非玩家的角色
+            if chara_id != character_id and chara_id != 0:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                #检测是否在H
+                if other_character_data.is_h:
+                    return 999
+    return 0
+
+
 @add_premise(constant.Premise.TATGET_LEAVE_SCENE)
 def handle_target_leave_scene(character_id: int) -> int:
     """

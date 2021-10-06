@@ -87,6 +87,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 319
     """ 手指插入（A） """
+    STATUS_SEE_H = 396
+    """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
     """ 亲吻失败 """
     STATUS_HIGH_OBSCENITY_ANUS = 398
@@ -274,6 +276,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 319
     """ 手指插入（A） """
+    SEE_H = 396
+    """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
     """ 亲吻失败 """
     HIGH_OBSCENITY_ANUS = 398
@@ -415,6 +419,8 @@ class StateMachine:
     """ 给玩家泡咖啡 """
     MAKE_COFFEE_ADD_TO_DR = 33
     """ 给玩家泡咖啡（加料） """
+    SEE_H_AND_MOVE_TO_DORMITORY = 40
+    """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
@@ -590,6 +596,10 @@ class Premise:
     """ 该地点里有除了玩家和该角色之外的人 """
     SCENE_ONLY_ONE = "place_12"
     """ 该地点里没有自己外的其他角色 """
+
+    SCENE_SOMEONE_IS_H = "place_is_h"
+    """ 该地点有其他角色在和玩家H """
+
     IN_KITCHEN = "in_kit"
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
@@ -598,7 +608,6 @@ class Premise:
     """ 在博士办公室 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
-
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
 
