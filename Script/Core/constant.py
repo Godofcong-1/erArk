@@ -169,6 +169,24 @@ class CharacterStatus:
     """ 玩弄子宫口 """
     STATUS_WOMB_INSERTION = 513
     """ 插入子宫 """
+    STATUS_NORMAL_ANAL_SEX = 521
+    """ 正常位肛交 """
+    STATUS_BACK_ANAL_SEX = 522
+    """ 后背位肛交 """
+    STATUS_RIDING_ANAL_SEX = 523
+    """ 骑乘位肛交 """
+    STATUS_FACE_SEAT_ANAL_SEX = 524
+    """ 对面座位肛交 """
+    STATUS_BACK_SEAT_ANAL_SEX = 525
+    """ 背面座位肛交 """
+    STATUS_FACE_STAND_ANAL_SEX = 526
+    """ 对面立位肛交 """
+    STATUS_BACK_STAND_ANAL_SEX = 527
+    """ 背面立位肛交 """
+    STATUS_STIMULATE_SIGMOID_COLON = 530
+    """ 玩弄s状结肠 """
+    STATUS_STIMULATE_VAGINA = 531
+    """ 隔着刺激阴道 """
 
 
 class Behavior:
@@ -338,6 +356,24 @@ class Behavior:
     """ 玩弄子宫口 """
     WOMB_INSERTION = 513
     """ 插入子宫 """
+    NORMAL_ANAL_SEX = 521
+    """ 正常位肛交 """
+    BACK_ANAL_SEX = 522
+    """ 后背位肛交 """
+    RIDING_ANAL_SEX = 523
+    """ 骑乘位肛交 """
+    FACE_SEAT_ANAL_SEX = 524
+    """ 对面座位肛交 """
+    BACK_SEAT_ANAL_SEX = 525
+    """ 背面座位肛交 """
+    FACE_STAND_ANAL_SEX = 526
+    """ 对面立位肛交 """
+    BACK_STAND_ANAL_SEX = 527
+    """ 背面立位肛交 """
+    STIMULATE_SIGMOID_COLON = 530
+    """ 玩弄s状结肠 """
+    STIMULATE_VAGINA = 531
+    """ 隔着刺激阴道 """
 
 
 class StateMachine:

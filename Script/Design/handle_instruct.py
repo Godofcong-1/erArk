@@ -2045,7 +2045,7 @@ def handle_womb_insertion():
 @add_instruct(
     constant.Instruct.NORMAL_ANAL_SEX,
     constant.InstructType.SEX,
-    _("正常位肛交_未实装"),
+    _("正常位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2053,13 +2053,16 @@ def handle_normal_anal_sex():
     """处理正常位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.NORMAL_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_NORMAL_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_ANAL_SEX,
     constant.InstructType.SEX,
-    _("后背位肛交_未实装"),
+    _("后背位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2067,13 +2070,16 @@ def handle_back_anal_sex():
     """处理后背位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.RIDING_ANAL_SEX,
     constant.InstructType.SEX,
-    _("骑乘位肛交_未实装"),
+    _("骑乘位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2081,13 +2087,16 @@ def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.RIDING_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_RIDING_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
-    _("对面座位肛交_未实装"),
+    _("对面座位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2095,13 +2104,16 @@ def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_SEAT_ANAL_SEX,
     constant.InstructType.SEX,
-    _("背面座位肛交_未实装"),
+    _("背面座位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2109,13 +2121,16 @@ def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.FACE_STAND_ANAL_SEX,
     constant.InstructType.SEX,
-    _("对面立位肛交_未实装"),
+    _("对面立位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2123,13 +2138,16 @@ def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BACK_STAND_ANAL_SEX,
     constant.InstructType.SEX,
-    _("背面立位肛交_未实装"),
+    _("背面立位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
 )
@@ -2137,36 +2155,47 @@ def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_ANAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_ANAL_SEX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.STIMULATE_SIGMOID_COLON,
     constant.InstructType.SEX,
-    _("玩弄s状结肠_未实装"),
+    _("玩弄s状结肠"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_A_SEX},
 )
 def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.STIMULATE_SIGMOID_COLON
+        character_data.state = constant.CharacterStatus.STATUS_STIMULATE_SIGMOID_COLON
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.STIMULATE_VAGINA,
     constant.InstructType.SEX,
-    _("隔着刺激阴道_未实装"),
+    _("隔着刺激阴道"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.LAST_CMD_A_SEX},
 )
 def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"A性交"):
+        character_data.behavior.behavior_id = constant.Behavior.STIMULATE_VAGINA
+        character_data.state = constant.CharacterStatus.STATUS_STIMULATE_VAGINA
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.DOUBLE_PENETRATION,

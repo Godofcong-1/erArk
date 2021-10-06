@@ -35,7 +35,7 @@ jobs:
           Copy-Item data dist/ -Recurse
           Copy-Item config.ini dist/
           Copy-Item LICENSE dist/
-          Copy-Item README.md dist/
+          Copy-Item 读我.md dist/
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
           Copy-Item package.json dist/
@@ -73,5 +73,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk.zip
-          asset_name: erArk_windows.zip
+          asset_name: erArk_${{steps.version.outputs.value}}.zip
           asset_content_type: application/zip
