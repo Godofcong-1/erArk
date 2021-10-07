@@ -921,8 +921,12 @@ def handle_touch_head():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 
@@ -938,8 +942,12 @@ def handle_touch_buttocks():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 @add_instruct(
@@ -955,8 +963,12 @@ def handle_touch_ears():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 @add_instruct(
@@ -972,8 +984,12 @@ def handle_touch_horn():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 @add_instruct(
@@ -989,8 +1005,12 @@ def handle_touch_tail():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 @add_instruct(
@@ -1006,8 +1026,12 @@ def handle_touch_ring():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 @add_instruct(
@@ -1023,8 +1047,12 @@ def handle_touch_wing():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 
@@ -1041,8 +1069,12 @@ def handle_touch_tentacle():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 
@@ -1059,8 +1091,12 @@ def handle_touch_car():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 
@@ -1076,8 +1112,12 @@ def handle_handle_in_handle():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
-    character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
+        character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 
@@ -1093,8 +1133,12 @@ def handle_lap_pillow():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.LAP_PILLOW
-    character_data.state = constant.CharacterStatus.STATUS_LAP_PILLOW
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.LAP_PILLOW
+        character_data.state = constant.CharacterStatus.STATUS_LAP_PILLOW
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
     update.game_update_flow(30)
 
 @add_instruct(
@@ -1109,8 +1153,12 @@ def handle_raise_skirt():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
-    character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
+        character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     update.game_update_flow(5)
 
 @add_instruct(
@@ -1124,8 +1172,12 @@ def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_CLITORIS
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_CLITORIS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_CLITORIS
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_CLITORIS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1140,8 +1192,12 @@ def handle_touch_vagina():
     """处理手指插入（V）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_VAGINA
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_VAGINA
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_VAGINA
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_VAGINA
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1156,8 +1212,12 @@ def handle_touch_anus():
     """处理手指插入（A）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 

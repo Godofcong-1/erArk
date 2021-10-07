@@ -1241,6 +1241,10 @@ class BehaviorEffect:
     """ 根据交互对象的技巧技能对发起者进行P快调整 """
     TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
     """ 根据交互对象的润滑情况对其进行苦痛调整 """
+    LOW_OBSCENITY_FAILED_ADJUST = 122
+    """ 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
+    HIGH_OBSCENITY_FAILED_ADJUST = 123
+    """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201

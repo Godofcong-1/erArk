@@ -388,3 +388,18 @@ def get_pain_adjust(value: int) -> int:
         just = 0.2
     return just
 
+
+def get_angry_level(value: int) -> int:
+    """
+    按怒气值返回生气程度
+    Keyword arguments:
+    value -- 怒气值
+    Return arguments:
+    level -- 生气程度
+    """
+    if value <= 30:
+        return 0
+    elif value <= 50:
+        return 1
+    elif value == 100:
+        return 2

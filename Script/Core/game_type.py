@@ -399,6 +399,8 @@ class Character:
         """ 角色最大射精槽 """
         self.eja_point: int = 0
         """ 角色当前射精槽 """
+        self.angry_point: int = 0
+        """ 角色当前愤怒槽 """
         self.state: int = 0
         """ 角色当前状态 """
         self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
