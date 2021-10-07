@@ -849,6 +849,130 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant.Premise.TARGET_GOOD_MOOD)
+def handle_target_good_mood(character_id: int) -> int:
+    """
+    交互对象心情愉快
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value <= 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_NORMAL_MOOD)
+def handle_target_normal_mood(character_id: int) -> int:
+    """
+    交互对象心情普通
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if 5 < value and value <= 30:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_BAD_MOOD)
+def handle_target_bad_mood(character_id: int) -> int:
+    """
+    交互对象心情不好
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if 30 < value and value <=50:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ANGRY_MOOD)
+def handle_target_angry_mood(character_id: int) -> int:
+    """
+    交互对象心情愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value > 50:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ABD_OR_ANGRY_MOOD)
+def handle_bad_or_angry_mood(character_id: int) -> int:
+    """
+    交互对象心情不好或愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value > 30:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ANGRY_WITH_PLAYER)
+def handle_target_angry_with_player(character_id: int) -> int:
+    """
+    交互对象被玩家惹火了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.angry_with_player:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_ANGRY_WITH_PLAYER)
+def handle_target_not_angry_with_player(character_id: int) -> int:
+    """
+    交互对象没有被玩家惹火
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.angry_with_player:
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant.Premise.COOK_1)
 def handle_cook_1(character_id: int) -> int:
     """

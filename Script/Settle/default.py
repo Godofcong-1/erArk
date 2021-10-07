@@ -2336,7 +2336,7 @@ def handle_low_obscenity_failed_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+    if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if not character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2354,8 +2354,9 @@ def handle_low_obscenity_failed_adjust(
             target_change.status_data[20] += now_add_lust
             #加愤怒
             target_data.angry_point += 20
+            target_data.angry_with_player = True
             #降好感
-            minus_favorability = - character.calculation_favorability(character_id, target_data.cid, add_time)
+            minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
             character_handle.add_favorability(
                 character_id, target_data.cid, minus_favorability, target_change, now_time
             )
@@ -2379,7 +2380,7 @@ def handle_high_obscenity_failed_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+    if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if not character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2394,11 +2395,12 @@ def handle_high_obscenity_failed_adjust(
             target_data.status_data[20] += now_add_lust
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
             target_change.status_data.setdefault(20, 0)
-            target_change.status_data[20] += now_add_lust
+            target_change.status_data[20] = now_add_lust
             #加愤怒
             target_data.angry_point += 50
+            target_data.angry_with_player = True
             #降好感
-            minus_favorability = - character.calculation_favorability(character_id, target_data.cid, add_time)
+            minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
             minus_favorability *= 5
             character_handle.add_favorability(
                 character_id, target_data.cid, minus_favorability, target_change, now_time
@@ -2407,7 +2409,7 @@ def handle_high_obscenity_failed_adjust(
             now_lust_multiple = 10
             adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
             now_lust_multiple *= adjust
-            target_data.trust += now_lust_multiple
+            target_data.trust -= now_lust_multiple
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
             target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            target_change.trust += now_lust_multiple
+            target_change.trust -= now_lust_multiple

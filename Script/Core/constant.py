@@ -37,6 +37,12 @@ class CharacterStatus:
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
     """ NPC停止跟随玩家 """
+    STATUS_APOLOGIZE = 117
+    """ 道歉 """
+    STATUS_APOLOGIZE_FAILED = 118
+    """ 道歉失败 """
+    STATUS_LISTEN_COMPLAINT = 119
+    """ 听牢骚 """
     STATUS_CONFESSION = 121
     """ 告白 """
     STATUS_CONFESSION_FAILED = 122
@@ -226,6 +232,12 @@ class Behavior:
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
     """ 让NPC停止跟随玩家 """
+    APOLOGIZE = 117
+    """ 道歉 """
+    APOLOGIZE_FAILED = 118
+    """ 道歉失败 """
+    LISTEN_COMPLAINT = 119
+    """ 听牢骚 """
     CONFESSION = 121
     """ 告白 """
     CONFESSION_FAILED = 122
@@ -567,6 +579,21 @@ class Premise:
     """ 交互对象气力低于30% """
     TARGET_MP_HIGH = "t_mp_high"
     """ 交互对象气力高于70% """
+
+    TARGET_GOOD_MOOD = "good_mood"
+    """ 交互对象心情愉快 """
+    TARGET_NORMAL_MOOD = "normal_mood"
+    """ 交互对象心情普通 """
+    TARGET_BAD_MOOD = "bad_mood"
+    """ 交互对象心情不好 """
+    TARGET_ANGRY_MOOD = "angry_mood"
+    """ 交互对象心情愤怒 """
+    TARGET_ABD_OR_ANGRY_MOOD = "bad_or_angry_mood"
+    """ 交互对象心情不好或愤怒 """
+    TARGET_ANGRY_WITH_PLAYER = "angry_with_player"
+    """ 交互对象被玩家惹火了 """
+    TARGET_NOT_ANGRY_WITH_PLAYER = "not_angry_with_player"
+    """ 交互对象没有被玩家惹火 """
 
     IN_PLAYER_SCENE = "place_0"
     """ 与玩家处于相同地点 """

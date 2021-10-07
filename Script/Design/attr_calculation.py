@@ -397,9 +397,28 @@ def get_angry_level(value: int) -> int:
     Return arguments:
     level -- 生气程度
     """
-    if value <= 30:
-        return 0
-    elif value <= 50:
+    if value <= 5:
         return 1
-    elif value == 100:
-        return 2
+    elif 5 < value and value <= 30:
+        return 0
+    elif 30 < value and value <=50:
+        return -1
+    elif value > 50:
+        return -3
+
+def get_angry_text(value: int) -> str:
+    """
+    按怒气值返回生气程度的文本
+    Keyword arguments:
+    value -- 怒气值
+    Return arguments:
+    level -- 生气程度的文本
+    """
+    if value <= 5:
+        return "愉快"
+    elif 5 < value and value <= 30:
+        return "普通"
+    elif 30 < value and value <=50:
+        return "不爽"
+    elif value > 50:
+        return "愤怒"

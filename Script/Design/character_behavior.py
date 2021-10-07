@@ -96,12 +96,14 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
         #1.结算数值为珠
-        judge_character_juel(character_id)
+        settle_character_juel(character_id)
         #2.清零射精槽
         if character_id == 0:
             character_data.eja_point = 0
         #3.清零高潮程度
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        #4.清零并随机重置生气程度
+        character_data.angry_point = random.randrange(1,35)
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)
@@ -321,7 +323,7 @@ def search_target(
         return random.choice(list(target_data[value_weight])), value_weight, 1
     return "", 0, 0
 
-def judge_character_juel(character_id: int) -> int:
+def settle_character_juel(character_id: int) -> int:
     """
     校验角色状态并结算为珠
     Keyword arguments:

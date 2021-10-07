@@ -325,23 +325,6 @@ def handle_stroke():
     update.game_update_flow(10)
 
 
-@add_instruct(
-    constant.Instruct.TOUCH_BREAST,
-    constant.InstructType.OBSCENITY,
-    _("摸胸"),
-    {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
-)
-def handle_touch_breast():
-    """处理摸胸指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.TOUCH_BREAST
-    character_data.state = constant.CharacterStatus.STATUS_TOUCH_BREAST
-    update.game_update_flow(10)
-
-
 # @add_instruct(
 #     constant.Instruct.COLLECTION_CHARACTER,
 #     constant.InstructType.SYSTEM,
@@ -644,30 +627,57 @@ def handle_end_followed():
 @add_instruct(
     constant.Instruct.APOLOGIZE,
     constant.InstructType.DAILY,
-    _("道歉_未实装"),
+    _("道歉"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_ANGRY_WITH_PLAYER},
 )
 def handle_apologize():
     """处理道歉指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    #根据口才获取调整值#
+    character_data.ability.setdefault(25, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[25])
+    value = 10 + adjust*10
+    #减愤怒值
+    target_data.angry_point -= value
+    #判定是否不生气了
+    if target_data.angry_point <= 30:
+        character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE
+        character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE
+        target_data.angry_with_player = False
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE_FAILED
+        character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE_FAILED
+    character_data.behavior.duration = 60
+    update.game_update_flow(60)
 
 @add_instruct(
     constant.Instruct.LISTEN_COMPLAINT,
     constant.InstructType.DAILY,
-    _("听牢骚_未实装"),
+    _("听牢骚"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_ABD_OR_ANGRY_MOOD,
+    constant.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,},
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    #根据口才获取调整值#
+    character_data.ability.setdefault(25, 0)
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[25])
+    value = 10 + adjust*10
+    #减愤怒值
+    target_data.angry_point -= value
+    character_data.behavior.behavior_id = constant.Behavior.LISTEN_COMPLAINT
+    character_data.state = constant.CharacterStatus.STATUS_LISTEN_COMPLAINT
+    character_data.behavior.duration = 45
+    update.game_update_flow(45)
 
 @add_instruct(
     constant.Instruct.PRAY,
@@ -927,6 +937,27 @@ def handle_touch_head():
     else:
         character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.TOUCH_BREAST,
+    constant.InstructType.OBSCENITY,
+    _("摸胸"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H},
+)
+def handle_touch_breast():
+    """处理摸胸指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.TOUCH_BREAST
+        character_data.state = constant.CharacterStatus.STATUS_TOUCH_BREAST
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     update.game_update_flow(10)
 
 

@@ -546,6 +546,8 @@ class Character:
         """ 角色信物文本 """
         self.tired : bool = 0
         """ 疲劳状态（HP=1） """
+        self.angry_with_player : bool = 0
+        """ 被玩家惹生气 """
 
 
 class Cache:

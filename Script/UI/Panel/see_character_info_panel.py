@@ -359,17 +359,20 @@ class CharacterInfoHead:
         character_data: game_type.Character = cache.character_data[character_id]
         sex_text = game_config.config_sex_tem[character_data.sex].name
         if character_id:
-            social = 0
-            if 0 in character_data.social_contact_data:
-                social = character_data.social_contact_data[0]
-            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}%） ").format(
-                # character_id=character_id,
-                character_name=character_data.name,
-                favorability=int(character_data.favorability[0]),
-                trust=round(character_data.trust,1),
-                # sex_text=sex_text,
-                # social_text=social_text,
-            )
+            angry_text = attr_calculation.get_angry_text(character_data.angry_point)
+            if angry_text == "普通":
+                message = _("{character_name}（好感度： {favorability}，信赖度： {trust}%） ").format(
+                    character_name=character_data.name,
+                    favorability=int(character_data.favorability[0]),
+                    trust=round(character_data.trust,1),
+                )
+            else:
+                message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}） ").format(
+                    character_name=character_data.name,
+                    favorability=int(character_data.favorability[0]),
+                    trust=round(character_data.trust,1),
+                    angry = angry_text
+                )
         else:
             message = _(
                 "{character_name}{character_nick_name}"
