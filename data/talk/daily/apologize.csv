@@ -3,6 +3,12 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
+<<<<<<< HEAD
 0,118,0,{Name}触发了道歉失败指令的地文
 1,118,0,{Name}表达了对{TargetName}的歉意，但对方没有接受
 2,118,0,{Name}向{TargetName}道歉了，但对方依旧很生气
+=======
+0,999,0,{Name}触发了道歉指令的地文
+1,999,0,{Name}表达了对{TargetName}的歉意
+2,999,0,{Name}向{TargetName}道歉了
+>>>>>>> a5789d43e0237dfa00247d96ce96d39f84314ea0

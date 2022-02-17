@@ -3,5 +3,10 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
+<<<<<<< HEAD
 0,119,0,{Name}触发了听牢骚指令的地文
 1,119,0,{TargetName}向{Name}倾诉了最近的烦心事
+=======
+0,999,0,{Name}触发了听牢骚指令的地文
+1,999,0,{TargetName}向{Name}表达了最近的烦心事
+>>>>>>> a5789d43e0237dfa00247d96ce96d39f84314ea0
