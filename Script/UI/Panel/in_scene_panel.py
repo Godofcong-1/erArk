@@ -15,6 +15,7 @@ from Script.Core import (
 )
 from Script.Design import attr_text, map_handle, handle_instruct, handle_premise
 from Script.Config import game_config
+import logging,time
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -57,6 +58,9 @@ class InScenePanel:
             null_button_text=character_data.target_character_id,
         )
         while 1:
+            #绘制的开始时间
+            start_draw = time.time()
+
             if character_data.dead:
                 cache.wframe_mouse.w_frame_skip_wait_mouse = 0
                 now_draw = draw.LineFeedWaitDraw()
@@ -268,10 +272,20 @@ class InScenePanel:
             """
             line_feed.draw()
             #以下为指令面板#
+            mid_draw = time.time()
+            logging.debug(f'————————')
+            logging.debug(f'截止到指令面板绘制前总时间为{mid_draw - start_draw}')
             see_instruct_panel.draw()
             ask_list.extend(see_instruct_panel.return_list)
+            logging.debug(f'————————')
+            logging.debug(f'指令外，ask_list = {ask_list}')
             flow_handle.askfor_all(ask_list)
+            mid_3_draw = time.time()
+            logging.debug(f'————————')
+            logging.debug(f'指令外，中间时间3号，截至flow_handle总时间为 {mid_3_draw - mid_draw}')
             py_cmd.clr_cmd()
+            end_draw = time.time()
+            logging.debug(f'指令部分绘制总时间为{end_draw - mid_draw}')
 
 
 class SeeInstructPanel:
@@ -294,6 +308,7 @@ class SeeInstructPanel:
 
     def draw(self):
         """绘制操作菜单面板"""
+        start_instruct = time.time()
         self.return_list = []
         line = draw.LineDraw("-.-", self.width)
         line.draw()

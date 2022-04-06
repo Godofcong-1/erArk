@@ -1,3 +1,4 @@
+import logging
 import random
 import datetime
 from uuid import UUID
@@ -24,6 +25,7 @@ from Script.Design import (
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+import time
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -40,16 +42,23 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
+    start_before = time.time()
     while 1:
         if len(cache.over_behavior_character) >= len(cache.character_data):
+            start_after = time.time()
+            logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
             break
         for character_id in cache.character_data:
+            start_all = time.time()
             if character_id in cache.over_behavior_character:
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
             judge_character_tired(character_id)
-        update_cafeteria()
+            end_all = time.time()
+            # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
+            # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
+        # update_cafeteria()
     cache.over_behavior_character = set()
 
 
@@ -83,16 +92,22 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
     #空闲状态下执行可用行动#
+    start_character = time.time()
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
             character_target_judge(character_id, now_time)
         else:
             cache.over_behavior_character.add(0)
+        end_judge = time.time()
+        # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
     #非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
+        end_judge = time.time()
+        # logging.debug(f'角色编号{character_id}非空闲，结算当前状态，到结算为止耗时为{end_judge - start_character}')
+
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
         #结算数值为珠
@@ -104,6 +119,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_id != 0:
         judge_character_follow(character_id)
         judge_character_h(character_id)
+    end_last = time.time()
+    # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
