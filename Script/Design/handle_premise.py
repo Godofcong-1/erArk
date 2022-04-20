@@ -488,6 +488,48 @@ def handle_not_in_dormitory(character_id: int) -> int:
     return now_position != character_data.dormitory
 
 
+@add_premise(constant.Premise.HAVE_MOVED)
+def handle_have_moved(character_id: int) -> int:
+    """
+    NPC距离上次移动已经至少经过了1小时
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    move_flag = 0
+    #同一天内过1小时则判定为1
+    if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
+        character_data.last_move_time = now_time
+        print("过一小时判定,character_id :",character_id)
+        move_flag = 1
+    #非同一天也判定为1
+    elif now_time.day != character_data.last_move_time.day:
+        character_data.last_move_time = now_time
+        move_flag = 1
+        print("非同一天判定")
+    return move_flag
+
+
+@add_premise(constant.Premise.AI_WAIT)
+def handle_ai_wait(character_id: int) -> int:
+    """
+    NPC需要进行一次5分钟的等待（wait_flag = 1)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.wait_flag:
+        # print("判断到需要进行等待，character_id = ",character_id)
+        return 999
+    else:
+        return 0
+
+
 @add_premise(constant.Premise.IN_SLEEP_TIME)
 def handle_in_sleep_time(character_id: int) -> int:
     """
@@ -805,6 +847,130 @@ def handle_target_mp_high(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant.Premise.TARGET_GOOD_MOOD)
+def handle_target_good_mood(character_id: int) -> int:
+    """
+    交互对象心情愉快
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value <= 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_NORMAL_MOOD)
+def handle_target_normal_mood(character_id: int) -> int:
+    """
+    交互对象心情普通
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if 5 < value and value <= 30:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_BAD_MOOD)
+def handle_target_bad_mood(character_id: int) -> int:
+    """
+    交互对象心情不好
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if 30 < value and value <=50:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ANGRY_MOOD)
+def handle_target_angry_mood(character_id: int) -> int:
+    """
+    交互对象心情愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value > 50:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ABD_OR_ANGRY_MOOD)
+def handle_bad_or_angry_mood(character_id: int) -> int:
+    """
+    交互对象心情不好或愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value = target_data.angry_point
+    if value > 30:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_ANGRY_WITH_PLAYER)
+def handle_target_angry_with_player(character_id: int) -> int:
+    """
+    交互对象被玩家惹火了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.angry_with_player:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_ANGRY_WITH_PLAYER)
+def handle_target_not_angry_with_player(character_id: int) -> int:
+    """
+    交互对象没有被玩家惹火
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.angry_with_player:
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant.Premise.COOK_1)
@@ -1878,6 +2044,21 @@ def handle_in_player_scene(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_PLAYER_SCENE)
+def handle_not_in_player_scene(character_id: int) -> int:
+    """
+    校验角色是否不与玩家处于同场景中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if now_character_data.position == cache.character_data[0].position:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.SCENE_ONLY_TWO)
 def handle_scene_only_two(character_id: int) -> int:
     """
@@ -1906,6 +2087,31 @@ def handle_scene_over_two(character_id: int) -> int:
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     return len(scene_data.character_list) > 2
+
+
+@add_premise(constant.Premise.SCENE_SOMEONE_IS_H)
+def handle_scene_someone_is_h(character_id: int) -> int:
+    """
+    该地点有其他角色在和玩家H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    #场景角色数大于2时进行检测
+    if len(scene_data.character_list) > 2 and not (character_data.is_follow or character_data.is_h):
+        #遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            #遍历非自己且非玩家的角色
+            if chara_id != character_id and chara_id != 0:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                #检测是否在H
+                if other_character_data.is_h:
+                    return 999
+    return 0
 
 
 @add_premise(constant.Premise.TATGET_LEAVE_SCENE)

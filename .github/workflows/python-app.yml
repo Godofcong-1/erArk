@@ -35,15 +35,15 @@ jobs:
           Copy-Item data dist/ -Recurse
           Copy-Item config.ini dist/
           Copy-Item LICENSE dist/
-          Copy-Item README.md dist/
+          Copy-Item 读我.md dist/
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
-          Copy-Item behavior.csv dist/
-          Copy-Item premise.csv dist/
-          Copy-Item state_machine.csv dist/
           Copy-Item package.json dist/
           Copy-Item 特别说明.txt dist/
+<<<<<<< HEAD
+=======
           Copy-Item Sarasa-Mono-SC-Regular.ttf dist/
+>>>>>>> a5789d43e0237dfa00247d96ce96d39f84314ea0
           Rename-Item dist erArk
       - name: Pack Game Files
         run: |
@@ -76,5 +76,9 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk.zip
+<<<<<<< HEAD
+          asset_name: erArk_${{steps.version.outputs.value}}.zip
+=======
           asset_name: erArk_windows.zip
+>>>>>>> a5789d43e0237dfa00247d96ce96d39f84314ea0
           asset_content_type: application/zip

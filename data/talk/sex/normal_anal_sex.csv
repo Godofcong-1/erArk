@@ -3,4 +3,8 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
+<<<<<<< HEAD
+0,521,0,{Name}触发了正常位肛交指令的地文
+=======
 0,999,0,{Name}触发了正常位肛交指令的地文
+>>>>>>> a5789d43e0237dfa00247d96ce96d39f84314ea0

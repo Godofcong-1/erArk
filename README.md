@@ -1,13 +1,12 @@
 erArk
 ====
-era-明日方舟
+era-明日方舟（目前）
 ====
 
 介绍
 ----
-艹干员。没了。
-
-补充一下，纯爱向，没有一切牛和G的成分。
+R18游戏，艹干员，纯爱向，无牛无G。\
+游戏基本内容以TW为主，顺便缝合了AM/YM/SQC/MGT等各Era，如有雷同，不是巧合。
 
 初次启动
 ----
@@ -23,12 +22,11 @@ BUG反馈
 
 更新日志
 ----
-暂无
+见update.log
 
 著作权信息
 ----
-此项目为明日方舟的二次同人游戏，原著作权归yj所有 \
-本作以TW为主，顺便缝合了AM/YM/SQC等各Era，如有雷同，不是巧合。\
+不是任何游戏的同人，问就是综漫 \
 此项目基于Python独立进行开发
 
 此项目的原版本来自于任悠云开发的https://github.com/pokemonchw/dieloli \
@@ -70,9 +68,8 @@ python3.9+
 字体
 ----
 本游戏界面设计依赖 Sarasa Mono SC 字体，若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
-字体相关配置可以通过 data/FontConfig.json 更改 \
-本游戏不提供Sarasa Mono SC相关字体文件 \
-请自行下载并安装:[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
+字体文件已附，有需要的自行安装\
+顺便贴一下字体的git链接[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
 可通过修改 config.ini 中的 font 项自行更改字体
 
 本地化
@@ -88,4 +85,4 @@ python3.9+
 
 联系方式
 ----
-无
+discord群：https://discord.gg/Bur3EWTVkN
