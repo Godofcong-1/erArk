@@ -41,6 +41,8 @@ def init_attr(character_id: int):
     character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
+    character_data.last_move_time = attr_calculation.get_time_zero()
+
 
     #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物
     if character_id == 0 :
@@ -51,9 +53,10 @@ def init_attr(character_id: int):
         character_data.eja_point_max = 1000
         character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
 
-    #初始所有角色的HP和MP都为max值
+    #一系列初始化函数
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
+    character_data.angry_point = random.randrange(1,35)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
@@ -231,7 +234,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_trust
     calculation_text += "+信赖修正("+ str(judge_trust) +")"
     #状态修正，好意(11)和欲情(12)修正#
-    judge_status = int(target_data.status_data[11] + target_data.status_data[12])
+    judge_status = int( (target_data.status_data[11] + target_data.status_data[12]) / 10 )
     judge += judge_status
     if judge_status:
         calculation_text += "+状态修正("+ str(judge_status) +")"
@@ -246,6 +249,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_mark
     if judge_mark:
         calculation_text += "+刻印修正("+ str(judge_mark) +")"
+    #心情修正，好心情+10，坏心情-10，愤怒-30
+    judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
+    judge += judge_angry
+    if judge_angry:
+        calculation_text += "+心情修正("+ str(judge_angry) +")"
     #陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
     judge_fall = target_data.talent[10]*30 + target_data.talent[11]*50 + target_data.talent[12]*80 + target_data.talent[13]*100 + target_data.talent[15]*30 + target_data.talent[16]*50 + target_data.talent[17]*80 + target_data.talent[18]*100
     judge += judge_fall
@@ -329,13 +337,10 @@ def judge_character_time_over_24(character_id: int) -> bool:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
+    judge = 0
     if now_time is None:
         now_time = cache.game_time
-    if cache.game_time.day == (now_time.day + 1):
-        return 1
-    elif cache.game_time.month == (now_time.month + 1):
-        return 1
-    elif cache.game_time.year == (now_time.year + 1):
-        return 1
-    else:
-        return 0
+    if cache.game_time.day != now_time.day:
+        judge = 1
+    now_time = cache.game_time
+    return judge

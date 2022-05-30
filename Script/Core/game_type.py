@@ -399,6 +399,8 @@ class Character:
         """ 角色最大射精槽 """
         self.eja_point: int = 0
         """ 角色当前射精槽 """
+        self.angry_point: int = 0
+        """ 角色当前愤怒槽 """
         self.state: int = 0
         """ 角色当前状态 """
         self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
@@ -526,6 +528,10 @@ class Character:
         """ 角色聊天次数计数器 """
         self.talk_time: datetime.datetime = None
         """ 角色上次聊天时间 """
+        self.last_move_time: datetime.datetime = None
+        """ 角色上次移动的时间 """
+        self.wait_flag : bool = 0
+        """ AI行动里的原地发呆判定 """
         self.is_h : bool = 0
         """ 在H模式中 """
         self.is_follow : bool = 0
@@ -540,6 +546,8 @@ class Character:
         """ 角色信物文本 """
         self.tired : bool = 0
         """ 疲劳状态（HP=1） """
+        self.angry_with_player : bool = 0
+        """ 被玩家惹生气 """
 
 
 class Cache:

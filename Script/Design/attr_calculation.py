@@ -101,6 +101,13 @@ def get_second_behavior_zero(second_behavior_dict) -> dict:
         second_behavior_list[second_behavior] = 0
     return second_behavior_list
 
+
+def get_time_zero() -> dict:
+    """
+    时间归为游戏初始时间
+    """
+    return cache.game_time
+
 def get_token_zero(token_dict) -> dict:
     """
     直接将初始信物归为全员0
@@ -381,3 +388,37 @@ def get_pain_adjust(value: int) -> int:
         just = 0.2
     return just
 
+
+def get_angry_level(value: int) -> int:
+    """
+    按怒气值返回生气程度
+    Keyword arguments:
+    value -- 怒气值
+    Return arguments:
+    level -- 生气程度
+    """
+    if value <= 5:
+        return 1
+    elif 5 < value and value <= 30:
+        return 0
+    elif 30 < value and value <=50:
+        return -1
+    elif value > 50:
+        return -3
+
+def get_angry_text(value: int) -> str:
+    """
+    按怒气值返回生气程度的文本
+    Keyword arguments:
+    value -- 怒气值
+    Return arguments:
+    level -- 生气程度的文本
+    """
+    if value <= 5:
+        return "愉快"
+    elif 5 < value and value <= 30:
+        return "普通"
+    elif 30 < value and value <=50:
+        return "不爽"
+    elif value > 50:
+        return "愤怒"

@@ -639,6 +639,8 @@ def handle_first_kiss(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #初吻的二段结算
+                target_data.second_behavior[1050] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_HAND_IN_HAND)
@@ -722,6 +724,8 @@ def handle_first_sex(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #处女的二段结算
+                target_data.second_behavior[1051] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
@@ -775,6 +779,8 @@ def handle_first_a_sex(
                 )
                 now_draw.width = window_width
                 now_draw.draw()
+                #处女的二段结算
+                target_data.second_behavior[1052] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
@@ -1637,6 +1643,7 @@ def handle_both_add_small_learn(
     now_lust_multiple = 10
     now_add_lust = add_time + now_lust_multiple
     character_data.status_data[9] += now_add_lust
+    change_data.status_data.setdefault(9, 0)
     change_data.status_data[9] += now_add_lust
     #交互对象也同样#
     if character_data.target_character_id:
@@ -2309,3 +2316,100 @@ def handle_target_lubrication_adjust_add_pain(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(17, 0)
     target_change.status_data[17] += now_add_lust
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
+def handle_low_obscenity_failed_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    轻度性骚扰失败的加反感、加愤怒、降好感度修正
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if not character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change = change_data.target_change[target_data.cid]
+            #加反感
+            target_data.status_data.setdefault(20, 0)
+            now_lust = target_data.status_data[20]
+            now_lust_multiple = 100 + now_lust / 10
+            now_add_lust = add_time + now_lust_multiple
+            adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+            now_add_lust *= adjust
+            target_data.status_data[20] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change.status_data.setdefault(20, 0)
+            target_change.status_data[20] += now_add_lust
+            #加愤怒
+            target_data.angry_point += 20
+            target_data.angry_with_player = True
+            #降好感
+            minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
+            character_handle.add_favorability(
+                character_id, target_data.cid, minus_favorability, target_change, now_time
+            )
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.HIGH_OBSCENITY_FAILED_ADJUST)
+def handle_high_obscenity_failed_adjust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    重度性骚扰失败的加反感、加愤怒、降好感度修正
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if not character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change = change_data.target_change[target_data.cid]
+            #加反感
+            target_data.status_data.setdefault(20, 0)
+            now_lust = target_data.status_data[20]
+            now_lust_multiple = 500 + now_lust / 10
+            now_add_lust = add_time + now_lust_multiple
+            adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+            now_add_lust *= adjust
+            target_data.status_data[20] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change.status_data.setdefault(20, 0)
+            target_change.status_data[20] = now_add_lust
+            #加愤怒
+            target_data.angry_point += 50
+            target_data.angry_with_player = True
+            #降好感
+            minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
+            minus_favorability *= 5
+            character_handle.add_favorability(
+                character_id, target_data.cid, minus_favorability, target_change, now_time
+            )
+            #降信赖
+            now_lust_multiple = 10
+            adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+            now_lust_multiple *= adjust
+            target_data.trust -= now_lust_multiple
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.trust -= now_lust_multiple

@@ -1,3 +1,4 @@
+import logging
 import random
 import datetime
 from uuid import UUID
@@ -24,6 +25,7 @@ from Script.Design import (
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+import time
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -40,16 +42,23 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
+    start_before = time.time()
     while 1:
         if len(cache.over_behavior_character) >= len(cache.character_data):
+            start_after = time.time()
+            logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
             break
         for character_id in cache.character_data:
+            start_all = time.time()
             if character_id in cache.over_behavior_character:
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
             judge_character_tired(character_id)
-        update_cafeteria()
+            end_all = time.time()
+            # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
+            # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
+        # update_cafeteria()
     cache.over_behavior_character = set()
 
 
@@ -83,27 +92,39 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
     #空闲状态下执行可用行动#
+    start_character = time.time()
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
             character_target_judge(character_id, now_time)
         else:
             cache.over_behavior_character.add(0)
+        end_judge = time.time()
+        # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
     #非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
             cache.over_behavior_character.add(character_id)
+        end_judge = time.time()
+        # logging.debug(f'角色编号{character_id}非空闲，结算当前状态，到结算为止耗时为{end_judge - start_character}')
+
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
-        #结算数值为珠
-        judge_character_juel(character_id)
-        #（已废弃）以防万一，此处的高潮程度和高潮次数归零
-        # character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-        # character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
+        #1.结算数值为珠
+        settle_character_juel(character_id)
+        #2.清零射精槽
+        if character_id == 0:
+            character_data.eja_point = 0
+        #3.清零高潮程度
+        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        #4.清零并随机重置生气程度
+        character_data.angry_point = random.randrange(1,35)
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)
         judge_character_h(character_id)
+    end_last = time.time()
+    # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -112,6 +133,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     Keyword arguments:
     character_id -- 角色id
     """
+    character_data: game_type.Character = cache.character_data[character_id]
     premise_data = {}
     target_weight_data = {}
     target, _, judge = search_target(
@@ -123,7 +145,12 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     )
     if judge:
         target_config = game_config.config_target[target]
-        constant.handle_state_machine_data[target_config.state_machine_id](character_id)
+        state_machine_id = target_config.state_machine_id
+        #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
+        if state_machine_id != 0:
+            character_data.wait_flag = 1
+            # print("前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+        constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)
@@ -313,7 +340,7 @@ def search_target(
         return random.choice(list(target_data[value_weight])), value_weight, 1
     return "", 0, 0
 
-def judge_character_juel(character_id: int) -> int:
+def settle_character_juel(character_id: int) -> int:
     """
     校验角色状态并结算为珠
     Keyword arguments:
@@ -330,10 +357,10 @@ def judge_character_juel(character_id: int) -> int:
         # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
         #去掉性别里不存在的状态
         if character_data.sex == 0:
-            if status_id in {2, 3, 7, 8}:
+            if status_id in {2, 4, 7, 8}:
                 continue
         elif character_data.sex == 1:
-            if status_id == 5:
+            if status_id == 3:
                 continue
         status_value = 0
         #获得状态值并清零
@@ -360,14 +387,17 @@ def judge_character_follow(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     # print("开始检测是否为跟随")
     if character_data.is_follow:
-        # print("检测到跟随，NPC编号为：",character_id)
-        to_dr = cache.character_data[0].position
-        _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
-        # print("开始移动，路径为：",move_path,"，时间为：",move_time)
-        character_data.behavior.behavior_id = constant.Behavior.MOVE
-        character_data.behavior.move_target = move_path
-        character_data.behavior.duration = move_time
-        character_data.state = constant.CharacterStatus.STATUS_MOVE
+        character_data.behavior.behavior_id = constant.Behavior.FOLLOW
+        character_data.state = constant.CharacterStatus.STATUS_FOLLOW
+        if character_data.position != cache.character_data[0].position:
+            # print("检测到跟随，NPC编号为：",character_id)
+            to_dr = cache.character_data[0].position
+            _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+            # print("开始移动，路径为：",move_path,"，时间为：",move_time)
+            character_data.behavior.behavior_id = constant.Behavior.MOVE
+            character_data.behavior.move_target = move_path
+            character_data.behavior.duration = move_time
+            character_data.state = constant.CharacterStatus.STATUS_MOVE
     return 1
 
 def judge_character_h(character_id: int) -> int:

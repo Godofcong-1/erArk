@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,context
 str,int,int,str
 0,0,0,1
 口上配置数据,,,
-0,101,0,触发聊天指令的地文
+0,101,0,{Name}触发了聊天指令的地文
 1,101,0,{Name}与{TargetName}聊了一会儿天
 2,101,0,{Name}在{SceneName}与{TargetName}闲聊了一会儿
 3,101,0,{Name}在{SceneName}与{TargetName}聊了一会儿天
@@ -22,3 +22,4 @@ str,int,int,str
 16,101,0,{Name}与{TargetName}谈论到源石病的控制与治疗
 17,101,0,{Name}和{TargetName}表示了对种族特征的好奇
 18,101,0,{Name}与{TargetName}闲聊了一会儿
+19,101,0,{Name}对{TargetName}{PlayerNickName}触发了聊天指令的地文

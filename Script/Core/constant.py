@@ -9,6 +9,8 @@ class CharacterStatus:
     """ 休闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
+    STATUS_WAIT = 2
+    """ 等待 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -35,6 +37,12 @@ class CharacterStatus:
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
     """ NPC停止跟随玩家 """
+    STATUS_APOLOGIZE = 117
+    """ 道歉 """
+    STATUS_APOLOGIZE_FAILED = 118
+    """ 道歉失败 """
+    STATUS_LISTEN_COMPLAINT = 119
+    """ 听牢骚 """
     STATUS_CONFESSION = 121
     """ 告白 """
     STATUS_CONFESSION_FAILED = 122
@@ -85,6 +93,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 319
     """ 手指插入（A） """
+    STATUS_SEE_H = 396
+    """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
     """ 亲吻失败 """
     STATUS_HIGH_OBSCENITY_ANUS = 398
@@ -167,6 +177,24 @@ class CharacterStatus:
     """ 玩弄子宫口 """
     STATUS_WOMB_INSERTION = 513
     """ 插入子宫 """
+    STATUS_NORMAL_ANAL_SEX = 521
+    """ 正常位肛交 """
+    STATUS_BACK_ANAL_SEX = 522
+    """ 后背位肛交 """
+    STATUS_RIDING_ANAL_SEX = 523
+    """ 骑乘位肛交 """
+    STATUS_FACE_SEAT_ANAL_SEX = 524
+    """ 对面座位肛交 """
+    STATUS_BACK_SEAT_ANAL_SEX = 525
+    """ 背面座位肛交 """
+    STATUS_FACE_STAND_ANAL_SEX = 526
+    """ 对面立位肛交 """
+    STATUS_BACK_STAND_ANAL_SEX = 527
+    """ 背面立位肛交 """
+    STATUS_STIMULATE_SIGMOID_COLON = 530
+    """ 玩弄s状结肠 """
+    STATUS_STIMULATE_VAGINA = 531
+    """ 隔着刺激阴道 """
 
 
 class Behavior:
@@ -176,6 +204,8 @@ class Behavior:
     """ 发呆 """
     MOVE = 1
     """ 移动 """
+    WAIT = 2
+    """ 等待 """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -202,6 +232,12 @@ class Behavior:
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
     """ 让NPC停止跟随玩家 """
+    APOLOGIZE = 117
+    """ 道歉 """
+    APOLOGIZE_FAILED = 118
+    """ 道歉失败 """
+    LISTEN_COMPLAINT = 119
+    """ 听牢骚 """
     CONFESSION = 121
     """ 告白 """
     CONFESSION_FAILED = 122
@@ -252,6 +288,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 319
     """ 手指插入（A） """
+    SEE_H = 396
+    """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
     """ 亲吻失败 """
     HIGH_OBSCENITY_ANUS = 398
@@ -334,6 +372,24 @@ class Behavior:
     """ 玩弄子宫口 """
     WOMB_INSERTION = 513
     """ 插入子宫 """
+    NORMAL_ANAL_SEX = 521
+    """ 正常位肛交 """
+    BACK_ANAL_SEX = 522
+    """ 后背位肛交 """
+    RIDING_ANAL_SEX = 523
+    """ 骑乘位肛交 """
+    FACE_SEAT_ANAL_SEX = 524
+    """ 对面座位肛交 """
+    BACK_SEAT_ANAL_SEX = 525
+    """ 背面座位肛交 """
+    FACE_STAND_ANAL_SEX = 526
+    """ 对面立位肛交 """
+    BACK_STAND_ANAL_SEX = 527
+    """ 背面立位肛交 """
+    STIMULATE_SIGMOID_COLON = 530
+    """ 玩弄s状结肠 """
+    STIMULATE_VAGINA = 531
+    """ 隔着刺激阴道 """
 
 
 class StateMachine:
@@ -361,10 +417,22 @@ class StateMachine:
     """ 移动至博士办公室 """
     MOVE_TO_MUSIC_ROOM = 14
     """ 移动至音乐室 """
+    MOVE_TO_PLAYER = 15
+    """ 移动至玩家位置 """
     CHAT_RAND_CHARACTER = 20
     """ 和场景里随机对象聊天 """
     STROKE_RAND_CHARACTER = 21
     """ 和场景里随机对象身体接触 """
+    CHAT_TO_DR = 30
+    """ 和玩家聊天 """
+    STROKE_TO_DR = 31
+    """ 和玩家身体接触 """
+    MAKE_COFFEE_TO_DR = 32
+    """ 给玩家泡咖啡 """
+    MAKE_COFFEE_ADD_TO_DR = 33
+    """ 给玩家泡咖啡（加料） """
+    SEE_H_AND_MOVE_TO_DORMITORY = 40
+    """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
@@ -512,8 +580,25 @@ class Premise:
     TARGET_MP_HIGH = "t_mp_high"
     """ 交互对象气力高于70% """
 
+    TARGET_GOOD_MOOD = "good_mood"
+    """ 交互对象心情愉快 """
+    TARGET_NORMAL_MOOD = "normal_mood"
+    """ 交互对象心情普通 """
+    TARGET_BAD_MOOD = "bad_mood"
+    """ 交互对象心情不好 """
+    TARGET_ANGRY_MOOD = "angry_mood"
+    """ 交互对象心情愤怒 """
+    TARGET_ABD_OR_ANGRY_MOOD = "bad_or_angry_mood"
+    """ 交互对象心情不好或愤怒 """
+    TARGET_ANGRY_WITH_PLAYER = "angry_with_player"
+    """ 交互对象被玩家惹火了 """
+    TARGET_NOT_ANGRY_WITH_PLAYER = "not_angry_with_player"
+    """ 交互对象没有被玩家惹火 """
+
     IN_PLAYER_SCENE = "place_0"
     """ 与玩家处于相同地点 """
+    NOT_IN_PLAYER_SCENE = "place_1"
+    """ 与玩家不处于相同地点 """
     # IN_PLAYER_ZONE = "place_1"
     # """ 与玩家处于相同大区域 """
     PLAYER_COME_SCENE = "place_2"
@@ -538,6 +623,10 @@ class Premise:
     """ 该地点里有除了玩家和该角色之外的人 """
     SCENE_ONLY_ONE = "place_12"
     """ 该地点里没有自己外的其他角色 """
+
+    SCENE_SOMEONE_IS_H = "place_is_h"
+    """ 该地点有其他角色在和玩家H """
+
     IN_KITCHEN = "in_kit"
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
@@ -546,9 +635,13 @@ class Premise:
     """ 在博士办公室 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
-
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
+
+    HAVE_MOVED = "ai_moved"
+    """ NPC距离上次移动已经至少经过了1小时 """
+    AI_WAIT = "ai_wait"
+    """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -770,76 +863,76 @@ class Premise:
 
 
     LAST_CMD_MAKING_OUT= "last_cmd_makeing_out"
-    """ 前一指令为身体爱抚 """
+    """ 前一指令为身体爱抚_口上触发用 """
     LAST_CMD_KISS_H= "last_cmd_kiss_h"
-    """ 前一指令为接吻（H） """
+    """ 前一指令为接吻（H）_口上触发用 """
     LAST_CMD_BREAST_CARESS= "last_cmd_breast_caress"
-    """ 前一指令为胸爱抚 """
+    """ 前一指令为胸爱抚_口上触发用 """
     LAST_CMD_TWIDDLE_NIPPLES= "last_cmd_twiddle_nipples"
-    """ 前一指令为玩弄乳头 """
+    """ 前一指令为玩弄乳头_口上触发用 """
     LAST_CMD_BREAST_SUCKING = "last_cmd_breast_sucking"
-    """ 前一指令为舔吸乳头 """
+    """ 前一指令为舔吸乳头_口上触发用 """
     LAST_CMD_CLIT_CARESS= "last_cmd_clit_caress"
-    """ 前一指令为阴蒂爱抚 """
+    """ 前一指令为阴蒂爱抚_口上触发用 """
     LAST_CMD_OPEN_LABIA= "last_cmd_open_labia"
-    """ 前一指令为掰开阴唇观察 """
+    """ 前一指令为掰开阴唇观察_口上触发用 """
     LAST_CMD_CUNNILINGUS= "last_cmd_cunnilingus"
-    """ 前一指令为舔阴 """
+    """ 前一指令为舔阴_口上触发用 """
     LAST_CMD_FINGER_INSERTION= "last_cmd_finger_insertion"
-    """ 前一指令为手指插入(V) """
+    """ 前一指令为手指插入(V)_口上触发用 """
     LAST_CMD_ANAL_CARESS= "last_cmd_anal_caress"
-    """ 前一指令为手指插入(A) """
+    """ 前一指令为手指插入(A)_口上触发用 """
     LAST_CMD_MAKE_MASTUREBATE= "last_cmd_make_masturebate"
-    """ 前一指令为让对方自慰（H） """
+    """ 前一指令为让对方自慰（H）_口上触发用 """
     LAST_CMD_HANDJOB= "last_cmd_handjob"
-    """ 前一指令为手交 """
+    """ 前一指令为手交_口上触发用 """
     LAST_CMD_BLOWJOB = "last_cmd_blowjob"
-    """ 前一指令为口交 """
+    """ 前一指令为口交_口上触发用 """
     LAST_CMD_PAIZURI= "last_cmd_paizuri"
-    """ 前一指令为乳交 """
+    """ 前一指令为乳交_口上触发用 """
     LAST_CMD_FOOTJOB= "last_cmd_footjob"
-    """ 前一指令为足交 """
+    """ 前一指令为足交_口上触发用 """
     LAST_CMD_AXILLAJOB= "last_cmd_axillajob"
-    """ 前一指令为腋交 """
+    """ 前一指令为腋交_口上触发用 """
     LAST_CMD_RUB_BUTTOCK= "last_cmd_rub_buttock"
-    """ 前一指令为素股 """
+    """ 前一指令为素股_口上触发用 """
     LAST_CMD_HAND_BLOWJOB= "last_cmd_hand_blowjob"
-    """ 前一指令为手交口交 """
+    """ 前一指令为手交口交_口上触发用 """
     LAST_CMD_TITS_BLOWJOB= "last_cmd_tits_blowjob"
-    """ 前一指令为乳交口交 """
+    """ 前一指令为乳交口交_口上触发用 """
     LAST_CMD_DEEP_THROAT= "last_cmd_deep_throat"
-    """ 前一指令为深喉插入 """
+    """ 前一指令为深喉插入_口上触发用 """
     LAST_CMD_FOCUS_BLOWJOB= "last_cmd_focus_blowjob"
-    """ 前一指令为真空口交 """
+    """ 前一指令为真空口交_口上触发用 """
     LAST_CMD_NORMAL_SEX= "last_cmd_normal_sex"
-    """ 前一指令为正常位 """
+    """ 前一指令为正常位_口上触发用 """
     LAST_CMD_BACK_SEX= "last_cmd_back_sex"
-    """ 前一指令为背后位 """
+    """ 前一指令为背后位_口上触发用 """
     LAST_CMD_RIDING_SEX= "last_cmd_riding_sex"
-    """ 前一指令为骑乘位 """
+    """ 前一指令为骑乘位_口上触发用 """
     LAST_CMD_FACE_SEAT_SEX= "last_cmd_face_seat_sex"
-    """ 前一指令为对面座位 """
+    """ 前一指令为对面座位_口上触发用 """
     LAST_CMD_BACK_SEAT_SEX= "last_cmd_back_seat_sex"
-    """ 前一指令为背面座位 """
+    """ 前一指令为背面座位_口上触发用 """
     LAST_CMD_FACE_STAND_SEX= "last_cmd_face_stand_sex"
-    """ 前一指令为对面立位 """
+    """ 前一指令为对面立位_口上触发用 """
     LAST_CMD_BACK_STAND_SEX= "last_cmd_back_stand_sex"
-    """ 前一指令为背面立位 """
+    """ 前一指令为背面立位_口上触发用 """
     LAST_CMD_STIMULATE_G_POINT= "last_cmd_stimulate_g_point"
-    """ 前一指令为刺激G点 """
+    """ 前一指令为刺激G点_口上触发用 """
     LAST_CMD_WOMB_OS_CARESS= "last_cmd_womb_os_caress"
-    """ 前一指令为玩弄子宫口 """
+    """ 前一指令为玩弄子宫口_口上触发用 """
 
     LAST_CMD_BLOWJOB_OR_HANDJOB = "last_cmd_blowjob_or_handjob"
-    """ 前一指令为口交或手交 """
+    """ 前一指令为口交或手交_指令触发用 """
     LAST_CMD_BLOWJOB_OR_PAIZURI = "last_cmd_blowjob_or_paizuri"
-    """ 前一指令为口交或乳交 """
+    """ 前一指令为口交或乳交_指令触发用 """
     LAST_CMD_BLOWJOB_OR_CUNNILINGUS = "last_cmd_blowjob_or_cunnilingus"
-    """ 前一指令为口交或舔阴 """
+    """ 前一指令为口交或舔阴_指令触发用 """
     LAST_CMD_SEX = "last_cmd_sex"
-    """ 前一指令为V性交 """
+    """ 前一指令为V性交_指令触发用 """
     LAST_CMD_A_SEX = "last_cmd_a_sex"
-    """ 前一指令为A性交 """
+    """ 前一指令为A性交_指令触发用 """
 
 
     HYPOSTHENIA = "83"
@@ -1175,6 +1268,10 @@ class BehaviorEffect:
     """ 根据交互对象的技巧技能对发起者进行P快调整 """
     TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
     """ 根据交互对象的润滑情况对其进行苦痛调整 """
+    LOW_OBSCENITY_FAILED_ADJUST = 122
+    """ 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
+    HIGH_OBSCENITY_FAILED_ADJUST = 123
+    """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201
@@ -1443,6 +1540,12 @@ class SecondBehavior:
     """ 结算反发刻印2 """
     HATE_MARK_3 = 1047
     """ 结算反发刻印3 """
+    FIRST_KISS = 1050
+    """ 结算初吻 """
+    FIRST_SEX = 1051
+    """ 结算处女 """
+    FIRST_A_SEX = 1052
+    """ 结算A处女 """
 
 class SecondEffect:
     """二段结算效果函数"""

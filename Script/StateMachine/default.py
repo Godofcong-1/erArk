@@ -1,3 +1,4 @@
+import datetime
 import random
 from typing import List
 from Script.Config import game_config
@@ -16,7 +17,10 @@ def character_wait_5_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.wait_flag = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_10_MIN)
@@ -27,7 +31,9 @@ def character_wait_10_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_30_MIN)
@@ -38,7 +44,9 @@ def character_wait_30_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
@@ -177,6 +185,22 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.duration += 15
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
+def character_move_to_player(character_id: int):
+    """
+    移动至玩家位置
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_dr = cache.character_data[0].position
+    _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)
 def character_chat_rand_character(character_id: int):
     """
@@ -215,6 +239,79 @@ def character_stroke_rand_character(character_id: int):
     character_data.behavior.duration = 10
     character_data.target_character_id = target_id
     character_data.state = constant.CharacterStatus.STATUS_STROKE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.CHAT_TO_DR)
+def character_chat_to_dr(character_id: int):
+    """
+    角色和玩家聊天
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.CHAT
+    character_data.behavior.duration = 5
+    character_data.target_character_id = target_id
+    character_data.state = constant.CharacterStatus.STATUS_CHAT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.STROKE_TO_DR)
+def character_stroke_to_dr(character_id: int):
+    """
+    角色和玩家身体接触
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.STROKE
+    character_data.behavior.duration = 10
+    character_data.target_character_id = target_id
+    character_data.state = constant.CharacterStatus.STATUS_STROKE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MAKE_COFFEE_TO_DR)
+def character_make_coffee_to_dr(character_id: int):
+    """
+    角色给玩家泡咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE
+    character_data.behavior.duration = 15
+    character_data.target_character_id = target_id
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MAKE_COFFEE_ADD_TO_DR)
+def character_make_coffee_Add_to_dr(character_id: int):
+    """
+    角色给玩家泡咖啡（加料）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE_ADD
+    character_data.behavior.duration = 15
+    character_data.target_character_id = target_id
+    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SEE_H_AND_MOVE_TO_DORMITORY)
+def character_see_h_and_move_to_dormitory(character_id: int):
+    """
+    目睹玩家和其他角色H
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.SEE_H
+    character_data.state = constant.CharacterStatus.STATUS_SEE_H
+    character_data.tired = 1
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)
