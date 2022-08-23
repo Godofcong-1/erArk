@@ -11,6 +11,7 @@ from Script.Core import (
     constant,
     value_handle,
     get_text,
+    save_handle,
 )
 from Script.Design import (
     settle_behavior,
@@ -119,6 +120,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
         #4.清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
+        #5.自动存档，用玩家id来限制只存一次
+        if character_id == 0:
+            save_handle.establish_save("auto")
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)

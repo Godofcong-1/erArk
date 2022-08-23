@@ -28,7 +28,8 @@ def init_instruct_handle_thread():
     while 1:
         if not instruct_queue.empty():
             instruct_queue.get()
-            save_handle.establish_save("auto")
+            # 暂时注释掉自动存档机制，看看是否能解决卡顿问题
+            # save_handle.establish_save("auto")
         time.sleep(1)
 
 
