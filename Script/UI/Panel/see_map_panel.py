@@ -303,7 +303,14 @@ class MapSceneNameDraw:
             for scene_id in scene_id_list:
                 load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene_id)
                 now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
+
                 now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
+                # 如果编号=0的话为出口，单独标注，其他的不标注序号
+                # if scene_id == '0':
+                #     now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
+                # else:
+                #     now_id_text = f"{load_scene_data.scene_name}"
+
                 now_draw = draw.LeftButton(
                     now_id_text, now_id_text, self.width, cmd_func=self.move_now, args=(now_scene_path,)
                 )
