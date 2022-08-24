@@ -122,7 +122,12 @@ def get_dirty_zero() -> dict:
     """
     直接将初始污浊情况归0
     """
+    position_text_list = ["头发","脸部","嘴部","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部"]
     dirty_data = game_type.DIRTY()
+    for i in range(11):
+        now_list = [position_text_list[i],0,0,0]
+        dirty_data.body_semen.append(now_list)
+
     return dirty_data
 
 def get_Dr_talent_zero(juel_dict) -> dict:
@@ -453,25 +458,3 @@ def get_semen_now_level(value: int) -> int:
     elif value > 1000:
         return 5
 
-
-def get_semen_now_text(level: int,position: int) -> str:
-    """
-    按当前部位精液覆盖等级(level)和部位(position)返回精液文本
-    (0小穴,1胸部,2后穴,3尿道,4头发,5脸部,6嘴部,7腋部,8手部,9腿部,10脚部)
-    Keyword arguments:
-    value -- 精液量
-    Return arguments:
-    level -- 精液覆盖等级
-    """
-    if level == 0:
-        return "没有粘上精液"
-    elif level == 1:
-        return "被射上了一点精液"
-    elif level == 2:
-        return "被射上了精液"
-    elif level == 3:
-        return "被射上了很多精液"
-    elif level == 4:
-        return "被射上了非常多的精液"
-    elif level == 5:
-        return "被射上了多得数不清的精液"

@@ -520,6 +520,10 @@ class Panel:
     """ 做饭面板 """
     FIND_CALL = 8
     """ 查询与召集面板 """
+    EJACULATION = 9
+    """ 射精面板 """
+    DIRTY = 10
+    """ 脏污面板 """
 
 
 class Premise:
@@ -1874,6 +1878,8 @@ class Instruct:
     """ 自身属性升级 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
+    SEE_DIRTY = 0
+    """ 显示污浊情况 """
 
 
 

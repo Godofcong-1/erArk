@@ -207,6 +207,11 @@ def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
     cache.now_panel_id = constant.Panel.FIND_CALL
 
+@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("显示污浊情况"), {constant.Premise.HAVE_TARGET})
+def see_dirty():
+    """处理显示污浊情况指令"""
+    cache.now_panel_id = constant.Panel.DIRTY
+
 
 # @add_instruct(
 #     constant.Instruct.PLAY_PIANO,
