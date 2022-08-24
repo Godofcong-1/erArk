@@ -117,6 +117,14 @@ def get_token_zero(token_dict) -> dict:
         token_list[i] = 0
     return token_list
 
+
+def get_ejaculation_zero() -> dict:
+    """
+    直接将初始精液情况归0
+    """
+    ejaculation_data = game_type.EJACULATION()
+    return ejaculation_data
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0

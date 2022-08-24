@@ -1558,22 +1558,22 @@ class CharacterBodyText:
                     )
             if character_data.ability[31] == 0:
                 now_text += "  普普通通的舌头\n"
-            if character_data.taste_semen == 0:
+            if character_data.ejaculation.mouse_semen_all == 0:
                 now_text += "  未品尝过精液\n"
             body_text_list.append(now_text)
             #胸部信息#
             now_text = f"\n 【胸】\n"
-            if character_data.breast_semen == 0:
+            if character_data.ejaculation.breast_semen_all == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #指部信息#
             now_text = f"\n 【指】\n"
-            if character_data.hand_semen == 0:
+            if character_data.ejaculation.hand_semen_all == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #足部信息#
             now_text = f"\n 【足】\n"
-            if character_data.foot_semen == 0:
+            if character_data.ejaculation.foot_semen_all == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #膣部信息#
@@ -1589,7 +1589,7 @@ class CharacterBodyText:
                         kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
                         kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
                     )
-            if character_data.sex_semen == 0:
+            if character_data.ejaculation.sex_semen_all == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #肛部信息#
@@ -1605,7 +1605,7 @@ class CharacterBodyText:
                         kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
                         kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
                     )
-            if character_data.a_sex_semen == 0:
+            if character_data.ejaculation.a_sex_semen_all == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #子宫信息#
@@ -1615,7 +1615,7 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             #尿道信息#
             now_text = f"\n 【尿】\n"
-            if character_data.urethral_semen == 0:
+            if character_data.ejaculation.urethral_semen_all == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
         if self.center_status:

@@ -42,6 +42,7 @@ def init_attr(character_id: int):
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.last_move_time = attr_calculation.get_time_zero()
+    character_data.ejaculation = attr_calculation.get_ejaculation_zero()
 
 
     #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物

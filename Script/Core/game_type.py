@@ -257,6 +257,60 @@ class Clothing:
         """ 穿戴部位 """
 
 
+
+class EJACULATION:
+    """被射精情况数据结构体"""
+
+    def __init__(self):
+
+        # 人类正常一次射精量在2～6ml
+
+        self.sex_semen_now: int = 0
+        """ 当前V/W精液量 """
+        self.sex_semen_all: int = 0
+        """ 总计V/W精液量 """
+        self.breast_semen_now: int = 0
+        """ 当前B精液量 """
+        self.breast_semen_all: int = 0
+        """ 总计B精液量 """
+        self.a_sex_semen_now: int = 0
+        """ 当前A精液量 """
+        self.a_sex_semen_all: int = 0
+        """ 总计A精液量 """
+        self.urethral_semen_now: int = 0
+        """ 当前U精液量 """
+        self.urethral_semen_all: int = 0
+        """ 总计U精液量 """
+        self.hair_semen_now: int = 0
+        """ 当前头发精液量 """
+        self.hair_semen_all: int = 0
+        """ 总计头发精液量 """
+        self.face_semen_now: int = 0
+        """ 当前脸部精液量 """
+        self.face_semen_all: int = 0
+        """ 总计脸部精液量 """
+        self.mouse_semen_now: int = 0
+        """ 当前嘴部精液量 """
+        self.mouse_semen_all: int = 0
+        """ 总计嘴部精液量 """
+        self.axillary_semen_now: int = 0
+        """ 当前腋部精液量 """
+        self.axillary_semen_all: int = 0
+        """ 总计腋部精液量 """
+        self.hand_semen_now: int = 0
+        """ 当前手部精液量 """
+        self.hand_semen_all: int = 0
+        """ 总计手部精液量 """
+        self.leg_semen_now: int = 0
+        """ 当前腿部精液量 """
+        self.leg_semen_all: int = 0
+        """ 总计腿部精液量 """
+        self.foot_semen_now: int = 0
+        """ 当前脚部精液量 """
+        self.foot_semen_all: int = 0
+        """ 总计脚部精液量 """
+
+
 # class Height:
 #     """身高数据结构体"""
 
@@ -482,6 +536,8 @@ class Character:
         """ 处女时间 """
         self.first_sex_place: List[str] = ["0"]
         """ 处女地点 """
+        self.ejaculation: EJACULATION = EJACULATION()
+        """ 角色被射精的情况 """
         self.sex_semen: int = 0
         """ V注入精液量计数 """
         self.first_sex_posture: str = ""
