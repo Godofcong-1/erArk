@@ -35,26 +35,30 @@ class Dirty_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_draw = draw.TitleLineDraw("对方当前污浊情况", self.width)
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+        title_text = target_data.name + "身体部位污浊情况"
+
+        title_draw = draw.TitleLineDraw(title_text, self.width)
         handle_panel = panel.PageHandlePanel([], Dirty_Draw, 10, 5, self.width, 1, 1, 0)
         while 1:
             return_list = []
             title_draw.draw()
 
-            character_data: game_type.Character = cache.character_data[0]
-            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
             name_draw = draw.NormalDraw()
 
             # 遍历全部位并输出结果
             # 部位列表[0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
-            now_text = "\n\n"
+            now_text = "\n"
             for i in range(11):
                 now_text += "  " + target_data.dirty.body_semen[i][0]
                 if i == 8:
                     now_text += " 尿液"
                 if target_data.dirty.body_semen[i][1] != 0:
                     now_text += " 精液"
-                    now_text += "\n"
+                now_text += "\n"
+            now_text += "\n"
 
             name_draw.text = now_text
             name_draw.width = self.width
