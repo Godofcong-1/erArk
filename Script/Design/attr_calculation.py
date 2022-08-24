@@ -118,12 +118,12 @@ def get_token_zero(token_dict) -> dict:
     return token_list
 
 
-def get_ejaculation_zero() -> dict:
+def get_dirty_zero() -> dict:
     """
-    直接将初始精液情况归0
+    直接将初始污浊情况归0
     """
-    ejaculation_data = game_type.EJACULATION()
-    return ejaculation_data
+    dirty_data = game_type.DIRTY()
+    return dirty_data
 
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
@@ -430,3 +430,48 @@ def get_angry_text(value: int) -> str:
         return "不爽"
     elif value > 50:
         return "愤怒"
+
+
+def get_semen_now_level(value: int) -> int:
+    """
+    按当前部位精液量返回精液覆盖等级
+    Keyword arguments:
+    value -- 精液量
+    Return arguments:
+    level -- 精液覆盖等级
+    """
+    if value <= 0:
+        return 0
+    elif 0 < value and value <= 10:
+        return 1
+    elif 10 < value and value <= 50:
+        return 2
+    elif 50 < value and value <=200:
+        return 3
+    elif 200 < value and value <=1000:
+        return 4
+    elif value > 1000:
+        return 5
+
+
+def get_semen_now_text(level: int,position: int) -> str:
+    """
+    按当前部位精液覆盖等级(level)和部位(position)返回精液文本
+    (0小穴,1胸部,2后穴,3尿道,4头发,5脸部,6嘴部,7腋部,8手部,9腿部,10脚部)
+    Keyword arguments:
+    value -- 精液量
+    Return arguments:
+    level -- 精液覆盖等级
+    """
+    if level == 0:
+        return "没有粘上精液"
+    elif level == 1:
+        return "被射上了一点精液"
+    elif level == 2:
+        return "被射上了精液"
+    elif level == 3:
+        return "被射上了很多精液"
+    elif level == 4:
+        return "被射上了非常多的精液"
+    elif level == 5:
+        return "被射上了多得数不清的精液"

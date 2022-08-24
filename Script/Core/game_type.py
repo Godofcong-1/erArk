@@ -258,8 +258,8 @@ class Clothing:
 
 
 
-class EJACULATION:
-    """被射精情况数据结构体"""
+class DIRTY:
+    """污浊情况数据结构体"""
 
     def __init__(self):
 
@@ -536,8 +536,8 @@ class Character:
         """ 处女时间 """
         self.first_sex_place: List[str] = ["0"]
         """ 处女地点 """
-        self.ejaculation: EJACULATION = EJACULATION()
-        """ 角色被射精的情况 """
+        self.dirty: DIRTY = DIRTY()
+        """ 角色身上污浊的情况 """
         self.sex_semen: int = 0
         """ V注入精液量计数 """
         self.first_sex_posture: str = ""
