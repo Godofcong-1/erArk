@@ -112,7 +112,7 @@ class SaveInfoDraw:
             save_time: datetime.datetime = save_head["save_time"]
             game_time_text = _("游戏时间:") + game_time.strftime("%Y-%m-%d %H:%M")
             save_time_text = _("存档时间:") + save_time.strftime("%Y-%m-%d %H:%M")
-            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text} {save_head['character_name']} {save_time_text}"
+            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text} {save_head['character_name']}博士 {save_time_text}"
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
