@@ -94,7 +94,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 [
                     _("\n  ")
                     + game_config.config_experience[i].name
-                    + _("经验:")
+                    + _(":")
                     + text_handle.number_to_symbol_string(status_data.experience[i])
                     for i in status_data.experience
                 ]

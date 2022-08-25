@@ -1583,6 +1583,8 @@ class SecondEffect:
     """ 增加1喷乳经验 """
     ADD_1_Peeing_EXPERIENCE = 223
     """ 增加1放尿经验 """
+    ADD_1_Cums_EXPERIENCE = 224
+    """ 交互对象增加1精液经验 """
 
 
 

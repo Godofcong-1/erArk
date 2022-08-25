@@ -327,3 +327,25 @@ def handle_add_1_peeing_experience(
     character_data.experience[23] += 1
     change_data.experience.setdefault(23, 0)
     change_data.experience[23] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Cums_EXPERIENCE)
+def handle_add_1_cums_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    交互对象增加1精液经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_data.experience.setdefault(24, 0)
+    target_data.experience[24] += 1
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(24, 0)
+    target_change.experience[24] += 1
