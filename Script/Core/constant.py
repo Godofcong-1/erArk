@@ -1583,8 +1583,20 @@ class SecondEffect:
     """ 增加1喷乳经验 """
     ADD_1_Peeing_EXPERIENCE = 223
     """ 增加1放尿经验 """
-    ADD_1_Cums_EXPERIENCE = 224
+    TARGET_ADD_1_Cums_EXPERIENCE = 224
     """ 交互对象增加1精液经验 """
+    TARGET_ADD_SMALL_LUBRICATION = 225
+    """ 交互对象增加少量润滑 """
+    TARGET_ADD_MIDDLE_LUBRICATION = 226
+    """ 交互对象增加中量润滑 """
+    TARGET_ADD_LARGE_LUBRICATION = 227
+    """ 交互对象增加大量润滑 """
+    ADD_SMALL_LUBRICATION = 228
+    """ 增加少量润滑 """
+    ADD_MIDDLE_LUBRICATION = 229
+    """ 增加中量润滑 """
+    ADD_LARGE_LUBRICATION = 230
+    """ 增加大量润滑 """
 
 
 

@@ -329,8 +329,8 @@ def handle_add_1_peeing_experience(
     change_data.experience[23] += 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Cums_EXPERIENCE)
-def handle_add_1_cums_experience(
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_1_Cums_EXPERIENCE)
+def handle_target_add_1_cums_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
@@ -349,3 +349,139 @@ def handle_add_1_cums_experience(
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.experience.setdefault(24, 0)
     target_change.experience[24] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_SMALL_LUBRICATION)
+def handle_target_add_small_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    交互对象增加少量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 500
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_MIDDLE_LUBRICATION)
+def handle_target_add_middle_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    交互对象增加中量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 1500
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_LARGE_LUBRICATION)
+def handle_target_add_large_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    交互对象增加大量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 5000
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION)
+def handle_add_small_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 500
+    character_data.status_data.setdefault(8, 0)
+    character_data.status_data[8] += now_add_lust
+    change_data.status_data.setdefault(8, 0)
+    change_data.status_data[8] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_LUBRICATION)
+def handle_add_middle_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加中量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 1500
+    character_data.status_data.setdefault(8, 0)
+    character_data.status_data[8] += now_add_lust
+    change_data.status_data.setdefault(8, 0)
+    change_data.status_data[8] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LUBRICATION)
+def handle_add_large_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加大量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    now_add_lust = 5000
+    character_data.status_data.setdefault(8, 0)
+    character_data.status_data[8] += now_add_lust
+    change_data.status_data.setdefault(8, 0)
+    change_data.status_data[8] += now_add_lust
+
