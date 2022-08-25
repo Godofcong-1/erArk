@@ -534,6 +534,9 @@ class Premise:
     DEBUG_MODE_OFF = "debug_mode_off"
     """ 现在不是debug模式 """
 
+    TO_DO = "to_do"
+    """ 未实装 """
+
     IS_PLAYER = "sys_0"
     """ 玩家触发的该指令 """
     NO_PLAYER = "sys_1"
@@ -691,6 +694,11 @@ class Premise:
     """ 自身音乐技能>=3 """
     MUSIC_GE_5 = "music_ge_5"
     """ 自身音乐技能>=5 """
+    TECHNIQUE_GE_3 = "technique_ge_3"
+    """ 自身技巧技能>=3 """
+    TECHNIQUE_GE_5 = "technique_ge_5"
+    """ 自身技巧技能>=5 """
+
 
     TARGET_INTIMACY_8 = "t_intimacy_8"
     """ 交互对象亲密==8 """
@@ -732,6 +740,11 @@ class Premise:
     """ 交互对象音乐技能>=3 """
     TARGET_MUSIC_GE_5 = "t_music_ge_5"
     """ 交互对象音乐技能>=5 """
+    TARGET_TECHNIQUE_GE_3 = "t_technique_ge_3"
+    """ 交互对象技巧技能>=3 """
+    TARGET_TECHNIQUE_GE_5 = "t_technique_ge_5"
+    """ 交互对象技巧技能>=5 """
+
 
     TARGET_NOT_FALL = "not_fall"
     """ 交互对象无陷落素质 """
