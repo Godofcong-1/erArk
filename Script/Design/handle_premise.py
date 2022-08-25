@@ -2001,6 +2001,34 @@ def handle_target_put_on_skirt(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant.Premise.DEBUG_MODE_ON)
+def handle_idebug_mode_on(character_id: int) -> int:
+    """
+    校验当前是否已经是debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.debug_mode:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.DEBUG_MODE_OFF)
+def handle_idebug_mode_off(character_id: int) -> int:
+    """
+    校验当前不是debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.debug_mode:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.IS_PLAYER)
 def handle_is_player(character_id: int) -> int:
     """

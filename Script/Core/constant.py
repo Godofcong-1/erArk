@@ -529,6 +529,11 @@ class Panel:
 class Premise:
     """前提id"""
 
+    DEBUG_MODE_ON = "debug_mode_on"
+    """ 现在是debug模式 """
+    DEBUG_MODE_OFF = "debug_mode_off"
+    """ 现在不是debug模式 """
+
     IS_PLAYER = "sys_0"
     """ 玩家触发的该指令 """
     NO_PLAYER = "sys_1"
@@ -1880,6 +1885,10 @@ class Instruct:
     """ 查找与召集干员 """
     SEE_DIRTY = 0
     """ 显示污浊情况 """
+    DEBUG_MODE_ON = 0
+    """ 开启debug模式 """
+    DEBUG_MODE_OFF = 0
+    """ 关闭debug模式 """
 
 
 

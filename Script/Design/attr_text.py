@@ -145,7 +145,7 @@ def get_value_text(value: float) -> str:
 def get_semen_now_text(level: int,position: int) -> str:
     """
     按当前部位精液覆盖等级(level)和部位(position)返回精液文本
-    (0小穴,1胸部,2后穴,3尿道,4头发,5脸部,6嘴部,7腋部,8手部,9腿部,10脚部)
+    [0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
     Keyword arguments:
     value -- 精液量
     Return arguments:

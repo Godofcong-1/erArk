@@ -282,6 +282,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_information:
         calculation_text += "+博士信息素("+ str(judge_information) +")"
 
+    # debug模式修正
+    if cache.debug_mode == True:
+        judge += 99999
+        calculation_text += "+debug模式(+99999)"
+
     calculation_text += " = " + str(judge) + "\n"
     now_draw = draw.WaitDraw()
     now_draw.width = 1

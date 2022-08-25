@@ -20,7 +20,7 @@ window_width: int = normal_config.config_normal.text_width
 
 class Ejaculation_Panel:
     """
-    用于查看射精界面面板对象
+    用于显示射精界面面板对象
     Keyword arguments:
     width -- 绘制宽度
     """
@@ -29,94 +29,50 @@ class Ejaculation_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("射精位置选择")
-        """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = None
-        """ 当前名字列表控制面板 """
 
     def draw(self):
         """绘制对象"""
-        scene_position = cache.character_data[0].position
-        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        scene_name = cache.scene_data[scene_position_str].scene_name
-        title_draw = draw.TitleLineDraw(scene_name, self.width)
-        ejaculation_type_list = [_("身体部位")]
-        # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        title_name = "射精部位选择"
+        title_draw = draw.TitleLineDraw(title_name, self.width)
+        handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 10, 6, self.width, 1, 1, 0)
         while 1:
-            py_cmd.clr_cmd()
-            food_name_list = list(
-                cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items()
-            )
-            self.handle_panel.text_list = food_name_list
-            self.handle_panel.update()
-            title_draw.draw()
             return_list = []
-            for ejaculation_type in ejaculation_type_list:
-                if ejaculation_type == self.now_panel:
-                    now_draw = draw.CenterDraw()
-                    now_draw.text = f"{ejaculation_type}]"
-                    now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(ejaculation_type_list)
-                    now_draw.draw()
-                else:
-                    now_draw = draw.CenterButton(
-                        f"[{ejaculation_type}]",
-                        ejaculation_type,
-                        self.width / len(ejaculation_type_list),
-                        cmd_func=self.change_panel,
-                        args=(ejaculation_type,),
-                    )
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-            line_feed.draw()
-            line = draw.LineDraw("+", self.width)
-            line.draw()
-            self.handle_panel.draw()
-            return_list.extend(self.handle_panel.return_list)
+            title_draw.draw()
+            position_list = []
+            for i in range(11):
+                position_list.append(target_data.dirty.body_semen[i][0])
+            handle_panel.text_list = position_list
+            handle_panel.update()
+            handle_panel.draw()
+            return_list.extend(handle_panel.return_list)
+            cache.now_panel_id = constant.Panel.IN_SCENE
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                cache.now_panel_id = constant.Panel.IN_SCENE
-                break
-
-    def change_panel(self, food_type: str):
-        """
-        切换当前面板显示的食物类型
-        Keyword arguments:
-        food_type -- 要切换的食物类型
-        """
-        self.now_panel = food_type
-        food_name_list = list(cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items())
-        self.handle_panel = panel.PageHandlePanel(
-            food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
-        )
+            # if yrn == back_draw.return_text:
+            cache.now_panel_id = constant.Panel.IN_SCENE
+            break
 
 
-class SeeFoodListByFoodNameDraw:
+class Ejaculation_NameDraw:
     """
-    点击后可查看食物列表的食物名字按钮对象
+    点击后可选择射精部位按钮对象
     Keyword arguments:
-    text -- 食物名字
+    text -- 道具id
     width -- 最大宽度
     is_button -- 绘制按钮
     num_button -- 绘制数字按钮
     button_id -- 数字按钮id
     """
 
-    def __init__(
-        self, text: Tuple[str, str], width: int, is_button: bool, num_button: bool, button_id: int
-    ):
+    def __init__(self, text: int, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
-        self.text = text[1]
-        """ 食物名字 """
-        self.cid = text[0]
-        """ 食物在食堂内的表id """
+        self.text = text
+        """ 道具id """
         self.draw_text: str = ""
-        """ 食物名字绘制文本 """
+        """ 道具名字绘制文本 """
         self.width: int = width
         """ 最大宽度 """
         self.num_button: bool = num_button
@@ -129,16 +85,16 @@ class SeeFoodListByFoodNameDraw:
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{self.text}"
+                button_text = f"{index_text} {self.text}"
                 name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.see_food_shop_food_list
+                    button_text, self.button_return, self.width, cmd_func=self.shoot_here
                 )
             else:
                 button_text = f"[{self.text}]"
                 name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.see_food_shop_food_list
+                    button_text, self.text, self.width, cmd_func=self.shoot_here
                 )
-                self.button_return = text
+                self.button_return = self.text
             self.draw_text = button_text
         else:
             name_draw = draw.CenterDraw()
@@ -152,78 +108,17 @@ class SeeFoodListByFoodNameDraw:
         """绘制对象"""
         self.now_draw.draw()
 
-    def see_food_shop_food_list(self):
-        """按食物名字显示食物商店的食物列表"""
-        title_draw = draw.TitleLineDraw(self.text, window_width)
-        now_food_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
-        page_handle = panel.PageHandlePanel(
-            now_food_list, BuyFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
-        )
-        # while 1:
-        return_list = []
-        title_draw.draw()
-        page_handle.update()
-        page_handle.draw()
-        return_list.extend(page_handle.return_list)
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        back_draw.draw()
-        line_feed.draw()
-        return_list.append(back_draw.return_text)
-        yrn = flow_handle.askfor_all(return_list)
-        # if yrn == back_draw.return_text:
-        #     break
-        page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
-
-
-class BuyFoodByFoodNameDraw:
-    """
-    点击后可购买食物的食物名字按钮对象
-    Keyword arguments:
-    text -- 食物id
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
-
-    def __init__(
-        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
-        self.text: UUID = text[1]
-        """ 食物uid """
-        self.cid: str = text[0]
-        """ 食物商店索引id """
-        self.draw_text: str = ""
-        """ 食物名字绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = str(button_id)
-        """ 按钮返回值 """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-        name_draw = draw.NormalDraw()
-        food_data: game_type.Food = cache.restaurant_data[self.cid][self.text]
-        food_name = ""
-        if isinstance(self.cid, str):
-            food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
-            food_name = food_recipe.name
-        index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{food_name}"
-        name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)
-        self.now_draw = name_draw
-        """ 绘制的对象 """
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
-    def buy_food(self):
-        """玩家购买食物"""
-        cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
-        del cache.restaurant_data[self.cid][self.text]
+    def shoot_here(self):
+        py_cmd.clr_cmd()
         character_data: game_type.Character = cache.character_data[0]
-        character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
-        character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
+        cache.shoot_position = self.button_id
+        position_text_list = ["头发","脸部","嘴部","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部"]
+        position_text = position_text_list[self.button_id]
+        now_text = "在",position_text,"射精"
+        now_draw = draw.WaitDraw()
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
+

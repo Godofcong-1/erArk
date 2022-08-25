@@ -409,6 +409,7 @@ def orgasm_effect(character_id: int):
                 character_data.second_behavior[1010] = 1
             character_data.orgasm_level[3] += 1
             character_data.eja_point = 0
+            cache.now_panel_id = constant.Panel.EJACULATION
     else:
         #检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):

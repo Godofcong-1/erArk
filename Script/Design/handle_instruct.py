@@ -212,6 +212,17 @@ def see_dirty():
     """处理显示污浊情况指令"""
     cache.now_panel_id = constant.Panel.DIRTY
 
+@add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"), {constant.Premise.DEBUG_MODE_OFF})
+def debug_mode():
+    """处理开启DEBUG模式指令"""
+    cache.debug_mode = True
+
+
+@add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"), {constant.Premise.DEBUG_MODE_ON})
+def debug_mode_off():
+    """处理关闭DEBUG模式指令"""
+    cache.debug_mode = False
+
 
 # @add_instruct(
 #     constant.Instruct.PLAY_PIANO,

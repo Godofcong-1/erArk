@@ -725,7 +725,7 @@ def handle_first_sex(
                 now_draw.width = window_width
                 now_draw.draw()
                 #处女的二段结算
-                target_data.second_behavior[1051] = 1
+                # target_data.second_behavior[1051] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
@@ -780,7 +780,7 @@ def handle_first_a_sex(
                 now_draw.width = window_width
                 now_draw.draw()
                 #处女的二段结算
-                target_data.second_behavior[1052] = 1
+                # target_data.second_behavior[1052] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
@@ -1615,7 +1615,7 @@ def handle_add_small_p_feel(
     if character_data.dead:
         return
     now_lust_multiple = 10
-    now_add_lust = add_time + now_lust_multiple
+    now_add_lust = add_time + now_lust_multiple + character_data.eja_point*0.4
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
 

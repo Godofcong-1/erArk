@@ -52,11 +52,11 @@ class Dirty_Panel:
             # 部位列表[0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
             now_text = "\n"
             for i in range(11):
-                now_text += "  " + target_data.dirty.body_semen[i][0]
+                now_text += "  " + target_data.dirty.body_semen[i][0] + "："
                 if i == 8:
-                    now_text += " 尿液"
+                    now_text += " <残留的尿渍>"
                 if target_data.dirty.body_semen[i][1] != 0:
-                    now_text += " 精液"
+                    now_text += " <精液>"
                 now_text += "\n"
             now_text += "\n"
 

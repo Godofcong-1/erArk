@@ -642,6 +642,10 @@ class Cache:
         """ 指定日期下每分钟太阳位置 日期:时:分:位置id """
         self.moon_phase: Dict[str, int] = {}
         """ 指定日期月相记录 日期:月相id """
+        self.shoot_position: int = 0
+        """ 记录射精位置 """
+        self.debug_mode: bool = False
+        """ 是否开启debug模式 """
 
 
 class TargetChange:
