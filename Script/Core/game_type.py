@@ -266,9 +266,10 @@ class DIRTY:
         # 人类正常一次射精量在2～6ml
 
         self.body_semen: list = []
-        """ 身体精液情况 """
-        # 0~10共11项，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]
-        # 部位顺序：[0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
+        """ 身体精液情况    
+        0~10共11项，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]    
+        部位顺序 [0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
+        """
 
 
 # class Height:
@@ -498,8 +499,6 @@ class Character:
         """ 处女地点 """
         self.dirty: DIRTY = DIRTY()
         """ 角色身上污浊的情况 """
-        self.sex_semen: int = 0
-        """ V注入精液量计数 """
         self.first_sex_posture: str = ""
         """ 处女姿势 """
         self.first_a_sex_id: int = -1
@@ -508,18 +507,8 @@ class Character:
         """ A处女时间 """
         self.first_a_sex_place: List[str] = ["0"]
         """ A处女地点 """
-        self.a_sex_semen: int = 0
-        """ A注入精液量计数 """
         self.first_a_sex_posture: str = ""
         """ A处女姿势 """
-        self.breast_semen: int = 0
-        """ 胸部精液量计数 """
-        self.hand_semen: int = 0
-        """ 手部精液ml数 """
-        self.foot_semen: int = 0
-        """ 脚部精液ml数 """
-        self.urethral_semen: int = 0
-        """ 尿道精液ml数 """
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.dead: bool = 0

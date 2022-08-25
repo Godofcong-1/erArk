@@ -1,10 +1,11 @@
 from typing import Tuple
 from types import FunctionType
-from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle
+from Script.Design import attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -110,11 +111,35 @@ class Ejaculation_NameDraw:
 
     def shoot_here(self):
         py_cmd.clr_cmd()
+
         character_data: game_type.Character = cache.character_data[0]
-        cache.shoot_position = self.button_id
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         position_text_list = ["头发","脸部","嘴部","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部"]
-        position_text = position_text_list[self.button_id]
-        now_text = "在",position_text,"射精"
+
+        cache.shoot_position = self.button_id
+        # 乘以一个随机数补正
+        random_weight = random.uniform(0.5, 1.5)
+
+        # 基础射精值，小中多射精区分
+        if character_data.orgasm_level[3]-1 % 3 == 0:
+            semen_count = int(5 * random_weight)
+            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.orgasm_level[3]-1 % 3 == 1:
+            semen_count = int(20 * random_weight)
+            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.orgasm_level[3]-1 % 3 == 2:
+            semen_count = int(100 * random_weight)
+            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+
+        # print("debug semen_count = ",semen_count)
+
+        # 更新污浊类里的身体部位精液参数
+        target_data.dirty.body_semen[self.button_id][1] += semen_count
+        target_data.dirty.body_semen[self.button_id][3] += semen_count
+        target_data.dirty.body_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.button_id][1])
+
+        now_text = "在" + position_text_list[self.button_id] + semen_text
+
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width
