@@ -1,3 +1,4 @@
+from turtle import position
 from typing import Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
@@ -48,7 +49,6 @@ class Ejaculation_Panel:
             handle_panel.update()
             handle_panel.draw()
             return_list.extend(handle_panel.return_list)
-            cache.now_panel_id = constant.Panel.IN_SCENE
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -83,7 +83,20 @@ class Ejaculation_NameDraw:
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
         name_draw = draw.NormalDraw()
-        if is_button:
+
+        # 根据前一指令的情况来区分小穴/后穴/尿道的出现与否
+        position_flag = True
+        if constant.Premise.LAST_CMD_SEX:
+            if self.button_id == 7 or self.button_id == 8:
+                position_flag = False
+        elif constant.Premise.LAST_CMD_A_SEX:
+            if self.button_id == 6 or self.button_id == 8:
+                position_flag = False
+        elif constant.Premise.LAST_CMD_U_SEX:
+            if self.button_id == 6 or self.button_id == 7:
+                position_flag = False
+
+        if is_button and position_flag:
             if num_button:
                 index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text} {self.text}"
@@ -98,8 +111,8 @@ class Ejaculation_NameDraw:
                 self.button_return = self.text
             self.draw_text = button_text
         else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{self.text}]"
+            name_draw = draw.LeftDraw()
+            name_draw.text = f"[{self.text}(未插入)]"
             name_draw.width = self.width
             self.draw_text = name_draw.text
         self.now_draw = name_draw
@@ -121,15 +134,16 @@ class Ejaculation_NameDraw:
         random_weight = random.uniform(0.5, 1.5)
 
         # 基础射精值，小中多射精区分
-        if character_data.orgasm_level[3]-1 % 3 == 0:
+        if character_data.orgasm_level[3] % 3 == 0:
             semen_count = int(5 * random_weight)
             semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.orgasm_level[3]-1 % 3 == 1:
+        if character_data.orgasm_level[3] % 3 == 1:
             semen_count = int(20 * random_weight)
             semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.orgasm_level[3]-1 % 3 == 2:
+        if character_data.orgasm_level[3] % 3 == 2:
             semen_count = int(100 * random_weight)
             semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+        character_data.orgasm_level[3] += 1
 
         # print("debug semen_count = ",semen_count)
 

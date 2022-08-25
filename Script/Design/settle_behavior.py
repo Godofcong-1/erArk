@@ -407,7 +407,6 @@ def orgasm_effect(character_id: int):
                 character_data.second_behavior[1010] = 1
             elif character_data.orgasm_level[3] % 3 == 2:
                 character_data.second_behavior[1010] = 1
-            character_data.orgasm_level[3] += 1
             character_data.eja_point = 0
             cache.now_panel_id = constant.Panel.EJACULATION
     else:

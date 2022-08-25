@@ -955,6 +955,8 @@ class Premise:
     """ 前一指令为V性交_指令触发用 """
     LAST_CMD_A_SEX = "last_cmd_a_sex"
     """ 前一指令为A性交_指令触发用 """
+    LAST_CMD_U_SEX = "last_cmd_u_sex"
+    """ 前一指令为U性交_指令触发用 """
 
 
     HYPOSTHENIA = "83"
