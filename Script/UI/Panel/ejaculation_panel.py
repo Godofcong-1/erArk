@@ -31,6 +31,10 @@ class Ejaculation_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
+        self.now_panel = _("身体")
+        """ 当前绘制的射精页面 """
+        self.handle_panel: panel.PageHandlePanel = None
+        """ 当前名字列表控制面板 """
 
     def draw(self):
         """绘制对象"""
@@ -38,23 +42,78 @@ class Ejaculation_Panel:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         title_name = "射精部位选择"
         title_draw = draw.TitleLineDraw(title_name, self.width)
-        handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 10, 6, self.width, 1, 1, 0)
+        eja_type_list = [_("身体"), _("服装")]
+        position_list = []
+
+        self.handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
+        for i in range(14):
+            position_list.append(target_data.dirty.body_semen[i][0])
+        self.handle_panel.text_list = position_list
+        self.handle_panel.update()
+
         while 1:
             return_list = []
             title_draw.draw()
-            position_list = []
-            for i in range(11):
-                position_list.append(target_data.dirty.body_semen[i][0])
-            handle_panel.text_list = position_list
-            handle_panel.update()
-            handle_panel.draw()
-            return_list.extend(handle_panel.return_list)
+
+            # 绘制射精主面板
+            for eja_type in eja_type_list:
+                if eja_type == self.now_panel:
+                    now_draw = draw.CenterDraw()
+                    now_draw.text = f"[{eja_type}]"
+                    now_draw.style = "onbutton"
+                    now_draw.width = self.width / len(eja_type_list)
+                    now_draw.draw()
+                else:
+                    now_draw = draw.CenterButton(
+                        f"[{eja_type}]",
+                        eja_type,
+                        self.width / len(eja_type_list),
+                        cmd_func=self.change_panel,
+                        args=(eja_type,),
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+            line_feed.draw()
+            line = draw.LineDraw("+", self.width)
+            line.draw()
+
+            # 绘制面板本体
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list.extend(self.handle_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            # if yrn == back_draw.return_text:
-            cache.now_panel_id = constant.Panel.IN_SCENE
-            break
+
+            # 在非页面切换时退出面板
+            if yrn not in ['身体','服装']:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def change_panel(self, eja_type: str):
+        """
+        切换当前面板显示的射精位置类型
+        Keyword arguments:
+        eja_type -- 要切换的射精位置类型
+        """
+        self.now_panel = eja_type
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        position_list = []
+
+        if eja_type == "身体":
+            for i in range(14):
+                position_list.append(target_data.dirty.body_semen[i][0])
+        elif eja_type == "服装":
+            for i in range(18):
+                position_list.append(target_data.dirty.cloth_semen[i][0])
+
+        self.handle_panel = panel.PageHandlePanel(
+            position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
+        )
+        self.handle_panel.text_list = position_list
+        self.handle_panel.update()
+
 
 
 class Ejaculation_NameDraw:
@@ -82,21 +141,40 @@ class Ejaculation_NameDraw:
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
+        self.position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
+        """ 位置文本列表 """
+        self.cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
+        """ 衣服文本列表 """
+        self.panel_type = 0
         name_draw = draw.NormalDraw()
 
-        # 根据前一指令的情况来区分小穴/后穴/尿道的出现与否
-        position_flag = True
-        if constant.Premise.LAST_CMD_SEX:
-            if self.button_id == 7 or self.button_id == 8:
-                position_flag = False
-        elif constant.Premise.LAST_CMD_A_SEX:
-            if self.button_id == 6 or self.button_id == 8:
-                position_flag = False
-        elif constant.Premise.LAST_CMD_U_SEX:
-            if self.button_id == 6 or self.button_id == 7:
-                position_flag = False
+        # 区分是位置还是衣服
+        if self.text in self.position_text_list:
+            position_flag = True
+            cloth_flag = False
+            self.panel_type = 1
+        elif self.text in self.cloth_text_list:
+            position_flag = False
+            cloth_flag = True
+            self.panel_type = 2
+        # print("debug self.text = ",self.text," panel_type = ",panel_type)
 
-        if is_button and position_flag:
+        if self.panel_type == 1:
+            # 根据前一指令的情况来区分小穴/后穴/尿道的出现与否
+            if constant.Premise.LAST_CMD_SEX:
+                if self.button_id in {7,8}:
+                    position_flag = False
+            elif constant.Premise.LAST_CMD_A_SEX:
+                if self.button_id in {6,8}:
+                    position_flag = False
+            elif constant.Premise.LAST_CMD_U_SEX:
+                if self.button_id in {6,7}:
+                    position_flag = False
+            else:
+                if self.button_id in {6,7,8}:
+                    position_flag = False
+
+        if is_button and ( position_flag or cloth_flag ):
             if num_button:
                 index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text} {self.text}"
@@ -127,7 +205,6 @@ class Ejaculation_NameDraw:
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        position_text_list = ["头发","脸部","嘴部","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部"]
 
         cache.shoot_position = self.button_id
         # 乘以一个随机数补正
@@ -148,11 +225,20 @@ class Ejaculation_NameDraw:
         # print("debug semen_count = ",semen_count)
 
         # 更新污浊类里的身体部位精液参数
-        target_data.dirty.body_semen[self.button_id][1] += semen_count
-        target_data.dirty.body_semen[self.button_id][3] += semen_count
-        target_data.dirty.body_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.button_id][1])
+        if self.panel_type == 1:
+            target_data.dirty.body_semen[self.button_id][1] += semen_count
+            target_data.dirty.body_semen[self.button_id][3] += semen_count
+            target_data.dirty.body_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.button_id][1])
 
-        now_text = "在" + position_text_list[self.button_id] + semen_text
+            now_text = "在" + self.position_text_list[self.button_id] + semen_text
+
+        # 更新污浊类里的服装部位精液参数
+        elif self.panel_type == 2:
+            target_data.dirty.cloth_semen[self.button_id][1] += semen_count
+            target_data.dirty.cloth_semen[self.button_id][3] += semen_count
+            target_data.dirty.cloth_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.button_id][1])
+
+            now_text = "在" + target_data.name + "的" +self.cloth_text_list[self.button_id] + semen_text
 
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
