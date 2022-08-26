@@ -49,14 +49,15 @@ class Dirty_Panel:
             name_draw = draw.NormalDraw()
 
             # 遍历全部位并输出结果
-            # 部位列表[0"头发",1"脸部",2"嘴部",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部"]
+            # 部位列表[0"头发",1"脸部",2"口腔",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部",11"尾巴",12"兽角",13"兽耳"]
+            # 服装列表[0"帽子",1"眼镜",2"耳部",3"脖子",4"嘴部",5"上衣",6"内衣（上）",7"手套",8"下衣",9"内衣（下）",10"袜子",11"鞋子",12"武器",13"附属物1",14"附属物2",15"附属物3",16"附属物4",17"附属物5"]
             now_text = "\n"
             for i in range(11):
                 now_text += "  " + target_data.dirty.body_semen[i][0] + "："
                 if i == 8:
                     now_text += " <残留的尿渍>"
                 if target_data.dirty.body_semen[i][1] != 0:
-                    now_text += " <精液>"
+                    now_text += " <" + attr_text.get_semen_now_text(target_data.dirty.body_semen[i][2],0) + ">(" + str(target_data.dirty.body_semen[i][1]) + "ml)"
                 now_text += "\n"
             now_text += "\n"
 

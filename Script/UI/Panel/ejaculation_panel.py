@@ -230,7 +230,7 @@ class Ejaculation_NameDraw:
             target_data.dirty.body_semen[self.button_id][3] += semen_count
             target_data.dirty.body_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.button_id][1])
 
-            now_text = "在" + self.position_text_list[self.button_id] + semen_text
+            now_text = "在" + target_data.name + "的" + self.position_text_list[self.button_id] + semen_text
 
         # 更新污浊类里的服装部位精液参数
         elif self.panel_type == 2:
@@ -238,7 +238,7 @@ class Ejaculation_NameDraw:
             target_data.dirty.cloth_semen[self.button_id][3] += semen_count
             target_data.dirty.cloth_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.button_id][1])
 
-            now_text = "在" + target_data.name + "的" +self.cloth_text_list[self.button_id] + semen_text
+            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.button_id] + semen_text
 
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
