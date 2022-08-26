@@ -88,7 +88,7 @@ class InScenePanel:
             now_position_draw.text = now_position_text
             now_position_draw.width = self.width - len(game_time_draw)
             meet_draw = draw.NormalDraw()
-            meet_draw.text = _("你在这里遇到了:")
+            meet_draw.text = _("这里有:")
             meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
@@ -305,6 +305,7 @@ class SeeInstructPanel:
             for instruct_type in game_config.config_instruct_type:
                 cache.instruct_filter[instruct_type] = 0
             cache.instruct_filter[0] = 1
+            cache.instruct_filter[1] = 1
 
     def draw(self):
         """绘制操作菜单面板"""

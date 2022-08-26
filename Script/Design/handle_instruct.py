@@ -862,6 +862,10 @@ def handle_do_h():
         now_draw.width = width
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
+
+        # 自动开启性爱面板
+        if not cache.instruct_filter[5]:
+            cache.instruct_filter[5] = 1
     else:
         now_draw = draw.WaitDraw()
         now_draw.width = width
@@ -892,6 +896,10 @@ def handle_end_h():
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")
     now_draw.draw()
+
+    # 自动关闭性爱面板
+    if cache.instruct_filter[5]:
+        cache.instruct_filter[5] = 0
 
 # @add_instruct(
 #     constant.Instruct.SINGING,
