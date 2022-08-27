@@ -93,8 +93,9 @@ class Make_food_Panel:
         """
         self.now_panel = food_type
         food_name_list = list(cooking.get_cook_level_food_type(self.now_panel).items())
+        now_food_list = [(food_name_list[0][0], x) for x in cache.makefood_data[food_name_list[0][0]]]
         self.handle_panel = panel.PageHandlePanel(
-            food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
+            now_food_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
 
 class SeeFoodListByFoodNameDraw:
@@ -109,13 +110,13 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, str], width: int, is_button: bool, num_button: bool, button_id: int
+        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.text = text[1]
-        """ 食物名字 """
-        self.cid = text[0]
-        """ 食物在食堂内的表id """
+        self.cid: str = text[0]
+        """ 食物商店索引id """
+        self.text: UUID = text[1]
+        """ 食物uid """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
