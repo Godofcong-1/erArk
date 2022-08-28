@@ -1,6 +1,6 @@
 from typing import List
 from types import FunctionType
-from Script.Core import cache_control, text_handle, get_text, py_cmd, game_type
+from Script.Core import cache_control, text_handle, get_text, flow_handle, constant, py_cmd, game_type
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 
@@ -9,6 +9,10 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
@@ -29,8 +33,8 @@ class SeeCharacterItemBagPanel:
         """ 最大绘制宽度 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[character_id]
-        item_list = list(character_data.item)
+        self.character_data = cache.character_data[character_id]
+        item_list = list(self.character_data.item)
         item_panel = panel.PageHandlePanel(item_list, ItemNameDraw, 20, 7, width, 1, 1, 0, "", "|")
         self.handle_panel = item_panel
         """ 页面控制对象 """
@@ -39,11 +43,28 @@ class SeeCharacterItemBagPanel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
         title_draw.draw()
-        self.return_list = []
-        self.handle_panel.update()
-        self.handle_panel.draw()
-        self.return_list.extend(self.handle_panel.return_list)
+        while 1:
+            # 绘制金钱
+            money_text = "当前持有龙门币：" + str(self.character_data.money) + "，合成玉：" + str(self.character_data.orundum) + "，至纯源石：" + str(self.character_data.Originite_Prime)
+            now_draw = draw.NormalDraw()
+            now_draw.text = money_text
+            now_draw.width = self.width
+            now_draw.draw()
+            line_feed.draw()
 
+            # 绘制道具面板
+            self.return_list = []
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            self.return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            self.return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(self.return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
 
 class ItemNameDraw:
     """

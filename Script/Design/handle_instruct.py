@@ -158,14 +158,22 @@ def handle_chat():
 
 
 @add_instruct(
-    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具_未实装"),
-    {constant.Premise.IN_SHOP,
-    constant.Premise.NOT_H,
-    constant.Premise.TO_DO}
+    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"),
+    # {constant.Premise.IN_SHOP,
+    {constant.Premise.NOT_H}
 )
 def handle_buy_item():
     """处理购买道具指令"""
     cache.now_panel_id = constant.Panel.ITEM_SHOP
+
+
+@add_instruct(
+    constant.Instruct.ITEM, constant.InstructType.SYSTEM, _("道具"),
+    {}
+)
+def handle_item():
+    """处理道具指令"""
+    cache.now_panel_id = constant.Panel.ITEM
 
 
 @add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"), 
@@ -217,6 +225,10 @@ def see_dirty():
 def debug_mode():
     """处理开启DEBUG模式指令"""
     cache.debug_mode = True
+    character_data = cache.character_data[0]
+    character_data.money += 999999
+    character_data.orundum += 999999
+    character_data.Originite_Prime += 999999
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"), {constant.Premise.DEBUG_MODE_ON})

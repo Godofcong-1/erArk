@@ -405,7 +405,7 @@ class Character:
         """ 他人对角色的称呼 """
         self.sex: int = 0
         """ 角色性别 """
-        self.age: int = 17
+        self.age: int = 18
         """ 角色年龄 """
         self.hit_point_max: int = 0
         """ 角色最大HP """
@@ -443,8 +443,8 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}
         """ 角色当前二段行为状态数据 """
-        self.gold: int = 0
-        """ 角色所持金钱数据 """
+        # self.gold: int = 0
+        # """ 角色所持金钱数据 """
         self.position: List[str] = ["0"]
         """ 角色当前坐标数据 """
         self.officeroom: List[str] = []
@@ -494,8 +494,6 @@ class Character:
         """ 初吻时间 """
         self.first_kiss_place: List[str] = ["0"]
         """ 初吻地点 """
-        self.taste_semen: int = 0
-        """ 饮精精液量计数 """
         self.first_sex_id: int = -1
         """ 处女对象 -1为无 """
         self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
@@ -550,7 +548,7 @@ class Character:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
-        self.token_list:Dict[int,int] = {}
+        self.token_list:Dict[int,bool] = {}
         """ 玩家的信物获得记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
@@ -558,7 +556,12 @@ class Character:
         """ 疲劳状态（HP=1） """
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
-
+        self.money : int = 0
+        """ 龙门币数量 """
+        self.orundum : int = 0
+        """ 合成玉数量 """
+        self.Originite_Prime : int = 0
+        """ 至纯源石数量 """
 
 class Cache:
     """游戏缓存数据结构体"""

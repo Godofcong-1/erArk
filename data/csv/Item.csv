@@ -1,6 +1,6 @@
-cid,name,tag,info
-道具id,道具名,标签,描述
-int,str,str,str
-0,1,0,1
-道具配置数据,,,
-0,篮球,Play,正圆形，使用皮，橡胶或合成物质等材质制成外皮的球类
+cid,name,tag,price,info
+道具id,道具名,标签,价格,描述
+int,str,str,int,str
+0,1,0,1,0
+道具配置数据,,,,
+0,润滑液,Drug,500,增加润滑

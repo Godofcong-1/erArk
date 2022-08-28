@@ -524,6 +524,8 @@ class Panel:
     """ 射精面板 """
     DIRTY = 10
     """ 脏污面板 """
+    ITEM = 11
+    """ 道具面板 """
 
 
 class Premise:
