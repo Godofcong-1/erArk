@@ -43,6 +43,7 @@ def init_attr(character_id: int):
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.last_move_time = attr_calculation.get_time_zero()
     character_data.dirty = attr_calculation.get_dirty_zero()
+    character_data.item = attr_calculation.get_item_zero(character_data.item)
 
 
     #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物

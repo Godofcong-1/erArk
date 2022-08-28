@@ -34,7 +34,11 @@ class SeeCharacterItemBagPanel:
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
         self.character_data = cache.character_data[character_id]
-        item_list = list(self.character_data.item)
+        item_list = [i for i in game_config.config_item]
+        bag_item_list = []
+        for item_id in item_list:
+            if self.character_data.item[item_id] >= 1:
+                bag_item_list.append(item_id)
         item_panel = panel.PageHandlePanel(item_list, ItemNameDraw, 20, 7, width, 1, 1, 0, "", "|")
         self.handle_panel = item_panel
         """ 页面控制对象 """
@@ -42,8 +46,8 @@ class SeeCharacterItemBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
-        title_draw.draw()
         while 1:
+            title_draw.draw()
             # 绘制金钱
             money_text = "当前持有龙门币：" + str(self.character_data.money) + "，合成玉：" + str(self.character_data.orundum) + "，至纯源石：" + str(self.character_data.Originite_Prime)
             now_draw = draw.NormalDraw()
@@ -95,10 +99,11 @@ class ItemNameDraw:
         """ 按钮返回值 """
         item_config = game_config.config_item[self.text]
         item_name = item_config.name
+        character_data = cache.character_data[0]
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                self.draw_text = f"{index_text} {item_name}"
+                self.draw_text = f"{index_text} {item_name}(持有{str(character_data.item[self.text])})"
                 self.button_return = str(button_id)
             else:
                 self.draw_text = item_name

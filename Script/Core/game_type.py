@@ -433,8 +433,10 @@ class Character:
         角色拥有的服装类型数据集合
         服装表id:服装唯一id
         """
-        self.item: Set = set()
-        """ 角色拥有的道具id集合 """
+        # self.item: Set = set()
+        # """ 旧：角色拥有的道具id集合 """
+        self.item: Dict[int,int] = {}
+        """ 角色拥有的道具 道具序号:数量"""
         # self.height: Height = Height()
         # """ 角色的身高数据 """
         # self.measurements: Measurements = Measurements()

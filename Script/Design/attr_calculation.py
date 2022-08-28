@@ -136,6 +136,18 @@ def get_dirty_zero() -> dict:
 
     return dirty_data
 
+
+def get_item_zero(item_dict) -> dict:
+    """
+    检查初始道具，将为空的项补为0
+    """
+    item_list = item_dict
+    for item in game_config.config_item:
+        if item not in item_dict:
+            item_list[item] = 0
+    return item_list
+
+
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
     检查是否是0号角色，将特定项补为0
