@@ -4250,6 +4250,458 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     return 0
 
 
+# 以下为道具系前提
+
+@add_premise(constant.Premise.HAVE_CAMERA)
+def handle_have_camera(character_id: int) -> int:
+    """
+    校验角色是否已持有相机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[50]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_VIDEO_RECORDER)
+def handle_have_video_recorder(character_id: int) -> int:
+    """
+    校验角色是否已持有录像机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[51]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_NIPPLE_CLAMP)
+def handle_have_nipple_clamp(character_id: int) -> int:
+    """
+    校验角色是否已持有乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[122]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_LOVE_EGG)
+def handle_have_love_egg(character_id: int) -> int:
+    """
+    校验角色是否已持有跳蛋
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[121]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLIT_CLAMP)
+def handle_have_clit_clamp(character_id: int) -> int:
+    """
+    校验角色是否已持有阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[123]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ELECTRIC_MESSAGE_STICK)
+def handle_have_electric_message_stick(character_id: int) -> int:
+    """
+    校验角色是否已持有电动按摩棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[124]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_VIBRATOR_INSERTION)
+def handle_have_vibrator_insertion(character_id: int) -> int:
+    """
+    校验角色是否已持有震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[125]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_MILKING_MACHINE)
+def handle_have_milking_machine(character_id: int) -> int:
+    """
+    校验角色是否已持有搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[133]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_URINE_COLLECTOR)
+def handle_have_urine_collector(character_id: int) -> int:
+    """
+    校验角色是否已持有采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[134]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BONDAGE)
+def handle_have_bondage(character_id: int) -> int:
+    """
+    校验角色是否已持有绳子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[135]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_PATCH)
+def handle_have_patch(character_id: int) -> int:
+    """
+    校验角色是否已持有眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[132]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIG_VIBRATOR_INSERTION)
+def handle_have_big_vibrator_insertion(character_id: int) -> int:
+    """
+    校验角色是否已持有加粗震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[126]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_HUGE_VIBRATOR_INSERTION)
+def handle_have_huge_vibrator_insertion(character_id: int) -> int:
+    """
+    校验角色是否已持有巨型震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[127]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLYSTER_TOOLS)
+def handle_have_clyster_tools(character_id: int) -> int:
+    """
+    校验角色是否已持有灌肠套装
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[128]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ANAL_BEADS)
+def handle_have_anal_beads(character_id: int) -> int:
+    """
+    校验角色是否已持有拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[129]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ANAL_PLUG)
+def handle_have_anal_plug(character_id: int) -> int:
+    """
+    校验角色是否已持有肛塞
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[130]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_WHIP)
+def handle_have_whip(character_id: int) -> int:
+    """
+    校验角色是否已持有鞭子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[131]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_NEEDLE)
+def handle_have_needle(character_id: int) -> int:
+    """
+    校验角色是否已持有针
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[137]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_COLLAR)
+def handle_have_collar(character_id: int) -> int:
+    """
+    校验角色是否已持有项圈
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[138]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_PUT_CONDOM)
+def handle_have_put_condom(character_id: int) -> int:
+    """
+    校验角色是否已持有避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[120]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_SAFE_CANDLES)
+def handle_have_safe_candles(character_id: int) -> int:
+    """
+    校验角色是否已持有低温蜡烛
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[136]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_COTTON_STICK)
+def handle_have_cotton_stick(character_id: int) -> int:
+    """
+    校验角色是否已持有无菌棉签
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[139]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIRTH_CONTROL_PILLS_BEFORE)
+def handle_have_birth_control_pills_before(character_id: int) -> int:
+    """
+    校验角色是否已持有事前避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[101]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIRTH_CONTROL_PILLS_AFTER)
+def handle_have_birth_control_pills_after(character_id: int) -> int:
+    """
+    校验角色是否已持有事后避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[102]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BODY_LUBRICANT)
+def handle_have_body_lubricant(character_id: int) -> int:
+    """
+    校验角色是否已持有润滑液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[100]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_PHILTER)
+def handle_have_philter(character_id: int) -> int:
+    """
+    校验角色是否已持有媚药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[103]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ENEMAS)
+def handle_have_enemas(character_id: int) -> int:
+    """
+    校验角色是否已持有灌肠液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[104]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_DIURETICS)
+def handle_have_diuretics(character_id: int) -> int:
+    """
+    校验角色是否已持有利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[105]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_SLEEPING_PILLS)
+def handle_have_sleeping_pills(character_id: int) -> int:
+    """
+    校验角色是否已持有睡眠药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[106]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLOMID)
+def handle_have_clomid(character_id: int) -> int:
+    """
+    校验角色是否已持有排卵促进药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[107]:
+        return 1
+    return 0
+
+
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:
 #     """

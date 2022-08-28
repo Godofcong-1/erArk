@@ -1766,14 +1766,14 @@ def handle_sixty_nine():
     _("乳头夹_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_NIPPLE_CLAMP},
 )
 def handle_nipple_clamp():
     """处理乳头夹指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    update.game_update_flow(10)
  
 @add_instruct(
     constant.Instruct.NIPPLES_LOVE_EGG,
@@ -1781,7 +1781,7 @@ def handle_nipple_clamp():
     _("乳头跳蛋_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_LOVE_EGG},
 )
 def handle_nipples_love_egg():
     """处理乳头跳蛋指令"""
@@ -1796,7 +1796,7 @@ def handle_nipples_love_egg():
     _("阴蒂夹_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_CLIT_CLAMP},
 )
 def handle_clit_clamp():
     """处理阴蒂夹指令"""
@@ -1811,7 +1811,7 @@ def handle_clit_clamp():
     _("阴蒂跳蛋_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_LOVE_EGG},
 )
 def handle_clit_love_egg():
     """处理阴蒂跳蛋指令"""
@@ -1826,7 +1826,7 @@ def handle_clit_love_egg():
     _("电动按摩棒_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_ELECTRIC_MESSAGE_STICK},
 )
 def handle_electric_message_stick():
     """处理电动按摩棒指令"""
@@ -1841,7 +1841,7 @@ def handle_electric_message_stick():
     _("震动棒_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_VIBRATOR_INSERTION},
 )
 def handle_vibrator_insertion():
     """处理震动棒指令"""
@@ -1856,7 +1856,7 @@ def handle_vibrator_insertion():
     _("肛门振动棒_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_VIBRATOR_INSERTION},
 )
 def handle_vibrator_insertion_anal():
     """处理肛门振动棒指令"""
@@ -1871,7 +1871,7 @@ def handle_vibrator_insertion_anal():
     _("搾乳机_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_MILKING_MACHINE},
 )
 def handle_milking_machine():
     """处理搾乳机指令"""
@@ -1886,7 +1886,7 @@ def handle_milking_machine():
     _("采尿器_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_URINE_COLLECTOR},
 )
 def handle_urine_collector():
     """处理采尿器指令"""
@@ -1901,7 +1901,7 @@ def handle_urine_collector():
     _("绳子_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_BONDAGE},
 )
 def handle_bondage():
     """处理绳子指令"""
@@ -1916,7 +1916,7 @@ def handle_bondage():
     _("眼罩_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_PATCH},
 )
 def handle_patch():
     """处理眼罩指令"""
@@ -1931,7 +1931,7 @@ def handle_patch():
     _("避孕套_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_PUT_CONDOM},
 )
 def handle_put_condom():
     """处理避孕套指令"""
@@ -1961,7 +1961,7 @@ def handle_birth_control_pills():
     _("润滑液_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_BODY_LUBRICANT},
 )
 def handle_body_lubricant():
     """处理润滑液指令"""
@@ -1976,7 +1976,7 @@ def handle_body_lubricant():
     _("媚药_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_PHILTER},
 )
 def handle_philter():
     """处理媚药指令"""
@@ -1991,7 +1991,7 @@ def handle_philter():
     _("灌肠液_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_ENEMAS},
 )
 def handle_enemas():
     """处理灌肠液指令"""
@@ -2006,7 +2006,7 @@ def handle_enemas():
     _("利尿剂_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_DIURETICS},
 )
 def handle_diuretics():
     """处理利尿剂指令"""
@@ -2021,7 +2021,7 @@ def handle_diuretics():
     _("睡眠药_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_SLEEPING_PILLS},
 )
 def handle_sleeping_pills():
     """处理睡眠药指令"""
@@ -2392,7 +2392,7 @@ def handle_double_penetration():
     _("尿道棉棒_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.TO_DO},
+    constant.Premise.HAVE_COTTON_STICK},
 )
 def handle_urethral_swab():
     """处理尿道棉棒指令"""
