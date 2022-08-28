@@ -49,7 +49,9 @@ class ItemShopPanel:
             line_feed.draw()
             line_feed.draw()
 
-            item_list = [i for i in game_config.config_item if i not in character_data.item]
+            # 商店里显示全部道具
+            # item_list = [i for i in game_config.config_item if i not in character_data.item]
+            item_list = [i for i in game_config.config_item]
             handle_panel.text_list = item_list
             handle_panel.update()
             handle_panel.draw()
@@ -88,11 +90,13 @@ class BuyItemByItemNameDraw:
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
+        self.character_data: game_type.Character = cache.character_data[0]
+        """ 人物属性 """
         name_draw = draw.NormalDraw()
         item_config = game_config.config_item[self.text]
-        if is_button:
+        index_text = text_handle.id_index(button_id)
+        if is_button and self.text not in self.character_data.item:
             if num_button:
-                index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text}{item_config.name}：{item_config.info}({item_config.price}龙门币)"
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.buy_item
@@ -105,8 +109,8 @@ class BuyItemByItemNameDraw:
                 self.button_return = item_config.name
             self.draw_text = button_text
         else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{item_config.name}]：{item_config.info}[{item_config.price}龙门币]"
+            name_draw = draw.LeftDraw()
+            name_draw.text = f"{index_text}{item_config.name}：{item_config.info}({item_config.price}龙门币)(已拥有)"
             name_draw.width = self.width
             self.draw_text = name_draw.text
         self.now_draw = name_draw
@@ -118,13 +122,12 @@ class BuyItemByItemNameDraw:
 
     def buy_item(self):
         py_cmd.clr_cmd()
-        character_data: game_type.Character = cache.character_data[0]
         item_config = game_config.config_item[self.text]
-        if character_data.money >= item_config.price:
-            character_data.item.add(self.text)
-            character_data.money -= item_config.price
+        if self.character_data.money >= item_config.price:
+            self.character_data.item.add(self.text)
+            self.character_data.money -= item_config.price
             now_text = _("{nickname}购买了{item_name}").format(
-                nickname=character_data.nick_name, item_name=item_config.name
+                nickname=self.character_data.nick_name, item_name=item_config.name
             )
         else:
             now_text = "你没有足够的金钱"
