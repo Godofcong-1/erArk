@@ -39,7 +39,7 @@ class SeeCharacterItemBagPanel:
         for item_id in item_list:
             if self.character_data.item[item_id] >= 1:
                 bag_item_list.append(item_id)
-        item_panel = panel.PageHandlePanel(item_list, ItemNameDraw, 20, 7, width, 1, 1, 0, "", "|")
+        item_panel = panel.PageHandlePanel(bag_item_list, ItemNameDraw, 50, 5, width, 1, 1, 0)
         self.handle_panel = item_panel
         """ 页面控制对象 """
 
@@ -100,10 +100,15 @@ class ItemNameDraw:
         item_config = game_config.config_item[self.text]
         item_name = item_config.name
         character_data = cache.character_data[0]
+        flag_consumables = item_config.tag in ["Drug","Consumables"]
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                self.draw_text = f"{index_text} {item_name}(持有{str(character_data.item[self.text])})"
+                self.draw_text = f"{index_text} {item_name}"
+                if flag_consumables:
+                    self.draw_text += "(持有" + str(character_data.item[self.text]) + ")"
+                else:
+                    self.draw_text += "(未持有)"
                 self.button_return = str(button_id)
             else:
                 self.draw_text = item_name
@@ -114,7 +119,7 @@ class ItemNameDraw:
     def draw(self):
         """绘制道具"""
         if self.is_button:
-            now_draw = draw.Button(self.draw_text, self.button_return, cmd_func=self.draw_item_info)
+            now_draw = draw.LeftButton(self.draw_text, self.button_return, self.width, cmd_func=self.draw_item_info)
         else:
             now_draw = draw.NormalDraw()
             now_draw.text = self.draw_text
