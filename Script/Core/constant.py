@@ -1627,6 +1627,8 @@ class BehaviorEffect:
     """ 交互对象增加1异常经验 """
     TARGET_ADD_1_Axillajob_EXPERIENCE = 262
     """ 交互对象增加1腋交经验 """
+    TARGET_ADD_1_Enema_EXPERIENCE = 263
+    """ 交互对象增加1灌肠经验 """
     TARGET_ADD_1_UnconsciouslyN_EXPERIENCE = 270
     """ 交互对象增加1无意识N经验 """
     TARGET_ADD_1_UnconsciouslyB_EXPERIENCE = 271

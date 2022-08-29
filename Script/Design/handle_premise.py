@@ -4487,8 +4487,8 @@ def handle_have_anal_plug(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.item[130]:
-        return 1
+    # if character_data.item[130]:
+        # return 1
     return 0
 
 
@@ -4711,7 +4711,8 @@ def handle_a_shit(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [1,3]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1,3]:
         return 1
     return 0
 
@@ -4725,7 +4726,8 @@ def handle_enema(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [1,3]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1,3]:
         return 1
     return 0
 
@@ -4740,7 +4742,8 @@ def handle_not_enema(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean not in [1,3]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean not in [1,3]:
         return 1
     return 0
 
@@ -4754,7 +4757,8 @@ def handle_enema_end(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [2,4]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [2,4]:
         return 1
     return 0
 
@@ -4768,7 +4772,8 @@ def handle_normal_enema(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [1]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1]:
         return 1
     return 0
 
@@ -4782,7 +4787,8 @@ def handle_semen_enema(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [3]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [3]:
         return 1
     return 0
 
@@ -4796,7 +4802,8 @@ def handle_normal_enema_end(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [2]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [2]:
         return 1
     return 0
 
@@ -4810,7 +4817,8 @@ def handle_semen_enema_end(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.dirty.a_clean in [4]:
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [4]:
         return 1
     return 0
 

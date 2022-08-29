@@ -1887,7 +1887,7 @@ def handle_vibrator_insertion_anal():
     constant.Premise.IS_H,
     constant.Premise.HAVE_CLYSTER_TOOLS,
     constant.Premise.NOT_ENEMA,
-    },
+    constant.Premise.HAVE_ENEMAS},
 )
 def handle_clyster():
     """处理灌肠指令"""
@@ -1920,7 +1920,7 @@ def handle_clyster_end():
 @add_instruct(
     constant.Instruct.ANAL_PLUG,
     constant.InstructType.SEX,
-    _("肛塞"),
+    _("肛塞_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_ANAL_PLUG,
