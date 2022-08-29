@@ -1763,7 +1763,7 @@ def handle_sixty_nine():
 @add_instruct(
     constant.Instruct.NIPPLE_CLAMP,
     constant.InstructType.SEX,
-    _("乳头夹_未实装"),
+    _("乳头夹"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_NIPPLE_CLAMP},
@@ -1772,13 +1772,15 @@ def handle_nipple_clamp():
     """处理乳头夹指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP
+    character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP
+    character_data.behavior.duration = 10
     update.game_update_flow(10)
  
 @add_instruct(
     constant.Instruct.NIPPLES_LOVE_EGG,
     constant.InstructType.SEX,
-    _("乳头跳蛋_未实装"),
+    _("乳头跳蛋"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_LOVE_EGG},
@@ -1787,13 +1789,15 @@ def handle_nipples_love_egg():
     """处理乳头跳蛋指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.NIPPLES_LOVE_EGG
+    character_data.state = constant.CharacterStatus.STATUS_NIPPLES_LOVE_EGG
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CLIT_CLAMP,
     constant.InstructType.SEX,
-    _("阴蒂夹_未实装"),
+    _("阴蒂夹"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_CLIT_CLAMP},
@@ -1802,13 +1806,15 @@ def handle_clit_clamp():
     """处理阴蒂夹指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.CLIT_LOVE_EGG,
     constant.InstructType.SEX,
-    _("阴蒂跳蛋_未实装"),
+    _("阴蒂跳蛋"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_LOVE_EGG},
@@ -1817,13 +1823,15 @@ def handle_clit_love_egg():
     """处理阴蒂跳蛋指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_LOVE_EGG
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_LOVE_EGG
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.ELECTRIC_MESSAGE_STICK,
     constant.InstructType.SEX,
-    _("电动按摩棒_未实装"),
+    _("电动按摩棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_ELECTRIC_MESSAGE_STICK},
@@ -1832,13 +1840,15 @@ def handle_electric_message_stick():
     """处理电动按摩棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.ELECTRIC_MESSAGE_STICK
+    character_data.state = constant.CharacterStatus.STATUS_ELECTRIC_MESSAGE_STICK
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION,
     constant.InstructType.SEX,
-    _("震动棒_未实装"),
+    _("震动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_VIBRATOR_INSERTION},
@@ -1847,13 +1857,15 @@ def handle_vibrator_insertion():
     """处理震动棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION
+    character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION_ANAL,
     constant.InstructType.SEX,
-    _("肛门振动棒_未实装"),
+    _("肛门振动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_VIBRATOR_INSERTION},
@@ -1862,13 +1874,88 @@ def handle_vibrator_insertion_anal():
     """处理肛门振动棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL
+    character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.CLYSTER,
+    constant.InstructType.SEX,
+    _("灌肠"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_CLYSTER_TOOLS,
+    constant.Premise.NOT_ENEMA,
+    },
+)
+def handle_clyster():
+    """处理灌肠指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.CLYSTER
+    character_data.state = constant.CharacterStatus.STATUS_CLYSTER
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.CLYSTER_END,
+    constant.InstructType.SEX,
+    _("拔出肛塞"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_CLYSTER_TOOLS,
+    constant.Premise.ENEMA,
+    },
+)
+def handle_clyster_end():
+    """处理拔出肛塞指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.CLYSTER_END
+    character_data.state = constant.CharacterStatus.STATUS_CLYSTER_END
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.ANAL_PLUG,
+    constant.InstructType.SEX,
+    _("肛塞"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_ANAL_PLUG,
+    constant.Premise.TO_DO},
+)
+def handle_anal_plug():
+    """处理肛塞指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.ANAL_PLUG
+    character_data.state = constant.CharacterStatus.STATUS_ANAL_PLUG
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.ANAL_BEADS,
+    constant.InstructType.SEX,
+    _("肛门拉珠"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_ANAL_BEADS},
+)
+def handle_anal_beads():
+    """处理肛门拉珠指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.ANAL_BEADS
+    character_data.state = constant.CharacterStatus.STATUS_ANAL_BEADS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.MILKING_MACHINE,
     constant.InstructType.SEX,
-    _("搾乳机_未实装"),
+    _("搾乳机"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_MILKING_MACHINE},
@@ -1877,13 +1964,15 @@ def handle_milking_machine():
     """处理搾乳机指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.MILKING_MACHINE
+    character_data.state = constant.CharacterStatus.STATUS_MILKING_MACHINE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.URINE_COLLECTOR,
     constant.InstructType.SEX,
-    _("采尿器_未实装"),
+    _("采尿器"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_URINE_COLLECTOR},
@@ -1892,13 +1981,15 @@ def handle_urine_collector():
     """处理采尿器指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.URINE_COLLECTOR
+    character_data.state = constant.CharacterStatus.STATUS_URINE_COLLECTOR
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BONDAGE,
     constant.InstructType.SEX,
-    _("绳子_未实装"),
+    _("绳子"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_BONDAGE},
@@ -1907,13 +1998,15 @@ def handle_bondage():
     """处理绳子指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BONDAGE
+    character_data.state = constant.CharacterStatus.STATUS_BONDAGE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.PATCH,
     constant.InstructType.SEX,
-    _("眼罩_未实装"),
+    _("眼罩"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_PATCH},
@@ -1922,23 +2015,78 @@ def handle_patch():
     """处理眼罩指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.PATCH
+    character_data.state = constant.CharacterStatus.STATUS_PATCH
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.WHIP,
+    constant.InstructType.SEX,
+    _("鞭子"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_WHIP},
+)
+def handle_whip():
+    """处理鞭子指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WHIP
+    character_data.state = constant.CharacterStatus.STATUS_WHIP
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.NEEDLE,
+    constant.InstructType.SEX,
+    _("针"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_NEEDLE},
+)
+def handle_neddle():
+    """处理针指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.NEEDLE
+    character_data.state = constant.CharacterStatus.STATUS_NEEDLE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.PUT_CONDOM,
     constant.InstructType.SEX,
-    _("避孕套_未实装"),
+    _("戴上避孕套"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_PUT_CONDOM},
+    constant.Premise.HAVE_CONDOM},
 )
 def handle_put_condom():
-    """处理避孕套指令"""
+    """处理戴上避孕套指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.PUT_CONDOM
+    character_data.state = constant.CharacterStatus.STATUS_PUT_CONDOM
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.SAFE_CANDLES,
+    constant.InstructType.SEX,
+    _("滴蜡"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_SAFE_CANDLES},
+)
+def handle_safe_candles():
+    """处理滴蜡指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.SAFE_CANDLES
+    character_data.state = constant.CharacterStatus.STATUS_SAFE_CANDLES
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.BIRTH_CONTROL_PILLS,
@@ -1958,7 +2106,7 @@ def handle_birth_control_pills():
 @add_instruct(
     constant.Instruct.BODY_LUBRICANT,
     constant.InstructType.SEX,
-    _("润滑液_未实装"),
+    _("润滑液"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_BODY_LUBRICANT},
@@ -1967,13 +2115,15 @@ def handle_body_lubricant():
     """处理润滑液指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.BODY_LUBRICANT
+    character_data.state = constant.CharacterStatus.STATUS_BODY_LUBRICANT
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.PHILTER,
     constant.InstructType.SEX,
-    _("媚药_未实装"),
+    _("媚药"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_PHILTER},
@@ -1982,8 +2132,10 @@ def handle_philter():
     """处理媚药指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.PHILTER
+    character_data.state = constant.CharacterStatus.STATUS_PHILTER
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.ENEMAS,
@@ -1991,7 +2143,8 @@ def handle_philter():
     _("灌肠液_未实装"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_ENEMAS},
+    constant.Premise.HAVE_ENEMAS,
+    constant.Premise.TO_DO},
 )
 def handle_enemas():
     """处理灌肠液指令"""
@@ -2003,7 +2156,7 @@ def handle_enemas():
 @add_instruct(
     constant.Instruct.DIURETICS,
     constant.InstructType.SEX,
-    _("利尿剂_未实装"),
+    _("利尿剂"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_DIURETICS},
@@ -2012,13 +2165,15 @@ def handle_diuretics():
     """处理利尿剂指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.DIURETICS
+    character_data.state = constant.CharacterStatus.STATUS_DIURETICS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.SLEEPING_PILLS,
     constant.InstructType.SEX,
-    _("睡眠药_未实装"),
+    _("睡眠药"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_SLEEPING_PILLS},
@@ -2027,8 +2182,27 @@ def handle_sleeping_pills():
     """处理睡眠药指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.SLEEPING_PILLS
+    character_data.state = constant.CharacterStatus.STATUS_SLEEPING_PILLS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.CLOMID,
+    constant.InstructType.SEX,
+    _("排卵促进药"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_CLOMID},
+)
+def handle_clomid():
+    """处理排卵促进药指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.CLOMID
+    character_data.state = constant.CharacterStatus.STATUS_CLOMID
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.NORMAL_SEX,
@@ -2389,7 +2563,7 @@ def handle_double_penetration():
 @add_instruct(
     constant.Instruct.URETHRAL_SWAB,
     constant.InstructType.SEX,
-    _("尿道棉棒_未实装"),
+    _("尿道棉棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.HAVE_COTTON_STICK},
@@ -2398,8 +2572,10 @@ def handle_urethral_swab():
     """处理尿道棉棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.behavior_id = constant.Behavior.URETHRAL_SWAB
+    character_data.state = constant.CharacterStatus.STATUS_URETHRAL_SWAB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
 
 @add_instruct(
     constant.Instruct.PISSING_PLAY,
@@ -2427,6 +2603,7 @@ def handle_pissing_play():
 def handle_urethral_insertion():
     """处理尿道插入指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
+    # if character.calculation_instuct_judege(0,character_data.target_character_id,"U性交"):
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)

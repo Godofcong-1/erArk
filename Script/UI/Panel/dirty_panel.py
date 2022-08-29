@@ -51,9 +51,13 @@ class Dirty_Panel:
             # 遍历全部位并输出结果
             # 部位列表[0"头发",1"脸部",2"口腔",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部",11"尾巴",12"兽角",13"兽耳"]
             # 服装列表[0"帽子",1"眼镜",2"耳部",3"脖子",4"嘴部",5"上衣",6"内衣（上）",7"手套",8"下衣",9"内衣（下）",10"袜子",11"鞋子",12"武器",13"附属物1",14"附属物2",15"附属物3",16"附属物4",17"附属物5"]
+            a_clean_list = [" <脏污>"," <灌肠中>"," <已灌肠清洁过>"," <精液灌肠中>"," <已精液灌肠过>"]
             now_text = "\n"
             for i in range(11):
                 now_text += "  " + target_data.dirty.body_semen[i][0] + "："
+                if i == 7:
+                    a_clean_text = a_clean_list[target_data.dirty.a_clean]
+                    now_text += a_clean_text
                 if i == 8:
                     now_text += " <残留的尿渍>"
                 if target_data.dirty.body_semen[i][1] != 0:

@@ -4537,8 +4537,8 @@ def handle_have_collar(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.HAVE_PUT_CONDOM)
-def handle_have_put_condom(character_id: int) -> int:
+@add_premise(constant.Premise.HAVE_CONDOM)
+def handle_have_condom(character_id: int) -> int:
     """
     校验角色是否已持有避孕套
     Keyword arguments:
@@ -4698,6 +4698,119 @@ def handle_have_clomid(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if character_data.item[107]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.A_SHIT)
+def handle_a_shit(character_id: int) -> int:
+    """
+    校验角色是否肠内脏污
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1,3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.ENEMA)
+def handle_enema(character_id: int) -> int:
+    """
+    校验角色是否正在灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1,3]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_ENEMA)
+def handle_not_enema(character_id: int) -> int:
+    """
+    校验角色是否非灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean not in [1,3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.ENEMA_END)
+def handle_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已灌肠（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [2,4]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.NORMAL_ENEMA)
+def handle_normal_enema(character_id: int) -> int:
+    """
+    校验角色是否普通灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.SEMEN_ENEMA)
+def handle_semen_enema(character_id: int) -> int:
+    """
+    校验角色是否精液灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.NORMAL_ENEMA_END)
+def handle_normal_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已普通灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [2]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.SEMEN_ENEMA_END)
+def handle_semen_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已精液灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [4]:
         return 1
     return 0
 

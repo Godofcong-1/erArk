@@ -134,6 +134,8 @@ def get_dirty_zero() -> dict:
         now_list = [cloth_text_list[i],0,0,0]
         dirty_data.cloth_semen.append(now_list)
 
+    dirty_data.a_clean = 0
+
     return dirty_data
 
 

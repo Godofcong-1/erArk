@@ -1200,6 +1200,218 @@ def handle_target_add_small_lubrication(
     target_change.status_data[8] += now_add_lust
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_BODY_LUBRICANT)
+def handle_use_body_lubricant(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    使用了一个润滑液
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[100] -= 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_HUGE_LUBRICATION)
+def handle_target_add_huge_lubrication(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加大量润滑（润滑液）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.status_data.setdefault(8, 0)
+    now_lust = target_data.status_data[8]
+    now_lust_multiple = 2000 + int(now_lust*0.5)
+    now_add_lust = now_lust_multiple
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_PHILTER)
+def handle_use_philter(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    使用了一个媚药
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[103] -= 1
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_HUGE_DESIRE_AND_SUBMIT)
+def handle_target_add_huge_desire_and_submit(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加大量好意和欲情（媚药）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+
+    # 欲情
+    target_data.status_data.setdefault(12, 0)
+    now_lust = target_data.status_data[12]
+    now_lust_multiple = 2000 + int(now_lust*0.5)
+    now_add_lust = now_lust_multiple
+    target_data.status_data[12] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(12, 0)
+    target_change.status_data[12] += now_add_lust
+    target_change.status_data[12] += now_add_lust
+
+    # 屈服
+    target_data.status_data.setdefault(15, 0)
+    now_lust = target_data.status_data[15]
+    now_lust_multiple = 2000 + int(now_lust*0.5)
+    now_add_lust = now_lust_multiple
+    target_data.status_data[15] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(15, 0)
+    target_change.status_data[15] += now_add_lust
+    target_change.status_data[15] += now_add_lust
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_ENEMAS)
+def handle_use_enemas(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    使用了一个灌肠液
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[104] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ENEMA)
+def handle_target_enema(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象A灌肠并增加中量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+
+    # 增加润滑
+    target_data.status_data.setdefault(8, 0)
+    now_lust = target_data.status_data[8]
+    now_lust_multiple = 500 + int(now_lust*0.1)
+    now_add_lust = now_lust_multiple
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+    # A灌肠
+    target_data.dirty.a_clean = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ENEMA_END)
+def handle_target_enema_end(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象结束A灌肠并增加中量润滑
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+
+    # 增加润滑
+    target_data.status_data.setdefault(8, 0)
+    now_lust = target_data.status_data[8]
+    now_lust_multiple = 500 + int(now_lust*0.1)
+    now_add_lust = now_lust_multiple
+    target_data.status_data[8] += now_add_lust
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.status_data.setdefault(8, 0)
+    target_change.status_data[8] += now_add_lust
+
+    # A灌肠结束
+    target_data.dirty.a_clean = 2
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
     character_id: int,

@@ -157,6 +157,58 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
+    STATUS_BODY_LUBRICANT = 451
+    """ 润滑液 """
+    STATUS_BIRTH_CONTROL_PILLS_BEFORE = 452
+    """ 事前避孕药 """
+    STATUS_BIRTH_CONTROL_PILLS_AFTER = 453
+    """ 事后避孕药 """
+    STATUS_PHILTER = 454
+    """ 媚药 """
+    STATUS_ENEMAS = 455
+    """ 灌肠液 """
+    STATUS_DIURETICS = 456
+    """ 利尿剂 """
+    STATUS_SLEEPING_PILLS = 457
+    """ 睡眠药 """
+    STATUS_CLOMID = 458
+    """ 排卵促进药 """
+    STATUS_PUT_CONDOM = 471
+    """ 戴上避孕套 """
+    STATUS_SAFE_CANDLES = 472
+    """ 低温蜡烛 """
+    STATUS_URETHRAL_SWAB = 473
+    """ 尿道棉棒 """
+    STATUS_NIPPLES_LOVE_EGG = 481
+    """ 乳头跳蛋 """
+    STATUS_NIPPLE_CLAMP = 482
+    """ 乳头夹 """
+    STATUS_CLIT_LOVE_EGG = 483
+    """ 阴蒂跳蛋 """
+    STATUS_CLIT_CLAMP = 484
+    """ 阴蒂夹 """
+    STATUS_ELECTRIC_MESSAGE_STICK = 485
+    """ 电动按摩棒 """
+    STATUS_VIBRATOR_INSERTION = 486
+    """ 震动棒 """
+    STATUS_BIG_VIBRATOR_INSERTION = 487
+    """ 加粗震动棒 """
+    STATUS_HUGE_VIBRATOR_INSERTION = 488
+    """ 巨型震动棒 """
+    STATUS_VIBRATOR_INSERTION_ANAL = 489
+    """ 肛门振动棒 """
+    STATUS_BIG_VIBRATOR_INSERTION_ANAL = 490
+    """ 加粗肛门震动棒 """
+    STATUS_HUGE_VIBRATOR_INSERTION_ANAL = 491
+    """ 巨型肛门震动棒 """
+    STATUS_CLYSTER = 492
+    """ 灌肠 """
+    STATUS_ANAL_PLUG = 493
+    """ 肛塞 """
+    STATUS_ANAL_BEADS = 494
+    """ 肛门拉珠 """
+    STATUS_CLYSTER_END = 495
+    """ 拔出肛塞 """
     STATUS_NORMAL_SEX = 501
     """ 正常位 """
     STATUS_BACK_SEX = 502
@@ -195,6 +247,18 @@ class CharacterStatus:
     """ 玩弄s状结肠 """
     STATUS_STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+    STATUS_MILKING_MACHINE = 601
+    """ 搾乳机 """
+    STATUS_URINE_COLLECTOR = 602
+    """ 采尿器 """
+    STATUS_BONDAGE = 603
+    """ 绳子 """
+    STATUS_PATCH = 604
+    """ 眼罩 """
+    STATUS_WHIP = 605
+    """ 鞭子 """
+    STATUS_NEEDLE = 606
+    """ 针 """
 
 
 class Behavior:
@@ -352,6 +416,58 @@ class Behavior:
     """ 深喉插入 """
     SIXTY_NINE = 431
     """ 六九式 """
+    BODY_LUBRICANT = 451
+    """ 润滑液 """
+    BIRTH_CONTROL_PILLS_BEFORE = 452
+    """ 事前避孕药 """
+    BIRTH_CONTROL_PILLS_AFTER = 453
+    """ 事后避孕药 """
+    PHILTER = 454
+    """ 媚药 """
+    ENEMAS = 455
+    """ 灌肠液 """
+    DIURETICS = 456
+    """ 利尿剂 """
+    SLEEPING_PILLS = 457
+    """ 睡眠药 """
+    CLOMID = 458
+    """ 排卵促进药 """
+    PUT_CONDOM = 471
+    """ 戴上避孕套 """
+    SAFE_CANDLES = 472
+    """ 低温蜡烛 """
+    URETHRAL_SWAB = 473
+    """ 尿道棉棒 """
+    NIPPLES_LOVE_EGG = 481
+    """ 乳头跳蛋 """
+    NIPPLE_CLAMP = 482
+    """ 乳头夹 """
+    CLIT_LOVE_EGG = 483
+    """ 阴蒂跳蛋 """
+    CLIT_CLAMP = 484
+    """ 阴蒂夹 """
+    ELECTRIC_MESSAGE_STICK = 485
+    """ 电动按摩棒 """
+    VIBRATOR_INSERTION = 486
+    """ 震动棒 """
+    BIG_VIBRATOR_INSERTION = 487
+    """ 加粗震动棒 """
+    HUGE_VIBRATOR_INSERTION = 488
+    """ 巨型震动棒 """
+    VIBRATOR_INSERTION_ANAL = 489
+    """ 肛门振动棒 """
+    BIG_VIBRATOR_INSERTION_ANAL = 490
+    """ 加粗肛门震动棒 """
+    HUGE_VIBRATOR_INSERTION_ANAL = 491
+    """ 巨型肛门震动棒 """
+    CLYSTER = 492
+    """ 灌肠 """
+    ANAL_PLUG = 493
+    """ 肛塞 """
+    ANAL_BEADS = 494
+    """ 肛门拉珠 """
+    CLYSTER_END = 495
+    """ 拔出肛塞 """
     NORMAL_SEX = 501
     """ 正常位 """
     BACK_SEX = 502
@@ -390,6 +506,19 @@ class Behavior:
     """ 玩弄s状结肠 """
     STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+
+    MILKING_MACHINE = 601
+    """ 搾乳机 """
+    URINE_COLLECTOR = 602
+    """ 采尿器 """
+    BONDAGE = 603
+    """ 绳子 """
+    PATCH = 604
+    """ 眼罩 """
+    WHIP = 605
+    """ 鞭子 """
+    NEEDLE = 606
+    """ 针 """
 
 
 class StateMachine:
@@ -1000,7 +1129,7 @@ class Premise:
     HAVE_COLLAR = "have_collar"
     """ 已持有项圈 """
 
-    HAVE_PUT_CONDOM = "have_put_condom"
+    HAVE_CONDOM = "have_condom"
     """ 已持有避孕套 """
     HAVE_SAFE_CANDLES = "have_safe_candles"
     """ 已持有低温蜡烛 """
@@ -1024,6 +1153,22 @@ class Premise:
     HAVE_CLOMID = "have_clomid"
     """ 已持有排卵促进药 """
 
+    A_SHIT = "a_shit"
+    """ 肠内脏污 """
+    ENEMA = "enema"
+    """ 正在灌肠中（含全种类灌肠） """
+    NOT_ENEMA = "not_enema"
+    """ 非灌肠中（含全种类灌肠） """
+    ENEMA_END = "enema_end"
+    """ 已灌肠（含全种类灌肠） """
+    NORMAL_ENEMA = "normal_enema"
+    """ 普通灌肠中 """
+    SEMEN_ENEMA = "semen_enema"
+    """ 精液灌肠中 """
+    NORMAL_ENEMA_END = "normal_enema_end"
+    """ 已普通灌肠 """
+    SEMEN_ENEMA_END = "semen_enema_end"
+    """ 已精液灌肠 """
 
     HYPOSTHENIA = "83"
     """ 体力不足 """
@@ -1328,6 +1473,22 @@ class BehaviorEffect:
     """ 自身增加少量Ｐ快 """
     DOWN_ADD_SMALL_LEARN = 71
     """ 双方增加少量习得（若没有交互对象则仅增加自己） """
+
+    USE_BODY_LUBRICANT = 80
+    """ 使用了一个润滑液 """
+    TARGET_ADD_HUGE_LUBRICATION = 81
+    """ 交互对象增加大量润滑（润滑液） """
+    USE_PHILTER = 82
+    """ 使用了一个媚药 """
+    TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 83
+    """ 交互对象增加大量欲情和屈服（媚药） """
+    USE_ENEMAS = 84
+    """ 使用了一个灌肠液 """
+    TARGET_ENEMA = 85
+    """ 交互对象A灌肠并增加中量润滑 """
+    TARGET_ENEMA_END = 86
+    """ 交互对象结束A灌肠并增加中量润滑 """
+
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101
@@ -1861,10 +2022,10 @@ class Instruct:
     """ 深喉插入 """
     SIXTY_NINE = 0
     """ 六九式 """
-    BIRTH_CONTROL_PILLS = 0
-    """ 避孕药 """
     BODY_LUBRICANT = 0
     """ 润滑液 """
+    BIRTH_CONTROL_PILLS = 0
+    """ 避孕药 """
     PHILTER = 0
     """ 媚药 """
     ENEMAS = 0
@@ -1873,20 +2034,44 @@ class Instruct:
     """ 利尿剂 """
     SLEEPING_PILLS = 0
     """ 睡眠药 """
-    NIPPLE_CLAMP = 0
-    """ 乳头夹 """
+    CLOMID = 0
+    """ 排卵促进药 """
+    PUT_CONDOM = 0
+    """ 戴上避孕套 """
+    SAFE_CANDLES = 0
+    """ 滴蜡 """
+    URETHRAL_SWAB = 0
+    """ 尿道棉棒 """
     NIPPLES_LOVE_EGG = 0
     """ 乳头跳蛋 """
-    CLIT_CLAMP = 0
-    """ 阴蒂夹 """
+    NIPPLE_CLAMP = 0
+    """ 乳头夹 """
     CLIT_LOVE_EGG = 0
     """ 阴蒂跳蛋 """
+    CLIT_CLAMP = 0
+    """ 阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 0
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 0
     """ 震动棒 """
+    BIG_VIBRATOR_INSERTION = 0
+    """ 加粗震动棒 """
+    HUGE_VIBRATOR_INSERTION = 0
+    """ 巨型震动棒 """
     VIBRATOR_INSERTION_ANAL = 0
     """ 肛门振动棒 """
+    BIG_VIBRATOR_INSERTION_ANAL = 0
+    """ 加粗肛门震动棒 """
+    HUGE_VIBRATOR_INSERTION_ANAL = 0
+    """ 巨型肛门震动棒 """
+    CLYSTER = 0
+    """ 灌肠 """
+    ANAL_PLUG = 0
+    """ 肛塞 """
+    ANAL_BEADS = 0
+    """ 肛门拉珠 """
+    CLYSTER_END = 0
+    """ 拔出肛塞 """
     MILKING_MACHINE = 0
     """ 搾乳机 """
     URINE_COLLECTOR = 0
@@ -1895,8 +2080,10 @@ class Instruct:
     """ 绳子 """
     PATCH = 0
     """ 眼罩 """
-    PUT_CONDOM = 0
-    """ 避孕套 """
+    WHIP = 0
+    """ 鞭子 """
+    NEEDLE = 0
+    """ 针 """
     NORMAL_SEX = 0
     """ 正常位 """
     BACK_SEX = 0
@@ -1937,8 +2124,6 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
-    URETHRAL_SWAB = 0
-    """ 尿道棉棒 """
     PISSING_PLAY = 0
     """ 放尿play """
     URETHRAL_INSERTION = 0
