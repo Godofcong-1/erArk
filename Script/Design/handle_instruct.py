@@ -146,7 +146,7 @@ def handle_chat():
     character_data = cache.character_data[0]
     character_data.behavior.duration = 5
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.talk_count > character_data.ability[25] + 1:
+    if target_data.talk_count > character_data.ability[40] + 1:
         character_data.behavior.behavior_id = constant.Behavior.CHAT_FAILED
         character_data.state = constant.CharacterStatus.STATUS_CHAT_FAILED
     else:
@@ -669,7 +669,7 @@ def handle_apologize():
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     #根据口才获取调整值#
     character_data.ability.setdefault(25, 0)
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[25])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     value = 10 + adjust*10
     #减愤怒值
     target_data.angry_point -= value
@@ -700,7 +700,7 @@ def handle_listen_complaint():
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     #根据口才获取调整值#
     character_data.ability.setdefault(25, 0)
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[25])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     value = 10 + adjust*10
     #减愤怒值
     target_data.angry_point -= value

@@ -70,6 +70,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         now_draw.width = width
         # now_draw.draw()
         now_text_list.append(now_draw.text)
+
+        # 体力/气力/射精的结算输出
         if status_data.hit_point and round(status_data.hit_point, 2) != 0:
             now_text_list.append(
                 _("\n  体力") + text_handle.number_to_symbol_string(int(status_data.hit_point))
@@ -82,31 +84,49 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             now_text_list.append(
                 _("\n  射精") + text_handle.number_to_symbol_string(int(status_data.eja_point))
             )
+
+        # 状态的结算输出
         if len(status_data.status_data):
             now_text_list.extend(
                 [
-                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
+                    f"\n\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
                     for i in status_data.status_data
                 ]
             )
+
+        # 经验的结算输出
         if len(status_data.experience):
             now_text_list.extend(
                 [
-                    _("\n  ")
+                    _("\n\n  ")
                     + game_config.config_experience[i].name
                     + _(":")
                     + text_handle.number_to_symbol_string(status_data.experience[i])
                     for i in status_data.experience
                 ]
             )
+
+        # 非常见结算输出
+        if status_data.money:
+            now_text_list.extend(
+                [
+                    _("\n\n  获得龙门币:")
+                    + text_handle.number_to_symbol_string(status_data.money)
+                ]
+            )
+
+
+        # 交互对象的结算输出
         if len(status_data.target_change):
             for target_character_id in status_data.target_change:
                 if character_id and target_character_id:
                     continue
                 target_change: game_type.TargetChange = status_data.target_change[target_character_id]
                 target_data: game_type.Character = cache.character_data[target_character_id]
-                now_text = f"\n{target_data.name}:"
+                now_text = f"\n\n{target_data.name}:"
                 judge = 0
+
+                # 体力/气力/好感/信赖的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
                     now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(target_change.hit_point))
                     judge = 1
@@ -133,22 +153,24 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 #         + game_config.config_social_type[target_change.new_social].name
                 #     )
                 #     judge = 1
+                # 状态的结算输出
                 if len(target_change.status_data):
                     for status_id in target_change.status_data:
                         if target_change.status_data[status_id]:
                             now_text += (
-                                "\n  "
+                                "\n\n  "
                                 + game_config.config_character_state[status_id].name
                                 + text_handle.number_to_symbol_string(
                                     int(target_change.status_data[status_id])
                                 )
                             )
                             judge = 1
+                # 经验的结算输出
                 if len(target_change.experience):
                     for experience_id in target_change.experience:
                         if target_change.experience[experience_id]:
                             now_text += (
-                                "\n  "
+                                "\n\n  "
                                 + game_config.config_experience[experience_id].name
                                 + _(":")
                                 + text_handle.number_to_symbol_string(

@@ -983,7 +983,7 @@ def handle_cook_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 1:
+    if character_data.ability[43] == 1:
         return 1
     return 0
 
@@ -998,7 +998,7 @@ def handle_cook_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 2:
+    if character_data.ability[43] == 2:
         return 1
     return 0
 
@@ -1013,7 +1013,7 @@ def handle_cook_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 3:
+    if character_data.ability[43] == 3:
         return 1
     return 0
 
@@ -1028,7 +1028,7 @@ def handle_cook_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 4:
+    if character_data.ability[43] == 4:
         return 1
     return 0
 
@@ -1043,7 +1043,7 @@ def handle_cook_le_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] <= 1:
+    if character_data.ability[43] <= 1:
         return 1
     return 0
 
@@ -1058,7 +1058,7 @@ def handle_cook_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] >= 3:
+    if character_data.ability[43] >= 3:
         return 1
     return 0
 
@@ -1073,7 +1073,7 @@ def handle_cook_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] >= 5:
+    if character_data.ability[43] >= 5:
         return 1
     return 0
 
@@ -1088,7 +1088,7 @@ def handle_music_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 1:
+    if character_data.ability[44] == 1:
         return 1
     return 0
 
@@ -1103,7 +1103,7 @@ def handle_music_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 2:
+    if character_data.ability[44] == 2:
         return 1
     return 0
 
@@ -1118,7 +1118,7 @@ def handle_music_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 3:
+    if character_data.ability[44] == 3:
         return 1
     return 0
 
@@ -1133,7 +1133,7 @@ def handle_music_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 4:
+    if character_data.ability[44] == 4:
         return 1
     return 0
 
@@ -1148,7 +1148,7 @@ def handle_music_le_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] <= 1:
+    if character_data.ability[44] <= 1:
         return 1
     return 0
 
@@ -1163,7 +1163,7 @@ def handle_music_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] >= 3:
+    if character_data.ability[44] >= 3:
         return 1
     return 0
 
@@ -1178,7 +1178,7 @@ def handle_music_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] >= 5:
+    if character_data.ability[44] >= 5:
         return 1
     return 0
 

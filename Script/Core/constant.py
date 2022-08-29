@@ -1499,6 +1499,8 @@ class BehaviorEffect:
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
+    KONWLEDGE_ADD_MONEY = 105
+    """ 根据自己（再加上交互对象的）学识获得少量金钱 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -1652,7 +1654,7 @@ class BehaviorEffect:
     TARGET_ADD_1_Combat_EXPERIENCE = 281
     """ 交互对象增加1战斗经验 """
     TARGET_ADD_1_Learn_EXPERIENCE = 282
-    """ 交互对象增加1学习经验 """
+    """ 交互对象增加1学识经验 """
     TARGET_ADD_1_Cooking_EXPERIENCE = 283
     """ 交互对象增加1料理经验 """
     TARGET_ADD_1_Date_EXPERIENCE = 284
@@ -1692,7 +1694,7 @@ class BehaviorEffect:
     ADD_1_Combat_EXPERIENCE = 314
     """ 增加1战斗经验 """
     ADD_1_Learn_EXPERIENCE = 315
-    """ 增加1学习经验 """
+    """ 增加1学识经验 """
     ADD_1_Cooking_EXPERIENCE = 316
     """ 增加1料理经验 """
     ADD_1_Date_EXPERIENCE = 317
@@ -1705,6 +1707,8 @@ class BehaviorEffect:
     """ 增加1插入经验 """
     ADD_1_Insert_COMMAND = 321
     """ 增加1指挥经验 """
+    Both_ADD_1_Learn_EXPERIENCE = 350
+    """ 自己（和对方一起）增加1学识经验 """
 
 class SecondBehavior:
     """二段结算行为函数"""

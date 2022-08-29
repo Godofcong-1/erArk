@@ -1556,7 +1556,7 @@ class CharacterBodyText:
                         kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
                         kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
                     )
-            if character_data.ability[31] == 0:
+            if character_data.ability[71] == 0:
                 now_text += "  普普通通的舌头\n"
             if character_data.dirty.body_semen[2][3] == 0:
                 now_text += "  未品尝过精液\n"

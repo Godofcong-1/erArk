@@ -691,3 +691,5 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.money: int = 0
+        """ 金钱变化 """

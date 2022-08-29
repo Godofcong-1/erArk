@@ -263,7 +263,7 @@ def init_makefood_data():
     food_list = {}
     cache.makefood_data = {}
     for recipes_id in recipe_data:
-        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
+        if character_data.ability[43] >= recipe_data[recipes_id].difficulty:
             new_food = cook(food_list, recipes_id, 5, "")
             cache.makefood_data.setdefault(str(recipes_id), {})
             cache.makefood_data[str(recipes_id)][new_food.uid] = new_food
