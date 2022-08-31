@@ -46,7 +46,7 @@ def init_attr(character_id: int):
     character_data.item = attr_calculation.get_item_zero(character_data.item)
 
 
-    #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物
+    #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000

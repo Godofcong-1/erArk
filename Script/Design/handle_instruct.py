@@ -878,6 +878,10 @@ def handle_do_h():
         # 自动开启性爱面板
         if not cache.instruct_filter[5]:
             cache.instruct_filter[5] = 1
+
+        # 清零H状态函数
+        target_data.h_state = attr_calculation.get_h_state_zero()
+
     else:
         now_draw = draw.WaitDraw()
         now_draw.width = width
@@ -1761,22 +1765,41 @@ def handle_sixty_nine():
     update.game_update_flow(10)
 
 @add_instruct(
-    constant.Instruct.NIPPLE_CLAMP,
+    constant.Instruct.NIPPLE_CLAMP_ON,
     constant.InstructType.SEX,
-    _("乳头夹"),
+    _("戴上乳头夹"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_NIPPLE_CLAMP},
+    constant.Premise.HAVE_NIPPLE_CLAMP,
+    constant.Premise.TARGET_NOT_NIPPLE_CLAMP},
 )
-def handle_nipple_clamp():
-    """处理乳头夹指令"""
+def handle_nipple_clamp_on():
+    """处理戴上乳头夹指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP
-    character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP
+    character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP_ON
+    character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP_ON
     character_data.behavior.duration = 10
     update.game_update_flow(10)
- 
+
+@add_instruct(
+    constant.Instruct.NIPPLE_CLAMP_OFF,
+    constant.InstructType.SEX,
+    _("取下乳头夹"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_NIPPLE_CLAMP,
+    constant.Premise.TARGET_NOW_NIPPLE_CLAMP},
+)
+def handle_nipple_clamp_off():
+    """处理取下乳头夹指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP_OFF
+    character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP_OFF
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
 @add_instruct(
     constant.Instruct.NIPPLES_LOVE_EGG,
     constant.InstructType.SEX,
@@ -1795,21 +1818,41 @@ def handle_nipples_love_egg():
     update.game_update_flow(10)
 
 @add_instruct(
-    constant.Instruct.CLIT_CLAMP,
+    constant.Instruct.CLIT_CLAMP_ON,
     constant.InstructType.SEX,
-    _("阴蒂夹"),
+    _("戴上阴蒂夹"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_CLIT_CLAMP},
+    constant.Premise.HAVE_CLIT_CLAMP,
+    constant.Premise.TARGET_NOT_CLIT_CLAMP},
 )
-def handle_clit_clamp():
-    """处理阴蒂夹指令"""
+def handle_clit_clamp_on():
+    """处理戴上阴蒂夹指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP
-    character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP_ON
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP_ON
     character_data.behavior.duration = 10
     update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.CLIT_CLAMP_OFF,
+    constant.InstructType.SEX,
+    _("取下阴蒂夹"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_CLIT_CLAMP,
+    constant.Premise.TARGET_NOW_CLIT_CLAMP},
+)
+def handle_clit_clamp_off():
+    """处理取下阴蒂夹指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP_OFF
+    character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP_OFF
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
 
 @add_instruct(
     constant.Instruct.CLIT_LOVE_EGG,
@@ -1848,13 +1891,13 @@ def handle_electric_message_stick():
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION,
     constant.InstructType.SEX,
-    _("震动棒"),
+    _("插入震动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_VIBRATOR_INSERTION},
+    constant.Premise.HAVE_VIBRATOR},
 )
 def handle_vibrator_insertion():
-    """处理震动棒指令"""
+    """处理插入震动棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION
@@ -1865,13 +1908,13 @@ def handle_vibrator_insertion():
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION_ANAL,
     constant.InstructType.SEX,
-    _("肛门振动棒"),
+    _("肛门插入振动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_VIBRATOR_INSERTION},
+    constant.Premise.HAVE_VIBRATOR},
 )
 def handle_vibrator_insertion_anal():
-    """处理肛门振动棒指令"""
+    """处理肛门插入振动棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL

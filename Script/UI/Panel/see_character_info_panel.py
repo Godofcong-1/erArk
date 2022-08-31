@@ -339,6 +339,85 @@ class SeeCharacterStatusPanel:
             else:
                 label.draw()
 
+class SeeCharacterHStatePanel:
+    """
+    显示角色H状态面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, type_number: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        self.type_number = type_number
+        """ 显示的状态类型 """
+        character_data = cache.character_data[0]
+        target_character_data = cache.character_data[character_data.target_character_id]
+        # print("game_config.config_character_state_type :",game_config.config_character_state_type)
+        # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
+
+
+        type_line = draw.LittleTitleLineDraw("H状态", width, ":")
+        # print("type_data.name :",type_data.name)
+        self.draw_list.append(type_line)
+
+        status_text_list = []
+        bondage_text_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
+        enemas_text_list = ["脏污","灌肠中","已灌肠","精液灌肠中","已精液灌肠"]
+        body_item_set = target_character_data.h_state.body_item
+
+        # 道具文本
+        for i in range(10):
+            # print("status_type :",status_type)
+            if body_item_set[i][1]:
+                status_text = body_item_set[i][0]
+
+                now_text = f"   <{status_text}>"
+                status_text_list.append(now_text)
+            # print("status_text_list :",status_text_list)
+
+        # 绳子文本
+        if target_character_data.h_state.bondage:
+            now_text = f"   <{bondage_text_list[target_character_data.h_state.bondage]}>"
+            status_text_list.append(now_text)
+
+        # 灌肠文本
+        if target_character_data.dirty.a_clean:
+            now_text = f"   <{enemas_text_list[target_character_data.dirty.a_clean]}>"
+            status_text_list.append(now_text)
+
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(status_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
 
 class CharacterInfoHead:
     """

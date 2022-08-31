@@ -123,6 +123,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         #5.自动存档，用玩家id来限制只存一次
         if character_id == 0:
             save_handle.establish_save("auto")
+        #6.清零污浊状态
+        character_data.dirty = attr_calculation.get_dirty_zero()
     #处理跟随与H模式#
     if character_id != 0:
         judge_character_follow(character_id)

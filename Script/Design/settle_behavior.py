@@ -87,18 +87,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
 
         # 状态的结算输出
         if len(status_data.status_data):
+            now_text_list += "\n"
             now_text_list.extend(
                 [
-                    f"\n\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
+                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
                     for i in status_data.status_data
                 ]
             )
 
         # 经验的结算输出
         if len(status_data.experience):
+            now_text_list += "\n"
             now_text_list.extend(
                 [
-                    _("\n\n  ")
+                    _("\n  ")
                     + game_config.config_experience[i].name
                     + _(":")
                     + text_handle.number_to_symbol_string(status_data.experience[i])
@@ -155,10 +157,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 #     judge = 1
                 # 状态的结算输出
                 if len(target_change.status_data):
+                    now_text += "\n"
                     for status_id in target_change.status_data:
                         if target_change.status_data[status_id]:
                             now_text += (
-                                "\n\n  "
+                                "\n  "
                                 + game_config.config_character_state[status_id].name
                                 + text_handle.number_to_symbol_string(
                                     int(target_change.status_data[status_id])
@@ -167,10 +170,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                             judge = 1
                 # 经验的结算输出
                 if len(target_change.experience):
+                    now_text += "\n"
                     for experience_id in target_change.experience:
                         if target_change.experience[experience_id]:
                             now_text += (
-                                "\n\n  "
+                                "\n  "
                                 + game_config.config_experience[experience_id].name
                                 + _(":")
                                 + text_handle.number_to_symbol_string(

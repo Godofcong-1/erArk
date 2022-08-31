@@ -181,12 +181,12 @@ class CharacterStatus:
     """ 尿道棉棒 """
     STATUS_NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
-    STATUS_NIPPLE_CLAMP = 482
-    """ 乳头夹 """
+    STATUS_NIPPLE_CLAMP_ON = 482
+    """ 戴上乳头夹 """
     STATUS_CLIT_LOVE_EGG = 483
     """ 阴蒂跳蛋 """
-    STATUS_CLIT_CLAMP = 484
-    """ 阴蒂夹 """
+    STATUS_CLIT_CLAMP_ON = 484
+    """ 戴上阴蒂夹 """
     STATUS_ELECTRIC_MESSAGE_STICK = 485
     """ 电动按摩棒 """
     STATUS_VIBRATOR_INSERTION = 486
@@ -209,6 +209,16 @@ class CharacterStatus:
     """ 肛门拉珠 """
     STATUS_CLYSTER_END = 495
     """ 拔出肛塞 """
+    STATUS_NIPPLE_CLAMP_OFF = 496
+    """ 取下乳头夹 """
+    STATUS_CLIT_CLAMP_OFF = 497
+    """ 取下阴蒂夹 """
+    STATUS_VIBRATOR_INSERTION_OFF = 498
+    """ 拔出振动棒 """
+    STATUS_VIBRATOR_INSERTION_ANAL_OFF = 499
+    """ 拔出肛门振动棒 """
+    STATUS_ANAL_BEADS_OFF = 500
+    """ 拔出肛门拉珠 """
     STATUS_NORMAL_SEX = 501
     """ 正常位 """
     STATUS_BACK_SEX = 502
@@ -440,12 +450,12 @@ class Behavior:
     """ 尿道棉棒 """
     NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
-    NIPPLE_CLAMP = 482
-    """ 乳头夹 """
+    NIPPLE_CLAMP_ON = 482
+    """ 戴上乳头夹 """
     CLIT_LOVE_EGG = 483
     """ 阴蒂跳蛋 """
-    CLIT_CLAMP = 484
-    """ 阴蒂夹 """
+    CLIT_CLAMP_ON = 484
+    """ 戴上阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 485
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 486
@@ -468,6 +478,16 @@ class Behavior:
     """ 肛门拉珠 """
     CLYSTER_END = 495
     """ 拔出肛塞 """
+    NIPPLE_CLAMP_OFF = 496
+    """ 取下乳头夹 """
+    CLIT_CLAMP_OFF = 497
+    """ 取下阴蒂夹 """
+    VIBRATOR_INSERTION_OFF = 498
+    """ 拔出振动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 499
+    """ 拔出肛门振动棒 """
+    ANAL_BEADS_OFF = 500
+    """ 拔出肛门拉珠 """
     NORMAL_SEX = 501
     """ 正常位 """
     BACK_SEX = 502
@@ -1096,13 +1116,21 @@ class Premise:
 
     HAVE_NIPPLE_CLAMP = "have_nipple_clamp"
     """ 已持有乳头夹 """
+    TARGET_NOW_NIPPLE_CLAMP = "target_now_nipple_clamp"
+    """ 交互对象正在乳头夹 """
+    TARGET_NOT_NIPPLE_CLAMP = "target_not_nipple_clamp"
+    """ 交互对象没有在乳头夹 """
     HAVE_LOVE_EGG = "have_love_egg"
     """ 已持有跳蛋 """
     HAVE_CLIT_CLAMP = "have_clit_clamp"
     """ 已持有阴蒂夹 """
+    TARGET_NOW_CLIT_CLAMP = "target_now_clit_clamp"
+    """ 交互对象正在阴蒂夹 """
+    TARGET_NOT_CLIT_CLAMP = "target_not_clit_clamp"
+    """ 交互对象没有在阴蒂夹 """
     HAVE_ELECTRIC_MESSAGE_STICK = "have_electric_message_stick"
     """ 已持有电动按摩棒 """
-    HAVE_VIBRATOR_INSERTION = "have_vibrator_insertion"
+    HAVE_VIBRATOR = "have_vibrator"
     """ 已持有震动棒 """
     HAVE_MILKING_MACHINE = "have_milking_machine"
     """ 已持有搾乳机 """
@@ -1112,9 +1140,9 @@ class Premise:
     """ 已持有绳子 """
     HAVE_PATCH = "have_patch"
     """ 已持有眼罩 """
-    HAVE_BIG_VIBRATOR_INSERTION = "have_big_vibrator_insertion"
+    HAVE_BIG_VIBRATOR = "have_big_vibrator"
     """ 已持有加粗震动棒 """
-    HAVE_HUGE_VIBRATOR_INSERTION = "have_huge_vibrator_insertion"
+    HAVE_HUGE_VIBRATOR = "have_huge_vibrator"
     """ 已持有巨型震动棒 """
     HAVE_CLYSTER_TOOLS = "have_clyster_tools"
     """ 已持有灌肠套装 """
@@ -1488,6 +1516,14 @@ class BehaviorEffect:
     """ 交互对象A灌肠并增加中量润滑 """
     TARGET_ENEMA_END = 86
     """ 交互对象结束A灌肠并增加中量润滑 """
+    TARGET_NIPPLE_CLAMP_ON = 87
+    """ 交互对象戴上乳头夹 """
+    TARGET_NIPPLE_CLAMP_OFF = 88
+    """ 交互对象取下乳头夹 """
+    TARGET_CLIT_CLAMP_ON = 89
+    """ 交互对象戴上阴蒂夹 """
+    TARGET_CLIT_CLAMP_OFF = 90
+    """ 交互对象取下阴蒂夹 """
 
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -2050,22 +2086,22 @@ class Instruct:
     """ 尿道棉棒 """
     NIPPLES_LOVE_EGG = 0
     """ 乳头跳蛋 """
-    NIPPLE_CLAMP = 0
-    """ 乳头夹 """
+    NIPPLE_CLAMP_ON = 0
+    """ 戴上乳头夹 """
     CLIT_LOVE_EGG = 0
     """ 阴蒂跳蛋 """
-    CLIT_CLAMP = 0
-    """ 阴蒂夹 """
+    CLIT_CLAMP_ON = 0
+    """ 戴上阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 0
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 0
-    """ 震动棒 """
+    """ 插入震动棒 """
     BIG_VIBRATOR_INSERTION = 0
     """ 加粗震动棒 """
     HUGE_VIBRATOR_INSERTION = 0
     """ 巨型震动棒 """
     VIBRATOR_INSERTION_ANAL = 0
-    """ 肛门振动棒 """
+    """ 肛门插入振动棒 """
     BIG_VIBRATOR_INSERTION_ANAL = 0
     """ 加粗肛门震动棒 """
     HUGE_VIBRATOR_INSERTION_ANAL = 0
@@ -2078,6 +2114,16 @@ class Instruct:
     """ 肛门拉珠 """
     CLYSTER_END = 0
     """ 拔出肛塞 """
+    NIPPLE_CLAMP_OFF = 0
+    """ 取下乳头夹 """
+    CLIT_CLAMP_OFF = 0
+    """ 取下阴蒂夹 """
+    VIBRATOR_INSERTION_OFF = 0
+    """ 拔出振动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 0
+    """ 拔出肛门振动棒 """
+    ANAL_BEADS_OFF = 0
+    """ 拔出肛门拉珠 """
     MILKING_MACHINE = 0
     """ 搾乳机 """
     URINE_COLLECTOR = 0

@@ -4297,6 +4297,38 @@ def handle_have_nipple_clamp(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_NOW_NIPPLE_CLAMP)
+def handle_target_now_nipple_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否正在乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[0][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_NIPPLE_CLAMP)
+def handle_target_not_nipple_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否没有在乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[0][1]:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.HAVE_LOVE_EGG)
 def handle_have_love_egg(character_id: int) -> int:
     """
@@ -4327,6 +4359,37 @@ def handle_have_clit_clamp(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_NOW_CLIT_CLAMP)
+def handle_target_now_clit_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否正在阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[1][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_CLIT_CLAMP)
+def handle_target_not_clit_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否没有在阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[1][1]:
+        return 0
+    return 1
+
 @add_premise(constant.Premise.HAVE_ELECTRIC_MESSAGE_STICK)
 def handle_have_electric_message_stick(character_id: int) -> int:
     """
@@ -4342,8 +4405,8 @@ def handle_have_electric_message_stick(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.HAVE_VIBRATOR_INSERTION)
-def handle_have_vibrator_insertion(character_id: int) -> int:
+@add_premise(constant.Premise.HAVE_VIBRATOR)
+def handle_have_vibrator(character_id: int) -> int:
     """
     校验角色是否已持有震动棒
     Keyword arguments:
@@ -4417,8 +4480,8 @@ def handle_have_patch(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.HAVE_BIG_VIBRATOR_INSERTION)
-def handle_have_big_vibrator_insertion(character_id: int) -> int:
+@add_premise(constant.Premise.HAVE_BIG_VIBRATOR)
+def handle_have_big_vibrator(character_id: int) -> int:
     """
     校验角色是否已持有加粗震动棒
     Keyword arguments:
@@ -4432,8 +4495,8 @@ def handle_have_big_vibrator_insertion(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.HAVE_HUGE_VIBRATOR_INSERTION)
-def handle_have_huge_vibrator_insertion(character_id: int) -> int:
+@add_premise(constant.Premise.HAVE_HUGE_VIBRATOR)
+def handle_have_huge_vibrator(character_id: int) -> int:
     """
     校验角色是否已持有巨型震动棒
     Keyword arguments:

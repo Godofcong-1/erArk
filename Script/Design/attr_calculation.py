@@ -126,17 +126,33 @@ def get_dirty_zero() -> dict:
     position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
     cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
 
-    for i in range(14):
-        now_list = [position_text_list[i],0,0,0]
+    for position_text in position_text_list:
+        now_list = [position_text,0,0,0]
         dirty_data.body_semen.append(now_list)
 
-    for i in range(18):
-        now_list = [cloth_text_list[i],0,0,0]
+    for cloth_text in cloth_text_list:
+        now_list = [cloth_text,0,0,0]
         dirty_data.cloth_semen.append(now_list)
 
     dirty_data.a_clean = 0
 
     return dirty_data
+
+def get_h_state_zero() -> dict:
+    """
+    直接将H状态结构体归0
+    """
+    h_state_data = game_type.BODY_H_STATE()
+    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","拉珠","利尿剂","睡眠药"]
+    # bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
+
+    for body_item in body_item_list:
+        now_list = [body_item,False]
+        h_state_data.body_item.append(now_list)
+
+    h_state_data.bondage = 0
+
+    return h_state_data
 
 
 def get_item_zero(item_dict) -> dict:
