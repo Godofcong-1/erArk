@@ -94,10 +94,10 @@ def get_orgasm_count_zero(orgasm_count_dict) -> dict:
 
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
-    将二段行为全项归零，暂时为前100项
+    将二段行为全项归零，暂时为前200项
     """
     second_behavior_list = second_behavior_dict
-    for second_behavior in range(1000,1100):
+    for second_behavior in range(1000,1200):
         second_behavior_list[second_behavior] = 0
     return second_behavior_list
 

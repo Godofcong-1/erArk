@@ -386,31 +386,41 @@ def check_second_effect(
     # print()
     # print("进入第二结算")
 
-    #检测自己
-    #1.高潮结算
+    # 检测自己
+    # 高潮结算
     orgasm_effect(character_id)
 
-    #2.遍历二段行为id，进行结算
+    # 道具结算
+    item_effect(character_id)
+
+    # 遍历二段行为id，进行结算
     for behavior_id,behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             #遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
-    #检测交互对象
-    #1.高潮结算
-    orgasm_effect(target_character_id)
+    # 检测交互对象
+    # 如果是玩家的交互，则target_character_id != 0
+    # 如果是NPC的交互，则character_data != 0
+    if target_character_id or character_data:
+        # 高潮结算
+        orgasm_effect(target_character_id)
 
-    #2.遍历二段行为id，进行结算
-    for behavior_id,behavior_data in target_character_data.second_behavior.items():
-        if behavior_data != 0:
-            #遍历该二段行为的所有结算效果，挨个触发
-            for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                # print("effect_id :",effect_id)
-                constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+        # 刻印结算
+        mark_effect(target_character_id)
 
-    #3.刻印结算
-    mark_effect(target_character_id)
+        # 道具结算
+        item_effect(target_character_id)
+
+        #3.遍历二段行为id，进行结算
+        for behavior_id,behavior_data in target_character_data.second_behavior.items():
+            if behavior_data != 0:
+                #遍历该二段行为的所有结算效果，挨个触发
+                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
+                    # print("effect_id :",effect_id)
+                    constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+
 
 
 def orgasm_effect(character_id: int):
@@ -589,3 +599,20 @@ def mark_effect(character_id: int):
         character_data.second_behavior[1047] = 1
 
 
+def item_effect(character_id: int):
+    """
+    处理第二结算中的道具结算
+    Keyword arguments:
+    character_id -- 角色id
+    """
+
+    # print()
+    # print("进入道具结算")
+    character_data: game_type.Character = cache.character_data[character_id]
+    num = 1100 #通过num值来判断是二段行为记录的哪个位置
+
+    if character_id != 0:
+
+        for i in range(10):
+            if character_data.h_state.body_item[i][1]:
+                character_data.second_behavior[num+i] = 1

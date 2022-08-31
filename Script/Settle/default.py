@@ -137,7 +137,7 @@ def handle_add_small_trust(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
         now_lust_multiple = 1
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[21])
         now_lust_multiple *= adjust
         target_data.trust += now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -926,7 +926,7 @@ def handle_target_add_small_n_feel(
     now_lust = target_data.status_data[0]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[0])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[0])
     now_add_lust *= adjust
     target_data.status_data[0] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -959,7 +959,7 @@ def handle_target_add_small_b_feel(
     now_lust = target_data.status_data[1]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[1])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[1])
     now_add_lust *= adjust
     target_data.status_data[1] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -992,7 +992,7 @@ def handle_target_add_small_c_feel(
     now_lust = target_data.status_data[2]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[2])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[2])
     now_add_lust *= adjust
     target_data.status_data[2] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1026,7 +1026,7 @@ def handle_target_add_small_p_feel(
     now_lust = target_data.status_data[3]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[3])
     now_add_lust *= adjust
     target_data.eja_point += now_add_lust
     # change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1059,7 +1059,7 @@ def handle_target_add_small_v_feel(
     now_lust = target_data.status_data[4]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[4])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[4])
     now_add_lust *= adjust
     target_data.status_data[4] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1092,7 +1092,7 @@ def handle_target_add_small_a_feel(
     now_lust = target_data.status_data[5]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[5])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[5])
     now_add_lust *= adjust
     target_data.status_data[5] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1125,7 +1125,7 @@ def handle_target_add_small_u_feel(
     now_lust = target_data.status_data[6]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[6])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[6])
     now_add_lust *= adjust
     target_data.status_data[6] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1158,7 +1158,7 @@ def handle_target_add_small_w_feel(
     now_lust = target_data.status_data[7]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[7])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[7])
     now_add_lust *= adjust
     target_data.status_data[7] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1191,7 +1191,7 @@ def handle_target_add_small_lubrication(
     now_lust = target_data.status_data[8]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[22])
     now_add_lust *= adjust
     target_data.status_data[8] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1455,7 +1455,6 @@ def handle_target_nipple_clamp_off(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[0][1] = False
-    print("debug target_data.h_state.body_item[0] = ",target_data.h_state.body_item[0])
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_CLIT_CLAMP_ON)
@@ -1526,7 +1525,7 @@ def handle_target_add_small_learn(
     now_lust = target_data.status_data[9]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[19])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[19])
     now_add_lust *= adjust
     target_data.status_data[9] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1559,7 +1558,7 @@ def handle_target_add_small_repect(
     now_lust = target_data.status_data[10]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[20])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[20])
     now_add_lust *= adjust
     target_data.status_data[10] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1592,7 +1591,7 @@ def handle_target_add_small_friendly(
     now_lust = target_data.status_data[11]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[21])
     now_add_lust *= adjust
     target_data.status_data[11] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1625,7 +1624,7 @@ def handle_target_add_small_desire(
     now_lust = target_data.status_data[12]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[22])
     now_add_lust *= adjust
     target_data.status_data[12] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1658,7 +1657,7 @@ def handle_target_add_small_happy(
     now_lust = target_data.status_data[13]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[13])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[13])
     now_add_lust *= adjust
     target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1691,7 +1690,7 @@ def handle_target_add_small_lead(
     now_lust = target_data.status_data[14]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[23])
     now_add_lust *= adjust
     target_data.status_data[14] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1724,7 +1723,7 @@ def handle_target_add_small_submit(
     now_lust = target_data.status_data[15]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[14])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[14])
     now_add_lust *= adjust
     target_data.status_data[15] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1757,7 +1756,7 @@ def handle_target_add_small_shy(
     now_lust = target_data.status_data[16]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[24])
     now_add_lust *= adjust
     target_data.status_data[16] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1887,7 +1886,7 @@ def handle_target_add_small_disgust(
     now_lust = target_data.status_data[20]
     now_lust_multiple = 10 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
     now_add_lust *= adjust
     target_data.status_data[20] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2688,7 +2687,7 @@ def handle_low_obscenity_failed_adjust(
         now_lust = target_data.status_data[20]
         now_lust_multiple = 100 + now_lust / 10
         now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         target_data.status_data[20] += now_add_lust
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2735,7 +2734,7 @@ def handle_high_obscenity_failed_adjust(
         now_lust = target_data.status_data[20]
         now_lust_multiple = 500 + now_lust / 10
         now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         target_data.status_data[20] += now_add_lust
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2752,7 +2751,7 @@ def handle_high_obscenity_failed_adjust(
         )
         #降信赖
         now_lust_multiple = 10
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[21])
         now_lust_multiple *= adjust
         target_data.trust -= now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())

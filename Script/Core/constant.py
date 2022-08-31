@@ -1840,6 +1840,28 @@ class SecondBehavior:
     FIRST_A_SEX = 1052
     """ 结算A处女 """
 
+    NIPPLE_CLAMP = 1100
+    """ 结算乳头夹 """
+    CLIT_CLAMP = 1101
+    """ 结算阴蒂夹 """
+    VIBRATOR_INSERTION = 1102
+    """ 结算震动棒 """
+    VIBRATOR_INSERTION_ANAL = 1103
+    """ 结算肛门振动棒 """
+    MILKING_MACHINE = 1104
+    """ 结算搾乳机 """
+    URINE_COLLECTOR = 1105
+    """ 结算采尿器 """
+    PATCH = 1106
+    """ 结算眼罩 """
+    ANAL_BEADS = 1107
+    """ 结算肛门拉珠 """
+    DIURETICS = 1108
+    """ 结算利尿剂 """
+    SLEEPING_PILLS = 1109
+    """ 结算睡眠药 """
+
+
 class SecondEffect:
     """二段结算效果函数"""
 
@@ -1881,6 +1903,66 @@ class SecondEffect:
     """ 增加中量润滑 """
     ADD_LARGE_LUBRICATION = 230
     """ 增加大量润滑 """
+    DOWN_SMALL_HIT_POINT = 231
+    """ 减少少量体力 """
+    DOWN_SMALL_MANA_POINT = 232
+    """ 减少少量气力 """
+    DOWN_MIDDLE_HIT_POINT = 233
+    """ 减少中量体力 """
+    DOWN_MIDDLE_MANA_POINT = 234
+    """ 减少中量气力 """
+    DOWN_LARGE_HIT_POINT = 235
+    """ 减少大量体力 """
+    DOWN_LARGE_MANA_POINT = 236
+    """ 减少大量气力 """
+    ADD_SMALL_N_FEEL = 237
+    """ 增加少量Ｎ快（N感补正） """
+    ADD_SMALL_B_FEEL = 238
+    """ 增加少量Ｂ快（B感补正） """
+    ADD_SMALL_C_FEEL = 239
+    """ 增加少量Ｃ快（C感补正） """
+    ADD_SMALL_P_FEEL = 240
+    """ 增加少量Ｐ快（P感补正） """
+    ADD_SMALL_V_FEEL = 241
+    """ 增加少量Ｖ快（V感补正） """
+    ADD_SMALL_A_FEEL = 242
+    """ 增加少量Ａ快（A感补正） """
+    ADD_SMALL_U_FEEL = 243
+    """ 增加少量Ｕ快（U感补正） """
+    ADD_SMALL_W_FEEL = 244
+    """ 增加少量Ｗ快（W感补正） """
+    ADD_MIDDLE_N_FEEL = 245
+    """ 增加中量Ｎ快（N感补正） """
+    ADD_MIDDLE_B_FEEL = 246
+    """ 增加中量Ｂ快（B感补正） """
+    ADD_MIDDLE_C_FEEL = 247
+    """ 增加中量Ｃ快（C感补正） """
+    ADD_MIDDLE_P_FEEL = 248
+    """ 增加中量Ｐ快（P感补正） """
+    ADD_MIDDLE_V_FEEL = 249
+    """ 增加中量Ｖ快（V感补正） """
+    ADD_MIDDLE_A_FEEL = 250
+    """ 增加中量Ａ快（A感补正） """
+    ADD_MIDDLE_U_FEEL = 251
+    """ 增加中量Ｕ快（U感补正） """
+    ADD_MIDDLE_W_FEEL = 252
+    """ 增加中量Ｗ快（W感补正） """
+    ADD_LARGE_N_FEEL = 253
+    """ 增加大量Ｎ快（N感补正） """
+    ADD_LARGE_B_FEEL = 254
+    """ 增加大量Ｂ快（B感补正） """
+    ADD_LARGE_C_FEEL = 255
+    """ 增加大量Ｃ快（C感补正） """
+    ADD_LARGE_P_FEEL = 256
+    """ 增加大量Ｐ快（P感补正） """
+    ADD_LARGE_V_FEEL = 257
+    """ 增加大量Ｖ快（V感补正） """
+    ADD_LARGE_A_FEEL = 258
+    """ 增加大量Ａ快（A感补正） """
+    ADD_LARGE_U_FEEL = 259
+    """ 增加大量Ｕ快（U感补正） """
+    ADD_LARGE_W_FEEL = 260
+    """ 增加大量Ｗ快（W感补正） """
 
 
 
