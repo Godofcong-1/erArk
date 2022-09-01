@@ -9,17 +9,17 @@
   │ │                           │                                                                                     │◢════════◣╔╗          
   │ │                           │                                                                                     │║          ║║║        
   │ │   │           │           ║                                                                                     └╢          ║║║        
-  │ │   ║           ║           ║                                   <mapbutton>甲板</mapbutton>                                               ║   <mapbutton>中枢</mapbutton>   ╠╣║        
-  │ │   │           │           ║ ╔═══╗ ╔═══╗                                             ╔═══╗ ╔═══╗  ■█████■■≡≡≡≡≡║          ║║║           
+  │ │   ║           ║           ║                                                                                      ║   <mapbutton>中枢</mapbutton>   ╠╣║        
+  │ │   │           │           ║ ╔═══╗ ╔═══╗                     <mapbutton>甲板</mapbutton>                    ╔═══╗ ╔═══╗  ■█████■■≡≡≡≡≡║          ║║║           
   │ │╔══╬═══════════╤═══════════╩═╩═══╩═╩═══╩═══════════════════════════╤═════════════════╩═══╩═╩╤══╩╗╔════╩╩══════════╩════╣╠════╩╩╩══════╗╔╗
   │ │║  ║  /────────┤      ┌──────────────┐   ┌──────────────┐ ┌─────┐  │                        │ ┌─╣╠─────┐  ┌────────────╣╠─────┬────┐  ├┤│
-  │ │║  ║ /  <mapbutton>会客</mapbutton>   │      │     <mapbutton>贸易</mapbutton>     │   │     <mapbutton>文职</mapbutton>     │ │<mapbutton>书档</mapbutton> │╔═╬        <mapbutton>花园农场</mapbutton>        ╬═╬        ╬══╬                   │ <mapbutton>教</mapbutton> │  ├┤│
+  │ │║  ║ /  <mapbutton>会客</mapbutton>   │      │     <mapbutton>贸易</mapbutton>     │   │     <mapbutton>文职</mapbutton>     │ │ <mapbutton>书</mapbutton>  │╔═╬        <mapbutton>花园农场</mapbutton>        ╬═╬        ╬══╬                   │ <mapbutton>教</mapbutton> │  ├┤│
   ├─┤║  ║/          ╬══╣╠══╬              ╬═╦═╬              │ └╬────┘║ │                        │ │        │  │         <mapbutton>医疗</mapbutton>      └────┤  ├┤│
   ╠╬╣║  ╟────────╬──┘      └──────────────┘ ║ └──────────────╩══╩═════╣ └────────────────────────┘ │  <mapbutton>生娱</mapbutton>  │  │                        │ //║║
   ├┼┼╣  ║  ┌────┐║                   ┌──────╬────────┐ ┌─────────────┐║ ┌───────┐  ┌─────────────┐ │        │  └─╫───────────────────╫──┘// ║║
-  ■■══╣  │ <mapbutton>卫</mapbutton> ╬╣ ┌───────────────┐ │     <mapbutton>科研</mapbutton>      ╬═╬     <mapbutton>发电</mapbutton>    ╬╩═╬ <mapbutton>训练</mapbutton>  ╬══╬     <mapbutton>浴</mapbutton>      ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
+  ■■══╣  │ <mapbutton>卫</mapbutton> ╬╣ ┌───────────────┐ │     <mapbutton>科研</mapbutton>      ╬═╬     <mapbutton>动力</mapbutton>    ╬╩═╬ <mapbutton>训练</mapbutton>  ╬══╬   <mapbutton>大浴室</mapbutton>    ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
   │ │╚┐┌╩╗ └────┘║ │               │ └───────────────┘ └────────────╫┘  └───────┘  └─────────────┘ └────────┘ ╠═╬                     ││/     
   ╠═╣ ╠╝ ╚╗      ║ │      <mapbutton>机库</mapbutton>     │┌─────────────┐  ┌───────────┐  ║ ┌──────────────────────┐      ┌───────┐ ║ ├─────    <mapbutton>宿舍</mapbutton>    ────┤╞═╗    
- /╠╗┼─╝   ╚╗┌─╦╤═╩═╬               ╬╬    <mapbutton>工程</mapbutton>     ╬╣╠╬    <mapbutton>制工</mapbutton>   ╬══╩═╬         <mapbutton>仓储</mapbutton>         ╬══╣╠══╬ <mapbutton>关押</mapbutton>  │ ╚═╬                     │╞═╝   
+ /╠╗┼─╝   ╚╗┌─╦╤═╩═╬               ╬╬    <mapbutton>工程</mapbutton>     ╬╣╠╬ <mapbutton>制造加工</mapbutton>  ╬══╩═╬         <mapbutton>仓储</mapbutton>         ╬══╣╠══╬ <mapbutton>关押</mapbutton>  │ ╚═╬                     │╞═╝   
 / ╚╝┘      ╚╛┈┈╘═══╧════════╦╦╦╦╦╦╦╬╧════╦╦╦╦╦╦╦╦╦╧══╧═╦╦╦╦╦╦╦╦╦═╧════╧════╦╦╦╦╦╦╦╦╦═════╦╦╦╦╧╦╦╦╦══╧══╦╦╦╦╦╬╦╦╦╧═══════════╦╦╦╦╦╦╦╦╦╦╧/     
             <mapbutton>0</mapbutton>//            <oIIIIIIIIo> <oIIIIIIIIIo> <oIIIIIIIIIo>       <oIIIIIIIIIo> <oIIIIIIIIIo> <oIIIIIIIIIo>        <oIIIIIIIIIIo>      
