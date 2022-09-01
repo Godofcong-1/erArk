@@ -715,6 +715,8 @@ class Premise:
 
     HIGH_1 = "high_1"
     """ 优先度为1的空白前提 """
+    HIGH_2 = "high_2"
+    """ 优先度为2的空白前提 """
     HIGH_5 = "high_5"
     """ 优先度为5的空白前提 """
     HIGH_10 = "high_10"

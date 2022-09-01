@@ -636,6 +636,18 @@ def handle_high_1(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant.Premise.HIGH_2)
+def handle_high_2(character_id: int) -> int:
+    """
+    优先度为2的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 2
+
+
 @add_premise(constant.Premise.HIGH_5)
 def handle_high_5(character_id: int) -> int:
     """
@@ -2249,7 +2261,7 @@ def handle_time_day(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 6 and now_time.hour <= 18:
+    if now_time.hour >= 6 and now_time.hour <= 17:
         return 1
     return 0
 
@@ -2265,7 +2277,7 @@ def handle_time_night(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour <= 6 or now_time.hour >= 18:
+    if now_time.hour <= 5 or now_time.hour >= 18:
         return 1
     return 0
 
@@ -2281,7 +2293,7 @@ def handle_time_midnight(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour <= 2 or now_time.hour >= 22:
+    if now_time.hour <= 1 or now_time.hour >= 22:
         return 1
     return 0
 
@@ -2297,7 +2309,7 @@ def handle_time_morning(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 4 and now_time.hour <= 8:
+    if now_time.hour >= 4 and now_time.hour <= 7:
         return 1
     return 0
 
@@ -2313,7 +2325,7 @@ def handle_time_moon(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 10 and now_time.hour <= 14:
+    if now_time.hour >= 10 and now_time.hour <= 13:
         return 1
     return 0
 
