@@ -771,7 +771,7 @@ def handle_ask_date():
 
 @add_instruct(
     constant.Instruct.CONFESSION,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("告白"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
@@ -805,7 +805,7 @@ def handle_confession():
 
 @add_instruct(
     constant.Instruct.GIVE_NECKLACE,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("戴上项圈"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
@@ -855,7 +855,7 @@ def handle_drink_alcohol():
 
 @add_instruct(
     constant.Instruct.DO_H,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("邀请H"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H},
@@ -891,7 +891,7 @@ def handle_do_h():
 
 @add_instruct(
     constant.Instruct.END_H,
-    constant.InstructType.DAILY,
+    constant.InstructType.SEX,
     _("H结束"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H},
