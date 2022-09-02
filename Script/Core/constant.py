@@ -2396,3 +2396,6 @@ settle_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色行为结算处理器 处理器id:处理器 """
 settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
+
+
+# 协力名单，不分先后 依吹脆香，反R，幻白，无色树
