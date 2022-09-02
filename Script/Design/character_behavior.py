@@ -55,7 +55,7 @@ def init_character_behavior():
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
-            judge_character_tired(character_id)
+            judge_character_tired_sleep(character_id)
             end_all = time.time()
             # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
@@ -190,21 +190,24 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
 #         if character_id not in cache.over_behavior_character:
 #             cache.over_behavior_character.add(character_id)
 
-def judge_character_tired(character_id : int):
+def judge_character_tired_sleep(character_id : int):
     """
-    校验角色是否疲劳
+    校验角色是否疲劳或困倦
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
     #疲劳结算
-    if character_data.tired and (character_data.is_h or character_data.is_follow):
-        character_data.is_h = 0
-        character_data.is_follow = 0
-        now_draw = draw.NormalDraw()
-        now_draw.width = width
-        now_draw.text = character_data.name + "太累了，决定回房间睡觉 "
-        now_draw.draw()
+    if character_data.is_h or character_data.is_follow:
+        
+        if character_data.tired or attr_calculation.get_sleep_level(character_data.sleep_point) >= 2:
+            character_data.is_h = 0
+            character_data.is_follow = 0
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            draw_text = "太累了，决定回房间睡觉 " if character_data.tired else "太困了，决定回房间睡觉"
+            now_draw.text = character_data.name + draw_text
+            now_draw.draw()
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:

@@ -25,6 +25,10 @@ str,str,str
 19,41,place_0
 20,42,place_0
 21,43,place_0
+22,32,not_in_dor
+23,32,sleep_ge_90
+24,33,in_dor
+25,33,sleep_ge_90
 30,7,ai_wait
 40,60,place_is_h
 41,60,not_in_dor

@@ -946,7 +946,7 @@ def handle_sleep_ge_90(character_id: int) -> int:
 
     value = character_data.sleep_point / 160
     if value >= 0.9:
-        return 1
+        return 999
     else:
         return 0
 

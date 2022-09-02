@@ -289,7 +289,7 @@ def handle_add_both_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 40
+    add_hit_point = add_time * 15
     character_data.hit_point += add_hit_point
     if character_data.hit_point > character_data.hit_point_max:
         add_hit_point -= character_data.hit_point - character_data.hit_point_max
@@ -300,7 +300,7 @@ def handle_add_both_small_hit_point(
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        add_hit_point = add_time * 40
+        add_hit_point = add_time * 15
         #如果气力=0则恢复减半
         if target_data.mana_point == 0:
             add_hit_point /= 2
@@ -331,7 +331,7 @@ def handle_add_both_small_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 60
+    add_mana_point = add_time * 20
     character_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
         add_mana_point -= character_data.mana_point - character_data.mana_point_max
@@ -342,7 +342,7 @@ def handle_add_both_small_mana_point(
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        add_mana_point = add_time * 60
+        add_mana_point = add_time * 20
         #如果气力=0则恢复减半
         if target_data.mana_point == 0:
             add_mana_point /= 2
@@ -2757,3 +2757,26 @@ def handle_high_obscenity_failed_adjust(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.trust -= now_lust_multiple
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SLEEP_POINT_DOWN)
+def handle_sleep_point_down(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    睡觉时降低困倦值
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    value = int(add_time / 3)
+    character_data.sleep_point -= value

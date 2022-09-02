@@ -355,6 +355,8 @@ class SeeInstructPanel:
                 cache.instruct_filter[instruct_type] = 0
             cache.instruct_filter[0] = 1
             cache.instruct_filter[1] = 1
+            cache.instruct_filter[2] = 1
+            cache.instruct_filter[3] = 1
 
     def draw(self):
         """绘制操作菜单面板"""
