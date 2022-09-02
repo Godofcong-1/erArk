@@ -39,6 +39,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         check_second_effect(0, status_data)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
+    # 结算角色的疲劳状态
+    now_character_data.sleep_point += int ( add_time / 6 )
     #注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
     #注释掉了社交关系#

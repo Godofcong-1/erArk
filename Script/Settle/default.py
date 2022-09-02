@@ -261,12 +261,12 @@ def handle_sub_both_small_mana_point(
             target_change.hit_point -= sub_mana
             if target_data.hit_point <= 0:
                 target_data.hit_point = 1
-            if not target_data.tired:
-                target_data.tired = 1
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + target_data.name + "太累了\n"
-                now_draw.draw()
+                if not target_data.tired:
+                    target_data.tired = 1
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + target_data.name + "太累了\n"
+                    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)

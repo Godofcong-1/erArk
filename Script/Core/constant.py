@@ -745,6 +745,19 @@ class Premise:
     TARGET_MP_HIGH = "t_mp_high"
     """ 交互对象气力高于70% """
 
+    SLEEP_GE_50 = "sleep_ge_50"
+    """ 困倦条≥50% """
+    SLEEP_LE_74 = "sleep_le_74"
+    """ 困倦条≤74%，全指令自由 """
+    SLEEP_GE_75 = "sleep_ge_75"
+    """ 困倦条≥75%，部分指令受限 """
+    SLEEP_LE_89 = "sleep_le_89"
+    """ 困倦条≤89%，自由活动的极限 """
+    SLEEP_GE_90 = "sleep_ge_90"
+    """ 困倦条≥90%，必须回去睡觉 """
+    SLEEP_100 = "sleep_100"
+    """ 困倦条100%，当场爆睡 """
+
     TARGET_GOOD_MOOD = "good_mood"
     """ 交互对象心情愉快 """
     TARGET_NORMAL_MOOD = "normal_mood"
@@ -1563,6 +1576,7 @@ class BehaviorEffect:
     """ 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
     HIGH_OBSCENITY_FAILED_ADJUST = 123
     """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
+
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201
@@ -1867,6 +1881,8 @@ class SecondBehavior:
 class SecondEffect:
     """二段结算效果函数"""
 
+
+
     ADD_1_NClimax_EXPERIENCE = 210
     """ 增加1N绝顶经验 """
     ADD_1_BClimax_EXPERIENCE = 211
@@ -1965,6 +1981,32 @@ class SecondEffect:
     """ 增加大量Ｕ快（U感补正） """
     ADD_LARGE_W_FEEL = 260
     """ 增加大量Ｗ快（W感补正） """
+    ADD_SMALL_LUBRICATION = 261
+    """ 增加少量润滑（欲望补正） """
+    ADD_SMALL_LEARN = 262
+    """ 增加少量习得（技巧补正） """
+    ADD_SMALL_RESPECT = 263
+    """ 增加少量恭顺（顺从补正） """
+    ADD_SMALL_FRIENDLY = 264
+    """ 增加少量好意（亲密补正） """
+    ADD_SMALL_DESIRE = 265
+    """ 增加少量欲情（欲望补正） """
+    ADD_SMALL_HAPPY = 266
+    """ 增加少量快乐（快乐刻印补正） """
+    ADD_SMALL_LEAD = 267
+    """ 增加少量先导（侍奉补正） """
+    ADD_SMALL_SUBMIT = 268
+    """ 增加少量屈服（屈服刻印补正） """
+    ADD_SMALL_SHY = 269
+    """ 增加少量羞耻（露出补正） """
+    ADD_SMALL_PAIN = 270
+    """ 增加少量苦痛（苦痛刻印补正） """
+    ADD_SMALL_TERROR = 271
+    """ 增加少量恐怖（恐怖刻印补正） """
+    ADD_SMALL_DEPRESSION = 272
+    """ 增加少量抑郁 """
+    ADD_SMALL_DISGUST = 273
+    """ 增加少量反感（反发刻印补正） """
 
 
 

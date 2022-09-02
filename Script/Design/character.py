@@ -47,7 +47,7 @@ def init_attr(character_id: int):
     character_data.h_state = attr_calculation.get_h_state_zero()
 
 
-    #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物
+    #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
@@ -55,6 +55,7 @@ def init_attr(character_id: int):
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
         character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
+        character_data.sleep_point = 0
 
     #一系列初始化函数
     character_data.hit_point = character_data.hit_point_max

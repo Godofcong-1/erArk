@@ -577,6 +577,8 @@ class Character:
         """ 角色信物文本 """
         self.tired : bool = 0
         """ 疲劳状态（HP=1） """
+        self.sleep_point : int = 0
+        """ 困倦程度 6m=1点，16h=160点(max)"""
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
         self.money : int = 0

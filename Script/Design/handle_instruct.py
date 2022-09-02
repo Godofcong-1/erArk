@@ -75,21 +75,24 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
 
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
-    {constant.Premise.NOT_H})
+    {constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
+)
 def handle_rest():
     """处理休息指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 10
+    character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.REST
     character_data.state = constant.CharacterStatus.STATUS_REST
-    update.game_update_flow(10)
+    update.game_update_flow(60)
 
 
 @add_instruct(
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
     {constant.Premise.IN_DINING_HALL,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_buy_food():
     """处理购买食物指令"""
@@ -99,7 +102,8 @@ def handle_buy_food():
 @add_instruct(
     constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"),
     {constant.Premise.HAVE_FOOD,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_eat():
     """处理进食指令"""
@@ -108,7 +112,8 @@ def handle_eat():
 
 @add_instruct(
     constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
-    {constant.Premise.NOT_H}
+    {constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_move():
     """处理移动指令"""
@@ -138,7 +143,8 @@ def handle_see_owner_attr():
 @add_instruct(
     constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_chat():
     """处理聊天指令"""
@@ -187,7 +193,7 @@ def handle_save():
 @add_instruct(
     constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"), 
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,}
 )
 def handle_abl_up():
     """处理属性上升"""
@@ -265,6 +271,7 @@ def handle_sleep():
     character_data.behavior.duration = 480
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
+    character_data.sleep_point = 0
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(480)
 
@@ -305,7 +312,8 @@ def handle_sleep():
 @add_instruct(
     constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -322,7 +330,8 @@ def handle_embrace():
     constant.InstructType.OBSCENITY,
     _("亲吻"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_kiss():
     """处理亲吻指令"""
@@ -343,7 +352,8 @@ def handle_kiss():
     constant.InstructType.DAILY,
     _("身体接触"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_stroke():
     """处理身体接触指令"""
@@ -559,7 +569,8 @@ def handle_wait():
     constant.InstructType.DAILY,
     _("泡咖啡"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_make_coffee():
     """处理泡咖啡指令"""
@@ -575,7 +586,8 @@ def handle_make_coffee():
     constant.InstructType.DAILY,
     _("泡咖啡（加料）"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_make_coffee_add():
     """处理泡咖啡（加料）指令"""
@@ -592,7 +604,8 @@ def handle_make_coffee_add():
     constant.InstructType.DAILY,
     _("让对方泡咖啡"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_ask_make_coffee():
     """处理让对方泡咖啡指令"""
@@ -774,7 +787,8 @@ def handle_ask_date():
     constant.InstructType.OBSCENITY,
     _("告白"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_confession():
     """处理告白指令"""
@@ -808,7 +822,8 @@ def handle_confession():
     constant.InstructType.OBSCENITY,
     _("戴上项圈"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_give_necklace():
     """处理戴上项圈指令"""
@@ -858,7 +873,8 @@ def handle_drink_alcohol():
     constant.InstructType.OBSCENITY,
     _("邀请H"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_74}
 )
 def handle_do_h():
     """处理邀请H指令"""
@@ -971,7 +987,8 @@ def handle_official_work():
     constant.InstructType.OBSCENITY,
     _("摸头"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_head():
     """处理摸头指令"""
@@ -992,7 +1009,8 @@ def handle_touch_head():
     constant.InstructType.OBSCENITY,
     _("摸胸"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_breast():
     """处理摸胸指令"""
@@ -1013,7 +1031,8 @@ def handle_touch_breast():
     constant.InstructType.OBSCENITY,
     _("摸屁股"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_buttocks():
     """处理摸屁股指令"""
@@ -1183,7 +1202,8 @@ def handle_touch_car():
     constant.InstructType.OBSCENITY,
     _("牵手"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_handle_in_handle():
     """处理牵手指令"""
@@ -1204,7 +1224,8 @@ def handle_handle_in_handle():
     constant.InstructType.OBSCENITY,
     _("膝枕"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_lap_pillow():
     """处理膝枕指令"""
@@ -1224,7 +1245,8 @@ def handle_lap_pillow():
     constant.InstructType.OBSCENITY,
     _("掀起裙子"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_raise_skirt():
     """处理掀起裙子指令"""
@@ -1244,7 +1266,8 @@ def handle_raise_skirt():
     constant.InstructType.OBSCENITY,
     _("阴蒂爱抚"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
@@ -1264,7 +1287,8 @@ def handle_touch_clitoris():
     constant.InstructType.OBSCENITY,
     _("手指插入（V）"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_vagina():
     """处理手指插入（V）指令"""
@@ -1284,7 +1308,8 @@ def handle_touch_vagina():
     constant.InstructType.OBSCENITY,
     _("手指插入（A）"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.NOT_H},
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
 )
 def handle_touch_anus():
     """处理手指插入（A）指令"""

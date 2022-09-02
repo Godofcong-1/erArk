@@ -730,3 +730,179 @@ def handle_add_small_w_feel(
     character_data.status_data[7] += now_add_lust
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION)
+def handle_add_small_lubrication(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量润滑（欲望补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[8])
+    now_add_lust *= adjust
+
+    character_data.status_data[8] += now_add_lust
+    change_data.status_data.setdefault(8, 0)
+    change_data.status_data[8] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DESIRE)
+def handle_add_small_desire(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量欲情（欲望补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    now_add_lust *= adjust
+
+    character_data.status_data[12] += now_add_lust
+    change_data.status_data.setdefault(12, 0)
+    change_data.status_data[12] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_HAPPY)
+def handle_add_small_happy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量快乐（快乐刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[13])
+    now_add_lust *= adjust
+
+    character_data.status_data[13] += now_add_lust
+    change_data.status_data.setdefault(13, 0)
+    change_data.status_data[13] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_SUBMIT)
+def handle_add_small_submit(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量屈服（屈服刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[14])
+    now_add_lust *= adjust
+
+    character_data.status_data[15] += now_add_lust
+    change_data.status_data.setdefault(15, 0)
+    change_data.status_data[15] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_PAIN)
+def handle_add_small_pain(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量苦痛（苦痛刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+
+    character_data.status_data[17] += now_add_lust
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_TERROR)
+def handle_add_small_terror(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量恐怖（恐怖刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[17])
+    now_add_lust *= adjust
+
+    character_data.status_data[18] += now_add_lust
+    change_data.status_data.setdefault(18, 0)
+    change_data.status_data[18] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DISGUST)
+def handle_add_small_disgust(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量反感（反发刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+    now_add_lust *= adjust
+
+    character_data.status_data[20] += now_add_lust
+    change_data.status_data.setdefault(20, 0)
+    change_data.status_data[20] += now_add_lust
+

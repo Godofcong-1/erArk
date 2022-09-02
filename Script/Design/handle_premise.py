@@ -861,6 +861,114 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant.Premise.SLEEP_GE_50)
+def handle_sleep_ge_50(character_id: int) -> int:
+    """
+    困倦条≥50%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 0.5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_LE_74)
+def handle_sleep_le_74(character_id: int) -> int:
+    """
+    困倦条≤74%，全指令自由
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value <= 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_GE_75)
+def handle_sleep_ge_75(character_id: int) -> int:
+    """
+    困倦条≥75%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 0.75:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_LE_89)
+def handle_sleep_le_89(character_id: int) -> int:
+    """
+    困倦条≤89%，自由活动的极限
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value <= 0.89:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_GE_90)
+def handle_sleep_ge_90(character_id: int) -> int:
+    """
+    困倦条≥90%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 0.9:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_100)
+def handle_sleep_100(character_id: int) -> int:
+    """
+    困倦条100%，当场爆睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
