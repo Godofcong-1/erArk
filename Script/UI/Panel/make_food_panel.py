@@ -20,7 +20,7 @@ window_width: int = normal_config.config_normal.text_width
 
 class Make_food_Panel:
     """
-    用于查看食物商店界面面板对象
+    用于查看制作食物界面面板对象
     Keyword arguments:
     width -- 绘制宽度
     """

@@ -154,6 +154,14 @@ def get_h_state_zero() -> dict:
 
     return h_state_data
 
+def get_assistant_state_zero() -> dict:
+    """
+    直接将助理状态结构体归0
+    """
+    assistant_state_data = game_type.ASSISTANT_STATE()
+
+    return assistant_state_data
+
 
 def get_item_zero(item_dict) -> dict:
     """

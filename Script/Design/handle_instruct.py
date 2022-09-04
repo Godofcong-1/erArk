@@ -966,7 +966,8 @@ def handle_end_h():
     constant.InstructType.WORK,
     _("处理公务"),
     {constant.Premise.NOT_H,
-    constant.Premise.IN_DR_OFFICE},
+    constant.Premise.IN_DR_OFFICE,
+    constant.Premise.SLEEP_LE_74}
 )
 def handle_official_work():
     """处理处理公务指令"""
@@ -977,6 +978,15 @@ def handle_official_work():
     character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
     update.game_update_flow(60)
 
+
+@add_instruct(
+    constant.Instruct.APPOINTED_ASSISTANT, constant.InstructType.WORK, _("指派助理"),
+    # {constant.Premise.IN_SHOP,
+    {constant.Premise.NOT_H}
+)
+def handle_appointed_assistant():
+    """处理指派助理指令"""
+    cache.now_panel_id = constant.Panel.ASSISTANT
 
 
 #以下为猥亵#

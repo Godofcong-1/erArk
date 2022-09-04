@@ -45,6 +45,7 @@ def init_attr(character_id: int):
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)
     character_data.h_state = attr_calculation.get_h_state_zero()
+    character_data.assistant_state = attr_calculation.get_assistant_state_zero()
 
 
     #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零

@@ -57,6 +57,8 @@ class CharacterStatus:
     """ 结束H状态 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
+    STATUS_APPOINTED_ASSISTANT = 204
+    """ 指派助理 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -326,6 +328,12 @@ class Behavior:
     """ 结束H """
     OFFICIAL_WORK = 201
     """ 处理公务 """
+    BATTLE_COMMAND = 202
+    """ 指挥作战 """
+    LISTEN_MISSION = 203
+    """ 听取委托 """
+    APPOINTED_ASSISTANT = 204
+    """ 指派助理 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -675,6 +683,8 @@ class Panel:
     """ 脏污面板 """
     ITEM = 11
     """ 道具面板 """
+    ASSISTANT = 12
+    """ 助理面板 """
 
 
 class Premise:
@@ -2091,6 +2101,7 @@ class Instruct:
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0
     # """ 演奏乐器 """
+
     #工作#
     OFFICIAL_WORK = 0
     """ 处理公务 """
@@ -2098,6 +2109,9 @@ class Instruct:
     """ 指挥作战 """
     LISTEN_MISSION = 0
     """ 听取委托 """
+    APPOINTED_ASSISTANT = 0
+    """ 指派助理 """
+
     #猥亵#
     TOUCH_HEAD = 0
     """ 摸头 """

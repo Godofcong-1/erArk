@@ -297,6 +297,30 @@ class BODY_H_STATE:
         [0未捆绑,1后高手缚,2直立缚,3驷马捆绑,4直臂缚,5双手缚,6菱绳缚,7龟甲缚,8团缚,9逆团缚,10吊缚,11后手吊缚,12单足吊缚,13后手观音,14苏秦背剑,15五花大绑]
         """
 
+class ASSISTANT_STATE:
+    """H状态结构体"""
+
+    def __init__(self):
+
+        self.always_follow: int = 0
+        """ 跟随服务，int[0否,1强制跟随,2智能跟随，在非工作时间(饭点/上厕所等)会暂离,3在博士办公室待机]"""
+        self.always_help_work: bool = False
+        """ 辅佐服务，仅由助理辅助工作系指令"""
+        self.work_until_sleep: bool = False
+        """ 加班服务，博士睡觉后自动加班到自己睡觉"""
+        self.offer_food: int = 0
+        """ 送饭服务，int[0否,1帮忙买午饭,2帮忙买三餐,3亲手做午饭,4亲手做三餐]"""
+        self.good_morning: int = 0
+        """ 早安服务，int[0否,1早安叫起床,2叫起床+早安吻,3叫起床+早安咬]"""
+        self.good_evening: int = 0
+        """ 晚安服务，int[0否,1晚安催睡觉,2催睡觉+晚安吻,3催睡觉+早安咬]"""
+        self.live_together: bool = False
+        """ 同居服务"""
+        self.help_chase: bool = False
+        """ 助攻服务"""
+        self.help_sex: int = 0
+        """ 性处理服务，int[0否,1被动接受(非本番),2被动接受(含本番),3主动请求(非本番),4主动请求(含本番)]"""
+
 
 # class Height:
 #     """身高数据结构体"""
@@ -589,6 +613,10 @@ class Character:
         """ 至纯源石数量 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()
         """ 角色本次H的情况 """
+        self.assistant_character_id: int = 0
+        """ 助理角色id """
+        self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
+        """ 角色作为助理的情况 """
 
 class Cache:
     """游戏缓存数据结构体"""

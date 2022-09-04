@@ -12,5 +12,6 @@ from Script.UI.Flow import (
     find_call_flow,
     dirty_flow,
     ejaculation_flow,
-    see_item_info_flow
+    see_item_info_flow,
+    assistant_flow,
 )
