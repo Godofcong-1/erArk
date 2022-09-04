@@ -41,14 +41,13 @@ class Assistant_Panel:
         scene_name = cache.scene_data[scene_position_str].scene_name
         title_draw = draw.TitleLineDraw("指派助理", self.width)
         character_data: game_type.Character = cache.character_data[0]
-        character_data.assistant_character_id = 1
 
         self.handle_panel = panel.PageHandlePanel([], SeeAssistantButtonList, 10, 1, self.width, 1, 1, 0)
         cooking.init_makefood_data()
         while 1:
             py_cmd.clr_cmd()
             if character_data.assistant_character_id != 0:
-                button_text_list = ["选择助理","跟随服务","辅佐服务","加班服务","送饭服务","早安服务","晚安服务","同居服务","助攻服务","性处理服务"]
+                button_text_list = ["选择助理","跟随服务","辅佐服务(未实装)","加班服务(未实装)","送饭服务(未实装)","早安服务(未实装)","晚安服务(未实装)","同居服务(未实装)","助攻服务(未实装)","性处理服务(未实装)"]
             else:
                 button_text_list = ["选择助理"]
 
@@ -248,7 +247,10 @@ class SeeAssistantButtonList:
                 line = draw.LineDraw("-", self.width)
                 line.draw()
                 now_npc_draw = draw.NormalDraw()
-                now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
+                if character_data.assistant_character_id != 0:
+                    now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
+                else:
+                    now_npc_text = f"当前无助理，请选择新的助理："
                 now_npc_draw.text = now_npc_text
                 now_npc_draw.draw()
                 line_feed.draw()
@@ -273,8 +275,14 @@ class SeeAssistantButtonList:
         elif self.button_id == 1:
             if target_data.assistant_state.always_follow == 3:
                 target_data.assistant_state.always_follow = 0
+                target_data.is_follow = 0
             else:
                 target_data.assistant_state.always_follow += 1
+                # 同时结算跟随状态
+                if target_data.assistant_state.always_follow == 1 or target_data.assistant_state.always_follow == 2:
+                    target_data.is_follow = 1
+                else:
+                    target_data.is_follow = 0
 
         # 2号指令,仅由助理辅助工作系指令
         elif self.button_id == 2:

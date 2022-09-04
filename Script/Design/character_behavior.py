@@ -394,7 +394,12 @@ def judge_character_follow(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # print("开始检测是否为跟随")
+
+    # 锁定助理的跟随状态
+    if character_data.assistant_state.always_follow == 1 or character_data.assistant_state.always_follow == 2:
+        character_data.is_follow = 1
+
+    # 维持跟随的状态
     if character_data.is_follow:
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
