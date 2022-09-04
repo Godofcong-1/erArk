@@ -2027,6 +2027,10 @@ class SecondEffect:
     """ 增加少量抑郁 """
     ADD_SMALL_DISGUST = 273
     """ 增加少量反感（反发刻印补正） """
+    ADD_LARGE_PAIN_FIRST_SEX = 400
+    """ 增加巨量苦痛（破处修正） """
+    ADD_LARGE_PAIN_FIRST_A_SEX = 401
+    """ 增加巨量苦痛（A破处修正） """
 
 
 

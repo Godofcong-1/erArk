@@ -757,6 +757,30 @@ def handle_add_small_lubrication_plus(
     change_data.status_data[8] += now_add_lust
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_FRIENDLY)
+def handle_add_small_friendly(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量好意（亲密补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    now_add_lust *= adjust
+
+    character_data.status_data[11] += now_add_lust
+    change_data.status_data.setdefault(11, 0)
+    change_data.status_data[11] += now_add_lust
+
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DESIRE)
 def handle_add_small_desire(
     character_id: int,
@@ -799,7 +823,7 @@ def handle_add_small_happy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[13])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
     now_add_lust *= adjust
 
     character_data.status_data[13] += now_add_lust
@@ -824,7 +848,7 @@ def handle_add_small_submit(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[14])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
 
     character_data.status_data[15] += now_add_lust
@@ -849,7 +873,7 @@ def handle_add_small_pain(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[15])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
     now_add_lust *= adjust
 
     character_data.status_data[17] += now_add_lust
@@ -874,7 +898,7 @@ def handle_add_small_terror(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[17])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
     now_add_lust *= adjust
 
     character_data.status_data[18] += now_add_lust
@@ -899,10 +923,81 @@ def handle_add_small_disgust(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[18])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
     now_add_lust *= adjust
 
     character_data.status_data[20] += now_add_lust
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_PAIN_FIRST_SEX)
+def handle_add_large_pain_first_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加巨量苦痛（破处修正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 1000
+    # 润滑修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
+    now_add_lust *= adjust
+    # 欲情修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
+    adjust = adjust/3 if adjust >=2 else adjust/1.5
+    now_add_lust *= adjust
+    # 痛苦刻印修正
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+    # V扩张修正
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[9]) * 6
+    now_add_lust /= adjust
+
+    character_data.status_data[17] += now_add_lust
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_PAIN_FIRST_A_SEX)
+def handle_add_large_pain_first_a_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加巨量苦痛（A破处修正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 1000
+    # 润滑修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
+    now_add_lust *= adjust
+    # 欲情修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
+    adjust = adjust/3 if adjust >=2 else adjust/1.5
+    now_add_lust *= adjust
+    # 痛苦刻印修正
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+    # A扩张修正
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[10]) * 6
+    now_add_lust /= adjust
+
+    character_data.status_data[17] += now_add_lust
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
 

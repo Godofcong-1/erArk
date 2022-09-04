@@ -725,7 +725,7 @@ def handle_first_sex(
             now_draw.width = window_width
             now_draw.draw()
             #处女的二段结算
-            # target_data.second_behavior[1051] = 1
+            target_data.second_behavior[1051] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
@@ -780,7 +780,7 @@ def handle_first_a_sex(
             now_draw.width = window_width
             now_draw.draw()
             #处女的二段结算
-            # target_data.second_behavior[1052] = 1
+            target_data.second_behavior[1052] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
@@ -1702,7 +1702,7 @@ def handle_target_add_small_happy(
     now_lust = target_data.status_data[13]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[13])
+    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[13])
     now_add_lust *= adjust
     target_data.status_data[13] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1768,7 +1768,7 @@ def handle_target_add_small_submit(
     now_lust = target_data.status_data[15]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[14])
+    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[14])
     now_add_lust *= adjust
     target_data.status_data[15] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -1931,7 +1931,7 @@ def handle_target_add_small_disgust(
     now_lust = target_data.status_data[20]
     now_lust_multiple = 10 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
+    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[18])
     now_add_lust *= adjust
     target_data.status_data[20] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
