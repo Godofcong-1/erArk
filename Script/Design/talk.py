@@ -97,7 +97,7 @@ def handle_talk(character_id: int):
             now_talk_data = handle_talk_sub(character_id, second_behavior_id)
             #触发后该行为值归零
             character_data.second_behavior[second_behavior_id] = 0
-    handle_talk_draw(character_id, now_talk_data)
+            handle_talk_draw(character_id, now_talk_data)
 
     #交互对象
     now_talk_data = {}
@@ -110,7 +110,7 @@ def handle_talk(character_id: int):
                 now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
                 #触发后该行为值归零
                 target_character_data.second_behavior[second_behavior_id] = 0
-        handle_talk_draw(target_character_id, now_talk_data)
+                handle_talk_draw(target_character_id, now_talk_data)
 
 
 

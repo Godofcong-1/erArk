@@ -32,11 +32,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
     #进行二段结算
+    check_second_effect(0, status_data)
     # check_second_effect(character_id)
-    if player_character_data.target_character_id:
-        # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
-        # print("target_data.name :",target_data.name)
-        check_second_effect(0, status_data)
+    # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
+    # print("target_data.name :",target_data.name)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
     # 结算角色与当前交互对象的疲劳状态
@@ -387,38 +386,38 @@ def check_second_effect(
     target_character_id = character_data.target_character_id
     target_character_data : game_type.Character = cache.character_data[target_character_id]
     change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
-    # print()
+    target_change: game_type.TargetChange = change_data.target_change[target_character_id]
+    # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
     # print("进入第二结算")
 
     # 检测自己
-    # 高潮结算
-    orgasm_effect(character_id)
+    if character_id == 0:
+        # 高潮结算
+        orgasm_effect(character_id)
 
-    # 道具结算
-    item_effect(character_id)
+        # 道具结算
+        item_effect(character_id)
 
-    # 遍历二段行为id，进行结算
-    for behavior_id,behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0:
-            #遍历该二段行为的所有结算效果，挨个触发
-            for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+        # 遍历二段行为id，进行结算
+        for behavior_id,behavior_data in character_data.second_behavior.items():
+            if behavior_data != 0:
+                #遍历该二段行为的所有结算效果，挨个触发
+                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
+                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
     # 检测交互对象
     # 如果是玩家的交互，则target_character_id != 0
-    # 如果是NPC的交互，则character_data != 0
-    if target_character_id or character_data:
+    # 如果是NPC的交互，则character_id != 0
+    if target_character_id or character_id:
+        # print("debug character_id = ",character_id)
+        # print("debug target_character_id = ",target_character_id)
         # 高潮结算
         orgasm_effect(target_character_id)
-
-        # 刻印结算
-        mark_effect(target_character_id)
 
         # 道具结算
         item_effect(target_character_id)
 
-        #3.遍历二段行为id，进行结算
+        #遍历二段行为id，进行结算
         for behavior_id,behavior_data in target_character_data.second_behavior.items():
             if behavior_data != 0:
                 #遍历该二段行为的所有结算效果，挨个触发
@@ -426,6 +425,16 @@ def check_second_effect(
                     # print("effect_id :",effect_id)
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
+        # 刻印结算
+        mark_effect(target_character_id,target_change)
+        mark_list = [i for i in range(1030,1048)]
+        # 单独遍历结算刻印
+        for behavior_id,behavior_data in target_character_data.second_behavior.items():
+            if behavior_id in mark_list:
+                #遍历该二段行为的所有结算效果，挨个触发
+                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
+                    # print("effect_id :",effect_id)
+                    constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
 
 def orgasm_effect(character_id: int):
@@ -497,7 +506,7 @@ def orgasm_effect(character_id: int):
                 #刷新记录
                 character_data.orgasm_level[orgasm] = now_data
 
-def mark_effect(character_id: int):
+def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     """
     处理第二结算中的刻印结算
     Keyword arguments:
@@ -519,10 +528,10 @@ def mark_effect(character_id: int):
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1
-    elif happy_count >= 8 and character_data.ability[13] <= 1:
+    if happy_count >= 8 and character_data.ability[13] <= 1:
         character_data.ability[13] = 2
         character_data.second_behavior[1031] = 1
-    elif happy_count >= 16 and character_data.ability[13] <= 2:
+    if happy_count >= 16 and character_data.ability[13] <= 2:
         character_data.ability[13] = 3
         character_data.second_behavior[1032] = 1
 
@@ -537,13 +546,13 @@ def mark_effect(character_id: int):
         #至少提升为顺从1
         if character_data.ability[20] <= 0:
             character_data.ability[20] = 1
-    elif yield_count >= 3000 and character_data.ability[14] <= 1:
+    if yield_count >= 3000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         #至少提升为顺从2
         if character_data.ability[20] <= 1:
             character_data.ability[20] = 2
-    elif yield_count >= 10000 and character_data.ability[14] <= 2:
+    if yield_count >= 10000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         #至少提升为顺从3
@@ -552,20 +561,21 @@ def mark_effect(character_id: int):
 
     #苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
     pain_count = 0
-    pain_count += character_data.status_data[17]
+    change_data.status_data.setdefault(17, 0)
+    pain_count += change_data.status_data[17]
     if pain_count >= 2000 and character_data.ability[15] <= 0:
         character_data.ability[15] = 1
         character_data.second_behavior[1036] = 1
         #至少提升为顺从1
         if character_data.ability[20] <= 0:
             character_data.ability[20] = 1
-    elif pain_count >= 4000 and character_data.ability[15] <= 1:
+    if pain_count >= 4000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
         #至少提升为顺从2
         if character_data.ability[20] <= 1:
             character_data.ability[20] = 2
-    elif pain_count >= 8000 and character_data.ability[15] <= 2:
+    if pain_count >= 8000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
         #至少提升为顺从3
@@ -581,10 +591,10 @@ def mark_effect(character_id: int):
     if terror_count >= 2000 and character_data.ability[17] <= 0:
         character_data.ability[17] = 1
         character_data.second_behavior[1042] = 1
-    elif terror_count >= 4000 and character_data.ability[17] <= 1:
+    if terror_count >= 4000 and character_data.ability[17] <= 1:
         character_data.ability[17] = 2
         character_data.second_behavior[1043] = 1
-    elif terror_count >= 8000 and character_data.ability[17] <= 2:
+    if terror_count >= 8000 and character_data.ability[17] <= 2:
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
@@ -596,10 +606,10 @@ def mark_effect(character_id: int):
     if hate_count >= 1000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1
-    elif hate_count >= 2000 and character_data.ability[18] <= 1:
+    if hate_count >= 2000 and character_data.ability[18] <= 1:
         character_data.ability[18] = 2
         character_data.second_behavior[1046] = 1
-    elif hate_count >= 4000 and character_data.ability[18] <= 2:
+    if hate_count >= 4000 and character_data.ability[18] <= 2:
         character_data.ability[18] = 3
         character_data.second_behavior[1047] = 1
 
