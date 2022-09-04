@@ -208,7 +208,7 @@ class CharacterStatus:
     STATUS_ANAL_PLUG = 493
     """ 肛塞 """
     STATUS_ANAL_BEADS = 494
-    """ 肛门拉珠 """
+    """ 塞入肛门拉珠 """
     STATUS_CLYSTER_END = 495
     """ 拔出肛塞 """
     STATUS_NIPPLE_CLAMP_OFF = 496
@@ -483,7 +483,7 @@ class Behavior:
     ANAL_PLUG = 493
     """ 肛塞 """
     ANAL_BEADS = 494
-    """ 肛门拉珠 """
+    """ 塞入肛门拉珠 """
     CLYSTER_END = 495
     """ 拔出肛塞 """
     NIPPLE_CLAMP_OFF = 496
@@ -1153,6 +1153,10 @@ class Premise:
     """ 交互对象正在阴蒂夹 """
     TARGET_NOT_CLIT_CLAMP = "target_not_clit_clamp"
     """ 交互对象没有在阴蒂夹 """
+    TARGET_NOW_ANAL_BEADS = "target_now_anal_beads"
+    """ 交互对象正在肛门拉珠 """
+    TARGET_NOT_ANAL_BEADS = "target_not_anal_beads"
+    """ 交互对象没有在肛门拉珠 """
     HAVE_ELECTRIC_MESSAGE_STICK = "have_electric_message_stick"
     """ 已持有电动按摩棒 """
     HAVE_VIBRATOR = "have_vibrator"
@@ -1549,6 +1553,10 @@ class BehaviorEffect:
     """ 交互对象戴上阴蒂夹 """
     TARGET_CLIT_CLAMP_OFF = 90
     """ 交互对象取下阴蒂夹 """
+    TARGET_ANAL_BEADS_ON = 91
+    """ 交互对象塞入肛门拉珠 """
+    TARGET_ANAL_BEADS_OFF = 92
+    """ 交互对象拔出肛门拉珠 """
 
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -1993,7 +2001,7 @@ class SecondEffect:
     """ 增加大量Ｕ快（U感补正） """
     ADD_LARGE_W_FEEL = 260
     """ 增加大量Ｗ快（W感补正） """
-    ADD_SMALL_LUBRICATION = 261
+    ADD_SMALL_LUBRICATION_PLUS = 261
     """ 增加少量润滑（欲望补正） """
     ADD_SMALL_LEARN = 262
     """ 增加少量习得（技巧补正） """
@@ -2253,7 +2261,7 @@ class Instruct:
     ANAL_PLUG = 0
     """ 肛塞 """
     ANAL_BEADS = 0
-    """ 肛门拉珠 """
+    """ 塞入肛门拉珠 """
     CLYSTER_END = 0
     """ 拔出肛塞 """
     NIPPLE_CLAMP_OFF = 0

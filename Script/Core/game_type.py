@@ -287,7 +287,7 @@ class BODY_H_STATE:
         self.body_item: list = []
         """ 身体道具情况    
         0~9共10项，编号int:[道具名str,当前有无bool]    
-        部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"拉珠",8"利尿剂",9"睡眠药"]
+        部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"利尿剂",9"睡眠药"]
         """
 
 
@@ -547,8 +547,6 @@ class Character:
         """ 处女时间 """
         self.first_sex_place: List[str] = ["0"]
         """ 处女地点 """
-        self.dirty: DIRTY = DIRTY()
-        """ 角色身上污浊的情况 """
         self.first_sex_posture: str = ""
         """ 处女姿势 """
         self.first_a_sex_id: int = -1
@@ -611,12 +609,14 @@ class Character:
         """ 合成玉数量 """
         self.Originite_Prime : int = 0
         """ 至纯源石数量 """
+        self.dirty: DIRTY = DIRTY()
+        """ 角色身上污浊的情况 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()
         """ 角色本次H的情况 """
-        self.assistant_character_id: int = 0
-        """ 助理角色id """
         self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
         """ 角色作为助理的情况 """
+        self.assistant_character_id: int = 0
+        """ 助理角色id """
 
 class Cache:
     """游戏缓存数据结构体"""

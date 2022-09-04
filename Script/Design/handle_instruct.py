@@ -2015,17 +2015,37 @@ def handle_anal_plug():
 @add_instruct(
     constant.Instruct.ANAL_BEADS,
     constant.InstructType.SEX,
-    _("肛门拉珠"),
+    _("塞入肛门拉珠"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_ANAL_BEADS},
+    constant.Premise.HAVE_ANAL_BEADS,
+    constant.Premise.TARGET_NOT_ANAL_BEADS},
 )
 def handle_anal_beads():
-    """处理肛门拉珠指令"""
+    """处理塞入肛门拉珠指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.ANAL_BEADS
     character_data.state = constant.CharacterStatus.STATUS_ANAL_BEADS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.ANAL_BEADS_OFF,
+    constant.InstructType.SEX,
+    _("拔出肛门拉珠"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_ANAL_BEADS,
+    constant.Premise.TARGET_NOW_ANAL_BEADS},
+)
+def handle_anal_beads_off():
+    """处理拔出肛门拉珠指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.ANAL_BEADS_OFF
+    character_data.state = constant.CharacterStatus.STATUS_ANAL_BEADS_OFF
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 

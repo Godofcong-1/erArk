@@ -732,8 +732,8 @@ def handle_add_small_w_feel(
     change_data.status_data[7] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION)
-def handle_add_small_lubrication(
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION_PLUS)
+def handle_add_small_lubrication_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):

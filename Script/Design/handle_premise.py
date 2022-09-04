@@ -4648,7 +4648,7 @@ def handle_have_clyster_tools(character_id: int) -> int:
 @add_premise(constant.Premise.HAVE_ANAL_BEADS)
 def handle_have_anal_beads(character_id: int) -> int:
     """
-    校验角色是否已持有拉珠
+    校验角色是否已持有肛门拉珠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4659,6 +4659,37 @@ def handle_have_anal_beads(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant.Premise.TARGET_NOW_ANAL_BEADS)
+def handle_target_now_anal_beads(character_id: int) -> int:
+    """
+    校验交互对象是否正在肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[7][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_ANAL_BEADS)
+def handle_target_not_anal_beads(character_id: int) -> int:
+    """
+    校验交互对象是否没有在肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[7][1]:
+        return 0
+    return 1
 
 @add_premise(constant.Premise.HAVE_ANAL_PLUG)
 def handle_have_anal_plug(character_id: int) -> int:
