@@ -58,8 +58,6 @@ class Assistant_Panel:
             return_list = []
 
             line_feed.draw()
-            line = draw.LineDraw("+", self.width)
-            line.draw()
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -102,9 +100,6 @@ class SeeAssistantButtonList:
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-
-        # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
-        # draw_effect_text = ""
 
         # 按钮绘制
         name_draw = draw.NormalDraw()
@@ -243,24 +238,35 @@ class SeeAssistantButtonList:
         # 0号指令,选择助理
         if self.button_id == 0:
 
-            id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
-            line_feed.draw()
+            self.handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
+
             while 1:
-                now_draw_list = []
+
+                # 显示当前助手
+                character_data: game_type.Character = cache.character_data[0]
+                target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+                line = draw.LineDraw("-", self.width)
+                line.draw()
+                now_npc_draw = draw.NormalDraw()
+                now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
+                now_npc_draw.text = now_npc_text
+                now_npc_draw.draw()
+                line_feed.draw()
+
+                # 遍历所有NPC
+                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                # print("debug id_list = ",id_list)
+                self.handle_panel.text_list = id_list
+                self.handle_panel.update()
+                self.handle_panel.draw()
                 return_list = []
-                for ass_id in id_list:
-                    now_target_data: game_type.Character = cache.character_data[ass_id]
-                    name = f"[{now_target_data.adv}：{now_target_data.name}]"
-                    NPC_name_draw = draw.CenterButton(
-                        name, self.button_return, int(self.width / 5), cmd_func=self.button_0,args=(ass_id,),
-                    )
-                    now_draw_list.append(NPC_name_draw)
-                    return_list.append(self.button_return)
-                NPC_name_draw_list = panel.DrawTextListPanel()
-                NPC_name_draw_list.set(now_draw_list,self.width,5)
-                NPC_name_draw_list.draw()
+                return_list.extend(self.handle_panel.return_list)
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+                back_draw.draw()
+                line_feed.draw()
+                return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn:
+                if yrn == back_draw.return_text:
                     break
 
         # 1号指令,助理常时跟随
@@ -323,4 +329,65 @@ class SeeAssistantButtonList:
         """绘制对象"""
         self.now_draw.draw()
 
+
+
+class SeeNPCButtonList:
+    """
+    点击后可选择作为助理的NPC的按钮对象
+    Keyword arguments:
+    text -- 选项名字
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.NPC_id: int = NPC_id
+        """ 指令名字绘制文本 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[NPC_id]
+        button_text = f"[{target_data.adv}：{target_data.name}]"
+
+        # 按钮绘制
+
+        if self.NPC_id == character_data.assistant_character_id:
+            name_draw = draw.CenterButton(
+                button_text, self.button_return, self.width, cmd_func=self.button_0
+            )
+        else:
+            name_draw = draw.CenterButton(
+                button_text, self.button_return, self.width, cmd_func=self.button_0
+            )
+        self.button_return = NPC_id
+        self.now_draw = name_draw
+        self.draw_text = button_text
+
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+
+
+    def button_0(self):
+        """选项1"""
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.assistant_character_id = self.NPC_id
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
 
