@@ -2274,19 +2274,37 @@ def handle_enemas():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.DIURETICS,
+    constant.Instruct.DIURETICS_ONCE,
     constant.InstructType.SEX,
-    _("利尿剂"),
+    _("一次性利尿剂"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_DIURETICS},
+    constant.Premise.HAVE_DIURETICS_ONCE},
 )
-def handle_diuretics():
-    """处理利尿剂指令"""
+def handle_diuretics_once():
+    """处理一次性利尿剂指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.DIURETICS
-    character_data.state = constant.CharacterStatus.STATUS_DIURETICS
+    character_data.behavior.behavior_id = constant.Behavior.DIURETICS_ONCE
+    character_data.state = constant.CharacterStatus.STATUS_DIURETICS_ONCE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.DIURETICS_PERSISTENT,
+    constant.InstructType.SEX,
+    _("持续性利尿剂"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_DIURETICS_PERSISTENT},
+)
+def handle_diuretics_persistent():
+    """处理持续性利尿剂指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.DIURETICS_PERSISTENT
+    character_data.state = constant.CharacterStatus.STATUS_DIURETICS_PERSISTENT
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 

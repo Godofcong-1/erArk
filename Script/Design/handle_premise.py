@@ -4927,10 +4927,10 @@ def handle_have_enemas(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.HAVE_DIURETICS)
-def handle_have_diuretics(character_id: int) -> int:
+@add_premise(constant.Premise.HAVE_DIURETICS_ONCE)
+def handle_have_diuretics_once(character_id: int) -> int:
     """
-    校验角色是否已持有利尿剂
+    校验角色是否已持有一次性利尿剂
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4938,6 +4938,21 @@ def handle_have_diuretics(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if character_data.item[105]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_DIURETICS_PERSISTENT)
+def handle_have_diuretics_persistent(character_id: int) -> int:
+    """
+    校验角色是否已持有持续性利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[106]:
         return 1
     return 0
 
@@ -4952,7 +4967,7 @@ def handle_have_sleeping_pills(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.item[106]:
+    if character_data.item[107]:
         return 1
     return 0
 
@@ -4967,7 +4982,7 @@ def handle_have_clomid(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.item[107]:
+    if character_data.item[108]:
         return 1
     return 0
 

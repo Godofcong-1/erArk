@@ -171,11 +171,13 @@ class CharacterStatus:
     """ 媚药 """
     STATUS_ENEMAS = 455
     """ 灌肠液 """
-    STATUS_DIURETICS = 456
-    """ 利尿剂 """
-    STATUS_SLEEPING_PILLS = 457
+    STATUS_DIURETICS_ONCE = 456
+    """ 一次性利尿剂 """
+    STATUS_DIURETICS_PERSISTENT = 457
+    """ 持续性利尿剂 """
+    STATUS_SLEEPING_PILLS = 458
     """ 睡眠药 """
-    STATUS_CLOMID = 458
+    STATUS_SLEEPING_PILLS = 459
     """ 排卵促进药 """
     STATUS_PUT_CONDOM = 471
     """ 戴上避孕套 """
@@ -448,11 +450,13 @@ class Behavior:
     """ 媚药 """
     ENEMAS = 455
     """ 灌肠液 """
-    DIURETICS = 456
-    """ 利尿剂 """
-    SLEEPING_PILLS = 457
+    DIURETICS_ONCE = 456
+    """ 一次性利尿剂 """
+    DIURETICS_PERSISTENT = 457
+    """ 持续性利尿剂 """
+    SLEEPING_PILLS = 458
     """ 睡眠药 """
-    CLOMID = 458
+    SLEEPING_PILLS = 459
     """ 排卵促进药 """
     PUT_CONDOM = 471
     """ 戴上避孕套 """
@@ -1216,8 +1220,10 @@ class Premise:
     """ 已持有媚药 """
     HAVE_ENEMAS = "have_enemas"
     """ 已持有灌肠液 """
-    HAVE_DIURETICS = "have_diuretics"
-    """ 已持有利尿剂 """
+    HAVE_DIURETICS_ONCE = "have_diuretics_once"
+    """ 已持有一次性利尿剂 """
+    HAVE_DIURETICS_PERSISTENT = "have_diuretics_persistent"
+    """ 已持有持续性利尿剂 """
     HAVE_SLEEPING_PILLS = "have_sleeping_pills"
     """ 已持有睡眠药 """
     HAVE_CLOMID = "have_clomid"
@@ -1579,6 +1585,14 @@ class BehaviorEffect:
     """ 交互对象塞入肛门拉珠 """
     TARGET_ANAL_BEADS_OFF = 92
     """ 交互对象拔出肛门拉珠 """
+    USE_DIURETICS_ONCE = 93
+    """ 使用了一个一次性利尿剂 """
+    USE_DIURETICS_PERSISTENT = 94
+    """ 使用了一个持续性利尿剂 """
+    TARGET_ADD_URINATE = 95
+    """ 交互对象尿意值全满 """
+    TARGET_DIURETICS_ON = 96
+    """ 交互对象获得利尿剂状态 """
 
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -2057,7 +2071,8 @@ class SecondEffect:
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401
     """ 增加巨量苦痛（A破处修正） """
-
+    ADD_URINATE = 402
+    """ 增加尿意（持续性利尿剂） """
 
 
 #旧结算存档#
@@ -2255,8 +2270,10 @@ class Instruct:
     """ 媚药 """
     ENEMAS = 0
     """ 灌肠液 """
-    DIURETICS = 0
-    """ 利尿剂 """
+    DIURETICS_ONCE = 0
+    """ 一次性利尿剂 """
+    DIURETICS_PERSISTENT = 0
+    """ 持续性利尿剂 """
     SLEEPING_PILLS = 0
     """ 睡眠药 """
     CLOMID = 0
@@ -2453,4 +2470,4 @@ settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
 
 
-# 协力名单，不分先后 依吹脆香，反R，幻白，无色树
+# 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛

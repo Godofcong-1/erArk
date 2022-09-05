@@ -286,8 +286,8 @@ class BODY_H_STATE:
 
         self.body_item: list = []
         """ 身体道具情况    
-        0~9共10项，编号int:[道具名str,当前有无bool]    
-        部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"利尿剂",9"睡眠药"]
+        0~9共10项，编号int:[道具名str,当前有无bool,状态的结束时间datetime.datetime]    
+        部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"持续性利尿剂",9"睡眠药"]
         """
 
 
@@ -298,7 +298,7 @@ class BODY_H_STATE:
         """
 
 class ASSISTANT_STATE:
-    """H状态结构体"""
+    """助理状态结构体"""
 
     def __init__(self):
 
@@ -320,7 +320,6 @@ class ASSISTANT_STATE:
         """ 助攻服务"""
         self.help_sex: int = 0
         """ 性处理服务，int[0否,1被动接受(非本番),2被动接受(含本番),3主动请求(非本番),4主动请求(含本番)]"""
-
 
 # class Height:
 #     """身高数据结构体"""
@@ -615,10 +614,10 @@ class Character:
         """ 角色身上污浊的情况 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()
         """ 角色本次H的情况 """
-        self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
-        """ 角色作为助理的情况 """
         self.assistant_character_id: int = 0
         """ 助理角色id """
+        self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
+        """ 角色作为助理的情况 """
 
 class Cache:
     """游戏缓存数据结构体"""

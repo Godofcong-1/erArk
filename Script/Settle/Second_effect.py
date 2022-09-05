@@ -1001,3 +1001,23 @@ def handle_add_large_pain_first_a_sex(
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_URINATE)
+def handle_add_urinate(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加尿意（持续性利尿剂）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    if character_data.h_state.body_item[8][1]:
+        if character_data.urinate_point >= 30:
+            character_data.urinate_point = 240
+

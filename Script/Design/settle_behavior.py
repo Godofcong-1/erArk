@@ -27,19 +27,24 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     status_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
+
+    # 结算角色随时间增加的一些数值（困倦值/尿意值）
+    change_character_value_add_as_time(character_id, add_time)
+    # 结算角色的持续状态
+    change_character_persistent_state(character_id, now_time, add_time)
+
+    # 进行一段结算
     behavior_id = now_character_data.behavior.behavior_id
     if behavior_id in game_config.config_behavior_effect_data:
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
-    #进行二段结算
+    # 进行二段结算
     check_second_effect(0, status_data)
     # check_second_effect(character_id)
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
-    # 结算角色随时间增加的一些数值（困倦值/尿意值）
-    change_character_value_add_as_time(character_id, add_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
     #注释掉了社交关系#
@@ -329,6 +334,30 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
             target_character_data.urinate_point += add_urinate
 
         # print(f"debug target_character_id = {player_character_data.target_character_id}，target_character_data.sleep_point = {target_character_data.sleep_point},target_character_data.urinate_point = {target_character_data.urinate_point}")
+
+
+def change_character_persistent_state(character_id: int, now_time: datetime.datetime, add_time: int):
+    """
+    结算角色的持续状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 距离上次结算过去的时间
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    player_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+
+    # 结算H状态的持续时间
+    for i in range(len(now_character_data.h_state.body_item)):
+        if now_character_data.h_state.body_item[i][1] :
+            end_time = now_character_data.h_state.body_item[i][2]
+            if end_time != None:
+                add_time = int((now_time - end_time).seconds / 60)
+                if add_time >= 0:
+                    now_character_data.h_state.body_item[i][1] = False
+                    now_character_data.h_state.body_item[i][2] = None
+
+
 
 # def change_character_social(character_id: int, change_data: game_type.CharacterStatusChange):
 #     """

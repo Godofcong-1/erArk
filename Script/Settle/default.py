@@ -1545,6 +1545,95 @@ def handle_target_anal_beads_off(
     target_data.h_state.body_item[7][1] = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_DIURETICS_ONCE)
+def handle_use_diuretics_once(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    使用了一个一次性利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[105] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_DIURETICS_PERSISTENT)
+def handle_use_diuretics_persistent(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    使用了一个持续性利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[106] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_URINATE)
+def handle_target_add_urinate(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象尿意值全满
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.urinate_point = 240
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_DIURETICS_ON)
+def handle_target_diuretics_on(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象获得利尿剂状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    add_time = datetime.timedelta(hours=4)
+    end_time = now_time + add_time
+    target_data.h_state.body_item[8][1] = True
+    target_data.h_state.body_item[8][2] = end_time
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
     character_id: int,

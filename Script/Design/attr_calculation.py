@@ -143,14 +143,12 @@ def get_h_state_zero() -> dict:
     直接将H状态结构体归0
     """
     h_state_data = game_type.BODY_H_STATE()
-    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","利尿剂","睡眠药"]
+    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","持续性利尿剂","睡眠药"]
     # bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
 
     for body_item in body_item_list:
-        now_list = [body_item,False]
+        now_list = [body_item,False,None]
         h_state_data.body_item.append(now_list)
-
-    h_state_data.bondage = 0
 
     return h_state_data
 
