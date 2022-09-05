@@ -256,49 +256,49 @@ class InScenePanel:
             #↓以下为H状态栏的内容↓#
             character_H_status_draw_list = []
             if character_data.target_character_id :
-                target_character_data = cache.character_data[character_data.target_character_id]
-                if target_character_data.is_h:
-                    character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
-                        character_data.cid, self.width, 9, 0, 0
-                    )
-                
-                    now_line = len(character_H_status_draw.draw_list)
 
-                    for i in range(now_line):
-                        c_draw = None
-                        if i in range(len(character_status_draw.draw_list)):
-                            c_draw = character_status_draw.draw_list[i]
-                        else:
-                            c_draw = draw.NormalDraw()
-                            c_draw.text = " " * int(self.width / 2)
-                            c_draw.width = self.width / 2
+                character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
+                    character_data.cid, self.width, 9, 0, 0
+                )
+            
+                now_line = len(character_H_status_draw.draw_list)
 
-                        character_H_status_draw_list = character_H_status_draw.draw_list
-                        # character_status_draw_list.append((t_draw))
-
-                for label in character_H_status_draw_list:
-                    if isinstance(label, tuple):
-                        index = 0
-                        for value in label:
-                            if isinstance(value, list):
-                                for value_draw in value:
-                                    value_draw.draw()
-                            else:
-                                value.line_feed = 0
-                                value.draw()
-                            if not index:
-                                fix_draw = draw.NormalDraw()
-                                fix_draw.width = 1
-                                fix_draw.text = "|"
-                                fix_draw.draw()
-                                index = 1
-                        line_feed.draw()
-                    elif isinstance(label, list):
-                        for value in label:
-                            value.draw()
-                        line_feed.draw()
+                for i in range(now_line):
+                    c_draw = None
+                    if i in range(len(character_status_draw.draw_list)):
+                        c_draw = character_status_draw.draw_list[i]
                     else:
-                        label.draw()
+                        c_draw = draw.NormalDraw()
+                        c_draw.text = " " * int(self.width / 2)
+                        c_draw.width = self.width / 2
+
+                    character_H_status_draw_list = character_H_status_draw.draw_list
+                    # character_status_draw_list.append((t_draw))
+
+                if now_line != 1:
+                    for label in character_H_status_draw_list:
+                        if isinstance(label, tuple):
+                            index = 0
+                            for value in label:
+                                if isinstance(value, list):
+                                    for value_draw in value:
+                                        value_draw.draw()
+                                else:
+                                    value.line_feed = 0
+                                    value.draw()
+                                if not index:
+                                    fix_draw = draw.NormalDraw()
+                                    fix_draw.width = 1
+                                    fix_draw.text = "|"
+                                    fix_draw.draw()
+                                    index = 1
+                            line_feed.draw()
+                        elif isinstance(label, list):
+                            for value in label:
+                                value.draw()
+                            line_feed.draw()
+                        else:
+                            label.draw()
 
 
             #以下为图片面板#

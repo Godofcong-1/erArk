@@ -102,7 +102,7 @@ def handle_talk(character_id: int):
     #交互对象
     now_talk_data = {}
     now_premise_data = {}
-    if (character_data.target_character_id):
+    if character_id == 0 and character_data.target_character_id:
         target_character_id = character_data.target_character_id
         target_character_data : game_type.Character = cache.character_data[target_character_id]
         for second_behavior_id,behavior_data in target_character_data.second_behavior.items():

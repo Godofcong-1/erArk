@@ -39,7 +39,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
     # 进行二段结算
-    check_second_effect(0, status_data)
+    check_second_effect(character_id, status_data)
     # check_second_effect(character_id)
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
@@ -461,7 +461,8 @@ def check_second_effect(
     # 检测交互对象
     # 如果是玩家的交互，则target_character_id != 0
     # 如果是NPC的交互，则character_id != 0
-    if target_character_id or character_id:
+    # if target_character_id or character_id:
+    if target_character_id:
         # print("debug character_id = ",character_id)
         # print("debug target_character_id = ",target_character_id)
         # 高潮结算

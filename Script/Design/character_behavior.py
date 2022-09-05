@@ -47,7 +47,7 @@ def init_character_behavior():
     while 1:
         if len(cache.over_behavior_character) >= len(cache.character_data):
             start_after = time.time()
-            logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
+            # logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
             break
         for character_id in cache.character_data:
             start_all = time.time()
@@ -92,7 +92,11 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         return
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
-    #空闲状态下执行可用行动#
+    # 处理跟随与H模式#
+    if character_id != 0:
+        judge_character_follow(character_id)
+        judge_character_h(character_id)
+    # 空闲状态下执行可用行动#
     start_character = time.time()
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
@@ -101,7 +105,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             cache.over_behavior_character.add(0)
         end_judge = time.time()
         # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
-    #非空闲活动下结算当前状态#
+    # 非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
@@ -125,10 +129,6 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             save_handle.establish_save("auto")
         #6.清零污浊状态
         character_data.dirty = attr_calculation.get_dirty_zero()
-    #处理跟随与H模式#
-    if character_id != 0:
-        judge_character_follow(character_id)
-        judge_character_h(character_id)
     end_last = time.time()
     # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
 

@@ -473,10 +473,10 @@ class CharacterInfoHead:
                 urinate = urinate_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 4
+        message_draw.width = width / 3
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
-        hp_draw.width = width / 4
+        hp_draw.width = width / 9 *2
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
@@ -485,7 +485,7 @@ class CharacterInfoHead:
             _("体力"),
         )
         mp_draw = draw.InfoBarDraw()
-        mp_draw.width = width / 4
+        mp_draw.width = width / 9 *2
         mp_draw.scale = 0.8
         mp_draw.set(
             "ManaPointbar",
@@ -495,7 +495,7 @@ class CharacterInfoHead:
         )
         if character_id == 0:
             ep_draw = draw.InfoBarDraw()
-            ep_draw.width = width / 4
+            ep_draw.width = width / 9 *2
             ep_draw.scale = 0.8
             ep_draw.set(
                 "EjaPointbar",
