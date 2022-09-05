@@ -439,33 +439,38 @@ class CharacterInfoHead:
         sex_text = game_config.config_sex_tem[character_data.sex].name
 
         # 非清醒时输出当前状态
-        sleep_text_list = ["<清醒>","<疲劳>","<昏昏欲睡>","<睡眠中>"]
+        sleep_text_list = [" <清醒>"," <疲劳>"," <昏昏欲睡>"," <睡眠中>"]
         sleep_text = sleep_text_list[attr_calculation.get_sleep_level(character_data.sleep_point)]
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.sleep_point = ",character_data.sleep_point,"   sleep_text = ",sleep_text)
-        sleep_text = "" if sleep_text == "<清醒>" else sleep_text
+        sleep_text = "" if sleep_text == " <清醒>" else sleep_text
 
         # 非普通时输出当前心情
         angry_text = attr_calculation.get_angry_text(character_data.angry_point)
         angry_text = "" if angry_text == "普通" else angry_text
 
+        # 有尿意时进行提示
+        urinate_text = " <尿>" if character_data.urinate_point >= 192 else ""
+
         if character_id:
-            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}） {sleep}").format(
+            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}").format(
                     character_name=character_data.name,
                     favorability=int(character_data.favorability[0]),
                     trust=round(character_data.trust,1),
                     angry = angry_text,
                     sleep = sleep_text,
+                    urinate = urinate_text,
                 )
         else:
             message = _(
-                "{character_name}{character_nick_name} {sleep}"
+                "{character_name}{character_nick_name}{sleep}{urinate}"
             ).format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
                 sleep = sleep_text,
+                urinate = urinate_text,
             )
         message_draw = draw.CenterDraw()
         message_draw.width = width / 4

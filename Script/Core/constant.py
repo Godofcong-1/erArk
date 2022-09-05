@@ -55,6 +55,8 @@ class CharacterStatus:
     """ H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
+    STATUS_PEE = 140
+    """ 解手 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -326,6 +328,8 @@ class Behavior:
     """ H """
     END_H = 126
     """ 结束H """
+    PEE = 140
+    """ 解手 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -590,6 +594,9 @@ class StateMachine:
     """ 给玩家泡咖啡（加料） """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
+    PEE = 50
+    """ 解手 """
+
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
@@ -825,6 +832,12 @@ class Premise:
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
+    IN_TOILET_MAN = "in_toilet_man"
+    """ 在男士洗手间 """
+    IN_TOILET_FEMALE = "in_toilet_female"
+    """ 在女士洗手间 """
+    NOT_IN_TOILET = "not_in_toilet"
+    """ 不在洗手间 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -1227,6 +1240,15 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
+    URINATE_LE_79 = "urinate_le_79"
+    """ 尿意条≤79%，不需要排尿 """
+    URINATE_GE_80 = "urinate_ge_80"
+    """ 尿意条≥80%，需要排尿 """
+    TARGET_URINATE_LE_79 = "target_urinate_le_79"
+    """ 交互对象尿意条≤79%，不需要排尿 """
+    TARGET_URINATE_GE_80 = "target_urinate_ge_80"
+    """ 交互对象尿意条≥80%，需要排尿 """
+
     HYPOSTHENIA = "83"
     """ 体力不足 """
     PHYSICAL_STRENGHT = "84"
@@ -1596,6 +1618,10 @@ class BehaviorEffect:
     """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
     SLEEP_POINT_DOWN = 124
     """ 睡觉时降低困倦值 """
+    URINATE_POINT_DOWN = 125
+    """ 尿意值归零 """
+    TARGET_URINATE_POINT_DOWN = 126
+    """ 交互对象尿意值归零 """
 
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
@@ -2099,12 +2125,6 @@ class Instruct:
     """ 收起内裤 """
     ASK_DATE = 0
     """ 邀请约会 """
-    CONFESSION = 0
-    """ 告白 """
-    GIVE_NECKLACE = 0
-    """ 戴上项圈 """
-    DO_H = 0
-    """ 邀请H """
     END_H = 0
     """ H结束 """
     DRINK_ALCOHOL = 0
@@ -2113,6 +2133,9 @@ class Instruct:
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0
     # """ 演奏乐器 """
+    PEE = 0
+    """ 解手 """
+
 
     #工作#
     OFFICIAL_WORK = 0
@@ -2161,6 +2184,12 @@ class Instruct:
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    DO_H = 0
+    """ 邀请H """
+    CONFESSION = 0
+    """ 告白 """
+    GIVE_NECKLACE = 0
+    """ 戴上项圈 """
     #性爱#
     MAKING_OUT = 0
     """ 身体爱抚 """

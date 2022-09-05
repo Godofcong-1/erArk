@@ -488,6 +488,62 @@ def handle_not_in_dormitory(character_id: int) -> int:
     return now_position != character_data.dormitory
 
 
+@add_premise(constant.Premise.IN_TOILET_MAN)
+def handle_in_toilet_man(character_id: int) -> int:
+    """
+    校验角色是否在男士洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Toilet_Male":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_TOILET_FEMALE)
+def handle_in_toilet_female(character_id: int) -> int:
+    """
+    校验角色是否在女士洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Toilet_Female":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_TOILET)
+def handle_not_in_toilet(character_id: int) -> int:
+    """
+    校验角色是否不在洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag not in ["Toilet_Male","Toilet_Female"]:
+        return 1
+    return 0
+
+
+
+
 @add_premise(constant.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
@@ -909,7 +965,7 @@ def handle_sleep_ge_75(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     value = character_data.sleep_point / 160
-    if value >= 0.75:
+    if value > 0.74:
         return 1
     else:
         return 0
@@ -945,8 +1001,8 @@ def handle_sleep_ge_90(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     value = character_data.sleep_point / 160
-    if value >= 0.9:
-        return 999
+    if value > 0.89:
+        return character_data.sleep_point * 5
     else:
         return 0
 
@@ -5035,6 +5091,80 @@ def handle_semen_enema_end(character_id: int) -> int:
     if target_data.dirty.a_clean in [4]:
         return 1
     return 0
+
+
+@add_premise(constant.Premise.URINATE_LE_79)
+def handle_urinate_le_79(character_id: int) -> int:
+    """
+    尿意条≤79%，不需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.URINATE_GE_80)
+def handle_urinate_ge_80(character_id: int) -> int:
+    """
+    尿意条≥80%，需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value > 0.79:
+        return character_data.urinate_point * 4
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_URINATE_LE_79)
+def handle_target_urinate_le_79(character_id: int) -> int:
+    """
+    交互对象尿意条≤79%，不需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.urinate_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_URINATE_GE_80)
+def handle_target_urinate_ge_80(character_id: int) -> int:
+    """
+    交互对象尿意条≥80%，需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.urinate_point / 240
+    if value > 0.79:
+        return 1
+    else:
+        return 0
 
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)

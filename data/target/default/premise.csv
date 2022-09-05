@@ -29,6 +29,11 @@ str,str,str
 23,32,sleep_ge_90
 24,33,in_dor
 25,33,sleep_ge_90
+26,34,urinate_ge_80
+27,34,not_in_toilet
+28,35,urinate_ge_80
+29,35,in_toilet_female
+
 30,7,ai_wait
 40,60,place_is_h
 41,60,not_in_dor

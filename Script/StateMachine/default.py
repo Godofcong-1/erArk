@@ -182,7 +182,6 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    character_data.behavior.duration += 15
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
@@ -312,6 +311,20 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SEE_H
     character_data.state = constant.CharacterStatus.STATUS_SEE_H
     character_data.tired = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.PEE)
+def character_pee(character_id: int):
+    """
+    角色解手
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.PEE
+    character_data.state = constant.CharacterStatus.STATUS_PEE
+    character_data.behavior.duration = 5
+
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)

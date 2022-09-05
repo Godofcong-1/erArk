@@ -76,6 +76,7 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
     {constant.Premise.NOT_H,
+    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_rest():
@@ -569,6 +570,7 @@ def handle_wait():
     _("泡咖啡"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
+    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_make_coffee():
@@ -586,6 +588,7 @@ def handle_make_coffee():
     _("泡咖啡（加料）"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
+    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_make_coffee_add():
@@ -604,6 +607,7 @@ def handle_make_coffee_add():
     _("让对方泡咖啡"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
+    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_ask_make_coffee():
@@ -863,6 +867,25 @@ def handle_drink_alcohol():
     """处理劝酒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.PEE,
+    constant.InstructType.DAILY,
+    _("解手"),
+    {constant.Premise.IN_TOILET_MAN,
+    constant.Premise.NOT_H,
+    constant.Premise.URINATE_GE_80,
+    constant.Premise.SLEEP_LE_89},
+)
+def handle_pee():
+    """处理解手指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.PEE
+    character_data.state = constant.CharacterStatus.STATUS_PEE
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 

@@ -618,7 +618,7 @@ def handle_first_kiss(
         character_data.first_kiss_place = character_data.position
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
+            now_draw.text = _("{character_name}博士于{kiss_time}在{kiss_palce}失去了初吻\n").format(
                 character_name=character_data.name,
                 kiss_time = str(character_data.first_kiss_time.month) + "月" + str (character_data.first_kiss_time.day) + "日",
                 kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
@@ -702,7 +702,7 @@ def handle_first_sex(
         character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
+            now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
                 character_name=character_data.name,
                 sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
                 sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
@@ -757,7 +757,7 @@ def handle_first_a_sex(
         character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了童贞\n").format(
+            now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
                 character_name=character_data.name,
                 sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
                 sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
@@ -2825,3 +2825,47 @@ def handle_sleep_point_down(
 
     value = int(add_time / 3)
     character_data.sleep_point -= value
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.URINATE_POINT_DOWN)
+def handle_urinate_point_down(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    尿意值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.urinate_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_URINATE_POINT_DOWN)
+def handle_target_urinate_point_down(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象尿意值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.urinate_point = 0
+

@@ -1,5 +1,5 @@
 import datetime
-import time
+import time,random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
@@ -38,11 +38,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     # print("target_data.name :",target_data.name)
     #结算上次进行聊天的时间，以重置聊天计数器#
     change_character_talkcount_for_time(character_id, now_time)
-    # 结算角色与当前交互对象的疲劳状态
-    now_character_data.sleep_point += int ( add_time / 6 )
-    if character_id == 0 and player_character_data.target_character_id:
-        target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
-        target_character_data.sleep_point += int ( add_time / 6 )
+    # 结算角色随时间增加的一些数值（困倦值/尿意值）
+    change_character_value_add_as_time(character_id, add_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
     #注释掉了社交关系#
@@ -305,6 +302,33 @@ def change_character_talkcount_for_time(character_id: int, now_time: datetime.da
         target_data.talk_count = 0
     # print("target_data.talk_count :",target_data.talk_count)
 
+def change_character_value_add_as_time(character_id: int, add_time: int):
+    """
+    结算角色随时间增加的一些数值（困倦值/尿意值）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 距离上次结算过去的时间
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    player_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+
+    # 结算困倦值
+    add_sleep = int ( add_time / 6 )
+    now_character_data.sleep_point += add_sleep
+
+    # 结算尿意值
+    add_urinate = random.randint(int(add_time*0.8), int(add_time*1.2))
+    now_character_data.urinate_point += add_urinate
+
+    # 给无法自由行动的交互对象结算
+    if character_id == 0 and player_character_data.target_character_id:
+        target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
+        if target_character_data.is_follow or target_character_data.is_h:
+            target_character_data.sleep_point += add_sleep
+            target_character_data.urinate_point += add_urinate
+
+        # print(f"debug target_character_id = {player_character_data.target_character_id}，target_character_data.sleep_point = {target_character_data.sleep_point},target_character_data.urinate_point = {target_character_data.urinate_point}")
 
 # def change_character_social(character_id: int, change_data: game_type.CharacterStatusChange):
 #     """
@@ -430,7 +454,7 @@ def check_second_effect(
         mark_list = [i for i in range(1030,1048)]
         # 单独遍历结算刻印
         for behavior_id,behavior_data in target_character_data.second_behavior.items():
-            if behavior_id in mark_list:
+            if behavior_data != 0 and behavior_id in mark_list:
                 #遍历该二段行为的所有结算效果，挨个触发
                 for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                     # print("effect_id :",effect_id)
