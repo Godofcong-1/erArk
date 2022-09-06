@@ -169,14 +169,25 @@ def character_move_to_toilet(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+
+    # 检索当前角色所在的大场景里有没有厕所，没有的话再随机选择其他厕所
+    now_position = character_data.position[0]
+    find_flag = False
     if character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Male"])
     )
     elif character_data.sex == 1:
-        to_toilet = map_handle.get_map_system_path_for_str(
+        for place in constant.place_data["Toilet_Female"]:
+            if place.split("\\")[0] == now_position:
+                to_toilet = map_handle.get_map_system_path_for_str(place)
+                find_flag = True
+                break
+        if not find_flag:
+            to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Female"])
     )
+    # print(f"debug constant.place_data[\"Toilet_Female\"] = ",constant.place_data["Toilet_Female"])
     _, _, move_path, move_time = character_move.character_move(character_id, to_toilet)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
@@ -198,6 +209,8 @@ def character_move_to_player(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    # if character_data.is_follow:
+    #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.is_follow}")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)

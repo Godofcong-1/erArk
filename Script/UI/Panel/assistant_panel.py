@@ -135,9 +135,9 @@ class SeeAssistantButtonList:
                 if target_data.assistant_state.always_follow == 0:
                     button_text += f"    否"
                 elif target_data.assistant_state.always_follow == 1:
-                    button_text += f"    强制跟随"
-                elif target_data.assistant_state.always_follow == 2:
                     button_text += f"    智能跟随，在非工作时间(饭点/上厕所/休息时间等)会暂离"
+                elif target_data.assistant_state.always_follow == 2:
+                    button_text += f"    强制跟随"
                 elif target_data.assistant_state.always_follow == 3:
                     button_text += f"    在博士办公室待机"
 
@@ -280,7 +280,7 @@ class SeeAssistantButtonList:
                 target_data.assistant_state.always_follow += 1
                 # 同时结算跟随状态
                 if target_data.assistant_state.always_follow == 1 or target_data.assistant_state.always_follow == 2:
-                    target_data.is_follow = 1
+                    target_data.is_follow = target_data.assistant_state.always_follow
                 else:
                     target_data.is_follow = 0
 

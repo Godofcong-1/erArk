@@ -303,7 +303,7 @@ class ASSISTANT_STATE:
     def __init__(self):
 
         self.always_follow: int = 0
-        """ 跟随服务，int[0否,1强制跟随,2智能跟随，在非工作时间(饭点/上厕所等)会暂离,3在博士办公室待机]"""
+        """ 跟随服务，int[0否,1智能跟随，在非工作时间(饭点/上厕所等)会暂离,2强制跟随,3在博士办公室待机]"""
         self.always_help_work: bool = False
         """ 辅佐服务，仅由助理辅助工作系指令"""
         self.work_until_sleep: bool = False
@@ -586,8 +586,8 @@ class Character:
         """ AI行动里的原地发呆判定 """
         self.is_h : bool = 0
         """ 在H模式中 """
-        self.is_follow : bool = 0
-        """ 正跟随玩家 """
+        self.is_follow : int = 0
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随] """
         self.orgasm_level: Dict[int,int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}

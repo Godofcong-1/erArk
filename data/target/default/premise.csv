@@ -4,17 +4,9 @@ str,str,str
 0,0,0
 执行目标所需的前提id,,
 
-0,20,place_11
-1,4,23
-2,4,83
-3,5,in_dor
-4,5,83
-5,6,83
-6,50,23
-7,50,in_dor
-8,50,83
-9,51,23
-10,51,in_dor
+1,4,ai_wait
+
+10,20,place_11
 11,21,place_11
 12,30,not_in_dor
 13,30,hp_1
@@ -34,6 +26,14 @@ str,str,str
 28,35,urinate_ge_80
 29,35,in_toilet_female
 
-30,7,ai_wait
 40,60,place_is_h
 41,60,not_in_dor
+
+100,10,not_follow
+101,11,not_follow
+102,12,not_follow
+103,13,not_follow
+104,14,not_follow
+
+150,5,is_follow
+151,5,place_1

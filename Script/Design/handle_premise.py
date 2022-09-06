@@ -5690,6 +5690,34 @@ def handle_not_h(character_id: int) -> int:
 @add_premise(constant.Premise.IS_FOLLOW)
 def handle_is_follow(character_id: int) -> int:
     """
+    校验是否正智能跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.is_follow == 1:
+        return 100
+    return 0
+
+
+@add_premise(constant.Premise.NOT_FOLLOW)
+def handle_not_follow(character_id: int) -> int:
+    """
+    校验是否没有智能跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.is_follow == 1
+
+
+@add_premise(constant.Premise.TARGET_IS_FOLLOW)
+def handle_target_is_follow(character_id: int) -> int:
+    """
     校验交互对象是否正跟随玩家
     Keyword arguments:
     character_id -- 角色id
@@ -5701,8 +5729,8 @@ def handle_is_follow(character_id: int) -> int:
     return target_data.is_follow
 
 
-@add_premise(constant.Premise.NOT_FOLLOW)
-def handle_not_follow(character_id: int) -> int:
+@add_premise(constant.Premise.TARGET_NOT_FOLLOW)
+def handle_target_not_follow(character_id: int) -> int:
     """
     校验交互对象是否没有跟随玩家
     Keyword arguments:

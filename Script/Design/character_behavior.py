@@ -153,9 +153,12 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
-        if state_machine_id != 0:
+        # 不会被打断的指令列表
+        safe_instruct = [10,11,12,13,14,15] # 移动系
+        safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
+        if state_machine_id != 0 and state_machine_id not in safe_instruct:
             character_data.wait_flag = 1
-            # print("前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+        #     print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
         constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
@@ -201,7 +204,7 @@ def judge_character_tired_sleep(character_id : int):
     if character_data.is_h or character_data.is_follow:
         
         if character_data.tired or attr_calculation.get_sleep_level(character_data.sleep_point) >= 2:
-            character_data.is_h = 0
+            character_data.is_h = False
             character_data.is_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.width = width
@@ -397,10 +400,10 @@ def judge_character_follow(character_id: int) -> int:
 
     # 锁定助理的跟随状态
     if character_data.assistant_state.always_follow == 1 or character_data.assistant_state.always_follow == 2:
-        character_data.is_follow = 1
+        character_data.is_follow = character_data.assistant_state.always_follow
 
     # 维持跟随的状态
-    if character_data.is_follow:
+    if character_data.is_follow == 2:
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
         if character_data.position != cache.character_data[0].position:

@@ -636,7 +636,7 @@ def handle_make_food():
     _("请求同行"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
-    constant.Premise.NOT_FOLLOW},
+    constant.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
     """处理请求同行指令"""
@@ -657,7 +657,7 @@ def handle_followed():
     _("结束同行"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
-    constant.Premise.IS_FOLLOW},
+    constant.Premise.TARGET_IS_FOLLOW},
 )
 def handle_end_followed():
     """处理结束同行指令"""
