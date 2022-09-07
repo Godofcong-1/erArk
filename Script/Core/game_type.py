@@ -709,14 +709,22 @@ class TargetChange:
         """ hp变化 """
         self.mana_point: int = 0
         """ mp变化 """
+        self.eja_point: int = 0
+        """ 射精变化 """
         self.status_data: Dict[int, int] = {}
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
         self.trust: int = 0
         """ 信赖度变化 """
+        self.target_change: Dict[int, TargetChange] = {}
+        """ 互动目标状态变化 """
+        self.ability: Dict[int, int] = {}
+        """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.money: int = 0
+        """ 金钱变化 """
 
 
 class CharacterStatusChange:
@@ -731,6 +739,10 @@ class CharacterStatusChange:
         """ 射精变化 """
         self.status_data: Dict[int, int] = {}
         """ 状态变化 """
+        self.favorability: int = 0
+        """ 好感度变化 """
+        self.trust: int = 0
+        """ 信赖度变化 """
         self.language: Dict[int, int] = {}
         """ 语言技能经验变化 """
         self.knowledge: Dict[int, int] = {}

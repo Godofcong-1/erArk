@@ -108,7 +108,7 @@ def handle_add_interaction_favoravility(
         target_change = change_data.target_change[target_data.cid]
         add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
         character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, target_change, now_time
+            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
 
 
@@ -143,6 +143,9 @@ def handle_add_small_trust(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.trust += now_lust_multiple
+        if (character_id != 0) and (character_data.target_character_id == 0):
+            character_data.trust += now_lust_multiple
+            change_data.trust += now_lust_multiple
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
@@ -409,7 +412,7 @@ def handle_eat_food(
             target_change = change_data.target_change[target_data.cid]
             add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
             character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, target_change, now_time
+                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
             )
         del character_data.food_bag[food.uid]
         character_data.behavior.food_name = food_name
@@ -447,7 +450,7 @@ def handle_make_food(
             target_change = change_data.target_change[target_data.cid]
             add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
             character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, target_change, now_time
+                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
             )
 
 
@@ -483,7 +486,7 @@ def handle_make_food(
 #             add_favorability *= target_data.social_contact_data[character_id]
 #             if add_favorability:
 #                 character_handle.add_favorability(
-#                     character_id, target_data.cid, add_favorability, target_change, now_time
+#                     character_id, target_data.cid, add_favorability, change_data, target_change, now_time
 #                 )
 
 
@@ -521,7 +524,7 @@ def handle_make_food(
 #         if social >= 2:
 #             add_favorability += add_favorability_coefficient * social
 #             character_handle.add_favorability(
-#                 character_id, target_data.cid, add_favorability, target_change, now_time
+#                 character_id, target_data.cid, add_favorability, change_data, target_change, now_time
 #             )
 #         else:
 #             add_favorability -= add_favorability_coefficient * social
@@ -534,7 +537,7 @@ def handle_make_food(
 #             target_change.status.setdefault(12, 0)
 #             target_change.status[12] += add_disgust
 #             character_handle.add_favorability(
-#                 character_id, target_data.cid, add_favorability, target_change, now_time
+#                 character_id, target_data.cid, add_favorability, change_data, target_change, now_time
 #             )
 
 
@@ -573,7 +576,7 @@ def handle_make_food(
 #         if social >= 3:
 #             add_favorability += add_favorability_coefficient * social
 #             character_handle.add_favorability(
-#                 character_id, target_data.cid, add_favorability, target_change, now_time
+#                 character_id, target_data.cid, add_favorability, change_data, target_change, now_time
 #             )
 #         else:
 #             add_favorability -= add_favorability_coefficient * social
@@ -586,7 +589,7 @@ def handle_make_food(
 #             target_change.status.setdefault(12, 0)
 #             target_change.status[12] += add_disgust
 #             character_handle.add_favorability(
-#                 character_id, target_data.cid, add_favorability, target_change, now_time
+#                 character_id, target_data.cid, add_favorability, change_data, target_change, now_time
 #             )
 
 
@@ -2121,7 +2124,7 @@ def handle_talk_add_adjust(
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     character_handle.add_favorability(
-        character_id, target_data.cid, add_favorability, target_change, now_time
+        character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
     #好意变化#
     target_data.status_data.setdefault(11, 0)
@@ -2184,7 +2187,7 @@ def handle_coffee_add_adjust(
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     character_handle.add_favorability(
-        character_id, target_data.cid, add_favorability, target_change, now_time
+        character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
     #信赖变化#
     now_lust_multiple = 1
@@ -2194,6 +2197,9 @@ def handle_coffee_add_adjust(
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.trust += now_lust_multiple
+    if (character_id != 0) and (character_data.target_character_id == 0):
+        character_data.trust += now_lust_multiple
+        change_data.trust += now_lust_multiple
     #好意变化#
     target_data.status_data.setdefault(11, 0)
     now_lust = target_data.status_data[11]
@@ -2241,7 +2247,7 @@ def handle_target_coffee_add_adjust(
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     character_handle.add_favorability(
-        character_id, target_data.cid, add_favorability, target_change, now_time
+        character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
     #信赖变化#
     now_lust_multiple = 1
@@ -2251,6 +2257,9 @@ def handle_target_coffee_add_adjust(
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.trust += now_lust_multiple
+    if (character_id != 0) and (character_data.target_character_id == 0):
+        character_data.trust += now_lust_multiple
+        change_data.trust += now_lust_multiple
     #好意变化#
     target_data.status_data.setdefault(11, 0)
     now_lust = target_data.status_data[11]

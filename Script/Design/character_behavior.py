@@ -203,7 +203,7 @@ def judge_character_tired_sleep(character_id : int):
     #疲劳结算
     if character_data.is_h or character_data.is_follow:
         
-        if character_data.tired or attr_calculation.get_sleep_level(character_data.sleep_point) >= 2:
+        if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
             character_data.is_h = False
             character_data.is_follow = 0
             now_draw = draw.NormalDraw()

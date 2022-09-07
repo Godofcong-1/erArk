@@ -50,7 +50,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     #注释掉了社交关系#
     # change_character_social(character_id, status_data)
     now_judge = False
-    if character_id:
+    change_flag = False
+    # 当NPC对玩家交互时，互相替换双方的输出内容
+    if character_id != 0 and now_character_data.target_character_id == 0:
+        change_flag = True
+        target_change: game_type.TargetChange = status_data.target_change[0]
+        target_change.target_change[character_id] = status_data
+
+        # 开始互换
+        # print(f"debug 前target_change.hit_point = {target_change.hit_point}")
+        status_data,target_change = target_change,status_data
+        now_character_data,target_data = player_character_data,now_character_data
+        character_id = 0
+        # print(f"debug 后target_change.hit_point = {target_change.hit_point}")
+    elif character_id:
         return
     if status_data is None:
         return
@@ -67,6 +80,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     if len(status_data.target_change) and not character_id:
         now_judge = True
     if now_judge:
+        # print(f"debug now_judge")
         now_text_list = []
         now_draw = draw.NormalDraw()
         if now_character_data.cid == 0:
@@ -92,7 +106,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             )
 
         # 状态的结算输出
-        if len(status_data.status_data):
+        if len(status_data.status_data) and not change_flag:
             now_text_list += "\n"
             now_text_list.extend(
                 [
@@ -127,12 +141,17 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         # 交互对象的结算输出
         if len(status_data.target_change):
             for target_character_id in status_data.target_change:
+                # print(f"debug target_now_judge,character_id = {character_id},target_character_id = {target_character_id}")
                 if character_id and target_character_id:
                     continue
-                target_change: game_type.TargetChange = status_data.target_change[target_character_id]
-                target_data: game_type.Character = cache.character_data[target_character_id]
-                now_text = f"\n\n{target_data.name}:"
+                # 当NPC对玩家交互时，直接使用互相替换完的双方数据
                 judge = 0
+                if not change_flag:
+                    target_change: game_type.TargetChange = status_data.target_change[target_character_id]
+                    target_data: game_type.Character = cache.character_data[target_character_id]
+                else:
+                    judge = 1
+                now_text = f"\n\n{target_data.name}:"
 
                 # 体力/气力/好感/信赖的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
