@@ -2071,6 +2071,58 @@ class SecondEffect:
     """ 增加少量抑郁 """
     ADD_SMALL_DISGUST = 273
     """ 增加少量反感（反发刻印补正） """
+    ADD_MIDDLE_LUBRICATION_PLUS = 274
+    """ 增加中量润滑（欲望补正） """
+    ADD_MIDDLE_LEARN = 275
+    """ 增加中量习得（技巧补正） """
+    ADD_MIDDLE_RESPECT = 276
+    """ 增加中量恭顺（顺从补正） """
+    ADD_MIDDLE_FRIENDLY = 277
+    """ 增加中量好意（亲密补正） """
+    ADD_MIDDLE_DESIRE = 278
+    """ 增加中量欲情（欲望补正） """
+    ADD_MIDDLE_HAPPY = 279
+    """ 增加中量快乐（快乐刻印补正） """
+    ADD_MIDDLE_LEAD = 280
+    """ 增加中量先导（侍奉补正） """
+    ADD_MIDDLE_SUBMIT = 281
+    """ 增加中量屈服（屈服刻印补正） """
+    ADD_MIDDLE_SHY = 282
+    """ 增加中量羞耻（露出补正） """
+    ADD_MIDDLE_PAIN = 283
+    """ 增加中量苦痛（苦痛刻印补正） """
+    ADD_MIDDLE_TERROR = 284
+    """ 增加中量恐怖（恐怖刻印补正） """
+    ADD_MIDDLE_DEPRESSION = 285
+    """ 增加中量抑郁 """
+    ADD_MIDDLE_DISGUST = 286
+    """ 增加中量反感（反发刻印补正） """
+    ADD_LARGE_LUBRICATION_PLUS = 287
+    """ 增加大量润滑（欲望补正） """
+    ADD_LARGE_LEARN = 288
+    """ 增加大量习得（技巧补正） """
+    ADD_LARGE_RESPECT = 289
+    """ 增加大量恭顺（顺从补正） """
+    ADD_LARGE_FRIENDLY = 290
+    """ 增加大量好意（亲密补正） """
+    ADD_LARGE_DESIRE = 291
+    """ 增加大量欲情（欲望补正） """
+    ADD_LARGE_HAPPY = 292
+    """ 增加大量快乐（快乐刻印补正） """
+    ADD_LARGE_LEAD = 293
+    """ 增加大量先导（侍奉补正） """
+    ADD_LARGE_SUBMIT = 294
+    """ 增加大量屈服（屈服刻印补正） """
+    ADD_LARGE_SHY = 295
+    """ 增加大量羞耻（露出补正） """
+    ADD_LARGE_PAIN = 296
+    """ 增加大量苦痛（苦痛刻印补正） """
+    ADD_LARGE_TERROR = 297
+    """ 增加大量恐怖（恐怖刻印补正） """
+    ADD_LARGE_DEPRESSION = 298
+    """ 增加大量抑郁 """
+    ADD_LARGE_DISGUST = 299
+    """ 增加大量反感（反发刻印补正） """
     ADD_LARGE_PAIN_FIRST_SEX = 400
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401
