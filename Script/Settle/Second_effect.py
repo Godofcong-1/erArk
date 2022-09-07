@@ -1811,7 +1811,7 @@ def handle_add_large_lubrication_plus(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE)
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LEARN)
 def handle_add_middle_learn_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
