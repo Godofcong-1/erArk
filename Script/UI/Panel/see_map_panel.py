@@ -196,8 +196,15 @@ class SeeMapPanel:
         py_cmd.clr_cmd()
         line_feed.draw()
         cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+        character_data: game_type.Character = cache.character_data[0]
+        flag_map_open = False
+        # 从大地图移动到另一个区块时，不关闭地图面板，且切换到下级地图面板
+        if character_data.position[0] != scene_path[0] and scene_path[1] == "0":
+            flag_map_open = True
         character_move.own_charcter_move(scene_path)
-
+        if flag_map_open:
+            cache.now_panel_id = constant.Panel.SEE_MAP
+            self.down_map()
 
 class MoveMenuPanel:
     """
