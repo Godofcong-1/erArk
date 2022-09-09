@@ -51,6 +51,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     # change_character_social(character_id, status_data)
     now_judge = False
     change_flag = False
+    PC_information_flag = 0 # 0初始，1PC输出，2不输出
     # 当NPC对玩家交互时，互相替换双方的输出内容
     if character_id != 0 and now_character_data.target_character_id == 0:
         change_flag = True
@@ -69,16 +70,27 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         return
     if status_data.mana_point:
         now_judge = True
+        PC_information_flag = 1
     if status_data.hit_point:
         now_judge = True
+        PC_information_flag = 1
     if status_data.eja_point:
         now_judge = True
+        PC_information_flag = 1
     if len(status_data.status_data):
         now_judge = True
     if len(status_data.experience):
         now_judge = True
+        PC_information_flag = 1
     if len(status_data.target_change) and not character_id:
-        now_judge = True
+        for target_character_id in status_data.target_change:
+            # print(f"debug target_now_judge,character_id = {character_id},target_character_id = {target_character_id}")
+            if character_id == target_character_id:
+                continue
+            else:
+                now_judge = True
+                PC_information_flag = 1 if PC_information_flag == 1 else 2
+                break
     if now_judge:
         # print(f"debug now_judge")
         now_text_list = []
@@ -89,7 +101,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             now_draw.text = "\n" + now_character_data.name + ": "
         now_draw.width = width
         # now_draw.draw()
-        now_text_list.append(now_draw.text)
+        if PC_information_flag == 1:
+            now_text_list.append(now_draw.text)
 
         # 体力/气力/射精的结算输出
         if status_data.hit_point and round(status_data.hit_point, 2) != 0:
@@ -122,7 +135,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                 [
                     _("\n  ")
                     + game_config.config_experience[i].name
-                    + _(":")
                     + text_handle.number_to_symbol_string(status_data.experience[i])
                     for i in status_data.experience
                 ]
@@ -151,7 +163,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                     target_data: game_type.Character = cache.character_data[target_character_id]
                 else:
                     judge = 1
-                now_text = f"\n\n{target_data.name}:"
+                name = f"\n\n{target_data.name}:"
+                now_text = name
 
                 # 体力/气力/好感/信赖的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
@@ -201,16 +214,19 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
                             now_text += (
                                 "\n  "
                                 + game_config.config_experience[experience_id].name
-                                + _(":")
                                 + text_handle.number_to_symbol_string(
                                     int(target_change.experience[experience_id])
                                 )
                             )
                             judge = 1
-                if judge:
+                if judge and (now_text != name):
                     now_text_list.append(now_text)
-        now_text_time = "\n\n  " + str(add_time) + "分钟过去了"
-        now_text_list.append(now_text_time)
+        if not change_flag:
+            now_text_time = "\n\n  " + str(add_time) + "分钟过去了"
+        else:
+            now_text_time = "\n\n  该行动将持续" + str(add_time) + "分钟"
+        if now_text_list != []:
+            now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
         now_panel.set(now_text_list, width, 8)
         # now_panel.draw()
