@@ -105,6 +105,7 @@ def get_map_system_path_str_for_list(now_list: list) -> str:
     Keyword arguments:
     now_list -- 地图路径列表数据
     """
+    # print(f"debug now_list = {now_list}")
     return os.sep.join(now_list)
 
 

@@ -1,9 +1,9 @@
 ╔══════════╦╗┅┅┅┅╔╦══════════════╦═════════════╦╗┅┅┅┅╔╗
-║  <mapbutton>1</mapbutton>       ║│    │║       <mapbutton>212</mapbutton>    ║       <mapbutton>213</mapbutton>   ║│    │║
+║  <mapbutton>舍管房</mapbutton>  ║│    │║       <mapbutton>212</mapbutton>    ║       <mapbutton>213</mapbutton>   ║│    │║
 ║     ╟ ┐  ║      ║  ╔┅┅╗        ║  ╔┅┅╗       ║      ║
 ║     ║ │ ▓║      ║  ║  ║     ▓▓ ║  ║  ║    ▓▓ ║      ║
 ╚┅┅┅┅┅╠═╧══╝      ╚┄┄╩══╩════════╩┄┄╩══╩═══════╝      ║
-╔  <mapbutton>0</mapbutton>  ┆                       <mapbutton>2</mapbutton>                       ║
+╔  <mapbutton>0</mapbutton>  ┆                     <mapbutton>外走廊</mapbutton>                    ║
 ╠══╤══╩┄╦┄═══╤══╗  ╔══╤═══┄╦═┄══╤══╗  ╔══╤═══┄╦═┄══╤══╣
 ║  │  ══╬══  │  ║  ║  │  ══╬══  │  ║  ║  │  ══╬══  │  ║
 ╟─┅┘<mapbutton>201</mapbutton> ║ <mapbutton>202</mapbutton>└┅─╢  ╟─┅┘<mapbutton>203</mapbutton> ║ <mapbutton>204</mapbutton>└┅─╢  ╟─┅┘<mapbutton>205</mapbutton> ║ <mapbutton>206</mapbutton>└┅─╢
@@ -11,7 +11,7 @@
 ║       ║       ║  ║       ║       ║  ║       ║       ║
 ║ ▓▓    ║    ▓▓ ║  ║ ▓▓    ║    ▓▓ ║  ║ ▓▓    ║    ▓▓ ║
 ╠═══════╩═══════╝  ╚═══════╩═══════╝  ╚═══════╩═══════╣
-║                             <mapbutton>3</mapbutton>                       ║
+║                          <mapbutton>内走廊</mapbutton>                     ║
 ╠══╤═══┄╦═┄══╤══╦═┄══╤══╗             ╔══╤═══┄╦═┄══╤══╣
 ║  │  ══╬══  │  ╠══  │  ║             ║  │  ══╬══  │  ║
 ║─┅┘<mapbutton>207</mapbutton> ║ <mapbutton>208</mapbutton>└┅─╢ <mapbutton>209</mapbutton>└┅─║             ╟─┅┘<mapbutton>210</mapbutton> ║ <mapbutton>211</mapbutton>└┅─╢

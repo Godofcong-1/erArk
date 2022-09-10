@@ -55,7 +55,7 @@ class SeeMapPanel:
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
             map_name = attr_text.get_map_path_text(self.now_map)
-            title_draw = draw.TitleLineDraw(_("移动:") + map_name, self.width)
+            title_draw = draw.TitleLineDraw(_("当前区块:") + map_name, self.width)
             title_draw.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
@@ -199,7 +199,8 @@ class SeeMapPanel:
         character_data: game_type.Character = cache.character_data[0]
         flag_map_open = False
         # 从大地图移动到另一个区块时，不关闭地图面板，且切换到下级地图面板
-        if character_data.position[0] != scene_path[0] and scene_path[1] == "0":
+        # print(f"debug character_data.position[0] = {character_data.position[0]}，scene_path = {scene_path}")
+        if character_data.position[0] != scene_path[-2] and scene_path[-1] == "0":
             flag_map_open = True
         character_move.own_charcter_move(scene_path)
         if flag_map_open:
