@@ -1,10 +1,10 @@
 ╔══════════╦══╤══╤╤══╤══╗ 
 ║ 🧯 🧯 🧯  ║ 〓〓〓〓〓 ║
-║  消防室  ║   监控室   ║ 
+║  <mapbutton>消防室</mapbutton>  ║   <mapbutton>监控室</mapbutton>   ║ 
 ╠════--════╩═════--════╦╩═
-║         走廊         ┆ 0
+║         <mapbutton>走廊</mapbutton>         ┆ <mapbutton>0</mapbutton>
 ╠═════╦════╦═════--════╩╦═
 ║▓   ▓║▓  ▓║ 🔪 🔪 🔪 🔪║ 
-║  休息室  ┆   装备间   ║ 
+║  <mapbutton>休息室</mapbutton>  ┆   <mapbutton>装备室</mapbutton>   ║ 
 ║▓   ▓║▓  ▓║ ♐ ♐ ♐ ♐║ 
 ╚═════╩════╩══╧══╧══╧═══╝ 
