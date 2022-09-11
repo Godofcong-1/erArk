@@ -125,16 +125,16 @@ def character_move_to_rand_scene(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MUSIC_ROOM)
-def character_move_to_music_room(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MODERN_MUSIC_ROOM)
+def character_move_to_modern_music_room(character_id: int):
     """
-    移动至音乐活动室
+    移动至现代音乐室
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
     to_cafeteria = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Musicroom"])
+        random.choice(constant.place_data["Modern_Musicroom"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_cafeteria)
     character_data.behavior.behavior_id = constant.Behavior.MOVE

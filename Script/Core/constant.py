@@ -580,8 +580,8 @@ class StateMachine:
     """ 去洗手间 """
     MOVE_TO_DR_OFFICE = 13
     """ 移动至博士办公室 """
-    MOVE_TO_MUSIC_ROOM = 14
-    """ 移动至音乐室 """
+    MOVE_TO_MODERN_MUSIC_ROOM = 14
+    """ 移动至现代音乐室 """
     MOVE_TO_PLAYER = 15
     """ 移动至玩家位置 """
     CHAT_RAND_CHARACTER = 20
