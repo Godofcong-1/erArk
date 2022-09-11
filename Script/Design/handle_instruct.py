@@ -91,7 +91,7 @@ def handle_rest():
 
 @add_instruct(
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
-    {constant.Premise.IN_DINING_HALL,
+    {constant.Premise.IN_FOOD_SHOP,
     constant.Premise.NOT_H,
     constant.Premise.SLEEP_LE_89}
 )

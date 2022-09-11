@@ -2,7 +2,7 @@ from typing import Tuple
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking
+from Script.Design import map_handle, cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -40,7 +40,7 @@ class FoodShopPanel:
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         scene_name = cache.scene_data[scene_position_str].scene_name
         title_draw = draw.TitleLineDraw(scene_name, self.width)
-        food_type_list = [_("主食")]
+        food_type_list = [_("当前提供的食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
         while 1:
@@ -55,7 +55,7 @@ class FoodShopPanel:
             for food_type in food_type_list:
                 if food_type == self.now_panel:
                     now_draw = draw.CenterDraw()
-                    now_draw.text = f"{food_type}]"
+                    now_draw.text = f"[{food_type}]"
                     now_draw.style = "onbutton"
                     now_draw.width = self.width / len(food_type_list)
                     now_draw.draw()
@@ -204,14 +204,17 @@ class BuyFoodByFoodNameDraw:
         """ 按钮返回值 """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
+        # print(f"debug text = {text}")
         name_draw = draw.NormalDraw()
         food_data: game_type.Food = cache.restaurant_data[self.cid][self.text]
-        food_name = ""
+        self.food_name = ""
         if isinstance(self.cid, str):
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
-            food_name = food_recipe.name
+            self.food_name = food_recipe.name
+            food_money = food_recipe.money
+            food_introduce = food_recipe.introduce
         index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{food_name}"
+        button_text = f"{index_text}{self.food_name}(食堂自助免费拿取)：{food_introduce}"
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)
         self.now_draw = name_draw
         """ 绘制的对象 """
@@ -222,8 +225,12 @@ class BuyFoodByFoodNameDraw:
 
     def buy_food(self):
         """玩家购买食物"""
+        update.game_update_flow(0)
         cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
         del cache.restaurant_data[self.cid][self.text]
         character_data: game_type.Character = cache.character_data[0]
         character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
         character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
+        character_data.behavior.food_name = self.food_name
+        character_data.behavior.duration = 1
+        update.game_update_flow(1)

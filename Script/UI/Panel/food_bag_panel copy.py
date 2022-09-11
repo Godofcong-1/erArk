@@ -29,7 +29,7 @@ class FoodBagPanel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("当前持有食物")
+        self.now_panel = _("主食")
         """ 当前绘制的食物类型 """
         self.handle_panel: panel.PageHandlePanel = None
         """ 当前名字列表控制面板 """
@@ -37,25 +37,22 @@ class FoodBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("食物背包"), self.width)
-        food_type_list = [_("当前持有食物")]
+        food_type_list = [_("主食")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
+        food_id_list = list(
+            cooking.get_character_food_bag_type_list_buy_food_type(0, self.now_panel).items()
+        )
+        print(f"debug food_id_list = {food_id_list}")
+        id_list = []
+        for i in range(len(food_id_list)):
+            id_list.append(list(food_id_list[i][1]))
+        print(f"debug id_list = {id_list}")
         self.handle_panel = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 1, 0
+            id_list, SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
         while 1:
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
-
-            # 读取背包食物，并只提取uid列表
-            food_id_list = list(
-                cooking.get_character_food_bag_type_list_buy_food_type(0, self.now_panel).items()
-            )
-            id_list = []
-            for i in range(len(food_id_list)):
-                id_list.append(list(food_id_list[i][1])[0])
-            # print(f"debug food_id_list = {food_id_list}")
-            # print(f"debug id_list = {id_list}")
-            self.handle_panel.text_list = id_list
             self.handle_panel.update()
             title_draw.draw()
             line_feed.draw()
@@ -101,7 +98,7 @@ class FoodBagPanel:
         )
         id_list = []
         for i in range(len(food_id_list)):
-            id_list.append(list(food_id_list[i][1])[0])
+            id_list.append(food_id_list[i][i])
         self.handle_panel = panel.PageHandlePanel(
             id_list, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 1, 0
         )
@@ -135,7 +132,7 @@ class SeeFoodListByFoodNameDraw:
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
         name_draw = draw.NormalDraw()
-        # print(f"debug self.text = {self.text}")
+        print(f"debug self.text = {self.text}")
         food_data: game_type.Food = cache.character_data[0].food_bag[self.text]
         # quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
         food_name = ""
@@ -180,4 +177,103 @@ class SeeFoodListByFoodNameDraw:
         character_data.behavior.eat_food = now_food
         character_data.behavior.duration = 1
         update.game_update_flow(1)
-        # cache.now_panel_id = constant.Panel.IN_SCENE
+        cache.now_panel_id = constant.Panel.IN_SCENE
+
+    def see_food_shop_food_list(self):
+        """按食物名字显示食物商店的食物列表"""
+        title_draw = draw.TitleLineDraw(self.text, window_width)
+        page_handle = panel.PageHandlePanel(
+            self.uid_list, EatFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
+        )
+        # while 1:
+        #     if cache.now_panel_id != constant.Panel.FOOD_BAG:
+        #         break
+        return_list = []
+        title_draw.draw()
+        page_handle.update()
+        page_handle.draw()
+        return_list.extend(page_handle.return_list)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+            # if yrn == back_draw.return_text:
+            #     break
+
+
+class EatFoodByFoodNameDraw:
+    """
+    点击后可食用食物的食物名字按钮对象
+    Keyword arguments:
+    text -- 食物id
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(self, text: UUID, width: int, is_button: bool, num_button: bool, button_id: int):
+        self.text: UUID = text
+        """ 食物id """
+        self.draw_text: str = ""
+        """ 食物名字绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = str(button_id)
+        """ 按钮返回值 """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+        name_draw = draw.NormalDraw()
+        food_data: game_type.Food = cache.character_data[0].food_bag[self.text]
+        # quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
+        food_name = ""
+        if food_data.recipe != -1:
+            food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
+            food_name = food_recipe.name
+            food_introduce = food_recipe.introduce
+        # else:
+        #     food_config = game_config.config_food[food_data.id]
+        #     food_name = food_config.name
+        # hunger_text = _("热量:")
+        # if 27 in food_data.feel:
+        #     hunger_text = f"{hunger_text}{round(food_data.feel[27],2)}"
+        # else:
+        #     hunger_text = f"{hunger_text}0.00"
+        # thirsty_text = _("水份:")
+        # if 28 in food_data.feel:
+        #     thirsty_text = f"{thirsty_text}{round(food_data.feel[28],2)}"
+        # else:
+        #     thirsty_text = f"{thirsty_text}0.00"
+        # food_name = (
+        #     food_name
+        #     + f" {hunger_text} {thirsty_text} "
+        #     + _("重量:")
+        #     + str(round(food_data.weight, 2))
+        #     + _("克")
+        #     + " "
+        #     + _("品质:")
+        #     + quality_text_data[food_data.quality]
+        # )
+        index_text = text_handle.id_index(button_id)
+        button_text = f"{index_text}{food_name}：{food_introduce}"
+        name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.eat_food)
+        self.now_draw = name_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+    def eat_food(self):
+        """食用食物"""
+        update.game_update_flow(0)
+        character_data: game_type.Character = cache.character_data[0]
+        now_food = character_data.food_bag[self.text]
+        character_data.behavior.behavior_id = constant.Behavior.EAT
+        character_data.state = constant.CharacterStatus.STATUS_EAT
+        character_data.behavior.eat_food = now_food
+        character_data.behavior.duration = 1
+        update.game_update_flow(1)
+        cache.now_panel_id = constant.Panel.IN_SCENE

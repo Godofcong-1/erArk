@@ -834,6 +834,8 @@ class Premise:
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
     """ 在食堂 """
+    IN_FOOD_SHOP = "in_food_shop"
+    """ 在食物商店 """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
     IN_DORMITORY = "in_dor"
@@ -1479,6 +1481,9 @@ class Premise:
 
 class BehaviorEffect:
     """行为结算效果函数"""
+
+    NOTHING = 999
+    """ 什么都没有的空结算 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 增加少量体力 """

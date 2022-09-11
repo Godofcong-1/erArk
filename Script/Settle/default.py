@@ -26,6 +26,23 @@ width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.NOTHING)
+def handle_nothing(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    空结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_HIT_POINT)
 def handle_add_small_hit_point(
     character_id: int,

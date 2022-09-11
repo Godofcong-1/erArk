@@ -295,6 +295,10 @@ class Recipes:
     """ 烹饪时间 """
     difficulty: int
     """ 烹饪难度 """
+    money: int
+    """ 价格 """
+    introduce: str
+    """ 说明介绍 """
 
 
 class Season:

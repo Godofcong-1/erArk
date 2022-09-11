@@ -146,6 +146,10 @@ class Recipes:
         """ 标准烹饪时间 """
         self.difficulty: int = 0
         """ 烹饪难度 """
+        self.money: int = 0
+        """ 菜品价格 """
+        self.introduce: str = ""
+        """ 说明介绍 """
         # self.base: list = []
         # """ 烹饪所使用的主食材 """
         # self.ingredients: list = []
