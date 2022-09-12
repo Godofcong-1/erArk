@@ -1634,6 +1634,22 @@ def handle_target_cook_le_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_COOK_LE_3)
+def handle_target_cook_le_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能<=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] <= 3:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.TARGET_COOK_GE_3)
 def handle_target_cook_ge_3(character_id: int) -> int:
     """
@@ -1646,6 +1662,22 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[28] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_G_3)
+def handle_target_cook_g_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] > 3:
         return 1
     return 0
 
@@ -1871,6 +1903,68 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[19] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.KISS_0)
+def handle_kiss_0(character_id: int) -> int:
+    """
+    校验自身亲吻经验==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.experience[40] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.KISS_GE_10)
+def handle_kiss_ge_10(character_id: int) -> int:
+    """
+    校验自身亲吻经验>=10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.experience[40] >= 10:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_KISS_0)
+def handle_t_kiss_0(character_id: int) -> int:
+    """
+    校验交互对象亲吻经验==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.experience[40] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_KISS_GE_10)
+def handle_t_kiss_ge_10(character_id: int) -> int:
+    """
+    校验交互对象亲吻经验>=10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.experience[40] >= 10:
         return 1
     return 0
 

@@ -258,9 +258,6 @@ def character_move_to_rest_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    to_rest_room = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Rest_Room"])
-    )
 
     # 检索当前角色所在的大场景里有没有休息室，没有的话再随机选择其他区块
     now_position = character_data.position[0]

@@ -636,29 +636,29 @@ def handle_first_kiss(
         character_data.first_record.first_kiss_id = target_data.cid
         character_data.first_record.first_kiss_time = cache.game_time
         character_data.first_record.first_kiss_place = character_data.position
-        if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}博士于{kiss_time}在{kiss_palce}失去了初吻\n").format(
-                character_name=character_data.name,
-                kiss_time = str(character_data.first_record.first_kiss_time.month) + "月" + str (character_data.first_record.first_kiss_time.day) + "日",
-                kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+        # if (not character_id) or (not target_data.cid):
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}博士于{kiss_time}在{kiss_palce}失去了初吻\n").format(
+            #     character_name=character_data.name,
+            #     kiss_time = str(character_data.first_record.first_kiss_time.month) + "月" + str (character_data.first_record.first_kiss_time.day) + "日",
+            #     kiss_palce = attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
     if target_data.talent[4] == 1:
         target_data.talent[4] = 0
         target_data.first_record.first_kiss_id = character_id
         target_data.first_record.first_kiss_time = cache.game_time
         target_data.first_record.first_kiss_place = target_data.position
         if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
-                character_name=target_data.name,
-                kiss_time = str(target_data.first_record.first_kiss_time.month) + "月" + str (target_data.first_record.first_kiss_time.day) + "日",
-                kiss_palce = attr_text.get_scene_path_text(target_data.first_record.first_kiss_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
+            #     character_name=target_data.name,
+            #     kiss_time = str(target_data.first_record.first_kiss_time.month) + "月" + str (target_data.first_record.first_kiss_time.day) + "日",
+            #     kiss_palce = attr_text.get_scene_path_text(target_data.first_record.first_kiss_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
             #初吻的二段结算
             target_data.second_behavior[1050] = 1
 
@@ -735,15 +735,15 @@ def handle_first_sex(
         character_data.first_record.first_sex_time = cache.game_time
         character_data.first_record.first_sex_place = character_data.position
         character_data.first_record.first_sex_posture = instruct_name
-        if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
-                character_name=character_data.name,
-                sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+        # if (not character_id) or (not target_data.cid):
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
+            #     character_name=character_data.name,
+            #     sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
+            #     sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
     if target_data.talent[0] == 1:
         target_data.talent[0] = 0
         target_data.first_record.first_sex_id = character_id
@@ -753,14 +753,14 @@ def handle_first_sex(
         if item_flag:
             target_data.first_record.first_sex_item = 1
         if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
-                character_name=target_data.name,
-                sex_time = str(target_data.first_record.first_sex_time.month) + "月" + str (target_data.first_record.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_sex_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
+            #     character_name=target_data.name,
+            #     sex_time = str(target_data.first_record.first_sex_time.month) + "月" + str (target_data.first_record.first_sex_time.day) + "日",
+            #     sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_sex_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
             #处女的二段结算
             target_data.second_behavior[1051] = 1
 
@@ -805,15 +805,15 @@ def handle_first_a_sex(
         character_data.first_record.first_sex_time = cache.game_time
         character_data.first_record.first_sex_place = character_data.position
         character_data.first_record.first_sex_posture = instruct_name
-        if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
-                character_name=character_data.name,
-                sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+        # if (not character_id) or (not target_data.cid):
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
+            #     character_name=character_data.name,
+            #     sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
+            #     sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
     if target_data.talent[1] == 1:
         target_data.talent[1] = 0
         target_data.first_record.first_a_sex_id = character_id
@@ -823,14 +823,14 @@ def handle_first_a_sex(
         if item_flag:
             target_data.first_record.first_a_sex_item = 1
         if (not character_id) or (not target_data.cid):
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
-                character_name=target_data.name,
-                a_sex_time = str(target_data.first_record.first_a_sex_time.month) + "月" + str (target_data.first_record.first_a_sex_time.day) + "日",
-                a_sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_a_sex_place),
-            )
-            now_draw.width = window_width
-            now_draw.draw()
+            # now_draw = draw.NormalDraw()
+            # now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
+            #     character_name=target_data.name,
+            #     a_sex_time = str(target_data.first_record.first_a_sex_time.month) + "月" + str (target_data.first_record.first_a_sex_time.day) + "日",
+            #     a_sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_a_sex_place),
+            # )
+            # now_draw.width = window_width
+            # now_draw.draw()
             #处女的二段结算
             target_data.second_behavior[1052] = 1
 

@@ -960,8 +960,12 @@ class Premise:
     """ 交互对象料理技能==4 """
     TARGET_COOK_LE_1 = "t_cook_le_1"
     """ 交互对象料理技能<=1 """
+    TARGET_COOK_LE_3 = "t_cook_le_3"
+    """ 交互对象料理技能<=3 """
     TARGET_COOK_GE_3 = "t_cook_ge_3"
     """ 交互对象料理技能>=3 """
+    TARGET_COOK_G_3 = "t_cook_g_3"
+    """ 交互对象料理技能>3 """
     TARGET_COOK_GE_5 = "t_cook_ge_5"
     """ 交互对象料理技能>=5 """
     TARGET_MUSIC_1 = "t_music_1"
@@ -982,6 +986,15 @@ class Premise:
     """ 交互对象技巧技能>=3 """
     TARGET_TECHNIQUE_GE_5 = "t_technique_ge_5"
     """ 交互对象技巧技能>=5 """
+
+    KISS_0 = "kiss_0"
+    """ 自身亲吻经验==0 """
+    KISS_GE_10 = "kiss_ge_10"
+    """ 自身亲吻经验>=10 """
+    TARGET_KISS_0 = "t_kiss_0"
+    """ 交互对象亲吻经验==0 """
+    TARGET_KISS_GE_10 = "t_kiss_ge_10"
+    """ 交互对象亲吻经验>=10 """
 
 
     TARGET_NOT_FALL = "not_fall"
