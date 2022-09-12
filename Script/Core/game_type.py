@@ -325,6 +325,42 @@ class ASSISTANT_STATE:
         self.help_sex: int = 0
         """ 性处理服务，int[0否,1被动接受(非本番),2被动接受(含本番),3主动请求(非本番),4主动请求(含本番)]"""
 
+
+class FIRST_RECORD:
+    """初次状态记录结构体"""
+
+    def __init__(self):
+
+        self.first_hand_in_hand: int = -1
+        """ 初次牵手对象 -1为无 """
+        self.first_kiss_id: int = -1
+        """ 初吻对象 -1为无 """
+        self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 初吻时间 """
+        self.first_kiss_place: List[str] = ["0"]
+        """ 初吻地点 """
+        self.first_sex_id: int = -1
+        """ 处女对象 -1为无 """
+        self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 处女时间 """
+        self.first_sex_place: List[str] = ["0"]
+        """ 处女地点 """
+        self.first_sex_posture: str = ""
+        """ 处女姿势 """
+        self.first_sex_item: int = -1
+        """ 处女道具 -1为无，0为手指，1为振动棒 """
+        self.first_a_sex_id: int = -1
+        """ A处女对象 -1为无 """
+        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ A处女时间 """
+        self.first_a_sex_place: List[str] = ["0"]
+        """ A处女地点 """
+        self.first_a_sex_posture: str = ""
+        """ A处女姿势 """
+        self.first_a_sex_item: int = -1
+        """ A处女道具 -1为无，0为手指，1为振动棒 """
+
+
 # class Height:
 #     """身高数据结构体"""
 
@@ -538,30 +574,6 @@ class Character:
         """ 剧情npc校验 """
         self.no_wear: bool = 0
         """ 是否不想穿衣服 """
-        self.first_kiss_id: int = -1
-        """ 初吻对象 -1为无 """
-        self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ 初吻时间 """
-        self.first_kiss_place: List[str] = ["0"]
-        """ 初吻地点 """
-        self.first_sex_id: int = -1
-        """ 处女对象 -1为无 """
-        self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ 处女时间 """
-        self.first_sex_place: List[str] = ["0"]
-        """ 处女地点 """
-        self.first_sex_posture: str = ""
-        """ 处女姿势 """
-        self.first_a_sex_id: int = -1
-        """ A处女对象 -1为无 """
-        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ A处女时间 """
-        self.first_a_sex_place: List[str] = ["0"]
-        """ A处女地点 """
-        self.first_a_sex_posture: str = ""
-        """ A处女姿势 """
-        self.first_hand_in_hand: int = -1
-        """ 初次牵手对象 -1为无 """
         self.dead: bool = 0
         """ 角色已死亡 """
         self.collection_character: Set = set()
@@ -616,6 +628,8 @@ class Character:
         """ 合成玉数量 """
         self.Originite_Prime : int = 0
         """ 至纯源石数量 """
+        self.first_record: FIRST_RECORD = FIRST_RECORD()
+        """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
         """ 角色身上污浊的情况 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()

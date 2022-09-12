@@ -161,6 +161,15 @@ def get_assistant_state_zero() -> dict:
     return assistant_state_data
 
 
+def get_first_record_zero() -> dict:
+    """
+    直接将初次状态记录结构体归0
+    """
+    first_record_data = game_type.FIRST_RECORD()
+
+    return first_record_data
+
+
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

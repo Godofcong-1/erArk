@@ -1951,7 +1951,8 @@ def handle_electric_message_stick():
     _("插入震动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_VIBRATOR},
+    constant.Premise.HAVE_VIBRATOR,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_vibrator_insertion():
     """处理插入震动棒指令"""
@@ -1965,19 +1966,57 @@ def handle_vibrator_insertion():
 @add_instruct(
     constant.Instruct.VIBRATOR_INSERTION_ANAL,
     constant.InstructType.SEX,
-    _("肛门插入振动棒"),
+    _("肛门插入震动棒"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
-    constant.Premise.HAVE_VIBRATOR},
+    constant.Premise.HAVE_VIBRATOR,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_vibrator_insertion_anal():
-    """处理肛门插入振动棒指令"""
+    """处理肛门插入震动棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL
     character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL
     character_data.behavior.duration = 10
     update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.VIBRATOR_INSERTION_OFF,
+    constant.InstructType.SEX,
+    _("拔出震动棒"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_VIBRATOR,
+    constant.Premise.TARGET_NOW_VIBRATOR_INSERTION},
+)
+def handle_vibrator_insertion_off():
+    """处理拔出震动棒指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_OFF
+    character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_OFF
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+@add_instruct(
+    constant.Instruct.VIBRATOR_INSERTION_ANAL_OFF,
+    constant.InstructType.SEX,
+    _("拔出肛门震动棒"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    constant.Premise.HAVE_VIBRATOR,
+    constant.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL},
+)
+def handle_vibrator_insertion_anal_off():
+    """处理拔出肛门震动棒指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL_OFF
+    character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL_OFF
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
 
 @add_instruct(
     constant.Instruct.CLYSTER,
@@ -2347,7 +2386,8 @@ def handle_clomid():
     constant.InstructType.SEX,
     _("正常位"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_normal_sex():
     """处理正常位指令"""
@@ -2364,7 +2404,8 @@ def handle_normal_sex():
     constant.InstructType.SEX,
     _("背后位"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_back_sex():
     """处理背后位指令"""
@@ -2381,7 +2422,8 @@ def handle_back_sex():
     constant.InstructType.SEX,
     _("骑乘位"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_riding_sex():
     """处理骑乘位指令"""
@@ -2399,6 +2441,7 @@ def handle_riding_sex():
     _("对面座位"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_3},
 )
 def handle_face_seat_sex():
@@ -2417,6 +2460,7 @@ def handle_face_seat_sex():
     _("背面座位"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_3},
 )
 def handle_back_seat_sex():
@@ -2435,6 +2479,7 @@ def handle_back_seat_sex():
     _("对面立位"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_face_stand_sex():
@@ -2453,6 +2498,7 @@ def handle_face_stand_sex():
     _("背面立位"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_back_stand_sex():
@@ -2472,6 +2518,7 @@ def handle_back_stand_sex():
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.LAST_CMD_SEX,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_3},
 )
 def handle_stimulate_g_point():
@@ -2491,6 +2538,7 @@ def handle_stimulate_g_point():
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.LAST_CMD_SEX,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_womb_os_caress():
@@ -2510,6 +2558,7 @@ def handle_womb_os_caress():
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
     constant.Premise.LAST_CMD_SEX,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_womb_insertion():
@@ -2527,7 +2576,8 @@ def handle_womb_insertion():
     constant.InstructType.SEX,
     _("正常位肛交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_normal_anal_sex():
     """处理正常位肛交指令"""
@@ -2544,7 +2594,8 @@ def handle_normal_anal_sex():
     constant.InstructType.SEX,
     _("后背位肛交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_back_anal_sex():
     """处理后背位肛交指令"""
@@ -2561,7 +2612,8 @@ def handle_back_anal_sex():
     constant.InstructType.SEX,
     _("骑乘位肛交"),
     {constant.Premise.HAVE_TARGET,
-    constant.Premise.IS_H},
+    constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
@@ -2579,6 +2631,7 @@ def handle_riding_anal_sex():
     _("对面座位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.TECHNIQUE_GE_3},
 )
 def handle_face_seat_anal_sex():
@@ -2597,6 +2650,7 @@ def handle_face_seat_anal_sex():
     _("背面座位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.TECHNIQUE_GE_3},
 )
 def handle_back_seat_anal_sex():
@@ -2615,6 +2669,7 @@ def handle_back_seat_anal_sex():
     _("对面立位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_face_stand_anal_sex():
@@ -2633,6 +2688,7 @@ def handle_face_stand_anal_sex():
     _("背面立位肛交"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.TECHNIQUE_GE_5},
 )
 def handle_back_stand_anal_sex():
@@ -2651,6 +2707,7 @@ def handle_back_stand_anal_sex():
     _("玩弄s状结肠"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.LAST_CMD_A_SEX,
     constant.Premise.TECHNIQUE_GE_3},
 )
@@ -2670,6 +2727,7 @@ def handle_stimulate_sigmoid_colon():
     _("隔着刺激阴道"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.IS_H,
+    constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
     constant.Premise.LAST_CMD_A_SEX,
     constant.Premise.TECHNIQUE_GE_3},
 )

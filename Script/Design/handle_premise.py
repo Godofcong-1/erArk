@@ -4729,6 +4729,70 @@ def handle_have_vibrator(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_NOW_VIBRATOR_INSERTION)
+def handle_target_now_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象V正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[2][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_VIBRATOR_INSERTION)
+def handle_target_not_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象V没有在插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[2][1]:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL)
+def handle_target_now_vibrator_insertion_anal(character_id: int) -> int:
+    """
+    校验交互对象A正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[3][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL)
+def handle_target_not_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象A没有在插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[3][1]:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.HAVE_MILKING_MACHINE)
 def handle_have_milking_machine(character_id: int) -> int:
     """
@@ -5464,7 +5528,7 @@ def handle_is_target_first_kiss(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return character_id == target_data.first_kiss_id
+    return character_id == target_data.first_record.first_kiss_id
 
 
 @add_premise(constant.Premise.HAVE_OTHER_TARGET_IN_SCENE)

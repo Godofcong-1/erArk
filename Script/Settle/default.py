@@ -633,29 +633,29 @@ def handle_first_kiss(
 
     if character_data.talent[4] == 1:
         character_data.talent[4] = 0
-        character_data.first_kiss_id = target_data.cid
-        character_data.first_kiss_time = cache.game_time
-        character_data.first_kiss_place = character_data.position
+        character_data.first_record.first_kiss_id = target_data.cid
+        character_data.first_record.first_kiss_time = cache.game_time
+        character_data.first_record.first_kiss_place = character_data.position
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}博士于{kiss_time}在{kiss_palce}失去了初吻\n").format(
                 character_name=character_data.name,
-                kiss_time = str(character_data.first_kiss_time.month) + "月" + str (character_data.first_kiss_time.day) + "日",
+                kiss_time = str(character_data.first_record.first_kiss_time.month) + "月" + str (character_data.first_record.first_kiss_time.day) + "日",
                 kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
             )
             now_draw.width = window_width
             now_draw.draw()
     if target_data.talent[4] == 1:
         target_data.talent[4] = 0
-        target_data.first_kiss_id = character_id
-        target_data.first_kiss_time = cache.game_time
-        target_data.first_kiss_place = target_data.position
+        target_data.first_record.first_kiss_id = character_id
+        target_data.first_record.first_kiss_time = cache.game_time
+        target_data.first_record.first_kiss_place = target_data.position
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
                 character_name=target_data.name,
-                kiss_time = str(target_data.first_kiss_time.month) + "月" + str (target_data.first_kiss_time.day) + "日",
-                kiss_palce = attr_text.get_scene_path_text(target_data.first_kiss_place),
+                kiss_time = str(target_data.first_record.first_kiss_time.month) + "月" + str (target_data.first_record.first_kiss_time.day) + "日",
+                kiss_palce = attr_text.get_scene_path_text(target_data.first_record.first_kiss_place),
             )
             now_draw.width = window_width
             now_draw.draw()
@@ -714,33 +714,50 @@ def handle_first_sex(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.social_contact_data.setdefault(character_id, 0)
 
-    if character_data.talent[5] == 1:
+    # 判定是否为道具性交
+    item_flag = False
+    if cache.input_cache[len(cache.input_cache)-1] == str(constant.Instruct.VIBRATOR_INSERTION):
+        item_flag = True
+
+    # 遍历指令列表，获得指令的中文名
+    i = 0
+    for k in constant.Instruct.__dict__:
+        # print(f"debug i = {i}，k = {k}")
+        # print(f"debug 上指令 = {cache.input_cache[len(cache.input_cache)-1]}")
+        if int(cache.input_cache[len(cache.input_cache)-1]) + 2 == i:
+            instruct_name = constant.instruct_en2cn[k]
+            break
+        i += 1
+
+    if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
-        character_data.first_sex_id = target_data.cid
-        character_data.first_sex_time = cache.game_time
-        character_data.first_sex_place = character_data.position
-        character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
+        character_data.first_record.first_sex_id = target_data.cid
+        character_data.first_record.first_sex_time = cache.game_time
+        character_data.first_record.first_sex_place = character_data.position
+        character_data.first_record.first_sex_posture = instruct_name
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
                 character_name=character_data.name,
-                sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
+                sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
             )
             now_draw.width = window_width
             now_draw.draw()
     if target_data.talent[0] == 1:
         target_data.talent[0] = 0
-        target_data.first_sex_id = character_id
-        target_data.first_sex_time = cache.game_time
-        target_data.first_sex_place = target_data.position
-        target_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
+        target_data.first_record.first_sex_id = character_id
+        target_data.first_record.first_sex_time = cache.game_time
+        target_data.first_record.first_sex_place = target_data.position
+        target_data.first_record.first_sex_posture = instruct_name
+        if item_flag:
+            target_data.first_record.first_sex_item = 1
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
                 character_name=target_data.name,
-                sex_time = str(target_data.first_sex_time.month) + "月" + str (target_data.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(target_data.first_sex_place),
+                sex_time = str(target_data.first_record.first_sex_time.month) + "月" + str (target_data.first_record.first_sex_time.day) + "日",
+                sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_sex_place),
             )
             now_draw.width = window_width
             now_draw.draw()
@@ -769,33 +786,48 @@ def handle_first_a_sex(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.social_contact_data.setdefault(character_id, 0)
 
-    if character_data.talent[5] == 1:
+    # 判定是否为道具性交
+    item_flag = False
+    if cache.input_cache[len(cache.input_cache)-1] == str(constant.Instruct.VIBRATOR_INSERTION_ANAL):
+        item_flag = True
+
+    # 遍历指令列表，获得指令的中文名
+    i = 0
+    for k in constant.Instruct.__dict__:
+        if int(cache.input_cache[len(cache.input_cache)-1]) + 2 == i:
+            instruct_name = constant.instruct_en2cn[k]
+            break
+        i += 1
+
+    if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
-        character_data.first_sex_id = target_data.cid
-        character_data.first_sex_time = cache.game_time
-        character_data.first_sex_place = character_data.position
-        character_data.first_sex_posture = cache.input_cache[len(cache.input_cache)-1]
+        character_data.first_record.first_sex_id = target_data.cid
+        character_data.first_record.first_sex_time = cache.game_time
+        character_data.first_record.first_sex_place = character_data.position
+        character_data.first_record.first_sex_posture = instruct_name
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}博士于{sex_time}在{sex_palce}失去了童贞\n").format(
                 character_name=character_data.name,
-                sex_time = str(character_data.first_sex_time.month) + "月" + str (character_data.first_sex_time.day) + "日",
-                sex_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                sex_time = str(character_data.first_record.first_sex_time.month) + "月" + str (character_data.first_record.first_sex_time.day) + "日",
+                sex_palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
             )
             now_draw.width = window_width
             now_draw.draw()
     if target_data.talent[1] == 1:
         target_data.talent[1] = 0
-        target_data.first_a_sex_id = character_id
-        target_data.first_a_sex_time = cache.game_time
-        target_data.first_a_sex_place = target_data.position
-        character_data.first_a_sex_posture = cache.input_cache[len(cache.input_cache)-1]
+        target_data.first_record.first_a_sex_id = character_id
+        target_data.first_record.first_a_sex_time = cache.game_time
+        target_data.first_record.first_a_sex_place = target_data.position
+        target_data.first_record.first_a_sex_posture = instruct_name
+        if item_flag:
+            target_data.first_record.first_a_sex_item = 1
         if (not character_id) or (not target_data.cid):
             now_draw = draw.NormalDraw()
             now_draw.text = _("{character_name}于{a_sex_time}在{a_sex_palce}失去了A处女\n").format(
                 character_name=target_data.name,
-                a_sex_time = str(target_data.first_a_sex_time.month) + "月" + str (target_data.first_a_sex_time.day) + "日",
-                a_sex_palce = attr_text.get_scene_path_text(target_data.first_a_sex_place),
+                a_sex_time = str(target_data.first_record.first_a_sex_time.month) + "月" + str (target_data.first_record.first_a_sex_time.day) + "日",
+                a_sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_a_sex_place),
             )
             now_draw.width = window_width
             now_draw.draw()
@@ -1519,6 +1551,94 @@ def handle_target_clit_clamp_off(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[1][1] = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_VIBRATOR_ON)
+def handle_target_vibrator_on(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象插入V震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[2][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_VIBRATOR_OFF)
+def handle_target_vibrator_off(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象拔出V震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[2][1] = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_VIBRATOR_ON)
+def handle_target_anal_vibrator_on(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象插入A震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[3][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_VIBRATOR_OFF)
+def handle_target_anal_vibrator_off(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象拔出A震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[3][1] = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_BEADS_ON)

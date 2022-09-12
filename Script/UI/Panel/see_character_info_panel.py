@@ -1643,12 +1643,12 @@ class CharacterBodyText:
             if character_data.talent[4]:
                 now_text += "保有初吻\n"
             else:
-                kiss_id = character_data.first_kiss_id
-                kiss_time = character_data.first_kiss_time
+                kiss_id = character_data.first_record.first_kiss_id
+                kiss_time = character_data.first_record.first_kiss_time
                 now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
                         character_name=cache.character_data[kiss_id].name,
                         kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
                     )
             if character_data.ability[71] == 0:
                 now_text += "  普普通通的舌头\n"
@@ -1676,12 +1676,15 @@ class CharacterBodyText:
             if character_data.talent[0]:
                 now_text += "保有处女\n"
             else:
-                sex_id = character_data.first_sex_id
-                sex_time = character_data.first_sex_time
-                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了处女\n").format(
+                sex_id = character_data.first_record.first_sex_id
+                sex_time = character_data.first_record.first_sex_time
+                sex_posture = character_data.first_record.first_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n").format(
                         character_name=cache.character_data[sex_id].name,
-                        kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                        time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
+                        palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
+                        posture =sex_posture,
                     )
             if character_data.dirty.body_semen[6][3] == 0:
                 now_text += "  未射入过精液\n"
@@ -1692,12 +1695,15 @@ class CharacterBodyText:
             if character_data.talent[1]:
                 now_text += "保有后庭处女\n"
             else:
-                a_sex_id = character_data.first_a_sex_id
-                a_sex_time = character_data.first_a_sex_time
-                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了A处女\n").format(
+                a_sex_id = character_data.first_record.first_a_sex_id
+                a_sex_time = character_data.first_record.first_a_sex_time
+                a_sex_posture = character_data.first_record.first_a_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n").format(
                         character_name=cache.character_data[a_sex_id].name,
-                        kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
+                        time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
+                        palce = attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
+                        posture =a_sex_posture,
                     )
             if character_data.dirty.body_semen[7][3] == 0:
                 now_text += "  未射入过精液\n"

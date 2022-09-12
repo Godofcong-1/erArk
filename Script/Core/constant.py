@@ -475,13 +475,13 @@ class Behavior:
     ELECTRIC_MESSAGE_STICK = 485
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 486
-    """ 震动棒 """
+    """ V插入震动棒 """
     BIG_VIBRATOR_INSERTION = 487
     """ 加粗震动棒 """
     HUGE_VIBRATOR_INSERTION = 488
     """ 巨型震动棒 """
     VIBRATOR_INSERTION_ANAL = 489
-    """ 肛门振动棒 """
+    """ A插入震动棒 """
     BIG_VIBRATOR_INSERTION_ANAL = 490
     """ 加粗肛门震动棒 """
     HUGE_VIBRATOR_INSERTION_ANAL = 491
@@ -499,9 +499,9 @@ class Behavior:
     CLIT_CLAMP_OFF = 497
     """ 取下阴蒂夹 """
     VIBRATOR_INSERTION_OFF = 498
-    """ 拔出振动棒 """
+    """ 拔出震动棒 """
     VIBRATOR_INSERTION_ANAL_OFF = 499
-    """ 拔出肛门振动棒 """
+    """ 拔出肛门震动棒 """
     ANAL_BEADS_OFF = 500
     """ 拔出肛门拉珠 """
     NORMAL_SEX = 501
@@ -1227,6 +1227,14 @@ class Premise:
     """ 已持有电动按摩棒 """
     HAVE_VIBRATOR = "have_vibrator"
     """ 已持有震动棒 """
+    TARGET_NOW_VIBRATOR_INSERTION = "target_now_vibrator_insertion"
+    """ 交互对象V正插入震动棒 """
+    TARGET_NOT_VIBRATOR_INSERTION = "target_not_vibrator_insertion"
+    """ 交互对象V没有在插入震动棒 """
+    TARGET_NOW_VIBRATOR_INSERTION_ANAL = "target_now_vibrator_insertion_anal"
+    """ 交互对象A正插入震动棒 """
+    TARGET_NOT_VIBRATOR_INSERTION_ANAL = "target_not_vibrator_insertion"
+    """ 交互对象A没有在插入震动棒 """
     HAVE_MILKING_MACHINE = "have_milking_machine"
     """ 已持有搾乳机 """
     HAVE_URINE_COLLECTOR = "have_urine_collector"
@@ -1598,6 +1606,15 @@ class BehaviorEffect:
     """ 自身增加少量Ｐ快 """
     DOWN_ADD_SMALL_LEARN = 71
     """ 双方增加少量习得（若没有交互对象则仅增加自己） """
+
+    TARGET_VIBRATOR_ON = 76
+    """ 交互对象插入V震动棒 """
+    TARGET_VIBRATOR_OFF = 77
+    """ 交互对象拔出V震动棒 """
+    TARGET_ANAL_VIBRATOR_ON = 78
+    """ 交互对象插入A震动棒 """
+    TARGET_ANAL_VIBRATOR_OFF = 79
+    """ 交互对象拔出A震动棒 """
 
     USE_BODY_LUBRICANT = 80
     """ 使用了一个润滑液 """
@@ -2564,6 +2581,8 @@ settle_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色行为结算处理器 处理器id:处理器 """
 settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
+
+instruct_en2cn = {"VIBRATOR_INSERTION" : "震动棒","VIBRATOR_INSERTION_ANAL" : "肛门震动棒","NORMAL_SEX" : "正常位","BACK_SEX" : "背后位","RIDING_SEX" : "骑乘位","FACE_SEAT_SEX" : "对面座位","BACK_SEAT_SEX" : "背面座位","FACE_STAND_SEX" : "对面立位","BACK_STAND_SEX" : "背面立位","NORMAL_ANAL_SEX" : "正常位肛交","BACK_ANAL_SEX" : "后背位肛交","RIDING_ANAL_SEX" : "骑乘位肛交","FACE_SEAT_ANAL_SEX" : "对面座位肛交","BACK_SEAT_ANAL_SEX" : "背面座位肛交","FACE_STAND_ANAL_SEX" : "对面立位肛交","BACK_STAND_ANAL_SEX" : "背面立位肛交"}
 
 
 # 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛
