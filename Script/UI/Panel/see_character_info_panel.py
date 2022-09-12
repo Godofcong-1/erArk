@@ -452,14 +452,18 @@ class CharacterInfoHead:
         # 有尿意时进行提示
         urinate_text = " <尿>" if character_data.urinate_point >= 192 else ""
 
+        # 饥饿时进行提示
+        hunger_text = " <饿>" if character_data.hunger_point >= 192 else ""
+
         if character_id:
-            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}").format(
+            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}{hunger}").format(
                     character_name=character_data.name,
                     favorability=int(character_data.favorability[0]),
                     trust=round(character_data.trust,1),
                     angry = angry_text,
                     sleep = sleep_text,
                     urinate = urinate_text,
+                    hunger = hunger_text,
                 )
         else:
             message = _(

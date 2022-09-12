@@ -4,9 +4,14 @@ from typing import List
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle
 from Script.Core import cache_control, game_type, constant
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_5_MIN)
@@ -99,7 +104,7 @@ def character_rest(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.behavior.behavior_id = constant.Behavior.REST
-    character_data.behavior.duration = 10
+    character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_REST
 
 
@@ -194,6 +199,13 @@ def character_move_to_toilet(character_id: int):
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去洗手间"
+        now_draw.draw()
+        line_feed.draw()
+
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOODSHOP)
 def character_move_to_foodshop(character_id: int):
@@ -212,6 +224,13 @@ def character_move_to_foodshop(character_id: int):
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去吃饭"
+        now_draw.draw()
+        line_feed.draw()
+
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DINING_HALL)
 def character_move_to_dining_hall(character_id: int):
@@ -229,6 +248,45 @@ def character_move_to_dining_hall(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
+def character_move_to_rest_room(character_id: int):
+    """
+    移动至休息室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_rest_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Rest_Room"])
+    )
+
+    # 检索当前角色所在的大场景里有没有休息室，没有的话再随机选择其他区块
+    now_position = character_data.position[0]
+    find_flag = False
+    for place in constant.place_data["Rest_Room"]:
+        if place.split("\\")[0] == now_position:
+            to_rest_room = map_handle.get_map_system_path_for_str(place)
+            find_flag = True
+            break
+    if not find_flag:
+        to_rest_room = map_handle.get_map_system_path_for_str(
+    random.choice(constant.place_data["Rest_Room"])
+    )
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_rest_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去休息"
+        now_draw.draw()
+        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)

@@ -95,9 +95,26 @@ def handle_eat_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
+    # print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
     if character_data.behavior.start_time.hour in {7,8,12,13,17,18}:
-        print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
+        # print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.SLEEP_TIME)
+def handle_sleep_time(character_id: int) -> int:
+    """
+    睡觉时间（晚上10点到早上6点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
         return 1
     return 0
 
@@ -622,6 +639,41 @@ def handle_not_in_toilet(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant.Premise.IN_REST_ROOM)
+def handle_in_rest_room(character_id: int) -> int:
+    """
+    校验角色是否在休息室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Rest_Room":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_REST_ROOM)
+def handle_not_in_rest_room(character_id: int) -> int:
+    """
+    校验角色是否不在休息室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Rest_Room":
+        return 0
+    return 1
 
 
 
@@ -5294,7 +5346,7 @@ def handle_hunger_ge_80(character_id: int) -> int:
 
     value = character_data.hunger_point / 240
     if value > 0.79:
-        print(f"debug {character_id}角色饿了")
+        # print(f"debug {character_id}角色饿了")
         return character_data.hunger_point * 4
     else:
         return 0

@@ -158,7 +158,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
         # 不会被打断的指令列表
-        safe_instruct = [10,11,12,13,14,15] # 移动系
+        safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
         safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
         if state_machine_id != 0 and state_machine_id not in safe_instruct:
             character_data.wait_flag = 1

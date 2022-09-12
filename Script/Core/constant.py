@@ -588,18 +588,8 @@ class StateMachine:
     """ 移动至食物商店（取餐区） """
     MOVE_TO_DINING_HALL = 17
     """ 移动至食堂 """
-    CHAT_RAND_CHARACTER = 20
-    """ 和场景里随机对象聊天 """
-    STROKE_RAND_CHARACTER = 21
-    """ 和场景里随机对象身体接触 """
-    CHAT_TO_DR = 30
-    """ 和玩家聊天 """
-    STROKE_TO_DR = 31
-    """ 和玩家身体接触 """
-    MAKE_COFFEE_TO_DR = 32
-    """ 给玩家泡咖啡 """
-    MAKE_COFFEE_ADD_TO_DR = 33
-    """ 给玩家泡咖啡（加料） """
+    MOVE_TO_REST_ROOM = 18
+    """ 移动至休息室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -608,6 +598,20 @@ class StateMachine:
     """ 食用背包内随机食物 """
     PEE = 50
     """ 解手 """
+
+    CHAT_TO_DR = 100
+    """ 和玩家聊天 """
+    STROKE_TO_DR = 101
+    """ 和玩家身体接触 """
+    MAKE_COFFEE_TO_DR = 102
+    """ 给玩家泡咖啡 """
+    MAKE_COFFEE_ADD_TO_DR = 103
+    """ 给玩家泡咖啡（加料） """
+
+    CHAT_RAND_CHARACTER = 200
+    """ 和场景里随机对象聊天 """
+    STROKE_RAND_CHARACTER = 201
+    """ 和场景里随机对象身体接触 """
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -874,6 +878,10 @@ class Premise:
     """ 在女士洗手间 """
     NOT_IN_TOILET = "not_in_toilet"
     """ 不在洗手间 """
+    IN_REST_ROOM = "in_restroom"
+    """ 在休息室中 """
+    NOT_IN_REST_ROOM = "not_in_restroom"
+    """ 不在休息室中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -891,7 +899,10 @@ class Premise:
     TIME_MOON = "time_moon"
     """ 时间:中午（10点~14点） """
     EAT_TIME = "eat_time"
-    """ 校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上17~18点） """
+    """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
+    SLEEP_TIME = "sleep_time"
+    """ 睡觉时间（晚上10点到早上6点） """
+
 
     COOK_1 = "cook_1"
     """ 自身料理技能==1 """

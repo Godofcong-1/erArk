@@ -373,7 +373,7 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
             target_character_data.urinate_point += add_urinate
             target_character_data.hunger_point += add_hunger
 
-    print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
+    # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 
 
 def change_character_persistent_state(character_id: int, now_time: datetime.datetime, add_time: int):
