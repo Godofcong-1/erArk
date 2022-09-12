@@ -480,7 +480,7 @@ class CharacterInfoHead:
         message_draw.width = width / 3
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
-        hp_draw.width = width / 9 *2
+        hp_draw.width = width / 6
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
@@ -489,7 +489,7 @@ class CharacterInfoHead:
             _("体力"),
         )
         mp_draw = draw.InfoBarDraw()
-        mp_draw.width = width / 9 *2
+        mp_draw.width = width / 6
         mp_draw.scale = 0.8
         mp_draw.set(
             "ManaPointbar",
@@ -499,7 +499,7 @@ class CharacterInfoHead:
         )
         if character_id == 0:
             ep_draw = draw.InfoBarDraw()
-            ep_draw.width = width / 9 *2
+            ep_draw.width = width / 6
             ep_draw.scale = 0.8
             ep_draw.set(
                 "EjaPointbar",
@@ -507,19 +507,22 @@ class CharacterInfoHead:
                 int(character_data.eja_point),
                 _("射精"),
             )
-        status_text = game_config.config_status[character_data.state].name
-        status_draw = draw.CenterDraw()
-        status_draw.width = width / 4
-        status_draw.text = _(" ").format(status_text=status_text)
+        # status_text = game_config.config_status[character_data.state].name
+        # status_draw = draw.CenterDraw()
+        # status_draw.width = width / 4
+        # status_draw.text = _(" ").format(status_text=status_text)
+        None_draw = draw.CenterDraw()
+        None_draw.width = 1
+        None_draw.text = (" ")
         if character_id == 0:
             self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw),
-                (status_draw, mp_draw, ep_draw),
+                (message_draw, hp_draw, None_draw, mp_draw, ep_draw),
+                # (status_draw),
             ]
         else:
             self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw),
-                (status_draw, mp_draw),
+                (message_draw, hp_draw, None_draw, mp_draw),
+                # (status_draw),
             ]
         """ 要绘制的面板列表 """
 
