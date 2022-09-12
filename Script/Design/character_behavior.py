@@ -119,6 +119,11 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
 
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = "\n已过24点，开始结算各种数据\n"
+            now_draw.draw()
         #1.结算数值为珠
         settle_character_juel(character_id)
         #2.清零射精槽
@@ -128,11 +133,15 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
         #4.清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-        #5.自动存档，用玩家id来限制只存一次
-        if character_id == 0:
-            save_handle.establish_save("auto")
-        #6.清零污浊状态
+        #5.清零污浊状态
         character_data.dirty = attr_calculation.get_dirty_zero()
+        #自动存档，用玩家id来限制只存一次
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = "\n全部结算完毕，开始自动保存\n"
+            now_draw.draw()
+            save_handle.establish_save("auto")
     end_last = time.time()
     # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
 

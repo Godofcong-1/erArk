@@ -16,8 +16,13 @@ str,str,str
 39,39,t_cook_g_3
 41,41,t_cook_le_3
 42,42,t_cook_g_3
-53,53,love_ge_1
-54,54,obey_ge_1
+51,51,sys_0
+52,52,sys_0
+53,53,sys_0
+54,53,love_ge_1
+55,54,sys_0
+56,54,obey_ge_1
+57,55,sys_0
 111,111,sys_0
 112,114,sys_0
 114,114,sys_0

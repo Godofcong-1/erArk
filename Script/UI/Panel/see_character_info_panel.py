@@ -439,11 +439,14 @@ class CharacterInfoHead:
         sex_text = game_config.config_sex_tem[character_data.sex].name
 
         # 非清醒时输出当前状态
-        sleep_text_list = [" <清醒>"," <疲劳>"," <昏昏欲睡>"," <睡眠中>"]
+        sleep_text_list = [" <清醒>"," <疲劳>"," <昏昏欲睡>"," <随时睡着>"]
         sleep_text = sleep_text_list[attr_calculation.get_sleep_level(character_data.sleep_point)]
+        status_text = game_config.config_status[character_data.state].name
+
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.sleep_point = ",character_data.sleep_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == " <清醒>" else sleep_text
+        sleep_text = " <睡眠中>" if status_text == "睡觉" else sleep_text
 
         # 非普通时输出当前心情
         angry_text = attr_calculation.get_angry_text(character_data.angry_point)
@@ -454,6 +457,9 @@ class CharacterInfoHead:
 
         # 饥饿时进行提示
         hunger_text = " <饿>" if character_data.hunger_point >= 192 else ""
+        start_time = character_data.behavior.start_time
+        hunger_text = hunger_text if start_time in {6,7,8,11,12,13,16,17,18} else ""
+
 
         if character_id:
             message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}{hunger}").format(

@@ -115,7 +115,8 @@ def handle_sleep_time(character_id: int) -> int:
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
-        return 1
+        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
+        return (now_hour-21) *100
     return 0
 
 @add_premise(constant.Premise.IN_BREAKFAST_TIME)
