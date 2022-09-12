@@ -584,6 +584,10 @@ class StateMachine:
     """ 移动至现代音乐室 """
     MOVE_TO_PLAYER = 15
     """ 移动至玩家位置 """
+    MOVE_TO_FOODSHOP = 16
+    """ 移动至食物商店（取餐区） """
+    MOVE_TO_DINING_HALL = 17
+    """ 移动至食堂 """
     CHAT_RAND_CHARACTER = 20
     """ 和场景里随机对象聊天 """
     STROKE_RAND_CHARACTER = 21
@@ -598,6 +602,10 @@ class StateMachine:
     """ 给玩家泡咖啡（加料） """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
+    BUY_RAND_FOOD_AT_FOODSHOP = 41
+    """ 在取餐区购买随机食物 """
+    EAT_BAG_RAND_FOOD = 42
+    """ 食用背包内随机食物 """
     PEE = 50
     """ 解手 """
 
@@ -605,12 +613,8 @@ class StateMachine:
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
     # """ 移动到随机取餐区 """
-    # BUY_RAND_FOOD_AT_CAFETERIA = 2
-    # """ 在取餐区购买随机食物 """
     # MOVE_TO_RAND_RESTAURANT = 3
     # """ 移动至随机就餐区 """
-    # EAT_BAG_RAND_FOOD = 4
-    # """ 食用背包内随机食物 """
     # WEAR_CLEAN_UNDERWEAR = 6
     # """ 穿干净的上衣 """
     # WEAR_CLEAN_UNDERPANTS = 7
@@ -783,6 +787,24 @@ class Premise:
     SLEEP_100 = "sleep_100"
     """ 困倦条100%，当场爆睡 """
 
+    URINATE_LE_79 = "urinate_le_79"
+    """ 尿意条≤79%，不需要排尿 """
+    URINATE_GE_80 = "urinate_ge_80"
+    """ 尿意条≥80%，需要排尿 """
+    TARGET_URINATE_LE_79 = "t_urinate_le_79"
+    """ 交互对象尿意条≤79%，不需要排尿 """
+    TARGET_URINATE_GE_80 = "t_urinate_ge_80"
+    """ 交互对象尿意条≥80%，需要排尿 """
+
+    HUNGER_LE_79 = "hunger_le_79"
+    """ 饥饿值≤79%，不需要吃饭 """
+    HUNGER_GE_80 = "hunger_ge_80"
+    """ 饥饿值≥80%，需要吃饭 """
+    TARGET_HUNGER_LE_79 = "t_hunger_le_79"
+    """ 交互对象饥饿值≤79%，不需要吃饭 """
+    TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
+    """ 交互对象饥饿值≥80%，需要吃饭 """
+
     TARGET_GOOD_MOOD = "good_mood"
     """ 交互对象心情愉快 """
     TARGET_NORMAL_MOOD = "normal_mood"
@@ -834,8 +856,12 @@ class Premise:
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
     """ 在食堂 """
+    NOT_IN_DINING_HALL = "not_in_din"
+    """ 不在食堂 """
     IN_FOOD_SHOP = "in_food_shop"
-    """ 在食物商店 """
+    """ 在食物商店（取餐区） """
+    NOT_IN_FOOD_SHOP = "not_in_food_shop"
+    """ 不在食物商店（取餐区） """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
     IN_DORMITORY = "in_dor"
@@ -864,6 +890,8 @@ class Premise:
     """ 时间:清晨（4点~8点） """
     TIME_MOON = "time_moon"
     """ 时间:中午（10点~14点） """
+    EAT_TIME = "eat_time"
+    """ 校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上17~18点） """
 
     COOK_1 = "cook_1"
     """ 自身料理技能==1 """
@@ -1157,6 +1185,10 @@ class Premise:
     LAST_CMD_U_SEX = "last_cmd_u_sex"
     """ 前一指令为U性交_指令触发用 """
 
+    HAVE_FOOD = "have_food"
+    """ 拥有食物 """
+    NOT_HAVE_FOOD = "not_have_food"
+    """ 未拥有食物 """
     HAVE_CAMERA = "have_camera"
     """ 已持有相机 """
     HAVE_VIDEO_RECORDER = "have_video_recorder"
@@ -1252,14 +1284,6 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
-    URINATE_LE_79 = "urinate_le_79"
-    """ 尿意条≤79%，不需要排尿 """
-    URINATE_GE_80 = "urinate_ge_80"
-    """ 尿意条≥80%，需要排尿 """
-    TARGET_URINATE_LE_79 = "target_urinate_le_79"
-    """ 交互对象尿意条≤79%，不需要排尿 """
-    TARGET_URINATE_GE_80 = "target_urinate_ge_80"
-    """ 交互对象尿意条≥80%，需要排尿 """
 
     HYPOSTHENIA = "83"
     """ 体力不足 """
@@ -1279,10 +1303,6 @@ class Premise:
     """ 处于晚餐时间段 """
     HUNGER = "5"
     """ 处于饥饿状态 """
-    HAVE_FOOD = "6"
-    """ 拥有食物 """
-    NOT_HAVE_FOOD = "7"
-    """ 未拥有食物 """
     HAVE_DRAW_ITEM = "10"
     """ 拥有绘画类道具 """
     HAVE_SHOOTING_ITEM = "11"
@@ -1645,6 +1665,10 @@ class BehaviorEffect:
     """ 尿意值归零 """
     TARGET_URINATE_POINT_DOWN = 126
     """ 交互对象尿意值归零 """
+    HUNGER_POINT_DOWN = 127
+    """ 饥饿值归零 """
+    TARGET_HUNGER_POINT_DOWN = 128
+    """ 交互对象饥饿值归零 """
 
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """

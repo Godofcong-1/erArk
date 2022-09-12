@@ -83,6 +83,24 @@ def handle_in_restaurant(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.EAT_TIME)
+def handle_eat_time(character_id: int) -> int:
+    """
+    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上17~18点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
+    if character_data.behavior.start_time.hour in {7,8,12,13,17,18}:
+        print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
+        return 1
+    return 0
+
 @add_premise(constant.Premise.IN_BREAKFAST_TIME)
 def handle_in_breakfast_time(character_id: int) -> int:
     """
@@ -94,7 +112,10 @@ def handle_in_breakfast_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 4) * 100
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour in {7,8}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.IN_LUNCH_TIME)
@@ -108,7 +129,10 @@ def handle_in_lunch_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 7) * 100
+    # return (now_time == 7) * 100
+    if character_data.behavior.start_time.hour in {12,13}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.IN_DINNER_TIME)
@@ -122,7 +146,10 @@ def handle_in_dinner_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 9) * 100
+    # return (now_time == 9) * 100
+    if character_data.behavior.start_time.hour in {17,18}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.HUNGER)
@@ -170,7 +197,7 @@ def handle_not_have_food(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     food_index = 1
     for food_id in character_data.food_bag:
-        if character_data.food_bag[food_id].eat and 27 in character_data.food_bag[food_id].feel:
+        if character_data.food_bag[food_id]:
             return 0
     return food_index
 
@@ -442,10 +469,28 @@ def handle_in_dining_hall(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_DINING_HALL)
+def handle_not_in_dining_hall(character_id: int) -> int:
+    """
+    校验角色是否不在食堂中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Dining_hall":
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.IN_FOOD_SHOP)
 def handle_in_food_shop(character_id: int) -> int:
     """
-    校验角色是否在食物商店
+    校验角色是否在食物商店（取餐区）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -458,6 +503,24 @@ def handle_in_food_shop(character_id: int) -> int:
     if now_scene_data.scene_tag == "Food_Shop":
         return 1
     return 0
+
+
+@add_premise(constant.Premise.NOT_IN_FOOD_SHOP)
+def handle_not_in_food_shop(character_id: int) -> int:
+    """
+    校验角色是否不在食物商店（取餐区）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Food_Shop":
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.IN_DR_OFFICE)
@@ -5194,6 +5257,81 @@ def handle_target_urinate_ge_80(character_id: int) -> int:
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     value = target_data.urinate_point / 240
+    if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.HUNGER_LE_79)
+def handle_hunger_le_79(character_id: int) -> int:
+    """
+    饥饿值≤79%，不需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.hunger_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.HUNGER_GE_80)
+def handle_hunger_ge_80(character_id: int) -> int:
+    """
+    饥饿值≥80%，需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.hunger_point / 240
+    if value > 0.79:
+        print(f"debug {character_id}角色饿了")
+        return character_data.hunger_point * 4
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HUNGER_LE_79)
+def handle_target_hunger_le_79(character_id: int) -> int:
+    """
+    交互对象饥饿值≤79%，不需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.hunger_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HUNGER_GE_80)
+def handle_target_hunger_ge_80(character_id: int) -> int:
+    """
+    交互对象饥饿值≥80%，需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.hunger_point / 240
     if value > 0.79:
         return 1
     else:

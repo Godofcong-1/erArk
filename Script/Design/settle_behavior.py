@@ -361,14 +361,19 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     add_urinate = random.randint(int(add_time*0.8), int(add_time*1.2))
     now_character_data.urinate_point += add_urinate
 
+    # 结算饥饿值
+    add_hunger = random.randint(int(add_time*0.8), int(add_time*1.2))
+    now_character_data.hunger_point += add_hunger
+
     # 给无法自由行动的交互对象结算
     if character_id == 0 and player_character_data.target_character_id:
         target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
         if target_character_data.is_follow or target_character_data.is_h:
             target_character_data.sleep_point += add_sleep
             target_character_data.urinate_point += add_urinate
+            target_character_data.hunger_point += add_hunger
 
-        # print(f"debug target_character_id = {player_character_data.target_character_id}，target_character_data.sleep_point = {target_character_data.sleep_point},target_character_data.urinate_point = {target_character_data.urinate_point}")
+    print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 
 
 def change_character_persistent_state(character_id: int, now_time: datetime.datetime, add_time: int):

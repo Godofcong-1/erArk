@@ -42,7 +42,7 @@ class FoodShopPanel:
         title_draw = draw.TitleLineDraw(scene_name, self.width)
         food_type_list = [_("当前提供的食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 30, 5, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
             food_name_list = list(

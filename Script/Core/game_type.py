@@ -606,6 +606,8 @@ class Character:
         """ 困倦值 6m=1点，16h=160点(max)"""
         self.urinate_point : int = 0
         """ 尿意值 1m=1点，4h=240点(max)"""
+        self.hunger_point : int = 0
+        """ 饥饿值 1m=1点，4h=240点(max)"""
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
         self.money : int = 0

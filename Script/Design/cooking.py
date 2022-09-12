@@ -256,7 +256,7 @@ def init_restaurant_data():
         #     else:
         #         cache.restaurant_data[now_food.id][now_food.uid] = now_food
         cook_index += 1
-        if cook_index == max_people:
+        if cook_index == max_people*3:
             break
 
 

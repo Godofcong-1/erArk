@@ -59,24 +59,28 @@ def init_character_behavior():
             end_all = time.time()
             # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
-        # update_cafeteria()
+        update_cafeteria()
     cache.over_behavior_character = set()
 
 
 def update_cafeteria():
     """刷新食堂内食物"""
-    food_judge = 1
+    max_people = len(cache.character_data)
+    # food_judge = 1
+    food_count = 0
     for food_type in cache.restaurant_data:
         food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
-        for food_id in food_list:
-            food: game_type.Food = food_list[food_id]
-            # if food.eat:
-                # food_judge = 0
-            food_judge = 0
-            break
-        if not food_judge:
-            break
-    if food_judge:
+        food_count += len(food_list)
+    #     for food_id in food_list:
+    #         food: game_type.Food = food_list[food_id]
+    #         # if food.eat:
+    #             # food_judge = 0
+    #         food_judge = 0
+    #         break
+    #     if not food_judge:
+    #         break
+    # if food_judge:
+    if (food_count * 2) <= max_people:
         cooking.init_restaurant_data()
 
 
