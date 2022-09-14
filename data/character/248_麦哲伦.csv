@@ -3,7 +3,7 @@ key,type,value,get_text,info
 AdvNpc,int,248,0,干员编号
 Name,str,麦哲伦,1,姓名
 Sex,int,1,0,女
-Age,int,14,0,少女
+Age,int,26,0,少女
 Profession,int,7,0,辅助
 Race,int,19,0,黎博利
 Hp,int,1400,0,初始体力

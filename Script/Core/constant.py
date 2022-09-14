@@ -566,10 +566,6 @@ class StateMachine:
     """ 原地待机10分钟 """
     WAIT_30_MIN = 2
     """ 原地待机30分钟 """
-    REST = 4
-    """ 休息一会儿 """
-    SLEEP = 5
-    """ 睡觉 """
     FOLLOW = 6
     """ 跟随玩家 """
     MOVE_TO_RAND_SCENE = 10
@@ -596,6 +592,10 @@ class StateMachine:
     """ 在取餐区购买随机食物 """
     EAT_BAG_RAND_FOOD = 42
     """ 食用背包内随机食物 """
+    REST = 43
+    """ 休息一会儿 """
+    SLEEP = 44
+    """ 睡觉 """
     PEE = 50
     """ 解手 """
 
@@ -1573,6 +1573,10 @@ class BehaviorEffect:
     """ 打断交互对象活动 """
     NOT_TIRED = 31
     """ 从疲劳中恢复 """
+    ITEM_OFF = 32
+    """ 去掉身上所有的道具 """
+    TARGET_ITEM_OFF = 33
+    """ 交互对象去掉身上所有的道具 """
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42
