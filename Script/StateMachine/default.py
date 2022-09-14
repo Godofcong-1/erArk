@@ -4,9 +4,14 @@ from typing import List
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle
 from Script.Core import cache_control, game_type, constant
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_5_MIN)
@@ -99,7 +104,7 @@ def character_rest(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.behavior.behavior_id = constant.Behavior.REST
-    character_data.behavior.duration = 10
+    character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_REST
 
 
@@ -125,16 +130,16 @@ def character_move_to_rand_scene(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MUSIC_ROOM)
-def character_move_to_music_room(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MODERN_MUSIC_ROOM)
+def character_move_to_modern_music_room(character_id: int):
     """
-    移动至音乐活动室
+    移动至现代音乐室
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
     to_cafeteria = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Musicroom"])
+        random.choice(constant.place_data["Modern_Musicroom"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_cafeteria)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -169,20 +174,116 @@ def character_move_to_toilet(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+
+    # 检索当前角色所在的大场景里有没有厕所，没有的话再随机选择其他厕所
+    now_position = character_data.position[0]
+    find_flag = False
     if character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Male"])
     )
     elif character_data.sex == 1:
-        to_toilet = map_handle.get_map_system_path_for_str(
+        for place in constant.place_data["Toilet_Female"]:
+            if place.split("\\")[0] == now_position:
+                to_toilet = map_handle.get_map_system_path_for_str(place)
+                find_flag = True
+                break
+        if not find_flag:
+            to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Female"])
     )
+    # print(f"debug constant.place_data[\"Toilet_Female\"] = ",constant.place_data["Toilet_Female"])
     _, _, move_path, move_time = character_move.character_move(character_id, to_toilet)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    character_data.behavior.duration += 15
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去洗手间"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOODSHOP)
+def character_move_to_foodshop(character_id: int):
+    """
+    移动至食物商店（取餐区）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_foodshop = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Food_Shop"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_foodshop)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去吃饭"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DINING_HALL)
+def character_move_to_dining_hall(character_id: int):
+    """
+    移动至食堂
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_dining_hall = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Dining_hall"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_dining_hall)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
+def character_move_to_rest_room(character_id: int):
+    """
+    移动至休息室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 检索当前角色所在的大场景里有没有休息室，没有的话再随机选择其他区块
+    now_position = character_data.position[0]
+    find_flag = False
+    for place in constant.place_data["Rest_Room"]:
+        if place.split("\\")[0] == now_position:
+            to_rest_room = map_handle.get_map_system_path_for_str(place)
+            find_flag = True
+            break
+    if not find_flag:
+        to_rest_room = map_handle.get_map_system_path_for_str(
+    random.choice(constant.place_data["Rest_Room"])
+    )
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_rest_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去休息"
+        now_draw.draw()
+        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
@@ -199,6 +300,8 @@ def character_move_to_player(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+    # if character_data.is_follow:
+    #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.is_follow}")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)
@@ -314,6 +417,80 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_data.tired = 1
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.PEE)
+def character_pee(character_id: int):
+    """
+    角色解手
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.PEE
+    character_data.state = constant.CharacterStatus.STATUS_PEE
+    character_data.behavior.duration = 5
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)
+def character_buy_rand_food_at_foodshop(character_id: int):
+    """
+    在取餐区购买随机食物
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    new_food_list = []
+    for food_id in cache.restaurant_data:
+        if not len(cache.restaurant_data[food_id]):
+            continue
+        for food_uid in cache.restaurant_data[food_id]:
+            now_food: game_type.Food = cache.restaurant_data[food_id][food_uid]
+            # if now_food.eat:
+            new_food_list.append(food_id)
+            break
+    if not len(new_food_list):
+        return
+    now_food_id = random.choice(new_food_list)
+    now_food = cache.restaurant_data[now_food_id][
+        random.choice(list(cache.restaurant_data[now_food_id].keys()))
+    ]
+    character_data.food_bag[now_food.uid] = now_food
+    del cache.restaurant_data[now_food_id][now_food.uid]
+
+    # 记录食物名字
+    food_recipe: game_type.Recipes = cache.recipe_data[now_food.recipe]
+    food_name = food_recipe.name
+    character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
+    character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
+    character_data.behavior.duration = 5
+    character_data.behavior.food_name = food_name
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.EAT_BAG_RAND_FOOD)
+def character_eat_rand_food(character_id: int):
+    """
+    角色随机食用背包中的食物
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.EAT
+    now_food_list = []
+    for food_id in character_data.food_bag:
+        # now_food: game_type.Food = character_data.food_bag[food_id]
+        # if 27 in now_food.feel and now_food.eat:
+        now_food_list.append(food_id)
+    choice_food_id = random.choice(now_food_list)
+    character_data.behavior.eat_food = character_data.food_bag[choice_food_id]
+    character_data.state = constant.CharacterStatus.STATUS_EAT
+
+    # 记录食物名字
+    food_data: game_type.Food = character_data.food_bag[choice_food_id]
+    food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
+    food_name = food_recipe.name
+    character_data.behavior.food_name = food_name
+    character_data.behavior.duration = 30
+
+
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)
 # def character_move_to_classroom(character_id: int):
 #     """
@@ -348,32 +525,6 @@ def character_see_h_and_move_to_dormitory(character_id: int):
 #     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
-# @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_CAFETERIA)
-# def character_buy_rand_food_at_restaurant(character_id: int):
-#     """
-#     在取餐区购买随机食物
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     new_food_list = []
-#     for food_id in cache.restaurant_data:
-#         if not len(cache.restaurant_data[food_id]):
-#             continue
-#         for food_uid in cache.restaurant_data[food_id]:
-#             now_food: game_type.Food = cache.restaurant_data[food_id][food_uid]
-#             if now_food.eat:
-#                 new_food_list.append(food_id)
-#             break
-#     if not len(new_food_list):
-#         return
-#     now_food_id = random.choice(new_food_list)
-#     now_food = cache.restaurant_data[now_food_id][
-#         random.choice(list(cache.restaurant_data[now_food_id].keys()))
-#     ]
-#     character_data.food_bag[now_food.uid] = now_food
-#     del cache.restaurant_data[now_food_id][now_food.uid]
-
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RAND_RESTAURANT)
 # def character_move_to_rand_restaurant(character_id: int):
@@ -393,24 +544,6 @@ def character_see_h_and_move_to_dormitory(character_id: int):
 #     character_data.behavior.duration = move_time
 #     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
-
-# @handle_state_machine.add_state_machine(constant.StateMachine.EAT_BAG_RAND_FOOD)
-# def character_eat_rand_food(character_id: int):
-#     """
-#     角色随机食用背包中的食物
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     character_data.behavior.behavior_id = constant.Behavior.EAT
-#     now_food_list = []
-#     for food_id in character_data.food_bag:
-#         now_food: game_type.Food = character_data.food_bag[food_id]
-#         if 27 in now_food.feel and now_food.eat:
-#             now_food_list.append(food_id)
-#     character_data.behavior.eat_food = character_data.food_bag[random.choice(now_food_list)]
-#     character_data.behavior.duration = 1
-#     character_data.state = constant.CharacterStatus.STATUS_EAT
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_CLEAN_UNDERWEAR)

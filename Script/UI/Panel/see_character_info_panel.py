@@ -339,6 +339,85 @@ class SeeCharacterStatusPanel:
             else:
                 label.draw()
 
+class SeeCharacterHStatePanel:
+    """
+    显示角色H状态面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, type_number: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        self.type_number = type_number
+        """ 显示的状态类型 """
+        character_data = cache.character_data[0]
+        target_character_data = cache.character_data[character_data.target_character_id]
+        # print("game_config.config_character_state_type :",game_config.config_character_state_type)
+        # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
+
+
+        type_line = draw.LittleTitleLineDraw("H状态", width, ":")
+        # print("type_data.name :",type_data.name)
+        self.draw_list.append(type_line)
+
+        status_text_list = []
+        bondage_text_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
+        enemas_text_list = ["脏污","灌肠中","已灌肠","精液灌肠中","已精液灌肠"]
+        body_item_set = target_character_data.h_state.body_item
+
+        # 道具文本
+        for i in range(10):
+            # print("status_type :",status_type)
+            if body_item_set[i][1]:
+                status_text = body_item_set[i][0]
+
+                now_text = f"   <{status_text}>"
+                status_text_list.append(now_text)
+            # print("status_text_list :",status_text_list)
+
+        # 绳子文本
+        if target_character_data.h_state.bondage:
+            now_text = f"   <{bondage_text_list[target_character_data.h_state.bondage]}>"
+            status_text_list.append(now_text)
+
+        # 灌肠文本
+        if target_character_data.dirty.a_clean:
+            now_text = f"   <{enemas_text_list[target_character_data.dirty.a_clean]}>"
+            status_text_list.append(now_text)
+
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(status_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
 
 class CharacterInfoHead:
     """
@@ -358,35 +437,56 @@ class CharacterInfoHead:
         """ 是否绘制面板标题 """
         character_data: game_type.Character = cache.character_data[character_id]
         sex_text = game_config.config_sex_tem[character_data.sex].name
+
+        # 非清醒时输出当前状态
+        sleep_text_list = [" <清醒>"," <疲劳>"," <昏昏欲睡>"," <随时睡着>"]
+        sleep_text = sleep_text_list[attr_calculation.get_sleep_level(character_data.sleep_point)]
+        status_text = game_config.config_status[character_data.state].name
+
+        # if character_id != 0:
+        #     print("debug character_id = ",character_id,"    character_data.sleep_point = ",character_data.sleep_point,"   sleep_text = ",sleep_text)
+        sleep_text = "" if sleep_text == " <清醒>" else sleep_text
+        sleep_text = " <睡眠中>" if status_text == "睡觉" else sleep_text
+
+        # 非普通时输出当前心情
+        angry_text = attr_calculation.get_angry_text(character_data.angry_point)
+        angry_text = "" if angry_text == "普通" else angry_text
+
+        # 有尿意时进行提示
+        urinate_text = " <尿>" if character_data.urinate_point >= 192 else ""
+
+        # 饥饿时进行提示
+        hunger_text = " <饿>" if character_data.hunger_point >= 192 else ""
+        start_time = character_data.behavior.start_time
+        hunger_text = hunger_text if start_time in {6,7,8,11,12,13,16,17,18} else ""
+
+
         if character_id:
-            angry_text = attr_calculation.get_angry_text(character_data.angry_point)
-            if angry_text == "普通":
-                message = _("{character_name}（好感度： {favorability}，信赖度： {trust}%） ").format(
+            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}{hunger}").format(
                     character_name=character_data.name,
                     favorability=int(character_data.favorability[0]),
                     trust=round(character_data.trust,1),
-                )
-            else:
-                message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}） ").format(
-                    character_name=character_data.name,
-                    favorability=int(character_data.favorability[0]),
-                    trust=round(character_data.trust,1),
-                    angry = angry_text
+                    angry = angry_text,
+                    sleep = sleep_text,
+                    urinate = urinate_text,
+                    hunger = hunger_text,
                 )
         else:
             message = _(
-                "{character_name}{character_nick_name}"
+                "{character_name}{character_nick_name}{sleep}{urinate}"
             ).format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
+                sleep = sleep_text,
+                urinate = urinate_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 4
+        message_draw.width = width / 3
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
-        hp_draw.width = width / 4
+        hp_draw.width = width / 6
         hp_draw.scale = 0.8
         hp_draw.set(
             "HitPointbar",
@@ -395,7 +495,7 @@ class CharacterInfoHead:
             _("体力"),
         )
         mp_draw = draw.InfoBarDraw()
-        mp_draw.width = width / 4
+        mp_draw.width = width / 6
         mp_draw.scale = 0.8
         mp_draw.set(
             "ManaPointbar",
@@ -405,7 +505,7 @@ class CharacterInfoHead:
         )
         if character_id == 0:
             ep_draw = draw.InfoBarDraw()
-            ep_draw.width = width / 4
+            ep_draw.width = width / 6
             ep_draw.scale = 0.8
             ep_draw.set(
                 "EjaPointbar",
@@ -413,19 +513,22 @@ class CharacterInfoHead:
                 int(character_data.eja_point),
                 _("射精"),
             )
-        status_text = game_config.config_status[character_data.state].name
-        status_draw = draw.CenterDraw()
-        status_draw.width = width / 4
-        status_draw.text = _(" ").format(status_text=status_text)
+        # status_text = game_config.config_status[character_data.state].name
+        # status_draw = draw.CenterDraw()
+        # status_draw.width = width / 4
+        # status_draw.text = _(" ").format(status_text=status_text)
+        None_draw = draw.CenterDraw()
+        None_draw.width = 1
+        None_draw.text = (" ")
         if character_id == 0:
             self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw),
-                (status_draw, mp_draw, ep_draw),
+                (message_draw, hp_draw, None_draw, mp_draw, ep_draw),
+                # (status_draw),
             ]
         else:
             self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw),
-                (status_draw, mp_draw),
+                (message_draw, hp_draw, None_draw, mp_draw),
+                # (status_draw),
             ]
         """ 要绘制的面板列表 """
 
@@ -1549,31 +1652,31 @@ class CharacterBodyText:
             if character_data.talent[4]:
                 now_text += "保有初吻\n"
             else:
-                kiss_id = character_data.first_kiss_id
-                kiss_time = character_data.first_kiss_time
+                kiss_id = character_data.first_record.first_kiss_id
+                kiss_time = character_data.first_record.first_kiss_time
                 now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
                         character_name=cache.character_data[kiss_id].name,
                         kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_kiss_place),
+                        kiss_palce = attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
                     )
-            if character_data.ability[31] == 0:
+            if character_data.ability[71] == 0:
                 now_text += "  普普通通的舌头\n"
-            if character_data.taste_semen == 0:
+            if character_data.dirty.body_semen[2][3] == 0:
                 now_text += "  未品尝过精液\n"
             body_text_list.append(now_text)
             #胸部信息#
             now_text = f"\n 【胸】\n"
-            if character_data.breast_semen == 0:
+            if character_data.dirty.body_semen[3][3] == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #指部信息#
             now_text = f"\n 【指】\n"
-            if character_data.hand_semen == 0:
+            if character_data.dirty.body_semen[5][3] == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #足部信息#
             now_text = f"\n 【足】\n"
-            if character_data.foot_semen == 0:
+            if character_data.dirty.body_semen[10][3] == 0:
                 now_text += "  未淋上过精液\n"
             body_text_list.append(now_text)
             #膣部信息#
@@ -1582,14 +1685,17 @@ class CharacterBodyText:
             if character_data.talent[0]:
                 now_text += "保有处女\n"
             else:
-                sex_id = character_data.first_sex_id
-                sex_time = character_data.first_sex_time
-                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了处女\n").format(
+                sex_id = character_data.first_record.first_sex_id
+                sex_time = character_data.first_record.first_sex_time
+                sex_posture = character_data.first_record.first_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n").format(
                         character_name=cache.character_data[sex_id].name,
-                        kiss_time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_sex_place),
+                        time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
+                        palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
+                        posture =sex_posture,
                     )
-            if character_data.sex_semen == 0:
+            if character_data.dirty.body_semen[6][3] == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #肛部信息#
@@ -1598,14 +1704,17 @@ class CharacterBodyText:
             if character_data.talent[1]:
                 now_text += "保有后庭处女\n"
             else:
-                a_sex_id = character_data.first_a_sex_id
-                a_sex_time = character_data.first_a_sex_time
-                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了A处女\n").format(
+                a_sex_id = character_data.first_record.first_a_sex_id
+                a_sex_time = character_data.first_record.first_a_sex_time
+                a_sex_posture = character_data.first_record.first_a_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n").format(
                         character_name=cache.character_data[a_sex_id].name,
-                        kiss_time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_a_sex_place),
+                        time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
+                        palce = attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
+                        posture =a_sex_posture,
                     )
-            if character_data.a_sex_semen == 0:
+            if character_data.dirty.body_semen[7][3] == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
             #子宫信息#
@@ -1615,7 +1724,7 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             #尿道信息#
             now_text = f"\n 【尿】\n"
-            if character_data.urethral_semen == 0:
+            if character_data.dirty.body_semen[8][3] == 0:
                 now_text += "  未射入过精液\n"
             body_text_list.append(now_text)
         if self.center_status:

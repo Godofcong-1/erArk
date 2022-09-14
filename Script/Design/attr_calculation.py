@@ -94,10 +94,10 @@ def get_orgasm_count_zero(orgasm_count_dict) -> dict:
 
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
-    将二段行为全项归零，暂时为前100项
+    将二段行为全项归零，暂时为前200项
     """
     second_behavior_list = second_behavior_dict
-    for second_behavior in range(1000,1100):
+    for second_behavior in range(1000,1200):
         second_behavior_list[second_behavior] = 0
     return second_behavior_list
 
@@ -116,6 +116,70 @@ def get_token_zero(token_dict) -> dict:
     for i in range(len(cache.npc_tem_data) + 1):
         token_list[i] = 0
     return token_list
+
+
+def get_dirty_zero() -> dict:
+    """
+    直接将初始污浊情况归0
+    """
+    dirty_data = game_type.DIRTY()
+    position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
+    cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
+
+    for position_text in position_text_list:
+        now_list = [position_text,0,0,0]
+        dirty_data.body_semen.append(now_list)
+
+    for cloth_text in cloth_text_list:
+        now_list = [cloth_text,0,0,0]
+        dirty_data.cloth_semen.append(now_list)
+
+    dirty_data.a_clean = 0
+
+    return dirty_data
+
+def get_h_state_zero() -> dict:
+    """
+    直接将H状态结构体归0
+    """
+    h_state_data = game_type.BODY_H_STATE()
+    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","持续性利尿剂","睡眠药"]
+    # bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
+
+    for body_item in body_item_list:
+        now_list = [body_item,False,None]
+        h_state_data.body_item.append(now_list)
+
+    return h_state_data
+
+def get_assistant_state_zero() -> dict:
+    """
+    直接将助理状态结构体归0
+    """
+    assistant_state_data = game_type.ASSISTANT_STATE()
+
+    return assistant_state_data
+
+
+def get_first_record_zero() -> dict:
+    """
+    直接将初次状态记录结构体归0
+    """
+    first_record_data = game_type.FIRST_RECORD()
+
+    return first_record_data
+
+
+def get_item_zero(item_dict) -> dict:
+    """
+    检查初始道具，将为空的项补为0
+    """
+    item_list = item_dict
+    for item in game_config.config_item:
+        if item not in item_dict:
+            item_list[item] = 0
+    return item_list
+
 
 def get_Dr_talent_zero(juel_dict) -> dict:
     """
@@ -422,3 +486,44 @@ def get_angry_text(value: int) -> str:
         return "不爽"
     elif value > 50:
         return "愤怒"
+
+
+def get_semen_now_level(value: int) -> int:
+    """
+    按当前部位精液量返回精液覆盖等级
+    Keyword arguments:
+    value -- 精液量
+    Return arguments:
+    level -- 精液覆盖等级
+    """
+    if value <= 0:
+        return 0
+    elif 0 < value and value <= 10:
+        return 1
+    elif 10 < value and value <= 50:
+        return 2
+    elif 50 < value and value <=200:
+        return 3
+    elif 200 < value and value <=1000:
+        return 4
+    elif value > 1000:
+        return 5
+
+
+def get_sleep_level(value: int) -> int:
+    """
+    按当前困倦程度返回困倦等级[0:0~74,1:75~89,2:89~99,3:100以上]
+    Keyword arguments:
+    value -- 困倦程度
+    Return arguments:
+    level -- 困倦等级
+    """
+    if value / 160 <= 0.74:
+        return 0
+    elif 0.74 < value / 160 and value / 160 <= 0.89:
+        return 1
+    elif 0.89 < value / 160 and value / 160 <= 0.99:
+        return 2
+    elif value / 160 >= 1:
+        return 3
+

@@ -43,8 +43,8 @@ class SeeMapPanel:
         """绘制对象"""
         move_menu_panel_data = {
             0: MapSceneNameDraw(self.now_map, self.width),
-            1: UsefulSceneNamePanel(self.now_map, self.width),
-            2: entertainmentSceneNamePanel(self.now_map, self.width),
+            # 1: UsefulSceneNamePanel(self.now_map, self.width),
+            # 2: entertainmentSceneNamePanel(self.now_map, self.width),
             3: CollectionSceneNamePanel(self.now_map, self.width),
         }
         move_menu_panel = MoveMenuPanel(self.width)
@@ -55,7 +55,7 @@ class SeeMapPanel:
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
             map_name = attr_text.get_map_path_text(self.now_map)
-            title_draw = draw.TitleLineDraw(_("移动:") + map_name, self.width)
+            title_draw = draw.TitleLineDraw(_("当前区块:") + map_name, self.width)
             title_draw.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
@@ -97,32 +97,35 @@ class SeeMapPanel:
             scene_path = path_edge[character_scene_id].copy()
             if character_scene_id in scene_path:
                 del scene_path[character_scene_id]
-            scene_path_list = list(scene_path.keys())
-            if len(scene_path_list):
-                line = draw.LineDraw(".", self.width)
-                line.draw()
-                message_draw = draw.NormalDraw()
-                message_draw.text = _("你可以从这里前往:\n")
-                message_draw.width = self.width
-                message_draw.draw()
-                draw_list = []
-                for scene in scene_path_list:
-                    load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene)
-                    now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
-                    now_draw = draw.CenterButton(
-                        f"[{load_scene_data.scene_name}]",
-                        load_scene_data.scene_name,
-                        self.width / 4,
-                        cmd_func=self.move_now,
-                        args=(now_scene_path,),
-                    )
-                    return_list.append(now_draw.return_text)
-                    draw_list.append(now_draw)
-                draw_group = value_handle.list_of_groups(draw_list, 8)
-                for now_draw_list in draw_group:
-                    for now_draw in now_draw_list:
-                        now_draw.draw()
-                    line_feed.draw()
+
+            # 当前位置相邻地点
+            # scene_path_list = list(scene_path.keys())
+            # if len(scene_path_list):
+            #     line = draw.LineDraw(".", self.width)
+            #     line.draw()
+            #     message_draw = draw.NormalDraw()
+            #     message_draw.text = _("你可以从这里前往:\n")
+            #     message_draw.width = self.width
+            #     message_draw.draw()
+            #     draw_list = []
+            #     for scene in scene_path_list:
+            #         load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene)
+            #         now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
+            #         now_draw = draw.CenterButton(
+            #             f"[{load_scene_data.scene_name}]",
+            #             load_scene_data.scene_name,
+            #             self.width / 4,
+            #             cmd_func=self.move_now,
+            #             args=(now_scene_path,),
+            #         )
+            #         return_list.append(now_draw.return_text)
+            #         draw_list.append(now_draw)
+            #     draw_group = value_handle.list_of_groups(draw_list, 8)
+            #     for now_draw_list in draw_group:
+            #         for now_draw in now_draw_list:
+            #             now_draw.draw()
+            #         line_feed.draw()
+
             scene_id_list = list(path_edge.keys())
             now_index = len(scene_id_list)
             index = now_index
@@ -195,8 +198,16 @@ class SeeMapPanel:
         py_cmd.clr_cmd()
         line_feed.draw()
         cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+        character_data: game_type.Character = cache.character_data[0]
+        flag_map_open = False
+        # 从大地图移动到另一个区块时，不关闭地图面板，且切换到下级地图面板
+        # print(f"debug character_data.position[0] = {character_data.position[0]}，scene_path = {scene_path}")
+        if character_data.position[0] != scene_path[-2] and scene_path[-1] == "0":
+            flag_map_open = True
         character_move.own_charcter_move(scene_path)
-
+        if flag_map_open:
+            cache.now_panel_id = constant.Panel.SEE_MAP
+            self.down_map()
 
 class MoveMenuPanel:
     """
@@ -305,7 +316,14 @@ class MapSceneNameDraw:
             for scene_id in scene_id_list:
                 load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene_id)
                 now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
-                now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
+
+                # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
+                # 如果编号=0的话为出口，单独标注，其他的不标注序号
+                if scene_id == '0':
+                    now_id_text = f"→0:{load_scene_data.scene_name}"
+                else:
+                    now_id_text = f"→{load_scene_data.scene_name}"
+
                 now_draw = draw.LeftButton(
                     now_id_text, now_id_text, self.width, cmd_func=self.move_now, args=(now_scene_path,)
                 )

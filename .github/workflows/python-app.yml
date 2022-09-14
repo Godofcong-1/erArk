@@ -35,7 +35,7 @@ jobs:
           Copy-Item data dist/ -Recurse
           Copy-Item config.ini dist/
           Copy-Item LICENSE dist/
-          Copy-Item 读我.md dist/
+          Copy-Item README.md dist/
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
           Copy-Item package.json dist/

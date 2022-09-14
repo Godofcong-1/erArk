@@ -20,7 +20,7 @@ window_width: int = normal_config.config_normal.text_width
 
 class Make_food_Panel:
     """
-    用于查看食物商店界面面板对象
+    用于查看制作食物界面面板对象
     Keyword arguments:
     width -- 绘制宽度
     """
@@ -57,7 +57,7 @@ class Make_food_Panel:
             for food_type in food_type_list:
                 if food_type == self.now_panel:
                     now_draw = draw.CenterDraw()
-                    now_draw.text = f"{food_type}]"
+                    now_draw.text = f"[{food_type}]"
                     now_draw.style = "onbutton"
                     now_draw.width = self.width / len(food_type_list)
                     now_draw.draw()
@@ -93,10 +93,10 @@ class Make_food_Panel:
         """
         self.now_panel = food_type
         food_name_list = list(cooking.get_cook_level_food_type(self.now_panel).items())
+        now_food_list = [(food_name_list[0][0], x) for x in cache.makefood_data[food_name_list[0][0]]]
         self.handle_panel = panel.PageHandlePanel(
-            food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
+            now_food_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
-
 
 class SeeFoodListByFoodNameDraw:
     """
@@ -110,13 +110,13 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, str], width: int, is_button: bool, num_button: bool, button_id: int
+        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.text = text[1]
-        """ 食物名字 """
-        self.cid = text[0]
-        """ 食物在食堂内的表id """
+        self.cid: str = text[0]
+        """ 食物商店索引id """
+        self.text: UUID = text[1]
+        """ 食物uid """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -127,119 +127,65 @@ class SeeFoodListByFoodNameDraw:
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
-        name_draw = draw.NormalDraw()
-        if is_button:
-            if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{self.text}"
-                name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.see_food_shop_food_list
-                )
-            else:
-                button_text = f"[{self.text}]"
-                name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.see_food_shop_food_list
-                )
-                self.button_return = text
-            self.draw_text = button_text
-        else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{self.text}]"
-            name_draw.width = self.width
-            self.draw_text = name_draw.text
-        self.now_draw = name_draw
-        """ 绘制的对象 """
-
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
-    def see_food_shop_food_list(self):
-        """按食物名字显示食物商店的食物列表"""
-        title_draw = draw.TitleLineDraw(self.text, window_width)
-        now_food_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
-        # now_food_list = [(self.cid, x) for x in self.make_food_data[self.cid]]
-        page_handle = panel.PageHandlePanel(
-            now_food_list, MakeFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
-        )
-        # while 1:
-        return_list = []
-        title_draw.draw()
-        page_handle.update()
-        page_handle.draw()
-        return_list.extend(page_handle.return_list)
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        back_draw.draw()
-        line_feed.draw()
-        return_list.append(back_draw.return_text)
-        yrn = flow_handle.askfor_all(return_list)
-        # if yrn == back_draw.return_text:
-        #     break
-        page_handle.text_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
-
-
-class MakeFoodByFoodNameDraw:
-    """
-    点击后可制作食物的食物名字按钮对象
-    Keyword arguments:
-    text -- 食物id
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
-
-    def __init__(
-        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
-        self.text: UUID = text[1]
-        """ 食物uid """
-        self.cid: str = text[0]
-        """ 食物商店索引id """
-        self.draw_text: str = ""
-        """ 食物名字绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = str(button_id)
-        """ 按钮返回值 """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
         self.make_food_time: int = 0
         """ 做饭所需时间 """
         # self.draw_effect_draw = draw.NormalDraw()
         # """ 做饭效果绘制 """
         self.food_name: str = ""
         """ 食物名字 """
-        name_draw = draw.NormalDraw()
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
         # draw_effect_text = ""
-        if isinstance(self.cid, str):
-            food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
+
+        # print("debug self.text :",self.text)
+        # print("debug self.cid :",self.text)
+
+        # 转换为正确格式
+        now_food_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
+        # print("debug now_food_list = ",now_food_list)
+        self.food_cid: str = now_food_list[0][0]
+        """ 食物商店索引id """
+        self.food_text: UUID = now_food_list[0][1]
+        """ 食物uid """
+
+
+        if isinstance(self.food_cid, str):
+            food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
             self.food_name = food_recipe.name
             self.make_food_time = food_recipe.time
             # draw_effect_text += "制作用时" + self.make_food_time + "分钟\n"
-        index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{self.food_name}"
+
         # print("index_text :",index_text)
-        # print("self.make_food_time :",self.make_food_time)
-        name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.make_food)
+        # print("debug self.make_food_time :",self.make_food_time)
+
+        # 按钮绘制
+        name_draw = draw.NormalDraw()
+        if is_button:
+            if num_button:
+                index_text = text_handle.id_index(button_id)
+                button_text = f"{index_text}{self.food_name}"
+                name_draw = draw.LeftButton(
+                    button_text, self.button_return, self.width, cmd_func=self.make_food
+                )
+            else:
+                button_text = f"[{self.food_name}]"
+                name_draw = draw.CenterButton(
+                    button_text, self.text, self.width, cmd_func=self.make_food
+                )
+                self.button_return = text
+            self.draw_text = button_text
+        else:
+            name_draw = draw.CenterDraw()
+            name_draw.text = f"[{self.food_name}]"
+            name_draw.width = self.width
+            self.draw_text = name_draw.text
         self.now_draw = name_draw
         """ 绘制的对象 """
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-        # self.draw_effect_draw.draw()
 
     def make_food(self):
         """玩家制作食物"""
         update.game_update_flow(0)
         character_data: game_type.Character = cache.character_data[0]
-        character_data.food_bag[self.text] = cache.makefood_data[self.cid][self.text]
+        character_data.food_bag[self.food_text] = cache.makefood_data[self.food_cid][self.food_text]
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
@@ -247,3 +193,8 @@ class MakeFoodByFoodNameDraw:
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
         update.game_update_flow(self.make_food_time)
         cache.now_panel_id = constant.Panel.IN_SCENE
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+

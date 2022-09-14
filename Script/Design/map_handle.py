@@ -105,6 +105,7 @@ def get_map_system_path_str_for_list(now_list: list) -> str:
     Keyword arguments:
     now_list -- 地图路径列表数据
     """
+    # print(f"debug now_list = {now_list}")
     return os.sep.join(now_list)
 
 
@@ -337,6 +338,8 @@ def get_scene_path_for_true(scene_path: list) -> list:
     scene_path -- 场景路径
     """
     scene_path_str = get_map_system_path_str_for_list(scene_path)
+    # print(f"debug scene_path_str = {scene_path_str} ")
+    # print(f"debug cache.scene_data = {cache.scene_data} ")
     if scene_path_str in cache.scene_data:
         return scene_path
     else:

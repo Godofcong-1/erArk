@@ -277,6 +277,14 @@ class Recipes:
     """ 烹饪时间 """
     difficulty: int
     """ 烹饪难度 """
+    
+    """ 道具名 """
+    tag: str
+    """ 标签 """
+    price: int
+    """ 价格 """
+    info: str
+    """ 描述 """
 
 
 class Juel:
@@ -1280,10 +1288,8 @@ class TalkPremise:
 
 
 
-
 class Target:
     """ ai的目标 """
-
     cid: str
     """ 目标id """
     state_machine_id: int

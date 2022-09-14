@@ -146,6 +146,10 @@ class Recipes:
         """ 标准烹饪时间 """
         self.difficulty: int = 0
         """ 烹饪难度 """
+        self.money: int = 0
+        """ 菜品价格 """
+        self.introduce: str = ""
+        """ 说明介绍 """
         # self.base: list = []
         # """ 烹饪所使用的主食材 """
         # self.ingredients: list = []
@@ -255,6 +259,106 @@ class Clothing:
         """ 服装评价文本 """
         self.wear: int = 0
         """ 穿戴部位 """
+
+
+
+class DIRTY:
+    """污浊情况数据结构体"""
+
+    def __init__(self):
+
+        # 人类正常一次射精量在2～6ml
+
+        self.body_semen: list = []
+        """ 身体精液情况    
+        0~13共14项，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]    
+        部位顺序 [0"头发",1"脸部",2"口腔",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部",11"尾巴",12"兽角",13"兽耳"]
+        """
+        self.cloth_semen: list = []
+        """ 服装精液情况    
+        0~17共18项，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]    
+        部位顺序 [0"帽子",1"眼镜",2"耳部",3"脖子",4"嘴部",5"上衣",6"内衣（上）",7"手套",8"下衣",9"内衣（下）",10"袜子",11"鞋子",12"武器",13"附属物1",14"附属物2",15"附属物3",16"附属物4",17"附属物5"]
+        """
+        self.a_clean: int = 0
+        """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
+
+
+class BODY_H_STATE:
+    """H状态结构体"""
+
+    def __init__(self):
+
+        self.body_item: list = []
+        """ 身体道具情况    
+        0~9共10项，编号int:[道具名str,当前有无bool,状态的结束时间datetime.datetime]    
+        部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"持续性利尿剂",9"睡眠药"]
+        """
+
+
+        self.bondage: int = 0
+        """ 绳子捆绑情况    
+        0~9共10项，编号int    
+        [0未捆绑,1后高手缚,2直立缚,3驷马捆绑,4直臂缚,5双手缚,6菱绳缚,7龟甲缚,8团缚,9逆团缚,10吊缚,11后手吊缚,12单足吊缚,13后手观音,14苏秦背剑,15五花大绑]
+        """
+
+class ASSISTANT_STATE:
+    """助理状态结构体"""
+
+    def __init__(self):
+
+        self.always_follow: int = 0
+        """ 跟随服务，int[0否,1智能跟随，在非工作时间(饭点/上厕所等)会暂离,2强制跟随,3在博士办公室待机]"""
+        self.always_help_work: bool = False
+        """ 辅佐服务，仅由助理辅助工作系指令"""
+        self.work_until_sleep: bool = False
+        """ 加班服务，博士睡觉后自动加班到自己睡觉"""
+        self.offer_food: int = 0
+        """ 送饭服务，int[0否,1帮忙买午饭,2帮忙买三餐,3亲手做午饭,4亲手做三餐]"""
+        self.good_morning: int = 0
+        """ 早安服务，int[0否,1早安叫起床,2叫起床+早安吻,3叫起床+早安咬]"""
+        self.good_evening: int = 0
+        """ 晚安服务，int[0否,1晚安催睡觉,2催睡觉+晚安吻,3催睡觉+早安咬]"""
+        self.live_together: bool = False
+        """ 同居服务"""
+        self.help_chase: bool = False
+        """ 助攻服务"""
+        self.help_sex: int = 0
+        """ 性处理服务，int[0否,1被动接受(非本番),2被动接受(含本番),3主动请求(非本番),4主动请求(含本番)]"""
+
+
+class FIRST_RECORD:
+    """初次状态记录结构体"""
+
+    def __init__(self):
+
+        self.first_hand_in_hand: int = -1
+        """ 初次牵手对象 -1为无 """
+        self.first_kiss_id: int = -1
+        """ 初吻对象 -1为无 """
+        self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 初吻时间 """
+        self.first_kiss_place: List[str] = ["0"]
+        """ 初吻地点 """
+        self.first_sex_id: int = -1
+        """ 处女对象 -1为无 """
+        self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 处女时间 """
+        self.first_sex_place: List[str] = ["0"]
+        """ 处女地点 """
+        self.first_sex_posture: str = ""
+        """ 处女姿势 """
+        self.first_sex_item: int = -1
+        """ 处女道具 -1为无，0为手指，1为振动棒 """
+        self.first_a_sex_id: int = -1
+        """ A处女对象 -1为无 """
+        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ A处女时间 """
+        self.first_a_sex_place: List[str] = ["0"]
+        """ A处女地点 """
+        self.first_a_sex_posture: str = ""
+        """ A处女姿势 """
+        self.first_a_sex_item: int = -1
+        """ A处女道具 -1为无，0为手指，1为振动棒 """
 
 
 # class Height:
@@ -387,7 +491,7 @@ class Character:
         """ 他人对角色的称呼 """
         self.sex: int = 0
         """ 角色性别 """
-        self.age: int = 17
+        self.age: int = 18
         """ 角色年龄 """
         self.hit_point_max: int = 0
         """ 角色最大HP """
@@ -415,8 +519,10 @@ class Character:
         角色拥有的服装类型数据集合
         服装表id:服装唯一id
         """
-        self.item: Set = set()
-        """ 角色拥有的道具id集合 """
+        # self.item: Set = set()
+        # """ 旧：角色拥有的道具id集合 """
+        self.item: Dict[int,int] = {}
+        """ 角色拥有的道具 道具序号:数量"""
         # self.height: Height = Height()
         # """ 角色的身高数据 """
         # self.measurements: Measurements = Measurements()
@@ -425,8 +531,8 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}
         """ 角色当前二段行为状态数据 """
-        self.gold: int = 0
-        """ 角色所持金钱数据 """
+        # self.gold: int = 0
+        # """ 角色所持金钱数据 """
         self.position: List[str] = ["0"]
         """ 角色当前坐标数据 """
         self.officeroom: List[str] = []
@@ -470,44 +576,6 @@ class Character:
         """ 剧情npc校验 """
         self.no_wear: bool = 0
         """ 是否不想穿衣服 """
-        self.first_kiss_id: int = -1
-        """ 初吻对象 -1为无 """
-        self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ 初吻时间 """
-        self.first_kiss_place: List[str] = ["0"]
-        """ 初吻地点 """
-        self.taste_semen: int = 0
-        """ 饮精精液量计数 """
-        self.first_sex_id: int = -1
-        """ 处女对象 -1为无 """
-        self.first_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ 处女时间 """
-        self.first_sex_place: List[str] = ["0"]
-        """ 处女地点 """
-        self.sex_semen: int = 0
-        """ V注入精液量计数 """
-        self.first_sex_posture: str = ""
-        """ 处女姿势 """
-        self.first_a_sex_id: int = -1
-        """ A处女对象 -1为无 """
-        self.first_a_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
-        """ A处女时间 """
-        self.first_a_sex_place: List[str] = ["0"]
-        """ A处女地点 """
-        self.a_sex_semen: int = 0
-        """ A注入精液量计数 """
-        self.first_a_sex_posture: str = ""
-        """ A处女姿势 """
-        self.breast_semen: int = 0
-        """ 胸部精液量计数 """
-        self.hand_semen: int = 0
-        """ 手部精液ml数 """
-        self.foot_semen: int = 0
-        """ 脚部精液ml数 """
-        self.urethral_semen: int = 0
-        """ 尿道精液ml数 """
-        self.first_hand_in_hand: int = -1
-        """ 初次牵手对象 -1为无 """
         self.dead: bool = 0
         """ 角色已死亡 """
         self.collection_character: Set = set()
@@ -536,21 +604,42 @@ class Character:
         """ AI行动里的原地发呆判定 """
         self.is_h : bool = 0
         """ 在H模式中 """
-        self.is_follow : bool = 0
-        """ 正跟随玩家 """
+        self.is_follow : int = 0
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随] """
         self.orgasm_level: Dict[int,int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
-        self.token_list:Dict[int,int] = {}
+        self.token_list:Dict[int,bool] = {}
         """ 玩家的信物获得记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
         self.tired : bool = 0
         """ 疲劳状态（HP=1） """
+        self.sleep_point : int = 0
+        """ 困倦值 6m=1点，16h=160点(max)"""
+        self.urinate_point : int = 0
+        """ 尿意值 1m=1点，4h=240点(max)"""
+        self.hunger_point : int = 0
+        """ 饥饿值 1m=1点，4h=240点(max)"""
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
-
+        self.money : int = 0
+        """ 龙门币数量 """
+        self.orundum : int = 0
+        """ 合成玉数量 """
+        self.Originite_Prime : int = 0
+        """ 至纯源石数量 """
+        self.first_record: FIRST_RECORD = FIRST_RECORD()
+        """ 角色初次状态记录 """
+        self.dirty: DIRTY = DIRTY()
+        """ 角色身上污浊的情况 """
+        self.h_state: BODY_H_STATE = BODY_H_STATE()
+        """ 角色本次H的情况 """
+        self.assistant_character_id: int = 0
+        """ 助理角色id """
+        self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
+        """ 角色作为助理的情况 """
 
 class Cache:
     """游戏缓存数据结构体"""
@@ -628,6 +717,10 @@ class Cache:
         """ 指定日期下每分钟太阳位置 日期:时:分:位置id """
         self.moon_phase: Dict[str, int] = {}
         """ 指定日期月相记录 日期:月相id """
+        self.shoot_position: int = 0
+        """ 记录射精位置 """
+        self.debug_mode: bool = False
+        """ 是否开启debug模式 """
 
 
 class TargetChange:
@@ -638,14 +731,22 @@ class TargetChange:
         """ hp变化 """
         self.mana_point: int = 0
         """ mp变化 """
+        self.eja_point: int = 0
+        """ 射精变化 """
         self.status_data: Dict[int, int] = {}
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
         self.trust: int = 0
         """ 信赖度变化 """
+        self.target_change: Dict[int, TargetChange] = {}
+        """ 互动目标状态变化 """
+        self.ability: Dict[int, int] = {}
+        """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.money: int = 0
+        """ 金钱变化 """
 
 
 class CharacterStatusChange:
@@ -660,6 +761,10 @@ class CharacterStatusChange:
         """ 射精变化 """
         self.status_data: Dict[int, int] = {}
         """ 状态变化 """
+        self.favorability: int = 0
+        """ 好感度变化 """
+        self.trust: int = 0
+        """ 信赖度变化 """
         self.language: Dict[int, int] = {}
         """ 语言技能经验变化 """
         self.knowledge: Dict[int, int] = {}
@@ -672,3 +777,5 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.money: int = 0
+        """ 金钱变化 """

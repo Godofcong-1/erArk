@@ -88,7 +88,7 @@ class InScenePanel:
             now_position_draw.text = now_position_text
             now_position_draw.width = self.width - len(game_time_draw)
             meet_draw = draw.NormalDraw()
-            meet_draw.text = _("你在这里遇到了:")
+            meet_draw.text = _("这里有:")
             meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
@@ -252,6 +252,55 @@ class InScenePanel:
                     line_feed.draw()
                 else:
                     label.draw()
+
+            #↓以下为H状态栏的内容↓#
+            character_H_status_draw_list = []
+            if character_data.target_character_id :
+
+                character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
+                    character_data.cid, self.width, 9, 0, 0
+                )
+            
+                now_line = len(character_H_status_draw.draw_list)
+
+                for i in range(now_line):
+                    c_draw = None
+                    if i in range(len(character_status_draw.draw_list)):
+                        c_draw = character_status_draw.draw_list[i]
+                    else:
+                        c_draw = draw.NormalDraw()
+                        c_draw.text = " " * int(self.width / 2)
+                        c_draw.width = self.width / 2
+
+                    character_H_status_draw_list = character_H_status_draw.draw_list
+                    # character_status_draw_list.append((t_draw))
+
+                if now_line != 1:
+                    for label in character_H_status_draw_list:
+                        if isinstance(label, tuple):
+                            index = 0
+                            for value in label:
+                                if isinstance(value, list):
+                                    for value_draw in value:
+                                        value_draw.draw()
+                                else:
+                                    value.line_feed = 0
+                                    value.draw()
+                                if not index:
+                                    fix_draw = draw.NormalDraw()
+                                    fix_draw.width = 1
+                                    fix_draw.text = "|"
+                                    fix_draw.draw()
+                                    index = 1
+                            line_feed.draw()
+                        elif isinstance(label, list):
+                            for value in label:
+                                value.draw()
+                            line_feed.draw()
+                        else:
+                            label.draw()
+
+
             #以下为图片面板#
             line_draw = draw.LineDraw("-.-", self.width)
             line_draw.draw()
@@ -305,6 +354,9 @@ class SeeInstructPanel:
             for instruct_type in game_config.config_instruct_type:
                 cache.instruct_filter[instruct_type] = 0
             cache.instruct_filter[0] = 1
+            cache.instruct_filter[1] = 1
+            cache.instruct_filter[2] = 1
+            cache.instruct_filter[3] = 1
 
     def draw(self):
         """绘制操作菜单面板"""

@@ -55,8 +55,12 @@ class CharacterStatus:
     """ H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
+    STATUS_PEE = 140
+    """ 解手 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
+    STATUS_APPOINTED_ASSISTANT = 204
+    """ 指派助理 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -157,6 +161,70 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
+    STATUS_BODY_LUBRICANT = 451
+    """ 润滑液 """
+    STATUS_BIRTH_CONTROL_PILLS_BEFORE = 452
+    """ 事前避孕药 """
+    STATUS_BIRTH_CONTROL_PILLS_AFTER = 453
+    """ 事后避孕药 """
+    STATUS_PHILTER = 454
+    """ 媚药 """
+    STATUS_ENEMAS = 455
+    """ 灌肠液 """
+    STATUS_DIURETICS_ONCE = 456
+    """ 一次性利尿剂 """
+    STATUS_DIURETICS_PERSISTENT = 457
+    """ 持续性利尿剂 """
+    STATUS_SLEEPING_PILLS = 458
+    """ 睡眠药 """
+    STATUS_SLEEPING_PILLS = 459
+    """ 排卵促进药 """
+    STATUS_PUT_CONDOM = 471
+    """ 戴上避孕套 """
+    STATUS_SAFE_CANDLES = 472
+    """ 低温蜡烛 """
+    STATUS_URETHRAL_SWAB = 473
+    """ 尿道棉棒 """
+    STATUS_NIPPLES_LOVE_EGG = 481
+    """ 乳头跳蛋 """
+    STATUS_NIPPLE_CLAMP_ON = 482
+    """ 戴上乳头夹 """
+    STATUS_CLIT_LOVE_EGG = 483
+    """ 阴蒂跳蛋 """
+    STATUS_CLIT_CLAMP_ON = 484
+    """ 戴上阴蒂夹 """
+    STATUS_ELECTRIC_MESSAGE_STICK = 485
+    """ 电动按摩棒 """
+    STATUS_VIBRATOR_INSERTION = 486
+    """ 震动棒 """
+    STATUS_BIG_VIBRATOR_INSERTION = 487
+    """ 加粗震动棒 """
+    STATUS_HUGE_VIBRATOR_INSERTION = 488
+    """ 巨型震动棒 """
+    STATUS_VIBRATOR_INSERTION_ANAL = 489
+    """ 肛门振动棒 """
+    STATUS_BIG_VIBRATOR_INSERTION_ANAL = 490
+    """ 加粗肛门震动棒 """
+    STATUS_HUGE_VIBRATOR_INSERTION_ANAL = 491
+    """ 巨型肛门震动棒 """
+    STATUS_CLYSTER = 492
+    """ 灌肠 """
+    STATUS_ANAL_PLUG = 493
+    """ 肛塞 """
+    STATUS_ANAL_BEADS = 494
+    """ 塞入肛门拉珠 """
+    STATUS_CLYSTER_END = 495
+    """ 拔出肛塞 """
+    STATUS_NIPPLE_CLAMP_OFF = 496
+    """ 取下乳头夹 """
+    STATUS_CLIT_CLAMP_OFF = 497
+    """ 取下阴蒂夹 """
+    STATUS_VIBRATOR_INSERTION_OFF = 498
+    """ 拔出振动棒 """
+    STATUS_VIBRATOR_INSERTION_ANAL_OFF = 499
+    """ 拔出肛门振动棒 """
+    STATUS_ANAL_BEADS_OFF = 500
+    """ 拔出肛门拉珠 """
     STATUS_NORMAL_SEX = 501
     """ 正常位 """
     STATUS_BACK_SEX = 502
@@ -195,6 +263,18 @@ class CharacterStatus:
     """ 玩弄s状结肠 """
     STATUS_STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+    STATUS_MILKING_MACHINE = 601
+    """ 搾乳机 """
+    STATUS_URINE_COLLECTOR = 602
+    """ 采尿器 """
+    STATUS_BONDAGE = 603
+    """ 绳子 """
+    STATUS_PATCH = 604
+    """ 眼罩 """
+    STATUS_WHIP = 605
+    """ 鞭子 """
+    STATUS_NEEDLE = 606
+    """ 针 """
 
 
 class Behavior:
@@ -250,8 +330,16 @@ class Behavior:
     """ H """
     END_H = 126
     """ 结束H """
+    PEE = 140
+    """ 解手 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
+    BATTLE_COMMAND = 202
+    """ 指挥作战 """
+    LISTEN_MISSION = 203
+    """ 听取委托 """
+    APPOINTED_ASSISTANT = 204
+    """ 指派助理 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -352,6 +440,70 @@ class Behavior:
     """ 深喉插入 """
     SIXTY_NINE = 431
     """ 六九式 """
+    BODY_LUBRICANT = 451
+    """ 润滑液 """
+    BIRTH_CONTROL_PILLS_BEFORE = 452
+    """ 事前避孕药 """
+    BIRTH_CONTROL_PILLS_AFTER = 453
+    """ 事后避孕药 """
+    PHILTER = 454
+    """ 媚药 """
+    ENEMAS = 455
+    """ 灌肠液 """
+    DIURETICS_ONCE = 456
+    """ 一次性利尿剂 """
+    DIURETICS_PERSISTENT = 457
+    """ 持续性利尿剂 """
+    SLEEPING_PILLS = 458
+    """ 睡眠药 """
+    SLEEPING_PILLS = 459
+    """ 排卵促进药 """
+    PUT_CONDOM = 471
+    """ 戴上避孕套 """
+    SAFE_CANDLES = 472
+    """ 低温蜡烛 """
+    URETHRAL_SWAB = 473
+    """ 尿道棉棒 """
+    NIPPLES_LOVE_EGG = 481
+    """ 乳头跳蛋 """
+    NIPPLE_CLAMP_ON = 482
+    """ 戴上乳头夹 """
+    CLIT_LOVE_EGG = 483
+    """ 阴蒂跳蛋 """
+    CLIT_CLAMP_ON = 484
+    """ 戴上阴蒂夹 """
+    ELECTRIC_MESSAGE_STICK = 485
+    """ 电动按摩棒 """
+    VIBRATOR_INSERTION = 486
+    """ V插入震动棒 """
+    BIG_VIBRATOR_INSERTION = 487
+    """ 加粗震动棒 """
+    HUGE_VIBRATOR_INSERTION = 488
+    """ 巨型震动棒 """
+    VIBRATOR_INSERTION_ANAL = 489
+    """ A插入震动棒 """
+    BIG_VIBRATOR_INSERTION_ANAL = 490
+    """ 加粗肛门震动棒 """
+    HUGE_VIBRATOR_INSERTION_ANAL = 491
+    """ 巨型肛门震动棒 """
+    CLYSTER = 492
+    """ 灌肠 """
+    ANAL_PLUG = 493
+    """ 肛塞 """
+    ANAL_BEADS = 494
+    """ 塞入肛门拉珠 """
+    CLYSTER_END = 495
+    """ 拔出肛塞 """
+    NIPPLE_CLAMP_OFF = 496
+    """ 取下乳头夹 """
+    CLIT_CLAMP_OFF = 497
+    """ 取下阴蒂夹 """
+    VIBRATOR_INSERTION_OFF = 498
+    """ 拔出震动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 499
+    """ 拔出肛门震动棒 """
+    ANAL_BEADS_OFF = 500
+    """ 拔出肛门拉珠 """
     NORMAL_SEX = 501
     """ 正常位 """
     BACK_SEX = 502
@@ -391,6 +543,19 @@ class Behavior:
     STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
 
+    MILKING_MACHINE = 601
+    """ 搾乳机 """
+    URINE_COLLECTOR = 602
+    """ 采尿器 """
+    BONDAGE = 603
+    """ 绳子 """
+    PATCH = 604
+    """ 眼罩 """
+    WHIP = 605
+    """ 鞭子 """
+    NEEDLE = 606
+    """ 针 """
+
 
 class StateMachine:
     """状态机id"""
@@ -415,34 +580,45 @@ class StateMachine:
     """ 去洗手间 """
     MOVE_TO_DR_OFFICE = 13
     """ 移动至博士办公室 """
-    MOVE_TO_MUSIC_ROOM = 14
-    """ 移动至音乐室 """
+    MOVE_TO_MODERN_MUSIC_ROOM = 14
+    """ 移动至现代音乐室 """
     MOVE_TO_PLAYER = 15
     """ 移动至玩家位置 """
-    CHAT_RAND_CHARACTER = 20
-    """ 和场景里随机对象聊天 """
-    STROKE_RAND_CHARACTER = 21
-    """ 和场景里随机对象身体接触 """
-    CHAT_TO_DR = 30
-    """ 和玩家聊天 """
-    STROKE_TO_DR = 31
-    """ 和玩家身体接触 """
-    MAKE_COFFEE_TO_DR = 32
-    """ 给玩家泡咖啡 """
-    MAKE_COFFEE_ADD_TO_DR = 33
-    """ 给玩家泡咖啡（加料） """
+    MOVE_TO_FOODSHOP = 16
+    """ 移动至食物商店（取餐区） """
+    MOVE_TO_DINING_HALL = 17
+    """ 移动至食堂 """
+    MOVE_TO_REST_ROOM = 18
+    """ 移动至休息室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
+    BUY_RAND_FOOD_AT_FOODSHOP = 41
+    """ 在取餐区购买随机食物 """
+    EAT_BAG_RAND_FOOD = 42
+    """ 食用背包内随机食物 """
+    PEE = 50
+    """ 解手 """
+
+    CHAT_TO_DR = 100
+    """ 和玩家聊天 """
+    STROKE_TO_DR = 101
+    """ 和玩家身体接触 """
+    MAKE_COFFEE_TO_DR = 102
+    """ 给玩家泡咖啡 """
+    MAKE_COFFEE_ADD_TO_DR = 103
+    """ 给玩家泡咖啡（加料） """
+
+    CHAT_RAND_CHARACTER = 200
+    """ 和场景里随机对象聊天 """
+    STROKE_RAND_CHARACTER = 201
+    """ 和场景里随机对象身体接触 """
+
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
     # MOVE_TO_RAND_CAFETERIA = 1
     # """ 移动到随机取餐区 """
-    # BUY_RAND_FOOD_AT_CAFETERIA = 2
-    # """ 在取餐区购买随机食物 """
     # MOVE_TO_RAND_RESTAURANT = 3
     # """ 移动至随机就餐区 """
-    # EAT_BAG_RAND_FOOD = 4
-    # """ 食用背包内随机食物 """
     # WEAR_CLEAN_UNDERWEAR = 6
     # """ 穿干净的上衣 """
     # WEAR_CLEAN_UNDERPANTS = 7
@@ -520,10 +696,26 @@ class Panel:
     """ 做饭面板 """
     FIND_CALL = 8
     """ 查询与召集面板 """
+    EJACULATION = 9
+    """ 射精面板 """
+    DIRTY = 10
+    """ 脏污面板 """
+    ITEM = 11
+    """ 道具面板 """
+    ASSISTANT = 12
+    """ 助理面板 """
 
 
 class Premise:
     """前提id"""
+
+    DEBUG_MODE_ON = "debug_mode_on"
+    """ 现在是debug模式 """
+    DEBUG_MODE_OFF = "debug_mode_off"
+    """ 现在不是debug模式 """
+
+    TO_DO = "to_do"
+    """ 未实装 """
 
     IS_PLAYER = "sys_0"
     """ 玩家触发的该指令 """
@@ -546,12 +738,18 @@ class Premise:
     NOT_H = "not_h"
     """ 当前不是H模式 """
     IS_FOLLOW = "is_follow"
-    """ 当前正跟随玩家 """
+    """ 当前正智能跟随玩家 """
     NOT_FOLLOW = "not_follow"
-    """ 当前没跟随玩家 """
+    """ 当前没智能跟随玩家 """
+    TARGET_IS_FOLLOW = "t_is_follow"
+    """ 交互对象当前正跟随玩家 """
+    TARGET_NOT_FOLLOW = "t_not_follow"
+    """ 交互对象当前没跟随玩家 """
 
     HIGH_1 = "high_1"
     """ 优先度为1的空白前提 """
+    HIGH_2 = "high_2"
+    """ 优先度为2的空白前提 """
     HIGH_5 = "high_5"
     """ 优先度为5的空白前提 """
     HIGH_10 = "high_10"
@@ -579,6 +777,37 @@ class Premise:
     """ 交互对象气力低于30% """
     TARGET_MP_HIGH = "t_mp_high"
     """ 交互对象气力高于70% """
+
+    SLEEP_GE_50 = "sleep_ge_50"
+    """ 困倦条≥50% """
+    SLEEP_LE_74 = "sleep_le_74"
+    """ 困倦条≤74%，全指令自由 """
+    SLEEP_GE_75 = "sleep_ge_75"
+    """ 困倦条≥75%，部分指令受限 """
+    SLEEP_LE_89 = "sleep_le_89"
+    """ 困倦条≤89%，自由活动的极限 """
+    SLEEP_GE_90 = "sleep_ge_90"
+    """ 困倦条≥90%，必须回去睡觉 """
+    SLEEP_100 = "sleep_100"
+    """ 困倦条100%，当场爆睡 """
+
+    URINATE_LE_79 = "urinate_le_79"
+    """ 尿意条≤79%，不需要排尿 """
+    URINATE_GE_80 = "urinate_ge_80"
+    """ 尿意条≥80%，需要排尿 """
+    TARGET_URINATE_LE_79 = "t_urinate_le_79"
+    """ 交互对象尿意条≤79%，不需要排尿 """
+    TARGET_URINATE_GE_80 = "t_urinate_ge_80"
+    """ 交互对象尿意条≥80%，需要排尿 """
+
+    HUNGER_LE_79 = "hunger_le_79"
+    """ 饥饿值≤79%，不需要吃饭 """
+    HUNGER_GE_80 = "hunger_ge_80"
+    """ 饥饿值≥80%，需要吃饭 """
+    TARGET_HUNGER_LE_79 = "t_hunger_le_79"
+    """ 交互对象饥饿值≤79%，不需要吃饭 """
+    TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
+    """ 交互对象饥饿值≥80%，需要吃饭 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 交互对象心情愉快 """
@@ -631,12 +860,28 @@ class Premise:
     """ 在厨房 """
     IN_DINING_HALL = "in_din"
     """ 在食堂 """
+    NOT_IN_DINING_HALL = "not_in_din"
+    """ 不在食堂 """
+    IN_FOOD_SHOP = "in_food_shop"
+    """ 在食物商店（取餐区） """
+    NOT_IN_FOOD_SHOP = "not_in_food_shop"
+    """ 不在食物商店（取餐区） """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
+    IN_TOILET_MAN = "in_toilet_man"
+    """ 在男士洗手间 """
+    IN_TOILET_FEMALE = "in_toilet_female"
+    """ 在女士洗手间 """
+    NOT_IN_TOILET = "not_in_toilet"
+    """ 不在洗手间 """
+    IN_REST_ROOM = "in_restroom"
+    """ 在休息室中 """
+    NOT_IN_REST_ROOM = "not_in_restroom"
+    """ 不在休息室中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -653,6 +898,11 @@ class Premise:
     """ 时间:清晨（4点~8点） """
     TIME_MOON = "time_moon"
     """ 时间:中午（10点~14点） """
+    EAT_TIME = "eat_time"
+    """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
+    SLEEP_TIME = "sleep_time"
+    """ 睡觉时间（晚上10点到早上6点） """
+
 
     COOK_1 = "cook_1"
     """ 自身料理技能==1 """
@@ -682,6 +932,11 @@ class Premise:
     """ 自身音乐技能>=3 """
     MUSIC_GE_5 = "music_ge_5"
     """ 自身音乐技能>=5 """
+    TECHNIQUE_GE_3 = "technique_ge_3"
+    """ 自身技巧技能>=3 """
+    TECHNIQUE_GE_5 = "technique_ge_5"
+    """ 自身技巧技能>=5 """
+
 
     TARGET_INTIMACY_8 = "t_intimacy_8"
     """ 交互对象亲密==8 """
@@ -705,8 +960,12 @@ class Premise:
     """ 交互对象料理技能==4 """
     TARGET_COOK_LE_1 = "t_cook_le_1"
     """ 交互对象料理技能<=1 """
+    TARGET_COOK_LE_3 = "t_cook_le_3"
+    """ 交互对象料理技能<=3 """
     TARGET_COOK_GE_3 = "t_cook_ge_3"
     """ 交互对象料理技能>=3 """
+    TARGET_COOK_G_3 = "t_cook_g_3"
+    """ 交互对象料理技能>3 """
     TARGET_COOK_GE_5 = "t_cook_ge_5"
     """ 交互对象料理技能>=5 """
     TARGET_MUSIC_1 = "t_music_1"
@@ -723,6 +982,20 @@ class Premise:
     """ 交互对象音乐技能>=3 """
     TARGET_MUSIC_GE_5 = "t_music_ge_5"
     """ 交互对象音乐技能>=5 """
+    TARGET_TECHNIQUE_GE_3 = "t_technique_ge_3"
+    """ 交互对象技巧技能>=3 """
+    TARGET_TECHNIQUE_GE_5 = "t_technique_ge_5"
+    """ 交互对象技巧技能>=5 """
+
+    KISS_0 = "kiss_0"
+    """ 自身亲吻经验==0 """
+    KISS_GE_10 = "kiss_ge_10"
+    """ 自身亲吻经验>=10 """
+    TARGET_KISS_0 = "t_kiss_0"
+    """ 交互对象亲吻经验==0 """
+    TARGET_KISS_GE_10 = "t_kiss_ge_10"
+    """ 交互对象亲吻经验>=10 """
+
 
     TARGET_NOT_FALL = "not_fall"
     """ 交互对象无陷落素质 """
@@ -933,6 +1206,115 @@ class Premise:
     """ 前一指令为V性交_指令触发用 """
     LAST_CMD_A_SEX = "last_cmd_a_sex"
     """ 前一指令为A性交_指令触发用 """
+    LAST_CMD_U_SEX = "last_cmd_u_sex"
+    """ 前一指令为U性交_指令触发用 """
+
+    HAVE_FOOD = "have_food"
+    """ 拥有食物 """
+    NOT_HAVE_FOOD = "not_have_food"
+    """ 未拥有食物 """
+    HAVE_CAMERA = "have_camera"
+    """ 已持有相机 """
+    HAVE_VIDEO_RECORDER = "have_video_recorder"
+    """ 已持有录像机 """
+
+    HAVE_NIPPLE_CLAMP = "have_nipple_clamp"
+    """ 已持有乳头夹 """
+    TARGET_NOW_NIPPLE_CLAMP = "target_now_nipple_clamp"
+    """ 交互对象正在乳头夹 """
+    TARGET_NOT_NIPPLE_CLAMP = "target_not_nipple_clamp"
+    """ 交互对象没有在乳头夹 """
+    HAVE_LOVE_EGG = "have_love_egg"
+    """ 已持有跳蛋 """
+    HAVE_CLIT_CLAMP = "have_clit_clamp"
+    """ 已持有阴蒂夹 """
+    TARGET_NOW_CLIT_CLAMP = "target_now_clit_clamp"
+    """ 交互对象正在阴蒂夹 """
+    TARGET_NOT_CLIT_CLAMP = "target_not_clit_clamp"
+    """ 交互对象没有在阴蒂夹 """
+    TARGET_NOW_ANAL_BEADS = "target_now_anal_beads"
+    """ 交互对象正在肛门拉珠 """
+    TARGET_NOT_ANAL_BEADS = "target_not_anal_beads"
+    """ 交互对象没有在肛门拉珠 """
+    HAVE_ELECTRIC_MESSAGE_STICK = "have_electric_message_stick"
+    """ 已持有电动按摩棒 """
+    HAVE_VIBRATOR = "have_vibrator"
+    """ 已持有震动棒 """
+    TARGET_NOW_VIBRATOR_INSERTION = "target_now_vibrator_insertion"
+    """ 交互对象V正插入震动棒 """
+    TARGET_NOT_VIBRATOR_INSERTION = "target_not_vibrator_insertion"
+    """ 交互对象V没有在插入震动棒 """
+    TARGET_NOW_VIBRATOR_INSERTION_ANAL = "target_now_vibrator_insertion_anal"
+    """ 交互对象A正插入震动棒 """
+    TARGET_NOT_VIBRATOR_INSERTION_ANAL = "target_not_vibrator_insertion"
+    """ 交互对象A没有在插入震动棒 """
+    HAVE_MILKING_MACHINE = "have_milking_machine"
+    """ 已持有搾乳机 """
+    HAVE_URINE_COLLECTOR = "have_urine_collector"
+    """ 已持有采尿器 """
+    HAVE_BONDAGE = "have_bondage"
+    """ 已持有绳子 """
+    HAVE_PATCH = "have_patch"
+    """ 已持有眼罩 """
+    HAVE_BIG_VIBRATOR = "have_big_vibrator"
+    """ 已持有加粗震动棒 """
+    HAVE_HUGE_VIBRATOR = "have_huge_vibrator"
+    """ 已持有巨型震动棒 """
+    HAVE_CLYSTER_TOOLS = "have_clyster_tools"
+    """ 已持有灌肠套装 """
+    HAVE_ANAL_BEADS = "have_anal_beads"
+    """ 已持有拉珠 """
+    HAVE_ANAL_PLUG = "have_anal_plug"
+    """ 已持有肛塞 """
+    HAVE_WHIP = "have_whip"
+    """ 已持有鞭子 """
+    HAVE_NEEDLE = "have_needle"
+    """ 已持有针 """
+    HAVE_COLLAR = "have_collar"
+    """ 已持有项圈 """
+
+    HAVE_CONDOM = "have_condom"
+    """ 已持有避孕套 """
+    HAVE_SAFE_CANDLES = "have_safe_candles"
+    """ 已持有低温蜡烛 """
+    HAVE_COTTON_STICK = "have_cotton_stick"
+    """ 已持有无菌棉签 """
+
+    HAVE_BIRTH_CONTROL_PILLS_BEFORE = "have_birth_control_pills_before"
+    """ 已持有事前避孕药 """
+    HAVE_BIRTH_CONTROL_PILLS_AFTER = "have_birth_control_pills_after"
+    """ 已持有事后避孕药 """
+    HAVE_BODY_LUBRICANT = "have_body_lubricant"
+    """ 已持有润滑液 """
+    HAVE_PHILTER = "have_philter"
+    """ 已持有媚药 """
+    HAVE_ENEMAS = "have_enemas"
+    """ 已持有灌肠液 """
+    HAVE_DIURETICS_ONCE = "have_diuretics_once"
+    """ 已持有一次性利尿剂 """
+    HAVE_DIURETICS_PERSISTENT = "have_diuretics_persistent"
+    """ 已持有持续性利尿剂 """
+    HAVE_SLEEPING_PILLS = "have_sleeping_pills"
+    """ 已持有睡眠药 """
+    HAVE_CLOMID = "have_clomid"
+    """ 已持有排卵促进药 """
+
+    A_SHIT = "a_shit"
+    """ 肠内脏污 """
+    ENEMA = "enema"
+    """ 正在灌肠中（含全种类灌肠） """
+    NOT_ENEMA = "not_enema"
+    """ 非灌肠中（含全种类灌肠） """
+    ENEMA_END = "enema_end"
+    """ 已灌肠（含全种类灌肠） """
+    NORMAL_ENEMA = "normal_enema"
+    """ 普通灌肠中 """
+    SEMEN_ENEMA = "semen_enema"
+    """ 精液灌肠中 """
+    NORMAL_ENEMA_END = "normal_enema_end"
+    """ 已普通灌肠 """
+    SEMEN_ENEMA_END = "semen_enema_end"
+    """ 已精液灌肠 """
 
 
     HYPOSTHENIA = "83"
@@ -953,10 +1335,6 @@ class Premise:
     """ 处于晚餐时间段 """
     HUNGER = "5"
     """ 处于饥饿状态 """
-    HAVE_FOOD = "6"
-    """ 拥有食物 """
-    NOT_HAVE_FOOD = "7"
-    """ 未拥有食物 """
     HAVE_DRAW_ITEM = "10"
     """ 拥有绘画类道具 """
     HAVE_SHOOTING_ITEM = "11"
@@ -1156,6 +1534,9 @@ class Premise:
 class BehaviorEffect:
     """行为结算效果函数"""
 
+    NOTHING = 999
+    """ 什么都没有的空结算 """
+
     ADD_SMALL_HIT_POINT = 0
     """ 增加少量体力 """
     ADD_SMALL_MANA_POINT = 1
@@ -1238,6 +1619,51 @@ class BehaviorEffect:
     """ 自身增加少量Ｐ快 """
     DOWN_ADD_SMALL_LEARN = 71
     """ 双方增加少量习得（若没有交互对象则仅增加自己） """
+
+    TARGET_VIBRATOR_ON = 76
+    """ 交互对象插入V震动棒 """
+    TARGET_VIBRATOR_OFF = 77
+    """ 交互对象拔出V震动棒 """
+    TARGET_ANAL_VIBRATOR_ON = 78
+    """ 交互对象插入A震动棒 """
+    TARGET_ANAL_VIBRATOR_OFF = 79
+    """ 交互对象拔出A震动棒 """
+
+    USE_BODY_LUBRICANT = 80
+    """ 使用了一个润滑液 """
+    TARGET_ADD_HUGE_LUBRICATION = 81
+    """ 交互对象增加大量润滑（润滑液） """
+    USE_PHILTER = 82
+    """ 使用了一个媚药 """
+    TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 83
+    """ 交互对象增加大量欲情和屈服（媚药） """
+    USE_ENEMAS = 84
+    """ 使用了一个灌肠液 """
+    TARGET_ENEMA = 85
+    """ 交互对象A灌肠并增加中量润滑 """
+    TARGET_ENEMA_END = 86
+    """ 交互对象结束A灌肠并增加中量润滑 """
+    TARGET_NIPPLE_CLAMP_ON = 87
+    """ 交互对象戴上乳头夹 """
+    TARGET_NIPPLE_CLAMP_OFF = 88
+    """ 交互对象取下乳头夹 """
+    TARGET_CLIT_CLAMP_ON = 89
+    """ 交互对象戴上阴蒂夹 """
+    TARGET_CLIT_CLAMP_OFF = 90
+    """ 交互对象取下阴蒂夹 """
+    TARGET_ANAL_BEADS_ON = 91
+    """ 交互对象塞入肛门拉珠 """
+    TARGET_ANAL_BEADS_OFF = 92
+    """ 交互对象拔出肛门拉珠 """
+    USE_DIURETICS_ONCE = 93
+    """ 使用了一个一次性利尿剂 """
+    USE_DIURETICS_PERSISTENT = 94
+    """ 使用了一个持续性利尿剂 """
+    TARGET_ADD_URINATE = 95
+    """ 交互对象尿意值全满 """
+    TARGET_DIURETICS_ON = 96
+    """ 交互对象获得利尿剂状态 """
+
     TALK_ADD_ADJUST = 100
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 101
@@ -1248,6 +1674,8 @@ class BehaviorEffect:
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
+    KONWLEDGE_ADD_MONEY = 105
+    """ 根据自己（再加上交互对象的）学识获得少量金钱 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -1272,6 +1700,17 @@ class BehaviorEffect:
     """ 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
     HIGH_OBSCENITY_FAILED_ADJUST = 123
     """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
+    SLEEP_POINT_DOWN = 124
+    """ 睡觉时降低困倦值 """
+    URINATE_POINT_DOWN = 125
+    """ 尿意值归零 """
+    TARGET_URINATE_POINT_DOWN = 126
+    """ 交互对象尿意值归零 """
+    HUNGER_POINT_DOWN = 127
+    """ 饥饿值归零 """
+    TARGET_HUNGER_POINT_DOWN = 128
+    """ 交互对象饥饿值归零 """
+
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 交互对象增加1N经验 """
     TARGET_ADD_1_B_EXPERIENCE = 201
@@ -1376,6 +1815,8 @@ class BehaviorEffect:
     """ 交互对象增加1异常经验 """
     TARGET_ADD_1_Axillajob_EXPERIENCE = 262
     """ 交互对象增加1腋交经验 """
+    TARGET_ADD_1_Enema_EXPERIENCE = 263
+    """ 交互对象增加1灌肠经验 """
     TARGET_ADD_1_UnconsciouslyN_EXPERIENCE = 270
     """ 交互对象增加1无意识N经验 """
     TARGET_ADD_1_UnconsciouslyB_EXPERIENCE = 271
@@ -1399,7 +1840,7 @@ class BehaviorEffect:
     TARGET_ADD_1_Combat_EXPERIENCE = 281
     """ 交互对象增加1战斗经验 """
     TARGET_ADD_1_Learn_EXPERIENCE = 282
-    """ 交互对象增加1学习经验 """
+    """ 交互对象增加1学识经验 """
     TARGET_ADD_1_Cooking_EXPERIENCE = 283
     """ 交互对象增加1料理经验 """
     TARGET_ADD_1_Date_EXPERIENCE = 284
@@ -1439,7 +1880,7 @@ class BehaviorEffect:
     ADD_1_Combat_EXPERIENCE = 314
     """ 增加1战斗经验 """
     ADD_1_Learn_EXPERIENCE = 315
-    """ 增加1学习经验 """
+    """ 增加1学识经验 """
     ADD_1_Cooking_EXPERIENCE = 316
     """ 增加1料理经验 """
     ADD_1_Date_EXPERIENCE = 317
@@ -1452,6 +1893,8 @@ class BehaviorEffect:
     """ 增加1插入经验 """
     ADD_1_Insert_COMMAND = 321
     """ 增加1指挥经验 """
+    Both_ADD_1_Learn_EXPERIENCE = 350
+    """ 自己（和对方一起）增加1学识经验 """
 
 class SecondBehavior:
     """二段结算行为函数"""
@@ -1547,8 +1990,32 @@ class SecondBehavior:
     FIRST_A_SEX = 1052
     """ 结算A处女 """
 
+    NIPPLE_CLAMP = 1100
+    """ 结算乳头夹 """
+    CLIT_CLAMP = 1101
+    """ 结算阴蒂夹 """
+    VIBRATOR_INSERTION = 1102
+    """ 结算震动棒 """
+    VIBRATOR_INSERTION_ANAL = 1103
+    """ 结算肛门振动棒 """
+    MILKING_MACHINE = 1104
+    """ 结算搾乳机 """
+    URINE_COLLECTOR = 1105
+    """ 结算采尿器 """
+    PATCH = 1106
+    """ 结算眼罩 """
+    ANAL_BEADS = 1107
+    """ 结算肛门拉珠 """
+    DIURETICS = 1108
+    """ 结算利尿剂 """
+    SLEEPING_PILLS = 1109
+    """ 结算睡眠药 """
+
+
 class SecondEffect:
     """二段结算效果函数"""
+
+
 
     ADD_1_NClimax_EXPERIENCE = 210
     """ 增加1N绝顶经验 """
@@ -1574,7 +2041,164 @@ class SecondEffect:
     """ 增加1喷乳经验 """
     ADD_1_Peeing_EXPERIENCE = 223
     """ 增加1放尿经验 """
-
+    TARGET_ADD_1_Cums_EXPERIENCE = 224
+    """ 交互对象增加1精液经验 """
+    TARGET_ADD_SMALL_LUBRICATION = 225
+    """ 交互对象增加少量润滑 """
+    TARGET_ADD_MIDDLE_LUBRICATION = 226
+    """ 交互对象增加中量润滑 """
+    TARGET_ADD_LARGE_LUBRICATION = 227
+    """ 交互对象增加大量润滑 """
+    ADD_SMALL_LUBRICATION = 228
+    """ 增加少量润滑 """
+    ADD_MIDDLE_LUBRICATION = 229
+    """ 增加中量润滑 """
+    ADD_LARGE_LUBRICATION = 230
+    """ 增加大量润滑 """
+    DOWN_SMALL_HIT_POINT = 231
+    """ 减少少量体力 """
+    DOWN_SMALL_MANA_POINT = 232
+    """ 减少少量气力 """
+    DOWN_MIDDLE_HIT_POINT = 233
+    """ 减少中量体力 """
+    DOWN_MIDDLE_MANA_POINT = 234
+    """ 减少中量气力 """
+    DOWN_LARGE_HIT_POINT = 235
+    """ 减少大量体力 """
+    DOWN_LARGE_MANA_POINT = 236
+    """ 减少大量气力 """
+    ADD_SMALL_N_FEEL = 237
+    """ 增加少量Ｎ快（N感补正） """
+    ADD_SMALL_B_FEEL = 238
+    """ 增加少量Ｂ快（B感补正） """
+    ADD_SMALL_C_FEEL = 239
+    """ 增加少量Ｃ快（C感补正） """
+    ADD_SMALL_P_FEEL = 240
+    """ 增加少量Ｐ快（P感补正） """
+    ADD_SMALL_V_FEEL = 241
+    """ 增加少量Ｖ快（V感补正） """
+    ADD_SMALL_A_FEEL = 242
+    """ 增加少量Ａ快（A感补正） """
+    ADD_SMALL_U_FEEL = 243
+    """ 增加少量Ｕ快（U感补正） """
+    ADD_SMALL_W_FEEL = 244
+    """ 增加少量Ｗ快（W感补正） """
+    ADD_MIDDLE_N_FEEL = 245
+    """ 增加中量Ｎ快（N感补正） """
+    ADD_MIDDLE_B_FEEL = 246
+    """ 增加中量Ｂ快（B感补正） """
+    ADD_MIDDLE_C_FEEL = 247
+    """ 增加中量Ｃ快（C感补正） """
+    ADD_MIDDLE_P_FEEL = 248
+    """ 增加中量Ｐ快（P感补正） """
+    ADD_MIDDLE_V_FEEL = 249
+    """ 增加中量Ｖ快（V感补正） """
+    ADD_MIDDLE_A_FEEL = 250
+    """ 增加中量Ａ快（A感补正） """
+    ADD_MIDDLE_U_FEEL = 251
+    """ 增加中量Ｕ快（U感补正） """
+    ADD_MIDDLE_W_FEEL = 252
+    """ 增加中量Ｗ快（W感补正） """
+    ADD_LARGE_N_FEEL = 253
+    """ 增加大量Ｎ快（N感补正） """
+    ADD_LARGE_B_FEEL = 254
+    """ 增加大量Ｂ快（B感补正） """
+    ADD_LARGE_C_FEEL = 255
+    """ 增加大量Ｃ快（C感补正） """
+    ADD_LARGE_P_FEEL = 256
+    """ 增加大量Ｐ快（P感补正） """
+    ADD_LARGE_V_FEEL = 257
+    """ 增加大量Ｖ快（V感补正） """
+    ADD_LARGE_A_FEEL = 258
+    """ 增加大量Ａ快（A感补正） """
+    ADD_LARGE_U_FEEL = 259
+    """ 增加大量Ｕ快（U感补正） """
+    ADD_LARGE_W_FEEL = 260
+    """ 增加大量Ｗ快（W感补正） """
+    ADD_SMALL_LUBRICATION_PLUS = 261
+    """ 增加少量润滑（欲望补正） """
+    ADD_SMALL_LEARN = 262
+    """ 增加少量习得（技巧补正） """
+    ADD_SMALL_RESPECT = 263
+    """ 增加少量恭顺（顺从补正） """
+    ADD_SMALL_FRIENDLY = 264
+    """ 增加少量好意（亲密补正） """
+    ADD_SMALL_DESIRE = 265
+    """ 增加少量欲情（欲望补正） """
+    ADD_SMALL_HAPPY = 266
+    """ 增加少量快乐（快乐刻印补正） """
+    ADD_SMALL_LEAD = 267
+    """ 增加少量先导（侍奉补正） """
+    ADD_SMALL_SUBMIT = 268
+    """ 增加少量屈服（屈服刻印补正） """
+    ADD_SMALL_SHY = 269
+    """ 增加少量羞耻（露出补正） """
+    ADD_SMALL_PAIN = 270
+    """ 增加少量苦痛（苦痛刻印补正） """
+    ADD_SMALL_TERROR = 271
+    """ 增加少量恐怖（恐怖刻印补正） """
+    ADD_SMALL_DEPRESSION = 272
+    """ 增加少量抑郁 """
+    ADD_SMALL_DISGUST = 273
+    """ 增加少量反感（反发刻印补正） """
+    ADD_MIDDLE_LUBRICATION_PLUS = 274
+    """ 增加中量润滑（欲望补正） """
+    ADD_MIDDLE_LEARN = 275
+    """ 增加中量习得（技巧补正） """
+    ADD_MIDDLE_RESPECT = 276
+    """ 增加中量恭顺（顺从补正） """
+    ADD_MIDDLE_FRIENDLY = 277
+    """ 增加中量好意（亲密补正） """
+    ADD_MIDDLE_DESIRE = 278
+    """ 增加中量欲情（欲望补正） """
+    ADD_MIDDLE_HAPPY = 279
+    """ 增加中量快乐（快乐刻印补正） """
+    ADD_MIDDLE_LEAD = 280
+    """ 增加中量先导（侍奉补正） """
+    ADD_MIDDLE_SUBMIT = 281
+    """ 增加中量屈服（屈服刻印补正） """
+    ADD_MIDDLE_SHY = 282
+    """ 增加中量羞耻（露出补正） """
+    ADD_MIDDLE_PAIN = 283
+    """ 增加中量苦痛（苦痛刻印补正） """
+    ADD_MIDDLE_TERROR = 284
+    """ 增加中量恐怖（恐怖刻印补正） """
+    ADD_MIDDLE_DEPRESSION = 285
+    """ 增加中量抑郁 """
+    ADD_MIDDLE_DISGUST = 286
+    """ 增加中量反感（反发刻印补正） """
+    ADD_LARGE_LUBRICATION_PLUS = 287
+    """ 增加大量润滑（欲望补正） """
+    ADD_LARGE_LEARN = 288
+    """ 增加大量习得（技巧补正） """
+    ADD_LARGE_RESPECT = 289
+    """ 增加大量恭顺（顺从补正） """
+    ADD_LARGE_FRIENDLY = 290
+    """ 增加大量好意（亲密补正） """
+    ADD_LARGE_DESIRE = 291
+    """ 增加大量欲情（欲望补正） """
+    ADD_LARGE_HAPPY = 292
+    """ 增加大量快乐（快乐刻印补正） """
+    ADD_LARGE_LEAD = 293
+    """ 增加大量先导（侍奉补正） """
+    ADD_LARGE_SUBMIT = 294
+    """ 增加大量屈服（屈服刻印补正） """
+    ADD_LARGE_SHY = 295
+    """ 增加大量羞耻（露出补正） """
+    ADD_LARGE_PAIN = 296
+    """ 增加大量苦痛（苦痛刻印补正） """
+    ADD_LARGE_TERROR = 297
+    """ 增加大量恐怖（恐怖刻印补正） """
+    ADD_LARGE_DEPRESSION = 298
+    """ 增加大量抑郁 """
+    ADD_LARGE_DISGUST = 299
+    """ 增加大量反感（反发刻印补正） """
+    ADD_LARGE_PAIN_FIRST_SEX = 400
+    """ 增加巨量苦痛（破处修正） """
+    ADD_LARGE_PAIN_FIRST_A_SEX = 401
+    """ 增加巨量苦痛（A破处修正） """
+    ADD_URINATE = 402
+    """ 增加尿意（持续性利尿剂） """
 
 
 #旧结算存档#
@@ -1642,12 +2266,6 @@ class Instruct:
     """ 收起内裤 """
     ASK_DATE = 0
     """ 邀请约会 """
-    CONFESSION = 0
-    """ 告白 """
-    GIVE_NECKLACE = 0
-    """ 戴上项圈 """
-    DO_H = 0
-    """ 邀请H """
     END_H = 0
     """ H结束 """
     DRINK_ALCOHOL = 0
@@ -1656,6 +2274,10 @@ class Instruct:
     # """ 唱歌 """
     # PLAY_INSTRUMENT = 0
     # """ 演奏乐器 """
+    PEE = 0
+    """ 解手 """
+
+
     #工作#
     OFFICIAL_WORK = 0
     """ 处理公务 """
@@ -1663,6 +2285,9 @@ class Instruct:
     """ 指挥作战 """
     LISTEN_MISSION = 0
     """ 听取委托 """
+    APPOINTED_ASSISTANT = 0
+    """ 指派助理 """
+
     #猥亵#
     TOUCH_HEAD = 0
     """ 摸头 """
@@ -1700,6 +2325,12 @@ class Instruct:
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    DO_H = 0
+    """ 邀请H """
+    CONFESSION = 0
+    """ 告白 """
+    GIVE_NECKLACE = 0
+    """ 戴上项圈 """
     #性爱#
     MAKING_OUT = 0
     """ 身体爱抚 """
@@ -1757,32 +2388,68 @@ class Instruct:
     """ 深喉插入 """
     SIXTY_NINE = 0
     """ 六九式 """
-    BIRTH_CONTROL_PILLS = 0
-    """ 避孕药 """
     BODY_LUBRICANT = 0
     """ 润滑液 """
+    BIRTH_CONTROL_PILLS = 0
+    """ 避孕药 """
     PHILTER = 0
     """ 媚药 """
     ENEMAS = 0
     """ 灌肠液 """
-    DIURETICS = 0
-    """ 利尿剂 """
+    DIURETICS_ONCE = 0
+    """ 一次性利尿剂 """
+    DIURETICS_PERSISTENT = 0
+    """ 持续性利尿剂 """
     SLEEPING_PILLS = 0
     """ 睡眠药 """
-    NIPPLE_CLAMP = 0
-    """ 乳头夹 """
+    CLOMID = 0
+    """ 排卵促进药 """
+    PUT_CONDOM = 0
+    """ 戴上避孕套 """
+    SAFE_CANDLES = 0
+    """ 滴蜡 """
+    URETHRAL_SWAB = 0
+    """ 尿道棉棒 """
     NIPPLES_LOVE_EGG = 0
     """ 乳头跳蛋 """
-    CLIT_CLAMP = 0
-    """ 阴蒂夹 """
+    NIPPLE_CLAMP_ON = 0
+    """ 戴上乳头夹 """
     CLIT_LOVE_EGG = 0
     """ 阴蒂跳蛋 """
+    CLIT_CLAMP_ON = 0
+    """ 戴上阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 0
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 0
-    """ 震动棒 """
+    """ 插入震动棒 """
+    BIG_VIBRATOR_INSERTION = 0
+    """ 加粗震动棒 """
+    HUGE_VIBRATOR_INSERTION = 0
+    """ 巨型震动棒 """
     VIBRATOR_INSERTION_ANAL = 0
-    """ 肛门振动棒 """
+    """ 肛门插入振动棒 """
+    BIG_VIBRATOR_INSERTION_ANAL = 0
+    """ 加粗肛门震动棒 """
+    HUGE_VIBRATOR_INSERTION_ANAL = 0
+    """ 巨型肛门震动棒 """
+    CLYSTER = 0
+    """ 灌肠 """
+    ANAL_PLUG = 0
+    """ 肛塞 """
+    ANAL_BEADS = 0
+    """ 塞入肛门拉珠 """
+    CLYSTER_END = 0
+    """ 拔出肛塞 """
+    NIPPLE_CLAMP_OFF = 0
+    """ 取下乳头夹 """
+    CLIT_CLAMP_OFF = 0
+    """ 取下阴蒂夹 """
+    VIBRATOR_INSERTION_OFF = 0
+    """ 拔出振动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 0
+    """ 拔出肛门振动棒 """
+    ANAL_BEADS_OFF = 0
+    """ 拔出肛门拉珠 """
     MILKING_MACHINE = 0
     """ 搾乳机 """
     URINE_COLLECTOR = 0
@@ -1791,8 +2458,10 @@ class Instruct:
     """ 绳子 """
     PATCH = 0
     """ 眼罩 """
-    PUT_CONDOM = 0
-    """ 避孕套 """
+    WHIP = 0
+    """ 鞭子 """
+    NEEDLE = 0
+    """ 针 """
     NORMAL_SEX = 0
     """ 正常位 """
     BACK_SEX = 0
@@ -1833,8 +2502,6 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
-    URETHRAL_SWAB = 0
-    """ 尿道棉棒 """
     PISSING_PLAY = 0
     """ 放尿play """
     URETHRAL_INSERTION = 0
@@ -1874,6 +2541,12 @@ class Instruct:
     """ 自身属性升级 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
+    SEE_DIRTY = 0
+    """ 显示污浊情况 """
+    DEBUG_MODE_ON = 0
+    """ 开启debug模式 """
+    DEBUG_MODE_OFF = 0
+    """ 关闭debug模式 """
 
 
 
@@ -1921,3 +2594,8 @@ settle_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色行为结算处理器 处理器id:处理器 """
 settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
+
+instruct_en2cn = {"VIBRATOR_INSERTION" : "震动棒","VIBRATOR_INSERTION_ANAL" : "肛门震动棒","NORMAL_SEX" : "正常位","BACK_SEX" : "背后位","RIDING_SEX" : "骑乘位","FACE_SEAT_SEX" : "对面座位","BACK_SEAT_SEX" : "背面座位","FACE_STAND_SEX" : "对面立位","BACK_STAND_SEX" : "背面立位","NORMAL_ANAL_SEX" : "正常位肛交","BACK_ANAL_SEX" : "后背位肛交","RIDING_ANAL_SEX" : "骑乘位肛交","FACE_SEAT_ANAL_SEX" : "对面座位肛交","BACK_SEAT_ANAL_SEX" : "背面座位肛交","FACE_STAND_ANAL_SEX" : "对面立位肛交","BACK_STAND_ANAL_SEX" : "背面立位肛交"}
+
+
+# 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛

@@ -83,6 +83,42 @@ def handle_in_restaurant(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.EAT_TIME)
+def handle_eat_time(character_id: int) -> int:
+    """
+    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上17~18点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    # print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
+    if character_data.behavior.start_time.hour in {7,8,12,13,17,18}:
+        # print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.SLEEP_TIME)
+def handle_sleep_time(character_id: int) -> int:
+    """
+    睡觉时间（晚上10点到早上6点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
+        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
+        return (now_hour-21) *100
+    return 0
+
 @add_premise(constant.Premise.IN_BREAKFAST_TIME)
 def handle_in_breakfast_time(character_id: int) -> int:
     """
@@ -94,7 +130,10 @@ def handle_in_breakfast_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 4) * 100
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour in {7,8}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.IN_LUNCH_TIME)
@@ -108,7 +147,10 @@ def handle_in_lunch_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 7) * 100
+    # return (now_time == 7) * 100
+    if character_data.behavior.start_time.hour in {12,13}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.IN_DINNER_TIME)
@@ -122,7 +164,10 @@ def handle_in_dinner_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
-    return (now_time == 9) * 100
+    # return (now_time == 9) * 100
+    if character_data.behavior.start_time.hour in {17,18}:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.HUNGER)
@@ -170,7 +215,7 @@ def handle_not_have_food(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     food_index = 1
     for food_id in character_data.food_bag:
-        if character_data.food_bag[food_id].eat and 27 in character_data.food_bag[food_id].feel:
+        if character_data.food_bag[food_id]:
             return 0
     return food_index
 
@@ -442,6 +487,60 @@ def handle_in_dining_hall(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_DINING_HALL)
+def handle_not_in_dining_hall(character_id: int) -> int:
+    """
+    校验角色是否不在食堂中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Dining_hall":
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.IN_FOOD_SHOP)
+def handle_in_food_shop(character_id: int) -> int:
+    """
+    校验角色是否在食物商店（取餐区）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Food_Shop":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_FOOD_SHOP)
+def handle_not_in_food_shop(character_id: int) -> int:
+    """
+    校验角色是否不在食物商店（取餐区）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Food_Shop":
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.IN_DR_OFFICE)
 def handle_in_dr_office(character_id: int) -> int:
     """
@@ -486,6 +585,97 @@ def handle_not_in_dormitory(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
     return now_position != character_data.dormitory
+
+
+@add_premise(constant.Premise.IN_TOILET_MAN)
+def handle_in_toilet_man(character_id: int) -> int:
+    """
+    校验角色是否在男士洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Toilet_Male":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_TOILET_FEMALE)
+def handle_in_toilet_female(character_id: int) -> int:
+    """
+    校验角色是否在女士洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Toilet_Female":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_TOILET)
+def handle_not_in_toilet(character_id: int) -> int:
+    """
+    校验角色是否不在洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag not in ["Toilet_Male","Toilet_Female"]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_REST_ROOM)
+def handle_in_rest_room(character_id: int) -> int:
+    """
+    校验角色是否在休息室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Rest_Room":
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_REST_ROOM)
+def handle_not_in_rest_room(character_id: int) -> int:
+    """
+    校验角色是否不在休息室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Rest_Room":
+        return 0
+    return 1
+
 
 
 @add_premise(constant.Premise.HAVE_MOVED)
@@ -634,6 +824,18 @@ def handle_high_1(character_id: int) -> int:
     int -- 权重
     """
     return 1
+
+
+@add_premise(constant.Premise.HIGH_2)
+def handle_high_2(character_id: int) -> int:
+    """
+    优先度为2的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 2
 
 
 @add_premise(constant.Premise.HIGH_5)
@@ -849,6 +1051,114 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant.Premise.SLEEP_GE_50)
+def handle_sleep_ge_50(character_id: int) -> int:
+    """
+    困倦条≥50%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 0.5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_LE_74)
+def handle_sleep_le_74(character_id: int) -> int:
+    """
+    困倦条≤74%，全指令自由
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value <= 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_GE_75)
+def handle_sleep_ge_75(character_id: int) -> int:
+    """
+    困倦条≥75%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value > 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_LE_89)
+def handle_sleep_le_89(character_id: int) -> int:
+    """
+    困倦条≤89%，自由活动的极限
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value <= 0.89:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_GE_90)
+def handle_sleep_ge_90(character_id: int) -> int:
+    """
+    困倦条≥90%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value > 0.89:
+        return character_data.sleep_point * 5
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.SLEEP_100)
+def handle_sleep_100(character_id: int) -> int:
+    """
+    困倦条100%，当场爆睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.sleep_point / 160
+    if value >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
@@ -983,7 +1293,7 @@ def handle_cook_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 1:
+    if character_data.ability[43] == 1:
         return 1
     return 0
 
@@ -998,7 +1308,7 @@ def handle_cook_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 2:
+    if character_data.ability[43] == 2:
         return 1
     return 0
 
@@ -1013,7 +1323,7 @@ def handle_cook_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 3:
+    if character_data.ability[43] == 3:
         return 1
     return 0
 
@@ -1028,7 +1338,7 @@ def handle_cook_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] == 4:
+    if character_data.ability[43] == 4:
         return 1
     return 0
 
@@ -1043,7 +1353,7 @@ def handle_cook_le_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] <= 1:
+    if character_data.ability[43] <= 1:
         return 1
     return 0
 
@@ -1058,7 +1368,7 @@ def handle_cook_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] >= 3:
+    if character_data.ability[43] >= 3:
         return 1
     return 0
 
@@ -1073,7 +1383,7 @@ def handle_cook_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[28] >= 5:
+    if character_data.ability[43] >= 5:
         return 1
     return 0
 
@@ -1088,7 +1398,7 @@ def handle_music_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 1:
+    if character_data.ability[44] == 1:
         return 1
     return 0
 
@@ -1103,7 +1413,7 @@ def handle_music_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 2:
+    if character_data.ability[44] == 2:
         return 1
     return 0
 
@@ -1118,7 +1428,7 @@ def handle_music_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 3:
+    if character_data.ability[44] == 3:
         return 1
     return 0
 
@@ -1133,7 +1443,7 @@ def handle_music_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] == 4:
+    if character_data.ability[44] == 4:
         return 1
     return 0
 
@@ -1148,7 +1458,7 @@ def handle_music_le_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] <= 1:
+    if character_data.ability[44] <= 1:
         return 1
     return 0
 
@@ -1163,7 +1473,7 @@ def handle_music_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] >= 3:
+    if character_data.ability[44] >= 3:
         return 1
     return 0
 
@@ -1178,7 +1488,37 @@ def handle_music_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[29] >= 5:
+    if character_data.ability[44] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TECHNIQUE_GE_3)
+def handle_technique_ge_3(character_id: int) -> int:
+    """
+    校验角色是否技巧技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[19] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TECHNIQUE_GE_5)
+def handle_technique_ge_3(character_id: int) -> int:
+    """
+    校验角色是否技巧技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[19] >= 5:
         return 1
     return 0
 
@@ -1295,6 +1635,22 @@ def handle_target_cook_le_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_COOK_LE_3)
+def handle_target_cook_le_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能<=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] <= 3:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.TARGET_COOK_GE_3)
 def handle_target_cook_ge_3(character_id: int) -> int:
     """
@@ -1307,6 +1663,22 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[28] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_COOK_G_3)
+def handle_target_cook_g_3(character_id: int) -> int:
+    """
+    校验交互对象是否料理技能>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[28] > 3:
         return 1
     return 0
 
@@ -1499,6 +1871,101 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[21] >= 5:
+        return 1
+    return 0
+
+
+
+@add_premise(constant.Premise.TARGET_TECHNIQUE_GE_3)
+def handle_t_technique_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否技巧技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[19] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_TECHNIQUE_GE_5)
+def handle_t_technique_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否技巧技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[19] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.KISS_0)
+def handle_kiss_0(character_id: int) -> int:
+    """
+    校验自身亲吻经验==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.experience[40] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.KISS_GE_10)
+def handle_kiss_ge_10(character_id: int) -> int:
+    """
+    校验自身亲吻经验>=10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.experience[40] >= 10:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_KISS_0)
+def handle_t_kiss_0(character_id: int) -> int:
+    """
+    校验交互对象亲吻经验==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.experience[40] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_KISS_GE_10)
+def handle_t_kiss_ge_10(character_id: int) -> int:
+    """
+    校验交互对象亲吻经验>=10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.experience[40] >= 10:
         return 1
     return 0
 
@@ -2001,6 +2468,48 @@ def handle_target_put_on_skirt(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant.Premise.DEBUG_MODE_ON)
+def handle_idebug_mode_on(character_id: int) -> int:
+    """
+    校验当前是否已经是debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.debug_mode:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.DEBUG_MODE_OFF)
+def handle_idebug_mode_off(character_id: int) -> int:
+    """
+    校验当前不是debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.debug_mode:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.TO_DO)
+def handle_todo(character_id: int) -> int:
+    """
+    未实装
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.debug_mode:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.IS_PLAYER)
 def handle_is_player(character_id: int) -> int:
     """
@@ -2144,7 +2653,7 @@ def handle_time_day(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 6 and now_time.hour <= 18:
+    if now_time.hour >= 6 and now_time.hour <= 17:
         return 1
     return 0
 
@@ -2160,7 +2669,7 @@ def handle_time_night(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour <= 6 or now_time.hour >= 18:
+    if now_time.hour <= 5 or now_time.hour >= 18:
         return 1
     return 0
 
@@ -2176,7 +2685,7 @@ def handle_time_midnight(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour <= 2 or now_time.hour >= 22:
+    if now_time.hour <= 1 or now_time.hour >= 22:
         return 1
     return 0
 
@@ -2192,7 +2701,7 @@ def handle_time_morning(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 4 and now_time.hour <= 8:
+    if now_time.hour >= 4 and now_time.hour <= 7:
         return 1
     return 0
 
@@ -2208,7 +2717,7 @@ def handle_time_moon(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
-    if now_time.hour >= 10 and now_time.hour <= 14:
+    if now_time.hour >= 10 and now_time.hour <= 13:
         return 1
     return 0
 
@@ -4123,6 +4632,922 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
                 return 1
     return 0
 
+@add_premise(constant.Premise.LAST_CMD_U_SEX)
+def handle_last_cmd_u_sex(character_id: int) -> int:
+    """
+    前一指令为U性交_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.URETHRAL_INSERTION)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+# 以下为道具系前提
+
+@add_premise(constant.Premise.HAVE_CAMERA)
+def handle_have_camera(character_id: int) -> int:
+    """
+    校验角色是否已持有相机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[50]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_VIDEO_RECORDER)
+def handle_have_video_recorder(character_id: int) -> int:
+    """
+    校验角色是否已持有录像机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[51]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_NIPPLE_CLAMP)
+def handle_have_nipple_clamp(character_id: int) -> int:
+    """
+    校验角色是否已持有乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[122]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOW_NIPPLE_CLAMP)
+def handle_target_now_nipple_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否正在乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[0][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_NIPPLE_CLAMP)
+def handle_target_not_nipple_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否没有在乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[0][1]:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.HAVE_LOVE_EGG)
+def handle_have_love_egg(character_id: int) -> int:
+    """
+    校验角色是否已持有跳蛋
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[121]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLIT_CLAMP)
+def handle_have_clit_clamp(character_id: int) -> int:
+    """
+    校验角色是否已持有阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[123]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOW_CLIT_CLAMP)
+def handle_target_now_clit_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否正在阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[1][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_CLIT_CLAMP)
+def handle_target_not_clit_clamp(character_id: int) -> int:
+    """
+    校验交互对象是否没有在阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[1][1]:
+        return 0
+    return 1
+
+@add_premise(constant.Premise.HAVE_ELECTRIC_MESSAGE_STICK)
+def handle_have_electric_message_stick(character_id: int) -> int:
+    """
+    校验角色是否已持有电动按摩棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[124]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_VIBRATOR)
+def handle_have_vibrator(character_id: int) -> int:
+    """
+    校验角色是否已持有震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[125]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOW_VIBRATOR_INSERTION)
+def handle_target_now_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象V正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[2][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_VIBRATOR_INSERTION)
+def handle_target_not_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象V没有在插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[2][1]:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL)
+def handle_target_now_vibrator_insertion_anal(character_id: int) -> int:
+    """
+    校验交互对象A正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[3][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL)
+def handle_target_not_vibrator_insertion(character_id: int) -> int:
+    """
+    校验交互对象A没有在插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[3][1]:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.HAVE_MILKING_MACHINE)
+def handle_have_milking_machine(character_id: int) -> int:
+    """
+    校验角色是否已持有搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[133]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_URINE_COLLECTOR)
+def handle_have_urine_collector(character_id: int) -> int:
+    """
+    校验角色是否已持有采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[134]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BONDAGE)
+def handle_have_bondage(character_id: int) -> int:
+    """
+    校验角色是否已持有绳子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[135]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_PATCH)
+def handle_have_patch(character_id: int) -> int:
+    """
+    校验角色是否已持有眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[132]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIG_VIBRATOR)
+def handle_have_big_vibrator(character_id: int) -> int:
+    """
+    校验角色是否已持有加粗震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[126]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_HUGE_VIBRATOR)
+def handle_have_huge_vibrator(character_id: int) -> int:
+    """
+    校验角色是否已持有巨型震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[127]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLYSTER_TOOLS)
+def handle_have_clyster_tools(character_id: int) -> int:
+    """
+    校验角色是否已持有灌肠套装
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[128]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ANAL_BEADS)
+def handle_have_anal_beads(character_id: int) -> int:
+    """
+    校验角色是否已持有肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[129]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOW_ANAL_BEADS)
+def handle_target_now_anal_beads(character_id: int) -> int:
+    """
+    校验交互对象是否正在肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[7][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_ANAL_BEADS)
+def handle_target_not_anal_beads(character_id: int) -> int:
+    """
+    校验交互对象是否没有在肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[7][1]:
+        return 0
+    return 1
+
+@add_premise(constant.Premise.HAVE_ANAL_PLUG)
+def handle_have_anal_plug(character_id: int) -> int:
+    """
+    校验角色是否已持有肛塞
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    # if character_data.item[130]:
+        # return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_WHIP)
+def handle_have_whip(character_id: int) -> int:
+    """
+    校验角色是否已持有鞭子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[131]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_NEEDLE)
+def handle_have_needle(character_id: int) -> int:
+    """
+    校验角色是否已持有针
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[137]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_COLLAR)
+def handle_have_collar(character_id: int) -> int:
+    """
+    校验角色是否已持有项圈
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[138]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CONDOM)
+def handle_have_condom(character_id: int) -> int:
+    """
+    校验角色是否已持有避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[120]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_SAFE_CANDLES)
+def handle_have_safe_candles(character_id: int) -> int:
+    """
+    校验角色是否已持有低温蜡烛
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[136]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_COTTON_STICK)
+def handle_have_cotton_stick(character_id: int) -> int:
+    """
+    校验角色是否已持有无菌棉签
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[139]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIRTH_CONTROL_PILLS_BEFORE)
+def handle_have_birth_control_pills_before(character_id: int) -> int:
+    """
+    校验角色是否已持有事前避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[101]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BIRTH_CONTROL_PILLS_AFTER)
+def handle_have_birth_control_pills_after(character_id: int) -> int:
+    """
+    校验角色是否已持有事后避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[102]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_BODY_LUBRICANT)
+def handle_have_body_lubricant(character_id: int) -> int:
+    """
+    校验角色是否已持有润滑液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[100]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_PHILTER)
+def handle_have_philter(character_id: int) -> int:
+    """
+    校验角色是否已持有媚药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[103]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_ENEMAS)
+def handle_have_enemas(character_id: int) -> int:
+    """
+    校验角色是否已持有灌肠液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[104]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_DIURETICS_ONCE)
+def handle_have_diuretics_once(character_id: int) -> int:
+    """
+    校验角色是否已持有一次性利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[105]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_DIURETICS_PERSISTENT)
+def handle_have_diuretics_persistent(character_id: int) -> int:
+    """
+    校验角色是否已持有持续性利尿剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[106]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_SLEEPING_PILLS)
+def handle_have_sleeping_pills(character_id: int) -> int:
+    """
+    校验角色是否已持有睡眠药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[107]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_CLOMID)
+def handle_have_clomid(character_id: int) -> int:
+    """
+    校验角色是否已持有排卵促进药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[108]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.A_SHIT)
+def handle_a_shit(character_id: int) -> int:
+    """
+    校验角色是否肠内脏污
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1,3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.ENEMA)
+def handle_enema(character_id: int) -> int:
+    """
+    校验角色是否正在灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1,3]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_ENEMA)
+def handle_not_enema(character_id: int) -> int:
+    """
+    校验角色是否非灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean not in [1,3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.ENEMA_END)
+def handle_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已灌肠（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [2,4]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.NORMAL_ENEMA)
+def handle_normal_enema(character_id: int) -> int:
+    """
+    校验角色是否普通灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [1]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.SEMEN_ENEMA)
+def handle_semen_enema(character_id: int) -> int:
+    """
+    校验角色是否精液灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [3]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.NORMAL_ENEMA_END)
+def handle_normal_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已普通灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [2]:
+        return 1
+    return 0
+
+@add_premise(constant.Premise.SEMEN_ENEMA_END)
+def handle_semen_enema_end(character_id: int) -> int:
+    """
+    校验角色是否已精液灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean in [4]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.URINATE_LE_79)
+def handle_urinate_le_79(character_id: int) -> int:
+    """
+    尿意条≤79%，不需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.URINATE_GE_80)
+def handle_urinate_ge_80(character_id: int) -> int:
+    """
+    尿意条≥80%，需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value > 0.79:
+        return character_data.urinate_point * 4
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_URINATE_LE_79)
+def handle_target_urinate_le_79(character_id: int) -> int:
+    """
+    交互对象尿意条≤79%，不需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.urinate_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_URINATE_GE_80)
+def handle_target_urinate_ge_80(character_id: int) -> int:
+    """
+    交互对象尿意条≥80%，需要排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.urinate_point / 240
+    if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.HUNGER_LE_79)
+def handle_hunger_le_79(character_id: int) -> int:
+    """
+    饥饿值≤79%，不需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.hunger_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.HUNGER_GE_80)
+def handle_hunger_ge_80(character_id: int) -> int:
+    """
+    饥饿值≥80%，需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.hunger_point / 240
+    if value > 0.79:
+        # print(f"debug {character_id}角色饿了")
+        return character_data.hunger_point * 4
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HUNGER_LE_79)
+def handle_target_hunger_le_79(character_id: int) -> int:
+    """
+    交互对象饥饿值≤79%，不需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.hunger_point / 240
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_HUNGER_GE_80)
+def handle_target_hunger_ge_80(character_id: int) -> int:
+    """
+    交互对象饥饿值≥80%，需要吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.hunger_point / 240
+    if value > 0.79:
+        return 1
+    else:
+        return 0
+
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:
@@ -4198,7 +5623,7 @@ def handle_is_target_first_kiss(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return character_id == target_data.first_kiss_id
+    return character_id == target_data.first_record.first_kiss_id
 
 
 @add_premise(constant.Premise.HAVE_OTHER_TARGET_IN_SCENE)
@@ -4632,6 +6057,34 @@ def handle_not_h(character_id: int) -> int:
 @add_premise(constant.Premise.IS_FOLLOW)
 def handle_is_follow(character_id: int) -> int:
     """
+    校验是否正智能跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.is_follow == 1:
+        return 100
+    return 0
+
+
+@add_premise(constant.Premise.NOT_FOLLOW)
+def handle_not_follow(character_id: int) -> int:
+    """
+    校验是否没有智能跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.is_follow == 1
+
+
+@add_premise(constant.Premise.TARGET_IS_FOLLOW)
+def handle_target_is_follow(character_id: int) -> int:
+    """
     校验交互对象是否正跟随玩家
     Keyword arguments:
     character_id -- 角色id
@@ -4643,8 +6096,8 @@ def handle_is_follow(character_id: int) -> int:
     return target_data.is_follow
 
 
-@add_premise(constant.Premise.NOT_FOLLOW)
-def handle_not_follow(character_id: int) -> int:
+@add_premise(constant.Premise.TARGET_NOT_FOLLOW)
+def handle_target_not_follow(character_id: int) -> int:
     """
     校验交互对象是否没有跟随玩家
     Keyword arguments:

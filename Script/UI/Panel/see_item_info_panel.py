@@ -1,6 +1,6 @@
 from typing import List
 from types import FunctionType
-from Script.Core import cache_control, text_handle, get_text, py_cmd, game_type
+from Script.Core import cache_control, text_handle, get_text, flow_handle, constant, py_cmd, game_type
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 
@@ -9,6 +9,10 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
 """ 翻译api """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
@@ -29,21 +33,88 @@ class SeeCharacterItemBagPanel:
         """ 最大绘制宽度 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
-        character_data = cache.character_data[character_id]
-        item_list = list(character_data.item)
-        item_panel = panel.PageHandlePanel(item_list, ItemNameDraw, 20, 7, width, 1, 1, 0, "", "|")
+        self.character_data = cache.character_data[character_id]
+
+        # 按类别统计全部道具
+        self.item_list_all = []
+        item_list_Drug = []
+        item_list_Machine = []
+        item_list_Consumables = []
+        item_list_H_Drug = []
+        item_list_H_Machine = []
+        item_list_SM = []
+        self.item_list = [i for i in game_config.config_item]
+        for item_id in self.item_list:
+            if self.character_data.item[item_id] >= 1:
+                if game_config.config_item[item_id].tag == "Drug":
+                    item_list_Drug.append(item_id)
+                elif game_config.config_item[item_id].tag == "Machine":
+                    item_list_Machine.append(item_id)
+                elif game_config.config_item[item_id].tag == "Consumables":
+                    item_list_Consumables.append(item_id)
+                elif game_config.config_item[item_id].tag == "H_Drug":
+                    item_list_H_Drug.append(item_id)
+                elif game_config.config_item[item_id].tag == "H_Machine":
+                    item_list_H_Machine.append(item_id)
+                elif game_config.config_item[item_id].tag == "SM":
+                    item_list_SM.append(item_id)
+        self.item_list_all.append(item_list_Drug)
+        self.item_list_all.append(item_list_Machine)
+        self.item_list_all.append(item_list_Consumables)
+        self.item_list_all.append(item_list_H_Drug)
+        self.item_list_all.append(item_list_H_Machine)
+        self.item_list_all.append(item_list_SM)
+
+
+        item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 5, width, 1, 1, 0)
         self.handle_panel = item_panel
         """ 页面控制对象 """
 
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
-        title_draw.draw()
-        self.return_list = []
-        self.handle_panel.update()
-        self.handle_panel.draw()
-        self.return_list.extend(self.handle_panel.return_list)
+        item_list_type = ["药品","机器","消耗品","H药品","H用机器","SM器具"]
+        while 1:
+            title_draw.draw()
+            # 绘制金钱
+            money_text = "当前持有龙门币：" + str(self.character_data.money) + "，合成玉：" + str(self.character_data.orundum) + "，至纯源石：" + str(self.character_data.Originite_Prime)
+            now_draw = draw.NormalDraw()
+            now_draw.text = money_text
+            now_draw.width = self.width
+            now_draw.draw()
+            line_feed.draw()
 
+            # 绘制道具面板
+
+
+            # 遍历输出每个类型的面板
+            for i in range(len(self.item_list_all)):
+                # 输出类别文字
+                type_text = f"————{item_list_type[i]}————"
+                now_draw = draw.NormalDraw()
+                now_draw.text = type_text
+                now_draw.width = self.width
+                now_draw.draw()
+                line_feed.draw()
+
+                # 输出面板
+                self.handle_panel.text_list = self.item_list_all[i]
+                self.handle_panel.update()
+                self.handle_panel.draw()
+
+            # 将道具列表输入可返回列表中
+            self.return_list = []
+            for i in self.item_list:
+                self.return_list.append(str(i))
+            # self.return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            self.return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(self.return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
 
 class ItemNameDraw:
     """
@@ -70,25 +141,29 @@ class ItemNameDraw:
         """ 绘制数字按钮 """
         self.button_id: int = button_id
         """ 数字按钮的id """
-        self.button_return: str = str(button_id)
+        self.button_return: str = str(text)
         """ 按钮返回值 """
         item_config = game_config.config_item[self.text]
         item_name = item_config.name
+        character_data = cache.character_data[0]
+        flag_consumables = item_config.tag in ["Drug","H_Drug","Consumables"]
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
                 self.draw_text = f"{index_text} {item_name}"
-                self.button_return = str(button_id)
+                if flag_consumables:
+                    self.draw_text += "(持有数量:" + str(character_data.item[self.text]) + ")"
             else:
                 self.draw_text = item_name
-                self.button_return = item_name
         else:
             self.draw_text = f"[{item_name}]"
+
+        self.button_return = str(text)
 
     def draw(self):
         """绘制道具"""
         if self.is_button:
-            now_draw = draw.Button(self.draw_text, self.button_return, cmd_func=self.draw_item_info)
+            now_draw = draw.LeftButton(self.draw_text, self.button_return, self.width, cmd_func=self.draw_item_info)
         else:
             now_draw = draw.NormalDraw()
             now_draw.text = self.draw_text

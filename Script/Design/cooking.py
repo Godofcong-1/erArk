@@ -21,11 +21,13 @@ def init_recipes():
             recipe_data.name,
             recipe_data.time,
             recipe_data.difficulty,
+            recipe_data.money,
+            recipe_data.introduce,
         )
         cache.recipe_data[len(cache.recipe_data)] = recipe
 
 
-def create_recipe(name: str, time: int, difficulty: int) -> Recipes:
+def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str) -> Recipes:
     """
     创建菜谱对象
     Keyword arguments:
@@ -39,6 +41,8 @@ def create_recipe(name: str, time: int, difficulty: int) -> Recipes:
     recipe.name = name
     recipe.time = time
     recipe.difficulty = difficulty
+    recipe.money = money
+    recipe.introduce = introduce
     return recipe
 
 
@@ -252,7 +256,7 @@ def init_restaurant_data():
         #     else:
         #         cache.restaurant_data[now_food.id][now_food.uid] = now_food
         cook_index += 1
-        if cook_index == max_people:
+        if cook_index == max_people*3:
             break
 
 
@@ -263,7 +267,7 @@ def init_makefood_data():
     food_list = {}
     cache.makefood_data = {}
     for recipes_id in recipe_data:
-        if character_data.ability[28] >= recipe_data[recipes_id].difficulty:
+        if character_data.ability[43] >= recipe_data[recipes_id].difficulty:
             new_food = cook(food_list, recipes_id, 5, "")
             cache.makefood_data.setdefault(str(recipes_id), {})
             cache.makefood_data[str(recipes_id)][new_food.uid] = new_food
@@ -286,11 +290,11 @@ def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type:
         #     food_feel_data = game_config.config_food_feel_data[food_data.id]
         # else:
         #     food_feel_data = {}
-        if food_type == _("主食"):
-            if food_data.recipe != -1:
-                food_name = cache.recipe_data[food_data.recipe].name
-                food_list.setdefault(food_name, set())
-                food_list[food_name].add(food_uid)
+        # if food_type == _("主食"):
+        if food_data.recipe != -1:
+            food_name = cache.recipe_data[food_data.recipe].name
+            food_list.setdefault(food_name, set())
+            food_list[food_name].add(food_uid)
         # elif food_type == _("零食"):
         #     if food_data.recipe == -1:
         #         food_config = game_config.config_food[food_data.id]

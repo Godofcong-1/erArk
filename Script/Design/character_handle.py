@@ -191,6 +191,7 @@ def add_favorability(
     character_id: int,
     target_id: int,
     now_add_favorability: int,
+    change_data: game_type.CharacterStatusChange,
     target_change: game_type.TargetChange,
     now_time: datetime.datetime,
 ):
@@ -205,6 +206,8 @@ def add_favorability(
     """
     target_data: game_type.Character = cache.character_data[target_id]
     target_data.favorability.setdefault(character_id, 0)
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.favorability.setdefault(target_id, 0)
     if target_change is not None:
         target_change.status_data.setdefault(12, 0)
     old_add_favorability = now_add_favorability
@@ -228,9 +231,18 @@ def add_favorability(
     #         if target_change is not None:
     #             target_change.favorability += now_add_favorability
     # else:
+
+    # 对自己操作
+    if (character_id != 0) and (character_data.target_character_id == 0):
+        character_data.favorability[target_id] += now_add_favorability
+        # print(f"debug change_data = {change_data}")
+        if change_data is not None:
+            change_data.favorability += now_add_favorability
+
+    # 对交互对象操作
     target_data.favorability[character_id] += now_add_favorability
     if target_change is not None:
         target_change.favorability += now_add_favorability
-    target_data.social_contact_last_cut_down_time[character_id] = now_time
-    if target_change is not None:
-        add_favorability(target_id, character_id, old_add_favorability, None, now_time)
+    # target_data.social_contact_last_cut_down_time[character_id] = now_time
+    # if target_change is not None:
+    #     add_favorability(target_id, character_id, old_add_favorability, None, None, now_time)

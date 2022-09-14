@@ -42,9 +42,14 @@ def init_attr(character_id: int):
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.last_move_time = attr_calculation.get_time_zero()
+    character_data.dirty = attr_calculation.get_dirty_zero()
+    character_data.item = attr_calculation.get_item_zero(character_data.item)
+    character_data.h_state = attr_calculation.get_h_state_zero()
+    character_data.assistant_state = attr_calculation.get_assistant_state_zero()
+    character_data.first_record = attr_calculation.get_first_record_zero()
 
 
-    #主角的初始处理，HP和MP默认为2000，EP默认为1000，初始化信物
+    #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
     if character_id == 0 :
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
@@ -52,11 +57,13 @@ def init_attr(character_id: int):
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
         character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
+        character_data.sleep_point = 0
 
     #一系列初始化函数
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     character_data.angry_point = random.randrange(1,35)
+    character_data.hunger_point = 240
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
@@ -190,7 +197,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge_data_value = judge_data.value
 
     if judge_data_type == "D":
-        calculation_text = "需要日常实行值至少为" + str(judge_data_value) + "\n"
+        calculation_text = "需要基础实行值至少为" + str(judge_data_value) + "\n"
     elif judge_data_type == "S":
         calculation_text = "需要性爱实行值至少为" + str(judge_data_value) + "\n"
     calculation_text += "当前值为："
@@ -216,6 +223,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge_favorability += 200
     calculation_text += "好感修正("+ str(judge_favorability) +")"
     judge += judge_favorability
+    
     #信赖判定#
     trust = target_data.trust
     judge_trust = 0
@@ -233,27 +241,32 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge_trust += 100
     judge += judge_trust
     calculation_text += "+信赖修正("+ str(judge_trust) +")"
+
     #状态修正，好意(11)和欲情(12)修正#
     judge_status = int( (target_data.status_data[11] + target_data.status_data[12]) / 10 )
     judge += judge_status
     if judge_status:
         calculation_text += "+状态修正("+ str(judge_status) +")"
+
     #能力修正，亲密(21)和欲望(22)修正#
     judge_ability = target_data.ability[21]*10 + target_data.ability[22]*5
     judge += judge_ability
     if judge_ability:
         calculation_text += "+能力修正("+ str(judge_ability) +")"
+
     #刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
     judge_mark = target_data.ability[13]*20 + target_data.ability[14]*20
     judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18]*30
     judge += judge_mark
     if judge_mark:
         calculation_text += "+刻印修正("+ str(judge_mark) +")"
+
     #心情修正，好心情+10，坏心情-10，愤怒-30
     judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
     judge += judge_angry
     if judge_angry:
         calculation_text += "+心情修正("+ str(judge_angry) +")"
+
     #陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
     judge_fall = target_data.talent[10]*30 + target_data.talent[11]*50 + target_data.talent[12]*80 + target_data.talent[13]*100 + target_data.talent[15]*30 + target_data.talent[16]*50 + target_data.talent[17]*80 + target_data.talent[18]*100
     judge += judge_fall
@@ -274,6 +287,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_information
     if judge_information:
         calculation_text += "+博士信息素("+ str(judge_information) +")"
+
+    # debug模式修正
+    if cache.debug_mode == True:
+        judge += 99999
+        calculation_text += "+debug模式(+99999)"
 
     calculation_text += " = " + str(judge) + "\n"
     now_draw = draw.WaitDraw()

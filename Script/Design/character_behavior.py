@@ -11,6 +11,7 @@ from Script.Core import (
     constant,
     value_handle,
     get_text,
+    save_handle,
 )
 from Script.Design import (
     settle_behavior,
@@ -46,7 +47,7 @@ def init_character_behavior():
     while 1:
         if len(cache.over_behavior_character) >= len(cache.character_data):
             start_after = time.time()
-            logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
+            # logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
             break
         for character_id in cache.character_data:
             start_all = time.time()
@@ -54,28 +55,32 @@ def init_character_behavior():
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
-            judge_character_tired(character_id)
+            judge_character_tired_sleep(character_id)
             end_all = time.time()
             # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
-        # update_cafeteria()
+        update_cafeteria()
     cache.over_behavior_character = set()
 
 
 def update_cafeteria():
     """刷新食堂内食物"""
-    food_judge = 1
+    max_people = len(cache.character_data)
+    # food_judge = 1
+    food_count = 0
     for food_type in cache.restaurant_data:
         food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
-        for food_id in food_list:
-            food: game_type.Food = food_list[food_id]
-            # if food.eat:
-                # food_judge = 0
-            food_judge = 0
-            break
-        if not food_judge:
-            break
-    if food_judge:
+        food_count += len(food_list)
+    #     for food_id in food_list:
+    #         food: game_type.Food = food_list[food_id]
+    #         # if food.eat:
+    #             # food_judge = 0
+    #         food_judge = 0
+    #         break
+    #     if not food_judge:
+    #         break
+    # if food_judge:
+    if (food_count * 2) <= max_people:
         cooking.init_restaurant_data()
 
 
@@ -91,7 +96,11 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         return
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
-    #空闲状态下执行可用行动#
+    # 处理跟随与H模式#
+    if character_id != 0:
+        judge_character_follow(character_id)
+        judge_character_h(character_id)
+    # 空闲状态下执行可用行动#
     start_character = time.time()
     if character_data.state == constant.CharacterStatus.STATUS_ARDER:
         if character_id:
@@ -100,7 +109,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             cache.over_behavior_character.add(0)
         end_judge = time.time()
         # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
-    #非空闲活动下结算当前状态#
+    # 非空闲活动下结算当前状态#
     else:
         status_judge = judge_character_status(character_id, now_time)
         if status_judge:
@@ -110,6 +119,11 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
 
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = "\n已过24点，开始结算各种数据\n"
+            now_draw.draw()
         #1.结算数值为珠
         settle_character_juel(character_id)
         #2.清零射精槽
@@ -119,10 +133,15 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
         #4.清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-    #处理跟随与H模式#
-    if character_id != 0:
-        judge_character_follow(character_id)
-        judge_character_h(character_id)
+        #5.清零污浊状态
+        character_data.dirty = attr_calculation.get_dirty_zero()
+        #自动存档，用玩家id来限制只存一次
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = "\n全部结算完毕，开始自动保存\n"
+            now_draw.draw()
+            save_handle.establish_save("auto")
     end_last = time.time()
     # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
 
@@ -147,9 +166,12 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
-        if state_machine_id != 0:
+        # 不会被打断的指令列表
+        safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
+        safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
+        if state_machine_id != 0 and state_machine_id not in safe_instruct:
             character_data.wait_flag = 1
-            # print("前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+        #     print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
         constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
@@ -184,21 +206,24 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
 #         if character_id not in cache.over_behavior_character:
 #             cache.over_behavior_character.add(character_id)
 
-def judge_character_tired(character_id : int):
+def judge_character_tired_sleep(character_id : int):
     """
-    校验角色是否疲劳
+    校验角色是否疲劳或困倦
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
     #疲劳结算
-    if character_data.tired and (character_data.is_h or character_data.is_follow):
-        character_data.is_h = 0
-        character_data.is_follow = 0
-        now_draw = draw.NormalDraw()
-        now_draw.width = width
-        now_draw.text = character_data.name + "太累了，决定回房间睡觉 "
-        now_draw.draw()
+    if character_data.is_h or character_data.is_follow:
+        
+        if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
+            character_data.is_h = False
+            character_data.is_follow = 0
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            draw_text = "太累了，决定回房间睡觉 " if character_data.tired else "太困了，决定回房间睡觉"
+            now_draw.text = character_data.name + draw_text
+            now_draw.draw()
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
@@ -385,8 +410,13 @@ def judge_character_follow(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # print("开始检测是否为跟随")
-    if character_data.is_follow:
+
+    # 锁定助理的跟随状态
+    if character_data.assistant_state.always_follow == 1 or character_data.assistant_state.always_follow == 2:
+        character_data.is_follow = character_data.assistant_state.always_follow
+
+    # 维持跟随的状态
+    if character_data.is_follow == 2:
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
         if character_data.position != cache.character_data[0].position:

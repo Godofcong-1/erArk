@@ -9,17 +9,17 @@
   │ │                           │                                                                                     │◢════════◣╔╗          
   │ │                           │                                                                                     │║          ║║║        
   │ │   │           │           ║                                                                                     └╢          ║║║        
-  │ │   ║           ║           ║                                    <mapbutton>1</mapbutton>                                                 ║     <mapbutton>2</mapbutton>    ╠╣║        
-  │ │   │           │           ║ ╔═══╗ ╔═══╗                                             ╔═══╗ ╔═══╗  ■█████■■≡≡≡≡≡║          ║║║           
+  │ │   ║           ║           ║                                                                                      ║   <mapbutton>中枢</mapbutton>   ╠╣║        
+  │ │   │           │           ║ ╔═══╗ ╔═══╗                     <mapbutton>甲板</mapbutton>                    ╔═══╗ ╔═══╗  ■█████■■≡≡≡≡≡║          ║║║           
   │ │╔══╬═══════════╤═══════════╩═╩═══╩═╩═══╩═══════════════════════════╤═════════════════╩═══╩═╩╤══╩╗╔════╩╩══════════╩════╣╠════╩╩╩══════╗╔╗
   │ │║  ║  /────────┤      ┌──────────────┐   ┌──────────────┐ ┌─────┐  │                        │ ┌─╣╠─────┐  ┌────────────╣╠─────┬────┐  ├┤│
-  │ │║  ║ /    <mapbutton>3</mapbutton>    │      │       <mapbutton>4</mapbutton>      │   │       <mapbutton>5</mapbutton>      │ │  <mapbutton>6</mapbutton>  │╔═╬            <mapbutton>7</mapbutton>           ╬═╬        ╬══╬                   │ <mapbutton>10</mapbutton> │  ├┤│
-  ├─┤║  ║/          ╬══╣╠══╬              ╬═╦═╬              │ └╬────┘║ │                        │ │        │  │           <mapbutton>9</mapbutton>       └────┤  ├┤│
-  ╠╬╣║  ╟────────╬──┘      └──────────────┘ ║ └──────────────╩══╩═════╣ └────────────────────────┘ │    <mapbutton>8</mapbutton>   │  │                        │ //║║
+  │ │║  ║ /  <mapbutton>会客</mapbutton>   │      │     <mapbutton>贸易</mapbutton>     │   │     <mapbutton>文职</mapbutton>     │ │ <mapbutton>书</mapbutton>  │╔═╬        <mapbutton>疗养庭院</mapbutton>        ╬═╬        ╬══╬                   ┆ <mapbutton>教</mapbutton> │  ├┤│
+  ├─┤║  ║/          ╬══╣╠══╬              ╬═╦═╬              │ └╬────┘║ │                        │ │        │  │         <mapbutton>医疗</mapbutton>      └────┤  ├┤│
+  ╠╬╣║  ╟────────╬──┘      └──────────────┘ ║ └──────────────╩══╩═════╣ └────────────────────────┘ │  <mapbutton>生娱</mapbutton>  │  │                        │ //║║
   ├┼┼╣  ║  ┌────┐║                   ┌──────╬────────┐ ┌─────────────┐║ ┌───────┐  ┌─────────────┐ │        │  └─╫───────────────────╫──┘// ║║
-  ■■══╣  │ <mapbutton>11</mapbutton> ╬╣ ┌───────────────┐ │      <mapbutton>13</mapbutton>       ╬═╬      <mapbutton>14</mapbutton>     ╬╩═╬  <mapbutton>15</mapbutton>   ╬══╬     <mapbutton>16</mapbutton>      ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
+  ■■══╣  │ <mapbutton>卫</mapbutton> ╬╣ ┌───────────────┐ │     <mapbutton>科研</mapbutton>      ╬═╬     <mapbutton>动力</mapbutton>    ╬╩═╬ <mapbutton>训练</mapbutton>  ╬══╬   <mapbutton>大浴室</mapbutton>    ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
   │ │╚┐┌╩╗ └────┘║ │               │ └───────────────┘ └────────────╫┘  └───────┘  └─────────────┘ └────────┘ ╠═╬                     ││/     
-  ╠═╣ ╠╝ ╚╗      ║ │       <mapbutton>12</mapbutton>      │┌─────────────┐  ┌───────────┐  ║ ┌──────────────────────┐      ┌───────┐ ║ ├─────     <mapbutton>17</mapbutton>     ────┤╞═╗    
- /╠╗┼─╝   ╚╗┌─╦╤═╩═╬               ╬╬     <mapbutton>18</mapbutton>      ╬╣╠╬     <mapbutton>19</mapbutton>    ╬══╩═╬          <mapbutton>20</mapbutton>          ╬══╣╠══╬  <mapbutton>21</mapbutton>   │ ╚═╬                     │╞═╝   
+  ╠═╣ ╠╝ ╚╗      ║ │      <mapbutton>机库</mapbutton>     │┌─────────────┐  ┌───────────┐  ║ ┌──────────────────────┐      ┌───────┐ ║ ├─────    <mapbutton>宿舍</mapbutton>    ────┤╞═╗    
+ /╠╗┼─╝   ╚╗┌─╦╤═╩═╬               ╬╬    <mapbutton>工程</mapbutton>     ╬╣╠╬ <mapbutton>制造加工</mapbutton>  ╬══╩═╬         <mapbutton>仓储</mapbutton>         ╬══╣╠══╬ <mapbutton>关押</mapbutton>  │ ╚═╬                     │╞═╝   
 / ╚╝┘      ╚╛┈┈╘═══╧════════╦╦╦╦╦╦╦╬╧════╦╦╦╦╦╦╦╦╦╧══╧═╦╦╦╦╦╦╦╦╦═╧════╧════╦╦╦╦╦╦╦╦╦═════╦╦╦╦╧╦╦╦╦══╧══╦╦╦╦╦╬╦╦╦╧═══════════╦╦╦╦╦╦╦╦╦╦╧/     
             <mapbutton>0</mapbutton>//            <oIIIIIIIIo> <oIIIIIIIIIo> <oIIIIIIIIIo>       <oIIIIIIIIIo> <oIIIIIIIIIo> <oIIIIIIIIIo>        <oIIIIIIIIIIo>      

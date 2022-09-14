@@ -1,0 +1,11 @@
+    ╔═════╦═════╦═════╦═════╦═════════════╗
+    ║▓   O║▓   O║▓   O║▓   O║  ☊  ☊  ☊ ║   
+    ║     ║     ║     ║     ║             ║
+    ║ <mapbutton>牢1</mapbutton> ║ <mapbutton>牢2</mapbutton> ║ <mapbutton>牢3</mapbutton> ║ <mapbutton>牢4</mapbutton> ║             ║
+══╦╦╩┄┄┅┅┅╩┄┄┅┅┅╩┄┄┅┅┅╩┄┄┅┅┅╣             ║
+ <mapbutton>0</mapbutton>┇┇           <mapbutton>走廊</mapbutton>         ┇  <mapbutton>调教室</mapbutton>  ]> ║
+══╩╩╦┄┄┅┅┅╦┄┄┅┅┅╦┄┄┅┅┅╦┄┄┅┅┅╣             ║ 
+    ║ <mapbutton>牢5</mapbutton> ║ <mapbutton>牢6</mapbutton> ║ <mapbutton>牢7</mapbutton> ║ <mapbutton>牢8</mapbutton> ║             ║
+    ║     ║     ║     ║     ║         ┌───╢
+    ║O  ▓ ║O   ▓║O   ▓║O   ▓║ ʭʭ   ▲ │≈≈≈║ 
+    ╚═════╩═════╩═════╩═════╩═════════╧═══╝

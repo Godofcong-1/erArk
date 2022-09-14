@@ -33,17 +33,75 @@ class ItemShopPanel:
         character_data: game_type.Character = cache.character_data[0]
         scene_position = character_data.position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        scene_name = cache.scene_data[scene_position_str].scene_name
-        title_draw = draw.TitleLineDraw(scene_name, self.width)
-        handle_panel = panel.PageHandlePanel([], BuyItemByItemNameDraw, 10, 5, self.width, 1, 1, 0)
+        # scene_name = cache.scene_data[scene_position_str].scene_name
+        title_draw = draw.TitleLineDraw("道具商店", self.width)
+
+        # 按类别统计全部道具
+        item_list_all = []
+        item_list_Drug = []
+        item_list_Machine = []
+        item_list_Consumables = []
+        item_list_H_Drug = []
+        item_list_H_Machine = []
+        item_list_SM = []
+        item_list_type = ["药品","机器","消耗品","H药品","H用机器","SM器具"]
+        item_list = [i for i in game_config.config_item]
+        for i in item_list:
+            if game_config.config_item[i].tag == "Drug":
+                item_list_Drug.append(i)
+            elif game_config.config_item[i].tag == "Machine":
+                item_list_Machine.append(i)
+            elif game_config.config_item[i].tag == "Consumables":
+                item_list_Consumables.append(i)
+            elif game_config.config_item[i].tag == "H_Drug":
+                item_list_H_Drug.append(i)
+            elif game_config.config_item[i].tag == "H_Machine":
+                item_list_H_Machine.append(i)
+            elif game_config.config_item[i].tag == "SM":
+                item_list_SM.append(i)
+        item_list_all.append(item_list_Drug)
+        item_list_all.append(item_list_Machine)
+        item_list_all.append(item_list_Consumables)
+        item_list_all.append(item_list_H_Drug)
+        item_list_all.append(item_list_H_Machine)
+        item_list_all.append(item_list_SM)
+
+        handle_panel = panel.PageHandlePanel([], BuyItemByItemNameDraw, 50, 3, self.width, 1, 1, 0)
+
         while 1:
             return_list = []
             title_draw.draw()
-            item_list = [i for i in game_config.config_item if i not in character_data.item]
-            handle_panel.text_list = item_list
-            handle_panel.update()
-            handle_panel.draw()
-            return_list.extend(handle_panel.return_list)
+
+            # 绘制金钱
+            money_text = "当前持有龙门币：" + str(character_data.money) + "，合成玉：" + str(character_data.orundum) + "，至纯源石：" + str(character_data.Originite_Prime)
+            now_draw = draw.NormalDraw()
+            now_draw.text = money_text
+            now_draw.width = self.width
+            now_draw.draw()
+            line_feed.draw()
+            line_feed.draw()
+
+            # 商店里显示全部道具
+            # item_list = [i for i in game_config.config_item if i not in character_data.item]
+
+            # 遍历输出每个类型的面板
+            for i in range(len(item_list_all)):
+                # 输出类别文字
+                type_text = f"————{item_list_type[i]}————"
+                now_draw = draw.NormalDraw()
+                now_draw.text = type_text
+                now_draw.width = self.width
+                now_draw.draw()
+                line_feed.draw()
+
+                # 输出面板
+                handle_panel.text_list = item_list_all[i]
+                handle_panel.update()
+                handle_panel.draw()
+
+            # 将道具列表输入可返回列表中
+            for i in item_list:
+                return_list.append(str(i))
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -76,29 +134,46 @@ class BuyItemByItemNameDraw:
         """ 绘制数字按钮 """
         self.button_id: int = button_id
         """ 数字按钮的id """
-        self.button_return: str = str(button_id)
+        self.button_return: str = str(text)
         """ 按钮返回值 """
-        name_draw = draw.NormalDraw()
+        self.character_data: game_type.Character = cache.character_data[0]
+        """ 人物属性 """
+        self.now_draw = draw.NormalDraw()
         item_config = game_config.config_item[self.text]
-        if is_button:
+        index_text = text_handle.id_index(button_id)
+        # print("debug self.text = ",self.text,"  self.character_data.item, = ",self.character_data.item)
+        # print("debug self.text in self.character_data.item",self.text in self.character_data.item)
+
+        # 判断是否是消耗品、是否已达99个堆叠上限，是否已拥有
+        flag_consumables = item_config.tag in ["Drug","H_Drug","Consumables"]
+        flag_not_max = self.character_data.item[self.text] <= 99
+        flag_have = self.character_data.item[self.text] > 0
+
+        # print("debug flag_consumables = ",flag_consumables,"  flag_not_max = ",flag_not_max,"  flag_have = ",flag_have)
+
+        # 可购买：1消耗品且数量小于99，2非消耗品且未持有
+        if (flag_consumables and flag_not_max) or (not flag_consumables and not flag_have):
             if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{item_config.name}"
+                button_text = f"{index_text}{item_config.name}：{item_config.price}龙门币"
+                if flag_consumables:
+                    button_text += "(持有：" + str(self.character_data.item[self.text]) + ")"
+                else:
+                    button_text += "(未持有)"
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.buy_item
                 )
-            else:
-                button_text = f"[{item_config.name}]"
-                name_draw = draw.CenterButton(
-                    button_text, item_config.name, self.width, cmd_func=self.buy_item
-                )
-                self.button_return = item_config.name
             self.draw_text = button_text
         else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{item_config.name}]"
+            name_draw = draw.LeftDraw()
+            name_draw.text = f"{index_text}{item_config.name}：{item_config.price}龙门币"
+            if flag_consumables:
+                name_draw.text += "(持有：" + str(self.character_data.item[self.text]) + ")"
+            else:
+                name_draw.text += "(已持有)"
             name_draw.width = self.width
             self.draw_text = name_draw.text
+
+            name_draw.width = self.width
         self.now_draw = name_draw
         """ 绘制的对象 """
 
@@ -108,12 +183,17 @@ class BuyItemByItemNameDraw:
 
     def buy_item(self):
         py_cmd.clr_cmd()
-        character_data: game_type.Character = cache.character_data[0]
-        character_data.item.add(self.text)
         item_config = game_config.config_item[self.text]
-        now_text = _("{nickname}购买了{item_name}").format(
-            nickname=character_data.nick_name, item_name=item_config.name
-        )
+        if self.character_data.money >= item_config.price:
+            self.character_data.item[self.text] += 1
+            self.character_data.money -= item_config.price
+            now_text = _("{nickname}购买了{item_name}").format(
+                nickname=self.character_data.nick_name, item_name=item_config.name
+            )
+        elif self.character_data.item[self.text] == 99:
+            now_text = "已达到最高堆叠上限"
+        else:
+            now_text = "你没有足够的金钱"
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width

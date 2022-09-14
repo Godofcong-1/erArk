@@ -72,7 +72,7 @@ def confirm_character_attr_panel():
         ask_list.extend(now_attr_panel.return_list)
         now_line = draw.LineDraw("~", width)
         now_line.draw()
-        askfor_list = [_("就这样开始新的人生吧"), _("重新设定")]
+        askfor_list = [_("睁开双眼"), _("重新设定")]
         start_id = 0
         now_id_judge = 0
         now_id_list = []
@@ -82,7 +82,7 @@ def confirm_character_attr_panel():
                 now_id_list.append(int(now_id))
         if now_id_judge:
             start_id = max(now_id_list) + 1
-        askfor_panel.set(askfor_list, _("就这样了可以吗?"), start_id)
+        askfor_panel.set(askfor_list, _("这样可以吗?"), start_id)
         askfor_panel.draw()
         askfor_panel_return_list = askfor_panel.get_return_list()
         ask_list.extend(askfor_panel_return_list.keys())
