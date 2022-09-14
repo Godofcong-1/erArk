@@ -693,13 +693,13 @@ def handle_have_moved(character_id: int) -> int:
     #同一天内过1小时则判定为1
     if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
         character_data.last_move_time = now_time
-        print("过一小时判定,character_id :",character_id)
+        # print("过一小时判定,character_id :",character_id)
         move_flag = 1
     #非同一天也判定为1
     elif now_time.day != character_data.last_move_time.day:
         character_data.last_move_time = now_time
         move_flag = 1
-        print("非同一天判定")
+        # print("非同一天判定")
     return move_flag
 
 

@@ -919,6 +919,8 @@ def handle_do_h():
 
         # 清零H状态函数
         target_data.h_state = attr_calculation.get_h_state_zero()
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
     else:
         now_draw = draw.WaitDraw()
@@ -950,6 +952,8 @@ def handle_end_h():
     now_draw.width = width
     now_draw.text = _("\n结束H模式\n")
     now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
     # 自动关闭性爱面板
     if cache.instruct_filter[5]:
