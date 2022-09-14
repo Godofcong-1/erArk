@@ -339,11 +339,13 @@ def init_style():
         for k in standard_data.__dict__:
             if k not in style.__dict__:
                 style.__dict__[k] = standard_data.__dict__[k]
+        if "font" not in style.__dict__ or style.font == "":
+            style.font = normal_config.config_normal.font
         style_def(
             style.name,
             style.foreground,
             style.background,
-            normal_config.config_normal.font,
+            style.font,
             normal_config.config_normal.font_size,
             style.bold,
             style.underline,

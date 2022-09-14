@@ -2,7 +2,7 @@ import os
 import pickle
 from typing import Dict, List
 from dijkstar import Graph, find_path
-from Script.Core import game_type, json_handle, get_text, text_handle, cache_control, constant
+from Script.Core import game_type, json_handle, get_text, text_handle, cache_control, constant, rich_text
 from Script.Design import map_handle
 
 cache: game_type.Cache = cache_control.cache
@@ -138,10 +138,27 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 i += 10
                 set_map_button = 1
                 if len(new_x_list):
-                    now_draw = game_type.MapDrawText()
-                    now_draw.text = new_x_list
-                    now_draw_list.draw_list.append(now_draw)
-                    now_draw_list.width += text_handle.get_text_index(new_x_list)
+                    now_rich_draw_list:List[game_type.MapDraw] = []
+                    now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")
+                    new_x_list = rich_text.remove_rich_cache(new_x_list)
+                    while 1:
+                        if not len(new_x_list):
+                            break
+                        now_rich_draw = game_type.MapDrawText()
+                        now_rich_draw.text = new_x_list[0]
+                        now_rich_draw.style = now_style_list[0]
+                        now_style_list = now_style_list[1:]
+                        new_x_list = new_x_list[1:]
+                        while 1:
+                            if not len(new_x_list):
+                                break
+                            if now_style_list[0] != now_rich_draw.style:
+                                break
+                            now_rich_draw.text += new_x_list[0]
+                            now_style_list = now_style_list[1:]
+                            new_x_list = new_x_list[1:]
+                        now_draw_list.draw_list.append(now_rich_draw)
+                        now_draw_list.width += len(now_rich_draw.text)
                     new_x_list = ""
             elif set_map_button and map_x_list[i : i + 12] != "</mapbutton>":
                 now_cmd += map_x_list[i]
@@ -156,10 +173,27 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 i += 11
             i += 1
         if len(new_x_list):
-            now_draw = game_type.MapDrawText()
-            now_draw.text = new_x_list
-            now_draw_list.draw_list.append(now_draw)
-            now_draw_list.width += text_handle.get_text_index(new_x_list)
+            now_rich_draw_list:List[game_type.MapDraw] = []
+            now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")
+            new_x_list = rich_text.remove_rich_cache(new_x_list)
+            while 1:
+                if not len(new_x_list):
+                    break
+                now_rich_draw = game_type.MapDrawText()
+                now_rich_draw.text = new_x_list[0]
+                now_rich_draw.style = now_style_list[0]
+                now_style_list = now_style_list[1:]
+                new_x_list = new_x_list[1:]
+                while 1:
+                    if not len(new_x_list):
+                        break
+                    if now_style_list[0] != now_rich_draw.style:
+                        break
+                    now_rich_draw.text += new_x_list[0]
+                    now_style_list = now_style_list[1:]
+                    new_x_list = new_x_list[1:]
+                now_draw_list.draw_list.append(now_rich_draw)
+                now_draw_list.width += len(now_rich_draw.text)
         map_draw_data.draw_text.append(now_draw_list)
     return map_draw_data
 

@@ -345,6 +345,8 @@ class MapDrawText:
         """ 要绘制的文本 """
         self.is_button: bool = 0
         """ 是否是场景按钮 """
+        self.style: str = ""
+        """ 绘制的样式 """
 
 
 class TargetPath:
