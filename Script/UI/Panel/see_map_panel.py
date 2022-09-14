@@ -73,7 +73,7 @@ class SeeMapPanel:
                 # print("fix_width:",fix_width)
                 fix_draw.draw()
                 for draw_text in now_draw_line.draw_list:
-                    if draw_text.is_button and draw_text.text != character_scene_id:
+                    if "is_button" in draw_text.__dict__ and draw_text.is_button and draw_text.text != character_scene_id:
                         scene_path = map_handle.get_scene_path_for_map_scene_id(
                             self.now_map, draw_text.text
                         )
@@ -85,10 +85,12 @@ class SeeMapPanel:
                         return_list.append(now_draw.return_text)
                     else:
                         now_draw = draw.NormalDraw()
+                        if draw_text.text == character_scene_id:
+                            now_draw.style = "nowmap"
+                        else:
+                            now_draw.style = draw_text.style
                         now_draw.text = draw_text.text
                         now_draw.width = self.width
-                        if draw_text.is_button and draw_text.text == character_scene_id:
-                            now_draw.style = "nowmap"
                         now_draw.draw()
                 line_feed.draw()
             path_edge = map_data.path_edge

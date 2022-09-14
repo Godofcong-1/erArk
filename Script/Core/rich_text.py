@@ -15,18 +15,22 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
     text_message -- 原始文本
     default_style -- 无富文本样式时的默认样式
     """
-    style_name_list = game_config.config_bar_data
+    style_name_list = game_config.config_font_data
     style_index = 0
     style_last_index = None
     style_max_index = None
     style_list = []
     for key in style_name_list:
+        if key == default_style:
+            continue
         style_text_head = "<" + key + ">"
         if style_text_head in text_message:
             style_index = 1
+            break
     if style_index == 0:
         style_list = [default_style] * len(text_message)
     else:
+        cache.output_text_style = default_style
         for i in range(0, len(text_message)):
             input_text_style_size = text_message.find(">", i) + 1
             input_text_style = text_message[i + 1 : input_text_style_size - 1]
@@ -37,12 +41,13 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
                 style_max_index = input_text_style_size
                 if input_text_style[0] == "/":
                     if cache.text_style_position == 1:
-                        cache.output_text_style = "standard"
+                        cache.output_text_style = default_style
                         cache.text_style_position = 0
-                        cache.text_style_cache = ["standard"]
+                        cache.text_style_cache = [default_style]
                     else:
-                        cache.text_style_position = cache.text_style_position - 1
-                        cache.output_text_style = cache.text_style_cache[cache.text_style_position]
+                        cache.output_text_style = default_style
+                        cache.text_style_position = 0
+                        cache.text_style_cache = [default_style]
                 else:
                     cache.text_style_position = len(cache.text_style_cache)
                     cache.text_style_cache.append(input_text_style)
