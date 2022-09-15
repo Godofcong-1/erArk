@@ -561,6 +561,8 @@ def handle_wait():
     """处理等待五分钟指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 

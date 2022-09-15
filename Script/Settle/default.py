@@ -432,6 +432,9 @@ def handle_eat_food(
                 character_id, target_data.cid, add_favorability, change_data, target_change, now_time
             )
         character_data.behavior.food_name = food_name
+        # if character_data.food_bag[food.uid]:
+        # print(f"debug food.uid = {food.uid}")
+        # print(f"debug character_data.food_bag = {character_data.food_bag}")
         del character_data.food_bag[food.uid]
 
 

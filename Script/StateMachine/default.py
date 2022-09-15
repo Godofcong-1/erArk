@@ -317,11 +317,12 @@ def character_chat_rand_character(character_id: int):
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
     character_list = list(character_set)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.CHAT
-    character_data.behavior.duration = 10
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_CHAT
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.CHAT
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_CHAT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.STROKE_RAND_CHARACTER)
@@ -337,11 +338,12 @@ def character_stroke_rand_character(character_id: int):
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
     character_list = list(character_set)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.STROKE
-    character_data.behavior.duration = 10
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_STROKE
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.STROKE
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_STROKE
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_TO_DR)
@@ -458,11 +460,12 @@ def character_singing_to_rand_character(character_id: int):
         ].character_list
     )
     character_list.remove(character_id)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.SINGING
-    character_data.behavior.duration = 10
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_SINGING
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.SINGING
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_SINGING
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.PLAY_INSTRUMENT_RAND_CHARACTER)
@@ -479,11 +482,12 @@ def character_play_instrument_to_rand_character(character_id: int):
         ].character_list
     )
     character_list.remove(character_id)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
-    character_data.behavior.duration = 30
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+        character_data.behavior.duration = 30
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.PEE)
