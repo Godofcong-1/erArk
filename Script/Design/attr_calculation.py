@@ -170,6 +170,15 @@ def get_first_record_zero() -> dict:
     return first_record_data
 
 
+def get_pl_ability_zero() -> dict:
+    """
+    直接将玩家能力结构体归0
+    """
+    pl_ability_data = game_type.PLAYER_ABILITY()
+
+    return pl_ability_data
+
+
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

@@ -361,6 +361,15 @@ class FIRST_RECORD:
         """ A处女道具 -1为无，0为手指，1为振动棒 """
 
 
+class PLAYER_ABILITY:
+    """玩家能力结构体"""
+
+    def __init__(self):
+
+        self.follow_count: int = 1
+        """ 最大同时跟随人数 """
+
+
 # class Height:
 #     """身高数据结构体"""
 
@@ -640,6 +649,8 @@ class Character:
         """ 助理角色id """
         self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
         """ 角色作为助理的情况 """
+        self.pl_ability: PLAYER_ABILITY = PLAYER_ABILITY()
+        """ 玩家的特殊能力 """
 
 class Cache:
     """游戏缓存数据结构体"""
