@@ -57,6 +57,10 @@ class CharacterStatus:
     """ 结束H状态 """
     STATUS_PEE = 140
     """ 解手 """
+    STATUS_SINGING = 151
+    """ 唱歌 """
+    STATUS_PLAY_INSTRUMENT = 152
+    """ 演奏乐器 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -332,6 +336,10 @@ class Behavior:
     """ 结束H """
     PEE = 140
     """ 解手 """
+    SINGING = 151
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 152
+    """ 演奏乐器 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -586,6 +594,8 @@ class StateMachine:
     """ 移动至食堂 """
     MOVE_TO_REST_ROOM = 18
     """ 移动至休息室 """
+    MOVE_TO_CLASSIC_MUSIC_ROOM = 19
+    """ 移动至夕照区音乐室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -596,6 +606,10 @@ class StateMachine:
     """ 休息一会儿 """
     SLEEP = 44
     """ 睡觉 """
+    SINGING = 45
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 46
+    """ 演奏乐器 """
     PEE = 50
     """ 解手 """
 
@@ -612,6 +626,10 @@ class StateMachine:
     """ 和场景里随机对象聊天 """
     STROKE_RAND_CHARACTER = 201
     """ 和场景里随机对象身体接触 """
+    SINGING_RAND_CHARACTER = 202
+    """ 唱歌给房间里随机角色听 """
+    PLAY_INSTRUMENT_RAND_CHARACTER = 203
+    """ 演奏乐器给房间里随机角色听 """
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -882,6 +900,8 @@ class Premise:
     """ 在休息室中 """
     NOT_IN_REST_ROOM = "not_in_restroom"
     """ 不在休息室中 """
+    IN_MUSIC_ROOM = "in_music_room"
+    """ 在音乐室中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -1217,6 +1237,8 @@ class Premise:
     """ 已持有相机 """
     HAVE_VIDEO_RECORDER = "have_video_recorder"
     """ 已持有录像机 """
+    HAVE_INSTRUMENT = "have_instrument"
+    """ 已持有乐器 """
 
     HAVE_NIPPLE_CLAMP = "have_nipple_clamp"
     """ 已持有乳头夹 """
@@ -1419,8 +1441,6 @@ class Premise:
     """ 拥有袜子 """
     CHEST_IS_NOT_CLIFF = "65"
     """ 胸围不是绝壁 """
-    IN_MUSIC_ROOM = "68"
-    """ 处于音乐室 """
     NO_EXCELLED_AT_SINGING = "69"
     """ 不擅长演唱 """
     TARGET_HEIGHT_LOW = "71"
@@ -1680,6 +1700,10 @@ class BehaviorEffect:
     """ 制作指定食物 """
     KONWLEDGE_ADD_MONEY = 105
     """ 根据自己（再加上交互对象的）学识获得少量金钱 """
+    SING_ADD_ADJUST = 106
+    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
+    PLAY_INSTRUMENT_ADD_ADJUST = 107
+    """ （演奏乐器用）根据交互对象的音乐技能进行好感度、信赖、好意调整 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -2274,12 +2298,14 @@ class Instruct:
     """ H结束 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
-    # SINGING = 0
-    # """ 唱歌 """
-    # PLAY_INSTRUMENT = 0
-    # """ 演奏乐器 """
     PEE = 0
     """ 解手 """
+
+    #娱乐#
+    SINGING = 0
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 0
+    """ 演奏乐器 """
 
 
     #工作#

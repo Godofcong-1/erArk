@@ -221,7 +221,7 @@ def judge_character_tired_sleep(character_id : int):
             character_data.is_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.width = width
-            draw_text = "太累了，决定回房间睡觉 " if character_data.tired else "太困了，决定回房间睡觉"
+            draw_text = "太累了，决定回房间睡觉\n" if character_data.tired else "太困了，决定回房间睡觉\n"
             now_draw.text = character_data.name + draw_text
             now_draw.draw()
 
