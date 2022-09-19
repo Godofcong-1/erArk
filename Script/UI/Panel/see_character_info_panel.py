@@ -382,6 +382,8 @@ class SeeCharacterClothPanel:
                 for cloth_id in target_character_data.cloth[clothing_type]:
                     cloth_name = game_config.config_clothing_tem[cloth_id].name
                     now_text += f" {cloth_name}"
+                    if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
+                        now_text += f"(精液)"
         cloth_text_list.append(now_text)
 
         if cloth_text_list == []:

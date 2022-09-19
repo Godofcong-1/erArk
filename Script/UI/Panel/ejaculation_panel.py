@@ -105,8 +105,9 @@ class Ejaculation_Panel:
             for i in range(14):
                 position_list.append(target_data.dirty.body_semen[i][0])
         elif eja_type == "服装":
-            for i in range(18):
-                position_list.append(target_data.dirty.cloth_semen[i][0])
+            for i in range(14):
+                if len(target_data.cloth[i]):
+                    position_list.append(target_data.dirty.cloth_semen[i][0])
 
         self.handle_panel = panel.PageHandlePanel(
             position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
@@ -174,6 +175,12 @@ class Ejaculation_NameDraw:
                 if self.button_id in {6,7,8}:
                     position_flag = False
 
+        if self.panel_type == 2:
+            for i in range(len(self.cloth_text_list)):
+                if self.text == self.cloth_text_list[i]:
+                    self.index = i
+
+
         if is_button and ( position_flag or cloth_flag ):
             if num_button:
                 index_text = text_handle.id_index(button_id)
@@ -234,11 +241,11 @@ class Ejaculation_NameDraw:
 
         # 更新污浊类里的服装部位精液参数
         elif self.panel_type == 2:
-            target_data.dirty.cloth_semen[self.button_id][1] += semen_count
-            target_data.dirty.cloth_semen[self.button_id][3] += semen_count
-            target_data.dirty.cloth_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.button_id][1])
+            target_data.dirty.cloth_semen[self.index][1] += semen_count
+            target_data.dirty.cloth_semen[self.index][3] += semen_count
+            target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.index][1])
 
-            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.button_id] + semen_text
+            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 
         now_draw = draw.WaitDraw()
         now_draw.text = now_text

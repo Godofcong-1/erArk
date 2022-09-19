@@ -55,15 +55,17 @@ class Find_call_Panel:
                 if npc_id != 0:
                     character_data = cache.character_data[npc_id]
                     name = character_data.name
+                    id = str(character_data.adv)
                     scene_position = character_data.position
                     scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
                     if scene_position_str[-1] == "0":
                         scene_position_str = scene_position_str[:-2] + "入口"
                     # scene_name = cache.scene_data[scene_position_str].scene_name
+                    npc_list[npc_id-1] = f"{name}({id}):{scene_position_str}"
                     if character_data.is_follow == 1:
-                        npc_list[npc_id-1] = name + " : " + scene_position_str + "   跟随中"
+                        npc_list[npc_id-1] += "   跟随中"
                     else:
-                        npc_list[npc_id-1] = name + " : " + scene_position_str + "   未跟随"
+                        npc_list[npc_id-1] += "   未跟随"
                     # print("npc_list[npc_id-1] :",npc_list[npc_id-1])
             self.handle_panel.text_list = npc_list
             self.handle_panel.update()

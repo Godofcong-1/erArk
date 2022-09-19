@@ -59,7 +59,14 @@ class Dirty_Panel:
                     a_clean_text = a_clean_list[target_data.dirty.a_clean]
                     now_text += a_clean_text
                 if i == 8:
-                    now_text += " <残留的尿渍>"
+                    if target_data.urinate_point <= 30:
+                        now_text += " <残留的尿渍>"
+                    elif target_data.urinate_point <= 120:
+                        now_text += " <洁净>"
+                    elif target_data.urinate_point <= 191:
+                        now_text += " <些许尿意>"
+                    elif target_data.urinate_point >= 192:
+                        now_text += " <充盈的尿意>"
                 if target_data.dirty.body_semen[i][1] != 0:
                     now_text += " <" + attr_text.get_semen_now_text(target_data.dirty.body_semen[i][2],0) + ">(" + str(target_data.dirty.body_semen[i][1]) + "ml)"
                 now_text += "\n"
