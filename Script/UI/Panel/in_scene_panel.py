@@ -253,6 +253,13 @@ class InScenePanel:
                 else:
                     label.draw()
 
+            #↓以下为服装栏的内容↓#
+            if character_data.target_character_id :
+                character_cloth_draw = see_character_info_panel.SeeCharacterClothPanel(
+                    character_data.cid, self.width, 20, 0, 0
+                )
+                character_cloth_draw.draw()
+
             #↓以下为H状态栏的内容↓#
             character_H_status_draw_list = []
             if character_data.target_character_id :

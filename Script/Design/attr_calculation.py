@@ -179,6 +179,19 @@ def get_pl_ability_zero() -> dict:
     return pl_ability_data
 
 
+def get_cloth_zero() -> dict:
+    """
+    遍历服装类型，将每个都设为空
+    """
+
+    cloth_dict = {}
+
+    for clothing_type in game_config.config_clothing_type:
+        cloth_dict[clothing_type] = []
+
+    return cloth_dict
+
+
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

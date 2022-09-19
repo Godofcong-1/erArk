@@ -101,20 +101,24 @@ class CharacterStateType:
     """ 类型名 """
 
 
-class ClothingSuit:
-    """ 套装配置数据 """
+class ClothingTem:
+    """ 服装模板 """
 
     cid: int
-    """ 套装id """
-    clothing_id: int
-    """ 服装id """
-    suit_type: int
-    """ 套装编号 """
-    sex: int
-    """ 性别限制 """
+    """ 模板id """
+    name: str
+    """ 服装名字 """
+    clothing_type: int
+    """ 服装类型 """
+    npc: int
+    """ 服装角色限制 """
+    tag: int
+    """ 服装用途标签 """
+    describe: str
+    """ 描述 """
 
 
-class ClothingTem:
+class ClothingTem_back:
     """ 服装模板 """
 
     cid: int

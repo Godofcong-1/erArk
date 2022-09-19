@@ -70,6 +70,8 @@ class NpcTem:
         """ 种族预设 """
         self.Talent: Dict[int,int] = {}
         """ 素质预设 """
+        self.Cloth: list = []
+        """ 服装预设 """
         self.Hp: int = 0
         """ HP预设 """
         self.Mp: int = 0
@@ -518,16 +520,18 @@ class Character:
         """ 角色当前愤怒槽 """
         self.state: int = 0
         """ 角色当前状态 """
-        self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
-        """
-        角色拥有的服装数据
-        服装穿戴位置:服装唯一id:服装数据
-        """
-        self.clothing_data: Dict[int, Set] = {}
-        """
-        角色拥有的服装类型数据集合
-        服装表id:服装唯一id
-        """
+        # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
+        # """
+        # 角色拥有的服装数据
+        # 服装穿戴位置:服装唯一id:服装数据
+        # """
+        # self.clothing_data: Dict[int, Set] = {}
+        # """
+        # 角色拥有的服装类型数据集合
+        # 服装表id:服装唯一id
+        # """
+        self.cloth: Dict[int,List] = {}
+        """ 角色穿着的服装 部位:衣服id"""
         # self.item: Set = set()
         # """ 旧：角色拥有的道具id集合 """
         self.item: Dict[int,int] = {}

@@ -339,6 +339,71 @@ class SeeCharacterStatusPanel:
             else:
                 label.draw()
 
+class SeeCharacterClothPanel:
+    """
+    显示角色服装面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, type_number: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        self.type_number = type_number
+        """ 显示的状态类型 """
+        character_data = cache.character_data[0]
+        target_character_data = cache.character_data[character_data.target_character_id]
+
+        type_line = draw.LittleTitleLineDraw("服装", width, ":")
+        self.draw_list.append(type_line)
+
+        cloth_text_list = []
+        now_text = ""
+        for clothing_type in game_config.config_clothing_type:
+            type_name = game_config.config_clothing_type[clothing_type].name
+            if len(target_character_data.cloth[clothing_type]):
+                now_text += f"  [{type_name}]:"
+                for cloth_id in target_character_data.cloth[clothing_type]:
+                    cloth_name = game_config.config_clothing_tem[cloth_id].name
+                    now_text += f" {cloth_name}"
+        cloth_text_list.append(now_text)
+
+        if cloth_text_list == []:
+            now_text = "  全裸"
+            cloth_text_list.append(now_text)
+
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(cloth_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+
 class SeeCharacterHStatePanel:
     """
     显示角色H状态面板对象
