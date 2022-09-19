@@ -376,6 +376,8 @@ class SeeCharacterClothPanel:
         for clothing_type in game_config.config_clothing_type:
             type_name = game_config.config_clothing_type[clothing_type].name
             if len(target_character_data.cloth[clothing_type]):
+                if clothing_type == 8 and now_text != "":
+                    now_text += "\n"
                 now_text += f"  [{type_name}]:"
                 for cloth_id in target_character_data.cloth[clothing_type]:
                     cloth_name = game_config.config_clothing_tem[cloth_id].name
