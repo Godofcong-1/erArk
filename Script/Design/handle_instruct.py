@@ -1294,6 +1294,7 @@ def handle_lap_pillow():
     _("掀起裙子"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_SKIRT,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_raise_skirt():

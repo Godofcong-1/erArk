@@ -378,9 +378,11 @@ class SeeCharacterClothPanel:
             type_name = game_config.config_clothing_type[clothing_type].name
             # 当该类型里有衣服存在的时候才显示
             if len(target_character_data.cloth[clothing_type]):
-                # 正常情况下不显示胸部和内裤的服装
+                # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
                 if clothing_type in {6,9} and not cache.debug_mode:
-                    continue
+                    print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
+                    if not target_character_data.cloth_see[clothing_type]:
+                        continue
                 # 当显示到下衣8的时候，换行
                 if clothing_type == 8 and now_text != "":
                     now_text += "\n"

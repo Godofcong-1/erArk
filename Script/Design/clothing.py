@@ -4,10 +4,30 @@ import uuid
 from typing import Dict
 from Script.Core import game_type,cache_control
 from Script.Config import game_config
+from Script.Design import attr_calculation
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
+
+def get_npc_cloth(character_id: int):
+    """
+    根据csv换一身同样的衣服，然后随机内衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        character_data.cloth = attr_calculation.get_cloth_zero()
+        tem_character = cache.npc_tem_data[character_id]
+
+        for cloth_id in tem_character.Cloth:
+            type = game_config.config_clothing_tem[cloth_id].clothing_type
+            # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+            character_data.cloth[type].append(cloth_id)
+        get_underwear(character_id)
 
 def get_underwear(character_id: int):
     """

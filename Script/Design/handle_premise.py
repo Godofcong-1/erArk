@@ -2923,19 +2923,19 @@ def handle_no_wear_pants(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.NO_WEAR_SKIRT)
-def handle_no_wear_skirt(character_id: int) -> int:
-    """
-    校验角色是否没穿短裙
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if 3 not in character_data.put_on or character_data.put_on[3] is None or character_data.put_on[3] == "":
-        return 1
-    return 0
+# @add_premise(constant.Premise.NO_WEAR_SKIRT)
+# def handle_no_wear_skirt(character_id: int) -> int:
+#     """
+#     校验角色是否没穿短裙
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if 3 not in character_data.put_on or character_data.put_on[3] is None or character_data.put_on[3] == "":
+#         return 1
+#     return 0
 
 
 @add_premise(constant.Premise.NO_WEAR_SHOES)
@@ -5561,6 +5561,42 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant.Premise.WEAR_SKIRT)
+def handle_wear_skirt(character_id: int) -> int:
+    """
+    穿着裙子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    cloth_id = character_data.cloth[8][0]
+    if game_config.config_clothing_tem[cloth_id].tag == 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_SKIRT)
+def handle_t_wear_skirt(character_id: int) -> int:
+    """
+    交互对象穿着裙子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    cloth_id = target_data.cloth[8][0]
+    if game_config.config_clothing_tem[cloth_id].tag == 5:
+        return 1
+    else:
+        return 0
+
 
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)

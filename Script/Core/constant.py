@@ -1338,6 +1338,13 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
+    WEAR_SKIRT = "wear_skirt"
+    """ 穿着裙子 """
+    TARGET_WEAR_SKIRT = "t_wear_skirt"
+    """ 交互对象穿着裙子 """
+
+
+
 
     HYPOSTHENIA = "83"
     """ 体力不足 """
@@ -1417,8 +1424,8 @@ class Premise:
     """ 没穿胸罩 """
     NO_WEAR_PANTS = "52"
     """ 没穿裤子 """
-    NO_WEAR_SKIRT = "53"
-    """ 没穿短裙 """
+    # NO_WEAR_SKIRT = "53"
+    # """ 没穿短裙 """
     NO_WEAR_SHOES = "54"
     """ 没穿鞋子 """
     NO_WEAR_SOCKS = "55"
@@ -1927,6 +1934,16 @@ class BehaviorEffect:
 
     CHANGE_UNDERWERA = 601
     """ 换新的内衣（胸部+内裤） """
+    BRA_SEE = 602
+    """ 胸罩可视 """
+    TARGET_BRA_SEE = 603
+    """ 交互对象胸罩可视 """
+    PAN_SEE = 604
+    """ 内裤可视 """
+    TARGET_PAN_SEE = 605
+    """ 交互对象内裤可视 """
+    CLOTH_SEE_ZERO = 606
+    """ 内衣可视清零 """
 
 
 

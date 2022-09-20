@@ -73,6 +73,14 @@ def handle_talk(character_id: int):
         scene_name = scene_data.scene_name
         player_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+        TagetBraId = target_data.cloth[6][0]
+        TagetSkiId = target_data.cloth[8][0]
+        TagetPanId = target_data.cloth[9][0]
+        TBraName = game_config.config_clothing_tem[TagetBraId].name
+        TSkiName = game_config.config_clothing_tem[TagetSkiId].name
+        TPanName = game_config.config_clothing_tem[TagetPanId].name
+
         now_talk_text = now_talk_text.format(
             NickName=character_data.nick_name,
             FoodName=character_data.behavior.food_name,
@@ -81,6 +89,9 @@ def handle_talk(character_id: int):
             SceneName=scene_name,
             PlayerNickName=player_data.nick_name,
             TargetName=target_data.name,
+            TagetBraName=TBraName,
+            TagetSkiName=TSkiName,
+            TagetPanName=TPanName,
         )
         now_draw = draw.LineFeedWaitDraw()
         now_draw.text = now_talk_text

@@ -532,6 +532,8 @@ class Character:
         # """
         self.cloth: Dict[int,List] = {}
         """ 角色穿着的服装 部位:衣服id"""
+        self.cloth_see: Dict[int,bool] = {}
+        """ 角色穿着的服装能否被看见 部位:能否"""
         # self.item: Set = set()
         # """ 旧：角色拥有的道具id集合 """
         self.item: Dict[int,int] = {}

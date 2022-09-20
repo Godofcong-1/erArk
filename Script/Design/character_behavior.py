@@ -138,16 +138,16 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             now_draw.width = window_width
             now_draw.text = "\n已过24点，开始结算各种数据\n"
             now_draw.draw()
-        #1.结算数值为珠
+        # 结算数值为珠
         settle_character_juel(character_id)
-        #2.清零射精槽
+        # 清零射精槽
         if character_id == 0:
             character_data.eja_point = 0
-        #3.清零高潮程度
+        # 清零高潮程度
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-        #4.清零并随机重置生气程度
+        # 清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-        #5.清零污浊状态
+        # 清零污浊状态
         character_data.dirty = attr_calculation.get_dirty_zero()
         #自动存档，用玩家id来限制只存一次
         if character_id == 0:
