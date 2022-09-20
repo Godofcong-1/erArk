@@ -373,15 +373,23 @@ class SeeCharacterClothPanel:
 
         cloth_text_list = []
         now_text = ""
+        # 遍历全部衣服类型
         for clothing_type in game_config.config_clothing_type:
             type_name = game_config.config_clothing_type[clothing_type].name
+            # 当该类型里有衣服存在的时候才显示
             if len(target_character_data.cloth[clothing_type]):
+                # 正常情况下不显示胸部和内裤的服装
+                if clothing_type in {6,9} and not cache.debug_mode:
+                    continue
+                # 当显示到下衣8的时候，换行
                 if clothing_type == 8 and now_text != "":
                     now_text += "\n"
                 now_text += f"  [{type_name}]:"
+                # 如果有多个衣服，则依次显示
                 for cloth_id in target_character_data.cloth[clothing_type]:
                     cloth_name = game_config.config_clothing_tem[cloth_id].name
                     now_text += f" {cloth_name}"
+                    # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         now_text += f"(精液)"
         cloth_text_list.append(now_text)

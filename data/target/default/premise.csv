@@ -46,6 +46,12 @@ str,str,str
 51,42,not_in_restroom
 52,43,mp_0
 53,43,in_restroom
+54,44,sleep_ge_90
+55,44,urinate_ge_80
+56,44,not_in_dor
+57,45,sleep_ge_90
+58,45,urinate_ge_80
+59,45,in_dor
 
 100,10,not_follow
 101,11,not_follow

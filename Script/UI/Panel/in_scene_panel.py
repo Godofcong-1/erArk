@@ -49,8 +49,8 @@ class InScenePanel:
         character_handle_panel = panel.PageHandlePanel(
             [],
             see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
+            20,
             10,
-            5,
             self.width,
             1,
             0,
@@ -88,7 +88,7 @@ class InScenePanel:
             now_position_draw.text = now_position_text
             now_position_draw.width = self.width - len(game_time_draw)
             meet_draw = draw.NormalDraw()
-            meet_draw.text = _("这里有:")
+            meet_draw.text = _("当前位置的角色一览:")
             meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0

@@ -1597,6 +1597,7 @@ class BehaviorEffect:
     """ 去掉身上所有的道具 """
     TARGET_ITEM_OFF = 33
     """ 交互对象去掉身上所有的道具 """
+
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42
@@ -1923,6 +1924,11 @@ class BehaviorEffect:
     """ 增加1指挥经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 自己（和对方一起）增加1学识经验 """
+
+    CHANGE_UNDERWERA = 601
+    """ 换新的内衣（胸部+内裤） """
+
+
 
 class SecondBehavior:
     """二段结算行为函数"""

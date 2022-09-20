@@ -2,8 +2,52 @@ import random
 import math
 import uuid
 from typing import Dict
-from Script.Core import game_type
+from Script.Core import game_type,cache_control
 from Script.Config import game_config
+
+cache: game_type.Cache = cache_control.cache
+""" 游戏缓存数据 """
+
+
+def get_underwear(character_id: int):
+    """
+    随机穿内衣，包括胸罩和内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    character_data = cache.character_data[character_id]
+    # 60,幼女,61,萝莉,62,少女,63,成年,64,长生者
+
+    if not len(character_data.cloth[6]):
+        cloth_list = []
+        if character_data.talent[60] or character_data.talent[61]:
+            for cloth_id in game_config.config_clothing_tem:
+                if game_config.config_clothing_tem[cloth_id].clothing_type == 6 and  game_config.config_clothing_tem[cloth_id].tag == 1:
+                    cloth_list.append(cloth_id)
+            bra_id = random.choice(cloth_list)
+        else:
+            for cloth_id in game_config.config_clothing_tem:
+                if game_config.config_clothing_tem[cloth_id].clothing_type == 6 and  game_config.config_clothing_tem[cloth_id].tag == 0:
+                    cloth_list.append(cloth_id)
+            bra_id = random.choice(cloth_list)
+        character_data.cloth[6].append(bra_id)
+
+
+    if not len(character_data.cloth[9]):
+        cloth_list = []
+        if character_data.talent[60] or character_data.talent[61]:
+            for cloth_id in game_config.config_clothing_tem:
+                if game_config.config_clothing_tem[cloth_id].clothing_type == 9 and  game_config.config_clothing_tem[cloth_id].tag == 1:
+                    cloth_list.append(cloth_id)
+            pan_id = random.choice(cloth_list)
+        else:
+            for cloth_id in game_config.config_clothing_tem:
+                if game_config.config_clothing_tem[cloth_id].clothing_type == 9 and  game_config.config_clothing_tem[cloth_id].tag == 0:
+                    cloth_list.append(cloth_id)
+            pan_id = random.choice(cloth_list)
+        character_data.cloth[9].append(pan_id)
 
 
 def creator_suit(suit_id: int, sex: int) -> Dict[int, game_type.Clothing]:

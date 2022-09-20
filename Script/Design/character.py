@@ -10,6 +10,8 @@ from Script.Core import (
 from Script.Design import (
     attr_calculation,
     clothing,
+    game_time,
+
 )
 from Script.Config import game_config
 from Script.UI.Moudle import draw
@@ -65,6 +67,8 @@ def init_attr(character_id: int):
     character_data.mana_point = character_data.mana_point_max
     character_data.angry_point = random.randrange(1,35)
     character_data.hunger_point = 240
+    if character_id:
+        clothing.get_underwear(character_id)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
@@ -355,11 +359,9 @@ def judge_character_time_over_24(character_id: int) -> bool:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_time: datetime.datetime = character_data.behavior.start_time
+    start_time: datetime.datetime = character_data.behavior.start_time
+    end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     judge = 0
-    if now_time is None:
-        now_time = cache.game_time
-    if cache.game_time.day != now_time.day:
+    if end_time.day != start_time.day:
         judge = 1
-    now_time = cache.game_time
     return judge
