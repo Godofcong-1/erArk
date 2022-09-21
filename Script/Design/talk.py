@@ -74,12 +74,21 @@ def handle_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-        TagetBraId = target_data.cloth[6][0]
-        TagetSkiId = target_data.cloth[8][0]
-        TagetPanId = target_data.cloth[9][0]
-        TBraName = game_config.config_clothing_tem[TagetBraId].name
-        TSkiName = game_config.config_clothing_tem[TagetSkiId].name
-        TPanName = game_config.config_clothing_tem[TagetPanId].name
+        if character_id == 0 and len(target_data.cloth[6]):
+            TagetBraId = target_data.cloth[6][0]
+            TBraName = game_config.config_clothing_tem[TagetBraId].name
+        else:
+            TBraName = ""
+        if character_id == 0 and len(target_data.cloth[8]):
+            TagetSkiId = target_data.cloth[8][0]
+            TSkiName = game_config.config_clothing_tem[TagetSkiId].name
+        else:
+            TSkiName = ""
+        if character_id == 0 and len(target_data.cloth[9]):
+            TagetPanId = target_data.cloth[9][0]
+            TPanName = game_config.config_clothing_tem[TagetPanId].name
+        else:
+            TPanName = ""
 
         now_talk_text = now_talk_text.format(
             NickName=character_data.nick_name,

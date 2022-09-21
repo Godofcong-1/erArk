@@ -105,9 +105,9 @@ class Ejaculation_Panel:
             for i in range(14):
                 position_list.append(target_data.dirty.body_semen[i][0])
         elif eja_type == "服装":
-            for i in range(14):
-                if len(target_data.cloth[i]):
-                    position_list.append(target_data.dirty.cloth_semen[i][0])
+            for clothing_type in game_config.config_clothing_type:
+                if len(target_data.cloth[clothing_type]):
+                    position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
 
         self.handle_panel = panel.PageHandlePanel(
             position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
@@ -144,7 +144,10 @@ class Ejaculation_NameDraw:
         """ 按钮返回值 """
         self.position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
         """ 位置文本列表 """
-        self.cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
+        self.cloth_text_list = []
+        for clothing_type in game_config.config_clothing_type:
+            cloth_text = game_config.config_clothing_type[clothing_type].name
+            self.cloth_text_list.append(cloth_text)
         """ 衣服文本列表 """
         self.panel_type = 0
         name_draw = draw.NormalDraw()

@@ -519,7 +519,27 @@ class CharacterImageListDraw:
         fix_draw.text = center_fix
         fix_draw.draw()
         self.return_list = []
+
+        # 优先绘制当前交互对象
+        if len(self.character_list):
+            text_draw = draw.NormalDraw()
+            text_draw.width = 1
+            text_draw.text = "→"
+            text_draw.draw()
+
+            player_data:game_type.Character = cache.character_data[0]
+            now_draw = CharacterImageButton(player_data.target_character_id,self.width)
+            now_draw.draw()
+            self.return_list.append(now_draw.return_text)
+
+            text_draw = draw.NormalDraw()
+            text_draw.width = 1
+            text_draw.text = "←"
+            text_draw.draw()
+
         for now_character in self.character_list:
+            if now_character == player_data.target_character_id:
+                continue
             now_draw = CharacterImageButton(now_character,self.width)
             now_draw.draw()
             self.return_list.append(now_draw.return_text)

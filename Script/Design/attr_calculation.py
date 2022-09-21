@@ -124,13 +124,13 @@ def get_dirty_zero() -> dict:
     """
     dirty_data = game_type.DIRTY()
     position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
-    cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
 
     for position_text in position_text_list:
         now_list = [position_text,0,0,0]
         dirty_data.body_semen.append(now_list)
 
-    for cloth_text in cloth_text_list:
+    for clothing_type in game_config.config_clothing_type:
+        cloth_text = game_config.config_clothing_type[clothing_type].name
         now_list = [cloth_text,0,0,0]
         dirty_data.cloth_semen.append(now_list)
 
