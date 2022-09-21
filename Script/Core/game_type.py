@@ -233,34 +233,34 @@ class NormalConfig:
     """ 输入框字体大小 """
 
 
-class Clothing:
-    """服装数据结构体"""
+# class Clothing:
+#     """服装数据结构体"""
 
-    def __init__(self):
-        self.uid: UUID = ""
-        """ 服装对象的唯一id """
-        self.tem_id: int = 0
-        """ 服装配表id """
-        self.sexy: int = 0
-        """ 服装性感属性 """
-        self.handsome: int = 0
-        """ 服装帅气属性 """
-        self.elegant: int = 0
-        """ 服装典雅属性 """
-        self.fresh: int = 0
-        """ 服装清新属性 """
-        self.sweet: int = 0
-        """ 服装可爱属性 """
-        self.warm: int = 0
-        """ 服装保暖属性 """
-        self.cleanliness: int = 0
-        """ 服装清洁属性 """
-        self.price: int = 0
-        """ 服装价值属性 """
-        self.evaluation: str = ""
-        """ 服装评价文本 """
-        self.wear: int = 0
-        """ 穿戴部位 """
+#     def __init__(self):
+#         self.uid: UUID = ""
+#         """ 服装对象的唯一id """
+#         self.tem_id: int = 0
+#         """ 服装配表id """
+#         self.sexy: int = 0
+#         """ 服装性感属性 """
+#         self.handsome: int = 0
+#         """ 服装帅气属性 """
+#         self.elegant: int = 0
+#         """ 服装典雅属性 """
+#         self.fresh: int = 0
+#         """ 服装清新属性 """
+#         self.sweet: int = 0
+#         """ 服装可爱属性 """
+#         self.warm: int = 0
+#         """ 服装保暖属性 """
+#         self.cleanliness: int = 0
+#         """ 服装清洁属性 """
+#         self.price: int = 0
+#         """ 服装价值属性 """
+#         self.evaluation: str = ""
+#         """ 服装评价文本 """
+#         self.wear: int = 0
+#         """ 穿戴部位 """
 
 
 
@@ -360,6 +360,22 @@ class FIRST_RECORD:
         """ A处女姿势 """
         self.first_a_sex_item: int = -1
         """ A处女道具 -1为无，0为手指，1为振动棒 """
+
+
+class PLAYER_COLLECTION:
+    """玩家收集品结构体"""
+
+    def __init__(self):
+
+
+        self.token_list:Dict[int,bool] = {}
+        """ 获得的NPC信物 """
+        self.first_panties: Dict[int,str] = {}
+        """ 获得的处子血胖次 """
+        self.npc_panties: Dict[int,list] = {}
+        """ 获得的角色胖次 """
+
+
 
 
 class PLAYER_ABILITY:
@@ -517,6 +533,12 @@ class Character:
         """ 角色当前射精槽 """
         self.angry_point: int = 0
         """ 角色当前愤怒槽 """
+        self.sleep_point : int = 0
+        """ 困倦值 6m=1点，16h=160点(max)"""
+        self.urinate_point : int = 0
+        """ 尿意值 1m=1点，4h=240点(max)"""
+        self.hunger_point : int = 0
+        """ 饥饿值 1m=1点，4h=240点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
@@ -529,6 +551,8 @@ class Character:
         # 角色拥有的服装类型数据集合
         # 服装表id:服装唯一id
         # """
+        self.clothing_tem: int = 0
+        """ 角色生成服装模板 """
         self.cloth: Dict[int,List] = {}
         """ 角色穿着的服装 部位:衣服id"""
         self.cloth_see: Dict[int,bool] = {}
@@ -555,8 +579,6 @@ class Character:
         """ 角色宿舍坐标 """
         self.birthday: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色生日数据 """
-        self.clothing_tem: int = 0
-        """ 角色生成服装模板 """
         # self.chest_tem: int = 0
         # """ 角色罩杯模板 """
         self.status_data: Dict[int, int] = {}
@@ -624,18 +646,10 @@ class Character:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}
         """ 高潮次数记录 """
-        self.token_list:Dict[int,bool] = {}
-        """ 玩家的信物获得记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
         self.tired : bool = 0
         """ 疲劳状态（HP=1） """
-        self.sleep_point : int = 0
-        """ 困倦值 6m=1点，16h=160点(max)"""
-        self.urinate_point : int = 0
-        """ 尿意值 1m=1点，4h=240点(max)"""
-        self.hunger_point : int = 0
-        """ 饥饿值 1m=1点，4h=240点(max)"""
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
         self.money : int = 0
@@ -656,6 +670,8 @@ class Character:
         """ 角色作为助理的情况 """
         self.pl_ability: PLAYER_ABILITY = PLAYER_ABILITY()
         """ 玩家的特殊能力 """
+        self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
+        """ 玩家的收藏品 """
 
 class Cache:
     """游戏缓存数据结构体"""

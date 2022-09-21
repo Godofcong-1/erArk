@@ -753,19 +753,20 @@ def handle_first_sex(
         target_data.first_record.first_sex_time = cache.game_time
         target_data.first_record.first_sex_place = target_data.position
         target_data.first_record.first_sex_posture = instruct_name
+        target_data.second_behavior[1051] = 1
+
+        # 处子血胖次
+        now_draw = draw.NormalDraw()
+        pan_id = target_data.cloth[9][0]
+        pan_name = game_config.config_clothing_tem[pan_id].name
+        target_data.cloth[9] = []
+        now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
+        now_draw.draw()
+        character_data.pl_collection.first_panties[character_data.target_character_id] = pan_name
+
+        # 道具破处
         if item_flag:
             target_data.first_record.first_sex_item = 1
-        if (not character_id) or (not target_data.cid):
-            # now_draw = draw.NormalDraw()
-            # now_draw.text = _("{character_name}于{sex_time}在{sex_palce}失去了处女\n").format(
-            #     character_name=target_data.name,
-            #     sex_time = str(target_data.first_record.first_sex_time.month) + "月" + str (target_data.first_record.first_sex_time.day) + "日",
-            #     sex_palce = attr_text.get_scene_path_text(target_data.first_record.first_sex_place),
-            # )
-            # now_draw.width = window_width
-            # now_draw.draw()
-            #处女的二段结算
-            target_data.second_behavior[1051] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)

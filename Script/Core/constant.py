@@ -722,6 +722,8 @@ class Panel:
     """ 道具面板 """
     ASSISTANT = 12
     """ 助理面板 """
+    COLLECTION = 13
+    """ 收藏品面板 """
 
 
 class Premise:
@@ -902,6 +904,8 @@ class Premise:
     """ 不在休息室中 """
     IN_MUSIC_ROOM = "in_music_room"
     """ 在音乐室中 """
+    IN_COLLECTION_ROOM = "in_collection_room"
+    """ 在藏品馆中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -2595,12 +2599,13 @@ class Instruct:
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
     SEE_DIRTY = 0
-    """ 显示污浊情况 """
+    """ 查看污浊情况 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0
     """ 关闭debug模式 """
-
+    SEE_COLLECTION = 0
+    """ 查看收藏品 """
 
 
 i = 0

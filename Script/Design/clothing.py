@@ -69,6 +69,8 @@ def get_underwear(character_id: int):
             pan_id = random.choice(cloth_list)
         character_data.cloth[9].append(pan_id)
 
+'''
+不用的旧函数
 
 def creator_suit(suit_id: int, sex: int) -> Dict[int, game_type.Clothing]:
     """
@@ -117,3 +119,5 @@ def creator_clothing(clothing_tem_id: int) -> game_type.Clothing:
     clothing_data.tem_id = clothing_tem_id
     clothing_data.wear = game_config.config_clothing_tem[clothing_tem_id].clothing_type
     return clothing_data
+
+'''

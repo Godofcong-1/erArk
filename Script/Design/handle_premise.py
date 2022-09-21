@@ -695,6 +695,24 @@ def handle_in_music_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.IN_COLLECTION_ROOM)
+def handle_in_collection_room(character_id: int) -> int:
+    """
+    校验角色是否在藏品馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.scene_tag == "Collection":
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
@@ -5591,11 +5609,11 @@ def handle_t_wear_skirt(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    cloth_id = target_data.cloth[8][0]
-    if game_config.config_clothing_tem[cloth_id].tag == 5:
-        return 1
-    else:
-        return 0
+    if len(target_data.cloth[8]):
+        cloth_id = target_data.cloth[8][0]
+        if game_config.config_clothing_tem[cloth_id].tag == 5:
+            return 1
+    return 0
 
 
 

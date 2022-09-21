@@ -3,7 +3,7 @@ from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle,attr_text
+from Script.Design import map_handle,attr_text,attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -82,9 +82,34 @@ class Dirty_Panel:
                 now_text = "\n"
                 for i in range(11):
                     now_text += "  " + target_data.dirty.body_semen[i][0] + "："
+
+                    # 小穴
+                    if i == 6:
+                        # 处女判定
+                        if not target_data.talent[0]:
+                            now_day = cache.game_time.day
+                            first_day = target_data.first_record.first_sex_time.day
+                            if now_day == first_day:
+                                now_text +=" <破处血>"
+
+                        # 润滑判定
+                        if target_data.status_data[8]:
+                            level = attr_calculation.get_status_level(target_data.status_data[8])
+                            if level <= 2:
+                                now_text +=" <些许爱液>"
+                            elif level <= 4:
+                                now_text +=" <充分湿润>"
+                            elif level <= 6:
+                                now_text +=" <泛滥的一塌糊涂>"
+                            else :
+                                now_text +=" <泛滥的一塌糊涂>"
+
+                    # 后穴
                     if i == 7:
                         a_clean_text = a_clean_list[target_data.dirty.a_clean]
                         now_text += a_clean_text
+
+                    # 尿道
                     if i == 8:
                         if target_data.urinate_point <= 30:
                             now_text += " <残留的尿渍>"
@@ -95,7 +120,7 @@ class Dirty_Panel:
                         elif target_data.urinate_point >= 192:
                             now_text += " <充盈的尿意>"
                     if target_data.dirty.body_semen[i][1] != 0:
-                        now_text += " <" + attr_text.get_semen_now_text(target_data.dirty.body_semen[i][2],0) + ">(" + str(target_data.dirty.body_semen[i][1]) + "ml)"
+                        now_text += f" <{str(target_data.dirty.body_semen[i][1])}ml精液>"
                     now_text += "\n"
                 now_text += "\n"
 
@@ -118,7 +143,7 @@ class Dirty_Panel:
                             now_text += f" {cloth_name}"
                             # 如果该部位有精液，则显示精液信息
                             if target_data.dirty.cloth_semen[clothing_type][1] != 0:
-                                now_text += f"({str(target_data.dirty.cloth_semen[clothing_type][1])}ml精液)"
+                                now_text += f" ({str(target_data.dirty.cloth_semen[clothing_type][1])}ml精液)"
                         now_text += "\n"
 
 

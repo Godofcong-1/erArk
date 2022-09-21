@@ -1667,10 +1667,10 @@ class CharacterTokenText:
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         token_text_list = []
-        for token_id in range(len(character_data.token_list)):
+        for token_id in range(len(character_data.pl_collection.token_list)):
             if token_id == 0:
                 continue
-            if character_data.token_list[token_id] == 1:
+            if character_data.pl_collection.token_list[token_id] == 1:
                 target_character_data = cache.character_data[token_id]
                 character_name = target_character_data.name
                 token_text = target_character_data.token_text

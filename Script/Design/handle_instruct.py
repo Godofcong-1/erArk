@@ -223,9 +223,9 @@ def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
     cache.now_panel_id = constant.Panel.FIND_CALL
 
-@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("显示污浊情况"), {constant.Premise.HAVE_TARGET})
+@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("查看污浊情况"), {constant.Premise.HAVE_TARGET})
 def see_dirty():
-    """处理显示污浊情况指令"""
+    """处理查看污浊情况指令"""
     cache.now_panel_id = constant.Panel.DIRTY
 
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"), {constant.Premise.DEBUG_MODE_OFF})
@@ -242,6 +242,18 @@ def debug_mode():
 def debug_mode_off():
     """处理关闭DEBUG模式指令"""
     cache.debug_mode = False
+
+
+@add_instruct(
+    constant.Instruct.SEE_COLLECTION,
+    constant.InstructType.SYSTEM,
+    _("查看收藏品"),
+    {
+        constant.Premise.IN_COLLECTION_ROOM
+    })
+def see_collection():
+    """处理查看收藏品指令"""
+    cache.now_panel_id = constant.Panel.COLLECTION
 
 
 # @add_instruct(
@@ -806,7 +818,7 @@ def handle_confession():
         #将对象的恋慕转为恋人，获得角色的信物
         target_data.talent[11] = 0
         target_data.talent[12] = 1
-        character_data.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\告白成功，[恋慕]转为[恋人]，获得了对方赠与的[信物]\n")
@@ -842,7 +854,7 @@ def handle_give_necklace():
         target_data.talent[15] = 0
         target_data.talent[16] = 1
         target_data.talent[19] = 1
-        character_data.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]，获得了对方赠与的[信物]\n")
