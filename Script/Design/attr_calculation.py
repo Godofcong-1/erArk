@@ -199,11 +199,10 @@ def get_collection_zero() -> dict:
 
     collection_data = game_type.PLAYER_COLLECTION()
 
-    for npc_id in range(len(cache.npc_tem_data)):
+    for npc_id in cache.character_data:
         collection_data.token_list[npc_id] = False
         collection_data.first_panties[npc_id] = ""
         collection_data.npc_panties[npc_id] = []
-        collection_data.npc_panties_tem[npc_id] = []
 
     return collection_data
 

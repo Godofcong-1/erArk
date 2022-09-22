@@ -5616,6 +5616,23 @@ def handle_t_wear_skirt(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HAVE_COLLECTION)
+def handle_have_collection(character_id: int) -> int:
+    """
+    持有藏品
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if len(character_data.pl_collection.npc_panties_tem):
+        return 1
+    else:
+        return 0
+
+
+
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
 # def handle_is_enthusiasm(character_id: int) -> int:

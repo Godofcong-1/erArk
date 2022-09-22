@@ -210,6 +210,7 @@ class SeeUndressButtonList:
             for i in {9}:
                 pan_id = target_data.cloth[i][-1]
                 pan_name = game_config.config_clothing_tem[pan_id].name
+                character_data.pl_collection.npc_panties_tem[character_data.target_character_id] = []
                 character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(pan_id)
                 target_data.cloth[i] = []
             now_draw = draw.WaitDraw()

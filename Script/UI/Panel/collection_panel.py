@@ -86,7 +86,8 @@ class Collection_Panel:
 
                 for npc_id in cache.character_data:
                     if npc_id != 0:
-                        if npc_id in character_data.pl_collection.first_panties or npc_id in character_data.pl_collection.npc_panties:
+
+                        if character_data.pl_collection.first_panties[npc_id] != "" or len(character_data.pl_collection.npc_panties[npc_id]):
                             npc_name = cache.character_data[npc_id].name
                             now_text += f"\n  {npc_name}："
                             if npc_id in character_data.pl_collection.first_panties:

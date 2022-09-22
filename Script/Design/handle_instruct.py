@@ -903,6 +903,35 @@ def handle_pee():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
+@add_instruct(
+    constant.Instruct.COLLECT,
+    constant.InstructType.DAILY,
+    _("摆放藏品"),
+    {constant.Premise.IN_COLLECTION_ROOM,
+    constant.Premise.HAVE_COLLECTION,
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89},
+)
+def handle_collect():
+    """处理摆放藏品指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+
+    if len(character_data.pl_collection.npc_panties_tem):
+        for npc_id in character_data.pl_collection.npc_panties_tem:
+            for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
+                    pan_name = game_config.config_clothing_tem[pan_id].name
+                    character_data.pl_collection.npc_panties[npc_id].append(pan_name)
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = width
+                    now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{pan_name}\n")
+                    now_draw.draw()
+        # 装完了之后清空
+        character_data.pl_collection.npc_panties_tem.clear()
+
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
 
 @add_instruct(
     constant.Instruct.DO_H,
@@ -986,7 +1015,7 @@ def handle_end_h():
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _(f"\n结束H模式,{target_data.name}穿回了脱下的衣服\n")
+    now_draw.text = _(f"\n结束H模式\n")
     now_draw.draw()
     character_data.behavior.duration = 5
     update.game_update_flow(5)

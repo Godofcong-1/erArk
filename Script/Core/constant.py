@@ -1354,6 +1354,8 @@ class Premise:
     TARGET_WEAR_SKIRT = "t_wear_skirt"
     """ 交互对象穿着裙子 """
 
+    HAVE_COLLECTION = "have_collection"
+    """ 持有藏品 """
 
 
 
@@ -2334,6 +2336,8 @@ class Instruct:
     """ 劝酒 """
     PEE = 0
     """ 解手 """
+    COLLECT = 0
+    """ 摆放藏品 """
 
     #娱乐#
     SINGING = 0
