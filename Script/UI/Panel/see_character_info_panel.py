@@ -173,12 +173,11 @@ class SeeCharacterSecondPanel:
         experience_draw = CharacterExperienceText(character_id, width,8, 0)
         juel_draw = CharacterJuelText(character_id, width,8, 0)
         if character_id == 0:
-            token_draw = CharacterTokenText(character_id, width,8, 0)
+            # token_draw = CharacterTokenText(character_id, width,8, 0)
             self.draw_list: List[draw.NormalDraw] = [
                 head_draw,
                 experience_draw,
                 juel_draw,
-                token_draw,
             ]
         else:
             self.draw_list: List[draw.NormalDraw] = [

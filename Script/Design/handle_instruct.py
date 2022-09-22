@@ -6,7 +6,7 @@ from functools import wraps
 from typing import Set, List
 from types import FunctionType
 from threading import Thread
-from Script.Core import constant, cache_control, game_type, get_text, save_handle
+from Script.Core import constant, cache_control, game_type, get_text, save_handle,flow_handle
 from Script.Design import update, character, attr_calculation
 from Script.UI.Panel import see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
@@ -251,7 +251,7 @@ def debug_mode_off():
     {
         constant.Premise.IN_COLLECTION_ROOM
     })
-def see_collection():
+def handle_see_collection():
     """处理查看收藏品指令"""
     cache.now_panel_id = constant.Panel.COLLECTION
 
@@ -920,6 +920,8 @@ def handle_do_h():
     if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
         target_data.is_h = 1
         target_data.is_follow = 0
+        target_data.cloth_see[6] = True
+        target_data.cloth_see[9] = True
         character_data.behavior.behavior_id = constant.Behavior.H
         character_data.state = constant.CharacterStatus.STATUS_H
         now_draw = draw.WaitDraw()
@@ -927,9 +929,10 @@ def handle_do_h():
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
 
-        # 自动开启性爱面板
-        if not cache.instruct_filter[5]:
-            cache.instruct_filter[5] = 1
+        # 自动开启性爱面板并关闭其他面板
+        cache.instruct_filter[5] = 1
+        for i in {1,2,3,4}:
+            cache.instruct_filter[i] = 0
 
         # 清零H状态函数
         target_data.h_state = attr_calculation.get_h_state_zero()
@@ -958,20 +961,35 @@ def handle_end_h():
     target_data.is_h = 0
     character_data.behavior.behavior_id = constant.Behavior.END_H
     character_data.state = constant.CharacterStatus.STATUS_END_H
+
     #H结束时的其他处理
-    #1.对象NPC进入跟随
+    # 对象NPC进入跟随
     target_data.is_follow = 1
+
+    # 自动关闭性爱面板并开启其他面板
+    cache.instruct_filter[5] = 0
+    for i in {1,2,3,4}:
+        cache.instruct_filter[i] = 1
+
+    # 穿回脱下的衣服
+    wear_flag = False
+    for i in game_config.config_clothing_type:
+        if len(target_data.cloth_off[i]):
+            target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
+            wear_flag = True
+    if wear_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+        now_draw.draw()
+
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n结束H模式\n")
+    now_draw.text = _(f"\n结束H模式,{target_data.name}穿回了脱下的衣服\n")
     now_draw.draw()
     character_data.behavior.duration = 5
     update.game_update_flow(5)
-
-    # 自动关闭性爱面板
-    if cache.instruct_filter[5]:
-        cache.instruct_filter[5] = 0
 
 #以下为娱乐#
 
@@ -2951,3 +2969,16 @@ def handle_give_blowjob():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.UNDRESS,
+    constant.InstructType.SEX,
+    _("脱衣服"),
+    {
+    constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    })
+def handle_undress():
+    """处理脱衣服指令"""
+    cache.now_panel_id = constant.Panel.UNDRESS
+

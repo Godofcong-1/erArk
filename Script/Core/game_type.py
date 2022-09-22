@@ -374,6 +374,8 @@ class PLAYER_COLLECTION:
         """ 获得的处子血胖次 """
         self.npc_panties: Dict[int,list] = {}
         """ 获得的角色胖次 """
+        self.npc_panties_tem: Dict[int,list] = {}
+        """ 临时获得的角色胖次 """
 
 
 
@@ -555,6 +557,8 @@ class Character:
         """ 角色生成服装模板 """
         self.cloth: Dict[int,List] = {}
         """ 角色穿着的服装 部位:衣服id"""
+        self.cloth_off: Dict[int,List] = {}
+        """ 角色脱下的服装 部位:衣服id"""
         self.cloth_see: Dict[int,bool] = {}
         """ 角色穿着的服装能否被看见 部位:能否"""
         # self.item: Set = set()

@@ -279,6 +279,8 @@ class CharacterStatus:
     """ 鞭子 """
     STATUS_NEEDLE = 606
     """ 针 """
+    STATUS_UNDRESS = 701
+    """ 脱衣服 """
 
 
 class Behavior:
@@ -564,6 +566,9 @@ class Behavior:
     NEEDLE = 606
     """ 针 """
 
+    UNDRESS = 701
+    """ 脱衣服 """
+
 
 class StateMachine:
     """状态机id"""
@@ -724,6 +729,8 @@ class Panel:
     """ 助理面板 """
     COLLECTION = 13
     """ 收藏品面板 """
+    UNDRESS = 14
+    """ 脱衣服面板 """
 
 
 class Premise:
@@ -2579,6 +2586,8 @@ class Instruct:
     """ 交给对方 """
     GIVE_BLOWJOB = 0
     """ 给对方口交 """
+    UNDRESS = 0
+    """ 脱衣服 """
     #系统#
     MOVE = 0
     """ 移动 """

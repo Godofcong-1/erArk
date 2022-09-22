@@ -90,7 +90,7 @@ class Collection_Panel:
                             npc_name = cache.character_data[npc_id].name
                             now_text += f"\n  {npc_name}："
                             if npc_id in character_data.pl_collection.first_panties:
-                                now_text += f" {character_data.pl_collection.first_panties[npc_id]}(沾上处子血)"
+                                now_text += f" {character_data.pl_collection.first_panties[npc_id]}"
                             if npc_id in character_data.pl_collection.npc_panties:
                                 for pan in character_data.pl_collection.npc_panties[npc_id]:
                                     now_text += f" {pan}"

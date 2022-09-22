@@ -192,6 +192,22 @@ def get_cloth_zero() -> dict:
     return cloth_dict
 
 
+def get_collection_zero() -> dict:
+    """
+    遍历玩家的收藏品结构体，设为空
+    """
+
+    collection_data = game_type.PLAYER_COLLECTION()
+
+    for npc_id in range(len(cache.npc_tem_data)):
+        collection_data.token_list[npc_id] = False
+        collection_data.first_panties[npc_id] = ""
+        collection_data.npc_panties[npc_id] = []
+        collection_data.npc_panties_tem[npc_id] = []
+
+    return collection_data
+
+
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

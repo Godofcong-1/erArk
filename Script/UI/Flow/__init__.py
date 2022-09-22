@@ -15,4 +15,5 @@ from Script.UI.Flow import (
     see_item_info_flow,
     assistant_flow,
     collection_flow,
+    undress_flow,
 )
