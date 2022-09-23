@@ -5581,6 +5581,37 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant.Premise.WEAR_BRA)
+def handle_wear_bra(character_id: int) -> int:
+    """
+    穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[6]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_BRA)
+def handle_t_wear_bra(character_id: int) -> int:
+    """
+    交互对象穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[6]):
+        return 1
+    return 0
+
 @add_premise(constant.Premise.WEAR_SKIRT)
 def handle_wear_skirt(character_id: int) -> int:
     """
@@ -5591,11 +5622,11 @@ def handle_wear_skirt(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    cloth_id = character_data.cloth[8][0]
-    if game_config.config_clothing_tem[cloth_id].tag == 5:
-        return 1
-    else:
-        return 0
+    if len(character_data.cloth[8]):
+        cloth_id = character_data.cloth[8][0]
+        if game_config.config_clothing_tem[cloth_id].tag == 5:
+            return 1
+    return 0
 
 
 @add_premise(constant.Premise.TARGET_WEAR_SKIRT)
@@ -5616,6 +5647,70 @@ def handle_t_wear_skirt(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.WEAR_PAN)
+def handle_wear_pan(character_id: int) -> int:
+    """
+    穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[9]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_PAN)
+def handle_t_wear_pan(character_id: int) -> int:
+    """
+    交互对象穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[9]):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.WEAR_SOCKS)
+def handle_wear_socks(character_id: int) -> int:
+    """
+    穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[10]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_SOCKS)
+def handle_t_wear_socks(character_id: int) -> int:
+    """
+    交互对象穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[10]):
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_COLLECTION)
 def handle_have_collection(character_id: int) -> int:
     """
@@ -5627,6 +5722,8 @@ def handle_have_collection(character_id: int) -> int:
     """
     character_data = cache.character_data[0]
     if len(character_data.pl_collection.npc_panties_tem):
+        return 1
+    if len(character_data.pl_collection.npc_socks_tem):
         return 1
     else:
         return 0

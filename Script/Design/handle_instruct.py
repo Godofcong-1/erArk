@@ -917,17 +917,39 @@ def handle_collect():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
 
+    # 内裤
     if len(character_data.pl_collection.npc_panties_tem):
         for npc_id in character_data.pl_collection.npc_panties_tem:
             for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
                     pan_name = game_config.config_clothing_tem[pan_id].name
-                    character_data.pl_collection.npc_panties[npc_id].append(pan_name)
                     now_draw = draw.WaitDraw()
                     now_draw.width = width
-                    now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{pan_name}\n")
+                    # 如果已经重复持有，则进行提示
+                    if pan_name in character_data.pl_collection.npc_panties[npc_id]:
+                        now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                    else:
+                        character_data.pl_collection.npc_panties[npc_id].append(pan_name)
+                        now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                    now_draw.draw()
+        # 最后清空
+        character_data.pl_collection.npc_panties_tem.clear()
+
+    # 袜子
+    if len(character_data.pl_collection.npc_socks_tem):
+        for npc_id in character_data.pl_collection.npc_socks_tem:
+            for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
+                    socks_name = game_config.config_clothing_tem[socks_id].name
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = width
+                    # 如果已经重复持有，则进行提示
+                    if socks_name in character_data.pl_collection.npc_socks[npc_id]:
+                        now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{socks_name}")
+                    else:
+                        character_data.pl_collection.npc_socks[npc_id].append(socks_name)
+                        now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{socks_name}")
                     now_draw.draw()
         # 装完了之后清空
-        character_data.pl_collection.npc_panties_tem.clear()
+        character_data.pl_collection.npc_socks_tem.clear()
 
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -1364,6 +1386,50 @@ def handle_raise_skirt():
     if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
         character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
         character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.ASK_FOR_PAN,
+    constant.InstructType.OBSCENITY,
+    _("索要内裤"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_PAN,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_ask_for_pan():
+    """处理索要内裤指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_PAN
+        character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_PAN
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.ASK_FOR_SOCKS,
+    constant.InstructType.OBSCENITY,
+    _("索要袜子"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_SOCKS,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_ask_for_socks():
+    """处理索要袜子指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_SOCKS
+        character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_SOCKS
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS

@@ -74,6 +74,7 @@ def handle_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
+        # print(f"debug target_data.cloth = {target_data.cloth}")
         if character_id == 0 and len(target_data.cloth[6]):
             TagetBraId = target_data.cloth[6][0]
             TBraName = game_config.config_clothing_tem[TagetBraId].name
@@ -87,8 +88,17 @@ def handle_talk(character_id: int):
         if character_id == 0 and len(target_data.cloth[9]):
             TagetPanId = target_data.cloth[9][0]
             TPanName = game_config.config_clothing_tem[TagetPanId].name
+        elif character_id == 0 and player_data.behavior.pan_name != "":
+            TPanName = player_data.behavior.pan_name
         else:
             TPanName = ""
+        if character_id == 0 and len(target_data.cloth[10]):
+            TagetSocId = target_data.cloth[10][0]
+            TSocName = game_config.config_clothing_tem[TagetSocId].name
+        elif character_id == 0 and player_data.behavior.socks_name != "":
+            TSocName = player_data.behavior.socks_name
+        else:
+            TSocName = ""
 
         now_talk_text = now_talk_text.format(
             NickName=character_data.nick_name,
@@ -101,6 +111,7 @@ def handle_talk(character_id: int):
             TagetBraName=TBraName,
             TagetSkiName=TSkiName,
             TagetPanName=TPanName,
+            TagetSocName=TSocName,
         )
         now_draw = draw.LineFeedWaitDraw()
         now_draw.text = now_talk_text

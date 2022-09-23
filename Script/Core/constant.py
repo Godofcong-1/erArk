@@ -95,11 +95,15 @@ class CharacterStatus:
     """ 膝枕 """
     STATUS_RAISE_SKIRT = 315
     """ 掀起裙子 """
-    STATUS_TOUCH_CLITORIS = 317
+    STATUS_ASK_FOR_PAN = 316
+    """ 索要内裤 """
+    STATUS_ASK_FOR_SOCKS = 317
+    """ 索要袜子 """
+    STATUS_TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
-    STATUS_TOUCH_VAGINA = 318
+    STATUS_TOUCH_VAGINA = 332
     """ 手指插入（V） """
-    STATUS_TOUCH_ANUS = 319
+    STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
@@ -380,11 +384,15 @@ class Behavior:
     """ 膝枕 """
     RAISE_SKIRT = 315
     """ 掀起裙子 """
-    TOUCH_CLITORIS = 317
+    ASK_FOR_PAN = 316
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 317
+    """ 索要袜子 """
+    TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
-    TOUCH_VAGINA = 318
+    TOUCH_VAGINA = 332
     """ 手指插入（V） """
-    TOUCH_ANUS = 319
+    TOUCH_ANUS = 333
     """ 手指插入（A） """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
@@ -1349,10 +1357,22 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
+    WEAR_BRA = "wear_bra"
+    """ 穿着胸衣 """
+    TARGET_WEAR_BRA = "t_wear_bra"
+    """ 交互对象穿着胸衣 """
     WEAR_SKIRT = "wear_skirt"
     """ 穿着裙子 """
     TARGET_WEAR_SKIRT = "t_wear_skirt"
     """ 交互对象穿着裙子 """
+    WEAR_PAN = "wear_pan"
+    """ 穿着内裤 """
+    TARGET_WEAR_PAN = "t_wear_pan"
+    """ 交互对象穿着内裤 """
+    WEAR_SOCKS = "wear_socks"
+    """ 穿着袜子 """
+    TARGET_WEAR_SOCKS = "t_wear_socks"
+    """ 交互对象穿着袜子 """
 
     HAVE_COLLECTION = "have_collection"
     """ 持有藏品 """
@@ -1957,6 +1977,10 @@ class BehaviorEffect:
     """ 交互对象内裤可视 """
     CLOTH_SEE_ZERO = 606
     """ 内衣可视清零 """
+    ASK_FOR_PAN = 621
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 622
+    """ 索要袜子 """
 
 
 
@@ -2387,6 +2411,10 @@ class Instruct:
     """ 膝枕 """
     RAISE_SKIRT = 0
     """ 掀起裙子 """
+    ASK_FOR_PAN = 0
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 0
+    """ 索要袜子 """
     TOUCH_CLITORIS = 0
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 0

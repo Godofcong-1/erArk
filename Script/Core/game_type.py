@@ -376,6 +376,10 @@ class PLAYER_COLLECTION:
         """ 获得的角色胖次 """
         self.npc_panties_tem: Dict[int,list] = {}
         """ 临时获得的角色胖次 """
+        self.npc_socks: Dict[int,list] = {}
+        """ 获得的角色袜子 """
+        self.npc_socks_tem: Dict[int,list] = {}
+        """ 临时获得的角色袜子 """
 
 
 
@@ -427,6 +431,10 @@ class Behavior:
         """ 前提结算用:进食行为消耗的食物品质 """
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
+        self.pan_name: str = ""
+        """ 前提结算用:内裤名字 """
+        self.socks_name: str = ""
+        """ 前提结算用:袜子名字 """
 
 
 class Map:

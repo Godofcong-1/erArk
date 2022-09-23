@@ -152,3 +152,56 @@ def handle_cloth_see_zero(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.cloth_see = {6:False,9:False}
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_PAN)
+def handle_ask_for_pan(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    索要内裤
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_collection.npc_panties_tem[character_data.target_character_id] = []
+    character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(target_data.cloth[9][0])
+    TagetPanId = target_data.cloth[9][0]
+    TPanName = game_config.config_clothing_tem[TagetPanId].name
+    character_data.behavior.pan_name = TPanName
+    target_data.cloth[9] = []
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_SOCKS)
+def handle_ask_for_sock(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    索要袜子
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_collection.npc_socks_tem[character_data.target_character_id] = []
+    character_data.pl_collection.npc_socks_tem[character_data.target_character_id].append(target_data.cloth[10][0])
+    TagetSocId = target_data.cloth[10][0]
+    TSocName = game_config.config_clothing_tem[TagetSocId].name
+    character_data.behavior.socks_name = TSocName
+    target_data.cloth[10] = []

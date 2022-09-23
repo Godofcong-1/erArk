@@ -40,7 +40,7 @@ class Collection_Panel:
         character_data: game_type.Character = cache.character_data[0]
 
         title_text = "收藏品"
-        collection_type_list = [_("信物"), _("内裤")]
+        collection_type_list = [_("信物"), _("内裤"), _("袜子")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         handle_panel = panel.PageHandlePanel([], collection_Draw, 10, 5, self.width, 1, 1, 0)
@@ -97,6 +97,19 @@ class Collection_Panel:
                                     now_text += f" {pan}"
                             now_text += f"\n"
 
+            elif self.now_panel == "袜子":
+
+                for npc_id in cache.character_data:
+                    if npc_id != 0:
+
+                        if len(character_data.pl_collection.npc_socks[npc_id]):
+                            npc_name = cache.character_data[npc_id].name
+                            now_text += f"\n  {npc_name}："
+                            if npc_id in character_data.pl_collection.npc_socks:
+                                for socks in character_data.pl_collection.npc_socks[npc_id]:
+                                    now_text += f" {socks}"
+                            now_text += f"\n"
+
 
             name_draw.text = now_text
             name_draw.width = self.width
@@ -123,9 +136,10 @@ class Collection_Panel:
 
         if collection_type == "信物":
             self.now_panel = "信物"
-
         elif collection_type == "内裤":
             self.now_panel = "内裤"
+        elif collection_type == "袜子":
+            self.now_panel = "袜子"
 
 
 class collection_Draw:

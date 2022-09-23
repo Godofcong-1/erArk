@@ -203,6 +203,7 @@ def get_collection_zero() -> dict:
         collection_data.token_list[npc_id] = False
         collection_data.first_panties[npc_id] = ""
         collection_data.npc_panties[npc_id] = []
+        collection_data.npc_socks[npc_id] = []
 
     return collection_data
 
