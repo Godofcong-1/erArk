@@ -1977,6 +1977,8 @@ class BehaviorEffect:
     """ 交互对象内裤可视 """
     CLOTH_SEE_ZERO = 606
     """ 内衣可视清零 """
+    RESTE_CLOTH = 607
+    """ 衣服重置为初始状态 """
     ASK_FOR_PAN = 621
     """ 索要内裤 """
     ASK_FOR_SOCKS = 622

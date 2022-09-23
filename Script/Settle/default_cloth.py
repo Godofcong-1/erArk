@@ -154,6 +154,35 @@ def handle_cloth_see_zero(
     character_data.cloth_see = {6:False,9:False}
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RESTE_CLOTH)
+def handle_reset_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    衣服重置为初始状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if character_id:
+        character_data: game_type.Character = cache.character_data[character_id]
+        character_tem = cache.npc_tem_data[character_id-1]
+        for cloth_id in character_tem.Cloth:
+            type = game_config.config_clothing_tem[cloth_id].clothing_type
+            # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+            if type in {6,9}:
+                continue
+            if cloth_id not in character_data.cloth[type]:
+                character_data.cloth[type].append(cloth_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_PAN)
 def handle_ask_for_pan(
     character_id: int,
