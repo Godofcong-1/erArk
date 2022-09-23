@@ -76,7 +76,6 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
     {constant.Premise.NOT_H,
-    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_rest():

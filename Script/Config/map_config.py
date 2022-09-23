@@ -65,10 +65,17 @@ def load_dir_now(data_path: str):
                         load_scene_data = json_handle.load_json(now_path)
                         now_scene_data.scene_name = get_text._(load_scene_data["SceneName"])
                         now_scene_data.in_door = load_scene_data["InOutDoor"] == "In"
-                        now_scene_data.scene_tag = load_scene_data["SceneTag"]
+                        scene_tag_list = load_scene_data["SceneTag"]
+                        if "," not in scene_tag_list:
+                            now_scene_data.scene_tag.append(scene_tag_list)
+                        else:
+                            scene_tag_list = scene_tag_list.split(',')
+                            for scene_tag in scene_tag_list:
+                                now_scene_data.scene_tag.append(scene_tag)
                         cache.scene_data[now_scene_data.scene_path] = now_scene_data
-                        constant.place_data.setdefault(now_scene_data.scene_tag, [])
-                        constant.place_data[now_scene_data.scene_tag].append(now_scene_data.scene_path)
+                        for scene_tag in now_scene_data.scene_tag:
+                            constant.place_data.setdefault(scene_tag, [])
+                            constant.place_data[scene_tag].append(now_scene_data.scene_path)
                     elif now_file[0] == "Map":
                         now_map_data = game_type.Map()
                         now_map_data.map_path = get_map_system_path_str(

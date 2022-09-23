@@ -60,7 +60,7 @@ def handle_in_cafeteria(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Cafeteria":
+    if "Cafeteria" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -78,7 +78,7 @@ def handle_in_restaurant(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Restaurant":
+    if "Restaurant" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -385,7 +385,7 @@ def handle_in_swimming_pool(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "SwimmingPool":
+    if "SwimmingPool" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -447,7 +447,7 @@ def handle_in_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Shop":
+    if "Shop" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -464,7 +464,7 @@ def handle_in_kitchen(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Kitchen":
+    if  "Kitchen" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -482,7 +482,7 @@ def handle_in_dining_hall(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dining_hall":
+    if "Dining_hall" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -500,7 +500,7 @@ def handle_not_in_dining_hall(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dining_hall":
+    if "Dining_hall" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -518,7 +518,7 @@ def handle_in_food_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Food_Shop":
+    if "Food_Shop" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -536,7 +536,7 @@ def handle_not_in_food_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Food_Shop":
+    if "Food_Shop" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -554,7 +554,7 @@ def handle_in_dr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dr_office":
+    if "Dr_office" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -600,7 +600,7 @@ def handle_in_toilet_man(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Toilet_Male":
+    if "Toilet_Male" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -618,7 +618,7 @@ def handle_in_toilet_female(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Toilet_Female":
+    if "Toilet_Female" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -636,9 +636,11 @@ def handle_not_in_toilet(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag not in ["Toilet_Male","Toilet_Female"]:
-        return 1
-    return 0
+    if "Toilet_Male" in now_scene_data.scene_tag:
+        return 0
+    if "Toilet_Female" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.IN_REST_ROOM)
@@ -654,7 +656,7 @@ def handle_in_rest_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rest_Room":
+    if "Rest_Room" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -672,7 +674,7 @@ def handle_not_in_rest_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rest_Room":
+    if "Rest_Room" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -690,7 +692,9 @@ def handle_in_music_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag in {"Modern_Musicroom","Classic_Musicroom"}:
+    if "Modern_Musicroom" in now_scene_data.scene_tag:
+        return 1
+    if "Classic_Musicroom" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -708,7 +712,7 @@ def handle_in_collection_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Collection":
+    if "Collection" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -6834,7 +6838,7 @@ def handle_in_rooftop_scene(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rooftop":
+    if "Rooftop" in now_scene_data.scene_tag:
         return 1
     return 0
 

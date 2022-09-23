@@ -509,7 +509,7 @@ class Scene:
         """ 场景名字 """
         self.in_door: bool = 0
         """ 在室内 """
-        self.scene_tag: str = ""
+        self.scene_tag: list = []
         """ 场景标签 """
         self.character_list: set = set()
         """ 场景内角色列表 """
