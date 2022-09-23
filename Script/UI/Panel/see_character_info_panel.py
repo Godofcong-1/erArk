@@ -393,6 +393,13 @@ class SeeCharacterClothPanel:
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         now_text += f"(精液)"
+            # 真空的胸衣和内裤单独显示
+            if clothing_type in {6,9} and not len(target_character_data.cloth[clothing_type]):
+                if not cache.debug_mode:
+                    # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
+                    if not target_character_data.cloth_see[clothing_type]:
+                        continue
+                now_text += f"  [{type_name}]: 真空"
         cloth_text_list.append(now_text)
 
         if cloth_text_list == []:

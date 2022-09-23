@@ -179,6 +179,7 @@ def handle_ask_for_pan(
     TPanName = game_config.config_clothing_tem[TagetPanId].name
     character_data.behavior.pan_name = TPanName
     target_data.cloth[9] = []
+    target_data.cloth_see[9] = True
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_SOCKS)
 def handle_ask_for_sock(
