@@ -74,6 +74,7 @@ def handle_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
+        # 衣服的代称代码，来自于NPC当前穿的衣服，或行动传入的变量
         # print(f"debug target_data.cloth = {target_data.cloth}")
         if character_id == 0 and len(target_data.cloth[6]):
             TagetBraId = target_data.cloth[6][0]

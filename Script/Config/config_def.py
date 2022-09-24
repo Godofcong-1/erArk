@@ -321,7 +321,7 @@ class SecondEffect:
     """ 表id """
     behavior_id: int
     """ 行为id """
-    effect_id: int
+    effect_id: str
     """ 结算器id """
 
 
