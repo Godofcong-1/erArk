@@ -14,6 +14,7 @@ from Script.Core import (
     py_cmd,
     flow_handle,
     constant,
+    rich_text,
 )
 from Script.Config import game_config, normal_config
 from Script.Design import attr_text, map_handle, attr_calculation
@@ -370,7 +371,7 @@ class SeeCharacterClothPanel:
         type_line = draw.LittleTitleLineDraw("服装", width, ":")
         self.draw_list.append(type_line)
 
-        cloth_text_list = []
+        # cloth_text_list = []
         now_text = ""
         # 遍历全部衣服类型
         for clothing_type in game_config.config_clothing_type:
@@ -392,7 +393,7 @@ class SeeCharacterClothPanel:
                     now_text += f" {cloth_name}"
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
-                        now_text += f"(精液)"
+                        now_text += f"<semen>(精液)</semen>"
             # 真空的胸衣和内裤单独显示
             if clothing_type in {6,9} and not len(target_character_data.cloth[clothing_type]):
                 if not cache.debug_mode:
@@ -400,17 +401,54 @@ class SeeCharacterClothPanel:
                     if not target_character_data.cloth_see[clothing_type]:
                         continue
                 now_text += f"  [{type_name}]: 真空"
-        cloth_text_list.append(now_text)
+        now_text += "\n"
+        # cloth_text_list.append(now_text)
 
-        if cloth_text_list == []:
+        if now_text == "":
             now_text = "  全裸"
-            cloth_text_list.append(now_text)
+            # cloth_text_list.append(now_text)
 
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
         else:
             now_draw = panel.LeftDrawTextListPanel()
-        now_draw.set(cloth_text_list, self.width, self.column)
+
+
+        # 富文本模组
+        now_style_list = rich_text.get_rich_text_print(now_text, "standard")
+        new_x_list = rich_text.remove_rich_cache(now_text)
+        # test_flag = False
+        # if 'emoji' in now_style_list:
+        #     test_flag = True
+        #     print(f"debug 总：now_style_list = {now_style_list}")
+        #     print(f"debug 总：new_x_list = {new_x_list}")
+        while 1:
+            if not len(new_x_list):
+                break
+            # now_rich_draw = game_type.MapDrawText()
+            now_rich_draw = draw.NormalDraw()
+            now_rich_draw.text = new_x_list[0]
+            now_rich_draw.style = now_style_list[0]
+            now_style_list = now_style_list[1:]
+            new_x_list = new_x_list[1:]
+            # if test_flag:
+            #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
+            while 1:
+                if not len(new_x_list):
+                    break
+                if now_style_list[0] != now_rich_draw.style:
+                    break
+                now_rich_draw.text += new_x_list[0]
+                now_style_list = now_style_list[1:]
+                new_x_list = new_x_list[1:]
+                # if test_flag:
+                #     print(f"debug 分：now_rich_draw.text = {now_rich_draw.text}")
+                #     print(f"debug 分：now_style_list = {now_style_list}")
+                #     print(f"debug 分：new_x_list = {new_x_list}")
+            now_draw.draw_list.append(now_rich_draw)
+            now_draw.width += len(now_rich_draw.text)
+
+        # now_draw.set(cloth_text_list, self.width, self.column)
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):
