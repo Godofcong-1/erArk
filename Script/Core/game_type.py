@@ -765,6 +765,8 @@ class Cache:
         """ 记录射精位置 """
         self.debug_mode: bool = False
         """ 是否开启debug模式 """
+        self.game_round: int = 1
+        """ 当前周目数 """
 
 
 class TargetChange:
