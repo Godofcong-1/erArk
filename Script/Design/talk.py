@@ -73,6 +73,34 @@ def handle_talk(character_id: int):
         scene_name = scene_data.scene_name
         player_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+        # 衣服的代称代码，来自于NPC当前穿的衣服，或行动传入的变量
+        # print(f"debug target_data.cloth = {target_data.cloth}")
+        if character_id == 0 and len(target_data.cloth[6]):
+            TagetBraId = target_data.cloth[6][0]
+            TBraName = game_config.config_clothing_tem[TagetBraId].name
+        else:
+            TBraName = ""
+        if character_id == 0 and len(target_data.cloth[8]):
+            TagetSkiId = target_data.cloth[8][0]
+            TSkiName = game_config.config_clothing_tem[TagetSkiId].name
+        else:
+            TSkiName = ""
+        if character_id == 0 and len(target_data.cloth[9]):
+            TagetPanId = target_data.cloth[9][0]
+            TPanName = game_config.config_clothing_tem[TagetPanId].name
+        elif character_id == 0 and player_data.behavior.pan_name != "":
+            TPanName = player_data.behavior.pan_name
+        else:
+            TPanName = ""
+        if character_id == 0 and len(target_data.cloth[10]):
+            TagetSocId = target_data.cloth[10][0]
+            TSocName = game_config.config_clothing_tem[TagetSocId].name
+        elif character_id == 0 and player_data.behavior.socks_name != "":
+            TSocName = player_data.behavior.socks_name
+        else:
+            TSocName = ""
+
         now_talk_text = now_talk_text.format(
             NickName=character_data.nick_name,
             FoodName=character_data.behavior.food_name,
@@ -81,6 +109,10 @@ def handle_talk(character_id: int):
             SceneName=scene_name,
             PlayerNickName=player_data.nick_name,
             TargetName=target_data.name,
+            TagetBraName=TBraName,
+            TagetSkiName=TSkiName,
+            TagetPanName=TPanName,
+            TagetSocName=TSocName,
         )
         now_draw = draw.LineFeedWaitDraw()
         now_draw.text = now_talk_text

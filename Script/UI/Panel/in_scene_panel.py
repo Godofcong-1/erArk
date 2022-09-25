@@ -49,8 +49,8 @@ class InScenePanel:
         character_handle_panel = panel.PageHandlePanel(
             [],
             see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
+            20,
             10,
-            5,
             self.width,
             1,
             0,
@@ -88,7 +88,7 @@ class InScenePanel:
             now_position_draw.text = now_position_text
             now_position_draw.width = self.width - len(game_time_draw)
             meet_draw = draw.NormalDraw()
-            meet_draw.text = _("这里有:")
+            meet_draw.text = _("当前位置的角色一览:")
             meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
@@ -252,6 +252,13 @@ class InScenePanel:
                     line_feed.draw()
                 else:
                     label.draw()
+
+            #↓以下为服装栏的内容↓#
+            if character_data.target_character_id :
+                character_cloth_draw = see_character_info_panel.SeeCharacterClothPanel(
+                    character_data.cid, self.width, 20, 0, 0
+                )
+                character_cloth_draw.draw()
 
             #↓以下为H状态栏的内容↓#
             character_H_status_draw_list = []
@@ -512,7 +519,27 @@ class CharacterImageListDraw:
         fix_draw.text = center_fix
         fix_draw.draw()
         self.return_list = []
+
+        # 优先绘制当前交互对象
+        if len(self.character_list):
+            text_draw = draw.NormalDraw()
+            text_draw.width = 1
+            text_draw.text = "→"
+            text_draw.draw()
+
+            player_data:game_type.Character = cache.character_data[0]
+            now_draw = CharacterImageButton(player_data.target_character_id,self.width)
+            now_draw.draw()
+            self.return_list.append(now_draw.return_text)
+
+            text_draw = draw.NormalDraw()
+            text_draw.width = 1
+            text_draw.text = "←"
+            text_draw.draw()
+
         for now_character in self.character_list:
+            if now_character == player_data.target_character_id:
+                continue
             now_draw = CharacterImageButton(now_character,self.width)
             now_draw.draw()
             self.return_list.append(now_draw.return_text)

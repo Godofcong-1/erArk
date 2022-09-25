@@ -65,10 +65,17 @@ def load_dir_now(data_path: str):
                         load_scene_data = json_handle.load_json(now_path)
                         now_scene_data.scene_name = get_text._(load_scene_data["SceneName"])
                         now_scene_data.in_door = load_scene_data["InOutDoor"] == "In"
-                        now_scene_data.scene_tag = load_scene_data["SceneTag"]
+                        scene_tag_list = load_scene_data["SceneTag"]
+                        if "," not in scene_tag_list:
+                            now_scene_data.scene_tag.append(scene_tag_list)
+                        else:
+                            scene_tag_list = scene_tag_list.split(',')
+                            for scene_tag in scene_tag_list:
+                                now_scene_data.scene_tag.append(scene_tag)
                         cache.scene_data[now_scene_data.scene_path] = now_scene_data
-                        constant.place_data.setdefault(now_scene_data.scene_tag, [])
-                        constant.place_data[now_scene_data.scene_tag].append(now_scene_data.scene_path)
+                        for scene_tag in now_scene_data.scene_tag:
+                            constant.place_data.setdefault(scene_tag, [])
+                            constant.place_data[scene_tag].append(now_scene_data.scene_path)
                     elif now_file[0] == "Map":
                         now_map_data = game_type.Map()
                         now_map_data.map_path = get_map_system_path_str(
@@ -176,6 +183,11 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
             now_rich_draw_list:List[game_type.MapDraw] = []
             now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")
             new_x_list = rich_text.remove_rich_cache(new_x_list)
+            # test_flag = False
+            # if 'emoji' in now_style_list:
+            #     test_flag = True
+            #     print(f"debug 总：now_style_list = {now_style_list}")
+            #     print(f"debug 总：new_x_list = {new_x_list}")
             while 1:
                 if not len(new_x_list):
                     break
@@ -184,6 +196,8 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 now_rich_draw.style = now_style_list[0]
                 now_style_list = now_style_list[1:]
                 new_x_list = new_x_list[1:]
+                # if test_flag:
+                #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
                 while 1:
                     if not len(new_x_list):
                         break
@@ -192,6 +206,10 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                     now_rich_draw.text += new_x_list[0]
                     now_style_list = now_style_list[1:]
                     new_x_list = new_x_list[1:]
+                    # if test_flag:
+                    #     print(f"debug 分：now_rich_draw.text = {now_rich_draw.text}")
+                    #     print(f"debug 分：now_style_list = {now_style_list}")
+                    #     print(f"debug 分：new_x_list = {new_x_list}")
                 now_draw_list.draw_list.append(now_rich_draw)
                 now_draw_list.width += len(now_rich_draw.text)
         map_draw_data.draw_text.append(now_draw_list)

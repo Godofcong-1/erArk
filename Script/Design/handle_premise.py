@@ -60,7 +60,7 @@ def handle_in_cafeteria(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Cafeteria":
+    if "Cafeteria" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -78,7 +78,7 @@ def handle_in_restaurant(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Restaurant":
+    if "Restaurant" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -385,7 +385,7 @@ def handle_in_swimming_pool(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "SwimmingPool":
+    if "SwimmingPool" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -447,7 +447,7 @@ def handle_in_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Shop":
+    if "Shop" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -464,7 +464,7 @@ def handle_in_kitchen(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Kitchen":
+    if  "Kitchen" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -482,7 +482,7 @@ def handle_in_dining_hall(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dining_hall":
+    if "Dining_hall" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -500,7 +500,7 @@ def handle_not_in_dining_hall(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dining_hall":
+    if "Dining_hall" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -518,7 +518,7 @@ def handle_in_food_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Food_Shop":
+    if "Food_Shop" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -536,7 +536,7 @@ def handle_not_in_food_shop(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Food_Shop":
+    if "Food_Shop" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -554,7 +554,7 @@ def handle_in_dr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Dr_office":
+    if "Dr_office" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -600,7 +600,7 @@ def handle_in_toilet_man(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Toilet_Male":
+    if "Toilet_Male" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -618,7 +618,7 @@ def handle_in_toilet_female(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Toilet_Female":
+    if "Toilet_Female" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -636,9 +636,11 @@ def handle_not_in_toilet(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag not in ["Toilet_Male","Toilet_Female"]:
-        return 1
-    return 0
+    if "Toilet_Male" in now_scene_data.scene_tag:
+        return 0
+    if "Toilet_Female" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.IN_REST_ROOM)
@@ -654,7 +656,7 @@ def handle_in_rest_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rest_Room":
+    if "Rest_Room" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -672,10 +674,47 @@ def handle_not_in_rest_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rest_Room":
+    if "Rest_Room" in now_scene_data.scene_tag:
         return 0
     return 1
 
+
+@add_premise(constant.Premise.IN_MUSIC_ROOM)
+def handle_in_music_room(character_id: int) -> int:
+    """
+    校验角色是否在音乐室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Modern_Musicroom" in now_scene_data.scene_tag:
+        return 1
+    if "Classic_Musicroom" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_COLLECTION_ROOM)
+def handle_in_collection_room(character_id: int) -> int:
+    """
+    校验角色是否在藏品馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Collection" in now_scene_data.scene_tag:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.HAVE_MOVED)
@@ -693,13 +732,13 @@ def handle_have_moved(character_id: int) -> int:
     #同一天内过1小时则判定为1
     if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
         character_data.last_move_time = now_time
-        print("过一小时判定,character_id :",character_id)
+        # print("过一小时判定,character_id :",character_id)
         move_flag = 1
     #非同一天也判定为1
     elif now_time.day != character_data.last_move_time.day:
         character_data.last_move_time = now_time
         move_flag = 1
-        print("非同一天判定")
+        # print("非同一天判定")
     return move_flag
 
 
@@ -924,7 +963,7 @@ def handle_mp_0(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     value = character_data.mana_point
     if value == 0:
-        return 1
+        return character_data.hit_point_max - character_data.hit_point
     else:
         return 0
 
@@ -2906,19 +2945,19 @@ def handle_no_wear_pants(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.NO_WEAR_SKIRT)
-def handle_no_wear_skirt(character_id: int) -> int:
-    """
-    校验角色是否没穿短裙
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if 3 not in character_data.put_on or character_data.put_on[3] is None or character_data.put_on[3] == "":
-        return 1
-    return 0
+# @add_premise(constant.Premise.NO_WEAR_SKIRT)
+# def handle_no_wear_skirt(character_id: int) -> int:
+#     """
+#     校验角色是否没穿短裙
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if 3 not in character_data.put_on or character_data.put_on[3] is None or character_data.put_on[3] == "":
+#         return 1
+#     return 0
 
 
 @add_premise(constant.Premise.NO_WEAR_SHOES)
@@ -3114,24 +3153,6 @@ def handle_chest_is_not_cliff(character_id: int) -> int:
 #         level = attr_calculation.get_experience_level_weight(character_data.knowledge[15])
 #         return weight * level
 #     return weight
-
-
-@add_premise(constant.Premise.IN_MUSIC_ROOM)
-def handle_in_music_room(character_id: int) -> int:
-    """
-    校验角色是否处于音乐活动室中
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Musicroom":
-        return 1
-    return 0
 
 
 @add_premise(constant.Premise.NO_EXCELLED_AT_SINGING)
@@ -4686,6 +4707,21 @@ def handle_have_video_recorder(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HAVE_INSTRUMENT)
+def handle_have_instrument(character_id: int) -> int:
+    """
+    校验角色是否已持有乐器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[52]:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_NIPPLE_CLAMP)
 def handle_have_nipple_clamp(character_id: int) -> int:
     """
@@ -5547,6 +5583,156 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant.Premise.WEAR_BRA)
+def handle_wear_bra(character_id: int) -> int:
+    """
+    穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[6]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_BRA)
+def handle_t_wear_bra(character_id: int) -> int:
+    """
+    交互对象穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[6]):
+        return 1
+    return 0
+
+@add_premise(constant.Premise.WEAR_SKIRT)
+def handle_wear_skirt(character_id: int) -> int:
+    """
+    穿着裙子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[8]):
+        cloth_id = character_data.cloth[8][0]
+        if game_config.config_clothing_tem[cloth_id].tag == 5:
+            return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_SKIRT)
+def handle_t_wear_skirt(character_id: int) -> int:
+    """
+    交互对象穿着裙子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[8]):
+        cloth_id = target_data.cloth[8][0]
+        if game_config.config_clothing_tem[cloth_id].tag == 5:
+            return 1
+    return 0
+
+
+@add_premise(constant.Premise.WEAR_PAN)
+def handle_wear_pan(character_id: int) -> int:
+    """
+    穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[9]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_PAN)
+def handle_t_wear_pan(character_id: int) -> int:
+    """
+    交互对象穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[9]):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.WEAR_SOCKS)
+def handle_wear_socks(character_id: int) -> int:
+    """
+    穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth[10]):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant.Premise.TARGET_WEAR_SOCKS)
+def handle_t_wear_socks(character_id: int) -> int:
+    """
+    交互对象穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[10]):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.HAVE_COLLECTION)
+def handle_have_collection(character_id: int) -> int:
+    """
+    持有藏品
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if len(character_data.pl_collection.npc_panties_tem):
+        return 1
+    if len(character_data.pl_collection.npc_socks_tem):
+        return 1
+    else:
+        return 0
+
+
 
 
 # @add_premise(constant.Premise.IS_ENTHUSIASM)
@@ -6652,7 +6838,7 @@ def handle_in_rooftop_scene(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if now_scene_data.scene_tag == "Rooftop":
+    if "Rooftop" in now_scene_data.scene_tag:
         return 1
     return 0
 

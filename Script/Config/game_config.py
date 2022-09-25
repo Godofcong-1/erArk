@@ -35,13 +35,13 @@ config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
 """ 角色状态类型配表数据 """
 config_character_state_type_data: Dict[int, Set] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
-config_clothing_suit: Dict[int, config_def.ClothingSuit] = {}
-""" 衣服套装配置列表 """
-config_clothing_suit_data: Dict[int, Dict[int, Set]] = {}
-"""
-衣服套装搭配数据
-套装编号:性别id:服装集合
-"""
+# config_clothing_suit: Dict[int, config_def.ClothingSuit] = {}
+# """ 衣服套装配置列表 """
+# config_clothing_suit_data: Dict[int, Dict[int, Set]] = {}
+# """
+# 衣服套装搭配数据
+# 套装编号:性别id:服装集合
+# """
 config_clothing_tem: Dict[int, config_def.ClothingTem] = {}
 """ 服装模板配置数据 """
 config_clothing_type: Dict[int, config_def.ClothingType] = {}
@@ -331,6 +331,13 @@ def load_behavior_effect_data():
         config_behavior_effect_data.setdefault(now_tem.behavior_id, set())
         config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
+        # if "|" not in now_tem.effect_id:
+        #     config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+        # else:
+        #     effect_list = now_tem.effect_id.split('|')
+        #     for effect in effect_list:
+        #         config_behavior_effect_data[now_tem.behavior_id].add(effect)
+
 
 def load_second_behavior_effect_data():
     """载入二段行为结算器配置"""
@@ -341,7 +348,14 @@ def load_second_behavior_effect_data():
         now_tem.__dict__ = tem_data
         config_second_behavior_effect[now_tem.cid] = now_tem
         config_second_behavior_effect_data.setdefault(now_tem.behavior_id, set())
-        config_second_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+        # config_second_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+
+        if "|" not in now_tem.effect_id:
+            config_second_behavior_effect_data[now_tem.behavior_id].add(int(now_tem.effect_id))
+        else:
+            effect_list = now_tem.effect_id.split('|')
+            for effect in effect_list:
+                config_second_behavior_effect_data[now_tem.behavior_id].add(int(effect))
 
 
 def load_book_data():
@@ -376,17 +390,17 @@ def load_character_state_type_data():
         config_character_state_type[now_tem.cid] = now_tem
 
 
-def load_clothing_suit():
-    """载入衣服套装配置数据"""
-    now_data = config_data["ClothingSuit"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.ClothingSuit()
-        now_tem.__dict__ = tem_data
-        config_clothing_suit[now_tem.cid] = now_tem
-        config_clothing_suit_data.setdefault(now_tem.suit_type, {})
-        config_clothing_suit_data[now_tem.suit_type].setdefault(now_tem.sex, set())
-        config_clothing_suit_data[now_tem.suit_type][now_tem.sex].add(now_tem.clothing_id)
+# def load_clothing_suit():
+#     """载入衣服套装配置数据"""
+#     now_data = config_data["ClothingSuit"]
+#     translate_data(now_data)
+#     for tem_data in now_data["data"]:
+#         now_tem = config_def.ClothingSuit()
+#         now_tem.__dict__ = tem_data
+#         config_clothing_suit[now_tem.cid] = now_tem
+#         config_clothing_suit_data.setdefault(now_tem.suit_type, {})
+#         config_clothing_suit_data[now_tem.suit_type].setdefault(now_tem.sex, set())
+#         config_clothing_suit_data[now_tem.suit_type][now_tem.sex].add(now_tem.clothing_id)
 
 
 def load_clothing_tem():
@@ -558,6 +572,14 @@ def load_talk():
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
+        # config_talk_premise_data.setdefault(now_tem.cid, set())
+        # if "|" not in now_tem.premise:
+        #     config_talk_premise_data[now_tem.cid].add(now_tem.premise)
+        # else:
+        #     premise_list = now_tem.premise.split('|')
+        #     for premise in premise_list:
+        #         config_talk_premise_data[now_tem.cid].add(premise)
+
 
 def load_talk_premise():
     """载入口上前提配置"""
@@ -630,7 +652,7 @@ def init():
     load_book_data()
     load_character_state_data()
     load_character_state_type_data()
-    load_clothing_suit()
+    # load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()

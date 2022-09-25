@@ -105,8 +105,9 @@ class Ejaculation_Panel:
             for i in range(14):
                 position_list.append(target_data.dirty.body_semen[i][0])
         elif eja_type == "服装":
-            for i in range(18):
-                position_list.append(target_data.dirty.cloth_semen[i][0])
+            for clothing_type in game_config.config_clothing_type:
+                if len(target_data.cloth[clothing_type]):
+                    position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
 
         self.handle_panel = panel.PageHandlePanel(
             position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
@@ -143,7 +144,10 @@ class Ejaculation_NameDraw:
         """ 按钮返回值 """
         self.position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
         """ 位置文本列表 """
-        self.cloth_text_list = ["帽子","眼镜","耳部","脖子","嘴部","上衣","内衣（上）","手套","下衣","内衣（下）","袜子","鞋子","武器","附属物1","附属物2","附属物3","附属物4","附属物5"]
+        self.cloth_text_list = []
+        for clothing_type in game_config.config_clothing_type:
+            cloth_text = game_config.config_clothing_type[clothing_type].name
+            self.cloth_text_list.append(cloth_text)
         """ 衣服文本列表 """
         self.panel_type = 0
         name_draw = draw.NormalDraw()
@@ -173,6 +177,12 @@ class Ejaculation_NameDraw:
             else:
                 if self.button_id in {6,7,8}:
                     position_flag = False
+
+        if self.panel_type == 2:
+            for i in range(len(self.cloth_text_list)):
+                if self.text == self.cloth_text_list[i]:
+                    self.index = i
+
 
         if is_button and ( position_flag or cloth_flag ):
             if num_button:
@@ -234,11 +244,11 @@ class Ejaculation_NameDraw:
 
         # 更新污浊类里的服装部位精液参数
         elif self.panel_type == 2:
-            target_data.dirty.cloth_semen[self.button_id][1] += semen_count
-            target_data.dirty.cloth_semen[self.button_id][3] += semen_count
-            target_data.dirty.cloth_semen[self.button_id][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.button_id][1])
+            target_data.dirty.cloth_semen[self.index][1] += semen_count
+            target_data.dirty.cloth_semen[self.index][3] += semen_count
+            target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.index][1])
 
-            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.button_id] + semen_text
+            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 
         now_draw = draw.WaitDraw()
         now_draw.text = now_text

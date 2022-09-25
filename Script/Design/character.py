@@ -10,6 +10,8 @@ from Script.Core import (
 from Script.Design import (
     attr_calculation,
     clothing,
+    game_time,
+
 )
 from Script.Config import game_config
 from Script.UI.Moudle import draw
@@ -47,6 +49,9 @@ def init_attr(character_id: int):
     character_data.h_state = attr_calculation.get_h_state_zero()
     character_data.assistant_state = attr_calculation.get_assistant_state_zero()
     character_data.first_record = attr_calculation.get_first_record_zero()
+    character_data.pl_ability = attr_calculation.get_pl_ability_zero()
+    character_data.cloth_see = {6:False,9:False}
+    character_data.cloth_off = attr_calculation.get_cloth_zero()
 
 
     #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
@@ -56,14 +61,18 @@ def init_attr(character_id: int):
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
-        character_data.token_list = attr_calculation.get_token_zero(character_data.token_list)
+        character_data.pl_collection.token_list = attr_calculation.get_token_zero(character_data.pl_collection.token_list)
         character_data.sleep_point = 0
+        character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.pl_collection = attr_calculation.get_collection_zero()
 
     #一系列初始化函数
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     character_data.angry_point = random.randrange(1,35)
     character_data.hunger_point = 240
+    if character_id:
+        clothing.get_underwear(character_id)
     # default_clothing_data = clothing.creator_suit(character_data.clothing_tem, character_data.sex)
     # for clothing_id in default_clothing_data:
     #     clothing_data = default_clothing_data[clothing_id]
@@ -354,11 +363,9 @@ def judge_character_time_over_24(character_id: int) -> bool:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    now_time: datetime.datetime = character_data.behavior.start_time
+    start_time: datetime.datetime = character_data.behavior.start_time
+    end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     judge = 0
-    if now_time is None:
-        now_time = cache.game_time
-    if cache.game_time.day != now_time.day:
+    if end_time.day != start_time.day:
         judge = 1
-    now_time = cache.game_time
     return judge

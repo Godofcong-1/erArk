@@ -6,7 +6,7 @@ from functools import wraps
 from typing import Set, List
 from types import FunctionType
 from threading import Thread
-from Script.Core import constant, cache_control, game_type, get_text, save_handle
+from Script.Core import constant, cache_control, game_type, get_text, save_handle,flow_handle
 from Script.Design import update, character, attr_calculation
 from Script.UI.Panel import see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
@@ -76,7 +76,6 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"), 
     {constant.Premise.NOT_H,
-    constant.Premise.NOT_IN_TOILET,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_rest():
@@ -223,9 +222,9 @@ def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
     cache.now_panel_id = constant.Panel.FIND_CALL
 
-@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("显示污浊情况"), {constant.Premise.HAVE_TARGET})
+@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("查看污浊情况"), {constant.Premise.HAVE_TARGET})
 def see_dirty():
-    """处理显示污浊情况指令"""
+    """处理查看污浊情况指令"""
     cache.now_panel_id = constant.Panel.DIRTY
 
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"), {constant.Premise.DEBUG_MODE_OFF})
@@ -242,6 +241,18 @@ def debug_mode():
 def debug_mode_off():
     """处理关闭DEBUG模式指令"""
     cache.debug_mode = False
+
+
+@add_instruct(
+    constant.Instruct.SEE_COLLECTION,
+    constant.InstructType.SYSTEM,
+    _("查看收藏品"),
+    {
+        constant.Premise.IN_COLLECTION_ROOM
+    })
+def handle_see_collection():
+    """处理查看收藏品指令"""
+    cache.now_panel_id = constant.Panel.COLLECTION
 
 
 # @add_instruct(
@@ -561,6 +572,8 @@ def handle_wait():
     """处理等待五分钟指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -804,7 +817,7 @@ def handle_confession():
         #将对象的恋慕转为恋人，获得角色的信物
         target_data.talent[11] = 0
         target_data.talent[12] = 1
-        character_data.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\告白成功，[恋慕]转为[恋人]，获得了对方赠与的[信物]\n")
@@ -840,7 +853,7 @@ def handle_give_necklace():
         target_data.talent[15] = 0
         target_data.talent[16] = 1
         target_data.talent[19] = 1
-        character_data.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]，获得了对方赠与的[信物]\n")
@@ -889,6 +902,57 @@ def handle_pee():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
+@add_instruct(
+    constant.Instruct.COLLECT,
+    constant.InstructType.DAILY,
+    _("摆放藏品"),
+    {constant.Premise.IN_COLLECTION_ROOM,
+    constant.Premise.HAVE_COLLECTION,
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89},
+)
+def handle_collect():
+    """处理摆放藏品指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+
+    # 内裤
+    if len(character_data.pl_collection.npc_panties_tem):
+        for npc_id in character_data.pl_collection.npc_panties_tem:
+            for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
+                    pan_name = game_config.config_clothing_tem[pan_id].name
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = width
+                    # 如果已经重复持有，则进行提示
+                    if pan_name in character_data.pl_collection.npc_panties[npc_id]:
+                        now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                    else:
+                        character_data.pl_collection.npc_panties[npc_id].append(pan_name)
+                        now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                    now_draw.draw()
+        # 最后清空
+        character_data.pl_collection.npc_panties_tem.clear()
+
+    # 袜子
+    if len(character_data.pl_collection.npc_socks_tem):
+        for npc_id in character_data.pl_collection.npc_socks_tem:
+            for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
+                    socks_name = game_config.config_clothing_tem[socks_id].name
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = width
+                    # 如果已经重复持有，则进行提示
+                    if socks_name in character_data.pl_collection.npc_socks[npc_id]:
+                        now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{socks_name}")
+                    else:
+                        character_data.pl_collection.npc_socks[npc_id].append(socks_name)
+                        now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{socks_name}")
+                    now_draw.draw()
+        # 装完了之后清空
+        character_data.pl_collection.npc_socks_tem.clear()
+
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
 
 @add_instruct(
     constant.Instruct.DO_H,
@@ -906,6 +970,8 @@ def handle_do_h():
     if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
         target_data.is_h = 1
         target_data.is_follow = 0
+        target_data.cloth_see[6] = True
+        target_data.cloth_see[9] = True
         character_data.behavior.behavior_id = constant.Behavior.H
         character_data.state = constant.CharacterStatus.STATUS_H
         now_draw = draw.WaitDraw()
@@ -913,12 +979,15 @@ def handle_do_h():
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
 
-        # 自动开启性爱面板
-        if not cache.instruct_filter[5]:
-            cache.instruct_filter[5] = 1
+        # 自动开启性爱面板并关闭其他面板
+        cache.instruct_filter[5] = 1
+        for i in {1,2,3,4}:
+            cache.instruct_filter[i] = 0
 
         # 清零H状态函数
         target_data.h_state = attr_calculation.get_h_state_zero()
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
     else:
         now_draw = draw.WaitDraw()
@@ -942,45 +1011,72 @@ def handle_end_h():
     target_data.is_h = 0
     character_data.behavior.behavior_id = constant.Behavior.END_H
     character_data.state = constant.CharacterStatus.STATUS_END_H
+
     #H结束时的其他处理
-    #1.对象NPC进入跟随
+    # 对象NPC进入跟随
     target_data.is_follow = 1
+
+    # 自动关闭性爱面板并开启其他面板
+    cache.instruct_filter[5] = 0
+    for i in {1,2,3,4}:
+        cache.instruct_filter[i] = 1
+
+    # 穿回脱下的衣服
+    wear_flag = False
+    for i in game_config.config_clothing_type:
+        if len(target_data.cloth_off[i]):
+            target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
+            wear_flag = True
+    if wear_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+        now_draw.draw()
+
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n结束H模式\n")
+    now_draw.text = _(f"\n结束H模式\n")
     now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
-    # 自动关闭性爱面板
-    if cache.instruct_filter[5]:
-        cache.instruct_filter[5] = 0
+#以下为娱乐#
 
-# @add_instruct(
-#     constant.Instruct.SINGING,
-#     constant.InstructType.DAILY,
-#     _("唱歌"),
-#     {})
-# def handle_singing():
-#     """处理唱歌指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
-#     character_data = cache.character_data[0]
-#     character_data.behavior.duration = 5
-#     character_data.behavior.behavior_id = constant.Behavior.SINGING
-#     character_data.state = constant.CharacterStatus.STATUS_SINGING
-#     update.game_update_flow(5)
+@add_instruct(
+    constant.Instruct.SINGING,
+    constant.InstructType.PLAY,
+    _("唱歌"),
+    {
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_74}
+    )
+def handle_singing():
+    """处理唱歌指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.SINGING
+    character_data.state = constant.CharacterStatus.STATUS_SINGING
+    update.game_update_flow(10)
 
-# @add_instruct(
-#     constant.Instruct.PLAY_INSTRUMENT,
-#     constant.InstructType.DAILY,
-#     _("演奏乐器"),
-#     {constant.Premise.HAVE_TARGET},
-# )
-# def handle_play_instrument():
-#     """处理演奏乐器指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
-#     character_data: game_type.Character = cache.character_data[0]
-#     character_data.behavior.duration = 5
-#     update.game_update_flow(5)
+@add_instruct(
+    constant.Instruct.PLAY_INSTRUMENT,
+    constant.InstructType.DAILY,
+    _("演奏乐器"),
+    {
+    constant.Premise.NOT_H,
+    constant.Premise.HAVE_INSTRUMENT,
+    constant.Premise.SLEEP_LE_74}
+    )
+def handle_play_instrument():
+    """处理演奏乐器指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 10
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
+    update.game_update_flow(10)
 
 #以下为工作#
 
@@ -1278,6 +1374,7 @@ def handle_lap_pillow():
     _("掀起裙子"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_SKIRT,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_raise_skirt():
@@ -1288,6 +1385,50 @@ def handle_raise_skirt():
     if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
         character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
         character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.ASK_FOR_PAN,
+    constant.InstructType.OBSCENITY,
+    _("索要内裤"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_PAN,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_ask_for_pan():
+    """处理索要内裤指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_PAN
+        character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_PAN
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.ASK_FOR_SOCKS,
+    constant.InstructType.OBSCENITY,
+    _("索要袜子"),
+    {constant.Premise.HAVE_TARGET,
+    constant.Premise.NOT_H,
+    constant.Premise.TARGET_WEAR_SOCKS,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_ask_for_socks():
+    """处理索要袜子指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_SOCKS
+        character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_SOCKS
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -2922,3 +3063,16 @@ def handle_give_blowjob():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.UNDRESS,
+    constant.InstructType.SEX,
+    _("脱衣服"),
+    {
+    constant.Premise.HAVE_TARGET,
+    constant.Premise.IS_H,
+    })
+def handle_undress():
+    """处理脱衣服指令"""
+    cache.now_panel_id = constant.Panel.UNDRESS
+

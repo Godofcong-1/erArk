@@ -52,6 +52,9 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     now_judge = False
     change_flag = False
     PC_information_flag = 0 # 0初始，1PC输出，2不输出
+    # NPC触发且不和玩家在同一地图时则跳过
+    if character_id != 0 and now_character_data.position != player_character_data.position:
+        return
     # 当NPC对玩家交互时，互相替换双方的输出内容
     if character_id != 0 and now_character_data.target_character_id == 0:
         change_flag = True

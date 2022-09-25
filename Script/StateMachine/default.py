@@ -317,11 +317,12 @@ def character_chat_rand_character(character_id: int):
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
     character_list = list(character_set)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.CHAT
-    character_data.behavior.duration = 10
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_CHAT
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.CHAT
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_CHAT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.STROKE_RAND_CHARACTER)
@@ -337,11 +338,12 @@ def character_stroke_rand_character(character_id: int):
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
     character_list = list(character_set)
-    target_id = random.choice(character_list)
-    character_data.behavior.behavior_id = constant.Behavior.STROKE
-    character_data.behavior.duration = 10
-    character_data.target_character_id = target_id
-    character_data.state = constant.CharacterStatus.STATUS_STROKE
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.STROKE
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_STROKE
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_TO_DR)
@@ -415,6 +417,77 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SEE_H
     character_data.state = constant.CharacterStatus.STATUS_SEE_H
     character_data.tired = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
+def character_singing(character_id: int):
+    """
+    唱歌
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.SINGING
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_SINGING
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.PLAY_INSTRUMENT)
+def character_play_instrument(character_id: int):
+    """
+    角色演奏乐器
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
+
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)
+def character_singing_to_rand_character(character_id: int):
+    """
+    唱歌给房间里随机角色听
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_list = list(
+        cache.scene_data[
+            map_handle.get_map_system_path_str_for_list(character_data.position)
+        ].character_list
+    )
+    character_list.remove(character_id)
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.SINGING
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_SINGING
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.PLAY_INSTRUMENT_RAND_CHARACTER)
+def character_play_instrument_to_rand_character(character_id: int):
+    """
+    演奏乐器给房间里随机角色听
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_list = list(
+        cache.scene_data[
+            map_handle.get_map_system_path_str_for_list(character_data.position)
+        ].character_list
+    )
+    character_list.remove(character_id)
+    if len(character_list):
+        target_id = random.choice(character_list)
+        character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+        character_data.behavior.duration = 30
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.PEE)
@@ -664,73 +737,6 @@ def character_eat_rand_food(character_id: int):
 #         now_value = max(value_dict.keys())
 #         character_data.put_on[5] = value_dict[now_value]
 
-
-# @handle_state_machine.add_state_machine(constant.StateMachine.PLAY_PIANO)
-# def character_play_piano(character_id: int):
-#     """
-#     角色弹奏钢琴
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     character_data.behavior.behavior_id = constant.Behavior.PLAY_PIANO
-#     character_data.behavior.duration = 30
-#     character_data.state = constant.CharacterStatus.STATUS_PLAY_PIANO
-
-
-# @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
-# def character_singing(character_id: int):
-#     """
-#     唱歌
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     character_data.behavior.behavior_id = constant.Behavior.SINGING
-#     character_data.behavior.duration = 5
-#     character_data.state = constant.CharacterStatus.STATUS_SINGING
-
-
-# @handle_state_machine.add_state_machine(constant.StateMachine.SING_RAND_CHARACTER)
-# def character_singing_to_rand_character(character_id: int):
-#     """
-#     唱歌给房间里随机角色听
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     character_list = list(
-#         cache.scene_data[
-#             map_handle.get_map_system_path_str_for_list(character_data.position)
-#         ].character_list
-#     )
-#     character_list.remove(character_id)
-#     target_id = random.choice(character_list)
-#     character_data.behavior.behavior_id = constant.Behavior.SINGING
-#     character_data.behavior.duration = 5
-#     character_data.target_character_id = target_id
-#     character_data.state = constant.CharacterStatus.STATUS_SINGING
-
-
-# @handle_state_machine.add_state_machine(constant.StateMachine.PLAY_PIANO_RAND_CHARACTER)
-# def character_play_piano_to_rand_character(character_id: int):
-#     """
-#     弹奏钢琴给房间里随机角色听
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     character_list = list(
-#         cache.scene_data[
-#             map_handle.get_map_system_path_str_for_list(character_data.position)
-#         ].character_list
-#     )
-#     character_list.remove(character_id)
-#     target_id = random.choice(character_list)
-#     character_data.behavior.behavior_id = constant.Behavior.PLAY_PIANO
-#     character_data.behavior.duration = 30
-#     character_data.target_character_id = target_id
-#     character_data.state = constant.CharacterStatus.STATUS_PLAY_PIANO
 
 
 # @handle_state_machine.add_state_machine(

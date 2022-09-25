@@ -183,6 +183,8 @@ class BuyItemByItemNameDraw:
 
     def buy_item(self):
         py_cmd.clr_cmd()
+        line = draw.LineDraw("-", window_width)
+        line.draw()
         item_config = game_config.config_item[self.text]
         if self.character_data.money >= item_config.price:
             self.character_data.item[self.text] += 1

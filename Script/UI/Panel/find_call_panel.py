@@ -37,28 +37,39 @@ class Find_call_Panel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw("干员位置一览", self.width)
-        self.handle_panel = panel.PageHandlePanel([], FindDraw, 10, 5, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 4, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
             npc_list = {}
+            title_draw.draw()
+            info_draw = draw.NormalDraw()
+            follow_count = cache.character_data[0].pl_ability.follow_count
+            if not cache.debug_mode:
+                info_draw.text = "●当前最大同时跟随角色数量：" + str(follow_count) + "\n\n"
+            else:
+                info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)\n\n"
+            info_draw.width = self.width
+            info_draw.draw()
             #读取人物的位置情报与跟随情报#
             for npc_id in cache.character_data:
                 if npc_id != 0:
                     character_data = cache.character_data[npc_id]
                     name = character_data.name
+                    id = str(character_data.adv)
                     scene_position = character_data.position
                     scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-                    scene_name = cache.scene_data[scene_position_str].scene_name
+                    if scene_position_str[-1] == "0":
+                        scene_position_str = scene_position_str[:-2] + "入口"
+                    # scene_name = cache.scene_data[scene_position_str].scene_name
+                    npc_list[npc_id-1] = f"{name}({id}):{scene_position_str}"
                     if character_data.is_follow == 1:
-                        npc_list[npc_id-1] = name + " : " + scene_name + "   跟随中"
+                        npc_list[npc_id-1] += "   跟随中"
                     else:
-                        npc_list[npc_id-1] = name + " : " + scene_name + "   未跟随"
+                        npc_list[npc_id-1] += "   未跟随"
                     # print("npc_list[npc_id-1] :",npc_list[npc_id-1])
             self.handle_panel.text_list = npc_list
             self.handle_panel.update()
-            title_draw.draw()
             return_list = []
-            line_feed.draw()
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
@@ -131,22 +142,33 @@ class FindDraw:
 
     def see_call_list(self):
         """点击后进行召集"""
-        title_draw = draw.TitleLineDraw(self.text, window_width)
+        # title_draw = draw.TitleLineDraw(self.text, window_width)
         return_list = []
-        title_draw.draw()
+        # title_draw.draw()
+        line = draw.LineDraw("-", window_width)
+        line.draw()
         character_id = self.button_id + 1
         character_data: game_type.Character = cache.character_data[character_id]
         if character_data.is_follow == 0:
             character_data.is_follow = 1
             now_draw = draw.NormalDraw()
-            now_draw.text = character_data.name + "进入跟随模式"
+            now_draw.text = character_data.name + "进入跟随模式\n"
+
+            # 去掉其他NPC的跟随
+            if not cache.debug_mode:
+                for npc_id in cache.character_data:
+                    if npc_id != 0 and npc_id != character_id:
+                        other_character_data = cache.character_data[npc_id]
+                        if other_character_data.is_follow:
+                            other_character_data.is_follow = 0
+                            now_draw.text += other_character_data.name + "退出跟随模式\n"
+
         else:
             character_data.is_follow = 0
             now_draw = draw.NormalDraw()
-            now_draw.text = character_data.name + "退出跟随模式"
+            now_draw.text = character_data.name + "退出跟随模式\n"
         now_draw.width = 1
         now_draw.draw()
-        line_feed.draw()
         # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
         # back_draw.draw()
         # line_feed.draw()

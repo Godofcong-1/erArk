@@ -57,6 +57,10 @@ class CharacterStatus:
     """ 结束H状态 """
     STATUS_PEE = 140
     """ 解手 """
+    STATUS_SINGING = 151
+    """ 唱歌 """
+    STATUS_PLAY_INSTRUMENT = 152
+    """ 演奏乐器 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -91,11 +95,15 @@ class CharacterStatus:
     """ 膝枕 """
     STATUS_RAISE_SKIRT = 315
     """ 掀起裙子 """
-    STATUS_TOUCH_CLITORIS = 317
+    STATUS_ASK_FOR_PAN = 316
+    """ 索要内裤 """
+    STATUS_ASK_FOR_SOCKS = 317
+    """ 索要袜子 """
+    STATUS_TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
-    STATUS_TOUCH_VAGINA = 318
+    STATUS_TOUCH_VAGINA = 332
     """ 手指插入（V） """
-    STATUS_TOUCH_ANUS = 319
+    STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
@@ -275,6 +283,8 @@ class CharacterStatus:
     """ 鞭子 """
     STATUS_NEEDLE = 606
     """ 针 """
+    STATUS_UNDRESS = 701
+    """ 脱衣服 """
 
 
 class Behavior:
@@ -332,6 +342,10 @@ class Behavior:
     """ 结束H """
     PEE = 140
     """ 解手 """
+    SINGING = 151
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 152
+    """ 演奏乐器 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -370,11 +384,15 @@ class Behavior:
     """ 膝枕 """
     RAISE_SKIRT = 315
     """ 掀起裙子 """
-    TOUCH_CLITORIS = 317
+    ASK_FOR_PAN = 316
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 317
+    """ 索要袜子 """
+    TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
-    TOUCH_VAGINA = 318
+    TOUCH_VAGINA = 332
     """ 手指插入（V） """
-    TOUCH_ANUS = 319
+    TOUCH_ANUS = 333
     """ 手指插入（A） """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
@@ -556,6 +574,9 @@ class Behavior:
     NEEDLE = 606
     """ 针 """
 
+    UNDRESS = 701
+    """ 脱衣服 """
+
 
 class StateMachine:
     """状态机id"""
@@ -566,10 +587,6 @@ class StateMachine:
     """ 原地待机10分钟 """
     WAIT_30_MIN = 2
     """ 原地待机30分钟 """
-    REST = 4
-    """ 休息一会儿 """
-    SLEEP = 5
-    """ 睡觉 """
     FOLLOW = 6
     """ 跟随玩家 """
     MOVE_TO_RAND_SCENE = 10
@@ -590,12 +607,22 @@ class StateMachine:
     """ 移动至食堂 """
     MOVE_TO_REST_ROOM = 18
     """ 移动至休息室 """
+    MOVE_TO_CLASSIC_MUSIC_ROOM = 19
+    """ 移动至夕照区音乐室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
     """ 在取餐区购买随机食物 """
     EAT_BAG_RAND_FOOD = 42
     """ 食用背包内随机食物 """
+    REST = 43
+    """ 休息一会儿 """
+    SLEEP = 44
+    """ 睡觉 """
+    SINGING = 45
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 46
+    """ 演奏乐器 """
     PEE = 50
     """ 解手 """
 
@@ -612,6 +639,10 @@ class StateMachine:
     """ 和场景里随机对象聊天 """
     STROKE_RAND_CHARACTER = 201
     """ 和场景里随机对象身体接触 """
+    SINGING_RAND_CHARACTER = 202
+    """ 唱歌给房间里随机角色听 """
+    PLAY_INSTRUMENT_RAND_CHARACTER = 203
+    """ 演奏乐器给房间里随机角色听 """
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -704,6 +735,10 @@ class Panel:
     """ 道具面板 """
     ASSISTANT = 12
     """ 助理面板 """
+    COLLECTION = 13
+    """ 收藏品面板 """
+    UNDRESS = 14
+    """ 脱衣服面板 """
 
 
 class Premise:
@@ -882,6 +917,10 @@ class Premise:
     """ 在休息室中 """
     NOT_IN_REST_ROOM = "not_in_restroom"
     """ 不在休息室中 """
+    IN_MUSIC_ROOM = "in_music_room"
+    """ 在音乐室中 """
+    IN_COLLECTION_ROOM = "in_collection_room"
+    """ 在藏品馆中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
@@ -1217,6 +1256,8 @@ class Premise:
     """ 已持有相机 """
     HAVE_VIDEO_RECORDER = "have_video_recorder"
     """ 已持有录像机 """
+    HAVE_INSTRUMENT = "have_instrument"
+    """ 已持有乐器 """
 
     HAVE_NIPPLE_CLAMP = "have_nipple_clamp"
     """ 已持有乳头夹 """
@@ -1316,6 +1357,27 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
+    WEAR_BRA = "wear_bra"
+    """ 穿着胸衣 """
+    TARGET_WEAR_BRA = "t_wear_bra"
+    """ 交互对象穿着胸衣 """
+    WEAR_SKIRT = "wear_skirt"
+    """ 穿着裙子 """
+    TARGET_WEAR_SKIRT = "t_wear_skirt"
+    """ 交互对象穿着裙子 """
+    WEAR_PAN = "wear_pan"
+    """ 穿着内裤 """
+    TARGET_WEAR_PAN = "t_wear_pan"
+    """ 交互对象穿着内裤 """
+    WEAR_SOCKS = "wear_socks"
+    """ 穿着袜子 """
+    TARGET_WEAR_SOCKS = "t_wear_socks"
+    """ 交互对象穿着袜子 """
+
+    HAVE_COLLECTION = "have_collection"
+    """ 持有藏品 """
+
+
 
     HYPOSTHENIA = "83"
     """ 体力不足 """
@@ -1395,8 +1457,8 @@ class Premise:
     """ 没穿胸罩 """
     NO_WEAR_PANTS = "52"
     """ 没穿裤子 """
-    NO_WEAR_SKIRT = "53"
-    """ 没穿短裙 """
+    # NO_WEAR_SKIRT = "53"
+    # """ 没穿短裙 """
     NO_WEAR_SHOES = "54"
     """ 没穿鞋子 """
     NO_WEAR_SOCKS = "55"
@@ -1419,8 +1481,6 @@ class Premise:
     """ 拥有袜子 """
     CHEST_IS_NOT_CLIFF = "65"
     """ 胸围不是绝壁 """
-    IN_MUSIC_ROOM = "68"
-    """ 处于音乐室 """
     NO_EXCELLED_AT_SINGING = "69"
     """ 不擅长演唱 """
     TARGET_HEIGHT_LOW = "71"
@@ -1573,6 +1633,11 @@ class BehaviorEffect:
     """ 打断交互对象活动 """
     NOT_TIRED = 31
     """ 从疲劳中恢复 """
+    ITEM_OFF = 32
+    """ 去掉身上所有的道具 """
+    TARGET_ITEM_OFF = 33
+    """ 交互对象去掉身上所有的道具 """
+
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42
@@ -1676,6 +1741,10 @@ class BehaviorEffect:
     """ 制作指定食物 """
     KONWLEDGE_ADD_MONEY = 105
     """ 根据自己（再加上交互对象的）学识获得少量金钱 """
+    SING_ADD_ADJUST = 106
+    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
+    PLAY_INSTRUMENT_ADD_ADJUST = 107
+    """ （演奏乐器用）根据交互对象的音乐技能进行好感度、信赖、好意调整 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -1895,6 +1964,27 @@ class BehaviorEffect:
     """ 增加1指挥经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 自己（和对方一起）增加1学识经验 """
+
+    CHANGE_UNDERWERA = 601
+    """ 换新的内衣（胸部+内裤） """
+    BRA_SEE = 602
+    """ 胸罩可视 """
+    TARGET_BRA_SEE = 603
+    """ 交互对象胸罩可视 """
+    PAN_SEE = 604
+    """ 内裤可视 """
+    TARGET_PAN_SEE = 605
+    """ 交互对象内裤可视 """
+    CLOTH_SEE_ZERO = 606
+    """ 内衣可视清零 """
+    RESTE_CLOTH = 607
+    """ 衣服重置为初始状态 """
+    ASK_FOR_PAN = 621
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 622
+    """ 索要袜子 """
+
+
 
 class SecondBehavior:
     """二段结算行为函数"""
@@ -2270,12 +2360,16 @@ class Instruct:
     """ H结束 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
-    # SINGING = 0
-    # """ 唱歌 """
-    # PLAY_INSTRUMENT = 0
-    # """ 演奏乐器 """
     PEE = 0
     """ 解手 """
+    COLLECT = 0
+    """ 摆放藏品 """
+
+    #娱乐#
+    SINGING = 0
+    """ 唱歌 """
+    PLAY_INSTRUMENT = 0
+    """ 演奏乐器 """
 
 
     #工作#
@@ -2319,6 +2413,10 @@ class Instruct:
     """ 膝枕 """
     RAISE_SKIRT = 0
     """ 掀起裙子 """
+    ASK_FOR_PAN = 0
+    """ 索要内裤 """
+    ASK_FOR_SOCKS = 0
+    """ 索要袜子 """
     TOUCH_CLITORIS = 0
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 0
@@ -2522,6 +2620,8 @@ class Instruct:
     """ 交给对方 """
     GIVE_BLOWJOB = 0
     """ 给对方口交 """
+    UNDRESS = 0
+    """ 脱衣服 """
     #系统#
     MOVE = 0
     """ 移动 """
@@ -2542,12 +2642,13 @@ class Instruct:
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
     SEE_DIRTY = 0
-    """ 显示污浊情况 """
+    """ 查看污浊情况 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0
     """ 关闭debug模式 """
-
+    SEE_COLLECTION = 0
+    """ 查看收藏品 """
 
 
 i = 0

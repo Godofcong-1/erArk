@@ -31,6 +31,9 @@ def init_character_tem_data():
             elif k.startswith("T|"):
                 now_k = int(k.lstrip("T|"))
                 now_tem.Talent[now_k] = 1
+            elif k.startswith("C|"):
+                now_k = int(k.lstrip("C|"))
+                now_tem.Cloth.append(now_k)
             else:
                 now_tem.__dict__[k] = v
         character_tem_list.append(now_tem)

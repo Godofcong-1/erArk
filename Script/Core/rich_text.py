@@ -30,10 +30,14 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
     if style_index == 0:
         style_list = [default_style] * len(text_message)
     else:
+        # print(f"debug default_style = {default_style}")
+        # print(f"debug text_message = {text_message}")
         cache.output_text_style = default_style
         for i in range(0, len(text_message)):
+            # print(f"debug i = {i}")
             input_text_style_size = text_message.find(">", i) + 1
             input_text_style = text_message[i + 1 : input_text_style_size - 1]
+            # print(f"debug input_text_style = {input_text_style}")
             if text_message[i] == "<" and (
                 (input_text_style in style_name_list) or (input_text_style[1:] in style_name_list)
             ):
@@ -62,6 +66,7 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
                         style_list.append(cache.output_text_style)
                 else:
                     style_list.append(cache.output_text_style)
+        # print(f"debug style_list = {style_list}")
     return style_list
 
 

@@ -9,6 +9,6 @@ width = normal_config.config_normal.text_width
 
 @handle_panel.add_panel(constant.Panel.DIRTY)
 def dirty_flow():
-    """射精面板"""
+    """污浊面板"""
     now_panel = dirty_panel.Dirty_Panel(width)
     now_panel.draw()

@@ -100,22 +100,36 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_id != 0:
         judge_character_follow(character_id)
         judge_character_h(character_id)
-    # 空闲状态下执行可用行动#
-    start_character = time.time()
-    if character_data.state == constant.CharacterStatus.STATUS_ARDER:
-        if character_id:
-            character_target_judge(character_id, now_time)
-        else:
+
+    # 先处理玩家部分
+    if character_id == 0:
+        if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(0)
-        end_judge = time.time()
-        # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
-    # 非空闲活动下结算当前状态#
-    else:
-        status_judge = judge_character_status(character_id, now_time)
-        if status_judge:
-            cache.over_behavior_character.add(character_id)
-        end_judge = time.time()
-        # logging.debug(f'角色编号{character_id}非空闲，结算当前状态，到结算为止耗时为{end_judge - start_character}')
+            # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
+        # 非空闲活动下结算当前状态#
+        else:
+            status_judge = judge_character_status(character_id, now_time)
+            if status_judge:
+                cache.over_behavior_character.add(character_id)
+
+    # 再处理NPC部分
+    if character_id:
+        # 空闲状态下执行可用行动#
+        start_character = time.time()
+        if character_data.state == constant.CharacterStatus.STATUS_ARDER:
+            if character_id:
+                character_target_judge(character_id, now_time)
+            else:
+                cache.over_behavior_character.add(0)
+            end_judge = time.time()
+            # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
+        # 非空闲活动下结算当前状态#
+        else:
+            status_judge = judge_character_status(character_id, now_time)
+            if status_judge:
+                cache.over_behavior_character.add(character_id)
+            end_judge = time.time()
+            # logging.debug(f'角色编号{character_id}非空闲，结算当前状态，到结算为止耗时为{end_judge - start_character}')
 
     #24点之后的结算#
     if character.judge_character_time_over_24(character_id):
@@ -124,16 +138,16 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             now_draw.width = window_width
             now_draw.text = "\n已过24点，开始结算各种数据\n"
             now_draw.draw()
-        #1.结算数值为珠
+        # 结算数值为珠
         settle_character_juel(character_id)
-        #2.清零射精槽
+        # 清零射精槽
         if character_id == 0:
             character_data.eja_point = 0
-        #3.清零高潮程度
+        # 清零高潮程度
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-        #4.清零并随机重置生气程度
+        # 清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-        #5.清零污浊状态
+        # 清零污浊状态
         character_data.dirty = attr_calculation.get_dirty_zero()
         #自动存档，用玩家id来限制只存一次
         if character_id == 0:
@@ -153,8 +167,17 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    PC_character_data: game_type.Character = cache.character_data[0]
     premise_data = {}
     target_weight_data = {}
+
+    # 如果玩家在对该NPC交互，则等待flag=1
+    safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
+    if PC_character_data.target_character_id == character_id:
+        # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
+        if PC_character_data.state not in safe_instruct:
+            character_data.wait_flag = 1
+
     target, _, judge = search_target(
         character_id,
         list(game_config.config_target.keys()),
@@ -165,11 +188,11 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
-        #如果上个AI行动不是原地等待5分钟，则将等待flag设为1
+        #如果上个AI行动不是等待5分钟，也不是移动指令，则将等待flag设为1
         # 不会被打断的指令列表
-        safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
-        safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
-        if state_machine_id != 0 and state_machine_id not in safe_instruct:
+        # safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
+        # safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
+        if state_machine_id != 0 and not (state_machine_id >= 10 and state_machine_id <= 39):
             character_data.wait_flag = 1
         #     print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
         constant.handle_state_machine_data[state_machine_id](character_id)
@@ -221,7 +244,7 @@ def judge_character_tired_sleep(character_id : int):
             character_data.is_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.width = width
-            draw_text = "太累了，决定回房间睡觉 " if character_data.tired else "太困了，决定回房间睡觉"
+            draw_text = "太累了，决定回房间睡觉\n" if character_data.tired else "太困了，决定回房间睡觉\n"
             now_draw.text = character_data.name + draw_text
             now_draw.draw()
 
@@ -412,7 +435,7 @@ def judge_character_follow(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 锁定助理的跟随状态
-    if character_data.assistant_state.always_follow == 1 or character_data.assistant_state.always_follow == 2:
+    if character_data.assistant_state.always_follow in {1,2}:
         character_data.is_follow = character_data.assistant_state.always_follow
 
     # 维持跟随的状态

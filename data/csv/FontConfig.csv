@@ -28,4 +28,5 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 22,solarperiod,#003e54,,,,,,,,节气字体
 23,season,#f0ffff,,,,,,,,季节字体
 24,moon,#d6ecf0,,,,,,,,月相
-25,emoji,#c8c8c8,,Noto Looped Thai UI,,,,,,表情
+25,emoji,#c8c8c8,,emoji 常规,,,,,,表情
+26,semen,#fffacd,,,,,,,,精液
