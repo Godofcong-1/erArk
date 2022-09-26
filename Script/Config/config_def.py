@@ -226,6 +226,15 @@ class Item:
     """ 描述 """
 
 
+class JJ:
+    """ 阴茎类型 """
+
+    cid: int
+    """ 阴茎id """
+    name: str
+    """ 阴茎名称 """
+
+
 class Juel:
     """ 珠名字 """
 

@@ -13,7 +13,7 @@ from Script.Design import (
     attr_calculation,
 )
 from Script.UI.Moudle import panel, draw
-from Script.UI.Panel import see_character_info_panel
+from Script.UI.Panel import see_character_info_panel,assistant_panel
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
@@ -143,14 +143,16 @@ class Character_creat_Handle:
         info_draw = see_character_info_panel.CharacterInfoHead(0, width)
         info_draw.draw_title = False
         sex_draw = Character_Sex(self.width)
+        jj_draw = Character_JJ(self.width)
         bonus_draw = Character_Bonus(self.width)
-        abi_draw = see_character_info_panel.CharacterabiText(0, width)
+        # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             info_draw,
             sex_draw,
+            jj_draw,
             bonus_draw,
-            abi_draw,
+            # abi_draw,
             tal_draw,
         ]
         """ 绘制的面板列表 """
@@ -159,6 +161,7 @@ class Character_creat_Handle:
 
     def draw(self):
         """绘制面板"""
+        line_feed_draw.draw()
         title_draw = draw.TitleLineDraw(_("详细设定"), self.width)
         title_draw.draw()
         for label in self.draw_list:
@@ -227,6 +230,67 @@ class Character_Sex:
         else:
             character_data.sex = 1
 
+
+class Character_JJ:
+    """
+    角色阴茎面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+
+        character_data: game_type.Character = cache.character_data[0]
+        jj_text = game_config.config_jj_tem[character_data.pl_ability.jj_size].name
+        now_draw = panel.LeftDrawTextListPanel()
+
+        jj_draw = draw.LeftDraw()
+        jj_draw.width = 1
+        jj_draw.text = f"\n 阴茎大小：{jj_text}      "
+        now_draw.draw_list.append(jj_draw)
+        now_draw.width += len(jj_draw.text)
+
+        button_text = f"    【改变大小】"
+        jj_button_draw = draw.LeftButton(
+            _(button_text),
+            _('改变大小'),
+            self.width / 10,
+            cmd_func=self.change)
+        self.return_list.append(jj_button_draw.return_text)
+
+        now_draw.draw_list.append(jj_button_draw)
+        now_draw.width += len(jj_button_draw.text)
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        if cache.character_data[0].sex == 0:
+            for label in self.draw_list:
+                if isinstance(label, list):
+                    for value in label:
+                        value.draw()
+                    line_feed_draw.draw()
+                else:
+                    label.draw()
+
+    def change(self):
+        """大小改变"""
+        character_data: game_type.Character = cache.character_data[0]
+        if character_data.pl_ability.jj_size == 3:
+            character_data.pl_ability.jj_size = 0
+        else:
+            character_data.pl_ability.jj_size += 1
+
+
 class Character_Bonus:
     """
     角色奖励点数面板
@@ -250,7 +314,7 @@ class Character_Bonus:
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = f"\n 当前为第{str(cache.game_round)}周目\n"
+        info_draw.text = f"\n\n 当前为第{str(cache.game_round)}周目\n"
         info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
             bonus_all += 20
@@ -318,7 +382,7 @@ class Character_Bonus:
         now_draw.width += 1
 
         if character_data.money:
-            button_text = f"   ●启动资金(10)：初始获得50000龙门币和6000合成玉"
+            button_text = f"   ●启动资金(5)：初始获得50000龙门币和6000合成玉"
             button_money_draw = draw.LeftButton(
                 _(button_text),
                 _('启动资金'),
@@ -327,9 +391,9 @@ class Character_Bonus:
                 )
             self.return_list.append(button_307_draw.return_text)
             button_307_draw.draw()
-            self.bonus_now -= 10
+            self.bonus_now -= 5
         else:
-            button_text = f"   ○启动资金(10)：初始获得50000龙门币和6000合成玉"
+            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉"
             button_money_draw = draw.LeftButton(
                 _(button_text),
                 _('启动资金'),
@@ -339,6 +403,34 @@ class Character_Bonus:
             self.return_list.append(button_money_draw.return_text)
         now_draw.draw_list.append(button_money_draw)
         now_draw.width += len(button_money_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        if character_data.assistant_character_id:
+            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+            button_text = f"   ●助理干员(5)：选择{target_data.name}成为助理干员，初始拥有1000点好感和50%信赖度"
+            button_assistant_draw = draw.LeftButton(
+                _(button_text),
+                _('助理干员'),
+                self.width,
+                cmd_func=self.get_assistant,
+                )
+            self.return_list.append(button_307_draw.return_text)
+            button_307_draw.draw()
+            self.bonus_now -= 5
+            target_data.favorability[0] = 1000
+            target_data.trust = 50
+        else:
+            button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
+            button_assistant_draw = draw.LeftButton(
+                _(button_text),
+                _('助理干员'),
+                self.width,
+                cmd_func=self.get_assistant,
+                )
+            self.return_list.append(button_assistant_draw.return_text)
+        now_draw.draw_list.append(button_assistant_draw)
+        now_draw.width += len(button_assistant_draw.text)
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
@@ -393,3 +485,54 @@ class Character_Bonus:
             info_last_draw.width = 1
             info_last_draw.text = f"\n 当前剩余奖励不足\n"
             info_last_draw.draw()
+
+    def get_assistant(self):
+        """获得助理干员"""
+        character_data: game_type.Character = cache.character_data[0]
+
+        if character_data.assistant_character_id:
+            character_data.assistant_character_id = 0
+        
+        # 这里直接沿用的助理页面的代码
+        elif self.bonus_now >= 10:
+
+            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
+
+            while 1:
+
+                # 显示当前助手
+                character_data: game_type.Character = cache.character_data[0]
+                target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+                line = draw.LineDraw("-", self.width)
+                line.draw()
+                now_npc_draw = draw.NormalDraw()
+                if character_data.assistant_character_id != 0:
+                    now_npc_text = f"当前助理为{target_data.name}，如果要更换，请在下面选择新的助理："
+                else:
+                    now_npc_text = f"当前无助理，请选择新的助理："
+                now_npc_draw.text = now_npc_text
+                now_npc_draw.draw()
+                line_feed_draw.draw()
+
+                # 遍历所有NPC
+                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                # print("debug id_list = ",id_list)
+                self.handle_panel.text_list = id_list
+                self.handle_panel.update()
+                self.handle_panel.draw()
+                return_list = []
+                return_list.extend(self.handle_panel.return_list)
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+                back_draw.draw()
+                line_feed_draw.draw()
+                return_list.append(back_draw.return_text)
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn == back_draw.return_text:
+                    break
+
+        else:
+            info_last_draw = draw.WaitDraw()
+            info_last_draw.width = 1
+            info_last_draw.text = f"\n 当前剩余奖励不足\n"
+            info_last_draw.draw()
+

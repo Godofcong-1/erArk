@@ -120,6 +120,8 @@ config_season: Dict[int, config_def.Season] = {}
 """ 季节配置数据 """
 config_sex_tem: Dict[int, config_def.SexTem] = {}
 """ 性别对应描述和性别器官模板 """
+config_jj_tem: Dict[int, config_def.JJ] = {}
+""" 阴茎对应描述 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -531,6 +533,16 @@ def load_sex_tem():
         config_random_npc_sex_region[now_tem.cid] = now_tem.region
 
 
+def load_jj_tem():
+    """载入性别对应描述和性别器官模板数据"""
+    now_data = config_data["JJ"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.JJ()
+        now_tem.__dict__ = tem_data
+        config_jj_tem[now_tem.cid] = now_tem
+
+
 def load_solar_period():
     """载入节气配置"""
     now_data = config_data["SolarPeriod"]
@@ -670,6 +682,7 @@ def init():
     load_recipes()
     load_season()
     load_sex_tem()
+    load_jj_tem()
     load_solar_period()
     load_status()
     load_sun_time()

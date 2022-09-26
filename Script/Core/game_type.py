@@ -391,6 +391,8 @@ class PLAYER_ABILITY:
 
         self.follow_count: int = 1
         """ 最大同时跟随人数 """
+        self.jj_size: int = 1
+        """ 阴茎大小，0短小,1普通,2粗大,3巨根 """
 
 
 # class Height:
