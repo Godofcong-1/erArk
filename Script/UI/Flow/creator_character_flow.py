@@ -187,18 +187,18 @@ class Character_Sex:
         sex_text = game_config.config_sex_tem[character_data.sex].name
         now_draw = panel.LeftDrawTextListPanel()
 
-        Now_draw = draw.LeftDraw()
-        Now_draw.width = 1
-        Now_draw.text = f"\n 性别：{sex_text}      "
-        now_draw.draw_list.append(Now_draw)
-        now_draw.width += len(Now_draw.text)
+        sex_draw = draw.LeftDraw()
+        sex_draw.width = 1
+        sex_draw.text = f"\n 性别：{sex_text}      "
+        now_draw.draw_list.append(sex_draw)
+        now_draw.width += len(sex_draw.text)
 
         button_text = f"    【改变性别】"
         sex_button_draw = draw.LeftButton(
             _(button_text),
-            _(str(character_data.sex)),
+            _('改变性别'),
             self.width /10,
-            cmd_func=self.change())
+            cmd_func=self.change)
         self.return_list.append(sex_button_draw.return_text)
 
         now_draw.draw_list.append(sex_button_draw)
@@ -221,7 +221,6 @@ class Character_Sex:
 
     def change(self):
         """性别改变"""
-        print(f"debug 性别改变")
         character_data: game_type.Character = cache.character_data[0]
         if character_data.sex:
             character_data.sex = 0
@@ -245,83 +244,152 @@ class Character_Bonus:
         self.talent_id = 0
         """ 当前需要改变的素质 """
 
-    def draw(self):
-        """绘制面板"""
         character_data: game_type.Character = cache.character_data[0]
         bonus_all = 0
+        now_draw = panel.LeftDrawTextListPanel()
 
-        Now_draw = draw.LeftDraw()
-        Now_draw.width = 1
-        Now_draw.text = f"\n 当前为第{str(cache.game_round)}周目\n"
-        Now_draw.text += f" 当前总奖励点数   ="
+        info_draw = draw.LeftDraw()
+        info_draw.width = 1
+        info_draw.text = f"\n 当前为第{str(cache.game_round)}周目\n"
+        info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
-            Now_draw.text += f" 30 (新玩家奖励+30)"
-            bonus_all += 30
-        Now_draw.draw()
+            bonus_all += 20
+            info_draw.text += f" {bonus_all} (新玩家奖励+20)"
         self.bonus_now = bonus_all
 
-        Now_draw = draw.LeftDraw()
-        Now_draw.width = 1
-        Now_draw.text = f"\n 可选素质奖励有：\n"
-        Now_draw.draw()
+        now_draw.draw_list.append(info_draw)
+        now_draw.width += len(info_draw.text)
+
+        info_talent_draw = draw.LeftDraw()
+        info_talent_draw.width = 1
+        info_talent_draw.text = f"\n 可选奖励有：\n"
+        now_draw.draw_list.append(info_talent_draw)
+        now_draw.width += len(info_talent_draw.text)
 
         if character_data.talent[304]:
             button_text = f"   ●博士信息素(10)：增加指令实行值"
-            self.talent_id = 304
-            button_draw = draw.LeftButton(
+            button_304_draw = draw.LeftButton(
                 _(button_text),
-                _(str(self.talent_id)),
+                _('博士信息素'),
                 self.width,
-                cmd_func=self.get_talent())
-            self.return_list.append(button_draw.return_text)
-            button_draw.draw()
+                cmd_func=self.get_talent,
+                args=304)
+            self.return_list.append(button_304_draw.return_text)
+            button_304_draw.draw()
+            self.bonus_now -= 10
         else:
             button_text = f"   ○博士信息素(10)：增加指令实行值"
-            self.talent_id = 304
-            button_draw = draw.LeftButton(
+            button_304_draw = draw.LeftButton(
                 _(button_text),
-                _(str(self.talent_id)),
+                _('博士信息素'),
                 self.width,
-                cmd_func=self.get_talent())
-            self.return_list.append(button_draw.return_text)
-            button_draw.draw()
-        line_feed_draw.draw()
+                cmd_func=self.get_talent,
+                args=304)
+            self.return_list.append(button_304_draw.return_text)
+            button_304_draw.draw()
+        now_draw.draw_list.append(button_304_draw)
+        now_draw.width += len(button_304_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
 
         if character_data.talent[307]:
             button_text = f"   ●内衣透视(10)：可以看到对方当前穿的内衣"
-            self.talent_id = 307
-            button_draw = draw.LeftButton(
+            button_307_draw = draw.LeftButton(
                 _(button_text),
-                _(str(self.talent_id)),
+                _('内衣透视'),
                 self.width,
-                cmd_func=self.get_talent())
-            self.return_list.append(button_draw.return_text)
-            button_draw.draw()
+                cmd_func=self.get_talent,
+                args=307)
+            self.return_list.append(button_307_draw.return_text)
+            button_307_draw.draw()
+            self.bonus_now -= 10
         else:
             button_text = f"   ○内衣透视(10)：可以看到对方当前穿的内衣"
-            self.talent_id = 307
-            button_draw = draw.LeftButton(
+            button_307_draw = draw.LeftButton(
                 _(button_text),
-                _(str(self.talent_id)),
+                _('内衣透视'),
                 self.width,
-                cmd_func=self.get_talent())
-            self.return_list.append(button_draw.return_text)
-            button_draw.draw()
-        line_feed_draw.draw()
+                cmd_func=self.get_talent,
+                args=307)
+            self.return_list.append(button_307_draw.return_text)
+        now_draw.draw_list.append(button_307_draw)
+        now_draw.width += len(button_307_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
 
-        Now_draw = draw.LeftDraw()
-        Now_draw.width = 1
-        Now_draw.text = f"\n\n 当前剩余奖励点数 = {self.bonus_now}\n"
-        Now_draw.draw()
+        if character_data.money:
+            button_text = f"   ●启动资金(10)：初始获得50000龙门币和6000合成玉"
+            button_money_draw = draw.LeftButton(
+                _(button_text),
+                _('启动资金'),
+                self.width,
+                cmd_func=self.get_money,
+                )
+            self.return_list.append(button_307_draw.return_text)
+            button_307_draw.draw()
+            self.bonus_now -= 10
+        else:
+            button_text = f"   ○启动资金(10)：初始获得50000龙门币和6000合成玉"
+            button_money_draw = draw.LeftButton(
+                _(button_text),
+                _('启动资金'),
+                self.width,
+                cmd_func=self.get_money,
+                )
+            self.return_list.append(button_money_draw.return_text)
+        now_draw.draw_list.append(button_money_draw)
+        now_draw.width += len(button_money_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        info_last_draw = draw.LeftDraw()
+        info_last_draw.width = 1
+        if self.bonus_now:
+            info_last_draw.text = f"\n 当前剩余奖励点数 = {self.bonus_now}\n"
+        else:
+            info_last_draw.text = f"\n 奖励点数消耗完毕\n"
+        now_draw.draw_list.append(info_last_draw)
+        now_draw.width += len(info_last_draw.text)
 
 
-    def get_talent(self):
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed_draw.draw()
+            else:
+                label.draw()
+
+    def get_talent(self,talent_id:int):
         """获得素质"""
         character_data: game_type.Character = cache.character_data[0]
-        # print(f"debug self.talent_id = {self.talent_id}")
-        if character_data.talent[self.talent_id]:
-            character_data.talent[self.talent_id] = 0
-            self.bonus_now += 10
+        if character_data.talent[talent_id]:
+            character_data.talent[talent_id] = 0
+        elif self.bonus_now >= 10:
+            character_data.talent[talent_id] = 1
         else:
-            character_data.talent[self.talent_id] = 1
-            self.bonus_now -= 10
+            info_last_draw = draw.WaitDraw()
+            info_last_draw.width = 1
+            info_last_draw.text = f"\n 当前剩余奖励不足\n"
+            info_last_draw.draw()
+
+    def get_money(self):
+        """获得金钱"""
+        character_data: game_type.Character = cache.character_data[0]
+        if character_data.money:
+            character_data.money = 0
+            character_data.orundum = 0
+        elif self.bonus_now >= 10:
+            character_data.money = 50000
+            character_data.orundum = 6000
+        else:
+            info_last_draw = draw.WaitDraw()
+            info_last_draw.width = 1
+            info_last_draw.text = f"\n 当前剩余奖励不足\n"
+            info_last_draw.draw()
