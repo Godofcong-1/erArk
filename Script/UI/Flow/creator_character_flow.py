@@ -35,6 +35,7 @@ def creator_character_panel():
     cache.character_data[0] = game_type.Character()
     character_handle.init_character_list()
     while 1:
+        confirm_game_info_panel()
         if input_name_panel():
             character.init_attr(0)
             game_start()
@@ -61,6 +62,21 @@ def game_start():
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
 
+def confirm_game_info_panel():
+    """确认游戏说明面板"""
+    askfor_panel = panel.OneMessageAndSingleColumnButton()
+    info_text = f"\n\n\n  免责声明：本游戏仅为开发者本人自娱自乐及代码练习所用，开发它是因为我个人趣味低下，思想低俗所至致，无任何经济收益和利益驱动。\n\n\n            本游戏禁止任何人在任何渠道进行传播，公开和私底下都不行，以前现在和未来没有也不会给任何人授权允许使用该游戏进行盈利。\n\n\n            虽然我个人建议看到这条信息的你现在关掉窗口并立刻删除该游戏，但我估计你大概率也不会听。\n\n\n            总之只要不删我就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
+    askfor_list = [_("我理解了，但我就是不删，我就是要玩")]
+    askfor_panel.set(askfor_list, info_text, 0)
+    while 1:
+        askfor_panel.draw()
+        askfor_panel_return_list = askfor_panel.get_return_list()
+        ask_list = []
+        ask_list.extend(askfor_panel_return_list.keys())
+        yrn = flow_handle.askfor_all(ask_list)
+        py_cmd.clr_cmd()
+        if yrn in askfor_panel_return_list:
+            break
 
 def confirm_character_attr_panel():
     """确认角色属性面板"""

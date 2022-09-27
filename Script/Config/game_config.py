@@ -331,14 +331,14 @@ def load_behavior_effect_data():
         now_tem.__dict__ = tem_data
         config_behavior_effect[now_tem.cid] = now_tem
         config_behavior_effect_data.setdefault(now_tem.behavior_id, set())
-        config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+        # config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
-        # if "|" not in now_tem.effect_id:
-        #     config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
-        # else:
-        #     effect_list = now_tem.effect_id.split('|')
-        #     for effect in effect_list:
-        #         config_behavior_effect_data[now_tem.behavior_id].add(effect)
+        if "|" not in now_tem.effect_id:
+            config_behavior_effect_data[now_tem.behavior_id].add(int(now_tem.effect_id))
+        else:
+            effect_list = now_tem.effect_id.split('|')
+            for effect in effect_list:
+                config_behavior_effect_data[now_tem.behavior_id].add(int(effect))
 
 
 def load_second_behavior_effect_data():
@@ -586,11 +586,11 @@ def load_talk():
 
         # config_talk_premise_data.setdefault(now_tem.cid, set())
         # if "|" not in now_tem.premise:
-        #     config_talk_premise_data[now_tem.cid].add(now_tem.premise)
+        #     config_talk_premise_data[now_tem.cid].add(int(now_tem.premise))
         # else:
         #     premise_list = now_tem.premise.split('|')
         #     for premise in premise_list:
-        #         config_talk_premise_data[now_tem.cid].add(premise)
+        #         config_talk_premise_data[now_tem.cid].add(int(premise))
 
 
 def load_talk_premise():
