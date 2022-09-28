@@ -2459,8 +2459,8 @@ def handle_talk_add_adjust(
         target_change.status_data.setdefault(13, 0)
         target_change.status_data[13] += now_add_lust
         #记录谈话时间#
-        target_data.talk_time = now_time
-        # print("聊天计数器时间变为 ：",target_data.talk_time)
+        target_data.action_info.talk_time = now_time
+        # print("聊天计数器时间变为 ：",target_data.action_info.talk_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.COFFEE_ADD_ADJUST)
@@ -3511,3 +3511,23 @@ def handle_target_urinate_point_down(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.hunger_point = 0
 
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_TRAINING_TIME)
+def handle_record_training_time(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录当前训练时间
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.talk_time = now_time

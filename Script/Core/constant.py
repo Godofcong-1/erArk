@@ -613,6 +613,8 @@ class StateMachine:
     """ 移动至休息室 """
     MOVE_TO_CLASSIC_MUSIC_ROOM = 19
     """ 移动至夕照区音乐室 """
+    MOVE_TO_TRAINING_ROOM = 21
+    """ 根据职业自动移动至对应训练室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -627,6 +629,8 @@ class StateMachine:
     """ 唱歌 """
     PLAY_INSTRUMENT = 46
     """ 演奏乐器 """
+    TRAINING = 47
+    """ 战斗训练 """
     PEE = 50
     """ 解手 """
 
@@ -929,6 +933,8 @@ class Premise:
     """ 在健身区中 """
     IN_TRAINING_ROOM = "in_training_room"
     """ 在训练室中（包括木桩房和射击房） """
+    NOT_IN_TRAINING_ROOM = "not_in_training_room"
+    """ 不在训练室中（包括木桩房和射击房） """
     IN_FIGHT_ROOM = "in_fight_room"
     """ 在木桩房中 """
     IN_SHOOT_ROOM = "in_shoot_room"
@@ -942,6 +948,8 @@ class Premise:
     """ NPC距离上次移动已经至少经过了1小时 """
     AI_WAIT = "ai_wait"
     """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
+    HAVE_TRAINED = "ai_trained"
+    """ NPC距离上次战斗训练已经超过两天了 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -2006,6 +2014,8 @@ class BehaviorEffect:
     ASK_FOR_SOCKS = 622
     """ 索要袜子 """
 
+    RECORD_TRAINING_TIME = 701
+    """ 记录当前训练时间 """
 
 
 class SecondBehavior:
@@ -2344,6 +2354,8 @@ class Instruct:
     #日常#
     WAIT = 0
     """ 等待五分钟 """
+    WAIT_6_HOUR = 0
+    """ 等待六个小时 """
     CHAT = 0
     """ 聊天 """
     STROKE = 0

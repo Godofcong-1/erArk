@@ -112,8 +112,7 @@ def handle_eat():
 
 @add_instruct(
     constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
-    {constant.Premise.NOT_H,
-    constant.Premise.SLEEP_LE_89}
+    {constant.Premise.NOT_H}
 )
 def handle_move():
     """处理移动指令"""
@@ -152,14 +151,14 @@ def handle_chat():
     character_data = cache.character_data[0]
     character_data.behavior.duration = 5
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.talk_count > character_data.ability[40] + 1:
+    if target_data.action_info.talk_count > character_data.ability[40] + 1:
         character_data.behavior.behavior_id = constant.Behavior.CHAT_FAILED
         character_data.state = constant.CharacterStatus.STATUS_CHAT_FAILED
     else:
         character_data.behavior.behavior_id = constant.Behavior.CHAT
         character_data.state = constant.CharacterStatus.STATUS_CHAT
-    target_data.talk_count += 1
-    # print("聊天计数器+1，现在为 ：",target_data.talk_count)
+    target_data.action_info.talk_count += 1
+    # print("聊天计数器+1，现在为 ：",target_data.action_info.talk_count)
     update.game_update_flow(5)
 
 
@@ -274,7 +273,8 @@ def handle_see_collection():
 @add_instruct(
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant.Premise.IN_DORMITORY,
-    constant.Premise.NOT_H}
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_GE_75}
     )
 def handle_sleep():
     """处理睡觉指令"""
@@ -575,7 +575,26 @@ def handle_wait():
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = 5
+    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.WAIT_6_HOUR,
+    constant.InstructType.DAILY,
+    _("等待六个小时"),
+    {constant.Premise.DEBUG_MODE_ON},
+)
+def handle_wait_6_hour():
+    """处理等待六个小时指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = 360
+    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+    update.game_update_flow(360)
+
 
 @add_instruct(
     constant.Instruct.MAKE_COFFEE,

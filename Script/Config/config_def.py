@@ -1370,17 +1370,6 @@ class TargetEffect:
     """ 达成的效果id（即达成的前提id） """
 
 
-class TargetPremise:
-    """ 执行目标所需的前提id """
-
-    cid: str
-    """ 配表id """
-    target_id: str
-    """ 所属目标id """
-    premise_id: str
-    """ 所需前提id """
-
-
 class Target:
     """ ai的目标 """
 
@@ -1388,5 +1377,7 @@ class Target:
     """ 目标id """
     state_machine_id: int
     """ 执行的状态机id """
+    premise_id: str
+    """ 所需前提id """
     remarks: str
     """ 备注 """

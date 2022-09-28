@@ -179,6 +179,18 @@ def get_pl_ability_zero() -> dict:
     return pl_ability_data
 
 
+def get_action_info_state_zero() -> dict:
+    """
+    直接将行动信息结构体归0
+    """
+    action_info_data = game_type.ACTION_INFO()
+    action_info_data.talk_time = cache.game_time
+    action_info_data.last_move_time = cache.game_time
+    action_info_data.last_training_time = cache.game_time
+
+    return action_info_data
+
+
 def get_cloth_zero() -> dict:
     """
     遍历服装类型，将每个都设为空

@@ -753,6 +753,24 @@ def handle_in_training_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_TRAINING_ROOM)
+def handle_not_in_training_room(character_id: int) -> int:
+    """
+    校验角色是否不在训练室中（包括木桩房和射击房）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Training_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.IN_FIGHT_ROOM)
 def handle_in_fight_room(character_id: int) -> int:
     """
@@ -802,13 +820,13 @@ def handle_have_moved(character_id: int) -> int:
     now_time: datetime.datetime = character_data.behavior.start_time
     move_flag = 0
     #同一天内过1小时则判定为1
-    if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
-        character_data.last_move_time = now_time
+    if now_time.day == character_data.action_info.last_move_time.day and now_time.hour > character_data.action_info.last_move_time.hour:
+        character_data.action_info.last_move_time = now_time
         # print("过一小时判定,character_id :",character_id)
         move_flag = 1
     #非同一天也判定为1
-    elif now_time.day != character_data.last_move_time.day:
-        character_data.last_move_time = now_time
+    elif now_time.day != character_data.action_info.last_move_time.day:
+        character_data.action_info.last_move_time = now_time
         move_flag = 1
         # print("非同一天判定")
     return move_flag
@@ -829,6 +847,24 @@ def handle_ai_wait(character_id: int) -> int:
         return 999
     else:
         return 0
+
+
+@add_premise(constant.Premise.HAVE_TRAINED)
+def handle_have_trained(character_id: int) -> int:
+    """
+    NPC距离上次战斗训练已经超过两天了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = cache.game_time
+    train_time = character_data.action_info.last_training_time
+    add_day = int((now_time - train_time).days)
+    if add_day >= 2:
+        return (add_day - 1)*10
+    return 0
 
 
 @add_premise(constant.Premise.IN_SLEEP_TIME)

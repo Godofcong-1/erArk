@@ -331,19 +331,19 @@ def change_character_talkcount_for_time(character_id: int, now_time: datetime.da
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if not target_data.talk_time:
-        target_data.talk_time = now_time
-    if now_time.day == target_data.talk_time.day and now_time.hour > target_data.talk_time.hour:
-        target_data.talk_count -= now_time.hour - target_data.talk_time.hour
-        target_data.talk_time = now_time
+    if not target_data.action_info.talk_time:
+        target_data.action_info.talk_time = now_time
+    if now_time.day == target_data.action_info.talk_time.day and now_time.hour > target_data.action_info.talk_time.hour:
+        target_data.action_info.talk_count -= now_time.hour - target_data.action_info.talk_time.hour
+        target_data.action_info.talk_time = now_time
         # print("检测到时间前进了至少一小时，聊天计数器-1")
-    elif now_time.day != target_data.talk_time.day:
-        target_data.talk_count = 0
-        target_data.talk_time = now_time
+    elif now_time.day != target_data.action_info.talk_time.day:
+        target_data.action_info.talk_count = 0
+        target_data.action_info.talk_time = now_time
         # print("检测到时间前进了至少一天，聊天计数器归零")
-    if target_data.talk_count < 0 :
-        target_data.talk_count = 0
-    # print("target_data.talk_count :",target_data.talk_count)
+    if target_data.action_info.talk_count < 0 :
+        target_data.action_info.talk_count = 0
+    # print("target_data.action_info.talk_count :",target_data.action_info.talk_count)
 
 def change_character_value_add_as_time(character_id: int, add_time: int):
     """

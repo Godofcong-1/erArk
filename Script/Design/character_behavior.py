@@ -160,7 +160,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
                 info_list.append(i)
             info_id = random.choice(info_list)
             info_text = game_config.config_tip_tem[info_id].info
-            now_draw.text += f"\n请博士在保存时阅读今日的睡前小贴士：\n\n  {info_text}\n"
+            now_draw.text += f"\n请博士在保存时阅读今日的睡前小贴士：\n\n  {info_text}\n\n\n"
             now_draw.draw()
             save_handle.establish_save("auto")
     end_last = time.time()
