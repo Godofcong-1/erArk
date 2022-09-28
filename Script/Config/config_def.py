@@ -415,6 +415,17 @@ class TalentUp:
     """ 需求值 """
 
 
+class Tip:
+    """ 提示信息 """
+
+    cid: int
+    """ 提示id """
+    type: str
+    """ 提示类型 """
+    info: str
+    """ 提示内容 """
+
+
 class WeekDay:
     """ 星期描述配置 """
 

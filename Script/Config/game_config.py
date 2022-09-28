@@ -122,6 +122,8 @@ config_sex_tem: Dict[int, config_def.SexTem] = {}
 """ 性别对应描述和性别器官模板 """
 config_jj_tem: Dict[int, config_def.JJ] = {}
 """ 阴茎对应描述 """
+config_tip_tem: Dict[int, config_def.Tip] = {}
+""" 提示对应描述 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -534,13 +536,23 @@ def load_sex_tem():
 
 
 def load_jj_tem():
-    """载入性别对应描述和性别器官模板数据"""
+    """载入阴茎模板数据"""
     now_data = config_data["JJ"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.JJ()
         now_tem.__dict__ = tem_data
         config_jj_tem[now_tem.cid] = now_tem
+
+
+def load_tip_tem():
+    """载入提示数据"""
+    now_data = config_data["Tip"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Tip()
+        now_tem.__dict__ = tem_data
+        config_tip_tem[now_tem.cid] = now_tem
 
 
 def load_solar_period():
@@ -683,6 +695,7 @@ def init():
     load_season()
     load_sex_tem()
     load_jj_tem()
+    load_tip_tem()
     load_solar_period()
     load_status()
     load_sun_time()

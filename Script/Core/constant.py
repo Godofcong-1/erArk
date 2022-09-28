@@ -921,6 +921,10 @@ class Premise:
     """ 在音乐室中 """
     IN_COLLECTION_ROOM = "in_collection_room"
     """ 在藏品馆中 """
+    IN_BUILDING_ROOM = "in_building_room"
+    """ 在基建部中 """
+    IN_FUNCTIONAL_ROOM = "in_functional_room"
+    """ 在功能性地点中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
