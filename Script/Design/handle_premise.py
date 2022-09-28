@@ -717,6 +717,78 @@ def handle_in_collection_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.IN_GYM_ROOM)
+def handle_in_gym_room(character_id: int) -> int:
+    """
+    校验角色是否在健身区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Gym" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_TRAINING_ROOM)
+def handle_in_training_room(character_id: int) -> int:
+    """
+    校验角色是否在训练室中（包括木桩房和射击房）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Training_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_FIGHT_ROOM)
+def handle_in_fight_room(character_id: int) -> int:
+    """
+    校验角色是否在木桩房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Fight_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_SHOOT_ROOM)
+def handle_in_shoot_room(character_id: int) -> int:
+    """
+    校验角色是否在射击房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Shoot_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """

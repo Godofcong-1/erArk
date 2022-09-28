@@ -1353,6 +1353,12 @@ class Talk:
 
 
 
+
+
+
+
+
+
 class TargetEffect:
     """ 执行目标所能达成的效果id """
 

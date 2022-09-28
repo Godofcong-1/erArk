@@ -65,6 +65,8 @@ class CharacterStatus:
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
     """ 指派助理 """
+    STATUS_TRAINING = 205
+    """ 战斗训练 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -354,6 +356,8 @@ class Behavior:
     """ 听取委托 """
     APPOINTED_ASSISTANT = 204
     """ 指派助理 """
+    TRAINING = 205
+    """ 战斗训练 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -921,6 +925,14 @@ class Premise:
     """ 在音乐室中 """
     IN_COLLECTION_ROOM = "in_collection_room"
     """ 在藏品馆中 """
+    IN_GYM_ROOM = "in_gym_room"
+    """ 在健身区中 """
+    IN_TRAINING_ROOM = "in_training_room"
+    """ 在训练室中（包括木桩房和射击房） """
+    IN_FIGHT_ROOM = "in_fight_room"
+    """ 在木桩房中 """
+    IN_SHOOT_ROOM = "in_shoot_room"
+    """ 在射击房中 """
     IN_BUILDING_ROOM = "in_building_room"
     """ 在基建部中 """
     IN_FUNCTIONAL_ROOM = "in_functional_room"
@@ -1619,6 +1631,10 @@ class BehaviorEffect:
     """ 增加双方少量体力 """
     ADD_BOTH_SMALL_MANA_POINT = 11
     """ 增加双方少量气力 """
+    DOWN_SELF_SMALL_HIT_POINT = 12
+    """ 减少自己少量体力 """
+    DOWN_SELF_SMALL_MANA_POINT = 13
+    """ 减少自己少量气力 """
 
 
     FIRST_KISS = 18
@@ -1686,8 +1702,10 @@ class BehaviorEffect:
     """ 交互对象增加少量反感（反发刻印补正） """
     ADD_SMALL_P_FEEL = 70
     """ 自身增加少量Ｐ快 """
-    DOWN_ADD_SMALL_LEARN = 71
+    BOTH_ADD_SMALL_LEARN = 71
     """ 双方增加少量习得（若没有交互对象则仅增加自己） """
+    ADD_SMALL_LEARN = 72
+    """ 自己增加少量习得 """
 
     TARGET_VIBRATOR_ON = 76
     """ 交互对象插入V震动棒 """
@@ -2385,6 +2403,8 @@ class Instruct:
     """ 听取委托 """
     APPOINTED_ASSISTANT = 0
     """ 指派助理 """
+    TRAINING = 0
+    """ 战斗训练 """
 
     #猥亵#
     TOUCH_HEAD = 0

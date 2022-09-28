@@ -1100,12 +1100,30 @@ def handle_official_work():
 
 @add_instruct(
     constant.Instruct.APPOINTED_ASSISTANT, constant.InstructType.WORK, _("指派助理"),
-    # {constant.Premise.IN_SHOP,
-    {constant.Premise.NOT_H}
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_DR_OFFICE,}
 )
 def handle_appointed_assistant():
     """处理指派助理指令"""
     cache.now_panel_id = constant.Panel.ASSISTANT
+
+
+@add_instruct(
+    constant.Instruct.TRAINING,
+    constant.InstructType.WORK,
+    _("战斗训练"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_TRAINING_ROOM,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_training():
+    """处理战斗训练指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.TRAINING
+    character_data.state = constant.CharacterStatus.STATUS_TRAINING
+    update.game_update_flow(120)
 
 
 #以下为猥亵#
