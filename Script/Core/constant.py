@@ -2670,8 +2670,6 @@ class Instruct:
     """ 睡觉 """
     SEE_ATTR = 0
     """ 查看属性 """
-    SEE_OWNER_ATTR = 0
-    """ 查看自身属性 """
     ITEM = 0
     """ 道具 """
     SAVE = 0
