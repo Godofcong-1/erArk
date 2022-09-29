@@ -48,6 +48,8 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
+config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
+""" 收藏品解锁数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -435,6 +437,16 @@ def load_clothing_use_type():
         config_clothing_use_type[now_type.cid] = now_type
 
 
+def load_collection_bonus_data():
+    """载入收藏品奖励数据"""
+    now_data = config_data["Collection_bouns"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Collection_bouns()
+        now_type.__dict__ = tem_data
+        config_collection_bonus_data[now_type.cid] = now_type
+
+
 def load_font_data():
     """载入字体配置数据"""
     now_data = config_data["FontConfig"]
@@ -675,6 +687,7 @@ def init():
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
+    load_collection_bonus_data()
     load_experience()
     load_font_data()
     load_instruct_type()

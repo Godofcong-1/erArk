@@ -40,34 +40,52 @@ def get_underwear(character_id: int):
     character_data = cache.character_data[character_id]
     # 60,幼女,61,萝莉,62,少女,63,成年,64,长生者
 
-    if not len(character_data.cloth[6]):
-        cloth_list = []
-        if character_data.talent[60] or character_data.talent[61]:
-            for cloth_id in game_config.config_clothing_tem:
-                if game_config.config_clothing_tem[cloth_id].clothing_type == 6 and  game_config.config_clothing_tem[cloth_id].tag == 1:
-                    cloth_list.append(cloth_id)
-            bra_id = random.choice(cloth_list)
-        else:
-            for cloth_id in game_config.config_clothing_tem:
-                if game_config.config_clothing_tem[cloth_id].clothing_type == 6 and  game_config.config_clothing_tem[cloth_id].tag == 0:
-                    cloth_list.append(cloth_id)
-            bra_id = random.choice(cloth_list)
+    # 遍历全衣服，以下分别是正常/童装/情趣的胸罩和内裤
+    bra_nor_list = []
+    bra_loli_list = []
+    bra_H_list = []
+    pan_nor_list = []
+    pan_loli_list = []
+    pan_H_list = []
+    for cloth_id in game_config.config_clothing_tem:
+        cloth = game_config.config_clothing_tem[cloth_id]
+        if cloth.clothing_type == 6:
+            if cloth.tag == 0:
+                bra_nor_list.append(cloth_id)
+            elif cloth.tag == 1:
+                bra_loli_list.append(cloth_id)
+            elif cloth.tag == 2:
+                bra_H_list.append(cloth_id)
+        elif cloth.clothing_type == 9:
+            if cloth.tag == 0:
+                pan_nor_list.append(cloth_id)
+            elif cloth.tag == 1:
+                pan_loli_list.append(cloth_id)
+            elif cloth.tag == 2:
+                pan_H_list.append(cloth_id)
+
+    # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
+    if cache.character_data[0].pl_collection.collection_bonus[102]:
+        for i in {11,12,13,16,17,18}:
+            if cache.character_data[i]:
+                bra_nor_list += bra_H_list
+                bra_loli_list += bra_H_list
+                pan_nor_list += pan_H_list
+                pan_loli_list += pan_H_list
+                break
+
+    # 随机选择上衣和下衣，有儿童和普通人两个分支
+    if character_data.talent[60] or character_data.talent[61]:
+        bra_id = random.choice(bra_loli_list)
         character_data.cloth[6].append(bra_id)
-
-
-    if not len(character_data.cloth[9]):
-        cloth_list = []
-        if character_data.talent[60] or character_data.talent[61]:
-            for cloth_id in game_config.config_clothing_tem:
-                if game_config.config_clothing_tem[cloth_id].clothing_type == 9 and  game_config.config_clothing_tem[cloth_id].tag == 1:
-                    cloth_list.append(cloth_id)
-            pan_id = random.choice(cloth_list)
-        else:
-            for cloth_id in game_config.config_clothing_tem:
-                if game_config.config_clothing_tem[cloth_id].clothing_type == 9 and  game_config.config_clothing_tem[cloth_id].tag == 0:
-                    cloth_list.append(cloth_id)
-            pan_id = random.choice(cloth_list)
+        pan_id = random.choice(pan_loli_list)
         character_data.cloth[9].append(pan_id)
+    else:
+        bra_id = random.choice(bra_nor_list)
+        character_data.cloth[6].append(bra_id)
+        pan_id = random.choice(pan_nor_list)
+        character_data.cloth[9].append(pan_id)
+
 
 '''
 不用的旧函数

@@ -966,6 +966,11 @@ class Premise:
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
 
+    COLLECT_BONUS_103 = "c_bonus_103"
+    """ 收藏奖励_103_解锁索要内裤 """
+    COLLECT_BONUS_203 = "c_bonus_203"
+    """ 收藏奖励_203_解锁索要袜子 """
+
 
     COOK_1 = "cook_1"
     """ 自身料理技能==1 """

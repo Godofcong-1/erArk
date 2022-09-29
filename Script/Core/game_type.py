@@ -387,6 +387,8 @@ class PLAYER_COLLECTION:
 
     def __init__(self):
 
+        self.collection_bonus:Dict[int,bool] = {}
+        """ 收藏品的解锁奖励 """
         self.token_list:Dict[int,bool] = {}
         """ 获得的NPC信物 """
         self.first_panties: Dict[int,str] = {}
@@ -399,7 +401,6 @@ class PLAYER_COLLECTION:
         """ 获得的角色袜子 """
         self.npc_socks_tem: Dict[int,list] = {}
         """ 临时获得的角色袜子 """
-
 
 
 

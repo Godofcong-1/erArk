@@ -1434,6 +1434,7 @@ def handle_raise_skirt():
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
     constant.Premise.TARGET_WEAR_PAN,
+    constant.Premise.COLLECT_BONUS_103,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_ask_for_pan():
@@ -1456,6 +1457,7 @@ def handle_ask_for_pan():
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
     constant.Premise.TARGET_WEAR_SOCKS,
+    constant.Premise.COLLECT_BONUS_203,
     constant.Premise.SLEEP_LE_89}
 )
 def handle_ask_for_socks():

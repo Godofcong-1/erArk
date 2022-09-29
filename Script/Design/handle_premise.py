@@ -1430,6 +1430,36 @@ def handle_target_not_angry_with_player(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant.Premise.COLLECT_BONUS_103)
+def handle_collect_bonus_103(character_id: int) -> int:
+    """
+    校验收藏奖励_103_解锁索要内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.pl_collection.collection_bonus[103]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.COLLECT_BONUS_203)
+def handle_collect_bonus_203(character_id: int) -> int:
+    """
+    校验收藏奖励_203_解锁索要袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.pl_collection.collection_bonus[203]:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.COOK_1)
 def handle_cook_1(character_id: int) -> int:
     """

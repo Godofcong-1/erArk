@@ -153,6 +153,19 @@ class ClothingUseType:
     """ 用途名字 """
 
 
+class Collection_bouns:
+    """ 收藏物的奖励解锁 """
+
+    cid: int
+    """ 奖励id """
+    type: str
+    """ 收藏物类型 """
+    count: int
+    """ 解锁所需的收藏数量 """
+    info: str
+    """ 奖励信息 """
+
+
 class Experience:
     """ 经验名字 """
 
