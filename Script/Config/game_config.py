@@ -50,6 +50,12 @@ config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
+config_facility: Dict[int, config_def.Facility] = {}
+""" 设施列表数据 """
+config_facility_effect: Dict[int, config_def.Facility_effect] = {}
+""" 设施效果总数据 """
+config_facility_effect_data: Dict[str, Set] = {}
+""" 设施效果分类数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -447,6 +453,29 @@ def load_collection_bonus_data():
         config_collection_bonus_data[now_type.cid] = now_type
 
 
+def load_facility():
+    """载入设施列表数据"""
+    now_data = config_data["Facility"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Facility()
+        now_tem.__dict__ = tem_data
+        config_facility[now_tem.cid] = now_tem
+
+
+def load_facility_effect():
+    """载入设施效果数据"""
+    now_data = config_data["Facility_effect"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Facility_effect()
+        now_tem.__dict__ = tem_data
+        config_facility_effect[now_tem.cid] = now_tem
+        config_facility_effect_data.setdefault(now_tem.name, list())
+        config_facility_effect_data[now_tem.name].append(now_tem.cid)
+    # print(f"debug config_facility_effect_data = {config_facility_effect_data}")
+
+
 def load_font_data():
     """载入字体配置数据"""
     now_data = config_data["FontConfig"]
@@ -688,6 +717,8 @@ def init():
     load_clothing_type()
     load_clothing_use_type()
     load_collection_bonus_data()
+    load_facility()
+    load_facility_effect()
     load_experience()
     load_font_data()
     load_instruct_type()

@@ -1120,6 +1120,16 @@ def handle_appointed_assistant():
 
 
 @add_instruct(
+    constant.Instruct.BUILDING, constant.InstructType.WORK, _("基建系统"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_BUILDING_ROOM,}
+)
+def handle_building():
+    """处理基建系统指令"""
+    cache.now_panel_id = constant.Panel.BUILDING
+
+
+@add_instruct(
     constant.Instruct.TRAINING,
     constant.InstructType.WORK,
     _("战斗训练"),

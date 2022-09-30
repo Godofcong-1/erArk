@@ -747,6 +747,8 @@ class Panel:
     """ 收藏品面板 """
     UNDRESS = 14
     """ 脱衣服面板 """
+    BUILDING = 15
+    """ 基建面板 """
 
 
 class Premise:
@@ -2412,6 +2414,8 @@ class Instruct:
 
 
     #工作#
+    BUILDING = 0
+    """ 基建系统 """
     OFFICIAL_WORK = 0
     """ 处理公务 """
     BATTLE_COMMAND = 0

@@ -222,6 +222,55 @@ def get_collection_zero() -> dict:
     return collection_data
 
 
+def get_base_zero() -> dict:
+    """
+    基地情况结构体，设为空
+    """
+
+    base_data = game_type.Base_resouce()
+
+    base_data.power_use = 0
+
+    # 遍历全设施清单
+    for all_cid in game_config.config_facility:
+        # 全设施等级设为1
+        base_data.facility_level[all_cid] = 1
+
+        # 累加全设施的用电量
+        facility_name = game_config.config_facility[all_cid].name
+        facility_cid = game_config.config_facility_effect_data[facility_name][0]
+        base_data.power_use += game_config.config_facility_effect[facility_cid].power_use
+
+    # print(f"debug power_use = {base_data.power_use}")
+
+    # 初始化供电量
+    facility_cid = game_config.config_facility_effect_data["动力区"][0]
+    base_data.power_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化仓库容量
+    facility_cid = game_config.config_facility_effect_data["仓储区"][0]
+    base_data.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
+    # 初始化干员人数上限
+    facility_cid = game_config.config_facility_effect_data["宿舍区"][0]
+    base_data.people_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化生活娱乐区设施数量上限
+    facility_cid = game_config.config_facility_effect_data["生活娱乐区"][0]
+    base_data.life_zone_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化患者人数上限
+    facility_cid = game_config.config_facility_effect_data["医疗部"][0]
+    base_data.ppatient_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化科研区设施数量上限
+    facility_cid = game_config.config_facility_effect_data["科研部"][0]
+    base_data.research_zone_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化商店数量上限
+    facility_cid = game_config.config_facility_effect_data["贸易区"][0]
+    base_data.shop_max = game_config.config_facility_effect[facility_cid].effect
+    # 初始化战斗时干员数量上限
+    facility_cid = game_config.config_facility_effect_data["指挥室"][0]
+    base_data.soldier_max = game_config.config_facility_effect[facility_cid].effect
+
+    return base_data
+
+
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

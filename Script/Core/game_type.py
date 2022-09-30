@@ -537,6 +537,32 @@ class Scene:
         """ 场景内角色列表 """
 
 
+class Base_resouce:
+    """基地资源"""
+
+    def __init__(self):
+        self.facility_level: Dict[int,int] = {}
+        """ 基地当前所有设施的等级 """
+        self.power_use: int = 0
+        """ 当前使用电力 """
+        self.power_max: int = 0
+        """ 总可用电力 """
+        self.warehouse_capacity: int = 0
+        """ 仓库容量 """
+        self.people_max: int = 0
+        """ 干员人数上限 """
+        self.life_zone_max: int = 0
+        """ 生活娱乐区设施数量上限 """
+        self.ppatient_max: int = 0
+        """ 患者人数上限 """
+        self.research_zone_max: int = 0
+        """ 科研区设施数量上限 """
+        self.shop_max: int = 0
+        """ 商店数量上限 """
+        self.soldier_max: int = 0
+        """ 战斗时干员数量上限 """
+
+
 class Character:
     """角色数据结构体"""
 
@@ -781,6 +807,8 @@ class Cache:
         """ 是否开启debug模式 """
         self.game_round: int = 1
         """ 当前周目数 """
+        self.base_resouce: Base_resouce = Base_resouce
+        """ 基地的资源情况 """
 
 
 class TargetChange:

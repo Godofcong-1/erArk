@@ -16,4 +16,5 @@ from Script.UI.Flow import (
     assistant_flow,
     collection_flow,
     undress_flow,
+    building_flow
 )

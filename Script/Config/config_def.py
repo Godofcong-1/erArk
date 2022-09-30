@@ -175,6 +175,40 @@ class Experience:
     """ 经验名 """
 
 
+class Facility:
+    """ 基建系统内全设施一览 """
+
+    cid: int
+    """ 效果id """
+    name: str
+    """ 设施名字 """
+    type: int
+    """ 设施类型-1区块，-2通用，否则为cid归属下的小房间 """
+    info: str
+    """ 介绍信息 """
+
+
+class Facility_effect:
+    """ 设施在不同等级下的效果 """
+
+    cid: int
+    """ 效果id """
+    name: str
+    """ 设施名字 """
+    level: int
+    """ 设施等级 """
+    effect: int
+    """ 设施效果数值 """
+    power_use: int
+    """ 耗电量 """
+    resouce_use: int
+    """ 升级需要的基建材料数量 """
+    money_use: int
+    """ 升级需要的龙门币数量 """
+    info: str
+    """ 介绍信息 """
+
+
 class FontConfig:
     """ 字体样式配置数据(富文本用) """
 
