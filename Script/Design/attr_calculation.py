@@ -238,34 +238,39 @@ def get_base_zero() -> dict:
 
         # 累加全设施的用电量
         facility_name = game_config.config_facility[all_cid].name
-        facility_cid = game_config.config_facility_effect_data[facility_name][0]
+        facility_cid = game_config.config_facility_effect_data[facility_name][1]
         base_data.power_use += game_config.config_facility_effect[facility_cid].power_use
 
     # print(f"debug power_use = {base_data.power_use}")
 
+    # 遍历全资源清单
+    for all_cid in game_config.config_resouce:
+        # 全资源数量设为0
+        base_data.materials_resouce[all_cid] = 0
+
     # 初始化供电量
-    facility_cid = game_config.config_facility_effect_data["动力区"][0]
+    facility_cid = game_config.config_facility_effect_data["动力区"][1]
     base_data.power_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化仓库容量
-    facility_cid = game_config.config_facility_effect_data["仓储区"][0]
+    facility_cid = game_config.config_facility_effect_data["仓储区"][1]
     base_data.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
     # 初始化干员人数上限
-    facility_cid = game_config.config_facility_effect_data["宿舍区"][0]
+    facility_cid = game_config.config_facility_effect_data["宿舍区"][1]
     base_data.people_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化生活娱乐区设施数量上限
-    facility_cid = game_config.config_facility_effect_data["生活娱乐区"][0]
+    facility_cid = game_config.config_facility_effect_data["生活娱乐区"][1]
     base_data.life_zone_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化患者人数上限
-    facility_cid = game_config.config_facility_effect_data["医疗部"][0]
+    facility_cid = game_config.config_facility_effect_data["医疗部"][1]
     base_data.ppatient_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化科研区设施数量上限
-    facility_cid = game_config.config_facility_effect_data["科研部"][0]
+    facility_cid = game_config.config_facility_effect_data["科研部"][1]
     base_data.research_zone_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化商店数量上限
-    facility_cid = game_config.config_facility_effect_data["贸易区"][0]
+    facility_cid = game_config.config_facility_effect_data["贸易区"][1]
     base_data.shop_max = game_config.config_facility_effect[facility_cid].effect
     # 初始化战斗时干员数量上限
-    facility_cid = game_config.config_facility_effect_data["指挥室"][0]
+    facility_cid = game_config.config_facility_effect_data["指挥室"][1]
     base_data.soldier_max = game_config.config_facility_effect[facility_cid].effect
 
     return base_data

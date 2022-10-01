@@ -144,13 +144,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
             )
 
         # 非常见结算输出
-        if status_data.money:
-            now_text_list.extend(
-                [
-                    _("\n\n  获得龙门币:")
-                    + text_handle.number_to_symbol_string(status_data.money)
-                ]
-            )
+        # if status_data.money:
+        #     now_text_list.extend(
+        #         [
+        #             _("\n\n  获得龙门币:")
+        #             + text_handle.number_to_symbol_string(status_data.money)
+        #         ]
+        #     )
 
 
         # 交互对象的结算输出

@@ -59,7 +59,7 @@ class Building_Panel:
                 else:
                     now_draw = draw.CenterButton(
                         f"[{building_type}]",
-                        building_type,
+                        f"\n{building_type}",
                         self.width / len(building_type_list),
                         cmd_func=self.change_panel,
                         args=(building_type,),
@@ -71,10 +71,25 @@ class Building_Panel:
             line.draw()
 
             resouce_draw = draw.NormalDraw()
-            resouce_text = "\n当前设施情况："
+            resouce_text = "\n当前资源情况："
+            power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
+            resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
+            money = str(cache.base_resouce.money)
+            resouce_text += f"\n  当前龙门币数量    ：{money}"
+            # 碳素建材的编号是15
+            building_materials = str(cache.base_resouce.materials_resouce[15])
+            resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
+
+
             resouce_draw.text = resouce_text
             resouce_draw.width = self.width
             resouce_draw.draw()
+
+            facility_draw = draw.NormalDraw()
+            facility_text = "\n当前设施情况："
+            facility_draw.text = facility_text
+            facility_draw.width = self.width
+            facility_draw.draw()
 
             # 开始区块总览信息
             building_draw = draw.NormalDraw()
@@ -85,11 +100,20 @@ class Building_Panel:
                 for all_cid in game_config.config_facility:
                     facility_data = game_config.config_facility[all_cid]
                     if facility_data.type == -1:
+
+                        # 获取该区块的一系列信息
                         facility_name = facility_data.name
                         now_level = str(cache.base_resouce.facility_level[all_cid])
+                        facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
+                        facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
                         facility_info = facility_data.info
-                        info_head = f"{facility_name} (lv{now_level})"
-                        building_text += f"\n  {info_head.ljust(12,'　')}：{facility_info}"
+
+                        if all_cid == 1:
+                            facility_power_give = str(game_config.config_facility_effect[facility_cid].effect)
+                            info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (供电:{facility_power_give})"
+                        else:
+                            info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
+                        building_text += f"\n  {info_head}：{facility_info}"
                 building_text += f"\n"
 
             elif self.now_panel == "特殊房间":
@@ -99,9 +123,12 @@ class Building_Panel:
                     if facility_data.type != -1:
                         facility_name = facility_data.name
                         now_level = str(cache.base_resouce.facility_level[all_cid])
+                        facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
+                        facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
                         facility_info = facility_data.info
-                        info_head = f"{facility_name} (lv{now_level})"
-                        building_text += f"\n  {info_head.ljust(12,'　')}：{facility_info}"
+
+                        info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
+                        building_text += f"\n  {info_head}：{facility_info}"
                 building_text += f"\n"
 
 

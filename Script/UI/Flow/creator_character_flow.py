@@ -400,8 +400,8 @@ class Character_Bonus:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        if character_data.money:
-            button_text = f"   ●启动资金(5)：初始获得50000龙门币和6000合成玉"
+        if cache.base_resouce.money:
+            button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和10粉色凭证"
             button_money_draw = draw.LeftButton(
                 _(button_text),
                 _('启动资金'),
@@ -412,7 +412,7 @@ class Character_Bonus:
             button_307_draw.draw()
             self.bonus_now -= 5
         else:
-            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉"
+            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和10粉色凭证"
             button_money_draw = draw.LeftButton(
                 _(button_text),
                 _('启动资金'),
@@ -492,13 +492,14 @@ class Character_Bonus:
 
     def get_money(self):
         """获得金钱"""
-        character_data: game_type.Character = cache.character_data[0]
-        if character_data.money:
-            character_data.money = 0
-            character_data.orundum = 0
+        if cache.base_resouce.money:
+            cache.base_resouce.money = 0
+            cache.base_resouce.orundum = 0
+            cache.base_resouce.pink_certificate = 0
         elif self.bonus_now >= 10:
-            character_data.money = 50000
-            character_data.orundum = 6000
+            cache.base_resouce.money = 50000
+            cache.base_resouce.orundum = 6000
+            cache.base_resouce.pink_certificate = 10
         else:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1

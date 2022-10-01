@@ -541,26 +541,63 @@ class Base_resouce:
     """基地资源"""
 
     def __init__(self):
-        self.facility_level: Dict[int,int] = {}
+        self.facility_level : Dict[int,int] = {}
         """ 基地当前所有设施的等级 """
-        self.power_use: int = 0
+        self.power_use : int = 0
         """ 当前使用电力 """
-        self.power_max: int = 0
+        self.power_max : int = 0
         """ 总可用电力 """
-        self.warehouse_capacity: int = 0
-        """ 仓库容量 """
-        self.people_max: int = 0
+        self.people_max : int = 0
         """ 干员人数上限 """
-        self.life_zone_max: int = 0
+        self.life_zone_max : int = 0
         """ 生活娱乐区设施数量上限 """
-        self.ppatient_max: int = 0
+        self.ppatient_max : int = 0
         """ 患者人数上限 """
-        self.research_zone_max: int = 0
+        self.research_zone_max : int = 0
         """ 科研区设施数量上限 """
-        self.shop_max: int = 0
+        self.shop_max : int = 0
         """ 商店数量上限 """
-        self.soldier_max: int = 0
+        self.soldier_max : int = 0
         """ 战斗时干员数量上限 """
+
+        self.money : int = 0
+        """ 龙门币数量 """
+        self.orundum : int = 0
+        """ 合成玉数量 """
+        self.Originite_Prime : int = 0
+        """ 至纯源石数量 """
+        self.pink_certificate : int = 0
+        """ 粉红凭证数量 """
+
+        self.warehouse_capacity : int = 0
+        """ 仓库容量 """
+        self.materials_resouce : Dict[int,int] = {}
+        """ 素材资源 """
+
+'''
+
+        self.daily_necessities : int = 0
+        """ 生活必需品数量 """
+        self.common_medicinal_materials : int = 0
+        """ 普通药材数量 """
+        self.special_medicinal_materials : int = 0
+        """ 矿石病药材数量 """
+        self.industrial_raw_materials : int = 0
+        """ 工业原材料数量 """
+        self.building_materials : int = 0
+        """ 碳素建材数量 """
+        self.machine_parts : int = 0
+        """ 机械零部件数量 """
+
+        self.analgesic : int = 0
+        """ 矿石病镇痛剂数量 """
+        self.inhibitor_S : int = 0
+        """ 感染抑制剂小样数量 """
+        self.inhibitor_M : int = 0
+        """ 感染抑制合剂数量 """
+        self.inhibitor_L : int = 0
+        """ 感染抑制剂浓缩液数量 """
+'''
 
 
 class Character:
@@ -702,12 +739,6 @@ class Character:
         """ 疲劳状态（HP=1） """
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
-        self.money : int = 0
-        """ 龙门币数量 """
-        self.orundum : int = 0
-        """ 合成玉数量 """
-        self.Originite_Prime : int = 0
-        """ 至纯源石数量 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
@@ -833,8 +864,6 @@ class TargetChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
-        self.money: int = 0
-        """ 金钱变化 """
 
 
 class CharacterStatusChange:
@@ -865,5 +894,3 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
-        self.money: int = 0
-        """ 金钱变化 """

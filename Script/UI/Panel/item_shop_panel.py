@@ -73,7 +73,7 @@ class ItemShopPanel:
             title_draw.draw()
 
             # 绘制金钱
-            money_text = "当前持有龙门币：" + str(character_data.money) + "，合成玉：" + str(character_data.orundum) + "，至纯源石：" + str(character_data.Originite_Prime)
+            money_text = f"当前持有粉色凭证：{str(cache.base_resouce.money)}"
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
@@ -154,7 +154,7 @@ class BuyItemByItemNameDraw:
         # 可购买：1消耗品且数量小于99，2非消耗品且未持有
         if (flag_consumables and flag_not_max) or (not flag_consumables and not flag_have):
             if num_button:
-                button_text = f"{index_text}{item_config.name}：{item_config.price}龙门币"
+                button_text = f"{index_text}{item_config.name}：{item_config.price}凭证"
                 if flag_consumables:
                     button_text += "(持有：" + str(self.character_data.item[self.text]) + ")"
                 else:
@@ -165,7 +165,7 @@ class BuyItemByItemNameDraw:
             self.draw_text = button_text
         else:
             name_draw = draw.LeftDraw()
-            name_draw.text = f"{index_text}{item_config.name}：{item_config.price}龙门币"
+            name_draw.text = f"{index_text}{item_config.name}：{item_config.price}凭证"
             if flag_consumables:
                 name_draw.text += "(持有：" + str(self.character_data.item[self.text]) + ")"
             else:
@@ -186,9 +186,9 @@ class BuyItemByItemNameDraw:
         line = draw.LineDraw("-", window_width)
         line.draw()
         item_config = game_config.config_item[self.text]
-        if self.character_data.money >= item_config.price:
+        if cache.base_resouce.pink_certificate >= item_config.price:
             self.character_data.item[self.text] += 1
-            self.character_data.money -= item_config.price
+            cache.base_resouce.pink_certificate -= item_config.price
             now_text = _("{nickname}购买了{item_name}").format(
                 nickname=self.character_data.nick_name, item_name=item_config.name
             )

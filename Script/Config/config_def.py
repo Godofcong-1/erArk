@@ -361,6 +361,19 @@ class Recipes:
     """ 说明介绍 """
 
 
+class Resouce:
+    """ 各类基地使用资源一览 """
+
+    cid: int
+    """ 资源id """
+    name: str
+    """ 资源名字 """
+    type: str
+    """ 资源类型 """
+    info: str
+    """ 介绍信息 """
+
+
 class Season:
     """ 季节配置 """
 

@@ -2583,15 +2583,15 @@ def handle_target_coffee_add_adjust(
         target_change.status_data[11] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.KONWLEDGE_ADD_MONEY)
-def handle_knowledge_add_money(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
+def handle_knowledge_add_pink_money(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    根据自己（再加上交互对象的）学识获得少量金钱
+    根据自己（再加上交互对象的）学识获得少量粉色凭证
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2609,7 +2609,7 @@ def handle_knowledge_add_money(
         return
     #获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
-    # 获得金钱 #
+    # 获得粉色凭证 #
     now_add_lust = add_time * adjust
     now_add_lust = int(now_add_lust)
 
@@ -2617,8 +2617,7 @@ def handle_knowledge_add_money(
     if character_data.target_character_id != 0:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int (add_time * adjust_target)
-    character_data.money += now_add_lust
-    change_data.money += now_add_lust
+    cache.base_resouce.pink_certificate += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)

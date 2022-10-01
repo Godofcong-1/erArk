@@ -56,6 +56,8 @@ config_facility_effect: Dict[int, config_def.Facility_effect] = {}
 """ 设施效果总数据 """
 config_facility_effect_data: Dict[str, Set] = {}
 """ 设施效果分类数据 """
+config_resouce: Dict[int, config_def.Resouce] = {}
+""" 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -472,8 +474,21 @@ def load_facility_effect():
         now_tem.__dict__ = tem_data
         config_facility_effect[now_tem.cid] = now_tem
         config_facility_effect_data.setdefault(now_tem.name, list())
+        if config_facility_effect_data[now_tem.name] == []:
+            config_facility_effect_data[now_tem.name].append(0)
+
         config_facility_effect_data[now_tem.name].append(now_tem.cid)
     # print(f"debug config_facility_effect_data = {config_facility_effect_data}")
+
+
+def load_resouce():
+    """载入资源数据"""
+    now_data = config_data["Resouce"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Resouce()
+        now_tem.__dict__ = tem_data
+        config_resouce[now_tem.cid] = now_tem
 
 
 def load_font_data():
@@ -719,6 +734,7 @@ def init():
     load_collection_bonus_data()
     load_facility()
     load_facility_effect()
+    load_resouce()
     load_experience()
     load_font_data()
     load_instruct_type()

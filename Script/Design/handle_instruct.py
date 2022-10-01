@@ -223,9 +223,9 @@ def debug_mode():
     """处理开启DEBUG模式指令"""
     cache.debug_mode = True
     character_data = cache.character_data[0]
-    character_data.money += 999999
-    character_data.orundum += 999999
-    character_data.Originite_Prime += 999999
+    cache.base_resouce.money += 999999
+    cache.base_resouce.orundum += 999999
+    cache.base_resouce.Originite_Prime += 999999
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"), {constant.Premise.DEBUG_MODE_ON})

@@ -1776,8 +1776,8 @@ class BehaviorEffect:
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
-    KONWLEDGE_ADD_MONEY = 105
-    """ 根据自己（再加上交互对象的）学识获得少量金钱 """
+    KONWLEDGE_ADD_PINK_MONEY = 105
+    """ 根据自己（再加上交互对象的）学识获得少量粉色凭证 """
     SING_ADD_ADJUST = 106
     """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
     PLAY_INSTRUMENT_ADD_ADJUST = 107

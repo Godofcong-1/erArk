@@ -77,7 +77,7 @@ class SeeCharacterItemBagPanel:
         while 1:
             title_draw.draw()
             # 绘制金钱
-            money_text = "当前持有龙门币：" + str(self.character_data.money) + "，合成玉：" + str(self.character_data.orundum) + "，至纯源石：" + str(self.character_data.Originite_Prime)
+            money_text = "当前持有龙门币：" + str(cache.base_resouce.money) + "，合成玉：" + str(cache.base_resouce.orundum) + "，至纯源石：" + str(cache.base_resouce.Originite_Prime)
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
