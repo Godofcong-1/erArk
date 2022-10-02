@@ -253,8 +253,8 @@ class Building_Panel:
                 up_info_draw.width = self.width
 
                 if level_up_flag == 3:
-                    now_draw = draw.LeftButton(
-                        f"      【升级】",
+                    now_draw = draw.CenterButton(
+                        f"【升级】",
                         f"\n【升级】",
                         self.width / 10,
                         cmd_func=self.level_up,

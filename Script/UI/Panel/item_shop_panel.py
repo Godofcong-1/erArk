@@ -72,8 +72,8 @@ class ItemShopPanel:
             return_list = []
             title_draw.draw()
 
-            # 绘制金钱
-            money_text = f"当前持有粉色凭证：{str(cache.base_resouce.money)}"
+            # 绘制粉色凭证
+            money_text = f"当前持有粉色凭证：{str(cache.base_resouce.pink_certificate)}"
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width

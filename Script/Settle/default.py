@@ -2618,6 +2618,10 @@ def handle_knowledge_add_pink_money(
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int (add_time * adjust_target)
     cache.base_resouce.pink_certificate += now_add_lust
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
+    now_draw.width = width
+    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)
