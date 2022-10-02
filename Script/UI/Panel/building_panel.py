@@ -96,8 +96,6 @@ class Building_Panel:
             if self.now_panel == "区块总览":
                 now_draw.draw_list.append(line_feed)
                 now_draw.width += 1
-                now_draw.draw_list.append(line_feed)
-                now_draw.width += 1
 
                 for all_cid in game_config.config_facility:
                     facility_data = game_config.config_facility[all_cid]
@@ -134,8 +132,6 @@ class Building_Panel:
             elif self.now_panel == "特殊房间":
                 now_draw.draw_list.append(line_feed)
                 now_draw.width += 1
-                now_draw.draw_list.append(line_feed)
-                now_draw.width += 1
 
                 for all_cid in game_config.config_facility:
                     facility_data = game_config.config_facility[all_cid]
@@ -163,30 +159,11 @@ class Building_Panel:
                         now_draw.width += len(button_building_draw.text)
                         now_draw.draw_list.append(line_feed)
                         now_draw.width += 1
-                        button_building_draw = draw.LeftButton(
-                            _(building_text),
-                            _(facility_name),
-                            self.width,
-                            cmd_func=self.level_up_info,
-                            args=(facility_cid,),
-                            )
-                        return_list.append(button_building_draw.return_text)
-                        now_draw.draw_list.append(button_building_draw)
-                        now_draw.width += len(button_building_draw.text)
-                        now_draw.draw_list.append(line_feed)
-                        now_draw.width += 1
 
             self.draw_list: List[draw.NormalDraw] = []
             """ 绘制的文本列表 """
             self.draw_list.extend(now_draw.draw_list)
 
-            for label in self.draw_list:
-                if isinstance(label, list):
-                    for value in label:
-                        value.draw()
-                    line_feed.draw()
-                else:
-                    label.draw()
             for label in self.draw_list:
                 if isinstance(label, list):
                     for value in label:
@@ -279,7 +256,7 @@ class Building_Panel:
                     now_draw = draw.LeftButton(
                         f"      【升级】",
                         f"\n【升级】",
-                        self.width / 5,
+                        self.width / 10,
                         cmd_func=self.level_up,
                         args=(facility_cid,),
                     )
