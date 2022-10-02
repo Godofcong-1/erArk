@@ -286,6 +286,36 @@ def character_move_to_rest_room(character_id: int):
         line_feed.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_ROOM)
+def character_move_to_training_room(character_id: int):
+    """
+    根据职业自动移动至对应训练室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.profession in {1,5,6,8}:
+        room_name = "Fight_Room"
+    else:
+        room_name = "Shoot_Room"
+
+    to_training_room = map_handle.get_map_system_path_for_str(
+    random.choice(constant.place_data[room_name])
+    )
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_training_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去进行战斗训练\n"
+        now_draw.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
 def character_move_to_player(character_id: int):
     """
@@ -444,6 +474,18 @@ def character_play_instrument(character_id: int):
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.TRAINING)
+def character_training(character_id: int):
+    """
+    角色战斗训练
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.TRAINING
+    character_data.behavior.duration = 120
+    character_data.state = constant.CharacterStatus.STATUS_TRAINING
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)

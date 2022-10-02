@@ -1,3 +1,4 @@
+from distutils.command.config import config
 from itertools import count
 from Script.UI.Flow import creator_character_flow
 from uuid import UUID
@@ -66,8 +67,8 @@ class SeeCharacterInfoPanel:
         if character_id == 0:
             self.draw_data = {
                 _("素质与能力"): main_first_draw,
-                _("经验、宝珠与信物"): main_second_draw,
-                _("肉体情况"): main_third_draw,
+                _("经验、宝珠"): main_second_draw,
+                _("玩家能力"): main_third_draw,
                 # _("属性（原）"): main_attr_draw,
                 # _("状态"): see_status_draw,
                 # _("服装"): see_clothing_draw,
@@ -208,10 +209,17 @@ class SeeCharacterThirdPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         body_draw = CharacterBodyText(character_id, width,8, 0)
-        self.draw_list: List[draw.NormalDraw] = [
-            head_draw,
-            body_draw,
-        ]
+        ability_draw = PlayerAbilityText(character_id, width,8, 0)
+        if character_id == 0:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                ability_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                body_draw,
+            ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
@@ -381,6 +389,9 @@ class SeeCharacterClothPanel:
                 # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
                 if clothing_type in {6,9} and not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
+                    # 如果有内衣透视素质，则自动变为显示
+                    target_character_data.cloth_see[clothing_type] = True if character_data.talent[307] else target_character_data.cloth_see[clothing_type]
+                    # 如果不显示，则不显示（废话
                     if not target_character_data.cloth_see[clothing_type]:
                         continue
                 # 当显示到下衣8的时候，换行
@@ -1855,6 +1866,83 @@ class CharacterBodyText:
         else:
             now_draw = panel.LeftDrawTextListPanel()
         now_draw.set(body_text_list, self.width, self.column)
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        line_feed.draw()
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed.draw()
+            else:
+                label.draw()
+
+
+class PlayerAbilityText:
+    """
+    显示玩家能力面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+        character_data = cache.character_data[character_id]
+        type_data = "玩家能力"
+        type_line = draw.LittleTitleLineDraw(type_data, width, ":")
+        self.draw_list.append(type_line)
+        ability_text_list = []
+
+        #视觉能力#
+        now_text = f"\n 【视觉系】\n"
+        for i in {307,308,309}:
+            if character_data.talent[i]:
+                ability_name = game_config.config_talent[i].name
+                ability_info = game_config.config_talent[i].info
+                now_text += f"  {ability_name}：{ability_info}\n"
+        ability_text_list.append(now_text)
+
+        #触觉能力#
+        now_text = f"\n 【触觉系】\n"
+        for i in {310,311,312}:
+            if character_data.talent[i]:
+                ability_name = game_config.config_talent[i].name
+                ability_info = game_config.config_talent[i].info
+                now_text += f"  {ability_name}：{ability_info}\n"
+        ability_text_list.append(now_text)
+
+        #嗅觉能力#
+        now_text = f"\n 【嗅觉系】\n"
+        for i in {304,305,306}:
+            if character_data.talent[i]:
+                ability_name = game_config.config_talent[i].name
+                ability_info = game_config.config_talent[i].info
+                now_text += f"  {ability_name}：{ability_info}\n"
+        ability_text_list.append(now_text)
+
+
+        if self.center_status:
+            now_draw = panel.CenterDrawTextListPanel()
+        else:
+            now_draw = panel.LeftDrawTextListPanel()
+        now_draw.set(ability_text_list, self.width, self.column)
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):

@@ -66,10 +66,10 @@ def load_dir_now(data_path: str):
                         now_scene_data.scene_name = get_text._(load_scene_data["SceneName"])
                         now_scene_data.in_door = load_scene_data["InOutDoor"] == "In"
                         scene_tag_list = load_scene_data["SceneTag"]
-                        if "," not in scene_tag_list:
+                        if "|" not in scene_tag_list:
                             now_scene_data.scene_tag.append(scene_tag_list)
                         else:
-                            scene_tag_list = scene_tag_list.split(',')
+                            scene_tag_list = scene_tag_list.split('|')
                             for scene_tag in scene_tag_list:
                                 now_scene_data.scene_tag.append(scene_tag)
                         cache.scene_data[now_scene_data.scene_path] = now_scene_data

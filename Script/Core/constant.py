@@ -65,6 +65,8 @@ class CharacterStatus:
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
     """ 指派助理 """
+    STATUS_TRAINING = 205
+    """ 战斗训练 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -354,6 +356,8 @@ class Behavior:
     """ 听取委托 """
     APPOINTED_ASSISTANT = 204
     """ 指派助理 """
+    TRAINING = 205
+    """ 战斗训练 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -609,6 +613,8 @@ class StateMachine:
     """ 移动至休息室 """
     MOVE_TO_CLASSIC_MUSIC_ROOM = 19
     """ 移动至夕照区音乐室 """
+    MOVE_TO_TRAINING_ROOM = 21
+    """ 根据职业自动移动至对应训练室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -623,6 +629,8 @@ class StateMachine:
     """ 唱歌 """
     PLAY_INSTRUMENT = 46
     """ 演奏乐器 """
+    TRAINING = 47
+    """ 战斗训练 """
     PEE = 50
     """ 解手 """
 
@@ -739,6 +747,8 @@ class Panel:
     """ 收藏品面板 """
     UNDRESS = 14
     """ 脱衣服面板 """
+    BUILDING = 15
+    """ 基建面板 """
 
 
 class Premise:
@@ -921,11 +931,27 @@ class Premise:
     """ 在音乐室中 """
     IN_COLLECTION_ROOM = "in_collection_room"
     """ 在藏品馆中 """
+    IN_GYM_ROOM = "in_gym_room"
+    """ 在健身区中 """
+    IN_TRAINING_ROOM = "in_training_room"
+    """ 在训练室中（包括木桩房和射击房） """
+    NOT_IN_TRAINING_ROOM = "not_in_training_room"
+    """ 不在训练室中（包括木桩房和射击房） """
+    IN_FIGHT_ROOM = "in_fight_room"
+    """ 在木桩房中 """
+    IN_SHOOT_ROOM = "in_shoot_room"
+    """ 在射击房中 """
+    IN_BUILDING_ROOM = "in_building_room"
+    """ 在基建部中 """
+    IN_FUNCTIONAL_ROOM = "in_functional_room"
+    """ 在功能性地点中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
     AI_WAIT = "ai_wait"
     """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
+    HAVE_TRAINED = "ai_trained"
+    """ NPC距离上次战斗训练已经超过两天了 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -941,6 +967,11 @@ class Premise:
     """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
+
+    COLLECT_BONUS_103 = "c_bonus_103"
+    """ 收藏奖励_103_解锁索要内裤 """
+    COLLECT_BONUS_203 = "c_bonus_203"
+    """ 收藏奖励_203_解锁索要袜子 """
 
 
     COOK_1 = "cook_1"
@@ -1615,6 +1646,10 @@ class BehaviorEffect:
     """ 增加双方少量体力 """
     ADD_BOTH_SMALL_MANA_POINT = 11
     """ 增加双方少量气力 """
+    DOWN_SELF_SMALL_HIT_POINT = 12
+    """ 减少自己少量体力 """
+    DOWN_SELF_SMALL_MANA_POINT = 13
+    """ 减少自己少量气力 """
 
 
     FIRST_KISS = 18
@@ -1682,8 +1717,10 @@ class BehaviorEffect:
     """ 交互对象增加少量反感（反发刻印补正） """
     ADD_SMALL_P_FEEL = 70
     """ 自身增加少量Ｐ快 """
-    DOWN_ADD_SMALL_LEARN = 71
+    BOTH_ADD_SMALL_LEARN = 71
     """ 双方增加少量习得（若没有交互对象则仅增加自己） """
+    ADD_SMALL_LEARN = 72
+    """ 自己增加少量习得 """
 
     TARGET_VIBRATOR_ON = 76
     """ 交互对象插入V震动棒 """
@@ -1739,8 +1776,8 @@ class BehaviorEffect:
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
-    KONWLEDGE_ADD_MONEY = 105
-    """ 根据自己（再加上交互对象的）学识获得少量金钱 """
+    KONWLEDGE_ADD_PINK_MONEY = 105
+    """ 根据自己（再加上交互对象的）学识获得少量粉色凭证 """
     SING_ADD_ADJUST = 106
     """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
     PLAY_INSTRUMENT_ADD_ADJUST = 107
@@ -1984,6 +2021,8 @@ class BehaviorEffect:
     ASK_FOR_SOCKS = 622
     """ 索要袜子 """
 
+    RECORD_TRAINING_TIME = 701
+    """ 记录当前训练时间 """
 
 
 class SecondBehavior:
@@ -2322,6 +2361,8 @@ class Instruct:
     #日常#
     WAIT = 0
     """ 等待五分钟 """
+    WAIT_6_HOUR = 0
+    """ 等待六个小时 """
     CHAT = 0
     """ 聊天 """
     STROKE = 0
@@ -2373,6 +2414,8 @@ class Instruct:
 
 
     #工作#
+    BUILDING = 0
+    """ 基建系统 """
     OFFICIAL_WORK = 0
     """ 处理公务 """
     BATTLE_COMMAND = 0
@@ -2381,6 +2424,8 @@ class Instruct:
     """ 听取委托 """
     APPOINTED_ASSISTANT = 0
     """ 指派助理 """
+    TRAINING = 0
+    """ 战斗训练 """
 
     #猥亵#
     TOUCH_HEAD = 0
@@ -2629,8 +2674,6 @@ class Instruct:
     """ 睡觉 """
     SEE_ATTR = 0
     """ 查看属性 """
-    SEE_OWNER_ATTR = 0
-    """ 查看自身属性 """
     ITEM = 0
     """ 道具 """
     SAVE = 0

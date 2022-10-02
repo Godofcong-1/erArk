@@ -154,6 +154,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             now_draw = draw.NormalDraw()
             now_draw.width = window_width
             now_draw.text = "\n全部结算完毕，开始自动保存\n"
+            # 播放一条提示信息
+            info_list = []
+            for i in game_config.config_tip_tem:
+                info_list.append(i)
+            info_id = random.choice(info_list)
+            info_text = game_config.config_tip_tem[info_id].info
+            now_draw.text += f"\n请博士在保存时阅读今日的睡前小贴士：\n\n  {info_text}\n\n\n"
             now_draw.draw()
             save_handle.establish_save("auto")
     end_last = time.time()

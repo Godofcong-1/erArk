@@ -362,12 +362,33 @@ class FIRST_RECORD:
         """ A处女道具 -1为无，0为手指，1为振动棒 """
 
 
+class ACTION_INFO:
+    """角色的行动信息结构体"""
+
+    def __init__(self):
+
+        self.talk_count : int = 0
+        """ 角色聊天次数计数器 """
+        self.talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次聊天时间 """
+        self.last_move_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次移动的时间 """
+        self.last_training_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次训练的时间 """
+        self.social_contact_last_time: Dict[int, datetime.datetime] = {}
+        """ 指定角色最后与自己社交的时间 """
+        self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
+        """ 指定角色上次扣除好感时间 """
+
+
+
 class PLAYER_COLLECTION:
     """玩家收集品结构体"""
 
     def __init__(self):
 
-
+        self.collection_bonus:Dict[int,bool] = {}
+        """ 收藏品的解锁奖励 """
         self.token_list:Dict[int,bool] = {}
         """ 获得的NPC信物 """
         self.first_panties: Dict[int,str] = {}
@@ -383,7 +404,6 @@ class PLAYER_COLLECTION:
 
 
 
-
 class PLAYER_ABILITY:
     """玩家能力结构体"""
 
@@ -391,6 +411,8 @@ class PLAYER_ABILITY:
 
         self.follow_count: int = 1
         """ 最大同时跟随人数 """
+        self.jj_size: int = 1
+        """ 阴茎大小，0短小,1普通,2粗大,3巨根 """
 
 
 # class Height:
@@ -515,6 +537,69 @@ class Scene:
         """ 场景内角色列表 """
 
 
+class Base_resouce:
+    """基地资源"""
+
+    def __init__(self):
+        self.facility_level : Dict[int,int] = {}
+        """ 基地当前所有设施的等级 """
+        self.power_use : int = 0
+        """ 当前使用电力 """
+        self.power_max : int = 0
+        """ 总可用电力 """
+        self.people_max : int = 0
+        """ 干员人数上限 """
+        self.life_zone_max : int = 0
+        """ 生活娱乐区设施数量上限 """
+        self.ppatient_max : int = 0
+        """ 患者人数上限 """
+        self.research_zone_max : int = 0
+        """ 科研区设施数量上限 """
+        self.shop_max : int = 0
+        """ 商店数量上限 """
+        self.soldier_max : int = 0
+        """ 战斗时干员数量上限 """
+
+        self.money : int = 0
+        """ 龙门币数量 """
+        self.orundum : int = 0
+        """ 合成玉数量 """
+        self.Originite_Prime : int = 0
+        """ 至纯源石数量 """
+        self.pink_certificate : int = 0
+        """ 粉红凭证数量 """
+
+        self.warehouse_capacity : int = 0
+        """ 仓库容量 """
+        self.materials_resouce : Dict[int,int] = {}
+        """ 素材资源 """
+
+'''
+
+        self.daily_necessities : int = 0
+        """ 生活必需品数量 """
+        self.common_medicinal_materials : int = 0
+        """ 普通药材数量 """
+        self.special_medicinal_materials : int = 0
+        """ 矿石病药材数量 """
+        self.industrial_raw_materials : int = 0
+        """ 工业原材料数量 """
+        self.building_materials : int = 0
+        """ 碳素建材数量 """
+        self.machine_parts : int = 0
+        """ 机械零部件数量 """
+
+        self.analgesic : int = 0
+        """ 矿石病镇痛剂数量 """
+        self.inhibitor_S : int = 0
+        """ 感染抑制剂小样数量 """
+        self.inhibitor_M : int = 0
+        """ 感染抑制合剂数量 """
+        self.inhibitor_L : int = 0
+        """ 感染抑制剂浓缩液数量 """
+'''
+
+
 class Character:
     """角色数据结构体"""
 
@@ -561,6 +646,11 @@ class Character:
         # 角色拥有的服装类型数据集合
         # 服装表id:服装唯一id
         # """
+        # self.put_on: Dict[int, UUID] = {}
+        # """
+        # 角色已穿戴服装数据
+        # 穿着类型:服装id
+        # """
         self.clothing_tem: int = 0
         """ 角色生成服装模板 """
         self.cloth: Dict[int,List] = {}
@@ -595,11 +685,6 @@ class Character:
         # """ 角色罩杯模板 """
         self.status_data: Dict[int, int] = {}
         """ 角色状态数据 状态id:状态数值 """
-        self.put_on: Dict[int, UUID] = {}
-        """
-        角色已穿戴服装数据
-        穿着类型:服装id
-        """
         self.hit_point_tem: int = 1
         """ 角色HP模板 """
         self.mana_point_tem: int = 1
@@ -608,10 +693,6 @@ class Character:
         """ 角色社交关系数据 关系类型:角色id集合 """
         self.social_contact_data: Dict[int, int] = {}
         """ 角色社交关系数据 角色id:关系类型 """
-        self.social_contact_last_time: Dict[int, datetime.datetime] = {}
-        """ 指定角色最后与自己社交的时间 """
-        self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
-        """ 指定角色上次扣除好感时间 """
         self.favorability: Dict[int, int] = {}
         """ 角色好感度数据 角色id:好感度 """
         self.trust: int = 0
@@ -642,12 +723,6 @@ class Character:
         """ 角色种族 """
         self.talent:Dict[int,int] = {}
         """ 角色素质 """
-        self.talk_count : int = 0
-        """ 角色聊天次数计数器 """
-        self.talk_time: datetime.datetime = None
-        """ 角色上次聊天时间 """
-        self.last_move_time: datetime.datetime = None
-        """ 角色上次移动的时间 """
         self.wait_flag : bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_h : bool = 0
@@ -664,12 +739,6 @@ class Character:
         """ 疲劳状态（HP=1） """
         self.angry_with_player : bool = 0
         """ 被玩家惹生气 """
-        self.money : int = 0
-        """ 龙门币数量 """
-        self.orundum : int = 0
-        """ 合成玉数量 """
-        self.Originite_Prime : int = 0
-        """ 至纯源石数量 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
@@ -684,6 +753,8 @@ class Character:
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
         """ 玩家的收藏品 """
+        self.action_info: ACTION_INFO = ACTION_INFO()
+        """ 角色的行动记录 """
 
 class Cache:
     """游戏缓存数据结构体"""
@@ -767,6 +838,8 @@ class Cache:
         """ 是否开启debug模式 """
         self.game_round: int = 1
         """ 当前周目数 """
+        self.base_resouce: Base_resouce = Base_resouce
+        """ 基地的资源情况 """
 
 
 class TargetChange:
@@ -791,8 +864,6 @@ class TargetChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
-        self.money: int = 0
-        """ 金钱变化 """
 
 
 class CharacterStatusChange:
@@ -823,5 +894,3 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
-        self.money: int = 0
-        """ 金钱变化 """

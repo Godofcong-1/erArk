@@ -48,6 +48,16 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
+config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
+""" 收藏品解锁数据 """
+config_facility: Dict[int, config_def.Facility] = {}
+""" 设施列表数据 """
+config_facility_effect: Dict[int, config_def.Facility_effect] = {}
+""" 设施效果总数据 """
+config_facility_effect_data: Dict[str, Set] = {}
+""" 设施效果分类数据 """
+config_resouce: Dict[int, config_def.Resouce] = {}
+""" 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -120,6 +130,10 @@ config_season: Dict[int, config_def.Season] = {}
 """ 季节配置数据 """
 config_sex_tem: Dict[int, config_def.SexTem] = {}
 """ 性别对应描述和性别器官模板 """
+config_jj_tem: Dict[int, config_def.JJ] = {}
+""" 阴茎对应描述 """
+config_tip_tem: Dict[int, config_def.Tip] = {}
+""" 提示对应描述 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -147,8 +161,6 @@ config_target_effect_data: Dict[int, Set] = {}
 """ 目标效果配置数据 """
 config_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
-config_target_premise: Dict[int, config_def.TargetPremise] = {}
-""" 目标前提配置 """
 config_target_premise_data: Dict[int, Set] = {}
 """ 目标前提配置数据 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
@@ -329,14 +341,14 @@ def load_behavior_effect_data():
         now_tem.__dict__ = tem_data
         config_behavior_effect[now_tem.cid] = now_tem
         config_behavior_effect_data.setdefault(now_tem.behavior_id, set())
-        config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
+        # config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
-        # if "|" not in now_tem.effect_id:
-        #     config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
-        # else:
-        #     effect_list = now_tem.effect_id.split('|')
-        #     for effect in effect_list:
-        #         config_behavior_effect_data[now_tem.behavior_id].add(effect)
+        if "|" not in now_tem.effect_id:
+            config_behavior_effect_data[now_tem.behavior_id].add(int(now_tem.effect_id))
+        else:
+            effect_list = now_tem.effect_id.split('|')
+            for effect in effect_list:
+                config_behavior_effect_data[now_tem.behavior_id].add(int(effect))
 
 
 def load_second_behavior_effect_data():
@@ -431,6 +443,52 @@ def load_clothing_use_type():
         now_type = config_def.ClothingUseType()
         now_type.__dict__ = tem_data
         config_clothing_use_type[now_type.cid] = now_type
+
+
+def load_collection_bonus_data():
+    """载入收藏品奖励数据"""
+    now_data = config_data["Collection_bouns"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Collection_bouns()
+        now_type.__dict__ = tem_data
+        config_collection_bonus_data[now_type.cid] = now_type
+
+
+def load_facility():
+    """载入设施列表数据"""
+    now_data = config_data["Facility"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Facility()
+        now_tem.__dict__ = tem_data
+        config_facility[now_tem.cid] = now_tem
+
+
+def load_facility_effect():
+    """载入设施效果数据"""
+    now_data = config_data["Facility_effect"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Facility_effect()
+        now_tem.__dict__ = tem_data
+        config_facility_effect[now_tem.cid] = now_tem
+        config_facility_effect_data.setdefault(now_tem.name, list())
+        if config_facility_effect_data[now_tem.name] == []:
+            config_facility_effect_data[now_tem.name].append(0)
+
+        config_facility_effect_data[now_tem.name].append(now_tem.cid)
+    # print(f"debug config_facility_effect_data = {config_facility_effect_data}")
+
+
+def load_resouce():
+    """载入资源数据"""
+    now_data = config_data["Resouce"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Resouce()
+        now_tem.__dict__ = tem_data
+        config_resouce[now_tem.cid] = now_tem
 
 
 def load_font_data():
@@ -531,6 +589,26 @@ def load_sex_tem():
         config_random_npc_sex_region[now_tem.cid] = now_tem.region
 
 
+def load_jj_tem():
+    """载入阴茎模板数据"""
+    now_data = config_data["JJ"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.JJ()
+        now_tem.__dict__ = tem_data
+        config_jj_tem[now_tem.cid] = now_tem
+
+
+def load_tip_tem():
+    """载入提示数据"""
+    now_data = config_data["Tip"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Tip()
+        now_tem.__dict__ = tem_data
+        config_tip_tem[now_tem.cid] = now_tem
+
+
 def load_solar_period():
     """载入节气配置"""
     now_data = config_data["SolarPeriod"]
@@ -574,11 +652,11 @@ def load_talk():
 
         # config_talk_premise_data.setdefault(now_tem.cid, set())
         # if "|" not in now_tem.premise:
-        #     config_talk_premise_data[now_tem.cid].add(now_tem.premise)
+        #     config_talk_premise_data[now_tem.cid].add(int(now_tem.premise))
         # else:
         #     premise_list = now_tem.premise.split('|')
         #     for premise in premise_list:
-        #         config_talk_premise_data[now_tem.cid].add(premise)
+        #         config_talk_premise_data[now_tem.cid].add(int(premise))
 
 
 def load_talk_premise():
@@ -602,6 +680,15 @@ def load_target():
         now_tem.__dict__ = tem_data
         config_target[now_tem.cid] = now_tem
 
+        config_target_premise_data.setdefault(now_tem.cid, set())
+        if len(now_tem.premise_id):
+            if "|" not in now_tem.premise_id:
+                config_target_premise_data[now_tem.cid].add(now_tem.premise_id)
+            else:
+                premise_list = now_tem.premise_id.split('|')
+                for premise_id in premise_list:
+                    config_target_premise_data[now_tem.cid].add(premise_id)
+
 
 def load_target_effect():
     """载入目标效果配置"""
@@ -615,18 +702,6 @@ def load_target_effect():
         config_target_effect_data[now_tem.target_id].add(now_tem.effect_id)
         config_effect_target_data.setdefault(now_tem.effect_id, set())
         config_effect_target_data[now_tem.effect_id].add(now_tem.target_id)
-
-
-def load_target_premise():
-    """载入目标效果配置"""
-    now_data = config_data["TargetPremise"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.TargetPremise()
-        now_tem.__dict__ = tem_data
-        config_target_premise[now_tem.cid] = now_tem
-        config_target_premise_data.setdefault(now_tem.target_id, set())
-        config_target_premise_data[now_tem.target_id].add(now_tem.premise_id)
 
 
 def load_week_day():
@@ -656,6 +731,10 @@ def init():
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
+    load_collection_bonus_data()
+    load_facility()
+    load_facility_effect()
+    load_resouce()
     load_experience()
     load_font_data()
     load_instruct_type()
@@ -670,6 +749,8 @@ def init():
     load_recipes()
     load_season()
     load_sex_tem()
+    load_jj_tem()
+    load_tip_tem()
     load_solar_period()
     load_status()
     load_sun_time()
@@ -680,5 +761,4 @@ def init():
     load_talent_up_data()
     load_target()
     load_target_effect()
-    load_target_premise()
     load_week_day()

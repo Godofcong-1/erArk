@@ -179,6 +179,18 @@ def get_pl_ability_zero() -> dict:
     return pl_ability_data
 
 
+def get_action_info_state_zero() -> dict:
+    """
+    直接将行动信息结构体归0
+    """
+    action_info_data = game_type.ACTION_INFO()
+    action_info_data.talk_time = cache.game_time
+    action_info_data.last_move_time = cache.game_time
+    action_info_data.last_training_time = cache.game_time
+
+    return action_info_data
+
+
 def get_cloth_zero() -> dict:
     """
     遍历服装类型，将每个都设为空
@@ -198,6 +210,8 @@ def get_collection_zero() -> dict:
     """
 
     collection_data = game_type.PLAYER_COLLECTION()
+    for cid in game_config.config_collection_bonus_data:
+        collection_data.collection_bonus[cid] = False
 
     for npc_id in cache.character_data:
         collection_data.token_list[npc_id] = False
@@ -206,6 +220,72 @@ def get_collection_zero() -> dict:
         collection_data.npc_socks[npc_id] = []
 
     return collection_data
+
+
+def get_base_zero() -> dict:
+    """
+    基地情况结构体，设为空
+    """
+
+    base_data = game_type.Base_resouce()
+
+    # 遍历全设施清单
+    for all_cid in game_config.config_facility:
+        # 全设施等级设为1
+        base_data.facility_level[all_cid] = 1
+
+    # 遍历全资源清单
+    for all_cid in game_config.config_resouce:
+        # 全资源数量设为0
+        base_data.materials_resouce[all_cid] = 0
+
+    return base_data
+
+def get_base_updata() -> dict:
+    """
+    遍历基地情况结构体，根据设施等级更新全部数值
+    """
+
+
+    cache.base_resouce.power_use = 0
+
+    # 遍历全设施清单
+    for all_cid in game_config.config_facility:
+        # 全设施等级设为1
+        level = cache.base_resouce.facility_level[all_cid]
+
+        # 累加全设施的用电量
+        facility_name = game_config.config_facility[all_cid].name
+        facility_cid = game_config.config_facility_effect_data[facility_name][level]
+        cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
+
+    # print(f"debug power_use = {base_data.power_use}")
+
+        # 初始化供电量
+        if facility_name == "动力区":
+            cache.base_resouce.power_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化仓库容量
+        elif facility_name == "仓储区":
+            cache.base_resouce.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
+        # 初始化干员人数上限
+        elif facility_name == "宿舍区":
+            cache.base_resouce.people_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化生活娱乐区设施数量上限
+        elif facility_name == "生活娱乐区":
+            cache.base_resouce.life_zone_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化患者人数上限
+        elif facility_name == "医疗部":
+            cache.base_resouce.ppatient_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化科研区设施数量上限
+        elif facility_name == "科研部":
+            cache.base_resouce.research_zone_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化商店数量上限
+        elif facility_name == "贸易区":
+            cache.base_resouce.shop_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化战斗时干员数量上限
+        elif facility_name == "指挥室":
+            cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
+
 
 
 def get_item_zero(item_dict) -> dict:

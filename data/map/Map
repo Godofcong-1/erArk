@@ -17,7 +17,7 @@
   ├─┤║  ║/          ╬══╣╠══╬              ╬═╦═╬              │ └╬────┘║ │                        │ │        │  │         <mapbutton>医疗</mapbutton>      └────┤  ├┤│
   ╠╬╣║  ╟────────╬──┘      └──────────────┘ ║ └──────────────╩══╩═════╣ └────────────────────────┘ │  <mapbutton>生娱</mapbutton>  │  │                        │ //║║
   ├┼┼╣  ║  ┌────┐║                   ┌──────╬────────┐ ┌─────────────┐║ ┌───────┐  ┌─────────────┐ │        │  └─╫───────────────────╫──┘// ║║
-  ■■══╣  │ <mapbutton>卫</mapbutton> ╬╣ ┌───────────────┐ │     <mapbutton>科研</mapbutton>      ╬═╬     <mapbutton>动力</mapbutton>    ╬╩═╬ <mapbutton>训练</mapbutton>  ╬══╬   <mapbutton>大浴室</mapbutton>    ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
+  ■■══╣  │ <mapbutton>卫</mapbutton> ╬╣ ┌───────────────┐ │     <mapbutton>科研</mapbutton>      ╬═╬     <mapbutton>动力</mapbutton>    ╬╩═╬ <mapbutton>训练</mapbutton>  ╬══╬   <mapbutton>大浴场</mapbutton>    ╬═╬        ╬═╗ ┌╫───────────────────╫┐ //  ╚╝  
   │ │╚┐┌╩╗ └────┘║ │               │ └───────────────┘ └────────────╫┘  └───────┘  └─────────────┘ └────────┘ ╠═╬                     ││/     
   ╠═╣ ╠╝ ╚╗      ║ │      <mapbutton>机库</mapbutton>     │┌─────────────┐  ┌───────────┐  ║ ┌──────────────────────┐      ┌───────┐ ║ ├─────    <mapbutton>宿舍</mapbutton>    ────┤╞═╗    
  /╠╗┼─╝   ╚╗┌─╦╤═╩═╬               ╬╬    <mapbutton>工程</mapbutton>     ╬╣╠╬ <mapbutton>制造加工</mapbutton>  ╬══╩═╬         <mapbutton>仓储</mapbutton>         ╬══╣╠══╬ <mapbutton>关押</mapbutton>  │ ╚═╬                     │╞═╝   

@@ -717,6 +717,114 @@ def handle_in_collection_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.IN_GYM_ROOM)
+def handle_in_gym_room(character_id: int) -> int:
+    """
+    校验角色是否在健身区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Gym" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_TRAINING_ROOM)
+def handle_in_training_room(character_id: int) -> int:
+    """
+    校验角色是否在训练室中（包括木桩房和射击房）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Training_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_TRAINING_ROOM)
+def handle_not_in_training_room(character_id: int) -> int:
+    """
+    校验角色是否不在训练室中（包括木桩房和射击房）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Training_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.IN_FIGHT_ROOM)
+def handle_in_fight_room(character_id: int) -> int:
+    """
+    校验角色是否在木桩房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Fight_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_SHOOT_ROOM)
+def handle_in_shoot_room(character_id: int) -> int:
+    """
+    校验角色是否在射击房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Shoot_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.IN_BUILDING_ROOM)
+def handle_in_building_room(character_id: int) -> int:
+    """
+    校验角色是否在基建部中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Building_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
@@ -730,13 +838,13 @@ def handle_have_moved(character_id: int) -> int:
     now_time: datetime.datetime = character_data.behavior.start_time
     move_flag = 0
     #同一天内过1小时则判定为1
-    if now_time.day == character_data.last_move_time.day and now_time.hour > character_data.last_move_time.hour:
-        character_data.last_move_time = now_time
+    if now_time.day == character_data.action_info.last_move_time.day and now_time.hour > character_data.action_info.last_move_time.hour:
+        character_data.action_info.last_move_time = now_time
         # print("过一小时判定,character_id :",character_id)
         move_flag = 1
     #非同一天也判定为1
-    elif now_time.day != character_data.last_move_time.day:
-        character_data.last_move_time = now_time
+    elif now_time.day != character_data.action_info.last_move_time.day:
+        character_data.action_info.last_move_time = now_time
         move_flag = 1
         # print("非同一天判定")
     return move_flag
@@ -757,6 +865,24 @@ def handle_ai_wait(character_id: int) -> int:
         return 999
     else:
         return 0
+
+
+@add_premise(constant.Premise.HAVE_TRAINED)
+def handle_have_trained(character_id: int) -> int:
+    """
+    NPC距离上次战斗训练已经超过两天了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = cache.game_time
+    train_time = character_data.action_info.last_training_time
+    add_day = int((now_time - train_time).days)
+    if add_day >= 2:
+        return (add_day - 1)*10
+    return 0
 
 
 @add_premise(constant.Premise.IN_SLEEP_TIME)
@@ -1320,6 +1446,36 @@ def handle_target_not_angry_with_player(character_id: int) -> int:
         return 0
     else:
         return 1
+
+
+@add_premise(constant.Premise.COLLECT_BONUS_103)
+def handle_collect_bonus_103(character_id: int) -> int:
+    """
+    校验收藏奖励_103_解锁索要内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.pl_collection.collection_bonus[103]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.COLLECT_BONUS_203)
+def handle_collect_bonus_203(character_id: int) -> int:
+    """
+    校验收藏奖励_203_解锁索要袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.pl_collection.collection_bonus[203]:
+        return 1
+    return 0
 
 
 @add_premise(constant.Premise.COOK_1)

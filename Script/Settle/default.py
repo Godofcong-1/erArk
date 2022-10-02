@@ -289,6 +289,85 @@ def handle_sub_both_small_mana_point(
                     now_draw.draw()
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
+def handle_sub_self_small_hit_point(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    减少自己少量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    sub_hit = add_time * 5
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit *= 3
+    #体力不足0时锁为1#
+    if character_data.hit_point >= sub_hit:
+        character_data.hit_point -= sub_hit
+        change_data.hit_point -= sub_hit
+    else:
+        change_data.hit_point -= character_data.hit_point
+        character_data.hit_point = 1
+        if not character_data.tired:
+            character_data.tired = 1
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            now_draw.text = "\n" + character_data.name + "太累了\n"
+            now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
+def handle_sub_self_small_mana_point(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    减少自己少量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    sub_mana = add_time * 7.5
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.mana_point >= sub_mana:
+        character_data.mana_point -= sub_mana
+        change_data.mana_point -= sub_mana
+    else:
+        change_data.mana_point -= character_data.mana_point
+        sub_mana -= character_data.mana_point
+        character_data.mana_point = 0
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 1
+            if not character_data.tired:
+                character_data.tired = 1
+                now_draw = draw.NormalDraw()
+                now_draw.width = width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
 def handle_add_both_small_hit_point(
     character_id: int,
@@ -2260,7 +2339,7 @@ def handle_add_small_p_feel(
     change_data.eja_point += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_ADD_SMALL_LEARN)
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.BOTH_ADD_SMALL_LEARN)
 def handle_both_add_small_learn(
     character_id: int,
     add_time: int,
@@ -2292,6 +2371,34 @@ def handle_both_add_small_learn(
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.status_data.setdefault(9, 0)
         target_change.status_data[9] += now_add_lust
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_LEARN)
+def handle_add_small_learn(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    自己增加少量习得
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    now_lust_multiple = 10
+    now_add_lust = add_time + now_lust_multiple
+    character_data.status_data[9] += now_add_lust
+    change_data.status_data.setdefault(9, 0)
+    change_data.status_data[9] += now_add_lust
+
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
@@ -2352,8 +2459,8 @@ def handle_talk_add_adjust(
         target_change.status_data.setdefault(13, 0)
         target_change.status_data[13] += now_add_lust
         #记录谈话时间#
-        target_data.talk_time = now_time
-        # print("聊天计数器时间变为 ：",target_data.talk_time)
+        target_data.action_info.talk_time = now_time
+        # print("聊天计数器时间变为 ：",target_data.action_info.talk_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.COFFEE_ADD_ADJUST)
@@ -2476,15 +2583,15 @@ def handle_target_coffee_add_adjust(
         target_change.status_data[11] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.KONWLEDGE_ADD_MONEY)
-def handle_knowledge_add_money(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
+def handle_knowledge_add_pink_money(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    根据自己（再加上交互对象的）学识获得少量金钱
+    根据自己（再加上交互对象的）学识获得少量粉色凭证
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2502,7 +2609,7 @@ def handle_knowledge_add_money(
         return
     #获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
-    # 获得金钱 #
+    # 获得粉色凭证 #
     now_add_lust = add_time * adjust
     now_add_lust = int(now_add_lust)
 
@@ -2510,8 +2617,7 @@ def handle_knowledge_add_money(
     if character_data.target_character_id != 0:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int (add_time * adjust_target)
-    character_data.money += now_add_lust
-    change_data.money += now_add_lust
+    cache.base_resouce.pink_certificate += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)
@@ -3404,3 +3510,23 @@ def handle_target_urinate_point_down(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.hunger_point = 0
 
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_TRAINING_TIME)
+def handle_record_training_time(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录当前训练时间
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.talk_time = now_time

@@ -43,15 +43,14 @@ def init_attr(character_id: int):
     character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
     character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
-    character_data.last_move_time = attr_calculation.get_time_zero()
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)
     character_data.h_state = attr_calculation.get_h_state_zero()
     character_data.assistant_state = attr_calculation.get_assistant_state_zero()
     character_data.first_record = attr_calculation.get_first_record_zero()
-    character_data.pl_ability = attr_calculation.get_pl_ability_zero()
     character_data.cloth_see = {6:False,9:False}
     character_data.cloth_off = attr_calculation.get_cloth_zero()
+    character_data.action_info = attr_calculation.get_action_info_state_zero()
 
 
     #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
@@ -64,6 +63,7 @@ def init_attr(character_id: int):
         character_data.pl_collection.token_list = attr_calculation.get_token_zero(character_data.pl_collection.token_list)
         character_data.sleep_point = 0
         character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
 
     #一系列初始化函数

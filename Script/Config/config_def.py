@@ -66,7 +66,7 @@ class BehaviorEffect:
     """ 表id """
     behavior_id: int
     """ 行为id """
-    effect_id: int
+    effect_id: str
     """ 结算器id """
 
 
@@ -153,6 +153,19 @@ class ClothingUseType:
     """ 用途名字 """
 
 
+class Collection_bouns:
+    """ 收藏物的奖励解锁 """
+
+    cid: int
+    """ 奖励id """
+    type: str
+    """ 收藏物类型 """
+    count: int
+    """ 解锁所需的收藏数量 """
+    info: str
+    """ 奖励信息 """
+
+
 class Experience:
     """ 经验名字 """
 
@@ -160,6 +173,40 @@ class Experience:
     """ 经验id """
     name: str
     """ 经验名 """
+
+
+class Facility:
+    """ 基建系统内全设施一览 """
+
+    cid: int
+    """ 效果id """
+    name: str
+    """ 设施名字 """
+    type: int
+    """ 设施类型-1区块，-2通用，否则为cid归属下的小房间 """
+    info: str
+    """ 介绍信息 """
+
+
+class Facility_effect:
+    """ 设施在不同等级下的效果 """
+
+    cid: int
+    """ 效果id """
+    name: str
+    """ 设施名字 """
+    level: int
+    """ 设施等级 """
+    effect: int
+    """ 设施效果数值 """
+    power_use: int
+    """ 耗电量 """
+    resouce_use: int
+    """ 升级需要的基建材料数量 """
+    money_use: int
+    """ 升级需要的龙门币数量 """
+    info: str
+    """ 介绍信息 """
 
 
 class FontConfig:
@@ -224,6 +271,15 @@ class Item:
     """ 价格 """
     info: str
     """ 描述 """
+
+
+class JJ:
+    """ 阴茎类型 """
+
+    cid: int
+    """ 阴茎id """
+    name: str
+    """ 阴茎名称 """
 
 
 class Juel:
@@ -303,6 +359,19 @@ class Recipes:
     """ 价格 """
     introduce: str
     """ 说明介绍 """
+
+
+class Resouce:
+    """ 各类基地使用资源一览 """
+
+    cid: int
+    """ 资源id """
+    name: str
+    """ 资源名字 """
+    type: str
+    """ 资源类型 """
+    info: str
+    """ 介绍信息 """
 
 
 class Season:
@@ -404,6 +473,17 @@ class TalentUp:
     """ 需求类型的子id """
     value: int
     """ 需求值 """
+
+
+class Tip:
+    """ 提示信息 """
+
+    cid: int
+    """ 提示id """
+    type: str
+    """ 提示类型 """
+    info: str
+    """ 提示内容 """
 
 
 class WeekDay:
@@ -1333,6 +1413,12 @@ class Talk:
 
 
 
+
+
+
+
+
+
 class TargetEffect:
     """ 执行目标所能达成的效果id """
 
@@ -1344,17 +1430,6 @@ class TargetEffect:
     """ 达成的效果id（即达成的前提id） """
 
 
-class TargetPremise:
-    """ 执行目标所需的前提id """
-
-    cid: str
-    """ 配表id """
-    target_id: str
-    """ 所属目标id """
-    premise_id: str
-    """ 所需前提id """
-
-
 class Target:
     """ ai的目标 """
 
@@ -1362,5 +1437,7 @@ class Target:
     """ 目标id """
     state_machine_id: int
     """ 执行的状态机id """
+    premise_id: str
+    """ 所需前提id """
     remarks: str
     """ 备注 """
