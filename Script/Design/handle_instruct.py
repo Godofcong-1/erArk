@@ -226,7 +226,8 @@ def debug_mode():
     cache.base_resouce.money += 999999
     cache.base_resouce.orundum += 999999
     cache.base_resouce.Originite_Prime += 999999
-
+    for i in {11,12,13,14,15,16,21,22,23,24}:
+        cache.base_resouce.materials_resouce[i] += 999999
 
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"), {constant.Premise.DEBUG_MODE_ON})
 def debug_mode_off():

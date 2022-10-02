@@ -43,7 +43,6 @@ class Building_Panel:
         building_type_list = [_("区块总览"), _("特殊房间")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        handle_panel = panel.PageHandlePanel([], building_Draw, 10, 5, self.width, 1, 1, 0)
         while 1:
             return_list = []
             title_draw.draw()
@@ -92,10 +91,11 @@ class Building_Panel:
             facility_draw.draw()
 
             # 开始区块总览信息
-            building_draw = draw.NormalDraw()
+            now_draw = panel.LeftDrawTextListPanel()
 
-            building_text = ""
             if self.now_panel == "区块总览":
+                now_draw.draw_list.append(line_feed)
+                now_draw.width += 1
 
                 for all_cid in game_config.config_facility:
                     facility_data = game_config.config_facility[all_cid]
@@ -113,14 +113,30 @@ class Building_Panel:
                             info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (供电:{facility_power_give})"
                         else:
                             info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
-                        building_text += f"\n  {info_head}：{facility_info}"
-                building_text += f"\n"
+                        building_text = f"  {info_head}：{facility_info}"
+
+                        button_building_draw = draw.LeftButton(
+                            _(building_text),
+                            _(facility_name),
+                            self.width,
+                            cmd_func=self.level_up_info,
+                            args=(facility_cid,),
+                            )
+                        return_list.append(button_building_draw.return_text)
+                        now_draw.draw_list.append(button_building_draw)
+                        now_draw.width += len(button_building_draw.text)
+                        now_draw.draw_list.append(line_feed)
+                        now_draw.width += 1
+
 
             elif self.now_panel == "特殊房间":
+                now_draw.draw_list.append(line_feed)
+                now_draw.width += 1
 
                 for all_cid in game_config.config_facility:
                     facility_data = game_config.config_facility[all_cid]
                     if facility_data.type != -1:
+
                         facility_name = facility_data.name
                         now_level = str(cache.base_resouce.facility_level[all_cid])
                         facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
@@ -128,16 +144,33 @@ class Building_Panel:
                         facility_info = facility_data.info
 
                         info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
-                        building_text += f"\n  {info_head}：{facility_info}"
-                building_text += f"\n"
+                        building_text = f"  {info_head}：{facility_info}"
 
+                        button_building_draw = draw.LeftButton(
+                            _(building_text),
+                            _(facility_name),
+                            self.width,
+                            cmd_func=self.level_up_info,
+                            args=(facility_cid,),
+                            )
+                        return_list.append(button_building_draw.return_text)
+                        now_draw.draw_list.append(button_building_draw)
+                        now_draw.width += len(button_building_draw.text)
+                        now_draw.draw_list.append(line_feed)
+                        now_draw.width += 1
 
-            building_draw.text = building_text
-            building_draw.width = self.width
-            building_draw.draw()
+            self.draw_list: List[draw.NormalDraw] = []
+            """ 绘制的文本列表 """
+            self.draw_list.extend(now_draw.draw_list)
 
+            for label in self.draw_list:
+                if isinstance(label, list):
+                    for value in label:
+                        value.draw()
+                    line_feed.draw()
+                else:
+                    label.draw()
 
-            return_list.extend(handle_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -146,7 +179,6 @@ class Building_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-
     def change_panel(self, building_type: str):
         """
         切换当前面板显示
@@ -154,78 +186,118 @@ class Building_Panel:
         building_type -- 要切换的面板类型
         """
 
-
         if building_type == "区块总览":
             self.now_panel = "区块总览"
         elif building_type == "特殊房间":
             self.now_panel = "特殊房间"
 
-    def get_bonus(self, bonus_id: int):
+    def level_up_info(self, facility_cid: int):
         """
-        获得解锁奖励
+        显示建筑升级的详细信息
         Keyword arguments:
-        bonus_id -- 奖励编号
+        facility_cid -- 建筑效果编号
         """
-        character_data: game_type.Character = cache.character_data[0]
-        bonus_data = game_config.config_building_bonus_data[bonus_id]
-        bonus_flag = False
 
-        # 比对相应的收集物数量，判断是否解锁成功
-        if bonus_data.type == "信物":
-            if self.token_count >= bonus_data.count or cache.debug_mode:
-                character_data.pl_building.building_bonus[bonus_id] = True
-                bonus_flag = True
-        if bonus_data.type == "内裤":
-            if self.pan_count >= bonus_data.count or cache.debug_mode:
-                character_data.pl_building.building_bonus[bonus_id] = True
-                bonus_flag = True
-        if bonus_data.type == "袜子":
-            if self.sock_count >= bonus_data.count or cache.debug_mode:
-                character_data.pl_building.building_bonus[bonus_id] = True
-                bonus_flag = True
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
 
-        # 获得素质类型的当场触发
-        if bonus_flag:
-            if bonus_id == 1:
-                character_data.talent[304] = 1
-            elif bonus_id == 101:
-                character_data.talent[307] = 1
+            # 如果等级不是5级则显示具体信息
+            info_draw = draw.NormalDraw()
+            facility_data_now = game_config.config_facility_effect[facility_cid]
+            if facility_data_now.level != 5:
+                facility_data_next = game_config.config_facility_effect[facility_cid+1]
+                info_draw.text = f"\n{facility_data_now.name}："
+                info_draw.text += f"\n  当前等级：{facility_data_now.level}，当前耗电量:{facility_data_now.power_use}，当前效果：{facility_data_now.info}"
+                info_draw.text += f"\n  下一等级：{facility_data_next.level}，下一等级耗电量:{facility_data_next.power_use}，下一等级效果：{facility_data_next.info}"
+                info_draw.text += f"\n  升级需要的龙门币：{facility_data_next.money_use}\n  升级需要的基建材料：{facility_data_next.resouce_use}\n"
+                info_draw.width = self.width
+                info_draw.draw()
 
-        # 输出提示信息
-        info_draw = draw.WaitDraw()
-        if bonus_flag:
-            info_draw.text = "\n  解锁成功\n"
-        else:
-            info_draw.text = "\n  未满足条件，解锁失败\n"
-        info_draw.width = self.width
-        info_draw.draw()
+                # 最后展示资源情况
+                resouce_draw = draw.NormalDraw()
+                resouce_text = "\n当前资源情况："
+                power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
+                resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
+                money = str(cache.base_resouce.money)
+                resouce_text += f"\n  当前龙门币数量    ：{money}"
+                # 碳素建材的编号是15
+                building_materials = str(cache.base_resouce.materials_resouce[15])
+                resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
+
+                resouce_draw.text = resouce_text
+                resouce_draw.width = self.width
+                resouce_draw.draw()
+
+                # 判定是否可以升级
+                level_up_flag = 0
+                up_info_draw = draw.NormalDraw()
+                up_info_draw.text = "当前无法升级："
+                # 电量
+                if cache.base_resouce.power_max - cache.base_resouce.power_use - facility_data_next.power_use + facility_data_now.power_use >= 0:
+                    level_up_flag += 1
+                else:
+                    up_info_draw.text += "\n  升级所需电量不足"
+                # 龙门币
+                if cache.base_resouce.money - facility_data_next.money_use >= 0:
+                    level_up_flag += 1
+                else:
+                    up_info_draw.text += "\n  升级所需龙门币不足"
+                # 建材
+                if cache.base_resouce.materials_resouce[15] - facility_data_next.resouce_use >= 0:
+                    level_up_flag += 1
+                else:
+                    up_info_draw.text += "\n  升级所需碳素建材不足"
+                up_info_draw.width = self.width
+
+                if level_up_flag == 3:
+                    now_draw = draw.LeftButton(
+                        f"      【升级】",
+                        f"\n【升级】",
+                        self.width / 5,
+                        cmd_func=self.level_up,
+                        args=(facility_cid,),
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+                else:
+                    up_info_draw.draw()
+                line_feed.draw()
+
+            else:
+                info_draw.text = "\n  当前建筑已是最高级\n\n"
+                info_draw.width = self.width
+                info_draw.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
 
 
+    def level_up(self, facility_cid: int):
+        """
+        显示建筑升级的详细信息
+        Keyword arguments:
+        facility_cid -- 建筑效果编号
+        """
+        for all_cid in game_config.config_facility:
+            facility_data = game_config.config_facility[all_cid]
+            facility_data_now = game_config.config_facility_effect[facility_cid]
 
-class building_Draw:
-    """
-    收藏品绘制对象
-    Keyword arguments:
-    text -- 道具id
-    width -- 最大宽度
-    """
+            # 寻找和当前设施名一样的
+            if facility_data.name == facility_data_now.name:
+                cache.base_resouce.facility_level[all_cid] += 1
+                attr_calculation.get_base_updata()
 
-    def __init__(self, text: int, width: int):
-        """初始化绘制对象"""
-        self.draw_text: str = ""
-        """ 绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-
-        name_draw = draw.NormalDraw()
-
-        name_draw.text = ""
-        name_draw.width = self.width
-        self.draw_text = ""
-        self.now_draw = name_draw
-        """ 绘制的对象 """
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
+                # 输出提示信息
+                line = draw.LineDraw("-", self.width)
+                line.draw()
+                info_draw = draw.WaitDraw()
+                info_draw.text = f"\n{facility_data_now.name}提升到{str(cache.base_resouce.facility_level[all_cid])}级了！\n"
+                info_draw.width = self.width
+                info_draw.draw()
+                break

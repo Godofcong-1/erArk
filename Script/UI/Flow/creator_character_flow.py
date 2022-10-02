@@ -62,6 +62,7 @@ def game_start():
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
     cache.base_resouce = attr_calculation.get_base_zero()
+    attr_calculation.get_base_updata()
 
 def confirm_game_info_panel():
     """确认游戏说明面板"""
