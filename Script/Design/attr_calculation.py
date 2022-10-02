@@ -234,6 +234,11 @@ def get_base_zero() -> dict:
         # 全设施等级设为1
         base_data.facility_level[all_cid] = 1
 
+    # 遍历全设施开放
+    for all_cid in game_config.config_facility_open:
+        # 全设施等级设为1
+        base_data.facility_open[all_cid] = False
+
     # 遍历全资源清单
     for all_cid in game_config.config_resouce:
         # 全资源数量设为0
@@ -258,6 +263,11 @@ def get_base_updata() -> dict:
         facility_name = game_config.config_facility[all_cid].name
         facility_cid = game_config.config_facility_effect_data[facility_name][level]
         cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
+
+        # 如果满足设施开放的前提条件，则开放该设施
+        for open_cid in game_config.config_facility_open:
+            if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
+                cache.base_resouce.facility_open[open_cid] = True
 
     # print(f"debug power_use = {base_data.power_use}")
 

@@ -209,6 +209,21 @@ class Facility_effect:
     """ 介绍信息 """
 
 
+class Facility_open:
+    """ 待开放的设施一览 """
+
+    cid: int
+    """ 设施id """
+    name: str
+    """ 设施名字 """
+    zone_cid: int
+    """ 开放所需的区块等级cid """
+    NPC_id: int
+    """ 开放所需的干员id """
+    info: str
+    """ 介绍信息 """
+
+
 class FontConfig:
     """ 字体样式配置数据(富文本用) """
 

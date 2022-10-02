@@ -543,6 +543,8 @@ class Base_resouce:
     def __init__(self):
         self.facility_level : Dict[int,int] = {}
         """ 基地当前所有设施的等级 """
+        self.facility_open : Dict[int,bool] = {}
+        """ 基地当前所有待开放设施的开放情况 """
         self.power_use : int = 0
         """ 当前使用电力 """
         self.power_max : int = 0
