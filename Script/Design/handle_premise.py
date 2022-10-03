@@ -119,6 +119,24 @@ def handle_sleep_time(character_id: int) -> int:
         return (now_hour-21) *100
     return 0
 
+
+@add_premise(constant.Premise.WORK_TIME)
+def handle_work_time(character_id: int) -> int:
+    """
+    工作时间（早上9:00~下午4:59）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour >= 9 and character_data.behavior.start_time.hour < 17:
+        return 50
+    return 0
+
+
 @add_premise(constant.Premise.IN_BREAKFAST_TIME)
 def handle_in_breakfast_time(character_id: int) -> int:
     """
@@ -823,6 +841,42 @@ def handle_in_building_room(character_id: int) -> int:
     if "Building_Room" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant.Premise.IN_CLINIC)
+def handle_in_clinic(character_id: int) -> int:
+    """
+    校验角色是否在门诊室中（含急诊室）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Clinic" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_CLINIC)
+def handle_not_in_clinic(character_id: int) -> int:
+    """
+    校验角色是否不在门诊室中（含急诊室）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Clinic" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.HAVE_MOVED)
@@ -2540,6 +2594,34 @@ def handle_target_have_a_virgin(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return not target_data.talent[1] == 1
+
+
+@add_premise(constant.Premise.IS_MEDICAL)
+def handle_is_medical(character_id: int) -> int:
+    """
+    校验自己的职业为医疗
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.profession == 3
+
+
+@add_premise(constant.Premise.PATIENT_WAIT)
+def handle_patient_wait(character_id: int) -> int:
+    """
+    有患者正等待就诊
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if cache.base_resouce.patient_now:
+        return 1
+    return 0
 
 
 # @add_premise(constant.Premise.TARGET_AGE_SIMILAR)
@@ -6394,6 +6476,68 @@ def handle_not_h(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     return not target_data.is_h
+
+
+@add_premise(constant.Premise.IS_ASSISTANT)
+def handle_is_assistant(character_id: int) -> int:
+    """
+    自己是当前的助理干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.assistant_character_id == character_id:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_ASSISTANT)
+def handle_not_assistant(character_id: int) -> int:
+    """
+    自己不是当前的助理干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.assistant_character_id == character_id:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.TARGET_IS_ASSISTANT)
+def handle_target_is_assistant(character_id: int) -> int:
+    """
+    交互对象是当前的助理干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.assistant_character_id == character_data.target_character_id:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_ASSISTANT)
+def handle_target_not_assistant(character_id: int) -> int:
+    """
+    交互对象不是当前的助理干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.assistant_character_id == character_data.target_character_id:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.IS_FOLLOW)

@@ -15,6 +15,8 @@ from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
+import random
+
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -2622,6 +2624,47 @@ def handle_knowledge_add_pink_money(
     now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
     now_draw.width = width
     now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
+def handle_cure_patient_add_just(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+    #获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[46])
+    # 获得加成 #
+    now_add_lust = add_time * adjust * 1000
+    now_add_lust = int(now_add_lust * random.uniform(0.5,1.5))
+
+    # 如果有交互对象，则算上对方的医疗加成
+    if character_data.target_character_id != character_id:
+        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
+        now_add_lust += int (add_time * adjust_target)
+    cache.base_resouce.money += now_add_lust
+    cache.base_resouce.cure_income += now_add_lust
+    cache.base_resouce.all_income += now_add_lust
+    cache.base_resouce.patient_now -= 1
+    cache.base_resouce.patient_cured += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)

@@ -549,12 +549,22 @@ class Base_resouce:
         """ 当前使用电力 """
         self.power_max : int = 0
         """ 总可用电力 """
+        self.work_people_now : int = 0
+        """ 当前工作干员人数 """
         self.people_max : int = 0
         """ 干员人数上限 """
         self.life_zone_max : int = 0
         """ 生活娱乐区设施数量上限 """
-        self.ppatient_max : int = 0
+        self.patient_now : int = 0
+        """ 当前患者人数 """
+        self.patient_cured : int = 0
+        """ 当前已治疗患者人数 """
+        self.patient_max : int = 0
         """ 患者人数上限 """
+        self.cure_income : int = 0
+        """ 今日总治疗收入 """
+        self.all_income : int = 0
+        """ 今日全部门总收入 """
         self.research_zone_max : int = 0
         """ 科研区设施数量上限 """
         self.shop_max : int = 0

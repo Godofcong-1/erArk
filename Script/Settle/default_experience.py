@@ -41,6 +41,8 @@ def handle_target_add_1_n_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -69,6 +71,8 @@ def handle_target_add_1_b_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -96,6 +100,8 @@ def handle_target_add_1_c_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -124,6 +130,8 @@ def handle_target_add_1_p_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -152,6 +160,8 @@ def handle_target_add_1_v_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -180,6 +190,8 @@ def handle_target_add_1_a_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -208,6 +220,8 @@ def handle_target_add_1_u_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -236,6 +250,8 @@ def handle_target_add_1_w_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -268,6 +284,8 @@ def handle_target_add_1_nclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -300,6 +318,8 @@ def handle_target_add_1_bclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -332,6 +352,8 @@ def handle_target_add_1_cclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -396,6 +418,8 @@ def handle_target_add_1_vclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -428,6 +452,8 @@ def handle_target_add_1_aclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -460,6 +486,8 @@ def handle_target_add_1_uclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -492,6 +520,8 @@ def handle_target_add_1_wclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -556,6 +586,8 @@ def handle_target_add_1_cumming_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -588,6 +620,8 @@ def handle_target_add_1_milking_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -616,6 +650,8 @@ def handle_target_add_1_peeing_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -644,6 +680,8 @@ def handle_target_add_1_cums_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -672,6 +710,8 @@ def handle_target_add_1_cumsdrink_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -700,6 +740,8 @@ def handle_target_add_1_creampie_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -728,6 +770,8 @@ def handle_target_add_1_analcums_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -760,6 +804,8 @@ def handle_target_add_1_plserve_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -788,6 +834,8 @@ def handle_target_add_1_love_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -816,6 +864,8 @@ def handle_target_add_1_plpain_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -844,6 +894,8 @@ def handle_target_add_1_plsadism_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -872,6 +924,8 @@ def handle_target_add_1_plexhibit_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -904,6 +958,8 @@ def handle_target_add_1_kiss_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -931,6 +987,8 @@ def handle_target_add_1_handjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -958,6 +1016,8 @@ def handle_target_add_1_blowjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -985,6 +1045,8 @@ def handle_target_add_1_paizuri_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1012,6 +1074,8 @@ def handle_target_add_1_footjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1039,6 +1103,8 @@ def handle_target_add_1_blowjob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1066,6 +1132,8 @@ def handle_target_add_1_masterbate_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1094,6 +1162,8 @@ def handle_target_add_1_bdsmmasterbate_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1122,6 +1192,8 @@ def handle_target_add_1_toys_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1150,6 +1222,8 @@ def handle_target_add_1_tiedup_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1178,6 +1252,8 @@ def handle_target_add_1_insert_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1206,6 +1282,8 @@ def handle_target_add_1_sexv_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1234,6 +1312,8 @@ def handle_target_add_1_sexa_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1262,6 +1342,8 @@ def handle_target_add_1_sexu_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1290,6 +1372,8 @@ def handle_target_add_1_sexw_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1318,6 +1402,8 @@ def handle_target_add_1_expandv_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1346,6 +1432,8 @@ def handle_target_add_1_expanda_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1374,6 +1462,8 @@ def handle_target_add_1_expandu_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1402,6 +1492,8 @@ def handle_target_add_1_expandw_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1430,6 +1522,8 @@ def handle_target_add_1_twrape_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1458,6 +1552,8 @@ def handle_target_add_1_slumberrape_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1486,6 +1582,8 @@ def handle_target_add_1_abnormal_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1515,6 +1613,8 @@ def handle_target_add_1_axillajob_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1544,6 +1644,8 @@ def handle_target_add_1_enema_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1577,6 +1679,8 @@ def handle_target_add_1_unconsciouslyn_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1605,6 +1709,8 @@ def handle_target_add_1_unconsciouslyb_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1633,6 +1739,8 @@ def handle_target_add_1_unconsciouslyc_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1661,6 +1769,8 @@ def handle_target_add_1_unconsciouslyp_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1689,6 +1799,8 @@ def handle_target_add_1_unconsciouslyv_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1717,6 +1829,8 @@ def handle_target_add_1_unconsciouslya_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1745,6 +1859,8 @@ def handle_target_add_1_unconsciouslyu_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1773,6 +1889,8 @@ def handle_target_add_1_unconsciouslyw_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1801,6 +1919,8 @@ def handle_target_add_1_unconsciouslyclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1833,6 +1953,8 @@ def handle_target_add_1_chat_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1861,6 +1983,8 @@ def handle_target_add_1_combat_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1889,6 +2013,8 @@ def handle_target_add_1_learn_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1917,6 +2043,8 @@ def handle_target_add_1_cooking_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1945,6 +2073,8 @@ def handle_target_add_1_Date_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -1973,6 +2103,8 @@ def handle_target_add_1_music_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2001,6 +2133,8 @@ def handle_target_add_1_givebirth_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2011,8 +2145,70 @@ def handle_target_add_1_givebirth_experience(
     target_change.experience.setdefault(86, 0)
     target_change.experience[86] += 1
 
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Command_EXPERIENCE)
+def handle_target_add_1_command_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加1指挥经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.experience.setdefault(87, 0)
+    target_data.experience[87] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(87, 0)
+    target_change.experience[87] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_Cure_EXPERIENCE)
+def handle_target_add_1_cure_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象增加1医疗经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.experience.setdefault(88, 0)
+    target_data.experience[88] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(88, 0)
+    target_change.experience[88] += 1
+
 """
-    87-99留空
+    89-99留空
 """
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_1_ForwardClimax_EXPERIENCE)
@@ -2033,6 +2229,8 @@ def handle_target_add_1_forwardclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2061,6 +2259,8 @@ def handle_target_add_1_backclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2089,6 +2289,8 @@ def handle_target_add_1_rideclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2117,6 +2319,8 @@ def handle_target_add_1_fseatclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2145,6 +2349,8 @@ def handle_target_add_1_bseatclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2173,6 +2379,8 @@ def handle_target_add_1_fstandclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2201,6 +2409,8 @@ def handle_target_add_1_bstandclimax_experience(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
@@ -2565,8 +2775,8 @@ def handle_add_1_insert_experience(
     change_data.experience[50] += 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Insert_COMMAND)
-def handle_add_1_insert_command(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Command_EXPERIENCE)
+def handle_add_1_command_experience(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
@@ -2589,6 +2799,32 @@ def handle_add_1_insert_command(
     character_data.experience[87] += 1
     change_data.experience.setdefault(87, 0)
     change_data.experience[87] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_1_Cure_EXPERIENCE)
+def handle_add_1_cure_experience(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    增加1医疗经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(88, 0)
+    character_data.experience[88] += 1
+    change_data.experience.setdefault(88, 0)
+    change_data.experience[88] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.Both_ADD_1_Learn_EXPERIENCE)

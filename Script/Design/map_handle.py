@@ -529,7 +529,7 @@ def identical_map_move(
         now_target_position = get_scene_path_for_map_scene_id(now_map, now_target_scene_id)
     return move_end, move_path, now_target_position, now_need_time
 
-def judge_scene_open(target_scene_str : str) -> int :
+def judge_scene_open(target_scene_str : str, character_id : int) -> int :
     """
     判断目标地点是否可以进入
     Keyword arguments:
@@ -556,12 +556,13 @@ def judge_scene_open(target_scene_str : str) -> int :
                 zone_data = game_config.config_facility_effect[facility_cid]
                 zone_name,zone_lv = zone_data.name,str(zone_data.level)
 
-                line = draw.LineDraw("-", width)
-                line.draw()
-                info_draw = draw.WaitDraw()
-                info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前尚未解锁，解锁需要将{zone_name}升到{zone_lv}级\n"
-                info_draw.width = width
-                info_draw.draw()
+                if character_id == 0:
+                    line = draw.LineDraw("-", width)
+                    line.draw()
+                    info_draw = draw.WaitDraw()
+                    info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前尚未解锁，解锁需要将{zone_name}升到{zone_lv}级\n"
+                    info_draw.width = width
+                    info_draw.draw()
 
                 return 0
     return 1

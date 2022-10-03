@@ -169,12 +169,7 @@ class Dirty_Panel:
         dirty_type -- 要切换的面板类型
         """
 
-
-        if dirty_type == "身体":
-            self.now_panel = "身体"
-
-        elif dirty_type == "服装":
-            self.now_panel = "服装"
+        self.now_panel = dirty_type
 
 
 class Dirty_Draw:

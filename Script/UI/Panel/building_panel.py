@@ -187,10 +187,7 @@ class Building_Panel:
         building_type -- 要切换的面板类型
         """
 
-        if building_type == "区块总览":
-            self.now_panel = "区块总览"
-        elif building_type == "特殊房间":
-            self.now_panel = "特殊房间"
+        self.now_panel = building_type
 
     def level_up_info(self, facility_cid: int):
         """

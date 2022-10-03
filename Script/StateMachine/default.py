@@ -250,6 +250,33 @@ def character_move_to_dining_hall(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLINIC)
+def character_move_to_clinic(character_id: int):
+    """
+    随机移动到门诊室（含急诊室）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 判断是否存在没有人的门诊室，存在的话优先去没有人的
+    empty_flag = False
+    for Clinic_place in constant.place_data["Clinic"]:
+        if list(cache.scene_data[Clinic_place].character_list) == []:
+            empty_flag = True
+            to_clinic = map_handle.get_map_system_path_for_str(Clinic_place)
+            break
+    if not empty_flag:
+        to_clinic = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Clinic"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_clinic)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -604,6 +631,19 @@ def character_eat_rand_food(character_id: int):
     food_name = food_recipe.name
     character_data.behavior.food_name = food_name
     character_data.behavior.duration = 30
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_CURE_PATIENT)
+def character_work_cure_patient(character_id: int):
+    """
+    角色工作：治疗病人
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)

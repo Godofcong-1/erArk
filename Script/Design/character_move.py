@@ -58,7 +58,7 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
     # if not character_id:
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
-    if not map_handle.judge_scene_open(target_scene_str):
+    if not map_handle.judge_scene_open(target_scene_str,character_id):
         return "un_open", [], [], 0
     if (
         now_position_str not in map_handle.scene_path_edge

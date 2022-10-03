@@ -194,13 +194,7 @@ class Collection_Panel:
         collection_type -- 要切换的面板类型
         """
 
-
-        if collection_type == "信物":
-            self.now_panel = "信物"
-        elif collection_type == "内裤":
-            self.now_panel = "内裤"
-        elif collection_type == "袜子":
-            self.now_panel = "袜子"
+        self.now_panel = collection_type
 
     def get_bonus(self, bonus_id: int):
         """

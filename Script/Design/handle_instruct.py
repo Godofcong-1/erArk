@@ -1,4 +1,3 @@
-from Script.UI.Flow.make_food_flow import make_food_flow
 import random
 import time
 import queue
@@ -238,7 +237,7 @@ def debug_mode_off():
 
 @add_instruct(
     constant.Instruct.SEE_COLLECTION,
-    constant.InstructType.SYSTEM,
+    constant.InstructType.WORK,
     _("查看收藏品"),
     {
         constant.Premise.IN_COLLECTION_ROOM
@@ -246,6 +245,18 @@ def debug_mode_off():
 def handle_see_collection():
     """处理查看收藏品指令"""
     cache.now_panel_id = constant.Panel.COLLECTION
+
+
+@add_instruct(
+    constant.Instruct.SEE_DEPARTMENT,
+    constant.InstructType.WORK,
+    _("查看部门运作情况"),
+    {
+        constant.Premise.IN_DR_OFFICE
+    })
+def handle_see_department():
+    """处理查看部门运作情况指令"""
+    cache.now_panel_id = constant.Panel.DEPARTMENT
 
 
 # @add_instruct(
@@ -1147,6 +1158,24 @@ def handle_training():
     character_data.behavior.behavior_id = constant.Behavior.TRAINING
     character_data.state = constant.CharacterStatus.STATUS_TRAINING
     update.game_update_flow(120)
+
+
+@add_instruct(
+    constant.Instruct.CURE_PATIENT,
+    constant.InstructType.WORK,
+    _("诊疗病人"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_CLINIC,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_cure_patient():
+    """处理诊疗病人指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
+    character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
+    update.game_update_flow(30)
 
 
 #以下为猥亵#

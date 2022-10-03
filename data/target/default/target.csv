@@ -34,6 +34,8 @@ ai的目标,,,
 45,50,sleep_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 46,21,ai_trained|not_in_training_room,距离上次训练已经超过2天，且当前不在训练室，则移动至训练室
 47,47,ai_trained|in_training_room,距离上次训练已经超过2天，且当前在训练室，则训练
+48,22,not_assistant|work_time|not_in_clinic|is_medical,非助理的医疗干员在工作时间如果不在门诊，则去门诊
+49,301,not_assistant|work_time|in_clinic|is_medical|patient_wait,非助理的医疗干员在工作时间如果在门诊，而且有正在排队的患者，则接诊
 
 60,40,place_is_h|not_in_dor,目睹玩家和其他角色H，然后逃回自己宿舍
 

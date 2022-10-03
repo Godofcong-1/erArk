@@ -60,6 +60,13 @@ def init_character_behavior():
             # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         update_cafeteria()
+        # 结算非角色数据的新一天刷新
+        if character.judge_character_time_over_24(0):
+            # 刷新新病人数量，已治愈病人数量和治疗收入归零
+            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
+            cache.base_resouce.patient_cured = 0
+            cache.base_resouce.cure_income = 0
+            cache.base_resouce.all_income = 0
     cache.over_behavior_character = set()
 
 

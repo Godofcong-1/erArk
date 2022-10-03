@@ -67,6 +67,8 @@ class CharacterStatus:
     """ 指派助理 """
     STATUS_TRAINING = 205
     """ 战斗训练 """
+    STATUS_CURE_PATIENT = 207
+    """ 诊疗病人 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -358,6 +360,8 @@ class Behavior:
     """ 指派助理 """
     TRAINING = 205
     """ 战斗训练 """
+    CURE_PATIENT = 207
+    """ 诊疗病人 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -615,6 +619,8 @@ class StateMachine:
     """ 移动至夕照区音乐室 """
     MOVE_TO_TRAINING_ROOM = 21
     """ 根据职业自动移动至对应训练室 """
+    MOVE_TO_CLINIC = 22
+    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -651,6 +657,10 @@ class StateMachine:
     """ 唱歌给房间里随机角色听 """
     PLAY_INSTRUMENT_RAND_CHARACTER = 203
     """ 演奏乐器给房间里随机角色听 """
+
+    WORK_CURE_PATIENT = 301
+    """ 工作：诊疗病人 """
+
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -749,6 +759,8 @@ class Panel:
     """ 脱衣服面板 """
     BUILDING = 15
     """ 基建面板 """
+    DEPARTMENT = 16
+    """ 部门运作情况面板 """
 
 
 class Premise:
@@ -782,6 +794,15 @@ class Premise:
     """ 当前为H模式 """
     NOT_H = "not_h"
     """ 当前不是H模式 """
+
+    IS_ASSISTANT = "is_assistant"
+    """ 自己是当前的助理干员 """
+    NOT_ASSISTANT = "not_assistant"
+    """ 自己不是当前的助理干员 """
+    TARGET_IS_ASSISTANT = "t_is_assistant"
+    """ 交互对象是当前的助理干员 """
+    TARGET_NOT_ASSISTANT = "t_not_assistant"
+    """ 交互对象不是当前的助理干员 """
     IS_FOLLOW = "is_follow"
     """ 当前正智能跟随玩家 """
     NOT_FOLLOW = "not_follow"
@@ -943,6 +964,10 @@ class Premise:
     """ 在射击房中 """
     IN_BUILDING_ROOM = "in_building_room"
     """ 在基建部中 """
+    IN_CLINIC = "in_clinic"
+    """ 在门诊室中（含急诊室） """
+    NOT_IN_CLINIC = "not_in_clinic"
+    """ 不在门诊室中（含急诊室） """
     IN_FUNCTIONAL_ROOM = "in_functional_room"
     """ 在功能性地点中 """
 
@@ -967,6 +992,8 @@ class Premise:
     """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
+    WORK_TIME = "work_time"
+    """ 工作时间（早上9:00~下午4:59） """
 
     COLLECT_BONUS_103 = "c_bonus_103"
     """ 收藏奖励_103_解锁索要内裤 """
@@ -1114,6 +1141,12 @@ class Premise:
     """ 交互对象非A处女 """
     TARGET_HAVE_A_VIRGIN = "a_virgin_1"
     """ 交互对象是A处女 """
+
+    IS_MEDICAL = "is_medical"
+    """ 自己的职业为医疗 """
+
+    PATIENT_WAIT = "patient_wait"
+    """ 有患者正等待就诊 """
 
     TARGET_CHEST_IS_CLIFF = "breast_0"
     """ 交互对象胸部大小是绝壁 """
@@ -1766,22 +1799,10 @@ class BehaviorEffect:
     TARGET_DIURETICS_ON = 96
     """ 交互对象获得利尿剂状态 """
 
-    TALK_ADD_ADJUST = 100
-    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
-    COFFEE_ADD_ADJUST = 101
-    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
-    TARGET_COFFEE_ADD_ADJUST = 104
-    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
     EAT_FOOD = 102
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
-    KONWLEDGE_ADD_PINK_MONEY = 105
-    """ 根据自己（再加上交互对象的）学识获得少量粉色凭证 """
-    SING_ADD_ADJUST = 106
-    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
-    PLAY_INSTRUMENT_ADD_ADJUST = 107
-    """ （演奏乐器用）根据交互对象的音乐技能进行好感度、信赖、好意调整 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -1955,6 +1976,10 @@ class BehaviorEffect:
     """ 交互对象增加1音乐经验 """
     TARGET_ADD_1_GiveBirth_EXPERIENCE = 286
     """ 交互对象增加1妊娠经验 """
+    TARGET_ADD_1_Command_EXPERIENCE = 288
+    """ 交互对象增加1指挥经验 """
+    TARGET_ADD_1_Cure_EXPERIENCE = 289
+    """ 交互对象增加1医疗经验 """
     TARGET_ADD_1_ForwardClimax_EXPERIENCE = 300
     """ 交互对象增加1正面位绝顶经验 """
     TARGET_ADD_1_BackClimax_EXPERIENCE = 301
@@ -1997,10 +2022,27 @@ class BehaviorEffect:
     """ 增加1妊娠经验 """
     ADD_1_Insert_EXPERIENCE = 320
     """ 增加1插入经验 """
-    ADD_1_Insert_COMMAND = 321
+    ADD_1_Command_EXPERIENCE = 321
     """ 增加1指挥经验 """
+    ADD_1_Cure_EXPERIENCE = 322
+    """ 增加1医疗经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 自己（和对方一起）增加1学识经验 """
+
+    TALK_ADD_ADJUST = 501
+    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
+    COFFEE_ADD_ADJUST = 502
+    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
+    TARGET_COFFEE_ADD_ADJUST = 503
+    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
+    SING_ADD_ADJUST = 504
+    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
+    PLAY_INSTRUMENT_ADD_ADJUST = 505
+    """ （演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整 """
+    KONWLEDGE_ADD_PINK_MONEY = 506
+    """ （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
+    CURE_PATIENT_ADD_ADJUST = 507
+    """ （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
 
     CHANGE_UNDERWERA = 601
     """ 换新的内衣（胸部+内裤） """
@@ -2426,6 +2468,12 @@ class Instruct:
     """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
+    CURE_PATIENT = 0
+    """ 诊疗病人 """
+    SEE_COLLECTION = 0
+    """ 查看收藏品 """
+    SEE_DEPARTMENT = 0
+    """ 查看部门运作情况 """
 
     #猥亵#
     TOUCH_HEAD = 0
@@ -2690,8 +2738,6 @@ class Instruct:
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0
     """ 关闭debug模式 """
-    SEE_COLLECTION = 0
-    """ 查看收藏品 """
 
 
 i = 0
