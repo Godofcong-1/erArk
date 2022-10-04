@@ -300,7 +300,7 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     if time_judge:
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
         talk.handle_talk(character_id)
-        if now_panel != None:
+        if now_panel != None and character_id == 0:
             now_panel.draw()
             #进行一次暂停以便玩家看输出信息
             wait_draw = draw.LineFeedWaitDraw()
