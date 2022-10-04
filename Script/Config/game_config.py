@@ -151,8 +151,8 @@ config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
 """ 角色行为对应口上集合 """
-config_talk_premise: Dict[int, config_def.TalkPremise] = {}
-""" 口上前提配置 """
+# config_talk_premise: Dict[int, config_def.TalkPremise] = {}
+# """ 口上前提配置 """
 config_talk_premise_data: Dict[int, Set] = {}
 """ 口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
@@ -663,25 +663,26 @@ def load_talk():
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
-        # config_talk_premise_data.setdefault(now_tem.cid, set())
-        # if "|" not in now_tem.premise:
-        #     config_talk_premise_data[now_tem.cid].add(int(now_tem.premise))
-        # else:
-        #     premise_list = now_tem.premise.split('|')
-        #     for premise in premise_list:
-        #         config_talk_premise_data[now_tem.cid].add(int(premise))
+        config_talk_premise_data.setdefault(now_tem.cid, set())
+        # print(f"debug now_tem.context = {now_tem.context}")
+        if "|" not in now_tem.premise:
+            config_talk_premise_data[now_tem.cid].add(now_tem.premise)
+        else:
+            premise_list = now_tem.premise.split('|')
+            for premise in premise_list:
+                config_talk_premise_data[now_tem.cid].add(premise)
 
 
-def load_talk_premise():
-    """载入口上前提配置"""
-    now_data = config_data["TalkPremise"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.TalkPremise()
-        now_tem.__dict__ = tem_data
-        config_talk_premise[now_tem.cid] = now_tem
-        config_talk_premise_data.setdefault(now_tem.talk_id, set())
-        config_talk_premise_data[now_tem.talk_id].add(now_tem.premise)
+# def load_talk_premise():
+#     """载入口上前提配置"""
+#     now_data = config_data["TalkPremise"]
+#     translate_data(now_data)
+#     for tem_data in now_data["data"]:
+#         now_tem = config_def.TalkPremise()
+#         now_tem.__dict__ = tem_data
+#         config_talk_premise[now_tem.cid] = now_tem
+#         config_talk_premise_data.setdefault(now_tem.talk_id, set())
+#         config_talk_premise_data[now_tem.talk_id].add(now_tem.premise)
 
 
 def load_target():
@@ -769,7 +770,6 @@ def init():
     load_status()
     load_sun_time()
     load_talk()
-    load_talk_premise()
     load_talent_type()
     load_talent_type_data()
     load_talent_up_data()
