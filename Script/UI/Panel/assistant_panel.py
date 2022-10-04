@@ -268,7 +268,7 @@ class SeeAssistantButtonList:
                 line_feed.draw()
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn == back_draw.return_text:
+                if yrn in return_list:
                     break
 
         # 1号指令,助理常时跟随
@@ -368,21 +368,15 @@ class SeeNPCButtonList:
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
 
-        character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[NPC_id]
         button_text = f"[{target_data.adv}：{target_data.name}]"
 
         # 按钮绘制
 
-        if self.NPC_id == character_data.assistant_character_id:
-            name_draw = draw.CenterButton(
-                button_text, self.button_return, self.width, cmd_func=self.button_0
-            )
-        else:
-            name_draw = draw.CenterButton(
-                button_text, self.button_return, self.width, cmd_func=self.button_0
-            )
-        self.button_return = NPC_id
+        name_draw = draw.CenterButton(
+            button_text, self.button_return, self.width, cmd_func=self.button_0
+        )
+        # self.button_return = NPC_id
         self.now_draw = name_draw
         self.draw_text = button_text
 
@@ -393,7 +387,33 @@ class SeeNPCButtonList:
     def button_0(self):
         """选项1"""
         character_data: game_type.Character = cache.character_data[0]
-        character_data.assistant_character_id = self.NPC_id
+
+        # 去掉旧助理的跟随状态
+        old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+        old_assistant_data.assistant_state.always_follow = 0
+
+        # 判断旧助理是否是玩家自己
+        pl_flag = False
+        if character_data.assistant_character_id == 0:
+            pl_flag = True
+
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        info_draw = draw.WaitDraw()
+        info_text = ""
+
+        if self.NPC_id == character_data.assistant_character_id:
+            character_data.assistant_character_id = 0
+        else:
+            character_data.assistant_character_id = self.NPC_id
+            new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+            new_assistant_data.assistant_state.always_follow = 1
+            info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
+        if not pl_flag:
+            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，她的跟随状态也一并取消\n\n"
+        info_draw.text = info_text
+        info_draw.width = self.width
+        info_draw.draw()
 
     def draw(self):
         """绘制对象"""

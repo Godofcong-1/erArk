@@ -2426,7 +2426,7 @@ class Instruct:
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOW = 0
-    """ 请求同行 """
+    """ 邀请同行 """
     END_FOLLOW = 0
     """ 结束同行 """
     APOLOGIZE = 0

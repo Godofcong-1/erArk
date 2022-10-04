@@ -670,13 +670,13 @@ def handle_make_food():
 @add_instruct(
     constant.Instruct.FOLLOW,
     constant.InstructType.DAILY,
-    _("请求同行"),
+    _("邀请同行"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
     constant.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
-    """处理请求同行指令"""
+    """处理邀请同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
@@ -687,6 +687,20 @@ def handle_followed():
     # print("进入同行模式")
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
     update.game_update_flow(5)
+
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n{target_data.name}进入跟随模式\n"
+
+    # 去掉其他NPC的跟随
+    if not cache.debug_mode:
+        for npc_id in cache.character_data:
+            if npc_id not in {0,character_data.target_character_id,character_data.assistant_character_id}:
+                other_character_data = cache.character_data[npc_id]
+                if other_character_data.is_follow:
+                    other_character_data.is_follow = 0
+                    now_draw.text += f"当前最大跟随数量：1人（助理除外），{other_character_data.name}退出跟随模式\n"
+    now_draw.width = 1
+    now_draw.draw()
 
 @add_instruct(
     constant.Instruct.END_FOLLOW,
