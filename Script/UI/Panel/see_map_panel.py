@@ -77,13 +77,21 @@ class SeeMapPanel:
                         scene_path = map_handle.get_scene_path_for_map_scene_id(
                             self.now_map, draw_text.text
                         )
-                        now_draw = draw.Button(
-                            draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
-                        )
+                        # print(f"debug map_path_str = {map_path_str}，draw_text.text = {draw_text.text}")
+                        # 如果当前地点是开放的，则正常绘制，否则绘制灰色按钮
+                        if map_handle.judge_scene_name_open(draw_text.text):
+                            now_draw = draw.Button(
+                                draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
+                            )
+                        else:
+                            now_draw = draw.Button(
+                                draw_text.text, draw_text.text,normal_style="un_open_mapbutton", cmd_func=self.move_now, args=(scene_path,)
+                            )
                         now_draw.width = self.width
                         now_draw.draw()
                         return_list.append(now_draw.return_text)
                     else:
+                        # 如果是玩家所在的地点，则高亮显示
                         now_draw = draw.NormalDraw()
                         if draw_text.text == character_scene_id:
                             now_draw.style = "nowmap"

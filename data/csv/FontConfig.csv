@@ -30,3 +30,4 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 24,moon,#d6ecf0,,,,,,,,月相
 25,emoji,#c8c8c8,,emoji 常规,,,,,,表情
 26,semen,#fffacd,,,,,,,,精液
+27,un_open_mapbutton,#666666,,,,,,,,未开放地点
