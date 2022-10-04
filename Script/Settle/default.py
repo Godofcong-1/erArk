@@ -2754,7 +2754,7 @@ def handle_sing_add_adjust(
                 if good_flag:
                     now_add_lust *= adjust
                 else:
-                    now_add_lust *= (adjust - 1)
+                    now_add_lust *= 10
                 target_data.status_data[i] += now_add_lust
                 change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
                 target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -2851,7 +2851,7 @@ def handle_play_instrument_add_adjust(
                 if good_flag:
                     now_add_lust *= adjust
                 else:
-                    now_add_lust *= (adjust - 1)
+                    now_add_lust *= 10
                 target_data.status_data[i] += now_add_lust
                 change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
                 target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
