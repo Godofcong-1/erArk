@@ -516,7 +516,8 @@ def handle_eat_food(
         # if character_data.food_bag[food.uid]:
         # print(f"debug food.uid = {food.uid}")
         # print(f"debug character_data.food_bag = {character_data.food_bag}")
-        del character_data.food_bag[food.uid]
+        if food.uid in character_data.food_bag:
+            del character_data.food_bag[food.uid]
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MAKE_FOOD)

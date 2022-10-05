@@ -202,13 +202,10 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
-        #如果上个AI行动不是等待5分钟，也不是移动指令，则将等待flag设为1
-        # 不会被打断的指令列表
-        # safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
-        # safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
-        if state_machine_id != 0 and not (state_machine_id >= 10 and state_machine_id <= 39):
+        #如果上个AI行动是普通交互指令，则将等待flag设为1
+        if state_machine_id >= 100:
             character_data.wait_flag = 1
-        #     print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+            # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
@@ -300,13 +297,14 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     if time_judge:
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
         talk.handle_talk(character_id)
-        if now_panel != None and character_id == 0:
+        if now_panel != None:
             now_panel.draw()
             #进行一次暂停以便玩家看输出信息
-            wait_draw = draw.LineFeedWaitDraw()
-            wait_draw.text = "\n"
-            wait_draw.width = normal_config.config_normal.text_width
-            wait_draw.draw()
+            if character_id == 0:
+                wait_draw = draw.LineFeedWaitDraw()
+                wait_draw.text = "\n"
+                wait_draw.width = normal_config.config_normal.text_width
+                wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
     if time_judge == 1:

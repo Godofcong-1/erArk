@@ -594,7 +594,7 @@ class StateMachine:
     WAIT_10_MIN = 1
     """ 原地待机10分钟 """
     WAIT_30_MIN = 2
-    """ 原地待机30分钟 """
+    """ 原地待机30分钟，并取消跟随状态 """
     FOLLOW = 6
     """ 跟随玩家 """
     MOVE_TO_RAND_SCENE = 10
@@ -804,9 +804,15 @@ class Premise:
     TARGET_NOT_ASSISTANT = "t_not_assistant"
     """ 交互对象不是当前的助理干员 """
     IS_FOLLOW = "is_follow"
-    """ 当前正智能跟随玩家 """
+    """ 当前正跟随玩家 """
     NOT_FOLLOW = "not_follow"
+    """ 当前没跟随玩家 """
+    IS_FOLLOW_1 = "is_follow_1"
+    """ 当前正智能跟随玩家 """
+    NOT_FOLLOW_1 = "not_follow_1"
     """ 当前没智能跟随玩家 """
+    IS_FOLLOW_3 = "is_follow_3"
+    """ 当前正前往博士办公室 """
     TARGET_IS_FOLLOW = "t_is_follow"
     """ 交互对象当前正跟随玩家 """
     TARGET_NOT_FOLLOW = "t_not_follow"
@@ -934,6 +940,10 @@ class Premise:
     """ 不在食物商店（取餐区） """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
+    NOT_IN_DR_OFFICE = "not_in_dr_off"
+    """ 不在博士办公室 """
+    IN_DR_OFFICE_OR_DEBUG = "in_dr_off_or_debug"
+    """ 在博士办公室或处于debug模式 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
@@ -974,7 +984,7 @@ class Premise:
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
     AI_WAIT = "ai_wait"
-    """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
+    """ NPC需要进行一次5分钟的等待（wait_flag = 1） """
     HAVE_TRAINED = "ai_trained"
     """ NPC距离上次战斗训练已经超过两天了 """
 
@@ -2472,6 +2482,8 @@ class Instruct:
     """ 诊疗病人 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
+    FIND_AND_CALL_NPC = 0
+    """ 查找与召集干员 """
     SEE_DEPARTMENT = 0
     """ 查看部门运作情况 """
 
@@ -2730,8 +2742,6 @@ class Instruct:
     """ 属性升级 """
     OWNER_ABL_UP = 0
     """ 自身属性升级 """
-    FIND_AND_CALL_NPC = 0
-    """ 查找与召集干员 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
     DEBUG_MODE_ON = 0

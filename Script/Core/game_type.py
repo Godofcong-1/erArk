@@ -740,7 +740,7 @@ class Character:
         self.is_h : bool = 0
         """ 在H模式中 """
         self.is_follow : int = 0
-        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随] """
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
         self.orgasm_level: Dict[int,int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}

@@ -577,6 +577,42 @@ def handle_in_dr_office(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.NOT_IN_DR_OFFICE)
+def handle_not_in_dr_office(character_id: int) -> int:
+    """
+    校验角色是否不在博士办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Dr_office" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.IN_DR_OFFICE_OR_DEBUG)
+def handle_in_dr_office_or_debug(character_id: int) -> int:
+    """
+    校验角色是否在博士办公室中或处于debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Dr_office" in now_scene_data.scene_tag or cache.debug_mode:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.IN_DORMITORY)
 def handle_in_dormitory(character_id: int) -> int:
     """
@@ -6543,6 +6579,32 @@ def handle_target_not_assistant(character_id: int) -> int:
 @add_premise(constant.Premise.IS_FOLLOW)
 def handle_is_follow(character_id: int) -> int:
     """
+    校验正在跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.is_follow
+
+
+@add_premise(constant.Premise.NOT_FOLLOW)
+def handle_not_follow(character_id: int) -> int:
+    """
+    校验是否没有跟随玩家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.is_follow
+
+
+@add_premise(constant.Premise.IS_FOLLOW_1)
+def handle_is_follow_1(character_id: int) -> int:
+    """
     校验是否正智能跟随玩家
     Keyword arguments:
     character_id -- 角色id
@@ -6555,8 +6617,8 @@ def handle_is_follow(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant.Premise.NOT_FOLLOW)
-def handle_not_follow(character_id: int) -> int:
+@add_premise(constant.Premise.NOT_FOLLOW_1)
+def handle_not_follow_1(character_id: int) -> int:
     """
     校验是否没有智能跟随玩家
     Keyword arguments:
@@ -6566,6 +6628,21 @@ def handle_not_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return not character_data.is_follow == 1
+
+
+@add_premise(constant.Premise.IS_FOLLOW_3)
+def handle_is_follow_3(character_id: int) -> int:
+    """
+    校验是否当前正前往博士办公室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.is_follow == 3:
+        return 100
+    return 0
 
 
 @add_premise(constant.Premise.TARGET_IS_FOLLOW)

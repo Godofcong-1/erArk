@@ -207,7 +207,10 @@ def handle_owner_abl_up():
     now_draw.draw()
 
 
-@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.SYSTEM, _("查找与召集干员"), {})
+@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.WORK, _("查找与召集干员"), 
+{
+    constant.Premise.IN_DR_OFFICE_OR_DEBUG,
+})
 def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
     cache.now_panel_id = constant.Panel.FIND_CALL

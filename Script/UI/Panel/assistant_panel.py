@@ -135,11 +135,11 @@ class SeeAssistantButtonList:
                 if target_data.assistant_state.always_follow == 0:
                     button_text += f"    否"
                 elif target_data.assistant_state.always_follow == 1:
-                    button_text += f"    智能跟随，在非工作时间(饭点/上厕所/休息时间等)会暂离"
+                    button_text += f"    智能跟随（在生理需求时，如吃饭/上厕所/需要休息等，会暂离，完成后再回来）"
                 elif target_data.assistant_state.always_follow == 2:
-                    button_text += f"    强制跟随"
+                    button_text += f"    强制跟随（测试用，会影响一部分游戏机能）"
                 elif target_data.assistant_state.always_follow == 3:
-                    button_text += f"    在博士办公室待机"
+                    button_text += f"    在博士办公室一趟（抵达后会如果博士不在，则等待半小时）"
 
             # 2号指令,仅由助理辅助工作系指令
             elif self.button_id == 2:
@@ -275,14 +275,10 @@ class SeeAssistantButtonList:
         elif self.button_id == 1:
             if target_data.assistant_state.always_follow == 3:
                 target_data.assistant_state.always_follow = 0
-                target_data.is_follow = 0
             else:
                 target_data.assistant_state.always_follow += 1
-                # 同时结算跟随状态
-                if target_data.assistant_state.always_follow == 1 or target_data.assistant_state.always_follow == 2:
-                    target_data.is_follow = target_data.assistant_state.always_follow
-                else:
-                    target_data.is_follow = 0
+            # 同时结算跟随状态
+            target_data.is_follow = target_data.assistant_state.always_follow
 
         # 2号指令,仅由助理辅助工作系指令
         elif self.button_id == 2:

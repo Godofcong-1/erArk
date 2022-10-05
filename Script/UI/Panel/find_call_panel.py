@@ -49,7 +49,9 @@ class Find_call_Panel:
             else:
                 info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)\n\n"
             info_draw.width = self.width
-            info_draw.draw()
+            # 暂不输出跟随角色信息，等加了该功能后再输出
+            # info_draw.draw()
+            line_feed.draw()
             #读取人物的位置情报与跟随情报#
             for npc_id in cache.character_data:
                 if npc_id != 0:
@@ -61,11 +63,18 @@ class Find_call_Panel:
                     if scene_position_str[-1] == "0":
                         scene_position_str = scene_position_str[:-2] + "入口"
                     # scene_name = cache.scene_data[scene_position_str].scene_name
-                    npc_list[npc_id-1] = f"{name}({id}):{scene_position_str}"
+                    npc_list[npc_id-1] = f"{name}({id}):{scene_position_str}   "
+
+                    # 输出跟随信息
                     if character_data.is_follow == 1:
-                        npc_list[npc_id-1] += "   跟随中"
+                        npc_list[npc_id-1] += "智能跟随中"
+                    elif character_data.is_follow == 2:
+                        npc_list[npc_id-1] += "强制跟随中"
+                    elif character_data.is_follow == 3:
+                        npc_list[npc_id-1] += "前往博士办公室中"
                     else:
-                        npc_list[npc_id-1] += "   未跟随"
+                        status_text = game_config.config_status[character_data.state].name
+                        npc_list[npc_id-1] += f"正在：{status_text}"
                     # print("npc_list[npc_id-1] :",npc_list[npc_id-1])
             self.handle_panel.text_list = npc_list
             self.handle_panel.update()
@@ -150,18 +159,27 @@ class FindDraw:
         character_id = self.button_id + 1
         character_data: game_type.Character = cache.character_data[character_id]
         if character_data.is_follow == 0:
-            character_data.is_follow = 1
-            now_draw = draw.NormalDraw()
-            now_draw.text = character_data.name + "进入跟随模式\n"
+            if cache.debug_mode:
+                character_data.is_follow = 1
+                now_draw = draw.NormalDraw()
+                now_draw.text = character_data.name + "进入跟随模式\n"
+            else:
+                character_data.is_follow = 3
+                now_draw = draw.NormalDraw()
+                now_draw.text = character_data.name + "正在前往博士办公室\n"
 
             # 去掉其他NPC的跟随
-            if not cache.debug_mode:
-                for npc_id in cache.character_data:
-                    if npc_id != 0 and npc_id != character_id:
-                        other_character_data = cache.character_data[npc_id]
-                        if other_character_data.is_follow:
-                            other_character_data.is_follow = 0
-                            now_draw.text += other_character_data.name + "退出跟随模式\n"
+            # if not cache.debug_mode:
+            #     for npc_id in cache.character_data:
+            #         if npc_id != 0 and npc_id != character_id:
+            #             other_character_data = cache.character_data[npc_id]
+            #             if other_character_data.is_follow:
+            #                 other_character_data.is_follow = 0
+            #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
+        elif character_data.is_follow == 1 and cache.debug_mode:
+            character_data.is_follow = 3
+            now_draw = draw.NormalDraw()
+            now_draw.text = character_data.name + "正在前往博士办公室\n"
 
         else:
             character_data.is_follow = 0

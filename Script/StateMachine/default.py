@@ -44,7 +44,7 @@ def character_wait_10_min(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_30_MIN)
 def character_wait_30_min(character_id: int):
     """
-    等待30分钟
+    等待30分钟，并取消跟随状态
     Keyword arguments:
     character_id -- 角色id
     """
@@ -52,6 +52,7 @@ def character_wait_30_min(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.is_follow = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
