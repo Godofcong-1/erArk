@@ -68,9 +68,9 @@ def confirm_game_info_panel():
     """确认游戏说明面板"""
     now_line = draw.LineDraw("-", width)
     now_line.draw()
+    info_text = f"\n\n  免责声明：1.本游戏仅为开发者本人自娱自乐及代码练习所用，开发它是因为我个人趣味低下，思想低俗所至致，无任何经济收益和利益驱动。\n\n\n            2.本游戏含有R18内容和浓重的era要素，包括且不限于软硬色情、性剥削、轻度SM、超自然等。\n\n\n            3.本游戏为完全纯爱，不含有任何NTR和R18G，且在设计理念和实际内容上缝合了大量era游戏与其他作品。\n\n\n            4.本游戏仅适合开发者本人游玩，不适合普通人游玩，尤其禁止未成年人游玩，非开发者以外的任何人游玩该游戏出现的任何意外都和开发者本人无关。\n\n\n            5.本游戏禁止任何人在任何渠道对游戏本体或选取部分内容进行传播、交流、展示，公开和私底下都不行，禁止任何人用该游戏通过任何方式进行盈利。\n\n\n            6.虽然你大概率也不会听，但我个人建议看到这条信息的你现在关掉窗口并立刻删除该游戏。\n\n\n            7.总之只要不删我就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
+    askfor_list = [_("我读完并理解了以上7条，和你没关系，我对自己负责，我不删，我要玩")]
     askfor_panel = panel.OneMessageAndSingleColumnButton()
-    info_text = f"\n\n\n  免责声明：本游戏仅为开发者本人自娱自乐及代码练习所用，开发它是因为我个人趣味低下，思想低俗所至致，无任何经济收益和利益驱动。\n\n\n            本游戏禁止任何人在任何渠道进行传播，公开和私底下都不行，禁止任何人以该游戏通过任何方式进行盈利。\n\n\n            虽然我个人建议看到这条信息的你现在关掉窗口并立刻删除该游戏，但我估计你大概率也不会听。\n\n\n            总之只要不删我就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
-    askfor_list = [_("我理解了，但我就是不删，我就是要玩")]
     askfor_panel.set(askfor_list, info_text, 0)
     while 1:
         askfor_panel.draw()
@@ -350,52 +350,37 @@ class Character_Bonus:
         now_draw.draw_list.append(info_talent_draw)
         now_draw.width += len(info_talent_draw.text)
 
+        talent_data_304 = game_config.config_talent[304]
         if character_data.talent[304]:
-            button_text = f"   ●博士信息素(10)：增加指令实行值"
-            button_304_draw = draw.LeftButton(
-                _(button_text),
-                _('博士信息素'),
-                self.width,
-                cmd_func=self.get_talent,
-                args=304)
-            self.return_list.append(button_304_draw.return_text)
-            button_304_draw.draw()
+            button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
             self.bonus_now -= 10
         else:
-            button_text = f"   ○博士信息素(10)：增加指令实行值"
-            button_304_draw = draw.LeftButton(
-                _(button_text),
-                _('博士信息素'),
-                self.width,
-                cmd_func=self.get_talent,
-                args=304)
-            self.return_list.append(button_304_draw.return_text)
-            button_304_draw.draw()
+            button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
+        button_304_draw = draw.LeftButton(
+            _(button_text),
+            _(talent_data_304.name),
+            self.width,
+            cmd_func=self.get_talent,
+            args=304)
+        self.return_list.append(button_304_draw.return_text)
         now_draw.draw_list.append(button_304_draw)
         now_draw.width += len(button_304_draw.text)
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
+        talent_data_307 = game_config.config_talent[307]
         if character_data.talent[307]:
-            button_text = f"   ●内衣透视(10)：可以看到对方当前穿的内衣"
-            button_307_draw = draw.LeftButton(
-                _(button_text),
-                _('内衣透视'),
-                self.width,
-                cmd_func=self.get_talent,
-                args=307)
-            self.return_list.append(button_307_draw.return_text)
-            button_307_draw.draw()
+            button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
             self.bonus_now -= 10
         else:
-            button_text = f"   ○内衣透视(10)：可以看到对方当前穿的内衣"
-            button_307_draw = draw.LeftButton(
-                _(button_text),
-                _('内衣透视'),
-                self.width,
-                cmd_func=self.get_talent,
-                args=307)
-            self.return_list.append(button_307_draw.return_text)
+            button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
+        button_307_draw = draw.LeftButton(
+            _(button_text),
+            _(talent_data_307.name),
+            self.width,
+            cmd_func=self.get_talent,
+            args=307)
+        self.return_list.append(button_307_draw.return_text)
         now_draw.draw_list.append(button_307_draw)
         now_draw.width += len(button_307_draw.text)
         now_draw.draw_list.append(line_feed_draw)
@@ -403,24 +388,16 @@ class Character_Bonus:
 
         if cache.base_resouce.money:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和10粉色凭证"
-            button_money_draw = draw.LeftButton(
-                _(button_text),
-                _('启动资金'),
-                self.width,
-                cmd_func=self.get_money,
-                )
-            self.return_list.append(button_307_draw.return_text)
-            button_307_draw.draw()
             self.bonus_now -= 5
         else:
             button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和10粉色凭证"
-            button_money_draw = draw.LeftButton(
-                _(button_text),
-                _('启动资金'),
-                self.width,
-                cmd_func=self.get_money,
-                )
-            self.return_list.append(button_money_draw.return_text)
+        button_money_draw = draw.LeftButton(
+            _(button_text),
+            _('启动资金'),
+            self.width,
+            cmd_func=self.get_money,
+            )
+        self.return_list.append(button_money_draw.return_text)
         now_draw.draw_list.append(button_money_draw)
         now_draw.width += len(button_money_draw.text)
         now_draw.draw_list.append(line_feed_draw)
@@ -429,26 +406,16 @@ class Character_Bonus:
         if character_data.assistant_character_id:
             target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             button_text = f"   ●助理干员(5)：选择{target_data.name}成为助理干员，初始拥有1000点好感和50%信赖度"
-            button_assistant_draw = draw.LeftButton(
-                _(button_text),
-                _('助理干员'),
-                self.width,
-                cmd_func=self.get_assistant,
-                )
-            self.return_list.append(button_307_draw.return_text)
-            button_307_draw.draw()
             self.bonus_now -= 5
-            target_data.favorability[0] = 1000
-            target_data.trust = 50
         else:
             button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
-            button_assistant_draw = draw.LeftButton(
-                _(button_text),
-                _('助理干员'),
-                self.width,
-                cmd_func=self.get_assistant,
-                )
-            self.return_list.append(button_assistant_draw.return_text)
+        button_assistant_draw = draw.LeftButton(
+            _(button_text),
+            _('助理干员'),
+            self.width,
+            cmd_func=self.get_assistant,
+            )
+        self.return_list.append(button_assistant_draw.return_text)
         now_draw.draw_list.append(button_assistant_draw)
         now_draw.width += len(button_assistant_draw.text)
         now_draw.draw_list.append(line_feed_draw)
@@ -497,7 +464,7 @@ class Character_Bonus:
             cache.base_resouce.money = 0
             cache.base_resouce.orundum = 0
             cache.base_resouce.pink_certificate = 0
-        elif self.bonus_now >= 10:
+        elif self.bonus_now >= 5:
             cache.base_resouce.money = 50000
             cache.base_resouce.orundum = 6000
             cache.base_resouce.pink_certificate = 10
@@ -511,11 +478,15 @@ class Character_Bonus:
         """获得助理干员"""
         character_data: game_type.Character = cache.character_data[0]
 
+        # 旧助理的好感信赖清零
         if character_data.assistant_character_id:
+            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+            target_data.favorability[0] = 0
+            target_data.trust = 0
             character_data.assistant_character_id = 0
         
         # 这里直接沿用的助理页面的代码
-        elif self.bonus_now >= 10:
+        elif self.bonus_now >= 5:
 
             self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
 
@@ -548,8 +519,13 @@ class Character_Bonus:
                 line_feed_draw.draw()
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn == back_draw.return_text:
+                if yrn in return_list:
                     break
+
+            # 在这里处理好感和信赖的增加
+            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+            target_data.favorability[0] = 1000
+            target_data.trust = 50
 
         else:
             info_last_draw = draw.WaitDraw()
