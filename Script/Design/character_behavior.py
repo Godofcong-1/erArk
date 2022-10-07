@@ -253,6 +253,9 @@ def judge_character_tired_sleep(character_id : int):
         if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
             character_data.is_h = False
             character_data.is_follow = 0
+            pl_character_data: game_type.Character = cache.character_data[0]
+            if character_id == pl_character_data.assistant_character_id:
+                character_data.assistant_state.always_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.width = width
             draw_text = "太累了，决定回房间睡觉\n" if character_data.tired else "太困了，决定回房间睡觉\n"

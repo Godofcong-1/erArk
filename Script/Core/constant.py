@@ -1004,6 +1004,8 @@ class Premise:
     """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
+    SLEEP_GE_75_OR_SLEEP_TIME = "sleep_ge_75_or_sleep_time"
+    """ 困倦条≥75%或到了睡觉的时间 """
     WORK_TIME = "work_time"
     """ 工作时间（早上9:00~下午4:59） """
 
@@ -2433,6 +2435,8 @@ class Instruct:
     """ 进食 """
     REST = 0
     """ 休息 """
+    SLEEP = 0
+    """ 睡觉 """
     BUY_ITEM = 0
     """ 购买道具 """
     BUY_FOOD = 0
@@ -2732,8 +2736,6 @@ class Instruct:
     #系统#
     MOVE = 0
     """ 移动 """
-    SLEEP = 0
-    """ 睡觉 """
     SEE_ATTR = 0
     """ 查看属性 """
     ITEM = 0

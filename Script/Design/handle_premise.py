@@ -120,6 +120,28 @@ def handle_sleep_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.SLEEP_GE_75_OR_SLEEP_TIME)
+def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
+    """
+    困倦条≥75%或到了睡觉的时间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time != None:
+        if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
+            now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
+            return (now_hour-21) *100
+    value = character_data.sleep_point / 160
+    if value > 0.74:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.WORK_TIME)
 def handle_work_time(character_id: int) -> int:
     """

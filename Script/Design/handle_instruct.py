@@ -282,7 +282,7 @@ def handle_see_department():
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant.Premise.IN_DORMITORY,
     constant.Premise.NOT_H,
-    constant.Premise.SLEEP_GE_75}
+    constant.Premise.SLEEP_GE_75_OR_SLEEP_TIME}
     )
 def handle_sleep():
     """处理睡觉指令"""
