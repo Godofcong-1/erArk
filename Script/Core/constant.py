@@ -944,6 +944,8 @@ class Premise:
     """ 不在博士办公室 """
     IN_DR_OFFICE_OR_DEBUG = "in_dr_off_or_debug"
     """ 在博士办公室或处于debug模式 """
+    IN_COMMAND_ROOM = "in_command_room"
+    """ 在指挥室 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"

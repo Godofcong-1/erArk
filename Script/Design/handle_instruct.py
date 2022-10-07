@@ -1140,6 +1140,22 @@ def handle_official_work():
 
 
 @add_instruct(
+    constant.Instruct.BATTLE_COMMAND,
+    constant.InstructType.WORK,
+    _("指挥作战（未实装）"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_COMMAND_ROOM,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_battle_command():
+    """处理指挥作战指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.APPOINTED_ASSISTANT, constant.InstructType.WORK, _("指派助理"),
     {constant.Premise.NOT_H,
     constant.Premise.IN_DR_OFFICE,}
