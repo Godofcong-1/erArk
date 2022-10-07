@@ -3391,7 +3391,7 @@ def handle_low_obscenity_failed_adjust(
         #降好感
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, target_change, now_time
+            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
         )
 
 
@@ -3439,7 +3439,7 @@ def handle_high_obscenity_failed_adjust(
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         minus_favorability *= 5
         character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, target_change, now_time
+            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
         )
         #降信赖
         now_lust_multiple = 10

@@ -327,7 +327,9 @@ class MapSceneNameDraw:
 
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
                 # 如果编号=0的话为出口，单独标注，其他的不标注序号
-                if scene_id == '0':
+                if scene_id == character_scene_id:
+                    continue
+                elif scene_id == '0':
                     now_id_text = f"→0:{load_scene_data.scene_name}"
                 else:
                     now_id_text = f"→{load_scene_data.scene_name}"

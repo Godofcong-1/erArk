@@ -387,10 +387,10 @@ class Character_Bonus:
         now_draw.width += 1
 
         if cache.base_resouce.money:
-            button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和10粉色凭证"
+            button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
         else:
-            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和10粉色凭证"
+            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
         button_money_draw = draw.LeftButton(
             _(button_text),
             _('启动资金'),
@@ -467,7 +467,7 @@ class Character_Bonus:
         elif self.bonus_now >= 5:
             cache.base_resouce.money = 50000
             cache.base_resouce.orundum = 6000
-            cache.base_resouce.pink_certificate = 10
+            cache.base_resouce.pink_certificate = 100
         else:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1
