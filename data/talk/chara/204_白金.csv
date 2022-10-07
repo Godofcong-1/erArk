@@ -61,7 +61,7 @@ str,int,int,str,str
 64,103,204,sys_0|love_4,“想要做什么呢？”{TargetName}红着脸稍微有点局促不安的样子。
 65,103,204,sys_0|love_ge_3|virgin_0|t_desire_ge_5|place_10,“这个地方附近……”\n{TargetName}牵着{Name}的手放在自己的光滑的大腿上\n“不想摸一摸吗？”
 66,103,204,sys_0|love_ge_3|virgin_0|t_desire_ge_7|place_10,“呼唔……在床上的话，可不会让{Name}这样摸一摸就走了”
-67,104,204,sys_0|not_falli |cook_le_1,“没搅拌均匀……”\n{TargetName}皱起眉头，慢慢地啜饮
+67,104,204,sys_0|not_fall|cook_le_1,“没搅拌均匀……”\n{TargetName}皱起眉头，慢慢地啜饮
 68,104,204,sys_0|cook_le_1,“勉强还行吧，至少这次没有结块。”\n{TargetName}摇晃着咖啡杯观察着里面的液体
 69,104,204,sys_0|cook_2,“还不错，勉强算是合格的。”
 70,104,204,sys_0|cook_3,“虽然比起正经的咖啡厅还差不少，不过开始有一点香气了。”\n{TargetName}端起咖啡杯小口地品尝。”

@@ -722,6 +722,8 @@ def handle_end_followed():
     character_data.state = constant.CharacterStatus.STATUS_END_FOLLOW
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.is_follow = 0
+    if character_data.target_character_id == character_data.assistant_character_id:
+        target_data.assistant_state.always_follow = 0
     update.game_update_flow(1)
 
 @add_instruct(
