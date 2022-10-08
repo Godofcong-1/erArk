@@ -3,6 +3,7 @@
 import sys
 import logging
 from types import FunctionType
+import buildconfig
 from Script.Config import normal_config
 from Script.Core import game_type, cache_control
 
