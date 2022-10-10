@@ -58,7 +58,7 @@ def game_start():
     cooking.init_recipes()
     cooking.init_restaurant_data()
     character_position = cache.character_data[0].position
-    map_handle.character_move_scene(["0"], character_position, 0)
+    map_handle.character_move_scene(["0","0"], character_position, 0)
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
     cache.base_resouce = attr_calculation.get_base_zero()

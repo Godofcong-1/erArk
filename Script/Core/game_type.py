@@ -685,7 +685,7 @@ class Character:
         """ 角色当前二段行为状态数据 """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
-        self.position: List[str] = ["0"]
+        self.position: List[str] = ["0","0"]
         """ 角色当前坐标数据 """
         self.officeroom: List[str] = []
         """ 角色所属办公室坐标 """
