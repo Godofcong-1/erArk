@@ -568,21 +568,22 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
                 return 0
     return 1
 
-def judge_scene_name_open(scene_name : str) -> int :
+def judge_scene_name_open(full_scene_str : str) -> int :
     """
     通过地点名判断目标地点是否可以进入
     Keyword arguments:
-    scene_name -- 目地点名字
+    full_scene_str -- 目标场景位置（例：A\B\C）
     Return arguments:
     int -- 是否可以进入
     """
     from Script.Config import game_config
+    now_scene_data = cache.scene_data[full_scene_str]
 
     # print(f"debug scene_name = {scene_name}")
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
     for open_cid in game_config.config_facility_open:
         # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
-        if game_config.config_facility_open[open_cid].name == scene_name:
+        if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
             if cache.base_resouce.facility_open[open_cid]:
                 return 1
             else:
