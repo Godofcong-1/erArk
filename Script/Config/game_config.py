@@ -665,10 +665,10 @@ def load_talk():
 
         config_talk_premise_data.setdefault(now_tem.cid, set())
         # print(f"debug now_tem.context = {now_tem.context}")
-        if "|" not in now_tem.premise:
+        if "&" not in now_tem.premise:
             config_talk_premise_data[now_tem.cid].add(now_tem.premise)
         else:
-            premise_list = now_tem.premise.split('|')
+            premise_list = now_tem.premise.split('&')
             for premise in premise_list:
                 config_talk_premise_data[now_tem.cid].add(premise)
 

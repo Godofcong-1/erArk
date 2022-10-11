@@ -11,52 +11,52 @@ str,int,int,str,str
 7,101,999,sys_4,干员{Name}主动和博士聊天的口上2
 8,101,999,sys_4,干员{Name}主动和博士聊天的口上3
 
-11,101,999,sys_1|sys_5,干员{Name}和另一名干员{TargetName}聊天的口上1
+11,101,999,sys_1&sys_5,干员{Name}和另一名干员{TargetName}聊天的口上1
 
-21,101,999,sys_0|high_5,博士主动和干员{TargetName}聊天的口上，触发权重+5
-22,101,999,sys_0|time_day,博士主动和干员{TargetName}聊天的口上，时间：白天
-23,101,999,sys_0|time_night,博士主动和干员{TargetName}聊天的口上，时间：晚上
-24,101,999,sys_0|eat_time,博士主动和干员{TargetName}聊天的口上，时间：三餐饭点
+21,101,999,sys_0&high_5,博士主动和干员{TargetName}聊天的口上，触发权重+5
+22,101,999,sys_0&time_day,博士主动和干员{TargetName}聊天的口上，时间：白天
+23,101,999,sys_0&time_night,博士主动和干员{TargetName}聊天的口上，时间：晚上
+24,101,999,sys_0&eat_time,博士主动和干员{TargetName}聊天的口上，时间：三餐饭点
 
-31,101,999,sys_0|place_10,博士主动和干员{TargetName}聊天的口上，该地点仅有玩家和该角色
-32,101,999,sys_0|place_11,博士主动和干员{TargetName}聊天的口上，该地点里有除了玩家和该角色之外的人
-32,101,999,sys_0|in_dr_off,博士主动和干员{TargetName}聊天的口上，地点：博士办公室
-34,101,999,sys_0|in_din,博士主动和干员{TargetName}聊天的口上，地点：食堂
-35,101,999,sys_0|in_training_room,博士主动和干员{TargetName}聊天的口上，地点：训练室（包括木桩房和射击房）
-36,101,999,sys_0|in_clinic,博士主动和干员{TargetName}聊天的口上，地点：门诊室（含急诊室）
+31,101,999,sys_0&place_10,博士主动和干员{TargetName}聊天的口上，该地点仅有玩家和该角色
+32,101,999,sys_0&place_11,博士主动和干员{TargetName}聊天的口上，该地点里有除了玩家和该角色之外的人
+32,101,999,sys_0&in_dr_off,博士主动和干员{TargetName}聊天的口上，地点：博士办公室
+34,101,999,sys_0&in_din,博士主动和干员{TargetName}聊天的口上，地点：食堂
+35,101,999,sys_0&in_training_room,博士主动和干员{TargetName}聊天的口上，地点：训练室（包括木桩房和射击房）
+36,101,999,sys_0&in_clinic,博士主动和干员{TargetName}聊天的口上，地点：门诊室（含急诊室）
 
-41,101,999,sys_0|t_is_follow,博士主动和干员{TargetName}聊天的口上，对方当前正跟随玩家
-42,101,999,sys_0|t_is_assistant,博士主动和干员{TargetName}聊天的口上，对方是当前的助理干员
-43,101,999,sys_0|hp_low,博士主动和干员{TargetName}聊天的口上，博士体力低于30%
-44,101,999,sys_0|t_hp_low,博士主动和干员{TargetName}聊天的口上，对方体力低于30%
-45,101,999,sys_0|good_mood,博士主动和干员{TargetName}聊天的口上，对方心情愉快
-46,101,999,sys_0|bad_or_angry_mood,博士主动和干员{TargetName}聊天的口上，对方心情不好或愤怒
-47,101,999,sys_0|t_sleep_ge_75,博士主动和干员{TargetName}聊天的口上，对方困倦条≥75%，部分指令受限
-48,101,999,sys_0|t_sleep_ge_90,博士主动和干员{TargetName}聊天的口上，对方困倦条≥90%，必须回去睡觉
-49,101,999,sys_0|t_urinate_ge_80,博士主动和干员{TargetName}聊天的口上，对方尿意条≥80%，需要排尿
-50,101,999,sys_0|t_hunger_ge_80,博士主动和干员{TargetName}聊天的口上，对方饥饿值≥80%，需要吃饭
+41,101,999,sys_0&t_is_follow,博士主动和干员{TargetName}聊天的口上，对方当前正跟随玩家
+42,101,999,sys_0&t_is_assistant,博士主动和干员{TargetName}聊天的口上，对方是当前的助理干员
+43,101,999,sys_0&hp_low,博士主动和干员{TargetName}聊天的口上，博士体力低于30%
+44,101,999,sys_0&t_hp_low,博士主动和干员{TargetName}聊天的口上，对方体力低于30%
+45,101,999,sys_0&good_mood,博士主动和干员{TargetName}聊天的口上，对方心情愉快
+46,101,999,sys_0&bad_or_angry_mood,博士主动和干员{TargetName}聊天的口上，对方心情不好或愤怒
+47,101,999,sys_0&t_sleep_ge_75,博士主动和干员{TargetName}聊天的口上，对方困倦条≥75%，部分指令受限
+48,101,999,sys_0&t_sleep_ge_90,博士主动和干员{TargetName}聊天的口上，对方困倦条≥90%，必须回去睡觉
+49,101,999,sys_0&t_urinate_ge_80,博士主动和干员{TargetName}聊天的口上，对方尿意条≥80%，需要排尿
+50,101,999,sys_0&t_hunger_ge_80,博士主动和干员{TargetName}聊天的口上，对方饥饿值≥80%，需要吃饭
 
-61,101,999,sys_0|t_intimacy_ge_3,博士主动和干员{TargetName}聊天的口上，对方的亲密>=3
-62,101,999,sys_0|t_desire_ge_5,博士主动和干员{TargetName}聊天的口上，对方的欲望>=5
-63,101,999,sys_0|talk_le_1,博士主动和干员{TargetName}聊天的口上，博士的话术技能<=1
-64,101,999,sys_0|talk_ge_5,博士主动和干员{TargetName}聊天的口上，博士的话术技能>=5
-65,101,999,sys_0|t_talk_le_1,博士主动和干员{TargetName}聊天的口上，对方的话术技能<=1
-66,101,999,sys_0|t_talk_ge_5,博士主动和干员{TargetName}聊天的口上，对方的话术技能>=5
+61,101,999,sys_0&t_intimacy_ge_3,博士主动和干员{TargetName}聊天的口上，对方的亲密>=3
+62,101,999,sys_0&t_desire_ge_5,博士主动和干员{TargetName}聊天的口上，对方的欲望>=5
+63,101,999,sys_0&talk_le_1,博士主动和干员{TargetName}聊天的口上，博士的话术技能<=1
+64,101,999,sys_0&talk_ge_5,博士主动和干员{TargetName}聊天的口上，博士的话术技能>=5
+65,101,999,sys_0&t_talk_le_1,博士主动和干员{TargetName}聊天的口上，对方的话术技能<=1
+66,101,999,sys_0&t_talk_ge_5,博士主动和干员{TargetName}聊天的口上，对方的话术技能>=5
 
-71,101,999,sys_0|not_fall,博士主动和干员{TargetName}聊天的口上，对方无陷落素质
-72,101,999,sys_0|love_1,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为思慕,爱情系第一阶段
-73,101,999,sys_0|love_le_2,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系<=恋慕(2级)
-74,101,999,sys_0|love_ge_3,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系>=恋人(3级)
-75,101,999,sys_0|obey_1,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为屈从,隶属系第一阶段
-76,101,999,sys_0|obey_le_2,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系<=驯服(2级)
-77,101,999,sys_0|obey_ge_3,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系>=妄信(3级)
+71,101,999,sys_0&not_fall,博士主动和干员{TargetName}聊天的口上，对方无陷落素质
+72,101,999,sys_0&love_1,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为思慕,爱情系第一阶段
+73,101,999,sys_0&love_le_2,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系<=恋慕(2级)
+74,101,999,sys_0&love_ge_3,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系>=恋人(3级)
+75,101,999,sys_0&obey_1,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为屈从,隶属系第一阶段
+76,101,999,sys_0&obey_le_2,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系<=驯服(2级)
+77,101,999,sys_0&obey_ge_3,博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系>=妄信(3级)
 
-81,101,999,sys_0|kiss_0,博士主动和干员{TargetName}聊天的口上，对方已没有初吻
-82,101,999,sys_0|kiss_1,博士主动和干员{TargetName}聊天的口上，对方还有初吻
-83,101,999,sys_0|virgin_0,博士主动和干员{TargetName}聊天的口上，对方非处女
-84,101,999,sys_0|virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是处女
-85,101,999,sys_0|a_virgin_0,博士主动和干员{TargetName}聊天的口上，对方非A处女
-86,101,999,sys_0|a_virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是A处女
+81,101,999,sys_0&kiss_0,博士主动和干员{TargetName}聊天的口上，对方已没有初吻
+82,101,999,sys_0&kiss_1,博士主动和干员{TargetName}聊天的口上，对方还有初吻
+83,101,999,sys_0&virgin_0,博士主动和干员{TargetName}聊天的口上，对方非处女
+84,101,999,sys_0&virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是处女
+85,101,999,sys_0&a_virgin_0,博士主动和干员{TargetName}聊天的口上，对方非A处女
+86,101,999,sys_0&a_virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是A处女
 
 
 101,102,999,sys_0,博士主动和干员{TargetName}聊天，但是失败了的口上
