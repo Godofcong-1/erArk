@@ -629,6 +629,10 @@ class StateMachine:
     """ 根据职业自动移动至对应训练室 """
     MOVE_TO_CLINIC = 22
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_BATHZONE_LOCKER_ROOM = 31
+    """ 移动至大浴场的更衣室 """
+    MOVE_TO_BATH_ROOM = 32
+    """ 移动至淋浴室 """
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
