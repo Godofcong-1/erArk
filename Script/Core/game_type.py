@@ -375,6 +375,8 @@ class ACTION_INFO:
         """ 角色上次移动的时间 """
         self.last_training_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次训练的时间 """
+        self.last_shower_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次淋浴的时间 """
         self.social_contact_last_time: Dict[int, datetime.datetime] = {}
         """ 指定角色最后与自己社交的时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}

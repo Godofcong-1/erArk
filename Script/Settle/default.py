@@ -2403,6 +2403,27 @@ def handle_add_small_learn(
     change_data.status_data[9] += now_add_lust
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DIRTY_RESET)
+def handle_dirty_reset(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    污浊情况(身体+衣服)归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.dirty = attr_calculation.get_dirty_zero()
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
     character_id: int,
@@ -3623,4 +3644,24 @@ def handle_record_training_time(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.action_info.talk_time = now_time
+    character_data.action_info.last_training_time = now_time
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_SHOWER_TIME)
+def handle_record_shower_time(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录当前淋浴时间
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.last_shower_time = now_time

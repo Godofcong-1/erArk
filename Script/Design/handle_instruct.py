@@ -295,6 +295,24 @@ def handle_sleep():
     update.game_update_flow(480)
 
 
+@add_instruct(
+    constant.Instruct.TAKE_SHOWER,
+    constant.InstructType.DAILY,
+    _("淋浴"),
+    {constant.Premise.IN_BATHROOM,
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_take_shower():
+    """处理淋浴指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 15
+    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
+    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
+    update.game_update_flow(15)
+
+
 # @add_instruct(
 #     constant.Instruct.DRINK_SPRING, constant.InstructType.DAILY, _("喝泉水"), {constant.Premise.IN_FOUNTAIN}
 # )
@@ -3130,7 +3148,7 @@ def handle_bundled_play():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.TAKE_SHOWER,
+    constant.Instruct.TAKE_SHOWER_H,
     constant.InstructType.SEX,
     _("淋浴_未实装"),
     {constant.Premise.HAVE_TARGET,

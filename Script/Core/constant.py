@@ -33,6 +33,8 @@ class CharacterStatus:
     """ 休息状态 """
     STATUS_SLEEP = 111
     """ 睡觉 """
+    STATUS_TAKE_SHOWER = 112
+    """ 淋浴 """
     STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
@@ -324,6 +326,8 @@ class Behavior:
     """ 休息 """
     SLEEP = 111
     """ 睡觉 """
+    TAKE_SHOWER = 112
+    """ 淋浴 """
     FOLLOW = 115
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
@@ -954,6 +958,8 @@ class Premise:
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
+    IN_BATHROOM = "in_bathroom"
+    """ 在浴室中 """
     IN_TOILET_MAN = "in_toilet_man"
     """ 在男士洗手间 """
     IN_TOILET_FEMALE = "in_toilet_female"
@@ -2053,6 +2059,9 @@ class BehaviorEffect:
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 自己（和对方一起）增加1学识经验 """
 
+    DIRTY_RESET = 401
+    """ 污浊情况(身体+衣服)归零 """
+
     TALK_ADD_ADJUST = 501
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 502
@@ -2091,6 +2100,8 @@ class BehaviorEffect:
 
     RECORD_TRAINING_TIME = 701
     """ 记录当前训练时间 """
+    RECORD_SHOWER_TIME = 702
+    """ 记录当前淋浴时间 """
 
 
 class SecondBehavior:
@@ -2449,6 +2460,8 @@ class Instruct:
     """ 休息 """
     SLEEP = 0
     """ 睡觉 """
+    TAKE_SHOWER = 0
+    """ 淋浴 """
     BUY_ITEM = 0
     """ 购买道具 """
     BUY_FOOD = 0
@@ -2737,7 +2750,7 @@ class Instruct:
     """ 羞耻play """
     BUNDLED_PLAY = 0
     """ 拘束play """
-    TAKE_SHOWER = 0
+    TAKE_SHOWER_H = 0
     """ 淋浴 """
     BUBBLE_BATH = 0
     """ 泡泡浴 """
