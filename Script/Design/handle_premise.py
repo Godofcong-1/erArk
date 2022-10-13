@@ -5930,6 +5930,23 @@ def handle_t_wear_bra(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant.Premise.TARGET_NOT_WEAR_BRA)
+def handle_t_not_wear_bra(character_id: int) -> int:
+    """
+    交互对象没有穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[6]):
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.WEAR_SKIRT)
 def handle_wear_skirt(character_id: int) -> int:
     """
@@ -5965,6 +5982,24 @@ def handle_t_wear_skirt(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TARGET_WEAR_TROUSERS)
+def handle_t_wear_trousers(character_id: int) -> int:
+    """
+    交互对象穿着裤子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[8]):
+        cloth_id = target_data.cloth[8][0]
+        if game_config.config_clothing_tem[cloth_id].tag == 4:
+            return 1
+    return 0
+
+
 @add_premise(constant.Premise.WEAR_PAN)
 def handle_wear_pan(character_id: int) -> int:
     """
@@ -5995,6 +6030,22 @@ def handle_t_wear_pan(character_id: int) -> int:
     if len(target_data.cloth[9]):
         return 1
     return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_WEAR_PAN)
+def handle_t_not_wear_pan(character_id: int) -> int:
+    """
+    交互对象没有穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[9]):
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.WEAR_SOCKS)

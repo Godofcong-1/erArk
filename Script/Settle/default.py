@@ -2668,6 +2668,52 @@ def handle_cure_patient_add_just(
     cache.base_resouce.patient_cured += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_HPMP_MAX)
+def handle_add_hpmp_max(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    （锻炼身体用）增加体力气力上限
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    add_hp = int(10 * random.uniform(0.75,1.25))
+    add_mp = int(20 * random.uniform(0.75,1.25))
+    character_data.hit_point_max += add_hp
+    character_data.mana_point_max += add_mp
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n{character_data.name}博士的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
+    now_draw.width = width
+    now_draw.draw()
+    #交互对象也同样#
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        add_hp = 10 * random.uniform(0.75,1.25)
+        add_mp = 20 * random.uniform(0.75,1.25)
+        target_data.hit_point_max += add_hp
+        target_data.mana_point_max += add_mp
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
+        now_draw.width = width
+        now_draw.draw()
+    else:
+        now_draw = draw.NormalDraw()
+        now_draw.text = "\n"
+        now_draw.width = 1
+        now_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)
 def handle_sing_add_adjust(
     character_id: int,

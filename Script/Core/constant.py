@@ -67,6 +67,8 @@ class CharacterStatus:
     """ 指派助理 """
     STATUS_TRAINING = 205
     """ 战斗训练 """
+    STATUS_EXERCISE = 206
+    """ 锻炼身体 """
     STATUS_CURE_PATIENT = 207
     """ 诊疗病人 """
     STATUS_TOUCH_HEAD = 301
@@ -360,6 +362,8 @@ class Behavior:
     """ 指派助理 """
     TRAINING = 205
     """ 战斗训练 """
+    EXERCISE = 206
+    """ 锻炼身体 """
     CURE_PATIENT = 207
     """ 诊疗病人 """
     TOUCH_HEAD = 301
@@ -1439,14 +1443,20 @@ class Premise:
     """ 穿着胸衣 """
     TARGET_WEAR_BRA = "t_wear_bra"
     """ 交互对象穿着胸衣 """
+    TARGET_NOT_WEAR_BRA = "t_not_wear_bra"
+    """ 交互对象没有穿着胸衣 """
     WEAR_SKIRT = "wear_skirt"
     """ 穿着裙子 """
     TARGET_WEAR_SKIRT = "t_wear_skirt"
     """ 交互对象穿着裙子 """
+    TARGET_WEAR_TROUSERS = "t_wear_trousers"
+    """ 交互对象穿着裤子 """
     WEAR_PAN = "wear_pan"
     """ 穿着内裤 """
     TARGET_WEAR_PAN = "t_wear_pan"
     """ 交互对象穿着内裤 """
+    TARGET_NOT_WEAR_PAN = "t_not_wear_pan"
+    """ 交互对象没有穿着内裤 """
     WEAR_SOCKS = "wear_socks"
     """ 穿着袜子 """
     TARGET_WEAR_SOCKS = "t_wear_socks"
@@ -2057,6 +2067,8 @@ class BehaviorEffect:
     """ （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
     CURE_PATIENT_ADD_ADJUST = 507
     """ （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
+    ADD_HPMP_MAX = 508
+    """ （锻炼身体用）增加体力气力上限 """
 
     CHANGE_UNDERWERA = 601
     """ 换新的内衣（胸部+内裤） """
@@ -2484,6 +2496,8 @@ class Instruct:
     """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
+    EXERCISE = 0
+    """ 锻炼身体 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
     SEE_COLLECTION = 0

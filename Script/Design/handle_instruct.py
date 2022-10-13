@@ -1196,6 +1196,24 @@ def handle_training():
 
 
 @add_instruct(
+    constant.Instruct.EXERCISE,
+    constant.InstructType.WORK,
+    _("锻炼身体"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_GYM_ROOM,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_exercise():
+    """处理锻炼身体指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.EXERCISE
+    character_data.state = constant.CharacterStatus.STATUS_EXERCISE
+    update.game_update_flow(120)
+
+
+@add_instruct(
     constant.Instruct.CURE_PATIENT,
     constant.InstructType.WORK,
     _("诊疗病人"),
