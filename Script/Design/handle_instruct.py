@@ -601,7 +601,6 @@ def handle_wait():
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = 5
-    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(5)
 
 

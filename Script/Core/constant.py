@@ -11,6 +11,8 @@ class CharacterStatus:
     """ 移动状态 """
     STATUS_WAIT = 2
     """ 等待 """
+    STATUS_CHANGE_CLOTH = 3
+    """ 换衣服状态 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -304,6 +306,8 @@ class Behavior:
     """ 移动 """
     WAIT = 2
     """ 等待 """
+    CHANGE_CLOTH = 3
+    """ 换衣服 """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -631,8 +635,9 @@ class StateMachine:
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
-    MOVE_TO_BATH_ROOM = 32
+    MOVE_TO_BATH_ROOM = 33
     """ 移动至淋浴室 """
+
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -651,6 +656,13 @@ class StateMachine:
     """ 战斗训练 """
     PEE = 50
     """ 解手 """
+    TAKE_SHOWER = 51
+    """ 淋浴 """
+
+    GET_CLOTH_OFF = 71
+    """ 脱成全裸 """
+    GET_SHOWER_CLOTH = 72
+    """ 换上浴帽和浴巾 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -994,6 +1006,14 @@ class Premise:
     """ 在门诊室中（含急诊室） """
     NOT_IN_CLINIC = "not_in_clinic"
     """ 不在门诊室中（含急诊室） """
+    IN_BATHROOM = "in_bathroom"
+    """ 在淋浴区 """
+    NOT_IN_BATHROOM = "not_in_bathroom"
+    """ 不在淋浴区 """
+    IN_BATHZONE_LOCKER_ROOM = "in_bathzone_locker_room"
+    """ 在大浴场的更衣室 """
+    NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
+    """ 不在大浴场的更衣室 """
     IN_FUNCTIONAL_ROOM = "in_functional_room"
     """ 在功能性地点中 """
 
@@ -1003,6 +1023,10 @@ class Premise:
     """ NPC需要进行一次5分钟的等待（wait_flag = 1） """
     HAVE_TRAINED = "ai_trained"
     """ NPC距离上次战斗训练已经超过两天了 """
+    NOT_SHOWER = "ai_not_shower"
+    """ NPC今天还没有洗澡 """
+    HAVE_SHOWERED = "ai_have_showered"
+    """ NPC今天已经洗过澡了 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -1016,6 +1040,8 @@ class Premise:
     """ 时间:中午（10点~14点） """
     EAT_TIME = "eat_time"
     """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
+    SHOWER_TIME = "shower_time"
+    """ 淋浴时间（晚上9点到晚上12点） """
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
     SLEEP_GE_75_OR_SLEEP_TIME = "sleep_ge_75_or_sleep_time"
@@ -1471,6 +1497,15 @@ class Premise:
     """ 穿着袜子 """
     TARGET_WEAR_SOCKS = "t_wear_socks"
     """ 交互对象穿着袜子 """
+
+    CLOTH_OFF = "cloth_off"
+    """ 当前全裸 """
+    NOT_CLOTH_OFF = "not_cloth_off"
+    """ 当前不是全裸 """
+    SHOWER_CLOTH = "shower_cloth"
+    """ 围着浴巾 """
+    NOT_SHOWER_CLOTH = "not_shower_cloth"
+    """ 没有围着浴巾 """
 
     HAVE_COLLECTION = "have_collection"
     """ 持有藏品 """

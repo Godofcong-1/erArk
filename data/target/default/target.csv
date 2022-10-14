@@ -28,8 +28,8 @@ ai的目标,,,
 37,41,hunger_ge_80|eat_time|not_have_food|in_food_shop,饥饿值到80%，且在饭点，且背包里没有食物，且在取餐区里，则买食物
 38,17,hunger_ge_80|eat_time|have_food|not_in_din,饥饿值到80%，且在饭点，且背包里有食物，且不在食堂里，则去食堂
 39,42,hunger_ge_80|eat_time|have_food|in_din,饥饿值到80%，且在饭点，且背包里有食物，且在食堂里，则吃饭
-40,11,sleep_time|not_in_dor,到就寝时间，且不在宿舍，则回宿舍
-41,44,sleep_time|in_dor,到就寝时间，且在宿舍，则睡觉
+40,11,sleep_time|ai_have_showered|not_in_dor,到就寝时间，今天已经洗过澡，且不在宿舍，则回宿舍
+41,44,sleep_time|ai_have_showered|in_dor,到就寝时间，今天已经洗过澡，且在宿舍，则睡觉
 42,18,mp_0|not_in_restroom,气力=0，且不在休息室，则去休息室
 43,43,mp_0|in_restroom,气力=0，且在休息室，则休息
 44,11,sleep_ge_90|urinate_ge_80|not_in_dor,困倦，且尿意值值到80%，且不在宿舍，则回宿舍
@@ -38,6 +38,13 @@ ai的目标,,,
 47,47,ai_trained|in_training_room,距离上次训练已经超过2天，且当前在训练室，则训练
 48,22,not_assistant|is_medical|not_follow|work_time|not_in_clinic,非助理的医疗干员，不在跟随模式下，在工作时间如果不在门诊，则去门诊
 49,301,not_assistant|is_medical|not_follow|work_time|in_clinic|patient_wait,非助理的医疗干员，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
+50,31,shower_time|ai_not_shower|not_in_bathzone_locker_room,淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
+51,71,shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_off,淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是全裸，则脱成全裸
+52,33,shower_time|ai_not_shower|not_in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前不在淋浴间，已经脱成全裸，则去淋浴区
+53,51,shower_time|ai_not_shower|in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前在淋浴间，已经脱成全裸，则开始淋浴
+54,31,shower_time|ai_have_showered|not_in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前不在大浴室的更衣室，已经脱成全裸，则去大浴室的更衣室
+55,72,shower_time|ai_have_showered|in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成全裸，则围上浴巾
+
 
 60,40,place_is_h|not_in_dor,目睹玩家和其他角色H，然后逃回自己宿舍
 

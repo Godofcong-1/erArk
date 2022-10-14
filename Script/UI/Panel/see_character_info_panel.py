@@ -415,8 +415,13 @@ class SeeCharacterClothPanel:
         now_text += "\n"
         # cloth_text_list.append(now_text)
 
-        if now_text == "":
-            now_text = "  全裸"
+        no_cloth_flag = True
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_character_data.cloth[clothing_type]):
+                no_cloth_flag = False
+                break
+        if no_cloth_flag:
+            now_text = "  全裸\n"
             # cloth_text_list.append(now_text)
 
         if self.center_status:

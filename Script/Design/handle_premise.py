@@ -102,6 +102,22 @@ def handle_eat_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.SHOWER_TIME)
+def handle_shower_time(character_id: int) -> int:
+    """
+    淋浴时间（晚上9点到晚上12点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.start_time.hour in {21,22,23}:
+        now_hour = character_data.behavior.start_time.hour
+        return (now_hour-20) *200
+    return 0
+
+
 @add_premise(constant.Premise.SLEEP_TIME)
 def handle_sleep_time(character_id: int) -> int:
     """
@@ -973,6 +989,78 @@ def handle_not_in_clinic(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant.Premise.IN_BATHZONE_LOCKER_ROOM)
+def handle_in_bathzone_locker_room(character_id: int) -> int:
+    """
+    校验角色是否在大浴场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Locker_Room" in now_scene_data.scene_tag and "大浴场" in now_scene_str:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_BATHZONE_LOCKER_ROOM)
+def handle_not_in_bathzone_locker_room(character_id: int) -> int:
+    """
+    校验角色是否不在大浴场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Locker_Room" in now_scene_data.scene_tag and "大浴场" in now_scene_str:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.IN_BATHROOM)
+def handle_in_bathroom(character_id: int) -> int:
+    """
+    校验角色是否在淋浴区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Bathroom" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_IN_BATHROOM)
+def handle_not_in_bathroom(character_id: int) -> int:
+    """
+    校验角色是否不在淋浴区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Bathroom" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
@@ -1030,6 +1118,40 @@ def handle_have_trained(character_id: int) -> int:
     add_day = int((now_time - train_time).days)
     if add_day >= 2:
         return (add_day - 1)*10
+    return 0
+
+
+@add_premise(constant.Premise.NOT_SHOWER)
+def handle_not_shower(character_id: int) -> int:
+    """
+    NPC今天还没有洗澡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = cache.game_time
+    shower_time = character_data.action_info.last_shower_time
+    if shower_time.day == now_time.day:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.HAVE_SHOWERED)
+def handle_have_showered(character_id: int) -> int:
+    """
+    NPC今天已经洗过澡了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = cache.game_time
+    shower_time = character_data.action_info.last_shower_time
+    if shower_time.day == now_time.day:
+        return 1
     return 0
 
 
@@ -6096,6 +6218,68 @@ def handle_t_wear_socks(character_id: int) -> int:
     if len(target_data.cloth[10]):
         return 1
     return 0
+
+
+@add_premise(constant.Premise.CLOTH_OFF)
+def handle_cloth_off(character_id: int) -> int:
+    """
+    当前全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth[clothing_type]):
+            return 0
+    return 1
+
+
+@add_premise(constant.Premise.NOT_CLOTH_OFF)
+def handle_not_cloth_off(character_id: int) -> int:
+    """
+    当前不是全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth[clothing_type]):
+            return 1
+    return 0
+
+
+@add_premise(constant.Premise.SHOWER_CLOTH)
+def handle_shower_cloth(character_id: int) -> int:
+    """
+    围着浴巾
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if 551 in character_data.cloth[5]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NOT_SHOWER_CLOTH)
+def handle_not_shower_cloth(character_id: int) -> int:
+    """
+    没有围着浴巾
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if 551 in character_data.cloth[5]:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.HAVE_COLLECTION)
