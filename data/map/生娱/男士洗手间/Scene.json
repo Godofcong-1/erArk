@@ -1,5 +1,5 @@
 {
   "SceneName":"男士洗手间",
   "InOutDoor":"In",
-  "SceneTag":"Toilet_Male"
+  "SceneTag":"Toilet_Male|exposed|have_furniture"
 }

@@ -1,5 +1,5 @@
 {
   "SceneName":"木桩房",
   "InOutDoor":"In",
-  "SceneTag":"Fight_Room|Training_Room"
+  "SceneTag":"Fight_Room|Training_Room|covert|have_furniture"
 }

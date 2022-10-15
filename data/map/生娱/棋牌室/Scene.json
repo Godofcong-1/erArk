@@ -1,5 +1,5 @@
 {
   "SceneName":"棋牌室",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|exposed|have_furniture"
 }

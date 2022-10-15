@@ -1,5 +1,5 @@
 {
   "SceneName":"炎式厅堂",
   "InOutDoor":"In",
-  "SceneTag":"Rest_Room"
+  "SceneTag":"Rest_Room|exposed|have_furniture"
 }

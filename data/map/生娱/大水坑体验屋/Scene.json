@@ -1,5 +1,5 @@
 {
   "SceneName":"大水坑快活体验屋",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|have_furniture"
 }

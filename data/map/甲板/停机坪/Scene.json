@@ -1,5 +1,5 @@
 {
   "SceneName":"停机坪",
   "InOutDoor":"Out",
-  "SceneTag":"Room"
+  "SceneTag":"Room|exposed|not_furniture"
 }

@@ -533,6 +533,10 @@ class Scene:
         """ 场景名字 """
         self.in_door: bool = 0
         """ 在室内 """
+        self.exposed: bool = 0
+        """ 地点暴露 """
+        self.have_furniture: bool = 0
+        """ 有家具 """
         self.scene_tag: list = []
         """ 场景标签 """
         self.character_list: set = set()

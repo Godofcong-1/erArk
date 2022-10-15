@@ -1,5 +1,5 @@
 {
   "SceneName":"红松骑士团休息室",
   "InOutDoor":"In",
-  "SceneTag":"Rest_Room"
+  "SceneTag":"Rest_Room|covert|have_furniture"
 }

@@ -1,5 +1,5 @@
 {
   "SceneName":"药草园",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|exposed|not_furniture"
 }

@@ -1,5 +1,5 @@
 {
   "SceneName":"指挥室",
   "InOutDoor":"In",
-  "SceneTag":"Command_Room"
+  "SceneTag":"Command_Room|exposed|have_furniture"
 }

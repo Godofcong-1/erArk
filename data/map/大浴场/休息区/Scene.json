@@ -1,5 +1,5 @@
 {
   "SceneName":"休息区",
   "InOutDoor":"In",
-  "SceneTag":"Rest_Room"
+  "SceneTag":"Rest_Room|exposed|have_furniture"
 }

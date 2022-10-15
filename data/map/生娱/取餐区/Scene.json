@@ -1,5 +1,5 @@
 {
   "SceneName":"取餐区",
   "InOutDoor":"In",
-  "SceneTag":"Food_Shop"
+  "SceneTag":"Food_Shop|exposed|not_furniture"
 }

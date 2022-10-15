@@ -1,5 +1,5 @@
 {
   "SceneName":"仿临光家客厅",
   "InOutDoor":"In",
-  "SceneTag":"Rest_Room"
+  "SceneTag":"Rest_Room|exposed|have_furniture"
 }

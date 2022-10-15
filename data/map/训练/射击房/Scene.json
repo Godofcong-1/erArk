@@ -1,5 +1,5 @@
 {
   "SceneName":"射击房",
   "InOutDoor":"In",
-  "SceneTag":"Shoot_Room|Training_Room"
+  "SceneTag":"Shoot_Room|Training_Room|exposed|have_furniture"
 }

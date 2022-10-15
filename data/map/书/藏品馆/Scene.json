@@ -1,5 +1,5 @@
 {
   "SceneName":"藏品馆",
   "InOutDoor":"In",
-  "SceneTag":"Collection"
+  "SceneTag":"Collection|exposed|not_furniture"
 }

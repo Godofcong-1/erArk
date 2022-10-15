@@ -1,5 +1,5 @@
 {
   "SceneName":"住院部",
   "InOutDoor":"In",
-  "SceneTag":"Inpatient_Department"
+  "SceneTag":"Inpatient_Department|exposed|have_furniture"
 }

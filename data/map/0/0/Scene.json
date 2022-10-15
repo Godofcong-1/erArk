@@ -1,5 +1,5 @@
 {
   "SceneName":"罗德岛出口",
   "InOutDoor":"Out",
-  "SceneTag":"Door"
+  "SceneTag":"Door|exposed|not_furniture"
 }

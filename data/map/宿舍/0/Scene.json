@@ -1,5 +1,5 @@
 {
   "SceneName":"宿舍区入口",
   "InOutDoor":"In",
-  "SceneTag":"Door"
+  "SceneTag":"Door|exposed|not_furniture"
 }

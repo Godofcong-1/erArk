@@ -1,5 +1,5 @@
 {
   "SceneName":"粮仓",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|not_furniture"
 }

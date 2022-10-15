@@ -1,5 +1,5 @@
 {
   "SceneName":"淋浴区",
   "InOutDoor":"In",
-  "SceneTag":"Bathroom"
+  "SceneTag":"Bathroom|exposed|not_furniture"
 }

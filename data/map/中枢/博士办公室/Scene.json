@@ -1,5 +1,5 @@
 {
   "SceneName":"博士办公室",
   "InOutDoor":"In",
-  "SceneTag":"Dr_office"
+  "SceneTag":"Dr_office|exposed|have_furniture"
 }

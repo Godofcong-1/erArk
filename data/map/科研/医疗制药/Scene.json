@@ -1,5 +1,5 @@
 {
   "SceneName":"医疗制药",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|have_furniture"
 }

@@ -1,5 +1,5 @@
 {
   "SceneName":"更衣室",
   "InOutDoor":"In",
-  "SceneTag":"Locker_Room"
+  "SceneTag":"Locker_Room|exposed|have_furniture"
 }

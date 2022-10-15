@@ -1,5 +1,5 @@
 {
   "SceneName":"急诊室",
   "InOutDoor":"In",
-  "SceneTag":"Emergency_Room|Clinic"
+  "SceneTag":"Emergency_Room|Clinic|covert|have_furniture"
 }

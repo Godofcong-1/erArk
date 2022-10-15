@@ -1,5 +1,5 @@
 {
   "SceneName":"模拟对战室",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|have_furniture"
 }

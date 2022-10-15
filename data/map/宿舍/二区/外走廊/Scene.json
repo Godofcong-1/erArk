@@ -1,5 +1,5 @@
 {
   "SceneName":"宿舍2区外走廊",
   "InOutDoor":"In",
-  "SceneTag":"Corridor"
+  "SceneTag":"Corridor|exposed|not_furniture"
 }

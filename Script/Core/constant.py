@@ -952,6 +952,15 @@ class Premise:
     SCENE_SOMEONE_IS_H = "place_is_h"
     """ 该地点有其他角色在和玩家H """
 
+    PLACE_EXPOSED = "place_exposed"
+    """ 当前地点暴露 """
+    PLACE_COVERT = "place_covert"
+    """ 当前地点隐蔽 """
+    PLACE_HAVE_FURNITURE = "place_have_furniture"
+    """ 当前地点有家具 """
+    PLACE_NOT_FURNITURE = "place_not_furniture"
+    """ 当前地点没家具 """
+
     IN_KITCHEN = "in_kit"
     """ 在厨房 """
     IN_DINING_HALL = "in_din"

@@ -1,5 +1,5 @@
 {
   "SceneName":"药房",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|have_furniture"
 }

@@ -1,5 +1,5 @@
 {
   "SceneName":"摄影爱好者影棚",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|exposed|have_furniture"
 }

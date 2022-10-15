@@ -1,5 +1,5 @@
 {
   "SceneName":"宿舍2区管理员房间",
   "InOutDoor":"In",
-  "SceneTag":"Room"
+  "SceneTag":"Room|covert|have_furniture"
 }
