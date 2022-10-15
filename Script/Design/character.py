@@ -365,7 +365,7 @@ def judge_character_time_over_24(character_id: int) -> bool:
     character_data: game_type.Character = cache.character_data[character_id]
     start_time: datetime.datetime = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-    judge = 0
+
     if end_time.day != start_time.day:
-        judge = 1
-    return judge
+        return 1
+    return 0

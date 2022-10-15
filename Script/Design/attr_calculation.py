@@ -186,7 +186,8 @@ def get_action_info_state_zero() -> dict:
     action_info_data = game_type.ACTION_INFO()
     action_info_data.talk_time = cache.game_time
     action_info_data.last_move_time = cache.game_time
-    action_info_data.last_training_time = cache.game_time
+    action_info_data.last_training_time = game_time.get_sub_date(day=-1)
+    action_info_data.last_shower_time = game_time.get_sub_date(day=-1)
 
     return action_info_data
 
@@ -234,6 +235,11 @@ def get_base_zero() -> dict:
         # 全设施等级设为1
         base_data.facility_level[all_cid] = 1
 
+    # 遍历全设施开放
+    for all_cid in game_config.config_facility_open:
+        # 全设施等级设为1
+        base_data.facility_open[all_cid] = False
+
     # 遍历全资源清单
     for all_cid in game_config.config_resouce:
         # 全资源数量设为0
@@ -259,6 +265,11 @@ def get_base_updata() -> dict:
         facility_cid = game_config.config_facility_effect_data[facility_name][level]
         cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
 
+        # 如果满足设施开放的前提条件，则开放该设施
+        for open_cid in game_config.config_facility_open:
+            if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
+                cache.base_resouce.facility_open[open_cid] = True
+
     # print(f"debug power_use = {base_data.power_use}")
 
         # 初始化供电量
@@ -273,9 +284,10 @@ def get_base_updata() -> dict:
         # 初始化生活娱乐区设施数量上限
         elif facility_name == "生活娱乐区":
             cache.base_resouce.life_zone_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化患者人数上限
+        # 初始化患者人数上限，并刷新当天患者人数
         elif facility_name == "医疗部":
-            cache.base_resouce.ppatient_max = game_config.config_facility_effect[facility_cid].effect
+            cache.base_resouce.patient_max = game_config.config_facility_effect[facility_cid].effect
+            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
         # 初始化科研区设施数量上限
         elif facility_name == "科研部":
             cache.base_resouce.research_zone_max = game_config.config_facility_effect[facility_cid].effect
@@ -286,6 +298,18 @@ def get_base_updata() -> dict:
         elif facility_name == "指挥室":
             cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
 
+
+def get_work_people() -> dict:
+    """
+    遍历基地情况结构体，根据设施等级更新全部数值
+    """
+    from Script.Core import constant
+
+    for Clinic_place in constant.place_data["Clinic"]:
+        if len(cache.scene_data[Clinic_place].character_list):
+            for npc_id in cache.scene_data[Clinic_place].character_list:
+                if npc_id:
+                    cache.base_resouce.work_people_now += 1
 
 
 def get_item_zero(item_dict) -> dict:

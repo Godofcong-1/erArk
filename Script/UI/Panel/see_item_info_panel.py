@@ -76,8 +76,8 @@ class SeeCharacterItemBagPanel:
         item_list_type = ["药品","机器","消耗品","H药品","H用机器","SM器具"]
         while 1:
             title_draw.draw()
-            # 绘制金钱
-            money_text = "当前持有龙门币：" + str(cache.base_resouce.money) + "，合成玉：" + str(cache.base_resouce.orundum) + "，至纯源石：" + str(cache.base_resouce.Originite_Prime)
+            # 绘制色色凭证
+            money_text = f"当前持有色色凭证：{str(cache.base_resouce.pink_certificate)} + "
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width

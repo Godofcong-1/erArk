@@ -11,6 +11,8 @@ class CharacterStatus:
     """ 移动状态 """
     STATUS_WAIT = 2
     """ 等待 """
+    STATUS_CHANGE_CLOTH = 3
+    """ 换衣服状态 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -33,6 +35,8 @@ class CharacterStatus:
     """ 休息状态 """
     STATUS_SLEEP = 111
     """ 睡觉 """
+    STATUS_TAKE_SHOWER = 112
+    """ 淋浴 """
     STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
@@ -67,6 +71,10 @@ class CharacterStatus:
     """ 指派助理 """
     STATUS_TRAINING = 205
     """ 战斗训练 """
+    STATUS_EXERCISE = 206
+    """ 锻炼身体 """
+    STATUS_CURE_PATIENT = 207
+    """ 诊疗病人 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -298,6 +306,8 @@ class Behavior:
     """ 移动 """
     WAIT = 2
     """ 等待 """
+    CHANGE_CLOTH = 3
+    """ 换衣服 """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -320,6 +330,8 @@ class Behavior:
     """ 休息 """
     SLEEP = 111
     """ 睡觉 """
+    TAKE_SHOWER = 112
+    """ 淋浴 """
     FOLLOW = 115
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116
@@ -358,6 +370,10 @@ class Behavior:
     """ 指派助理 """
     TRAINING = 205
     """ 战斗训练 """
+    EXERCISE = 206
+    """ 锻炼身体 """
+    CURE_PATIENT = 207
+    """ 诊疗病人 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -590,7 +606,7 @@ class StateMachine:
     WAIT_10_MIN = 1
     """ 原地待机10分钟 """
     WAIT_30_MIN = 2
-    """ 原地待机30分钟 """
+    """ 原地待机30分钟，并取消跟随状态 """
     FOLLOW = 6
     """ 跟随玩家 """
     MOVE_TO_RAND_SCENE = 10
@@ -615,6 +631,13 @@ class StateMachine:
     """ 移动至夕照区音乐室 """
     MOVE_TO_TRAINING_ROOM = 21
     """ 根据职业自动移动至对应训练室 """
+    MOVE_TO_CLINIC = 22
+    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_BATHZONE_LOCKER_ROOM = 31
+    """ 移动至大浴场的更衣室 """
+    MOVE_TO_BATH_ROOM = 33
+    """ 移动至淋浴室 """
+
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
     BUY_RAND_FOOD_AT_FOODSHOP = 41
@@ -633,6 +656,13 @@ class StateMachine:
     """ 战斗训练 """
     PEE = 50
     """ 解手 """
+    TAKE_SHOWER = 51
+    """ 淋浴 """
+
+    GET_CLOTH_OFF = 71
+    """ 脱成全裸 """
+    GET_SHOWER_CLOTH = 72
+    """ 换上浴帽和浴巾 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -651,6 +681,10 @@ class StateMachine:
     """ 唱歌给房间里随机角色听 """
     PLAY_INSTRUMENT_RAND_CHARACTER = 203
     """ 演奏乐器给房间里随机角色听 """
+
+    WORK_CURE_PATIENT = 301
+    """ 工作：诊疗病人 """
+
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -749,6 +783,8 @@ class Panel:
     """ 脱衣服面板 """
     BUILDING = 15
     """ 基建面板 """
+    DEPARTMENT = 16
+    """ 部门运作情况面板 """
 
 
 class Premise:
@@ -782,10 +818,25 @@ class Premise:
     """ 当前为H模式 """
     NOT_H = "not_h"
     """ 当前不是H模式 """
+
+    IS_ASSISTANT = "is_assistant"
+    """ 自己是当前的助理干员 """
+    NOT_ASSISTANT = "not_assistant"
+    """ 自己不是当前的助理干员 """
+    TARGET_IS_ASSISTANT = "t_is_assistant"
+    """ 交互对象是当前的助理干员 """
+    TARGET_NOT_ASSISTANT = "t_not_assistant"
+    """ 交互对象不是当前的助理干员 """
     IS_FOLLOW = "is_follow"
-    """ 当前正智能跟随玩家 """
+    """ 当前正跟随玩家 """
     NOT_FOLLOW = "not_follow"
+    """ 当前没跟随玩家 """
+    IS_FOLLOW_1 = "is_follow_1"
+    """ 当前正智能跟随玩家 """
+    NOT_FOLLOW_1 = "not_follow_1"
     """ 当前没智能跟随玩家 """
+    IS_FOLLOW_3 = "is_follow_3"
+    """ 当前正前往博士办公室 """
     TARGET_IS_FOLLOW = "t_is_follow"
     """ 交互对象当前正跟随玩家 """
     TARGET_NOT_FOLLOW = "t_not_follow"
@@ -913,10 +964,18 @@ class Premise:
     """ 不在食物商店（取餐区） """
     IN_DR_OFFICE = "in_dr_off"
     """ 在博士办公室 """
+    NOT_IN_DR_OFFICE = "not_in_dr_off"
+    """ 不在博士办公室 """
+    IN_DR_OFFICE_OR_DEBUG = "in_dr_off_or_debug"
+    """ 在博士办公室或处于debug模式 """
+    IN_COMMAND_ROOM = "in_command_room"
+    """ 在指挥室 """
     IN_DORMITORY = "in_dor"
     """ 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 不在自己宿舍中 """
+    IN_BATHROOM = "in_bathroom"
+    """ 在浴室中 """
     IN_TOILET_MAN = "in_toilet_man"
     """ 在男士洗手间 """
     IN_TOILET_FEMALE = "in_toilet_female"
@@ -943,15 +1002,31 @@ class Premise:
     """ 在射击房中 """
     IN_BUILDING_ROOM = "in_building_room"
     """ 在基建部中 """
+    IN_CLINIC = "in_clinic"
+    """ 在门诊室中（含急诊室） """
+    NOT_IN_CLINIC = "not_in_clinic"
+    """ 不在门诊室中（含急诊室） """
+    IN_BATHROOM = "in_bathroom"
+    """ 在淋浴区 """
+    NOT_IN_BATHROOM = "not_in_bathroom"
+    """ 不在淋浴区 """
+    IN_BATHZONE_LOCKER_ROOM = "in_bathzone_locker_room"
+    """ 在大浴场的更衣室 """
+    NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
+    """ 不在大浴场的更衣室 """
     IN_FUNCTIONAL_ROOM = "in_functional_room"
     """ 在功能性地点中 """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """
     AI_WAIT = "ai_wait"
-    """ NPC需要进行一次10分钟的等待（wait_flag = 1） """
+    """ NPC需要进行一次5分钟的等待（wait_flag = 1） """
     HAVE_TRAINED = "ai_trained"
     """ NPC距离上次战斗训练已经超过两天了 """
+    NOT_SHOWER = "ai_not_shower"
+    """ NPC今天还没有洗澡 """
+    HAVE_SHOWERED = "ai_have_showered"
+    """ NPC今天已经洗过澡了 """
 
     TIME_DAY = "time_day"
     """ 时间:白天（6点~18点） """
@@ -965,8 +1040,14 @@ class Premise:
     """ 时间:中午（10点~14点） """
     EAT_TIME = "eat_time"
     """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
+    SHOWER_TIME = "shower_time"
+    """ 淋浴时间（晚上9点到晚上12点） """
     SLEEP_TIME = "sleep_time"
     """ 睡觉时间（晚上10点到早上6点） """
+    SLEEP_GE_75_OR_SLEEP_TIME = "sleep_ge_75_or_sleep_time"
+    """ 困倦条≥75%或到了睡觉的时间 """
+    WORK_TIME = "work_time"
+    """ 工作时间（早上9:00~下午4:59） """
 
     COLLECT_BONUS_103 = "c_bonus_103"
     """ 收藏奖励_103_解锁索要内裤 """
@@ -1114,6 +1195,12 @@ class Premise:
     """ 交互对象非A处女 """
     TARGET_HAVE_A_VIRGIN = "a_virgin_1"
     """ 交互对象是A处女 """
+
+    IS_MEDICAL = "is_medical"
+    """ 自己的职业为医疗 """
+
+    PATIENT_WAIT = "patient_wait"
+    """ 有患者正等待就诊 """
 
     TARGET_CHEST_IS_CLIFF = "breast_0"
     """ 交互对象胸部大小是绝壁 """
@@ -1392,18 +1479,33 @@ class Premise:
     """ 穿着胸衣 """
     TARGET_WEAR_BRA = "t_wear_bra"
     """ 交互对象穿着胸衣 """
+    TARGET_NOT_WEAR_BRA = "t_not_wear_bra"
+    """ 交互对象没有穿着胸衣 """
     WEAR_SKIRT = "wear_skirt"
     """ 穿着裙子 """
     TARGET_WEAR_SKIRT = "t_wear_skirt"
     """ 交互对象穿着裙子 """
+    TARGET_WEAR_TROUSERS = "t_wear_trousers"
+    """ 交互对象穿着裤子 """
     WEAR_PAN = "wear_pan"
     """ 穿着内裤 """
     TARGET_WEAR_PAN = "t_wear_pan"
     """ 交互对象穿着内裤 """
+    TARGET_NOT_WEAR_PAN = "t_not_wear_pan"
+    """ 交互对象没有穿着内裤 """
     WEAR_SOCKS = "wear_socks"
     """ 穿着袜子 """
     TARGET_WEAR_SOCKS = "t_wear_socks"
     """ 交互对象穿着袜子 """
+
+    CLOTH_OFF = "cloth_off"
+    """ 当前全裸 """
+    NOT_CLOTH_OFF = "not_cloth_off"
+    """ 当前不是全裸 """
+    SHOWER_CLOTH = "shower_cloth"
+    """ 围着浴巾 """
+    NOT_SHOWER_CLOTH = "not_shower_cloth"
+    """ 没有围着浴巾 """
 
     HAVE_COLLECTION = "have_collection"
     """ 持有藏品 """
@@ -1766,22 +1868,10 @@ class BehaviorEffect:
     TARGET_DIURETICS_ON = 96
     """ 交互对象获得利尿剂状态 """
 
-    TALK_ADD_ADJUST = 100
-    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
-    COFFEE_ADD_ADJUST = 101
-    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
-    TARGET_COFFEE_ADD_ADJUST = 104
-    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
     EAT_FOOD = 102
     """ 进食指定食物 """
     MAKE_FOOD = 103
     """ 制作指定食物 """
-    KONWLEDGE_ADD_PINK_MONEY = 105
-    """ 根据自己（再加上交互对象的）学识获得少量粉色凭证 """
-    SING_ADD_ADJUST = 106
-    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
-    PLAY_INSTRUMENT_ADD_ADJUST = 107
-    """ （演奏乐器用）根据交互对象的音乐技能进行好感度、信赖、好意调整 """
     TECH_ADD_N_ADJUST = 110
     """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
@@ -1955,6 +2045,10 @@ class BehaviorEffect:
     """ 交互对象增加1音乐经验 """
     TARGET_ADD_1_GiveBirth_EXPERIENCE = 286
     """ 交互对象增加1妊娠经验 """
+    TARGET_ADD_1_Command_EXPERIENCE = 288
+    """ 交互对象增加1指挥经验 """
+    TARGET_ADD_1_Cure_EXPERIENCE = 289
+    """ 交互对象增加1医疗经验 """
     TARGET_ADD_1_ForwardClimax_EXPERIENCE = 300
     """ 交互对象增加1正面位绝顶经验 """
     TARGET_ADD_1_BackClimax_EXPERIENCE = 301
@@ -1997,10 +2091,32 @@ class BehaviorEffect:
     """ 增加1妊娠经验 """
     ADD_1_Insert_EXPERIENCE = 320
     """ 增加1插入经验 """
-    ADD_1_Insert_COMMAND = 321
+    ADD_1_Command_EXPERIENCE = 321
     """ 增加1指挥经验 """
+    ADD_1_Cure_EXPERIENCE = 322
+    """ 增加1医疗经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 自己（和对方一起）增加1学识经验 """
+
+    DIRTY_RESET = 401
+    """ 污浊情况(身体+衣服)归零 """
+
+    TALK_ADD_ADJUST = 501
+    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
+    COFFEE_ADD_ADJUST = 502
+    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
+    TARGET_COFFEE_ADD_ADJUST = 503
+    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
+    SING_ADD_ADJUST = 504
+    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
+    PLAY_INSTRUMENT_ADD_ADJUST = 505
+    """ （演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整 """
+    KONWLEDGE_ADD_PINK_MONEY = 506
+    """ （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
+    CURE_PATIENT_ADD_ADJUST = 507
+    """ （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
+    ADD_HPMP_MAX = 508
+    """ （锻炼身体用）增加体力气力上限 """
 
     CHANGE_UNDERWERA = 601
     """ 换新的内衣（胸部+内裤） """
@@ -2023,6 +2139,8 @@ class BehaviorEffect:
 
     RECORD_TRAINING_TIME = 701
     """ 记录当前训练时间 """
+    RECORD_SHOWER_TIME = 702
+    """ 记录当前淋浴时间 """
 
 
 class SecondBehavior:
@@ -2379,12 +2497,16 @@ class Instruct:
     """ 进食 """
     REST = 0
     """ 休息 """
+    SLEEP = 0
+    """ 睡觉 """
+    TAKE_SHOWER = 0
+    """ 淋浴 """
     BUY_ITEM = 0
     """ 购买道具 """
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOW = 0
-    """ 请求同行 """
+    """ 邀请同行 """
     END_FOLLOW = 0
     """ 结束同行 """
     APOLOGIZE = 0
@@ -2426,6 +2548,16 @@ class Instruct:
     """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
+    EXERCISE = 0
+    """ 锻炼身体 """
+    CURE_PATIENT = 0
+    """ 诊疗病人 """
+    SEE_COLLECTION = 0
+    """ 查看收藏品 """
+    FIND_AND_CALL_NPC = 0
+    """ 查找与召集干员 """
+    SEE_DEPARTMENT = 0
+    """ 查看部门运作情况 """
 
     #猥亵#
     TOUCH_HEAD = 0
@@ -2657,7 +2789,7 @@ class Instruct:
     """ 羞耻play """
     BUNDLED_PLAY = 0
     """ 拘束play """
-    TAKE_SHOWER = 0
+    TAKE_SHOWER_H = 0
     """ 淋浴 """
     BUBBLE_BATH = 0
     """ 泡泡浴 """
@@ -2670,8 +2802,6 @@ class Instruct:
     #系统#
     MOVE = 0
     """ 移动 """
-    SLEEP = 0
-    """ 睡觉 """
     SEE_ATTR = 0
     """ 查看属性 """
     ITEM = 0
@@ -2682,16 +2812,12 @@ class Instruct:
     """ 属性升级 """
     OWNER_ABL_UP = 0
     """ 自身属性升级 """
-    FIND_AND_CALL_NPC = 0
-    """ 查找与召集干员 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0
     """ 关闭debug模式 """
-    SEE_COLLECTION = 0
-    """ 查看收藏品 """
 
 
 i = 0

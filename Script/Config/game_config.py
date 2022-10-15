@@ -56,6 +56,8 @@ config_facility_effect: Dict[int, config_def.Facility_effect] = {}
 """ 设施效果总数据 """
 config_facility_effect_data: Dict[str, Set] = {}
 """ 设施效果分类数据 """
+config_facility_open: Dict[int, config_def.Facility_open] = {}
+""" 设施开放数据 """
 config_resouce: Dict[int, config_def.Resouce] = {}
 """ 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
@@ -149,8 +151,8 @@ config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
 """ 角色行为对应口上集合 """
-config_talk_premise: Dict[int, config_def.TalkPremise] = {}
-""" 口上前提配置 """
+# config_talk_premise: Dict[int, config_def.TalkPremise] = {}
+# """ 口上前提配置 """
 config_talk_premise_data: Dict[int, Set] = {}
 """ 口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
@@ -474,11 +476,22 @@ def load_facility_effect():
         now_tem.__dict__ = tem_data
         config_facility_effect[now_tem.cid] = now_tem
         config_facility_effect_data.setdefault(now_tem.name, list())
+        # 补个0，让序号=等级
         if config_facility_effect_data[now_tem.name] == []:
             config_facility_effect_data[now_tem.name].append(0)
 
         config_facility_effect_data[now_tem.name].append(now_tem.cid)
     # print(f"debug config_facility_effect_data = {config_facility_effect_data}")
+
+
+def load_facility_open():
+    """载入设施开放数据"""
+    now_data = config_data["Facility_open"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Facility_open()
+        now_tem.__dict__ = tem_data
+        config_facility_open[now_tem.cid] = now_tem
 
 
 def load_resouce():
@@ -650,25 +663,26 @@ def load_talk():
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
-        # config_talk_premise_data.setdefault(now_tem.cid, set())
-        # if "|" not in now_tem.premise:
-        #     config_talk_premise_data[now_tem.cid].add(int(now_tem.premise))
-        # else:
-        #     premise_list = now_tem.premise.split('|')
-        #     for premise in premise_list:
-        #         config_talk_premise_data[now_tem.cid].add(int(premise))
+        config_talk_premise_data.setdefault(now_tem.cid, set())
+        # print(f"debug now_tem.context = {now_tem.context}")
+        if "&" not in now_tem.premise:
+            config_talk_premise_data[now_tem.cid].add(now_tem.premise)
+        else:
+            premise_list = now_tem.premise.split('&')
+            for premise in premise_list:
+                config_talk_premise_data[now_tem.cid].add(premise)
 
 
-def load_talk_premise():
-    """载入口上前提配置"""
-    now_data = config_data["TalkPremise"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.TalkPremise()
-        now_tem.__dict__ = tem_data
-        config_talk_premise[now_tem.cid] = now_tem
-        config_talk_premise_data.setdefault(now_tem.talk_id, set())
-        config_talk_premise_data[now_tem.talk_id].add(now_tem.premise)
+# def load_talk_premise():
+#     """载入口上前提配置"""
+#     now_data = config_data["TalkPremise"]
+#     translate_data(now_data)
+#     for tem_data in now_data["data"]:
+#         now_tem = config_def.TalkPremise()
+#         now_tem.__dict__ = tem_data
+#         config_talk_premise[now_tem.cid] = now_tem
+#         config_talk_premise_data.setdefault(now_tem.talk_id, set())
+#         config_talk_premise_data[now_tem.talk_id].add(now_tem.premise)
 
 
 def load_target():
@@ -734,6 +748,7 @@ def init():
     load_collection_bonus_data()
     load_facility()
     load_facility_effect()
+    load_facility_open()
     load_resouce()
     load_experience()
     load_font_data()
@@ -755,7 +770,6 @@ def init():
     load_status()
     load_sun_time()
     load_talk()
-    load_talk_premise()
     load_talent_type()
     load_talent_type_data()
     load_talent_up_data()

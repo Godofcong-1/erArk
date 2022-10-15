@@ -87,6 +87,35 @@ def get_underwear(character_id: int):
         character_data.cloth[9].append(pan_id)
 
 
+def get_cloth_off(character_id: int):
+    """
+    脱成全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        character_data.cloth = attr_calculation.get_cloth_zero()
+
+
+def get_shower_cloth(character_id: int):
+    """
+    换上浴帽和浴巾
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.cloth[0].append(51)
+        character_data.cloth[5].append(551)
+        character_data.cloth[8].append(851)
+
+
 '''
 不用的旧函数
 

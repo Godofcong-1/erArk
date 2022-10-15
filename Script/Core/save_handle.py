@@ -54,42 +54,8 @@ def establish_save(save_id: str):
     Keyword arguments:
     save_id -- 存档id
     """
-    if save_id != "auto":
-        establish_save_linux(save_id)
-        return
-    if platform.system() == "Linux":
-        now_process = multiprocessing.Process(target=establish_save_linux, args=(save_id,))
-        now_process.start()
-        now_process.join()
-    else:
-        save_verson = {
-            "game_verson": normal_config.config_normal.verson,
-            "game_time": cache.game_time,
-            "character_name": cache.character_data[0].name,
-            "save_time": datetime.datetime.now(),
-        }
-        data = {
-            "1": cache,
-            "0": save_verson,
-        }
-        data_queue = multiprocessing.Queue()
-        data_queue.put(data)
-        now_process = multiprocessing.Process(target=establish_save_windows, args=(save_id, data_queue))
-        now_process.start()
-        now_process.join()
-
-
-def establish_save_windows(save_id: str, save_queue: multiprocessing.Queue):
-    """
-    针对windows的并行自动存档函数
-    笔记:由于windows不支持fork机制,数据无法从主进程直接继承,pickle转换数据效率过低且不安全,最后决定使用线程安全的queue来传递数据(稳定性待测试)
-    Keyword arguments:
-    save_id -- 当前存档id
-    save_queue -- 传递存档数据的消息队列
-    """
-    data = save_queue.get()
-    for data_id in data:
-        write_save_data(save_id, data_id, data[data_id])
+    establish_save_linux(save_id)
+    return
 
 
 def establish_save_linux(save_id: str):

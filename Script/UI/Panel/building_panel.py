@@ -74,10 +74,10 @@ class Building_Panel:
             power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
             resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
             money = str(cache.base_resouce.money)
-            resouce_text += f"\n  当前龙门币数量    ：{money}"
+            resouce_text += f"\n  当前龙门币数量    ：{money}\n"
             # 碳素建材的编号是15
-            building_materials = str(cache.base_resouce.materials_resouce[15])
-            resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
+            # building_materials = str(cache.base_resouce.materials_resouce[15])
+            # resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
 
 
             resouce_draw.text = resouce_text
@@ -187,10 +187,7 @@ class Building_Panel:
         building_type -- 要切换的面板类型
         """
 
-        if building_type == "区块总览":
-            self.now_panel = "区块总览"
-        elif building_type == "特殊房间":
-            self.now_panel = "特殊房间"
+        self.now_panel = building_type
 
     def level_up_info(self, facility_cid: int):
         """
@@ -212,7 +209,8 @@ class Building_Panel:
                 info_draw.text = f"\n{facility_data_now.name}："
                 info_draw.text += f"\n  当前等级：{facility_data_now.level}，当前耗电量:{facility_data_now.power_use}，当前效果：{facility_data_now.info}"
                 info_draw.text += f"\n  下一等级：{facility_data_next.level}，下一等级耗电量:{facility_data_next.power_use}，下一等级效果：{facility_data_next.info}"
-                info_draw.text += f"\n  升级需要的龙门币：{facility_data_next.money_use}\n  升级需要的基建材料：{facility_data_next.resouce_use}\n"
+                info_draw.text += f"\n  升级需要的龙门币：{facility_data_next.money_use}\n"
+                # info_draw.text += f"\n  升级需要的龙门币：{facility_data_next.money_use}\n  升级需要的基建材料：{facility_data_next.resouce_use}\n"
                 info_draw.width = self.width
                 info_draw.draw()
 
@@ -222,10 +220,10 @@ class Building_Panel:
                 power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
                 resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
                 money = str(cache.base_resouce.money)
-                resouce_text += f"\n  当前龙门币数量    ：{money}"
+                resouce_text += f"\n  当前龙门币数量    ：{money}\n"
                 # 碳素建材的编号是15
-                building_materials = str(cache.base_resouce.materials_resouce[15])
-                resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
+                # building_materials = str(cache.base_resouce.materials_resouce[15])
+                # resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
 
                 resouce_draw.text = resouce_text
                 resouce_draw.width = self.width
@@ -246,15 +244,15 @@ class Building_Panel:
                 else:
                     up_info_draw.text += "\n  升级所需龙门币不足"
                 # 建材
-                if cache.base_resouce.materials_resouce[15] - facility_data_next.resouce_use >= 0:
-                    level_up_flag += 1
-                else:
-                    up_info_draw.text += "\n  升级所需碳素建材不足"
+                # if cache.base_resouce.materials_resouce[15] - facility_data_next.resouce_use >= 0:
+                #     level_up_flag += 1
+                # else:
+                #     up_info_draw.text += "\n  升级所需碳素建材不足"
                 up_info_draw.width = self.width
 
-                if level_up_flag == 3:
-                    now_draw = draw.LeftButton(
-                        f"      【升级】",
+                if level_up_flag == 2:
+                    now_draw = draw.CenterButton(
+                        f"【升级】",
                         f"\n【升级】",
                         self.width / 10,
                         cmd_func=self.level_up,

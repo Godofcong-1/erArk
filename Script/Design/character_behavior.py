@@ -60,6 +60,13 @@ def init_character_behavior():
             # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         update_cafeteria()
+        # 结算非角色数据的新一天刷新
+        if character.judge_character_time_over_24(0):
+            # 刷新新病人数量，已治愈病人数量和治疗收入归零
+            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
+            cache.base_resouce.patient_cured = 0
+            cache.base_resouce.cure_income = 0
+            cache.base_resouce.all_income = 0
     cache.over_behavior_character = set()
 
 
@@ -195,13 +202,10 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
-        #如果上个AI行动不是等待5分钟，也不是移动指令，则将等待flag设为1
-        # 不会被打断的指令列表
-        # safe_instruct = [10,11,12,13,14,15,16,17,18] # 移动系
-        # safe_instruct += [30,31,32,33,34,35] # 有事中断处理系
-        if state_machine_id != 0 and not (state_machine_id >= 10 and state_machine_id <= 39):
+        #如果上个AI行动是普通交互指令，则将等待flag设为1
+        if state_machine_id >= 100:
             character_data.wait_flag = 1
-        #     print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_id =",character_id)
+            # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
     else:
         start_time = cache.character_data[character_id].behavior.start_time
@@ -249,6 +253,9 @@ def judge_character_tired_sleep(character_id : int):
         if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
             character_data.is_h = False
             character_data.is_follow = 0
+            pl_character_data: game_type.Character = cache.character_data[0]
+            if character_id == pl_character_data.assistant_character_id:
+                character_data.assistant_state.always_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.width = width
             draw_text = "太累了，决定回房间睡觉\n" if character_data.tired else "太困了，决定回房间睡觉\n"
@@ -296,10 +303,11 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         if now_panel != None:
             now_panel.draw()
             #进行一次暂停以便玩家看输出信息
-            wait_draw = draw.LineFeedWaitDraw()
-            wait_draw.text = "\n"
-            wait_draw.width = normal_config.config_normal.text_width
-            wait_draw.draw()
+            if character_id == 0:
+                wait_draw = draw.LineFeedWaitDraw()
+                wait_draw.text = "\n"
+                wait_draw.width = normal_config.config_normal.text_width
+                wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
     if time_judge == 1:

@@ -7,8 +7,10 @@ ai的目标,,,
 0,0,high_1,原地待机5分钟
 1,1,high_1,原地待机10分钟
 2,2,high_1,原地待机30分钟
-4,0,ai_wait,（AI行为控制用）进行任何非移动指令后都需要原地待机5分钟
-5,15,is_follow|place_1,智能跟随模式下，如果不在玩家位置，则移动到玩家位置
+4,0,ai_wait,（AI行为控制用）进行日常交互指令后都需要原地待机5分钟
+5,15,is_follow_1|place_1,智能跟随模式下，如果不在玩家位置，则移动到玩家位置
+6,13,is_follow_3|not_in_dr_off,要求前往博士办公室时，如果不在博士办公室，则移动到博士办公室
+7,2,is_follow_3|in_dr_off,要求前往博士办公室时，如果在博士办公室，则原地等待30分钟并取消跟随
 
 10,10,not_follow,未跟随时自主移动，闲逛
 11,11,not_follow,未跟随时自主移动，回宿舍
@@ -26,14 +28,23 @@ ai的目标,,,
 37,41,hunger_ge_80|eat_time|not_have_food|in_food_shop,饥饿值到80%，且在饭点，且背包里没有食物，且在取餐区里，则买食物
 38,17,hunger_ge_80|eat_time|have_food|not_in_din,饥饿值到80%，且在饭点，且背包里有食物，且不在食堂里，则去食堂
 39,42,hunger_ge_80|eat_time|have_food|in_din,饥饿值到80%，且在饭点，且背包里有食物，且在食堂里，则吃饭
-40,11,sleep_time|not_in_dor,到就寝时间，且不在宿舍，则回宿舍
-41,44,sleep_time|in_dor,到就寝时间，且在宿舍，则睡觉
+40,11,sleep_time|ai_have_showered|not_in_dor,到就寝时间，今天已经洗过澡，且不在宿舍，则回宿舍
+41,44,sleep_time|ai_have_showered|in_dor,到就寝时间，今天已经洗过澡，且在宿舍，则睡觉
 42,18,mp_0|not_in_restroom,气力=0，且不在休息室，则去休息室
 43,43,mp_0|in_restroom,气力=0，且在休息室，则休息
 44,11,sleep_ge_90|urinate_ge_80|not_in_dor,困倦，且尿意值值到80%，且不在宿舍，则回宿舍
 45,50,sleep_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 46,21,ai_trained|not_in_training_room,距离上次训练已经超过2天，且当前不在训练室，则移动至训练室
 47,47,ai_trained|in_training_room,距离上次训练已经超过2天，且当前在训练室，则训练
+48,22,not_assistant|is_medical|not_follow|work_time|not_in_clinic,非助理的医疗干员，不在跟随模式下，在工作时间如果不在门诊，则去门诊
+49,301,not_assistant|is_medical|not_follow|work_time|in_clinic|patient_wait,非助理的医疗干员，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
+50,31,shower_time|ai_not_shower|not_in_bathzone_locker_room,淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
+51,71,shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_off,淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是全裸，则脱成全裸
+52,33,shower_time|ai_not_shower|not_in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前不在淋浴间，已经脱成全裸，则去淋浴区
+53,51,shower_time|ai_not_shower|in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前在淋浴间，已经脱成全裸，则开始淋浴
+54,31,shower_time|ai_have_showered|not_in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前不在大浴室的更衣室，已经脱成全裸，则去大浴室的更衣室
+55,72,shower_time|ai_have_showered|in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成全裸，则围上浴巾
+
 
 60,40,place_is_h|not_in_dor,目睹玩家和其他角色H，然后逃回自己宿舍
 

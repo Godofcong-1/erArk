@@ -20,7 +20,7 @@ def own_charcter_move(target_scene: list):
                 now_target_position,
                 now_need_time,
             ) = character_move(0, target_scene)
-            if move_now == "Null":
+            if move_now == "Null" or move_now == "un_open":
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
             character_data.behavior.move_target = now_target_position
@@ -30,7 +30,10 @@ def own_charcter_move(target_scene: list):
         else:
             break
     cache.character_data[0].target_character_id = 0
-    cache.now_panel_id = constant.Panel.IN_SCENE
+    if move_now == "un_open":
+        cache.now_panel_id = constant.Panel.SEE_MAP
+    else:
+        cache.now_panel_id = constant.Panel.IN_SCENE
 
 
 def character_move(character_id: int, target_scene: list) -> (str, list, list, int):
@@ -47,10 +50,16 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     int -- 本次移动花费的时间
     """
     now_position = cache.character_data[character_id].position
+    # if not character_id:
+    #     print(f"debug now_position = {now_position},target_scene = {target_scene}")
     if now_position == target_scene:
         return "end", [], [], 0
     now_position_str = map_handle.get_map_system_path_str_for_list(now_position)
     target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+    # if not character_id:
+    #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
+    if not map_handle.judge_scene_open(target_scene_str,character_id):
+        return "un_open", [], [], 0
     if (
         now_position_str not in map_handle.scene_path_edge
         or target_scene_str not in map_handle.scene_path_edge[now_position_str]

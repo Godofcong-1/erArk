@@ -1,6 +1,6 @@
-cid,behavior_id,adv_id,context
-口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
-str,int,int,str
-0,0,0,1
-口上配置数据,,,
-0,315,0,{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,315,0,high_1,{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}

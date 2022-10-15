@@ -375,6 +375,8 @@ class ACTION_INFO:
         """ 角色上次移动的时间 """
         self.last_training_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次训练的时间 """
+        self.last_shower_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次淋浴的时间 """
         self.social_contact_last_time: Dict[int, datetime.datetime] = {}
         """ 指定角色最后与自己社交的时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
@@ -543,16 +545,28 @@ class Base_resouce:
     def __init__(self):
         self.facility_level : Dict[int,int] = {}
         """ 基地当前所有设施的等级 """
+        self.facility_open : Dict[int,bool] = {}
+        """ 基地当前所有待开放设施的开放情况 """
         self.power_use : int = 0
         """ 当前使用电力 """
         self.power_max : int = 0
         """ 总可用电力 """
+        self.work_people_now : int = 0
+        """ 当前工作干员人数 """
         self.people_max : int = 0
         """ 干员人数上限 """
         self.life_zone_max : int = 0
         """ 生活娱乐区设施数量上限 """
-        self.ppatient_max : int = 0
+        self.patient_now : int = 0
+        """ 当前患者人数 """
+        self.patient_cured : int = 0
+        """ 当前已治疗患者人数 """
+        self.patient_max : int = 0
         """ 患者人数上限 """
+        self.cure_income : int = 0
+        """ 今日总治疗收入 """
+        self.all_income : int = 0
+        """ 今日全部门总收入 """
         self.research_zone_max : int = 0
         """ 科研区设施数量上限 """
         self.shop_max : int = 0
@@ -673,7 +687,7 @@ class Character:
         """ 角色当前二段行为状态数据 """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
-        self.position: List[str] = ["0"]
+        self.position: List[str] = ["0","0"]
         """ 角色当前坐标数据 """
         self.officeroom: List[str] = []
         """ 角色所属办公室坐标 """
@@ -728,7 +742,7 @@ class Character:
         self.is_h : bool = 0
         """ 在H模式中 """
         self.is_follow : int = 0
-        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随] """
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
         self.orgasm_level: Dict[int,int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int,int] = {}

@@ -2,7 +2,7 @@ import datetime
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle
+from Script.Design import handle_state_machine, character_move, map_handle, clothing
 from Script.Core import cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -44,7 +44,7 @@ def character_wait_10_min(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_30_MIN)
 def character_wait_30_min(character_id: int):
     """
-    等待30分钟
+    等待30分钟，并取消跟随状态
     Keyword arguments:
     character_id -- 角色id
     """
@@ -52,6 +52,7 @@ def character_wait_30_min(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.is_follow = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
@@ -250,6 +251,33 @@ def character_move_to_dining_hall(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLINIC)
+def character_move_to_clinic(character_id: int):
+    """
+    随机移动到门诊室（含急诊室）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 判断是否存在没有人的门诊室，存在的话优先去没有人的
+    empty_flag = False
+    for Clinic_place in constant.place_data["Clinic"]:
+        if list(cache.scene_data[Clinic_place].character_list) == []:
+            empty_flag = True
+            to_clinic = map_handle.get_map_system_path_for_str(Clinic_place)
+            break
+    if not empty_flag:
+        to_clinic = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Clinic"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_clinic)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -282,6 +310,71 @@ def character_move_to_rest_room(character_id: int):
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.text = character_data.name + "打算去休息"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
+def character_move_to_bathzone_locker_room(character_id: int):
+    """
+    移动至大浴场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 直接检索大浴场的更衣室
+    for place in constant.place_data["Locker_Room"]:
+        if place.split("\\")[0] == "大浴场":
+            to_locker_room = map_handle.get_map_system_path_for_str(place)
+            break
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_locker_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去大浴场的更衣室"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATH_ROOM)
+def character_move_to_bath_room(character_id: int):
+    """
+    移动至淋浴室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 检索当前角色所在的大场景里有没有淋浴室，没有的话再随机选择其他区块
+    now_position = character_data.position[0]
+    find_flag = False
+    for place in constant.place_data["Bathroom"]:
+        if place.split("\\")[0] == now_position:
+            to_bath_room = map_handle.get_map_system_path_for_str(place)
+            find_flag = True
+            break
+    if not find_flag:
+        to_bath_room = map_handle.get_map_system_path_for_str(
+    random.choice(constant.place_data["BathRoom"])
+    )
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_bath_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去淋浴"
         now_draw.draw()
         line_feed.draw()
 
@@ -545,6 +638,57 @@ def character_pee(character_id: int):
     character_data.behavior.duration = 5
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.TAKE_SHOWER)
+def character_take_shower(character_id: int):
+    """
+    角色淋浴
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
+    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
+    character_data.behavior.duration = 15
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_CLOTH_OFF)
+def character_get_cloth_off(character_id: int):
+    """
+    角色脱成全裸
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.CHANGE_CLOTH
+    character_data.state = constant.CharacterStatus.STATUS_CHANGE_CLOTH
+    character_data.behavior.duration = 5
+    clothing.get_cloth_off(character_id)
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "脱成全裸了"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_SHOWER_CLOTH)
+def character_get_shower_cloth(character_id: int):
+    """
+    角色换上浴帽和浴巾
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.CHANGE_CLOTH
+    character_data.state = constant.CharacterStatus.STATUS_CHANGE_CLOTH
+    character_data.behavior.duration = 5
+    clothing.get_shower_cloth(character_id)
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "换上了浴帽和浴巾"
+        now_draw.draw()
+        line_feed.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)
 def character_buy_rand_food_at_foodshop(character_id: int):
     """
@@ -604,6 +748,19 @@ def character_eat_rand_food(character_id: int):
     food_name = food_recipe.name
     character_data.behavior.food_name = food_name
     character_data.behavior.duration = 30
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_CURE_PATIENT)
+def character_work_cure_patient(character_id: int):
+    """
+    角色工作：治疗病人
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)

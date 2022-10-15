@@ -1,4 +1,3 @@
-from Script.UI.Flow.make_food_flow import make_food_flow
 import random
 import time
 import queue
@@ -208,7 +207,10 @@ def handle_owner_abl_up():
     now_draw.draw()
 
 
-@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.SYSTEM, _("查找与召集干员"), {})
+@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.WORK, _("查找与召集干员"), 
+{
+    constant.Premise.IN_DR_OFFICE_OR_DEBUG,
+})
 def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
     cache.now_panel_id = constant.Panel.FIND_CALL
@@ -226,6 +228,7 @@ def debug_mode():
     cache.base_resouce.money += 999999
     cache.base_resouce.orundum += 999999
     cache.base_resouce.Originite_Prime += 999999
+    cache.base_resouce.pink_certificate += 999999
     for i in {11,12,13,14,15,16,21,22,23,24}:
         cache.base_resouce.materials_resouce[i] += 999999
 
@@ -237,7 +240,7 @@ def debug_mode_off():
 
 @add_instruct(
     constant.Instruct.SEE_COLLECTION,
-    constant.InstructType.SYSTEM,
+    constant.InstructType.WORK,
     _("查看收藏品"),
     {
         constant.Premise.IN_COLLECTION_ROOM
@@ -245,6 +248,18 @@ def debug_mode_off():
 def handle_see_collection():
     """处理查看收藏品指令"""
     cache.now_panel_id = constant.Panel.COLLECTION
+
+
+@add_instruct(
+    constant.Instruct.SEE_DEPARTMENT,
+    constant.InstructType.WORK,
+    _("查看部门运作情况"),
+    {
+        constant.Premise.IN_DR_OFFICE
+    })
+def handle_see_department():
+    """处理查看部门运作情况指令"""
+    cache.now_panel_id = constant.Panel.DEPARTMENT
 
 
 # @add_instruct(
@@ -267,7 +282,7 @@ def handle_see_collection():
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant.Premise.IN_DORMITORY,
     constant.Premise.NOT_H,
-    constant.Premise.SLEEP_GE_75}
+    constant.Premise.SLEEP_GE_75_OR_SLEEP_TIME}
     )
 def handle_sleep():
     """处理睡觉指令"""
@@ -278,6 +293,24 @@ def handle_sleep():
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(480)
+
+
+@add_instruct(
+    constant.Instruct.TAKE_SHOWER,
+    constant.InstructType.DAILY,
+    _("淋浴"),
+    {constant.Premise.IN_BATHROOM,
+    constant.Premise.NOT_H,
+    constant.Premise.SLEEP_LE_89}
+)
+def handle_take_shower():
+    """处理淋浴指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 15
+    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
+    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
+    update.game_update_flow(15)
 
 
 # @add_instruct(
@@ -568,7 +601,6 @@ def handle_wait():
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = 5
-    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(5)
 
 
@@ -658,13 +690,13 @@ def handle_make_food():
 @add_instruct(
     constant.Instruct.FOLLOW,
     constant.InstructType.DAILY,
-    _("请求同行"),
+    _("邀请同行"),
     {constant.Premise.HAVE_TARGET,
     constant.Premise.NOT_H,
     constant.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
-    """处理请求同行指令"""
+    """处理邀请同行指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
@@ -675,6 +707,20 @@ def handle_followed():
     # print("进入同行模式")
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
     update.game_update_flow(5)
+
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n{target_data.name}进入跟随模式\n"
+
+    # 去掉其他NPC的跟随
+    if not cache.debug_mode:
+        for npc_id in cache.character_data:
+            if npc_id not in {0,character_data.target_character_id,character_data.assistant_character_id}:
+                other_character_data = cache.character_data[npc_id]
+                if other_character_data.is_follow:
+                    other_character_data.is_follow = 0
+                    now_draw.text += f"当前最大跟随数量：1人（助理除外），{other_character_data.name}退出跟随模式\n"
+    now_draw.width = 1
+    now_draw.draw()
 
 @add_instruct(
     constant.Instruct.END_FOLLOW,
@@ -693,6 +739,8 @@ def handle_end_followed():
     character_data.state = constant.CharacterStatus.STATUS_END_FOLLOW
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.is_follow = 0
+    if character_data.target_character_id == character_data.assistant_character_id:
+        target_data.assistant_state.always_follow = 0
     update.game_update_flow(1)
 
 @add_instruct(
@@ -1111,6 +1159,22 @@ def handle_official_work():
 
 
 @add_instruct(
+    constant.Instruct.BATTLE_COMMAND,
+    constant.InstructType.WORK,
+    _("指挥作战（未实装）"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_COMMAND_ROOM,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_battle_command():
+    """处理指挥作战指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.APPOINTED_ASSISTANT, constant.InstructType.WORK, _("指派助理"),
     {constant.Premise.NOT_H,
     constant.Premise.IN_DR_OFFICE,}
@@ -1146,6 +1210,42 @@ def handle_training():
     character_data.behavior.behavior_id = constant.Behavior.TRAINING
     character_data.state = constant.CharacterStatus.STATUS_TRAINING
     update.game_update_flow(120)
+
+
+@add_instruct(
+    constant.Instruct.EXERCISE,
+    constant.InstructType.WORK,
+    _("锻炼身体"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_GYM_ROOM,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_exercise():
+    """处理锻炼身体指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.EXERCISE
+    character_data.state = constant.CharacterStatus.STATUS_EXERCISE
+    update.game_update_flow(120)
+
+
+@add_instruct(
+    constant.Instruct.CURE_PATIENT,
+    constant.InstructType.WORK,
+    _("诊疗病人"),
+    {constant.Premise.NOT_H,
+    constant.Premise.IN_CLINIC,
+    constant.Premise.SLEEP_LE_74}
+)
+def handle_cure_patient():
+    """处理诊疗病人指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
+    character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
+    update.game_update_flow(30)
 
 
 #以下为猥亵#
@@ -3047,7 +3147,7 @@ def handle_bundled_play():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.TAKE_SHOWER,
+    constant.Instruct.TAKE_SHOWER_H,
     constant.InstructType.SEX,
     _("淋浴_未实装"),
     {constant.Premise.HAVE_TARGET,

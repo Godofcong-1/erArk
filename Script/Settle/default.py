@@ -15,6 +15,8 @@ from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
+import random
+
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -514,7 +516,8 @@ def handle_eat_food(
         # if character_data.food_bag[food.uid]:
         # print(f"debug food.uid = {food.uid}")
         # print(f"debug character_data.food_bag = {character_data.food_bag}")
-        del character_data.food_bag[food.uid]
+        if food.uid in character_data.food_bag:
+            del character_data.food_bag[food.uid]
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MAKE_FOOD)
@@ -2400,6 +2403,27 @@ def handle_add_small_learn(
     change_data.status_data[9] += now_add_lust
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DIRTY_RESET)
+def handle_dirty_reset(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    污浊情况(身体+衣服)归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.dirty = attr_calculation.get_dirty_zero()
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
     character_id: int,
@@ -2618,6 +2642,97 @@ def handle_knowledge_add_pink_money(
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int (add_time * adjust_target)
     cache.base_resouce.pink_certificate += now_add_lust
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
+    now_draw.width = width
+    now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
+def handle_cure_patient_add_just(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+    #获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[46])
+    # 获得加成 #
+    now_add_lust = add_time * adjust * 1000
+    now_add_lust = int(now_add_lust * random.uniform(0.5,1.5))
+
+    # 如果有交互对象，则算上对方的医疗加成
+    if character_data.target_character_id != character_id:
+        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
+        now_add_lust += int (add_time * adjust_target)
+    cache.base_resouce.money += now_add_lust
+    cache.base_resouce.cure_income += now_add_lust
+    cache.base_resouce.all_income += now_add_lust
+    cache.base_resouce.patient_now -= 1
+    cache.base_resouce.patient_cured += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_HPMP_MAX)
+def handle_add_hpmp_max(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    （锻炼身体用）增加体力气力上限
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    add_hp = int(10 * random.uniform(0.75,1.25))
+    add_mp = int(20 * random.uniform(0.75,1.25))
+    character_data.hit_point_max += add_hp
+    character_data.mana_point_max += add_mp
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"\n{character_data.name}博士的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
+    now_draw.width = width
+    now_draw.draw()
+    #交互对象也同样#
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        add_hp = 10 * random.uniform(0.75,1.25)
+        add_mp = 20 * random.uniform(0.75,1.25)
+        target_data.hit_point_max += add_hp
+        target_data.mana_point_max += add_mp
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
+        now_draw.width = width
+        now_draw.draw()
+    else:
+        now_draw = draw.NormalDraw()
+        now_draw.text = "\n"
+        now_draw.width = 1
+        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)
@@ -2707,7 +2822,7 @@ def handle_sing_add_adjust(
                 if good_flag:
                     now_add_lust *= adjust
                 else:
-                    now_add_lust *= (adjust - 1)
+                    now_add_lust *= 10
                 target_data.status_data[i] += now_add_lust
                 change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
                 target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -2804,7 +2919,7 @@ def handle_play_instrument_add_adjust(
                 if good_flag:
                     now_add_lust *= adjust
                 else:
-                    now_add_lust *= (adjust - 1)
+                    now_add_lust *= 10
                 target_data.status_data[i] += now_add_lust
                 change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
                 target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -3343,7 +3458,7 @@ def handle_low_obscenity_failed_adjust(
         #降好感
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, target_change, now_time
+            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
         )
 
 
@@ -3391,7 +3506,7 @@ def handle_high_obscenity_failed_adjust(
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         minus_favorability *= 5
         character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, target_change, now_time
+            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
         )
         #降信赖
         now_lust_multiple = 10
@@ -3529,4 +3644,24 @@ def handle_record_training_time(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.action_info.talk_time = now_time
+    character_data.action_info.last_training_time = now_time
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_SHOWER_TIME)
+def handle_record_shower_time(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    记录当前淋浴时间
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.last_shower_time = now_time

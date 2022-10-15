@@ -528,3 +528,64 @@ def identical_map_move(
         now_need_time = move_path.time[0]
         now_target_position = get_scene_path_for_map_scene_id(now_map, now_target_scene_id)
     return move_end, move_path, now_target_position, now_need_time
+
+def judge_scene_open(target_scene_str : str, character_id : int) -> int :
+    """
+    判断目标地点是否可以进入
+    Keyword arguments:
+    target_scene_str -- 目标场景位置（例：A\B\C）
+    Return arguments:
+    int -- 是否可以进入
+    """
+    from Script.Config import game_config, normal_config
+    from Script.UI.Moudle import draw
+    width: int = normal_config.config_normal.text_width
+    """ 窗体宽度 """
+
+    # print(f"debug target_scene_str = {target_scene_str}")
+    now_scene_data = cache.scene_data[target_scene_str]
+    # print(f"debug now_scene_data.name = {now_scene_data.scene_name}")
+    # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
+    for open_cid in game_config.config_facility_open:
+        # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
+        if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
+            if cache.base_resouce.facility_open[open_cid]:
+                return 1
+            else:
+                # 获取设施的解锁条件数据
+                facility_cid = game_config.config_facility_open[open_cid].zone_cid
+                zone_data = game_config.config_facility_effect[facility_cid]
+                zone_name,zone_lv = zone_data.name,str(zone_data.level)
+
+                if character_id == 0:
+                    line = draw.LineDraw("-", width)
+                    line.draw()
+                    info_draw = draw.WaitDraw()
+                    info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前尚未解锁，解锁需要将{zone_name}升到{zone_lv}级\n"
+                    info_draw.width = width
+                    info_draw.draw()
+
+                return 0
+    return 1
+
+def judge_scene_name_open(full_scene_str : str) -> int :
+    """
+    通过地点名判断目标地点是否可以进入
+    Keyword arguments:
+    full_scene_str -- 目标场景位置（例：A\B\C）
+    Return arguments:
+    int -- 是否可以进入
+    """
+    from Script.Config import game_config
+    now_scene_data = cache.scene_data[full_scene_str]
+
+    # print(f"debug scene_name = {scene_name}")
+    # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
+    for open_cid in game_config.config_facility_open:
+        # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
+        if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
+            if cache.base_resouce.facility_open[open_cid]:
+                return 1
+            else:
+                return 0
+    return 1

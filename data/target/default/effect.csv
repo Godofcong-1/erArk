@@ -3,4 +3,4 @@ cid,target_id,effect_id
 str,str,str
 0,0,0
 执行目标所能达成的效果id,,
-0,4,in_dor
+0,6,in_dr_off

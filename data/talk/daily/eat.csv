@@ -1,8 +1,8 @@
-cid,behavior_id,adv_id,context
-口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
-str,int,int,str
-0,0,0,1
-口上配置数据,,,
-0,108,0,{Name}触发了进食{FoodName}的地文
-1,108,0,{Name}食用了随身携带的{FoodName}
-2,108,0,{Name}食用了制作好的{FoodName}
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,108,0,high_1,{Name}触发了进食{FoodName}的地文
+1,108,0,sys_0,{Name}食用了随身携带的{FoodName}
+2,108,0,sys_0,{Name}食用了制作好的{FoodName}

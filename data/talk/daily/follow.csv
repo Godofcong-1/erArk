@@ -1,8 +1,8 @@
-cid,behavior_id,adv_id,context
-口上id,触发口上的行为id,口上限定的剧情NPCid,口上内容
-str,int,int,str
-0,0,0,1
-口上配置数据,,,
-0,115,0,{Name}触发了请求同行指令的地文
-1,115,0,{Name}表示了想要{TargetName}和自己一起逛逛
-2,115,0,{Name}表示了想要{TargetName}跟着自己
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,115,0,high_1,{Name}触发了邀请同行指令的地文
+1,115,0,sys_0,{Name}表示了想要{TargetName}和自己一起逛逛
+2,115,0,sys_0,{Name}表示了想要{TargetName}跟着自己
