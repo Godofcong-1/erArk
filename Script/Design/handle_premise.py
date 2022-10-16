@@ -2092,6 +2092,99 @@ def handle_target_desire_ge_7(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.TALK_LE_1)
+def handle_talk_le_1(character_id: int) -> int:
+    """
+    校验角色是否话术技能<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[40] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TALK_GE_3)
+def handle_talk_ge_3(character_id: int) -> int:
+    """
+    校验角色是否话术技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[40] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TALK_GE_5)
+def handle_talk_ge_5(character_id: int) -> int:
+    """
+    校验角色是否话术技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[40] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_TALK_LE_1)
+def handle_t_talk_le_1(character_id: int) -> int:
+    """
+    校验交互对象是否话术技能<=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[40] <= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_TALK_GE_3)
+def handle_t_talk_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否话术技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[40] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_TALK_GE_5)
+def handle_t_talk_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否话术技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[40] >= 5:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.TARGET_COOK_1)
 def handle_target_cook_1(character_id: int) -> int:
     """
@@ -2441,6 +2534,182 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[19] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_YIELD_MARK_1)
+def handle_t_yield_mark_1(character_id: int) -> int:
+    """
+    校验交互对象是否屈服刻印==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[14] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_YIELD_MARK_2)
+def handle_t_yield_mark_2(character_id: int) -> int:
+    """
+    校验交互对象是否屈服刻印==2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[14] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_YIELD_MARK_3)
+def handle_t_yield_mark_3(character_id: int) -> int:
+    """
+    校验交互对象是否屈服刻印==3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[14] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_YIELD_MARK_GE_1)
+def handle_t_yield_mark_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否屈服刻印>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[14] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_YIELD_MARK_LE_2)
+def handle_t_yield_mark_le_2(character_id: int) -> int:
+    """
+    校验交互对象是否屈服刻印<=2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[14] <= 2:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_GE_1)
+def handle_t_finger_tec_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否指技>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_GE_3)
+def handle_t_finger_tec_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否指技>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_GE_5)
+def handle_t_finger_tec_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否指技>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_GE_7)
+def handle_t_finger_tec_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否指技>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_0)
+def handle_t_finger_tec_0(character_id: int) -> int:
+    """
+    校验交互对象是否指技==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_FINGER_TEC_L_3)
+def handle_t_finger_tec_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否指技<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[70] < 3:
         return 1
     return 0
 
@@ -6155,6 +6424,38 @@ def handle_t_not_wear_bra(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if len(target_data.cloth[6]):
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.TARGET_WEAR_GLOVES)
+def handle_t_wear_gloves(character_id: int) -> int:
+    """
+    交互对象戴着手套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[7]):
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.TARGET_NOT_WEAR_GLOVES)
+def handle_t_not_wear_gloves(character_id: int) -> int:
+    """
+    交互对象没有戴着手套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth[7]):
         return 0
     return 1
 
