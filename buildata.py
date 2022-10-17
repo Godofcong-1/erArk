@@ -1,10 +1,15 @@
 from Script.Config import game_config
 
+'''
+自动生成前提的文件
+'''
+
+
 # 1前提生成
 mode = 1
-command_str = "t_finger_tec_0"
+command_str = "bfeel_ge_1"
 capital_command = command_str.upper()
-dataname = "指技"
+dataname = "Ｂ感觉"
 # A:能力数值,S:状态数值
 datetype = "A"
 

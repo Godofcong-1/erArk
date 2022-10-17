@@ -3072,6 +3072,21 @@ def handle_target_same_sex(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HAVE_VIRGIN)
+def handle_have_virgin(character_id: int) -> int:
+    """
+    校验玩家是否是童贞
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.talent[5]:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.TARGET_NO_FIRST_KISS)
 def handle_target_no_first_kiss(character_id: int) -> int:
     """
@@ -8069,3 +8084,892 @@ def handle_no_in_item_shop(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.position != ["11"]
+
+
+@add_premise(constant.Premise.T_NFEEL_GE_1)
+def handle_t_nfeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_GE_3)
+def handle_t_nfeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_GE_5)
+def handle_t_nfeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_GE_7)
+def handle_t_nfeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_L_1)
+def handle_t_nfeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_L_3)
+def handle_t_nfeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_NFEEL_L_5)
+def handle_t_nfeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｎ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[0] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_GE_1)
+def handle_t_bfeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_GE_3)
+def handle_t_bfeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_GE_5)
+def handle_t_bfeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_GE_7)
+def handle_t_bfeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_L_1)
+def handle_t_bfeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_L_3)
+def handle_t_bfeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BFEEL_L_5)
+def handle_t_bfeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｂ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[1] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_GE_1)
+def handle_t_cfeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_GE_3)
+def handle_t_cfeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_GE_5)
+def handle_t_cfeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_GE_7)
+def handle_t_cfeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_L_1)
+def handle_t_cfeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_L_3)
+def handle_t_cfeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_CFEEL_L_5)
+def handle_t_cfeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｃ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[2] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_GE_1)
+def handle_pfeel_ge_1(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_GE_3)
+def handle_pfeel_ge_3(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_GE_5)
+def handle_pfeel_ge_5(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_GE_7)
+def handle_pfeel_ge_7(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_L_1)
+def handle_pfeel_l_1(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_L_3)
+def handle_pfeel_l_3(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.PFEEL_L_5)
+def handle_pfeel_l_5(character_id: int) -> int:
+    """
+    校验角色是否Ｐ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[3] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_GE_1)
+def handle_t_vfeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_GE_3)
+def handle_t_vfeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_GE_5)
+def handle_t_vfeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_GE_7)
+def handle_t_vfeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_L_1)
+def handle_t_vfeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_L_3)
+def handle_t_vfeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_VFEEL_L_5)
+def handle_t_vfeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｖ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[4] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_GE_1)
+def handle_t_afeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_GE_3)
+def handle_t_afeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_GE_5)
+def handle_t_afeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_GE_7)
+def handle_t_afeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_L_1)
+def handle_t_afeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_L_3)
+def handle_t_afeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_AFEEL_L_5)
+def handle_t_afeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ａ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[5] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_GE_1)
+def handle_t_ufeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_GE_3)
+def handle_t_ufeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_GE_5)
+def handle_t_ufeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_GE_7)
+def handle_t_ufeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_L_1)
+def handle_t_ufeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_L_3)
+def handle_t_ufeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_UFEEL_L_5)
+def handle_t_ufeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｕ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[6] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_GE_1)
+def handle_t_wfeel_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_GE_3)
+def handle_t_wfeel_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_GE_5)
+def handle_t_wfeel_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_GE_7)
+def handle_t_wfeel_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_L_1)
+def handle_t_wfeel_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_L_3)
+def handle_t_wfeel_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WFEEL_L_5)
+def handle_t_wfeel_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否Ｗ感觉<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[7] < 5:
+        return 1
+    return 0
