@@ -6746,6 +6746,86 @@ def handle_not_shower_cloth(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant.Premise.T_UP_CLOTH_SEMEN)
+def handle_t_up_cloth_semen(character_id: int) -> int:
+    """
+    交互对象当前上衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[5][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_GLOVE_SEMEN)
+def handle_t_glove_semen(character_id: int) -> int:
+    """
+    交互对象当前手套有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[7][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_BOTTOM_CLOTH_SEMEN)
+def handle_t_botton_cloth_semen(character_id: int) -> int:
+    """
+    交互对象当前下衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[8][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_PAN_SEMEN)
+def handle_t_pan_semen(character_id: int) -> int:
+    """
+    交互对象当前内裤有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[9][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SOCKS_SEMEN)
+def handle_t_socks_semen(character_id: int) -> int:
+    """
+    交互对象当前袜子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[10][1]:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.HAVE_COLLECTION)
 def handle_have_collection(character_id: int) -> int:
     """
@@ -9481,5 +9561,357 @@ def handle_t_m_l_5(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[25] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_GE_1)
+def handle_t_submit_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否顺从>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_GE_3)
+def handle_t_submit_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否顺从>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_GE_5)
+def handle_t_submit_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否顺从>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_GE_7)
+def handle_t_submit_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否顺从>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_L_1)
+def handle_t_submit_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否顺从<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_L_3)
+def handle_t_submit_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否顺从<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SUBMIT_L_5)
+def handle_t_submit_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否顺从<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[20] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LOVE_SENSE_TASTE_0)
+def handle_t_love_sense_taste_0(character_id: int) -> int:
+    """
+    校验交互对象是否精爱味觉==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[26] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LOVE_SENSE_TASTE_1)
+def handle_t_love_sense_taste_1(character_id: int) -> int:
+    """
+    校验交互对象是否精爱味觉==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[26] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SADISM_0)
+def handle_t_sadism_0(character_id: int) -> int:
+    """
+    校验交互对象是否施虐狂==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[27] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_SADISM_1)
+def handle_t_sadism_1(character_id: int) -> int:
+    """
+    校验交互对象是否施虐狂==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[27] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_MASOCHISM_0)
+def handle_t_masochism_0(character_id: int) -> int:
+    """
+    校验交互对象是否受虐狂==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[28] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_MASOCHISM_1)
+def handle_t_masochism_1(character_id: int) -> int:
+    """
+    校验交互对象是否受虐狂==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[28] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_OESTRUS_0)
+def handle_t_oestrus_0(character_id: int) -> int:
+    """
+    校验交互对象是否发情期==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[130] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_OESTRUS_1)
+def handle_t_oestrus_1(character_id: int) -> int:
+    """
+    校验交互对象是否发情期==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[130] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_L_1)
+def handle_t_lubrication_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否润滑<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_GE_3)
+def handle_t_lubrication_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否润滑>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_GE_1)
+def handle_t_lubrication_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否润滑>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_GE_5)
+def handle_t_lubrication_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否润滑>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_GE_7)
+def handle_t_lubrication_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否润滑>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_L_3)
+def handle_t_lubrication_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否润滑<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_LUBRICATION_L_7)
+def handle_t_lubrication_l_7(character_id: int) -> int:
+    """
+    校验交互对象是否润滑<7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.status_data[8] < 7:
         return 1
     return 0

@@ -7,11 +7,11 @@ from Script.Config import game_config
 
 # 1前提生成
 mode = 1
-command_str = "t_m_l_5"
+command_str = "t_lubrication_l_7"
 capital_command = command_str.upper()
-dataname = "顺从"
-# A:能力数值,S:状态数值
-datetype = "A"
+dataname = "润滑"
+# A:能力数值,S:状态数值,T:素质
+datetype = "S"
 
 # 数据初始化
 game_config.init()
@@ -27,6 +27,12 @@ elif datetype == "S":
     datetype_str = "status_data"
     for config_data_index in game_config.config_character_state:
         if game_config.config_character_state[config_data_index].name == dataname:
+            data_index = config_data_index
+            break
+elif datetype == "T":
+    datetype_str = "talent"
+    for config_data_index in game_config.config_talent:
+        if game_config.config_talent[config_data_index].name == dataname:
             data_index = config_data_index
             break
 print(f"数据名 = {dataname}，类型 = {datetype_str}，id = {config_data_index}")

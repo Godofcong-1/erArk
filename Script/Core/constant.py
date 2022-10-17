@@ -1064,6 +1064,21 @@ class Premise:
     """ 收藏奖励_203_解锁索要袜子 """
 
 
+    T_LUBRICATION_L_1 = "t_lubrication_l_1"
+    """ 交互对象润滑<1 """
+    T_LUBRICATION_L_3 = "t_lubrication_l_3"
+    """ 交互对象润滑<3 """
+    T_LUBRICATION_L_7 = "t_lubrication_l_7"
+    """ 交互对象润滑<7 """
+    T_LUBRICATION_GE_1 = "t_lubrication_ge_1"
+    """ 交互对象润滑>=1 """
+    T_LUBRICATION_GE_3 = "t_lubrication_ge_3"
+    """ 交互对象润滑>=3 """
+    T_LUBRICATION_GE_5 = "t_lubrication_ge_5"
+    """ 交互对象润滑>=5 """
+    T_LUBRICATION_GE_7 = "t_lubrication_ge_7"
+    """ 交互对象润滑>=7 """
+
     T_NFEEL_GE_1 = "t_nfeel_ge_1"
     """ 交互对象Ｎ感觉>=1 """
     T_NFEEL_GE_3 = "t_nfeel_ge_3"
@@ -1193,6 +1208,21 @@ class Premise:
     """ 交互对象技巧技能>=3 """
     TARGET_TECHNIQUE_GE_5 = "t_technique_ge_5"
     """ 交互对象技巧技能>=5 """
+
+    T_SUBMIT_GE_1 = "t_submit_ge_1"
+    """ 交互对象顺从>=1 """
+    T_SUBMIT_GE_3 = "t_submit_ge_3"
+    """ 交互对象顺从>=3 """
+    T_SUBMIT_GE_5 = "t_submit_ge_5"
+    """ 交互对象顺从>=5 """
+    T_SUBMIT_GE_7 = "t_submit_ge_7"
+    """ 交互对象顺从>=7 """
+    T_SUBMIT_L_1 = "t_submit_l_1"
+    """ 交互对象顺从<1 """
+    T_SUBMIT_L_3 = "t_submit_l_3"
+    """ 交互对象顺从<3 """
+    T_SUBMIT_L_5 = "t_submit_l_5"
+    """ 交互对象顺从<5 """
 
     TARGET_INTIMACY_8 = "t_intimacy_8"
     """ 交互对象亲密==8 """
@@ -1366,8 +1396,6 @@ class Premise:
     """ 交互对象指技<3 """
 
 
-
-
     KISS_0 = "kiss_0"
     """ 自身亲吻经验==0 """
     KISS_GE_10 = "kiss_ge_10"
@@ -1437,6 +1465,24 @@ class Premise:
     """ 交互对象非A处女 """
     TARGET_HAVE_A_VIRGIN = "t_a_virgin_1"
     """ 交互对象是A处女 """
+
+    T_LOVE_SENSE_TASTE_0 = "t_love_sense_taste_0"
+    """ 交互对象精爱味觉==0 """
+    T_LOVE_SENSE_TASTE_1 = "t_love_sense_taste_1"
+    """ 交互对象精爱味觉==1 """
+    T_SADISM_0 = "t_sadism_0"
+    """ 交互对象施虐狂==0 """
+    T_SADISM_1 = "t_sadism_1"
+    """ 交互对象施虐狂==1 """
+    T_MASOCHISM_0 = "t_masochism_0"
+    """ 交互对象受虐狂==0 """
+    T_MASOCHISM_1 = "t_masochism_1"
+    """ 交互对象受虐狂==1 """
+    T_OESTRUS_0 = "t_oestrus_0"
+    """ 交互对象发情期==0 """
+    T_OESTRUS_1 = "t_oestrus_1"
+    """ 交互对象发情期==1 """
+
 
     IS_MEDICAL = "is_medical"
     """ 自己的职业为医疗 """
@@ -1717,6 +1763,11 @@ class Premise:
     SEMEN_ENEMA_END = "semen_enema_end"
     """ 已精液灌肠 """
 
+    T_HAIR_SEMEN = "t_hair_semen"
+    """ 交互对象当前头发有精液 """
+    T_WOMB_SEMEN = "t_womb_semen"
+    """ 交互对象当前子宫有精液 """
+
     WEAR_BRA = "wear_bra"
     """ 穿着胸衣 """
     TARGET_WEAR_BRA = "t_wear_bra"
@@ -1752,6 +1803,17 @@ class Premise:
     """ 围着浴巾 """
     NOT_SHOWER_CLOTH = "not_shower_cloth"
     """ 没有围着浴巾 """
+
+    T_UP_CLOTH_SEMEN = "t_up_cloth_semen"
+    """ 交互对象当前上衣有精液 """
+    T_GLOVE_SEMEN = "t_glove_semen"
+    """ 交互对象当前手套有精液 """
+    T_BOTTOM_CLOTH_SEMEN = "t_botton_cloth_semen"
+    """ 交互对象当前下衣有精液 """
+    T_PAN_SEMEN = "t_pan_semen"
+    """ 交互对象当前内裤有精液 """
+    T_SOCKS_SEMEN = "t_socks_semen"
+    """ 交互对象当前袜子有精液 """
 
     HAVE_COLLECTION = "have_collection"
     """ 持有藏品 """
