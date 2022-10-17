@@ -9,7 +9,7 @@ from Script.Config import game_config
 mode = 1
 command_str = "t_m_l_5"
 capital_command = command_str.upper()
-dataname = "受虐"
+dataname = "顺从"
 # A:能力数值,S:状态数值
 datetype = "A"
 
