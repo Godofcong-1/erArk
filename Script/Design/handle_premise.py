@@ -3072,6 +3072,36 @@ def handle_target_same_sex(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.HAVE_FIRST_KISS)
+def handle_have_first_kiss(character_id: int) -> int:
+    """
+    玩家保有初吻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.talent[4]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NO_FIRST_KISS)
+def handle_no_first_kiss(character_id: int) -> int:
+    """
+    玩家未保有初吻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.talent[4]:
+        return 0
+    return 1
+
+
 @add_premise(constant.Premise.HAVE_VIRGIN)
 def handle_have_virgin(character_id: int) -> int:
     """
@@ -3081,10 +3111,55 @@ def handle_have_virgin(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
+    character_data: game_type.Character = cache.character_data[0]
     if character_data.talent[5]:
         return 1
     return 0
+
+
+@add_premise(constant.Premise.NO_VIRGIN)
+def handle_no_virgin(character_id: int) -> int:
+    """
+    玩家非童贞
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.talent[5]:
+        return 0
+    return 1
+
+
+@add_premise(constant.Premise.HAVE_A_VIRGIN)
+def handle_have_a_virgin(character_id: int) -> int:
+    """
+    校验玩家是否是A处
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.talent[1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.NO_A_VIRGIN)
+def handle_no_a_virgin(character_id: int) -> int:
+    """
+    玩家非A处
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.talent[1]:
+        return 0
+    return 1
 
 
 @add_premise(constant.Premise.TARGET_NO_FIRST_KISS)
@@ -3099,6 +3174,7 @@ def handle_target_no_first_kiss(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[4] == 1
+
 
 @add_premise(constant.Premise.TARGET_HAVE_FIRST_KISS)
 def handle_target_have_first_kiss(character_id: int) -> int:
@@ -8971,5 +9047,439 @@ def handle_t_wfeel_l_5(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[7] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_GE_1)
+def handle_s_ge_1(character_id: int) -> int:
+    """
+    校验角色是否施虐>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_GE_3)
+def handle_s_ge_3(character_id: int) -> int:
+    """
+    校验角色是否施虐>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_GE_5)
+def handle_s_ge_5(character_id: int) -> int:
+    """
+    校验角色是否施虐>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_GE_7)
+def handle_s_ge_7(character_id: int) -> int:
+    """
+    校验角色是否施虐>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_L_1)
+def handle_s_l_1(character_id: int) -> int:
+    """
+    校验角色是否施虐<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_L_3)
+def handle_s_l_3(character_id: int) -> int:
+    """
+    校验角色是否施虐<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.S_L_5)
+def handle_s_l_5(character_id: int) -> int:
+    """
+    校验角色是否施虐<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[24] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_GE_1)
+def handle_t_s_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否施虐>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_GE_3)
+def handle_t_s_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否施虐>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_GE_5)
+def handle_t_s_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否施虐>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_GE_7)
+def handle_t_s_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否施虐>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_L_1)
+def handle_t_s_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否施虐<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_L_3)
+def handle_t_s_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否施虐<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_S_L_5)
+def handle_t_s_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否施虐<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[24] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_GE_1)
+def handle_m_ge_1(character_id: int) -> int:
+    """
+    校验角色是否受虐>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_GE_3)
+def handle_m_ge_3(character_id: int) -> int:
+    """
+    校验角色是否受虐>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_GE_5)
+def handle_m_ge_5(character_id: int) -> int:
+    """
+    校验角色是否受虐>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_GE_7)
+def handle_m_ge_7(character_id: int) -> int:
+    """
+    校验角色是否受虐>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_L_1)
+def handle_m_l_1(character_id: int) -> int:
+    """
+    校验角色是否受虐<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_L_3)
+def handle_m_l_3(character_id: int) -> int:
+    """
+    校验角色是否受虐<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.M_L_5)
+def handle_m_l_5(character_id: int) -> int:
+    """
+    校验角色是否受虐<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[25] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_GE_1)
+def handle_t_m_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否受虐>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_GE_3)
+def handle_t_m_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否受虐>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_GE_5)
+def handle_t_m_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否受虐>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_GE_7)
+def handle_t_m_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否受虐>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_L_1)
+def handle_t_m_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否受虐<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_L_3)
+def handle_t_m_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否受虐<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_M_L_5)
+def handle_t_m_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否受虐<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[25] < 5:
         return 1
     return 0

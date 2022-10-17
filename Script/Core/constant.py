@@ -1207,6 +1207,64 @@ class Premise:
     TARGET_DESIRE_GE_7 = "t_desire_ge_7"
     """ 交互对象欲望>=7 """
 
+    S_GE_1 = "s_ge_1"
+    """ 施虐>=1 """
+    S_GE_3 = "s_ge_3"
+    """ 施虐>=3 """
+    S_GE_5 = "s_ge_5"
+    """ 施虐>=5 """
+    S_GE_7 = "s_ge_7"
+    """ 施虐>=7 """
+    S_L_1 = "s_l_1"
+    """ 施虐<1 """
+    S_L_3 = "s_l_3"
+    """ 施虐<3 """
+    S_L_5 = "s_l_5"
+    """ 施虐<5 """
+    T_S_GE_1 = "t_s_ge_1"
+    """ 交互对象施虐>=1 """
+    T_S_GE_3 = "t_s_ge_3"
+    """ 交互对象施虐>=3 """
+    T_S_GE_5 = "t_s_ge_5"
+    """ 交互对象施虐>=5 """
+    T_S_GE_7 = "t_s_ge_7"
+    """ 交互对象施虐>=7 """
+    T_S_L_1 = "t_s_l_1"
+    """ 交互对象施虐<1 """
+    T_S_L_3 = "t_s_l_3"
+    """ 交互对象施虐<3 """
+    T_S_L_5 = "t_s_l_5"
+    """ 交互对象施虐<5 """
+
+    M_GE_1 = "m_ge_1"
+    """ 受虐>=1 """
+    M_GE_3 = "m_ge_3"
+    """ 受虐>=3 """
+    M_GE_5 = "m_ge_5"
+    """ 受虐>=5 """
+    M_GE_7 = "m_ge_7"
+    """ 受虐>=7 """
+    M_L_1 = "m_l_1"
+    """ 受虐<1 """
+    M_L_3 = "m_l_3"
+    """ 受虐<3 """
+    M_L_5 = "m_l_5"
+    """ 受虐<5 """
+    T_M_GE_1 = "t_m_ge_1"
+    """ 交互对象受虐>=1 """
+    T_M_GE_3 = "t_m_ge_3"
+    """ 交互对象受虐>=3 """
+    T_M_GE_5 = "t_m_ge_5"
+    """ 交互对象受虐>=5 """
+    T_M_GE_7 = "t_m_ge_7"
+    """ 交互对象受虐>=7 """
+    T_M_L_1 = "t_m_l_1"
+    """ 交互对象受虐<1 """
+    T_M_L_3 = "t_m_l_3"
+    """ 交互对象受虐<3 """
+    T_M_L_5 = "t_m_l_5"
+    """ 交互对象受虐<5 """
+
     T_YIELD_MARK_1 = "t_yield_mark_1"
     """ 交互对象屈服刻印==1 """
     T_YIELD_MARK_2 = "t_yield_mark_2"
@@ -1355,17 +1413,29 @@ class Premise:
     TARGET_OBEY_LE_2 = "obey_le_2"
     """ 交互对象隶属系<=驯服 """
 
-    TARGET_NO_FIRST_KISS = "kiss_0"
+    NO_FIRST_KISS = "kiss_0"
+    """ 玩家未保有初吻 """
+    HAVE_FIRST_KISS = "kiss_1"
+    """ 玩家保有初吻 """
+    NO_VIRGIN = "virgin_0"
+    """ 玩家非童贞 """
+    HAVE_VIRGIN = "virgin_1"
+    """ 玩家是童贞 """
+    NO_A_VIRGIN = "a_virgin_0"
+    """ 玩家非A处 """
+    HAVE_A_VIRGIN = "a_virgin_1"
+    """ 玩家是A处 """
+    TARGET_NO_FIRST_KISS = "t_kiss_0"
     """ 交互对象未保有初吻 """
-    TARGET_HAVE_FIRST_KISS = "kiss_1"
+    TARGET_HAVE_FIRST_KISS = "t_kiss_1"
     """ 交互对象保有初吻 """
-    TARGET_NO_VIRGIN = "virgin_0"
+    TARGET_NO_VIRGIN = "t_virgin_0"
     """ 交互对象非处女 """
-    TARGET_HAVE_VIRGIN = "virgin_1"
+    TARGET_HAVE_VIRGIN = "t_virgin_1"
     """ 交互对象是处女 """
-    TARGET_NO_A_VIRGIN = "a_virgin_0"
+    TARGET_NO_A_VIRGIN = "t_a_virgin_0"
     """ 交互对象非A处女 """
-    TARGET_HAVE_A_VIRGIN = "a_virgin_1"
+    TARGET_HAVE_A_VIRGIN = "t_a_virgin_1"
     """ 交互对象是A处女 """
 
     IS_MEDICAL = "is_medical"
@@ -1980,7 +2050,7 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_HAPPY = 55
     """ 交互对象增加少量快乐（快乐刻印补正） """
     TARGET_ADD_SMALL_LEAD = 56
-    """ 交互对象增加少量先导（侍奉补正） """
+    """ 交互对象增加少量先导（受虐补正） """
     TARGET_ADD_SMALL_SUBMIT = 57
     """ 交互对象增加少量屈服（屈服刻印补正） """
     TARGET_ADD_SMALL_SHY = 58
@@ -2551,7 +2621,7 @@ class SecondEffect:
     ADD_SMALL_HAPPY = 266
     """ 增加少量快乐（快乐刻印补正） """
     ADD_SMALL_LEAD = 267
-    """ 增加少量先导（侍奉补正） """
+    """ 增加少量先导（受虐补正） """
     ADD_SMALL_SUBMIT = 268
     """ 增加少量屈服（屈服刻印补正） """
     ADD_SMALL_SHY = 269
@@ -2577,7 +2647,7 @@ class SecondEffect:
     ADD_MIDDLE_HAPPY = 279
     """ 增加中量快乐（快乐刻印补正） """
     ADD_MIDDLE_LEAD = 280
-    """ 增加中量先导（侍奉补正） """
+    """ 增加中量先导（受虐补正） """
     ADD_MIDDLE_SUBMIT = 281
     """ 增加中量屈服（屈服刻印补正） """
     ADD_MIDDLE_SHY = 282
@@ -2603,7 +2673,7 @@ class SecondEffect:
     ADD_LARGE_HAPPY = 292
     """ 增加大量快乐（快乐刻印补正） """
     ADD_LARGE_LEAD = 293
-    """ 增加大量先导（侍奉补正） """
+    """ 增加大量先导（受虐补正） """
     ADD_LARGE_SUBMIT = 294
     """ 增加大量屈服（屈服刻印补正） """
     ADD_LARGE_SHY = 295

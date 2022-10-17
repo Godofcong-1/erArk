@@ -2095,7 +2095,7 @@ def handle_target_add_small_lead(
     now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量先导（侍奉补正）
+    交互对象增加少量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2112,7 +2112,7 @@ def handle_target_add_small_lead(
     now_lust = target_data.status_data[14]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[23])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[25])
     now_add_lust *= adjust
     target_data.status_data[14] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -2178,7 +2178,7 @@ def handle_target_add_small_shy(
     now_lust = target_data.status_data[16]
     now_lust_multiple = 100 + now_lust / 10
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[24])
+    adjust = attr_calculation.get_ability_adjust(target_data.ability[23])
     now_add_lust *= adjust
     target_data.status_data[16] += now_add_lust
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())

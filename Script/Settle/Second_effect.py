@@ -887,7 +887,7 @@ def handle_add_small_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加少量先导（侍奉补正）
+    增加少量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -898,7 +898,7 @@ def handle_add_small_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -948,7 +948,7 @@ def handle_add_small_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
@@ -1414,7 +1414,7 @@ def handle_add_middle_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加中量先导（侍奉补正）
+    增加中量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1425,7 +1425,7 @@ def handle_add_middle_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 500
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -1475,7 +1475,7 @@ def handle_add_middle_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 500
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
@@ -1941,7 +1941,7 @@ def handle_add_large_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加大量先导（侍奉补正）
+    增加大量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1952,7 +1952,7 @@ def handle_add_large_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -2002,7 +2002,7 @@ def handle_add_large_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust

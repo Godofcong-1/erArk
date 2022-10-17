@@ -7,9 +7,9 @@ from Script.Config import game_config
 
 # 1前提生成
 mode = 1
-command_str = "bfeel_ge_1"
+command_str = "t_m_l_5"
 capital_command = command_str.upper()
-dataname = "Ｂ感觉"
+dataname = "受虐"
 # A:能力数值,S:状态数值
 datetype = "A"
 
