@@ -5515,6 +5515,28 @@ def handle_last_cmd_sex(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.LAST_CMD_W_SEX)
+def handle_last_cmd_w_sex(character_id: int) -> int:
+    """
+    前一指令为W性交_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
 @add_premise(constant.Premise.LAST_CMD_A_SEX)
 def handle_last_cmd_a_sex(character_id: int) -> int:
     """

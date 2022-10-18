@@ -70,6 +70,15 @@ class BehaviorEffect:
     """ 结算器id """
 
 
+class BodyPart:
+    """ 身体部位表 """
+
+    cid: int
+    """ 配表id """
+    name: str
+    """ 部位名字 """
+
+
 class Book:
     """ 书籍配置表 """
 

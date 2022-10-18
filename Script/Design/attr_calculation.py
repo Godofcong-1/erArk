@@ -123,10 +123,10 @@ def get_dirty_zero() -> dict:
     直接将初始污浊情况归0
     """
     dirty_data = game_type.DIRTY()
-    position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
 
-    for position_text in position_text_list:
-        now_list = [position_text,0,0,0]
+    for body_part in game_config.config_body_part:
+        body_text = game_config.config_body_part[body_part].name
+        now_list = [body_text,0,0,0]
         dirty_data.body_semen.append(now_list)
 
     for clothing_type in game_config.config_clothing_type:

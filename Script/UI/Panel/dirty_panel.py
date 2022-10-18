@@ -104,13 +104,17 @@ class Dirty_Panel:
                             else :
                                 now_text +=" <泛滥的一塌糊涂>"
 
+                        # 精液判定
+                        if target_data.dirty.body_semen[i][1]:
+                            now_text +=" <残留的精液>"
+
                     # 后穴
-                    if i == 7:
+                    if i == 8:
                         a_clean_text = a_clean_list[target_data.dirty.a_clean]
                         now_text += a_clean_text
 
                     # 尿道
-                    if i == 8:
+                    if i == 9:
                         if target_data.urinate_point <= 30:
                             now_text += " <残留的尿渍>"
                         elif target_data.urinate_point <= 120:
@@ -119,7 +123,7 @@ class Dirty_Panel:
                             now_text += " <些许尿意>"
                         elif target_data.urinate_point >= 192:
                             now_text += " <充盈的尿意>"
-                    if target_data.dirty.body_semen[i][1] != 0:
+                    if target_data.dirty.body_semen[i][1] and i != 6:
                         now_text += f" <{str(target_data.dirty.body_semen[i][1])}ml精液>"
                     now_text += "\n"
                 now_text += "\n"
