@@ -6,8 +6,10 @@ from Script.Core import (
     value_handle,
     constant,
     game_type,
+    text_handle,
 )
 from Script.Design import (
+    map_handle,
     attr_calculation,
     clothing,
     game_time,
@@ -204,6 +206,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge_data = game_config.config_instruct_judge_data[judge_id]
             judge_data_type = judge_data.need_type
             judge_data_value = judge_data.value
+            break
 
     if judge_data_type == "D":
         calculation_text = "需要基础实行值至少为" + str(judge_data_value) + "\n"
@@ -296,6 +299,27 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_information
     if judge_information:
         calculation_text += "+博士信息素("+ str(judge_information) +")"
+
+    # 当前场景有人修正
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data = cache.scene_data[scene_path_str]
+    if len(scene_data.character_list) > 2:
+        if judge_data_type == "S":
+            judge_other_people = 100
+        else:
+            judge_other_people = 30
+        # 露出修正
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[23])
+        judge_other_people = int(judge_other_people *(adjust - 1.5))
+        judge += judge_other_people
+        calculation_text += "+当前场景有其他人在("+ text_handle.number_to_symbol_string(judge_other_people) +")"
+
+    # 今天H被打断了修正
+    judge_h_interrupt = character_data.action_info.h_interrupt*10
+    judge -= judge_h_interrupt
+    if judge_h_interrupt:
+        calculation_text += "+今天H被打断过(-"+ str(judge_h_interrupt) +")"
+
 
     # debug模式修正
     if cache.debug_mode == True:

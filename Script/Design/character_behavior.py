@@ -154,8 +154,10 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
         # 清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-        # 清零污浊状态
-        character_data.dirty = attr_calculation.get_dirty_zero()
+        # 清零H被撞破的flag
+        character_data.action_info.h_interrupt = 0
+        # 新：改为洗澡时清零（清零污浊状态）
+        # character_data.dirty = attr_calculation.get_dirty_zero()
         #自动存档，用玩家id来限制只存一次
         if character_id == 0:
             now_draw = draw.NormalDraw()

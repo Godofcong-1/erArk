@@ -380,6 +380,8 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
         """ 指定角色上次扣除好感时间 """
+        self.h_interrupt : int = 0
+        """ 角色H被打断 """
 
 
 
