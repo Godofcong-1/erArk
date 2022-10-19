@@ -2,7 +2,7 @@ import datetime
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct
 from Script.Core import cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -561,13 +561,12 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     # 中断H
     pl_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[pl_data.target_character_id]
-    target_data.is_h = 0
-    target_data.is_follow = 1
     target_data.action_info.h_interrupt = 1
     now_draw = draw.NormalDraw()
     now_draw.text = f"因为被{character_data.name}撞破了情事，所以被迫中断了H\n"
     now_draw.draw()
     line_feed.draw()
+    handle_instruct.handle_end_h()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)

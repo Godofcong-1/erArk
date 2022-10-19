@@ -2829,8 +2829,6 @@ class Instruct:
     """ 收起内裤 """
     ASK_DATE = 0
     """ 邀请约会 """
-    END_H = 0
-    """ H结束 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
     PEE = 0
@@ -2916,7 +2914,10 @@ class Instruct:
     """ 告白 """
     GIVE_NECKLACE = 0
     """ 戴上项圈 """
+
     #性爱#
+    END_H = 0
+    """ H结束 """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0

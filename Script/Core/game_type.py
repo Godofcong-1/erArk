@@ -538,6 +538,8 @@ class Scene:
         """ 地点暴露 """
         self.have_furniture: bool = 0
         """ 有家具 """
+        self.close_door: int = 0
+        """ 关门判定 """
         self.scene_tag: list = []
         """ 场景标签 """
         self.character_list: set = set()

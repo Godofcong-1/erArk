@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, cache_control, game_type, get_text, save_handle,flow_handle
 from Script.Design import update, character, attr_calculation
-from Script.UI.Panel import see_character_info_panel, see_save_info_panel
+from Script.UI.Panel import see_character_info_panel, see_save_info_panel, normal_panely
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -1028,26 +1028,28 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
-        target_data.is_h = 1
-        target_data.is_follow = 0
-        target_data.cloth_see[6] = True
-        target_data.cloth_see[9] = True
-        character_data.behavior.behavior_id = constant.Behavior.H
-        character_data.state = constant.CharacterStatus.STATUS_H
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
-        now_draw.text = _("\n进入H模式\n")
-        now_draw.draw()
+        now_draw = normal_panely.Close_Door_Panel(width)
+        if now_draw.draw():
+            target_data.is_h = 1
+            target_data.is_follow = 0
+            target_data.cloth_see[6] = True
+            target_data.cloth_see[9] = True
+            character_data.behavior.behavior_id = constant.Behavior.H
+            character_data.state = constant.CharacterStatus.STATUS_H
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
+            now_draw.text = _("\n进入H模式\n")
+            now_draw.draw()
 
-        # 自动开启性爱面板并关闭其他面板
-        cache.instruct_filter[5] = 1
-        for i in {1,2,3,4}:
-            cache.instruct_filter[i] = 0
+            # 自动开启性爱面板并关闭其他面板
+            cache.instruct_filter[5] = 1
+            for i in {1,2,3,4}:
+                cache.instruct_filter[i] = 0
 
-        # 清零H状态函数
-        target_data.h_state = attr_calculation.get_h_state_zero()
-        character_data.behavior.duration = 5
-        update.game_update_flow(5)
+            # 清零H状态函数
+            target_data.h_state = attr_calculation.get_h_state_zero()
+            character_data.behavior.duration = 5
+            update.game_update_flow(5)
 
     else:
         now_draw = draw.WaitDraw()
