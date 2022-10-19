@@ -1027,9 +1027,11 @@ def handle_do_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
-        now_draw = normal_panely.Close_Door_Panel(width)
-        if now_draw.draw():
+    h_flag = False
+    now_draw = normal_panely.Close_Door_Panel(width)
+    if now_draw.draw():
+        if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
+            h_flag = True
             target_data.is_h = 1
             target_data.is_follow = 0
             target_data.cloth_see[6] = True
@@ -1048,10 +1050,13 @@ def handle_do_h():
 
             # 清零H状态函数
             target_data.h_state = attr_calculation.get_h_state_zero()
-            character_data.behavior.duration = 5
-            update.game_update_flow(5)
+        else:
+            character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+            character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
-    else:
+    if not h_flag:
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n进入H模式失败\n")
@@ -1070,30 +1075,36 @@ def handle_end_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    target_data.is_h = 0
-    character_data.behavior.behavior_id = constant.Behavior.END_H
-    character_data.state = constant.CharacterStatus.STATUS_END_H
-
-    #H结束时的其他处理
-    # 对象NPC进入跟随
-    target_data.is_follow = 1
+    if character_data.behavior.behavior_id != constant.Behavior.H_INTERRUPT:
+        character_data.behavior.behavior_id = constant.Behavior.END_H
+        character_data.state = constant.CharacterStatus.STATUS_END_H
 
     # 自动关闭性爱面板并开启其他面板
     cache.instruct_filter[5] = 0
     for i in {1,2,3,4}:
         cache.instruct_filter[i] = 1
 
-    # 穿回脱下的衣服
-    wear_flag = False
-    for i in game_config.config_clothing_type:
-        if len(target_data.cloth_off[i]):
-            target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
-            wear_flag = True
-    if wear_flag:
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
-        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
-        now_draw.draw()
+    #H结束时的其他处理
+    if target_data.is_h == 1:
+
+        # 对象NPC进入跟随，并原地待机十分钟
+        target_data.is_h = 0
+        target_data.is_follow = 1
+        target_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_data.behavior.duration = 10
+        target_data.state = constant.CharacterStatus.STATUS_WAIT
+
+        # 穿回脱下的衣服
+        wear_flag = False
+        for i in game_config.config_clothing_type:
+            if len(target_data.cloth_off[i]):
+                target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
+                wear_flag = True
+        if wear_flag:
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
+            now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+            now_draw.draw()
 
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

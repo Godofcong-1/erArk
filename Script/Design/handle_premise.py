@@ -6344,6 +6344,38 @@ def handle_semen_enema_end(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant.Premise.T_HAIR_SEMEN)
+def handle_t_hair_semen(character_id: int) -> int:
+    """
+    交互对象当前头发有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.body_semen[0][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant.Premise.T_WOMB_SEMEN)
+def handle_t_womb_semen(character_id: int) -> int:
+    """
+    交互对象当前子宫有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.body_semen[7][1]:
+        return 1
+    return 0
+
+
 @add_premise(constant.Premise.URINATE_LE_79)
 def handle_urinate_le_79(character_id: int) -> int:
     """

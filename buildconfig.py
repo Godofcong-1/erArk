@@ -184,7 +184,8 @@ talk_file_list = os.listdir(talk_dir)
 for i in talk_file_list:
     now_dir = os.path.join(talk_dir, i)
     for f in os.listdir(now_dir):
-        config_def_str += "\n\n\n"
+        config_def_str += "\n"
+        # config_def_str += "\n\n\n"
         now_f = os.path.join(now_dir, f)
         build_csv_config(now_f, f, 1, 0)
 

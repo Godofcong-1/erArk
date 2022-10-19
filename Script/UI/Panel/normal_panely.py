@@ -64,8 +64,6 @@ class Close_Door_Panel:
             title_draw.draw()
 
             line_feed.draw()
-            line = draw.LineDraw("+", self.width)
-            line.draw()
 
             now_position = character_data.position
             now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)

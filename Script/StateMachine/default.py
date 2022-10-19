@@ -562,10 +562,12 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     pl_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[pl_data.target_character_id]
     target_data.action_info.h_interrupt = 1
-    now_draw = draw.NormalDraw()
-    now_draw.text = f"因为被{character_data.name}撞破了情事，所以被迫中断了H\n"
-    now_draw.draw()
-    line_feed.draw()
+    # 原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.behavior.duration = 10
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
+    pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+    pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
     handle_instruct.handle_end_h()
 
 

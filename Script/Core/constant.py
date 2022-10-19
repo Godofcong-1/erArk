@@ -59,6 +59,14 @@ class CharacterStatus:
     """ H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
+    STATUS_DO_H_FAIL = 131
+    """ 邀请H失败 """
+    STATUS_H_HP_0 = 132
+    """ H时博士体力为零中断 """
+    STATUS_T_H_HP_0 = 133
+    """ H时交互对象体力为零中断 """
+    STATUS_H_INTERRUPT = 134
+    """ H时被人目击闯入中断 """
     STATUS_PEE = 140
     """ 解手 """
     STATUS_SINGING = 151
@@ -354,6 +362,14 @@ class Behavior:
     """ H """
     END_H = 126
     """ 结束H """
+    DO_H_FAIL = 131
+    """ 邀请H失败 """
+    H_HP_0 = 132
+    """ H时博士体力为零中断 """
+    T_H_HP_0 = 133
+    """ H时交互对象体力为零中断 """
+    H_INTERRUPT = 134
+    """ H时被人目击闯入中断 """
     PEE = 140
     """ 解手 """
     SINGING = 151
