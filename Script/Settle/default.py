@@ -10,6 +10,8 @@ from Script.Design import (
     cooking,
     update,
     attr_text,
+    handle_instruct,
+    character_behavior,
 )
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -200,10 +202,15 @@ def handle_sub_both_small_hit_point(
         character_data.hit_point = 1
         if not character_data.tired:
             character_data.tired = 1
-            now_draw = draw.NormalDraw()
-            now_draw.width = width
-            now_draw.text = "\n" + character_data.name + "太累了\n"
-            now_draw.draw()
+            # H时单独结算
+            if target_data.is_h:
+                character_behavior.judge_character_tired_sleep(0)
+                handle_instruct.handle_end_h()
+            else:
+                now_draw = draw.NormalDraw()
+                now_draw.width = width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
     #交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -222,10 +229,15 @@ def handle_sub_both_small_hit_point(
             target_data.hit_point = 1
             if not target_data.tired:
                 target_data.tired = 1
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + target_data.name + "太累了\n"
-                now_draw.draw()
+                # H时单独结算
+                if target_data.is_h:
+                    character_behavior.judge_character_tired_sleep(character_data.target_character_id)
+                    handle_instruct.handle_end_h()
+                else:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + target_data.name + "太累了\n"
+                    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)

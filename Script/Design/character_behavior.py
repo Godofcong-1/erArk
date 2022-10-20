@@ -263,23 +263,22 @@ def judge_character_tired_sleep(character_id : int):
                     draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.tired else "太困了，开始回房间睡觉\n"
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
+                # H时
                 else:
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
 
-                # 数据结算
-                character_data.is_h = False
-                character_data.is_follow = 0
+                # 新：交给指令里的end_h结算(旧：数据结算)
+                # character_data.is_h = False
+                # character_data.is_follow = 0
 
-                # 助手取消助手栏里的跟随
-                if character_id == pl_character_data.assistant_character_id:
-                    character_data.assistant_state.always_follow = 0
+                # 新：暂时注释，保持跟随状态（旧：助手取消助手栏里的跟随）
+                # if character_id == pl_character_data.assistant_character_id:
+                #     character_data.assistant_state.always_follow = 0
     # 玩家疲劳计算
     else:
         target_data = cache.character_data[character_data.target_character_id]
         if character_data.tired and target_data.is_h:
-            target_data.is_h = False
-            target_data.is_follow = 1
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
             character_data.tired = 0

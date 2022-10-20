@@ -564,8 +564,8 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     target_data.action_info.h_interrupt = 1
     # 原地待机10分钟
     target_data.behavior.behavior_id = constant.Behavior.WAIT
-    target_data.behavior.duration = 10
     target_data.state = constant.CharacterStatus.STATUS_WAIT
+    target_data.behavior.duration = 10
     pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
     pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
     handle_instruct.handle_end_h()
