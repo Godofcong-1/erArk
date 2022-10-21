@@ -254,17 +254,20 @@ def judge_character_tired_sleep(character_id : int):
         if character_data.is_h or character_data.is_follow:
             
             if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
+                print(f"debug 检测到疲劳")
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.NormalDraw()
                 now_draw.width = width
-                # 跟随和H的分歧
-                if character_data.is_follow:
+                # 跟随和H的分歧，忽略H后停留的情况
+                if character_data.is_follow and character_data.behavior != constant.Behavior.WAIT:
                     draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.tired else "太困了，开始回房间睡觉\n"
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
+                    character_data.is_follow = 0
                 # H时
                 else:
+                    print(f"debug 玩家进入对方H时体力不足中断状态")
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
 
@@ -279,6 +282,7 @@ def judge_character_tired_sleep(character_id : int):
     else:
         target_data = cache.character_data[character_data.target_character_id]
         if character_data.tired and target_data.is_h:
+            print(f"debug 进入玩家H时体力不足中断状态")
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
             character_data.tired = 0

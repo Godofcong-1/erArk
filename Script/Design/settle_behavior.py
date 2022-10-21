@@ -6,6 +6,7 @@ from Script.Core import cache_control, constant, game_type, get_text, text_handl
 from Script.Design import attr_text, attr_calculation
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -555,7 +556,8 @@ def orgasm_effect(character_id: int):
             elif character_data.orgasm_level[3] % 3 == 2:
                 character_data.second_behavior[1010] = 1
             character_data.eja_point = 0
-            cache.now_panel_id = constant.Panel.EJACULATION
+            now_draw = ejaculation_panel.Ejaculation_Panel(width)
+            now_draw.draw()
     else:
         #检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):

@@ -46,7 +46,7 @@ ai的目标,,,
 55,72,shower_time|ai_have_showered|in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成全裸，则围上浴巾
 
 
-60,40,place_is_h|not_in_dor,目睹玩家和其他角色H，然后逃回自己宿舍
+60,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
 
 100,100,place_0,和玩家聊天
 101,101,place_0,和玩家身体接触

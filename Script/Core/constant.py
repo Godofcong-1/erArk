@@ -1043,6 +1043,8 @@ class Premise:
     """ 不在大浴场的更衣室 """
     IN_FUNCTIONAL_ROOM = "in_functional_room"
     """ 在功能性地点中 """
+    PLACE_DOOR_OPEN = "place_door_open"
+    """ 地点的门是开着的（不含内隔间关门） """
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """

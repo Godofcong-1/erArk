@@ -1082,7 +1082,8 @@ def handle_end_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character_data.behavior.behavior_id != constant.Behavior.H_INTERRUPT:
+    special_end_list = [constant.Behavior.H_INTERRUPT,constant.Behavior.H_HP_0, constant.Behavior.T_H_HP_0]
+    if character_data.behavior.behavior_id not in special_end_list:
         character_data.behavior.behavior_id = constant.Behavior.END_H
         character_data.state = constant.CharacterStatus.STATUS_END_H
 
@@ -1093,6 +1094,7 @@ def handle_end_h():
 
     #H结束时的其他处理
     if target_data.is_h == 1:
+        print(f"debug 对方原地待机")
 
         # 对象NPC进入跟随，并原地待机十分钟
         target_data.is_h = 0
