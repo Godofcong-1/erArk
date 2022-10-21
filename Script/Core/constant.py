@@ -56,7 +56,7 @@ class CharacterStatus:
     STATUS_GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     STATUS_H = 125
-    """ H状态 """
+    """ 邀请H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
     STATUS_DO_H_FAIL = 131
@@ -359,7 +359,7 @@ class Behavior:
     GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     H = 125
-    """ H """
+    """ 邀请H """
     END_H = 126
     """ 结束H """
     DO_H_FAIL = 131
@@ -2428,6 +2428,8 @@ class BehaviorEffect:
 
     DIRTY_RESET = 401
     """ 污浊情况(身体+衣服)归零 """
+    DOOR_CLOSE_RESET = 402
+    """ 当前场景取消关门状态 """
 
     TALK_ADD_ADJUST = 501
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -2464,6 +2466,8 @@ class BehaviorEffect:
     """ 索要内裤 """
     ASK_FOR_SOCKS = 622
     """ 索要袜子 """
+    T_CLOTH_BACK = 631
+    """ 交互对象穿回H时脱掉的衣服 """
 
     RECORD_TRAINING_TIME = 701
     """ 记录当前训练时间 """

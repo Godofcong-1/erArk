@@ -1101,18 +1101,6 @@ def handle_end_h():
         target_data.behavior.duration = 10
         target_data.state = constant.CharacterStatus.STATUS_WAIT
 
-        # 穿回脱下的衣服
-        wear_flag = False
-        for i in game_config.config_clothing_type:
-            if len(target_data.cloth_off[i]):
-                target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
-                wear_flag = True
-        if wear_flag:
-            now_draw = draw.WaitDraw()
-            now_draw.width = width
-            now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
-            now_draw.draw()
-
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width

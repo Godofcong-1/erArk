@@ -499,6 +499,6 @@ def judge_character_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.is_h:
-        character_data.behavior.behavior_id = constant.Behavior.H
-        character_data.state = constant.CharacterStatus.STATUS_H
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
     return 1

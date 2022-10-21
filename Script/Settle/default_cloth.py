@@ -235,3 +235,36 @@ def handle_ask_for_sock(
     TSocName = game_config.config_clothing_tem[TagetSocId].name
     character_data.behavior.socks_name = TSocName
     target_data.cloth[10] = []
+
+
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_CLOTH_BACK)
+def handle_t_cloth_back(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象穿回H时脱掉的衣服
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 穿回脱下的衣服
+    wear_flag = False
+    for i in game_config.config_clothing_type:
+        if len(target_data.cloth_off[i]):
+            target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
+            wear_flag = True
+    if wear_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+        now_draw.draw()

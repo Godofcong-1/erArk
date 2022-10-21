@@ -67,6 +67,7 @@ def load_dir_now(data_path: str):
                         now_scene_data.in_door = load_scene_data["InOutDoor"] == "In"
                         # now_scene_data.exposed = load_scene_data["Exposed"]
                         # now_scene_data.have_furniture = load_scene_data["Have_Furniture"]
+                        now_scene_data.close_flag = 0
                         scene_tag_list = load_scene_data["SceneTag"]
                         if "|" not in scene_tag_list:
                             now_scene_data.scene_tag.append(scene_tag_list)
