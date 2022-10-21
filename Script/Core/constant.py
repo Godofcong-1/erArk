@@ -801,6 +801,8 @@ class Panel:
     """ 基建面板 """
     DEPARTMENT = 16
     """ 部门运作情况面板 """
+    INSTRUCT_FILTER = 17
+    """ 指令过滤面板 """
 
 
 class Premise:
@@ -3141,6 +3143,8 @@ class Instruct:
     """ 自身属性升级 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
+    INSTRUCT_FILTER = 0
+    """ 指令过滤 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0

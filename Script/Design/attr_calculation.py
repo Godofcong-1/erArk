@@ -12,18 +12,6 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
 
 
-def get_Favorability_zero() -> dict:
-    """
-    直接将初始好感归为{0:0}
-    """
-    return {0:0}
-
-def get_Trust_zero() -> dict:
-    """
-    直接将初始信赖归为0
-    """
-    return 0
-
 def get_ability_zero(ability_dict) -> dict:
     """
     检查初始能力，将为空的项补为0

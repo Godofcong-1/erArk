@@ -220,6 +220,13 @@ def see_dirty():
     """处理查看污浊情况指令"""
     cache.now_panel_id = constant.Panel.DIRTY
 
+
+@add_instruct(constant.Instruct.INSTRUCT_FILTER, constant.InstructType.SYSTEM, _("指令过滤"), {})
+def instruct_filter():
+    """处理指令过滤指令"""
+    cache.now_panel_id = constant.Panel.INSTRUCT_FILTER
+
+
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"), {constant.Premise.DEBUG_MODE_OFF})
 def debug_mode():
     """处理开启DEBUG模式指令"""
@@ -1044,9 +1051,9 @@ def handle_do_h():
             now_draw.draw()
 
             # 自动开启性爱面板并关闭其他面板
-            cache.instruct_filter[5] = 1
+            cache.instruct_type_filter[5] = 1
             for i in {1,2,3,4}:
-                cache.instruct_filter[i] = 0
+                cache.instruct_type_filter[i] = 0
 
             # 清零H状态函数
             target_data.h_state = attr_calculation.get_h_state_zero()
@@ -1080,9 +1087,9 @@ def handle_end_h():
         character_data.state = constant.CharacterStatus.STATUS_END_H
 
     # 自动关闭性爱面板并开启其他面板
-    cache.instruct_filter[5] = 0
+    cache.instruct_type_filter[5] = 0
     for i in {1,2,3,4}:
-        cache.instruct_filter[i] = 1
+        cache.instruct_type_filter[i] = 1
 
     #H结束时的其他处理
     if target_data.is_h == 1:

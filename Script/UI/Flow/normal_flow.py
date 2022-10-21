@@ -16,6 +16,7 @@ from Script.UI.Panel import (
     see_map_panel,
     undress_panel,
     department_panel,
+    instruct_filter_panel,
 )
 from Script.Config import normal_config
 
@@ -111,4 +112,10 @@ def undress_flow():
 def department_flow():
     """部门运作情况面板"""
     now_panel = department_panel.Department_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.INSTRUCT_FILTER)
+def instruct_filter_flow():
+    """指令过滤面板"""
+    now_panel = instruct_filter_panel.Instruct_filter_Panel(width)
     now_panel.draw()

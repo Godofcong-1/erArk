@@ -795,8 +795,10 @@ class Cache:
         """ 寻路算法用,当前节点所属的地图的id """
         self.input_position: int = 0
         """ 回溯输入记录用定位 """
-        self.instruct_filter: Dict[int, bool] = {}
+        self.instruct_type_filter: Dict[int, bool] = {}
         """ 玩家操作指令面板指令过滤状态数据 指令类型:是否展示"""
+        self.instruct_index_filter: Dict[int, bool] = {}
+        """ 玩家操作指令面板指令过滤状态数据 指令编号:是否展示"""
         self.output_text_style: str = ""
         """ 富文本记录输出样式临时缓存 """
         self.text_style_position: int = 0
