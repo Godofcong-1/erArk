@@ -73,7 +73,7 @@ print(out_str)
 
 # 进行前提输出
 out_str = "\n\n"
-out_str += f"@add_premise(constant.Premise.{capital_command})\n"
+out_str += f"@add_premise(constant_promise.Premise.{capital_command})\n"
 out_str += f"def handle_{command_str}(character_id: int) -> int:\n"
 out_str += f"    \"\"\"\n"
 if not target_flag:
