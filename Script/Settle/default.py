@@ -232,11 +232,8 @@ def handle_sub_both_small_hit_point(
                 target_data.tired = 1
                 # H时单独结算
                 if target_data.is_h:
-                    print(f"debug 1target_data.is_h = {target_data.is_h}")
                     character_behavior.judge_character_tired_sleep(character_data.target_character_id)
-                    print(f"debug 2target_data.is_h = {target_data.is_h}")
                     handle_instruct.handle_end_h()
-                    print(f"debug 3target_data.is_h = {target_data.is_h}")
                 else:
                     now_draw = draw.NormalDraw()
                     now_draw.width = width
@@ -310,12 +307,8 @@ def handle_sub_both_small_mana_point(
                     target_data.tired = 1
                     # H时单独结算
                     if target_data.is_h:
-                        print(f"debug 4target_data.is_h = {target_data.is_h}")
-                        print(f"debug character_data.target_character_id = {character_data.target_character_id}")
                         character_behavior.judge_character_tired_sleep(character_data.target_character_id)
-                        print(f"debug 5target_data.is_h = {target_data.is_h}")
                         handle_instruct.handle_end_h()
-                        print(f"debug 6target_data.is_h = {target_data.is_h}")
                     else:
                         now_draw = draw.NormalDraw()
                         now_draw.width = width

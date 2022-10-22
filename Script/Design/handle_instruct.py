@@ -1081,7 +1081,7 @@ def handle_end_h():
     """处理H结束指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    target_data = cache.character_data[character_data.target_character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     special_end_list = [constant.Behavior.H_INTERRUPT,constant.Behavior.H_HP_0, constant.Behavior.T_H_HP_0]
     if character_data.behavior.behavior_id not in special_end_list:
         character_data.behavior.behavior_id = constant.Behavior.END_H
@@ -1094,14 +1094,15 @@ def handle_end_h():
 
     #H结束时的其他处理
     if target_data.is_h == 1:
-        print(f"debug 对方原地待机")
 
         # 对象NPC进入跟随，并原地待机十分钟
         target_data.is_h = 0
         target_data.is_follow = 1
+        character.init_character_behavior_start_time(character_data.target_character_id, cache.game_time)
         target_data.behavior.behavior_id = constant.Behavior.WAIT
         target_data.behavior.duration = 10
         target_data.state = constant.CharacterStatus.STATUS_WAIT
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     #H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
