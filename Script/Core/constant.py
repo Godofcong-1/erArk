@@ -187,6 +187,16 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
+    STATUS_LEGJOB = 432
+    """ 腿交 """
+    STATUS_TAILJOB = 433
+    """ 尾交 """
+    STATUS_FACE_RUB = 434
+    """ 阴茎蹭脸 """
+    STATUS_HORN_RUB = 435
+    """ 阴茎蹭角 """
+    STATUS_EARS_RUB = 436
+    """ 阴茎蹭耳朵 """
     STATUS_BODY_LUBRICANT = 451
     """ 润滑液 """
     STATUS_BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -494,6 +504,16 @@ class Behavior:
     """ 深喉插入 """
     SIXTY_NINE = 431
     """ 六九式 """
+    LEGJOB = 432
+    """ 腿交 """
+    TAILJOB = 433
+    """ 尾交 """
+    FACE_RUB = 434
+    """ 阴茎蹭脸 """
+    HORN_RUB = 435
+    """ 阴茎蹭角 """
+    EARS_RUB = 436
+    """ 阴茎蹭耳朵 """
     BODY_LUBRICANT = 451
     """ 润滑液 """
     BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -1343,6 +1363,40 @@ class SecondBehavior:
     SLEEPING_PILLS = 1109
     """ 结算睡眠药 """
 
+    PENIS_IN_HAIR = 1201
+    """ 结算发交中 """
+    PENIS_IN_FACE = 1202
+    """ 结算阴茎蹭脸中 """
+    PENIS_IN_MOUSE = 1203
+    """ 结算口交中 """
+    PENIS_IN_BREAST = 1204
+    """ 结算乳交中 """
+    PENIS_IN_AXILLA = 1205
+    """ 结算腋交中 """
+    PENIS_IN_HAND = 1206
+    """ 结算手交中 """
+    PENIS_IN_VAGINA = 1207
+    """ 结算V插入中 """
+    PENIS_IN_WOMB = 1208
+    """ 结算W插入中 """
+    PENIS_IN_ANAL = 1209
+    """ 结算A插入中 """
+    PENIS_IN_URETHRAL = 1210
+    """ 结算U插入中 """
+    PENIS_IN_LEG = 1211
+    """ 结算腿交中 """
+    PENIS_IN_FOOT = 1212
+    """ 结算足交中 """
+    PENIS_IN_TAIL = 1213
+    """ 结算尾交中 """
+    PENIS_IN_HORN = 1214
+    """ 结算阴茎蹭角中 """
+    PENIS_IN_EARS = 1215
+    """ 结算阴茎蹭耳朵中 """
+    PENIS_IN_EARS = 1216
+    """ 结算素股中 """
+
+
 
 class SecondEffect:
     """二段结算效果函数"""
@@ -1749,6 +1803,16 @@ class Instruct:
     """ 深喉插入 """
     SIXTY_NINE = 0
     """ 六九式 """
+    LEGJOB = 0
+    """ 腿交 """
+    TAILJOB = 0
+    """ 尾交 """
+    FACE_RUB = 0
+    """ 阴茎蹭脸 """
+    HORN_RUB = 0
+    """ 阴茎蹭角 """
+    EARS_RUB = 0
+    """ 阴茎蹭耳朵 """
     BODY_LUBRICANT = 0
     """ 润滑液 """
     BIRTH_CONTROL_PILLS = 0

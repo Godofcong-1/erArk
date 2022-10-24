@@ -1387,6 +1387,54 @@ def handle_high_10(character_id: int) -> int:
     return 10
 
 
+@add_premise(constant_promise.Premise.INSTRUCT_JUDGE_LOW_OBSCENITY)
+def handle_instruct_judge_low_obscenity(character_id: int) -> int:
+    """
+    当前实行值足以轻度性骚扰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INSTRUCT_JUDGE_HIGH_OBSCENITY)
+def handle_instruct_judge_high_obscenity(character_id: int) -> int:
+    """
+    当前实行值足以重度性骚扰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INSTRUCT_JUDGE_H)
+def handle_instruct_judge_h(character_id: int) -> int:
+    """
+    当前实行值足以H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.HP_1)
 def handle_hp_1(character_id: int) -> int:
     """
@@ -5198,6 +5246,23 @@ def handle_last_cmd_footjob(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.LAST_CMD_HAIRJOB)
+def handle_last_cmd_hairjob(character_id: int) -> int:
+    """
+    前一指令为发交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.HAIRJOB)):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.LAST_CMD_AXILLAJOB)
 def handle_last_cmd_axillajob(character_id: int) -> int:
     """
@@ -5228,6 +5293,91 @@ def handle_last_cmd_rub_buttock(character_id: int) -> int:
     len_input = len(len_input)
     last_cmd = cache.input_cache[len(cache.input_cache)-2]
     if len_input and (last_cmd == str(constant.Instruct.RUB_BUTTOCK)):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_LEGJOB)
+def handle_last_cmd_legjob(character_id: int) -> int:
+    """
+    前一指令为腿交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.LEGJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_TAILJOB)
+def handle_last_cmd_tailjob(character_id: int) -> int:
+    """
+    前一指令为尾交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.TAILJOB)):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_FACE_RUB)
+def handle_last_cmd_face_rub(character_id: int) -> int:
+    """
+    前一指令为阴茎蹭脸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.FACE_RUB)):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_HORN_RUB)
+def handle_last_cmd_horn_rub(character_id: int) -> int:
+    """
+    前一指令为阴茎蹭角
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.HORN_RUB)):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_EARS_RUB)
+def handle_last_cmd_ears_rub(character_id: int) -> int:
+    """
+    前一指令为阴茎蹭耳朵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    if len_input and (last_cmd == str(constant.Instruct.EARS_RUB)):
         return 1
     return 0
 
@@ -5579,6 +5729,7 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
                 return 1
     return 0
 
+
 @add_premise(constant_promise.Premise.LAST_CMD_U_SEX)
 def handle_last_cmd_u_sex(character_id: int) -> int:
     """
@@ -5593,6 +5744,97 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     last_cmd = cache.input_cache[len(cache.input_cache)-1]
     sex = {
         str(constant.Instruct.URETHRAL_INSERTION)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_BREAST_CARESS_TYPE)
+def handle_last_cmd_breast_caress_type(character_id: int) -> int:
+    """
+    前一指令为胸部爱抚类_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.BREAST_CARESS),str(constant.Instruct.TWIDDLE_NIPPLES),
+        str(constant.Instruct.BREAST_SUCKING)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_HANDJOB_TYPE)
+def handle_last_cmd_handjob_type(character_id: int) -> int:
+    """
+    前一指令为手交类_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.HANDJOB),str(constant.Instruct.HAND_BLOWJOB)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB_TYPE)
+def handle_last_cmd_blowjob_type(character_id: int) -> int:
+    """
+    前一指令为口交类_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.BLOWJOB),str(constant.Instruct.HAND_BLOWJOB),
+        str(constant.Instruct.TITS_BLOWJOB),str(constant.Instruct.FOCUS_BLOWJOB),
+        str(constant.Instruct.DEEP_THROAT),str(constant.Instruct.SIXTY_NINE)
+        }
+    if len_input:
+        for cmd in sex:
+            if last_cmd == cmd:
+                return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LAST_CMD_PAIZURI_TYPE)
+def handle_last_cmd_paizuri_type(character_id: int) -> int:
+    """
+    前一指令为乳交类_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.PAIZURI),str(constant.Instruct.TITS_BLOWJOB)
         }
     if len_input:
         for cmd in sex:
@@ -9985,5 +10227,197 @@ def handle_t_lubrication_l_7(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.status_data[8] < 7:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_GE_1)
+def handle_t_exhibit_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否露出>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_GE_3)
+def handle_t_exhibit_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否露出>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_GE_5)
+def handle_t_exhibit_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否露出>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_GE_7)
+def handle_t_exhibit_ge_7(character_id: int) -> int:
+    """
+    校验交互对象是否露出>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] >= 7:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_L_1)
+def handle_t_exhibit_l_1(character_id: int) -> int:
+    """
+    校验交互对象是否露出<1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] < 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_L_3)
+def handle_t_exhibit_l_3(character_id: int) -> int:
+    """
+    校验交互对象是否露出<3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] < 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXHIBIT_L_5)
+def handle_t_exhibit_l_5(character_id: int) -> int:
+    """
+    校验交互对象是否露出<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[23] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAPPY_MARK_1)
+def handle_t_happy_mark_1(character_id: int) -> int:
+    """
+    校验交互对象是否快乐刻印==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[13] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAPPY_MARK_2)
+def handle_t_happy_mark_2(character_id: int) -> int:
+    """
+    校验交互对象是否快乐刻印==2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[13] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAPPY_MARK_3)
+def handle_t_happy_mark_3(character_id: int) -> int:
+    """
+    校验交互对象是否快乐刻印==3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[13] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAPPY_MARK_GE_1)
+def handle_t_happy_mark_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否快乐刻印>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[13] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAPPY_MARK_LE_2)
+def handle_t_happy_mark_le_2(character_id: int) -> int:
+    """
+    校验交互对象是否快乐刻印<=2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[13] <= 2:
         return 1
     return 0

@@ -2116,6 +2116,95 @@ def handle_sixty_nine():
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
+
+@add_instruct(
+    constant.Instruct.LEGJOB,
+    constant.InstructType.SEX,
+    _("腿交"),
+    {constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.IS_H},
+)
+def handle_legjob():
+    """处理腿交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.LEGJOB
+    character_data.state = constant.CharacterStatus.STATUS_LEGJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.TAILJOB,
+    constant.InstructType.SEX,
+    _("尾交"),
+    {constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.TARGET_HAVE_TAIL,
+    constant_promise.Premise.IS_H},
+)
+def handle_tailjob():
+    """处理尾交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TAILJOB
+    character_data.state = constant.CharacterStatus.STATUS_TAILJOB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.FACE_RUB,
+    constant.InstructType.SEX,
+    _("阴茎蹭脸"),
+    {constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.IS_H},
+)
+def handle_face_rub():
+    """处理阴茎蹭脸指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.FACE_RUB
+    character_data.state = constant.CharacterStatus.STATUS_FACE_RUB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HORN_RUB,
+    constant.InstructType.SEX,
+    _("阴茎蹭角"),
+    {constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.TARGET_HAVE_HORN,
+    constant_promise.Premise.IS_H},
+)
+def handle_horn_rub():
+    """处理阴茎蹭角指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HORN_RUB
+    character_data.state = constant.CharacterStatus.STATUS_HORN_RUB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.EARS_RUB,
+    constant.InstructType.SEX,
+    _("阴茎蹭耳朵"),
+    {constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.TARGET_HAVE_EARS,
+    constant_promise.Premise.IS_H},
+)
+def handle_eras_rub():
+    """处理阴茎蹭耳朵指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.EARS_RUB
+    character_data.state = constant.CharacterStatus.STATUS_EARS_RUB
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
 @add_instruct(
     constant.Instruct.NIPPLE_CLAMP_ON,
     constant.InstructType.SEX,
