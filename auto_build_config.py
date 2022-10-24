@@ -209,10 +209,10 @@ data_path = os.path.join("data","Character.json")
 with open(data_path,"w",encoding="utf-8") as character_data_file:
     json.dump(character_data,character_data_file,ensure_ascii=0)
 
-config_path = os.path.join("Script", "Config", "config_def.py")
-config_def_str += "\n"
-with open(config_path, "w", encoding="utf-8") as config_file:
-    config_file.write(config_def_str)
+# config_path = os.path.join("Script", "Config", "config_def.py")
+# config_def_str += "\n"
+# with open(config_path, "w", encoding="utf-8") as config_file:
+#     config_file.write(config_def_str)
 
 config_data_path = os.path.join("data", "data.json")
 with open(config_data_path, "w", encoding="utf-8") as config_data_file:
