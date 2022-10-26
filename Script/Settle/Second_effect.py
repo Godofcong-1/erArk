@@ -631,6 +631,30 @@ def handle_add_small_c_feel(
     change_data.status_data.setdefault(2, 0)
     change_data.status_data[2] += now_add_lust
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_P_FEEL)
+def handle_add_small_p_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量射精值（P感补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[0]
+
+    now_add_lust = 100 + character_data.eja_point*0.4
+    # adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
+    # now_add_lust *= adjust
+    character_data.eja_point += now_add_lust
+    change_data.eja_point += now_add_lust
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_V_FEEL)
 def handle_add_small_v_feel(
     character_id: int,
@@ -2196,4 +2220,23 @@ def handle_add_urinate(
     if character_data.h_state.body_item[8][1]:
         if character_data.urinate_point >= 30:
             character_data.urinate_point = 240
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.T_PENIS_IN_RESET)
+def handle_t_penis_in_reset(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    交互对象身上阴茎位置归零
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.insert_position = -1
 

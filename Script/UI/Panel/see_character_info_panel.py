@@ -517,45 +517,16 @@ class SeeCharacterHStatePanel:
         status_text_list = []
         bondage_text_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
         enemas_text_list = ["脏污","灌肠中","已灌肠","精液灌肠中","已精液灌肠"]
+        insert_text_list = ["发交中","阴茎蹭脸中","口交中","乳交中","腋交中","手交中","抽插阴道中","抽插子宫中","抽插后穴中","抽插尿道中","腿交中","足交中","尾交中","阴茎蹭角中","阴茎蹭耳朵中"]
         body_item_set = target_character_data.h_state.body_item
 
         # 指令文本
         now_text = ""
-        # 口、手、胸三个部位可能重叠
-        if handle_premise.handle_last_cmd_blowjob_type(0):
-            now_text += f"   <口交中>"
-        if handle_premise.handle_last_cmd_handjob_type(0):
-            now_text += f"   <手交中>"
-        if handle_premise.handle_last_cmd_paizuri_type(0):
-            now_text += f"   <乳交中>"
-
-        # 其他部位唯一
-        if handle_premise.handle_last_cmd_sex(0):
-            now_text += f"   <抽插阴道中>"
-        elif handle_premise.handle_last_cmd_w_sex(0):
-            now_text += f"   <抽插子宫中>"
-        elif handle_premise.handle_last_cmd_a_sex(0):
-            now_text += f"   <抽插后穴中>"
-        elif handle_premise.handle_last_cmd_u_sex(0):
-            now_text += f"   <抽插尿道中>"
-        elif handle_premise.handle_last_cmd_footjob(0):
-            now_text += f"   <足交中>"
-        elif handle_premise.handle_last_cmd_axillajob(0):
-            now_text += f"   <腋交中>"
-        elif handle_premise.handle_last_cmd_hairjob(0):
-            now_text += f"   <发交中>"
-        elif handle_premise.handle_last_cmd_rub_buttock(0):
-            now_text += f"   <素股中>"
-        elif handle_premise.handle_last_cmd_legjob(0):
-            now_text += f"   <腿交中>"
-        elif handle_premise.handle_last_cmd_tailjob(0):
-            now_text += f"   <尾交中>"
-        elif handle_premise.handle_last_cmd_face_rub(0):
-            now_text += f"   <阴茎蹭脸中>"
-        elif handle_premise.handle_last_cmd_horn_rub(0):
-            now_text += f"   <阴茎蹭角中>"
-        elif handle_premise.handle_last_cmd_ears_rub(0):
-            now_text += f"   <阴茎蹭耳朵中>"
+        insert_index = target_character_data.h_state.insert_position
+        if insert_index == -1:
+            now_text += f""
+        else:
+            now_text += f"   <{insert_text_list[insert_index]}>"
         status_text_list.append(now_text)
 
         # 道具文本

@@ -489,8 +489,6 @@ def check_second_effect(
 
     # 检测自己
     if character_id == 0:
-        # 阴茎位置结算
-        insert_position_effect(character_id)
 
         # 高潮结算
         orgasm_effect(character_id)
@@ -549,43 +547,10 @@ def insert_position_effect(character_id: int):
     """
 
     # print(f"debug 进入阴茎位置结算")
-    character_data: game_type.Character = cache.character_data[0]
-
-    # 口、手、胸三个部位可能重叠
-    if handle_premise.handle_last_cmd_blowjob_type(0):
-        character_data.second_behavior[1203] = 1
-    if handle_premise.handle_last_cmd_paizuri_type(0):
-        character_data.second_behavior[1204] = 1
-    if handle_premise.handle_last_cmd_handjob_type(0):
-        character_data.second_behavior[1206] = 1
-
-    # 其他部位唯一
-    if handle_premise.handle_last_cmd_sex(0):
-        character_data.second_behavior[1207] = 1
-    elif handle_premise.handle_last_cmd_w_sex(0):
-        character_data.second_behavior[1208] = 1
-    elif handle_premise.handle_last_cmd_a_sex(0):
-        character_data.second_behavior[1209] = 1
-    elif handle_premise.handle_last_cmd_u_sex(0):
-        character_data.second_behavior[1210] = 1
-    elif handle_premise.handle_last_cmd_footjob(0):
-        character_data.second_behavior[1212] = 1
-    elif handle_premise.handle_last_cmd_axillajob(0):
-        character_data.second_behavior[1205] = 1
-    elif handle_premise.handle_last_cmd_hairjob(0):
-        character_data.second_behavior[1201] = 1
-    elif handle_premise.handle_last_cmd_rub_buttock(0):
-        character_data.second_behavior[1216] = 1
-    elif handle_premise.handle_last_cmd_legjob(0):
-        character_data.second_behavior[1211] = 1
-    elif handle_premise.handle_last_cmd_tailjob(0):
-        character_data.second_behavior[1213] = 1
-    elif handle_premise.handle_last_cmd_face_rub(0):
-        character_data.second_behavior[1202] = 1
-    elif handle_premise.handle_last_cmd_horn_rub(0):
-        character_data.second_behavior[1214] = 1
-    elif handle_premise.handle_last_cmd_ears_rub(0):
-        character_data.second_behavior[1215] = 1
+    character_data: game_type.Character = cache.character_data[character_id]
+    if not handle_premise.handle_last_cmd_penis_position(0):
+        position_index = 1201 + character_data.h_state.insert_position
+        character_data.second_behavior[position_index] = 1
 
 
 def orgasm_effect(character_id: int):

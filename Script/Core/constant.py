@@ -1247,6 +1247,39 @@ class BehaviorEffect:
     RECORD_SHOWER_TIME = 702
     """ 记录当前淋浴时间 """
 
+    T_PENIS_IN_RESET = 801
+    """ 交互对象身上阴茎位置归零 """
+    T_PENIS_IN_HAIR = 802
+    """ 交互对象身上阴茎位置发交中 """
+    T_PENIS_IN_FACE = 803
+    """ 交互对象身上阴茎位置阴茎蹭脸中 """
+    T_PENIS_IN_MOUSE = 804
+    """ 交互对象身上阴茎位置口交中 """
+    T_PENIS_IN_BREAST = 805
+    """ 交互对象身上阴茎位置乳交中 """
+    T_PENIS_IN_AXILLA = 806
+    """ 交互对象身上阴茎位置腋交中 """
+    T_PENIS_IN_HAND = 807
+    """ 交互对象身上阴茎位置手交中 """
+    T_PENIS_IN_VAGINA = 808
+    """ 交互对象身上阴茎位置V插入中 """
+    T_PENIS_IN_WOMB = 809
+    """ 交互对象身上阴茎位置W插入中 """
+    T_PENIS_IN_ANAL = 810
+    """ 交互对象身上阴茎位置A插入中 """
+    T_PENIS_IN_URETHRAL = 811
+    """ 交互对象身上阴茎位置U插入中 """
+    T_PENIS_IN_LEG = 812
+    """ 交互对象身上阴茎位置腿交中 """
+    T_PENIS_IN_FOOT = 813
+    """ 交互对象身上阴茎位置足交中 """
+    T_PENIS_IN_TAIL = 814
+    """ 交互对象身上阴茎位置尾交中 """
+    T_PENIS_IN_HORN = 815
+    """ 交互对象身上阴茎位置阴茎蹭角中 """
+    T_PENIS_IN_EARS = 816
+    """ 交互对象身上阴茎位置阴茎蹭耳朵中 """
+
 
 class SecondBehavior:
     """二段结算行为函数"""
@@ -1460,7 +1493,7 @@ class SecondEffect:
     ADD_SMALL_C_FEEL = 239
     """ 增加少量Ｃ快（C感补正） """
     ADD_SMALL_P_FEEL = 240
-    """ 增加少量Ｐ快（P感补正） """
+    """ 增加少量射精值（P感补正） """
     ADD_SMALL_V_FEEL = 241
     """ 增加少量Ｖ快（V感补正） """
     ADD_SMALL_A_FEEL = 242
@@ -1585,6 +1618,10 @@ class SecondEffect:
     """ 增加巨量苦痛（A破处修正） """
     ADD_URINATE = 402
     """ 增加尿意（持续性利尿剂） """
+
+    T_PENIS_IN_RESET = 501
+    """ 交互对象身上阴茎位置归零 """
+
 
 
 #旧结算存档#

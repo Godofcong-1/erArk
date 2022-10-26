@@ -5603,6 +5603,43 @@ def handle_last_cmd_womb_os_caress(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.LAST_CMD_PENIS_POSITION)
+def handle_last_cmd_penis_position(character_id: int) -> int:
+    """
+    前一指令为阴茎位置相关指令_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    len_input = cache.input_cache
+    len_input = len(len_input)
+    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    sex = {
+        str(constant.Instruct.NORMAL_SEX),str(constant.Instruct.BACK_SEX),str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.FACE_SEAT_SEX),str(constant.Instruct.BACK_SEAT_SEX),
+        str(constant.Instruct.FACE_STAND_SEX),str(constant.Instruct.BACK_STAND_SEX),
+        str(constant.Instruct.STIMULATE_G_POINT),str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION),
+        str(constant.Instruct.NORMAL_ANAL_SEX),str(constant.Instruct.BACK_ANAL_SEX),str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.FACE_SEAT_ANAL_SEX),str(constant.Instruct.BACK_SEAT_ANAL_SEX),
+        str(constant.Instruct.FACE_STAND_ANAL_SEX),str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.STIMULATE_SIGMOID_COLON),str(constant.Instruct.STIMULATE_VAGINA),
+        str(constant.Instruct.URETHRAL_INSERTION),
+        str(constant.Instruct.HANDJOB),str(constant.Instruct.HAND_BLOWJOB),
+        str(constant.Instruct.BLOWJOB),str(constant.Instruct.PAIZURI),
+        str(constant.Instruct.TITS_BLOWJOB),str(constant.Instruct.FOCUS_BLOWJOB),
+        str(constant.Instruct.DEEP_THROAT),str(constant.Instruct.SIXTY_NINE),
+        str(constant.Instruct.FOOTJOB),str(constant.Instruct.HAIRJOB),
+        str(constant.Instruct.AXILLAJOB),str(constant.Instruct.RUB_BUTTOCK),
+        str(constant.Instruct.LEGJOB),str(constant.Instruct.TAILJOB),
+        str(constant.Instruct.FACE_RUB),str(constant.Instruct.HORN_RUB),
+        str(constant.Instruct.EARS_RUB),
+        }
+    if len_input:
+        if last_cmd in sex:
+            return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB)
 def handle_last_cmd_blowjob_or_handjob(character_id: int) -> int:
@@ -5677,9 +5714,8 @@ def handle_last_cmd_sex(character_id: int) -> int:
         str(constant.Instruct.STIMULATE_G_POINT),str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5699,9 +5735,8 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
         str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5724,9 +5759,8 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
         str(constant.Instruct.STIMULATE_SIGMOID_COLON),str(constant.Instruct.STIMULATE_VAGINA)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5746,9 +5780,8 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
         str(constant.Instruct.URETHRAL_INSERTION)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5769,9 +5802,8 @@ def handle_last_cmd_breast_caress_type(character_id: int) -> int:
         str(constant.Instruct.BREAST_SUCKING)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5791,9 +5823,8 @@ def handle_last_cmd_handjob_type(character_id: int) -> int:
         str(constant.Instruct.HANDJOB),str(constant.Instruct.HAND_BLOWJOB)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5815,9 +5846,8 @@ def handle_last_cmd_blowjob_type(character_id: int) -> int:
         str(constant.Instruct.DEEP_THROAT),str(constant.Instruct.SIXTY_NINE)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
     return 0
 
 
@@ -5837,9 +5867,248 @@ def handle_last_cmd_paizuri_type(character_id: int) -> int:
         str(constant.Instruct.PAIZURI),str(constant.Instruct.TITS_BLOWJOB)
         }
     if len_input:
-        for cmd in sex:
-            if last_cmd == cmd:
-                return 1
+        if last_cmd in sex:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_HAIR)
+def handle_t_penis_in_hair(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_发交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_FACE)
+def handle_t_penis_in_face(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_阴茎蹭脸中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_MOUSE)
+def handle_t_penis_in_mouse(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_口交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_BREAST)
+def handle_t_penis_in_breast(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_乳交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_AXILLA)
+def handle_t_penis_in_axilla(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_腋交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_HAND)
+def handle_t_penis_in_hand(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_手交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_VAGINA)
+def handle_t_penis_in_vagina(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_V插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 6:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_WOMB)
+def handle_t_penis_in_womb(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_W插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 7:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_ANAL)
+def handle_t_penis_in_anal(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_A插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 8:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_URETHRAL)
+def handle_t_penis_in_nrethral(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_U插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 9:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_LEG)
+def handle_t_penis_in_leg(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_腿交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 10:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_FOOT)
+def handle_t_penis_in_foot(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_足交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 11:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_TAIL)
+def handle_t_penis_in_tail(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_尾交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 12:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_HORN)
+def handle_t_penis_in_horn(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_阴茎蹭角中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 13:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PENIS_IN_EARS)
+def handle_t_penis_in_ears(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_阴茎蹭耳朵中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position == 14:
+        return 1
     return 0
 
 
