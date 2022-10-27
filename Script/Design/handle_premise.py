@@ -5872,8 +5872,8 @@ def handle_last_cmd_paizuri_type(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_HAIR)
-def handle_t_penis_in_hair(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_HAIR)
+def handle_penis_in_t_hair(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_发交中
     Keyword arguments:
@@ -5888,8 +5888,8 @@ def handle_t_penis_in_hair(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_FACE)
-def handle_t_penis_in_face(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_FACE)
+def handle_penis_in_t_face(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_阴茎蹭脸中
     Keyword arguments:
@@ -5904,8 +5904,8 @@ def handle_t_penis_in_face(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_MOUSE)
-def handle_t_penis_in_mouse(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_MOUSE)
+def handle_penis_in_t_mouse(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_口交中
     Keyword arguments:
@@ -5920,8 +5920,8 @@ def handle_t_penis_in_mouse(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_BREAST)
-def handle_t_penis_in_breast(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_BREAST)
+def handle_penis_in_t_breast(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_乳交中
     Keyword arguments:
@@ -5936,8 +5936,8 @@ def handle_t_penis_in_breast(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_AXILLA)
-def handle_t_penis_in_axilla(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_AXILLA)
+def handle_penis_in_t_axilla(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_腋交中
     Keyword arguments:
@@ -5952,8 +5952,8 @@ def handle_t_penis_in_axilla(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_HAND)
-def handle_t_penis_in_hand(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_HAND)
+def handle_penis_in_t_hand(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_手交中
     Keyword arguments:
@@ -5968,8 +5968,8 @@ def handle_t_penis_in_hand(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_VAGINA)
-def handle_t_penis_in_vagina(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_VAGINA)
+def handle_penis_in_t_vagina(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_V插入中
     Keyword arguments:
@@ -5984,8 +5984,8 @@ def handle_t_penis_in_vagina(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_WOMB)
-def handle_t_penis_in_womb(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_WOMB)
+def handle_penis_in_t_womb(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_W插入中
     Keyword arguments:
@@ -6000,8 +6000,8 @@ def handle_t_penis_in_womb(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_ANAL)
-def handle_t_penis_in_anal(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_ANAL)
+def handle_penis_in_t_anal(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_A插入中
     Keyword arguments:
@@ -6016,8 +6016,8 @@ def handle_t_penis_in_anal(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_URETHRAL)
-def handle_t_penis_in_nrethral(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_URETHRAL)
+def handle_penis_in_t_nrethral(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_U插入中
     Keyword arguments:
@@ -6032,8 +6032,8 @@ def handle_t_penis_in_nrethral(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_LEG)
-def handle_t_penis_in_leg(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_LEG)
+def handle_penis_in_t_leg(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_腿交中
     Keyword arguments:
@@ -6048,8 +6048,8 @@ def handle_t_penis_in_leg(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_FOOT)
-def handle_t_penis_in_foot(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_FOOT)
+def handle_penis_in_t_foot(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_足交中
     Keyword arguments:
@@ -6064,8 +6064,8 @@ def handle_t_penis_in_foot(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_TAIL)
-def handle_t_penis_in_tail(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_TAIL)
+def handle_penis_in_t_tail(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_尾交中
     Keyword arguments:
@@ -6080,8 +6080,8 @@ def handle_t_penis_in_tail(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_HORN)
-def handle_t_penis_in_horn(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_HORN)
+def handle_penis_in_t_horn(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_阴茎蹭角中
     Keyword arguments:
@@ -6096,8 +6096,8 @@ def handle_t_penis_in_horn(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.T_PENIS_IN_EARS)
-def handle_t_penis_in_ears(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PENIS_IN_T_EARS)
+def handle_penis_in_t_ears(character_id: int) -> int:
     """
     当前阴茎位置为交互对象_阴茎蹭耳朵中
     Keyword arguments:

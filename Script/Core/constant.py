@@ -1247,38 +1247,38 @@ class BehaviorEffect:
     RECORD_SHOWER_TIME = 702
     """ 记录当前淋浴时间 """
 
-    T_PENIS_IN_RESET = 801
-    """ 交互对象身上阴茎位置归零 """
-    T_PENIS_IN_HAIR = 802
-    """ 交互对象身上阴茎位置发交中 """
-    T_PENIS_IN_FACE = 803
-    """ 交互对象身上阴茎位置阴茎蹭脸中 """
-    T_PENIS_IN_MOUSE = 804
-    """ 交互对象身上阴茎位置口交中 """
-    T_PENIS_IN_BREAST = 805
-    """ 交互对象身上阴茎位置乳交中 """
-    T_PENIS_IN_AXILLA = 806
-    """ 交互对象身上阴茎位置腋交中 """
-    T_PENIS_IN_HAND = 807
-    """ 交互对象身上阴茎位置手交中 """
-    T_PENIS_IN_VAGINA = 808
-    """ 交互对象身上阴茎位置V插入中 """
-    T_PENIS_IN_WOMB = 809
-    """ 交互对象身上阴茎位置W插入中 """
-    T_PENIS_IN_ANAL = 810
-    """ 交互对象身上阴茎位置A插入中 """
-    T_PENIS_IN_URETHRAL = 811
-    """ 交互对象身上阴茎位置U插入中 """
-    T_PENIS_IN_LEG = 812
-    """ 交互对象身上阴茎位置腿交中 """
-    T_PENIS_IN_FOOT = 813
-    """ 交互对象身上阴茎位置足交中 """
-    T_PENIS_IN_TAIL = 814
-    """ 交互对象身上阴茎位置尾交中 """
-    T_PENIS_IN_HORN = 815
-    """ 交互对象身上阴茎位置阴茎蹭角中 """
-    T_PENIS_IN_EARS = 816
-    """ 交互对象身上阴茎位置阴茎蹭耳朵中 """
+    PENIS_IN_T_RESET = 801
+    """ 当前阴茎位置为交互对象_归零 """
+    PENIS_IN_T_HAIR = 802
+    """ 当前阴茎位置为交互对象_发交中 """
+    PENIS_IN_T_FACE = 803
+    """ 当前阴茎位置为交互对象_阴茎蹭脸中 """
+    PENIS_IN_T_MOUSE = 804
+    """ 当前阴茎位置为交互对象_口交中 """
+    PENIS_IN_T_BREAST = 805
+    """ 当前阴茎位置为交互对象_乳交中 """
+    PENIS_IN_T_AXILLA = 806
+    """ 当前阴茎位置为交互对象_腋交中 """
+    PENIS_IN_T_HAND = 807
+    """ 当前阴茎位置为交互对象_手交中 """
+    PENIS_IN_T_VAGINA = 808
+    """ 当前阴茎位置为交互对象_V插入中 """
+    PENIS_IN_T_WOMB = 809
+    """ 当前阴茎位置为交互对象_W插入中 """
+    PENIS_IN_T_ANAL = 810
+    """ 当前阴茎位置为交互对象_A插入中 """
+    PENIS_IN_T_URETHRAL = 811
+    """ 当前阴茎位置为交互对象_U插入中 """
+    PENIS_IN_T_LEG = 812
+    """ 当前阴茎位置为交互对象_腿交中 """
+    PENIS_IN_T_FOOT = 813
+    """ 当前阴茎位置为交互对象_足交中 """
+    PENIS_IN_T_TAIL = 814
+    """ 当前阴茎位置为交互对象_尾交中 """
+    PENIS_IN_T_HORN = 815
+    """ 当前阴茎位置为交互对象_阴茎蹭角中 """
+    PENIS_IN_T_EARS = 816
+    """ 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
 
 
 class SecondBehavior:
@@ -1619,8 +1619,8 @@ class SecondEffect:
     ADD_URINATE = 402
     """ 增加尿意（持续性利尿剂） """
 
-    T_PENIS_IN_RESET = 501
-    """ 交互对象身上阴茎位置归零 """
+    PENIS_IN_T_RESET = 501
+    """ 当前阴茎位置为交互对象_归零 """
 
 
 

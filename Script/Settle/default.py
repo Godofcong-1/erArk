@@ -3716,15 +3716,15 @@ def handle_record_shower_time(
     character_data.action_info.last_shower_time = now_time
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_RESET)
-def handle_t_penis_in_reset(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_RESET)
+def handle_penis_in_t_reset(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置归零
+    当前阴茎位置为交互对象_归零
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3738,15 +3738,15 @@ def handle_t_penis_in_reset(
     target_data.h_state.insert_position = -1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_HAIR)
-def handle_t_penis_in_hair(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HAIR)
+def handle_penis_in_t_hair(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置发交中
+    当前阴茎位置为交互对象_发交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3760,15 +3760,15 @@ def handle_t_penis_in_hair(
     target_data.h_state.insert_position = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_FACE)
-def handle_t_penis_in_face(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_FACE)
+def handle_penis_in_t_face(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置阴茎蹭脸中
+    当前阴茎位置为交互对象_阴茎蹭脸中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3782,15 +3782,15 @@ def handle_t_penis_in_face(
     target_data.h_state.insert_position = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_MOUSE)
-def handle_t_penis_in_mouse(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_MOUSE)
+def handle_penis_in_t_mouse(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置口交中
+    当前阴茎位置为交互对象_口交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3804,15 +3804,15 @@ def handle_t_penis_in_mouse(
     target_data.h_state.insert_position = 2
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_BREAST)
-def handle_t_penis_in_breast(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_BREAST)
+def handle_penis_in_t_breast(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置乳交中
+    当前阴茎位置为交互对象_乳交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3826,15 +3826,15 @@ def handle_t_penis_in_breast(
     target_data.h_state.insert_position = 3
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_AXILLA)
-def handle_t_penis_in_axilla(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_AXILLA)
+def handle_penis_in_t_axilla(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置腋交中
+    当前阴茎位置为交互对象_腋交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3848,15 +3848,15 @@ def handle_t_penis_in_axilla(
     target_data.h_state.insert_position = 4
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_HAND)
-def handle_t_penis_in_hand(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HAND)
+def handle_penis_in_t_hand(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置手交中
+    当前阴茎位置为交互对象_手交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3870,15 +3870,15 @@ def handle_t_penis_in_hand(
     target_data.h_state.insert_position = 5
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_VAGINA)
-def handle_t_penis_in_vagina(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_VAGINA)
+def handle_penis_in_t_vagina(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置V插入中
+    当前阴茎位置为交互对象_V插入中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3892,15 +3892,15 @@ def handle_t_penis_in_vagina(
     target_data.h_state.insert_position = 6
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_WOMB)
-def handle_t_penis_in_womb(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_WOMB)
+def handle_penis_in_t_womb(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置W插入中
+    当前阴茎位置为交互对象_W插入中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3914,15 +3914,15 @@ def handle_t_penis_in_womb(
     target_data.h_state.insert_position = 7
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_ANAL)
-def handle_t_penis_in_anal(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_ANAL)
+def handle_penis_in_t_anal(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置A插入中
+    当前阴茎位置为交互对象_A插入中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3936,15 +3936,15 @@ def handle_t_penis_in_anal(
     target_data.h_state.insert_position = 8
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_URETHRAL)
-def handle_t_penis_in_urethral(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_URETHRAL)
+def handle_penis_in_t_urethral(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置U插入中
+    当前阴茎位置为交互对象_U插入中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3958,15 +3958,15 @@ def handle_t_penis_in_urethral(
     target_data.h_state.insert_position = 9
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_LEG)
-def handle_t_penis_in_leg(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_LEG)
+def handle_penis_in_t_leg(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置腿交中
+    当前阴茎位置为交互对象_腿交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3980,15 +3980,15 @@ def handle_t_penis_in_leg(
     target_data.h_state.insert_position = 10
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_FOOT)
-def handle_t_penis_in_foot(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_FOOT)
+def handle_penis_in_t_foot(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置足交中
+    当前阴茎位置为交互对象_足交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4002,15 +4002,15 @@ def handle_t_penis_in_foot(
     target_data.h_state.insert_position = 11
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_TAIL)
-def handle_t_penis_in_tail(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_TAIL)
+def handle_penis_in_t_tail(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置尾交中
+    当前阴茎位置为交互对象_尾交中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4024,15 +4024,15 @@ def handle_t_penis_in_tail(
     target_data.h_state.insert_position = 12
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_HORN)
-def handle_t_penis_in_horn(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HORN)
+def handle_penis_in_t_horn(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置阴茎蹭角中
+    当前阴茎位置为交互对象_阴茎蹭角中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4046,15 +4046,15 @@ def handle_t_penis_in_horn(
     target_data.h_state.insert_position = 13
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.T_PENIS_IN_EARS)
-def handle_t_penis_in_ears(
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_EARS)
+def handle_penis_in_t_ears(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    交互对象身上阴茎位置阴茎蹭耳朵中
+    当前阴茎位置为交互对象_阴茎蹭耳朵中
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

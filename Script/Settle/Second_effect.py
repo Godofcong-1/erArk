@@ -2222,13 +2222,13 @@ def handle_add_urinate(
             character_data.urinate_point = 240
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.T_PENIS_IN_RESET)
-def handle_t_penis_in_reset(
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.PENIS_IN_T_RESET)
+def handle_penis_in_t_reset(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    交互对象身上阴茎位置归零
+    当前阴茎位置为交互对象_归零
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
