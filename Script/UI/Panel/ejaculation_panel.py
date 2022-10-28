@@ -257,6 +257,7 @@ class Ejaculation_NameDraw:
 
             now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 
+        line_feed.draw()
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width

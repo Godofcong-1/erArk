@@ -511,7 +511,7 @@ def check_second_effect(
         # print("debug character_id = ",character_id)
         # print("debug target_character_id = ",target_character_id)
         # 阴茎位置结算
-        insert_position_effect(character_id)
+        insert_position_effect(target_character_id)
 
         # 高潮结算
         orgasm_effect(target_character_id)
@@ -538,7 +538,6 @@ def check_second_effect(
                     # print("effect_id :",effect_id)
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
-
 def insert_position_effect(character_id: int):
     """
     处理第二结算中的阴茎位置结算
@@ -546,9 +545,8 @@ def insert_position_effect(character_id: int):
     character_id -- 角色id
     """
 
-    # print(f"debug 进入阴茎位置结算")
     character_data: game_type.Character = cache.character_data[character_id]
-    if not handle_premise.handle_last_cmd_penis_position(0):
+    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0) :
         position_index = 1201 + character_data.h_state.insert_position
         character_data.second_behavior[position_index] = 1
 
@@ -576,6 +574,8 @@ def orgasm_effect(character_id: int):
             character_data.eja_point = 0
             now_draw = ejaculation_panel.Ejaculation_Panel(width)
             now_draw.draw()
+            line = draw.LineDraw("-", width)
+            line.draw()
     else:
         #检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
@@ -715,11 +715,12 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
-    #反发刻印检测反感+抑郁/5+恐怖/5，500反发1，1000反发2，2000反发3
+    #反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
     hate_count = 0
     hate_count += character_data.status_data[20]
     hate_count += character_data.status_data[18]/5
     hate_count += character_data.status_data[19]/5
+    hate_count += character_data.status_data[17]/10
     if hate_count >= 1000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1
