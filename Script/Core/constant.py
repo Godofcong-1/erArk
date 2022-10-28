@@ -1426,9 +1426,8 @@ class SecondBehavior:
     """ 结算阴茎蹭角中 """
     PENIS_IN_EARS = 1215
     """ 结算阴茎蹭耳朵中 """
-    PENIS_IN_EARS = 1216
+    PENIS_IN_RUB_BUTTOCK = 1216
     """ 结算素股中 """
-
 
 
 class SecondEffect:

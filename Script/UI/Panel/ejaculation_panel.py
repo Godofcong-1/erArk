@@ -230,11 +230,14 @@ class Ejaculation_NameDraw:
 
         # print("debug semen_count = ",semen_count)
 
-        # 更新污浊类里的身体部位精液参数
         if self.panel_type == 1:
 
             now_text = "在" + target_data.name + "的" + self.position_text_list[self.index] + semen_text
 
+            # 记录射精部位
+            target_data.h_state.shoot_position_body = self.index
+
+            # 更新污浊类里的身体部位精液参数
             if self.index == 6:
                 target_data.dirty.body_semen[self.index][1] += 1
                 self.index = 7
@@ -242,8 +245,12 @@ class Ejaculation_NameDraw:
             target_data.dirty.body_semen[self.index][3] += semen_count
             target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.index][1])
 
-        # 更新污浊类里的服装部位精液参数
         elif self.panel_type == 2:
+
+            # 记录射精部位
+            target_data.h_state.shoot_position_cloth = self.index
+
+            # 更新污浊类里的服装部位精液参数
             target_data.dirty.cloth_semen[self.index][1] += semen_count
             target_data.dirty.cloth_semen[self.index][3] += semen_count
             target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.index][1])
