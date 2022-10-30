@@ -6112,6 +6112,278 @@ def handle_penis_in_t_ears(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SHOOT_IN_T_BODY)
+def handle_shoot_in_t_body(character_id: int) -> int:
+    """
+    在交互对象的身体上射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body != -1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_HAIR)
+def handle_shoot_in_t_hair(character_id: int) -> int:
+    """
+    在交互对象的头发射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_FACE)
+def handle_shoot_in_t_face(character_id: int) -> int:
+    """
+    在交互对象的脸部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_MOUSE)
+def handle_shoot_in_t_mouse(character_id: int) -> int:
+    """
+    在交互对象的口腔射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_BREAST)
+def handle_shoot_in_t_breast(character_id: int) -> int:
+    """
+    在交互对象的胸部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_AXILLA)
+def handle_shoot_in_t_axilla(character_id: int) -> int:
+    """
+    在交互对象的腋部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_HAND)
+def handle_shoot_in_t_hand(character_id: int) -> int:
+    """
+    在交互对象的手部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_VAGINA)
+def handle_shoot_in_t_vagina(character_id: int) -> int:
+    """
+    在交互对象的小穴射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 6:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_WOMB)
+def handle_shoot_in_t_womb(character_id: int) -> int:
+    """
+    在交互对象的子宫射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 7:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_ANAL)
+def handle_shoot_in_t_anal(character_id: int) -> int:
+    """
+    在交互对象的后穴射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 8:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_URETHRAL)
+def handle_shoot_in_t_nrethral(character_id: int) -> int:
+    """
+    在交互对象的尿道射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 9:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_LEG)
+def handle_shoot_in_t_leg(character_id: int) -> int:
+    """
+    在交互对象的腿部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 10:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_FOOT)
+def handle_shoot_in_t_foot(character_id: int) -> int:
+    """
+    在交互对象的脚部射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 11:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_TAIL)
+def handle_shoot_in_t_tail(character_id: int) -> int:
+    """
+    在交互对象的尾巴射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 12:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_HORN)
+def handle_shoot_in_t_horn(character_id: int) -> int:
+    """
+    在交互对象的兽角射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 13:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_EARS)
+def handle_shoot_in_t_ears(character_id: int) -> int:
+    """
+    在交互对象的兽耳射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_body == 14:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOOT_IN_T_CLOTH)
+def handle_shoot_in_t_cloth(character_id: int) -> int:
+    """
+    在交互对象的衣服上射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.shoot_position_cloth != -1:
+        return 1
+    return 0
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)
