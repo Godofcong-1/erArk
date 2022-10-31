@@ -74,17 +74,23 @@ def get_underwear(character_id: int):
                     pan_loli_list += pan_H_list
                     break
 
-    # 随机选择上衣和下衣，有儿童和普通人两个分支
-    if character_data.talent[60] or character_data.talent[61]:
-        bra_id = random.choice(bra_loli_list)
-        character_data.cloth[6].append(bra_id)
-        pan_id = random.choice(pan_loli_list)
-        character_data.cloth[9].append(pan_id)
-    else:
-        bra_id = random.choice(bra_nor_list)
-        character_data.cloth[6].append(bra_id)
-        pan_id = random.choice(pan_nor_list)
-        character_data.cloth[9].append(pan_id)
+    # 判断是否当前已经穿了胸衣和内裤
+    if not len(character_data.cloth[6]):
+        # 随机选择胸衣和内裤，有儿童和普通人两个分支
+        if character_data.talent[60] or character_data.talent[61]:
+            bra_id = random.choice(bra_loli_list)
+            character_data.cloth[6].append(bra_id)
+        else:
+            bra_id = random.choice(bra_nor_list)
+            character_data.cloth[6].append(bra_id)
+
+    if not len(character_data.cloth[9]):
+        if character_data.talent[60] or character_data.talent[61]:
+            pan_id = random.choice(pan_loli_list)
+            character_data.cloth[9].append(pan_id)
+        else:
+            pan_id = random.choice(pan_nor_list)
+            character_data.cloth[9].append(pan_id)
 
 
 def get_cloth_off(character_id: int):

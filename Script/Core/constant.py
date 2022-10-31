@@ -56,7 +56,7 @@ class CharacterStatus:
     STATUS_GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     STATUS_H = 125
-    """ 邀请H状态 """
+    """ 进入H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
     STATUS_DO_H_FAIL = 131
@@ -369,7 +369,7 @@ class Behavior:
     GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     H = 125
-    """ 邀请H """
+    """ 进入H状态 """
     END_H = 126
     """ 结束H """
     DO_H_FAIL = 131
@@ -1201,7 +1201,9 @@ class BehaviorEffect:
 
     DIRTY_RESET = 401
     """ 污浊情况(身体+衣服)归零 """
-    DOOR_CLOSE_RESET = 402
+    DOOR_CLOSE = 402
+    """ 当前场景进入关门状态 """
+    DOOR_CLOSE_RESET = 403
     """ 当前场景取消关门状态 """
 
     TALK_ADD_ADJUST = 501

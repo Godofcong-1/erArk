@@ -1041,8 +1041,6 @@ def handle_do_h():
             h_flag = True
             target_data.is_h = 1
             target_data.is_follow = 0
-            target_data.cloth_see[6] = True
-            target_data.cloth_see[9] = True
             character_data.behavior.behavior_id = constant.Behavior.H
             character_data.state = constant.CharacterStatus.STATUS_H
             now_draw = draw.WaitDraw()
