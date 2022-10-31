@@ -64,6 +64,8 @@ class Premise:
     """ 优先度为5的空白前提 """
     HIGH_10 = "high_10"
     """ 优先度为10的空白前提 """
+    HIGH_999 = "high_999"
+    """ 优先度为999的空白前提 """
 
     INSTRUCT_JUDGE_LOW_OBSCENITY = "instruct_judge_low_obscenity"
     """ 当前实行值足以轻度性骚扰 """
@@ -181,6 +183,12 @@ class Premise:
     """ 当前地点有家具 """
     PLACE_NOT_FURNITURE = "place_not_furniture"
     """ 当前地点没家具 """
+    IN_FUNCTIONAL_ROOM = "in_functional_room"
+    """ 在功能性地点中 """
+    PLACE_DOOR_OPEN = "place_door_open"
+    """ 地点的门是开着的（不含内隔间关门） """
+    PLACE_LADIES_ONLY = "place_ladies_only"
+    """ 该地点男士止步（女洗手间/更衣室/浴室等） """
 
     IN_KITCHEN = "in_kit"
     """ 在厨房 """
@@ -244,10 +252,7 @@ class Premise:
     """ 在大浴场的更衣室 """
     NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
     """ 不在大浴场的更衣室 """
-    IN_FUNCTIONAL_ROOM = "in_functional_room"
-    """ 在功能性地点中 """
-    PLACE_DOOR_OPEN = "place_door_open"
-    """ 地点的门是开着的（不含内隔间关门） """
+
 
     HAVE_MOVED = "ai_moved"
     """ NPC距离上次移动已经至少经过了1小时 """

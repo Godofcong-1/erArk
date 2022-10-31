@@ -1115,6 +1115,24 @@ def handle_place_door_open(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PLACE_LADIES_ONLY)
+def handle_place_ladies_only(character_id: int) -> int:
+    """
+    该地点男士止步（女洗手间/更衣室/浴室等）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Ladies_Only" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IN_BATHROOM)
 def handle_in_bathroom(character_id: int) -> int:
     """
@@ -1385,6 +1403,18 @@ def handle_high_10(character_id: int) -> int:
     int -- 权重
     """
     return 10
+
+
+@add_premise(constant_promise.Premise.HIGH_999)
+def handle_high_999(character_id: int) -> int:
+    """
+    优先度为999的空白前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 999
 
 
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_LOW_OBSCENITY)
