@@ -565,11 +565,11 @@ def orgasm_effect(character_id: int):
     #检测射精
     if character_id == 0:
         if character_data.eja_point >= character_data.eja_point_max:
-            if character_data.orgasm_level[3] % 3 == 0:
+            if character_data.h_state.orgasm_level[3] % 3 == 0:
                 character_data.second_behavior[1009] = 1
-            elif character_data.orgasm_level[3] % 3 == 1:
+            elif character_data.h_state.orgasm_level[3] % 3 == 1:
                 character_data.second_behavior[1010] = 1
-            elif character_data.orgasm_level[3] % 3 == 2:
+            elif character_data.h_state.orgasm_level[3] % 3 == 2:
                 character_data.second_behavior[1010] = 1
             character_data.eja_point = 0
             now_draw = ejaculation_panel.Ejaculation_Panel(width)
@@ -582,7 +582,7 @@ def orgasm_effect(character_id: int):
             #now_data -- 当前高潮程度
             #pre_data -- 记录里的前高潮程度
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-            pre_data = character_data.orgasm_level[orgasm]
+            pre_data = character_data.h_state.orgasm_level[orgasm]
             #跳过射精槽
             if orgasm == 3:
                 continue
@@ -621,7 +621,7 @@ def orgasm_effect(character_id: int):
                 # now_draw.draw()
                 
                 #刷新记录
-                character_data.orgasm_level[orgasm] = now_data
+                character_data.h_state.orgasm_level[orgasm] = now_data
 
 def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     """
@@ -639,9 +639,9 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     #快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     happy_count = 0
     for orgasm in range(8):
-        happy_count += character_data.orgasm_count[orgasm]
+        happy_count += character_data.h_state.orgasm_count[orgasm][0]
         #计数归零
-        character_data.orgasm_count[orgasm] = 0
+        character_data.h_state.orgasm_count[orgasm][0] = 0
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1

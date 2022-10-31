@@ -306,6 +306,10 @@ class BODY_H_STATE:
         """ 身体上的射精位置，int，-1为未射精，其他同身体部位 """
         self.shoot_position_cloth: int = -1
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
+        self.orgasm_level: Dict[int,int] = {}
+        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        self.orgasm_count: Dict[int,list] = {}
+        """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
 
 class ASSISTANT_STATE:
     """助理状态结构体"""
@@ -758,10 +762,6 @@ class Character:
         """ 在H模式中 """
         self.is_follow : int = 0
         """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
-        self.orgasm_level: Dict[int,int] = {}
-        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
-        self.orgasm_count: Dict[int,int] = {}
-        """ 高潮次数记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
         self.tired : bool = 0

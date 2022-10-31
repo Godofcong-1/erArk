@@ -1205,6 +1205,8 @@ class BehaviorEffect:
     """ 当前场景进入关门状态 """
     DOOR_CLOSE_RESET = 403
     """ 当前场景取消关门状态 """
+    BOTH_H_STATE_RESET = 404
+    """ 双方H状态结构体归零 """
 
     TALK_ADD_ADJUST = 501
     """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

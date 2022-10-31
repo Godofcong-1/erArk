@@ -42,8 +42,6 @@ def init_attr(character_id: int):
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
     character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
-    character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
-    character_data.orgasm_count = attr_calculation.get_orgasm_count_zero(character_data.orgasm_count)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)

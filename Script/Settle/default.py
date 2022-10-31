@@ -2497,6 +2497,29 @@ def handle_door_close_reset(
     now_scene_data.close_flag = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.BOTH_H_STATE_RESET)
+def handle_both_h_state_reset(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    双方H状态结构体归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.h_state = attr_calculation.get_h_state_zero()
+    target_data.h_state = attr_calculation.get_h_state_zero()
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
     character_id: int,

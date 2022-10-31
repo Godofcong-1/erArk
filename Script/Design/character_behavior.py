@@ -151,7 +151,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         if character_id == 0:
             character_data.eja_point = 0
         # 清零高潮程度
-        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        character_data.h_state.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.h_state.orgasm_level)
         # 清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
         # 清零H被撞破的flag

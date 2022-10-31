@@ -217,16 +217,16 @@ class Ejaculation_NameDraw:
         random_weight = random.uniform(0.5, 1.5)
 
         # 基础射精值，小中多射精区分
-        if character_data.orgasm_level[3] % 3 == 0:
+        if character_data.h_state.orgasm_level[3] % 3 == 0:
             semen_count = int(5 * random_weight)
             semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.orgasm_level[3] % 3 == 1:
+        if character_data.h_state.orgasm_level[3] % 3 == 1:
             semen_count = int(20 * random_weight)
             semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.orgasm_level[3] % 3 == 2:
+        if character_data.h_state.orgasm_level[3] % 3 == 2:
             semen_count = int(100 * random_weight)
             semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
-        character_data.orgasm_level[3] += 1
+        character_data.h_state.orgasm_level[3] += 1
 
         # print("debug semen_count = ",semen_count)
 

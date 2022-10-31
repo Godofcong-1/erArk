@@ -1053,8 +1053,6 @@ def handle_do_h():
             for i in {1,2,3,4}:
                 cache.instruct_type_filter[i] = 0
 
-            # 清零H状态函数
-            target_data.h_state = attr_calculation.get_h_state_zero()
         else:
             character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
             character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL

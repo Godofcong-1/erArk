@@ -6384,6 +6384,238 @@ def handle_shoot_in_t_cloth(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.T_TURN_ORGASM_0)
+def handle_t_turn_orgasm_0(character_id: int) -> int:
+    """
+    交互对象本次H中还没有绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    for body_part in game_config.config_body_part:
+        if target_data.h_state.orgasm_count[body_part][1]:
+            return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.T_TURN_ORGASM_G_1)
+def handle_t_turn_orgasm_g_1(character_id: int) -> int:
+    """
+    交互对象本次H中绝顶次数>1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    count = 0
+    for body_part in game_config.config_body_part:
+        count += target_data.h_state.orgasm_count[body_part][1]
+        if count > 1:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_ORGASM_G_5)
+def handle_t_turn_orgasm_g_5(character_id: int) -> int:
+    """
+    交互对象本次H中绝顶次数>5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    count = 0
+    for body_part in game_config.config_body_part:
+        count += target_data.h_state.orgasm_count[body_part][1]
+        if count > 5:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_ORGASM_G_10)
+def handle_t_turn_orgasm_g_10(character_id: int) -> int:
+    """
+    交互对象本次H中绝顶次数>10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    count = 0
+    for body_part in game_config.config_body_part:
+        count += target_data.h_state.orgasm_count[body_part][1]
+        if count > 10:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_N_ORGASM_G_3)
+def handle_t_turn_n_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中N绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[0][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_B_ORGASM_G_3)
+def handle_t_turn_b_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中B绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[1][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_C_ORGASM_G_3)
+def handle_t_turn_c_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中C绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[2][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TURN_P_ORGASM_G_1)
+def handle_turn_p_orgasm_g_1(character_id: int) -> int:
+    """
+    玩家本次H中射精次数>1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.h_state.orgasm_count[3][1] > 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TURN_P_ORGASM_G_3)
+def handle_turn_p_orgasm_g_3(character_id: int) -> int:
+    """
+    玩家本次H中射精次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.h_state.orgasm_count[3][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_V_ORGASM_G_3)
+def handle_t_turn_v_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中V绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[4][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_A_ORGASM_G_3)
+def handle_t_turn_a_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中A绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[5][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_U_ORGASM_G_3)
+def handle_t_turn_u_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中U绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[6][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_W_ORGASM_G_3)
+def handle_t_turn_w_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中W绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[7][1] > 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_TURN_M_ORGASM_G_3)
+def handle_t_turn_m_orgasm_g_3(character_id: int) -> int:
+    """
+    交互对象本次H中M绝顶次数>3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.orgasm_count[8][1] > 3:
+        return 1
+    return 0
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)
