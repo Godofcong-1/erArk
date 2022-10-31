@@ -1,5 +1,7 @@
 {
   "SceneName":"机房",
   "InOutDoor":"In",
-  "SceneTag":"Room|exposed|have_furniture"
+  "Exposed":"1",
+  "Have_Furniture":"1",
+  "SceneTag":"Room"
 }

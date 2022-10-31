@@ -1,5 +1,7 @@
 {
   "SceneName":"宿舍2区入口",
   "InOutDoor":"In",
-  "SceneTag":"Door|exposed|not_furniture"
+  "Exposed":"1",
+  "Have_Furniture":"0",
+  "SceneTag":"Door"
 }

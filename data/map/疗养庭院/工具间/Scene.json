@@ -1,5 +1,7 @@
 {
   "SceneName":"工具间",
   "InOutDoor":"In",
-  "SceneTag":"Room|covert|not_furniture"
+  "Exposed":"0",
+  "Have_Furniture":"0",
+  "SceneTag":"Room"
 }

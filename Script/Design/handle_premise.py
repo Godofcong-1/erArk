@@ -503,7 +503,7 @@ def handle_place_exposed(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "exposed" in now_scene_data.scene_tag:
+    if now_scene_data.exposed:
         return 1
     return 0
 
@@ -521,9 +521,9 @@ def handle_place_covert(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "covert" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    if now_scene_data.exposed:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.PLACE_HAVE_FURNITURE)
@@ -539,7 +539,7 @@ def handle_place_have_furniture(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "have_furniture" in now_scene_data.scene_tag:
+    if now_scene_data.have_furniture:
         return 1
     return 0
 
@@ -557,9 +557,9 @@ def handle_place_not_furniture(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "not_furniture" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    if now_scene_data.have_furniture:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.IN_SHOP)
