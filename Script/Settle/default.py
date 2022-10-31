@@ -2449,6 +2449,30 @@ def handle_dirty_reset(
     character_data.dirty = attr_calculation.get_dirty_zero()
 
 
+@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOOR_CLOSE)
+def handle_door_close(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    当前场景进入关门状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_position = character_data.position
+    now_position_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_position_str]
+    now_scene_data.close_flag = now_scene_data.close_type
+
+
 @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOOR_CLOSE_RESET)
 def handle_door_close_reset(
     character_id: int,

@@ -69,7 +69,6 @@ class Close_Door_Panel:
             now_draw = panel.LeftDrawTextListPanel()
 
             # 地点关门判定的三个分支
-            now_scene_data.close_type = 1
             if now_scene_data.close_type == 0:
                 info_text = "\n当前地点无法关门，要继续吗："
             elif now_scene_data.close_type == 1:
@@ -100,6 +99,5 @@ class Close_Door_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 if askfor_panel_return_list[yrn] == askfor_list[0]:
-                    now_scene_data.close_flag = now_scene_data.close_type
                     return 1
                 return 0
