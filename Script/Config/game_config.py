@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Set
 from Script.Config import config_def
-from Script.Core import json_handle, get_text
+from Script.Core import json_handle, get_text, game_type
 
 
 
@@ -169,6 +169,17 @@ config_target_premise_data: Dict[int, Set] = {}
 """ 目标前提配置数据 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
+config_event: Dict[str, game_type.Event] = {}
+""" 事件配置数据 """
+config_event_status_data: Dict[int, Dict[int, Set]] = {}
+"""
+各个状态下事件列表
+状态id:开始/结束事件:口上id集合
+"""
+config_event_target: Dict[int, game_type.Target] = {}
+""" 目标配置数据 """
+config_event_effect_target_data: Dict[int, Set] = {}
+""" 能达成效果的目标集合 """
 
 
 def load_data_json():
@@ -740,6 +751,32 @@ def load_week_day():
         config_week_day[now_tem.cid] = now_tem
 
 
+def load_event():
+    """载入事件配置"""
+    now_data = config_data["Event"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = game_type.Event()
+        now_tem.__dict__ = tem_data
+        config_event[now_tem.uid] = now_tem
+        config_event_status_data.setdefault(int(now_tem.status_id), {})
+        config_event_status_data[int(now_tem.status_id)].setdefault(int(now_tem.start), set())
+        config_event_status_data[int(now_tem.status_id)][int(now_tem.start)].add(now_tem.uid)
+
+
+def load_event_target():
+    """载入事件目标配置"""
+    now_data = config_data["Event_Target"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = game_type.Target()
+        now_tem.__dict__ = tem_data
+        config_event_target[now_tem.uid] = now_tem
+        for effect in now_tem.effect:
+            config_event_effect_target_data.setdefault(effect, set())
+            config_event_effect_target_data[effect].add(now_tem.uid)
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -789,3 +826,5 @@ def init():
     load_target()
     load_target_effect()
     load_week_day()
+    # load_event()
+    # load_event_target()

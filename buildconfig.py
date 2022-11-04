@@ -5,6 +5,8 @@ import datetime
 import ast
 
 config_dir = os.path.join("data", "csv")
+# os.system("cp ./tools/DieloliEventEditor/default.json ./data/event/")
+event_dir = os.path.join("data", "event")
 talk_dir = os.path.join("data", "talk")
 target_dir = os.path.join("data", "target")
 config_data = {}

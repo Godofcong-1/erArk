@@ -925,3 +925,41 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+
+
+class Event:
+    """事件数据结构体"""
+
+    def __init__(self):
+        """初始化事件对象"""
+        self.uid: str = ""
+        """ 事件唯一id """
+        self.adv_id: str = ""
+        """ 事件所属advnpcid """
+        self.status_id: str = ""
+        """ 事件所属状态id """
+        self.start: bool = 0
+        """ 是否是行为开始时的事件 """
+        self.text: str = ""
+        """ 事件文本 """
+        self.premise: dict = {}
+        """ 事件的前提集合 """
+        self.settle: dict = {}
+        """ 事件的结算器集合 """
+
+
+class Target:
+    """目标数据结构体"""
+
+    def __init__(self):
+        """初始化口上对象"""
+        self.uid: str = ""
+        """ 目标唯一id """
+        self.text: str = ""
+        """ 目标描述 """
+        self.state_machine_id: str = ""
+        """ 执行的状态机id """
+        self.premise: dict = {}
+        """ 目标的前提集合 """
+        self.effect: dict = {}
+        """ 目标的效果集合 """
