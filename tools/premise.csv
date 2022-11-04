@@ -188,13 +188,14 @@ bad_or_angry_mood,属性_心情,交互对象心情不好或愤怒
 angry_with_player,属性_心情,交互对象被玩家惹火了
 not_angry_with_player,属性_心情,交互对象没有被玩家惹火
 
-t_lubrication_l_1,属性_能力,交互对象润滑<1
-t_lubrication_l_3,属性_能力,交互对象润滑<3
-t_lubrication_l_7,属性_能力,交互对象润滑<7
-t_lubrication_ge_1,属性_能力,交互对象润滑>=1
-t_lubrication_ge_3,属性_能力,交互对象润滑>=3
-t_lubrication_ge_5,属性_能力,交互对象润滑>=5
-t_lubrication_ge_7,属性_能力,交互对象润滑>=7
+t_lubrication_l_1,属性_状态,交互对象润滑<1
+t_lubrication_l_3,属性_状态,交互对象润滑<3
+t_lubrication_l_7,属性_状态,交互对象润滑<7
+t_lubrication_ge_1,属性_状态,交互对象润滑>=1
+t_lubrication_ge_3,属性_状态,交互对象润滑>=3
+t_lubrication_ge_5,属性_状态,交互对象润滑>=5
+t_lubrication_ge_7,属性_状态,交互对象润滑>=7
+
 t_nfeel_ge_1,属性_能力,交互对象Ｎ感觉>=1
 t_nfeel_ge_3,属性_能力,交互对象Ｎ感觉>=3
 t_nfeel_ge_5,属性_能力,交互对象Ｎ感觉>=5
