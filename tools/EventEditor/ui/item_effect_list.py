@@ -17,6 +17,8 @@ class ItemEffectList(QWidget):
         label.setText("结算列表")
         layout.addWidget(label)
         self.item_list = QListWidget()
+        self.item_list.setWordWrap(True)
+        self.item_list.adjustSize()
         layout.addWidget(self.item_list)
         self.setLayout(layout)
 
