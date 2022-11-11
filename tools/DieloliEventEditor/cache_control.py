@@ -27,3 +27,9 @@ item_premise_list = None
 """ 事件前提列表 """
 item_settle_list = None
 """ 事件结算器列表 """
+item_effect_list = None
+""" 事件结算列表 """
+effect_data: dict = {}
+""" 结算数据 """
+effect_type_data: Dict[str, Set] = {}
+""" 结算类型数据 """

@@ -5,8 +5,8 @@ from Script.Config import game_config
 '''
 
 
-# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件
-mode = 1
+# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件
+mode = 5
 command_str = "t_lubrication_l_7"
 capital_command = command_str.upper()
 dataname = "润滑"
@@ -126,7 +126,7 @@ def constand_2_handle():
 
     return out_str
 
-def constand_2_csv():
+def constand_promise_2_csv():
     with open("Script\\Core\\constant_promise.py", "r",encoding="utf-8") as f:
         a=f.readlines()
         f.close()
@@ -180,10 +180,71 @@ def csv_2_constand():
 
     return out_str
 
+def constand_effect_2_csv():
+    with open("Script\\Core\\constant_effect.py", "r",encoding="utf-8") as f:
+        a=f.readlines()
+        f.close()
+    out_str = "\n"
+
+    for line in a:
+        if len(line) >= 3 and "#" not in line:
+            if line[-3] == "\"" and " " in line:
+                effect_text = line.split("\"")[-4].strip()
+                if effect_text != "行为结算效果函数":
+                    # promise_type,promise_info = effect_text.split(" ")[0],effect_text.split(" ")[1]
+                    out_str += f"未分类,{effect_text}\n"
+                    # print(f"debug effect_text = {effect_text}")
+            else:
+                effect_name = line.split("\"")[-1].strip().split(" ")[0]
+                effect_cid = line.split("\"")[-1].strip().split(" ")[-1]
+                if out_str != "BehaviorEffect:":
+                    out_str += f"{effect_cid},{effect_name},"
+                    print(f"debug {effect_cid},{effect_name},")
+        elif len(line) == 1:
+            out_str += "\n"
+
+    # 开始保存
+    with open("tools\\Effect.csv", "a",encoding="utf-8") as f:
+        f.write(out_str)
+        f.close()
+    print(f"已写入csv文件末尾")
+
+    return out_str
+
+def csv_2_constand_effect():
+    with open("tools\\Effect.csv", "r",encoding="utf-8") as f:
+        a=f.readlines()
+        # print(a)
+        f.close()
+
+    out_str = "\n"
+    for line in a:
+        effect_text = line.strip().split(",")
+        # print(f"debug promise_text = {promise_text}")
+        if len(effect_text) == 1:
+            out_str += "\n"
+        elif effect_text[0] != "cid":
+            out_str += f"    {effect_text[1]} = {effect_text[0]}\n"
+            out_str += f"    \"\"\" {effect_text[2]} {effect_text[3]} \"\"\"\n"
+
+
+    # 开始保存
+    with open("Script\\Core\\constant_effect.py", "a",encoding="utf-8") as f:
+        f.write(out_str)
+        f.close()
+    print(f"已写入结算文件末尾")
+
+    return out_str
+
+
 if __name__ == "__main__":
     if mode == 1:
         out_str = constand_2_handle()
     elif mode == 2:
-        constand_2_csv()
+        constand_promise_2_csv()
     elif mode == 3:
         csv_2_constand()
+    elif mode == 4:
+        constand_effect_2_csv()
+    elif mode == 5:
+        csv_2_constand_effect()

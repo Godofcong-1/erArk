@@ -5,6 +5,7 @@ from PySide6.QtGui import QFont, QCursor
 from ui.list_item import ListItem
 from ui.premise_menu import PremiseMenu
 from ui.settle_menu import SettleMenu
+from ui.effect_menu import EffectMenu
 import cache_control
 import game_type
 
@@ -82,14 +83,22 @@ class DataList(QListWidget):
             clean_premise_action.setText("清除前提")
             clean_premise_action.triggered.connect(self.clean_premise)
             menu.addAction(clean_premise_action)
-            settle_action: QWidgetAction = QWidgetAction(self)
-            settle_action.setText("设置结算器")
-            settle_action.triggered.connect(self.setting_settle)
-            menu.addAction(settle_action)
-            clean_settle_action: QWidgetAction = QWidgetAction(self)
-            clean_settle_action.setText("清除结算器")
-            clean_settle_action.triggered.connect(self.clean_settle)
-            menu.addAction(clean_settle_action)
+            # settle_action: QWidgetAction = QWidgetAction(self)
+            # settle_action.setText("设置结算器")
+            # settle_action.triggered.connect(self.setting_settle)
+            # menu.addAction(settle_action)
+            # clean_settle_action: QWidgetAction = QWidgetAction(self)
+            # clean_settle_action.setText("清除结算器")
+            # clean_settle_action.triggered.connect(self.clean_settle)
+            # menu.addAction(clean_settle_action)
+            effect_action: QWidgetAction = QWidgetAction(self)
+            effect_action.setText("设置结算")
+            effect_action.triggered.connect(self.setting_effect)
+            menu.addAction(effect_action)
+            clean_effect_action: QWidgetAction = QWidgetAction(self)
+            clean_effect_action.setText("清除结算")
+            clean_effect_action.triggered.connect(self.clean_effect)
+            menu.addAction(clean_effect_action)
         menu.exec(position)
 
     def create_event(self):
@@ -163,6 +172,21 @@ class DataList(QListWidget):
         event_index = self.currentRow()
         item = self.item(event_index)
         cache_control.now_event_data[item.uid].settle = {}
+        self.close_edit()
+
+    def setting_effect(self):
+        """设置事件结算"""
+        event_index = self.currentRow()
+        item = self.item(event_index)
+        cache_control.now_event_id = item.uid
+        menu = EffectMenu()
+        menu.exec()
+
+    def clean_effect(self):
+        """清除事件结算"""
+        event_index = self.currentRow()
+        item = self.item(event_index)
+        cache_control.now_event_data[item.uid].effect = {}
         self.close_edit()
 
     def update(self):

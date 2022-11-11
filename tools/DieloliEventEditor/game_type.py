@@ -17,3 +17,5 @@ class Event:
         """ 事件的前提集合 """
         self.settle: dict = {}
         """ 事件的结算器集合 """
+        self.effect: dict = {}
+        """ 事件的结算集合 """

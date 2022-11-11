@@ -13,7 +13,7 @@ from Script.Design import (
     handle_instruct,
     character_behavior,
 )
-from Script.Core import cache_control, constant, game_type, get_text
+from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
@@ -30,7 +30,7 @@ width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.NOTHING)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
 def handle_nothing(
     character_id: int,
     add_time: int,
@@ -47,7 +47,7 @@ def handle_nothing(
     """
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_HIT_POINT)
 def handle_add_small_hit_point(
     character_id: int,
     add_time: int,
@@ -75,7 +75,7 @@ def handle_add_small_hit_point(
     change_data.hit_point += add_hit_point
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_MANA_POINT)
 def handle_add_small_mana_point(
     character_id: int,
     add_time: int,
@@ -103,7 +103,7 @@ def handle_add_small_mana_point(
     change_data.mana_point += add_mana_point
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_INTERACTION_FAVORABILITY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_INTERACTION_FAVORABILITY)
 def handle_add_interaction_favoravility(
     character_id: int,
     add_time: int,
@@ -133,7 +133,7 @@ def handle_add_interaction_favoravility(
         )
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_TRUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_TRUST)
 def handle_add_small_trust(
     character_id: int,
     add_time: int,
@@ -169,7 +169,7 @@ def handle_add_small_trust(
             change_data.trust += now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
 def handle_sub_both_small_hit_point(
     character_id: int,
     add_time: int,
@@ -241,7 +241,7 @@ def handle_sub_both_small_hit_point(
                     now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
 def handle_sub_both_small_mana_point(
     character_id: int,
     add_time: int,
@@ -316,7 +316,7 @@ def handle_sub_both_small_mana_point(
                         now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
 def handle_sub_self_small_hit_point(
     character_id: int,
     add_time: int,
@@ -355,7 +355,7 @@ def handle_sub_self_small_hit_point(
             now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
 def handle_sub_self_small_mana_point(
     character_id: int,
     add_time: int,
@@ -395,7 +395,7 @@ def handle_sub_self_small_mana_point(
                 now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
 def handle_add_both_small_hit_point(
     character_id: int,
     add_time: int,
@@ -437,7 +437,7 @@ def handle_add_both_small_hit_point(
             target_data.hit_point = target_data.hit_point_max
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_BOTH_SMALL_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_MANA_POINT)
 def handle_add_both_small_mana_point(
     character_id: int,
     add_time: int,
@@ -479,7 +479,7 @@ def handle_add_both_small_mana_point(
             target_data.mana_point = target_data.mana_point_max
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MOVE_TO_TARGET_SCENE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOVE_TO_TARGET_SCENE)
 def handle_move_to_target_scene(
     character_id: int,
     add_time: int,
@@ -505,7 +505,7 @@ def handle_move_to_target_scene(
         )
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.EAT_FOOD)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD)
 def handle_eat_food(
     character_id: int,
     add_time: int,
@@ -545,7 +545,7 @@ def handle_eat_food(
             del character_data.food_bag[food.uid]
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.MAKE_FOOD)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAKE_FOOD)
 def handle_make_food(
     character_id: int,
     add_time: int,
@@ -581,7 +581,7 @@ def handle_make_food(
             )
 
 
-# @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)
+# @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)
 # def handle_add_social_favorability(
 #     character_id: int,
 #     add_time: int,
@@ -617,7 +617,7 @@ def handle_make_food(
 #                 )
 
 
-# @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_INTIMACY_FAVORABILITY)
+# @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_INTIMACY_FAVORABILITY)
 # def handle_add_intimacy_favorability(
 #     character_id: int,
 #     add_time: int,
@@ -668,7 +668,7 @@ def handle_make_food(
 #             )
 
 
-# @settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_INTIMATE_FAVORABILITY)
+# @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_INTIMATE_FAVORABILITY)
 # def handle_add_intimate_favorability(
 #     character_id: int,
 #     add_time: int,
@@ -720,7 +720,7 @@ def handle_make_food(
 #             )
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_KISS)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_KISS)
 def handle_first_kiss(
     character_id: int,
     add_time: int,
@@ -773,7 +773,7 @@ def handle_first_kiss(
             target_data.second_behavior[1050] = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_HAND_IN_HAND)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
 def handle_first_hand_in_hand(
     character_id: int,
     add_time: int,
@@ -803,7 +803,7 @@ def handle_first_hand_in_hand(
             target_data.first_kiss = character_id
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_SEX)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_SEX)
 def handle_first_sex(
     character_id: int,
     add_time: int,
@@ -889,7 +889,7 @@ def handle_first_sex(
             target_data.first_record.first_sex_item = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.FIRST_A_SEX)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_A_SEX)
 def handle_first_a_sex(
     character_id: int,
     add_time: int,
@@ -959,7 +959,7 @@ def handle_first_a_sex(
             target_data.second_behavior[1052] = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
     character_id: int,
     add_time: int,
@@ -987,7 +987,7 @@ def handle_add_medium_hit_point(
     change_data.hit_point += add_hit_point
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_MEDIUM_MANA_POINT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_MANA_POINT)
 def handle_add_medium_mana_point(
     character_id: int,
     add_time: int,
@@ -1015,7 +1015,7 @@ def handle_add_medium_mana_point(
     change_data.mana_point += add_mana_point
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.INTERRUPT_TARGET_ACTIVITY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.INTERRUPT_TARGET_ACTIVITY)
 def handle_interrupt_target_activity(
     character_id: int,
     add_time: int,
@@ -1056,7 +1056,7 @@ def handle_interrupt_target_activity(
                     )
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.NOT_TIRED)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
 def handle_not_tired(
     character_id: int,
     add_time: int,
@@ -1077,7 +1077,7 @@ def handle_not_tired(
     character_data.tired = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ITEM_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF)
 def handle_item_off(
     character_id: int,
     add_time: int,
@@ -1100,7 +1100,7 @@ def handle_item_off(
         character_data.h_state.body_item[i][2] = None
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ITEM_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ITEM_OFF)
 def handle_target_item_off(
     character_id: int,
     add_time: int,
@@ -1126,7 +1126,7 @@ def handle_target_item_off(
         target_data.h_state.body_item[i][2] = None
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_N_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_N_FEEL)
 def handle_target_add_small_n_feel(
     character_id: int,
     add_time: int,
@@ -1159,7 +1159,7 @@ def handle_target_add_small_n_feel(
     target_change.status_data.setdefault(0, 0)
     target_change.status_data[0] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_B_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_B_FEEL)
 def handle_target_add_small_b_feel(
     character_id: int,
     add_time: int,
@@ -1192,7 +1192,7 @@ def handle_target_add_small_b_feel(
     target_change.status_data.setdefault(1, 0)
     target_change.status_data[1] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
 def handle_target_add_small_c_feel(
     character_id: int,
     add_time: int,
@@ -1226,7 +1226,7 @@ def handle_target_add_small_c_feel(
     target_change.status_data[2] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
 def handle_target_add_small_p_feel(
     character_id: int,
     add_time: int,
@@ -1259,7 +1259,7 @@ def handle_target_add_small_p_feel(
     # target_change.eja_point.setdefault(3, 0)
     # target_change.eja_point += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
 def handle_target_add_small_v_feel(
     character_id: int,
     add_time: int,
@@ -1292,7 +1292,7 @@ def handle_target_add_small_v_feel(
     target_change.status_data.setdefault(4, 0)
     target_change.status_data[4] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
 def handle_target_add_small_a_feel(
     character_id: int,
     add_time: int,
@@ -1325,7 +1325,7 @@ def handle_target_add_small_a_feel(
     target_change.status_data.setdefault(5, 0)
     target_change.status_data[5] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_U_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_U_FEEL)
 def handle_target_add_small_u_feel(
     character_id: int,
     add_time: int,
@@ -1358,7 +1358,7 @@ def handle_target_add_small_u_feel(
     target_change.status_data.setdefault(6, 0)
     target_change.status_data[6] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_W_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_W_FEEL)
 def handle_target_add_small_w_feel(
     character_id: int,
     add_time: int,
@@ -1391,7 +1391,7 @@ def handle_target_add_small_w_feel(
     target_change.status_data.setdefault(7, 0)
     target_change.status_data[7] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LUBRICATION)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LUBRICATION)
 def handle_target_add_small_lubrication(
     character_id: int,
     add_time: int,
@@ -1425,7 +1425,7 @@ def handle_target_add_small_lubrication(
     target_change.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_BODY_LUBRICANT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BODY_LUBRICANT)
 def handle_use_body_lubricant(
     character_id: int,
     add_time: int,
@@ -1445,7 +1445,7 @@ def handle_use_body_lubricant(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[100] -= 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_HUGE_LUBRICATION)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_HUGE_LUBRICATION)
 def handle_target_add_huge_lubrication(
     character_id: int,
     add_time: int,
@@ -1476,7 +1476,7 @@ def handle_target_add_huge_lubrication(
     target_change.status_data.setdefault(8, 0)
     target_change.status_data[8] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_PHILTER)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_PHILTER)
 def handle_use_philter(
     character_id: int,
     add_time: int,
@@ -1496,7 +1496,7 @@ def handle_use_philter(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[103] -= 1
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_HUGE_DESIRE_AND_SUBMIT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_HUGE_DESIRE_AND_SUBMIT)
 def handle_target_add_huge_desire_and_submit(
     character_id: int,
     add_time: int,
@@ -1543,7 +1543,7 @@ def handle_target_add_huge_desire_and_submit(
     target_change.status_data[15] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_ENEMAS)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_ENEMAS)
 def handle_use_enemas(
     character_id: int,
     add_time: int,
@@ -1564,7 +1564,7 @@ def handle_use_enemas(
     character_data.item[104] -= 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ENEMA)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ENEMA)
 def handle_target_enema(
     character_id: int,
     add_time: int,
@@ -1601,7 +1601,7 @@ def handle_target_enema(
     target_data.dirty.a_clean = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ENEMA_END)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ENEMA_END)
 def handle_target_enema_end(
     character_id: int,
     add_time: int,
@@ -1638,7 +1638,7 @@ def handle_target_enema_end(
     target_data.dirty.a_clean = 2
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_NIPPLE_CLAMP_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NIPPLE_CLAMP_ON)
 def handle_target_nipple_clamp_on(
     character_id: int,
     add_time: int,
@@ -1660,7 +1660,7 @@ def handle_target_nipple_clamp_on(
     target_data.h_state.body_item[0][1] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_NIPPLE_CLAMP_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NIPPLE_CLAMP_OFF)
 def handle_target_nipple_clamp_off(
     character_id: int,
     add_time: int,
@@ -1682,7 +1682,7 @@ def handle_target_nipple_clamp_off(
     target_data.h_state.body_item[0][1] = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_CLIT_CLAMP_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_CLIT_CLAMP_ON)
 def handle_target_clit_clamp_on(
     character_id: int,
     add_time: int,
@@ -1704,7 +1704,7 @@ def handle_target_clit_clamp_on(
     target_data.h_state.body_item[1][1] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_CLIT_CLAMP_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_CLIT_CLAMP_OFF)
 def handle_target_clit_clamp_off(
     character_id: int,
     add_time: int,
@@ -1726,7 +1726,7 @@ def handle_target_clit_clamp_off(
     target_data.h_state.body_item[1][1] = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_VIBRATOR_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_VIBRATOR_ON)
 def handle_target_vibrator_on(
     character_id: int,
     add_time: int,
@@ -1748,7 +1748,7 @@ def handle_target_vibrator_on(
     target_data.h_state.body_item[2][1] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_VIBRATOR_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_VIBRATOR_OFF)
 def handle_target_vibrator_off(
     character_id: int,
     add_time: int,
@@ -1770,7 +1770,7 @@ def handle_target_vibrator_off(
     target_data.h_state.body_item[2][1] = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_VIBRATOR_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANAL_VIBRATOR_ON)
 def handle_target_anal_vibrator_on(
     character_id: int,
     add_time: int,
@@ -1792,7 +1792,7 @@ def handle_target_anal_vibrator_on(
     target_data.h_state.body_item[3][1] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_VIBRATOR_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANAL_VIBRATOR_OFF)
 def handle_target_anal_vibrator_off(
     character_id: int,
     add_time: int,
@@ -1814,7 +1814,7 @@ def handle_target_anal_vibrator_off(
     target_data.h_state.body_item[3][1] = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_BEADS_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANAL_BEADS_ON)
 def handle_target_anal_beads_on(
     character_id: int,
     add_time: int,
@@ -1836,7 +1836,7 @@ def handle_target_anal_beads_on(
     target_data.h_state.body_item[7][1] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ANAL_BEADS_OFF)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANAL_BEADS_OFF)
 def handle_target_anal_beads_off(
     character_id: int,
     add_time: int,
@@ -1858,7 +1858,7 @@ def handle_target_anal_beads_off(
     target_data.h_state.body_item[7][1] = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_DIURETICS_ONCE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_DIURETICS_ONCE)
 def handle_use_diuretics_once(
     character_id: int,
     add_time: int,
@@ -1879,7 +1879,7 @@ def handle_use_diuretics_once(
     character_data.item[105] -= 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.USE_DIURETICS_PERSISTENT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_DIURETICS_PERSISTENT)
 def handle_use_diuretics_persistent(
     character_id: int,
     add_time: int,
@@ -1900,7 +1900,7 @@ def handle_use_diuretics_persistent(
     character_data.item[106] -= 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_URINATE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_URINATE)
 def handle_target_add_urinate(
     character_id: int,
     add_time: int,
@@ -1922,7 +1922,7 @@ def handle_target_add_urinate(
     target_data.urinate_point = 240
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_DIURETICS_ON)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_DIURETICS_ON)
 def handle_target_diuretics_on(
     character_id: int,
     add_time: int,
@@ -1947,7 +1947,7 @@ def handle_target_diuretics_on(
     target_data.h_state.body_item[8][2] = end_time
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
     character_id: int,
     add_time: int,
@@ -1980,7 +1980,7 @@ def handle_target_add_small_learn(
     target_change.status_data.setdefault(9, 0)
     target_change.status_data[9] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
 def handle_target_add_small_repect(
     character_id: int,
     add_time: int,
@@ -2013,7 +2013,7 @@ def handle_target_add_small_repect(
     target_change.status_data.setdefault(10, 0)
     target_change.status_data[10] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
 def handle_target_add_small_friendly(
     character_id: int,
     add_time: int,
@@ -2046,7 +2046,7 @@ def handle_target_add_small_friendly(
     target_change.status_data.setdefault(11, 0)
     target_change.status_data[11] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
 def handle_target_add_small_desire(
     character_id: int,
     add_time: int,
@@ -2079,7 +2079,7 @@ def handle_target_add_small_desire(
     target_change.status_data.setdefault(12, 0)
     target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
 def handle_target_add_small_happy(
     character_id: int,
     add_time: int,
@@ -2112,7 +2112,7 @@ def handle_target_add_small_happy(
     target_change.status_data.setdefault(13, 0)
     target_change.status_data[13] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
 def handle_target_add_small_lead(
     character_id: int,
     add_time: int,
@@ -2145,7 +2145,7 @@ def handle_target_add_small_lead(
     target_change.status_data.setdefault(14, 0)
     target_change.status_data[14] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
 def handle_target_add_small_submit(
     character_id: int,
     add_time: int,
@@ -2178,7 +2178,7 @@ def handle_target_add_small_submit(
     target_change.status_data.setdefault(15, 0)
     target_change.status_data[15] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_SHY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SHY)
 def handle_target_add_small_shy(
     character_id: int,
     add_time: int,
@@ -2211,7 +2211,7 @@ def handle_target_add_small_shy(
     target_change.status_data.setdefault(16, 0)
     target_change.status_data[16] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
 def handle_target_add_small_pain(
     character_id: int,
     add_time: int,
@@ -2244,7 +2244,7 @@ def handle_target_add_small_pain(
     target_change.status_data.setdefault(17, 0)
     target_change.status_data[17] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
 def handle_target_add_small_terror(
     character_id: int,
     add_time: int,
@@ -2277,7 +2277,7 @@ def handle_target_add_small_terror(
     target_change.status_data.setdefault(18, 0)
     target_change.status_data[18] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
 def handle_target_add_small_depression(
     character_id: int,
     add_time: int,
@@ -2308,7 +2308,7 @@ def handle_target_add_small_depression(
     target_change.status_data.setdefault(19, 0)
     target_change.status_data[19] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
 def handle_target_add_small_disgust(
     character_id: int,
     add_time: int,
@@ -2341,7 +2341,7 @@ def handle_target_add_small_disgust(
     target_change.status_data.setdefault(20, 0)
     target_change.status_data[20] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_P_FEEL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_P_FEEL)
 def handle_add_small_p_feel(
     character_id: int,
     add_time: int,
@@ -2367,7 +2367,7 @@ def handle_add_small_p_feel(
     change_data.eja_point += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.BOTH_ADD_SMALL_LEARN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_ADD_SMALL_LEARN)
 def handle_both_add_small_learn(
     character_id: int,
     add_time: int,
@@ -2401,7 +2401,7 @@ def handle_both_add_small_learn(
         target_change.status_data[9] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_SMALL_LEARN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_LEARN)
 def handle_add_small_learn(
     character_id: int,
     add_time: int,
@@ -2428,7 +2428,7 @@ def handle_add_small_learn(
     change_data.status_data[9] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DIRTY_RESET)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET)
 def handle_dirty_reset(
     character_id: int,
     add_time: int,
@@ -2449,7 +2449,7 @@ def handle_dirty_reset(
     character_data.dirty = attr_calculation.get_dirty_zero()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOOR_CLOSE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOOR_CLOSE)
 def handle_door_close(
     character_id: int,
     add_time: int,
@@ -2473,7 +2473,7 @@ def handle_door_close(
     now_scene_data.close_flag = now_scene_data.close_type
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.DOOR_CLOSE_RESET)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOOR_CLOSE_RESET)
 def handle_door_close_reset(
     character_id: int,
     add_time: int,
@@ -2497,7 +2497,7 @@ def handle_door_close_reset(
     now_scene_data.close_flag = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.BOTH_H_STATE_RESET)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
 def handle_both_h_state_reset(
     character_id: int,
     add_time: int,
@@ -2520,7 +2520,7 @@ def handle_both_h_state_reset(
     target_data.h_state = attr_calculation.get_h_state_zero()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TALK_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
     character_id: int,
     add_time: int,
@@ -2583,7 +2583,7 @@ def handle_talk_add_adjust(
         # print("聊天计数器时间变为 ：",target_data.action_info.talk_time)
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.COFFEE_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.COFFEE_ADD_ADJUST)
 def handle_coffee_add_adjust(
     character_id: int,
     add_time: int,
@@ -2643,7 +2643,7 @@ def handle_coffee_add_adjust(
         target_change.status_data[11] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_COFFEE_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_COFFEE_ADD_ADJUST)
 def handle_target_coffee_add_adjust(
     character_id: int,
     add_time: int,
@@ -2703,7 +2703,7 @@ def handle_target_coffee_add_adjust(
         target_change.status_data[11] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
 def handle_knowledge_add_pink_money(
     character_id: int,
     add_time: int,
@@ -2744,7 +2744,7 @@ def handle_knowledge_add_pink_money(
     now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
 def handle_cure_patient_add_just(
     character_id: int,
     add_time: int,
@@ -2785,7 +2785,7 @@ def handle_cure_patient_add_just(
     cache.base_resouce.patient_cured += 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ADD_HPMP_MAX)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
     character_id: int,
     add_time: int,
@@ -2831,7 +2831,7 @@ def handle_add_hpmp_max(
         now_draw.draw()
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SING_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SING_ADD_ADJUST)
 def handle_sing_add_adjust(
     character_id: int,
     add_time: int,
@@ -2926,7 +2926,7 @@ def handle_sing_add_adjust(
                 target_change.status_data[i] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PLAY_INSTRUMENT_ADD_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLAY_INSTRUMENT_ADD_ADJUST)
 def handle_play_instrument_add_adjust(
     character_id: int,
     add_time: int,
@@ -3023,7 +3023,7 @@ def handle_play_instrument_add_adjust(
                 target_change.status_data[i] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_N_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_N_ADJUST)
 def handle_tech_add_n_adjust(
     character_id: int,
     add_time: int,
@@ -3075,7 +3075,7 @@ def handle_tech_add_n_adjust(
         target_change.status_data[12] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_B_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_B_ADJUST)
 def handle_tech_add_b_adjust(
     character_id: int,
     add_time: int,
@@ -3126,7 +3126,7 @@ def handle_tech_add_b_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_C_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_C_ADJUST)
 def handle_tech_add_c_adjust(
     character_id: int,
     add_time: int,
@@ -3177,7 +3177,7 @@ def handle_tech_add_c_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_P_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_P_ADJUST)
 def handle_tech_add_p_adjust(
     character_id: int,
     add_time: int,
@@ -3228,7 +3228,7 @@ def handle_tech_add_p_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_V_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_V_ADJUST)
 def handle_tech_add_v_adjust(
     character_id: int,
     add_time: int,
@@ -3279,7 +3279,7 @@ def handle_tech_add_v_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_A_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_A_ADJUST)
 def handle_tech_add_a_adjust(
     character_id: int,
     add_time: int,
@@ -3330,7 +3330,7 @@ def handle_tech_add_a_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_U_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_U_ADJUST)
 def handle_tech_add_u_adjust(
     character_id: int,
     add_time: int,
@@ -3381,7 +3381,7 @@ def handle_tech_add_u_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_W_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_W_ADJUST)
 def handle_tech_add_w_adjust(
     character_id: int,
     add_time: int,
@@ -3432,7 +3432,7 @@ def handle_tech_add_w_adjust(
         target_change.status_data.setdefault(12, 0)
         target_change.status_data[12] += now_add_lust
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
 def handle_tech_add_pl_p_adjust(
     character_id: int,
     add_time: int,
@@ -3470,7 +3470,7 @@ def handle_tech_add_pl_p_adjust(
         change_data.eja_point += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)
 def handle_target_lubrication_adjust_add_pain(
     character_id: int,
     add_time: int,
@@ -3511,7 +3511,7 @@ def handle_target_lubrication_adjust_add_pain(
         target_change.status_data[17] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
 def handle_low_obscenity_failed_adjust(
     character_id: int,
     add_time: int,
@@ -3558,7 +3558,7 @@ def handle_low_obscenity_failed_adjust(
         )
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.HIGH_OBSCENITY_FAILED_ADJUST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HIGH_OBSCENITY_FAILED_ADJUST)
 def handle_high_obscenity_failed_adjust(
     character_id: int,
     add_time: int,
@@ -3614,7 +3614,7 @@ def handle_high_obscenity_failed_adjust(
         target_change.trust -= now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.SLEEP_POINT_DOWN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_POINT_DOWN)
 def handle_sleep_point_down(
     character_id: int,
     add_time: int,
@@ -3637,7 +3637,7 @@ def handle_sleep_point_down(
     character_data.sleep_point -= value
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.URINATE_POINT_DOWN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)
 def handle_urinate_point_down(
     character_id: int,
     add_time: int,
@@ -3658,7 +3658,7 @@ def handle_urinate_point_down(
     character_data.urinate_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_URINATE_POINT_DOWN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_DOWN)
 def handle_target_urinate_point_down(
     character_id: int,
     add_time: int,
@@ -3679,7 +3679,7 @@ def handle_target_urinate_point_down(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.urinate_point = 0
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.HUNGER_POINT_DOWN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_DOWN)
 def handle_hunger_point_down(
     character_id: int,
     add_time: int,
@@ -3700,7 +3700,7 @@ def handle_hunger_point_down(
     character_data.hunger_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_HUNGER_POINT_DOWN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HUNGER_POINT_DOWN)
 def handle_target_urinate_point_down(
     character_id: int,
     add_time: int,
@@ -3722,7 +3722,7 @@ def handle_target_urinate_point_down(
     target_data.hunger_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_TRAINING_TIME)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_TRAINING_TIME)
 def handle_record_training_time(
     character_id: int,
     add_time: int,
@@ -3742,7 +3742,7 @@ def handle_record_training_time(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.action_info.last_training_time = now_time
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RECORD_SHOWER_TIME)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_SHOWER_TIME)
 def handle_record_shower_time(
     character_id: int,
     add_time: int,
@@ -3763,7 +3763,7 @@ def handle_record_shower_time(
     character_data.action_info.last_shower_time = now_time
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_RESET)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_RESET)
 def handle_penis_in_t_reset(
     character_id: int,
     add_time: int,
@@ -3785,7 +3785,7 @@ def handle_penis_in_t_reset(
     target_data.h_state.insert_position = -1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HAIR)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAIR)
 def handle_penis_in_t_hair(
     character_id: int,
     add_time: int,
@@ -3807,7 +3807,7 @@ def handle_penis_in_t_hair(
     target_data.h_state.insert_position = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_FACE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_FACE)
 def handle_penis_in_t_face(
     character_id: int,
     add_time: int,
@@ -3829,7 +3829,7 @@ def handle_penis_in_t_face(
     target_data.h_state.insert_position = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_MOUSE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_MOUSE)
 def handle_penis_in_t_mouse(
     character_id: int,
     add_time: int,
@@ -3851,7 +3851,7 @@ def handle_penis_in_t_mouse(
     target_data.h_state.insert_position = 2
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_BREAST)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_BREAST)
 def handle_penis_in_t_breast(
     character_id: int,
     add_time: int,
@@ -3873,7 +3873,7 @@ def handle_penis_in_t_breast(
     target_data.h_state.insert_position = 3
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_AXILLA)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_AXILLA)
 def handle_penis_in_t_axilla(
     character_id: int,
     add_time: int,
@@ -3895,7 +3895,7 @@ def handle_penis_in_t_axilla(
     target_data.h_state.insert_position = 4
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HAND)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAND)
 def handle_penis_in_t_hand(
     character_id: int,
     add_time: int,
@@ -3917,7 +3917,7 @@ def handle_penis_in_t_hand(
     target_data.h_state.insert_position = 5
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_VAGINA)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_VAGINA)
 def handle_penis_in_t_vagina(
     character_id: int,
     add_time: int,
@@ -3939,7 +3939,7 @@ def handle_penis_in_t_vagina(
     target_data.h_state.insert_position = 6
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_WOMB)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_WOMB)
 def handle_penis_in_t_womb(
     character_id: int,
     add_time: int,
@@ -3961,7 +3961,7 @@ def handle_penis_in_t_womb(
     target_data.h_state.insert_position = 7
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_ANAL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_ANAL)
 def handle_penis_in_t_anal(
     character_id: int,
     add_time: int,
@@ -3983,7 +3983,7 @@ def handle_penis_in_t_anal(
     target_data.h_state.insert_position = 8
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_URETHRAL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_URETHRAL)
 def handle_penis_in_t_urethral(
     character_id: int,
     add_time: int,
@@ -4005,7 +4005,7 @@ def handle_penis_in_t_urethral(
     target_data.h_state.insert_position = 9
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_LEG)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_LEG)
 def handle_penis_in_t_leg(
     character_id: int,
     add_time: int,
@@ -4027,7 +4027,7 @@ def handle_penis_in_t_leg(
     target_data.h_state.insert_position = 10
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_FOOT)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_FOOT)
 def handle_penis_in_t_foot(
     character_id: int,
     add_time: int,
@@ -4049,7 +4049,7 @@ def handle_penis_in_t_foot(
     target_data.h_state.insert_position = 11
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_TAIL)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_TAIL)
 def handle_penis_in_t_tail(
     character_id: int,
     add_time: int,
@@ -4071,7 +4071,7 @@ def handle_penis_in_t_tail(
     target_data.h_state.insert_position = 12
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_HORN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HORN)
 def handle_penis_in_t_horn(
     character_id: int,
     add_time: int,
@@ -4093,7 +4093,7 @@ def handle_penis_in_t_horn(
     target_data.h_state.insert_position = 13
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PENIS_IN_T_EARS)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_EARS)
 def handle_penis_in_t_ears(
     character_id: int,
     add_time: int,

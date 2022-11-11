@@ -22,6 +22,7 @@ from ui.data_list import DataList
 from ui.tools_bar import ToolsBar
 from ui.item_premise_list import ItemPremiseList
 from ui.item_settle_list import ItemSettleList
+from ui.item_effect_list import ItemEffectList
 import load_csv
 import json_handle
 import game_type
@@ -37,6 +38,8 @@ item_premise_list: ItemPremiseList = ItemPremiseList()
 cache_control.item_premise_list = item_premise_list
 item_settle_list: ItemSettleList = ItemSettleList()
 cache_control.item_settle_list = item_settle_list
+item_effect_list: ItemEffectList = ItemEffectList()
+cache_control.item_effect_list = item_effect_list
 
 # envpath = '/home/diyun/anaconda3/envs/transformer_py38/lib/python3.8/site-packages/cv2/qt/plugins/platforms'
 # os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = envpath
@@ -61,12 +64,18 @@ def load_event_data():
                     delete_premise_list.append(premise)
             for premise in delete_premise_list:
                 del now_event.premise[premise]
-            delete_settle_list = []
-            for settle in now_event.settle:
-                if settle not in cache_control.settle_data:
-                    delete_settle_list.append(settle)
-            for settle in delete_settle_list:
-                del now_event.settle[settle]
+            # delete_settle_list = []
+            # for settle in now_event.settle:
+            #     if settle not in cache_control.settle_data:
+            #         delete_settle_list.append(settle)
+            # for settle in delete_settle_list:
+            #     del now_event.settle[settle]
+            delete_effect_list = []
+            for effect in now_event.effect:
+                if effect not in cache_control.effect_data:
+                    delete_effect_list.append(effect)
+            for effect in delete_effect_list:
+                del now_event.effect[effect]
             cache_control.now_event_data[k] = now_event
         data_list.update()
 
@@ -127,7 +136,8 @@ def change_status_menu(action: QWidgetAction):
     tools_bar.status_menu.addActions(action_list)
     data_list.update()
     item_premise_list.item_list.clear()
-    item_settle_list.item_list.clear()
+    # item_settle_list.item_list.clear()
+    item_effect_list.item_list.clear()
 
 
 def change_start_menu(action: QWidgetAction):
@@ -156,7 +166,8 @@ def change_start_menu(action: QWidgetAction):
     tools_bar.start_menu.addActions(action_list)
     data_list.update()
     item_premise_list.item_list.clear()
-    item_settle_list.item_list.clear()
+    # item_settle_list.item_list.clear()
+    item_effect_list.item_list.clear()
 
 
 def update_premise_and_settle_list(model_index: QModelIndex):
@@ -170,7 +181,8 @@ def update_premise_and_settle_list(model_index: QModelIndex):
     if item is not None:
         cache_control.now_event_id = item.uid
         item_premise_list.update()
-        item_settle_list.update()
+        # item_settle_list.update()
+        item_effect_list.update()
 
 
 def update_premise_and_settle_list_for_move(model_index: int):
@@ -184,7 +196,8 @@ def update_premise_and_settle_list_for_move(model_index: int):
     if item is not None:
         cache_control.now_event_id = item.uid
         item_premise_list.update()
-        item_settle_list.update()
+        # item_settle_list.update()
+        item_effect_list.update()
 
 
 data_list.clicked.connect(update_premise_and_settle_list)
@@ -224,7 +237,8 @@ main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(tools_bar)
 main_window.add_main_widget(item_premise_list,1)
 main_window.add_main_widget(data_list,3)
-main_window.add_main_widget(item_settle_list,1)
+# main_window.add_main_widget(item_settle_list,1)
+main_window.add_main_widget(item_effect_list,1)
 main_window.completed_layout()
 QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
 QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
