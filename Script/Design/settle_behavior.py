@@ -34,11 +34,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
 
-    # 进行一段结算
-    behavior_id = now_character_data.behavior.behavior_id
-    if behavior_id in game_config.config_behavior_effect_data:
-        for effect_id in game_config.config_behavior_effect_data[behavior_id]:
-            constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+    event_id = now_character_data.event_id
+    if event_id != "":
+        # 进行事件结算
+        event_data: game_type.Event = game_config.config_event[event_id]
+        for effect in event_data.effect:
+            constant.settle_behavior_effect_data[effect](
+                character_id, add_time, status_data, now_time
+            )
+    else:
+        # 进行一段结算
+        behavior_id = now_character_data.behavior.behavior_id
+        if behavior_id in game_config.config_behavior_effect_data:
+            for effect_id in game_config.config_behavior_effect_data[behavior_id]:
+                constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
     # 进行二段结算
     check_second_effect(character_id, status_data)
     # check_second_effect(character_id)

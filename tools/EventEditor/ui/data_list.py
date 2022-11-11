@@ -137,8 +137,10 @@ class DataList(QListWidget):
         event.start = old_event.start
         for premise in old_event.premise:
             event.premise[premise] = old_event.premise[premise]
-        for settle in old_event.settle:
-            event.settle[settle] = old_event.settle[settle]
+        # for settle in old_event.settle:
+        #     event.settle[settle] = old_event.settle[settle]
+        for effect in old_event.effect:
+            event.effect[effect] = old_event.settle[effect]
         event.text = old_event.text + "(复制)"
         cache_control.now_event_data[event.uid] = event
         self.insertItem(event_index + 1, new_item)

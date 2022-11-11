@@ -11,8 +11,8 @@ def game_update_flow(add_time: int):
     """
     character_behavior.init_character_behavior()
     now_event = event.handle_event(0,1)
-    # if now_event != None:
-    #     now_event.draw()
+    if now_event != None:
+        now_event.draw()
     game_time.sub_time_now(add_time)
     logging.debug(f'————————')
     logging.debug(f'进入第二次结算')

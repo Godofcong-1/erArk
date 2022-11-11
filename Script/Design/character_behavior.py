@@ -18,6 +18,7 @@ from Script.Design import (
     game_time,
     character,
     handle_premise,
+    event,
     talk,
     map_handle,
     cooking,
@@ -209,6 +210,10 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
             character_data.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
+        event_draw = event.handle_event(character_id, 1)
+        if (not character_id) or (PC_character_data.target_character_id == character_id):
+            if event_draw is not None:
+                event_draw.draw()
     else:
         start_time = cache.character_data[character_id].behavior.start_time
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)
@@ -320,6 +325,9 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     # character_data.status[28] += hunger_time * 0.02
     # character_data.last_hunger_time = now_time
     if time_judge:
+        event_draw = event.handle_event(character_id, 0)
+        if event_draw != None:
+            character_data.event_id = event_draw.event_id
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
         talk.handle_talk(character_id)
         if now_panel != None:
@@ -332,6 +340,7 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
                 wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.event_id = ""
     if time_judge == 1:
         character_data.behavior.start_time = end_time
         return 0

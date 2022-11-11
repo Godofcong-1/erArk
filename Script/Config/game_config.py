@@ -826,5 +826,5 @@ def init():
     load_target()
     load_target_effect()
     load_week_day()
-    # load_event()
+    load_event()
     # load_event_target()

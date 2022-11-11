@@ -704,6 +704,8 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}
         """ 角色当前二段行为状态数据 """
+        self.event_id: str = ""
+        """ 角色当前事件id """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
         self.position: List[str] = ["0","0"]
@@ -946,6 +948,8 @@ class Event:
         """ 事件的前提集合 """
         self.settle: dict = {}
         """ 事件的结算器集合 """
+        self.effect: dict = {}
+        """ 事件的结算集合 """
 
 
 class Target:
