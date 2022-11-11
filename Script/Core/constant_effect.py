@@ -1,44 +1,44 @@
 class BehaviorEffect:
     """行为结算效果函数"""
 
-    NOTHING = 999
+    NOTHING = 9999
     """ 系统状态 什么都没有的空结算 """
-    INTERRUPT_TARGET_ACTIVITY = 30
+    INTERRUPT_TARGET_ACTIVITY = 10000
     """ 系统状态 打断交互对象活动 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
     ADD_SMALL_MANA_POINT = 1
     """ 属性_基础 增加少量气力 """
-    ADD_INTERACTION_FAVORABILITY = 2
-    """ 属性_基础 增加基础互动好感 """
-    DOWN_BOTH_SMALL_HIT_POINT = 3
-    """ 属性_基础 双方减少少量体力（若没有交互对象则仅减少自己） """
-    DOWN_BOTH_SMALL_MANA_POINT = 4
-    """ 属性_基础 双方减少少量气力（若没有交互对象则仅减少自己） """
-    ADD_SMALL_TRUST = 6
-    """ 属性_基础 增加基础互动信赖 """
-    ADD_BOTH_SMALL_HIT_POINT = 10
+    ADD_BOTH_SMALL_HIT_POINT = 2
     """ 属性_基础 增加双方少量体力 """
-    ADD_BOTH_SMALL_MANA_POINT = 11
+    ADD_BOTH_SMALL_MANA_POINT = 3
     """ 属性_基础 增加双方少量气力 """
-    DOWN_SELF_SMALL_HIT_POINT = 12
-    """ 属性_基础 减少自己少量体力 """
-    DOWN_SELF_SMALL_MANA_POINT = 13
-    """ 属性_基础 减少自己少量气力 """
-    ADD_MEDIUM_HIT_POINT = 20
+    ADD_MEDIUM_HIT_POINT = 5
     """ 属性_基础 增加中量体力 """
-    ADD_MEDIUM_MANA_POINT = 21
+    ADD_MEDIUM_MANA_POINT = 6
     """ 属性_基础 增加中量气力 """
+    DOWN_BOTH_SMALL_HIT_POINT = 11
+    """ 属性_基础 双方减少少量体力（若没有交互对象则仅减少自己） """
+    DOWN_BOTH_SMALL_MANA_POINT = 12
+    """ 属性_基础 双方减少少量气力（若没有交互对象则仅减少自己） """
+    DOWN_SELF_SMALL_HIT_POINT = 13
+    """ 属性_基础 减少自己少量体力 """
+    DOWN_SELF_SMALL_MANA_POINT = 14
+    """ 属性_基础 减少自己少量气力 """
+    ADD_INTERACTION_FAVORABILITY = 21
+    """ 属性_基础 增加基础互动好感 """
+    ADD_SMALL_TRUST = 22
+    """ 属性_基础 增加基础互动信赖 """
     NOT_TIRED = 31
     """ 属性_基础 从疲劳中恢复 """
-    URINATE_POINT_DOWN = 125
+    URINATE_POINT_DOWN = 32
     """ 属性_基础 尿意值归零 """
-    TARGET_URINATE_POINT_DOWN = 126
+    TARGET_URINATE_POINT_DOWN = 33
     """ 属性_基础 交互对象尿意值归零 """
-    HUNGER_POINT_DOWN = 127
+    HUNGER_POINT_DOWN = 34
     """ 属性_基础 饥饿值归零 """
-    TARGET_HUNGER_POINT_DOWN = 128
+    TARGET_HUNGER_POINT_DOWN = 35
     """ 属性_基础 交互对象饥饿值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
@@ -111,11 +111,10 @@ class BehaviorEffect:
     TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
     """ 属性_状态特殊补正 根据交互对象的润滑情况对其进行苦痛调整 """
 
-    LOW_OBSCENITY_FAILED_ADJUST = 122
+    LOW_OBSCENITY_FAILED_ADJUST = 151
     """ 属性_失败状态 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
-    HIGH_OBSCENITY_FAILED_ADJUST = 123
+    HIGH_OBSCENITY_FAILED_ADJUST = 152
     """ 属性_失败状态 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
-
 
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 属性_经验 交互对象增加1N经验 """
@@ -309,6 +308,25 @@ class BehaviorEffect:
     BOTH_H_STATE_RESET = 404
     """ 属性_结构体 双方H状态结构体归零 """
 
+    TALK_ADD_ADJUST = 501
+    """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
+    COFFEE_ADD_ADJUST = 502
+    """ 指令_专用结算 （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
+    TARGET_COFFEE_ADD_ADJUST = 503
+    """ 指令_专用结算 （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
+    SING_ADD_ADJUST = 504
+    """ 指令_专用结算 （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
+    PLAY_INSTRUMENT_ADD_ADJUST = 505
+    """ 指令_专用结算 （演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整 """
+    KONWLEDGE_ADD_PINK_MONEY = 506
+    """ 指令_专用结算 （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
+    CURE_PATIENT_ADD_ADJUST = 507
+    """ 指令_专用结算 （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
+    ADD_HPMP_MAX = 508
+    """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
+    SLEEP_POINT_DOWN = 509
+    """ 指令_专用结算 （睡觉用）降低困倦值 """
+
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
     BRA_SEE = 602
@@ -330,129 +348,108 @@ class BehaviorEffect:
     T_CLOTH_BACK = 631
     """ 属性_服装 交互对象穿回H时脱掉的衣服 """
 
-    MOVE_TO_TARGET_SCENE = 5
-    """ 系统量_地点 移动至目标场景 """
-    DOOR_CLOSE = 402
-    """ 系统量_地点 当前场景进入关门状态 """
-    DOOR_CLOSE_RESET = 403
-    """ 系统量_地点 当前场景取消关门状态 """
-
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """
     RECORD_SHOWER_TIME = 702
     """ 系统量_时间 角色记录并刷新淋浴时间 """
 
-    FIRST_KISS = 18
-    """ 初次 记录初吻 """
-    FIRST_HAND_IN_HAND = 19
-    """ 初次 记录初次牵手 """
-    FIRST_SEX = 22
-    """ 初次 记录处女 """
-    FIRST_A_SEX = 23
-    """ 初次 记录A处女 """
-
-    ITEM_OFF = 32
-    """ 道具_使用 去掉身上所有的道具 """
-    TARGET_ITEM_OFF = 33
-    """ 道具_使用 交互对象去掉身上所有的道具 """
-
-    TARGET_VIBRATOR_ON = 76
-    """ 道具_使用 交互对象插入V震动棒 """
-    TARGET_VIBRATOR_OFF = 77
-    """ 道具_使用 交互对象拔出V震动棒 """
-    TARGET_ANAL_VIBRATOR_ON = 78
-    """ 道具_使用 交互对象插入A震动棒 """
-    TARGET_ANAL_VIBRATOR_OFF = 79
-    """ 道具_使用 交互对象拔出A震动棒 """
-    USE_BODY_LUBRICANT = 80
-    """ 道具_使用 使用了一个润滑液 """
-    USE_PHILTER = 82
-    """ 道具_使用 使用了一个媚药 """
-    USE_ENEMAS = 84
-    """ 道具_使用 使用了一个灌肠液 """
-    TARGET_NIPPLE_CLAMP_ON = 87
-    """ 道具_使用 交互对象戴上乳头夹 """
-    TARGET_NIPPLE_CLAMP_OFF = 88
-    """ 道具_使用 交互对象取下乳头夹 """
-    TARGET_CLIT_CLAMP_ON = 89
-    """ 道具_使用 交互对象戴上阴蒂夹 """
-    TARGET_CLIT_CLAMP_OFF = 90
-    """ 道具_使用 交互对象取下阴蒂夹 """
-    TARGET_ANAL_BEADS_ON = 91
-    """ 道具_使用 交互对象塞入肛门拉珠 """
-    TARGET_ANAL_BEADS_OFF = 92
-    """ 道具_使用 交互对象拔出肛门拉珠 """
-    USE_DIURETICS_ONCE = 93
-    """ 道具_使用 使用了一个一次性利尿剂 """
-    USE_DIURETICS_PERSISTENT = 94
-    """ 道具_使用 使用了一个持续性利尿剂 """
-    EAT_FOOD = 102
-    """ 道具_使用 进食指定食物 """
-    MAKE_FOOD = 103
-    """ 道具_使用 制作指定食物 """
-
-    TARGET_ADD_HUGE_LUBRICATION = 81
-    """ 道具_使用效果 交互对象增加大量润滑（润滑液） """
-    TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 83
-    """ 道具_使用效果 交互对象增加大量欲情和屈服（媚药） """
-    TARGET_ENEMA = 85
-    """ 道具_使用效果 交互对象A灌肠并增加中量润滑 """
-    TARGET_ENEMA_END = 86
-    """ 道具_使用效果 交互对象结束A灌肠并增加中量润滑 """
-    TARGET_ADD_URINATE = 95
-    """ 道具_使用效果 交互对象尿意值全满 """
-    TARGET_DIURETICS_ON = 96
-    """ 道具_使用效果 交互对象获得利尿剂状态 """
-
-    SLEEP_POINT_DOWN = 124
-    """ 指令_专用结算 （睡觉用）降低困倦值 """
-    TALK_ADD_ADJUST = 501
-    """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
-    COFFEE_ADD_ADJUST = 502
-    """ 指令_专用结算 （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
-    TARGET_COFFEE_ADD_ADJUST = 503
-    """ 指令_专用结算 （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
-    SING_ADD_ADJUST = 504
-    """ 指令_专用结算 （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
-    PLAY_INSTRUMENT_ADD_ADJUST = 505
-    """ 指令_专用结算 （演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整 """
-    KONWLEDGE_ADD_PINK_MONEY = 506
-    """ 指令_专用结算 （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
-    CURE_PATIENT_ADD_ADJUST = 507
-    """ 指令_专用结算 （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
-    ADD_HPMP_MAX = 508
-    """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
+    MOVE_TO_TARGET_SCENE = 751
+    """ 系统量_地点 移动至目标场景 """
+    DOOR_CLOSE = 752
+    """ 系统量_地点 当前场景进入关门状态 """
+    DOOR_CLOSE_RESET = 753
+    """ 系统量_地点 当前场景取消关门状态 """
 
     PENIS_IN_T_RESET = 801
-    """ 指令_专用结算 当前阴茎位置为交互对象_归零 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_归零 """
     PENIS_IN_T_HAIR = 802
-    """ 指令_专用结算 当前阴茎位置为交互对象_发交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_发交中 """
     PENIS_IN_T_FACE = 803
-    """ 指令_专用结算 当前阴茎位置为交互对象_阴茎蹭脸中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭脸中 """
     PENIS_IN_T_MOUSE = 804
-    """ 指令_专用结算 当前阴茎位置为交互对象_口交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_口交中 """
     PENIS_IN_T_BREAST = 805
-    """ 指令_专用结算 当前阴茎位置为交互对象_乳交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_乳交中 """
     PENIS_IN_T_AXILLA = 806
-    """ 指令_专用结算 当前阴茎位置为交互对象_腋交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_腋交中 """
     PENIS_IN_T_HAND = 807
-    """ 指令_专用结算 当前阴茎位置为交互对象_手交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_手交中 """
     PENIS_IN_T_VAGINA = 808
-    """ 指令_专用结算 当前阴茎位置为交互对象_V插入中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_V插入中 """
     PENIS_IN_T_WOMB = 809
-    """ 指令_专用结算 当前阴茎位置为交互对象_W插入中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_W插入中 """
     PENIS_IN_T_ANAL = 810
-    """ 指令_专用结算 当前阴茎位置为交互对象_A插入中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_A插入中 """
     PENIS_IN_T_URETHRAL = 811
-    """ 指令_专用结算 当前阴茎位置为交互对象_U插入中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_U插入中 """
     PENIS_IN_T_LEG = 812
-    """ 指令_专用结算 当前阴茎位置为交互对象_腿交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_腿交中 """
     PENIS_IN_T_FOOT = 813
-    """ 指令_专用结算 当前阴茎位置为交互对象_足交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_足交中 """
     PENIS_IN_T_TAIL = 814
-    """ 指令_专用结算 当前阴茎位置为交互对象_尾交中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_尾交中 """
     PENIS_IN_T_HORN = 815
-    """ 指令_专用结算 当前阴茎位置为交互对象_阴茎蹭角中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭角中 """
     PENIS_IN_T_EARS = 816
-    """ 指令_专用结算 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
+    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
 
+    ITEM_OFF = 901
+    """ 道具_使用 去掉身上所有的道具 """
+    TARGET_ITEM_OFF = 902
+    """ 道具_使用 交互对象去掉身上所有的道具 """
+    TARGET_VIBRATOR_ON = 911
+    """ 道具_使用 交互对象插入V震动棒 """
+    TARGET_VIBRATOR_OFF = 912
+    """ 道具_使用 交互对象拔出V震动棒 """
+    TARGET_ANAL_VIBRATOR_ON = 913
+    """ 道具_使用 交互对象插入A震动棒 """
+    TARGET_ANAL_VIBRATOR_OFF = 914
+    """ 道具_使用 交互对象拔出A震动棒 """
+    TARGET_NIPPLE_CLAMP_ON = 915
+    """ 道具_使用 交互对象戴上乳头夹 """
+    TARGET_NIPPLE_CLAMP_OFF = 916
+    """ 道具_使用 交互对象取下乳头夹 """
+    TARGET_CLIT_CLAMP_ON = 917
+    """ 道具_使用 交互对象戴上阴蒂夹 """
+    TARGET_CLIT_CLAMP_OFF = 918
+    """ 道具_使用 交互对象取下阴蒂夹 """
+    TARGET_ANAL_BEADS_ON = 919
+    """ 道具_使用 交互对象塞入肛门拉珠 """
+    TARGET_ANAL_BEADS_OFF = 920
+    """ 道具_使用 交互对象拔出肛门拉珠 """
+    USE_BODY_LUBRICANT = 941
+    """ 道具_使用 使用了一个润滑液 """
+    USE_PHILTER = 942
+    """ 道具_使用 使用了一个媚药 """
+    USE_ENEMAS = 943
+    """ 道具_使用 使用了一个灌肠液 """
+    USE_DIURETICS_ONCE = 944
+    """ 道具_使用 使用了一个一次性利尿剂 """
+    USE_DIURETICS_PERSISTENT = 945
+    """ 道具_使用 使用了一个持续性利尿剂 """
+    EAT_FOOD = 991
+    """ 道具_使用 进食指定食物 """
+    MAKE_FOOD = 992
+    """ 道具_使用 制作指定食物 """
+
+    TARGET_ADD_HUGE_LUBRICATION = 1001
+    """ 道具_使用效果 交互对象增加大量润滑（润滑液） """
+    TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 1002
+    """ 道具_使用效果 交互对象增加大量欲情和屈服（媚药） """
+    TARGET_ENEMA = 1003
+    """ 道具_使用效果 交互对象A灌肠并增加中量润滑 """
+    TARGET_ENEMA_END = 1004
+    """ 道具_使用效果 交互对象结束A灌肠并增加中量润滑 """
+    TARGET_ADD_URINATE = 1005
+    """ 道具_使用效果 交互对象尿意值全满 """
+    TARGET_DIURETICS_ON = 1006
+    """ 道具_使用效果 交互对象获得利尿剂状态 """
+
+    FIRST_KISS = 1101
+    """ 初次 记录初吻 """
+    FIRST_HAND_IN_HAND = 1102
+    """ 初次 记录初次牵手 """
+    FIRST_SEX = 1103
+    """ 初次 记录处女 """
+    FIRST_A_SEX = 1104
+    """ 初次 记录A处女 """

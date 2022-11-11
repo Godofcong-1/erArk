@@ -6,7 +6,7 @@ from Script.Config import game_config
 
 
 # 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件
-mode = 5
+mode = 4
 command_str = "t_lubrication_l_7"
 capital_command = command_str.upper()
 dataname = "润滑"
@@ -189,17 +189,16 @@ def constand_effect_2_csv():
     for line in a:
         if len(line) >= 3 and "#" not in line:
             if line[-3] == "\"" and " " in line:
-                effect_text = line.split("\"")[-4].strip()
-                if effect_text != "行为结算效果函数":
-                    # promise_type,promise_info = effect_text.split(" ")[0],effect_text.split(" ")[1]
-                    out_str += f"未分类,{effect_text}\n"
+                effect_text = line.split("\"")[-4].strip().split(" ")
+                if len(effect_text) == 2:
                     # print(f"debug effect_text = {effect_text}")
+                    out_str += f"{effect_text[0]},{effect_text[1]}\n"
             else:
                 effect_name = line.split("\"")[-1].strip().split(" ")[0]
                 effect_cid = line.split("\"")[-1].strip().split(" ")[-1]
                 if out_str != "BehaviorEffect:":
                     out_str += f"{effect_cid},{effect_name},"
-                    print(f"debug {effect_cid},{effect_name},")
+                    # print(f"debug {effect_cid},{effect_name},")
         elif len(line) == 1:
             out_str += "\n"
 
