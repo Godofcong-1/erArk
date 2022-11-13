@@ -5,10 +5,10 @@ import cache_control
 # premise_path = os.path.join("..","premise.csv")
 # status_path = os.path.join("..","Status.csv")
 # settle_path = os.path.join("..","Settle.csv")
-premise_path = "C:/code/work/erArk/tools/premise.csv"
-status_path = "C:/code/work/erArk/tools/Status.csv"
-settle_path = "C:/code/work/erArk/tools/Settle.csv"
-effect_path = "C:/code/work/erArk/tools/Effect.csv"
+premise_path = "tools\premise.csv"
+status_path = "tools\Status.csv"
+settle_path = "tools\Settle.csv"
+effect_path = "tools\Effect.csv"
 
 
 def load_config():

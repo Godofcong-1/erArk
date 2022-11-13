@@ -6,7 +6,7 @@ from Script.Config import game_config
 
 
 # 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件
-mode = 4
+mode = 3
 command_str = "t_lubrication_l_7"
 capital_command = command_str.upper()
 dataname = "润滑"
@@ -139,11 +139,13 @@ def constand_promise_2_csv():
                 if promise_text != "前提id":
                     promise_type,promise_info = promise_text.split(" ")[0],promise_text.split(" ")[1]
                     out_str += f"{promise_type},{promise_info}\n"
+                    # out_str += f"未分类,{promise_text}\n"
                 # print(f"debug promise_text = {promise_text}")
             else:
                 promise_cid = line.split("\"")[-2].strip()
-                out_str += f"{promise_cid},"
-                # print(f"debug promise_cid = {promise_cid}")
+                promise_name = line.split(" =")[0].strip()
+                out_str += f"{promise_cid},{promise_name},"
+                # print(f"debug promise_name = {promise_name}")
         elif len(line) == 1:
             out_str += "\n"
 
@@ -164,12 +166,12 @@ def csv_2_constand():
     out_str = "\n"
     for line in a:
         promise_text = line.strip().split(",")
-        # print(f"debug promise_text = {promise_text}")
+        print(f"debug promise_text = {promise_text}")
         if len(promise_text) == 1:
             out_str += "\n"
-        elif promise_text[0] != "cid":
-            out_str += f"    {promise_text[0].upper()} = \"{promise_text[0]}\"\n"
-            out_str += f"    \"\"\" {promise_text[1]} {promise_text[2]} \"\"\"\n"
+        elif promise_text[0] != "cid" and len(promise_text) == 4:
+            out_str += f"    {promise_text[1]} = \"{promise_text[0]}\"\n"
+            out_str += f"    \"\"\" {promise_text[2]} {promise_text[3]} \"\"\"\n"
 
 
     # 开始保存

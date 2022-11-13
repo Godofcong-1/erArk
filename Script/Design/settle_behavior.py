@@ -39,7 +39,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
         # 进行事件结算
         event_data: game_type.Event = game_config.config_event[event_id]
         for effect in event_data.effect:
-            constant.settle_behavior_effect_data[effect](
+            constant.settle_behavior_effect_data[int(effect)](
                 character_id, add_time, status_data, now_time
             )
     else:
@@ -491,7 +491,7 @@ def check_second_effect(
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data : game_type.Character = cache.character_data[target_character_id]
-    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    # change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_character_id]
     # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
     # print("进入第二结算")

@@ -754,7 +754,7 @@ def load_week_day():
 def load_event():
     """载入事件配置"""
     now_data = config_data["Event"]
-    translate_data(now_data)
+    # translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = game_type.Event()
         now_tem.__dict__ = tem_data
