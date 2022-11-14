@@ -16,12 +16,13 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, start_flag = False):
     """
     处理结算角色行为
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
+    start_flag -- 事件开始结算
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
@@ -37,24 +38,25 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     event_id = now_character_data.event_id
     if event_id != "":
         # 进行事件结算
+        print(f"debug handle_settle_behavior event_id = {event_id}")
         event_data: game_type.Event = game_config.config_event[event_id]
         for effect in event_data.effect:
             constant.settle_behavior_effect_data[int(effect)](
                 character_id, add_time, status_data, now_time
             )
-    else:
+    if not start_flag: # 在事件的开始结算中不结算以下内容
         # 进行一段结算
         behavior_id = now_character_data.behavior.behavior_id
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
-    # 进行二段结算
-    check_second_effect(character_id, status_data)
+        # 进行二段结算
+        check_second_effect(character_id, status_data)
+        #结算上次进行聊天的时间，以重置聊天计数器#
+        change_character_talkcount_for_time(character_id, now_time)
     # check_second_effect(character_id)
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
-    #结算上次进行聊天的时间，以重置聊天计数器#
-    change_character_talkcount_for_time(character_id, now_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
     #注释掉了社交关系#
@@ -491,7 +493,7 @@ def check_second_effect(
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data : game_type.Character = cache.character_data[target_character_id]
-    # change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_character_id]
     # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
     # print("进入第二结算")
