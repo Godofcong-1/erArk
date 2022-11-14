@@ -16,7 +16,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, start_flag = False):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = False):
     """
     处理结算角色行为
     Keyword arguments:
@@ -44,7 +44,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, start
             constant.settle_behavior_effect_data[int(effect)](
                 character_id, add_time, status_data, now_time
             )
-    if not start_flag: # 在事件的开始结算中不结算以下内容
+    if not event_flag: # 在事件的开始结算中不结算以下内容
         # 进行一段结算
         behavior_id = now_character_data.behavior.behavior_id
         if behavior_id in game_config.config_behavior_effect_data:

@@ -214,6 +214,8 @@ class Premise:
     """ 系统量_地点 在男士洗手间 """
     IN_TOILET_FEMALE = "in_toilet_female"
     """ 系统量_地点 在女士洗手间 """
+    MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
+    """ 系统量_地点 角色抵达女士洗手间 """
     NOT_IN_TOILET = "not_in_toilet"
     """ 系统量_地点 不在洗手间 """
     IN_REST_ROOM = "in_restroom"

@@ -112,14 +112,15 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     # 先处理玩家部分
     if character_id == 0:
         # 判断玩家的开始事件
-        now_event = event.handle_event(0,1)
-        if now_event != None:
-            now_event.draw()
-            start_time = character_data.behavior.start_time
-            end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
-            if now_panel != None:
-                now_panel.draw()
+        # now_event = event.handle_event(0,1)
+        # if now_event != None:
+        #     now_event.draw()
+        #     character_data.event_id = now_event.event_id
+        #     start_time = character_data.behavior.start_time
+        #     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+        #     now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
+        #     if now_panel != None:
+        #         now_panel.draw()
 
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(0)
@@ -342,13 +343,15 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     # character_data.status[28] += hunger_time * 0.02
     # character_data.last_hunger_time = now_time
     if time_judge:
-        # 查询当前玩家是否触发了结束事件
-        event_draw = None if character_id else event.handle_event(character_id, 0)
-        if event_draw != None:
-            event_draw.draw()
-            character_data.event_id = event_draw.event_id
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
-        if event_draw == None:
+        # 查询当前玩家是否触发了结束事件
+        end_event_draw = None if character_id else event.handle_event(character_id, 0)
+        # 如果有事件则显示事件，否则显示口上
+        if end_event_draw != None:
+            end_event_draw.draw()
+            character_data.event_id = end_event_draw.event_id
+            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, True)
+        else:
             talk.handle_talk(character_id)
         if now_panel != None:
             now_panel.draw()

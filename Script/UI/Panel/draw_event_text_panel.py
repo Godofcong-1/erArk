@@ -39,7 +39,7 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         character_data: game_type.Character = cache.character_data[character_id]
         if player_data.position not in [character_data.position, character_data.behavior.move_target]:
             return
-        now_event_text: str = game_config.config_event[event_id].text
+        now_event_text: str = "\n" + game_config.config_event[event_id].text
         scene_path = character_data.position
         scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
