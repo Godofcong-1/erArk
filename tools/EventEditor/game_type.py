@@ -11,6 +11,8 @@ class Event:
         """ 事件所属状态id """
         self.start: bool = 0
         """ 是否是状态开始时的事件 """
+        self.type: int = 1
+        """ 事件类型(0不进行指令结算，1正常) """
         self.text: str = ""
         """ 事件描述文本 """
         self.premise: dict = {}

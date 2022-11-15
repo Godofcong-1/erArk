@@ -108,8 +108,8 @@ class DataList(QListWidget):
         event = game_type.Event()
         event.uid = item.uid
         event.status_id = cache_control.now_status
-        if cache_control.start_status == "开始":
-            event.start = 1
+        if cache_control.now_type == "指令正常":
+            event.type = 1
         event.text = item.text()
         cache_control.now_event_data[event.uid] = event
         self.addItem(item)
@@ -134,7 +134,7 @@ class DataList(QListWidget):
         event = game_type.Event()
         event.uid = new_item.uid
         event.status_id = old_event.status_id
-        event.start = old_event.start
+        event.type = old_event.type
         for premise in old_event.premise:
             event.premise[premise] = old_event.premise[premise]
         # for settle in old_event.settle:
@@ -202,8 +202,8 @@ class DataList(QListWidget):
             now_event: game_type.Event = cache_control.now_event_data[uid]
             if now_event.status_id != cache_control.now_status:
                 continue
-            now_start = cache_control.start_status == "开始"
-            if now_event.start != now_start:
+            now_type = cache_control.now_type == "指令正常"
+            if now_event.type != now_type:
                 continue
             item = ListItem(now_event.text)
             item.uid = uid

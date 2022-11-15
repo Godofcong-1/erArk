@@ -22,7 +22,7 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
     character_id -- 触发事件的角色id
     """
 
-    def __init__(self, event_id: str,character_id: int):
+    def __init__(self, event_id: str,character_id: int, event_type: int):
         """初始化绘制对象"""
         self.width: int = window_width
         """ 绘制的最大宽度 """
@@ -30,6 +30,8 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         """ 事件id """
         self.character_id: int = character_id
         """ 触发事件的角色id """
+        self.event_type: int = event_type
+        """ 事件的类型 """
         self.text: str = ""
         """ 当前绘制的文本 """
         player_data: game_type.Character = cache.character_data[0]

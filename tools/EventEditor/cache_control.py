@@ -15,6 +15,8 @@ status_data: dict = {}
 """ 当前状态数据 """
 now_status: str = "1"
 """ 当前事件状态 """
+now_type: str = "指令正常"
+""" 当前事件类型 """
 start_status: str = "开始"
 """ 当前事件开始类型 """
 now_event_id: str = ""

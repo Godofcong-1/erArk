@@ -16,13 +16,13 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = False):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = True):
     """
     处理结算角色行为
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
-    start_flag -- 事件开始结算
+    event_flag -- 是否保留指令结算
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
@@ -35,18 +35,9 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
 
-    event_id = now_character_data.event_id
-    if event_id != "":
-        # 进行事件结算
-        print(f"debug handle_settle_behavior event_id = {event_id}")
-        event_data: game_type.Event = game_config.config_event[event_id]
-        for effect in event_data.effect:
-            constant.settle_behavior_effect_data[int(effect)](
-                character_id, add_time, status_data, now_time
-            )
-    if not event_flag: # 在事件的开始结算中不结算以下内容
+    behavior_id = now_character_data.behavior.behavior_id
+    if event_flag: # 在事件的开始结算中不结算以下内容
         # 进行一段结算
-        behavior_id = now_character_data.behavior.behavior_id
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
@@ -54,7 +45,17 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         check_second_effect(character_id, status_data)
         #结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
-    # check_second_effect(character_id)
+
+    event_id = now_character_data.event_id
+    if event_id != "":
+        # 进行事件结算
+        # print(f"debug handle_settle_behavior event_id = {event_id}")
+        event_data: game_type.Event = game_config.config_event[event_id]
+        for effect in event_data.effect:
+            constant.settle_behavior_effect_data[int(effect)](
+                character_id, add_time, status_data, now_time
+            )
+
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
     #注释掉了会按不交流的时间自动扣好感的系统#

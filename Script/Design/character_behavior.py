@@ -343,14 +343,24 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     # character_data.status[28] += hunger_time * 0.02
     # character_data.last_hunger_time = now_time
     if time_judge:
-        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
-        # 查询当前玩家是否触发了结束事件
-        end_event_draw = None if character_id else event.handle_event(character_id, 0)
+        # 查询当前玩家是否触发了事件
+        end_event_draw = None if character_id else event.handle_event(character_id)
+        event_type_now = 1
+        if end_event_draw != None:
+            character_data.event_id = end_event_draw.event_id
+            event_type_now = end_event_draw.event_type
+        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now == 1)
+
+        # 如果行为是移动的话，则再进行一次判定
+        if character_data.behavior.behavior_id == constant.Behavior.MOVE:
+            end_event_draw = event.handle_event(character_id)
+            if end_event_draw != None:
+                character_data.event_id = end_event_draw.event_id
+                now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, False)
+
         # 如果有事件则显示事件，否则显示口上
         if end_event_draw != None:
             end_event_draw.draw()
-            character_data.event_id = end_event_draw.event_id
-            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, True)
         else:
             talk.handle_talk(character_id)
         if now_panel != None:

@@ -8,12 +8,11 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-def handle_event(character_id: int, start: int) -> (draw_event_text_panel.DrawEventTextPanel, str):
+def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel, str):
     """
     处理状态触发事件
     Keyword arguments:
     character_id -- 角色id
-    start -- 是否是状态开始
     Return arguments:
     draw.LineFeedWaitDraw -- 事件绘制文本
     str -- 事件id
@@ -24,13 +23,12 @@ def handle_event(character_id: int, start: int) -> (draw_event_text_panel.DrawEv
     now_premise_data = {}
     if (
         behavior_id in game_config.config_event_status_data
-        and start in game_config.config_event_status_data[behavior_id]
     ):
-        for event_id in game_config.config_event_status_data[behavior_id][start]:
+        for event_id in game_config.config_event_status_data[behavior_id]:
             now_weight = 1
             event_config = game_config.config_event[event_id]
             if len(event_config.premise):
-                now_weight = 0
+                now_weight = 0 
                 for premise in event_config.premise:
                     if premise in now_premise_data:
                         if not now_premise_data[premise]:
@@ -53,4 +51,4 @@ def handle_event(character_id: int, start: int) -> (draw_event_text_panel.DrawEv
         event_weight = value_handle.get_rand_value_for_value_region(list(now_event_data.keys()))
         now_event_id = random.choice(list(now_event_data[event_weight]))
     if now_event_id != "":
-        return draw_event_text_panel.DrawEventTextPanel(now_event_id,character_id)
+        return draw_event_text_panel.DrawEventTextPanel(now_event_id,character_id, event_config.type)

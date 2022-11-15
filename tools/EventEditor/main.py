@@ -140,30 +140,31 @@ def change_status_menu(action: QWidgetAction):
     item_effect_list.item_list.clear()
 
 
-def change_start_menu(action: QWidgetAction):
+def change_type_menu(action: QWidgetAction):
     """
     更新开始分类菜单
     Keyword arguments:
     action -- 触发的菜单
     """
     data_list.close_edit()
-    start = action.data()
-    tools_bar.start_menu.setTitle(start)
-    cache_control.start_status = start
-    tools_bar.start_menu.clear()
+    type = action.data()
+    tools_bar.type_menu.setTitle(type)
+    # cache_control.start_status = start # 这一句姑且先保留
+    cache_control.now_type = type
+    tools_bar.type_menu.clear()
     action_list = []
-    start_group = QActionGroup(tools_bar.start_menu)
-    start_list = {"开始", "结束"}
-    for v in start_list:
+    type_group = QActionGroup(tools_bar.type_menu)
+    type_list = {"指令正常", "跳过指令"}
+    for v in type_list:
         if v == cache_control.start_status:
             continue
         now_action: QWidgetAction = QWidgetAction(tools_bar)
         now_action.setText(v)
-        now_action.setActionGroup(start_group)
+        now_action.setActionGroup(type_group)
         now_action.setData(v)
         action_list.append(now_action)
-    start_group.triggered.connect(change_start_menu)
-    tools_bar.start_menu.addActions(action_list)
+    type_group.triggered.connect(change_type_menu)
+    tools_bar.type_menu.addActions(action_list)
     data_list.update()
     item_premise_list.item_list.clear()
     # item_settle_list.item_list.clear()
@@ -216,19 +217,19 @@ for cid in cache_control.status_data:
     action_list.append(now_action)
 status_group.triggered.connect(change_status_menu)
 tools_bar.status_menu.addActions(action_list)
-start_list = {"开始", "结束"}
+type_list = {"指令正常", "跳过指令"}
 action_list = []
-start_group = QActionGroup(tools_bar.start_menu)
-for v in start_list:
+type_group = QActionGroup(tools_bar.type_menu)
+for v in type_list:
     if v == cache_control.start_status:
         continue
     now_action: QWidgetAction = QWidgetAction(tools_bar)
     now_action.setText(v)
-    now_action.setActionGroup(start_group)
+    now_action.setActionGroup(type_group)
     now_action.setData(v)
     action_list.append(now_action)
-start_group.triggered.connect(change_start_menu)
-tools_bar.start_menu.addActions(action_list)
+type_group.triggered.connect(change_type_menu)
+tools_bar.type_menu.addActions(action_list)
 menu_bar.select_event_file_action.triggered.connect(load_event_data)
 menu_bar.new_event_file_action.triggered.connect(create_event_data)
 menu_bar.save_event_action.triggered.connect(save_event_data)
