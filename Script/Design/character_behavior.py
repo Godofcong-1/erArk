@@ -349,14 +349,21 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         if end_event_draw != None:
             character_data.event_id = end_event_draw.event_id
             event_type_now = end_event_draw.event_type
-        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now == 1)
+        if not character_id:
+            print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+        if not character_id:
+            print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
         # 如果行为是移动的话，则再进行一次判定
         if character_data.behavior.behavior_id == constant.Behavior.MOVE:
             end_event_draw = event.handle_event(character_id)
             if end_event_draw != None:
                 character_data.event_id = end_event_draw.event_id
-                now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, False)
+                now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 2)
+
+        if not character_id:
+            print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
         # 如果有事件则显示事件，否则显示口上
         if end_event_draw != None:

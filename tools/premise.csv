@@ -73,75 +73,80 @@ last_cmd_handjob_type,LAST_CMD_HANDJOB_TYPE,指令_前指令,前一指令为手�
 last_cmd_blowjob_type,LAST_CMD_BLOWJOB_TYPE,指令_前指令,前一指令为口交类(421，427，428，429，430，431)
 last_cmd_paizuri_type,LAST_CMD_PAIZURI_TYPE,指令_前指令,前一指令为乳交类(422，428)
 
-place_0,IN_PLAYER_SCENE,系统量_地点,与玩家处于相同地点
-place_1,NOT_IN_PLAYER_SCENE,系统量_地点,与玩家不处于相同地点
-place_1,# IN_PLAYER_ZONE,系统量_地点,与玩家处于相同大区域
-place_2,PLAYER_COME_SCENE,系统量_地点,玩家来到该角色所在的地点
-place_3,# PLAYER_COME_ZONE,系统量_地点,玩家来到该角色所在的区域
-place_4,PLAYER_LEAVE_SCENE,系统量_地点,玩家离开该角色所在的地点
-place_5,# PLAYER_LEAVE_ZONE,系统量_地点,玩家离开该角色所在的区域
-place_6,TATGET_COME_SCENE,系统量_地点,该角色来到玩家所在的地点
-place_7,# TATGET_COME_ZONE,系统量_地点,该角色来到玩家所在的区域
-place_8,TATGET_LEAVE_SCENE,系统量_地点,该角色离开玩家所在的地点
-place_9,# TATGET_LEAVE_ZONE,系统量_地点,该角色离开玩家所在的区域
-place_10,SCENE_ONLY_TWO,系统量_地点,该地点仅有玩家和该角色
-place_11,SCENE_OVER_TWO,系统量_地点,该地点里有除了玩家和该角色之外的人
-place_12,SCENE_ONLY_ONE,系统量_地点,该地点里没有自己外的其他角色
-place_is_h,SCENE_SOMEONE_IS_H,系统量_地点,该地点有其他角色在和玩家H
-place_exposed,PLACE_EXPOSED,系统量_地点,当前地点暴露
-place_covert,PLACE_COVERT,系统量_地点,当前地点隐蔽
-place_have_furniture,PLACE_HAVE_FURNITURE,系统量_地点,当前地点有家具
-place_not_furniture,PLACE_NOT_FURNITURE,系统量_地点,当前地点没家具
-in_functional_room,IN_FUNCTIONAL_ROOM,系统量_地点,在功能性地点中
-place_door_open,PLACE_DOOR_OPEN,系统量_地点,地点的门是开着的（不含内隔间关门）
-place_ladies_only,PLACE_LADIES_ONLY,系统量_地点,该地点男士止步（女洗手间/更衣室/浴室等）
-in_kit,IN_KITCHEN,系统量_地点,在厨房
-in_din,IN_DINING_HALL,系统量_地点,在食堂
-not_in_din,NOT_IN_DINING_HALL,系统量_地点,不在食堂
-in_food_shop,IN_FOOD_SHOP,系统量_地点,在食物商店（取餐区）
-not_in_food_shop,NOT_IN_FOOD_SHOP,系统量_地点,不在食物商店（取餐区）
-in_dr_off,IN_DR_OFFICE,系统量_地点,在博士办公室
-not_in_dr_off,NOT_IN_DR_OFFICE,系统量_地点,不在博士办公室
-in_dr_off_or_debug,IN_DR_OFFICE_OR_DEBUG,系统量_地点,在博士办公室或处于debug模式
-in_command_room,IN_COMMAND_ROOM,系统量_地点,在指挥室
-in_dor,IN_DORMITORY,系统量_地点,在自己宿舍中
-not_in_dor,NOT_IN_DORMITORY,系统量_地点,不在自己宿舍中
-in_bathroom,IN_BATHROOM,系统量_地点,在浴室中
-in_toilet_man,IN_TOILET_MAN,系统量_地点,在男士洗手间
-in_toilet_female,IN_TOILET_FEMALE,系统量_地点,在女士洗手间
-not_in_toilet,NOT_IN_TOILET,系统量_地点,不在洗手间
-in_restroom,IN_REST_ROOM,系统量_地点,在休息室中
-not_in_restroom,NOT_IN_REST_ROOM,系统量_地点,不在休息室中
-in_music_room,IN_MUSIC_ROOM,系统量_地点,在音乐室中
-in_collection_room,IN_COLLECTION_ROOM,系统量_地点,在藏品馆中
-in_gym_room,IN_GYM_ROOM,系统量_地点,在健身区中
-in_training_room,IN_TRAINING_ROOM,系统量_地点,在训练室中（包括木桩房和射击房）
-not_in_training_room,NOT_IN_TRAINING_ROOM,系统量_地点,不在训练室中（包括木桩房和射击房）
-in_fight_room,IN_FIGHT_ROOM,系统量_地点,在木桩房中
-in_shoot_room,IN_SHOOT_ROOM,系统量_地点,在射击房中
-in_building_room,IN_BUILDING_ROOM,系统量_地点,在基建部中
-in_clinic,IN_CLINIC,系统量_地点,在门诊室中（含急诊室）
-not_in_clinic,NOT_IN_CLINIC,系统量_地点,不在门诊室中（含急诊室）
-in_bathroom,IN_BATHROOM,系统量_地点,在淋浴区
-not_in_bathroom,NOT_IN_BATHROOM,系统量_地点,不在淋浴区
-in_bathzone_locker_room,IN_BATHZONE_LOCKER_ROOM,系统量_地点,在大浴场的更衣室
-not_in_bathzone_locker_room,NOT_IN_BATHZONE_LOCKER_ROOM,系统量_地点,不在大浴场的更衣室
+place_0,IN_PLAYER_SCENE,地点_角色,与玩家处于相同地点
+place_1,NOT_IN_PLAYER_SCENE,地点_角色,与玩家不处于相同地点
+place_1,# IN_PLAYER_ZONE,地点_角色,与玩家处于相同大区域
+place_2,PLAYER_COME_SCENE,地点_角色,玩家来到该角色所在的地点
+place_3,# PLAYER_COME_ZONE,地点_角色,玩家来到该角色所在的区域
+place_4,PLAYER_LEAVE_SCENE,地点_角色,玩家离开该角色所在的地点
+place_5,# PLAYER_LEAVE_ZONE,地点_角色,玩家离开该角色所在的区域
+place_6,TATGET_COME_SCENE,地点_角色,该角色来到玩家所在的地点
+place_7,# TATGET_COME_ZONE,地点_角色,该角色来到玩家所在的区域
+place_8,TATGET_LEAVE_SCENE,地点_角色,该角色离开玩家所在的地点
+place_9,# TATGET_LEAVE_ZONE,地点_角色,该角色离开玩家所在的区域
+place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有玩家和该角色
+place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之外的人
+place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
+place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 
-ai_moved,HAVE_MOVED,系统量_时间,NPC距离上次移动已经至少经过了1小时
-ai_wait,AI_WAIT,系统量_时间,NPC需要进行一次5分钟的等待（wait_flag = 1）
-ai_trained,HAVE_TRAINED,系统量_时间,NPC距离上次战斗训练已经超过两天了
-ai_not_shower,NOT_SHOWER,系统量_时间,NPC今天还没有洗澡
-ai_have_showered,HAVE_SHOWERED,系统量_时间,NPC今天已经洗过澡了
-time_day,TIME_DAY,系统量_时间,时间:白天（6点~18点）
-time_night,TIME_NIGHT,系统量_时间,时间:夜晚（18点~6点）
-time_midnight,TIME_MIDNIGHT,系统量_时间,时间:深夜（22点~2点）
-time_morning,TIME_MORNING,系统量_时间,时间:清晨（4点~8点）
-time_moon,TIME_MOON,系统量_时间,时间:中午（10点~14点）
-eat_time,EAT_TIME,系统量_时间,饭点（早上7~8点、中午12~13点、晚上17~18点）
-shower_time,SHOWER_TIME,系统量_时间,淋浴时间（晚上9点到晚上12点）
-sleep_time,SLEEP_TIME,系统量_时间,睡觉时间（晚上10点到早上6点）
-sleep_ge_75_or_sleep_time,SLEEP_GE_75_OR_SLEEP_TIME,系统量_时间,困倦条≥75%或到了睡觉的时间
-work_time,WORK_TIME,系统量_时间,工作时间（早上9:00~下午4:59）
+place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
+place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
+place_have_furniture,PLACE_HAVE_FURNITURE,地点_属性,当前地点有家具
+place_not_furniture,PLACE_NOT_FURNITURE,地点_属性,当前地点没家具
+in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中
+place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
+place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
+
+in_kit,IN_KITCHEN,地点_定位,在厨房
+in_din,IN_DINING_HALL,地点_定位,在食堂
+not_in_din,NOT_IN_DINING_HALL,地点_定位,不在食堂
+in_food_shop,IN_FOOD_SHOP,地点_定位,在食物商店（取餐区）
+not_in_food_shop,NOT_IN_FOOD_SHOP,地点_定位,不在食物商店（取餐区）
+in_dr_off,IN_DR_OFFICE,地点_定位,在博士办公室
+not_in_dr_off,NOT_IN_DR_OFFICE,地点_定位,不在博士办公室
+in_dr_off_or_debug,IN_DR_OFFICE_OR_DEBUG,地点_定位,在博士办公室或处于debug模式
+in_command_room,IN_COMMAND_ROOM,地点_定位,在指挥室
+in_dor,IN_DORMITORY,地点_定位,在自己宿舍中
+not_in_dor,NOT_IN_DORMITORY,地点_定位,不在自己宿舍中
+in_bathroom,IN_BATHROOM,地点_定位,在浴室中
+in_toilet_man,IN_TOILET_MAN,地点_定位,在男士洗手间
+in_toilet_female,IN_TOILET_FEMALE,地点_定位,在女士洗手间
+not_in_toilet,NOT_IN_TOILET,地点_定位,不在洗手间
+in_restroom,IN_REST_ROOM,地点_定位,在休息室中
+not_in_restroom,NOT_IN_REST_ROOM,地点_定位,不在休息室中
+in_music_room,IN_MUSIC_ROOM,地点_定位,在音乐室中
+in_collection_room,IN_COLLECTION_ROOM,地点_定位,在藏品馆中
+in_gym_room,IN_GYM_ROOM,地点_定位,在健身区中
+in_training_room,IN_TRAINING_ROOM,地点_定位,在训练室中（包括木桩房和射击房）
+not_in_training_room,NOT_IN_TRAINING_ROOM,地点_定位,不在训练室中（包括木桩房和射击房）
+in_fight_room,IN_FIGHT_ROOM,地点_定位,在木桩房中
+in_shoot_room,IN_SHOOT_ROOM,地点_定位,在射击房中
+in_building_room,IN_BUILDING_ROOM,地点_定位,在基建部中
+in_clinic,IN_CLINIC,地点_定位,在门诊室中（含急诊室）
+not_in_clinic,NOT_IN_CLINIC,地点_定位,不在门诊室中（含急诊室）
+in_bathroom,IN_BATHROOM,地点_定位,在淋浴区
+not_in_bathroom,NOT_IN_BATHROOM,地点_定位,不在淋浴区
+in_bathzone_locker_room,IN_BATHZONE_LOCKER_ROOM,地点_定位,在大浴场的更衣室
+not_in_bathzone_locker_room,NOT_IN_BATHZONE_LOCKER_ROOM,地点_定位,不在大浴场的更衣室
+
+move_to_toilet_female,MOVE_TO_TOILET_FEMALE,地点_移动,角色抵达女士洗手间
+
+ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
+ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）
+ai_trained,HAVE_TRAINED,时间_角色,NPC距离上次战斗训练已经超过两天了
+ai_not_shower,NOT_SHOWER,时间_角色,NPC今天还没有洗澡
+ai_have_showered,HAVE_SHOWERED,时间_角色,NPC今天已经洗过澡了
+
+time_day,TIME_DAY,时间_当前,时间:白天（6点~18点）
+time_night,TIME_NIGHT,时间_当前,时间:夜晚（18点~6点）
+time_midnight,TIME_MIDNIGHT,时间_当前,时间:深夜（22点~2点）
+time_morning,TIME_MORNING,时间_当前,时间:清晨（4点~8点）
+time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
+eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上17~18点）
+shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上9点到晚上12点）
+sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
+sleep_ge_75_or_sleep_time,SLEEP_GE_75_OR_SLEEP_TIME,时间_当前,困倦条≥75%或到了睡觉的时间
+work_time,WORK_TIME,时间_当前,工作时间（早上9:00~下午4:59）
 
 is_assistant,IS_ASSISTANT,属性_助理与跟随,自己是当前的助理干员
 not_assistant,NOT_ASSISTANT,属性_助理与跟随,自己不是当前的助理干员

@@ -16,13 +16,13 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = True):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = int):
     """
     处理结算角色行为
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
-    event_flag -- 是否保留指令结算
+    event_flag -- 事件结算变量，0不指令，1先指令后事件，2先事件后指令
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]

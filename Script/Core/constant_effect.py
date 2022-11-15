@@ -5,6 +5,8 @@ class BehaviorEffect:
     """ 系统状态 什么都没有的空结算 """
     INTERRUPT_TARGET_ACTIVITY = 10000
     """ 系统状态 打断交互对象活动 """
+    OPTION_FATER = 10001
+    """ 系统状态 开启子选项面板 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -359,6 +361,8 @@ class BehaviorEffect:
     """ 系统量_地点 当前场景进入关门状态 """
     DOOR_CLOSE_RESET = 753
     """ 系统量_地点 当前场景取消关门状态 """
+    MOVE_TO_PRE_SCENE = 761
+    """ 系统量_地点 角色移动至前一场景 """
 
     PENIS_IN_T_RESET = 801
     """ H_阴茎位置 当前阴茎位置为交互对象_归零 """
