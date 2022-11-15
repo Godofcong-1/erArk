@@ -71,10 +71,6 @@ class Event_option_Panel:
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 break

@@ -22,7 +22,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
-    event_flag -- 事件结算变量，0不指令，1先指令后事件，2先事件后指令
+    event_flag -- 事件结算变量，0不指令，1先指令后事件，2不事件
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
