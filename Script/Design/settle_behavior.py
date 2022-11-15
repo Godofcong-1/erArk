@@ -46,11 +46,21 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         #结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
 
-    event_id = now_character_data.event_id
+    event_id = now_character_data.event.event_id
     if event_id != "":
         # 进行事件结算
-        # print(f"debug handle_settle_behavior event_id = {event_id}")
+        print(f"debug handle_settle_behavior event_id = {event_id}")
         event_data: game_type.Event = game_config.config_event[event_id]
+        for effect in event_data.effect:
+            constant.settle_behavior_effect_data[int(effect)](
+                character_id, add_time, status_data, now_time
+            )
+
+    son_event_id = now_character_data.event.son_event_id
+    if son_event_id != "":
+        # 进行事件结算
+        print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
+        event_data: game_type.Event = game_config.config_event[son_event_id]
         for effect in event_data.effect:
             constant.settle_behavior_effect_data[int(effect)](
                 character_id, add_time, status_data, now_time
@@ -108,7 +118,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 PC_information_flag = 1 if PC_information_flag == 1 else 2
                 break
     if now_judge:
-        # print(f"debug now_judge")
+        print(f"debug now_judge")
         now_text_list = []
         now_draw = draw.NormalDraw()
         if now_character_data.cid == 0:

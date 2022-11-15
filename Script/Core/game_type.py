@@ -471,6 +471,14 @@ class Behavior:
         self.socks_name: str = ""
         """ 前提结算用:袜子名字 """
 
+class Chara_Event:
+    """角色事件状态数据"""
+
+    def __init__(self):
+        self.event_id: str = ""
+        """ 角色当前事件id """
+        self.son_event_id: str = ""
+        """ 角色当前子事件id """
 
 class Map:
     """地图数据"""
@@ -704,8 +712,8 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}
         """ 角色当前二段行为状态数据 """
-        self.event_id: str = ""
-        """ 角色当前事件id """
+        self.event: Chara_Event = Chara_Event()
+        """ 角色当前事件状态数据 """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
         self.position: List[str] = ["0","0"]

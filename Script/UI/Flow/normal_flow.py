@@ -17,6 +17,7 @@ from Script.UI.Panel import (
     undress_panel,
     department_panel,
     instruct_filter_panel,
+    event_option_panel,
 )
 from Script.Config import normal_config
 
@@ -118,4 +119,10 @@ def department_flow():
 def instruct_filter_flow():
     """指令过滤面板"""
     now_panel = instruct_filter_panel.Instruct_filter_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.EVENT_OPTION)
+def instruct_event_option_flow():
+    """事件选项面板"""
+    now_panel = event_option_panel.Event_option_Panel(width)
     now_panel.draw()

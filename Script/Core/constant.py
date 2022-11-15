@@ -823,6 +823,8 @@ class Panel:
     """ 部门运作情况面板 """
     INSTRUCT_FILTER = 17
     """ 指令过滤面板 """
+    EVENT_OPTION = 18
+    """ 事件选项面板 """
 
 
 class SecondBehavior:

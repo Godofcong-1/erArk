@@ -6983,7 +6983,7 @@ def handle_option_son(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.IS_ASSISTANT)

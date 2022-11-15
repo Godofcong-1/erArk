@@ -51,6 +51,7 @@ def init_attr(character_id: int):
     character_data.cloth_see = {6:False,9:False}
     character_data.cloth_off = attr_calculation.get_cloth_zero()
     character_data.action_info = attr_calculation.get_action_info_state_zero()
+    character_data.event = attr_calculation.get_event_zero()
 
 
     #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零

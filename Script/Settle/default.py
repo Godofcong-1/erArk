@@ -17,6 +17,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
+from Script.UI.Panel import event_option_panel
 
 import random
 
@@ -1055,6 +1056,28 @@ def handle_interrupt_target_activity(
                     settle_behavior.handle_settle_behavior(
                         target_data.cid, character_data.behavior.start_time
                     )
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OPTION_FATER)
+def handle_option_fater(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    开启子选项面板
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    event_option_panel.line_feed.draw()
+    now_draw = event_option_panel.Event_option_Panel(width)
+    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)

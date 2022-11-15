@@ -26,6 +26,7 @@ from Script.Design import (
     character_move
 )
 from Script.UI.Moudle import draw
+from Script.UI.Panel import draw_event_text_panel
 from Script.Config import game_config, normal_config
 import time
 
@@ -115,7 +116,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         # now_event = event.handle_event(0,1)
         # if now_event != None:
         #     now_event.draw()
-        #     character_data.event_id = now_event.event_id
+        #     character_data.event.event_id = now_event.event_id
         #     start_time = character_data.behavior.start_time
         #     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
         #     now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
@@ -347,23 +348,36 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         end_event_draw = None if character_id else event.handle_event(character_id)
         event_type_now = 1
         if end_event_draw != None:
-            character_data.event_id = end_event_draw.event_id
+            event_id = end_event_draw.event_id
+            character_data.event.event_id = event_id
             event_type_now = end_event_draw.event_type
-        if not character_id:
-            print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+            # 如果是父事件的话，则先输出文本
+            event_config = game_config.config_event[event_id]
+            print(f"debug effect = {event_config.effect}")
+            if "10001" in event_config.effect:
+                end_event_draw.draw()
+        # if not character_id:
+        #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
-        if not character_id:
-            print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+        # if not character_id:
+        #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
         # 如果行为是移动的话，则再进行一次判定
         if character_data.behavior.behavior_id == constant.Behavior.MOVE:
             end_event_draw = event.handle_event(character_id)
             if end_event_draw != None:
-                character_data.event_id = end_event_draw.event_id
+                character_data.event.event_id = end_event_draw.event_id
                 now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 2)
 
-        if not character_id:
-            print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+        # if not character_id:
+        #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+        # 如果触发了子事件的话则把文本替换为子事件文本
+        if character_data.event.son_event_id != "":
+            son_event_id = character_data.event.son_event_id
+            event_config = game_config.config_event[son_event_id]
+            end_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
 
         # 如果有事件则显示事件，否则显示口上
         if end_event_draw != None:
@@ -380,7 +394,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
                 wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
-        character_data.event_id = ""
+        character_data.event.event_id = ""
+        character_data.event.son_event_id = ""
     if time_judge == 1:
         character_data.behavior.start_time = end_time
         return 0

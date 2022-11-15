@@ -22,6 +22,13 @@ def get_ability_zero(ability_dict) -> dict:
             ability_list[ability] = 0
     return ability_list
 
+def get_event_zero() -> dict:
+    """
+    初始化事件结构体
+    """
+    event_data = game_type.Chara_Event()
+    return event_data
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0
