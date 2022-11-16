@@ -49,7 +49,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     event_id = now_character_data.event.event_id
     if event_id != "":
         # 进行事件结算
-        print(f"debug handle_settle_behavior event_id = {event_id}")
+        # print(f"debug handle_settle_behavior event_id = {event_id}")
         event_data: game_type.Event = game_config.config_event[event_id]
         for effect in event_data.effect:
             constant.settle_behavior_effect_data[int(effect)](
@@ -59,7 +59,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     son_event_id = now_character_data.event.son_event_id
     if son_event_id != "":
         # 进行事件结算
-        print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
+        # print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
         event_data: game_type.Event = game_config.config_event[son_event_id]
         for effect in event_data.effect:
             constant.settle_behavior_effect_data[int(effect)](

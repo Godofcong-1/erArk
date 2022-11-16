@@ -41,35 +41,53 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         character_data: game_type.Character = cache.character_data[character_id]
         if player_data.position not in [character_data.position, character_data.behavior.move_target]:
             return
+
         # 子事件的文本里去掉选项内容
         if "option_son" in game_config.config_event[event_id].premise:
-            game_config.config_event[event_id].text = game_config.config_event[event_id].text.split("|")[1]
-        # 在事件前补个换行
-        now_event_text: str = "\n" + game_config.config_event[event_id].text
+            now_event_text: str = "\n" + game_config.config_event[event_id].text.split("|")[1]
+        else:
+            now_event_text: str = "\n" + game_config.config_event[event_id].text
 
         # 代码词语
         scene_path = character_data.position
         scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
         scene_name = scene_data.scene_name
+        random_chara_name = ""
+        for chara_id in scene_data.character_list:
+            if chara_id:
+                random_chara_name = cache.character_data[chara_id].name
+                break
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        src_scene_name = ""
+        src_scene_name,src_random_chara_name = "",""
         if len(player_data.behavior.move_src):
             src_scene_path_str = map_handle.get_map_system_path_str_for_list(player_data.behavior.move_src)
             src_scene_data: game_type.Scene = cache.scene_data[src_scene_path_str]
             src_scene_name = src_scene_data.scene_name
-        target_scene_name = ""
+            for chara_id in src_scene_data.character_list:
+                if chara_id:
+                    src_random_chara_name = cache.character_data[chara_id].name
+                    break
+        target_scene_name,tar_random_chara_name = "",""
         if len(character_data.behavior.move_target):
             target_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.behavior.move_target)
             target_scene_data: game_type.Scene = cache.scene_data[target_scene_path_str]
             target_scene_name = target_scene_data.scene_name
+            for chara_id in target_scene_data.character_list:
+                if chara_id:
+                    tar_random_chara_name = cache.character_data[chara_id].name
+                    break
+        # print(f"debug random_chara_name = {random_chara_name},src_random_chara_name = {src_random_chara_name},tar_random_chara_name = {tar_random_chara_name}")
         now_event_text = now_event_text.format(
             NickName=player_data.nick_name,
             FoodName=character_data.behavior.food_name,
             Name=character_data.name,
             SceneName=scene_name,
+            SceneOneCharaName=random_chara_name,
             TargetName=target_data.name,
             TargetSceneName=target_scene_name,
+            TargetOneCharaName=tar_random_chara_name,
             SrcSceneName=src_scene_name,
+            SrcOneCharaName=src_random_chara_name,
         )
         self.text = now_event_text

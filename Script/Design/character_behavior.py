@@ -385,6 +385,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         # 如果有事件则显示事件，否则显示口上
         if start_event_draw != None:
             start_event_draw.draw()
+        elif end_event_draw != None:
+            end_event_draw.draw()
         else:
             talk.handle_talk(character_id)
         if now_panel != None:

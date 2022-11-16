@@ -3226,6 +3226,21 @@ def handle_scene_over_two(character_id: int) -> int:
     return len(scene_data.character_list) > 2
 
 
+@add_premise(constant_promise.Premise.SCENE_OVER_ONE)
+def handle_scene_over_one(character_id: int) -> int:
+    """
+    该地点里有除了自己之外的人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    return len(scene_data.character_list) > 1
+
+
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_IS_H)
 def handle_scene_someone_is_h(character_id: int) -> int:
     """

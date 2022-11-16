@@ -178,6 +178,8 @@ class Premise:
     """ 地点_角色 该地点有其他角色在和玩家H """
     SCENE_SOMEONE_NO_FALL = "place_someone_no_fall"
     """ 地点_角色 该地点有未拥有陷落素质的角色 """
+    SCENE_OVER_ONE = "place_over_one"
+    """ 地点_角色 该地点里有除了自己之外的人 """
 
     PLACE_EXPOSED = "place_exposed"
     """ 地点_属性 当前地点暴露 """
