@@ -2542,7 +2542,9 @@ def handle_move_to_pre_scene(
     if character_data.dead:
         return
     if len(character_data.behavior.move_src) and not character_id:
+        character_data.behavior.move_target = character_data.behavior.move_src
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
+        character_data.move_stop = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)

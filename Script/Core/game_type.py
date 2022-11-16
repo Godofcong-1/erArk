@@ -794,6 +794,8 @@ class Character:
         """ 玩家的收藏品 """
         self.action_info: ACTION_INFO = ACTION_INFO()
         """ 角色的行动记录 """
+        self.move_stop: bool = 0
+        """ 角色停止移动 """
 
 class Cache:
     """游戏缓存数据结构体"""
