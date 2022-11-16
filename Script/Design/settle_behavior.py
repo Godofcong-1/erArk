@@ -118,7 +118,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 PC_information_flag = 1 if PC_information_flag == 1 else 2
                 break
     if now_judge:
-        print(f"debug now_judge")
+        # print(f"debug now_judge")
         now_text_list = []
         now_draw = draw.NormalDraw()
         if now_character_data.cid == 0:

@@ -41,7 +41,7 @@ class Event_option_Panel:
 
         # 获取父事件的前提信息
         father_event_data: game_type.Event = game_config.config_event[father_event_id]
-        self.handle_panel = panel.PageHandlePanel([], SonEventDraw, 20, 4, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SonEventDraw, 20, 1, self.width, 1, 1, 0)
         father_promise = father_event_data.premise
 
         son_event_list = []

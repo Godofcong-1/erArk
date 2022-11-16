@@ -2,6 +2,7 @@ cid,effect_name,effect_type,effect
 
 9999,NOTHING,系统状态,什么都没有的空结算
 10000,INTERRUPT_TARGET_ACTIVITY,系统状态,打断交互对象活动
+10001,OPTION_FATER,系统状态,开启子选项面板
 
 0,ADD_SMALL_HIT_POINT,属性_基础,增加少量体力
 1,ADD_SMALL_MANA_POINT,属性_基础,增加少量气力
@@ -59,7 +60,6 @@ cid,effect_name,effect_type,effect
 
 151,LOW_OBSCENITY_FAILED_ADJUST,属性_失败状态,轻度性骚扰失败的加反感、加愤怒、降好感度修正
 152,HIGH_OBSCENITY_FAILED_ADJUST,属性_失败状态,重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正
-
 
 200,TARGET_ADD_1_N_EXPERIENCE,属性_经验,交互对象增加1N经验
 201,TARGET_ADD_1_B_EXPERIENCE,属性_经验,交互对象增加1B经验
@@ -185,6 +185,7 @@ cid,effect_name,effect_type,effect
 751,MOVE_TO_TARGET_SCENE,系统量_地点,移动至目标场景
 752,DOOR_CLOSE,系统量_地点,当前场景进入关门状态
 753,DOOR_CLOSE_RESET,系统量_地点,当前场景取消关门状态
+761,MOVE_TO_PRE_SCENE,系统量_地点,角色移动至前一场景
 
 801,PENIS_IN_T_RESET,H_阴茎位置,当前阴茎位置为交互对象_归零
 802,PENIS_IN_T_HAIR,H_阴茎位置,当前阴茎位置为交互对象_发交中

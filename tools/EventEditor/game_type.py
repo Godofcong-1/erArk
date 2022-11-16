@@ -12,7 +12,7 @@ class Event:
         self.start: bool = 0
         """ 是否是状态开始时的事件 """
         self.type: int = 1
-        """ 事件类型(0不进行指令结算，1正常) """
+        """ 事件类型(0不进行指令结算，1正常，2结算后置) """
         self.text: str = ""
         """ 事件描述文本 """
         self.premise: dict = {}

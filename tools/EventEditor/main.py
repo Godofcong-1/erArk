@@ -142,7 +142,7 @@ def change_status_menu(action: QWidgetAction):
 
 def change_type_menu(action: QWidgetAction):
     """
-    更新开始分类菜单
+    更新类型分类菜单
     Keyword arguments:
     action -- 触发的菜单
     """
@@ -154,9 +154,9 @@ def change_type_menu(action: QWidgetAction):
     tools_bar.type_menu.clear()
     action_list = []
     type_group = QActionGroup(tools_bar.type_menu)
-    type_list = {"指令正常", "跳过指令"}
+    type_list = {"指令正常", "跳过指令", "事件后置"}
     for v in type_list:
-        if v == cache_control.start_status:
+        if v == cache_control.now_type:
             continue
         now_action: QWidgetAction = QWidgetAction(tools_bar)
         now_action.setText(v)
@@ -217,11 +217,11 @@ for cid in cache_control.status_data:
     action_list.append(now_action)
 status_group.triggered.connect(change_status_menu)
 tools_bar.status_menu.addActions(action_list)
-type_list = {"指令正常", "跳过指令"}
+type_list = {"指令正常", "跳过指令", "事件后置"}
 action_list = []
 type_group = QActionGroup(tools_bar.type_menu)
 for v in type_list:
-    if v == cache_control.start_status:
+    if v == cache_control.now_type:
         continue
     now_action: QWidgetAction = QWidgetAction(tools_bar)
     now_action.setText(v)

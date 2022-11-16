@@ -4,6 +4,8 @@ debug_mode_on,DEBUG_MODE_ON,系统状态,现在是debug模式
 debug_mode_off,DEBUG_MODE_OFF,系统状态,现在不是debug模式
 is_h,IS_H,系统状态,当前为H模式
 not_h,NOT_H,系统状态,当前不是H模式
+option_fater,# OPTION_FATER,系统状态,选项的父事件
+option_son,OPTION_SON,系统状态,选项的子事件
 
 sys_0,IS_PLAYER,指令_触发与交互,玩家触发的该指令
 sys_1,NO_PLAYER,指令_触发与交互,NPC触发的该指令
@@ -88,6 +90,7 @@ place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有玩家和该角色
 place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之外的人
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
+place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
 
 place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
 place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
@@ -130,6 +133,7 @@ in_bathzone_locker_room,IN_BATHZONE_LOCKER_ROOM,地点_定位,在大浴场的更
 not_in_bathzone_locker_room,NOT_IN_BATHZONE_LOCKER_ROOM,地点_定位,不在大浴场的更衣室
 
 move_to_toilet_female,MOVE_TO_TOILET_FEMALE,地点_移动,角色抵达女士洗手间
+move_to_locker_room,MOVE_TO_LOCKER_ROOM,地点_移动,角色抵达更衣室
 
 ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
 ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）

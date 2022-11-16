@@ -557,6 +557,7 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
                 zone_data = game_config.config_facility_effect[facility_cid]
                 zone_name,zone_lv = zone_data.name,str(zone_data.level)
 
+                # 是玩家的话输出提示信息
                 if character_id == 0:
                     line = draw.LineDraw("-", width)
                     line.draw()

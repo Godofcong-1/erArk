@@ -41,7 +41,13 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         character_data: game_type.Character = cache.character_data[character_id]
         if player_data.position not in [character_data.position, character_data.behavior.move_target]:
             return
+        # 子事件的文本里去掉选项内容
+        if "option_son" in game_config.config_event[event_id].premise:
+            game_config.config_event[event_id].text = game_config.config_event[event_id].text.split("|")[1]
+        # 在事件前补个换行
         now_event_text: str = "\n" + game_config.config_event[event_id].text
+
+        # 代码词语
         scene_path = character_data.position
         scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
