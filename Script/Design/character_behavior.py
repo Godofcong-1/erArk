@@ -18,6 +18,7 @@ from Script.Design import (
     game_time,
     character,
     handle_premise,
+    event,
     talk,
     map_handle,
     cooking,
@@ -25,6 +26,7 @@ from Script.Design import (
     character_move
 )
 from Script.UI.Moudle import draw
+from Script.UI.Panel import draw_event_text_panel
 from Script.Config import game_config, normal_config
 import time
 
@@ -110,6 +112,17 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
 
     # 先处理玩家部分
     if character_id == 0:
+        # 判断玩家的开始事件
+        # now_event = event.handle_event(0,1)
+        # if now_event != None:
+        #     now_event.draw()
+        #     character_data.event.event_id = now_event.event_id
+        #     start_time = character_data.behavior.start_time
+        #     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+        #     now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
+        #     if now_panel != None:
+        #         now_panel.draw()
+
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(0)
             # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
@@ -151,11 +164,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         if character_id == 0:
             character_data.eja_point = 0
         # 清零高潮程度
-        character_data.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.orgasm_level)
+        character_data.h_state.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.h_state.orgasm_level)
         # 清零并随机重置生气程度
         character_data.angry_point = random.randrange(1,35)
-        # 清零污浊状态
-        character_data.dirty = attr_calculation.get_dirty_zero()
+        # 清零H被撞破的flag
+        character_data.action_info.h_interrupt = 0
+        # 新：改为洗澡时清零（清零污浊状态）
+        # character_data.dirty = attr_calculation.get_dirty_zero()
         #自动存档，用玩家id来限制只存一次
         if character_id == 0:
             now_draw = draw.NormalDraw()
@@ -182,6 +197,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     PC_character_data: game_type.Character = cache.character_data[0]
+    start_time = character_data.behavior.start_time
     premise_data = {}
     target_weight_data = {}
 
@@ -207,8 +223,18 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
             character_data.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
+        # event_draw = event.handle_event(character_id, 1)
+        # if (not character_id) or (PC_character_data.target_character_id == character_id):
+        #     if event_draw is not None:
+        #         event_draw.draw()
+        #         # 进行开始结算的数值结算
+        #         end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+        #         if character_data.target_character_id != character_id:
+        #             end_time = now_time
+        #         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
+        #         if now_panel != None:
+        #             now_panel.draw()
     else:
-        start_time = cache.character_data[character_id].behavior.start_time
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)
         if now_judge:
             cache.over_behavior_character.add(character_id)
@@ -247,20 +273,40 @@ def judge_character_tired_sleep(character_id : int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    #疲劳结算
-    if character_data.is_h or character_data.is_follow:
-        
-        if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
-            character_data.is_h = False
-            character_data.is_follow = 0
-            pl_character_data: game_type.Character = cache.character_data[0]
-            if character_id == pl_character_data.assistant_character_id:
-                character_data.assistant_state.always_follow = 0
-            now_draw = draw.NormalDraw()
-            now_draw.width = width
-            draw_text = "太累了，决定回房间睡觉\n" if character_data.tired else "太困了，决定回房间睡觉\n"
-            now_draw.text = character_data.name + draw_text
-            now_draw.draw()
+    #交互对象结算
+    if character_id:
+        if character_data.is_h or character_data.is_follow:
+            
+            if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
+                pl_character_data: game_type.Character = cache.character_data[0]
+                # 输出基础文本
+                now_draw = draw.NormalDraw()
+                now_draw.width = width
+                # 跟随和H的分歧，忽略H后停留的情况
+                if character_data.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
+                    draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.tired else "太困了，开始回房间睡觉\n"
+                    now_draw.text = character_data.name + draw_text
+                    now_draw.draw()
+                    character_data.is_follow = 0
+                # H时
+                else:
+                    pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
+                    pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
+
+                # 新：交给指令里的end_h结算(旧：数据结算)
+                # character_data.is_h = False
+                # character_data.is_follow = 0
+
+                # 新：暂时注释，保持跟随状态（旧：助手取消助手栏里的跟随）
+                # if character_id == pl_character_data.assistant_character_id:
+                #     character_data.assistant_state.always_follow = 0
+    # 玩家疲劳计算
+    else:
+        target_data = cache.character_data[character_data.target_character_id]
+        if character_data.tired and target_data.is_h:
+            character_data.behavior.behavior_id = constant.Behavior.H_HP_0
+            character_data.state = constant.CharacterStatus.STATUS_H_HP_0
+            character_data.tired = 0
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
@@ -298,8 +344,49 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     # character_data.status[28] += hunger_time * 0.02
     # character_data.last_hunger_time = now_time
     if time_judge:
-        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time)
-        talk.handle_talk(character_id)
+        # 查询当前玩家是否触发了事件
+        start_event_draw = None if character_id else event.handle_event(character_id)
+        event_type_now = 1
+        if start_event_draw != None:
+            event_id = start_event_draw.event_id
+            character_data.event.event_id = event_id
+            event_type_now = start_event_draw.event_type
+
+        # if not character_id:
+        #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+        # if not character_id:
+        #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+        # 如果是二类
+        end_event_draw = event.handle_event(character_id)
+        if end_event_draw != None:
+            end_event_id = end_event_draw.event_id
+            end_event_type = end_event_draw.event_type
+            event_config = game_config.config_event[end_event_id]
+            if end_event_type == 2:
+
+                # 如果是父事件的话，则先输出文本
+                if "10001" in event_config.effect:
+                    end_event_draw.draw()
+
+                character_data.event.event_id = end_event_id
+                now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
+
+        # if not character_id:
+        #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+        # 如果触发了子事件的话则把文本替换为子事件文本
+        if character_data.event.son_event_id != "":
+            son_event_id = character_data.event.son_event_id
+            event_config = game_config.config_event[son_event_id]
+            start_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
+
+        # 如果有事件则显示事件，否则显示口上
+        if start_event_draw != None:
+            start_event_draw.draw()
+        else:
+            talk.handle_talk(character_id)
         if now_panel != None:
             now_panel.draw()
             #进行一次暂停以便玩家看输出信息
@@ -310,6 +397,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
                 wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.event.event_id = ""
+        character_data.event.son_event_id = ""
     if time_judge == 1:
         character_data.behavior.start_time = end_time
         return 0
@@ -363,6 +452,7 @@ def search_target(
                 premise_judge = premise_data[premise]
             else:
                 premise_judge = handle_premise.handle_premise(premise, character_id)
+                premise_judge = max(premise_judge, 0)
                 premise_data[premise] = premise_judge
             if premise_judge:
                 now_weight += premise_judge
@@ -455,6 +545,7 @@ def judge_character_follow(character_id: int) -> int:
 
     # 维持跟随的状态
     if character_data.is_follow == 2:
+        character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
         if character_data.position != cache.character_data[0].position:
@@ -478,6 +569,7 @@ def judge_character_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.is_h:
-        character_data.behavior.behavior_id = constant.Behavior.H
-        character_data.state = constant.CharacterStatus.STATUS_H
+        character.init_character_behavior_start_time(character_id, cache.game_time)
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
     return 1

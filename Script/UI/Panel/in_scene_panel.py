@@ -357,13 +357,19 @@ class SeeInstructPanel:
         """ 最大绘制宽度 """
         self.return_list: List[str] = []
         """ 监听的按钮列表 """
-        if cache.instruct_filter == {}:
+        if cache.instruct_type_filter == {}:
             for instruct_type in game_config.config_instruct_type:
-                cache.instruct_filter[instruct_type] = 0
-            cache.instruct_filter[0] = 1
-            cache.instruct_filter[1] = 1
-            cache.instruct_filter[2] = 1
-            cache.instruct_filter[3] = 1
+                cache.instruct_type_filter[instruct_type] = 0
+            cache.instruct_type_filter[0] = 1
+            cache.instruct_type_filter[1] = 1
+            cache.instruct_type_filter[2] = 1
+            cache.instruct_type_filter[3] = 1
+
+        # 初始化命令过滤
+        if cache.instruct_index_filter == {}:
+            for now_type in cache.instruct_type_filter:
+                for instruct in constant.instruct_type_data[now_type]:
+                    cache.instruct_index_filter[instruct] = 1
 
     def draw(self):
         """绘制操作菜单面板"""
@@ -373,20 +379,20 @@ class SeeInstructPanel:
         line.draw()
         fix_draw = draw.NormalDraw()
         fix_width = int(
-            (self.width - int(self.width / len(cache.instruct_filter)) * len(cache.instruct_filter)) / 2
+            (self.width - int(self.width / len(cache.instruct_type_filter)) * len(cache.instruct_type_filter)) / 2
         )
         fix_draw.width = fix_width
         fix_draw.text = " " * fix_width
         fix_draw.draw()
-        for now_type in cache.instruct_filter:
+        for now_type in cache.instruct_type_filter:
             if now_type == constant.InstructType.SYSTEM:
                 continue
             now_config = game_config.config_instruct_type[now_type]
-            if cache.instruct_filter[now_type]:
+            if cache.instruct_type_filter[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (len(cache.instruct_filter) - 1),
+                    self.width / (len(cache.instruct_type_filter) - 1),
                     " ",
                     "onbutton",
                     "standard",
@@ -397,11 +403,11 @@ class SeeInstructPanel:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (len(cache.instruct_filter) - 1),
+                    self.width / (len(cache.instruct_type_filter) - 1),
                     cmd_func=self.change_filter,
                     args=(now_type,),
                 )
-            now_button.width = int(self.width / (len(cache.instruct_filter) - 1))
+            now_button.width = int(self.width / (len(cache.instruct_type_filter) - 1))
             self.return_list.append(now_button.return_text)
             now_button.draw()
         line_feed.draw()
@@ -409,9 +415,12 @@ class SeeInstructPanel:
         line.draw()
         now_instruct_list = []
         now_premise_data = {}
-        for now_type in cache.instruct_filter:
-            if cache.instruct_filter[now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
+        for now_type in cache.instruct_type_filter:
+            if cache.instruct_type_filter[now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
+                    # 如果在过滤列表里，则过滤
+                    if not cache.instruct_index_filter[instruct]:
+                        continue
                     premise_judge = 0
                     if instruct in constant.instruct_premise_data:
                         for premise in constant.instruct_premise_data[instruct]:
@@ -469,10 +478,10 @@ class SeeInstructPanel:
         Keyword arguments:
         now_type -- 指令类型
         """
-        if cache.instruct_filter[now_type]:
-            cache.instruct_filter[now_type] = 0
+        if cache.instruct_type_filter[now_type]:
+            cache.instruct_type_filter[now_type] = 0
         else:
-            cache.instruct_filter[now_type] = 1
+            cache.instruct_type_filter[now_type] = 1
 
     def handle_instruct(self, instruct_id: int):
         """

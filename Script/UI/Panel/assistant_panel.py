@@ -36,14 +36,11 @@ class Assistant_Panel:
 
     def draw(self):
         """绘制对象"""
-        scene_position = cache.character_data[0].position
-        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        scene_name = cache.scene_data[scene_position_str].scene_name
         title_draw = draw.TitleLineDraw("指派助理", self.width)
         character_data: game_type.Character = cache.character_data[0]
 
         self.handle_panel = panel.PageHandlePanel([], SeeAssistantButtonList, 10, 1, self.width, 1, 1, 0)
-        cooking.init_makefood_data()
+
         while 1:
             py_cmd.clr_cmd()
             if character_data.assistant_character_id != 0:

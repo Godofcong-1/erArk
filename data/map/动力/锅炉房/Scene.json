@@ -1,5 +1,8 @@
 {
   "SceneName":"锅炉房",
   "InOutDoor":"In",
+  "Exposed":"0",
+  "Have_Furniture":"0",
+  "Close_Type":"1",
   "SceneTag":"Room"
 }

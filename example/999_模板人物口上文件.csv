@@ -53,9 +53,9 @@ str,int,int,str,str
 
 81,101,999,sys_0&kiss_0,博士主动和干员{TargetName}聊天的口上，对方已没有初吻
 82,101,999,sys_0&kiss_1,博士主动和干员{TargetName}聊天的口上，对方还有初吻
-83,101,999,sys_0&virgin_0,博士主动和干员{TargetName}聊天的口上，对方非处女
+83,101,999,sys_0&t_virgin_0,博士主动和干员{TargetName}聊天的口上，对方非处女
 84,101,999,sys_0&virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是处女
-85,101,999,sys_0&a_virgin_0,博士主动和干员{TargetName}聊天的口上，对方非A处女
+85,101,999,sys_0&t_a_virgin_0,博士主动和干员{TargetName}聊天的口上，对方非A处女
 86,101,999,sys_0&a_virgin_1,博士主动和干员{TargetName}聊天的口上，对方还是A处女
 
 

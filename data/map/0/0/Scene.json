@@ -1,5 +1,8 @@
 {
   "SceneName":"罗德岛出口",
   "InOutDoor":"Out",
+  "Exposed":"1",
+  "Have_Furniture":"0",
+  "Close_Type":"0",
   "SceneTag":"Door"
 }

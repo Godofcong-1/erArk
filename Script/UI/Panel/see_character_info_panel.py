@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, map_handle, attr_calculation
+from Script.Design import attr_text, map_handle, attr_calculation, handle_premise
 
 panel_info_data = {}
 
@@ -517,7 +517,17 @@ class SeeCharacterHStatePanel:
         status_text_list = []
         bondage_text_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
         enemas_text_list = ["脏污","灌肠中","已灌肠","精液灌肠中","已精液灌肠"]
+        insert_text_list = ["发交中","阴茎蹭脸中","口交中","乳交中","腋交中","手交中","抽插阴道中","抽插子宫中","抽插后穴中","抽插尿道中","腿交中","足交中","尾交中","阴茎蹭角中","阴茎蹭耳朵中"]
         body_item_set = target_character_data.h_state.body_item
+
+        # 指令文本
+        now_text = ""
+        insert_index = target_character_data.h_state.insert_position
+        if insert_index == -1:
+            now_text += f""
+        else:
+            now_text += f"   <{insert_text_list[insert_index]}>"
+        status_text_list.append(now_text)
 
         # 道具文本
         for i in range(10):
@@ -1785,6 +1795,16 @@ class CharacterBodyText:
         self.draw_list.append(type_line)
         body_text_list = []
         if character_id != 0:
+            #尿道信息#
+            now_text = f"\n 【总】\n"
+            semen_count = 0
+            for body_part in game_config.config_body_part:
+                semen_count += character_data.dirty.body_semen[body_part][3]
+            if semen_count == 0:
+                now_text += "  未接触过精液\n"
+            else:
+                now_text += f"  全身总共被射上过{semen_count}ml精液\n"
+            body_text_list.append(now_text)
             #口部信息#
             now_text = f"\n 【口】\n"
             now_text += "  初吻情况："
@@ -1802,21 +1822,29 @@ class CharacterBodyText:
                 now_text += "  普普通通的舌头\n"
             if character_data.dirty.body_semen[2][3] == 0:
                 now_text += "  未品尝过精液\n"
+            else:
+                now_text += f"  总共喝过{character_data.dirty.body_semen[2][3]}ml精液\n"
             body_text_list.append(now_text)
             #胸部信息#
             now_text = f"\n 【胸】\n"
             if character_data.dirty.body_semen[3][3] == 0:
                 now_text += "  未淋上过精液\n"
+            else:
+                now_text += f"  总共被淋上过{character_data.dirty.body_semen[3][3]}ml精液\n"
             body_text_list.append(now_text)
             #指部信息#
             now_text = f"\n 【指】\n"
             if character_data.dirty.body_semen[5][3] == 0:
                 now_text += "  未淋上过精液\n"
+            else:
+                now_text += f"  总共被淋上过{character_data.dirty.body_semen[5][3]}ml精液\n"
             body_text_list.append(now_text)
             #足部信息#
             now_text = f"\n 【足】\n"
-            if character_data.dirty.body_semen[10][3] == 0:
+            if character_data.dirty.body_semen[11][3] == 0:
                 now_text += "  未淋上过精液\n"
+            else:
+                now_text += f"  总共被淋上过{character_data.dirty.body_semen[11][3]}ml精液\n"
             body_text_list.append(now_text)
             #膣部信息#
             now_text = f"\n 【膣】\n"
@@ -1834,8 +1862,10 @@ class CharacterBodyText:
                         palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
                         posture =sex_posture,
                     )
-            if character_data.dirty.body_semen[6][3] == 0:
+            if character_data.dirty.body_semen[7][3] == 0:
                 now_text += "  未射入过精液\n"
+            else:
+                now_text += f"  总共被射入过{character_data.dirty.body_semen[7][3]}ml精液\n"
             body_text_list.append(now_text)
             #肛部信息#
             now_text = f"\n 【肛】\n"
@@ -1853,8 +1883,10 @@ class CharacterBodyText:
                         palce = attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
                         posture =a_sex_posture,
                     )
-            if character_data.dirty.body_semen[7][3] == 0:
+            if character_data.dirty.body_semen[8][3] == 0:
                 now_text += "  未射入过精液\n"
+            else:
+                now_text += f"  总共被射入过{character_data.dirty.body_semen[8][3]}ml精液\n"
             body_text_list.append(now_text)
             #子宫信息#
             now_text = f"\n 【宫】\n"
@@ -1863,8 +1895,10 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             #尿道信息#
             now_text = f"\n 【尿】\n"
-            if character_data.dirty.body_semen[8][3] == 0:
+            if character_data.dirty.body_semen[9][3] == 0:
                 now_text += "  未射入过精液\n"
+            else:
+                now_text += f"  总共被射入过{character_data.dirty.body_semen[9][3]}ml精液\n"
             body_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()

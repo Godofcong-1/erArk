@@ -9,7 +9,7 @@ from Script.Design import (
     game_time,
     clothing,
 )
-from Script.Core import cache_control, constant, game_type, get_text
+from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
@@ -23,7 +23,7 @@ cache: game_type.Cache = cache_control.cache
 
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.CHANGE_UNDERWERA)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHANGE_UNDERWERA)
 def handle_change_underware(
     character_id: int,
     add_time: int,
@@ -47,7 +47,7 @@ def handle_change_underware(
         clothing.get_underwear(character_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.BRA_SEE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BRA_SEE)
 def handle_bra_see(
     character_id: int,
     add_time: int,
@@ -68,7 +68,7 @@ def handle_bra_see(
     character_data.cloth_see[6] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_BRA_SEE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_BRA_SEE)
 def handle_target_bra_see(
     character_id: int,
     add_time: int,
@@ -90,7 +90,7 @@ def handle_target_bra_see(
     target_data.cloth_see[6] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.PAN_SEE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PAN_SEE)
 def handle_pan_see(
     character_id: int,
     add_time: int,
@@ -111,7 +111,7 @@ def handle_pan_see(
     character_data.cloth_see[9] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.TARGET_PAN_SEE)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PAN_SEE)
 def handle_target_pan_see(
     character_id: int,
     add_time: int,
@@ -133,7 +133,7 @@ def handle_target_pan_see(
     target_data.cloth_see[9] = True
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.CLOTH_SEE_ZERO)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLOTH_SEE_ZERO)
 def handle_cloth_see_zero(
     character_id: int,
     add_time: int,
@@ -154,7 +154,7 @@ def handle_cloth_see_zero(
     character_data.cloth_see = {6:False,9:False}
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.RESTE_CLOTH)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RESTE_CLOTH)
 def handle_reset_cloth(
     character_id: int,
     add_time: int,
@@ -183,7 +183,7 @@ def handle_reset_cloth(
                 character_data.cloth[type].append(cloth_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_PAN)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASK_FOR_PAN)
 def handle_ask_for_pan(
     character_id: int,
     add_time: int,
@@ -210,7 +210,7 @@ def handle_ask_for_pan(
     target_data.cloth[9] = []
     target_data.cloth_see[9] = True
 
-@settle_behavior.add_settle_behavior_effect(constant.BehaviorEffect.ASK_FOR_SOCKS)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASK_FOR_SOCKS)
 def handle_ask_for_sock(
     character_id: int,
     add_time: int,
@@ -235,3 +235,36 @@ def handle_ask_for_sock(
     TSocName = game_config.config_clothing_tem[TagetSocId].name
     character_data.behavior.socks_name = TSocName
     target_data.cloth[10] = []
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_CLOTH_BACK)
+def handle_t_cloth_back(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象穿回H时脱掉的衣服
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 穿回脱下的衣服
+    wear_flag = False
+    for i in game_config.config_clothing_type:
+        if len(target_data.cloth_off[i]):
+            target_data.cloth[i],target_data.cloth_off[i] = target_data.cloth_off[i],[]
+            wear_flag = True
+    if wear_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+        now_draw.draw()

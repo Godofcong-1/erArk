@@ -40,7 +40,7 @@ cache: game_type.Cache = cache_control.cache
 #         return
 #     #仅在H模式下才计算高潮次数计数
 #     if character_data.is_h == 1:
-#         character_data.orgasm_count[0] += 1
+#         character_data.h_state.orgasm_count[0] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_NClimax_EXPERIENCE)
@@ -66,7 +66,8 @@ def handle_add_1_nclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[0] += 1
+        character_data.h_state.orgasm_count[0][0] += 1
+        character_data.h_state.orgasm_count[0][1] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_BClimax_EXPERIENCE)
@@ -92,7 +93,8 @@ def handle_add_1_bclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[1] += 1
+        character_data.h_state.orgasm_count[1][0] += 1
+        character_data.h_state.orgasm_count[1][1] += 1
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_CClimax_EXPERIENCE)
 def handle_add_1_cclimax_experience(
@@ -117,7 +119,8 @@ def handle_add_1_cclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[2] += 1
+        character_data.h_state.orgasm_count[2][0] += 1
+        character_data.h_state.orgasm_count[2][1] += 1
 
 # @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_PClimax_EXPERIENCE)
 # def handle_add_1_pclimax_experience(
@@ -167,7 +170,8 @@ def handle_add_1_vclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[4] += 1
+        character_data.h_state.orgasm_count[4][0] += 1
+        character_data.h_state.orgasm_count[4][1] += 1
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_AClimax_EXPERIENCE)
 def handle_add_1_aclimax_experience(
@@ -192,7 +196,8 @@ def handle_add_1_aclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[5] += 1
+        character_data.h_state.orgasm_count[5][0] += 1
+        character_data.h_state.orgasm_count[5][1] += 1
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_UClimax_EXPERIENCE)
 def handle_add_1_uclimax_experience(
@@ -217,7 +222,8 @@ def handle_add_1_uclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[6] += 1
+        character_data.h_state.orgasm_count[6][0] += 1
+        character_data.h_state.orgasm_count[6][1] += 1
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_WClimax_EXPERIENCE)
 def handle_add_1_wclimax_experience(
@@ -242,7 +248,8 @@ def handle_add_1_wclimax_experience(
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
     if character_data.is_h == 1:
-        character_data.orgasm_count[7] += 1
+        character_data.h_state.orgasm_count[7][0] += 1
+        character_data.h_state.orgasm_count[7][1] += 1
 
 """
     8-9留空
@@ -287,8 +294,8 @@ def handle_add_1_cumming_experience(
     character_data.experience[21] += 1
     change_data.experience.setdefault(21, 0)
     change_data.experience[21] += 1
-    if character_data.is_h == 1:
-        character_data.orgasm_count[3] += 1
+    character_data.h_state.orgasm_count[3][0] += 1
+    character_data.h_state.orgasm_count[3][1] += 1
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Milking_EXPERIENCE)
 def handle_add_1_milking_experience(
@@ -631,6 +638,30 @@ def handle_add_small_c_feel(
     change_data.status_data.setdefault(2, 0)
     change_data.status_data[2] += now_add_lust
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_P_FEEL)
+def handle_add_small_p_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量射精值（P感补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[0]
+
+    now_add_lust = 100 + character_data.eja_point*0.4
+    # adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
+    # now_add_lust *= adjust
+    character_data.eja_point += now_add_lust
+    change_data.eja_point += now_add_lust
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_V_FEEL)
 def handle_add_small_v_feel(
     character_id: int,
@@ -887,7 +918,7 @@ def handle_add_small_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加少量先导（侍奉补正）
+    增加少量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -898,7 +929,7 @@ def handle_add_small_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -948,7 +979,7 @@ def handle_add_small_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
@@ -1414,7 +1445,7 @@ def handle_add_middle_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加中量先导（侍奉补正）
+    增加中量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1425,7 +1456,7 @@ def handle_add_middle_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 500
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -1475,7 +1506,7 @@ def handle_add_middle_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 500
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
@@ -1941,7 +1972,7 @@ def handle_add_large_lead(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加大量先导（侍奉补正）
+    增加大量先导（受虐补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1952,7 +1983,7 @@ def handle_add_large_lead(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[25])
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
@@ -2002,7 +2033,7 @@ def handle_add_large_shy(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_add_lust = 1000
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[24])
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[23])
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
@@ -2196,4 +2227,23 @@ def handle_add_urinate(
     if character_data.h_state.body_item[8][1]:
         if character_data.urinate_point >= 30:
             character_data.urinate_point = 240
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.PENIS_IN_T_RESET)
+def handle_penis_in_t_reset(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    当前阴茎位置为交互对象_归零
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.insert_position = -1
 

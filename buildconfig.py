@@ -5,6 +5,8 @@ import datetime
 import ast
 
 config_dir = os.path.join("data", "csv")
+# os.system("cp ./tools/DieloliEventEditor/default.json ./data/event/")
+event_dir = os.path.join("data", "event")
 talk_dir = os.path.join("data", "talk")
 target_dir = os.path.join("data", "target")
 config_data = {}
@@ -184,7 +186,8 @@ talk_file_list = os.listdir(talk_dir)
 for i in talk_file_list:
     now_dir = os.path.join(talk_dir, i)
     for f in os.listdir(now_dir):
-        config_def_str += "\n\n\n"
+        config_def_str += "\n"
+        # config_def_str += "\n\n\n"
         now_f = os.path.join(now_dir, f)
         build_csv_config(now_f, f, 1, 0)
 
@@ -200,6 +203,29 @@ character_file_list = os.listdir(character_dir)
 for i in character_file_list:
     now_path = os.path.join(character_dir,i)
     build_character_config(now_path,i)
+
+
+event_file_list = os.listdir(event_dir)
+event_list = []
+for i in event_file_list:
+    if i.split(".")[1] != "json":
+        continue
+    now_event_path = os.path.join(event_dir, i)
+    with open(now_event_path, "r", encoding="utf-8") as event_file:
+        now_event_data = json.loads(event_file.read())
+        for event_id in now_event_data:
+            now_event = now_event_data[event_id]
+            event_list.append(now_event)
+            now_event_text = now_event["text"]
+            if now_event_text not in msgData:
+                config_po += f"#: Event:{event_id}\n"
+                config_po += f'msgid "{now_event_text}"\n'
+                config_po += 'msgstr ""\n\n'
+                msgData.add(now_event_text)
+config_data["Event"] = {}
+config_data["Event"]["data"] = event_list
+config_data["Event"]["gettext"] = {}
+config_data["Event"]["gettext"]["text"] = 1
 
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)

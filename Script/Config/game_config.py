@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Set
 from Script.Config import config_def
-from Script.Core import json_handle, get_text
+from Script.Core import json_handle, get_text, game_type
 
 
 
@@ -48,6 +48,8 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
+config_body_part: Dict[int, config_def.BodyPart] = {}
+""" 身体部位配置数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
 config_facility: Dict[int, config_def.Facility] = {}
@@ -167,6 +169,17 @@ config_target_premise_data: Dict[int, Set] = {}
 """ 目标前提配置数据 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
+config_event: Dict[str, game_type.Event] = {}
+""" 事件配置数据 """
+config_event_status_data: Dict[int, Set] = {}
+"""
+各个状态下事件列表
+状态id:口上id集合
+"""
+config_event_target: Dict[int, game_type.Target] = {}
+""" 目标配置数据 """
+config_event_effect_target_data: Dict[int, Set] = {}
+""" 能达成效果的目标集合 """
 
 
 def load_data_json():
@@ -445,6 +458,16 @@ def load_clothing_use_type():
         now_type = config_def.ClothingUseType()
         now_type.__dict__ = tem_data
         config_clothing_use_type[now_type.cid] = now_type
+
+
+def load_body_part():
+    """载入身体部位配置数据"""
+    now_data = config_data["BodyPart"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.BodyPart()
+        now_type.__dict__ = tem_data
+        config_body_part[now_type.cid] = now_type
 
 
 def load_collection_bonus_data():
@@ -728,6 +751,31 @@ def load_week_day():
         config_week_day[now_tem.cid] = now_tem
 
 
+def load_event():
+    """载入事件配置"""
+    now_data = config_data["Event"]
+    # translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = game_type.Event()
+        now_tem.__dict__ = tem_data
+        config_event[now_tem.uid] = now_tem
+        config_event_status_data.setdefault(int(now_tem.status_id), set())
+        config_event_status_data[int(now_tem.status_id)].add(now_tem.uid)
+
+
+def load_event_target():
+    """载入事件目标配置"""
+    now_data = config_data["Event_Target"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = game_type.Target()
+        now_tem.__dict__ = tem_data
+        config_event_target[now_tem.uid] = now_tem
+        for effect in now_tem.effect:
+            config_event_effect_target_data.setdefault(effect, set())
+            config_event_effect_target_data[effect].add(now_tem.uid)
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -745,6 +793,7 @@ def init():
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
+    load_body_part()
     load_collection_bonus_data()
     load_facility()
     load_facility_effect()
@@ -776,3 +825,5 @@ def init():
     load_target()
     load_target_effect()
     load_week_day()
+    load_event()
+    # load_event_target()

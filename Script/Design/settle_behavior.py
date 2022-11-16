@@ -3,9 +3,10 @@ import time,random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation
+from Script.Design import attr_text, attr_calculation, handle_premise
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -15,12 +16,13 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = int):
     """
     处理结算角色行为
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
+    event_flag -- 事件结算变量，0不指令，1先指令后事件，2不事件
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
@@ -33,18 +35,39 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime):
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
 
-    # 进行一段结算
     behavior_id = now_character_data.behavior.behavior_id
-    if behavior_id in game_config.config_behavior_effect_data:
-        for effect_id in game_config.config_behavior_effect_data[behavior_id]:
-            constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
-    # 进行二段结算
-    check_second_effect(character_id, status_data)
-    # check_second_effect(character_id)
+    if event_flag: # 在事件的开始结算中不结算以下内容
+        # 进行一段结算
+        if behavior_id in game_config.config_behavior_effect_data:
+            for effect_id in game_config.config_behavior_effect_data[behavior_id]:
+                constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+        # 进行二段结算
+        check_second_effect(character_id, status_data)
+        #结算上次进行聊天的时间，以重置聊天计数器#
+        change_character_talkcount_for_time(character_id, now_time)
+
+    event_id = now_character_data.event.event_id
+    if event_id != "":
+        # 进行事件结算
+        print(f"debug handle_settle_behavior event_id = {event_id}")
+        event_data: game_type.Event = game_config.config_event[event_id]
+        for effect in event_data.effect:
+            constant.settle_behavior_effect_data[int(effect)](
+                character_id, add_time, status_data, now_time
+            )
+
+    son_event_id = now_character_data.event.son_event_id
+    if son_event_id != "":
+        # 进行事件结算
+        print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
+        event_data: game_type.Event = game_config.config_event[son_event_id]
+        for effect in event_data.effect:
+            constant.settle_behavior_effect_data[int(effect)](
+                character_id, add_time, status_data, now_time
+            )
+
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
-    #结算上次进行聊天的时间，以重置聊天计数器#
-    change_character_talkcount_for_time(character_id, now_time)
     #注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
     #注释掉了社交关系#
@@ -488,6 +511,7 @@ def check_second_effect(
 
     # 检测自己
     if character_id == 0:
+
         # 高潮结算
         orgasm_effect(character_id)
 
@@ -508,6 +532,9 @@ def check_second_effect(
     if target_character_id:
         # print("debug character_id = ",character_id)
         # print("debug target_character_id = ",target_character_id)
+        # 阴茎位置结算
+        insert_position_effect(target_character_id)
+
         # 高潮结算
         orgasm_effect(target_character_id)
 
@@ -533,6 +560,18 @@ def check_second_effect(
                     # print("effect_id :",effect_id)
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
+def insert_position_effect(character_id: int):
+    """
+    处理第二结算中的阴茎位置结算
+    Keyword arguments:
+    character_id -- 角色id
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0) :
+        position_index = 1201 + character_data.h_state.insert_position
+        character_data.second_behavior[position_index] = 1
+
 
 def orgasm_effect(character_id: int):
     """
@@ -548,21 +587,24 @@ def orgasm_effect(character_id: int):
     #检测射精
     if character_id == 0:
         if character_data.eja_point >= character_data.eja_point_max:
-            if character_data.orgasm_level[3] % 3 == 0:
+            if character_data.h_state.orgasm_level[3] % 3 == 0:
                 character_data.second_behavior[1009] = 1
-            elif character_data.orgasm_level[3] % 3 == 1:
+            elif character_data.h_state.orgasm_level[3] % 3 == 1:
                 character_data.second_behavior[1010] = 1
-            elif character_data.orgasm_level[3] % 3 == 2:
+            elif character_data.h_state.orgasm_level[3] % 3 == 2:
                 character_data.second_behavior[1010] = 1
             character_data.eja_point = 0
-            cache.now_panel_id = constant.Panel.EJACULATION
+            now_draw = ejaculation_panel.Ejaculation_Panel(width)
+            now_draw.draw()
+            line = draw.LineDraw("-", width)
+            line.draw()
     else:
         #检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
             #now_data -- 当前高潮程度
             #pre_data -- 记录里的前高潮程度
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-            pre_data = character_data.orgasm_level[orgasm]
+            pre_data = character_data.h_state.orgasm_level[orgasm]
             #跳过射精槽
             if orgasm == 3:
                 continue
@@ -601,7 +643,7 @@ def orgasm_effect(character_id: int):
                 # now_draw.draw()
                 
                 #刷新记录
-                character_data.orgasm_level[orgasm] = now_data
+                character_data.h_state.orgasm_level[orgasm] = now_data
 
 def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     """
@@ -619,9 +661,9 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     #快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     happy_count = 0
     for orgasm in range(8):
-        happy_count += character_data.orgasm_count[orgasm]
+        happy_count += character_data.h_state.orgasm_count[orgasm][0]
         #计数归零
-        character_data.orgasm_count[orgasm] = 0
+        character_data.h_state.orgasm_count[orgasm][0] = 0
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1
@@ -695,11 +737,12 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
-    #反发刻印检测反感+抑郁/5+恐怖/5，500反发1，1000反发2，2000反发3
+    #反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
     hate_count = 0
     hate_count += character_data.status_data[20]
     hate_count += character_data.status_data[18]/5
     hate_count += character_data.status_data[19]/5
+    hate_count += character_data.status_data[17]/10
     if hate_count >= 1000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1

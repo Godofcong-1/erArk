@@ -273,8 +273,7 @@ class DIRTY:
 
         self.body_semen: list = []
         """ 身体精液情况    
-        0~13共14项，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]    
-        部位顺序 [0"头发",1"脸部",2"口腔",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部",11"尾巴",12"兽角",13"兽耳"]
+        同身体部位，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]    
         """
         self.cloth_semen: list = []
         """ 服装精液情况    
@@ -295,12 +294,22 @@ class BODY_H_STATE:
         部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"持续性利尿剂",9"睡眠药"]
         """
 
-
         self.bondage: int = 0
         """ 绳子捆绑情况    
         0~9共10项，编号int    
         [0未捆绑,1后高手缚,2直立缚,3驷马捆绑,4直臂缚,5双手缚,6菱绳缚,7龟甲缚,8团缚,9逆团缚,10吊缚,11后手吊缚,12单足吊缚,13后手观音,14苏秦背剑,15五花大绑]
         """
+
+        self.insert_position: int = -1
+        """ 阴茎插入位置，int，-1为未插入，其他同身体部位 """
+        self.shoot_position_body: int = -1
+        """ 身体上的射精位置，int，-1为未射精，其他同身体部位 """
+        self.shoot_position_cloth: int = -1
+        """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
+        self.orgasm_level: Dict[int,int] = {}
+        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        self.orgasm_count: Dict[int,list] = {}
+        """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
 
 class ASSISTANT_STATE:
     """助理状态结构体"""
@@ -381,6 +390,8 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
         """ 指定角色上次扣除好感时间 """
+        self.h_interrupt : int = 0
+        """ 角色H被打断 """
 
 
 
@@ -460,6 +471,14 @@ class Behavior:
         self.socks_name: str = ""
         """ 前提结算用:袜子名字 """
 
+class Chara_Event:
+    """角色事件状态数据"""
+
+    def __init__(self):
+        self.event_id: str = ""
+        """ 角色当前事件id """
+        self.son_event_id: str = ""
+        """ 角色当前子事件id """
 
 class Map:
     """地图数据"""
@@ -533,6 +552,14 @@ class Scene:
         """ 场景名字 """
         self.in_door: bool = 0
         """ 在室内 """
+        self.exposed: bool = 0
+        """ 地点暴露 """
+        self.have_furniture: bool = 0
+        """ 有家具 """
+        self.close_type: int = 0
+        """ 关门类型 """
+        self.close_flag: bool = 0
+        """ 关门状态 """
         self.scene_tag: list = []
         """ 场景标签 """
         self.character_list: set = set()
@@ -685,6 +712,8 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}
         """ 角色当前二段行为状态数据 """
+        self.event: Chara_Event = Chara_Event()
+        """ 角色当前事件状态数据 """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
         self.position: List[str] = ["0","0"]
@@ -743,10 +772,6 @@ class Character:
         """ 在H模式中 """
         self.is_follow : int = 0
         """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
-        self.orgasm_level: Dict[int,int] = {}
-        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
-        self.orgasm_count: Dict[int,int] = {}
-        """ 高潮次数记录 """
         self.token_text: str = ""
         """ 角色信物文本 """
         self.tired : bool = 0
@@ -788,8 +813,10 @@ class Cache:
         """ 寻路算法用,当前节点所属的地图的id """
         self.input_position: int = 0
         """ 回溯输入记录用定位 """
-        self.instruct_filter: Dict[int, bool] = {}
+        self.instruct_type_filter: Dict[int, bool] = {}
         """ 玩家操作指令面板指令过滤状态数据 指令类型:是否展示"""
+        self.instruct_index_filter: Dict[int, bool] = {}
+        """ 玩家操作指令面板指令过滤状态数据 指令编号:是否展示"""
         self.output_text_style: str = ""
         """ 富文本记录输出样式临时缓存 """
         self.text_style_position: int = 0
@@ -908,3 +935,45 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+
+
+class Event:
+    """事件数据结构体"""
+
+    def __init__(self):
+        """初始化事件对象"""
+        self.uid: str = ""
+        """ 事件唯一id """
+        self.adv_id: str = ""
+        """ 事件所属advnpcid """
+        self.status_id: str = ""
+        """ 事件所属状态id """
+        self.start: bool = 0
+        """ 是否是行为开始时的事件 """
+        self.type: int = 1
+        """ 事件类型(0不进行指令结算，1正常) """
+        self.text: str = ""
+        """ 事件文本 """
+        self.premise: dict = {}
+        """ 事件的前提集合 """
+        self.settle: dict = {}
+        """ 事件的结算器集合 """
+        self.effect: dict = {}
+        """ 事件的结算集合 """
+
+
+class Target:
+    """目标数据结构体"""
+
+    def __init__(self):
+        """初始化口上对象"""
+        self.uid: str = ""
+        """ 目标唯一id """
+        self.text: str = ""
+        """ 目标描述 """
+        self.state_machine_id: str = ""
+        """ 执行的状态机id """
+        self.premise: dict = {}
+        """ 目标的前提集合 """
+        self.effect: dict = {}
+        """ 目标的效果集合 """

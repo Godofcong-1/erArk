@@ -2,7 +2,7 @@ import datetime
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct
 from Script.Core import cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -537,9 +537,38 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.behavior.behavior_id = constant.Behavior.SEE_H
-    character_data.state = constant.CharacterStatus.STATUS_SEE_H
-    character_data.tired = 1
+    _, _, move_path, move_time = character_move.character_move(
+        character_id,
+        map_handle.get_map_system_path_for_str(character_data.dormitory),
+    )
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 输出提示信息，并结算把柄
+    now_draw = draw.NormalDraw()
+    now_draw.text = f"被{character_data.name}看到了情事现场\n"
+    if character_data.talent[222]:
+        now_draw.text += f"{character_data.name}还不懂这是什么意义，被你随口糊弄走了"
+    else:
+        character_data.talent[30] = 1
+        now_draw.text += f"{character_data.name}获得了[持有博士把柄]\n"
+        now_draw.text += f"{character_data.name}红着脸跑走了"
+    now_draw.draw()
+    line_feed.draw()
+
+    # 中断H
+    pl_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[pl_data.target_character_id]
+    target_data.action_info.h_interrupt = 1
+    # 原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
+    target_data.behavior.duration = 10
+    pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+    pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+    handle_instruct.handle_end_h()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)

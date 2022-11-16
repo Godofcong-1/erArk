@@ -51,8 +51,8 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.race= character_tem.Race
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
-    now_character.favorability = attr_calculation.get_Favorability_zero()
-    now_character.trust = attr_calculation.get_Trust_zero()
+    now_character.favorability = {0:0}
+    now_character.trust = 0
     now_character.ability = character_tem.Ability
     now_character.experience = character_tem.Experience
     now_character.talent = character_tem.Talent

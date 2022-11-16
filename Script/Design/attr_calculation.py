@@ -12,18 +12,6 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
 
 
-def get_Favorability_zero() -> dict:
-    """
-    直接将初始好感归为{0:0}
-    """
-    return {0:0}
-
-def get_Trust_zero() -> dict:
-    """
-    直接将初始信赖归为0
-    """
-    return 0
-
 def get_ability_zero(ability_dict) -> dict:
     """
     检查初始能力，将为空的项补为0
@@ -33,6 +21,13 @@ def get_ability_zero(ability_dict) -> dict:
         if ability not in ability_dict:
             ability_list[ability] = 0
     return ability_list
+
+def get_event_zero() -> dict:
+    """
+    初始化事件结构体
+    """
+    event_data = game_type.Chara_Event()
+    return event_data
 
 def get_status_zero(status_dict) -> dict:
     """
@@ -74,23 +69,6 @@ def get_juel_zero(juel_dict) -> dict:
             juel_list[juel] = 0
     return juel_list
 
-def get_orgasm_level_zero(orgasm_level_dict) -> dict:
-    """
-    将绝顶水平全项归零
-    """
-    orgasm_level_list = orgasm_level_dict
-    for orgasm in range(8):
-        orgasm_level_list[orgasm] = 0
-    return orgasm_level_list
-
-def get_orgasm_count_zero(orgasm_count_dict) -> dict:
-    """
-    将绝顶次数全项归零
-    """
-    orgasm_count_list = orgasm_count_dict
-    for orgasm in range(8):
-        orgasm_count_list[orgasm] = 0
-    return orgasm_count_list
 
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
@@ -123,10 +101,10 @@ def get_dirty_zero() -> dict:
     直接将初始污浊情况归0
     """
     dirty_data = game_type.DIRTY()
-    position_text_list = ["头发","脸部","口腔","胸部","腋部","手部","小穴","后穴","尿道","腿部","脚部","尾巴","兽角","兽耳"]
 
-    for position_text in position_text_list:
-        now_list = [position_text,0,0,0]
+    for body_part in game_config.config_body_part:
+        body_text = game_config.config_body_part[body_part].name
+        now_list = [body_text,0,0,0]
         dirty_data.body_semen.append(now_list)
 
     for clothing_type in game_config.config_clothing_type:
@@ -149,6 +127,10 @@ def get_h_state_zero() -> dict:
     for body_item in body_item_list:
         now_list = [body_item,False,None]
         h_state_data.body_item.append(now_list)
+
+    for body_part in game_config.config_body_part:
+        h_state_data.orgasm_level[body_part] = 0
+        h_state_data.orgasm_count[body_part] = [0,0]
 
     return h_state_data
 

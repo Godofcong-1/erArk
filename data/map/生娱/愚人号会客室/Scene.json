@@ -1,5 +1,8 @@
 {
   "SceneName":"愚人号会客室",
   "InOutDoor":"In",
+  "Exposed":"1",
+  "Have_Furniture":"1",
+  "Close_Type":"2",
   "SceneTag":"Rest_Room"
 }

@@ -56,9 +56,17 @@ class CharacterStatus:
     STATUS_GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     STATUS_H = 125
-    """ H状态 """
+    """ 进入H状态 """
     STATUS_END_H = 126
     """ 结束H状态 """
+    STATUS_DO_H_FAIL = 131
+    """ 邀请H失败 """
+    STATUS_H_HP_0 = 132
+    """ H时博士体力为零中断 """
+    STATUS_T_H_HP_0 = 133
+    """ H时交互对象体力为零中断 """
+    STATUS_H_INTERRUPT = 134
+    """ H时被人目击闯入中断 """
     STATUS_PEE = 140
     """ 解手 """
     STATUS_SINGING = 151
@@ -179,6 +187,16 @@ class CharacterStatus:
     """ 深喉插入 """
     STATUS_SIXTY_NINE = 431
     """ 六九式 """
+    STATUS_LEGJOB = 432
+    """ 腿交 """
+    STATUS_TAILJOB = 433
+    """ 尾交 """
+    STATUS_FACE_RUB = 434
+    """ 阴茎蹭脸 """
+    STATUS_HORN_RUB = 435
+    """ 阴茎蹭角 """
+    STATUS_EARS_RUB = 436
+    """ 阴茎蹭耳朵 """
     STATUS_BODY_LUBRICANT = 451
     """ 润滑液 """
     STATUS_BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -351,9 +369,17 @@ class Behavior:
     GIVE_NECKLACE_FAILED = 124
     """ 戴上项圈失败 """
     H = 125
-    """ H """
+    """ 进入H状态 """
     END_H = 126
     """ 结束H """
+    DO_H_FAIL = 131
+    """ 邀请H失败 """
+    H_HP_0 = 132
+    """ H时博士体力为零中断 """
+    T_H_HP_0 = 133
+    """ H时交互对象体力为零中断 """
+    H_INTERRUPT = 134
+    """ H时被人目击闯入中断 """
     PEE = 140
     """ 解手 """
     SINGING = 151
@@ -478,6 +504,16 @@ class Behavior:
     """ 深喉插入 """
     SIXTY_NINE = 431
     """ 六九式 """
+    LEGJOB = 432
+    """ 腿交 """
+    TAILJOB = 433
+    """ 尾交 """
+    FACE_RUB = 434
+    """ 阴茎蹭脸 """
+    HORN_RUB = 435
+    """ 阴茎蹭角 """
+    EARS_RUB = 436
+    """ 阴茎蹭耳朵 """
     BODY_LUBRICANT = 451
     """ 润滑液 """
     BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -785,1362 +821,10 @@ class Panel:
     """ 基建面板 """
     DEPARTMENT = 16
     """ 部门运作情况面板 """
-
-
-class Premise:
-    """前提id"""
-
-    DEBUG_MODE_ON = "debug_mode_on"
-    """ 现在是debug模式 """
-    DEBUG_MODE_OFF = "debug_mode_off"
-    """ 现在不是debug模式 """
-
-    TO_DO = "to_do"
-    """ 未实装 """
-
-    IS_PLAYER = "sys_0"
-    """ 玩家触发的该指令 """
-    NO_PLAYER = "sys_1"
-    """ NPC触发的该指令 """
-    HAVE_TARGET = "sys_2"
-    """ 拥有交互对象 """
-    HAVE_NO_TARGET = "sys_3"
-    """ 没有交互对象 """
-    TARGET_IS_PLAYER = "sys_4"
-    """ 交互对象是玩家角色 """
-    TARGET_NO_PLAYER = "sys_5"
-    """ 交互对象不是玩家 """
-    IS_MAN = "sex_0"
-    """ 触发该指令的是男性 """
-    IS_WOMAN = "sex_1"
-    """ 触发该指令的是女性 """
-    IS_H = "is_h"
-    """ 当前为H模式 """
-    NOT_H = "not_h"
-    """ 当前不是H模式 """
-
-    IS_ASSISTANT = "is_assistant"
-    """ 自己是当前的助理干员 """
-    NOT_ASSISTANT = "not_assistant"
-    """ 自己不是当前的助理干员 """
-    TARGET_IS_ASSISTANT = "t_is_assistant"
-    """ 交互对象是当前的助理干员 """
-    TARGET_NOT_ASSISTANT = "t_not_assistant"
-    """ 交互对象不是当前的助理干员 """
-    IS_FOLLOW = "is_follow"
-    """ 当前正跟随玩家 """
-    NOT_FOLLOW = "not_follow"
-    """ 当前没跟随玩家 """
-    IS_FOLLOW_1 = "is_follow_1"
-    """ 当前正智能跟随玩家 """
-    NOT_FOLLOW_1 = "not_follow_1"
-    """ 当前没智能跟随玩家 """
-    IS_FOLLOW_3 = "is_follow_3"
-    """ 当前正前往博士办公室 """
-    TARGET_IS_FOLLOW = "t_is_follow"
-    """ 交互对象当前正跟随玩家 """
-    TARGET_NOT_FOLLOW = "t_not_follow"
-    """ 交互对象当前没跟随玩家 """
-
-    HIGH_1 = "high_1"
-    """ 优先度为1的空白前提 """
-    HIGH_2 = "high_2"
-    """ 优先度为2的空白前提 """
-    HIGH_5 = "high_5"
-    """ 优先度为5的空白前提 """
-    HIGH_10 = "high_10"
-    """ 优先度为10的空白前提 """
-
-    HP_1 = "hp_1"
-    """ 自身疲劳（体力=1） """
-    HP_LOW = "hp_low"
-    """ 自身体力低于30% """
-    HP_HIGH = "hp_high"
-    """ 自身体力高于70% """
-    MP_0 = "mp_0"
-    """ 自身气力为0 """
-    MP_LOW = "mp_low"
-    """ 自身气力低于30% """
-    MP_HIGH = "mp_high"
-    """ 自身气力高于70% """
-    TARGET_HP_LOW = "t_hp_low"
-    """ 交互对象体力低于30% """
-    TARGET_HP_HIGH = "t_hp_high"
-    """ 交互对象体力高于70% """
-    TARGET_MP_0 = "t_mp_0"
-    """ 交互对象气力为0 """
-    TARGET_MP_LOW = "t_mp_low"
-    """ 交互对象气力低于30% """
-    TARGET_MP_HIGH = "t_mp_high"
-    """ 交互对象气力高于70% """
-
-    SLEEP_GE_50 = "sleep_ge_50"
-    """ 困倦条≥50% """
-    SLEEP_LE_74 = "sleep_le_74"
-    """ 困倦条≤74%，全指令自由 """
-    SLEEP_GE_75 = "sleep_ge_75"
-    """ 困倦条≥75%，部分指令受限 """
-    SLEEP_LE_89 = "sleep_le_89"
-    """ 困倦条≤89%，自由活动的极限 """
-    SLEEP_GE_90 = "sleep_ge_90"
-    """ 困倦条≥90%，必须回去睡觉 """
-    SLEEP_100 = "sleep_100"
-    """ 困倦条100%，当场爆睡 """
-
-    URINATE_LE_79 = "urinate_le_79"
-    """ 尿意条≤79%，不需要排尿 """
-    URINATE_GE_80 = "urinate_ge_80"
-    """ 尿意条≥80%，需要排尿 """
-    TARGET_URINATE_LE_79 = "t_urinate_le_79"
-    """ 交互对象尿意条≤79%，不需要排尿 """
-    TARGET_URINATE_GE_80 = "t_urinate_ge_80"
-    """ 交互对象尿意条≥80%，需要排尿 """
-
-    HUNGER_LE_79 = "hunger_le_79"
-    """ 饥饿值≤79%，不需要吃饭 """
-    HUNGER_GE_80 = "hunger_ge_80"
-    """ 饥饿值≥80%，需要吃饭 """
-    TARGET_HUNGER_LE_79 = "t_hunger_le_79"
-    """ 交互对象饥饿值≤79%，不需要吃饭 """
-    TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
-    """ 交互对象饥饿值≥80%，需要吃饭 """
-
-    TARGET_GOOD_MOOD = "good_mood"
-    """ 交互对象心情愉快 """
-    TARGET_NORMAL_MOOD = "normal_mood"
-    """ 交互对象心情普通 """
-    TARGET_BAD_MOOD = "bad_mood"
-    """ 交互对象心情不好 """
-    TARGET_ANGRY_MOOD = "angry_mood"
-    """ 交互对象心情愤怒 """
-    TARGET_ABD_OR_ANGRY_MOOD = "bad_or_angry_mood"
-    """ 交互对象心情不好或愤怒 """
-    TARGET_ANGRY_WITH_PLAYER = "angry_with_player"
-    """ 交互对象被玩家惹火了 """
-    TARGET_NOT_ANGRY_WITH_PLAYER = "not_angry_with_player"
-    """ 交互对象没有被玩家惹火 """
-
-    IN_PLAYER_SCENE = "place_0"
-    """ 与玩家处于相同地点 """
-    NOT_IN_PLAYER_SCENE = "place_1"
-    """ 与玩家不处于相同地点 """
-    # IN_PLAYER_ZONE = "place_1"
-    # """ 与玩家处于相同大区域 """
-    PLAYER_COME_SCENE = "place_2"
-    """ 玩家来到该角色所在的地点 """
-    # PLAYER_COME_ZONE = "place_3"
-    # """ 玩家来到该角色所在的区域 """
-    PLAYER_LEAVE_SCENE = "place_4"
-    """ 玩家离开该角色所在的地点 """
-    # PLAYER_LEAVE_ZONE = "place_5"
-    # """ 玩家离开该角色所在的区域 """
-    TATGET_COME_SCENE = "place_6"
-    """ 该角色来到玩家所在的地点 """
-    # TATGET_COME_ZONE = "place_7"
-    # """ 该角色来到玩家所在的区域 """
-    TATGET_LEAVE_SCENE = "place_8"
-    """ 该角色离开玩家所在的地点 """
-    # TATGET_LEAVE_ZONE = "place_9"
-    # """ 该角色离开玩家所在的区域 """
-    SCENE_ONLY_TWO = "place_10"
-    """ 该地点仅有玩家和该角色 """
-    SCENE_OVER_TWO = "place_11"
-    """ 该地点里有除了玩家和该角色之外的人 """
-    SCENE_ONLY_ONE = "place_12"
-    """ 该地点里没有自己外的其他角色 """
-
-    SCENE_SOMEONE_IS_H = "place_is_h"
-    """ 该地点有其他角色在和玩家H """
-
-    IN_KITCHEN = "in_kit"
-    """ 在厨房 """
-    IN_DINING_HALL = "in_din"
-    """ 在食堂 """
-    NOT_IN_DINING_HALL = "not_in_din"
-    """ 不在食堂 """
-    IN_FOOD_SHOP = "in_food_shop"
-    """ 在食物商店（取餐区） """
-    NOT_IN_FOOD_SHOP = "not_in_food_shop"
-    """ 不在食物商店（取餐区） """
-    IN_DR_OFFICE = "in_dr_off"
-    """ 在博士办公室 """
-    NOT_IN_DR_OFFICE = "not_in_dr_off"
-    """ 不在博士办公室 """
-    IN_DR_OFFICE_OR_DEBUG = "in_dr_off_or_debug"
-    """ 在博士办公室或处于debug模式 """
-    IN_COMMAND_ROOM = "in_command_room"
-    """ 在指挥室 """
-    IN_DORMITORY = "in_dor"
-    """ 在自己宿舍中 """
-    NOT_IN_DORMITORY = "not_in_dor"
-    """ 不在自己宿舍中 """
-    IN_BATHROOM = "in_bathroom"
-    """ 在浴室中 """
-    IN_TOILET_MAN = "in_toilet_man"
-    """ 在男士洗手间 """
-    IN_TOILET_FEMALE = "in_toilet_female"
-    """ 在女士洗手间 """
-    NOT_IN_TOILET = "not_in_toilet"
-    """ 不在洗手间 """
-    IN_REST_ROOM = "in_restroom"
-    """ 在休息室中 """
-    NOT_IN_REST_ROOM = "not_in_restroom"
-    """ 不在休息室中 """
-    IN_MUSIC_ROOM = "in_music_room"
-    """ 在音乐室中 """
-    IN_COLLECTION_ROOM = "in_collection_room"
-    """ 在藏品馆中 """
-    IN_GYM_ROOM = "in_gym_room"
-    """ 在健身区中 """
-    IN_TRAINING_ROOM = "in_training_room"
-    """ 在训练室中（包括木桩房和射击房） """
-    NOT_IN_TRAINING_ROOM = "not_in_training_room"
-    """ 不在训练室中（包括木桩房和射击房） """
-    IN_FIGHT_ROOM = "in_fight_room"
-    """ 在木桩房中 """
-    IN_SHOOT_ROOM = "in_shoot_room"
-    """ 在射击房中 """
-    IN_BUILDING_ROOM = "in_building_room"
-    """ 在基建部中 """
-    IN_CLINIC = "in_clinic"
-    """ 在门诊室中（含急诊室） """
-    NOT_IN_CLINIC = "not_in_clinic"
-    """ 不在门诊室中（含急诊室） """
-    IN_BATHROOM = "in_bathroom"
-    """ 在淋浴区 """
-    NOT_IN_BATHROOM = "not_in_bathroom"
-    """ 不在淋浴区 """
-    IN_BATHZONE_LOCKER_ROOM = "in_bathzone_locker_room"
-    """ 在大浴场的更衣室 """
-    NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
-    """ 不在大浴场的更衣室 """
-    IN_FUNCTIONAL_ROOM = "in_functional_room"
-    """ 在功能性地点中 """
-
-    HAVE_MOVED = "ai_moved"
-    """ NPC距离上次移动已经至少经过了1小时 """
-    AI_WAIT = "ai_wait"
-    """ NPC需要进行一次5分钟的等待（wait_flag = 1） """
-    HAVE_TRAINED = "ai_trained"
-    """ NPC距离上次战斗训练已经超过两天了 """
-    NOT_SHOWER = "ai_not_shower"
-    """ NPC今天还没有洗澡 """
-    HAVE_SHOWERED = "ai_have_showered"
-    """ NPC今天已经洗过澡了 """
-
-    TIME_DAY = "time_day"
-    """ 时间:白天（6点~18点） """
-    TIME_NIGHT = "time_night"
-    """ 时间:夜晚（18点~6点） """
-    TIME_MIDNIGHT = "time_midnight"
-    """ 时间:深夜（22点~2点） """
-    TIME_MORNING = "time_morning"
-    """ 时间:清晨（4点~8点） """
-    TIME_MOON = "time_moon"
-    """ 时间:中午（10点~14点） """
-    EAT_TIME = "eat_time"
-    """ 饭点（早上7~8点、中午12~13点、晚上17~18点） """
-    SHOWER_TIME = "shower_time"
-    """ 淋浴时间（晚上9点到晚上12点） """
-    SLEEP_TIME = "sleep_time"
-    """ 睡觉时间（晚上10点到早上6点） """
-    SLEEP_GE_75_OR_SLEEP_TIME = "sleep_ge_75_or_sleep_time"
-    """ 困倦条≥75%或到了睡觉的时间 """
-    WORK_TIME = "work_time"
-    """ 工作时间（早上9:00~下午4:59） """
-
-    COLLECT_BONUS_103 = "c_bonus_103"
-    """ 收藏奖励_103_解锁索要内裤 """
-    COLLECT_BONUS_203 = "c_bonus_203"
-    """ 收藏奖励_203_解锁索要袜子 """
-
-
-    COOK_1 = "cook_1"
-    """ 自身料理技能==1 """
-    COOK_2 = "cook_2"
-    """ 自身料理技能==2 """
-    COOK_3 = "cook_3"
-    """ 自身料理技能==3 """
-    COOK_4 = "cook_4"
-    """ 自身料理技能==4 """
-    COOK_LE_1 = "cook_le_1"
-    """ 自身料理技能<=1 """
-    COOK_GE_3 = "cook_ge_3"
-    """ 自身料理技能>=3 """
-    COOK_GE_5 = "cook_ge_5"
-    """ 自身料理技能>=5 """
-    MUSIC_1 = "music_1"
-    """ 自身音乐技能==1 """
-    MUSIC_2 = "music_2"
-    """ 自身音乐技能==2 """
-    MUSIC_3 = "music_3"
-    """ 自身音乐技能==3 """
-    MUSIC_4 = "music_4"
-    """ 自身音乐技能==4 """
-    MUSIC_LE_1 = "music_le_1"
-    """ 自身音乐技能<=1 """
-    MUSIC_GE_3 = "music_ge_3"
-    """ 自身音乐技能>=3 """
-    MUSIC_GE_5 = "music_ge_5"
-    """ 自身音乐技能>=5 """
-    TECHNIQUE_GE_3 = "technique_ge_3"
-    """ 自身技巧技能>=3 """
-    TECHNIQUE_GE_5 = "technique_ge_5"
-    """ 自身技巧技能>=5 """
-
-
-    TARGET_INTIMACY_8 = "t_intimacy_8"
-    """ 交互对象亲密==8 """
-    TARGET_INTIMACY_LE_1 = "t_intimacy_le_1"
-    """ 交互对象亲密<=1 """
-    TARGET_INTIMACY_GE_3 = "t_intimacy_ge_3"
-    """ 交互对象亲密>=3 """
-    TARGET_INTIMACY_GE_5 = "t_intimacy_ge_5"
-    """ 交互对象亲密>=5 """
-    TARGET_DESIRE_GE_5 = "t_desire_ge_5"
-    """ 交互对象欲望>=5 """
-    TARGET_DESIRE_GE_7 = "t_desire_ge_7"
-    """ 交互对象欲望>=7 """
-    TARGET_COOK_1 = "t_cook_1"
-    """ 交互对象料理技能==1 """
-    TARGET_COOK_2 = "t_cook_2"
-    """ 交互对象料理技能==2 """
-    TARGET_COOK_3 = "t_cook_3"
-    """ 交互对象料理技能==3 """
-    TARGET_COOK_4 = "t_cook_4"
-    """ 交互对象料理技能==4 """
-    TARGET_COOK_LE_1 = "t_cook_le_1"
-    """ 交互对象料理技能<=1 """
-    TARGET_COOK_LE_3 = "t_cook_le_3"
-    """ 交互对象料理技能<=3 """
-    TARGET_COOK_GE_3 = "t_cook_ge_3"
-    """ 交互对象料理技能>=3 """
-    TARGET_COOK_G_3 = "t_cook_g_3"
-    """ 交互对象料理技能>3 """
-    TARGET_COOK_GE_5 = "t_cook_ge_5"
-    """ 交互对象料理技能>=5 """
-    TARGET_MUSIC_1 = "t_music_1"
-    """ 交互对象音乐技能==1 """
-    TARGET_MUSIC_2 = "t_music_2"
-    """ 交互对象音乐技能==2 """
-    TARGET_MUSIC_3 = "t_music_3"
-    """ 交互对象音乐技能==3 """
-    TARGET_MUSIC_4 = "t_music_4"
-    """ 交互对象音乐技能==4 """
-    TARGET_MUSIC_LE_1 = "t_music_le_1"
-    """ 交互对象音乐技能<=1 """
-    TARGET_MUSIC_GE_3 = "t_music_ge_3"
-    """ 交互对象音乐技能>=3 """
-    TARGET_MUSIC_GE_5 = "t_music_ge_5"
-    """ 交互对象音乐技能>=5 """
-    TARGET_TECHNIQUE_GE_3 = "t_technique_ge_3"
-    """ 交互对象技巧技能>=3 """
-    TARGET_TECHNIQUE_GE_5 = "t_technique_ge_5"
-    """ 交互对象技巧技能>=5 """
-
-    KISS_0 = "kiss_0"
-    """ 自身亲吻经验==0 """
-    KISS_GE_10 = "kiss_ge_10"
-    """ 自身亲吻经验>=10 """
-    TARGET_KISS_0 = "t_kiss_0"
-    """ 交互对象亲吻经验==0 """
-    TARGET_KISS_GE_10 = "t_kiss_ge_10"
-    """ 交互对象亲吻经验>=10 """
-
-
-    TARGET_NOT_FALL = "not_fall"
-    """ 交互对象无陷落素质 """
-    TARGET_LOVE_1 = "love_1"
-    """ 交互对象拥有思慕（爱情系第一阶段） """
-    TARGET_LOVE_2 = "love_2"
-    """ 交互对象拥有恋慕（爱情系第二阶段） """
-    TARGET_LOVE_3 = "love_3"
-    """ 交互对象拥有恋人（爱情系第三阶段） """
-    TARGET_LOVE_4 = "love_4"
-    """ 交互对象拥有爱侣（爱情系第四阶段） """
-    TARGET_LOVE_GE_1 = "love_ge_1"
-    """ 交互对象爱情系>=思慕 """
-    TARGET_LOVE_GE_2 = "love_ge_2"
-    """ 交互对象爱情系>=恋慕 """
-    TARGET_LOVE_GE_3 = "love_ge_3"
-    """ 交互对象爱情系>=恋人 """
-    TARGET_LOVE_LE_2 = "love_le_2"
-    """ 交互对象爱情系<=恋慕 """
-    TARGET_OBEY_1 = "obey_1"
-    """ 交互对象拥有屈从（隶属系第一阶段） """
-    TARGET_OBEY_2 = "obey_2"
-    """ 交互对象拥有驯服（隶属系第二阶段） """
-    TARGET_OBEY_3 = "obey_3"
-    """ 交互对象拥有宠物（隶属系第三阶段） """
-    TARGET_OBEY_4 = "obey_4"
-    """ 交互对象拥有奴隶（隶属系第四阶段） """
-    TARGET_OBEY_GE_1 = "obey_ge_1"
-    """ 交互对象隶属系>=屈从 """
-    TARGET_OBEY_GE_2 = "obey_ge_2"
-    """ 交互对象隶属系>=驯服 """
-    TARGET_OBEY_GE_3 = "obey_ge_3"
-    """ 交互对象隶属系>=宠物 """
-    TARGET_OBEY_LE_2 = "obey_le_2"
-    """ 交互对象隶属系<=驯服 """
-
-    TARGET_NO_FIRST_KISS = "kiss_0"
-    """ 交互对象未保有初吻 """
-    TARGET_HAVE_FIRST_KISS = "kiss_1"
-    """ 交互对象保有初吻 """
-    TARGET_NO_VIRGIN = "virgin_0"
-    """ 交互对象非处女 """
-    TARGET_HAVE_VIRGIN = "virgin_1"
-    """ 交互对象是处女 """
-    TARGET_NO_A_VIRGIN = "a_virgin_0"
-    """ 交互对象非A处女 """
-    TARGET_HAVE_A_VIRGIN = "a_virgin_1"
-    """ 交互对象是A处女 """
-
-    IS_MEDICAL = "is_medical"
-    """ 自己的职业为医疗 """
-
-    PATIENT_WAIT = "patient_wait"
-    """ 有患者正等待就诊 """
-
-    TARGET_CHEST_IS_CLIFF = "breast_0"
-    """ 交互对象胸部大小是绝壁 """
-    TARGET_CHEST_IS_SMALL = "breast_1"
-    """ 交互对象胸部大小是贫乳 """
-    TARGET_CHEST_IS_NORMAL = "breast_2"
-    """ 交互对象胸部大小是普乳 """
-    TARGET_CHEST_IS_BIG = "breast_3"
-    """ 交互对象胸部大小是巨乳 """
-    TARGET_CHEST_IS_SUPER = "breast_4"
-    """ 交互对象胸部大小是爆乳 """
-    TARGET_BUTTOCKS_IS_SMALL = "buttock_0"
-    """ 交互对象臀部大小是小尻 """
-    TARGET_BUTTOCKS_IS_NORMAL = "buttock_1"
-    """ 交互对象臀部大小是普尻 """
-    TARGET_BUTTOCKS_IS_BIG = "buttock_2"
-    """ 交互对象臀部大小是巨尻 """
-
-    TARGET_HAVE_NO_EARS = "ear_0"
-    """ 交互对象没有兽耳 """
-    TARGET_HAVE_EARS = "ear_1"
-    """ 交互对象有兽耳 """
-    TARGET_HAVE_NO_HORN = "horn_0"
-    """ 交互对象没有兽角 """
-    TARGET_HAVE_HORN = "horn_1"
-    """ 交互对象有兽角 """
-    TARGET_HAVE_NO_TAIL = "tail_0"
-    """ 交互对象没有兽尾 """
-    TARGET_HAVE_TAIL = "tail_1"
-    """ 交互对象有兽尾 """
-    TARGET_HAVE_NO_RING = "ring_0"
-    """ 交互对象没有光环 """
-    TARGET_HAVE_RING = "ring_1"
-    """ 交互对象有光环 """
-    TARGET_HAVE_NO_WING = "wing_0"
-    """ 交互对象没有光翼 """
-    TARGET_HAVE_WING = "wing_1"
-    """ 交互对象有光翼 """
-    TARGET_HAVE_NO_TENTACLE = "tentacle_0"
-    """ 交互对象没有触手 """
-    TARGET_HAVE_TENTACLE = "tentacle_1"
-    """ 交互对象有触手 """
-    TARGET_HAVE_NO_CAR = "car_0"
-    """ 交互对象没有小车 """
-    TARGET_HAVE_CAR = "car_1"
-    """ 交互对象有小车 """
-
-    TARGET_NOT_PATIENT = "patient_0"
-    """ 交互对象不是源石病感染者 """
-    TARGET_IS_PATIENT = "patient_1"
-    """ 交互对象是源石病感染者 """
-    TARGET_HAVE_NO_CRYSTAL = "crystal_0"
-    """ 交互对象没有体表源石结晶 """
-    TARGET_HAVE_CRYSTAL = "crystal_1"
-    """ 交互对象有体表源石结晶 """
-
-    TARGET_HAVE_NO_DILIGENT = "diligent_0"
-    """ 交互对象非勤劳 """
-    TARGET_HAVE_DILIGENT = "diligent_1"
-    """ 交互对象勤劳 """
-    TARGET_HAVE_NO_LAZY = "lazy_0"
-    """ 交互对象非懒散 """
-    TARGET_HAVE_LAZY = "lazy_1"
-    """ 交互对象懒散 """
-    TARGET_HAVE_NO_FRAGILE = "fragile_0"
-    """ 交互对象非脆弱 """
-    TARGET_HAVE_FRAGILE = "fragile_1"
-    """ 交互对象脆弱 """
-    TARGET_HAVE_NO_FORCEFUL = "forceful_0"
-    """ 交互对象非坚强 """
-    TARGET_HAVE_FORCEFUL = "forceful_1"
-    """ 交互对象坚强 """
-    TARGET_HAVE_NO_ENTHUSIACTIC = "enthusiactic_0"
-    """ 交互对象非热情 """
-    TARGET_HAVE_ENTHUSIACTIC = "enthusiactic_1"
-    """ 交互对象热情 """
-    TARGET_HAVE_NO_ALONE = "alone_0"
-    """ 交互对象非孤僻 """
-    TARGET_HAVE_ALONE = "alone_1"
-    """ 交互对象孤僻 """
-    TARGET_HAVE_NO_SHAME = "shame_0"
-    """ 交互对象非羞耻 """
-    TARGET_HAVE_SHAME = "shame_1"
-    """ 交互对象羞耻 """
-    TARGET_HAVE_NO_OPEN = "open_0"
-    """ 交互对象非开放 """
-    TARGET_HAVE_OPEN = "open_1"
-    """ 交互对象开放 """
-
-
-
-    LAST_CMD_MAKING_OUT= "last_cmd_makeing_out"
-    """ 前一指令为身体爱抚_口上触发用 """
-    LAST_CMD_KISS_H= "last_cmd_kiss_h"
-    """ 前一指令为接吻（H）_口上触发用 """
-    LAST_CMD_BREAST_CARESS= "last_cmd_breast_caress"
-    """ 前一指令为胸爱抚_口上触发用 """
-    LAST_CMD_TWIDDLE_NIPPLES= "last_cmd_twiddle_nipples"
-    """ 前一指令为玩弄乳头_口上触发用 """
-    LAST_CMD_BREAST_SUCKING = "last_cmd_breast_sucking"
-    """ 前一指令为舔吸乳头_口上触发用 """
-    LAST_CMD_CLIT_CARESS= "last_cmd_clit_caress"
-    """ 前一指令为阴蒂爱抚_口上触发用 """
-    LAST_CMD_OPEN_LABIA= "last_cmd_open_labia"
-    """ 前一指令为掰开阴唇观察_口上触发用 """
-    LAST_CMD_CUNNILINGUS= "last_cmd_cunnilingus"
-    """ 前一指令为舔阴_口上触发用 """
-    LAST_CMD_FINGER_INSERTION= "last_cmd_finger_insertion"
-    """ 前一指令为手指插入(V)_口上触发用 """
-    LAST_CMD_ANAL_CARESS= "last_cmd_anal_caress"
-    """ 前一指令为手指插入(A)_口上触发用 """
-    LAST_CMD_MAKE_MASTUREBATE= "last_cmd_make_masturebate"
-    """ 前一指令为让对方自慰（H）_口上触发用 """
-    LAST_CMD_HANDJOB= "last_cmd_handjob"
-    """ 前一指令为手交_口上触发用 """
-    LAST_CMD_BLOWJOB = "last_cmd_blowjob"
-    """ 前一指令为口交_口上触发用 """
-    LAST_CMD_PAIZURI= "last_cmd_paizuri"
-    """ 前一指令为乳交_口上触发用 """
-    LAST_CMD_FOOTJOB= "last_cmd_footjob"
-    """ 前一指令为足交_口上触发用 """
-    LAST_CMD_AXILLAJOB= "last_cmd_axillajob"
-    """ 前一指令为腋交_口上触发用 """
-    LAST_CMD_RUB_BUTTOCK= "last_cmd_rub_buttock"
-    """ 前一指令为素股_口上触发用 """
-    LAST_CMD_HAND_BLOWJOB= "last_cmd_hand_blowjob"
-    """ 前一指令为手交口交_口上触发用 """
-    LAST_CMD_TITS_BLOWJOB= "last_cmd_tits_blowjob"
-    """ 前一指令为乳交口交_口上触发用 """
-    LAST_CMD_DEEP_THROAT= "last_cmd_deep_throat"
-    """ 前一指令为深喉插入_口上触发用 """
-    LAST_CMD_FOCUS_BLOWJOB= "last_cmd_focus_blowjob"
-    """ 前一指令为真空口交_口上触发用 """
-    LAST_CMD_NORMAL_SEX= "last_cmd_normal_sex"
-    """ 前一指令为正常位_口上触发用 """
-    LAST_CMD_BACK_SEX= "last_cmd_back_sex"
-    """ 前一指令为背后位_口上触发用 """
-    LAST_CMD_RIDING_SEX= "last_cmd_riding_sex"
-    """ 前一指令为骑乘位_口上触发用 """
-    LAST_CMD_FACE_SEAT_SEX= "last_cmd_face_seat_sex"
-    """ 前一指令为对面座位_口上触发用 """
-    LAST_CMD_BACK_SEAT_SEX= "last_cmd_back_seat_sex"
-    """ 前一指令为背面座位_口上触发用 """
-    LAST_CMD_FACE_STAND_SEX= "last_cmd_face_stand_sex"
-    """ 前一指令为对面立位_口上触发用 """
-    LAST_CMD_BACK_STAND_SEX= "last_cmd_back_stand_sex"
-    """ 前一指令为背面立位_口上触发用 """
-    LAST_CMD_STIMULATE_G_POINT= "last_cmd_stimulate_g_point"
-    """ 前一指令为刺激G点_口上触发用 """
-    LAST_CMD_WOMB_OS_CARESS= "last_cmd_womb_os_caress"
-    """ 前一指令为玩弄子宫口_口上触发用 """
-
-    LAST_CMD_BLOWJOB_OR_HANDJOB = "last_cmd_blowjob_or_handjob"
-    """ 前一指令为口交或手交_指令触发用 """
-    LAST_CMD_BLOWJOB_OR_PAIZURI = "last_cmd_blowjob_or_paizuri"
-    """ 前一指令为口交或乳交_指令触发用 """
-    LAST_CMD_BLOWJOB_OR_CUNNILINGUS = "last_cmd_blowjob_or_cunnilingus"
-    """ 前一指令为口交或舔阴_指令触发用 """
-    LAST_CMD_SEX = "last_cmd_sex"
-    """ 前一指令为V性交_指令触发用 """
-    LAST_CMD_A_SEX = "last_cmd_a_sex"
-    """ 前一指令为A性交_指令触发用 """
-    LAST_CMD_U_SEX = "last_cmd_u_sex"
-    """ 前一指令为U性交_指令触发用 """
-
-    HAVE_FOOD = "have_food"
-    """ 拥有食物 """
-    NOT_HAVE_FOOD = "not_have_food"
-    """ 未拥有食物 """
-    HAVE_CAMERA = "have_camera"
-    """ 已持有相机 """
-    HAVE_VIDEO_RECORDER = "have_video_recorder"
-    """ 已持有录像机 """
-    HAVE_INSTRUMENT = "have_instrument"
-    """ 已持有乐器 """
-
-    HAVE_NIPPLE_CLAMP = "have_nipple_clamp"
-    """ 已持有乳头夹 """
-    TARGET_NOW_NIPPLE_CLAMP = "target_now_nipple_clamp"
-    """ 交互对象正在乳头夹 """
-    TARGET_NOT_NIPPLE_CLAMP = "target_not_nipple_clamp"
-    """ 交互对象没有在乳头夹 """
-    HAVE_LOVE_EGG = "have_love_egg"
-    """ 已持有跳蛋 """
-    HAVE_CLIT_CLAMP = "have_clit_clamp"
-    """ 已持有阴蒂夹 """
-    TARGET_NOW_CLIT_CLAMP = "target_now_clit_clamp"
-    """ 交互对象正在阴蒂夹 """
-    TARGET_NOT_CLIT_CLAMP = "target_not_clit_clamp"
-    """ 交互对象没有在阴蒂夹 """
-    TARGET_NOW_ANAL_BEADS = "target_now_anal_beads"
-    """ 交互对象正在肛门拉珠 """
-    TARGET_NOT_ANAL_BEADS = "target_not_anal_beads"
-    """ 交互对象没有在肛门拉珠 """
-    HAVE_ELECTRIC_MESSAGE_STICK = "have_electric_message_stick"
-    """ 已持有电动按摩棒 """
-    HAVE_VIBRATOR = "have_vibrator"
-    """ 已持有震动棒 """
-    TARGET_NOW_VIBRATOR_INSERTION = "target_now_vibrator_insertion"
-    """ 交互对象V正插入震动棒 """
-    TARGET_NOT_VIBRATOR_INSERTION = "target_not_vibrator_insertion"
-    """ 交互对象V没有在插入震动棒 """
-    TARGET_NOW_VIBRATOR_INSERTION_ANAL = "target_now_vibrator_insertion_anal"
-    """ 交互对象A正插入震动棒 """
-    TARGET_NOT_VIBRATOR_INSERTION_ANAL = "target_not_vibrator_insertion"
-    """ 交互对象A没有在插入震动棒 """
-    HAVE_MILKING_MACHINE = "have_milking_machine"
-    """ 已持有搾乳机 """
-    HAVE_URINE_COLLECTOR = "have_urine_collector"
-    """ 已持有采尿器 """
-    HAVE_BONDAGE = "have_bondage"
-    """ 已持有绳子 """
-    HAVE_PATCH = "have_patch"
-    """ 已持有眼罩 """
-    HAVE_BIG_VIBRATOR = "have_big_vibrator"
-    """ 已持有加粗震动棒 """
-    HAVE_HUGE_VIBRATOR = "have_huge_vibrator"
-    """ 已持有巨型震动棒 """
-    HAVE_CLYSTER_TOOLS = "have_clyster_tools"
-    """ 已持有灌肠套装 """
-    HAVE_ANAL_BEADS = "have_anal_beads"
-    """ 已持有拉珠 """
-    HAVE_ANAL_PLUG = "have_anal_plug"
-    """ 已持有肛塞 """
-    HAVE_WHIP = "have_whip"
-    """ 已持有鞭子 """
-    HAVE_NEEDLE = "have_needle"
-    """ 已持有针 """
-    HAVE_COLLAR = "have_collar"
-    """ 已持有项圈 """
-
-    HAVE_CONDOM = "have_condom"
-    """ 已持有避孕套 """
-    HAVE_SAFE_CANDLES = "have_safe_candles"
-    """ 已持有低温蜡烛 """
-    HAVE_COTTON_STICK = "have_cotton_stick"
-    """ 已持有无菌棉签 """
-
-    HAVE_BIRTH_CONTROL_PILLS_BEFORE = "have_birth_control_pills_before"
-    """ 已持有事前避孕药 """
-    HAVE_BIRTH_CONTROL_PILLS_AFTER = "have_birth_control_pills_after"
-    """ 已持有事后避孕药 """
-    HAVE_BODY_LUBRICANT = "have_body_lubricant"
-    """ 已持有润滑液 """
-    HAVE_PHILTER = "have_philter"
-    """ 已持有媚药 """
-    HAVE_ENEMAS = "have_enemas"
-    """ 已持有灌肠液 """
-    HAVE_DIURETICS_ONCE = "have_diuretics_once"
-    """ 已持有一次性利尿剂 """
-    HAVE_DIURETICS_PERSISTENT = "have_diuretics_persistent"
-    """ 已持有持续性利尿剂 """
-    HAVE_SLEEPING_PILLS = "have_sleeping_pills"
-    """ 已持有睡眠药 """
-    HAVE_CLOMID = "have_clomid"
-    """ 已持有排卵促进药 """
-
-    A_SHIT = "a_shit"
-    """ 肠内脏污 """
-    ENEMA = "enema"
-    """ 正在灌肠中（含全种类灌肠） """
-    NOT_ENEMA = "not_enema"
-    """ 非灌肠中（含全种类灌肠） """
-    ENEMA_END = "enema_end"
-    """ 已灌肠（含全种类灌肠） """
-    NORMAL_ENEMA = "normal_enema"
-    """ 普通灌肠中 """
-    SEMEN_ENEMA = "semen_enema"
-    """ 精液灌肠中 """
-    NORMAL_ENEMA_END = "normal_enema_end"
-    """ 已普通灌肠 """
-    SEMEN_ENEMA_END = "semen_enema_end"
-    """ 已精液灌肠 """
-
-    WEAR_BRA = "wear_bra"
-    """ 穿着胸衣 """
-    TARGET_WEAR_BRA = "t_wear_bra"
-    """ 交互对象穿着胸衣 """
-    TARGET_NOT_WEAR_BRA = "t_not_wear_bra"
-    """ 交互对象没有穿着胸衣 """
-    WEAR_SKIRT = "wear_skirt"
-    """ 穿着裙子 """
-    TARGET_WEAR_SKIRT = "t_wear_skirt"
-    """ 交互对象穿着裙子 """
-    TARGET_WEAR_TROUSERS = "t_wear_trousers"
-    """ 交互对象穿着裤子 """
-    WEAR_PAN = "wear_pan"
-    """ 穿着内裤 """
-    TARGET_WEAR_PAN = "t_wear_pan"
-    """ 交互对象穿着内裤 """
-    TARGET_NOT_WEAR_PAN = "t_not_wear_pan"
-    """ 交互对象没有穿着内裤 """
-    WEAR_SOCKS = "wear_socks"
-    """ 穿着袜子 """
-    TARGET_WEAR_SOCKS = "t_wear_socks"
-    """ 交互对象穿着袜子 """
-
-    CLOTH_OFF = "cloth_off"
-    """ 当前全裸 """
-    NOT_CLOTH_OFF = "not_cloth_off"
-    """ 当前不是全裸 """
-    SHOWER_CLOTH = "shower_cloth"
-    """ 围着浴巾 """
-    NOT_SHOWER_CLOTH = "not_shower_cloth"
-    """ 没有围着浴巾 """
-
-    HAVE_COLLECTION = "have_collection"
-    """ 持有藏品 """
-
-
-
-    HYPOSTHENIA = "83"
-    """ 体力不足 """
-    PHYSICAL_STRENGHT = "84"
-    """ 体力充沛 """
-
-
-    IN_CAFETERIA = "0"
-    """ 处于取餐区 """
-    IN_RESTAURANT = "1"
-    """ 处于就餐区 """
-    IN_BREAKFAST_TIME = "2"
-    """ 处于早餐时间段 """
-    IN_LUNCH_TIME = "3"
-    """ 处于午餐时间段 """
-    IN_DINNER_TIME = "4"
-    """ 处于晚餐时间段 """
-    HUNGER = "5"
-    """ 处于饥饿状态 """
-    HAVE_DRAW_ITEM = "10"
-    """ 拥有绘画类道具 """
-    HAVE_SHOOTING_ITEM = "11"
-    """ 拥有射击类道具 """
-    HAVE_GUITAR = "12"
-    """ 拥有吉他 """
-    HAVE_HARMONICA = "13"
-    """ 拥有口琴 """
-    HAVE_BAM_BOO_FLUTE = "14"
-    """ 拥有竹笛 """
-    HAVE_BASKETBALL = "15"
-    """ 拥有篮球 """
-    HAVE_FOOTBALL = "16"
-    """ 拥有足球 """
-    HAVE_TABLE_TENNIS = "17"
-    """ 拥有乒乓球 """
-    IN_SWIMMING_POOL = "18"
-    """ 在游泳池中 """
-    IN_CLASSROOM = "19"
-    """ 在教室中 """
-    IS_STUDENT = "20"
-    """ 是学生 """
-    IS_TEACHER = "21"
-    """ 是老师 """
-    IN_SHOP = "22"
-    """ 在商店中 """
-    IN_SLEEP_TIME = "23"
-    """ 处于睡觉时间 """
-    IN_SIESTA_TIME = "24"
-    """ 处于午休时间 """
-    TARGET_IS_FUTA_OR_WOMAN = "25"
-    """ 目标是扶她或女性 """
-    TARGET_IS_FUTA_OR_MAN = "26"
-    """ 目标是扶她或男性 """
-    TARGET_SAME_SEX = "29"
-    """ 目标与自身性别相同 """
-    TARGET_NOT_PUT_ON_UNDERWEAR = "35"
-    """ 目标没穿上衣 """
-    TARGET_NOT_PUT_ON_SKIRT = "36"
-    """ 目标没穿短裙 """
-    TARGET_IS_ADORE = "41"
-    """ 目标是爱慕对象 """
-    TARGET_IS_ADMIRE = "42"
-    """ 目标是恋慕对象 """
-    PLAYER_IS_ADORE = "43"
-    """ 玩家是爱慕对象 """
-    EAT_SPRING_FOOD = "44"
-    """ 食用了春药品质的食物 """
-    TARGET_IS_BEYOND_FRIENDSHIP = "46"
-    """ 对目标抱有超越友谊的想法 """
-    IS_BEYOND_FRIENDSHIP_TARGET = "47"
-    """ 目标对自己抱有超越友谊的想法 """
-    NO_WEAR_UNDERWEAR = "49"
-    """ 没穿上衣 """
-    NO_WEAR_UNDERPANTS = "50"
-    """ 没穿内裤 """
-    NO_WEAR_BRA = "51"
-    """ 没穿胸罩 """
-    NO_WEAR_PANTS = "52"
-    """ 没穿裤子 """
-    # NO_WEAR_SKIRT = "53"
-    # """ 没穿短裙 """
-    NO_WEAR_SHOES = "54"
-    """ 没穿鞋子 """
-    NO_WEAR_SOCKS = "55"
-    """ 没穿袜子 """
-    WANT_PUT_ON = "56"
-    """ 想穿衣服 """
-    HAVE_UNDERWEAR = "57"
-    """ 拥有上衣 """
-    HAVE_UNDERPANTS = "58"
-    """ 拥有内裤 """
-    HAVE_BRA = "59"
-    """ 拥有胸罩 """
-    HAVE_PANTS = "60"
-    """ 拥有裤子 """
-    HAVE_SKIRT = "61"
-    """ 拥有短裙 """
-    HAVE_SHOES = "62"
-    """ 拥有鞋子 """
-    HAVE_SOCKS = "63"
-    """ 拥有袜子 """
-    CHEST_IS_NOT_CLIFF = "65"
-    """ 胸围不是绝壁 """
-    NO_EXCELLED_AT_SINGING = "69"
-    """ 不擅长演唱 """
-    TARGET_HEIGHT_LOW = "71"
-    """ 交互对象身高低于自身身高 """
-    TARGET_ADORE = "72"
-    """ 被交互对象爱慕 """
-    NO_EXCELLED_AT_PLAY_MUSIC = "73"
-    """ 不擅长演奏 """
-    ARROGANT_HEIGHT = "74"
-    """ 傲慢情绪高涨 """
-    SCENE_CHARACTER_ONLY_PLAYER_AND_ONE = "78"
-    """ 场景中只有包括玩家在内的两个角色 """
-    NO_BEYOND_FRIENDSHIP_TARGET = "80"
-    """ 目标对自己没有有超越友谊的想法 """
-    BEYOND_FRIENDSHIP_TARGET_IN_SCENE = "82"
-    """ 对场景中某个角色抱有超越友谊的想法 """
-    IN_FOUNTAIN = "86"
-    """ 在会客室入口场景 """
-    TARGET_ADMIRE = "89"
-    """ 被交互对象恋慕 """
-    IS_ENTHUSIASM = "90"
-    """ 是一个热情的人 """
-    NO_FIRST_KISS = "93"
-    """ 初吻还在 """
-    IS_TARGET_FIRST_KISS = "94"
-    """ 是交互对象的初吻对象 """
-    HAVE_OTHER_TARGET_IN_SCENE = "95"
-    """ 场景中有自己和交互对象以外的其他人 """
-    NO_HAVE_OTHER_TARGET_IN_SCENE = "96"
-    """ 场景中没有自己和交互对象以外的其他人 """
-    HAVE_FIRST_KISS = "98"
-    """ 初吻不在了 """
-    HAVE_LIKE_TARGET = "99"
-    """ 有喜欢的人 """
-    HAVE_LIKE_TARGET_IN_SCENE = "100"
-    """ 场景中有喜欢的人 """
-    TARGET_IS_STUDENT = "101"
-    """ 交互对象是学生 """
-    TARGET_NO_FIRST_HAND_IN_HAND = "108"
-    """ 交互对象没有牵过手 """
-    NO_FIRST_HAND_IN_HAND = "109"
-    """ 没有和牵过手 """
-    HAVE_NO_FIRST_KISS_LIKE_TARGET_IN_SCENE = "111"
-    """ 有自己喜欢的还是初吻的人在场景中 """
-    HAVE_LIKE_TARGET_NO_FIRST_KISS = "112"
-    """ 有自己喜欢的人的初吻还在 """
-    TARGET_UNARMED_COMBAT_IS_HIGHT = "114"
-    """ 交互对象徒手格斗技能比自己高 """
-    TARGET_DISGUST_IS_HIGHT = "115"
-    """ 交互对象反感情绪高涨 """
-    TARGET_LUST_IS_HIGHT = "116"
-    """ 交互对象色欲高涨 """
-    TARGET_IS_WOMAN = "117"
-    """ 交互对象是女性 """
-    TARGET_CLITORIS_LEVEL_IS_HIGHT = "119"
-    """ 交互对象阴蒂开发度高 """
-    TARGET_IS_MAN = "120"
-    """ 交互对象是男性 """
-    SEX_EXPERIENCE_IS_HIGHT = "121"
-    """ 性技熟练 """
-    IS_COLLECTION_SYSTEM = "122"
-    """ 玩家已启用收藏模式 """
-    UN_COLLECTION_SYSTEM = "123"
-    """ 玩家未启用收藏模式 """
-    TARGET_IS_COLLECTION = "124"
-    """ 交互对象已被玩家收藏 """
-    TARGET_IS_NOT_COLLECTION = "125"
-    """ 交互对象未被玩家收藏 """
-    TARGET_IS_LIVE = "126"
-    """ 交互对象未死亡 """
-    THIRSTY = "127"
-    """ 处于口渴状态 """
-    HAVE_DRINKS = "128"
-    """ 背包中有饮料 """
-    NO_HAVE_DRINKS = "129"
-    """ 背包中没有饮料 """
-    ATTEND_CLASS_TODAY = "130"
-    """ 今日需要上课 """
-    NO_IN_CLASSROOM = "133"
-    """ 不在教室中 """
-    TEACHER_IN_CLASSROOM = "135"
-    """ 角色所属班级的老师在教室中 """
-    IS_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = "137"
-    """ 场景中有角色对自己抱有超越友谊的想法 """
-    HAVE_STUDENTS_IN_CLASSROOM = "138"
-    """ 有所教班级的学生在教室中 """
-    TARGET_IS_SLEEP = "149"
-    """ 交互对象正在睡觉 """
-    IN_ROOFTOP_SCENE = "150"
-    """ 处于天台场景 """
-    TONIGHT_IS_FULL_MOON = "151"
-    """ 今夜是满月 """
-    TARGET_NO_EXPERIENCE_IN_SEX = "154"
-    """ 交互对象没有性经验 """
-    LUST_IS_HIGHT = "155"
-    """ 角色色欲高涨 """
-    IN_GROVE = "156"
-    """ 处于加工站入口场景 """
-    NO_IN_GROVE = "157"
-    """ 未处于加工站入口场景 """
-    TARGET_IS_SING = "159"
-    """ 交互对象正在唱歌 """
-    NO_HAVE_GUITAR = "160"
-    """ 未拥有吉他 """
-    IN_ITEM_SHOP = "161"
-    """ 不在训练场入口中 """
-    NO_IN_ITEM_SHOP = "162"
-    """ 在训练场入口中 """
-
-
-class BehaviorEffect:
-    """行为结算效果函数"""
-
-    NOTHING = 999
-    """ 什么都没有的空结算 """
-
-    ADD_SMALL_HIT_POINT = 0
-    """ 增加少量体力 """
-    ADD_SMALL_MANA_POINT = 1
-    """ 增加少量气力 """
-    ADD_INTERACTION_FAVORABILITY = 2
-    """ 增加基础互动好感 """
-    DOWN_BOTH_SMALL_HIT_POINT = 3
-    """ 双方减少少量体力（若没有交互对象则仅减少自己） """
-    DOWN_BOTH_SMALL_MANA_POINT = 4
-    """ 双方减少少量气力（若没有交互对象则仅减少自己） """
-    MOVE_TO_TARGET_SCENE = 5
-    """ 移动至目标场景 """
-    ADD_SMALL_TRUST = 6
-    """ 增加基础互动信赖 """
-    ADD_BOTH_SMALL_HIT_POINT = 10
-    """ 增加双方少量体力 """
-    ADD_BOTH_SMALL_MANA_POINT = 11
-    """ 增加双方少量气力 """
-    DOWN_SELF_SMALL_HIT_POINT = 12
-    """ 减少自己少量体力 """
-    DOWN_SELF_SMALL_MANA_POINT = 13
-    """ 减少自己少量气力 """
-
-
-    FIRST_KISS = 18
-    """ 记录初吻 """
-    FIRST_HAND_IN_HAND = 19
-    """ 记录初次牵手 """
-    ADD_MEDIUM_HIT_POINT = 20
-    """ 增加中量体力 """
-    ADD_MEDIUM_MANA_POINT = 21
-    """ 增加中量气力 """
-    FIRST_SEX = 22
-    """ 记录处女 """
-    FIRST_A_SEX = 23
-    """ 记录A处女 """
-    INTERRUPT_TARGET_ACTIVITY = 30
-    """ 打断交互对象活动 """
-    NOT_TIRED = 31
-    """ 从疲劳中恢复 """
-    ITEM_OFF = 32
-    """ 去掉身上所有的道具 """
-    TARGET_ITEM_OFF = 33
-    """ 交互对象去掉身上所有的道具 """
-
-    TARGET_ADD_SMALL_N_FEEL = 41
-    """ 交互对象增加少量Ｎ快（N感补正） """
-    TARGET_ADD_SMALL_B_FEEL = 42
-    """ 交互对象增加少量Ｂ快（B感补正） """
-    TARGET_ADD_SMALL_C_FEEL = 43
-    """ 交互对象增加少量Ｃ快（C感补正） """
-    TARGET_ADD_SMALL_P_FEEL = 44
-    """ 交互对象增加少量Ｐ快（P感补正） """
-    TARGET_ADD_SMALL_V_FEEL = 45
-    """ 交互对象增加少量Ｖ快（V感补正） """
-    TARGET_ADD_SMALL_A_FEEL = 46
-    """ 交互对象增加少量Ａ快（A感补正） """
-    TARGET_ADD_SMALL_U_FEEL = 47
-    """ 交互对象增加少量Ｕ快（U感补正） """
-    TARGET_ADD_SMALL_W_FEEL = 48
-    """ 交互对象增加少量Ｗ快（W感补正） """
-    TARGET_ADD_SMALL_LUBRICATION = 49
-    """ 交互对象增加少量润滑（欲望补正） """
-    TARGET_ADD_SMALL_LEARN = 51
-    """ 交互对象增加少量习得（技巧补正） """
-    TARGET_ADD_SMALL_RESPECT = 52
-    """ 交互对象增加少量恭顺（顺从补正） """
-    TARGET_ADD_SMALL_FRIENDLY = 53
-    """ 交互对象增加少量好意（亲密补正） """
-    TARGET_ADD_SMALL_DESIRE = 54
-    """ 交互对象增加少量欲情（欲望补正） """
-    TARGET_ADD_SMALL_HAPPY = 55
-    """ 交互对象增加少量快乐（快乐刻印补正） """
-    TARGET_ADD_SMALL_LEAD = 56
-    """ 交互对象增加少量先导（侍奉补正） """
-    TARGET_ADD_SMALL_SUBMIT = 57
-    """ 交互对象增加少量屈服（屈服刻印补正） """
-    TARGET_ADD_SMALL_SHY = 58
-    """ 交互对象增加少量羞耻（露出补正） """
-    TARGET_ADD_SMALL_PAIN = 59
-    """ 交互对象增加少量苦痛（苦痛刻印补正） """
-    TARGET_ADD_SMALL_TERROR = 60
-    """ 交互对象增加少量恐怖（恐怖刻印补正） """
-    TARGET_ADD_SMALL_DEPRESSION = 61
-    """ 交互对象增加少量抑郁 """
-    TARGET_ADD_SMALL_DISGUST = 62
-    """ 交互对象增加少量反感（反发刻印补正） """
-    ADD_SMALL_P_FEEL = 70
-    """ 自身增加少量Ｐ快 """
-    BOTH_ADD_SMALL_LEARN = 71
-    """ 双方增加少量习得（若没有交互对象则仅增加自己） """
-    ADD_SMALL_LEARN = 72
-    """ 自己增加少量习得 """
-
-    TARGET_VIBRATOR_ON = 76
-    """ 交互对象插入V震动棒 """
-    TARGET_VIBRATOR_OFF = 77
-    """ 交互对象拔出V震动棒 """
-    TARGET_ANAL_VIBRATOR_ON = 78
-    """ 交互对象插入A震动棒 """
-    TARGET_ANAL_VIBRATOR_OFF = 79
-    """ 交互对象拔出A震动棒 """
-
-    USE_BODY_LUBRICANT = 80
-    """ 使用了一个润滑液 """
-    TARGET_ADD_HUGE_LUBRICATION = 81
-    """ 交互对象增加大量润滑（润滑液） """
-    USE_PHILTER = 82
-    """ 使用了一个媚药 """
-    TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 83
-    """ 交互对象增加大量欲情和屈服（媚药） """
-    USE_ENEMAS = 84
-    """ 使用了一个灌肠液 """
-    TARGET_ENEMA = 85
-    """ 交互对象A灌肠并增加中量润滑 """
-    TARGET_ENEMA_END = 86
-    """ 交互对象结束A灌肠并增加中量润滑 """
-    TARGET_NIPPLE_CLAMP_ON = 87
-    """ 交互对象戴上乳头夹 """
-    TARGET_NIPPLE_CLAMP_OFF = 88
-    """ 交互对象取下乳头夹 """
-    TARGET_CLIT_CLAMP_ON = 89
-    """ 交互对象戴上阴蒂夹 """
-    TARGET_CLIT_CLAMP_OFF = 90
-    """ 交互对象取下阴蒂夹 """
-    TARGET_ANAL_BEADS_ON = 91
-    """ 交互对象塞入肛门拉珠 """
-    TARGET_ANAL_BEADS_OFF = 92
-    """ 交互对象拔出肛门拉珠 """
-    USE_DIURETICS_ONCE = 93
-    """ 使用了一个一次性利尿剂 """
-    USE_DIURETICS_PERSISTENT = 94
-    """ 使用了一个持续性利尿剂 """
-    TARGET_ADD_URINATE = 95
-    """ 交互对象尿意值全满 """
-    TARGET_DIURETICS_ON = 96
-    """ 交互对象获得利尿剂状态 """
-
-    EAT_FOOD = 102
-    """ 进食指定食物 """
-    MAKE_FOOD = 103
-    """ 制作指定食物 """
-    TECH_ADD_N_ADJUST = 110
-    """ 根据发起者的技巧技能对交互对象进行N快、欲情调整 """
-    TECH_ADD_B_ADJUST = 111
-    """ 根据发起者的技巧技能对交互对象进行B快、欲情调整 """
-    TECH_ADD_C_ADJUST = 112
-    """ 根据发起者的技巧技能对交互对象进行C快、欲情调整 """
-    TECH_ADD_P_ADJUST = 113
-    """ 根据发起者的技巧技能对交互对象进行P快、欲情调整 """
-    TECH_ADD_V_ADJUST = 114
-    """ 根据发起者的技巧技能对交互对象进行V快、欲情调整 """
-    TECH_ADD_A_ADJUST = 115
-    """ 根据发起者的技巧技能对交互对象进行A快、欲情调整 """
-    TECH_ADD_U_ADJUST = 116
-    """ 根据发起者的技巧技能对交互对象进行U快、欲情调整 """
-    TECH_ADD_W_ADJUST = 117
-    """ 根据发起者的技巧技能对交互对象进行W快、欲情调整 """
-    TECH_ADD_PL_P_ADJUST = 120
-    """ 根据交互对象的技巧技能对发起者进行P快调整 """
-    TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
-    """ 根据交互对象的润滑情况对其进行苦痛调整 """
-    LOW_OBSCENITY_FAILED_ADJUST = 122
-    """ 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
-    HIGH_OBSCENITY_FAILED_ADJUST = 123
-    """ 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
-    SLEEP_POINT_DOWN = 124
-    """ 睡觉时降低困倦值 """
-    URINATE_POINT_DOWN = 125
-    """ 尿意值归零 """
-    TARGET_URINATE_POINT_DOWN = 126
-    """ 交互对象尿意值归零 """
-    HUNGER_POINT_DOWN = 127
-    """ 饥饿值归零 """
-    TARGET_HUNGER_POINT_DOWN = 128
-    """ 交互对象饥饿值归零 """
-
-    TARGET_ADD_1_N_EXPERIENCE = 200
-    """ 交互对象增加1N经验 """
-    TARGET_ADD_1_B_EXPERIENCE = 201
-    """ 交互对象增加1B经验 """
-    TARGET_ADD_1_C_EXPERIENCE = 202
-    """ 交互对象增加1C经验 """
-    TARGET_ADD_1_P_EXPERIENCE = 203
-    """ 交互对象增加1P经验 """
-    TARGET_ADD_1_V_EXPERIENCE = 204
-    """ 交互对象增加1V经验 """
-    TARGET_ADD_1_A_EXPERIENCE = 205
-    """ 交互对象增加1A经验 """
-    TARGET_ADD_1_U_EXPERIENCE = 206
-    """ 交互对象增加1U经验 """
-    TARGET_ADD_1_W_EXPERIENCE = 207
-    """ 交互对象增加1W经验 """
-    TARGET_ADD_1_NClimax_EXPERIENCE = 210
-    """ 交互对象增加1N绝顶经验 """
-    TARGET_ADD_1_BClimax_EXPERIENCE = 211
-    """ 交互对象增加1B绝顶经验 """
-    TARGET_ADD_1_CClimax_EXPERIENCE = 212
-    """ 交互对象增加1C绝顶经验 """
-    # TARGET_ADD_1_PClimax_EXPERIENCE = 213
-    # """ 交互对象增加1P绝顶经验 """
-    TARGET_ADD_1_VClimax_EXPERIENCE = 214
-    """ 交互对象增加1V绝顶经验 """
-    TARGET_ADD_1_AClimax_EXPERIENCE = 215
-    """ 交互对象增加1A绝顶经验 """
-    TARGET_ADD_1_UClimax_EXPERIENCE = 216
-    """ 交互对象增加1U绝顶经验 """
-    TARGET_ADD_1_WClimax_EXPERIENCE = 217
-    """ 交互对象增加1W绝顶经验 """
-    # TARGET_ADD_1_Climax_EXPERIENCE = 220
-    # """ 交互对象增加1绝顶经验 """
-    TARGET_ADD_1_Cumming_EXPERIENCE = 221
-    """ 交互对象增加1射精经验 """
-    TARGET_ADD_1_Milking_EXPERIENCE = 222
-    """ 交互对象增加1喷乳经验 """
-    TARGET_ADD_1_Peeing_EXPERIENCE = 223
-    """ 交互对象增加1放尿经验 """
-    TARGET_ADD_1_Cums_EXPERIENCE = 224
-    """ 交互对象增加1精液经验 """
-    TARGET_ADD_1_CumsDrink_EXPERIENCE = 225
-    """ 交互对象增加1饮精经验 """
-    TARGET_ADD_1_Creampie_EXPERIENCE = 226
-    """ 交互对象增加1膣射经验 """
-    TARGET_ADD_1_AnalCums_EXPERIENCE = 227
-    """ 交互对象增加1肛射经验 """
-    TARGET_ADD_1_plServe_EXPERIENCE = 230
-    """ 交互对象增加1奉仕快乐经验 """
-    TARGET_ADD_1_Love_EXPERIENCE = 231
-    """ 交互对象增加1爱情经验 """
-    TARGET_ADD_1_plPain_EXPERIENCE = 232
-    """ 交互对象增加1苦痛快乐经验 """
-    TARGET_ADD_1_plSadism_EXPERIENCE = 233
-    """ 交互对象增加1嗜虐快乐经验 """
-    TARGET_ADD_1_plExhibit_EXPERIENCE = 234
-    """ 交互对象增加1露出快乐经验 """
-    TARGET_ADD_1_Kiss_EXPERIENCE = 240
-    """ 交互对象增加1接吻经验 """
-    TARGET_ADD_1_Handjob_EXPERIENCE = 241
-    """ 交互对象增加1手淫经验 """
-    TARGET_ADD_1_Blowjob_EXPERIENCE = 242
-    """ 交互对象增加1口淫经验 """
-    TARGET_ADD_1_Paizuri_EXPERIENCE = 243
-    """ 交互对象增加1乳交经验 """
-    TARGET_ADD_1_Footjob_EXPERIENCE = 244
-    """ 交互对象增加1足交经验 """
-    TARGET_ADD_1_Hairjob_EXPERIENCE = 245
-    """ 交互对象增加1发交经验 """
-    TARGET_ADD_1_Masterbate_EXPERIENCE = 246
-    """ 交互对象增加1自慰经验 """
-    TARGET_ADD_1_bdsmMasterbate_EXPERIENCE = 247
-    """ 交互对象增加1调教自慰经验 """
-    TARGET_ADD_1_Toys_EXPERIENCE = 248
-    """ 交互对象增加1道具使用经验 """
-    TARGET_ADD_1_Tiedup_EXPERIENCE = 249
-    """ 交互对象增加1紧缚经验 """
-    TARGET_ADD_1_Insert_EXPERIENCE = 250
-    """ 交互对象增加1插入经验 """
-    TARGET_ADD_1_sexV_EXPERIENCE = 251
-    """ 交互对象增加1V性交经验 """
-    TARGET_ADD_1_sexA_EXPERIENCE = 252
-    """ 交互对象增加1A性交经验 """
-    TARGET_ADD_1_sexU_EXPERIENCE = 253
-    """ 交互对象增加1U性交经验 """
-    TARGET_ADD_1_sexW_EXPERIENCE = 254
-    """ 交互对象增加1W性交经验 """
-    TARGET_ADD_1_expandV_EXPERIENCE = 255
-    """ 交互对象增加1V扩张经验 """
-    TARGET_ADD_1_expandA_EXPERIENCE = 256
-    """ 交互对象增加1A扩张经验 """
-    TARGET_ADD_1_expandU_EXPERIENCE = 257
-    """ 交互对象增加1U扩张经验 """
-    TARGET_ADD_1_expandW_EXPERIENCE = 258
-    """ 交互对象增加1W扩张经验 """
-    TARGET_ADD_1_TWRape_EXPERIENCE = 259
-    """ 交互对象增加1时奸经验 """
-    TARGET_ADD_1_SlumberRape_EXPERIENCE = 260
-    """ 交互对象增加1睡奸经验 """
-    TARGET_ADD_1_Abnormal_EXPERIENCE = 261
-    """ 交互对象增加1异常经验 """
-    TARGET_ADD_1_Axillajob_EXPERIENCE = 262
-    """ 交互对象增加1腋交经验 """
-    TARGET_ADD_1_Enema_EXPERIENCE = 263
-    """ 交互对象增加1灌肠经验 """
-    TARGET_ADD_1_UnconsciouslyN_EXPERIENCE = 270
-    """ 交互对象增加1无意识N经验 """
-    TARGET_ADD_1_UnconsciouslyB_EXPERIENCE = 271
-    """ 交互对象增加1无意识B经验 """
-    TARGET_ADD_1_UnconsciouslyC_EXPERIENCE = 272
-    """ 交互对象增加1无意识C经验 """
-    TARGET_ADD_1_UnconsciouslyP_EXPERIENCE = 273
-    """ 交互对象增加1无意识P经验 """
-    TARGET_ADD_1_UnconsciouslyV_EXPERIENCE = 274
-    """ 交互对象增加1无意识V经验 """
-    TARGET_ADD_1_UnconsciouslyA_EXPERIENCE = 275
-    """ 交互对象增加1无意识A经验 """
-    TARGET_ADD_1_UnconsciouslyU_EXPERIENCE = 276
-    """ 交互对象增加1无意识U经验 """
-    TARGET_ADD_1_UnconsciouslyW_EXPERIENCE = 277
-    """ 交互对象增加1无意识W经验 """
-    TARGET_ADD_1_UnconsciouslyClimax_EXPERIENCE = 278
-    """ 交互对象增加1无意识绝顶经验 """
-    TARGET_ADD_1_Chat_EXPERIENCE = 280
-    """ 交互对象增加1对话经验 """
-    TARGET_ADD_1_Combat_EXPERIENCE = 281
-    """ 交互对象增加1战斗经验 """
-    TARGET_ADD_1_Learn_EXPERIENCE = 282
-    """ 交互对象增加1学识经验 """
-    TARGET_ADD_1_Cooking_EXPERIENCE = 283
-    """ 交互对象增加1料理经验 """
-    TARGET_ADD_1_Date_EXPERIENCE = 284
-    """ 交互对象增加1约会经验 """
-    TARGET_ADD_1_Music_EXPERIENCE = 285
-    """ 交互对象增加1音乐经验 """
-    TARGET_ADD_1_GiveBirth_EXPERIENCE = 286
-    """ 交互对象增加1妊娠经验 """
-    TARGET_ADD_1_Command_EXPERIENCE = 288
-    """ 交互对象增加1指挥经验 """
-    TARGET_ADD_1_Cure_EXPERIENCE = 289
-    """ 交互对象增加1医疗经验 """
-    TARGET_ADD_1_ForwardClimax_EXPERIENCE = 300
-    """ 交互对象增加1正面位绝顶经验 """
-    TARGET_ADD_1_BackClimax_EXPERIENCE = 301
-    """ 交互对象增加1后入位绝顶经验 """
-    TARGET_ADD_1_RideClimax_EXPERIENCE = 302
-    """ 交互对象增加1骑乘位绝顶经验 """
-    TARGET_ADD_1_FSeatClimax_EXPERIENCE = 303
-    """ 交互对象增加1对面座位绝顶经验 """
-    TARGET_ADD_1_BSeatClimax_EXPERIENCE = 304
-    """ 交互对象增加1背面座位绝顶经验 """
-    TARGET_ADD_1_FStandClimax_EXPERIENCE = 305
-    """ 交互对象增加1对面立位绝顶经验 """
-    TARGET_ADD_1_BStandClimax_EXPERIENCE = 306
-    """ 交互对象增加1背面立位绝顶经验 """
-    ADD_1_Kiss_EXPERIENCE = 307
-    """ 增加1接吻经验 """
-    ADD_1_Handjob_EXPERIENCE = 308
-    """ 增加1手淫经验 """
-    ADD_1_Blowjob_EXPERIENCE = 309
-    """ 增加1口淫经验 """
-    ADD_1_Paizuri_EXPERIENCE = 310
-    """ 增加1乳交经验 """
-    ADD_1_Footjob_EXPERIENCE = 311
-    """ 增加1足交经验 """
-    ADD_1_Hairjob_EXPERIENCE = 312
-    """ 增加1发交经验 """
-    ADD_1_Chat_EXPERIENCE = 313
-    """ 增加1对话经验 """
-    ADD_1_Combat_EXPERIENCE = 314
-    """ 增加1战斗经验 """
-    ADD_1_Learn_EXPERIENCE = 315
-    """ 增加1学识经验 """
-    ADD_1_Cooking_EXPERIENCE = 316
-    """ 增加1料理经验 """
-    ADD_1_Date_EXPERIENCE = 317
-    """ 增加1约会经验 """
-    ADD_1_Music_EXPERIENCE = 318
-    """ 增加1音乐经验 """
-    ADD_1_GiveBirth_EXPERIENCE = 319
-    """ 增加1妊娠经验 """
-    ADD_1_Insert_EXPERIENCE = 320
-    """ 增加1插入经验 """
-    ADD_1_Command_EXPERIENCE = 321
-    """ 增加1指挥经验 """
-    ADD_1_Cure_EXPERIENCE = 322
-    """ 增加1医疗经验 """
-    Both_ADD_1_Learn_EXPERIENCE = 350
-    """ 自己（和对方一起）增加1学识经验 """
-
-    DIRTY_RESET = 401
-    """ 污浊情况(身体+衣服)归零 """
-
-    TALK_ADD_ADJUST = 501
-    """ （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
-    COFFEE_ADD_ADJUST = 502
-    """ （泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整 """
-    TARGET_COFFEE_ADD_ADJUST = 503
-    """ （泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整 """
-    SING_ADD_ADJUST = 504
-    """ （唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整 """
-    PLAY_INSTRUMENT_ADD_ADJUST = 505
-    """ （演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整 """
-    KONWLEDGE_ADD_PINK_MONEY = 506
-    """ （处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证 """
-    CURE_PATIENT_ADD_ADJUST = 507
-    """ （诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币 """
-    ADD_HPMP_MAX = 508
-    """ （锻炼身体用）增加体力气力上限 """
-
-    CHANGE_UNDERWERA = 601
-    """ 换新的内衣（胸部+内裤） """
-    BRA_SEE = 602
-    """ 胸罩可视 """
-    TARGET_BRA_SEE = 603
-    """ 交互对象胸罩可视 """
-    PAN_SEE = 604
-    """ 内裤可视 """
-    TARGET_PAN_SEE = 605
-    """ 交互对象内裤可视 """
-    CLOTH_SEE_ZERO = 606
-    """ 内衣可视清零 """
-    RESTE_CLOTH = 607
-    """ 衣服重置为初始状态 """
-    ASK_FOR_PAN = 621
-    """ 索要内裤 """
-    ASK_FOR_SOCKS = 622
-    """ 索要袜子 """
-
-    RECORD_TRAINING_TIME = 701
-    """ 记录当前训练时间 """
-    RECORD_SHOWER_TIME = 702
-    """ 记录当前淋浴时间 """
+    INSTRUCT_FILTER = 17
+    """ 指令过滤面板 """
+    EVENT_OPTION = 18
+    """ 事件选项面板 """
 
 
 class SecondBehavior:
@@ -2258,6 +942,39 @@ class SecondBehavior:
     SLEEPING_PILLS = 1109
     """ 结算睡眠药 """
 
+    PENIS_IN_HAIR = 1201
+    """ 结算发交中 """
+    PENIS_IN_FACE = 1202
+    """ 结算阴茎蹭脸中 """
+    PENIS_IN_MOUSE = 1203
+    """ 结算口交中 """
+    PENIS_IN_BREAST = 1204
+    """ 结算乳交中 """
+    PENIS_IN_AXILLA = 1205
+    """ 结算腋交中 """
+    PENIS_IN_HAND = 1206
+    """ 结算手交中 """
+    PENIS_IN_VAGINA = 1207
+    """ 结算V插入中 """
+    PENIS_IN_WOMB = 1208
+    """ 结算W插入中 """
+    PENIS_IN_ANAL = 1209
+    """ 结算A插入中 """
+    PENIS_IN_URETHRAL = 1210
+    """ 结算U插入中 """
+    PENIS_IN_LEG = 1211
+    """ 结算腿交中 """
+    PENIS_IN_FOOT = 1212
+    """ 结算足交中 """
+    PENIS_IN_TAIL = 1213
+    """ 结算尾交中 """
+    PENIS_IN_HORN = 1214
+    """ 结算阴茎蹭角中 """
+    PENIS_IN_EARS = 1215
+    """ 结算阴茎蹭耳朵中 """
+    PENIS_IN_RUB_BUTTOCK = 1216
+    """ 结算素股中 """
+
 
 class SecondEffect:
     """二段结算效果函数"""
@@ -2321,7 +1038,7 @@ class SecondEffect:
     ADD_SMALL_C_FEEL = 239
     """ 增加少量Ｃ快（C感补正） """
     ADD_SMALL_P_FEEL = 240
-    """ 增加少量Ｐ快（P感补正） """
+    """ 增加少量射精值（P感补正） """
     ADD_SMALL_V_FEEL = 241
     """ 增加少量Ｖ快（V感补正） """
     ADD_SMALL_A_FEEL = 242
@@ -2375,7 +1092,7 @@ class SecondEffect:
     ADD_SMALL_HAPPY = 266
     """ 增加少量快乐（快乐刻印补正） """
     ADD_SMALL_LEAD = 267
-    """ 增加少量先导（侍奉补正） """
+    """ 增加少量先导（受虐补正） """
     ADD_SMALL_SUBMIT = 268
     """ 增加少量屈服（屈服刻印补正） """
     ADD_SMALL_SHY = 269
@@ -2401,7 +1118,7 @@ class SecondEffect:
     ADD_MIDDLE_HAPPY = 279
     """ 增加中量快乐（快乐刻印补正） """
     ADD_MIDDLE_LEAD = 280
-    """ 增加中量先导（侍奉补正） """
+    """ 增加中量先导（受虐补正） """
     ADD_MIDDLE_SUBMIT = 281
     """ 增加中量屈服（屈服刻印补正） """
     ADD_MIDDLE_SHY = 282
@@ -2427,7 +1144,7 @@ class SecondEffect:
     ADD_LARGE_HAPPY = 292
     """ 增加大量快乐（快乐刻印补正） """
     ADD_LARGE_LEAD = 293
-    """ 增加大量先导（侍奉补正） """
+    """ 增加大量先导（受虐补正） """
     ADD_LARGE_SUBMIT = 294
     """ 增加大量屈服（屈服刻印补正） """
     ADD_LARGE_SHY = 295
@@ -2446,6 +1163,10 @@ class SecondEffect:
     """ 增加巨量苦痛（A破处修正） """
     ADD_URINATE = 402
     """ 增加尿意（持续性利尿剂） """
+
+    PENIS_IN_T_RESET = 501
+    """ 当前阴茎位置为交互对象_归零 """
+
 
 
 #旧结算存档#
@@ -2519,8 +1240,6 @@ class Instruct:
     """ 收起内裤 """
     ASK_DATE = 0
     """ 邀请约会 """
-    END_H = 0
-    """ H结束 """
     DRINK_ALCOHOL = 0
     """ 劝酒 """
     PEE = 0
@@ -2606,7 +1325,10 @@ class Instruct:
     """ 告白 """
     GIVE_NECKLACE = 0
     """ 戴上项圈 """
+
     #性爱#
+    END_H = 0
+    """ H结束 """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0
@@ -2663,6 +1385,16 @@ class Instruct:
     """ 深喉插入 """
     SIXTY_NINE = 0
     """ 六九式 """
+    LEGJOB = 0
+    """ 腿交 """
+    TAILJOB = 0
+    """ 尾交 """
+    FACE_RUB = 0
+    """ 阴茎蹭脸 """
+    HORN_RUB = 0
+    """ 阴茎蹭角 """
+    EARS_RUB = 0
+    """ 阴茎蹭耳朵 """
     BODY_LUBRICANT = 0
     """ 润滑液 """
     BIRTH_CONTROL_PILLS = 0
@@ -2814,6 +1546,8 @@ class Instruct:
     """ 自身属性升级 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
+    INSTRUCT_FILTER = 0
+    """ 指令过滤 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0

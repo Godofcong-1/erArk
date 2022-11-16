@@ -20,7 +20,8 @@ def own_charcter_move(target_scene: list):
                 now_target_position,
                 now_need_time,
             ) = character_move(0, target_scene)
-            if move_now == "Null" or move_now == "un_open":
+            break_list = ["Null","un_open","door_close"]
+            if move_now in break_list :
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
             character_data.behavior.move_target = now_target_position
@@ -56,10 +57,13 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
         return "end", [], [], 0
     now_position_str = map_handle.get_map_system_path_str_for_list(now_position)
     target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+    target_scene_data = cache.scene_data[target_scene_str]
     # if not character_id:
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
     if not map_handle.judge_scene_open(target_scene_str,character_id):
         return "un_open", [], [], 0
+    if target_scene_data.close_flag == 1:
+        return "door_close", [], [], 0
     if (
         now_position_str not in map_handle.scene_path_edge
         or target_scene_str not in map_handle.scene_path_edge[now_position_str]
