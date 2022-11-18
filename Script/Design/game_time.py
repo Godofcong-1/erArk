@@ -35,6 +35,7 @@ def init_time():
         normal_config.config_normal.minute,
     )
     cache.game_time = game_time
+    cache.pre_game_time = game_time
 
 
 def get_date_text(game_time_data: datetime.datetime = None) -> str:

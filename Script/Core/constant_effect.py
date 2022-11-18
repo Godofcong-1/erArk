@@ -32,6 +32,10 @@ class BehaviorEffect:
     """ 属性_基础 增加基础互动好感 """
     ADD_SMALL_TRUST = 22
     """ 属性_基础 增加基础互动信赖 """
+    DOWN_INTERACTION_FAVORABILITY = 23
+    """ 属性_基础 降低基础互动好感 """
+    DOWN_SMALL_TRUST = 24
+    """ 属性_基础 降低基础互动信赖 """
     NOT_TIRED = 31
     """ 属性_基础 从疲劳中恢复 """
     URINATE_POINT_DOWN = 32

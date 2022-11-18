@@ -135,6 +135,36 @@ def handle_add_interaction_favoravility(
         )
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_INTERACTION_FAVORABILITY)
+def handle_down_interaction_favoravility(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    降低基础互动好感
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if target_data.dead:
+            return
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
+        character_handle.add_favorability(
+            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
+        )
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_TRUST)
 def handle_add_small_trust(
     character_id: int,
@@ -160,6 +190,42 @@ def handle_add_small_trust(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
         now_lust_multiple = 1
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[21])
+        now_lust_multiple *= adjust
+        target_data.trust += now_lust_multiple
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.trust += now_lust_multiple
+        if (character_id != 0) and (character_data.target_character_id == 0):
+            character_data.trust += now_lust_multiple
+            change_data.trust += now_lust_multiple
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SMALL_TRUST)
+def handle_down_small_trust(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    降低基础互动信赖
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id != character_id and (not character_id or not character_data.target_character_id):
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        if target_data.dead:
+            return
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+        now_lust_multiple = -1
         adjust = attr_calculation.get_ability_adjust(target_data.ability[21])
         now_lust_multiple *= adjust
         target_data.trust += now_lust_multiple

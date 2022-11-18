@@ -69,16 +69,16 @@ def handle_eat_time(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SHOWER_TIME)
 def handle_shower_time(character_id: int) -> int:
     """
-    淋浴时间（晚上9点到晚上12点）
+    淋浴时间（晚上8点到晚上12点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.behavior.start_time.hour in {21,22,23}:
+    if character_data.behavior.start_time.hour in {20,21,22,23}:
         now_hour = character_data.behavior.start_time.hour
-        return (now_hour-20) *200
+        return (now_hour-19) *200
     return 0
 
 
@@ -96,6 +96,8 @@ def handle_sleep_time(character_id: int) -> int:
     # return (now_time == 4) * 100
     if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
         now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
+        # print(f"debug {character_data.name}的睡觉前提判定，当前时间为{character_data.behavior.start_time}")
+        # print(f"成功进入睡觉前提if，返回值为{(now_hour-21) *100}")
         return (now_hour-21) *100
     return 0
 
@@ -561,6 +563,68 @@ def handle_move_to_locker_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.MOVE_TO_DORMITORY)
+def handle_move_to_dormitory(character_id: int) -> int:
+    """
+    角色抵达宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if (
+        character_data.behavior.move_target == character_data.position
+        and "Dormitory" in now_scene_data.scene_tag
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MOVE_FROM_DORMITORY)
+def handle_move_from_dormitory(character_id: int) -> int:
+    """
+    角色离开宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    src_scene_str = map_handle.get_map_system_path_str_for_list(character_data.behavior.move_src)
+    if character_id == 0 and src_scene_str != "":
+        src_scene_data = cache.scene_data[src_scene_str]
+        print(f"debug move_src = {character_data.behavior.move_src},place_name = {src_scene_data.scene_name},tag = {src_scene_data.scene_tag}")
+        # print(f"debug now_position = {now_position},place_name = {now_scene_data.scene_name},tag = {now_scene_data.scene_tag}")
+        if "Dormitory" in src_scene_data.scene_tag:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MOVE_TO_LADIES_ONLY)
+def handle_move_to_ladies_only(character_id: int) -> int:
+    """
+    角色抵达男士止步的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if (
+        character_data.behavior.move_target == character_data.position
+        and "Ladies_Only" in now_scene_data.scene_tag
+    ):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NOT_IN_TOILET)
 def handle_not_in_toilet(character_id: int) -> int:
     """
@@ -981,6 +1045,8 @@ def handle_not_shower(character_id: int) -> int:
     shower_time = character_data.action_info.last_shower_time
     if shower_time.day == now_time.day:
         return 0
+    elif now_time.hour <= 6 and (game_time.count_day_for_datetime(shower_time,now_time) == 1):
+        return 0
     return 1
 
 
@@ -997,6 +1063,8 @@ def handle_have_showered(character_id: int) -> int:
     now_time = cache.game_time
     shower_time = character_data.action_info.last_shower_time
     if shower_time.day == now_time.day:
+        return 1
+    elif now_time.hour <= 6 and (game_time.count_day_for_datetime(shower_time,now_time) == 1):
         return 1
     return 0
 
@@ -9051,5 +9119,37 @@ def handle_t_happy_mark_le_2(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[13] <= 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_LACTATION_1)
+def handle_t_lactation_1(character_id: int) -> int:
+    """
+    校验交互对象是否泌乳==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[23] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_LACTATION_0)
+def handle_t_lactation_0(character_id: int) -> int:
+    """
+    校验交互对象是否泌乳==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[23] == 0:
         return 1
     return 0

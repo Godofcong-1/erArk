@@ -173,6 +173,7 @@ def handle_reset_cloth(
         return
     if character_id:
         character_data: game_type.Character = cache.character_data[character_id]
+        character_data.cloth = attr_calculation.get_cloth_zero()
         character_tem = cache.npc_tem_data[character_id-1]
         for cloth_id in character_tem.Cloth:
             type = game_config.config_clothing_tem[cloth_id].clothing_type

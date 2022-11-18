@@ -835,6 +835,8 @@ class Cache:
         """ cmd数据 """
         self.game_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 游戏时间 """
+        self.pre_game_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 前一循环时的游戏时间 """
         self.now_panel_id: int = 0
         """ 当前游面板id """
         self.old_character_id: int = 0

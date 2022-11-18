@@ -22,6 +22,7 @@ def character_wait_5_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -36,6 +37,7 @@ def character_wait_10_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 10
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -49,6 +51,7 @@ def character_wait_30_min(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -63,6 +66,7 @@ def character_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     _, _, move_path, move_time = character_move.character_move(
         character_id,
         map_handle.get_map_system_path_for_str(character_data.dormitory),
@@ -81,6 +85,7 @@ def character_sleep(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
@@ -104,6 +109,7 @@ def character_rest(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.REST
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_REST
@@ -117,6 +123,7 @@ def character_move_to_rand_scene(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     scene_list = list(cache.scene_data.keys())
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_list.remove(now_scene_str)
@@ -139,6 +146,7 @@ def character_move_to_modern_music_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     to_cafeteria = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Modern_Musicroom"])
     )
@@ -157,6 +165,7 @@ def character_move_to_dr_office(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     to_dr_office = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Dr_office"])
     )
@@ -175,6 +184,7 @@ def character_move_to_toilet(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
 
     # 检索当前角色所在的大场景里有没有厕所，没有的话再随机选择其他厕所
     now_position = character_data.position[0]
@@ -216,6 +226,7 @@ def character_move_to_foodshop(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     to_foodshop = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Food_Shop"])
     )
@@ -241,6 +252,7 @@ def character_move_to_dining_hall(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     to_dining_hall = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Dining_hall"])
     )
@@ -259,6 +271,7 @@ def character_move_to_clinic(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
 
     # 判断是否存在没有人的门诊室，存在的话优先去没有人的
     empty_flag = False
@@ -286,6 +299,7 @@ def character_move_to_rest_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
 
     # 检索当前角色所在的大场景里有没有休息室，没有的话再随机选择其他区块
     now_position = character_data.position[0]
@@ -322,6 +336,7 @@ def character_move_to_bathzone_locker_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
 
     # 直接检索大浴场的更衣室
     for place in constant.place_data["Locker_Room"]:
@@ -351,6 +366,7 @@ def character_move_to_bath_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
 
     # 检索当前角色所在的大场景里有没有淋浴室，没有的话再随机选择其他区块
     now_position = character_data.position[0]
@@ -387,6 +403,7 @@ def character_move_to_training_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     if character_data.profession in {1,5,6,8}:
         room_name = "Fight_Room"
     else:
@@ -417,6 +434,7 @@ def character_move_to_player(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     to_dr = cache.character_data[0].position
     _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -537,6 +555,7 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     _, _, move_path, move_time = character_move.character_move(
         character_id,
         map_handle.get_map_system_path_for_str(character_data.dormitory),
@@ -579,6 +598,7 @@ def character_singing(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SINGING
     character_data.behavior.duration = 10
     character_data.state = constant.CharacterStatus.STATUS_SINGING
@@ -592,6 +612,7 @@ def character_play_instrument(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
@@ -605,6 +626,7 @@ def character_training(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.TRAINING
     character_data.behavior.duration = 120
     character_data.state = constant.CharacterStatus.STATUS_TRAINING
@@ -662,6 +684,7 @@ def character_pee(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.PEE
     character_data.state = constant.CharacterStatus.STATUS_PEE
     character_data.behavior.duration = 5
@@ -675,9 +698,10 @@ def character_take_shower(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
     character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
-    character_data.behavior.duration = 15
+    character_data.behavior.duration = 30
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.GET_CLOTH_OFF)
@@ -688,9 +712,10 @@ def character_get_cloth_off(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.CHANGE_CLOTH
     character_data.state = constant.CharacterStatus.STATUS_CHANGE_CLOTH
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     clothing.get_cloth_off(character_id)
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
@@ -707,9 +732,10 @@ def character_get_shower_cloth(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.CHANGE_CLOTH
     character_data.state = constant.CharacterStatus.STATUS_CHANGE_CLOTH
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 10
     clothing.get_shower_cloth(character_id)
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
@@ -726,6 +752,7 @@ def character_buy_rand_food_at_foodshop(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     new_food_list = []
     for food_id in cache.restaurant_data:
         if not len(cache.restaurant_data[food_id]):
@@ -761,6 +788,7 @@ def character_eat_rand_food(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.EAT
     now_food_list = []
     for food_id in character_data.food_bag:
@@ -787,6 +815,7 @@ def character_work_cure_patient(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
