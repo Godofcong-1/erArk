@@ -122,6 +122,27 @@ def get_shower_cloth(character_id: int):
         character_data.cloth[8].append(851)
 
 
+def get_sleep_cloth(character_id: int):
+    """
+    换上睡衣和内衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        character_data.cloth = attr_calculation.get_cloth_zero()
+        choic_flag = random.randint(0,1)
+        if choic_flag:
+            character_data.cloth[5].append(552)
+            character_data.cloth[8].append(852)
+        else:
+            character_data.cloth[5].append(553)
+            character_data.cloth[8].append(853)
+        get_underwear(character_id)
+
+
 '''
 不用的旧函数
 

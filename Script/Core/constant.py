@@ -73,6 +73,8 @@ class CharacterStatus:
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    STATUS_CHECK_LOCKER = 161
+    """ 检查衣柜 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -386,6 +388,8 @@ class Behavior:
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    CHECK_LOCKER = 161
+    """ 检查衣柜 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -825,6 +829,8 @@ class Panel:
     """ 指令过滤面板 """
     EVENT_OPTION = 18
     """ 事件选项面板 """
+    CHECK_LOCKER = 19
+    """ 检查衣柜面板 """
 
 
 class SecondBehavior:
@@ -1236,6 +1242,8 @@ class Instruct:
     """ 听牢骚 """
     PRAY = 0
     """ 祈愿 """
+    CHECK_LOCKER = 0
+    """ 检查衣柜 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0

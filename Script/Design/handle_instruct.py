@@ -836,6 +836,18 @@ def handle_listen_mission():
     update.game_update_flow(5)
 
 @add_instruct(
+    constant.Instruct.CHECK_LOCKER,
+    constant.InstructType.DAILY,
+    _("检查衣柜"),
+    {constant_promise.Premise.NOT_H,
+    constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY,
+    constant_promise.Premise.SLEEP_LE_89},
+)
+def handle_check_locker():
+    """处理检查衣柜指令"""
+    cache.now_panel_id = constant.Panel.CHECK_LOCKER
+
+@add_instruct(
     constant.Instruct.COLLCET_PANTY,
     constant.InstructType.DAILY,
     _("收起内裤_未实装"),

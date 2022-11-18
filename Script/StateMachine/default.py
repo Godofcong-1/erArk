@@ -86,6 +86,7 @@ def character_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
+    clothing.get_sleep_cloth(character_id)
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP

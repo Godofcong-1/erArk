@@ -258,6 +258,8 @@ class Premise:
     """ 地点_定位 在大浴场的更衣室 """
     NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
     """ 地点_定位 不在大浴场的更衣室 """
+    IN_LOCKER_ROOM_OR_DORMITORY = "in_locker_room_or_dormitory"
+    """ 地点_定位 在更衣室或宿舍 """
 
     MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
     """ 地点_移动 角色抵达女士洗手间 """
