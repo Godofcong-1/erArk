@@ -933,17 +933,17 @@ def handle_first_sex(
         # 处子血胖次
         no_pan_flag = False
         now_draw = draw.NormalDraw()
-        if len(target_data.cloth[9]):
-            pan_id = target_data.cloth[9][-1]
-        elif len(target_data.cloth_off[9]):
-            pan_id = target_data.cloth_off[9][-1]
+        if len(target_data.cloth.cloth_wear[9]):
+            pan_id = target_data.cloth.cloth_wear[9][-1]
+        elif len(target_data.cloth.cloth_off[9]):
+            pan_id = target_data.cloth.cloth_off[9][-1]
         elif len(character_data.pl_collection.npc_panties_tem[character_data.target_character_id]):
             pan_id = character_data.pl_collection.npc_panties_tem[character_data.target_character_id][-1]
         else:
             no_pan_flag = True
         if not no_pan_flag:
             pan_name = game_config.config_clothing_tem[pan_id].name
-            target_data.cloth[9] = []
+            target_data.cloth.cloth_wear[9] = []
             now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
             now_draw.draw()
             character_data.pl_collection.first_panties[character_data.target_character_id] =  f"{pan_name}(沾有处子血)"

@@ -385,31 +385,31 @@ class SeeCharacterClothPanel:
         for clothing_type in game_config.config_clothing_type:
             type_name = game_config.config_clothing_type[clothing_type].name
             # 当该类型里有衣服存在的时候才显示
-            if len(target_character_data.cloth[clothing_type]):
+            if len(target_character_data.cloth.cloth_wear[clothing_type]):
                 # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
                 if clothing_type in {6,9} and not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
                     # 如果有内衣透视素质，则自动变为显示
-                    target_character_data.cloth_see[clothing_type] = True if character_data.talent[307] else target_character_data.cloth_see[clothing_type]
+                    target_character_data.cloth.cloth_see[clothing_type] = True if character_data.talent[307] else target_character_data.cloth.cloth_see[clothing_type]
                     # 如果不显示，则不显示（废话
-                    if not target_character_data.cloth_see[clothing_type]:
+                    if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
                 # 当显示到下衣8的时候，换行
                 if clothing_type == 8 and now_text != "":
                     now_text += "\n"
                 now_text += f"  [{type_name}]:"
                 # 如果有多个衣服，则依次显示
-                for cloth_id in target_character_data.cloth[clothing_type]:
+                for cloth_id in target_character_data.cloth.cloth_wear[clothing_type]:
                     cloth_name = game_config.config_clothing_tem[cloth_id].name
                     now_text += f" {cloth_name}"
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         now_text += f"<semen>(精液)</semen>"
             # 真空的胸衣和内裤单独显示
-            if clothing_type in {6,9} and not len(target_character_data.cloth[clothing_type]):
+            if clothing_type in {6,9} and not len(target_character_data.cloth.cloth_wear[clothing_type]):
                 if not cache.debug_mode:
-                    # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
-                    if not target_character_data.cloth_see[clothing_type]:
+                    # print(f"debug {target_character_data.name}.cloth.cloth_see[clothing_type] = {target_character_data.cloth.cloth_see[clothing_type]}")
+                    if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
                 now_text += f"  [{type_name}]: 真空"
         now_text += "\n"
@@ -417,7 +417,7 @@ class SeeCharacterClothPanel:
 
         no_cloth_flag = True
         for clothing_type in game_config.config_clothing_type:
-            if len(target_character_data.cloth[clothing_type]):
+            if len(target_character_data.cloth.cloth_wear[clothing_type]):
                 no_cloth_flag = False
                 break
         if no_cloth_flag:

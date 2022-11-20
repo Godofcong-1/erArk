@@ -283,6 +283,22 @@ class DIRTY:
         """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
 
 
+class CLOTH:
+
+    def __init__(self):
+
+        self.clothing_tem: int = 0
+        """ 角色生成服装模板 """
+        self.cloth_wear: Dict[int,List] = {}
+        """ 角色穿着的服装 部位:衣服id"""
+        self.cloth_off: Dict[int,List] = {}
+        """ 角色脱下的服装 部位:衣服id"""
+        self.cloth_locker: Dict[int,List] = {}
+        """ 角色放在衣柜里的服装 部位:衣服id"""
+        self.cloth_see: Dict[int,bool] = {}
+        """ 角色穿着的服装能否被看见 部位:能否"""
+
+
 class BODY_H_STATE:
     """H状态结构体"""
 
@@ -692,14 +708,6 @@ class Character:
         # 角色已穿戴服装数据
         # 穿着类型:服装id
         # """
-        self.clothing_tem: int = 0
-        """ 角色生成服装模板 """
-        self.cloth: Dict[int,List] = {}
-        """ 角色穿着的服装 部位:衣服id"""
-        self.cloth_off: Dict[int,List] = {}
-        """ 角色脱下的服装 部位:衣服id"""
-        self.cloth_see: Dict[int,bool] = {}
-        """ 角色穿着的服装能否被看见 部位:能否"""
         # self.item: Set = set()
         # """ 旧：角色拥有的道具id集合 """
         self.item: Dict[int,int] = {}
@@ -708,6 +716,8 @@ class Character:
         # """ 角色的身高数据 """
         # self.measurements: Measurements = Measurements()
         # """ 角色的三围数据 """
+        self.cloth: CLOTH = CLOTH()
+        """ 角色的衣服数据 """
         self.behavior: Behavior = Behavior()
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[int,int] = {}

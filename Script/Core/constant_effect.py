@@ -353,6 +353,16 @@ class BehaviorEffect:
     """ 属性_服装 获得交互对象的袜子 """
     T_CLOTH_BACK = 631
     """ 属性_服装 交互对象穿回H时脱掉的衣服 """
+    WEAR_CLOTH_OFF = 632
+    """ 属性_服装 脱掉全部衣服 """
+    GET_SHOWER_CLOTH = 633
+    """ 属性_服装 换上浴帽和浴巾 """
+    LOCKER_CLOTH_RESET = 641
+    """ 属性_服装 衣柜里的衣服清零 """
+    WEAR_TO_LOCKER = 642
+    """ 属性_服装 当前身上衣服转移到衣柜里 """
+    LOCKER_TO_WEAR = 643
+    """ 属性_服装 衣柜里的衣服转移到身上 """
 
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """

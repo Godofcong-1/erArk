@@ -76,25 +76,25 @@ def handle_talk(character_id: int):
 
         # 衣服的代称代码，来自于NPC当前穿的衣服，或行动传入的变量
         # print(f"debug target_data.cloth = {target_data.cloth}")
-        if character_id == 0 and len(target_data.cloth[6]):
-            TagetBraId = target_data.cloth[6][0]
+        if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
+            TagetBraId = target_data.cloth.cloth_wear[6][0]
             TBraName = game_config.config_clothing_tem[TagetBraId].name
         else:
             TBraName = ""
-        if character_id == 0 and len(target_data.cloth[8]):
-            TagetSkiId = target_data.cloth[8][0]
+        if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
+            TagetSkiId = target_data.cloth.cloth_wear[8][0]
             TSkiName = game_config.config_clothing_tem[TagetSkiId].name
         else:
             TSkiName = ""
-        if character_id == 0 and len(target_data.cloth[9]):
-            TagetPanId = target_data.cloth[9][0]
+        if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
+            TagetPanId = target_data.cloth.cloth_wear[9][0]
             TPanName = game_config.config_clothing_tem[TagetPanId].name
         elif character_id == 0 and player_data.behavior.pan_name != "":
             TPanName = player_data.behavior.pan_name
         else:
             TPanName = ""
-        if character_id == 0 and len(target_data.cloth[10]):
-            TagetSocId = target_data.cloth[10][0]
+        if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
+            TagetSocId = target_data.cloth.cloth_wear[10][0]
             TSocName = game_config.config_clothing_tem[TagetSocId].name
         elif character_id == 0 and player_data.behavior.socks_name != "":
             TSocName = player_data.behavior.socks_name

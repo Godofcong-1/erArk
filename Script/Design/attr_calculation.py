@@ -178,13 +178,40 @@ def get_cloth_zero() -> dict:
     """
     遍历服装类型，将每个都设为空
     """
-
-    cloth_dict = {}
+    coloth_data = game_type.CLOTH()
 
     for clothing_type in game_config.config_clothing_type:
-        cloth_dict[clothing_type] = []
+        coloth_data.cloth_wear[clothing_type] = []
+        coloth_data.cloth_off[clothing_type] = []
+        coloth_data.cloth_locker[clothing_type] = []
 
-    return cloth_dict
+    coloth_data.cloth_see= {6:False,9:False}
+
+    return coloth_data
+
+
+def get_cloth_wear_zero() -> dict:
+    """
+    遍历当前穿着服装类型，将每个都设为空
+    """
+    coloth_wear_data = game_type.CLOTH().cloth_wear
+
+    for clothing_type in game_config.config_clothing_type:
+        coloth_wear_data[clothing_type] = []
+
+    return coloth_wear_data
+
+
+def get_cloth_locker_zero() -> dict:
+    """
+    遍历当前穿着服装类型，将每个都设为空
+    """
+    cloth_locker_data = game_type.CLOTH().cloth_locker
+
+    for clothing_type in game_config.config_clothing_type:
+        cloth_locker_data[clothing_type] = []
+
+    return cloth_locker_data
 
 
 def get_collection_zero() -> dict:

@@ -69,10 +69,11 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # if character_tem.Chest:
     #     now_character.chest_tem = character_tem.Chest
     now_character.cloth = attr_calculation.get_cloth_zero()
+    now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
     for cloth_id in character_tem.Cloth:
         type = game_config.config_clothing_tem[cloth_id].clothing_type
         # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-        now_character.cloth[type].append(cloth_id)
+        now_character.cloth.cloth_wear[type].append(cloth_id)
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)
 

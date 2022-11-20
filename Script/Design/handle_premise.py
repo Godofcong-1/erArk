@@ -6657,7 +6657,7 @@ def handle_wear_bra(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[6]):
+    if len(character_data.cloth.cloth_wear[6]):
         return 1
     else:
         return 0
@@ -6674,7 +6674,7 @@ def handle_t_wear_bra(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[6]):
+    if len(target_data.cloth.cloth_wear[6]):
         return 1
     return 0
 
@@ -6690,7 +6690,7 @@ def handle_t_not_wear_bra(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[6]):
+    if len(target_data.cloth.cloth_wear[6]):
         return 0
     return 1
 
@@ -6706,7 +6706,7 @@ def handle_t_wear_gloves(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[7]):
+    if len(target_data.cloth.cloth_wear[7]):
         return 1
     return 0
 
@@ -6722,7 +6722,7 @@ def handle_t_not_wear_gloves(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[7]):
+    if len(target_data.cloth.cloth_wear[7]):
         return 0
     return 1
 
@@ -6737,8 +6737,8 @@ def handle_wear_skirt(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[8]):
-        cloth_id = character_data.cloth[8][0]
+    if len(character_data.cloth.cloth_wear[8]):
+        cloth_id = character_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 5:
             return 1
     return 0
@@ -6755,8 +6755,8 @@ def handle_t_wear_skirt(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[8]):
-        cloth_id = target_data.cloth[8][0]
+    if len(target_data.cloth.cloth_wear[8]):
+        cloth_id = target_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 5:
             return 1
     return 0
@@ -6773,8 +6773,8 @@ def handle_t_wear_trousers(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[8]):
-        cloth_id = target_data.cloth[8][0]
+    if len(target_data.cloth.cloth_wear[8]):
+        cloth_id = target_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 4:
             return 1
     return 0
@@ -6790,7 +6790,7 @@ def handle_wear_pan(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[9]):
+    if len(character_data.cloth.cloth_wear[9]):
         return 1
     else:
         return 0
@@ -6807,7 +6807,7 @@ def handle_t_wear_pan(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[9]):
+    if len(target_data.cloth.cloth_wear[9]):
         return 1
     return 0
 
@@ -6823,7 +6823,7 @@ def handle_t_not_wear_pan(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[9]):
+    if len(target_data.cloth.cloth_wear[9]):
         return 0
     return 1
 
@@ -6838,7 +6838,7 @@ def handle_wear_socks(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[10]):
+    if len(character_data.cloth.cloth_wear[10]):
         return 1
     else:
         return 0
@@ -6855,7 +6855,7 @@ def handle_t_wear_socks(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[10]):
+    if len(target_data.cloth.cloth_wear[10]):
         return 1
     return 0
 
@@ -6871,7 +6871,7 @@ def handle_cloth_off(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth[clothing_type]):
+        if len(character_data.cloth.cloth_wear[clothing_type]):
             return 0
     return 1
 
@@ -6887,7 +6887,7 @@ def handle_not_cloth_off(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth[clothing_type]):
+        if len(character_data.cloth.cloth_wear[clothing_type]):
             return 1
     return 0
 
@@ -6902,7 +6902,7 @@ def handle_shower_cloth(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth[5]:
+    if 551 in character_data.cloth.cloth_wear[5]:
         return 1
     return 0
 
@@ -6917,7 +6917,7 @@ def handle_not_shower_cloth(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth[5]:
+    if 551 in character_data.cloth.cloth_wear[5]:
         return 0
     return 1
 

@@ -69,6 +69,16 @@ class CharacterStatus:
     """ H时被人目击闯入中断 """
     STATUS_PEE = 140
     """ 解手 """
+    STATUS_CLOTH_OFF = 141
+    """ 脱掉全部衣服 """
+    STATUS_PUT_SHOWER_CLOTH = 142
+    """ 换上浴帽和浴巾 """
+    STATUS_PUT_SLEEP_CLOTH = 143
+    """ 换上睡衣和内衣 """
+    STATUS_WEAR_TO_LOCKER = 144
+    """ 身上衣服脱到衣柜 """
+    STATUS_LOCKER_TO_WEAR = 145
+    """ 衣柜衣服穿回身上 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
@@ -384,6 +394,16 @@ class Behavior:
     """ H时被人目击闯入中断 """
     PEE = 140
     """ 解手 """
+    CLOTH_OFF = 141
+    """ 脱掉全部衣服 """
+    PUT_SHOWER_CLOTH = 142
+    """ 换上浴帽和浴巾 """
+    PUT_SLEEP_CLOTH = 143
+    """ 换上睡衣和内衣 """
+    WEAR_TO_LOCKER = 144
+    """ 身上衣服脱到衣柜 """
+    LOCKER_TO_WEAR = 145
+    """ 衣柜衣服穿回身上 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
@@ -699,8 +719,8 @@ class StateMachine:
     TAKE_SHOWER = 51
     """ 淋浴 """
 
-    GET_CLOTH_OFF = 71
-    """ 脱成全裸 """
+    WEAR_TO_LOCKER = 71
+    """ 当前身上衣服转移到衣柜里 """
     GET_SHOWER_CLOTH = 72
     """ 换上浴帽和浴巾 """
 

@@ -123,7 +123,7 @@ class Ejaculation_Panel:
 
         elif eja_type == "服装":
             for clothing_type in game_config.config_clothing_type:
-                if len(target_data.cloth[clothing_type]):
+                if len(target_data.cloth.cloth_wear[clothing_type]):
                     position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
 
         self.handle_panel = panel.PageHandlePanel(
