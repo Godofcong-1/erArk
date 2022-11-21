@@ -63,6 +63,7 @@ def init_attr(character_id: int):
         character_data.sleep_point = 0
         character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
+        character_data.cloth = attr_calculation.get_cloth_zero()
 
     #一系列初始化函数
     character_data.hit_point = character_data.hit_point_max

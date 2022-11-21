@@ -597,7 +597,7 @@ def handle_move_from_dormitory(character_id: int) -> int:
     src_scene_str = map_handle.get_map_system_path_str_for_list(character_data.behavior.move_src)
     if character_id == 0 and src_scene_str != "":
         src_scene_data = cache.scene_data[src_scene_str]
-        print(f"debug move_src = {character_data.behavior.move_src},place_name = {src_scene_data.scene_name},tag = {src_scene_data.scene_tag}")
+        # print(f"debug move_src = {character_data.behavior.move_src},place_name = {src_scene_data.scene_name},tag = {src_scene_data.scene_tag}")
         # print(f"debug now_position = {now_position},place_name = {now_scene_data.scene_name},tag = {now_scene_data.scene_tag}")
         if "Dormitory" in src_scene_data.scene_tag:
             return 1

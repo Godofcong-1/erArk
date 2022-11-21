@@ -85,6 +85,8 @@ class CharacterStatus:
     """ 演奏乐器 """
     STATUS_CHECK_LOCKER = 161
     """ 检查衣柜 """
+    STATUS_SMELL_UNDERWEAR = 162
+    """ 闻内衣 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -464,6 +466,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 333
     """ 手指插入（A） """
+    SMELL_UNDERWEAR = 341
+    """ 闻内衣 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -1226,6 +1230,8 @@ class Instruct:
     #日常#
     WAIT = 0
     """ 等待五分钟 """
+    WAIT_1_HOUR = 0
+    """ 等待一个小时 """
     WAIT_6_HOUR = 0
     """ 等待六个小时 """
     CHAT = 0

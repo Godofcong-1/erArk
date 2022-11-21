@@ -173,8 +173,7 @@ def handle_reset_cloth(
         return
     if character_id:
         character_data: game_type.Character = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_zero()
-        character_data.cloth.cloth_wear = attr_calculation.get_wear_cloth_zero()
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
         character_tem = cache.npc_tem_data[character_id-1]
         for cloth_id in character_tem.Cloth:
             type = game_config.config_clothing_tem[cloth_id].clothing_type
@@ -341,7 +340,7 @@ def handle_wear_to_locker(
     now_time: datetime.datetime,
 ):
     """
-    当前身上衣服转移到衣柜里
+    身上衣服与衣柜衣服互换（除耳朵和脖子）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -351,7 +350,10 @@ def handle_wear_to_locker(
     if not add_time:
         return
     character_data = cache.character_data[character_id]
-    character_data.cloth.cloth_wear,character_data.cloth.cloth_locker = [],character_data.cloth.cloth_wear
+    for clothing_type in game_config.config_clothing_type:
+        if clothing_type not in [2,3]:
+            character_data.cloth.cloth_wear[clothing_type],character_data.cloth.cloth_locker[clothing_type] = character_data.cloth.cloth_locker[clothing_type],character_data.cloth.cloth_wear[clothing_type]
+    clothing.chara_special_wear_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_TO_WEAR)
@@ -372,5 +374,6 @@ def handle_locker_to_wear(
     if not add_time:
         return
     character_data = cache.character_data[character_id]
-    character_data.cloth.cloth_wear,character_data.cloth.cloth_locker = character_data.cloth.cloth_locker,[]
+    character_data.cloth.cloth_wear,character_data.cloth.cloth_locker = character_data.cloth.cloth_locker,attr_calculation.get_cloth_locker_zero()
+    clothing.chara_special_wear_cloth(character_id)
 

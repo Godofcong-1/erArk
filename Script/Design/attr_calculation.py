@@ -202,6 +202,19 @@ def get_cloth_wear_zero() -> dict:
     return coloth_wear_data
 
 
+def get_cloth_wear_zero_except_jewellery() -> dict:
+    """
+    遍历当前穿着服装类型，将首饰以外的设为空
+    """
+    coloth_wear_data = game_type.CLOTH().cloth_wear
+
+    for clothing_type in game_config.config_clothing_type:
+        if clothing_type not in [2,3]:
+            coloth_wear_data[clothing_type] = []
+
+    return coloth_wear_data
+
+
 def get_cloth_locker_zero() -> dict:
     """
     遍历当前穿着服装类型，将每个都设为空

@@ -612,6 +612,23 @@ def handle_wait():
 
 
 @add_instruct(
+    constant.Instruct.WAIT_1_HOUR,
+    constant.InstructType.DAILY,
+    _("等待一个小时"),
+    {constant_promise.Premise.DEBUG_MODE_ON},
+)
+def handle_wait_1_hour():
+    """处理等待一个小时指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = 60
+    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+    update.game_update_flow(60)
+
+
+@add_instruct(
     constant.Instruct.WAIT_6_HOUR,
     constant.InstructType.DAILY,
     _("等待六个小时"),

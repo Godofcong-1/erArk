@@ -18,7 +18,7 @@ from Script.UI.Panel import (
     department_panel,
     instruct_filter_panel,
     event_option_panel,
-    # check_locker_panel,
+    check_locker_panel,
 )
 from Script.Config import normal_config
 
@@ -128,8 +128,8 @@ def instruct_event_option_flow():
     now_panel = event_option_panel.Event_option_Panel(width)
     now_panel.draw()
 
-# @handle_panel.add_panel(constant.Panel.CHECK_LOCKER)
-# def instruct_check_locker_flow():
-#     """检查衣柜面板"""
-#     now_panel = check_locker_panel.Event_option_Panel(width)
-#     now_panel.draw()
+@handle_panel.add_panel(constant.Panel.CHECK_LOCKER)
+def instruct_check_locker_flow():
+    """检查衣柜面板"""
+    now_panel = check_locker_panel.Check_locker_Panel(width)
+    now_panel.draw()

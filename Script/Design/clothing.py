@@ -104,6 +104,7 @@ def get_cloth_off(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        chara_special_wear_cloth(character_id)
 
 
 def get_shower_cloth(character_id: int):
@@ -116,10 +117,11 @@ def get_shower_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero_except_jewellery()
         character_data.cloth.cloth_wear[0].append(51)
         character_data.cloth.cloth_wear[5].append(551)
         character_data.cloth.cloth_wear[8].append(851)
+        chara_special_wear_cloth(character_id)
 
 
 def get_sleep_cloth(character_id: int):
@@ -132,7 +134,7 @@ def get_sleep_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero_except_jewellery()
         choic_flag = random.randint(0,1)
         if choic_flag:
             character_data.cloth.cloth_wear[5].append(552)
@@ -141,7 +143,24 @@ def get_sleep_cloth(character_id: int):
             character_data.cloth.cloth_wear[5].append(553)
             character_data.cloth.cloth_wear[8].append(853)
         get_underwear(character_id)
+        chara_special_wear_cloth(character_id)
 
+
+def chara_special_wear_cloth(character_id: int):
+    """
+    根据角色设定而穿上必须穿的衣物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+
+        # 阿米娅必须戴戒指
+        if character_data.adv == 1:
+            if 701 not in character_data.cloth.cloth_wear[7]:
+                character_data.cloth.cloth_wear[7].append(701)
 
 '''
 不用的旧函数

@@ -360,7 +360,7 @@ class BehaviorEffect:
     LOCKER_CLOTH_RESET = 641
     """ 属性_服装 衣柜里的衣服清零 """
     WEAR_TO_LOCKER = 642
-    """ 属性_服装 当前身上衣服转移到衣柜里 """
+    """ 属性_服装 身上衣服与衣柜衣服互换（除耳朵和脖子） """
     LOCKER_TO_WEAR = 643
     """ 属性_服装 衣柜里的衣服转移到身上 """
 
