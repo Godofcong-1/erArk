@@ -202,17 +202,17 @@ def get_cloth_wear_zero() -> dict:
     return coloth_wear_data
 
 
-def get_cloth_wear_zero_except_jewellery() -> dict:
+def get_cloth_wear_zero_except_jewellery(character_id: int) -> dict:
     """
     遍历当前穿着服装类型，将首饰以外的设为空
     """
-    coloth_wear_data = game_type.CLOTH().cloth_wear
-
+    character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
-        if clothing_type not in [2,3]:
-            coloth_wear_data[clothing_type] = []
-
-    return coloth_wear_data
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+                # 只要不是首饰，就删掉该服装
+                if game_config.config_clothing_tem[cloth_id].tag != 6:
+                    character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
 
 
 def get_cloth_locker_zero() -> dict:

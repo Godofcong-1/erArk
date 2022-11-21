@@ -6892,6 +6892,38 @@ def handle_not_cloth_off(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.CLOTH_MOST_OFF)
+def handle_cloth_most_off(character_id: int) -> int:
+    """
+    当前大致全裸（没穿上下外衣内衣）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in [5,6,8,9]:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.NOT_CLOTH_MOST_OFF)
+def handle_not_cloth_most_off(character_id: int) -> int:
+    """
+    当前不是大致全裸（没穿上下外衣内衣）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in [5,6,8,9]:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SHOWER_CLOTH)
 def handle_shower_cloth(character_id: int) -> int:
     """

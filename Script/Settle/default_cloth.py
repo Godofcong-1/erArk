@@ -340,7 +340,7 @@ def handle_wear_to_locker(
     now_time: datetime.datetime,
 ):
     """
-    身上衣服与衣柜衣服互换（除耳朵和脖子）
+    身上首饰以外的衣服转移到柜子里
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -350,9 +350,15 @@ def handle_wear_to_locker(
     if not add_time:
         return
     character_data = cache.character_data[character_id]
+
     for clothing_type in game_config.config_clothing_type:
-        if clothing_type not in [2,3]:
-            character_data.cloth.cloth_wear[clothing_type],character_data.cloth.cloth_locker[clothing_type] = character_data.cloth.cloth_locker[clothing_type],character_data.cloth.cloth_wear[clothing_type]
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+                # 只要不是首饰，就转移到柜子里
+                if game_config.config_clothing_tem[cloth_id].tag != 6:
+                    character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
+                    character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
+
     clothing.chara_special_wear_cloth(character_id)
 
 
@@ -374,6 +380,10 @@ def handle_locker_to_wear(
     if not add_time:
         return
     character_data = cache.character_data[character_id]
-    character_data.cloth.cloth_wear,character_data.cloth.cloth_locker = character_data.cloth.cloth_locker,attr_calculation.get_cloth_locker_zero()
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_locker[clothing_type]):
+            for cloth_id in character_data.cloth.cloth_locker[clothing_type]:
+                character_data.cloth.cloth_wear[clothing_type].append(cloth_id)
+
     clothing.chara_special_wear_cloth(character_id)
 

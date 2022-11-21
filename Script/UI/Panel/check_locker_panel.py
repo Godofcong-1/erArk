@@ -156,11 +156,11 @@ class FindDraw:
             # 选项面板
             # button_all_draw = panel.LeftDrawTextListPanel()
 
-            button0_text = f"[001]拿起来闻一闻内衣的味道"
+            button0_text = f"[001]把内衣拿起来闻一闻味道"
             button0_draw = draw.LeftButton(
                 _(button0_text),
                 _("1"),
-                self.width,
+                window_width,
                 cmd_func=self.smell,
                 args=(),
                 )
@@ -173,7 +173,7 @@ class FindDraw:
                 button1_draw = draw.LeftButton(
                     _(button1_text),
                     _("2"),
-                    self.width,
+                    window_width,
                     cmd_func=self.get_pan,
                     args=(),
                     )
@@ -186,13 +186,25 @@ class FindDraw:
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("3"),
-                    self.width,
+                    window_width,
                     cmd_func=self.get_socks,
                     args=(),
                     )
                 line_feed.draw()
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
+
+                button3_text = f"[004]用衣服自慰，射在上面（未实装）"
+                button3_draw = draw.LeftButton(
+                    _(button3_text),
+                    _("3"),
+                    window_width,
+                    cmd_func=self.smell,
+                    args=(),
+                    )
+                line_feed.draw()
+                button3_draw.draw()
+                return_list.append(button3_draw.return_text)
 
             # return_list.append(button0_draw.return_text)
             # button_all_draw.draw_list.append(button0_draw)
@@ -251,3 +263,11 @@ class FindDraw:
         now_draw.width = window_width
         now_draw.text = _(f"\n获得了{ self.character_data.name}的{socks_name}，可在藏品馆里纳入收藏\n")
         now_draw.draw()
+
+    def shoot_in_cloth(self):
+        """射在衣服上"""
+
+        self.pl_data.behavior.duration = 1
+        self.pl_data.behavior.behavior_id = constant.Behavior.SMELL_UNDERWEAR
+        self.pl_data.state = constant.CharacterStatus.STATUS_SMELL_UNDERWEAR
+        update.game_update_flow(1)

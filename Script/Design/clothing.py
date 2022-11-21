@@ -117,7 +117,7 @@ def get_shower_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero_except_jewellery()
+        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
         character_data.cloth.cloth_wear[0].append(51)
         character_data.cloth.cloth_wear[5].append(551)
         character_data.cloth.cloth_wear[8].append(851)
@@ -134,7 +134,7 @@ def get_sleep_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero_except_jewellery()
+        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
         choic_flag = random.randint(0,1)
         if choic_flag:
             character_data.cloth.cloth_wear[5].append(552)
@@ -156,11 +156,13 @@ def chara_special_wear_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
+        # print(f"debug name = {character_data.name}")
 
         # 阿米娅必须戴戒指
         if character_data.adv == 1:
             if 701 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(701)
+                # print("换上戒指了")
 
 '''
 不用的旧函数

@@ -37,7 +37,7 @@ class Find_call_Panel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw("干员位置一览", self.width)
-        self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 4, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 3, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
             npc_list = {}
