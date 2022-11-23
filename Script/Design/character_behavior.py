@@ -70,7 +70,7 @@ def init_character_behavior():
 
 def update_cafeteria():
     """刷新食堂内食物"""
-    max_people = len(cache.character_data)
+    max_people = len(cache.npc_id_got)
     # food_judge = 1
     food_count = 0
     for food_type in cache.restaurant_data:
@@ -549,7 +549,7 @@ def update_sleep():
     now_draw.draw()
 
     # 角色刷新
-    for character_id in cache.character_data:
+    for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
         # 结算数值为珠
         settle_character_juel(character_id)

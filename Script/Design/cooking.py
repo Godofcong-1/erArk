@@ -209,7 +209,7 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
 def init_restaurant_data():
     """初始化餐馆内的食物数据"""
     cache.restaurant_data = {}
-    max_people = len(cache.character_data)
+    max_people = len(cache.npc_id_got)
     cook_index = 0
     while 1:
         recipes_id = random.randint(0, len(cache.recipe_data) - 1)

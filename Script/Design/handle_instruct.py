@@ -737,7 +737,7 @@ def handle_followed():
 
     # 去掉其他NPC的跟随
     if not cache.debug_mode:
-        for npc_id in cache.character_data:
+        for npc_id in cache.npc_id_got:
             if npc_id not in {0,character_data.target_character_id,character_data.assistant_character_id}:
                 other_character_data = cache.character_data[npc_id]
                 if other_character_data.is_follow:

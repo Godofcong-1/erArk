@@ -236,7 +236,7 @@ def get_collection_zero() -> dict:
     for cid in game_config.config_collection_bonus_data:
         collection_data.collection_bonus[cid] = False
 
-    for npc_id in cache.character_data:
+    for npc_id in cache.npc_id_got:
         collection_data.token_list[npc_id] = False
         collection_data.first_panties[npc_id] = ""
         collection_data.npc_panties[npc_id] = []

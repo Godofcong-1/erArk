@@ -40,7 +40,7 @@ class Find_call_Panel:
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 3, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
-            npc_list = {}
+            npc_list = []
             title_draw.draw()
             info_draw = draw.NormalDraw()
             follow_count = cache.character_data[0].pl_ability.follow_count
@@ -52,30 +52,10 @@ class Find_call_Panel:
             # 暂不输出跟随角色信息，等加了该功能后再输出
             # info_draw.draw()
             line_feed.draw()
-            #读取人物的位置情报与跟随情报#
-            for npc_id in cache.character_data:
+            # 遍历角色id
+            for npc_id in cache.npc_id_got:
                 if npc_id != 0:
-                    character_data = cache.character_data[npc_id]
-                    name = character_data.name
-                    id = str(character_data.adv)
-                    scene_position = character_data.position
-                    scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-                    if scene_position_str[-1] == "0":
-                        scene_position_str = scene_position_str[:-2] + "入口"
-                    # scene_name = cache.scene_data[scene_position_str].scene_name
-                    npc_list[npc_id-1] = f"{name}({id}):{scene_position_str}   "
-
-                    # 输出跟随信息
-                    if character_data.is_follow == 1:
-                        npc_list[npc_id-1] += "智能跟随中"
-                    elif character_data.is_follow == 2:
-                        npc_list[npc_id-1] += "强制跟随中"
-                    elif character_data.is_follow == 3:
-                        npc_list[npc_id-1] += "前往博士办公室中"
-                    else:
-                        status_text = game_config.config_status[character_data.state].name
-                        npc_list[npc_id-1] += f"正在：{status_text}"
-                    # print("npc_list[npc_id-1] :",npc_list[npc_id-1])
+                    npc_list.append(npc_id)
             self.handle_panel.text_list = npc_list
             self.handle_panel.update()
             return_list = []
@@ -103,13 +83,11 @@ class FindDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, str], width: int, is_button: bool, num_button: bool, button_id: int
+        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.text = text
-        """ 食物名字 """
-        self.cid = text[0]
-        """ 食物在食堂内的表id """
+        self.npc_id: int = NPC_id
+        """ 干员角色编号 """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -122,25 +100,33 @@ class FindDraw:
         """ 按钮返回值 """
         name_draw = draw.NormalDraw()
         # print("text :",text)
-        if is_button:
-            if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{text}"
-                name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.see_call_list
-                )
-            else:
-                button_text = f"[{text}]"
-                name_draw = draw.CenterButton(
-                    button_text, text, self.width, cmd_func=self.see_call_list
-                )
-                self.button_return = text
-            self.draw_text = button_text
+
+        character_data = cache.character_data[self.npc_id]
+        name = character_data.name
+        id = str(character_data.adv)
+        scene_position = character_data.position
+        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
+        if scene_position_str[-1] == "0":
+            scene_position_str = scene_position_str[:-2] + "入口"
+        # scene_name = cache.scene_data[scene_position_str].scene_name
+        now_draw_text = f"[{id}]{name}:{scene_position_str}   "
+
+        # 输出跟随信息
+        if character_data.is_follow == 1:
+            now_draw_text += "智能跟随中"
+        elif character_data.is_follow == 2:
+            now_draw_text += "强制跟随中"
+        elif character_data.is_follow == 3:
+            now_draw_text += "前往博士办公室中"
         else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{text}]"
-            name_draw.width = self.width
-            self.draw_text = name_draw.text
+            status_text = game_config.config_status[character_data.state].name
+            now_draw_text += f"正在：{status_text}"
+
+        button_text = f"{now_draw_text}"
+        name_draw = draw.LeftButton(
+            button_text, self.button_return, self.width, cmd_func=self.see_call_list
+        )
+        self.draw_text = button_text
         self.now_draw = name_draw
         """ 绘制的对象 """
 
@@ -170,7 +156,7 @@ class FindDraw:
 
             # 去掉其他NPC的跟随
             # if not cache.debug_mode:
-            #     for npc_id in cache.character_data:
+            #     for npc_id in cache.npc_id_got:
             #         if npc_id != 0 and npc_id != character_id:
             #             other_character_data = cache.character_data[npc_id]
             #             if other_character_data.is_follow:

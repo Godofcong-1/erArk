@@ -53,7 +53,7 @@ class Check_locker_Panel:
             if "Locker_Room" in map_data.scene_tag:
 
                 #读取所有人物是否有在衣柜里存放衣服#
-                for npc_id in cache.character_data:
+                for npc_id in cache.npc_id_got:
                     if npc_id:
                         character_data = cache.character_data[npc_id]
                         for clothing_type in game_config.config_clothing_type:

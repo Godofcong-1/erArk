@@ -38,7 +38,8 @@ def creator_character_panel():
         confirm_game_info_panel()
         if input_name_panel():
             character.init_attr(0)
-            game_start()
+            # game_start()
+            cache.base_resouce = attr_calculation.get_base_zero()
             if confirm_character_attr_panel():
                 game_start()
                 break
@@ -62,7 +63,6 @@ def game_start():
     map_handle.character_move_scene(["0","0"], character_position, 0)
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
-    cache.base_resouce = attr_calculation.get_base_zero()
     attr_calculation.get_base_updata()
 
 def confirm_game_info_panel():
@@ -165,6 +165,7 @@ class Character_creat_Handle:
         info_draw.draw_title = False
         sex_draw = Character_Sex(self.width)
         jj_draw = Character_JJ(self.width)
+        debug_draw = Character_Debug(self.width)
         firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
@@ -173,6 +174,7 @@ class Character_creat_Handle:
             info_draw,
             sex_draw,
             jj_draw,
+            debug_draw,
             firstNpc_draw,
             bonus_draw,
             # abi_draw,
@@ -314,6 +316,59 @@ class Character_JJ:
             character_data.pl_ability.jj_size += 1
 
 
+
+class Character_Debug:
+    """
+    Debug面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+
+        if cache.debug_mode:
+            button_text = f"    【关闭debug模式】"
+        else:
+            button_text = f"    【开启debug模式】"
+        button_draw = draw.LeftButton(
+            _(button_text),
+            _('debug'),
+            self.width / 10,
+            cmd_func=self.change)
+        self.return_list.append(button_draw.return_text)
+
+        now_draw.draw_list.append(button_draw)
+        now_draw.width += len(button_draw.text)
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        if cache.character_data[0].sex == 0:
+            for label in self.draw_list:
+                if isinstance(label, list):
+                    for value in label:
+                        value.draw()
+                    line_feed_draw.draw()
+                else:
+                    label.draw()
+
+    def change(self):
+        """改变"""
+        cache.debug_mode = not cache.debug_mode
+
+
 class Character_FirstNPC:
     """
     角色初始干员面板
@@ -370,7 +425,10 @@ class Character_FirstNPC:
 
         info_last_draw = draw.LeftDraw()
         info_last_draw.width = 1
-        self.npc_select_now = 5 - len(cache.npc_id_got)
+        if cache.debug_mode:
+            self.npc_select_now = 999
+        else:
+            self.npc_select_now = 5 - len(cache.npc_id_got)
         if self.npc_select_now:
             info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
         else:
@@ -403,7 +461,10 @@ class Character_FirstNPC:
             line = draw.LineDraw("-", self.width)
             line.draw()
             now_npc_draw = draw.NormalDraw()
-            self.npc_select_now = 5 - len(cache.npc_id_got)
+            if cache.debug_mode:
+                self.npc_select_now = 999
+            else:
+                self.npc_select_now = 5 - len(cache.npc_id_got)
             now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
             now_npc_draw.draw()
             line_feed_draw.draw()
@@ -442,7 +503,7 @@ class SelectFirstNPCButton:
         """初始化绘制对象"""
 
         self.NPC_id: int = NPC_id
-        """ 指令名字绘制文本 """
+        """ 干员角色编号 """
         self.draw_text: str = ""
         """ 绘制文本 """
         self.width: int = width
@@ -479,6 +540,8 @@ class SelectFirstNPCButton:
         """选项1"""
         if self.NPC_id in cache.npc_id_got:
             cache.npc_id_got.remove(self.NPC_id)
+        elif cache.debug_mode:
+            cache.npc_id_got.add(self.NPC_id)
         elif 5 - len(cache.npc_id_got):
             cache.npc_id_got.add(self.NPC_id)
 
@@ -519,6 +582,8 @@ class Character_Bonus:
         if cache.game_round == 1:
             bonus_all += 20
             info_draw.text += f" {bonus_all} (新玩家奖励+20)"
+        if cache.debug_mode:
+            bonus_all += 999
         self.bonus_now = bonus_all
 
         now_draw.draw_list.append(info_draw)
