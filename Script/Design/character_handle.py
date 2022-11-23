@@ -186,7 +186,9 @@ def init_character_dormitory():
 
 def init_character_position():
     """初始化角色位置"""
-    for character_id in cache.npc_id_got:
+    id_list = cache.npc_id_got
+    id_list.add(0)
+    for character_id in id_list:
         character_position = cache.character_data[character_id].position
         character_dormitory = cache.character_data[character_id].dormitory
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)

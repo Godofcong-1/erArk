@@ -38,7 +38,7 @@ class Department_Panel:
         """绘制对象"""
 
         title_text = "部门运作情况"
-        department_type_list = [_("部门总概况"),_("医疗部")]
+        department_type_list = [_("部门总概况"),_("医疗部"),_("宿舍")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -124,6 +124,32 @@ class Department_Panel:
                 medical_info_draw.width = self.width
                 now_draw.draw_list.append(medical_info_draw)
                 now_draw.width += len(medical_info_draw.text)
+
+            elif self.now_panel == "宿舍":
+
+                dormitory_info_draw = draw.NormalDraw()
+                dormitory_info_text = "\n当前宿舍情况："
+                npc_count = str(len(cache.npc_id_got))
+                dormitory_info_text += f"\n  干员总数：{npc_count}"
+                dormitory_info_text += f"\n  具体居住情况："
+                doctor_name_str = ""
+                for dormitory_place in constant.place_data["Dormitory"]:
+                    count = 0
+                    dormitory_name = dormitory_place.split("\\")[-1]
+                    dormitory_son_text = f"\n    {dormitory_name}："
+                    for npc_id in cache.npc_id_got:
+                        live_dormitory = cache.character_data[npc_id].dormitory
+                        if live_dormitory == dormitory_place:
+                            dormitory_son_text += f"{cache.character_data[npc_id].name}  "
+                            count += 1
+                        if count >= 2:
+                            dormitory_info_text += dormitory_son_text
+                            break
+
+                dormitory_info_draw.text = dormitory_info_text
+                dormitory_info_draw.width = self.width
+                now_draw.draw_list.append(dormitory_info_draw)
+                now_draw.width += len(dormitory_info_draw.text)
 
             self.draw_list: List[draw.NormalDraw] = []
             """ 绘制的文本列表 """
