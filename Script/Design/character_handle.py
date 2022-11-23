@@ -46,6 +46,10 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character = game_type.Character()
     now_character.cid = character_id
     now_character.name = character_tem.Name
+    # 检测基础干员并加入已有干员列表
+    if now_character.name in {"阿米娅","凯尔希"}:
+        cache.npc_id_got.add(character_id)
+    cache.npc_name_data.add(now_character.name) # 加入到已有干员姓名中
     now_character.sex = character_tem.Sex
     now_character.profession= character_tem.Profession
     now_character.race= character_tem.Race
@@ -159,33 +163,30 @@ def init_character_dormitory():
     Dr_room = {
         x: 0 for j in [k[1] for k in sorted(Dr_room.items(), key=lambda x: x[0])] for x in j
     }
+    now_room = list(Dr_room.keys())[0]
+    cache.character_data[0].dormitory = now_room
     dormitory = {
         key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
     }
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
     }
-    # print("Dr_room :",Dr_room)
     # print("dormitory :",dormitory)
     # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
-    for character_id in cache.character_data:
+    npc_count = 0
+    # 每两个人住一个房间
+    for character_id in cache.npc_id_got:
         # print("character_id :",character_id)
-        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
-        if character_id == 0:
-            now_room = list(Dr_room.keys())[0]
-            cache.character_data[character_id].dormitory = now_room
-        else:
-            # print("list(dormitory.keys()) :",list(dormitory.keys()))
-            for n in list(dormitory.keys()):
-                # print("n :",n)
-                if cache.scene_data[n].scene_name == cache.character_data[character_id].dormitory:
-                    cache.character_data[character_id].dormitory = n
-        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
+        n = npc_count // 2
+        now_room = list(dormitory.keys())[n]
+        # print(f"debug now_room = {now_room}")
+        cache.character_data[character_id].dormitory = now_room
+        npc_count += 1
 
 
 def init_character_position():
     """初始化角色位置"""
-    for character_id in cache.character_data:
+    for character_id in cache.npc_id_got:
         character_position = cache.character_data[character_id].position
         character_dormitory = cache.character_data[character_id].dormitory
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)

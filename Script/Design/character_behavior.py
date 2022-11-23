@@ -46,9 +46,11 @@ def init_character_behavior():
     角色行为树总控制
     """
     while 1:
-        if len(cache.over_behavior_character) >= len(cache.character_data):
+        id_list = cache.npc_id_got
+        id_list.add(0)
+        if len(cache.over_behavior_character) >= len(id_list):
             break
-        for character_id in cache.character_data:
+        for character_id in id_list:
             if character_id in cache.over_behavior_character:
                 continue
             character_behavior(character_id, cache.game_time)

@@ -40,6 +40,7 @@ def creator_character_panel():
             character.init_attr(0)
             game_start()
             if confirm_character_attr_panel():
+                game_start()
                 break
         cache.character_data[0] = game_type.Character()
     cache.now_panel_id = constant.Panel.IN_SCENE
@@ -164,6 +165,7 @@ class Character_creat_Handle:
         info_draw.draw_title = False
         sex_draw = Character_Sex(self.width)
         jj_draw = Character_JJ(self.width)
+        firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
@@ -171,6 +173,7 @@ class Character_creat_Handle:
             info_draw,
             sex_draw,
             jj_draw,
+            firstNpc_draw,
             bonus_draw,
             # abi_draw,
             tal_draw,
@@ -311,6 +314,179 @@ class Character_JJ:
             character_data.pl_ability.jj_size += 1
 
 
+class Character_FirstNPC:
+    """
+    角色初始干员面板
+    Keyword arguments:
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+        self.npc_select_now = 3
+        """ 当前还可以选择的NPC数量 """
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
+
+        info_draw = draw.LeftDraw()
+        info_draw.width = 1
+        info_draw.text = f" 当前初始干员有："
+        info_draw.text += f"\n   基础:"
+        for character_id in cache.npc_id_got:
+            npc_character_data = cache.character_data[character_id]
+            if npc_character_data.name in {"阿米娅","凯尔希"}:
+                info_draw.text += f" ●{npc_character_data.name}"
+        info_draw.text += f"\n   自选:"
+        for character_id in cache.npc_id_got:
+            npc_character_data = cache.character_data[character_id]
+            if npc_character_data.name not in {"阿米娅","凯尔希"}:
+                info_draw.text += f" ●{npc_character_data.name}"
+
+        now_draw.draw_list.append(info_draw)
+        now_draw.width += len(info_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        button_text = f"   【选择初期干员】"
+        button_select_draw = draw.LeftButton(
+            _(button_text),
+            _('选择初期干员'),
+            self.width,
+            cmd_func=self.select_npc,
+            )
+        self.return_list.append(button_select_draw.return_text)
+        now_draw.draw_list.append(button_select_draw)
+        now_draw.width += len(button_select_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        info_last_draw = draw.LeftDraw()
+        info_last_draw.width = 1
+        self.npc_select_now = 5 - len(cache.npc_id_got)
+        if self.npc_select_now:
+            info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
+        else:
+            info_last_draw.text = f" 已选择全部初始干员"
+        now_draw.draw_list.append(info_last_draw)
+        now_draw.width += len(info_last_draw.text)
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed_draw.draw()
+            else:
+                label.draw()
+
+    def select_npc(self):
+        """选择初期干员"""
+
+        self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 8, self.width, 1, 1, 0)
+
+        while 1:
+
+            # 显示当前助手
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            now_npc_draw = draw.NormalDraw()
+            self.npc_select_now = 5 - len(cache.npc_id_got)
+            now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
+            now_npc_draw.draw()
+            line_feed_draw.draw()
+
+            # 遍历所有NPC
+            id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            # print("debug id_list = ",id_list)
+            self.handle_panel.text_list = id_list
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list = []
+            return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back_draw.draw()
+            line_feed_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
+class SelectFirstNPCButton:
+    """
+    点击后可选择作为初期干员的NPC的按钮对象
+    Keyword arguments:
+    text -- 选项名字
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.NPC_id: int = NPC_id
+        """ 指令名字绘制文本 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        target_data: game_type.Character = cache.character_data[NPC_id]
+        button_text = f"[{target_data.adv}：{target_data.name}]"
+        name_draw = draw.CenterDraw()
+        if self.NPC_id in cache.npc_id_got:
+            if target_data.name in {"阿米娅","凯尔希"}:
+                button_text += f"(基础)"
+                name_draw.text = button_text
+                name_draw.width = self.width
+            else:
+                button_text += f"(自选)"
+                name_draw = draw.CenterButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+        else:
+            name_draw = draw.CenterButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+
+        # 按钮绘制
+        # self.button_return = NPC_id
+        self.draw_text = button_text
+
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+
+    def button_0(self):
+        """选项1"""
+        if self.NPC_id in cache.npc_id_got:
+            cache.npc_id_got.remove(self.NPC_id)
+        elif 5 - len(cache.npc_id_got):
+            cache.npc_id_got.add(self.NPC_id)
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+
 class Character_Bonus:
     """
     角色奖励点数面板
@@ -331,10 +507,14 @@ class Character_Bonus:
         character_data: game_type.Character = cache.character_data[0]
         bonus_all = 0
         now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = f"\n\n 当前为第{str(cache.game_round)}周目\n"
+        info_draw.text = f" 当前为第{str(cache.game_round)}周目\n"
         info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
             bonus_all += 20
@@ -424,12 +604,11 @@ class Character_Bonus:
         info_last_draw = draw.LeftDraw()
         info_last_draw.width = 1
         if self.bonus_now:
-            info_last_draw.text = f"\n 当前剩余奖励点数 = {self.bonus_now}\n"
+            info_last_draw.text = f" 当前剩余奖励点数 = {self.bonus_now}\n"
         else:
-            info_last_draw.text = f"\n 奖励点数消耗完毕\n"
+            info_last_draw.text = f" 奖励点数消耗完毕\n"
         now_draw.draw_list.append(info_last_draw)
         now_draw.width += len(info_last_draw.text)
-
 
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """

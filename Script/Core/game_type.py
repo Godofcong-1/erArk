@@ -819,6 +819,8 @@ class Cache:
         """ 角色对象数据缓存组 """
         self.npc_tem_data: List[NpcTem] = []
         """ npc模板列表 """
+        self.npc_id_got: Set = set()
+        """ 已拥有的干员id数据 """
         self.input_cache: List[str] = []
         """ 玩家指令输入记录（最大20）"""
         self.now_init_map_id: str = ""
