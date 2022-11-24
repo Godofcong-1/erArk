@@ -142,8 +142,7 @@ class FindDraw:
         # title_draw.draw()
         line = draw.LineDraw("-", window_width)
         line.draw()
-        character_id = self.button_id + 1
-        character_data: game_type.Character = cache.character_data[character_id]
+        character_data: game_type.Character = cache.character_data[self.npc_id]
         if character_data.is_follow == 0:
             if cache.debug_mode:
                 character_data.is_follow = 1
