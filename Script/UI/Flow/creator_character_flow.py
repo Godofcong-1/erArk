@@ -397,12 +397,12 @@ class Character_FirstNPC:
         info_draw.text += f"\n   基础:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name in {"阿米娅","凯尔希"}:
+            if npc_character_data.name in {"阿米娅","凯尔希","可露希尔","华法琳"}:
                 info_draw.text += f" ●{npc_character_data.name}"
         info_draw.text += f"\n   自选:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name not in {"阿米娅","凯尔希"}:
+            if npc_character_data.name not in {"阿米娅","凯尔希","可露希尔","华法琳"}:
                 info_draw.text += f" ●{npc_character_data.name}"
 
         now_draw.draw_list.append(info_draw)
@@ -519,7 +519,7 @@ class SelectFirstNPCButton:
         button_text = f"[{target_data.adv}：{target_data.name}]"
         name_draw = draw.CenterDraw()
         if self.NPC_id in cache.npc_id_got:
-            if target_data.name in {"阿米娅","凯尔希"}:
+            if target_data.name in {"阿米娅","凯尔希","可露希尔","华法琳"}:
                 button_text += f"(基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
