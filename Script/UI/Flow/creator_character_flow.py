@@ -428,7 +428,7 @@ class Character_FirstNPC:
         if cache.debug_mode:
             self.npc_select_now = 999
         else:
-            self.npc_select_now = 5 - len(cache.npc_id_got)
+            self.npc_select_now = 7 - len(cache.npc_id_got)
         if self.npc_select_now:
             info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
         else:
@@ -464,7 +464,7 @@ class Character_FirstNPC:
             if cache.debug_mode:
                 self.npc_select_now = 999
             else:
-                self.npc_select_now = 5 - len(cache.npc_id_got)
+                self.npc_select_now = 7 - len(cache.npc_id_got)
             now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
             now_npc_draw.draw()
             line_feed_draw.draw()
@@ -542,7 +542,7 @@ class SelectFirstNPCButton:
             cache.npc_id_got.remove(self.NPC_id)
         elif cache.debug_mode:
             cache.npc_id_got.add(self.NPC_id)
-        elif 5 - len(cache.npc_id_got):
+        elif 7 - len(cache.npc_id_got):
             cache.npc_id_got.add(self.NPC_id)
 
     def draw(self):
