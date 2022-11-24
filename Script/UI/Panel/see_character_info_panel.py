@@ -56,6 +56,7 @@ class SeeCharacterInfoPanel:
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_second_draw = SeeCharacterSecondPanel(character_id, width)
         main_third_draw = SeeCharacterThirdPanel(character_id, width)
+        see_daily_draw = SeeCharacterThirdPanel(character_id, width)
         # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
@@ -82,6 +83,7 @@ class SeeCharacterInfoPanel:
             self.draw_data = {
                 _("素质与能力"): main_first_draw,
                 _("经验与宝珠"): main_second_draw,
+                _("日程与喜好"): see_daily_draw,
                 _("肉体情况"): main_third_draw,
                 # _("属性（原）"): main_attr_draw,
                 # _("状态"): see_status_draw,
@@ -220,6 +222,33 @@ class SeeCharacterThirdPanel:
                 head_draw,
                 body_draw,
             ]
+        """ 绘制的面板列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            label.draw()
+
+
+class SeeCharacterDailyPanel:
+    """
+    显示角色属性面板中的日程与喜好面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    """
+
+    def __init__(self, character_id: int, width: int):
+        """初始化绘制对象"""
+        head_draw = CharacterInfoHead(character_id, width)
+        daily_draw = CharacterInfoHead(character_id, width)
+        preference_draw = CharacterInfoHead(character_id, width)
+        self.draw_list: List[draw.NormalDraw] = [
+            head_draw,
+            daily_draw,
+        ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
