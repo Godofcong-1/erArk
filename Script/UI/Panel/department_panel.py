@@ -38,7 +38,7 @@ class Department_Panel:
         """绘制对象"""
 
         title_text = "部门运作情况"
-        department_type_list = [_("部门总概况"),_("医疗部"),_("宿舍")]
+        department_type_list = [_("部门总概况"),_("医疗部"),_("文职部"),_("宿舍")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -88,7 +88,7 @@ class Department_Panel:
                             if npc_id:
                                 cache.base_resouce.work_people_now += 1
 
-                work_people_now,people_max = str(cache.base_resouce.work_people_now),str(len(cache.npc_tem_data))
+                work_people_now,people_max = str(cache.base_resouce.work_people_now),str(len(cache.npc_id_got))
 
                 all_info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
                 all_income = str(cache.base_resouce.all_income)
@@ -125,12 +125,41 @@ class Department_Panel:
                 now_draw.draw_list.append(medical_info_draw)
                 now_draw.width += len(medical_info_draw.text)
 
+            elif self.now_panel == "文职部":
+
+                civil_info_draw = draw.NormalDraw()
+                civil_info_text = "\n当前文职部门情况："
+                if cache.base_resouce.recruit_conut:
+                    civil_info_text += f"\n  当前已招募未确认干员人数为：{cache.base_resouce.recruit_conut}人，请前往文职部会议室确认"
+                else:
+                    civil_info_text += f"\n  当前没有已招募干员，请等待招募完成"
+                for i in {0,1,2}:
+                    if i in cache.base_resouce.recruit_now:
+                        civil_info_text += f"\n  {i+1}号招募位进度：{cache.base_resouce.recruit_now[0]}/100"
+                civil_info_text += f"\n  当前正在进行招募工作的HR有："
+                HR_name_str = ""
+                for HR_place in constant.place_data["HR_office"]:
+                    if len(cache.scene_data[HR_place].character_list):
+                        for npc_id in cache.scene_data[HR_place].character_list:
+                            npc_name = cache.character_data[npc_id].name
+                            HR_name_str += f" {npc_name}"
+                if len(HR_name_str):
+                    civil_info_text += HR_name_str
+                else:
+                    civil_info_text += " 暂无工作中的HR"
+                civil_info_text += "\n"
+
+                civil_info_draw.text = civil_info_text
+                civil_info_draw.width = self.width
+                now_draw.draw_list.append(civil_info_draw)
+                now_draw.width += len(civil_info_draw.text)
+
             elif self.now_panel == "宿舍":
 
                 dormitory_info_draw = draw.NormalDraw()
                 dormitory_info_text = "\n当前宿舍情况："
                 npc_count = str(len(cache.npc_id_got))
-                dormitory_info_text += f"\n  干员总数：{npc_count}"
+                dormitory_info_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.base_resouce.people_max}"
                 dormitory_info_text += f"\n  具体居住情况："
                 doctor_name_str = ""
                 for dormitory_place in constant.place_data["Dormitory"]:
@@ -145,6 +174,7 @@ class Department_Panel:
                         if count >= 2:
                             dormitory_info_text += dormitory_son_text
                             break
+                dormitory_info_text += "\n"
 
                 dormitory_info_draw.text = dormitory_info_text
                 dormitory_info_draw.width = self.width

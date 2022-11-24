@@ -598,8 +598,13 @@ class Base_resouce:
         """ 当前工作干员人数 """
         self.people_max : int = 0
         """ 干员人数上限 """
+        self.all_income : int = 0
+        """ 今日全部门总收入 """
+
         self.life_zone_max : int = 0
         """ 生活娱乐区设施数量上限 """
+
+        # 医疗区
         self.patient_now : int = 0
         """ 当前患者人数 """
         self.patient_cured : int = 0
@@ -608,8 +613,13 @@ class Base_resouce:
         """ 患者人数上限 """
         self.cure_income : int = 0
         """ 今日总治疗收入 """
-        self.all_income : int = 0
-        """ 今日全部门总收入 """
+
+        # 文职区
+        self.recruit_now : Dict[int,int] = {}
+        """ 当前招募进度 """
+        self.recruit_conut : int = 0
+        """ 已招募人数 """
+
         self.research_zone_max : int = 0
         """ 科研区设施数量上限 """
         self.shop_max : int = 0

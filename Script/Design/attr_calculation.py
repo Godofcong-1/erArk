@@ -274,12 +274,11 @@ def get_base_updata() -> dict:
     遍历基地情况结构体，根据设施等级更新全部数值
     """
 
-
     cache.base_resouce.power_use = 0
 
     # 遍历全设施清单
     for all_cid in game_config.config_facility:
-        # 全设施等级设为1
+        # 全设施等级设为对应值
         level = cache.base_resouce.facility_level[all_cid]
 
         # 累加全设施的用电量
@@ -319,11 +318,19 @@ def get_base_updata() -> dict:
         # 初始化战斗时干员数量上限
         elif facility_name == "指挥室":
             cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
+        # 初始化人数上限
+        elif facility_name == "文职部":
+            if level >= 5 and 2 not in cache.base_resouce.recruit_now:
+                cache.base_resouce.recruit_now[2] = 0
+            if level >= 3 and 1 not in cache.base_resouce.recruit_now:
+                cache.base_resouce.recruit_now[1] = 0
+            if 0 not in cache.base_resouce.recruit_now:
+                cache.base_resouce.recruit_now[0] = 0
 
 
 def get_work_people() -> dict:
     """
-    遍历基地情况结构体，根据设施等级更新全部数值
+    遍历各工作位置，获取当前正在工作人数
     """
     from Script.Core import constant
 
