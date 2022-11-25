@@ -1,0 +1,10 @@
+cid,name,department,palce,tag,describe
+模板id,工作名,工作部门,工作地点,标签,描述
+int,str,str,str,int,str
+0,1,0,0,0,1
+工作模板,,,,,
+
+0,无,无,无,0,无
+
+061,坐诊,医疗部,Clinic,0,接待并诊治病人，获得龙门币
+071,招募,文职部,HR_office,0,招募干员，消耗龙门币，增加招募条

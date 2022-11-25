@@ -410,6 +410,14 @@ class ACTION_INFO:
         """ 角色H被打断 """
 
 
+class CHARA_WORK:
+    """角色的工作信息结构体"""
+
+    def __init__(self):
+
+        self.work_type : int = 0
+        """ 角色工作的类型 """
+
 
 class PLAYER_COLLECTION:
     """玩家收集品结构体"""
@@ -613,12 +621,16 @@ class Base_resouce:
         """ 患者人数上限 """
         self.cure_income : int = 0
         """ 今日总治疗收入 """
+        self.patient_cured_all : int = 0
+        """ 已治疗的患者总人数 """
+        self.cure_income_all : int = 0
+        """ 至今为止的治疗总收入 """
 
         # 文职区
         self.recruit_now : Dict[int,int] = {}
         """ 当前招募进度 """
         self.recruit_conut : int = 0
-        """ 已招募人数 """
+        """ 已招募待确认人数 """
 
         self.research_zone_max : int = 0
         """ 科研区设施数量上限 """

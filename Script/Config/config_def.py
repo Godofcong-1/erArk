@@ -517,6 +517,23 @@ class WeekDay:
     """ 周id """
     name: str
     """ 描述 """
+
+
+class work_type:
+    """ 工作模板 """
+
+    cid: int
+    """ 模板id """
+    name: str
+    """ 工作名 """
+    department: str
+    """ 工作部门 """
+    palce: str
+    """ 工作地点 """
+    tag: int
+    """ 标签 """
+    describe: str
+    """ 描述 """
 class Talk:
     """ 口上配置数据 """
 

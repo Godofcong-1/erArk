@@ -244,11 +244,11 @@ config_data_path = os.path.join("data", "data.json")
 with open(config_data_path, "w", encoding="utf-8") as config_data_file:
     json.dump(config_data, config_data_file, ensure_ascii=0)
 
-package_path = os.path.join("package.json")
-with open(package_path, "w", encoding="utf-8") as package_file:
-    now_time = datetime.datetime.now()
-    version = f"{now_time.year}.{now_time.month}.{now_time.day}"
-    version_data = {"version": version}
-    json.dump(version_data, package_file, ensure_ascii=0)
+# package_path = os.path.join("package.json")
+# with open(package_path, "w", encoding="utf-8") as package_file:
+#     now_time = datetime.datetime.now()
+#     version = f"{now_time.year}.{now_time.month}.{now_time.day}"
+#     version_data = {"version": version}
+#     json.dump(version_data, package_file, ensure_ascii=0)
 
 print("Config Building End")
