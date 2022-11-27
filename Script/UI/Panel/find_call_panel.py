@@ -106,7 +106,7 @@ class FindDraw:
         id = str(character_data.adv)
         scene_position = character_data.position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        if scene_position_str[-1] == "0":
+        if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
             scene_position_str = scene_position_str[:-2] + "入口"
         # scene_name = cache.scene_data[scene_position_str].scene_name
         now_draw_text = f"[{id}]{name}:{scene_position_str}   "
