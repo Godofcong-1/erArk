@@ -875,6 +875,8 @@ class Cache:
         """ 当前游面板id """
         self.old_character_id: int = 0
         """ 离开场景面板前在场景中查看的角色id """
+        self.npc_image_index: int = 0
+        """ 当前绘制人物列表的开始值 """
         self.text_wait: int = 0
         """ 绘制文本输出等待时间 """
         self.map_data: Dict[str, Map] = {}

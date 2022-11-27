@@ -536,6 +536,7 @@ class CharacterImageListDraw:
             text_draw.text = "→"
             text_draw.draw()
 
+            # 绘制交互对象
             player_data:game_type.Character = cache.character_data[0]
             now_draw = CharacterImageButton(player_data.target_character_id,self.width)
             now_draw.draw()
@@ -546,12 +547,42 @@ class CharacterImageListDraw:
             text_draw.text = "←"
             text_draw.draw()
 
-        for now_character in self.character_list:
+        # 超过10人，则只绘制10个
+        if len(self.character_list) <= 10:
+            npc_darw_list = self.character_list
+        else:
+            # 修正超过数据范围的起始点
+            if cache.npc_image_index >= len(self.character_list):
+                cache.npc_image_index = len(self.character_list) - 1
+            start_index = cache.npc_image_index
+            npc_darw_list = self.character_list[start_index:min((10+start_index),len(self.character_list))]
+            # print(f"debug npc_darw_list = {npc_darw_list}")
+
+        # 绘制非交互对象
+        for now_character in npc_darw_list:
             if now_character == player_data.target_character_id:
                 continue
             now_draw = CharacterImageButton(now_character,self.width)
             now_draw.draw()
             self.return_list.append(now_draw.return_text)
+
+        # 绘制下一页按钮
+        if len(self.character_list) > 10:
+            now_button = draw.CenterButton(
+                f"[下一页]",
+                "下一页",
+                8,
+                cmd_func=self.next_page,
+                )
+            now_button.draw()
+            self.return_list.append(now_button.return_text)
+
+    def next_page(self):
+        """跳到下一页"""
+        if cache.npc_image_index + 10 <= len(self.character_list):
+            cache.npc_image_index += 10
+        else:
+            cache.npc_image_index = 0
 
 
 class CharacterImageButton:
