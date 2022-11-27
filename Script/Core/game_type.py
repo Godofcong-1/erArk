@@ -285,6 +285,8 @@ class DIRTY:
 
 class CLOTH:
 
+    # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
+    # 靴子低筒不过小腿肚，中筒过小腿肚，高筒过膝盖
     def __init__(self):
 
         self.clothing_tem: int = 0
