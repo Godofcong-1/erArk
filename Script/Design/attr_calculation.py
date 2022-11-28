@@ -29,6 +29,13 @@ def get_event_zero() -> dict:
     event_data = game_type.Chara_Event()
     return event_data
 
+def get_work_zero() -> dict:
+    """
+    初始化工作结构体
+    """
+    work_data = game_type.CHARA_WORK()
+    return work_data
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0

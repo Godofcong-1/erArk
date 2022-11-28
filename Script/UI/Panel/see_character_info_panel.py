@@ -56,7 +56,7 @@ class SeeCharacterInfoPanel:
         main_first_draw = SeeCharacterFirstPanel(character_id, width)
         main_second_draw = SeeCharacterSecondPanel(character_id, width)
         main_third_draw = SeeCharacterThirdPanel(character_id, width)
-        see_daily_draw = SeeCharacterThirdPanel(character_id, width)
+        see_daily_draw = SeeCharacterDailyPanel(character_id, width)
         # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
         # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
         # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)

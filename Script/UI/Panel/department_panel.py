@@ -81,16 +81,23 @@ class Department_Panel:
                 all_info_draw = draw.NormalDraw()
                 all_info_text = "\n当前全部门总情况："
 
-                cache.base_resouce.work_people_now = 0
+                # 统计各部门岗位的工作干员数量
+                doctor_now,HR_now = 0,0
                 for Clinic_place in constant.place_data["Clinic"]:
-                    if len(cache.scene_data[Clinic_place].character_list):
-                        for npc_id in cache.scene_data[Clinic_place].character_list:
-                            if npc_id:
-                                cache.base_resouce.work_people_now += 1
+                    doctor_now += len(cache.scene_data[Clinic_place].character_list)
+                doctor_all = len(cache.base_resouce.doctor_id_set)
+                for HR_place in constant.place_data["HR_office"]:
+                    HR_now += len(cache.scene_data[HR_place].character_list)
+                HR_all = len(cache.base_resouce.HR_id_set)
+                cache.base_resouce.work_people_now = doctor_now + HR_now
 
                 work_people_now,people_max = str(cache.base_resouce.work_people_now),str(len(cache.npc_id_got))
 
                 all_info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
+                all_info_text += f"\n  医疗部：{doctor_now}/{doctor_all}\n"
+                all_info_text += f"\n  文职部：{HR_now}/{HR_all}\n"
+
+                # 收入
                 all_income = str(cache.base_resouce.all_income)
                 all_info_text += f"\n  截至目前为止，今日各部门龙门币总收入为：{all_income}\n"
 
@@ -98,6 +105,19 @@ class Department_Panel:
                 all_info_draw.width = self.width
                 now_draw.draw_list.append(all_info_draw)
                 now_draw.width += len(all_info_draw.text)
+
+                now_draw.draw_list.append(line_feed)
+                now_draw.width += line_feed.width
+
+                button_draw = draw.LeftButton(
+                    f"[调整干员岗位]",
+                    f"\n调整干员岗位",
+                    self.width ,
+                    cmd_func=self.change_npc_work,
+                )
+                now_draw.draw_list.append(button_draw)
+                now_draw.width += len(button_draw.text)
+                return_list.append(button_draw.return_text)
 
 
             elif self.now_panel == "医疗部":
@@ -209,3 +229,130 @@ class Department_Panel:
         """
 
         self.now_panel = department_type
+
+    def change_npc_work(self):
+        """
+        调整干员的工作岗位
+        """
+
+        handle_doctor_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
+        handle_HR_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
+
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_text = ""
+            return_list = []
+
+            # 统计各部门岗位的工作干员数量
+            doctor_now,HR_now = 0,0
+            for Clinic_place in constant.place_data["Clinic"]:
+                doctor_now += len(cache.scene_data[Clinic_place].character_list)
+            for HR_place in constant.place_data["HR_office"]:
+                HR_now += len(cache.scene_data[HR_place].character_list)
+            cache.base_resouce.work_people_now = doctor_now + HR_now
+            work_people_now,people_max = str(cache.base_resouce.work_people_now),str(len(cache.npc_id_got))
+
+            info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
+            info_text += f"\n  医疗部："
+            info_draw.text = info_text
+            info_draw.draw()
+
+            # 医疗部干员列表
+            handle_doctor_panel.text_list = cache.base_resouce.doctor_id_set
+            handle_doctor_panel.update()
+            handle_doctor_panel.draw()
+
+            info_text = f"\n  文职部："
+            info_draw.text = info_text
+            info_draw.draw()
+            # 医疗部干员列表
+            handle_HR_panel.text_list = cache.base_resouce.HR_id_set
+            handle_HR_panel.update()
+            handle_HR_panel.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
+class ChangeWorkButtonList:
+    """
+    点击后可选择NPC的工作的按钮对象
+    Keyword arguments:
+    text -- 选项名字
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.NPC_id: int = NPC_id
+        """ 指令名字绘制文本 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        target_data: game_type.Character = cache.character_data[NPC_id]
+        button_text = f"[{target_data.adv}：{target_data.name}]"
+
+        # 按钮绘制
+
+        name_draw = draw.CenterButton(
+            button_text, self.button_return, self.width, cmd_func=self.button_0
+        )
+        # self.button_return = NPC_id
+        self.now_draw = name_draw
+        self.draw_text = button_text
+
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+
+
+    def button_0(self):
+        """选项1"""
+
+        while 1:
+
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            line_feed.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.width = window_width
+
+            target_data: game_type.Character = cache.character_data[self.NPC_id]
+            info_text = f"{target_data.name}的当前工作为："
+            if target_data.work.work_type == 61:
+                info_text += "坐诊(医疗部)"
+            elif target_data.work.work_type == 71:
+                info_text += "招募(文职部)"
+            else:
+                info_text += "无"
+            info_draw.text = info_text
+            info_draw.draw()
+
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
