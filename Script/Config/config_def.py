@@ -519,7 +519,7 @@ class WeekDay:
     """ 描述 """
 
 
-class work_type:
+class WorkType:
     """ 工作模板 """
 
     cid: int

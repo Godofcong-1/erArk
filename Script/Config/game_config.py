@@ -48,6 +48,8 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
+config_work_type: Dict[int, config_def.WorkType] = {}
+""" 工作种类配置数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
@@ -460,6 +462,16 @@ def load_clothing_use_type():
         config_clothing_use_type[now_type.cid] = now_type
 
 
+def load_work_type():
+    """载入工作种类配置数据"""
+    now_data = config_data["WorkType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.WorkType()
+        now_type.__dict__ = tem_data
+        config_work_type[now_type.cid] = now_type
+
+
 def load_body_part():
     """载入身体部位配置数据"""
     now_data = config_data["BodyPart"]
@@ -793,6 +805,7 @@ def init():
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
+    load_work_type()
     load_body_part()
     load_collection_bonus_data()
     load_facility()
