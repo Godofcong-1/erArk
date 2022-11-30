@@ -3,7 +3,7 @@ from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle,attr_text,attr_calculation
+from Script.Design import character
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -82,16 +82,9 @@ class Department_Panel:
                 all_info_text = "\n当前全部门总情况："
 
                 # 统计各部门岗位的工作干员数量
-                doctor_now,HR_now = 0,0
-                for Clinic_place in constant.place_data["Clinic"]:
-                    doctor_now += len(cache.scene_data[Clinic_place].character_list)
-                doctor_all = len(cache.base_resouce.doctor_id_set)
-                for HR_place in constant.place_data["HR_office"]:
-                    HR_now += len(cache.scene_data[HR_place].character_list)
-                HR_all = len(cache.base_resouce.HR_id_set)
-                cache.base_resouce.work_people_now = doctor_now + HR_now
-
-                work_people_now,people_max = str(cache.base_resouce.work_people_now),str(len(cache.npc_id_got))
+                doctor_now,HR_now = cache.base_resouce.doctor_now,cache.base_resouce.HR_now
+                doctor_all,HR_all = len(cache.base_resouce.doctor_id_set), len(cache.base_resouce.HR_id_set)
+                work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
 
                 all_info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
                 all_info_text += f"\n  医疗部：{doctor_now}/{doctor_all}\n"
@@ -127,11 +120,9 @@ class Department_Panel:
                 medical_info_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
                 medical_info_text += f"\n  当前正在坐诊的医生有："
                 doctor_name_str = ""
-                for Clinic_place in constant.place_data["Clinic"]:
-                    if len(cache.scene_data[Clinic_place].character_list):
-                        for npc_id in cache.scene_data[Clinic_place].character_list:
-                            npc_name = cache.character_data[npc_id].name
-                            doctor_name_str += f" {npc_name}"
+                for npc_id in cache.base_resouce.doctor_id_set:
+                    npc_name = cache.character_data[npc_id].name
+                    doctor_name_str += f" {npc_name}"
                 if len(doctor_name_str):
                     medical_info_text += doctor_name_str
                 else:
@@ -155,17 +146,15 @@ class Department_Panel:
                 for i in {0,1,2}:
                     if i in cache.base_resouce.recruit_now:
                         civil_info_text += f"\n  {i+1}号招募位进度：{cache.base_resouce.recruit_now[0]}/100"
-                civil_info_text += f"\n  当前正在进行招募工作的HR有："
+                civil_info_text += f"\n  当前正在进行招募工作的人事有："
                 HR_name_str = ""
-                for HR_place in constant.place_data["HR_office"]:
-                    if len(cache.scene_data[HR_place].character_list):
-                        for npc_id in cache.scene_data[HR_place].character_list:
-                            npc_name = cache.character_data[npc_id].name
-                            HR_name_str += f" {npc_name}"
+                for npc_id in cache.base_resouce.HR_id_set:
+                    npc_name = cache.character_data[npc_id].name
+                    HR_name_str += f" {npc_name}"
                 if len(HR_name_str):
                     civil_info_text += HR_name_str
                 else:
-                    civil_info_text += " 暂无工作中的HR"
+                    civil_info_text += " 暂无工作中的人事"
                 civil_info_text += "\n"
 
                 civil_info_draw.text = civil_info_text
@@ -253,10 +242,10 @@ class Department_Panel:
             leisure_list = []
             cache.npc_id_got.discard(0)
             for id in cache.npc_id_got:
-                if {
+                if (
                     id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
-                }:
+                ):
                     leisure_list.append(id)
             handle_leisure_panel.text_list = leisure_list
             handle_leisure_panel.update()
@@ -322,13 +311,13 @@ class ChangeWorkButtonList:
 
         target_data: game_type.Character = cache.character_data[NPC_id]
         button_text = f"[{target_data.adv}：{target_data.name}]"
+        self.button_return = str(NPC_id)
 
         # 按钮绘制
 
         name_draw = draw.CenterButton(
             button_text, self.button_return, self.width, cmd_func=self.button_0
         )
-        self.button_return = NPC_id
         self.now_draw = name_draw
         self.draw_text = button_text
 
@@ -356,26 +345,28 @@ class ChangeWorkButtonList:
                 info_text += "招募(文职部)"
             else:
                 info_text += "无"
-            info_text += "\n 新工作为：\n"
+            info_text += "\n 可指派的新工作有：\n"
             info_draw.text = info_text
             info_draw.draw()
 
-            for cid in range(len(game_config.config_work_type)):
-                work_cid = game_config.config_work_type[cid].cid
-                work_name = game_config.config_work_type[cid].name
-                work_place = game_config.config_work_type[cid].department
-                work_describe = game_config.config_work_type[cid].describe
+            # 遍历工作列表，获取每个工作的信息
+            for cid in game_config.config_work_type.keys():
+                if cid:
+                    work_cid = game_config.config_work_type[cid].cid
+                    work_name = game_config.config_work_type[cid].name
+                    work_place = game_config.config_work_type[cid].department
+                    work_describe = game_config.config_work_type[cid].describe
 
-                button_draw = draw.LeftButton(
-                    f"[{work_cid}]{work_name}({work_place})：{work_describe}",
-                    f"\n{work_cid}",
-                    self.width ,
-                    cmd_func=self.select_new_work,
-                    args={work_cid}
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-                line_feed.draw()
+                    button_draw = draw.LeftButton(
+                        f"[{work_cid}]{work_name}({work_place})：{work_describe}",
+                        f"\n{work_cid}",
+                        window_width ,
+                        cmd_func=self.select_new_work,
+                        args=work_cid
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                    line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -383,7 +374,7 @@ class ChangeWorkButtonList:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list:
                 break
 
     def draw(self):
@@ -394,3 +385,4 @@ class ChangeWorkButtonList:
         """赋予新的工作id"""
         target_data: game_type.Character = cache.character_data[self.NPC_id]
         target_data.work.work_type = work_id
+        character.update_work_people()

@@ -391,3 +391,33 @@ def judge_character_time_over_24(character_id: int) -> bool:
     if end_time.day != start_time.day:
         return 1
     return 0
+
+
+def update_work_people():
+    """
+    刷新各干员的职位和当前正在工作的干员
+    """
+    from Script.Design import handle_premise
+
+    cache.base_resouce.doctor_now += 1
+    cache.base_resouce.doctor_id_set = set()
+    cache.base_resouce.HR_now += 1
+    cache.base_resouce.HR_id_set = set()
+    cache.base_resouce.work_people_now = 0
+
+    cache.npc_id_got.discard(0)
+    for id in cache.npc_id_got:
+        character_data = cache.character_data[id]
+
+        # 医生统计
+        if character_data.work.work_type == 61:
+            cache.base_resouce.doctor_id_set.add(id)
+            if handle_premise.handle_in_clinic(id):
+                cache.base_resouce.doctor_now += 1
+                cache.base_resouce.work_people_now += 1
+        # HR统计
+        elif character_data.work.work_type == 71:
+            cache.base_resouce.HR_id_set.add(id)
+            if handle_premise.handle_in_hr_office(id):
+                cache.base_resouce.HR_now += 1
+                cache.base_resouce.work_people_now += 1

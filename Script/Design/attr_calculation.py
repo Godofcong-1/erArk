@@ -335,19 +335,6 @@ def get_base_updata() -> dict:
                 cache.base_resouce.recruit_now[0] = 0
 
 
-def get_work_people() -> dict:
-    """
-    遍历各工作位置，获取当前正在工作人数
-    """
-    from Script.Core import constant
-
-    for Clinic_place in constant.place_data["Clinic"]:
-        if len(cache.scene_data[Clinic_place].character_list):
-            for npc_id in cache.scene_data[Clinic_place].character_list:
-                if npc_id:
-                    cache.base_resouce.work_people_now += 1
-
-
 def get_item_zero(item_dict) -> dict:
     """
     检查初始道具，将为空的项补为0

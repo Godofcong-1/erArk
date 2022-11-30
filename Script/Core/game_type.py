@@ -621,8 +621,8 @@ class Base_resouce:
         """ 当前已治疗患者人数 """
         self.patient_max : int = 0
         """ 患者人数上限 """
-        self.doctor_all : int = 0
-        """ 医生总数量 """
+        self.doctor_now : int = 0
+        """ 当前工作中的医生数量 """
         self.doctor_id_set : Set = set()
         """ 医生干员id合集 """
         self.cure_income : int = 0
@@ -637,8 +637,8 @@ class Base_resouce:
         """ 当前招募进度 """
         self.recruit_conut : int = 0
         """ 已招募待确认人数 """
-        self.HR_all : int = 0
-        """ HR总数量 """
+        self.HR_now : int = 0
+        """ 当前工作中的HR数量 """
         self.HR_id_set : Set = set()
         """ HR干员id合集 """
 
