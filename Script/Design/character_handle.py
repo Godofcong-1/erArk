@@ -174,6 +174,7 @@ def init_character_dormitory():
     # print("dormitory :",dormitory)
     # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
     npc_count = 0
+    cache.npc_id_got.discard(0)
     # 每两个人住一个房间
     for character_id in cache.npc_id_got:
         # print("character_id :",character_id)
@@ -194,6 +195,22 @@ def init_character_position():
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
         # print("character_dormitory = ",character_dormitory)
         map_handle.character_move_scene(character_position, character_dormitory, character_id)
+
+def get_new_character(character_id: int):
+    """获得新角色"""
+    cache.npc_id_got.add(character_id)
+    character_data = cache.character_data[character_id]
+    init_character_dormitory()
+
+    # 初始化新角色位置
+    character_position = character_data.position
+    pl_postion = cache.character_data[0].position
+    map_handle.character_move_scene(character_position, pl_postion, character_id)
+
+    # 新角色原地等待30分钟
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 def add_favorability(

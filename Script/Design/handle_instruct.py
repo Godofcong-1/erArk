@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle,flow_handle
-from Script.Design import update, character, attr_calculation
+from Script.Design import update, character, attr_calculation, character_handle
 from Script.UI.Panel import see_character_info_panel, see_save_info_panel, normal_panely
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1300,6 +1300,32 @@ def handle_recruit():
     character_data.behavior.behavior_id = constant.Behavior.RECRUIT
     character_data.state = constant.CharacterStatus.STATUS_RECRUIT
     update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.CONFIM_RECRUIT,
+    constant.InstructType.WORK,
+    _("确认已招募干员"),
+    {constant_promise.Premise.NOT_H,
+    constant_promise.Premise.IN_DR_OFFICE,
+    constant_promise.Premise.NEW_NPC_WAIT,
+    constant_promise.Premise.SLEEP_LE_74}
+)
+def handle_confim_recruit():
+    """处理确认已招募干员指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    new_chara_id = cache.base_resouce.recruited_id.pop()
+    character_handle.get_new_character(new_chara_id)
+    character_data = cache.character_data[new_chara_id]
+
+    # 输出对应信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
+    now_draw.style = "nowmap"
+    now_draw.draw()
+
+    update.game_update_flow(5)
 
 
 #以下为猥亵#

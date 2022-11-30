@@ -637,8 +637,8 @@ class Base_resouce:
         # 文职区
         self.recruit_now : Dict[int,float] = {}
         """ 当前招募进度 """
-        self.recruit_conut : int = 0
-        """ 已招募待确认人数 """
+        self.recruited_id : Set = set()
+        """ 已招募待确认的干员id """
         self.HR_now : int = 0
         """ 当前工作中的HR数量 """
         self.HR_id_set : Set = set()

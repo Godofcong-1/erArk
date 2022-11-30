@@ -126,7 +126,7 @@ class Department_Panel:
                 if len(doctor_name_str):
                     medical_info_text += doctor_name_str
                 else:
-                    medical_info_text += " 暂无坐诊中的医生"
+                    medical_info_text += " 暂无"
                 cure_income = str(cache.base_resouce.cure_income)
                 medical_info_text += f"\n  截至目前为止，今日医疗部门龙门币总收入为：{cure_income}\n"
 
@@ -139,8 +139,8 @@ class Department_Panel:
 
                 civil_info_draw = draw.NormalDraw()
                 civil_info_text = "\n当前文职部门情况："
-                if cache.base_resouce.recruit_conut:
-                    civil_info_text += f"\n  当前已招募未确认干员人数为：{cache.base_resouce.recruit_conut}人，请前往文职部会议室确认"
+                if len(cache.base_resouce.recruited_id):
+                    civil_info_text += f"\n  当前已招募未确认干员人数为：{len(cache.base_resouce.recruited_id)}人，请前往博士办公室确认"
                 else:
                     civil_info_text += f"\n  当前没有已招募干员，请等待招募完成"
                 for i in {0,1,2}:
@@ -154,7 +154,7 @@ class Department_Panel:
                 if len(HR_name_str):
                     civil_info_text += HR_name_str
                 else:
-                    civil_info_text += " 暂无工作中的人事"
+                    civil_info_text += " 暂无"
                 civil_info_text += "\n"
 
                 civil_info_draw.text = civil_info_text

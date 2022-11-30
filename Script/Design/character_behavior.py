@@ -98,7 +98,23 @@ def update_recruit():
         # 如果超过100则进行结算
         if cache.base_resouce.recruit_now[key] >= 100:
             cache.base_resouce.recruit_now[key] = 0
-            cache.base_resouce.recruit_conut += 1
+
+            # 开始随机获得招募npc的id
+            wait_id_set = []
+            for i in range(len(cache.npc_tem_data)):
+                id = i + 1
+                if id not in cache.npc_id_got:
+                    wait_id_set.append(id)
+            if len(wait_id_set):
+                choice_id = random.choice(wait_id_set)
+                cache.base_resouce.recruited_id.add(choice_id)
+
+                now_draw = draw.WaitDraw()
+                now_draw.width = width
+                now_draw.text = _(f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
+                now_draw.style = "nowmap"
+                now_draw.draw()
+
 
             # 之前做该栏位工作的HR，也把栏位数据清零
             for id in cache.base_resouce.HR_id_set:

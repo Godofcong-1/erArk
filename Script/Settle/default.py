@@ -2928,8 +2928,9 @@ def handle_recruit_add_just(
     #获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 获得加成 #
-    now_add_lust = adjust
-    now_add_lust = now_add_lust * random.uniform(0.5,1.5)
+    now_add_lust = adjust * random.uniform(0.5,1.5)
+    if cache.debug_mode:
+        now_add_lust += 100
 
     # 如果有交互对象，则算上对方的医疗加成
     if character_data.target_character_id != character_id:

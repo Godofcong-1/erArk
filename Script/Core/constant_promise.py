@@ -254,6 +254,8 @@ class Premise:
     """ 地点_定位 在人事部办公室中 """
     NOT_IN_HR_OFFICE = "not_in_hr_office"
     """ 地点_定位 不在人事部办公室中 """
+    IN_HR_MEETING_ROOM = "in_hr_meeting_room"
+    """ 地点_定位 在人事部会议室中 """
     IN_BATHROOM = "in_bathroom"
     """ 地点_定位 在淋浴区 """
     NOT_IN_BATHROOM = "not_in_bathroom"
@@ -1177,6 +1179,8 @@ class Premise:
 
     PATIENT_WAIT = "patient_wait"
     """ 经营 有患者正等待就诊 """
+    NEW_NPC_WAIT = "new_npc_wait"
+    """ 经营 有已招募待确认的干员 """
 
     TO_DO = "to_do"
     """ 未分类 未实装 """
