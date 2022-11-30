@@ -97,6 +97,8 @@ class CharacterStatus:
     """ 锻炼身体 """
     STATUS_CURE_PATIENT = 207
     """ 诊疗病人 """
+    STATUS_RECRUIT = 208
+    """ 招募干员 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -426,6 +428,8 @@ class Behavior:
     """ 锻炼身体 """
     CURE_PATIENT = 207
     """ 诊疗病人 """
+    RECRUIT = 208
+    """ 招募干员 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -697,6 +701,8 @@ class StateMachine:
     """ 根据职业自动移动至对应训练室 """
     MOVE_TO_CLINIC = 22
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_HR_OFFICE = 23
+    """ 随机移动到人事部办公室 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
     MOVE_TO_BATH_ROOM = 33
@@ -748,6 +754,8 @@ class StateMachine:
 
     WORK_CURE_PATIENT = 301
     """ 工作：诊疗病人 """
+    WORK_RECRUIT = 302
+    """ 工作：招募干员 """
 
 
     # MOVE_TO_CLASS = 0
@@ -1305,6 +1313,8 @@ class Instruct:
     """ 锻炼身体 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
+    RECRUIT = 0
+    """ 招募干员 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

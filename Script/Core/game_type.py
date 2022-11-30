@@ -419,6 +419,8 @@ class CHARA_WORK:
 
         self.work_type : int = 0
         """ 角色工作的类型 """
+        self.recruit_index : int = -1
+        """ 角色当前正在工作的招募位 """
 
 
 class PLAYER_COLLECTION:
@@ -633,7 +635,7 @@ class Base_resouce:
         """ 至今为止的治疗总收入 """
 
         # 文职区
-        self.recruit_now : Dict[int,int] = {}
+        self.recruit_now : Dict[int,float] = {}
         """ 当前招募进度 """
         self.recruit_conut : int = 0
         """ 已招募待确认人数 """

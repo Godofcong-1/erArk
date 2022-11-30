@@ -292,6 +292,26 @@ def character_move_to_clinic(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
+def character_move_to_hr_office(character_id: int):
+    """
+    随机移动到人事部办公室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_hr_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["HR_office"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_hr_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -818,6 +838,20 @@ def character_work_cure_patient(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_RECRUIT)
+def character_work_recruit(character_id: int):
+    """
+    角色工作：招募干员
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.RECRUIT
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_RECRUIT
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)

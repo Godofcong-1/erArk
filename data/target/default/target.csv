@@ -41,8 +41,6 @@ ai的目标,,,
 45,50,sleep_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 
 
-48,22,not_assistant|is_medical|not_follow|work_time|not_in_clinic,非助理的医疗干员，不在跟随模式下，在工作时间如果不在门诊，则去门诊
-49,301,not_assistant|is_medical|not_follow|work_time|in_clinic|patient_wait,非助理的医疗干员，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
 
 50,31,shower_time|ai_not_shower|not_in_bathzone_locker_room,淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
 51,71,shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_most_off,淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是大致全裸，则脱成全裸
@@ -61,3 +59,8 @@ ai的目标,,,
 201,201,place_11,和房间里的人身体接触
 202,202,in_music_room,如果在音乐室里，则唱歌给房间里随机角色听
 203,203,in_music_room,如果在音乐室里，则演奏乐器给房间里随机角色听
+
+301,22,not_assistant|work_is_doctor|not_follow|work_time|not_in_clinic,非助理，工作为医生，不在跟随模式下，在工作时间如果不在门诊，则去门诊
+302,301,not_assistant|work_is_doctor|not_follow|work_time|in_clinic|patient_wait,非助理，工作为医生，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
+305,23,not_assistant|work_is_hr|not_follow|work_time|not_in_clinic,非助理，工作为人事，不在跟随模式下，在工作时间如果不在人事部办公室，则去人事部办公室
+306,302,not_assistant|work_is_hr|not_follow|work_time|in_clinic,非助理，工作为人事，不在跟随模式下，在工作时间如果在人事部办公室，则进行招募工作

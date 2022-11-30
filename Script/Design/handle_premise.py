@@ -4116,6 +4116,32 @@ def handle_target_have_open(character_id: int) -> int:
     return target_data.talent[207]
 
 
+@add_premise(constant_promise.Premise.WORK_IS_DOCTOR)
+def handle_work_is_doctor(character_id: int) -> int:
+    """
+    自己的工作为医生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 61
+
+
+@add_premise(constant_promise.Premise.WORK_IS_HR)
+def handle_work_is_hr(character_id: int) -> int:
+    """
+    自己的工作为人事
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 71
+
+
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)
 def handle_last_cmd_blowjob(character_id: int) -> int:
     """

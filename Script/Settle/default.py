@@ -2901,6 +2901,57 @@ def handle_cure_patient_add_just(
     cache.base_resouce.patient_cured += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)
+def handle_recruit_add_just(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+    #获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 获得加成 #
+    now_add_lust = adjust
+    now_add_lust = now_add_lust * random.uniform(0.5,1.5)
+
+    # 如果有交互对象，则算上对方的医疗加成
+    if character_data.target_character_id != character_id:
+        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[40])
+        now_add_lust += adjust_target
+
+    # 如果角色没有确定招募栏位，则选一个当前空的指派过去
+    if character_data.work.recruit_index == -1:
+        select_index = 0
+        for key in cache.base_resouce.recruit_now.keys():
+            if cache.base_resouce.recruit_now[key] == 0:
+                select_index = key
+                break
+        character_data.work.recruit_index = key
+    else:
+        select_index = character_data.work.recruit_index
+
+    # 增加对应槽的招募值，并进行结算
+    cache.base_resouce.recruit_now[select_index] += now_add_lust
+    character_behavior.update_recruit()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
     character_id: int,

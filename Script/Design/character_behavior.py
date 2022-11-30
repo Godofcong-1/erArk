@@ -89,6 +89,23 @@ def update_cafeteria():
     if (food_count * 2) <= max_people and cache.game_time.hour in {7,8,12,13,17,18}:
         cooking.init_restaurant_data()
 
+def update_recruit():
+    """刷新招募栏位"""
+
+    # 遍历全招募栏
+    for key in cache.base_resouce.recruit_now:
+
+        # 如果超过100则进行结算
+        if cache.base_resouce.recruit_now[key] >= 100:
+            cache.base_resouce.recruit_now[key] = 0
+            cache.base_resouce.recruit_conut += 1
+
+            # 之前做该栏位工作的HR，也把栏位数据清零
+            for id in cache.base_resouce.HR_id_set:
+                character_data = cache.character_data[id]
+                if character_data.work.recruit_index == key:
+                    character_data.work.recruit_index = -1
+
 
 def character_behavior(character_id: int, now_time: datetime.datetime):
     """

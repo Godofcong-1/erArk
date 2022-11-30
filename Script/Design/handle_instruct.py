@@ -1284,6 +1284,24 @@ def handle_cure_patient():
     update.game_update_flow(30)
 
 
+@add_instruct(
+    constant.Instruct.RECRUIT,
+    constant.InstructType.WORK,
+    _("招募干员"),
+    {constant_promise.Premise.NOT_H,
+    constant_promise.Premise.IN_HR_OFFICE,
+    constant_promise.Premise.SLEEP_LE_74}
+)
+def handle_recruit():
+    """处理招募干员指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.RECRUIT
+    character_data.state = constant.CharacterStatus.STATUS_RECRUIT
+    update.game_update_flow(60)
+
+
 #以下为猥亵#
 
 @add_instruct(

@@ -145,7 +145,7 @@ class Department_Panel:
                     civil_info_text += f"\n  当前没有已招募干员，请等待招募完成"
                 for i in {0,1,2}:
                     if i in cache.base_resouce.recruit_now:
-                        civil_info_text += f"\n  {i+1}号招募位进度：{cache.base_resouce.recruit_now[0]}/100"
+                        civil_info_text += f"\n  {i+1}号招募位进度：{round(cache.base_resouce.recruit_now[0],1)}%/100%"
                 civil_info_text += f"\n  当前正在进行招募工作的人事有："
                 HR_name_str = ""
                 for npc_id in cache.base_resouce.HR_id_set:
