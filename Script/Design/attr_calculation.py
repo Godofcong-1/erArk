@@ -365,8 +365,7 @@ def get_rand_npc_birthday(age: int):
     now_year = cache.game_time.year
     now_month = cache.game_time.month
     now_day = cache.game_time.day
-    birth_year = now_year - int(age)
-    birthday = game_time.get_rand_day_for_year(birth_year)
+    birthday = game_time.get_rand_day_for_year(now_year)
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)
     return birthday

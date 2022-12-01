@@ -878,11 +878,12 @@ class CharacterBirthdayText:
         self.width = width
         """ 当前最大可绘制宽度 """
         character_data = cache.character_data[self.character_id]
-        age_text = _("年龄:{character_age}岁").format(character_age=character_data.age)
+        # age_text = _("年龄:{character_age}岁").format(character_age=character_data.age)
         birthday_text = _("生日:{birthday_month}月{birthday_day}日").format(
             birthday_month=character_data.birthday.month, birthday_day=character_data.birthday.day
         )
-        self.info_list = [age_text, birthday_text]
+        # self.info_list = [age_text, birthday_text]
+        self.info_list = [birthday_text]
         """ 绘制的文本列表 """
 
     def draw(self):

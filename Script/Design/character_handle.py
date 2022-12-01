@@ -64,12 +64,6 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.mana_point_max = character_tem.Mp
     now_character.dormitory = character_tem.Dormitory
     now_character.token_text = character_tem.Token
-    # now_character.age = attr_calculation.get_age(character_id)
-    if character_tem.Age != "":
-        # print("character_tem = ",character_tem)
-        # print("character_tem.Age = ",character_tem.Age)
-        now_character.age = character_tem.Age
-        # now_character.age = attr_calculation.get_age(character_tem.Age)
     # if character_tem.Chest:
     #     now_character.chest_tem = character_tem.Chest
     now_character.cloth = attr_calculation.get_cloth_zero()

@@ -32,7 +32,7 @@ def init_attr(character_id: int):
     # print("进入第二步的init_attr")
     # print("进入第二步的character_id :",character_id)
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
+    # character_data.birthday = attr_calculation.get_rand_npc_birthday(character_data.age)
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
 

@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,1023,0,干员编号
 Name,str,归溟幽灵鲨,1,姓名
 Sex,int,1,0,女
-Age,int,21,0,猜测年龄
 Profession,int,8,0,特种
 Race,int,34,0,阿戈尔
 Hp,int,1100,0,初始体力

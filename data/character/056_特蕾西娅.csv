@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,56,0,干员编号
 Name,str,特蕾西娅,1,姓名
 Sex,int,1,0,女
-Age,int,20,0,猜测年龄
 Profession,int,8,0,特种
 Race,int,25,0,萨卡兹
 Hp,int,1100,0,初始体力

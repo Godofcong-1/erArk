@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,479,0,干员编号
 Name,str,琴柳,1,姓名
 Sex,int,1,0,女
-Age,int,19,0,猜测年龄
 Profession,int,1,0,先锋
 Race,int,27,0,瓦伊凡
 Hp,int,1500,0,初始体力

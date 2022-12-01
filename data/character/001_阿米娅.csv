@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,1,0,干员编号
 Name,str,阿米娅,1,姓名
 Sex,int,1,0,女
-Age,int,14,0,少女
 Profession,int,4,0,术师
 Race,int,1,0,卡特斯/奇美拉
 Hp,int,1400,0,初始体力
@@ -16,6 +15,7 @@ E|81,int,100,0,战斗经验
 T|0,int,1,0,处女
 T|1,int,1,0,A处女
 T|4,int,1,0,无接吻经验
+T|7,int,1,0,未成年
 T|62,int,1,0,少女
 T|70,int,1,0,兽耳
 T|72,int,1,0,兽尾

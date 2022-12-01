@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,298,0,干员编号
 Name,str,苏苏洛,1,姓名
 Sex,int,1,0,女
-Age,int,15,0,猜测年龄
 Profession,int,3,0,医疗
 Race,int,28,0,沃尔珀
 Hp,int,1100,0,初始体力

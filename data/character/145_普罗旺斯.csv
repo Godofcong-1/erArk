@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,145,0,干员编号
 Name,str,普罗旺斯,1,姓名
 Sex,int,1,0,女
-Age,int,24,0,少女
 Profession,int,1,0,先锋
 Race,int,20,0,鲁珀
 Hp,int,1500,0,初始体力

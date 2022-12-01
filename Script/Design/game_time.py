@@ -376,9 +376,9 @@ def get_moon_phase(now_time: datetime.datetime) -> int:
     return cache.moon_phase[now_date_str]
 
 
-def judge_attend_class_today(character_id: int) -> bool:
+def judge_work_today(character_id: int) -> bool:
     """
-    校验角色今日是否需要上课
+    校验角色今日是否需要工作
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -389,19 +389,37 @@ def judge_attend_class_today(character_id: int) -> bool:
     if now_time is None:
         now_time = cache.game_time
     now_week = now_time.weekday()
-    now_month = now_time.month
-    if now_month not in {3, 4, 5, 6, 8, 9, 10, 11, 12}:
-        return 0
-    if character_data.age <= 18:
-        if character_data.age > 15:
-            return 1
-        if character_data.age > 13 and now_week < 6:
-            return 1
-        if now_week < 5:
-            return 1
-    elif (
-        character_id in cache.teacher_phase_table
-        and now_week in cache.teacher_class_week_day_data[character_id]
-    ):
+    if now_week < 6:
         return 1
-    return 0
+    else:
+        return 0
+
+# def judge_attend_class_today(character_id: int) -> bool:
+#     """
+#     校验角色今日是否需要上课
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     now_time: datetime.datetime = character_data.behavior.start_time
+#     if now_time is None:
+#         now_time = cache.game_time
+#     now_week = now_time.weekday()
+#     now_month = now_time.month
+#     if now_month not in {3, 4, 5, 6, 8, 9, 10, 11, 12}:
+#         return 0
+#     if character_data.age <= 18:
+#         if character_data.age > 15:
+#             return 1
+#         if character_data.age > 13 and now_week < 6:
+#             return 1
+#         if now_week < 5:
+#             return 1
+#     elif (
+#         character_id in cache.teacher_phase_table
+#         and now_week in cache.teacher_class_week_day_data[character_id]
+#     ):
+#         return 1
+#     return 0

@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,400,0,干员编号
 Name,str,温蒂,1,姓名
 Sex,int,1,0,女
-Age,int,19,0,猜测年龄
 Profession,int,8,0,特种
 Race,int,34,0,阿戈尔
 Hp,int,1100,0,初始体力
@@ -26,6 +25,6 @@ C|711,int,1,0,可拆式袖套
 C|712,int,1,0,单边黑色手套
 C|824,int,1,0,连帽透明风超短连衣裙
 C|1012,int,1,0,腿环
-C|1120,int,1,0,黑色无跟低筒靴
+C|1120,int,1,0,黑色无跟低筒皮靴
 C|1213,int,1,0,工程蓄水炮
 C|1251,int,1,0,源石法杖

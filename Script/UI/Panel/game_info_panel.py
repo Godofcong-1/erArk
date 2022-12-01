@@ -62,7 +62,7 @@ class GameTimeInfoPanel:
             moon_phase_draw.style = "moon"
             now_draw.draw_list.append(moon_phase_draw)
             now_width += len(moon_phase_draw)
-        now_judge = game_time.judge_attend_class_today(0)
+        now_judge = game_time.judge_work_today(0)
         attend_class = _("(休息)")
         if now_judge:
             attend_class = _("(工作日)")

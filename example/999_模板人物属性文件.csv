@@ -5,7 +5,6 @@ key,type,value,get_text,info
 AdvNpc,int,999,0,干员编号：999
 Name,str,样板人物,1,姓名：样板人物
 Sex,int,1,0,性别：女，当前版本暂不支持其他性别的干员
-Age,int,18,0,年龄：18岁
 Profession,int,4,0,职业：术师
 Race,int,13,0,种族：菲林
 Hp,int,1500,0,初始体力：1500

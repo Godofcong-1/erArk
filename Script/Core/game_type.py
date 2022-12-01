@@ -41,8 +41,8 @@ class NpcTem:
         """ npc名字 """
         self.Sex: str = ""
         """ npc性别 """
-        self.Age: str = ""
-        """ npc年龄模板 """
+        # self.Age: str = ""
+        # """ npc年龄模板 """
         self.Position: List[int] = []
         """ npc出生位置(已废弃) """
         self.AdvNpc: int = 0
@@ -703,8 +703,8 @@ class Character:
         """ 他人对角色的称呼 """
         self.sex: int = 0
         """ 角色性别 """
-        self.age: int = 18
-        """ 角色年龄 """
+        # self.age: int = 18
+        # """ 角色年龄 """
         self.hit_point_max: int = 0
         """ 角色最大HP """
         self.hit_point: int = 0

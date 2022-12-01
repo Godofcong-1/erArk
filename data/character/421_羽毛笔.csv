@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,421,0,干员编号
 Name,str,羽毛笔,1,姓名
 Sex,int,1,0,女
-Age,int,16,0,猜测年龄
 Profession,int,5,0,近卫
 Race,int,19,0,黎博利
 Hp,int,1800,0,初始体力

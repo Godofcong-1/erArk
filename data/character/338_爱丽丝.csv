@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,338,0,干员编号
 Name,str,爱丽丝,1,姓名
 Sex,int,1,0,女
-Age,int,16,0,猜测年龄
 Profession,int,4,0,术士
 Race,int,13,0,菲林
 Hp,int,1100,0,初始体力

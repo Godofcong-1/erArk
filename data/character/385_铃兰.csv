@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,385,0,干员编号
 Name,str,铃兰,1,姓名
 Sex,int,1,0,女
-Age,int,12,0,猜测年龄
 Profession,int,7,0,辅助
 Race,int,28,0,沃尔珀
 Hp,int,1000,0,初始体力
@@ -18,6 +17,8 @@ E|83,int,100,0,料理经验
 T|0,int,1,0,处女
 T|1,int,1,0,A处女
 T|4,int,1,0,无接吻经验
+T|6,int,1,0,未初潮
+T|7,int,1,0,未成年
 T|61,int,1,0,萝莉
 T|70,int,1,0,兽耳
 T|72,int,1,0,兽尾

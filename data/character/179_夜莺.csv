@@ -3,7 +3,6 @@ key,type,value,get_text,info
 AdvNpc,int,179,0,干员编号
 Name,str,夜莺,1,姓名
 Sex,int,1,0,女
-Age,int,20,0,少女
 Profession,int,3,0,医疗
 Race,int,25,0,萨卡兹
 Hp,int,1000,0,初始体力

@@ -4,7 +4,6 @@ key,type,value,get_text,info
 AdvNpc,int,405,0,干员编号：405
 Name,str,苦艾,1,姓名：苦艾
 Sex,int,1,0,性别：女
-Age,int,16,0,年龄：16岁
 Profession,int,4,0,职业：术师
 Race,int,29,0,种族：乌萨斯
 Hp,int,1600,0,初始体力：1600
