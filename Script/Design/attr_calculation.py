@@ -266,7 +266,7 @@ def get_base_zero() -> dict:
 
     # 遍历全设施开放
     for all_cid in game_config.config_facility_open:
-        # 全设施等级设为1
+        # 全设施初始关闭
         base_data.facility_open[all_cid] = False
 
     # 遍历全资源清单

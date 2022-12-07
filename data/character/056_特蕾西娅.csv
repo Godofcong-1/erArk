@@ -7,7 +7,7 @@ Profession,int,8,0,特种
 Race,int,25,0,萨卡兹
 Hp,int,1100,0,初始体力
 Mp,int,800,0,初始气力
-Dormitory,str,宿舍101房,1,初始宿舍
+Dormitory,str,无,1,初始宿舍
 Token,str,暂无
 Introduce_1,str,暂无,1,人物介绍_1
 T|0,int,1,0,处女

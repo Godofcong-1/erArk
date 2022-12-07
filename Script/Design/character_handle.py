@@ -165,18 +165,32 @@ def init_character_dormitory():
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
     }
+    special_dormitory = {
+        key: constant.place_data[key] for key in constant.place_data if "Special_Dormitory" in key
+    }
+    special_dormitory = {
+        x: 0 for j in [k[1] for k in sorted(special_dormitory.items(), key=lambda x: x[0])] for x in j
+    }
     # print("dormitory :",dormitory)
     # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
     npc_count = 0
     cache.npc_id_got.discard(0)
-    # 每两个人住一个房间
     for character_id in cache.npc_id_got:
-        # print("character_id :",character_id)
-        n = npc_count // 2
-        now_room = list(dormitory.keys())[n]
-        # print(f"debug now_room = {now_room}")
-        cache.character_data[character_id].dormitory = now_room
-        npc_count += 1
+        character_data = cache.character_data[character_id]
+        # print(f"{character_data.name}：{character_data.dormitory}")
+        # 普通干员每两个人住一个房间
+        if character_data.dormitory == "无":
+            n = npc_count // 2
+            now_room = list(dormitory.keys())[n]
+            # print(f"debug now_room = {now_room}")
+            character_data.dormitory = now_room
+            npc_count += 1
+        # 有单独宿舍的干员住在对应宿舍
+        else:
+            for n in list(dormitory.keys()):
+                if cache.scene_data[n].scene_name == character_data.dormitory:
+                    character_data.dormitory = n
+                    # print(f"debug n :{n}")
 
 
 def init_character_position():
@@ -189,6 +203,15 @@ def init_character_position():
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
         # print("character_dormitory = ",character_dormitory)
         map_handle.character_move_scene(character_position, character_dormitory, character_id)
+
+
+def init_character_facility_open():
+    """初始化角色开放设施"""
+    for open_cid in game_config.config_facility_open:
+        for character_id in cache.npc_id_got:
+            if game_config.config_facility_open[open_cid].NPC_id == cache.character_data[character_id].adv:
+                cache.base_resouce.facility_open[open_cid] = True
+                break
 
 def get_new_character(character_id: int):
     """获得新角色"""
@@ -205,6 +228,11 @@ def get_new_character(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # 如果满足设施开放的前提条件，则开放该设施
+    for open_cid in game_config.config_facility_open:
+        if game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
+            cache.base_resouce.facility_open[open_cid] = True
 
 
 def add_favorability(
