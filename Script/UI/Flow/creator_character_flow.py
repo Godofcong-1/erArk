@@ -94,6 +94,7 @@ def confirm_character_attr_panel():
         now_attr_panel.draw()
         ask_list = []
         ask_list.extend(now_attr_panel.return_list)
+        line_feed_draw.draw()
         now_line = draw.LineDraw("~", width)
         now_line.draw()
         askfor_list = [_("睁开双眼"), _("重新设定")]
@@ -578,7 +579,7 @@ class Character_Bonus:
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = f" 当前为第{str(cache.game_round)}周目\n"
+        info_draw.text = f" 当前为第 {str(cache.game_round)} 周目\n"
         info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
             bonus_all += 20
