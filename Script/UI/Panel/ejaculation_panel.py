@@ -127,7 +127,7 @@ class Ejaculation_Panel:
                     position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
 
         self.handle_panel = panel.PageHandlePanel(
-            position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
+            position_list, Ejaculation_NameDraw, 20, 4, self.width, 1, 1, 0
         )
         self.handle_panel.text_list = position_list
         self.handle_panel.update()
@@ -172,17 +172,26 @@ class Ejaculation_NameDraw:
         self.panel_type = 0
         name_draw = draw.NormalDraw()
 
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
         # 区分是位置还是衣服
         if self.text in self.position_text_list:
             self.panel_type = 1
             for i in range(len(self.position_text_list)):
                 if self.text == self.position_text_list[i]:
                     self.index = i
+                    break
         elif self.text in self.cloth_text_list:
             self.panel_type = 2
             for i in range(len(self.cloth_text_list)):
                 if self.text == self.cloth_text_list[i]:
                     self.index = i
+                    cloth_name_text = ":"
+                    for cloth_id in target_data.cloth.cloth_wear[i]:
+                        cloth_name_text += f" {game_config.config_clothing_tem[cloth_id].name}"
+                    self.text += cloth_name_text
+                    break
         # print("debug self.text = ",self.text," panel_type = ",panel_type)
 
         if is_button:

@@ -330,6 +330,7 @@ def handle_locker_cloth_reset(
         return
     character_data = cache.character_data[character_id]
     character_data.cloth.cloth_locker = attr_calculation.get_cloth_locker_zero()
+    character_data.dirty.cloth_locker_semen = []
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_TO_LOCKER)
@@ -358,6 +359,7 @@ def handle_wear_to_locker(
                 if game_config.config_clothing_tem[cloth_id].tag != 6:
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
+    character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
 
     clothing.chara_special_wear_cloth(character_id)
 

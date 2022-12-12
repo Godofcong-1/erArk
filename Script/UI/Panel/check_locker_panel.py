@@ -1,10 +1,10 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
-from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update, attr_text
+from Script.Design import map_handle, attr_calculation, update, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -194,17 +194,17 @@ class FindDraw:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-                button3_text = f"[004]用衣服自慰，射在上面（未实装）"
-                button3_draw = draw.LeftButton(
-                    _(button3_text),
-                    _("3"),
-                    window_width,
-                    cmd_func=self.smell,
-                    args=(),
-                    )
-                line_feed.draw()
-                button3_draw.draw()
-                return_list.append(button3_draw.return_text)
+            button3_text = f"[004]用衣服冲，射在上面（未实装）"
+            button3_draw = draw.LeftButton(
+                _(button3_text),
+                _("3"),
+                window_width,
+                cmd_func=self.shoot_in_cloth,
+                args=(),
+                )
+            line_feed.draw()
+            button3_draw.draw()
+            return_list.append(button3_draw.return_text)
 
             # return_list.append(button0_draw.return_text)
             # button_all_draw.draw_list.append(button0_draw)
@@ -267,7 +267,139 @@ class FindDraw:
     def shoot_in_cloth(self):
         """射在衣服上"""
 
-        self.pl_data.behavior.duration = 1
-        self.pl_data.behavior.behavior_id = constant.Behavior.SMELL_UNDERWEAR
-        self.pl_data.state = constant.CharacterStatus.STATUS_SMELL_UNDERWEAR
-        update.game_update_flow(1)
+        shoot_in_cloth_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
+
+        while 1:
+            return_list = []
+            line_feed.draw()
+            line = draw.LineDraw("+", self.width)
+            line.draw()
+
+            cloth_show_text = []
+            for clothing_type in game_config.config_clothing_type:
+                cloth_list = self.character_data.cloth.cloth_locker[clothing_type]
+                if len(cloth_list):
+                    for cloth_id in cloth_list:
+                        cloth_show_text.append([cloth_id,self.npc_id])
+            print(f"debug cloth_show_text = {cloth_show_text}")
+
+            # 绘制面板本体
+            shoot_in_cloth_panel.text_list = cloth_show_text
+            shoot_in_cloth_panel.update()
+            shoot_in_cloth_panel.draw()
+            return_list.extend(shoot_in_cloth_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+
+            # 在非页面切换时退出面板
+            if yrn == back_draw.return_text:
+                break
+
+
+class Ejaculation_NameDraw:
+    """
+    点击后可选择射精部位按钮对象
+    Keyword arguments:
+    text -- 部位名
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(self, text: list, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.text = text[0]
+        """ 部位名 """
+        self.npc_id = text[1]
+        """ 角色id """
+        self.draw_text: str = ""
+        """ 部位名字绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+        self.cloth_text_list = []
+        for clothing_type in game_config.config_clothing_type:
+            cloth_text = game_config.config_clothing_type[clothing_type].name
+            self.cloth_text_list.append(cloth_text)
+        """ 衣服文本列表 """
+        name_draw = draw.NormalDraw()
+
+        for i in range(len(self.cloth_text_list)):
+            if self.text == self.cloth_text_list[i]:
+                self.index = i
+        print(f"debug text = {text}, self.text = {self.text}")
+
+        target_data: game_type.Character = cache.character_data[self.npc_id]
+
+        if is_button:
+            if num_button:
+                index_text = text_handle.id_index(button_id)
+                button_text = f"{index_text} {self.text}"
+                if target_data.dirty.cloth_locker_semen[self.index][1] != 0:
+                    button_text += f" ({str(target_data.dirty.cloth_locker_semen[self.index][1])}ml精液)"
+                name_draw = draw.LeftButton(
+                    button_text, self.button_return, self.width, cmd_func=self.shoot_here
+                )
+            else:
+                button_text = f"[{self.text}]"
+                name_draw = draw.CenterButton(
+                    button_text, self.text, self.width, cmd_func=self.shoot_here
+                )
+                self.button_return = self.text
+            self.draw_text = button_text
+        self.now_draw = name_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+    def shoot_here(self):
+        py_cmd.clr_cmd()
+
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[self.npc_id]
+
+        cache.shoot_position = self.index
+        # 乘以一个随机数补正
+        random_weight = random.uniform(0.5, 1.5)
+
+        # 基础射精值，小中多射精区分
+        if character_data.h_state.orgasm_level[3] % 3 == 0:
+            semen_count = int(5 * random_weight)
+            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 1:
+            semen_count = int(20 * random_weight)
+            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 2:
+            semen_count = int(100 * random_weight)
+            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+        character_data.h_state.orgasm_level[3] += 1
+
+        # print("debug semen_count = ",semen_count)
+
+        # 记录射精部位
+        # target_data.h_state.shoot_position_cloth = self.index
+
+        # 更新污浊类里的服装部位精液参数
+        target_data.dirty.cloth_locker_semen[self.index][1] += semen_count
+        target_data.dirty.cloth_locker_semen[self.index][3] += semen_count
+        target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1])
+
+        now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
+
+        line_feed.draw()
+        now_draw = draw.WaitDraw()
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
+
