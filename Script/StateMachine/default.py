@@ -399,7 +399,7 @@ def character_move_to_bath_room(character_id: int):
             break
     if not find_flag:
         to_bath_room = map_handle.get_map_system_path_for_str(
-    random.choice(constant.place_data["BathRoom"])
+    random.choice(constant.place_data["Bathroom"])
     )
 
     _, _, move_path, move_time = character_move.character_move(character_id, to_bath_room)

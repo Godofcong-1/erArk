@@ -8,6 +8,9 @@
 # 游戏解包数据
 # data/data_from_game
 
+# AI
+tools/AI
+
 # 没实装的图像
 image/艾雅法拉.png
 image/白雪.png

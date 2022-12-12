@@ -399,12 +399,12 @@ class Character_FirstNPC:
         info_draw.text += f"\n   基础:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂"}:
+            if npc_character_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
                 info_draw.text += f" ●{npc_character_data.name}"
         info_draw.text += f"\n   自选:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name not in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂"}:
+            if npc_character_data.name not in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
                 info_draw.text += f" ●{npc_character_data.name}"
 
         now_draw.draw_list.append(info_draw)
@@ -430,7 +430,7 @@ class Character_FirstNPC:
         if cache.debug_mode:
             self.npc_select_now = 999
         else:
-            self.npc_select_now = 9 - len(cache.npc_id_got)
+            self.npc_select_now = 10 - len(cache.npc_id_got)
         if self.npc_select_now:
             info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
         else:
@@ -466,7 +466,7 @@ class Character_FirstNPC:
             if cache.debug_mode:
                 self.npc_select_now = 999
             else:
-                self.npc_select_now = 9 - len(cache.npc_id_got)
+                self.npc_select_now = 10 - len(cache.npc_id_got)
             now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
             now_npc_draw.draw()
             line_feed_draw.draw()
@@ -521,7 +521,7 @@ class SelectFirstNPCButton:
         button_text = f"[{target_data.adv}：{target_data.name}]"
         name_draw = draw.CenterDraw()
         if self.NPC_id in cache.npc_id_got:
-            if target_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂"}:
+            if target_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
                 button_text += f"(基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
@@ -544,7 +544,7 @@ class SelectFirstNPCButton:
             cache.npc_id_got.remove(self.NPC_id)
         elif cache.debug_mode:
             cache.npc_id_got.add(self.NPC_id)
-        elif 9 - len(cache.npc_id_got):
+        elif 10 - len(cache.npc_id_got):
             cache.npc_id_got.add(self.NPC_id)
 
     def draw(self):
