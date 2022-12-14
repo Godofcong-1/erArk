@@ -455,7 +455,7 @@ class Character_FirstNPC:
     def select_npc(self):
         """选择初期干员"""
 
-        self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 8, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
 
         while 1:
 
@@ -518,18 +518,19 @@ class SelectFirstNPCButton:
         """ 按钮返回值 """
 
         target_data: game_type.Character = cache.character_data[NPC_id]
-        button_text = f"[{target_data.adv}：{target_data.name}]"
-        name_draw = draw.CenterDraw()
+        button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
+        name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
             if target_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
-                button_text += f"(基础)"
+                button_text += f" (基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
+                name_draw.style = "nowmap"
             else:
-                button_text += f"(自选)"
-                name_draw = draw.CenterButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+                button_text += f" (自选)"
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
         else:
-            name_draw = draw.CenterButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
 
         # 按钮绘制
         # self.button_return = NPC_id
@@ -601,12 +602,15 @@ class Character_Bonus:
         if character_data.talent[304]:
             button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
             self.bonus_now -= 10
+            draw_style = "nowmap"
         else:
             button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
+            draw_style = "standard"
         button_304_draw = draw.LeftButton(
             _(button_text),
             _(talent_data_304.name),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_talent,
             args=304)
         self.return_list.append(button_304_draw.return_text)
@@ -619,12 +623,15 @@ class Character_Bonus:
         if character_data.talent[307]:
             button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
             self.bonus_now -= 10
+            draw_style = "nowmap"
         else:
             button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
+            draw_style = "standard"
         button_307_draw = draw.LeftButton(
             _(button_text),
             _(talent_data_307.name),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_talent,
             args=307)
         self.return_list.append(button_307_draw.return_text)
@@ -636,12 +643,15 @@ class Character_Bonus:
         if cache.base_resouce.money:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
+            draw_style = "nowmap"
         else:
             button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
+            draw_style = "standard"
         button_money_draw = draw.LeftButton(
             _(button_text),
             _('启动资金'),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_money,
             )
         self.return_list.append(button_money_draw.return_text)
@@ -652,14 +662,17 @@ class Character_Bonus:
 
         if character_data.assistant_character_id:
             target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            button_text = f"   ●助理干员(5)：选择{target_data.name}成为助理干员，初始拥有1000点好感和50%信赖度"
+            button_text = f"   ●助理干员(5)：选择[{target_data.name}]成为助理干员，初始拥有1000点好感和50%信赖度"
             self.bonus_now -= 5
+            draw_style = "nowmap"
         else:
             button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
+            draw_style = "standard"
         button_assistant_draw = draw.LeftButton(
             _(button_text),
             _('助理干员'),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_assistant,
             )
         self.return_list.append(button_assistant_draw.return_text)
@@ -734,7 +747,7 @@ class Character_Bonus:
         # 这里直接沿用的助理页面的代码
         elif self.bonus_now >= 5:
 
-            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
+            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 8, self.width, 1, 1, 0)
 
             while 1:
 
@@ -745,7 +758,7 @@ class Character_Bonus:
                 line.draw()
                 now_npc_draw = draw.NormalDraw()
                 if character_data.assistant_character_id != 0:
-                    now_npc_text = f"当前助理为{target_data.name}，如果要更换，请在下面选择新的助理："
+                    now_npc_text = f"当前助理为 {target_data.name} ，如果要更换，请在下面选择新的助理："
                 else:
                     now_npc_text = f"当前无助理，请选择新的助理："
                 now_npc_draw.text = now_npc_text

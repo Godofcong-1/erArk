@@ -362,11 +362,11 @@ class SeeNPCButtonList:
         """ 按钮返回值 """
 
         target_data: game_type.Character = cache.character_data[NPC_id]
-        button_text = f"[{target_data.adv}：{target_data.name}]"
+        button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
 
         # 按钮绘制
 
-        name_draw = draw.CenterButton(
+        name_draw = draw.LeftButton(
             button_text, self.button_return, self.width, cmd_func=self.button_0
         )
         # self.button_return = NPC_id
