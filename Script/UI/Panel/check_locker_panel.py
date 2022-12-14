@@ -267,24 +267,23 @@ class FindDraw:
     def shoot_in_cloth(self):
         """射在衣服上"""
 
-        shoot_in_cloth_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
+        shoot_in_cloth_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, window_width, 1, 1, 0)
 
         while 1:
             return_list = []
             line_feed.draw()
-            line = draw.LineDraw("+", self.width)
-            line.draw()
+            # line = draw.LineDraw("+", self.width)
+            # line.draw()
 
-            cloth_show_text = []
+            cloth_type_list = []
             for clothing_type in game_config.config_clothing_type:
                 cloth_list = self.character_data.cloth.cloth_locker[clothing_type]
                 if len(cloth_list):
-                    for cloth_id in cloth_list:
-                        cloth_show_text.append([cloth_id,self.npc_id])
-            print(f"debug cloth_show_text = {cloth_show_text}")
+                    cloth_type_list.append([clothing_type,self.npc_id])
+            print(f"debug cloth_type_list = {cloth_type_list}")
 
             # 绘制面板本体
-            shoot_in_cloth_panel.text_list = cloth_show_text
+            shoot_in_cloth_panel.text_list = cloth_type_list
             shoot_in_cloth_panel.update()
             shoot_in_cloth_panel.draw()
             return_list.extend(shoot_in_cloth_panel.return_list)
@@ -311,7 +310,7 @@ class Ejaculation_NameDraw:
     def __init__(self, text: list, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
         self.text = text[0]
-        """ 部位名 """
+        """ 部位id """
         self.npc_id = text[1]
         """ 角色id """
         self.draw_text: str = ""
@@ -331,9 +330,7 @@ class Ejaculation_NameDraw:
         """ 衣服文本列表 """
         name_draw = draw.NormalDraw()
 
-        for i in range(len(self.cloth_text_list)):
-            if self.text == self.cloth_text_list[i]:
-                self.index = i
+        self.index = self.text
         print(f"debug text = {text}, self.text = {self.text}")
 
         target_data: game_type.Character = cache.character_data[self.npc_id]
