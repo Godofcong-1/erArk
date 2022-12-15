@@ -766,7 +766,7 @@ class Character_Bonus:
                 line_feed_draw.draw()
 
                 # 遍历所有NPC
-                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                id_list = [i for i in cache.npc_id_got]
                 # print("debug id_list = ",id_list)
                 self.handle_panel.text_list = id_list
                 self.handle_panel.update()
