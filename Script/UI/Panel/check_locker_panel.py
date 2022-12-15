@@ -194,7 +194,7 @@ class FindDraw:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            button3_text = f"[004]用衣服冲，射在上面（未实装）"
+            button3_text = f"[004]用衣服冲，射在上面"
             button3_draw = draw.LeftButton(
                 _(button3_text),
                 _("3"),
@@ -267,7 +267,7 @@ class FindDraw:
     def shoot_in_cloth(self):
         """射在衣服上"""
 
-        shoot_in_cloth_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, window_width, 1, 1, 0)
+        shoot_in_cloth_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 1, window_width, 1, 1, 0)
 
         while 1:
             return_list = []
@@ -280,7 +280,7 @@ class FindDraw:
                 cloth_list = self.character_data.cloth.cloth_locker[clothing_type]
                 if len(cloth_list):
                     cloth_type_list.append([clothing_type,self.npc_id])
-            print(f"debug cloth_type_list = {cloth_type_list}")
+            # print(f"debug cloth_type_list = {cloth_type_list}")
 
             # 绘制面板本体
             shoot_in_cloth_panel.text_list = cloth_type_list
@@ -288,6 +288,7 @@ class FindDraw:
             shoot_in_cloth_panel.draw()
             return_list.extend(shoot_in_cloth_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
 
@@ -331,9 +332,14 @@ class Ejaculation_NameDraw:
         name_draw = draw.NormalDraw()
 
         self.index = self.text
-        print(f"debug text = {text}, self.text = {self.text}")
-
         target_data: game_type.Character = cache.character_data[self.npc_id]
+
+        self.text = game_config.config_clothing_type[self.index].name
+        cloth_name_text = ":"
+        for cloth_id in target_data.cloth.cloth_locker[self.index]:
+            cloth_name_text += f" {game_config.config_clothing_tem[cloth_id].name}"
+        self.text += cloth_name_text
+        # print(f"debug text = {text}, self.text = {self.text}")
 
         if is_button:
             if num_button:
