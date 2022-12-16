@@ -756,6 +756,7 @@ class Character_Bonus:
                 target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
                 line = draw.LineDraw("-", self.width)
                 line.draw()
+                line_feed_draw.draw()
                 now_npc_draw = draw.NormalDraw()
                 if character_data.assistant_character_id != 0:
                     now_npc_text = f"当前助理为 {target_data.name} ，如果要更换，请在下面选择新的助理："
@@ -763,6 +764,7 @@ class Character_Bonus:
                     now_npc_text = f"当前无助理，请选择新的助理："
                 now_npc_draw.text = now_npc_text
                 now_npc_draw.draw()
+                line_feed_draw.draw()
                 line_feed_draw.draw()
 
                 # 遍历所有NPC
