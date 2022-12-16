@@ -103,7 +103,7 @@ class FindDraw:
 
         character_data = cache.character_data[self.npc_id]
         name = character_data.name
-        id = str(character_data.adv)
+        id = str(character_data.adv).rjust(4,'0')
         scene_position = character_data.position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
