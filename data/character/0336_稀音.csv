@@ -3,7 +3,7 @@ key,type,value,get_text,info
 AdvNpc,int,336,0,干员编号
 Name,str,稀音,1,姓名
 Sex,int,1,0,女
-Profession,int,1,0,先锋
+Profession,int,7,0,辅助
 Race,int,8,0,皮洛萨
 Hp,int,1200,0,初始体力
 Mp,int,400,0,初始气力
@@ -14,6 +14,7 @@ T|0,int,1,0,处女
 T|1,int,1,0,A处女
 T|4,int,1,0,无接吻经验
 T|62,int,1,0,少女
+T|76,int,1,0,小车
 T|81,int,1,0,贫乳
 T|86,int,1,0,普尻
 T|88,int,1,0,细腿
