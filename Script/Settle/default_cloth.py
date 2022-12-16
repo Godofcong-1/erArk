@@ -354,9 +354,12 @@ def handle_wear_to_locker(
 
     for clothing_type in game_config.config_clothing_type:
         if len(character_data.cloth.cloth_wear[clothing_type]):
-            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+            tem_list = character_data.cloth.cloth_wear[clothing_type].copy()
+            for cloth_id in tem_list:
+                # print(f"debug cloth_id = {cloth_id}")
                 # 只要不是首饰，就转移到柜子里
                 if game_config.config_clothing_tem[cloth_id].tag != 6:
+                    # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
     character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen

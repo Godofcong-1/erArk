@@ -150,6 +150,9 @@ class FindDraw:
                     for cloth_id in cloth_list:
                         cloth_name = game_config.config_clothing_tem[cloth_id].name
                         cloth_show_text += f" {cloth_name}"
+                    semen_now_count = self.character_data.dirty.cloth_locker_semen[clothing_type][1]
+                    if semen_now_count:
+                        cloth_show_text += f"({semen_now_count}ml精液)"
             cloth_show_draw.text = cloth_show_text + "\n\n"
             cloth_show_draw.draw()
 
@@ -272,8 +275,8 @@ class FindDraw:
         while 1:
             return_list = []
             line_feed.draw()
-            # line = draw.LineDraw("+", self.width)
-            # line.draw()
+            line = draw.LineDraw("-", window_width)
+            line.draw()
 
             cloth_type_list = []
             for clothing_type in game_config.config_clothing_type:
