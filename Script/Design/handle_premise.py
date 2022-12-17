@@ -1575,6 +1575,120 @@ def handle_sleep_100(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_50)
+def handle_t_sleep_ge_50(character_id: int) -> int:
+    """
+    交互对象困倦条≥50%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value >= 0.5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_74)
+def handle_t_sleep_le_74(character_id: int) -> int:
+    """
+    交互对象困倦条≤74%，全指令自由
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value <= 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_75)
+def handle_t_sleep_ge_75(character_id: int) -> int:
+    """
+    交互对象困倦条≥75%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value > 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_89)
+def handle_t_sleep_le_89(character_id: int) -> int:
+    """
+    交互对象困倦条≤89%，自由活动的极限
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value <= 0.89:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_90)
+def handle_t_sleep_ge_90(character_id: int) -> int:
+    """
+    交互对象困倦条≥90%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value > 0.89:
+        return target_data.sleep_point * 5
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_100)
+def handle_t_sleep_100(character_id: int) -> int:
+    """
+    交互对象困倦条100%，当场爆睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
@@ -3442,6 +3556,65 @@ def handle_scene_someone_is_h(character_id: int) -> int:
                         break
                     if i == 18:
                         return 999
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
+def handle_player_come_scene(character_id: int) -> int:
+    """
+    校验玩家来到该角色所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+    if (
+        pl_character_data.behavior.move_src != target_data.position
+        and pl_character_data.behavior.move_target == target_data.position
+        and pl_character_data.position == target_data.position
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_LEAVE_SCENE)
+def handle_player_leave_scene(character_id: int) -> int:
+    """
+    校验玩家离开该角色所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+    if (
+        pl_character_data.behavior.move_src == target_data.position
+        and pl_character_data.behavior.move_target != target_data.position
+        # and pl_character_data.position != target_data.position
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TATGET_COME_SCENE)
+def handle_target_come_scene(character_id: int) -> int:
+    """
+    校验该角色来到玩家所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if (
+        now_character_data.behavior.move_src != cache.character_data[0].position
+        and now_character_data.behavior.move_target == cache.character_data[0].position
+        and now_character_data.position == cache.character_data[0].position
+    ):
+        return 1
     return 0
 
 

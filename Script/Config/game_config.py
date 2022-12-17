@@ -695,6 +695,7 @@ def load_talk():
         now_tem = config_def.Talk()
         now_tem.__dict__ = tem_data
         config_talk[now_tem.cid] = now_tem
+        # print(f"debug now_tem.context = {now_tem.context}")
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
