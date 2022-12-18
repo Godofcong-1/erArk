@@ -29,6 +29,12 @@ config_second_behavior_effect_data: Dict[int, Set] = {}
 """ 二段行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
+config_book_type_data: Dict[int, Set] = {}
+""" 书籍各类型下的id集合数据 类型id:书籍id集合 """
+config_book_type: Dict[int, config_def.BookType] = {}
+""" 书籍类型配表数据 """
+config_book_type_name_data: Dict[str, Set] = {}
+""" 书籍类型配表数据集合 父类型名:子类型名 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
 """ 角色状态属性配表数据 """
 config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
@@ -396,13 +402,27 @@ def load_second_behavior_effect_data():
 
 
 def load_book_data():
-    """载入数据配置数据"""
+    """载入书籍配置数据"""
     now_data = config_data["Book"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.Book()
         now_tem.__dict__ = tem_data
         config_book[now_tem.cid] = now_tem
+        config_book_type_data.setdefault(now_tem.type, set())
+        config_book_type_data[now_tem.type].add(now_tem.cid)
+
+
+def load_book_type():
+    """载入书籍种类配置数据"""
+    now_data = config_data["BookType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.BookType()
+        now_type.__dict__ = tem_data
+        config_book_type[now_type.cid] = now_type
+        config_book_type_name_data.setdefault(now_type.father_type_name, set())
+        config_book_type_name_data[now_type.father_type_name].add(now_type.son_type_name)
 
 
 def load_character_state_data():
@@ -808,6 +828,7 @@ def init():
     load_behavior_effect_data()
     load_second_behavior_effect_data()
     load_book_data()
+    load_book_type()
     load_character_state_data()
     load_character_state_type_data()
     # load_clothing_suit()

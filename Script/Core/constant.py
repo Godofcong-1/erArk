@@ -863,6 +863,8 @@ class Panel:
     """ 事件选项面板 """
     CHECK_LOCKER = 19
     """ 检查衣柜面板 """
+    BORROW_BOOK = 20
+    """ 借阅书籍面板 """
 
 
 class SecondBehavior:
@@ -1317,6 +1319,8 @@ class Instruct:
     """ 招募干员 """
     CONFIM_RECRUIT = 0
     """ 确认已招募的干员 """
+    BORROW_BOOK = 0
+    """ 借阅书籍 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

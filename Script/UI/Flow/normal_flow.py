@@ -19,6 +19,7 @@ from Script.UI.Panel import (
     instruct_filter_panel,
     event_option_panel,
     check_locker_panel,
+    borrow_book_panel,
 )
 from Script.Config import normal_config
 
@@ -123,13 +124,19 @@ def instruct_filter_flow():
     now_panel.draw()
 
 @handle_panel.add_panel(constant.Panel.EVENT_OPTION)
-def instruct_event_option_flow():
+def event_option_flow():
     """事件选项面板"""
     now_panel = event_option_panel.Event_option_Panel(width)
     now_panel.draw()
 
 @handle_panel.add_panel(constant.Panel.CHECK_LOCKER)
-def instruct_check_locker_flow():
+def check_locker_flow():
     """检查衣柜面板"""
     now_panel = check_locker_panel.Check_locker_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.BORROW_BOOK)
+def borrow_book_flow():
+    """借阅书籍面板"""
+    now_panel = borrow_book_panel.Borrow_Book_Panel(width)
     now_panel.draw()

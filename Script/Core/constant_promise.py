@@ -232,6 +232,8 @@ class Premise:
     """ 地点_定位 不在休息室中 """
     IN_MUSIC_ROOM = "in_music_room"
     """ 地点_定位 在音乐室中 """
+    IN_LIBRARY = "in_library"
+    """ 地点_定位 在图书馆中 """
     IN_COLLECTION_ROOM = "in_collection_room"
     """ 地点_定位 在藏品馆中 """
     IN_GYM_ROOM = "in_gym_room"

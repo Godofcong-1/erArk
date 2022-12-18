@@ -258,6 +258,18 @@ def handle_see_collection():
 
 
 @add_instruct(
+    constant.Instruct.BORROW_BOOK,
+    constant.InstructType.WORK,
+    _("借阅书籍"),
+    {
+        constant_promise.Premise.IN_LIBRARY
+    })
+def handle_borrow_book():
+    """处理借阅书籍指令"""
+    cache.now_panel_id = constant.Panel.BORROW_BOOK
+
+
+@add_instruct(
     constant.Instruct.SEE_DEPARTMENT,
     constant.InstructType.WORK,
     _("查看部门运作情况"),

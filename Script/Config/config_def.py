@@ -31,17 +31,6 @@ class AbilityUp:
     """ 升级需求 """
 
 
-class AbilityUpType:
-    """ 能力对应类型和文字描述 """
-
-    cid: int
-    """ 升级id """
-    ability_id: int
-    """ 能力id """
-    now_level: int
-    """ 当前等级 """
-
-
 class BarConfig:
     """ 比例条名字对应的状态图片和绘制宽度 """
 
@@ -97,8 +86,10 @@ class BookType:
 
     cid: int
     """ 书本类型id """
-    type_name: str
-    """ 书本类型名 """
+    father_type_name: str
+    """ 书本大类 """
+    son_type_name: str
+    """ 书本小类 """
 
 
 class CharacterState:
