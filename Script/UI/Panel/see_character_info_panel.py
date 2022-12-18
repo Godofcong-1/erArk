@@ -1218,44 +1218,48 @@ class Characterabi_cmd_Text:
         judge = 1
         #绘制标题#
         while 1:
-            for abi_id in game_config.config_ability_up_type:
-                #匹配到能力的id与能力等级对应的前提#
-                if game_config.config_ability_up_type[abi_id].ability_id == self.ability_id and game_config.config_ability_up_type[abi_id].now_level == self.ability_level:
-                    need_list = game_config.config_ability_up_data[abi_id]
-                    line = draw.LineDraw(".", self.width)
-                    line.draw()
-                    line_feed.draw()
-                    for need_id in need_list:
-                        need_type = need_list[need_id].need_type
-                        need_type_id = need_list[need_id].need_type_id
-                        need_value = need_list[need_id].value
-                        if need_type == "A":
-                            abi_name = game_config.config_ability[need_type_id].name
-                            button_text = "需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
-                            if self.character_data.ability[need_type_id] < need_value:
-                                judge = 0
-                        elif need_type == "J":
-                            juel_name = game_config.config_juel[need_type_id].name
-                            button_text = "需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
-                            if self.character_data.juel[need_type_id] < need_value:
-                                judge = 0
-                            self.jule_dict[need_type_id] = need_value
-                        elif need_type == "E":
-                            experience_name = game_config.config_experience[need_type_id].name
-                            button_text = "需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
-                            if self.character_data.experience[need_type_id] < need_value:
-                                judge = 0
-                        now_draw = draw.NormalDraw()
-                        now_draw.text = button_text
-                        now_draw.draw()
-                    if judge:
-                        now_draw_succed = draw.NormalDraw()
-                        now_draw_succed.text = "满足条件，要升级吗？\n"
-                        now_draw_succed.draw()
-                    else:
-                        now_draw_failed = draw.NormalDraw()
-                        now_draw_failed.text = "不满足条件，无法升级\n"
-                        now_draw_failed.draw()
+
+            # 读取该能力在对应等级下的升级需求
+            need_list = game_config.config_ability_up_data[self.ability_id][self.ability_level]
+            line = draw.LineDraw(".", self.width)
+            line.draw()
+            line_feed.draw()
+
+            # 遍历升级需求，并输出信息
+            for need_text in need_list:
+                # print(f"debug need_text = {need_text}")
+                need_type = need_text.split('|')[0][0]
+                need_type_id = int(need_text.split('|')[0][1:])
+                need_value = int(need_text.split('|')[1])
+                if need_type == "A":
+                    abi_name = game_config.config_ability[need_type_id].name
+                    button_text = "需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
+                    if self.character_data.ability[need_type_id] < need_value:
+                        judge = 0
+                elif need_type == "J":
+                    juel_name = game_config.config_juel[need_type_id].name
+                    button_text = "需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
+                    if self.character_data.juel[need_type_id] < need_value:
+                        judge = 0
+                    self.jule_dict[need_type_id] = need_value
+                elif need_type == "E":
+                    experience_name = game_config.config_experience[need_type_id].name
+                    button_text = "需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
+                    if self.character_data.experience[need_type_id] < need_value:
+                        judge = 0
+                now_draw = draw.NormalDraw()
+                now_draw.text = button_text
+                now_draw.draw()
+
+            # 判断是否可以升级
+            if judge:
+                now_draw_succed = draw.NormalDraw()
+                now_draw_succed.text = "满足条件，要升级吗？\n"
+                now_draw_succed.draw()
+            else:
+                now_draw_failed = draw.NormalDraw()
+                now_draw_failed.text = "不满足条件，无法升级\n"
+                now_draw_failed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
             back_draw.draw()
             self.return_list.append(back_draw.return_text)
@@ -1360,7 +1364,7 @@ class Character_talent_show_Text:
                 text_draw_love.text = "未满足基础前提\n"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.ability[15] !=0 or self.character_data.ability[17] !=0 or self.character_data.ability[21] <= self.character_data.ability[20]:
+            elif self.character_data.ability[15] !=0 or self.character_data.ability[17] !=0 or self.character_data.ability[32] <= self.character_data.ability[31]:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足爱情路线前提\n"
                 text_draw_love.width = 1
@@ -1393,7 +1397,7 @@ class Character_talent_show_Text:
                 text_draw_love.text = "未满足基础前提"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.ability[13] ==0 or self.character_data.ability[14] ==0 or self.character_data.ability[20] <= self.character_data.ability[21]:
+            elif self.character_data.ability[13] ==0 or self.character_data.ability[14] ==0 or self.character_data.ability[31] <= self.character_data.ability[32]:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足隶属路线前提"
                 text_draw_love.width = 1

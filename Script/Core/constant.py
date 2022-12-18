@@ -1130,7 +1130,7 @@ class SecondEffect:
     ADD_SMALL_HAPPY = 266
     """ 增加少量快乐（快乐刻印补正） """
     ADD_SMALL_LEAD = 267
-    """ 增加少量先导（受虐补正） """
+    """ 增加少量先导（施虐补正） """
     ADD_SMALL_SUBMIT = 268
     """ 增加少量屈服（屈服刻印补正） """
     ADD_SMALL_SHY = 269
@@ -1156,7 +1156,7 @@ class SecondEffect:
     ADD_MIDDLE_HAPPY = 279
     """ 增加中量快乐（快乐刻印补正） """
     ADD_MIDDLE_LEAD = 280
-    """ 增加中量先导（受虐补正） """
+    """ 增加中量先导（施虐补正） """
     ADD_MIDDLE_SUBMIT = 281
     """ 增加中量屈服（屈服刻印补正） """
     ADD_MIDDLE_SHY = 282
@@ -1182,7 +1182,7 @@ class SecondEffect:
     ADD_LARGE_HAPPY = 292
     """ 增加大量快乐（快乐刻印补正） """
     ADD_LARGE_LEAD = 293
-    """ 增加大量先导（受虐补正） """
+    """ 增加大量先导（施虐补正） """
     ADD_LARGE_SUBMIT = 294
     """ 增加大量屈服（屈服刻印补正） """
     ADD_LARGE_SHY = 295

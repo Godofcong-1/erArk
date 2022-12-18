@@ -258,8 +258,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_status:
         calculation_text += "+状态修正("+ str(judge_status) +")"
 
-    #能力修正，亲密(21)和欲望(22)修正#
-    judge_ability = target_data.ability[21]*10 + target_data.ability[22]*5
+    #能力修正，亲密(32)和欲望(33)修正#
+    judge_ability = target_data.ability[32]*10 + target_data.ability[33]*5
     judge += judge_ability
     if judge_ability:
         calculation_text += "+能力修正("+ str(judge_ability) +")"
@@ -307,7 +307,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         else:
             judge_other_people = 30
         # 露出修正
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[23])
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
         judge_other_people = int(judge_other_people *(adjust - 1.5))
         judge += judge_other_people
         calculation_text += "+当前场景有其他人在("+ text_handle.number_to_symbol_string(judge_other_people) +")"

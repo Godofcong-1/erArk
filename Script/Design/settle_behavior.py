@@ -683,20 +683,20 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[14] = 1
         character_data.second_behavior[1033] = 1
         #至少提升为顺从1
-        if character_data.ability[20] <= 0:
-            character_data.ability[20] = 1
+        if character_data.ability[31] <= 0:
+            character_data.ability[31] = 1
     if yield_count >= 3000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         #至少提升为顺从2
-        if character_data.ability[20] <= 1:
-            character_data.ability[20] = 2
+        if character_data.ability[31] <= 1:
+            character_data.ability[31] = 2
     if yield_count >= 10000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         #至少提升为顺从3
-        if character_data.ability[20] <= 2:
-            character_data.ability[20] = 3
+        if character_data.ability[31] <= 2:
+            character_data.ability[31] = 3
 
     #苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
     pain_count = 0
@@ -706,20 +706,20 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[15] = 1
         character_data.second_behavior[1036] = 1
         #至少提升为顺从1
-        if character_data.ability[20] <= 0:
-            character_data.ability[20] = 1
+        if character_data.ability[31] <= 0:
+            character_data.ability[31] = 1
     if pain_count >= 4000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
         #至少提升为顺从2
-        if character_data.ability[20] <= 1:
-            character_data.ability[20] = 2
+        if character_data.ability[31] <= 1:
+            character_data.ability[31] = 2
     if pain_count >= 8000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
         #至少提升为顺从3
-        if character_data.ability[20] <= 2:
-            character_data.ability[20] = 3
+        if character_data.ability[31] <= 2:
+            character_data.ability[31] = 3
 
     #时姦刻印未实装
 

@@ -36,7 +36,7 @@ cid,effect_name,effect_type,effect
 53,TARGET_ADD_SMALL_FRIENDLY,属性_状态,交互对象增加少量好意（亲密补正）
 54,TARGET_ADD_SMALL_DESIRE,属性_状态,交互对象增加少量欲情（欲望补正）
 55,TARGET_ADD_SMALL_HAPPY,属性_状态,交互对象增加少量快乐（快乐刻印补正）
-56,TARGET_ADD_SMALL_LEAD,属性_状态,交互对象增加少量先导（受虐补正）
+56,TARGET_ADD_SMALL_LEAD,属性_状态,交互对象增加少量先导（施虐补正）
 57,TARGET_ADD_SMALL_SUBMIT,属性_状态,交互对象增加少量屈服（屈服刻印补正）
 58,TARGET_ADD_SMALL_SHY,属性_状态,交互对象增加少量羞耻（露出补正）
 59,TARGET_ADD_SMALL_PAIN,属性_状态,交互对象增加少量苦痛（苦痛刻印补正）

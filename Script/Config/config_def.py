@@ -23,14 +23,12 @@ class AbilityUp:
 
     cid: int
     """ 编号id """
-    ability_up_id: int
-    """ 对应的升级需求id """
-    need_type: str
-    """ 需求类型 """
-    need_type_id: int
-    """ 需求类型的子id """
-    value: int
-    """ 需求值 """
+    ability_id: int
+    """ 能力id """
+    now_level: int
+    """ 当前等级 """
+    up_need: str
+    """ 升级需求 """
 
 
 class AbilityUpType:
@@ -86,8 +84,21 @@ class Book:
     """ 书本id """
     name: str
     """ 名字 """
+    type: int
+    """ 类型 """
+    use: int
+    """ 特殊用途 """
     info: str
     """ 介绍 """
+
+
+class BookType:
+    """ 书籍类型表 """
+
+    cid: int
+    """ 书本类型id """
+    type_name: str
+    """ 书本类型名 """
 
 
 class CharacterState:

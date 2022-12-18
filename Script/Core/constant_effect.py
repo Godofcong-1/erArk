@@ -76,7 +76,7 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_HAPPY = 55
     """ 属性_状态 交互对象增加少量快乐（快乐刻印补正） """
     TARGET_ADD_SMALL_LEAD = 56
-    """ 属性_状态 交互对象增加少量先导（受虐补正） """
+    """ 属性_状态 交互对象增加少量先导（施虐补正） """
     TARGET_ADD_SMALL_SUBMIT = 57
     """ 属性_状态 交互对象增加少量屈服（屈服刻印补正） """
     TARGET_ADD_SMALL_SHY = 58

@@ -2063,7 +2063,7 @@ def handle_technique_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[19] >= 3:
+    if character_data.ability[30] >= 3:
         return 1
     return 0
 
@@ -2078,7 +2078,7 @@ def handle_technique_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[19] >= 5:
+    if character_data.ability[30] >= 5:
         return 1
     return 0
 
@@ -2094,7 +2094,7 @@ def handle_target_desire_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[22] >= 5:
+    if target_data.ability[33] >= 5:
         return 1
     return 0
 
@@ -2110,7 +2110,7 @@ def handle_target_desire_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[22] >= 7:
+    if target_data.ability[33] >= 7:
         return 1
     return 0
 
@@ -2219,7 +2219,7 @@ def handle_target_cook_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 1:
+    if target_data.ability[43] == 1:
         return 1
     return 0
 
@@ -2235,7 +2235,7 @@ def handle_target_cook_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 2:
+    if target_data.ability[43] == 2:
         return 1
     return 0
 
@@ -2251,7 +2251,7 @@ def handle_target_cook_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 3:
+    if target_data.ability[43] == 3:
         return 1
     return 0
 
@@ -2267,7 +2267,7 @@ def handle_target_cook_4(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 4:
+    if target_data.ability[43] == 4:
         return 1
     return 0
 
@@ -2283,7 +2283,7 @@ def handle_target_cook_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] <= 1:
+    if target_data.ability[43] <= 1:
         return 1
     return 0
 
@@ -2299,7 +2299,7 @@ def handle_target_cook_le_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] <= 3:
+    if target_data.ability[43] <= 3:
         return 1
     return 0
 
@@ -2315,7 +2315,7 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] >= 3:
+    if target_data.ability[43] >= 3:
         return 1
     return 0
 
@@ -2331,7 +2331,7 @@ def handle_target_cook_g_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] > 3:
+    if target_data.ability[43] > 3:
         return 1
     return 0
 
@@ -2347,7 +2347,7 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] >= 5:
+    if target_data.ability[43] >= 5:
         return 1
     return 0
 
@@ -2364,7 +2364,7 @@ def handle_target_music_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 1:
+    if target_data.ability[44] == 1:
         return 1
     return 0
 
@@ -2380,7 +2380,7 @@ def handle_target_music_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 2:
+    if target_data.ability[44] == 2:
         return 1
     return 0
 
@@ -2396,7 +2396,7 @@ def handle_target_music_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 3:
+    if target_data.ability[44] == 3:
         return 1
     return 0
 
@@ -2412,7 +2412,7 @@ def handle_target_music_4(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 4:
+    if target_data.ability[44] == 4:
         return 1
     return 0
 
@@ -2428,7 +2428,7 @@ def handle_target_music_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] <= 1:
+    if target_data.ability[44] <= 1:
         return 1
     return 0
 
@@ -2444,7 +2444,7 @@ def handle_target_music_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] >= 3:
+    if target_data.ability[44] >= 3:
         return 1
     return 0
 
@@ -2460,7 +2460,7 @@ def handle_target_music_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] >= 5:
+    if target_data.ability[44] >= 5:
         return 1
     return 0
 
@@ -2475,7 +2475,7 @@ def handle_target_intimacy_8(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] == 8:
+    if target_data.ability[32] == 8:
         return 1
     return 0
 
@@ -2491,7 +2491,7 @@ def handle_target_intimacy_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] <= 1:
+    if target_data.ability[32] <= 1:
         return 1
     return 0
 
@@ -2507,7 +2507,7 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] >= 3:
+    if target_data.ability[32] >= 3:
         return 1
     return 0
 
@@ -2523,7 +2523,7 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] >= 5:
+    if target_data.ability[32] >= 5:
         return 1
     return 0
 
@@ -2540,7 +2540,7 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[19] >= 3:
+    if target_data.ability[30] >= 3:
         return 1
     return 0
 
@@ -2556,7 +2556,7 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[19] >= 5:
+    if target_data.ability[30] >= 5:
         return 1
     return 0
 
@@ -8470,7 +8470,7 @@ def handle_s_ge_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 1:
+    if character_data.ability[35] >= 1:
         return 1
     return 0
 
@@ -8485,7 +8485,7 @@ def handle_s_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 3:
+    if character_data.ability[35] >= 3:
         return 1
     return 0
 
@@ -8500,7 +8500,7 @@ def handle_s_ge_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 5:
+    if character_data.ability[35] >= 5:
         return 1
     return 0
 
@@ -8515,7 +8515,7 @@ def handle_s_ge_7(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 7:
+    if character_data.ability[35] >= 7:
         return 1
     return 0
 
@@ -8530,7 +8530,7 @@ def handle_s_l_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 1:
+    if character_data.ability[35] < 1:
         return 1
     return 0
 
@@ -8545,7 +8545,7 @@ def handle_s_l_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 3:
+    if character_data.ability[35] < 3:
         return 1
     return 0
 
@@ -8560,7 +8560,7 @@ def handle_s_l_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 5:
+    if character_data.ability[35] < 5:
         return 1
     return 0
 
@@ -8576,7 +8576,7 @@ def handle_t_s_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 1:
+    if target_data.ability[35] >= 1:
         return 1
     return 0
 
@@ -8592,7 +8592,7 @@ def handle_t_s_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 3:
+    if target_data.ability[35] >= 3:
         return 1
     return 0
 
@@ -8608,7 +8608,7 @@ def handle_t_s_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 5:
+    if target_data.ability[35] >= 5:
         return 1
     return 0
 
@@ -8624,7 +8624,7 @@ def handle_t_s_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 7:
+    if target_data.ability[35] >= 7:
         return 1
     return 0
 
@@ -8640,7 +8640,7 @@ def handle_t_s_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 1:
+    if target_data.ability[35] < 1:
         return 1
     return 0
 
@@ -8656,7 +8656,7 @@ def handle_t_s_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 3:
+    if target_data.ability[35] < 3:
         return 1
     return 0
 
@@ -8672,7 +8672,7 @@ def handle_t_s_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 5:
+    if target_data.ability[35] < 5:
         return 1
     return 0
 
@@ -8687,7 +8687,7 @@ def handle_m_ge_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 1:
+    if character_data.ability[36] >= 1:
         return 1
     return 0
 
@@ -8702,7 +8702,7 @@ def handle_m_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 3:
+    if character_data.ability[36] >= 3:
         return 1
     return 0
 
@@ -8717,7 +8717,7 @@ def handle_m_ge_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 5:
+    if character_data.ability[36] >= 5:
         return 1
     return 0
 
@@ -8732,7 +8732,7 @@ def handle_m_ge_7(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 7:
+    if character_data.ability[36] >= 7:
         return 1
     return 0
 
@@ -8747,7 +8747,7 @@ def handle_m_l_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 1:
+    if character_data.ability[36] < 1:
         return 1
     return 0
 
@@ -8762,7 +8762,7 @@ def handle_m_l_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 3:
+    if character_data.ability[36] < 3:
         return 1
     return 0
 
@@ -8777,7 +8777,7 @@ def handle_m_l_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 5:
+    if character_data.ability[36] < 5:
         return 1
     return 0
 
@@ -8793,7 +8793,7 @@ def handle_t_m_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 1:
+    if target_data.ability[36] >= 1:
         return 1
     return 0
 
@@ -8809,7 +8809,7 @@ def handle_t_m_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 3:
+    if target_data.ability[36] >= 3:
         return 1
     return 0
 
@@ -8825,7 +8825,7 @@ def handle_t_m_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 5:
+    if target_data.ability[36] >= 5:
         return 1
     return 0
 
@@ -8841,7 +8841,7 @@ def handle_t_m_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 7:
+    if target_data.ability[36] >= 7:
         return 1
     return 0
 
@@ -8857,7 +8857,7 @@ def handle_t_m_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 1:
+    if target_data.ability[36] < 1:
         return 1
     return 0
 
@@ -8873,7 +8873,7 @@ def handle_t_m_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 3:
+    if target_data.ability[36] < 3:
         return 1
     return 0
 
@@ -8889,7 +8889,7 @@ def handle_t_m_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 5:
+    if target_data.ability[36] < 5:
         return 1
     return 0
 
@@ -8905,7 +8905,7 @@ def handle_t_submit_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 1:
+    if target_data.ability[31] >= 1:
         return 1
     return 0
 
@@ -8921,7 +8921,7 @@ def handle_t_submit_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 3:
+    if target_data.ability[31] >= 3:
         return 1
     return 0
 
@@ -8937,7 +8937,7 @@ def handle_t_submit_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 5:
+    if target_data.ability[31] >= 5:
         return 1
     return 0
 
@@ -8953,7 +8953,7 @@ def handle_t_submit_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 7:
+    if target_data.ability[31] >= 7:
         return 1
     return 0
 
@@ -8969,7 +8969,7 @@ def handle_t_submit_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 1:
+    if target_data.ability[31] < 1:
         return 1
     return 0
 
@@ -8985,7 +8985,7 @@ def handle_t_submit_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 3:
+    if target_data.ability[31] < 3:
         return 1
     return 0
 
@@ -9001,7 +9001,7 @@ def handle_t_submit_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 5:
+    if target_data.ability[31] < 5:
         return 1
     return 0
 
@@ -9257,7 +9257,7 @@ def handle_t_exhibit_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 1:
+    if target_data.ability[34] >= 1:
         return 1
     return 0
 
@@ -9273,7 +9273,7 @@ def handle_t_exhibit_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 3:
+    if target_data.ability[34] >= 3:
         return 1
     return 0
 
@@ -9289,7 +9289,7 @@ def handle_t_exhibit_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 5:
+    if target_data.ability[34] >= 5:
         return 1
     return 0
 
@@ -9305,7 +9305,7 @@ def handle_t_exhibit_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 7:
+    if target_data.ability[34] >= 7:
         return 1
     return 0
 
@@ -9321,7 +9321,7 @@ def handle_t_exhibit_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 1:
+    if target_data.ability[34] < 1:
         return 1
     return 0
 
@@ -9337,7 +9337,7 @@ def handle_t_exhibit_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 3:
+    if target_data.ability[34] < 3:
         return 1
     return 0
 
@@ -9353,7 +9353,7 @@ def handle_t_exhibit_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 5:
+    if target_data.ability[34] < 5:
         return 1
     return 0
 
