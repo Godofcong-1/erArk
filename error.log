@@ -23,40 +23,24 @@ Traceback (most recent call last):
     constant.handle_instruct_data[instruct]()
   File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 63, in return_wrapper
     return func(*args, **kwargs)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 152, in handle_chat
-    update.game_update_flow(5)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 318, in handle_sleep
+    update.game_update_flow(480)
   File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\update.py", line 16, in game_update_flow
     character_behavior.init_character_behavior()
   File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 56, in init_character_behavior
     character_behavior(character_id, cache.game_time)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 161, in character_behavior
-    status_judge = judge_character_status(character_id, now_time)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 348, in judge_character_status
-    now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\settle_behavior.py", line 43, in handle_settle_behavior
-    constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\settle_behavior.py", line 276, in return_wrapper
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 171, in character_behavior
+    character_target_judge(character_id, now_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 201, in character_target_judge
+    target, _, judge = search_target(
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 447, in search_target
+    premise_judge = handle_premise.handle_premise(premise, character_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 45, in handle_premise
+    return constant.handle_premise_data[premise](character_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 27, in return_wrapper
     return func(*args, **kwargs)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Settle\default.py", line 132, in handle_add_interaction_favoravility
-    add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character.py", line 148, in calculation_favorability
-    print(target_data.ability[i])
-KeyError: 21
-Traceback (most recent call last):
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 50, in init
-    run_main_flow()
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 42, in run_main_flow
-    main_flow()
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\start_flow.py", line 16, in start_frame
-    constant.panel_data[cache.now_panel_id]()
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_panel.py", line 18, in return_wrapper
-    return func(*args, **kwargs)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Flow\normal_flow.py", line 34, in in_scene_flow
-    now_panel.draw()
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 83, in draw
-    game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\game_info_panel.py", line 49, in __init__
-    sun_time = game_time.get_sun_time(cache.game_time)
-  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\game_time.py", line 280, in get_sun_time
-    now_time = datetime.datetime(old_time.year,old_time.month,old_time.day,old_time.minute,tzinfo=time_zone)
-ValueError: hour must be in 0..23
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 60, in handle_eat_time
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\game_time.py", line 316, in get_sun_time
+    return cache.sun_phase[now_date_str][now_time.hour][now_time.minute]
+KeyError: 0
