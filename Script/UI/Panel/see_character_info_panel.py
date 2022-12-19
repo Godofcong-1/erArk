@@ -415,7 +415,13 @@ class SeeCharacterClothPanel:
                 if clothing_type in {6,9} and not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
                     # 如果有内衣透视素质，则自动变为显示
-                    target_character_data.cloth.cloth_see[clothing_type] = True if character_data.talent[307] else target_character_data.cloth.cloth_see[clothing_type]
+                    if (
+                        character_data.talent[307]
+                        or len(target_character_data.cloth.cloth_wear[clothing_type-1]) == 0
+                    ):
+                        target_character_data.cloth.cloth_see[clothing_type] = True
+                    else:
+                        target_character_data.cloth.cloth_see[clothing_type] = False
                     # 如果不显示，则不显示（废话
                     if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
@@ -430,6 +436,9 @@ class SeeCharacterClothPanel:
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         now_text += f"<semen>(精液)</semen>"
+            # 当显示到下衣8的时候，换行
+            if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:
+                now_text += "\n"
             # 真空的胸衣和内裤单独显示
             if clothing_type in {6,9} and not len(target_character_data.cloth.cloth_wear[clothing_type]):
                 if not cache.debug_mode:
