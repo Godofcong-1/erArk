@@ -42,3 +42,21 @@ Traceback (most recent call last):
   File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character.py", line 148, in calculation_favorability
     print(target_data.ability[i])
 KeyError: 21
+Traceback (most recent call last):
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Flow\normal_flow.py", line 34, in in_scene_flow
+    now_panel.draw()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 83, in draw
+    game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\game_info_panel.py", line 49, in __init__
+    sun_time = game_time.get_sun_time(cache.game_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\game_time.py", line 280, in get_sun_time
+    now_time = datetime.datetime(old_time.year,old_time.month,old_time.day,old_time.minute,tzinfo=time_zone)
+ValueError: hour must be in 0..23
