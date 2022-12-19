@@ -648,6 +648,10 @@ class Base_resouce:
         self.HR_id_set : Set = set()
         """ HR干员id合集 """
 
+        # 图书档案区
+        self.book_borrow_dict : Dict[int,int] = {}
+        """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
+
         self.research_zone_max : int = 0
         """ 科研区设施数量上限 """
         self.shop_max : int = 0

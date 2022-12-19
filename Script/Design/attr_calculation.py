@@ -274,6 +274,11 @@ def get_base_zero() -> dict:
         # 全资源数量设为0
         base_data.materials_resouce[all_cid] = 0
 
+    # 遍历全部书籍
+    for book_id in game_config.config_book:
+        # 全书籍设为未借出
+        base_data.book_borrow_dict[book_id] = -1
+
     return base_data
 
 def get_base_updata() -> dict:
