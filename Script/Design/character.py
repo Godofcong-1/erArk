@@ -18,7 +18,6 @@ from Script.Design import (
 from Script.Config import game_config
 from Script.UI.Moudle import draw
 
-
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
@@ -36,7 +35,7 @@ def init_attr(character_id: int):
     # character_data.height = attr_calculation.get_height(character_data.sex, character_data.age)
     # character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
 
-    #一系列归零函数
+    # 一系列归零函数
     character_data.ability = attr_calculation.get_ability_zero(character_data.ability)
     character_data.status_data = attr_calculation.get_status_zero(character_data.status_data)
     character_data.talent = attr_calculation.get_talent_zero(character_data.talent)
@@ -52,24 +51,24 @@ def init_attr(character_id: int):
     character_data.event = attr_calculation.get_event_zero()
     character_data.work = attr_calculation.get_work_zero()
 
-
-    #主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
-    if character_id == 0 :
+    # 主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
+    if character_id == 0:
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
         character_data.hit_point_max = 2000
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
-        character_data.pl_collection.token_list = attr_calculation.get_token_zero(character_data.pl_collection.token_list)
+        character_data.pl_collection.token_list = attr_calculation.get_token_zero(
+            character_data.pl_collection.token_list)
         character_data.sleep_point = 0
         character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()
 
-    #一系列初始化函数
+    # 一系列初始化函数
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
-    character_data.angry_point = random.randrange(1,35)
+    character_data.angry_point = random.randrange(1, 35)
     character_data.hunger_point = 240
     if character_id:
         clothing.get_underwear(character_id)
@@ -127,37 +126,37 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
     fix = 1.0
-    #状态相关计算#
+    # 状态相关计算#
 
-    #恭顺、好意、欲情、快乐每级+0.1倍#
+    # 恭顺、好意、欲情、快乐每级+0.1倍#
     for i in {10, 11, 12, 13}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix += status_level*0.1
-    #羞耻、苦痛每级-0.1倍#
+        fix += status_level * 0.1
+    # 羞耻、苦痛每级-0.1倍#
     for i in {16, 17}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level*0.2
-    #恐怖、抑郁、反感每级-0.4倍#
+        fix -= status_level * 0.2
+    # 恐怖、抑郁、反感每级-0.4倍#
     for i in {18, 19, 20}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level*0.4
+        fix -= status_level * 0.4
 
-    #能力相关计算#
-    #亲密、快乐刻印、屈服刻印每级+0.2倍#
-    for i in {13, 14, 21}:
-        status_level = attr_calculation.get_status_level(target_data.ability[i])
-        fix += status_level*0.2
-    #苦痛刻印、恐怖刻印每级-0.3倍#
+    # 能力相关计算#
+    # 亲密、快乐刻印、屈服刻印每级+0.2倍#
+    for i in {13, 14, 32}:
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix += ability_level * 0.2
+    # 苦痛刻印、恐怖刻印每级-0.3倍#
     for i in {15, 17}:
-        status_level = attr_calculation.get_status_level(target_data.ability[i])
-        fix -= status_level*0.3
-    #反发刻印每级-1.0倍#
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix -= ability_level * 0.3
+    # 反发刻印每级-1.0倍#
     for i in {18}:
-        status_level = attr_calculation.get_status_level(target_data.ability[i])
-        fix -= status_level*1.0
-    
-    #素质相关计算#
-    #爱情与隶属系加成0.5~2.0#
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix -= ability_level * 1.0
+
+    # 素质相关计算#
+    # 爱情与隶属系加成0.5~2.0#
     if target_data.talent[10] or target_data.talent[15]:
         fix += 0.5
     if target_data.talent[11] or target_data.talent[16]:
@@ -166,22 +165,22 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
         fix += 1.5
     if target_data.talent[13] or target_data.talent[18]:
         fix += 2.0
-    #受精、妊娠、育儿均+0.5#
+    # 受精、妊娠、育儿均+0.5#
     if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
         fix += 0.5
-    #感情缺乏-0.2#
+    # 感情缺乏-0.2#
     if target_data.talent[223]:
         fix -= 0.2
-    #讨厌男性-0.2#
+    # 讨厌男性-0.2#
     if target_data.talent[227]:
         fix -= 0.2
-    #博士信息素每级+0.5#
-    if character_data.talent[304]:
-        fix += 0.5
-    if character_data.talent[305]:
-        fix += 1.0
+    # 博士信息素每级+0.5#
     if character_data.talent[306]:
         fix += 1.5
+    elif character_data.talent[305]:
+        fix += 1.0
+    elif character_data.talent[304]:
+        fix += 0.5
     favorability *= fix
     return favorability
 
@@ -199,7 +198,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
     for judge_id in game_config.config_instruct_judge_data:
-        #匹配到能力的id与能力等级对应的前提#
+        # 匹配到能力的id与能力等级对应的前提#
         if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:
             judge_data = game_config.config_instruct_judge_data[judge_id]
             judge_data_type = judge_data.need_type
@@ -214,89 +213,92 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     judge = 0
 
-    #好感判定#
+    # 好感判定#
     favorability = target_data.favorability[0]
     judge_favorability = 0
     if favorability < 100:
         judge_favorability -= 20
     if favorability < 1000:
         judge_favorability += 0
-    elif favorability <3000:
+    elif favorability < 3000:
         judge_favorability += 50
-    elif favorability <5000:
+    elif favorability < 5000:
         judge_favorability += 75
-    elif favorability <10000:
+    elif favorability < 10000:
         judge_favorability += 100
-    elif favorability <30000:
+    elif favorability < 30000:
         judge_favorability += 150
     else:
         judge_favorability += 200
-    calculation_text += "好感修正("+ str(judge_favorability) +")"
+    calculation_text += "好感修正(" + str(judge_favorability) + ")"
     judge += judge_favorability
-    
-    #信赖判定#
+
+    # 信赖判定#
     trust = target_data.trust
     judge_trust = 0
     if trust < 50:
         judge_trust -= 50
-    elif trust <100:
+    elif trust < 100:
         judge_trust -= 20
-    elif trust <150:
+    elif trust < 150:
         judge_trust += 0
-    elif trust <200:
+    elif trust < 200:
         judge_trust += 30
-    elif trust <250:
+    elif trust < 250:
         judge_trust += 50
     else:
         judge_trust += 100
     judge += judge_trust
-    calculation_text += "+信赖修正("+ str(judge_trust) +")"
+    calculation_text += "+信赖修正(" + str(judge_trust) + ")"
 
-    #状态修正，好意(11)和欲情(12)修正#
-    judge_status = int( (target_data.status_data[11] + target_data.status_data[12]) / 10 )
+    # 状态修正，好意(11)和欲情(12)修正#
+    judge_status = int((target_data.status_data[11] + target_data.status_data[12]) / 10)
     judge += judge_status
     if judge_status:
-        calculation_text += "+状态修正("+ str(judge_status) +")"
+        calculation_text += "+状态修正(" + str(judge_status) + ")"
 
-    #能力修正，亲密(32)和欲望(33)修正#
-    judge_ability = target_data.ability[32]*10 + target_data.ability[33]*5
+    # 能力修正，亲密(32)和欲望(33)修正#
+    judge_ability = target_data.ability[32] * 10 + target_data.ability[33] * 5
     judge += judge_ability
     if judge_ability:
-        calculation_text += "+能力修正("+ str(judge_ability) +")"
+        calculation_text += "+能力修正(" + str(judge_ability) + ")"
 
-    #刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
-    judge_mark = target_data.ability[13]*20 + target_data.ability[14]*20
-    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18]*30
+    # 刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
+    judge_mark = target_data.ability[13] * 20 + target_data.ability[14] * 20
+    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18] * 30
     judge += judge_mark
     if judge_mark:
-        calculation_text += "+刻印修正("+ str(judge_mark) +")"
+        calculation_text += "+刻印修正(" + str(judge_mark) + ")"
 
-    #心情修正，好心情+10，坏心情-10，愤怒-30
+    # 心情修正，好心情+10，坏心情-10，愤怒-30
     judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
     judge += judge_angry
     if judge_angry:
-        calculation_text += "+心情修正("+ str(judge_angry) +")"
+        calculation_text += "+心情修正(" + str(judge_angry) + ")"
 
-    #陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
-    judge_fall = target_data.talent[10]*30 + target_data.talent[11]*50 + target_data.talent[12]*80 + target_data.talent[13]*100 + target_data.talent[15]*30 + target_data.talent[16]*50 + target_data.talent[17]*80 + target_data.talent[18]*100
+    # 陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
+    judge_fall = target_data.talent[10] * 30 + target_data.talent[11] * 50 + target_data.talent[12] * 80 + \
+                 target_data.talent[13] * 100 + target_data.talent[15] * 30 + target_data.talent[16] * 50 + \
+                 target_data.talent[17] * 80 + target_data.talent[18] * 100
     judge += judge_fall
     if judge_fall:
-        calculation_text += "+陷落修正("+ str(judge_fall) +")"
-    #讨厌男性修正#
-    judge_hate = target_data.talent[227]*30
+        calculation_text += "+陷落修正(" + str(judge_fall) + ")"
+    # 讨厌男性修正#
+    judge_hate = target_data.talent[227] * 30
     judge -= judge_hate
     if judge_hate:
-        calculation_text += "+讨厌男性(-"+ str(judge_hate) +")"
-    #难以越过的底线修正#
-    judge_hardlove = target_data.talent[224]*30
+        calculation_text += "+讨厌男性(-" + str(judge_hate) + ")"
+    # 难以越过的底线修正#
+    judge_hardlove = target_data.talent[224] * 30
     judge -= judge_hardlove
     if judge_hardlove:
-        calculation_text += "+难以越过的底线(-"+ str(judge_hardlove) +")"
-    #博士信息素修正#
-    judge_information = character_data.talent[304]*10 + character_data.talent[305]*25 + character_data.talent[306]*50
+        calculation_text += "+难以越过的底线(-" + str(judge_hardlove) + ")"
+    # 博士信息素修正#
+    judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
+        306] * 50
     judge += judge_information
     if judge_information:
-        calculation_text += "+博士信息素("+ str(judge_information) +")"
+        calculation_text += "+博士信息素(" + str(judge_information) + ")"
 
     # 当前场景有人修正
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -308,16 +310,15 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge_other_people = 30
         # 露出修正
         adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-        judge_other_people = int(judge_other_people *(adjust - 1.5))
+        judge_other_people = int(judge_other_people * (adjust - 1.5))
         judge += judge_other_people
-        calculation_text += "+当前场景有其他人在("+ text_handle.number_to_symbol_string(judge_other_people) +")"
+        calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
     # 今天H被打断了修正
-    judge_h_interrupt = character_data.action_info.h_interrupt*10
+    judge_h_interrupt = character_data.action_info.h_interrupt * 10
     judge -= judge_h_interrupt
     if judge_h_interrupt:
-        calculation_text += "+今天H被打断过(-"+ str(judge_h_interrupt) +")"
-
+        calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
 
     # debug模式修正
     if cache.debug_mode == True:
@@ -333,6 +334,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         return 1
     else:
         return 0
+
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
 #     """

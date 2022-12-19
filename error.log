@@ -1,0 +1,44 @@
+Traceback (most recent call last):
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Flow\normal_flow.py", line 34, in in_scene_flow
+    now_panel.draw()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 338, in draw
+    flow_handle.askfor_all(ask_list)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 274, in askfor_all
+    _cmd_deal(order)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 191, in _cmd_deal
+    cmd_map[order_number]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 118, in run_func
+    cmd_func(*arg, **kw)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 502, in handle_instruct
+    handle_instruct.handle_instruct(instruct_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 47, in handle_instruct
+    constant.handle_instruct_data[instruct]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 63, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 152, in handle_chat
+    update.game_update_flow(5)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\update.py", line 16, in game_update_flow
+    character_behavior.init_character_behavior()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 56, in init_character_behavior
+    character_behavior(character_id, cache.game_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 161, in character_behavior
+    status_judge = judge_character_status(character_id, now_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 348, in judge_character_status
+    now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\settle_behavior.py", line 43, in handle_settle_behavior
+    constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\settle_behavior.py", line 276, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Settle\default.py", line 132, in handle_add_interaction_favoravility
+    add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character.py", line 148, in calculation_favorability
+    print(target_data.ability[i])
+KeyError: 21
