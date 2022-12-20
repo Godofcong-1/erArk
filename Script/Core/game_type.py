@@ -53,22 +53,22 @@ class NpcTem:
         # """ 体脂率模板 """
         # self.Chest: int = 0
         # """ 罩杯模板 """
-        #以下为新加
+        # 以下为新加
         self.Favorability: str = {}
         """ 好感度模板 """
         self.Trust: int = 0
         """ 信赖度模板 """
-        self.Ability: Dict[int,int] = {}
+        self.Ability: Dict[int, int] = {}
         """ 能力预设 """
-        self.Experience: Dict[int,int] = {}
+        self.Experience: Dict[int, int] = {}
         """ 经验预设 """
-        self.Juel: Dict[int,int] = {}
+        self.Juel: Dict[int, int] = {}
         """ 宝珠预设 """
         self.Profession: str = ""
         """ 职业预设 """
         self.Race: str = ""
         """ 种族预设 """
-        self.Talent: Dict[int,int] = {}
+        self.Talent: Dict[int, int] = {}
         """ 素质预设 """
         self.Cloth: list = []
         """ 服装预设 """
@@ -263,12 +263,10 @@ class NormalConfig:
 #         """ 穿戴部位 """
 
 
-
 class DIRTY:
     """污浊情况数据结构体"""
 
     def __init__(self):
-
         # 人类正常一次射精量在2～6ml
 
         self.body_semen: list = []
@@ -292,16 +290,15 @@ class CLOTH:
     # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
     # 靴子低筒不过小腿肚，中筒过小腿肚，高筒过膝盖
     def __init__(self):
-
         self.clothing_tem: int = 0
         """ 角色生成服装模板 """
-        self.cloth_wear: Dict[int,List] = {}
+        self.cloth_wear: Dict[int, List] = {}
         """ 角色穿着的服装 部位:衣服id"""
-        self.cloth_off: Dict[int,List] = {}
+        self.cloth_off: Dict[int, List] = {}
         """ 角色脱下的服装 部位:衣服id"""
-        self.cloth_locker: Dict[int,List] = {}
+        self.cloth_locker: Dict[int, List] = {}
         """ 角色放在衣柜里的服装 部位:衣服id"""
-        self.cloth_see: Dict[int,bool] = {}
+        self.cloth_see: Dict[int, bool] = {}
         """ 角色穿着的服装能否被看见 部位:能否"""
 
 
@@ -309,7 +306,6 @@ class BODY_H_STATE:
     """H状态结构体"""
 
     def __init__(self):
-
         self.body_item: list = []
         """ 身体道具情况    
         0~9共10项，编号int:[道具名str,当前有无bool,状态的结束时间datetime.datetime]    
@@ -328,16 +324,16 @@ class BODY_H_STATE:
         """ 身体上的射精位置，int，-1为未射精，其他同身体部位 """
         self.shoot_position_cloth: int = -1
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
-        self.orgasm_level: Dict[int,int] = {}
+        self.orgasm_level: Dict[int, int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
-        self.orgasm_count: Dict[int,list] = {}
+        self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
+
 
 class ASSISTANT_STATE:
     """助理状态结构体"""
 
     def __init__(self):
-
         self.always_follow: int = 0
         """ 跟随服务，int[0否,1智能跟随，在非工作时间(饭点/上厕所等)会暂离,2强制跟随,3在博士办公室待机]"""
         self.always_help_work: bool = False
@@ -362,7 +358,6 @@ class FIRST_RECORD:
     """初次状态记录结构体"""
 
     def __init__(self):
-
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.first_kiss_id: int = -1
@@ -397,8 +392,7 @@ class ACTION_INFO:
     """角色的行动信息结构体"""
 
     def __init__(self):
-
-        self.talk_count : int = 0
+        self.talk_count: int = 0
         """ 角色聊天次数计数器 """
         self.talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次聊天时间 """
@@ -412,7 +406,7 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
         """ 指定角色上次扣除好感时间 """
-        self.h_interrupt : int = 0
+        self.h_interrupt: int = 0
         """ 角色H被打断 """
 
 
@@ -420,10 +414,9 @@ class CHARA_WORK:
     """角色的工作信息结构体"""
 
     def __init__(self):
-
-        self.work_type : int = 0
+        self.work_type: int = 0
         """ 角色工作的类型 """
-        self.recruit_index : int = -1
+        self.recruit_index: int = -1
         """ 角色当前正在工作的招募位 """
 
 
@@ -431,29 +424,26 @@ class PLAYER_COLLECTION:
     """玩家收集品结构体"""
 
     def __init__(self):
-
-        self.collection_bonus:Dict[int,bool] = {}
+        self.collection_bonus: Dict[int, bool] = {}
         """ 收藏品的解锁奖励 """
-        self.token_list:Dict[int,bool] = {}
+        self.token_list: Dict[int, bool] = {}
         """ 获得的NPC信物 """
-        self.first_panties: Dict[int,str] = {}
+        self.first_panties: Dict[int, str] = {}
         """ 获得的处子血胖次 """
-        self.npc_panties: Dict[int,list] = {}
+        self.npc_panties: Dict[int, list] = {}
         """ 获得的角色胖次 """
-        self.npc_panties_tem: Dict[int,list] = {}
+        self.npc_panties_tem: Dict[int, list] = {}
         """ 临时获得的角色胖次 """
-        self.npc_socks: Dict[int,list] = {}
+        self.npc_socks: Dict[int, list] = {}
         """ 获得的角色袜子 """
-        self.npc_socks_tem: Dict[int,list] = {}
+        self.npc_socks_tem: Dict[int, list] = {}
         """ 临时获得的角色袜子 """
-
 
 
 class PLAYER_ABILITY:
     """玩家能力结构体"""
 
     def __init__(self):
-
         self.follow_count: int = 1
         """ 最大同时跟随人数 """
         self.jj_size: int = 1
@@ -503,6 +493,7 @@ class Behavior:
         self.socks_name: str = ""
         """ 前提结算用:袜子名字 """
 
+
 class Chara_Event:
     """角色事件状态数据"""
 
@@ -511,6 +502,7 @@ class Chara_Event:
         """ 角色当前事件id """
         self.son_event_id: str = ""
         """ 角色当前子事件id """
+
 
 class Map:
     """地图数据"""
@@ -602,76 +594,77 @@ class Base_resouce:
     """基地资源"""
 
     def __init__(self):
-        self.facility_level : Dict[int,int] = {}
+        self.facility_level: Dict[int, int] = {}
         """ 基地当前所有设施的等级 """
-        self.facility_open : Dict[int,bool] = {}
+        self.facility_open: Dict[int, bool] = {}
         """ 基地当前所有待开放设施的开放情况 """
-        self.power_use : int = 0
+        self.power_use: int = 0
         """ 当前使用电力 """
-        self.power_max : int = 0
+        self.power_max: int = 0
         """ 总可用电力 """
-        self.work_people_now : int = 0
+        self.work_people_now: int = 0
         """ 当前工作干员人数 """
-        self.people_max : int = 0
+        self.people_max: int = 0
         """ 干员人数上限 """
-        self.all_income : int = 0
+        self.all_income: int = 0
         """ 今日全部门总收入 """
 
-        self.life_zone_max : int = 0
+        self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """
 
         # 医疗区
-        self.patient_now : int = 0
+        self.patient_now: int = 0
         """ 当前患者人数 """
-        self.patient_cured : int = 0
+        self.patient_cured: int = 0
         """ 当前已治疗患者人数 """
-        self.patient_max : int = 0
+        self.patient_max: int = 0
         """ 患者人数上限 """
-        self.doctor_now : int = 0
+        self.doctor_now: int = 0
         """ 当前工作中的医生数量 """
-        self.doctor_id_set : Set = set()
+        self.doctor_id_set: Set = set()
         """ 医生干员id合集 """
-        self.cure_income : int = 0
+        self.cure_income: int = 0
         """ 今日总治疗收入 """
-        self.patient_cured_all : int = 0
+        self.patient_cured_all: int = 0
         """ 已治疗的患者总人数 """
-        self.cure_income_all : int = 0
+        self.cure_income_all: int = 0
         """ 至今为止的治疗总收入 """
 
         # 文职区
-        self.recruit_now : Dict[int,float] = {}
+        self.recruit_now: Dict[int, float] = {}
         """ 当前招募进度 """
-        self.recruited_id : Set = set()
+        self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
-        self.HR_now : int = 0
+        self.HR_now: int = 0
         """ 当前工作中的HR数量 """
-        self.HR_id_set : Set = set()
+        self.HR_id_set: Set = set()
         """ HR干员id合集 """
 
         # 图书档案区
-        self.book_borrow_dict : Dict[int,int] = {}
+        self.book_borrow_dict: Dict[int, int] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
 
-        self.research_zone_max : int = 0
+        self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
-        self.shop_max : int = 0
+        self.shop_max: int = 0
         """ 商店数量上限 """
-        self.soldier_max : int = 0
+        self.soldier_max: int = 0
         """ 战斗时干员数量上限 """
 
-        self.money : int = 0
+        self.money: int = 0
         """ 龙门币数量 """
-        self.orundum : int = 0
+        self.orundum: int = 0
         """ 合成玉数量 """
-        self.Originite_Prime : int = 0
+        self.Originite_Prime: int = 0
         """ 至纯源石数量 """
-        self.pink_certificate : int = 0
+        self.pink_certificate: int = 0
         """ 粉红凭证数量 """
 
-        self.warehouse_capacity : int = 0
+        self.warehouse_capacity: int = 0
         """ 仓库容量 """
-        self.materials_resouce : Dict[int,int] = {}
+        self.materials_resouce: Dict[int, int] = {}
         """ 素材资源 """
+
 
 '''
 
@@ -727,11 +720,11 @@ class Character:
         """ 角色当前射精槽 """
         self.angry_point: int = 0
         """ 角色当前愤怒槽 """
-        self.sleep_point : int = 0
+        self.sleep_point: int = 0
         """ 困倦值 6m=1点，16h=160点(max)"""
-        self.urinate_point : int = 0
+        self.urinate_point: int = 0
         """ 尿意值 1m=1点，4h=240点(max)"""
-        self.hunger_point : int = 0
+        self.hunger_point: int = 0
         """ 饥饿值 1m=1点，4h=240点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
@@ -752,7 +745,7 @@ class Character:
         # """
         # self.item: Set = set()
         # """ 旧：角色拥有的道具id集合 """
-        self.item: Dict[int,int] = {}
+        self.item: Dict[int, int] = {}
         """ 角色拥有的道具 道具序号:数量"""
         # self.height: Height = Height()
         # """ 角色的身高数据 """
@@ -762,13 +755,13 @@ class Character:
         """ 角色的衣服数据 """
         self.behavior: Behavior = Behavior()
         """ 角色当前行为状态数据 """
-        self.second_behavior: Dict[int,int] = {}
+        self.second_behavior: Dict[int, int] = {}
         """ 角色当前二段行为状态数据 """
         self.event: Chara_Event = Chara_Event()
         """ 角色当前事件状态数据 """
         # self.gold: int = 0
         # """ 角色所持金钱数据 """
-        self.position: List[str] = ["0","0"]
+        self.position: List[str] = ["0", "0"]
         """ 角色当前坐标数据 """
         self.officeroom: List[str] = []
         """ 角色所属办公室坐标 """
@@ -806,29 +799,29 @@ class Character:
         """ 收藏的角色列表 """
         self.last_hunger_time: datetime.datetime = None
         """ 最后一次结算饥饿的时间 """
-        self.ability:Dict[int,int] = {}
+        self.ability: Dict[int, int] = {}
         """ 角色能力类型 """
-        self.experience:Dict[int,int] = {}
+        self.experience: Dict[int, int] = {}
         """ 角色经验 """
-        self.juel:Dict[int,int] = {}
+        self.juel: Dict[int, int] = {}
         """ 角色宝珠 """
         self.profession: int = 0
         """ 角色职业 """
         self.race: int = 0
         """ 角色种族 """
-        self.talent:Dict[int,int] = {}
+        self.talent: Dict[int, int] = {}
         """ 角色素质 """
-        self.wait_flag : bool = 0
+        self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
-        self.is_h : bool = 0
+        self.is_h: bool = 0
         """ 在H模式中 """
-        self.is_follow : int = 0
+        self.is_follow: int = 0
         """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
         self.token_text: str = ""
         """ 角色信物文本 """
-        self.tired : bool = 0
+        self.tired: bool = 0
         """ 疲劳状态（HP=1） """
-        self.angry_with_player : bool = 0
+        self.angry_with_player: bool = 0
         """ 被玩家惹生气 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
@@ -850,6 +843,7 @@ class Character:
         """ 角色停止移动 """
         self.work: CHARA_WORK = CHARA_WORK()
         """ 角色的工作情况 """
+
 
 class Cache:
     """游戏缓存数据结构体"""

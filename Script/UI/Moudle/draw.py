@@ -177,6 +177,7 @@ class BarDraw:
         """
         return len(self.draw_list)
 
+
 class CharaDraw:
     """人物图片绘制"""
 
@@ -343,13 +344,13 @@ class Button:
     """
 
     def __init__(
-        self,
-        text: str,
-        return_text: str,
-        normal_style="standard",
-        on_mouse_style="onbutton",
-        cmd_func=None,
-        args=(),
+            self,
+            text: str,
+            return_text: str,
+            normal_style="standard",
+            on_mouse_style="onbutton",
+            cmd_func=None,
+            args=(),
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -425,12 +426,12 @@ class ImageButton:
     """
 
     def __init__(
-        self,
-        text: str,
-        return_text: str,
-        width:int,
-        cmd_func=None,
-        args=(),
+            self,
+            text: str,
+            return_text: str,
+            width: int,
+            cmd_func=None,
+            args=(),
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -454,7 +455,7 @@ class ImageButton:
 
     def draw(self):
         """绘制按钮"""
-        py_cmd.pimagecmd(self.text,self.return_text,self.cmd_func,self.args)
+        py_cmd.pimagecmd(self.text, self.return_text, self.cmd_func, self.args)
 
 
 class CenterButton:
@@ -472,15 +473,15 @@ class CenterButton:
     """
 
     def __init__(
-        self,
-        text: str,
-        return_text: str,
-        width: int,
-        fix_text=" ",
-        normal_style="standard",
-        on_mouse_style="onbutton",
-        cmd_func: FunctionType = None,
-        args=(),
+            self,
+            text: str,
+            return_text: str,
+            width: int,
+            fix_text=" ",
+            normal_style="standard",
+            on_mouse_style="onbutton",
+            cmd_func: FunctionType = None,
+            args=(),
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -631,14 +632,14 @@ class TitleLineDraw:
     """
 
     def __init__(
-        self,
-        title: str,
-        width: int,
-        line: str = "=",
-        frame="口",
-        style="standard",
-        title_style="littletitle",
-        frame_style="littletitle",
+            self,
+            title: str,
+            width: int,
+            line: str = "=",
+            frame="口",
+            style="standard",
+            title_style="littletitle",
+            frame_style="littletitle",
     ):
         """初始化绘制对象"""
         self.title = title
@@ -748,7 +749,7 @@ class CenterDraw(NormalDraw):
             now_text = ""
             if self.width > 0:
                 for i in self.text:
-                    print("i :",i)
+                    print("i :", i)
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         # print("now_text（中间的第一次） :",now_text)
                         now_text += i
@@ -768,7 +769,8 @@ class CenterDraw(NormalDraw):
         # print("now_text（第二次） :",now_text)
         io_init.era_print(now_text, self.style)
 
-class CenterDraw_Image(NormalDraw):
+
+class CenterDrawImage(NormalDraw):
     """居中绘制图片_现阶段为立绘限定"""
 
     def __gt__(self, other) -> bool:
@@ -777,8 +779,8 @@ class CenterDraw_Image(NormalDraw):
     def draw(self):
         """绘制图片"""
         self.width = int(self.width)
-        print("int(len(self)) :",int(len(self)))
-        print("int(self.width) :",int(self.width))
+        print("int(len(self)) :", int(len(self)))
+        print("int(self.width) :", int(self.width))
         if int(len(self)) > int(self.width):
             print("第一个分支")
             now_image = ""
@@ -838,6 +840,7 @@ class CenterMergeDraw:
         if now_width < self.width:
             fix_draw.text += int(self.width - now_width) * " "
         fix_draw.draw()
+
 
 class LeftMergeDraw:
     """

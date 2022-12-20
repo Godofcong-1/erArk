@@ -18,18 +18,18 @@ def handle_talk(character_id: int):
     behavior_id = character_data.behavior.behavior_id
     now_talk_data = {}
     now_premise_data = {}
-    #检测是否是收藏模式#
+    # 检测是否是收藏模式#
     if cache.is_collection and character_id:
         player_data: game_type.Character = cache.character_data[0]
         if character_id not in player_data.collection_character:
             return
-    #检测是否与玩家处于同一位置#
+    # 检测是否与玩家处于同一位置#
     if (
-        character_data.position != cache.character_data[0].position
-        and character_data.behavior.move_src != cache.character_data[0].position
+            character_data.position != cache.character_data[0].position
+            and character_data.behavior.move_src != cache.character_data[0].position
     ):
         return
-    #第一段行为结算的口上
+    # 第一段行为结算的口上
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
@@ -119,31 +119,30 @@ def handle_talk(character_id: int):
         now_draw.width = normal_config.config_normal.text_width
         now_draw.draw()
 
-    #第二段行为结算的口上
+    # 第二段行为结算的口上
 
-    #自己
+    # 自己
     now_talk_data = {}
     now_premise_data = {}
-    for second_behavior_id,behavior_data in character_data.second_behavior.items():
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             now_talk_data = handle_talk_sub(character_id, second_behavior_id)
-            #触发后该行为值归零
+            # 触发后该行为值归零
             character_data.second_behavior[second_behavior_id] = 0
             handle_talk_draw(character_id, now_talk_data)
 
-    #交互对象
+    # 交互对象
     now_talk_data = {}
     now_premise_data = {}
     if character_id == 0 and character_data.target_character_id:
         target_character_id = character_data.target_character_id
-        target_character_data : game_type.Character = cache.character_data[target_character_id]
-        for second_behavior_id,behavior_data in target_character_data.second_behavior.items():
+        target_character_data: game_type.Character = cache.character_data[target_character_id]
+        for second_behavior_id, behavior_data in target_character_data.second_behavior.items():
             if behavior_data != 0:
                 now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
-                #触发后该行为值归零
+                # 触发后该行为值归零
                 target_character_data.second_behavior[second_behavior_id] = 0
                 handle_talk_draw(target_character_id, now_talk_data)
-
 
 
 def handle_talk_sub(character_id: int, behavior_id: int):

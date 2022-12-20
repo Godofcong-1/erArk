@@ -114,7 +114,7 @@ def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     # now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if character_data.behavior.start_time != None:
+    if character_data.behavior.start_time is not None:
         if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
             now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
             return (now_hour - 21) * 100
@@ -136,7 +136,7 @@ def handle_work_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if character_data.behavior.start_time.hour >= 9 and character_data.behavior.start_time.hour < 17:
+    if 9 <= character_data.behavior.start_time.hour < 17:
         return 50
     return 0
 
