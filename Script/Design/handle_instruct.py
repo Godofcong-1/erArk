@@ -266,10 +266,25 @@ def handle_see_collection():
     constant.InstructType.WORK,
     _("借阅书籍"),
     {
-        constant_promise.Premise.IN_LIBRARY
+        constant_promise.Premise.IN_LIBRARY,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.SLEEP_LE_89,
     })
 def handle_borrow_book():
     """处理借阅书籍指令"""
+    cache.now_panel_id = constant.Panel.BORROW_BOOK
+
+
+@add_instruct(
+    constant.Instruct.READ_BOOK,
+    constant.InstructType.WORK,
+    _("读书"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.SLEEP_LE_89,
+    })
+def handle_read_book():
+    """处理读书指令"""
     cache.now_panel_id = constant.Panel.BORROW_BOOK
 
 

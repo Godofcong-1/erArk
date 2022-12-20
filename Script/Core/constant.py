@@ -1321,6 +1321,8 @@ class Instruct:
     """ 确认已招募的干员 """
     BORROW_BOOK = 0
     """ 借阅书籍 """
+    READ_BOOK = 0
+    """ 读书 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0
