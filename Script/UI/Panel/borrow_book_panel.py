@@ -88,6 +88,7 @@ class Borrow_Book_Panel:
 
             # 初始化变量
             book_count = 0
+            book_can_borrow_count = 0
 
             # 遍历书籍类型列表，寻找符合当前书籍父类别的书籍类型cid
             for book_type_cid in game_config.config_book_type:
@@ -100,20 +101,26 @@ class Borrow_Book_Panel:
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
                         if cache.base_resouce.book_borrow_dict[book_cid] == -1:
                             book_text += "  (可借阅)"
+                            book_style = "standard"
+                            book_can_borrow_count += 1
                         elif cache.base_resouce.book_borrow_dict[book_cid] == 0:
                             book_text += f"  (已被博士借走)"
+                            book_style = "nowmap"
                         else:
                             borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
                             borrow_npc_name = cache.character_data[borrow_npc_id].name
                             book_text += f"  (已被{borrow_npc_name}借走)"
+                            book_style = "nullcmd"
 
                         button_draw = draw.LeftButton(
                             _(book_text),
                             _(str(book_count)),
                             self.width,
+                            normal_style = book_style,
                             cmd_func=self.borrow,
                             args=(book_cid,),
                             )
+                        # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
                         return_list.append(button_draw.return_text)
                         now_draw.draw_list.append(button_draw)
                         now_draw.width += len(button_draw.text)
@@ -122,7 +129,7 @@ class Borrow_Book_Panel:
 
             resouce_draw = draw.NormalDraw()
             resouce_text = "\n当前藏书情况："
-            resouce_text += f"\n  {self.now_panel}在馆量/总藏书量：{book_count}/{book_count}\n"
+            resouce_text += f"\n  {self.now_panel}在馆量/总藏书量：{book_can_borrow_count}/{book_count}\n"
             resouce_draw.text = resouce_text
             resouce_draw.width = self.width
             resouce_draw.draw()
