@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 50, in init
+    run_main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\game_init.py", line 42, in run_main_flow
+    main_flow()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\start_flow.py", line 16, in start_frame
+    constant.panel_data[cache.now_panel_id]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_panel.py", line 18, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Flow\normal_flow.py", line 34, in in_scene_flow
+    now_panel.draw()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 338, in draw
+    flow_handle.askfor_all(ask_list)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 274, in askfor_all
+    _cmd_deal(order)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 191, in _cmd_deal
+    cmd_map[order_number]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Core\flow_handle.py", line 118, in run_func
+    cmd_func(*arg, **kw)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\UI\Panel\in_scene_panel.py", line 502, in handle_instruct
+    handle_instruct.handle_instruct(instruct_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 47, in handle_instruct
+    constant.handle_instruct_data[instruct]()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 63, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_instruct.py", line 318, in handle_sleep
+    update.game_update_flow(480)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\update.py", line 16, in game_update_flow
+    character_behavior.init_character_behavior()
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 56, in init_character_behavior
+    character_behavior(character_id, cache.game_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 171, in character_behavior
+    character_target_judge(character_id, now_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 201, in character_target_judge
+    target, _, judge = search_target(
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\character_behavior.py", line 447, in search_target
+    premise_judge = handle_premise.handle_premise(premise, character_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 45, in handle_premise
+    return constant.handle_premise_data[premise](character_id)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 27, in return_wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\handle_premise.py", line 60, in handle_eat_time
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+  File "C:\Users\endymx\PycharmProjects\erArk\Script\Design\game_time.py", line 316, in get_sun_time
+    return cache.sun_phase[now_date_str][now_time.hour][now_time.minute]
+KeyError: 0
