@@ -44,36 +44,8 @@ class Ejaculation_Panel:
         title_draw = draw.TitleLineDraw(title_name, self.width)
         eja_type_list = [_("身体"), _("服装")]
         position_list = []
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
-        clothing = {}
-
-        for clothing_type in game_config.config_clothing_type:
-            if len(target_data.cloth.cloth_wear[clothing_type]):
-                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
-
         self.handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
         for body_part in game_config.config_body_part:
-            if body_part == 6 and not handle_premise.handle_last_cmd_sex(0):
-                continue
-            elif body_part == 7 and not handle_premise.handle_last_cmd_w_sex(0):
-                continue
-            elif body_part == 8 and not handle_premise.handle_last_cmd_a_sex(0):
-                continue
-            elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
-                continue
-            if isinstance(body_cloth[body_part], list):
-                def cloth_list(bbc):
-                    for bc in bbc:
-                        if bc in clothing.keys():
-                            # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
-                            return False
-                    return True
-                if not cloth_list(body_cloth[body_part]):
-                    continue
-            else:
-                if body_cloth[body_part] in clothing.keys():
-                    # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
-                    continue
             position_list.append(target_data.dirty.body_semen[body_part][0])
         self.handle_panel.text_list = position_list
         self.handle_panel.update()
@@ -127,7 +99,6 @@ class Ejaculation_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         position_list = []
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
         clothing = {}
 
         for clothing_type in game_config.config_clothing_type:
@@ -136,36 +107,19 @@ class Ejaculation_Panel:
 
         if eja_type == "身体":
             for body_part in game_config.config_body_part:
-                if body_part == 6 and not handle_premise.handle_last_cmd_sex(0):
-                    continue
-                elif body_part == 7 and not handle_premise.handle_last_cmd_w_sex(0):
-                    continue
-                elif body_part == 8 and not handle_premise.handle_last_cmd_a_sex(0):
-                    continue
-                elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
-                    continue
-                if isinstance(body_cloth[body_part], list):
-                    def cloth_list(bbc):
-                        for bc in bbc:
-                            if bc in clothing.keys():
-                                # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
-                                return False
-                        return True
-                    if not cloth_list(body_cloth[body_part]):
-                        continue
-                else:
-                    if body_cloth[body_part] in clothing.keys():
-                        # TODO 绘制一份灰色不可选择的文字
-                        continue
                 position_list.append(target_data.dirty.body_semen[body_part][0])
+            self.handle_panel = panel.PageHandlePanel(
+                position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
+            )
 
         elif eja_type == "服装":
-            for cloth in clothing.keys():
-                position_list.append(target_data.dirty.cloth_semen[cloth][0])
+            for clothing_type in game_config.config_clothing_type:
+                if len(target_data.cloth.cloth_wear[clothing_type]):
+                    position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
 
-        self.handle_panel = panel.PageHandlePanel(
-            position_list, Ejaculation_NameDraw, 20, 4, self.width, 1, 1, 0
-        )
+            self.handle_panel = panel.PageHandlePanel(
+                position_list, Ejaculation_NameDraw, 20, 1, self.width, 1, 1, 0
+            )
         self.handle_panel.text_list = position_list
         self.handle_panel.update()
 
@@ -181,7 +135,7 @@ class Ejaculation_NameDraw:
     button_id -- 数字按钮id
     """
 
-    def __init__(self, text: int, width: int, is_button: bool, num_button: bool, button_id: int):
+    def __init__(self, text: str, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
         self.text = text
         """ 部位名 """
@@ -195,61 +149,107 @@ class Ejaculation_NameDraw:
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
-        self.position_text_list = []
-        for body_part in game_config.config_body_part:
-            position_text = game_config.config_body_part[body_part].name
-            self.position_text_list.append(position_text)
-        """ 位置文本列表 """
-        self.cloth_text_list = []
-        for clothing_type in game_config.config_clothing_type:
-            cloth_text = game_config.config_clothing_type[clothing_type].name
-            self.cloth_text_list.append(cloth_text)
-        """ 衣服文本列表 """
+
         self.panel_type = 0
         name_draw = draw.NormalDraw()
-
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
         # 区分是位置还是衣服
-        if self.text in self.position_text_list:
-            self.panel_type = 1
-            for i in range(len(self.position_text_list)):
-                if self.text == self.position_text_list[i]:
-                    self.index = i
-                    break
-        elif self.text in self.cloth_text_list:
-            self.panel_type = 2
-            for i in range(len(self.cloth_text_list)):
-                if self.text == self.cloth_text_list[i]:
-                    self.index = i
-                    cloth_name_text = ":"
-                    for cloth_id in target_data.cloth.cloth_wear[i]:
-                        cloth_name_text += f" {game_config.config_clothing_tem[cloth_id].name}"
-                    self.text += cloth_name_text
-                    break
+        """ 位置文本列表 """
+        self.position_text_list = []
+        for body_part in game_config.config_body_part:
+            position_text = game_config.config_body_part[body_part].name
+            self.position_text_list.append(position_text)
+            if self.text == position_text:
+                self.panel_type = 1
+                self.index = body_part
+                is_button = self.part_can_choose()
+                break
+
+        """ 衣服文本列表 """
+        self.cloth_text_list = []
+        for clothing_type in game_config.config_clothing_type:
+            cloth_text = game_config.config_clothing_type[clothing_type].name
+            self.cloth_text_list.append(cloth_text)
+            if self.text == cloth_text:
+                self.panel_type = 2
+                self.index = clothing_type
+                cloth_name_text = ":"
+                for cloth_id in target_data.cloth.cloth_wear[clothing_type]:
+                    cloth_name_text += f" {game_config.config_clothing_tem[cloth_id].name}"
+                self.text += cloth_name_text
+                is_button = self.part_can_choose()
+                break
+
         # print("debug self.text = ",self.text," panel_type = ",panel_type)
 
+        index_text = text_handle.id_index(button_id)
+        button_text = f"{index_text} {self.text}"
         if is_button:
-            if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text} {self.text}"
-                name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.shoot_here
-                )
-            else:
-                button_text = f"[{self.text}]"
-                name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.shoot_here
-                )
-                self.button_return = self.text
-            self.draw_text = button_text
+            name_draw = draw.LeftButton(
+                button_text, self.button_return, self.width, cmd_func=self.shoot_here
+            )
+        else:
+            name_draw = draw.LeftDraw()
+            name_draw.text = button_text
+            name_draw.width = self.width
+            name_draw.style = "un_open_mapbutton"
+        self.draw_text = button_text
         self.now_draw = name_draw
         """ 绘制的对象 """
 
     def draw(self):
         """绘制对象"""
         self.now_draw.draw()
+
+    def part_can_choose(self):
+        """判断该部位是否可以绘制"""
+
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
+        clothing = {}
+
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
+
+        if self.panel_type == 1:
+            body_part = self.index
+            if body_part == 6 and not handle_premise.handle_last_cmd_sex(0):
+                return False
+            elif body_part == 7 and not handle_premise.handle_last_cmd_w_sex(0):
+                return False
+            elif body_part == 8 and not handle_premise.handle_last_cmd_a_sex(0):
+                return False
+            elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
+                return False
+            elif body_part == 12 and not target_data.talent[72]:
+                return False
+            elif body_part == 13 and not target_data.talent[71]:
+                return False
+            elif body_part == 14 and not target_data.talent[70]:
+                return False
+            
+            if isinstance(body_cloth[body_part], list):
+                def cloth_list(bbc):
+                    for bc in bbc:
+                        if bc in clothing.keys():
+                            return False
+                    return True
+                if not cloth_list(body_cloth[body_part]):
+                    return False
+            else:
+                if body_cloth[body_part] in clothing.keys():
+                    return False
+        elif self.panel_type == 2:
+            clothing_type = self.index
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                return True
+            else:
+                return False
+        return True
 
     def shoot_here(self):
         py_cmd.clr_cmd()
