@@ -4,7 +4,6 @@ from Script.Core import cache_control, text_handle, get_text, flow_handle, const
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 
-
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -65,7 +64,6 @@ class SeeCharacterItemBagPanel:
         self.item_list_all.append(item_list_H_Machine)
         self.item_list_all.append(item_list_SM)
 
-
         item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 5, width, 1, 1, 0)
         self.handle_panel = item_panel
         """ 页面控制对象 """
@@ -73,7 +71,7 @@ class SeeCharacterItemBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
-        item_list_type = ["药品","机器","消耗品","H药品","H用机器","SM器具"]
+        item_list_type = ["药品", "机器", "消耗品", "H药品", "H用机器", "SM器具"]
         while 1:
             title_draw.draw()
             # 绘制色色凭证
@@ -85,7 +83,6 @@ class SeeCharacterItemBagPanel:
             line_feed.draw()
 
             # 绘制道具面板
-
 
             # 遍历输出每个类型的面板
             for i in range(len(self.item_list_all)):
@@ -115,6 +112,7 @@ class SeeCharacterItemBagPanel:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
 
 class ItemNameDraw:
     """
@@ -146,7 +144,7 @@ class ItemNameDraw:
         item_config = game_config.config_item[self.text]
         item_name = item_config.name
         character_data = cache.character_data[0]
-        flag_consumables = item_config.tag in ["Drug","H_Drug","Consumables"]
+        flag_consumables = item_config.tag in ["Drug", "H_Drug", "Consumables"]
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)

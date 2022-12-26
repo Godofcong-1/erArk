@@ -2,7 +2,7 @@ from turtle import position
 from typing import Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import attr_calculation,handle_premise
+from Script.Design import attr_calculation, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -44,6 +44,12 @@ class Ejaculation_Panel:
         title_draw = draw.TitleLineDraw(title_name, self.width)
         eja_type_list = [_("身体"), _("服装")]
         position_list = []
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
+        clothing = {}
+
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
 
         self.handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
         for body_part in game_config.config_body_part:
@@ -55,6 +61,19 @@ class Ejaculation_Panel:
                 continue
             elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
                 continue
+            if isinstance(body_cloth[body_part], list):
+                def cloth_list(bbc):
+                    for bc in bbc:
+                        if bc in clothing.keys():
+                            # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
+                            return False
+                    return True
+                if not cloth_list(body_cloth[body_part]):
+                    continue
+            else:
+                if body_cloth[body_part] in clothing.keys():
+                    # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
+                    continue
             position_list.append(target_data.dirty.body_semen[body_part][0])
         self.handle_panel.text_list = position_list
         self.handle_panel.update()
@@ -94,7 +113,7 @@ class Ejaculation_Panel:
             yrn = flow_handle.askfor_all(return_list)
 
             # 在非页面切换时退出面板
-            if yrn not in ['身体','服装']:
+            if yrn not in ['身体', '服装']:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -108,6 +127,12 @@ class Ejaculation_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         position_list = []
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
+        clothing = {}
+
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
 
         if eja_type == "身体":
             for body_part in game_config.config_body_part:
@@ -119,19 +144,30 @@ class Ejaculation_Panel:
                     continue
                 elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
                     continue
+                if isinstance(body_cloth[body_part], list):
+                    def cloth_list(bbc):
+                        for bc in bbc:
+                            if bc in clothing.keys():
+                                # TODO 绘制一份灰色不可选择的文字，并复制到下面的146行附近
+                                return False
+                        return True
+                    if not cloth_list(body_cloth[body_part]):
+                        continue
+                else:
+                    if body_cloth[body_part] in clothing.keys():
+                        # TODO 绘制一份灰色不可选择的文字
+                        continue
                 position_list.append(target_data.dirty.body_semen[body_part][0])
 
         elif eja_type == "服装":
-            for clothing_type in game_config.config_clothing_type:
-                if len(target_data.cloth.cloth_wear[clothing_type]):
-                    position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
+            for cloth in clothing.keys():
+                position_list.append(target_data.dirty.cloth_semen[cloth][0])
 
         self.handle_panel = panel.PageHandlePanel(
             position_list, Ejaculation_NameDraw, 20, 4, self.width, 1, 1, 0
         )
         self.handle_panel.text_list = position_list
         self.handle_panel.update()
-
 
 
 class Ejaculation_NameDraw:
@@ -252,7 +288,8 @@ class Ejaculation_NameDraw:
                 self.index = 7
             target_data.dirty.body_semen[self.index][1] += semen_count
             target_data.dirty.body_semen[self.index][3] += semen_count
-            target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.index][1])
+            target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(
+                target_data.dirty.body_semen[self.index][1])
 
         elif self.panel_type == 2:
 
@@ -262,7 +299,8 @@ class Ejaculation_NameDraw:
             # 更新污浊类里的服装部位精液参数
             target_data.dirty.cloth_semen[self.index][1] += semen_count
             target_data.dirty.cloth_semen[self.index][3] += semen_count
-            target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[self.index][1])
+            target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(
+                target_data.dirty.cloth_semen[self.index][1])
 
             now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 
@@ -273,4 +311,3 @@ class Ejaculation_NameDraw:
         now_draw.draw()
         line_feed.draw()
         line_feed.draw()
-

@@ -1,5 +1,5 @@
 import datetime
-import time,random
+import time, random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
@@ -16,7 +16,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = int):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag=int):
     """
     处理结算角色行为
     Keyword arguments:
@@ -36,14 +36,14 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     change_character_persistent_state(character_id, now_time, add_time)
 
     behavior_id = now_character_data.behavior.behavior_id
-    if event_flag: # 在事件的开始结算中不结算以下内容
+    if event_flag:  # 在事件的开始结算中不结算以下内容
         # 进行一段结算
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
         # 进行二段结算
         check_second_effect(character_id, status_data)
-        #结算上次进行聊天的时间，以重置聊天计数器#
+        # 结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
 
     event_id = now_character_data.event.event_id
@@ -68,13 +68,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
-    #注释掉了会按不交流的时间自动扣好感的系统#
+    # 注释掉了会按不交流的时间自动扣好感的系统#
     # change_character_favorability_for_time(character_id, now_time)
-    #注释掉了社交关系#
+    # 注释掉了社交关系#
     # change_character_social(character_id, status_data)
     now_judge = False
     change_flag = False
-    PC_information_flag = 0 # 0初始，1PC输出，2不输出
+    PC_information_flag = 0  # 0初始，1PC输出，2不输出
     # NPC触发且不和玩家在同一地图时则跳过
     if character_id != 0 and now_character_data.position != player_character_data.position:
         return
@@ -86,8 +86,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
         # 开始互换
         # print(f"debug 前target_change.hit_point = {target_change.hit_point}")
-        status_data,target_change = target_change,status_data
-        now_character_data,target_data = player_character_data,now_character_data
+        status_data, target_change = target_change, status_data
+        now_character_data, target_data = player_character_data, now_character_data
         character_id = 0
         # print(f"debug 后target_change.hit_point = {target_change.hit_point}")
     elif character_id:
@@ -175,7 +175,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         #         ]
         #     )
 
-
         # 交互对象的结算输出
         if len(status_data.target_change):
             for target_character_id in status_data.target_change:
@@ -209,7 +208,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     now_text += _("\n  对{character_name}{character_nick_name}信赖").format(
                         character_name=now_character_data.name,
                         character_nick_name=now_character_data.nick_name
-                    ) + text_handle.number_to_symbol_string(float(target_change.trust)) + ("%")
+                    ) + text_handle.number_to_symbol_string(float(target_change.trust)) + "%"
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
@@ -225,11 +224,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     for status_id in target_change.status_data:
                         if target_change.status_data[status_id]:
                             now_text += (
-                                "\n  "
-                                + game_config.config_character_state[status_id].name
-                                + text_handle.number_to_symbol_string(
-                                    int(target_change.status_data[status_id])
-                                )
+                                    "\n  "
+                                    + game_config.config_character_state[status_id].name
+                                    + text_handle.number_to_symbol_string(
+                                int(target_change.status_data[status_id])
+                            )
                             )
                             judge = 1
                 # 经验的结算输出
@@ -238,11 +237,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     for experience_id in target_change.experience:
                         if target_change.experience[experience_id]:
                             now_text += (
-                                "\n  "
-                                + game_config.config_experience[experience_id].name
-                                + text_handle.number_to_symbol_string(
-                                    int(target_change.experience[experience_id])
-                                )
+                                    "\n  "
+                                    + game_config.config_experience[experience_id].name
+                                    + text_handle.number_to_symbol_string(
+                                int(target_change.experience[experience_id])
+                            )
                             )
                             judge = 1
                 if judge and (now_text != name):
@@ -251,7 +250,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
             now_text_time = "\n\n  " + str(add_time) + "分钟过去了"
         else:
             now_text_time = "\n\n  该行动将持续" + str(add_time) + "分钟"
-        if now_text_list != []:
+        if now_text_list:
             now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
         now_panel.set(now_text_list, width, 8)
@@ -307,9 +306,9 @@ def get_cut_down_favorability_for_consume_time(consume_time: int):
     """
     if consume_time < 10:
         return consume_time
-    elif consume_time >= 10 and consume_time < 100:
+    elif 10 <= consume_time < 100:
         return (consume_time - 9) * 10 + 9
-    elif consume_time >= 100 and consume_time < 1000:
+    elif 100 <= consume_time < 1000:
         return (consume_time - 99) * 100 + 909
     else:
         return (consume_time - 999) * 1000 + 90909
@@ -364,9 +363,10 @@ def change_character_talkcount_for_time(character_id: int, now_time: datetime.da
         target_data.action_info.talk_count = 0
         target_data.action_info.talk_time = now_time
         # print("检测到时间前进了至少一天，聊天计数器归零")
-    if target_data.action_info.talk_count < 0 :
+    if target_data.action_info.talk_count < 0:
         target_data.action_info.talk_count = 0
     # print("target_data.action_info.talk_count :",target_data.action_info.talk_count)
+
 
 def change_character_value_add_as_time(character_id: int, add_time: int):
     """
@@ -380,15 +380,15 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
     # 结算困倦值
-    add_sleep = int ( add_time / 6 )
+    add_sleep = int(add_time / 6)
     now_character_data.sleep_point += add_sleep
 
     # 结算尿意值
-    add_urinate = random.randint(int(add_time*0.8), int(add_time*1.2))
+    add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
     now_character_data.urinate_point += add_urinate
 
     # 结算饥饿值
-    add_hunger = random.randint(int(add_time*0.8), int(add_time*1.2))
+    add_hunger = random.randint(int(add_time * 0.8), int(add_time * 1.2))
     now_character_data.hunger_point += add_hunger
 
     # 给无法自由行动的交互对象结算
@@ -415,14 +415,13 @@ def change_character_persistent_state(character_id: int, now_time: datetime.date
 
     # 结算H状态的持续时间
     for i in range(len(now_character_data.h_state.body_item)):
-        if now_character_data.h_state.body_item[i][1] :
+        if now_character_data.h_state.body_item[i][1]:
             end_time = now_character_data.h_state.body_item[i][2]
             if end_time != None:
                 add_time = int((now_time - end_time).seconds / 60)
                 if add_time >= 0:
                     now_character_data.h_state.body_item[i][1] = False
                     now_character_data.h_state.body_item[i][2] = None
-
 
 
 # def change_character_social(character_id: int, change_data: game_type.CharacterStatusChange):
@@ -491,9 +490,10 @@ def get_favorability_social(favorability: int) -> int:
         return 4
     return 5
 
+
 def check_second_effect(
-    character_id: int ,
-    change_data: game_type.CharacterStatusChange,
+        character_id: int,
+        change_data: game_type.CharacterStatusChange,
 ):
     """
     处理第二结算
@@ -503,7 +503,7 @@ def check_second_effect(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
-    target_character_data : game_type.Character = cache.character_data[target_character_id]
+    target_character_data: game_type.Character = cache.character_data[target_character_id]
     change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_character_id]
     # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
@@ -519,9 +519,9 @@ def check_second_effect(
         item_effect(character_id)
 
         # 遍历二段行为id，进行结算
-        for behavior_id,behavior_data in character_data.second_behavior.items():
+        for behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data != 0:
-                #遍历该二段行为的所有结算效果，挨个触发
+                # 遍历该二段行为的所有结算效果，挨个触发
                 for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                     constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
@@ -541,24 +541,25 @@ def check_second_effect(
         # 道具结算
         item_effect(target_character_id)
 
-        #遍历二段行为id，进行结算
-        for behavior_id,behavior_data in target_character_data.second_behavior.items():
+        # 遍历二段行为id，进行结算
+        for behavior_id, behavior_data in target_character_data.second_behavior.items():
             if behavior_data != 0:
-                #遍历该二段行为的所有结算效果，挨个触发
+                # 遍历该二段行为的所有结算效果，挨个触发
                 for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                     # print("effect_id :",effect_id)
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
         # 刻印结算
-        mark_effect(target_character_id,target_change)
-        mark_list = [i for i in range(1030,1048)]
+        mark_effect(target_character_id, target_change)
+        mark_list = [i for i in range(1030, 1048)]
         # 单独遍历结算刻印
-        for behavior_id,behavior_data in target_character_data.second_behavior.items():
+        for behavior_id, behavior_data in target_character_data.second_behavior.items():
             if behavior_data != 0 and behavior_id in mark_list:
-                #遍历该二段行为的所有结算效果，挨个触发
+                # 遍历该二段行为的所有结算效果，挨个触发
                 for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                     # print("effect_id :",effect_id)
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+
 
 def insert_position_effect(character_id: int):
     """
@@ -568,7 +569,7 @@ def insert_position_effect(character_id: int):
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0) :
+    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0):
         position_index = 1201 + character_data.h_state.insert_position
         character_data.second_behavior[position_index] = 1
 
@@ -584,7 +585,7 @@ def orgasm_effect(character_id: int):
     # print("进入高潮结算")
     character_data: game_type.Character = cache.character_data[character_id]
 
-    #检测射精
+    # 检测射精
     if character_id == 0:
         if character_data.eja_point >= character_data.eja_point_max:
             if character_data.h_state.orgasm_level[3] % 3 == 0:
@@ -599,53 +600,54 @@ def orgasm_effect(character_id: int):
             line = draw.LineDraw("-", width)
             line.draw()
     else:
-        #检测人物的各感度数据是否等于该人物的高潮记录程度数据
+        # 检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
-            #now_data -- 当前高潮程度
-            #pre_data -- 记录里的前高潮程度
+            # now_data -- 当前高潮程度
+            # pre_data -- 记录里的前高潮程度
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
             pre_data = character_data.h_state.orgasm_level[orgasm]
-            #跳过射精槽
+            # 跳过射精槽
             if orgasm == 3:
                 continue
             if now_data != pre_data:
-                #判定触发哪些绝顶
-                num = orgasm*3 + 1000 #通过num值来判断是二段行为记录的哪个位置
+                # 判定触发哪些绝顶
+                num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
                 # now_draw = draw.WaitDraw()
                 # now_draw.width = width
                 if (now_data - pre_data) >= 3:
                     # now_draw.text = _("\n触发小、普、强绝顶\n")
                     character_data.second_behavior[num] = 1
-                    character_data.second_behavior[num+1] = 1
-                    character_data.second_behavior[num+2] = 1
+                    character_data.second_behavior[num + 1] = 1
+                    character_data.second_behavior[num + 2] = 1
                 elif (now_data - pre_data) == 2:
                     if pre_data % 3 == 0:
                         # now_draw.text = _("\n触发小、普绝顶\n")
                         character_data.second_behavior[num] = 1
-                        character_data.second_behavior[num+1] = 1
+                        character_data.second_behavior[num + 1] = 1
                     elif pre_data % 3 == 1:
                         # now_draw.text = _("\n触发普、强绝顶\n")
-                        character_data.second_behavior[num+1] = 1
-                        character_data.second_behavior[num+2] = 1
+                        character_data.second_behavior[num + 1] = 1
+                        character_data.second_behavior[num + 2] = 1
                     elif pre_data % 3 == 2:
                         # now_draw.text = _("\n触发强绝顶\n")
-                        character_data.second_behavior[num+2] = 1
+                        character_data.second_behavior[num + 2] = 1
                 else:
                     if pre_data % 3 == 0:
                         # now_draw.text = _("\n触发小绝顶\n")
                         character_data.second_behavior[num] = 1
                     elif pre_data % 3 == 1:
                         # now_draw.text = _("\n触发普绝顶\n")
-                        character_data.second_behavior[num+1] = 1
+                        character_data.second_behavior[num + 1] = 1
                     elif pre_data % 3 == 2:
                         # now_draw.text = _("\n触发强绝顶\n")
-                        character_data.second_behavior[num+2] = 1
+                        character_data.second_behavior[num + 2] = 1
                 # now_draw.draw()
-                
-                #刷新记录
+
+                # 刷新记录
                 character_data.h_state.orgasm_level[orgasm] = now_data
 
-def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
+
+def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
     处理第二结算中的刻印结算
     Keyword arguments:
@@ -658,11 +660,11 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
     # print("进入刻印结算")
     character_data: game_type.Character = cache.character_data[character_id]
 
-    #快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
+    # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     happy_count = 0
     for orgasm in range(8):
         happy_count += character_data.h_state.orgasm_count[orgasm][0]
-        #计数归零
+        # 计数归零
         character_data.h_state.orgasm_count[orgasm][0] = 0
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
@@ -674,59 +676,59 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[13] = 3
         character_data.second_behavior[1032] = 1
 
-    #屈服刻印检测屈服+恭顺+羞耻/5，1000以上屈服1,3000以上屈服2,10000以上屈服3
+    # 屈服刻印检测屈服+恭顺+羞耻/5，1000以上屈服1,3000以上屈服2,10000以上屈服3
     yield_count = 0
     yield_count += character_data.status_data[10]
     yield_count += character_data.status_data[15]
-    yield_count += character_data.status_data[16]/5
+    yield_count += character_data.status_data[16] / 5
     if yield_count >= 1000 and character_data.ability[14] <= 0:
         character_data.ability[14] = 1
         character_data.second_behavior[1033] = 1
-        #至少提升为顺从1
+        # 至少提升为顺从1
         if character_data.ability[31] <= 0:
             character_data.ability[31] = 1
     if yield_count >= 3000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
-        #至少提升为顺从2
+        # 至少提升为顺从2
         if character_data.ability[31] <= 1:
             character_data.ability[31] = 2
     if yield_count >= 10000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
-        #至少提升为顺从3
+        # 至少提升为顺从3
         if character_data.ability[31] <= 2:
             character_data.ability[31] = 3
 
-    #苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
+    # 苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
     pain_count = 0
     change_data.status_data.setdefault(17, 0)
     pain_count += change_data.status_data[17]
     if pain_count >= 2000 and character_data.ability[15] <= 0:
         character_data.ability[15] = 1
         character_data.second_behavior[1036] = 1
-        #至少提升为顺从1
+        # 至少提升为顺从1
         if character_data.ability[31] <= 0:
             character_data.ability[31] = 1
     if pain_count >= 4000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
-        #至少提升为顺从2
+        # 至少提升为顺从2
         if character_data.ability[31] <= 1:
             character_data.ability[31] = 2
     if pain_count >= 8000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
-        #至少提升为顺从3
+        # 至少提升为顺从3
         if character_data.ability[31] <= 2:
             character_data.ability[31] = 3
 
-    #时姦刻印未实装
+    # 时姦刻印未实装
 
-    #恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
+    # 恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
     terror_count = 0
     terror_count += character_data.status_data[18]
-    terror_count += character_data.status_data[17]/5
+    terror_count += character_data.status_data[17] / 5
     if terror_count >= 2000 and character_data.ability[17] <= 0:
         character_data.ability[17] = 1
         character_data.second_behavior[1042] = 1
@@ -737,12 +739,12 @@ def mark_effect(character_id: int,change_data: game_type.CharacterStatusChange):
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
-    #反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
+    # 反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
     hate_count = 0
     hate_count += character_data.status_data[20]
-    hate_count += character_data.status_data[18]/5
-    hate_count += character_data.status_data[19]/5
-    hate_count += character_data.status_data[17]/10
+    hate_count += character_data.status_data[18] / 5
+    hate_count += character_data.status_data[19] / 5
+    hate_count += character_data.status_data[17] / 10
     if hate_count >= 1000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1
@@ -764,10 +766,10 @@ def item_effect(character_id: int):
     # print()
     # print("进入道具结算")
     character_data: game_type.Character = cache.character_data[character_id]
-    num = 1100 #通过num值来判断是二段行为记录的哪个位置
+    num = 1100  # 通过num值来判断是二段行为记录的哪个位置
 
     if character_id != 0:
 
         for i in range(10):
             if character_data.h_state.body_item[i][1]:
-                character_data.second_behavior[num+i] = 1
+                character_data.second_behavior[num + i] = 1

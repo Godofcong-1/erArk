@@ -150,7 +150,7 @@ class SeeCharacterFirstPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         image_draw = CharacterImage(character_id, width)
-        Talent_draw = CharacterTalentText(character_id, width,8, 0)
+        Talent_draw = CharacterTalentText(character_id, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             image_draw,
@@ -165,6 +165,7 @@ class SeeCharacterFirstPanel:
         for label in self.draw_list:
             label.draw()
 
+
 class SeeCharacterSecondPanel:
     """
     显示角色属性面板第二页对象
@@ -177,8 +178,8 @@ class SeeCharacterSecondPanel:
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
         abi_draw = CharacterabiText(character_id, width)
-        experience_draw = CharacterExperienceText(character_id, width,8, 0)
-        juel_draw = CharacterJuelText(character_id, width,8, 0)
+        experience_draw = CharacterExperienceText(character_id, width, 8, 0)
+        juel_draw = CharacterJuelText(character_id, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             abi_draw,
@@ -206,8 +207,8 @@ class SeeCharacterThirdPanel:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
-        body_draw = CharacterBodyText(character_id, width,8, 0)
-        ability_draw = PlayerAbilityText(character_id, width,8, 0)
+        body_draw = CharacterBodyText(character_id, width, 8, 0)
+        ability_draw = PlayerAbilityText(character_id, width, 8, 0)
         if character_id == 0:
             self.draw_list: List[draw.NormalDraw] = [
                 head_draw,
@@ -253,6 +254,7 @@ class SeeCharacterDailyPanel:
         """绘制面板"""
         for label in self.draw_list:
             label.draw()
+
 
 class SeeCharacterMainAttrPanel:
     """
@@ -372,6 +374,7 @@ class SeeCharacterStatusPanel:
             else:
                 label.draw()
 
+
 class SeeCharacterClothPanel:
     """
     显示角色服装面板对象
@@ -412,12 +415,12 @@ class SeeCharacterClothPanel:
             # 当该类型里有衣服存在的时候才显示
             if len(target_character_data.cloth.cloth_wear[clothing_type]):
                 # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
-                if clothing_type in {6,9} and not cache.debug_mode:
+                if clothing_type in {6, 9} and not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
                     # 如果有内衣透视素质，则自动变为显示
                     if (
-                        character_data.talent[307]
-                        or len(target_character_data.cloth.cloth_wear[clothing_type-1]) == 0
+                            character_data.talent[307]
+                            or len(target_character_data.cloth.cloth_wear[clothing_type - 1]) == 0
                     ):
                         target_character_data.cloth.cloth_see[clothing_type] = True
                     else:
@@ -440,7 +443,7 @@ class SeeCharacterClothPanel:
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:
                 now_text += "\n"
             # 真空的胸衣和内裤单独显示
-            if clothing_type in {6,9} and not len(target_character_data.cloth.cloth_wear[clothing_type]):
+            if clothing_type in {6, 9} and not len(target_character_data.cloth.cloth_wear[clothing_type]):
                 if not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth.cloth_see[clothing_type] = {target_character_data.cloth.cloth_see[clothing_type]}")
                     if not target_character_data.cloth.cloth_see[clothing_type]:
@@ -462,7 +465,6 @@ class SeeCharacterClothPanel:
             now_draw = panel.CenterDrawTextListPanel()
         else:
             now_draw = panel.LeftDrawTextListPanel()
-
 
         # 富文本模组
         now_style_list = rich_text.get_rich_text_print(now_text, "standard")
@@ -543,15 +545,16 @@ class SeeCharacterHStatePanel:
         # print("game_config.config_character_state_type :",game_config.config_character_state_type)
         # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
 
-
         type_line = draw.LittleTitleLineDraw("H状态", width, ":")
         # print("type_data.name :",type_data.name)
         self.draw_list.append(type_line)
 
         status_text_list = []
-        bondage_text_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
-        enemas_text_list = ["脏污","灌肠中","已灌肠","精液灌肠中","已精液灌肠"]
-        insert_text_list = ["发交中","阴茎蹭脸中","口交中","乳交中","腋交中","手交中","抽插阴道中","抽插子宫中","抽插后穴中","抽插尿道中","腿交中","足交中","尾交中","阴茎蹭角中","阴茎蹭耳朵中"]
+        bondage_text_list = ["未捆绑", "后高手缚", "直立缚", "驷马捆绑", "直臂缚", "双手缚", "菱绳缚", "龟甲缚", "团缚",
+                             "逆团缚", "吊缚", "后手吊缚", "单足吊缚", "后手观音", "苏秦背剑", "五花大绑"]
+        enemas_text_list = ["脏污", "灌肠中", "已灌肠", "精液灌肠中", "已精液灌肠"]
+        insert_text_list = ["发交中", "阴茎蹭脸中", "口交中", "乳交中", "腋交中", "手交中", "抽插阴道中", "抽插子宫中",
+                            "抽插后穴中", "抽插尿道中", "腿交中", "足交中", "尾交中", "阴茎蹭角中", "阴茎蹭耳朵中"]
         body_item_set = target_character_data.h_state.body_item
 
         # 指令文本
@@ -622,7 +625,7 @@ class CharacterInfoHead:
         sex_text = game_config.config_sex_tem[character_data.sex].name
 
         # 非清醒时输出当前状态
-        sleep_text_list = [" <清醒>"," <疲劳>"," <昏昏欲睡>"," <随时睡着>"]
+        sleep_text_list = [" <清醒>", " <疲劳>", " <昏昏欲睡>", " <随时睡着>"]
         sleep_text = sleep_text_list[attr_calculation.get_sleep_level(character_data.sleep_point)]
         status_text = game_config.config_status[character_data.state].name
 
@@ -641,19 +644,19 @@ class CharacterInfoHead:
         # 饥饿时进行提示
         hunger_text = " <饿>" if character_data.hunger_point >= 192 else ""
         start_time = character_data.behavior.start_time
-        hunger_text = hunger_text if start_time in {6,7,8,11,12,13,16,17,18} else ""
-
+        hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
 
         if character_id:
-            message = _("{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}{hunger}").format(
-                    character_name=character_data.name,
-                    favorability=int(character_data.favorability[0]),
-                    trust=round(character_data.trust,1),
-                    angry = angry_text,
-                    sleep = sleep_text,
-                    urinate = urinate_text,
-                    hunger = hunger_text,
-                )
+            message = _(
+                "{character_name}（好感度： {favorability}，信赖度： {trust}% {angry}）{sleep}{urinate}{hunger}").format(
+                character_name=character_data.name,
+                favorability=int(character_data.favorability[0]),
+                trust=round(character_data.trust, 1),
+                angry=angry_text,
+                sleep=sleep_text,
+                urinate=urinate_text,
+                hunger=hunger_text,
+            )
         else:
             message = _(
                 "{character_name}{character_nick_name}{sleep}{urinate}"
@@ -662,8 +665,8 @@ class CharacterInfoHead:
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
-                sleep = sleep_text,
-                urinate = urinate_text,
+                sleep=sleep_text,
+                urinate=urinate_text,
             )
         message_draw = draw.CenterDraw()
         message_draw.width = width / 3
@@ -751,7 +754,7 @@ class CharacterWearClothingList:
         """ 绘制的对象列表 """
         for clothing_type in game_config.config_clothing_type:
             if clothing_type in character_data.put_on and isinstance(
-                character_data.put_on[clothing_type], UUID
+                    character_data.put_on[clothing_type], UUID
             ):
                 now_id = character_data.put_on[clothing_type]
                 now_clothing: game_type.Clothing = character_data.clothing[clothing_type][now_id]
@@ -1003,7 +1006,7 @@ class CharacterSexExperienceText:
         sex_tem = character_data.sex in (0, 3)
         organ_list = game_config.config_organ_data[sex_tem] | game_config.config_organ_data[2]
         for organ in organ_list:
-            if organ!= 8:
+            if organ != 8:
                 now_draw = draw.NormalDraw()
                 now_draw_1 = draw.NormalDraw()
                 now_draw_2 = draw.NormalDraw()
@@ -1063,16 +1066,16 @@ class CharacterabiText:
         title_text = "能力"
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.draw_list.append(type_line)
-        #进入能力大类#
+        # 进入能力大类#
         for anility_type in ability_list:
             # if anility_type == type:
             type_set = ability_list[anility_type]
-            #去掉玩家的若干能力#
+            # 去掉玩家的若干能力#
             if self.character_id == 0:
                 if anility_type in {0, 1, 2, 6}:
                     continue
             for ability_id in type_set:
-                #去掉与性别不符的能力#
+                # 去掉与性别不符的能力#
                 if character_data.sex == 0:
                     if ability_id in {2, 4, 7, 9, 12, 33, 34, 39}:
                         continue
@@ -1082,7 +1085,7 @@ class CharacterabiText:
                 now_draw = draw.NormalDraw()
                 now_draw_value = draw.NormalDraw()
                 now_draw.text = game_config.config_ability[ability_id].name
-                #这个_1是为了补空格让格式对齐#
+                # 这个_1是为了补空格让格式对齐#
                 now_draw_1 = draw.NormalDraw()
                 now_draw_1.text = " "
                 now_draw_1.width = 1
@@ -1095,7 +1098,7 @@ class CharacterabiText:
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(now_draw)
                 new_draw.draw_list.append(now_draw_1)
-                #根据不同的类型补不同数量的空格#
+                # 根据不同的类型补不同数量的空格#
                 if anility_type != 2 and anility_type != 4 and anility_type != 6:
                     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw_1)
@@ -1106,12 +1109,13 @@ class CharacterabiText:
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(now_draw_value)
                 self.draw_list.append(new_draw)
-            #只有不是最后一个类型就补个换行#
+            # 只有不是最后一个类型就补个换行#
             if anility_type != 6:
                 new_draw_n = draw.NormalDraw()
                 new_draw_n.text = "\n"
                 new_draw_n.width = 1
                 self.draw_list.append(new_draw_n)
+
     def draw(self):
         """绘制对象"""
         line_feed.draw()
@@ -1143,7 +1147,7 @@ class Characterabi_show_Text:
     def draw(self):
         """绘制对象"""
         self.return_list = []
-        #绘制标题#
+        # 绘制标题#
         line_feed.draw()
         title_text = "能力"
         type_line = draw.LittleTitleLineDraw(title_text, self.width, ":")
@@ -1151,25 +1155,25 @@ class Characterabi_show_Text:
         ability_list = game_config.config_ability_type_data
         for anility_type in ability_list:
             type_set = ability_list[anility_type]
-            #去掉刻印
+            # 去掉刻印
             # print("anility_type : ",anility_type)
             if anility_type == 2:
                 continue
             for ability_id in type_set:
-                #去掉与性别不符的感度与扩张
+                # 去掉与性别不符的感度与扩张
                 if self.character_data.sex == 0:
                     if ability_id in {2, 4, 7, 9, 12, 34, 39}:
                         continue
                 elif self.character_data.sex == 1:
                     if ability_id == 3:
                         continue
-                #这个_1是为了补空格让格式对齐#
+                # 这个_1是为了补空格让格式对齐#
                 now_exp = 0
                 now_exp = self.character_data.ability[ability_id]
                 button_text = " "
                 button_text += game_config.config_ability[ability_id].name
                 button_text += " "
-                #根据不同的类型补不同数量的空格#
+                # 根据不同的类型补不同数量的空格#
                 if anility_type != 2 and anility_type != 4 and anility_type != 6:
                     button_text += "  "
                     if anility_type == 3 or anility_type == 5:
@@ -1188,13 +1192,13 @@ class Characterabi_show_Text:
                 # py_cmd.clr_cmd()
                 # if yrn == self.back_draw.return_text:
                 #     break
-            #只有不是最后一个类型就补个换行#
+            # 只有不是最后一个类型就补个换行#
             if anility_type != 6:
                 new_draw_n = draw.NormalDraw()
                 new_draw_n.text = "\n"
                 new_draw_n.width = 1
                 new_draw_n.draw()
-        #yrn = flow_handle.askfor_all(self.return_list)
+        # yrn = flow_handle.askfor_all(self.return_list)
 
 
 class Characterabi_cmd_Text:
@@ -1225,7 +1229,7 @@ class Characterabi_cmd_Text:
         self.return_list = []
         self.jule_dict = {}
         judge = 1
-        #绘制标题#
+        # 绘制标题#
         while 1:
 
             # 读取该能力在对应等级下的升级需求
@@ -1273,7 +1277,7 @@ class Characterabi_cmd_Text:
             back_draw.draw()
             self.return_list.append(back_draw.return_text)
             if judge:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3,cmd_func=self.level_up)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up)
                 yes_draw.draw()
                 self.return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
@@ -1312,12 +1316,12 @@ class Character_talent_show_Text:
     def draw(self):
         """绘制对象"""
         self.return_list = []
-        #绘制标题#
+        # 绘制标题#
         line_feed.draw()
         title_text = "素质"
         type_line = draw.LittleTitleLineDraw(title_text, self.width, ":")
         type_line.draw()
-        #前提说明#
+        # 前提说明#
         text_draw_introduce = draw.NormalDraw()
         text_draw_introduce.text = "基础前提条件： 好感度500以上 信任度50%以上 反发刻印0\n分为爱情系与隶属系两条路线\n"
         text_draw_introduce.width = 1
@@ -1326,7 +1330,7 @@ class Character_talent_show_Text:
         line.draw()
         love = 0
         obey = 0
-        #恋慕分支#
+        # 恋慕分支#
         if game_config.config_talent[10] == 1:
             love = 11
             button_text_love = game_config.config_talent[11].name
@@ -1341,7 +1345,7 @@ class Character_talent_show_Text:
         else:
             love = 10
             button_text_love = game_config.config_talent[10].name
-        #隶属分支#
+        # 隶属分支#
         if game_config.config_talent[15] == 1:
             obey = 16
             button_text_obey = game_config.config_talent[16].name
@@ -1356,24 +1360,26 @@ class Character_talent_show_Text:
         else:
             obey = 15
             button_text_obey = game_config.config_talent[15].name
-        #爱情文本#
+        # 爱情文本#
         text_draw_love = draw.NormalDraw()
         text_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级高于顺从等级\n"
         text_draw_love.width = 1
         text_draw_love.draw()
-        #没进入隶属路线则触发#
+        # 没进入隶属路线则触发#
         if obey == 15:
             if love == 14:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "已达到最高级-爱侣\n"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] !=0:
+            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or \
+                    self.character_data.ability[18] != 0:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足基础前提\n"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.ability[15] !=0 or self.character_data.ability[17] !=0 or self.character_data.ability[32] <= self.character_data.ability[31]:
+            elif self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or \
+                    self.character_data.ability[32] <= self.character_data.ability[31]:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足爱情路线前提\n"
                 text_draw_love.width = 1
@@ -1389,24 +1395,26 @@ class Character_talent_show_Text:
                 button_draw.draw()
         line = draw.LineDraw("-", self.width)
         line.draw()
-        #隶属文本#
+        # 隶属文本#
         text_draw_love = draw.NormalDraw()
         text_draw_love.text = "隶属路线前提： 快乐刻印>=1 屈服刻印>=1 顺从等级高于亲密等级\n"
         text_draw_love.width = 1
         text_draw_love.draw()
-        #没进入爱情路线则触发#
+        # 没进入爱情路线则触发#
         if love == 10:
             if obey == 19:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "已达到最高级-奴隶"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] !=0:
+            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or \
+                    self.character_data.ability[18] != 0:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足基础前提"
                 text_draw_love.width = 1
                 text_draw_love.draw()
-            elif self.character_data.ability[13] ==0 or self.character_data.ability[14] ==0 or self.character_data.ability[31] <= self.character_data.ability[32]:
+            elif self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or \
+                    self.character_data.ability[31] <= self.character_data.ability[32]:
                 text_draw_love = draw.NormalDraw()
                 text_draw_love.text = "未满足隶属路线前提"
                 text_draw_love.width = 1
@@ -1430,7 +1438,7 @@ class Charactertal_cmd_Text:
     width -- 最大宽度
     """
 
-    def __init__(self, character_id: int, width: int, talent_id: int,):
+    def __init__(self, character_id: int, width: int, talent_id: int, ):
         """初始化绘制对象"""
         self.character_id = character_id
         """ 绘制的角色id """
@@ -1448,7 +1456,7 @@ class Charactertal_cmd_Text:
         self.return_list = []
         self.jule_dict = {}
         judge = 1
-        #绘制标题#
+        # 绘制标题#
         while 1:
             need_list = game_config.config_talent_up_data[self.talent_id]
             for need_id in need_list:
@@ -1488,7 +1496,7 @@ class Charactertal_cmd_Text:
             back_draw.draw()
             self.return_list.append(back_draw.return_text)
             if judge:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3,cmd_func=self.level_up)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up)
                 yes_draw.draw()
                 self.return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
@@ -1526,11 +1534,12 @@ class CharacterImage:
         title_text = "立绘"
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.title_list.append(type_line)
-        self.image_name=character_data.name
+        self.image_name = character_data.name
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
         now_draw_1.width = 2
         self.draw_list.append(now_draw_1)
+
     def draw(self):
         """绘制对象"""
         if self.character_id != 0:
@@ -1538,7 +1547,8 @@ class CharacterImage:
                 value.draw()
             # for value in self.draw_list:
             #     value.draw()
-            flow_handle.print_image_cmd(self.image_name,"立绘按钮")
+            flow_handle.print_image_cmd(self.image_name, "立绘按钮")
+
 
 class CharacterExperienceText:
     """
@@ -1571,10 +1581,11 @@ class CharacterExperienceText:
         experience_text_list = []
         for experience_id in game_config.config_experience:
             if character_data.sex == 0:
-                if experience_id in {2, 4, 7, 12, 14, 17, 20, 22, 26, 51, 54, 55, 58, 72, 74 ,77, 86, 100, 101, 102, 103, 104, 105, 106}:
+                if experience_id in {2, 4, 7, 12, 14, 17, 20, 22, 26, 51, 54, 55, 58, 72, 74, 77, 86, 100, 101, 102,
+                                     103, 104, 105, 106}:
                     continue
             elif character_data.sex == 1:
-                if experience_id == {3,13,21,73}:
+                if experience_id == {3, 13, 21, 73}:
                     continue
             experience_text = game_config.config_experience[experience_id].name
             experience_value = 0
@@ -1608,6 +1619,7 @@ class CharacterExperienceText:
             line_feed.draw()
             if count == 0:
                 line_feed.draw()
+
 
 class CharacterTalentText:
     """
@@ -1722,9 +1734,6 @@ class CharacterWorkText:
 
         f"[{work_cid}]{work_name}({work_place})：{work_describe}",
 
-
-
-
         profession_text = game_config.config_profession[character_data.profession].name
         race_text = game_config.config_race[character_data.race].name
         type_data = "工作"
@@ -1777,6 +1786,7 @@ class CharacterWorkText:
                 # line_feed.draw()
             else:
                 label.draw()
+
 
 class CharacterJuelText:
     """
@@ -1837,6 +1847,7 @@ class CharacterJuelText:
                 line_feed.draw()
             else:
                 label.draw()
+
 
 class CharacterTokenText:
     """
@@ -1925,7 +1936,7 @@ class CharacterBodyText:
         self.draw_list.append(type_line)
         body_text_list = []
         if character_id != 0:
-            #尿道信息#
+            # 尿道信息#
             now_text = f"\n 【总】\n"
             semen_count = 0
             for body_part in game_config.config_body_part:
@@ -1935,7 +1946,7 @@ class CharacterBodyText:
             else:
                 now_text += f"  全身总共被射上过{semen_count}ml精液\n"
             body_text_list.append(now_text)
-            #口部信息#
+            # 口部信息#
             now_text = f"\n 【口】\n"
             now_text += "  初吻情况："
             if character_data.talent[4]:
@@ -1944,10 +1955,10 @@ class CharacterBodyText:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
                 now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
-                        character_name=cache.character_data[kiss_id].name,
-                        kiss_time = str(kiss_time.month) + "月" + str (kiss_time.day) + "日",
-                        kiss_palce = attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
-                    )
+                    character_name=cache.character_data[kiss_id].name,
+                    kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
+                    kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
+                )
             if character_data.ability[71] == 0:
                 now_text += "  普普通通的舌头\n"
             if character_data.dirty.body_semen[2][3] == 0:
@@ -1955,28 +1966,28 @@ class CharacterBodyText:
             else:
                 now_text += f"  总共喝过{character_data.dirty.body_semen[2][3]}ml精液\n"
             body_text_list.append(now_text)
-            #胸部信息#
+            # 胸部信息#
             now_text = f"\n 【胸】\n"
             if character_data.dirty.body_semen[3][3] == 0:
                 now_text += "  未淋上过精液\n"
             else:
                 now_text += f"  总共被淋上过{character_data.dirty.body_semen[3][3]}ml精液\n"
             body_text_list.append(now_text)
-            #指部信息#
+            # 指部信息#
             now_text = f"\n 【指】\n"
             if character_data.dirty.body_semen[5][3] == 0:
                 now_text += "  未淋上过精液\n"
             else:
                 now_text += f"  总共被淋上过{character_data.dirty.body_semen[5][3]}ml精液\n"
             body_text_list.append(now_text)
-            #足部信息#
+            # 足部信息#
             now_text = f"\n 【足】\n"
             if character_data.dirty.body_semen[11][3] == 0:
                 now_text += "  未淋上过精液\n"
             else:
                 now_text += f"  总共被淋上过{character_data.dirty.body_semen[11][3]}ml精液\n"
             body_text_list.append(now_text)
-            #膣部信息#
+            # 膣部信息#
             now_text = f"\n 【膣】\n"
             now_text += "  处女情况："
             if character_data.talent[0]:
@@ -1987,17 +1998,17 @@ class CharacterBodyText:
                 sex_posture = character_data.first_record.first_sex_posture
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n").format(
-                        character_name=cache.character_data[sex_id].name,
-                        time = str(sex_time.month) + "月" + str (sex_time.day) + "日",
-                        palce = attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
-                        posture =sex_posture,
-                    )
+                    character_name=cache.character_data[sex_id].name,
+                    time=str(sex_time.month) + "月" + str(sex_time.day) + "日",
+                    palce=attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
+                    posture=sex_posture,
+                )
             if character_data.dirty.body_semen[7][3] == 0:
                 now_text += "  未射入过精液\n"
             else:
                 now_text += f"  总共被射入过{character_data.dirty.body_semen[7][3]}ml精液\n"
             body_text_list.append(now_text)
-            #肛部信息#
+            # 肛部信息#
             now_text = f"\n 【肛】\n"
             now_text += "  后庭处女情况："
             if character_data.talent[1]:
@@ -2008,22 +2019,22 @@ class CharacterBodyText:
                 a_sex_posture = character_data.first_record.first_a_sex_posture
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n").format(
-                        character_name=cache.character_data[a_sex_id].name,
-                        time = str(a_sex_time.month) + "月" + str (a_sex_time.day) + "日",
-                        palce = attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
-                        posture =a_sex_posture,
-                    )
+                    character_name=cache.character_data[a_sex_id].name,
+                    time=str(a_sex_time.month) + "月" + str(a_sex_time.day) + "日",
+                    palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
+                    posture=a_sex_posture,
+                )
             if character_data.dirty.body_semen[8][3] == 0:
                 now_text += "  未射入过精液\n"
             else:
                 now_text += f"  总共被射入过{character_data.dirty.body_semen[8][3]}ml精液\n"
             body_text_list.append(now_text)
-            #子宫信息#
+            # 子宫信息#
             now_text = f"\n 【宫】\n"
             if character_data.experience[86] == 0:
                 now_text += "  未怀孕过\n"
             body_text_list.append(now_text)
-            #尿道信息#
+            # 尿道信息#
             now_text = f"\n 【尿】\n"
             if character_data.dirty.body_semen[9][3] == 0:
                 now_text += "  未射入过精液\n"
@@ -2079,33 +2090,32 @@ class PlayerAbilityText:
         self.draw_list.append(type_line)
         ability_text_list = []
 
-        #视觉能力#
+        # 视觉能力#
         now_text = f"\n 【视觉系】\n"
-        for i in {307,308,309}:
+        for i in {307, 308, 309}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
                 ability_info = game_config.config_talent[i].info
                 now_text += f"  {ability_name}：{ability_info}\n"
         ability_text_list.append(now_text)
 
-        #触觉能力#
+        # 触觉能力#
         now_text = f"\n 【触觉系】\n"
-        for i in {310,311,312}:
+        for i in {310, 311, 312}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
                 ability_info = game_config.config_talent[i].info
                 now_text += f"  {ability_name}：{ability_info}\n"
         ability_text_list.append(now_text)
 
-        #嗅觉能力#
+        # 嗅觉能力#
         now_text = f"\n 【嗅觉系】\n"
-        for i in {304,305,306}:
+        for i in {304, 305, 306}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
                 ability_info = game_config.config_talent[i].info
                 now_text += f"  {ability_name}：{ability_info}\n"
         ability_text_list.append(now_text)
-
 
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
@@ -2303,6 +2313,7 @@ class SeeCharacterInfoByNameDrawInScene:
         cache.character_data[0].target_character_id = self.character_id
         py_cmd.clr_cmd()
 
+
 class SeeCharacterInfoByimageDrawInScene:
     """场景中点击后切换目标角色的角色立绘按钮对象"""
 
@@ -2328,8 +2339,8 @@ class SeeCharacterInfoByimageDrawInScene:
         # character_name = character_data.name + f"({sex_text})"
         button_text = f"{character_name}"
         name_draw = draw.ImageButton(
-                    button_text, self.button_return, self.width, cmd_func=self.see_character
-                )
+            button_text, self.button_return, self.width, cmd_func=self.see_character
+        )
         character_name = f"[{character_name}]"
         character_name = text_handle.align(character_name, "center", 0, 1, self.width)
         name_draw.text = character_name
@@ -2684,8 +2695,8 @@ class Character_abi_up_frist_Handle:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
-        Juel_draw = CharacterJuelText(character_id, width,8, 0)
-        Experience_draw = CharacterExperienceText(character_id, width,8, 0)
+        Juel_draw = CharacterJuelText(character_id, width, 8, 0)
+        Experience_draw = CharacterExperienceText(character_id, width, 8, 0)
         abi_draw = Characterabi_show_Text(character_id, width)
         tal_draw = Character_talent_show_Text(character_id, width)
         if character_id == 0:
