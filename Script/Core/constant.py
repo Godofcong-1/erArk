@@ -99,6 +99,8 @@ class CharacterStatus:
     """ 诊疗病人 """
     STATUS_RECRUIT = 208
     """ 招募干员 """
+    STATUS_READ_BOOK = 210
+    """ 读书 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -430,6 +432,8 @@ class Behavior:
     """ 诊疗病人 """
     RECRUIT = 208
     """ 招募干员 """
+    READ_BOOK = 210
+    """ 读书 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302

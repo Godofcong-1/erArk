@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle
-from Script.UI.Panel import see_character_info_panel, see_save_info_panel, normal_panely
+from Script.UI.Panel import normal_panel, see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -285,7 +285,8 @@ def handle_borrow_book():
     })
 def handle_read_book():
     """处理读书指令"""
-    cache.now_panel_id = constant.Panel.BORROW_BOOK
+    now_draw = normal_panel.Read_Book_Panel(width)
+    now_draw.draw()
 
 
 @add_instruct(
@@ -1111,7 +1112,7 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     h_flag = False
-    now_draw = normal_panely.Close_Door_Panel(width)
+    now_draw = normal_panel.Close_Door_Panel(width)
     if now_draw.draw():
         if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
             h_flag = True

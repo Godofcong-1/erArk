@@ -2982,6 +2982,72 @@ def handle_recruit_add_just(
     character_behavior.update_recruit()
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
+def handle_read_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （读书用）根据书的不同对发起者(如果有的话再加上交互对象)获得对应的知识
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    book_id = character_data.behavior.book_id
+    book_data = game_config.config_book[book_id]
+    book_type = book_data.type
+    experience_index_set = set()
+    experience_index_set.add(92)
+    # 技能书籍的额外经验增长
+    if book_type == 11:
+        experience_index_set.add(80)
+    elif book_type == 12:
+        experience_index_set.add(87)
+    elif book_type == 13:
+        experience_index_set.add(81)
+    elif book_type == 14:
+        experience_index_set.add(83)
+    elif book_type == 15:
+        experience_index_set.add(85)
+    elif book_type == 16:
+        experience_index_set.add(82)
+    elif book_type == 17:
+        experience_index_set.add(88)
+    elif book_type == 18:
+        experience_index_set.add(89)
+    elif book_type == 19:
+        experience_index_set.add(90)
+    elif book_type == 20:
+        experience_index_set.add(91)
+    # 色情书籍额外加色情阅读经验
+    elif 31 <= book_type <= 59:
+        experience_index_set.add(93)
+
+    # 遍历集合增加对应经验
+    for experience_index in experience_index_set:
+        character_data.experience[experience_index] += 1
+        change_data.experience.setdefault(experience_index, 0)
+        change_data.experience[experience_index] += 1
+        # 如果有交互对象，则交互对象也加
+        if character_data.target_character_id != character_id:
+            target_data.experience[experience_index] += 1
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.experience.setdefault(experience_index, 0)
+            target_change.experience[experience_index] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
         character_id: int,

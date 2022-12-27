@@ -492,6 +492,10 @@ class Behavior:
         """ 前提结算用:内裤名字 """
         self.socks_name: str = ""
         """ 前提结算用:袜子名字 """
+        self.book_id: int = 0
+        """ 前提结算用:书籍id """
+        self.book_name: str = ""
+        """ 前提结算用:书籍名字 """
 
 
 class Chara_Event:
