@@ -3,7 +3,7 @@ from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import character
+from Script.Design import basement
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -38,9 +38,14 @@ class Department_Panel:
         """绘制对象"""
 
         title_text = "部门运作情况"
-        department_type_list = [_("部门总概况"),_("医疗部"),_("文职部"),_("宿舍")]
+        department_type_list = [_("部门总概况"),_("医疗部"),_("文职部"),_("宿舍"),_("图书馆")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        # 进行一轮刷新
+        basement.update_work_people()
+        basement.update_facility_people()
+
         while 1:
             return_list = []
             title_draw.draw()
@@ -82,13 +87,15 @@ class Department_Panel:
                 all_info_text = "\n当前全部门总情况："
 
                 # 统计各部门岗位的工作干员数量
-                doctor_now,HR_now = cache.base_resouce.doctor_now,cache.base_resouce.HR_now
-                doctor_all,HR_all = len(cache.base_resouce.doctor_id_set), len(cache.base_resouce.HR_id_set)
+                doctor_now,doctor_all = cache.base_resouce.doctor_now,len(cache.base_resouce.doctor_id_set)
+                HR_now,HR_all = cache.base_resouce.HR_now, len(cache.base_resouce.HR_id_set)
+                library_manager_now,library_manager_all = cache.base_resouce.library_manager_now, len(cache.base_resouce.library_manager_set)
                 work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
 
                 all_info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
-                all_info_text += f"\n  医疗部：{doctor_now}/{doctor_all}\n"
-                all_info_text += f"\n  文职部：{HR_now}/{HR_all}\n"
+                all_info_text += f"\n  医疗部：{doctor_now}/{doctor_all}"
+                all_info_text += f"\n  文职部：{HR_now}/{HR_all}"
+                all_info_text += f"\n  图书馆：{library_manager_now}/{library_manager_all}\n"
 
                 # 收入
                 all_income = str(cache.base_resouce.all_income)
@@ -118,7 +125,7 @@ class Department_Panel:
                 medical_info_text = "\n当前医疗部门情况："
                 patient_cured,patient_now = str(cache.base_resouce.patient_cured),str(cache.base_resouce.patient_now)
                 medical_info_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
-                medical_info_text += f"\n  当前正在坐诊的医生有："
+                medical_info_text += f"\n  当前正在坐诊的医生："
                 doctor_name_str = ""
                 for npc_id in cache.base_resouce.doctor_id_set:
                     npc_name = cache.character_data[npc_id].name
@@ -146,7 +153,7 @@ class Department_Panel:
                 for i in {0,1,2}:
                     if i in cache.base_resouce.recruit_now:
                         civil_info_text += f"\n  {i+1}号招募位进度：{round(cache.base_resouce.recruit_now[0],1)}%/100%"
-                civil_info_text += f"\n  当前正在进行招募工作的人事有："
+                civil_info_text += f"\n  当前正在进行招募工作的人事："
                 HR_name_str = ""
                 for npc_id in cache.base_resouce.HR_id_set:
                     npc_name = cache.character_data[npc_id].name
@@ -161,6 +168,28 @@ class Department_Panel:
                 civil_info_draw.width = self.width
                 now_draw.draw_list.append(civil_info_draw)
                 now_draw.width += len(civil_info_draw.text)
+
+            elif self.now_panel == "图书馆":
+
+                library_info_draw = draw.NormalDraw()
+                library_info_text = "\n当前图书馆部门情况："
+
+                reader_count = cache.base_resouce.reader_now
+                library_info_text += f"\n  当前读者人数：{reader_count} 人"
+                library_info_text += f"\n  当前正在工作的管理员："
+                manager_name_str = ""
+                for npc_id in cache.base_resouce.library_manager_set:
+                    npc_name = cache.character_data[npc_id].name
+                    manager_name_str += f" {npc_name}"
+                if len(manager_name_str):
+                    library_info_text += manager_name_str
+                else:
+                    library_info_text += " 暂无"
+
+                library_info_draw.text = library_info_text
+                library_info_draw.width = self.width
+                now_draw.draw_list.append(library_info_draw)
+                now_draw.width += len(library_info_draw.text)
 
             elif self.now_panel == "宿舍":
 
@@ -226,6 +255,7 @@ class Department_Panel:
         handle_leisure_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
         handle_doctor_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
         handle_HR_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
+        handle_library_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
 
         while 1:
             line = draw.LineDraw("-", self.width)
@@ -269,6 +299,16 @@ class Department_Panel:
             handle_HR_panel.update()
             handle_HR_panel.draw()
             return_list.extend(handle_HR_panel.return_list)
+
+
+            # 图书馆
+            info_text = f"\n  图书馆："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_library_panel.text_list = list(cache.base_resouce.library_manager_set)
+            handle_library_panel.update()
+            handle_library_panel.draw()
+            return_list.extend(handle_library_panel.return_list)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -343,6 +383,8 @@ class ChangeWorkButtonList:
                 info_text += "坐诊(医疗部)"
             elif target_data.work.work_type == 71:
                 info_text += "招募(文职部)"
+            elif target_data.work.work_type == 101:
+                info_text += "图书馆管理员(图书馆)"
             else:
                 info_text += "无"
             info_text += "\n 可指派的新工作有：\n"
@@ -358,7 +400,7 @@ class ChangeWorkButtonList:
                     work_describe = game_config.config_work_type[cid].describe
 
                     button_draw = draw.LeftButton(
-                        f"[{work_cid}]{work_name}({work_place})：{work_describe}",
+                        f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})：{work_describe}",
                         f"\n{work_cid}",
                         window_width ,
                         cmd_func=self.select_new_work,
@@ -385,4 +427,4 @@ class ChangeWorkButtonList:
         """赋予新的工作id"""
         target_data: game_type.Character = cache.character_data[self.NPC_id]
         target_data.work.work_type = work_id
-        character.update_work_people()
+        basement.update_work_people()

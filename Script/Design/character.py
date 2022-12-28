@@ -401,10 +401,12 @@ def update_work_people():
     """
     from Script.Design import handle_premise
 
-    cache.base_resouce.doctor_now += 1
+    cache.base_resouce.doctor_now = 0
     cache.base_resouce.doctor_id_set = set()
-    cache.base_resouce.HR_now += 1
+    cache.base_resouce.HR_now = 0
     cache.base_resouce.HR_id_set = set()
+    cache.base_resouce.library_manager_now = 0
+    cache.base_resouce.library_manager_set = set()
     cache.base_resouce.work_people_now = 0
 
     cache.npc_id_got.discard(0)
@@ -422,4 +424,10 @@ def update_work_people():
             cache.base_resouce.HR_id_set.add(id)
             if handle_premise.handle_in_hr_office(id):
                 cache.base_resouce.HR_now += 1
+                cache.base_resouce.work_people_now += 1
+        # 图书馆管理员统计
+        elif character_data.work.work_type == 101:
+            cache.base_resouce.library_manager_set.add(id)
+            if handle_premise.handle_in_library_office(id) or handle_premise.handle_in_library(id):
+                cache.base_resouce.library_manager_now += 1
                 cache.base_resouce.work_people_now += 1

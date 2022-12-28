@@ -645,8 +645,14 @@ class Base_resouce:
         """ HR干员id合集 """
 
         # 图书档案区
+        self.library_manager_now: int = 0
+        """ 当前工作中的图书馆管理员数量 """
+        self.library_manager_set: Set = set()
+        """ 图书馆管理员干员id合集 """
         self.book_borrow_dict: Dict[int, int] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
+        self.reader_now: int = 0
+        """ 当前图书馆中的读者数量 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """

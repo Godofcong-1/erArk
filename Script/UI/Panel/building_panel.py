@@ -3,7 +3,7 @@ from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle,attr_text,attr_calculation
+from Script.Design import basement,attr_text,attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -290,7 +290,7 @@ class Building_Panel:
             # 寻找和当前设施名一样的
             if facility_data.name == facility_data_now.name:
                 cache.base_resouce.facility_level[all_cid] += 1
-                attr_calculation.get_base_updata()
+                basement.get_base_updata()
 
                 # 输出提示信息
                 line = draw.LineDraw("-", self.width)

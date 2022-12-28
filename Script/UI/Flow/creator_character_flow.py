@@ -11,6 +11,7 @@ from Script.Design import (
     cooking,
     map_handle,
     attr_calculation,
+    basement,
 )
 from Script.UI.Moudle import panel, draw
 from Script.UI.Panel import see_character_info_panel,assistant_panel
@@ -64,7 +65,7 @@ def game_start():
     map_handle.character_move_scene(["0","0"], character_position, 0)
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
-    attr_calculation.get_base_updata()
+    basement.get_base_updata()
 
 def confirm_game_info_panel():
     """确认游戏说明面板"""
