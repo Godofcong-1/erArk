@@ -1,5 +1,5 @@
 from turtle import position
-from typing import Tuple, List
+from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
@@ -200,8 +200,9 @@ class Department_Panel:
                 dormitory_info_text += f"\n  具体居住情况："
                 doctor_name_str = ""
                 live_npc_id_set = cache.npc_id_got.copy()
+                Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
                 # 遍历所有宿舍
-                for dormitory_place in constant.place_data["Dormitory"]:
+                for dormitory_place in Dormitory_all:
                     count = 0
                     tem_remove_id_set = set() # 用来保存需要删除id的临时set
                     dormitory_name = dormitory_place.split("\\")[-1]
