@@ -295,7 +295,7 @@ def character_move_to_clinic(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
 def character_move_to_hr_office(character_id: int):
     """
-    随机移动到人事部办公室
+    移动到人事部办公室
     Keyword arguments:
     character_id -- 角色id
     """
@@ -306,6 +306,46 @@ def character_move_to_hr_office(character_id: int):
         random.choice(constant.place_data["HR_office"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_hr_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_LIBRARY_OFFICE)
+def character_move_to_library_office(character_id: int):
+    """
+    移动到图书馆办公室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_library_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Library_office"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_library_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_LIBRARY)
+def character_move_to_library(character_id: int):
+    """
+    移动到图书馆
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_library = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Library"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_library)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time

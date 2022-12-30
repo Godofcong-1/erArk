@@ -706,7 +706,11 @@ class StateMachine:
     MOVE_TO_CLINIC = 22
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_HR_OFFICE = 23
-    """ 随机移动到人事部办公室 """
+    """ 移动到人事部办公室 """
+    MOVE_TO_LIBRARY_OFFICE = 24
+    """ 移动到图书馆办公室 """
+    MOVE_TO_LIBRARY = 25
+    """ 移动到图书馆 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
     MOVE_TO_BATH_ROOM = 33

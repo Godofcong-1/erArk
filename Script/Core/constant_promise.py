@@ -933,6 +933,8 @@ class Premise:
     """ 属性_工作 自己的工作为医生 """
     WORK_IS_HR = "work_is_hr"
     """ 属性_工作 自己的工作为人事 """
+    WORK_IS_LIBRARY_MANAGER = "work_is_library_manager"
+    """ 属性_工作 自己的工作为图书馆管理员 """
 
     WEAR_BRA = "wear_bra"
     """ 属性_服装 穿着胸衣 """
