@@ -199,18 +199,30 @@ class Department_Panel:
                 dormitory_info_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.base_resouce.people_max}"
                 dormitory_info_text += f"\n  具体居住情况："
                 doctor_name_str = ""
+                live_npc_id_set = cache.npc_id_got.copy()
+                # 遍历所有宿舍
                 for dormitory_place in constant.place_data["Dormitory"]:
                     count = 0
+                    tem_remove_id_set = set() # 用来保存需要删除id的临时set
                     dormitory_name = dormitory_place.split("\\")[-1]
                     dormitory_son_text = f"\n    {dormitory_name}："
-                    for npc_id in cache.npc_id_got:
+                    # 遍历角色id
+                    for npc_id in live_npc_id_set:
                         live_dormitory = cache.character_data[npc_id].dormitory
+                        # 如果该角色住在该宿舍，则在text中加入名字信息
                         if live_dormitory == dormitory_place:
                             dormitory_son_text += f"{cache.character_data[npc_id].name}  "
                             count += 1
+                            tem_remove_id_set.add(npc_id)
+                        # 宿舍满2人则中断循环
                         if count >= 2:
-                            dormitory_info_text += dormitory_son_text
                             break
+                    # 在id集合中删掉本次已经出现过的id
+                    for npc_id in tem_remove_id_set:
+                        live_npc_id_set.discard(npc_id)
+                    # 宿舍有人则显示该宿舍
+                    if count:
+                        dormitory_info_text += dormitory_son_text
                 dormitory_info_text += "\n"
 
                 dormitory_info_draw.text = dormitory_info_text
