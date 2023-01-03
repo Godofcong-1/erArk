@@ -102,6 +102,7 @@ class Close_Door_Panel:
                     return 1
                 return 0
 
+
 class Read_Book_Panel:
     """
     用于读书的面板对象

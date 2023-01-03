@@ -20,6 +20,7 @@ from Script.UI.Panel import (
     event_option_panel,
     check_locker_panel,
     borrow_book_panel,
+    manage_library,
 )
 from Script.Config import normal_config
 
@@ -157,4 +158,11 @@ def check_locker_flow():
 def borrow_book_flow():
     """借阅书籍面板"""
     now_panel = borrow_book_panel.Borrow_Book_Panel(width)
+    now_panel.draw()
+
+
+@handle_panel.add_panel(constant.Panel.MANAGE_LIBRARY)
+def manage_library_flow():
+    """图书馆管理面板"""
+    now_panel = manage_library.Manage_Library_Panel(width)
     now_panel.draw()

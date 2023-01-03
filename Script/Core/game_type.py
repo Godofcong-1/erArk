@@ -420,6 +420,16 @@ class CHARA_WORK:
         """ 角色当前正在工作的招募位 """
 
 
+class CHARA_ENTERTAINMENT:
+    """角色的娱乐信息结构体"""
+
+    def __init__(self):
+        self.entertainment_type: int = 0
+        """ 角色娱乐活动的类型 """
+        self.book_return_possibility: int = 0
+        """ 角色归还当前阅读书籍的可能性比例 """
+
+
 class PLAYER_COLLECTION:
     """玩家收集品结构体"""
 
@@ -853,6 +863,8 @@ class Character:
         """ 角色停止移动 """
         self.work: CHARA_WORK = CHARA_WORK()
         """ 角色的工作情况 """
+        self.entertainment: CHARA_ENTERTAINMENT = CHARA_ENTERTAINMENT()
+        """ 角色的娱乐情况 """
 
 
 class Cache:

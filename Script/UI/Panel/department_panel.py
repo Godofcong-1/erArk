@@ -288,6 +288,7 @@ class Department_Panel:
                 if (
                     id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
+                    and id not in cache.base_resouce.library_manager_set
                 ):
                     leisure_list.append(id)
             handle_leisure_panel.text_list = leisure_list

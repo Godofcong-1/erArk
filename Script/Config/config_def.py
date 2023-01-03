@@ -177,6 +177,23 @@ class Collection_bouns:
     """ 奖励信息 """
 
 
+class Entertainment:
+    """ 娱乐模板 """
+
+    cid: int
+    """ 模板id """
+    name: str
+    """ 娱乐名 """
+    behavior_id: str
+    """ 娱乐行动id """
+    palce: str
+    """ 娱乐地点 """
+    tag: int
+    """ 标签 """
+    describe: str
+    """ 描述 """
+
+
 class Experience:
     """ 经验名字 """
 

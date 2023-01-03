@@ -36,6 +36,13 @@ def get_work_zero() -> dict:
     work_data = game_type.CHARA_WORK()
     return work_data
 
+def get_entertainment_zero() -> dict:
+    """
+    初始化娱乐结构体
+    """
+    entertainment_data = game_type.CHARA_ENTERTAINMENT()
+    return entertainment_data
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0

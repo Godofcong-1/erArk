@@ -50,6 +50,7 @@ def init_attr(character_id: int):
     character_data.action_info = attr_calculation.get_action_info_state_zero()
     character_data.event = attr_calculation.get_event_zero()
     character_data.work = attr_calculation.get_work_zero()
+    character_data.entertainment = attr_calculation.get_entertainment_zero()
 
     # 主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
     if character_id == 0:

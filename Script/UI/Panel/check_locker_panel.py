@@ -200,7 +200,7 @@ class FindDraw:
             button3_text = f"[004]用衣服冲，射在上面"
             button3_draw = draw.LeftButton(
                 _(button3_text),
-                _("3"),
+                _("4"),
                 window_width,
                 cmd_func=self.shoot_in_cloth,
                 args=(),

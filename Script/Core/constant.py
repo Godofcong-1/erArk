@@ -873,6 +873,8 @@ class Panel:
     """ 检查衣柜面板 """
     BORROW_BOOK = 20
     """ 借阅书籍面板 """
+    MANAGE_LIBRARY = 21
+    """ 图书馆管理面板 """
 
 
 class SecondBehavior:
@@ -1331,6 +1333,8 @@ class Instruct:
     """ 借阅书籍 """
     READ_BOOK = 0
     """ 读书 """
+    MANAGE_LIBRARY = 0
+    """ 管理图书馆 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

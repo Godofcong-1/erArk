@@ -290,6 +290,21 @@ def handle_read_book():
 
 
 @add_instruct(
+    constant.Instruct.MANAGE_LIBRARY,
+    constant.InstructType.WORK,
+    _("管理图书馆"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.SLEEP_LE_89,
+        constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE,
+        constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER,
+    })
+def handle_manage_library():
+    """处理管理图书馆指令"""
+    cache.now_panel_id = constant.Panel.MANAGE_LIBRARY
+
+
+@add_instruct(
     constant.Instruct.SEE_DEPARTMENT,
     constant.InstructType.WORK,
     _("查看部门运作情况"),

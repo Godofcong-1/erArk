@@ -971,6 +971,42 @@ def handle_not_in_library_office(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE)
+def handle_in_library_or_library_office(character_id: int) -> int:
+    """
+    校验角色是否在图书馆或图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIBRARY_OR_LIBRARY_OFFICE)
+def handle_not_in_library_or_library_office(character_id: int) -> int:
+    """
+    校验角色是否不在图书馆或图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_BATHZONE_LOCKER_ROOM)
 def handle_in_bathzone_locker_room(character_id: int) -> int:
     """
@@ -4416,6 +4452,20 @@ def handle_work_is_library_manager(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 101
+
+
+@add_premise(constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER)
+def handle_t_work_is_library_manager(character_id: int) -> int:
+    """
+    交互对象的工作为图书馆管理员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.work.work_type == 101
 
 
 @add_premise(constant_promise.Premise.WORK_IS_HR)
