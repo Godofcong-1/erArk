@@ -141,6 +141,23 @@ def handle_work_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ENTERTAINMENT_TIME)
+def handle_entertainment_time(character_id: int) -> int:
+    """
+    娱乐时间（下午5:00~晚上9:59）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if 17 <= character_data.behavior.start_time.hour < 22:
+        return 50
+    return 0
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
@@ -717,6 +734,24 @@ def handle_in_library(character_id: int) -> int:
     if "Library" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIBRARY)
+def handle_not_in_library(character_id: int) -> int:
+    """
+    校验角色是否不在图书馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.IN_COLLECTION_ROOM)
@@ -4479,6 +4514,19 @@ def handle_work_is_hr(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 71
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
+def handle_entertainment_is_read(character_id: int) -> int:
+    """
+    自己的娱乐为读书
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 101
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)

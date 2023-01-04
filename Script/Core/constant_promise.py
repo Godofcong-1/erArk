@@ -234,6 +234,8 @@ class Premise:
     """ 地点_定位 在音乐室中 """
     IN_LIBRARY = "in_library"
     """ 地点_定位 在图书馆中 """
+    NOT_IN_LIBRARY = "not_in_library"
+    """ 地点_定位 不在图书馆中 """
     IN_COLLECTION_ROOM = "in_collection_room"
     """ 地点_定位 在藏品馆中 """
     IN_GYM_ROOM = "in_gym_room"
@@ -319,6 +321,8 @@ class Premise:
     """ 时间_当前 困倦条≥75%或到了睡觉的时间 """
     WORK_TIME = "work_time"
     """ 时间_当前 工作时间（早上9:00~下午4:59） """
+    ENTERTAINMENT_TIME = "entertainment_time"
+    """ 时间_当前 娱乐时间（下午5:00~晚上9:59） """
 
     IS_ASSISTANT = "is_assistant"
     """ 属性_助理与跟随 自己是当前的助理干员 """
@@ -941,6 +945,9 @@ class Premise:
     """ 属性_工作 自己的工作为图书馆管理员 """
     T_WORK_IS_LIBRARY_MANAGER = "t_work_is_library_manager"
     """ 属性_工作 交互对象的工作为图书馆管理员 """
+
+    ENTERTAINMENT_IS_READ = "entertainment_is_read"
+    """ 属性_娱乐 自己的娱乐为读书 """
 
     WEAR_BRA = "wear_bra"
     """ 属性_服装 穿着胸衣 """

@@ -598,6 +598,9 @@ def update_sleep():
             character_data.action_info.h_interrupt = 0
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
+            # 随机当天的娱乐活动
+            entertainment_list = [i for i in game_config.config_entertainment]
+            character_data.entertainment.entertainment_type = random.choice(entertainment_list)
 
     # 非角色部分
     update_save()

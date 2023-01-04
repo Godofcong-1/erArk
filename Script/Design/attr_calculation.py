@@ -41,6 +41,9 @@ def get_entertainment_zero() -> dict:
     初始化娱乐结构体
     """
     entertainment_data = game_type.CHARA_ENTERTAINMENT()
+    entertainment_list = [i for i in game_config.config_entertainment]
+    entertainment_data.entertainment_type = random.choice(entertainment_list)
+
     return entertainment_data
 
 def get_status_zero(status_dict) -> dict:

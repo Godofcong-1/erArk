@@ -184,7 +184,7 @@ class Entertainment:
     """ 模板id """
     name: str
     """ 娱乐名 """
-    behavior_id: str
+    behavior_id: int
     """ 娱乐行动id """
     palce: str
     """ 娱乐地点 """

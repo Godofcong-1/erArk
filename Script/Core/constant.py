@@ -765,6 +765,9 @@ class StateMachine:
     WORK_RECRUIT = 302
     """ 工作：招募干员 """
 
+    ENTERTAIN_READ = 401
+    """ 娱乐：读书 """
+
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
