@@ -426,6 +426,8 @@ class CHARA_ENTERTAINMENT:
     def __init__(self):
         self.entertainment_type: int = 0
         """ 角色娱乐活动的类型 """
+        self.borrow_book_id_set: set = set()
+        """ 借的书的id """
         self.book_return_possibility: int = 0
         """ 角色归还当前阅读书籍的可能性比例 """
 

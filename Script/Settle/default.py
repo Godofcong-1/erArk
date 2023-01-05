@@ -12,7 +12,7 @@ from Script.Design import (
     attr_text,
     handle_instruct,
     character_behavior,
-    character_move,
+    basement,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -2990,7 +2990,7 @@ def handle_read_add_adjust(
         now_time: datetime.datetime,
 ):
     """
-    （读书用）根据书的不同对发起者(如果有的话再加上交互对象)获得对应的知识
+    （读书用）根据书的不同对发起者(如果有的话再加上交互对象)获得对应的知识，并进行NPC的还书判定
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3047,6 +3047,11 @@ def handle_read_add_adjust(
             target_change.experience.setdefault(experience_index, 0)
             target_change.experience[experience_index] += 1
 
+    # NPC的还书判定
+    if character_id:
+        return_rate = 20 + random.randint(1,20)
+        character_data.entertainment.book_return_possibility += return_rate
+        basement.check_return_book(character_id)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(

@@ -67,3 +67,4 @@ ai的目标,,,
 307,24,not_assistant|work_is_library_manager|not_follow|work_time|not_in_library_or_library_office,非助理，工作为图书馆管理员，不在跟随模式下，在工作时间如果不在图书馆或图书馆办公室，则去图书馆办公室
 
 401,25,not_assistant|not_follow|entertainment_time|entertainment_is_read|not_in_library,非助理，不在跟随模式下，下班娱乐时间，娱乐是读书，不在图书馆，则去图书馆
+402,401,not_assistant|not_follow|entertainment_time|entertainment_is_read|in_library,非助理，不在跟随模式下，下班娱乐时间，娱乐是读书，在图书馆，则读书

@@ -37,8 +37,6 @@ class Borrow_Book_Panel:
     def draw(self):
         """绘制对象"""
 
-        character_data: game_type.Character = cache.character_data[0]
-
         title_text = "借阅书籍"
         book_father_type_list = [_("技能类书籍"), _("娱乐类书籍"), _("色情类书籍")]
 
@@ -99,6 +97,7 @@ class Borrow_Book_Panel:
                         book_data = game_config.config_book[book_cid]
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
+                        button_flag = True
                         if cache.base_resouce.book_borrow_dict[book_cid] == -1:
                             book_text += "  (可借阅)"
                             book_style = "standard"
@@ -111,17 +110,25 @@ class Borrow_Book_Panel:
                             borrow_npc_name = cache.character_data[borrow_npc_id].name
                             book_text += f"  (已被{borrow_npc_name}借走)"
                             book_style = "nullcmd"
+                            button_flag = False
 
-                        button_draw = draw.LeftButton(
-                            _(book_text),
-                            _(str(book_count)),
-                            self.width,
-                            normal_style = book_style,
-                            cmd_func=self.borrow,
-                            args=(book_cid,),
-                            )
+                        if button_flag:
+                            button_draw = draw.LeftButton(
+                                _(book_text),
+                                _(str(book_count)),
+                                self.width,
+                                normal_style = book_style,
+                                cmd_func=self.borrow,
+                                args=(book_cid,),
+                                )
+                            return_list.append(button_draw.return_text)
+                        else:
+                            button_draw = draw.NormalDraw()
+                            button_draw.text = book_text
+                            button_draw.width = self.width
+                            button_draw.style = book_style
+
                         # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
-                        return_list.append(button_draw.return_text)
                         now_draw.draw_list.append(button_draw)
                         now_draw.width += len(button_draw.text)
                         now_draw.draw_list.append(line_feed)
@@ -170,16 +177,20 @@ class Borrow_Book_Panel:
         facility_cid -- 建筑效果编号
         """
 
-        # 当前借书数量限制信息
-        borrow_count = 0
-        for book_id in cache.base_resouce.book_borrow_dict:
-            if cache.base_resouce.book_borrow_dict[book_id] == 0:
-                borrow_count += 1
+        character_data: game_type.Character = cache.character_data[0]
 
+        # 当前借书数量限制信息
+        borrow_count = len(character_data.entertainment.borrow_book_id_set)
+
+        # 如果已借该书，则还书
         if cache.base_resouce.book_borrow_dict[book_cid] == 0:
             cache.base_resouce.book_borrow_dict[book_cid] = -1
+            character_data.entertainment.borrow_book_id_set.discard(book_cid)
+        # 未借该书，且借书数量不到上限，则借书
         elif borrow_count < 3:
             cache.base_resouce.book_borrow_dict[book_cid] = 0
+            character_data.entertainment.borrow_book_id_set.add(book_cid)
+        # 未借该书，且借书数量已达上限，则输出错误信息
         else:
             borrow_limit_draw = draw.WaitDraw()
             borrow_limit_text = f"\n已达到最大借书上限，无法继续借阅\n"

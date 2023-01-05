@@ -118,3 +118,47 @@ def update_facility_people():
         # 图书馆读者统计
         if handle_premise.handle_in_library(id):
             cache.base_resouce.reader_now += 1
+
+def check_random_borrow_book(character_id):
+    """
+    检查角色是否有借书，有的话跳过，没有的话随机借一本书
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 已借书则跳过
+    if len(character_data.entertainment.borrow_book_id_set):
+        return 1
+    # 未借书则随机借书
+    else:
+        # 遍历获得所有没借的书id
+        book_id_set = []
+        for book_id in cache.base_resouce.book_borrow_dict:
+            if cache.base_resouce.book_borrow_dict[book_id] == -1:
+                book_id_set.append(book_id)
+        # 开始借书
+        borrow_book_id = random.choice(book_id_set)
+        cache.base_resouce.book_borrow_dict[borrow_book_id] = character_id
+        character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
+        print(f"debug {character_data.name}借了书{borrow_book_id}")
+        return 0
+
+def check_return_book(character_id):
+    """
+    检查并决定是否归还当前书籍
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 未借书则跳过
+    if len(character_data.entertainment.borrow_book_id_set) == 0:
+        return 0
+    # 已借书则d100和还书概率比大小
+    else:
+        return_d100 = random.randint(1,100)
+        # 小于还书概率则还书
+        # print(f"debug return_d100 = {return_d100},book_return_possibility = {character_data.entertainment.book_return_possibility}")
+        if return_d100 < character_data.entertainment.book_return_possibility:
+            for book_id in character_data.entertainment.borrow_book_id_set:
+                cache.base_resouce.book_borrow_dict[book_id] = -1
+                character_data.entertainment.borrow_book_id_set.discard(book_id)
+                # print(f"debug {character_data.name}还了书{book_id}")
+                return 1

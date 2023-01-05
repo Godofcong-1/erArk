@@ -107,6 +107,7 @@ def handle_talk(character_id: int):
             MakeFoodTime=character_data.behavior.make_food_time,
             Name=character_data.name,
             SceneName=scene_name,
+            book_name = character_data.behavior.book_name,
             PlayerNickName=player_data.nick_name,
             TargetName=target_data.name,
             TagetBraName=TBraName,

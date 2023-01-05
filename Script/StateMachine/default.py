@@ -2,7 +2,7 @@ import datetime
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement
 from Script.Core import cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -892,6 +892,27 @@ def character_work_recruit(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.RECRUIT
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_RECRUIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
+def character_entertain_read(character_id: int):
+    """
+    角色娱乐：读书
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 检查是否要借书
+    basement.check_random_borrow_book(character_id)
+
+    for book_id_all in character_data.entertainment.borrow_book_id_set:
+        book_id = book_id_all
+    book_data = game_config.config_book[book_id]
+    character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
+    character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
+    character_data.behavior.book_id = book_id
+    character_data.behavior.book_name = book_data.name
+    character_data.behavior.duration = 30
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS)

@@ -132,10 +132,7 @@ class Read_Book_Panel:
             title_draw.draw()
 
             # 当前借书数量信息
-            book_id_set = set()
-            for book_id in cache.base_resouce.book_borrow_dict:
-                if cache.base_resouce.book_borrow_dict[book_id] == 0:
-                    book_id_set.add(book_id)
+            book_id_set = character_data.entertainment.borrow_book_id_set
 
             # 如果未借书的话直接输出提示信息
             if len(book_id_set) == 0:
@@ -144,6 +141,7 @@ class Read_Book_Panel:
                 info_draw.text = borrow_limit_text
                 info_draw.width = self.width
                 info_draw.draw()
+            # 已借书则遍历输出按钮
             else:
                 for book_id in book_id_set:
                     book_data = game_config.config_book[book_id]
