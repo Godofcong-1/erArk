@@ -624,6 +624,8 @@ class Base_resouce:
         """ 干员人数上限 """
         self.all_income: int = 0
         """ 今日全部门总收入 """
+        self.party_day_of_week: Dict[int, int] = {}
+        """ 一周内的派对计划，周一0~周日6:娱乐id """
 
         self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """

@@ -66,7 +66,7 @@ class Manage_Library_Panel:
             return_list.append(button0_draw.return_text)
 
             if 1:
-                button1_text = f"[002]图书进货"
+                button1_text = f"[002]图书进货(未实装)"
                 button1_draw = draw.LeftButton(
                     _(button1_text),
                     _("2"),
@@ -222,10 +222,69 @@ class Manage_Library_Panel:
     def reading_party(self):
         """读书会"""
 
-        now_draw = draw.WaitDraw()
-        now_draw.width = window_width
-        now_draw.text = _(f"\n暂未实装\n")
-        now_draw.draw()
+        while 1:
+            return_list = []
+            line_feed.draw()
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+
+            # 提示信息
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = _(f"\n  要把哪一天定为读书会呢？\n")
+            now_draw.draw()
+
+            # 遍历一周七天
+            for i in range(7):
+                week_date_data = game_config.config_week_day[i]
+                button_text = f"  [{i}]:{week_date_data.name}"
+                party_entertain_id = cache.base_resouce.party_day_of_week[i]
+                if party_entertain_id:
+                    button_text += f" ({game_config.config_entertainment[party_entertain_id].name})"
+
+                button_draw = draw.LeftButton(
+                    _(button_text),
+                    _(str(i)),
+                    self.width,
+                    cmd_func=self.choice_read_party,
+                    args=(i,),
+                    )
+                # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
+                line_feed.draw()
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+
+            # 在非页面切换时退出面板
+            if yrn == back_draw.return_text:
+                break
+
+    def choice_read_party(self,week_day):
+        """选择读书会之日"""
+
+        party_entertain_id = cache.base_resouce.party_day_of_week[week_day]
+
+        if party_entertain_id == 101:
+            cache.base_resouce.party_day_of_week[week_day] = 0
+        elif party_entertain_id:
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = _(f"\n这一天已经被选为其他活动了\n")
+            now_draw.draw()
+        else:
+            # 先取消掉其他日子可能有的读书会
+            for i in range(7):
+                party_entertain_all_id = cache.base_resouce.party_day_of_week[i]
+                if party_entertain_all_id == 101:
+                    cache.base_resouce.party_day_of_week[i] = 0
+
+            # 再把指定日子变成读书会
+            cache.base_resouce.party_day_of_week[week_day] = 101
 
 
 class SelectRecommendBookButton:

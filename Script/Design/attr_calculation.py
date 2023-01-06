@@ -289,6 +289,10 @@ def get_base_zero() -> dict:
         # 全书籍设为未借出
         base_data.book_borrow_dict[book_id] = -1
 
+    # 派对设为空
+    for i in range(7):
+        base_data.party_day_of_week[i] = 0
+
     return base_data
 
 
