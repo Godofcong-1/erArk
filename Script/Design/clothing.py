@@ -20,13 +20,13 @@ def get_npc_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
         tem_character = cache.npc_tem_data[character_id]
 
         for cloth_id in tem_character.Cloth:
             type = game_config.config_clothing_tem[cloth_id].clothing_type
             # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-            character_data.cloth[type].append(cloth_id)
+            character_data.cloth.cloth_wear[type].append(cloth_id)
         get_underwear(character_id)
 
 def get_underwear(character_id: int):
@@ -75,22 +75,22 @@ def get_underwear(character_id: int):
                     break
 
     # 判断是否当前已经穿了胸衣和内裤
-    if not len(character_data.cloth[6]):
+    if not len(character_data.cloth.cloth_wear[6]):
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
         if character_data.talent[60] or character_data.talent[61]:
             bra_id = random.choice(bra_loli_list)
-            character_data.cloth[6].append(bra_id)
+            character_data.cloth.cloth_wear[6].append(bra_id)
         else:
             bra_id = random.choice(bra_nor_list)
-            character_data.cloth[6].append(bra_id)
+            character_data.cloth.cloth_wear[6].append(bra_id)
 
-    if not len(character_data.cloth[9]):
+    if not len(character_data.cloth.cloth_wear[9]):
         if character_data.talent[60] or character_data.talent[61]:
             pan_id = random.choice(pan_loli_list)
-            character_data.cloth[9].append(pan_id)
+            character_data.cloth.cloth_wear[9].append(pan_id)
         else:
             pan_id = random.choice(pan_nor_list)
-            character_data.cloth[9].append(pan_id)
+            character_data.cloth.cloth_wear[9].append(pan_id)
 
 
 def get_cloth_off(character_id: int):
@@ -103,7 +103,8 @@ def get_cloth_off(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        chara_special_wear_cloth(character_id)
 
 
 def get_shower_cloth(character_id: int):
@@ -116,11 +117,52 @@ def get_shower_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        character_data.cloth = attr_calculation.get_cloth_zero()
-        character_data.cloth[0].append(51)
-        character_data.cloth[5].append(551)
-        character_data.cloth[8].append(851)
+        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        character_data.cloth.cloth_wear[0].append(51)
+        character_data.cloth.cloth_wear[5].append(551)
+        character_data.cloth.cloth_wear[8].append(851)
+        chara_special_wear_cloth(character_id)
 
+
+def get_sleep_cloth(character_id: int):
+    """
+    换上睡衣和内衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        choic_flag = random.randint(0,1)
+        if choic_flag:
+            character_data.cloth.cloth_wear[5].append(552)
+            character_data.cloth.cloth_wear[8].append(852)
+        else:
+            character_data.cloth.cloth_wear[5].append(553)
+            character_data.cloth.cloth_wear[8].append(853)
+        get_underwear(character_id)
+        chara_special_wear_cloth(character_id)
+
+
+def chara_special_wear_cloth(character_id: int):
+    """
+    根据角色设定而穿上必须穿的衣物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        # print(f"debug name = {character_data.name}")
+
+        # 阿米娅必须戴戒指
+        if character_data.adv == 1:
+            if 701 not in character_data.cloth.cloth_wear[7]:
+                character_data.cloth.cloth_wear[7].append(701)
+                # print("换上戒指了")
 
 '''
 不用的旧函数

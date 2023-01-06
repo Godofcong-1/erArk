@@ -29,6 +29,23 @@ def get_event_zero() -> dict:
     event_data = game_type.Chara_Event()
     return event_data
 
+def get_work_zero() -> dict:
+    """
+    初始化工作结构体
+    """
+    work_data = game_type.CHARA_WORK()
+    return work_data
+
+def get_entertainment_zero() -> dict:
+    """
+    初始化娱乐结构体
+    """
+    entertainment_data = game_type.CHARA_ENTERTAINMENT()
+    entertainment_list = [i for i in game_config.config_entertainment]
+    entertainment_data.entertainment_type = random.choice(entertainment_list)
+
+    return entertainment_data
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0
@@ -178,13 +195,53 @@ def get_cloth_zero() -> dict:
     """
     遍历服装类型，将每个都设为空
     """
-
-    cloth_dict = {}
+    coloth_data = game_type.CLOTH()
 
     for clothing_type in game_config.config_clothing_type:
-        cloth_dict[clothing_type] = []
+        coloth_data.cloth_wear[clothing_type] = []
+        coloth_data.cloth_off[clothing_type] = []
+        coloth_data.cloth_locker[clothing_type] = []
 
-    return cloth_dict
+    coloth_data.cloth_see= {6:False,9:False}
+
+    return coloth_data
+
+
+def get_cloth_wear_zero() -> dict:
+    """
+    遍历当前穿着服装类型，将每个都设为空
+    """
+    coloth_wear_data = game_type.CLOTH().cloth_wear
+
+    for clothing_type in game_config.config_clothing_type:
+        coloth_wear_data[clothing_type] = []
+
+    return coloth_wear_data
+
+
+def get_cloth_wear_zero_except_jewellery(character_id: int) -> dict:
+    """
+    遍历当前穿着服装类型，将首饰以外的设为空
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+                # 只要不是首饰，就删掉该服装
+                if game_config.config_clothing_tem[cloth_id].tag != 6:
+                    character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
+
+
+def get_cloth_locker_zero() -> dict:
+    """
+    遍历当前穿着服装类型，将每个都设为空
+    """
+    cloth_locker_data = game_type.CLOTH().cloth_locker
+
+    for clothing_type in game_config.config_clothing_type:
+        cloth_locker_data[clothing_type] = []
+
+    return cloth_locker_data
 
 
 def get_collection_zero() -> dict:
@@ -196,7 +253,7 @@ def get_collection_zero() -> dict:
     for cid in game_config.config_collection_bonus_data:
         collection_data.collection_bonus[cid] = False
 
-    for npc_id in cache.character_data:
+    for npc_id in cache.npc_id_got:
         collection_data.token_list[npc_id] = False
         collection_data.first_panties[npc_id] = ""
         collection_data.npc_panties[npc_id] = []
@@ -219,7 +276,7 @@ def get_base_zero() -> dict:
 
     # 遍历全设施开放
     for all_cid in game_config.config_facility_open:
-        # 全设施等级设为1
+        # 全设施初始关闭
         base_data.facility_open[all_cid] = False
 
     # 遍历全资源清单
@@ -227,71 +284,16 @@ def get_base_zero() -> dict:
         # 全资源数量设为0
         base_data.materials_resouce[all_cid] = 0
 
+    # 遍历全部书籍
+    for book_id in game_config.config_book:
+        # 全书籍设为未借出
+        base_data.book_borrow_dict[book_id] = -1
+
+    # 派对设为空
+    for i in range(7):
+        base_data.party_day_of_week[i] = 0
+
     return base_data
-
-def get_base_updata() -> dict:
-    """
-    遍历基地情况结构体，根据设施等级更新全部数值
-    """
-
-
-    cache.base_resouce.power_use = 0
-
-    # 遍历全设施清单
-    for all_cid in game_config.config_facility:
-        # 全设施等级设为1
-        level = cache.base_resouce.facility_level[all_cid]
-
-        # 累加全设施的用电量
-        facility_name = game_config.config_facility[all_cid].name
-        facility_cid = game_config.config_facility_effect_data[facility_name][level]
-        cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
-
-        # 如果满足设施开放的前提条件，则开放该设施
-        for open_cid in game_config.config_facility_open:
-            if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
-                cache.base_resouce.facility_open[open_cid] = True
-
-    # print(f"debug power_use = {base_data.power_use}")
-
-        # 初始化供电量
-        if facility_name == "动力区":
-            cache.base_resouce.power_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化仓库容量
-        elif facility_name == "仓储区":
-            cache.base_resouce.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
-        # 初始化干员人数上限
-        elif facility_name == "宿舍区":
-            cache.base_resouce.people_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化生活娱乐区设施数量上限
-        elif facility_name == "生活娱乐区":
-            cache.base_resouce.life_zone_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化患者人数上限，并刷新当天患者人数
-        elif facility_name == "医疗部":
-            cache.base_resouce.patient_max = game_config.config_facility_effect[facility_cid].effect
-            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
-        # 初始化科研区设施数量上限
-        elif facility_name == "科研部":
-            cache.base_resouce.research_zone_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化商店数量上限
-        elif facility_name == "贸易区":
-            cache.base_resouce.shop_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化战斗时干员数量上限
-        elif facility_name == "指挥室":
-            cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
-
-
-def get_work_people() -> dict:
-    """
-    遍历基地情况结构体，根据设施等级更新全部数值
-    """
-    from Script.Core import constant
-
-    for Clinic_place in constant.place_data["Clinic"]:
-        if len(cache.scene_data[Clinic_place].character_list):
-            for npc_id in cache.scene_data[Clinic_place].character_list:
-                if npc_id:
-                    cache.base_resouce.work_people_now += 1
 
 
 def get_item_zero(item_dict) -> dict:
@@ -324,8 +326,7 @@ def get_rand_npc_birthday(age: int):
     now_year = cache.game_time.year
     now_month = cache.game_time.month
     now_day = cache.game_time.day
-    birth_year = now_year - int(age)
-    birthday = game_time.get_rand_day_for_year(birth_year)
+    birthday = game_time.get_rand_day_for_year(now_year)
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)
     return birthday

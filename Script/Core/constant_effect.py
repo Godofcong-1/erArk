@@ -32,6 +32,10 @@ class BehaviorEffect:
     """ 属性_基础 增加基础互动好感 """
     ADD_SMALL_TRUST = 22
     """ 属性_基础 增加基础互动信赖 """
+    DOWN_INTERACTION_FAVORABILITY = 23
+    """ 属性_基础 降低基础互动好感 """
+    DOWN_SMALL_TRUST = 24
+    """ 属性_基础 降低基础互动信赖 """
     NOT_TIRED = 31
     """ 属性_基础 从疲劳中恢复 """
     URINATE_POINT_DOWN = 32
@@ -72,7 +76,7 @@ class BehaviorEffect:
     TARGET_ADD_SMALL_HAPPY = 55
     """ 属性_状态 交互对象增加少量快乐（快乐刻印补正） """
     TARGET_ADD_SMALL_LEAD = 56
-    """ 属性_状态 交互对象增加少量先导（受虐补正） """
+    """ 属性_状态 交互对象增加少量先导（施虐补正） """
     TARGET_ADD_SMALL_SUBMIT = 57
     """ 属性_状态 交互对象增加少量屈服（屈服刻印补正） """
     TARGET_ADD_SMALL_SHY = 58
@@ -328,6 +332,10 @@ class BehaviorEffect:
     """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
     SLEEP_POINT_DOWN = 509
     """ 指令_专用结算 （睡觉用）降低困倦值 """
+    RECRUIT_ADD_ADJUST = 510
+    """ 指令_专用结算 （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽 """
+    READ_ADD_ADJUST = 511
+    """ 指令_专用结算 （读书用）根据书的不同对发起者(如果有的话再加上交互对象)获得对应的知识，并进行NPC的还书判定 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -349,6 +357,16 @@ class BehaviorEffect:
     """ 属性_服装 获得交互对象的袜子 """
     T_CLOTH_BACK = 631
     """ 属性_服装 交互对象穿回H时脱掉的衣服 """
+    WEAR_CLOTH_OFF = 632
+    """ 属性_服装 脱掉全部衣服 """
+    GET_SHOWER_CLOTH = 633
+    """ 属性_服装 换上浴帽和浴巾 """
+    LOCKER_CLOTH_RESET = 641
+    """ 属性_服装 衣柜里的衣服清零 """
+    WEAR_TO_LOCKER = 642
+    """ 属性_服装 身上首饰以外的衣服转移到柜子里 """
+    LOCKER_TO_WEAR = 643
+    """ 属性_服装 衣柜里的衣服转移到身上 """
 
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """

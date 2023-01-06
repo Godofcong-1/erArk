@@ -60,7 +60,7 @@ def handle_eat_time(character_id: int) -> int:
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     # print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
-    if character_data.behavior.start_time.hour in {7,8,12,13,17,18}:
+    if character_data.behavior.start_time.hour in {7, 8, 12, 13, 17, 18}:
         # print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
         return 1
     return 0
@@ -69,16 +69,16 @@ def handle_eat_time(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SHOWER_TIME)
 def handle_shower_time(character_id: int) -> int:
     """
-    淋浴时间（晚上9点到晚上12点）
+    淋浴时间（晚上8点到晚上12点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.behavior.start_time.hour in {21,22,23}:
+    if character_data.behavior.start_time.hour in {20, 21, 22, 23}:
         now_hour = character_data.behavior.start_time.hour
-        return (now_hour-20) *200
+        return (now_hour - 19) * 200
     return 0
 
 
@@ -94,9 +94,11 @@ def handle_sleep_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
-        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
-        return (now_hour-21) *100
+    if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
+        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
+        # print(f"debug {character_data.name}的睡觉前提判定，当前时间为{character_data.behavior.start_time}")
+        # print(f"成功进入睡觉前提if，返回值为{(now_hour-21) *100}")
+        return (now_hour - 21) * 100
     return 0
 
 
@@ -112,10 +114,10 @@ def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     # now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if character_data.behavior.start_time != None:
-        if character_data.behavior.start_time.hour in {0,1,2,3,4,5,22,23}:
-            now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour>20 else character_data.behavior.start_time.hour+24
-            return (now_hour-21) *100
+    if character_data.behavior.start_time is not None:
+        if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
+            now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
+            return (now_hour - 21) * 100
     value = character_data.sleep_point / 160
     if value > 0.74:
         return 1
@@ -134,7 +136,24 @@ def handle_work_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if character_data.behavior.start_time.hour >= 9 and character_data.behavior.start_time.hour < 17:
+    if 9 <= character_data.behavior.start_time.hour < 17:
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_TIME)
+def handle_entertainment_time(character_id: int) -> int:
+    """
+    娱乐时间（下午5:00~晚上9:59）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if 17 <= character_data.behavior.start_time.hour < 22:
         return 50
     return 0
 
@@ -288,7 +307,7 @@ def handle_in_kitchen(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if  "Kitchen" in now_scene_data.scene_tag:
+    if "Kitchen" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -533,8 +552,8 @@ def handle_move_to_toilet_female(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if (
-        character_data.behavior.move_target == character_data.position
-        and "Toilet_Female" in now_scene_data.scene_tag
+            character_data.behavior.move_target == character_data.position
+            and "Toilet_Female" in now_scene_data.scene_tag
     ):
         return 1
     return 0
@@ -554,8 +573,70 @@ def handle_move_to_locker_room(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if (
-        character_data.behavior.move_target == character_data.position
-        and "Locker_Room" in now_scene_data.scene_tag
+            character_data.behavior.move_target == character_data.position
+            and "Locker_Room" in now_scene_data.scene_tag
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MOVE_TO_DORMITORY)
+def handle_move_to_dormitory(character_id: int) -> int:
+    """
+    角色抵达宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if (
+            character_data.behavior.move_target == character_data.position
+            and "Dormitory" in now_scene_data.scene_tag
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MOVE_FROM_DORMITORY)
+def handle_move_from_dormitory(character_id: int) -> int:
+    """
+    角色离开宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    src_scene_str = map_handle.get_map_system_path_str_for_list(character_data.behavior.move_src)
+    if character_id == 0 and src_scene_str != "":
+        src_scene_data = cache.scene_data[src_scene_str]
+        # print(f"debug move_src = {character_data.behavior.move_src},place_name = {src_scene_data.scene_name},tag = {src_scene_data.scene_tag}")
+        # print(f"debug now_position = {now_position},place_name = {now_scene_data.scene_name},tag = {now_scene_data.scene_tag}")
+        if "Dormitory" in src_scene_data.scene_tag:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MOVE_TO_LADIES_ONLY)
+def handle_move_to_ladies_only(character_id: int) -> int:
+    """
+    角色抵达男士止步的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if (
+            character_data.behavior.move_target == character_data.position
+            and "Ladies_Only" in now_scene_data.scene_tag
     ):
         return 1
     return 0
@@ -635,6 +716,42 @@ def handle_in_music_room(character_id: int) -> int:
     if "Classic_Musicroom" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.IN_LIBRARY)
+def handle_in_library(character_id: int) -> int:
+    """
+    校验角色是否在图书馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIBRARY)
+def handle_not_in_library(character_id: int) -> int:
+    """
+    校验角色是否不在图书馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.IN_COLLECTION_ROOM)
@@ -799,6 +916,132 @@ def handle_not_in_clinic(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_HR_OFFICE)
+def handle_in_hr_office(character_id: int) -> int:
+    """
+    校验角色是否在人事部办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "HR_office" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_HR_OFFICE)
+def handle_not_in_hr_office(character_id: int) -> int:
+    """
+    校验角色是否不在人事部办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "HR_office" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_HR_MEETING_ROOM)
+def handle_in_hr_meeting_room(character_id: int) -> int:
+    """
+    校验角色是否在人事部会议室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "HR_Meeting_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_LIBRARY_OFFICE)
+def handle_in_library_office(character_id: int) -> int:
+    """
+    校验角色是否在图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIBRARY_OFFICE)
+def handle_not_in_library_office(character_id: int) -> int:
+    """
+    校验角色是否不在图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE)
+def handle_in_library_or_library_office(character_id: int) -> int:
+    """
+    校验角色是否在图书馆或图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIBRARY_OR_LIBRARY_OFFICE)
+def handle_not_in_library_or_library_office(character_id: int) -> int:
+    """
+    校验角色是否不在图书馆或图书馆办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_BATHZONE_LOCKER_ROOM)
 def handle_in_bathzone_locker_room(character_id: int) -> int:
     """
@@ -833,6 +1076,24 @@ def handle_not_in_bathzone_locker_room(character_id: int) -> int:
     if "Locker_Room" in now_scene_data.scene_tag and "大浴场" in now_scene_str:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY)
+def handle_in_locker_room_or_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在更衣室或宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Locker_Room" in now_scene_data.scene_tag or "Dormitory" in now_scene_data.scene_tag:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.PLACE_DOOR_OPEN)
@@ -919,12 +1180,12 @@ def handle_have_moved(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
     move_flag = 0
-    #同一天内过1小时则判定为1
+    # 同一天内过1小时则判定为1
     if now_time.day == character_data.action_info.last_move_time.day and now_time.hour > character_data.action_info.last_move_time.hour:
         character_data.action_info.last_move_time = now_time
         # print("过一小时判定,character_id :",character_id)
         move_flag = 1
-    #非同一天也判定为1
+    # 非同一天也判定为1
     elif now_time.day != character_data.action_info.last_move_time.day:
         character_data.action_info.last_move_time = now_time
         move_flag = 1
@@ -963,7 +1224,7 @@ def handle_have_trained(character_id: int) -> int:
     train_time = character_data.action_info.last_training_time
     add_day = int((now_time - train_time).days)
     if add_day >= 2:
-        return (add_day - 1)*10
+        return (add_day - 1) * 10
     return 0
 
 
@@ -981,6 +1242,8 @@ def handle_not_shower(character_id: int) -> int:
     shower_time = character_data.action_info.last_shower_time
     if shower_time.day == now_time.day:
         return 0
+    elif now_time.hour <= 6 and (game_time.count_day_for_datetime(shower_time, now_time) == 1):
+        return 0
     return 1
 
 
@@ -997,6 +1260,8 @@ def handle_have_showered(character_id: int) -> int:
     now_time = cache.game_time
     shower_time = character_data.action_info.last_shower_time
     if shower_time.day == now_time.day:
+        return 1
+    elif now_time.hour <= 6 and (game_time.count_day_for_datetime(shower_time, now_time) == 1):
         return 1
     return 0
 
@@ -1102,7 +1367,7 @@ def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
             return 1
     return 0
 
@@ -1118,7 +1383,7 @@ def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
             return 1
     return 0
 
@@ -1134,7 +1399,7 @@ def handle_instruct_judge_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0,character_data.target_character_id,"H模式"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
             return 1
     return 0
 
@@ -1204,6 +1469,7 @@ def handle_mp_0(character_id: int) -> int:
         return character_data.hit_point_max - character_data.hit_point
     else:
         return 0
+
 
 @add_premise(constant_promise.Premise.MP_LOW)
 def handle_mp_low(character_id: int) -> int:
@@ -1291,6 +1557,7 @@ def handle_target_mp_0(character_id: int) -> int:
         return 1
     else:
         return 0
+
 
 @add_premise(constant_promise.Premise.TARGET_MP_LOW)
 def handle_target_mp_low(character_id: int) -> int:
@@ -1436,6 +1703,120 @@ def handle_sleep_100(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_50)
+def handle_t_sleep_ge_50(character_id: int) -> int:
+    """
+    交互对象困倦条≥50%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value >= 0.5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_74)
+def handle_t_sleep_le_74(character_id: int) -> int:
+    """
+    交互对象困倦条≤74%，全指令自由
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value <= 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_75)
+def handle_t_sleep_ge_75(character_id: int) -> int:
+    """
+    交互对象困倦条≥75%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value > 0.74:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_89)
+def handle_t_sleep_le_89(character_id: int) -> int:
+    """
+    交互对象困倦条≤89%，自由活动的极限
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value <= 0.89:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_90)
+def handle_t_sleep_ge_90(character_id: int) -> int:
+    """
+    交互对象困倦条≥90%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value > 0.89:
+        return target_data.sleep_point * 5
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_100)
+def handle_t_sleep_100(character_id: int) -> int:
+    """
+    交互对象困倦条100%，当场爆睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    value = target_data.sleep_point / 160
+    if value >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
@@ -1484,7 +1865,7 @@ def handle_target_bad_mood(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     value = target_data.angry_point
-    if 30 < value and value <=50:
+    if 30 < value and value <= 50:
         return 1
     else:
         return 0
@@ -1810,7 +2191,7 @@ def handle_technique_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[19] >= 3:
+    if character_data.ability[30] >= 3:
         return 1
     return 0
 
@@ -1825,7 +2206,7 @@ def handle_technique_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[19] >= 5:
+    if character_data.ability[30] >= 5:
         return 1
     return 0
 
@@ -1841,7 +2222,7 @@ def handle_target_desire_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[22] >= 5:
+    if target_data.ability[33] >= 5:
         return 1
     return 0
 
@@ -1857,7 +2238,7 @@ def handle_target_desire_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[22] >= 7:
+    if target_data.ability[33] >= 7:
         return 1
     return 0
 
@@ -1966,7 +2347,7 @@ def handle_target_cook_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 1:
+    if target_data.ability[43] == 1:
         return 1
     return 0
 
@@ -1982,7 +2363,7 @@ def handle_target_cook_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 2:
+    if target_data.ability[43] == 2:
         return 1
     return 0
 
@@ -1998,7 +2379,7 @@ def handle_target_cook_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 3:
+    if target_data.ability[43] == 3:
         return 1
     return 0
 
@@ -2014,7 +2395,7 @@ def handle_target_cook_4(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] == 4:
+    if target_data.ability[43] == 4:
         return 1
     return 0
 
@@ -2030,7 +2411,7 @@ def handle_target_cook_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] <= 1:
+    if target_data.ability[43] <= 1:
         return 1
     return 0
 
@@ -2046,7 +2427,7 @@ def handle_target_cook_le_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] <= 3:
+    if target_data.ability[43] <= 3:
         return 1
     return 0
 
@@ -2062,7 +2443,7 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] >= 3:
+    if target_data.ability[43] >= 3:
         return 1
     return 0
 
@@ -2078,7 +2459,7 @@ def handle_target_cook_g_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] > 3:
+    if target_data.ability[43] > 3:
         return 1
     return 0
 
@@ -2094,10 +2475,9 @@ def handle_target_cook_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[28] >= 5:
+    if target_data.ability[43] >= 5:
         return 1
     return 0
-
 
 
 @add_premise(constant_promise.Premise.TARGET_MUSIC_1)
@@ -2111,7 +2491,7 @@ def handle_target_music_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 1:
+    if target_data.ability[44] == 1:
         return 1
     return 0
 
@@ -2127,7 +2507,7 @@ def handle_target_music_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 2:
+    if target_data.ability[44] == 2:
         return 1
     return 0
 
@@ -2143,7 +2523,7 @@ def handle_target_music_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 3:
+    if target_data.ability[44] == 3:
         return 1
     return 0
 
@@ -2159,7 +2539,7 @@ def handle_target_music_4(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] == 4:
+    if target_data.ability[44] == 4:
         return 1
     return 0
 
@@ -2175,7 +2555,7 @@ def handle_target_music_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] <= 1:
+    if target_data.ability[44] <= 1:
         return 1
     return 0
 
@@ -2191,7 +2571,7 @@ def handle_target_music_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] >= 3:
+    if target_data.ability[44] >= 3:
         return 1
     return 0
 
@@ -2207,9 +2587,10 @@ def handle_target_music_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[29] >= 5:
+    if target_data.ability[44] >= 5:
         return 1
     return 0
+
 
 @add_premise(constant_promise.Premise.TARGET_INTIMACY_8)
 def handle_target_intimacy_8(character_id: int) -> int:
@@ -2222,7 +2603,7 @@ def handle_target_intimacy_8(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] == 8:
+    if target_data.ability[32] == 8:
         return 1
     return 0
 
@@ -2238,7 +2619,7 @@ def handle_target_intimacy_le_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] <= 1:
+    if target_data.ability[32] <= 1:
         return 1
     return 0
 
@@ -2254,7 +2635,7 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] >= 3:
+    if target_data.ability[32] >= 3:
         return 1
     return 0
 
@@ -2270,10 +2651,9 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[21] >= 5:
+    if target_data.ability[32] >= 5:
         return 1
     return 0
-
 
 
 @add_premise(constant_promise.Premise.TARGET_TECHNIQUE_GE_3)
@@ -2287,7 +2667,7 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[19] >= 3:
+    if target_data.ability[30] >= 3:
         return 1
     return 0
 
@@ -2303,7 +2683,7 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[19] >= 5:
+    if target_data.ability[30] >= 5:
         return 1
     return 0
 
@@ -2557,7 +2937,7 @@ def handle_target_not_fall(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {10,11,12,13,15,16,17,18}:
+    for i in {10, 11, 12, 13, 15, 16, 17, 18}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -2638,7 +3018,7 @@ def handle_target_love_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {10,11,12,13}:
+    for i in {10, 11, 12, 13}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2655,7 +3035,7 @@ def handle_target_love_ge_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {11,12,13}:
+    for i in {11, 12, 13}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2672,7 +3052,7 @@ def handle_target_love_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {12,13}:
+    for i in {12, 13}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2689,7 +3069,7 @@ def handle_target_love_le_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {12,13}:
+    for i in {12, 13}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -2758,6 +3138,7 @@ def handle_target_obey_4(character_id: int) -> int:
         return 1
     return 0
 
+
 @add_premise(constant_promise.Premise.TARGET_OBEY_GE_1)
 def handle_target_obey_ge_1(character_id: int) -> int:
     """
@@ -2769,7 +3150,7 @@ def handle_target_obey_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {15,16,17,18}:
+    for i in {15, 16, 17, 18}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2786,7 +3167,7 @@ def handle_target_obey_ge_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {16,17,18}:
+    for i in {16, 17, 18}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2803,7 +3184,7 @@ def handle_target_obey_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {17,18}:
+    for i in {17, 18}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -2820,7 +3201,7 @@ def handle_target_obey_le_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {17,18}:
+    for i in {17, 18}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -2957,6 +3338,7 @@ def handle_target_no_virgin(character_id: int) -> int:
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[0] == 1
 
+
 @add_premise(constant_promise.Premise.TARGET_HAVE_VIRGIN)
 def handle_target_have_virgin(character_id: int) -> int:
     """
@@ -2983,6 +3365,7 @@ def handle_target_no_a_virgin(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[1] == 1
+
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_A_VIRGIN)
 def handle_target_have_a_virgin(character_id: int) -> int:
@@ -3020,8 +3403,21 @@ def handle_patient_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     if cache.base_resouce.patient_now:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NEW_NPC_WAIT)
+def handle_new_npc_wait(character_id: int) -> int:
+    """
+    有已招募待确认的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if len(cache.base_resouce.recruited_id):
         return 1
     return 0
 
@@ -3226,6 +3622,21 @@ def handle_scene_over_two(character_id: int) -> int:
     return len(scene_data.character_list) > 2
 
 
+@add_premise(constant_promise.Premise.SCENE_OVER_ONE)
+def handle_scene_over_one(character_id: int) -> int:
+    """
+    该地点里有除了自己之外的人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    return len(scene_data.character_list) > 1
+
+
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_IS_H)
 def handle_scene_someone_is_h(character_id: int) -> int:
     """
@@ -3238,14 +3649,14 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    #场景角色数大于2时进行检测
+    # 场景角色数大于2时进行检测
     if len(scene_data.character_list) > 2 and not (character_data.is_follow or character_data.is_h):
-        #遍历当前角色列表
+        # 遍历当前角色列表
         for chara_id in scene_data.character_list:
-            #遍历非自己且非玩家的角色
+            # 遍历非自己且非玩家的角色
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
-                #检测是否在H
+                # 检测是否在H
                 if other_character_data.is_h:
                     return 999
     return 0
@@ -3263,18 +3674,77 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    #场景角色数大于等于2时进行检测
+    # 场景角色数大于等于2时进行检测
     if len(scene_data.character_list) >= 2:
-        #遍历当前角色列表
+        # 遍历当前角色列表
         for chara_id in scene_data.character_list:
-            #遍历非玩家的角色
+            # 遍历非玩家的角色
             if chara_id:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
-                for i in {10,11,12,13,15,16,17,18}:
+                for i in {10, 11, 12, 13, 15, 16, 17, 18}:
                     if other_character_data.talent[i]:
                         break
                     if i == 18:
                         return 999
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
+def handle_player_come_scene(character_id: int) -> int:
+    """
+    校验玩家来到该角色所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+    if (
+            pl_character_data.behavior.move_src != target_data.position
+            and pl_character_data.behavior.move_target == target_data.position
+            and pl_character_data.position == target_data.position
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_LEAVE_SCENE)
+def handle_player_leave_scene(character_id: int) -> int:
+    """
+    校验玩家离开该角色所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+    if (
+            pl_character_data.behavior.move_src == target_data.position
+            and pl_character_data.behavior.move_target != target_data.position
+            # and pl_character_data.position != target_data.position
+    ):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TATGET_COME_SCENE)
+def handle_target_come_scene(character_id: int) -> int:
+    """
+    校验该角色来到玩家所在的地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if (
+            now_character_data.behavior.move_src != cache.character_data[0].position
+            and now_character_data.behavior.move_target == cache.character_data[0].position
+            and now_character_data.position == cache.character_data[0].position
+    ):
+        return 1
     return 0
 
 
@@ -3289,9 +3759,9 @@ def handle_target_leave_scene(character_id: int) -> int:
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     if (
-        now_character_data.behavior.move_src == cache.character_data[0].position
-        and now_character_data.behavior.move_target != cache.character_data[0].position
-        and now_character_data.position != cache.character_data[0].position
+            now_character_data.behavior.move_src == cache.character_data[0].position
+            and now_character_data.behavior.move_target != cache.character_data[0].position
+            and now_character_data.position != cache.character_data[0].position
     ):
         return 1
     return 0
@@ -3980,6 +4450,85 @@ def handle_target_have_open(character_id: int) -> int:
     return target_data.talent[207]
 
 
+@add_premise(constant_promise.Premise.WORK_IS_DOCTOR)
+def handle_work_is_doctor(character_id: int) -> int:
+    """
+    自己的工作为医生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 61
+
+
+@add_premise(constant_promise.Premise.WORK_IS_HR)
+def handle_work_is_hr(character_id: int) -> int:
+    """
+    自己的工作为人事
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 71
+
+
+@add_premise(constant_promise.Premise.WORK_IS_LIBRARY_MANAGER)
+def handle_work_is_library_manager(character_id: int) -> int:
+    """
+    自己的工作为图书馆管理员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 101
+
+
+@add_premise(constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER)
+def handle_t_work_is_library_manager(character_id: int) -> int:
+    """
+    交互对象的工作为图书馆管理员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.work.work_type == 101
+
+
+@add_premise(constant_promise.Premise.WORK_IS_HR)
+def handle_work_is_hr(character_id: int) -> int:
+    """
+    自己的工作为人事
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 71
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
+def handle_entertainment_is_read(character_id: int) -> int:
+    """
+    自己的娱乐为读书
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 101
+
+
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)
 def handle_last_cmd_blowjob(character_id: int) -> int:
     """
@@ -3991,7 +4540,7 @@ def handle_last_cmd_blowjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input and (last_cmd == str(constant.Instruct.BLOWJOB)):
         return 1
     return 0
@@ -4008,7 +4557,7 @@ def handle_last_cmd_makeing_out(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.MAKING_OUT)):
         return 1
     return 0
@@ -4025,7 +4574,7 @@ def handle_last_cmd_kiss_h(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.KISS_H)):
         return 1
     return 0
@@ -4042,7 +4591,7 @@ def handle_last_cmd_breast_caress(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BREAST_CARESS)):
         return 1
     return 0
@@ -4059,7 +4608,7 @@ def handle_last_cmd_twiddle_nipples(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TWIDDLE_NIPPLES)):
         return 1
     return 0
@@ -4076,7 +4625,7 @@ def handle_last_cmd_breast_sucking(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BREAST_SUCKING)):
         return 1
     return 0
@@ -4093,7 +4642,7 @@ def handle_last_cmd_clit_caress(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.CLIT_CARESS)):
         return 1
     return 0
@@ -4110,7 +4659,7 @@ def handle_last_cmd_open_labia(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.OPEN_LABIA)):
         return 1
     return 0
@@ -4127,7 +4676,7 @@ def handle_last_cmd_cunnilingus(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.CUNNILINGUS)):
         return 1
     return 0
@@ -4144,7 +4693,7 @@ def handle_last_cmd_finger_insertion(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FINGER_INSERTION)):
         return 1
     return 0
@@ -4161,7 +4710,7 @@ def handle_last_cmd_anal_caress(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.ANAL_CARESS)):
         return 1
     return 0
@@ -4178,7 +4727,7 @@ def handle_last_cmd_make_masturebate(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.MAKE_MASTUREBATE)):
         return 1
     return 0
@@ -4195,7 +4744,7 @@ def handle_last_cmd_handjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HANDJOB)):
         return 1
     return 0
@@ -4212,7 +4761,7 @@ def handle_last_cmd_paizuri(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.PAIZURI)):
         return 1
     return 0
@@ -4229,7 +4778,7 @@ def handle_last_cmd_footjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FOOTJOB)):
         return 1
     return 0
@@ -4246,7 +4795,7 @@ def handle_last_cmd_hairjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HAIRJOB)):
         return 1
     return 0
@@ -4263,7 +4812,7 @@ def handle_last_cmd_axillajob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.AXILLAJOB)):
         return 1
     return 0
@@ -4280,7 +4829,7 @@ def handle_last_cmd_rub_buttock(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.RUB_BUTTOCK)):
         return 1
     return 0
@@ -4297,7 +4846,7 @@ def handle_last_cmd_legjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.LEGJOB)):
         return 1
     return 0
@@ -4314,7 +4863,7 @@ def handle_last_cmd_tailjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TAILJOB)):
         return 1
     return 0
@@ -4331,7 +4880,7 @@ def handle_last_cmd_face_rub(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FACE_RUB)):
         return 1
     return 0
@@ -4348,7 +4897,7 @@ def handle_last_cmd_horn_rub(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HORN_RUB)):
         return 1
     return 0
@@ -4365,7 +4914,7 @@ def handle_last_cmd_ears_rub(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.EARS_RUB)):
         return 1
     return 0
@@ -4382,7 +4931,7 @@ def handle_last_cmd_hand_blowjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HAND_BLOWJOB)):
         return 1
     return 0
@@ -4399,7 +4948,7 @@ def handle_last_cmd_tits_blowjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TITS_BLOWJOB)):
         return 1
     return 0
@@ -4416,7 +4965,7 @@ def handle_last_cmd_deep_throat(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.DEEP_THROAT)):
         return 1
     return 0
@@ -4433,7 +4982,7 @@ def handle_last_cmd_focus_blowjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FOCUS_BLOWJOB)):
         return 1
     return 0
@@ -4450,7 +4999,7 @@ def handle_last_cmd_normal_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.NORMAL_SEX)):
         return 1
     return 0
@@ -4467,7 +5016,7 @@ def handle_last_cmd_back_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BACK_SEX)):
         return 1
     return 0
@@ -4484,7 +5033,7 @@ def handle_last_cmd_riding_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.RIDING_SEX)):
         return 1
     return 0
@@ -4501,7 +5050,7 @@ def handle_last_cmd_face_seat_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FACE_SEAT_SEX)):
         return 1
     return 0
@@ -4518,7 +5067,7 @@ def handle_last_cmd_back_seat_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BACK_SEAT_SEX)):
         return 1
     return 0
@@ -4535,7 +5084,7 @@ def handle_last_cmd_face_stand_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FACE_STAND_SEX)):
         return 1
     return 0
@@ -4552,7 +5101,7 @@ def handle_last_cmd_back_stand_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BACK_STAND_SEX)):
         return 1
     return 0
@@ -4569,7 +5118,7 @@ def handle_last_cmd_stimulate_g_point(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.STIMULATE_G_POINT)):
         return 1
     return 0
@@ -4586,7 +5135,7 @@ def handle_last_cmd_womb_os_caress(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-2]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.WOMB_OS_CARESS)):
         return 1
     return 0
@@ -4603,27 +5152,29 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.NORMAL_SEX),str(constant.Instruct.BACK_SEX),str(constant.Instruct.RIDING_SEX),
-        str(constant.Instruct.FACE_SEAT_SEX),str(constant.Instruct.BACK_SEAT_SEX),
-        str(constant.Instruct.FACE_STAND_SEX),str(constant.Instruct.BACK_STAND_SEX),
-        str(constant.Instruct.STIMULATE_G_POINT),str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION),
-        str(constant.Instruct.NORMAL_ANAL_SEX),str(constant.Instruct.BACK_ANAL_SEX),str(constant.Instruct.RIDING_ANAL_SEX),
-        str(constant.Instruct.FACE_SEAT_ANAL_SEX),str(constant.Instruct.BACK_SEAT_ANAL_SEX),
-        str(constant.Instruct.FACE_STAND_ANAL_SEX),str(constant.Instruct.BACK_STAND_ANAL_SEX),
-        str(constant.Instruct.STIMULATE_SIGMOID_COLON),str(constant.Instruct.STIMULATE_VAGINA),
+        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
+        str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
+        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
+        str(constant.Instruct.WOMB_INSERTION),
+        str(constant.Instruct.NORMAL_ANAL_SEX), str(constant.Instruct.BACK_ANAL_SEX),
+        str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.FACE_SEAT_ANAL_SEX), str(constant.Instruct.BACK_SEAT_ANAL_SEX),
+        str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA),
         str(constant.Instruct.URETHRAL_INSERTION),
-        str(constant.Instruct.HANDJOB),str(constant.Instruct.HAND_BLOWJOB),
-        str(constant.Instruct.BLOWJOB),str(constant.Instruct.PAIZURI),
-        str(constant.Instruct.TITS_BLOWJOB),str(constant.Instruct.FOCUS_BLOWJOB),
-        str(constant.Instruct.DEEP_THROAT),str(constant.Instruct.SIXTY_NINE),
-        str(constant.Instruct.FOOTJOB),str(constant.Instruct.HAIRJOB),
-        str(constant.Instruct.AXILLAJOB),str(constant.Instruct.RUB_BUTTOCK),
-        str(constant.Instruct.LEGJOB),str(constant.Instruct.TAILJOB),
-        str(constant.Instruct.FACE_RUB),str(constant.Instruct.HORN_RUB),
+        str(constant.Instruct.HANDJOB), str(constant.Instruct.HAND_BLOWJOB),
+        str(constant.Instruct.BLOWJOB), str(constant.Instruct.PAIZURI),
+        str(constant.Instruct.TITS_BLOWJOB), str(constant.Instruct.FOCUS_BLOWJOB),
+        str(constant.Instruct.DEEP_THROAT), str(constant.Instruct.SIXTY_NINE),
+        str(constant.Instruct.FOOTJOB), str(constant.Instruct.HAIRJOB),
+        str(constant.Instruct.AXILLAJOB), str(constant.Instruct.RUB_BUTTOCK),
+        str(constant.Instruct.LEGJOB), str(constant.Instruct.TAILJOB),
+        str(constant.Instruct.FACE_RUB), str(constant.Instruct.HORN_RUB),
         str(constant.Instruct.EARS_RUB),
-        }
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4641,7 +5192,7 @@ def handle_last_cmd_blowjob_or_handjob(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.HANDJOB)):
             return 1
@@ -4659,7 +5210,7 @@ def handle_last_cmd_blowjob_or_paizuri(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.PAIZURI)):
             return 1
@@ -4677,7 +5228,7 @@ def handle_last_cmd_blowjob_or_cunnilingus(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.CUNNILINGUS)):
             return 1
@@ -4695,13 +5246,14 @@ def handle_last_cmd_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.NORMAL_SEX),str(constant.Instruct.BACK_SEX),str(constant.Instruct.RIDING_SEX),
-        str(constant.Instruct.FACE_SEAT_SEX),str(constant.Instruct.BACK_SEAT_SEX),
-        str(constant.Instruct.FACE_STAND_SEX),str(constant.Instruct.BACK_STAND_SEX),
-        str(constant.Instruct.STIMULATE_G_POINT),str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
-        }
+        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
+        str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
+        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
+        str(constant.Instruct.WOMB_INSERTION)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4719,10 +5271,10 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.WOMB_OS_CARESS),str(constant.Instruct.WOMB_INSERTION)
-        }
+        str(constant.Instruct.WOMB_OS_CARESS), str(constant.Instruct.WOMB_INSERTION)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4740,13 +5292,14 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.NORMAL_ANAL_SEX),str(constant.Instruct.BACK_ANAL_SEX),str(constant.Instruct.RIDING_ANAL_SEX),
-        str(constant.Instruct.FACE_SEAT_ANAL_SEX),str(constant.Instruct.BACK_SEAT_ANAL_SEX),
-        str(constant.Instruct.FACE_STAND_ANAL_SEX),str(constant.Instruct.BACK_STAND_ANAL_SEX),
-        str(constant.Instruct.STIMULATE_SIGMOID_COLON),str(constant.Instruct.STIMULATE_VAGINA)
-        }
+        str(constant.Instruct.NORMAL_ANAL_SEX), str(constant.Instruct.BACK_ANAL_SEX),
+        str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.FACE_SEAT_ANAL_SEX), str(constant.Instruct.BACK_SEAT_ANAL_SEX),
+        str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4764,10 +5317,10 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.URETHRAL_INSERTION)
-        }
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4785,11 +5338,11 @@ def handle_last_cmd_breast_caress_type(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.BREAST_CARESS),str(constant.Instruct.TWIDDLE_NIPPLES),
+        str(constant.Instruct.BREAST_CARESS), str(constant.Instruct.TWIDDLE_NIPPLES),
         str(constant.Instruct.BREAST_SUCKING)
-        }
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4807,10 +5360,10 @@ def handle_last_cmd_handjob_type(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.HANDJOB),str(constant.Instruct.HAND_BLOWJOB)
-        }
+        str(constant.Instruct.HANDJOB), str(constant.Instruct.HAND_BLOWJOB)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4828,12 +5381,12 @@ def handle_last_cmd_blowjob_type(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.BLOWJOB),str(constant.Instruct.HAND_BLOWJOB),
-        str(constant.Instruct.TITS_BLOWJOB),str(constant.Instruct.FOCUS_BLOWJOB),
-        str(constant.Instruct.DEEP_THROAT),str(constant.Instruct.SIXTY_NINE)
-        }
+        str(constant.Instruct.BLOWJOB), str(constant.Instruct.HAND_BLOWJOB),
+        str(constant.Instruct.TITS_BLOWJOB), str(constant.Instruct.FOCUS_BLOWJOB),
+        str(constant.Instruct.DEEP_THROAT), str(constant.Instruct.SIXTY_NINE)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -4851,10 +5404,10 @@ def handle_last_cmd_paizuri_type(character_id: int) -> int:
     """
     len_input = cache.input_cache
     len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache)-1]
+    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.PAIZURI),str(constant.Instruct.TITS_BLOWJOB)
-        }
+        str(constant.Instruct.PAIZURI), str(constant.Instruct.TITS_BLOWJOB)
+    }
     if len_input:
         if last_cmd in sex:
             return 1
@@ -5760,6 +6313,7 @@ def handle_target_not_clit_clamp(character_id: int) -> int:
         return 0
     return 1
 
+
 @add_premise(constant_promise.Premise.HAVE_ELECTRIC_MESSAGE_STICK)
 def handle_have_electric_message_stick(character_id: int) -> int:
     """
@@ -6005,6 +6559,7 @@ def handle_target_not_anal_beads(character_id: int) -> int:
         return 0
     return 1
 
+
 @add_premise(constant_promise.Premise.HAVE_ANAL_PLUG)
 def handle_have_anal_plug(character_id: int) -> int:
     """
@@ -6016,7 +6571,7 @@ def handle_have_anal_plug(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     # if character_data.item[130]:
-        # return 1
+    # return 1
     return 0
 
 
@@ -6244,6 +6799,7 @@ def handle_have_clomid(character_id: int) -> int:
         return 1
     return 0
 
+
 @add_premise(constant_promise.Premise.A_SHIT)
 def handle_a_shit(character_id: int) -> int:
     """
@@ -6255,9 +6811,10 @@ def handle_a_shit(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dirty.a_clean in [1,3]:
+    if target_data.dirty.a_clean in [1, 3]:
         return 1
     return 0
+
 
 @add_premise(constant_promise.Premise.ENEMA)
 def handle_enema(character_id: int) -> int:
@@ -6270,7 +6827,7 @@ def handle_enema(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dirty.a_clean in [1,3]:
+    if target_data.dirty.a_clean in [1, 3]:
         return 1
     return 0
 
@@ -6286,9 +6843,10 @@ def handle_not_enema(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dirty.a_clean not in [1,3]:
+    if target_data.dirty.a_clean not in [1, 3]:
         return 1
     return 0
+
 
 @add_premise(constant_promise.Premise.ENEMA_END)
 def handle_enema_end(character_id: int) -> int:
@@ -6301,9 +6859,10 @@ def handle_enema_end(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dirty.a_clean in [2,4]:
+    if target_data.dirty.a_clean in [2, 4]:
         return 1
     return 0
+
 
 @add_premise(constant_promise.Premise.NORMAL_ENEMA)
 def handle_normal_enema(character_id: int) -> int:
@@ -6320,6 +6879,7 @@ def handle_normal_enema(character_id: int) -> int:
         return 1
     return 0
 
+
 @add_premise(constant_promise.Premise.SEMEN_ENEMA)
 def handle_semen_enema(character_id: int) -> int:
     """
@@ -6335,6 +6895,7 @@ def handle_semen_enema(character_id: int) -> int:
         return 1
     return 0
 
+
 @add_premise(constant_promise.Premise.NORMAL_ENEMA_END)
 def handle_normal_enema_end(character_id: int) -> int:
     """
@@ -6349,6 +6910,7 @@ def handle_normal_enema_end(character_id: int) -> int:
     if target_data.dirty.a_clean in [2]:
         return 1
     return 0
+
 
 @add_premise(constant_promise.Premise.SEMEN_ENEMA_END)
 def handle_semen_enema_end(character_id: int) -> int:
@@ -6557,7 +7119,7 @@ def handle_wear_bra(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[6]):
+    if len(character_data.cloth.cloth_wear[6]):
         return 1
     else:
         return 0
@@ -6574,7 +7136,7 @@ def handle_t_wear_bra(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[6]):
+    if len(target_data.cloth.cloth_wear[6]):
         return 1
     return 0
 
@@ -6590,7 +7152,7 @@ def handle_t_not_wear_bra(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[6]):
+    if len(target_data.cloth.cloth_wear[6]):
         return 0
     return 1
 
@@ -6606,7 +7168,7 @@ def handle_t_wear_gloves(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[7]):
+    if len(target_data.cloth.cloth_wear[7]):
         return 1
     return 0
 
@@ -6622,7 +7184,7 @@ def handle_t_not_wear_gloves(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[7]):
+    if len(target_data.cloth.cloth_wear[7]):
         return 0
     return 1
 
@@ -6637,8 +7199,8 @@ def handle_wear_skirt(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[8]):
-        cloth_id = character_data.cloth[8][0]
+    if len(character_data.cloth.cloth_wear[8]):
+        cloth_id = character_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 5:
             return 1
     return 0
@@ -6655,8 +7217,8 @@ def handle_t_wear_skirt(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[8]):
-        cloth_id = target_data.cloth[8][0]
+    if len(target_data.cloth.cloth_wear[8]):
+        cloth_id = target_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 5:
             return 1
     return 0
@@ -6673,8 +7235,8 @@ def handle_t_wear_trousers(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[8]):
-        cloth_id = target_data.cloth[8][0]
+    if len(target_data.cloth.cloth_wear[8]):
+        cloth_id = target_data.cloth.cloth_wear[8][0]
         if game_config.config_clothing_tem[cloth_id].tag == 4:
             return 1
     return 0
@@ -6690,7 +7252,7 @@ def handle_wear_pan(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[9]):
+    if len(character_data.cloth.cloth_wear[9]):
         return 1
     else:
         return 0
@@ -6707,7 +7269,7 @@ def handle_t_wear_pan(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[9]):
+    if len(target_data.cloth.cloth_wear[9]):
         return 1
     return 0
 
@@ -6723,7 +7285,7 @@ def handle_t_not_wear_pan(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[9]):
+    if len(target_data.cloth.cloth_wear[9]):
         return 0
     return 1
 
@@ -6738,7 +7300,7 @@ def handle_wear_socks(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if len(character_data.cloth[10]):
+    if len(character_data.cloth.cloth_wear[10]):
         return 1
     else:
         return 0
@@ -6755,7 +7317,7 @@ def handle_t_wear_socks(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth[10]):
+    if len(target_data.cloth.cloth_wear[10]):
         return 1
     return 0
 
@@ -6771,7 +7333,7 @@ def handle_cloth_off(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth[clothing_type]):
+        if len(character_data.cloth.cloth_wear[clothing_type]):
             return 0
     return 1
 
@@ -6787,7 +7349,39 @@ def handle_not_cloth_off(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth[clothing_type]):
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.CLOTH_MOST_OFF)
+def handle_cloth_most_off(character_id: int) -> int:
+    """
+    当前大致全裸（没穿上下外衣内衣）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in [5, 6, 8, 9]:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.NOT_CLOTH_MOST_OFF)
+def handle_not_cloth_most_off(character_id: int) -> int:
+    """
+    当前不是大致全裸（没穿上下外衣内衣）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for clothing_type in [5, 6, 8, 9]:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
             return 1
     return 0
 
@@ -6802,7 +7396,7 @@ def handle_shower_cloth(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth[5]:
+    if 551 in character_data.cloth.cloth_wear[5]:
         return 1
     return 0
 
@@ -6817,7 +7411,7 @@ def handle_not_shower_cloth(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth[5]:
+    if 551 in character_data.cloth.cloth_wear[5]:
         return 0
     return 1
 
@@ -8072,7 +8666,7 @@ def handle_s_ge_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 1:
+    if character_data.ability[35] >= 1:
         return 1
     return 0
 
@@ -8087,7 +8681,7 @@ def handle_s_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 3:
+    if character_data.ability[35] >= 3:
         return 1
     return 0
 
@@ -8102,7 +8696,7 @@ def handle_s_ge_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 5:
+    if character_data.ability[35] >= 5:
         return 1
     return 0
 
@@ -8117,7 +8711,7 @@ def handle_s_ge_7(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] >= 7:
+    if character_data.ability[35] >= 7:
         return 1
     return 0
 
@@ -8132,7 +8726,7 @@ def handle_s_l_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 1:
+    if character_data.ability[35] < 1:
         return 1
     return 0
 
@@ -8147,7 +8741,7 @@ def handle_s_l_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 3:
+    if character_data.ability[35] < 3:
         return 1
     return 0
 
@@ -8162,7 +8756,7 @@ def handle_s_l_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[24] < 5:
+    if character_data.ability[35] < 5:
         return 1
     return 0
 
@@ -8178,7 +8772,7 @@ def handle_t_s_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 1:
+    if target_data.ability[35] >= 1:
         return 1
     return 0
 
@@ -8194,7 +8788,7 @@ def handle_t_s_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 3:
+    if target_data.ability[35] >= 3:
         return 1
     return 0
 
@@ -8210,7 +8804,7 @@ def handle_t_s_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 5:
+    if target_data.ability[35] >= 5:
         return 1
     return 0
 
@@ -8226,7 +8820,7 @@ def handle_t_s_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] >= 7:
+    if target_data.ability[35] >= 7:
         return 1
     return 0
 
@@ -8242,7 +8836,7 @@ def handle_t_s_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 1:
+    if target_data.ability[35] < 1:
         return 1
     return 0
 
@@ -8258,7 +8852,7 @@ def handle_t_s_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 3:
+    if target_data.ability[35] < 3:
         return 1
     return 0
 
@@ -8274,7 +8868,7 @@ def handle_t_s_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[24] < 5:
+    if target_data.ability[35] < 5:
         return 1
     return 0
 
@@ -8289,7 +8883,7 @@ def handle_m_ge_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 1:
+    if character_data.ability[36] >= 1:
         return 1
     return 0
 
@@ -8304,7 +8898,7 @@ def handle_m_ge_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 3:
+    if character_data.ability[36] >= 3:
         return 1
     return 0
 
@@ -8319,7 +8913,7 @@ def handle_m_ge_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 5:
+    if character_data.ability[36] >= 5:
         return 1
     return 0
 
@@ -8334,7 +8928,7 @@ def handle_m_ge_7(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] >= 7:
+    if character_data.ability[36] >= 7:
         return 1
     return 0
 
@@ -8349,7 +8943,7 @@ def handle_m_l_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 1:
+    if character_data.ability[36] < 1:
         return 1
     return 0
 
@@ -8364,7 +8958,7 @@ def handle_m_l_3(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 3:
+    if character_data.ability[36] < 3:
         return 1
     return 0
 
@@ -8379,7 +8973,7 @@ def handle_m_l_5(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.ability[25] < 5:
+    if character_data.ability[36] < 5:
         return 1
     return 0
 
@@ -8395,7 +8989,7 @@ def handle_t_m_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 1:
+    if target_data.ability[36] >= 1:
         return 1
     return 0
 
@@ -8411,7 +9005,7 @@ def handle_t_m_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 3:
+    if target_data.ability[36] >= 3:
         return 1
     return 0
 
@@ -8427,7 +9021,7 @@ def handle_t_m_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 5:
+    if target_data.ability[36] >= 5:
         return 1
     return 0
 
@@ -8443,7 +9037,7 @@ def handle_t_m_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] >= 7:
+    if target_data.ability[36] >= 7:
         return 1
     return 0
 
@@ -8459,7 +9053,7 @@ def handle_t_m_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 1:
+    if target_data.ability[36] < 1:
         return 1
     return 0
 
@@ -8475,7 +9069,7 @@ def handle_t_m_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 3:
+    if target_data.ability[36] < 3:
         return 1
     return 0
 
@@ -8491,7 +9085,7 @@ def handle_t_m_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[25] < 5:
+    if target_data.ability[36] < 5:
         return 1
     return 0
 
@@ -8507,7 +9101,7 @@ def handle_t_submit_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 1:
+    if target_data.ability[31] >= 1:
         return 1
     return 0
 
@@ -8523,7 +9117,7 @@ def handle_t_submit_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 3:
+    if target_data.ability[31] >= 3:
         return 1
     return 0
 
@@ -8539,7 +9133,7 @@ def handle_t_submit_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 5:
+    if target_data.ability[31] >= 5:
         return 1
     return 0
 
@@ -8555,7 +9149,7 @@ def handle_t_submit_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] >= 7:
+    if target_data.ability[31] >= 7:
         return 1
     return 0
 
@@ -8571,7 +9165,7 @@ def handle_t_submit_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 1:
+    if target_data.ability[31] < 1:
         return 1
     return 0
 
@@ -8587,7 +9181,7 @@ def handle_t_submit_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 3:
+    if target_data.ability[31] < 3:
         return 1
     return 0
 
@@ -8603,7 +9197,7 @@ def handle_t_submit_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[20] < 5:
+    if target_data.ability[31] < 5:
         return 1
     return 0
 
@@ -8859,7 +9453,7 @@ def handle_t_exhibit_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 1:
+    if target_data.ability[34] >= 1:
         return 1
     return 0
 
@@ -8875,7 +9469,7 @@ def handle_t_exhibit_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 3:
+    if target_data.ability[34] >= 3:
         return 1
     return 0
 
@@ -8891,7 +9485,7 @@ def handle_t_exhibit_ge_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 5:
+    if target_data.ability[34] >= 5:
         return 1
     return 0
 
@@ -8907,7 +9501,7 @@ def handle_t_exhibit_ge_7(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] >= 7:
+    if target_data.ability[34] >= 7:
         return 1
     return 0
 
@@ -8923,7 +9517,7 @@ def handle_t_exhibit_l_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 1:
+    if target_data.ability[34] < 1:
         return 1
     return 0
 
@@ -8939,7 +9533,7 @@ def handle_t_exhibit_l_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 3:
+    if target_data.ability[34] < 3:
         return 1
     return 0
 
@@ -8955,7 +9549,7 @@ def handle_t_exhibit_l_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.ability[23] < 5:
+    if target_data.ability[34] < 5:
         return 1
     return 0
 
@@ -9036,5 +9630,37 @@ def handle_t_happy_mark_le_2(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[13] <= 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_LACTATION_1)
+def handle_t_lactation_1(character_id: int) -> int:
+    """
+    校验交互对象是否泌乳==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[23] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_LACTATION_0)
+def handle_t_lactation_0(character_id: int) -> int:
+    """
+    校验交互对象是否泌乳==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[23] == 0:
         return 1
     return 0

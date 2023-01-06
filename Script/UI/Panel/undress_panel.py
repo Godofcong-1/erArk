@@ -105,11 +105,11 @@ class SeeUndressButtonList:
 
         # 0号指令,脱到只穿内衣
         if self.button_id == 0:
-            cloth_count = len(target_data.cloth[5]) + len(target_data.cloth[8])
+            cloth_count = len(target_data.cloth.cloth_wear[5]) + len(target_data.cloth.cloth_wear[8])
             if cloth_count:
                 button_text += f" ：会脱掉"
                 for i in {5,8}:
-                    for j in target_data.cloth[i]:
+                    for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
@@ -118,11 +118,11 @@ class SeeUndressButtonList:
 
         # 1号指令,脱到只穿袜子手套等
         elif self.button_id == 1:
-            cloth_count = len(target_data.cloth[5]) + len(target_data.cloth[6]) + len(target_data.cloth[8]) + len(target_data.cloth[9])
+            cloth_count = len(target_data.cloth.cloth_wear[5]) + len(target_data.cloth.cloth_wear[6]) + len(target_data.cloth.cloth_wear[8]) + len(target_data.cloth.cloth_wear[9])
             if cloth_count:
                 button_text += f" ：会脱掉"
                 for i in {5,6,8,9}:
-                    for j in target_data.cloth[i]:
+                    for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
@@ -133,11 +133,11 @@ class SeeUndressButtonList:
         elif self.button_id == 2:
             cloth_count = 0
             for i in game_config.config_clothing_type:
-                cloth_count += len(target_data.cloth[i])
+                cloth_count += len(target_data.cloth.cloth_wear[i])
             if cloth_count:
                 button_text += f" ：会脱掉"
                 for i in game_config.config_clothing_type:
-                    for j in target_data.cloth[i]:
+                    for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
@@ -146,11 +146,11 @@ class SeeUndressButtonList:
 
         # 3号指令,把内裤收走
         if self.button_id == 3:
-            cloth_count = len(target_data.cloth[9])
+            cloth_count = len(target_data.cloth.cloth_wear[9])
             if cloth_count:
                 button_text += f" ：会收走"
                 for i in {9}:
-                    for j in target_data.cloth[i]:
+                    for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
@@ -186,7 +186,7 @@ class SeeUndressButtonList:
         if self.button_id == 0:
 
             for i in {5,8}:
-                target_data.cloth_off[i],target_data.cloth[i] = target_data.cloth[i],[]
+                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
@@ -194,25 +194,25 @@ class SeeUndressButtonList:
         # 1号指令,脱到只穿袜子手套等
         elif self.button_id == 1:
             for i in {5,6,8,9}:
-                target_data.cloth_off[i],target_data.cloth[i] = target_data.cloth[i],[]
+                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
         # 2号指令,脱到全裸
         elif self.button_id == 2:
             for i in game_config.config_clothing_type:
-                target_data.cloth_off[i],target_data.cloth[i] = target_data.cloth[i],[]
+                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
         # 3号指令,把内裤收走
         elif self.button_id == 3:
             for i in {9}:
-                pan_id = target_data.cloth[i][-1]
+                pan_id = target_data.cloth.cloth_wear[i][-1]
                 pan_name = game_config.config_clothing_tem[pan_id].name
                 character_data.pl_collection.npc_panties_tem[character_data.target_character_id] = []
                 character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(pan_id)
-                target_data.cloth[i] = []
+                target_data.cloth.cloth_wear[i] = []
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
             now_draw.text = _(f"\n获得了{target_data.name}的{pan_name}，可在藏品馆里纳入收藏\n")

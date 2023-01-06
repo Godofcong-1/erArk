@@ -69,10 +69,24 @@ class CharacterStatus:
     """ H时被人目击闯入中断 """
     STATUS_PEE = 140
     """ 解手 """
+    STATUS_CLOTH_OFF = 141
+    """ 脱掉全部衣服 """
+    STATUS_PUT_SHOWER_CLOTH = 142
+    """ 换上浴帽和浴巾 """
+    STATUS_PUT_SLEEP_CLOTH = 143
+    """ 换上睡衣和内衣 """
+    STATUS_WEAR_TO_LOCKER = 144
+    """ 身上衣服脱到衣柜 """
+    STATUS_LOCKER_TO_WEAR = 145
+    """ 衣柜衣服穿回身上 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    STATUS_CHECK_LOCKER = 161
+    """ 检查衣柜 """
+    STATUS_SMELL_UNDERWEAR = 162
+    """ 闻内衣 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -83,6 +97,10 @@ class CharacterStatus:
     """ 锻炼身体 """
     STATUS_CURE_PATIENT = 207
     """ 诊疗病人 """
+    STATUS_RECRUIT = 208
+    """ 招募干员 """
+    STATUS_READ_BOOK = 210
+    """ 读书 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -382,10 +400,22 @@ class Behavior:
     """ H时被人目击闯入中断 """
     PEE = 140
     """ 解手 """
+    CLOTH_OFF = 141
+    """ 脱掉全部衣服 """
+    PUT_SHOWER_CLOTH = 142
+    """ 换上浴帽和浴巾 """
+    PUT_SLEEP_CLOTH = 143
+    """ 换上睡衣和内衣 """
+    WEAR_TO_LOCKER = 144
+    """ 身上衣服脱到衣柜 """
+    LOCKER_TO_WEAR = 145
+    """ 衣柜衣服穿回身上 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    CHECK_LOCKER = 161
+    """ 检查衣柜 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -400,6 +430,10 @@ class Behavior:
     """ 锻炼身体 """
     CURE_PATIENT = 207
     """ 诊疗病人 """
+    RECRUIT = 208
+    """ 招募干员 """
+    READ_BOOK = 210
+    """ 读书 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -440,6 +474,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 333
     """ 手指插入（A） """
+    SMELL_UNDERWEAR = 341
+    """ 闻内衣 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -669,6 +705,12 @@ class StateMachine:
     """ 根据职业自动移动至对应训练室 """
     MOVE_TO_CLINIC = 22
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_HR_OFFICE = 23
+    """ 移动到人事部办公室 """
+    MOVE_TO_LIBRARY_OFFICE = 24
+    """ 移动到图书馆办公室 """
+    MOVE_TO_LIBRARY = 25
+    """ 移动到图书馆 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
     MOVE_TO_BATH_ROOM = 33
@@ -695,8 +737,8 @@ class StateMachine:
     TAKE_SHOWER = 51
     """ 淋浴 """
 
-    GET_CLOTH_OFF = 71
-    """ 脱成全裸 """
+    WEAR_TO_LOCKER = 71
+    """ 当前身上衣服转移到衣柜里 """
     GET_SHOWER_CLOTH = 72
     """ 换上浴帽和浴巾 """
 
@@ -720,6 +762,11 @@ class StateMachine:
 
     WORK_CURE_PATIENT = 301
     """ 工作：诊疗病人 """
+    WORK_RECRUIT = 302
+    """ 工作：招募干员 """
+
+    ENTERTAIN_READ = 401
+    """ 娱乐：读书 """
 
 
     # MOVE_TO_CLASS = 0
@@ -825,6 +872,12 @@ class Panel:
     """ 指令过滤面板 """
     EVENT_OPTION = 18
     """ 事件选项面板 """
+    CHECK_LOCKER = 19
+    """ 检查衣柜面板 """
+    BORROW_BOOK = 20
+    """ 借阅书籍面板 """
+    MANAGE_LIBRARY = 21
+    """ 图书馆管理面板 """
 
 
 class SecondBehavior:
@@ -1092,7 +1145,7 @@ class SecondEffect:
     ADD_SMALL_HAPPY = 266
     """ 增加少量快乐（快乐刻印补正） """
     ADD_SMALL_LEAD = 267
-    """ 增加少量先导（受虐补正） """
+    """ 增加少量先导（施虐补正） """
     ADD_SMALL_SUBMIT = 268
     """ 增加少量屈服（屈服刻印补正） """
     ADD_SMALL_SHY = 269
@@ -1118,7 +1171,7 @@ class SecondEffect:
     ADD_MIDDLE_HAPPY = 279
     """ 增加中量快乐（快乐刻印补正） """
     ADD_MIDDLE_LEAD = 280
-    """ 增加中量先导（受虐补正） """
+    """ 增加中量先导（施虐补正） """
     ADD_MIDDLE_SUBMIT = 281
     """ 增加中量屈服（屈服刻印补正） """
     ADD_MIDDLE_SHY = 282
@@ -1144,7 +1197,7 @@ class SecondEffect:
     ADD_LARGE_HAPPY = 292
     """ 增加大量快乐（快乐刻印补正） """
     ADD_LARGE_LEAD = 293
-    """ 增加大量先导（受虐补正） """
+    """ 增加大量先导（施虐补正） """
     ADD_LARGE_SUBMIT = 294
     """ 增加大量屈服（屈服刻印补正） """
     ADD_LARGE_SHY = 295
@@ -1200,6 +1253,8 @@ class Instruct:
     #日常#
     WAIT = 0
     """ 等待五分钟 """
+    WAIT_1_HOUR = 0
+    """ 等待一个小时 """
     WAIT_6_HOUR = 0
     """ 等待六个小时 """
     CHAT = 0
@@ -1236,6 +1291,8 @@ class Instruct:
     """ 听牢骚 """
     PRAY = 0
     """ 祈愿 """
+    CHECK_LOCKER = 0
+    """ 检查衣柜 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0
@@ -1271,6 +1328,16 @@ class Instruct:
     """ 锻炼身体 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
+    RECRUIT = 0
+    """ 招募干员 """
+    CONFIM_RECRUIT = 0
+    """ 确认已招募的干员 """
+    BORROW_BOOK = 0
+    """ 借阅书籍 """
+    READ_BOOK = 0
+    """ 读书 """
+    MANAGE_LIBRARY = 0
+    """ 管理图书馆 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

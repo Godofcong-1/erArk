@@ -253,7 +253,7 @@ class SeeAssistantButtonList:
                 line_feed.draw()
 
                 # 遍历所有NPC
-                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                id_list = [i for i in cache.npc_id_got]
                 # print("debug id_list = ",id_list)
                 self.handle_panel.text_list = id_list
                 self.handle_panel.update()
@@ -362,11 +362,11 @@ class SeeNPCButtonList:
         """ 按钮返回值 """
 
         target_data: game_type.Character = cache.character_data[NPC_id]
-        button_text = f"[{target_data.adv}：{target_data.name}]"
+        button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
 
         # 按钮绘制
 
-        name_draw = draw.CenterButton(
+        name_draw = draw.LeftButton(
             button_text, self.button_return, self.width, cmd_func=self.button_0
         )
         # self.button_return = NPC_id

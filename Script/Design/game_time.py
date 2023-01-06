@@ -35,6 +35,7 @@ def init_time():
         normal_config.config_normal.minute,
     )
     cache.game_time = game_time
+    cache.pre_game_time = game_time
 
 
 def get_date_text(game_time_data: datetime.datetime = None) -> str:
@@ -78,12 +79,12 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
 
 
 def get_sub_date(
-    minute=0,
-    hour=0,
-    day=0,
-    month=0,
-    year=0,
-    old_date: datetime.datetime = None,
+        minute=0,
+        hour=0,
+        day=0,
+        month=0,
+        year=0,
+        old_date: datetime.datetime = None,
 ) -> datetime.datetime:
     """
     获取旧日期增加指定时间后得到的新日期
@@ -142,8 +143,8 @@ def get_rand_day_for_date(start_date: datetime.datetime, end_date: datetime.date
 
 
 def count_day_for_datetime(
-    start_date: datetime.datetime,
-    end_date: datetime.datetime,
+        start_date: datetime.datetime,
+        end_date: datetime.datetime,
 ) -> int:
     """
     计算两个时间之间经过的天数
@@ -276,12 +277,16 @@ def get_sun_time(old_time: datetime.datetime) -> int:
     now_date_str = f"{old_time.year}/{old_time.month}/{old_time.day}"
     now_time = old_time.astimezone(time_zone)
     if now_time.hour > old_time.hour:
-        now_time = datetime.datetime(old_time.year,old_time.month,old_time.day,old_time.minute,tzinfo=time_zone)
+        now_time = datetime.datetime(year=old_time.year,
+                                     month=old_time.month,
+                                     day=old_time.day,
+                                     minute=old_time.minute,
+                                     tzinfo=time_zone)
     gatech.long, gatech.lat = str(cache.school_longitude), str(cache.school_latitude)
     if (
-        (now_date_str not in cache.sun_phase)
-        or (now_time.hour not in cache.sun_phase[now_date_str])
-        or (now_time.minute not in cache.sun_phase[now_date_str][now_time.hour])
+            (now_date_str not in cache.sun_phase)
+            or (now_time.hour not in cache.sun_phase[now_date_str])
+            or (now_time.minute not in cache.sun_phase[now_date_str][now_time.hour])
     ):
         now_unix = now_time.timestamp()
         now_unix -= 60
@@ -318,27 +323,27 @@ def get_sun_phase_for_sun_az(now_az: float) -> int:
     Return arguments:
     太阳位置配表id
     """
-    if now_az >= 225 and now_az < 255:
+    if 225 <= now_az < 255:
         return 8
-    elif now_az >= 255 and now_az < 285:
+    elif 255 <= now_az < 285:
         return 9
-    elif now_az >= 285 and now_az < 315:
+    elif 285 <= now_az < 315:
         return 10
-    elif now_az >= 315 and now_az < 345:
+    elif 315 <= now_az < 345:
         return 11
     elif now_az >= 345 or now_az < 15:
         return 0
-    elif now_az >= 15 and now_az < 45:
+    elif 15 <= now_az < 45:
         return 1
-    elif now_az >= 45 and now_az < 75:
+    elif 45 <= now_az < 75:
         return 2
-    elif now_az >= 75 and now_az < 105:
+    elif 75 <= now_az < 105:
         return 3
-    elif now_az >= 105 and now_az < 135:
+    elif 105 <= now_az < 135:
         return 4
-    elif now_az >= 135 and now_az < 165:
+    elif 135 <= now_az < 165:
         return 5
-    elif now_az >= 165 and now_az < 195:
+    elif 165 <= now_az < 195:
         return 6
     return 7
 
@@ -366,7 +371,7 @@ def get_moon_phase(now_time: datetime.datetime) -> int:
         now_type = next_phase > now_phase
         for phase in game_config.config_moon_data[now_type]:
             phase_config = game_config.config_moon[phase]
-            if now_phase > phase_config.min_phase and now_phase <= phase_config.max_phase:
+            if phase_config.min_phase < now_phase <= phase_config.max_phase:
                 cache.moon_phase[now_date_str] = phase_config.cid
                 break
         if len(cache.moon_phase) > 3:
@@ -375,9 +380,9 @@ def get_moon_phase(now_time: datetime.datetime) -> int:
     return cache.moon_phase[now_date_str]
 
 
-def judge_attend_class_today(character_id: int) -> bool:
+def judge_work_today(character_id: int) -> bool:
     """
-    校验角色今日是否需要上课
+    校验角色今日是否需要工作
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -388,19 +393,37 @@ def judge_attend_class_today(character_id: int) -> bool:
     if now_time is None:
         now_time = cache.game_time
     now_week = now_time.weekday()
-    now_month = now_time.month
-    if now_month not in {3, 4, 5, 6, 8, 9, 10, 11, 12}:
-        return 0
-    if character_data.age <= 18:
-        if character_data.age > 15:
-            return 1
-        if character_data.age > 13 and now_week < 6:
-            return 1
-        if now_week < 5:
-            return 1
-    elif (
-        character_id in cache.teacher_phase_table
-        and now_week in cache.teacher_class_week_day_data[character_id]
-    ):
+    if now_week < 6:
         return 1
-    return 0
+    else:
+        return 0
+
+# def judge_attend_class_today(character_id: int) -> bool:
+#     """
+#     校验角色今日是否需要上课
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     now_time: datetime.datetime = character_data.behavior.start_time
+#     if now_time is None:
+#         now_time = cache.game_time
+#     now_week = now_time.weekday()
+#     now_month = now_time.month
+#     if now_month not in {3, 4, 5, 6, 8, 9, 10, 11, 12}:
+#         return 0
+#     if character_data.age <= 18:
+#         if character_data.age > 15:
+#             return 1
+#         if character_data.age > 13 and now_week < 6:
+#             return 1
+#         if now_week < 5:
+#             return 1
+#     elif (
+#         character_id in cache.teacher_phase_table
+#         and now_week in cache.teacher_class_week_day_data[character_id]
+#     ):
+#         return 1
+#     return 0

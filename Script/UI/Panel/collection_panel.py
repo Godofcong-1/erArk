@@ -136,7 +136,7 @@ class Collection_Panel:
                 # 统计当前内裤收集数
                 self.pan_count = 0
 
-                for npc_id in cache.character_data:
+                for npc_id in cache.npc_id_got:
                     if npc_id != 0:
 
                         # 如果有收集到该角色的处子胖次或其他普通胖次则开始绘制
@@ -159,7 +159,7 @@ class Collection_Panel:
                 # 统计当前袜子收集数
                 self.sock_count = 0
 
-                for npc_id in cache.character_data:
+                for npc_id in cache.npc_id_got:
                     if npc_id != 0:
 
                         if len(character_data.pl_collection.npc_socks[npc_id]):

@@ -91,6 +91,7 @@ place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
+place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
 
 place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
 place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
@@ -127,13 +128,20 @@ in_shoot_room,IN_SHOOT_ROOM,地点_定位,在射击房中
 in_building_room,IN_BUILDING_ROOM,地点_定位,在基建部中
 in_clinic,IN_CLINIC,地点_定位,在门诊室中（含急诊室）
 not_in_clinic,NOT_IN_CLINIC,地点_定位,不在门诊室中（含急诊室）
+in_hr_office,IN_HR_OFFICE,地点_定位,在人事部办公室中
+not_in_hr_office,NOT_IN_HR_OFFICE,地点_定位,不在人事部办公室中
+in_hr_meeting_room,IN_HR_MEETING_ROOM,地点_定位,在人事部会议室中
 in_bathroom,IN_BATHROOM,地点_定位,在淋浴区
 not_in_bathroom,NOT_IN_BATHROOM,地点_定位,不在淋浴区
 in_bathzone_locker_room,IN_BATHZONE_LOCKER_ROOM,地点_定位,在大浴场的更衣室
 not_in_bathzone_locker_room,NOT_IN_BATHZONE_LOCKER_ROOM,地点_定位,不在大浴场的更衣室
+in_locker_room_or_dormitory,IN_LOCKER_ROOM_OR_DORMITORY,地点_定位,在更衣室或宿舍
 
 move_to_toilet_female,MOVE_TO_TOILET_FEMALE,地点_移动,角色抵达女士洗手间
 move_to_locker_room,MOVE_TO_LOCKER_ROOM,地点_移动,角色抵达更衣室
+move_to_dormitory,MOVE_TO_DORMITORY,地点_移动,角色抵达宿舍
+move_from_dormitory,MOVE_FROM_DORMITORY,地点_移动,角色离开宿舍
+move_to_ladies_only,MOVE_TO_LADIES_ONLY,地点_移动,角色抵达男士止步的地点
 
 ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
 ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）
@@ -147,7 +155,7 @@ time_midnight,TIME_MIDNIGHT,时间_当前,时间:深夜（22点~2点）
 time_morning,TIME_MORNING,时间_当前,时间:清晨（4点~8点）
 time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
 eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上17~18点）
-shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上9点到晚上12点）
+shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
 sleep_ge_75_or_sleep_time,SLEEP_GE_75_OR_SLEEP_TIME,时间_当前,困倦条≥75%或到了睡觉的时间
 work_time,WORK_TIME,时间_当前,工作时间（早上9:00~下午4:59）
@@ -410,6 +418,8 @@ t_masochism_1,T_MASOCHISM_1,属性_素质,交互对象受虐狂==1
 t_oestrus_0,T_OESTRUS_0,属性_素质,交互对象发情期==0
 t_oestrus_1,T_OESTRUS_1,属性_素质,交互对象发情期==1
 is_medical,IS_MEDICAL,属性_素质,自己的职业为医疗
+t_lactation_0,T_LACTATION_0,属性_素质,交互对象泌乳==0
+t_lactation_1,T_LACTATION_1,属性_素质,交互对象泌乳==1
 
 breast_0,TARGET_CHEST_IS_CLIFF,属性_素质,交互对象胸部大小是绝壁
 breast_1,TARGET_CHEST_IS_SMALL,属性_素质,交互对象胸部大小是贫乳
@@ -455,6 +465,9 @@ shame_1,TARGET_HAVE_SHAME,属性_素质,交互对象羞耻
 open_0,TARGET_HAVE_NO_OPEN,属性_素质,交互对象非开放
 open_1,TARGET_HAVE_OPEN,属性_素质,交互对象开放
 
+work_is_doctor,WORK_IS_DOCTOR,属性_工作,自己的工作为医生
+work_is_hr,WORK_IS_HR,属性_工作,自己的工作为人事
+
 wear_bra,WEAR_BRA,属性_服装,穿着胸衣
 t_wear_bra,TARGET_WEAR_BRA,属性_服装,交互对象穿着胸衣
 t_not_wear_bra,TARGET_NOT_WEAR_BRA,属性_服装,交互对象没有穿着胸衣
@@ -470,24 +483,27 @@ wear_socks,WEAR_SOCKS,属性_服装,穿着袜子
 t_wear_socks,TARGET_WEAR_SOCKS,属性_服装,交互对象穿着袜子
 cloth_off,CLOTH_OFF,属性_服装,当前全裸
 not_cloth_off,NOT_CLOTH_OFF,属性_服装,当前不是全裸
+cloth_most_off,CLOTH_MOST_OFF,属性_服装,当前大致全裸（没穿上下外衣内衣）
+not_cloth_most_off,NOT_CLOTH_MOST_OFF,属性_服装,当前不是大致全裸（没穿上下外衣内衣）
 shower_cloth,SHOWER_CLOTH,属性_服装,围着浴巾
 not_shower_cloth,NOT_SHOWER_CLOTH,属性_服装,没有围着浴巾
 
-a_shit,A_SHIT,属性_污浊,肠内脏污
-enema,ENEMA,属性_污浊,正在灌肠中（含全种类灌肠）
-not_enema,NOT_ENEMA,属性_污浊,非灌肠中（含全种类灌肠）
-enema_end,ENEMA_END,属性_污浊,已灌肠（含全种类灌肠）
-normal_enema,NORMAL_ENEMA,属性_污浊,普通灌肠中
-semen_enema,SEMEN_ENEMA,属性_污浊,精液灌肠中
-normal_enema_end,NORMAL_ENEMA_END,属性_污浊,已普通灌肠
-semen_enema_end,SEMEN_ENEMA_END,属性_污浊,已精液灌肠
-t_hair_semen,T_HAIR_SEMEN,属性_污浊,交互对象当前头发有精液
-t_womb_semen,T_WOMB_SEMEN,属性_污浊,交互对象当前子宫有精液
-t_up_cloth_semen,T_UP_CLOTH_SEMEN,属性_污浊,交互对象当前上衣有精液
-t_glove_semen,T_GLOVE_SEMEN,属性_污浊,交互对象当前手套有精液
-t_botton_cloth_semen,T_BOTTOM_CLOTH_SEMEN,属性_污浊,交互对象当前下衣有精液
-t_pan_semen,T_PAN_SEMEN,属性_污浊,交互对象当前内裤有精液
-t_socks_semen,T_SOCKS_SEMEN,属性_污浊,交互对象当前袜子有精液
+a_shit,A_SHIT,污浊_身体,肠内脏污
+enema,ENEMA,污浊_身体,正在灌肠中（含全种类灌肠）
+not_enema,NOT_ENEMA,污浊_身体,非灌肠中（含全种类灌肠）
+enema_end,ENEMA_END,污浊_身体,已灌肠（含全种类灌肠）
+normal_enema,NORMAL_ENEMA,污浊_身体,普通灌肠中
+semen_enema,SEMEN_ENEMA,污浊_身体,精液灌肠中
+normal_enema_end,NORMAL_ENEMA_END,污浊_身体,已普通灌肠
+semen_enema_end,SEMEN_ENEMA_END,污浊_身体,已精液灌肠
+t_hair_semen,T_HAIR_SEMEN,污浊_身体,交互对象当前头发有精液
+t_womb_semen,T_WOMB_SEMEN,污浊_身体,交互对象当前子宫有精液
+
+t_up_cloth_semen,T_UP_CLOTH_SEMEN,污浊_服装,交互对象当前上衣有精液
+t_glove_semen,T_GLOVE_SEMEN,污浊_服装,交互对象当前手套有精液
+t_botton_cloth_semen,T_BOTTOM_CLOTH_SEMEN,污浊_服装,交互对象当前下衣有精液
+t_pan_semen,T_PAN_SEMEN,污浊_服装,交互对象当前内裤有精液
+t_socks_semen,T_SOCKS_SEMEN,污浊_服装,交互对象当前袜子有精液
 
 penis_in_t_hair,PENIS_IN_T_HAIR,H_射精与绝顶,当前阴茎位置为交互对象_发交中
 penis_in_t_face,PENIS_IN_T_FACE,H_射精与绝顶,当前阴茎位置为交互对象_阴茎蹭脸中
@@ -587,6 +603,7 @@ c_bonus_103,COLLECT_BONUS_103,收集,收藏奖励_103_解锁索要内裤
 c_bonus_203,COLLECT_BONUS_203,收集,收藏奖励_203_解锁索要袜子
 
 patient_wait,PATIENT_WAIT,经营,有患者正等待就诊
+new_npc_wait,NEW_NPC_WAIT,经营,有已招募待确认的干员
 
 to_do,TO_DO,未分类,未实装
 

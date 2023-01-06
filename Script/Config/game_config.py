@@ -29,6 +29,12 @@ config_second_behavior_effect_data: Dict[int, Set] = {}
 """ 二段行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
+config_book_type_data: Dict[int, Set] = {}
+""" 书籍各类型下的id集合数据 类型id:书籍id集合 """
+config_book_type: Dict[int, config_def.BookType] = {}
+""" 书籍类型配表数据 """
+config_book_type_name_data: Dict[str, Set] = {}
+""" 书籍类型配表数据集合 父类型名:子类型名 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
 """ 角色状态属性配表数据 """
 config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
@@ -48,6 +54,10 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
+config_work_type: Dict[int, config_def.WorkType] = {}
+""" 工作种类配置数据 """
+config_entertainment: Dict[int, config_def.Entertainment] = {}
+""" 娱乐配置数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
@@ -114,8 +124,8 @@ config_talent_type_data: Dict[int, Set] = {}
 """
 config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
-config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
-""" 根据能力id和等级来判断升级的前提编号 """
+# config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
+# """ 根据能力id和等级来判断升级的前提编号 """
 config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 """
 载入根据前提编号来判断具体的能力升级的具体前提数据
@@ -226,31 +236,39 @@ def load_ability_type_data():
         config_ability_type_data[now_tem.ability_type].add(now_tem.cid)
 
 
-def load_ability_up_type():
-    """根据能力id和等级来判断升级的前提编号"""
-    now_data = config_data["AbilityUpType"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.AbilityUpType()
-        now_tem.__dict__ = tem_data
-        config_ability_up_type[now_tem.cid] = now_tem
+# def load_ability_up_type():
+#     """根据能力id和等级来判断升级的前提编号"""
+#     now_data = config_data["AbilityUpType"]
+#     translate_data(now_data)
+#     for tem_data in now_data["data"]:
+#         now_tem = config_def.AbilityUpType()
+#         now_tem.__dict__ = tem_data
+#         config_ability_up_type[now_tem.cid] = now_tem
 
 
 def load_ability_up_data():
-    """载入根据前提编号来判断具体的能力升级的具体前提数据"""
+    """载入根据编号来判断具体的能力升级的具体数据"""
     now_data = config_data["AbilityUp"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.AbilityUp()
         now_tem.__dict__ = tem_data
-        config_ability_up_data.setdefault(now_tem.ability_up_id, {})
-        config_ability_up_data[now_tem.ability_up_id].setdefault(now_tem.cid, {})
-        config_ability_up_data[now_tem.ability_up_id][now_tem.cid] = now_tem
+        config_ability_up_data.setdefault(now_tem.ability_id, {})
+        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.now_level, set())
+
+        # 以&为分割判定是否有多个需求
+        if "&" not in now_tem.up_need:
+            config_ability_up_data[now_tem.ability_id][now_tem.now_level].add(now_tem.up_need)
+        else:
+            up_need_list = now_tem.up_need.split('&')
+            for up_need in up_need_list:
+                config_ability_up_data[now_tem.ability_id][now_tem.now_level].add(up_need)
+
         # print("tem_data :",tem_data)
         # print("now_tem.cid :",now_tem.cid)
         # print("now_tem.ability_id :",now_tem.ability_id)
         # print("config_ability_up_data[now_tem.ability_id] :",config_ability_up_data[now_tem.ability_id])
-        # print("config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type :",config_ability_up_data[now_tem.ability_id][now_tem.cid].need_type)
+        # print("config_ability_up_data[now_tem.ability_id][now_tem.now_level] :",config_ability_up_data[now_tem.ability_id][now_tem.now_level])
         # print()
 
 def load_talent_up_data():
@@ -386,13 +404,27 @@ def load_second_behavior_effect_data():
 
 
 def load_book_data():
-    """载入数据配置数据"""
+    """载入书籍配置数据"""
     now_data = config_data["Book"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.Book()
         now_tem.__dict__ = tem_data
         config_book[now_tem.cid] = now_tem
+        config_book_type_data.setdefault(now_tem.type, set())
+        config_book_type_data[now_tem.type].add(now_tem.cid)
+
+
+def load_book_type():
+    """载入书籍种类配置数据"""
+    now_data = config_data["BookType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.BookType()
+        now_type.__dict__ = tem_data
+        config_book_type[now_type.cid] = now_type
+        config_book_type_name_data.setdefault(now_type.father_type_name, set())
+        config_book_type_name_data[now_type.father_type_name].add(now_type.son_type_name)
 
 
 def load_character_state_data():
@@ -458,6 +490,26 @@ def load_clothing_use_type():
         now_type = config_def.ClothingUseType()
         now_type.__dict__ = tem_data
         config_clothing_use_type[now_type.cid] = now_type
+
+
+def load_work_type():
+    """载入工作种类配置数据"""
+    now_data = config_data["WorkType"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.WorkType()
+        now_type.__dict__ = tem_data
+        config_work_type[now_type.cid] = now_type
+
+
+def load_entertainment():
+    """载入娱乐配置数据"""
+    now_data = config_data["Entertainment"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Entertainment()
+        now_type.__dict__ = tem_data
+        config_entertainment[now_type.cid] = now_type
 
 
 def load_body_part():
@@ -683,6 +735,7 @@ def load_talk():
         now_tem = config_def.Talk()
         now_tem.__dict__ = tem_data
         config_talk[now_tem.cid] = now_tem
+        # print(f"debug now_tem.context = {now_tem.context}")
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
@@ -781,18 +834,21 @@ def init():
     load_data_json()
     load_ability_type()
     load_ability_type_data()
-    load_ability_up_type()
+    # load_ability_up_type()
     load_ability_up_data()
     load_bar_data()
     load_behavior_effect_data()
     load_second_behavior_effect_data()
     load_book_data()
+    load_book_type()
     load_character_state_data()
     load_character_state_type_data()
     # load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()
     load_clothing_use_type()
+    load_work_type()
+    load_entertainment()
     load_body_part()
     load_collection_bonus_data()
     load_facility()

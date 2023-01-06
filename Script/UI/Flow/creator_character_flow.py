@@ -11,6 +11,7 @@ from Script.Design import (
     cooking,
     map_handle,
     attr_calculation,
+    basement,
 )
 from Script.UI.Moudle import panel, draw
 from Script.UI.Panel import see_character_info_panel,assistant_panel
@@ -38,8 +39,10 @@ def creator_character_panel():
         confirm_game_info_panel()
         if input_name_panel():
             character.init_attr(0)
-            game_start()
+            # game_start()
+            cache.base_resouce = attr_calculation.get_base_zero()
             if confirm_character_attr_panel():
+                game_start()
                 break
         cache.character_data[0] = game_type.Character()
     cache.now_panel_id = constant.Panel.IN_SCENE
@@ -49,6 +52,7 @@ def game_start():
     """初始化游戏数据"""
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
+    character_handle.init_character_facility_open()
     # course.init_phase_course_hour()
     # interest.init_character_interest()
     # course.init_character_knowledge()
@@ -61,8 +65,7 @@ def game_start():
     map_handle.character_move_scene(["0","0"], character_position, 0)
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
-    cache.base_resouce = attr_calculation.get_base_zero()
-    attr_calculation.get_base_updata()
+    basement.get_base_updata()
 
 def confirm_game_info_panel():
     """确认游戏说明面板"""
@@ -92,6 +95,7 @@ def confirm_character_attr_panel():
         now_attr_panel.draw()
         ask_list = []
         ask_list.extend(now_attr_panel.return_list)
+        line_feed_draw.draw()
         now_line = draw.LineDraw("~", width)
         now_line.draw()
         askfor_list = [_("睁开双眼"), _("重新设定")]
@@ -164,6 +168,8 @@ class Character_creat_Handle:
         info_draw.draw_title = False
         sex_draw = Character_Sex(self.width)
         jj_draw = Character_JJ(self.width)
+        debug_draw = Character_Debug(self.width)
+        firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
@@ -171,6 +177,8 @@ class Character_creat_Handle:
             info_draw,
             sex_draw,
             jj_draw,
+            debug_draw,
+            firstNpc_draw,
             bonus_draw,
             # abi_draw,
             tal_draw,
@@ -311,6 +319,241 @@ class Character_JJ:
             character_data.pl_ability.jj_size += 1
 
 
+
+class Character_Debug:
+    """
+    Debug面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+
+        if cache.debug_mode:
+            button_text = f"    【关闭debug模式】"
+        else:
+            button_text = f"    【开启debug模式】"
+        button_draw = draw.LeftButton(
+            _(button_text),
+            _('debug'),
+            self.width / 10,
+            cmd_func=self.change)
+        self.return_list.append(button_draw.return_text)
+
+        now_draw.draw_list.append(button_draw)
+        now_draw.width += len(button_draw.text)
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        if cache.character_data[0].sex == 0:
+            for label in self.draw_list:
+                if isinstance(label, list):
+                    for value in label:
+                        value.draw()
+                    line_feed_draw.draw()
+                else:
+                    label.draw()
+
+    def change(self):
+        """改变"""
+        cache.debug_mode = not cache.debug_mode
+
+
+class Character_FirstNPC:
+    """
+    角色初始干员面板
+    Keyword arguments:
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+        self.npc_select_now = 3
+        """ 当前还可以选择的NPC数量 """
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
+
+        info_draw = draw.LeftDraw()
+        info_draw.width = 1
+        info_draw.text = f" 当前初始干员有："
+        info_draw.text += f"\n   基础:"
+        for character_id in cache.npc_id_got:
+            npc_character_data = cache.character_data[character_id]
+            if npc_character_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+                info_draw.text += f" ●{npc_character_data.name}"
+        info_draw.text += f"\n   自选:"
+        for character_id in cache.npc_id_got:
+            npc_character_data = cache.character_data[character_id]
+            if npc_character_data.name not in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+                info_draw.text += f" ●{npc_character_data.name}"
+
+        now_draw.draw_list.append(info_draw)
+        now_draw.width += len(info_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        button_text = f"   【选择初期干员】"
+        button_select_draw = draw.LeftButton(
+            _(button_text),
+            _('选择初期干员'),
+            self.width,
+            cmd_func=self.select_npc,
+            )
+        self.return_list.append(button_select_draw.return_text)
+        now_draw.draw_list.append(button_select_draw)
+        now_draw.width += len(button_select_draw.text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        info_last_draw = draw.LeftDraw()
+        info_last_draw.width = 1
+        if cache.debug_mode:
+            self.npc_select_now = 999
+        else:
+            self.npc_select_now = 10 - len(cache.npc_id_got)
+        if self.npc_select_now:
+            info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
+        else:
+            info_last_draw.text = f" 已选择全部初始干员"
+        now_draw.draw_list.append(info_last_draw)
+        now_draw.width += len(info_last_draw.text)
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed_draw.draw()
+            else:
+                label.draw()
+
+    def select_npc(self):
+        """选择初期干员"""
+
+        self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
+
+        while 1:
+
+            # 显示当前助手
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            now_npc_draw = draw.NormalDraw()
+            if cache.debug_mode:
+                self.npc_select_now = 999
+            else:
+                self.npc_select_now = 10 - len(cache.npc_id_got)
+            now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
+            now_npc_draw.draw()
+            line_feed_draw.draw()
+
+            # 遍历所有NPC
+            id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            # print("debug id_list = ",id_list)
+            self.handle_panel.text_list = id_list
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list = []
+            return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back_draw.draw()
+            line_feed_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
+class SelectFirstNPCButton:
+    """
+    点击后可选择作为初期干员的NPC的按钮对象
+    Keyword arguments:
+    text -- 选项名字
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.NPC_id: int = NPC_id
+        """ 干员角色编号 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        target_data: game_type.Character = cache.character_data[NPC_id]
+        button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
+        name_draw = draw.LeftDraw()
+        if self.NPC_id in cache.npc_id_got:
+            if target_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+                button_text += f" (基础)"
+                name_draw.text = button_text
+                name_draw.width = self.width
+                name_draw.style = "nowmap"
+            else:
+                button_text += f" (自选)"
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
+        else:
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+
+        # 按钮绘制
+        # self.button_return = NPC_id
+        self.draw_text = button_text
+
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+
+    def button_0(self):
+        """选项1"""
+        if self.NPC_id in cache.npc_id_got:
+            cache.npc_id_got.remove(self.NPC_id)
+        elif cache.debug_mode:
+            cache.npc_id_got.add(self.NPC_id)
+        elif 10 - len(cache.npc_id_got):
+            cache.npc_id_got.add(self.NPC_id)
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+
 class Character_Bonus:
     """
     角色奖励点数面板
@@ -331,14 +574,20 @@ class Character_Bonus:
         character_data: game_type.Character = cache.character_data[0]
         bonus_all = 0
         now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = f"\n\n 当前为第{str(cache.game_round)}周目\n"
+        info_draw.text = f" 当前为第 {str(cache.game_round)} 周目\n"
         info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
             bonus_all += 20
             info_draw.text += f" {bonus_all} (新玩家奖励+20)"
+        if cache.debug_mode:
+            bonus_all += 999
         self.bonus_now = bonus_all
 
         now_draw.draw_list.append(info_draw)
@@ -354,12 +603,15 @@ class Character_Bonus:
         if character_data.talent[304]:
             button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
             self.bonus_now -= 10
+            draw_style = "nowmap"
         else:
             button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
+            draw_style = "standard"
         button_304_draw = draw.LeftButton(
             _(button_text),
             _(talent_data_304.name),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_talent,
             args=304)
         self.return_list.append(button_304_draw.return_text)
@@ -372,12 +624,15 @@ class Character_Bonus:
         if character_data.talent[307]:
             button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
             self.bonus_now -= 10
+            draw_style = "nowmap"
         else:
             button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
+            draw_style = "standard"
         button_307_draw = draw.LeftButton(
             _(button_text),
             _(talent_data_307.name),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_talent,
             args=307)
         self.return_list.append(button_307_draw.return_text)
@@ -389,12 +644,15 @@ class Character_Bonus:
         if cache.base_resouce.money:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
+            draw_style = "nowmap"
         else:
             button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
+            draw_style = "standard"
         button_money_draw = draw.LeftButton(
             _(button_text),
             _('启动资金'),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_money,
             )
         self.return_list.append(button_money_draw.return_text)
@@ -405,14 +663,17 @@ class Character_Bonus:
 
         if character_data.assistant_character_id:
             target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            button_text = f"   ●助理干员(5)：选择{target_data.name}成为助理干员，初始拥有1000点好感和50%信赖度"
+            button_text = f"   ●助理干员(5)：选择[{target_data.name}]成为助理干员，初始拥有1000点好感和50%信赖度"
             self.bonus_now -= 5
+            draw_style = "nowmap"
         else:
             button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
+            draw_style = "standard"
         button_assistant_draw = draw.LeftButton(
             _(button_text),
             _('助理干员'),
             self.width,
+            normal_style = draw_style,
             cmd_func=self.get_assistant,
             )
         self.return_list.append(button_assistant_draw.return_text)
@@ -424,12 +685,11 @@ class Character_Bonus:
         info_last_draw = draw.LeftDraw()
         info_last_draw.width = 1
         if self.bonus_now:
-            info_last_draw.text = f"\n 当前剩余奖励点数 = {self.bonus_now}\n"
+            info_last_draw.text = f" 当前剩余奖励点数 = {self.bonus_now}\n"
         else:
-            info_last_draw.text = f"\n 奖励点数消耗完毕\n"
+            info_last_draw.text = f" 奖励点数消耗完毕\n"
         now_draw.draw_list.append(info_last_draw)
         now_draw.width += len(info_last_draw.text)
-
 
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
@@ -488,7 +748,7 @@ class Character_Bonus:
         # 这里直接沿用的助理页面的代码
         elif self.bonus_now >= 5:
 
-            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
+            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 8, self.width, 1, 1, 0)
 
             while 1:
 
@@ -497,17 +757,19 @@ class Character_Bonus:
                 target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
                 line = draw.LineDraw("-", self.width)
                 line.draw()
+                line_feed_draw.draw()
                 now_npc_draw = draw.NormalDraw()
                 if character_data.assistant_character_id != 0:
-                    now_npc_text = f"当前助理为{target_data.name}，如果要更换，请在下面选择新的助理："
+                    now_npc_text = f"当前助理为 {target_data.name} ，如果要更换，请在下面选择新的助理："
                 else:
                     now_npc_text = f"当前无助理，请选择新的助理："
                 now_npc_draw.text = now_npc_text
                 now_npc_draw.draw()
                 line_feed_draw.draw()
+                line_feed_draw.draw()
 
                 # 遍历所有NPC
-                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                id_list = [i for i in cache.npc_id_got]
                 # print("debug id_list = ",id_list)
                 self.handle_panel.text_list = id_list
                 self.handle_panel.update()

@@ -22,7 +22,7 @@ ai的目标,,,
 31,44,in_dor|hp_1,疲劳时，且已回宿舍，则睡觉
 32,11,not_in_dor|sleep_ge_90,困倦时，且不在宿舍，则回宿舍
 33,44,in_dor|sleep_ge_90,困倦时，且在宿舍，则睡觉
-34,12,urinate_ge_80|not_in_toilet|sleep_le_89,尿意值到80%，且不在洗手间里，且不困，则去洗手间
+34,12,urinate_ge_80|not_in_toilet|sleep_le_89|not_cloth_most_off,尿意值到80%，且不在洗手间里，且不困，且不是大致全裸，则去洗手间
 35,50,urinate_ge_80|in_toilet_female,尿意值到80%，且正在洗手间里，则解手
 
 36,16,hunger_ge_80|eat_time|not_have_food|not_in_food_shop,饥饿值到80%，且在饭点，且背包里没有食物，且不在取餐区里，则去取餐区
@@ -41,15 +41,13 @@ ai的目标,,,
 45,50,sleep_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 
 
-48,22,not_assistant|is_medical|not_follow|work_time|not_in_clinic,非助理的医疗干员，不在跟随模式下，在工作时间如果不在门诊，则去门诊
-49,301,not_assistant|is_medical|not_follow|work_time|in_clinic|patient_wait,非助理的医疗干员，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
 
 50,31,shower_time|ai_not_shower|not_in_bathzone_locker_room,淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
-51,71,shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_off,淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是全裸，则脱成全裸
-52,33,shower_time|ai_not_shower|not_in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前不在淋浴间，已经脱成全裸，则去淋浴区
-53,51,shower_time|ai_not_shower|in_bathroom|cloth_off,淋浴时间，今天没洗过澡，当前在淋浴间，已经脱成全裸，则开始淋浴
-54,31,shower_time|ai_have_showered|not_in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前不在大浴室的更衣室，已经脱成全裸，则去大浴室的更衣室
-55,72,shower_time|ai_have_showered|in_bathzone_locker_room|cloth_off,淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成全裸，则围上浴巾
+51,71,shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_most_off,淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是大致全裸，则脱成全裸
+52,33,shower_time|ai_not_shower|not_in_bathroom|cloth_most_off,淋浴时间，今天没洗过澡，当前不在淋浴间，已经脱成大致全裸，则去淋浴区
+53,51,shower_time|ai_not_shower|in_bathroom|cloth_most_off,淋浴时间，今天没洗过澡，当前在淋浴间，已经脱成大致全裸，则开始淋浴
+54,31,shower_time|ai_have_showered|not_in_bathzone_locker_room|cloth_most_off,淋浴时间，今天已经洗过澡，当前不在大浴室的更衣室，已经脱成大致全裸，则去大浴室的更衣室
+55,72,shower_time|ai_have_showered|in_bathzone_locker_room|cloth_most_off,淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成大致全裸，则围上浴巾
 
 60,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
 
@@ -61,3 +59,12 @@ ai的目标,,,
 201,201,place_11,和房间里的人身体接触
 202,202,in_music_room,如果在音乐室里，则唱歌给房间里随机角色听
 203,203,in_music_room,如果在音乐室里，则演奏乐器给房间里随机角色听
+
+301,22,not_assistant|work_is_doctor|not_follow|work_time|not_in_clinic,非助理，工作为医生，不在跟随模式下，在工作时间如果不在门诊，则去门诊
+302,301,not_assistant|work_is_doctor|not_follow|work_time|in_clinic|patient_wait,非助理，工作为医生，不在跟随模式下，在工作时间如果在门诊，而且有正在排队的患者，则接诊
+305,23,not_assistant|work_is_hr|not_follow|work_time|not_in_hr_office,非助理，工作为人事，不在跟随模式下，在工作时间如果不在人事部办公室，则去人事部办公室
+306,302,not_assistant|work_is_hr|not_follow|work_time|in_hr_office,非助理，工作为人事，不在跟随模式下，在工作时间如果在人事部办公室，则进行招募工作
+307,24,not_assistant|work_is_library_manager|not_follow|work_time|not_in_library_or_library_office,非助理，工作为图书馆管理员，不在跟随模式下，在工作时间如果不在图书馆或图书馆办公室，则去图书馆办公室
+
+401,25,not_assistant|not_follow|entertainment_time|entertainment_is_read|not_in_library,非助理，不在跟随模式下，下班娱乐时间，娱乐是读书，不在图书馆，则去图书馆
+402,401,not_assistant|not_follow|entertainment_time|entertainment_is_read|in_library,非助理，不在跟随模式下，下班娱乐时间，娱乐是读书，在图书馆，则读书

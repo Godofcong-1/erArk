@@ -45,36 +45,32 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
-    start_before = time.time()
     while 1:
-        if len(cache.over_behavior_character) >= len(cache.character_data):
-            start_after = time.time()
-            # logging.debug(f'全部角色的总行为树时间为{start_after - start_before}')
+        id_list = cache.npc_id_got
+        id_list.add(0)
+        if len(cache.over_behavior_character) >= len(id_list):
             break
-        for character_id in cache.character_data:
-            start_all = time.time()
+        for character_id in id_list:
             if character_id in cache.over_behavior_character:
                 continue
             character_behavior(character_id, cache.game_time)
             # judge_character_dead(character_id)
             judge_character_tired_sleep(character_id)
-            end_all = time.time()
-            # logging.debug(f'角色编号{character_id}的总行为树时间为{end_all - start_all}')
             # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         update_cafeteria()
-        # 结算非角色数据的新一天刷新
-        if character.judge_character_time_over_24(0):
-            # 刷新新病人数量，已治愈病人数量和治疗收入归零
-            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
-            cache.base_resouce.patient_cured = 0
-            cache.base_resouce.cure_income = 0
-            cache.base_resouce.all_income = 0
+        # 睡觉刷新
+        PL_data: game_type.Character = cache.character_data[0]
+        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP:
+            update_sleep()
+        # 新一天刷新
+        if cache.game_time.day != cache.pre_game_time.day:
+            update_new_day()
     cache.over_behavior_character = set()
 
 
 def update_cafeteria():
     """刷新食堂内食物"""
-    max_people = len(cache.character_data)
+    max_people = len(cache.npc_id_got)
     # food_judge = 1
     food_count = 0
     for food_type in cache.restaurant_data:
@@ -89,8 +85,42 @@ def update_cafeteria():
     #     if not food_judge:
     #         break
     # if food_judge:
-    if (food_count * 2) <= max_people:
+    # 食物数量不足且当前时间在饭点时，刷新食物
+    if (food_count * 2) <= max_people and cache.game_time.hour in {7,8,12,13,17,18}:
         cooking.init_restaurant_data()
+
+def update_recruit():
+    """刷新招募栏位"""
+
+    # 遍历全招募栏
+    for key in cache.base_resouce.recruit_now:
+
+        # 如果超过100则进行结算
+        if cache.base_resouce.recruit_now[key] >= 100:
+            cache.base_resouce.recruit_now[key] = 0
+
+            # 开始随机获得招募npc的id
+            wait_id_set = []
+            for i in range(len(cache.npc_tem_data)):
+                id = i + 1
+                if id not in cache.npc_id_got:
+                    wait_id_set.append(id)
+            if len(wait_id_set):
+                choice_id = random.choice(wait_id_set)
+                cache.base_resouce.recruited_id.add(choice_id)
+
+                now_draw = draw.WaitDraw()
+                now_draw.width = width
+                now_draw.text = _(f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
+                now_draw.style = "nowmap"
+                now_draw.draw()
+
+
+            # 之前做该栏位工作的HR，也把栏位数据清零
+            for id in cache.base_resouce.HR_id_set:
+                character_data = cache.character_data[id]
+                if character_data.work.recruit_index == key:
+                    character_data.work.recruit_index = -1
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime):
@@ -134,59 +164,19 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
 
     # 再处理NPC部分
     if character_id:
+        # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}")
         # 空闲状态下执行可用行动#
-        start_character = time.time()
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             if character_id:
                 character_target_judge(character_id, now_time)
             else:
                 cache.over_behavior_character.add(0)
-            end_judge = time.time()
-            # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
         # 非空闲活动下结算当前状态#
         else:
             status_judge = judge_character_status(character_id, now_time)
             if status_judge:
                 cache.over_behavior_character.add(character_id)
-            end_judge = time.time()
-            # logging.debug(f'角色编号{character_id}非空闲，结算当前状态，到结算为止耗时为{end_judge - start_character}')
-
-    #24点之后的结算#
-    if character.judge_character_time_over_24(character_id):
-        if character_id == 0:
-            now_draw = draw.NormalDraw()
-            now_draw.width = window_width
-            now_draw.text = "\n已过24点，开始结算各种数据\n"
-            now_draw.draw()
-        # 结算数值为珠
-        settle_character_juel(character_id)
-        # 清零射精槽
-        if character_id == 0:
-            character_data.eja_point = 0
-        # 清零高潮程度
-        character_data.h_state.orgasm_level = attr_calculation.get_orgasm_level_zero(character_data.h_state.orgasm_level)
-        # 清零并随机重置生气程度
-        character_data.angry_point = random.randrange(1,35)
-        # 清零H被撞破的flag
-        character_data.action_info.h_interrupt = 0
-        # 新：改为洗澡时清零（清零污浊状态）
-        # character_data.dirty = attr_calculation.get_dirty_zero()
-        #自动存档，用玩家id来限制只存一次
-        if character_id == 0:
-            now_draw = draw.NormalDraw()
-            now_draw.width = window_width
-            now_draw.text = "\n全部结算完毕，开始自动保存\n"
-            # 播放一条提示信息
-            info_list = []
-            for i in game_config.config_tip_tem:
-                info_list.append(i)
-            info_id = random.choice(info_list)
-            info_text = game_config.config_tip_tem[info_id].info
-            now_draw.text += f"\n请博士在保存时阅读今日的睡前小贴士：\n\n  {info_text}\n\n\n"
-            now_draw.draw()
-            save_handle.establish_save("auto")
-    end_last = time.time()
-    # logging.debug(f'角色编号{character_id}结算完24点和跟随H为止耗时为{end_last - start_character}')
+        # print(f"debug 后：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}")
 
 
 def character_target_judge(character_id: int, now_time: datetime.datetime):
@@ -205,7 +195,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
     if PC_character_data.target_character_id == character_id:
         # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
-        if PC_character_data.state not in safe_instruct:
+        if character_data.state not in safe_instruct:
             character_data.wait_flag = 1
 
     target, _, judge = search_target(
@@ -327,6 +317,7 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         and character_data.target_character_id not in scene_data.character_list
     ):
         end_time = now_time
+    # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
     if not add_time:
@@ -385,6 +376,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
         # 如果有事件则显示事件，否则显示口上
         if start_event_draw != None:
             start_event_draw.draw()
+        elif end_event_draw != None:
+            end_event_draw.draw()
         else:
             talk.handle_talk(character_id)
         if now_panel != None:
@@ -561,9 +554,9 @@ def judge_character_follow(character_id: int) -> int:
 
 def judge_character_h(character_id: int) -> int:
     """
-    维持H状态
+    维持H状态\n
     Keyword arguments:
-    character_id -- 角色id
+    character_id -- 角色id\n
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
@@ -573,3 +566,106 @@ def judge_character_h(character_id: int) -> int:
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
     return 1
+
+def update_sleep():
+    """
+    玩家睡觉时的刷新\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+
+    now_draw = draw.NormalDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n博士入睡，开始结算各种数据\n"
+    now_draw.draw()
+
+    # 角色刷新
+    for character_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 结算数值为珠
+        settle_character_juel(character_id)
+        # 清零射精槽
+        if character_id == 0:
+            character_data.eja_point = 0
+        else:
+            # 清零H状态
+            character_data.h_state = attr_calculation.get_h_state_zero()
+            # 清零并随机重置生气程度
+            character_data.angry_point = random.randrange(1,35)
+            # 清零H被撞破的flag
+            character_data.action_info.h_interrupt = 0
+            # 新：改为洗澡时清零（清零污浊状态）
+            # character_data.dirty = attr_calculation.get_dirty_zero()
+
+    # 非角色部分
+    update_save()
+
+
+def update_new_day():
+    """
+    新一天的刷新\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+
+    now_draw = draw.NormalDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n已过24点，开始结算各种数据\n"
+    now_draw.draw()
+    week_day = cache.game_time.weekday()
+
+    # 角色刷新
+    for character_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[character_id]
+        if character_id:
+            # 如果当天有派对的话，则全员当天娱乐为该娱乐
+            if cache.base_resouce.party_day_of_week[week_day]:
+                character_data.entertainment.entertainment_type = cache.base_resouce.party_day_of_week[week_day]
+            # 否则随机当天的娱乐活动
+            else:
+                entertainment_list = [i for i in game_config.config_entertainment]
+                character_data.entertainment.entertainment_type = random.choice(entertainment_list)
+
+    # 非角色部分
+    update_base_resouce()
+    cache.pre_game_time = cache.game_time
+    update_save()
+
+def update_base_resouce():
+    """
+    刷新基地资源数据\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+    # 刷新新病人数量，已治愈病人数量和治疗收入归零
+    cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
+    cache.base_resouce.patient_cured = 0
+    cache.base_resouce.cure_income = 0
+    cache.base_resouce.all_income = 0
+
+def update_save():
+    """
+    自动存档\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+    now_draw = draw.NormalDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n全部结算完毕，开始自动保存\n"
+    # 播放一条提示信息
+    info_list = []
+    for i in game_config.config_tip_tem:
+        info_list.append(i)
+    info_id = random.choice(info_list)
+    info_text = game_config.config_tip_tem[info_id].info
+    now_draw.text += f"\n请博士在保存时阅读今日的小贴士：\n\n  {info_text}\n\n\n"
+    now_draw.draw()
+    save_handle.establish_save("auto")

@@ -46,6 +46,10 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character = game_type.Character()
     now_character.cid = character_id
     now_character.name = character_tem.Name
+    # 检测基础干员并加入已有干员列表
+    if now_character.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+        cache.npc_id_got.add(character_id)
+    cache.npc_name_data.add(now_character.name) # 加入到已有干员姓名中
     now_character.sex = character_tem.Sex
     now_character.profession= character_tem.Profession
     now_character.race= character_tem.Race
@@ -60,19 +64,14 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.mana_point_max = character_tem.Mp
     now_character.dormitory = character_tem.Dormitory
     now_character.token_text = character_tem.Token
-    # now_character.age = attr_calculation.get_age(character_id)
-    if character_tem.Age != "":
-        # print("character_tem = ",character_tem)
-        # print("character_tem.Age = ",character_tem.Age)
-        now_character.age = character_tem.Age
-        # now_character.age = attr_calculation.get_age(character_tem.Age)
     # if character_tem.Chest:
     #     now_character.chest_tem = character_tem.Chest
     now_character.cloth = attr_calculation.get_cloth_zero()
+    now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
     for cloth_id in character_tem.Cloth:
         type = game_config.config_clothing_tem[cloth_id].clothing_type
         # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-        now_character.cloth[type].append(cloth_id)
+        now_character.cloth.cloth_wear[type].append(cloth_id)
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)
 
@@ -158,38 +157,82 @@ def init_character_dormitory():
     Dr_room = {
         x: 0 for j in [k[1] for k in sorted(Dr_room.items(), key=lambda x: x[0])] for x in j
     }
+    now_room = list(Dr_room.keys())[0]
+    cache.character_data[0].dormitory = now_room
     dormitory = {
         key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
     }
     dormitory = {
         x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
     }
-    # print("Dr_room :",Dr_room)
+    special_dormitory = {
+        key: constant.place_data[key] for key in constant.place_data if "Special_Dormitory" in key
+    }
+    special_dormitory = {
+        x: 0 for j in [k[1] for k in sorted(special_dormitory.items(), key=lambda x: x[0])] for x in j
+    }
     # print("dormitory :",dormitory)
     # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
-    for character_id in cache.character_data:
-        # print("character_id :",character_id)
-        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
-        if character_id == 0:
-            now_room = list(Dr_room.keys())[0]
-            cache.character_data[character_id].dormitory = now_room
+    npc_count = 0
+    cache.npc_id_got.discard(0)
+    for character_id in cache.npc_id_got:
+        character_data = cache.character_data[character_id]
+        # print(f"{character_data.name}：{character_data.dormitory}")
+        # 普通干员每两个人住一个房间
+        if character_data.dormitory == "无":
+            n = npc_count // 2
+            now_room = list(dormitory.keys())[n]
+            # print(f"debug now_room = {now_room}")
+            character_data.dormitory = now_room
+            npc_count += 1
+        # 有单独宿舍的干员住在对应宿舍
         else:
-            # print("list(dormitory.keys()) :",list(dormitory.keys()))
             for n in list(dormitory.keys()):
-                # print("n :",n)
-                if cache.scene_data[n].scene_name == cache.character_data[character_id].dormitory:
-                    cache.character_data[character_id].dormitory = n
-        # print("cache.character_data[character_id].dormitory :",cache.character_data[character_id].dormitory)
+                if cache.scene_data[n].scene_name == character_data.dormitory:
+                    character_data.dormitory = n
+                    # print(f"debug n :{n}")
 
 
 def init_character_position():
     """初始化角色位置"""
-    for character_id in cache.character_data:
+    id_list = cache.npc_id_got
+    id_list.add(0)
+    for character_id in id_list:
         character_position = cache.character_data[character_id].position
         character_dormitory = cache.character_data[character_id].dormitory
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
         # print("character_dormitory = ",character_dormitory)
         map_handle.character_move_scene(character_position, character_dormitory, character_id)
+
+
+def init_character_facility_open():
+    """初始化角色开放设施"""
+    for open_cid in game_config.config_facility_open:
+        for character_id in cache.npc_id_got:
+            if game_config.config_facility_open[open_cid].NPC_id == cache.character_data[character_id].adv:
+                cache.base_resouce.facility_open[open_cid] = True
+                break
+
+def get_new_character(character_id: int):
+    """获得新角色"""
+    cache.npc_id_got.add(character_id)
+    character_data = cache.character_data[character_id]
+    init_character_dormitory()
+
+    # 初始化新角色位置
+    character_position = character_data.position
+    pl_postion = cache.character_data[0].position
+    map_handle.character_move_scene(character_position, pl_postion, character_id)
+
+    # 新角色原地等待30分钟
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # 如果满足设施开放的前提条件，则开放该设施
+    for open_cid in game_config.config_facility_open:
+        if game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
+            cache.base_resouce.facility_open[open_cid] = True
 
 
 def add_favorability(
