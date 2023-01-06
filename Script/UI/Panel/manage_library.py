@@ -111,6 +111,7 @@ class Manage_Library_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
 
@@ -148,6 +149,12 @@ class Manage_Library_Panel:
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
 
+            # 没有人借书时输出提示信息
+            if book_count == 0:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = _(f"\n  目前无人借书，不需要催还\n")
+                now_draw.draw()
 
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -162,7 +169,13 @@ class Manage_Library_Panel:
     def return_book(self,chara_id):
         """角色还书"""
 
-        cache.character_data[chara_id].entertainment.book_return_possibility = 100
+        character_data = cache.character_data[chara_id]
+        character_data.entertainment.book_return_possibility += 100
+        character_data.entertainment.entertainment_type = 101
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _(f"\n{character_data.name}将在空闲时间前往图书馆还书\n")
+        now_draw.draw()
 
 
     def get_new_book(self):
@@ -173,13 +186,38 @@ class Manage_Library_Panel:
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
 
+
     def read_recommend(self):
         """阅读推荐"""
 
-        now_draw = draw.WaitDraw()
-        now_draw.width = window_width
-        now_draw.text = _(f"\n暂未实装\n")
-        now_draw.draw()
+        self.handle_panel = panel.PageHandlePanel([], SelectRecommendBookButton, 999, 6, self.width, 1, 1, 0)
+
+        while 1:
+
+            # 显示提示信息
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            info_draw = draw.NormalDraw()
+            can_recommend_count = 3 - len(cache.base_resouce.recommend_book_type_set)
+            info_draw.text = f"\n 当前剩余可选推荐 {can_recommend_count}\n"
+            info_draw.draw()
+            line_feed.draw()
+
+            # 按类型遍历全图书，寻找已经被借出的书籍
+            book_type_list = [i for i in game_config.config_book_type]
+            self.handle_panel.text_list = book_type_list
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list = []
+            return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
 
     def reading_party(self):
         """读书会"""
@@ -188,3 +226,57 @@ class Manage_Library_Panel:
         now_draw.width = window_width
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
+
+
+class SelectRecommendBookButton:
+    """
+    点击后可选择作为推荐书籍类别的按钮对象
+    Keyword arguments:
+    text -- 选项名字
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, book_type_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.book_type_id: int = book_type_id
+        """ 书籍类型编号 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        type_data = game_config.config_book_type[self.book_type_id]
+        button_text = f"[{str(type_data.cid).rjust(2,'0')}]：{type_data.father_type_name}-{type_data.son_type_name}"
+        name_draw = draw.LeftDraw()
+        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
+            button_text += f" (已推荐)"
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
+        else:
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+
+    def button_0(self):
+        """选项1"""
+        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
+            cache.base_resouce.recommend_book_type_set.remove(self.book_type_id)
+        elif 3 - len(cache.base_resouce.recommend_book_type_set):
+            cache.base_resouce.recommend_book_type_set.add(self.book_type_id)
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+

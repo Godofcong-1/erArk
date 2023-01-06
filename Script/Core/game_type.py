@@ -665,6 +665,8 @@ class Base_resouce:
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
         self.reader_now: int = 0
         """ 当前图书馆中的读者数量 """
+        self.recommend_book_type_set: Set = set()
+        """ 推荐的阅读类别 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """

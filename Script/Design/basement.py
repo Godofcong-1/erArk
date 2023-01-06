@@ -131,15 +131,22 @@ def check_random_borrow_book(character_id):
     # 未借书则随机借书
     else:
         # 遍历获得所有没借的书id
-        book_id_set = []
+        recommend_book_id_set,book_id_set = [],[]
         for book_id in cache.base_resouce.book_borrow_dict:
+            # 未被借出则加入book_id_set
             if cache.base_resouce.book_borrow_dict[book_id] == -1:
                 book_id_set.append(book_id)
-        # 开始借书
-        borrow_book_id = random.choice(book_id_set)
+                # 如果类型在推荐列表里，则加入recommend_book_id_set
+                if game_config.config_book[book_id].type in cache.base_resouce.recommend_book_type_set:
+                    recommend_book_id_set.append(book_id)
+        # 如果推荐列表有书，则有一半的概率在推荐列表里借书，否则在全列表里借书
+        if len(recommend_book_id_set) and random.randint(0,1) == 1:
+            borrow_book_id = random.choice(recommend_book_id_set)
+        else:
+            borrow_book_id = random.choice(book_id_set)
         cache.base_resouce.book_borrow_dict[borrow_book_id] = character_id
         character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
-        print(f"debug {character_data.name}借了书{borrow_book_id}")
+        # print(f"debug {character_data.name}借了书{borrow_book_id}")
         return 0
 
 def check_return_book(character_id):
