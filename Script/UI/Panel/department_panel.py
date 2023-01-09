@@ -265,10 +265,10 @@ class Department_Panel:
         调整干员的工作岗位
         """
 
-        handle_leisure_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
-        handle_doctor_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
-        handle_HR_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
-        handle_library_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 1, 0)
+        handle_leisure_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_doctor_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_HR_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_library_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
 
         while 1:
             line = draw.LineDraw("-", self.width)
