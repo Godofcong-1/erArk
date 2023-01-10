@@ -23,7 +23,8 @@ from Script.Design import (
     map_handle,
     cooking,
     attr_calculation,
-    character_move
+    character_move,
+    pregnancy
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel
@@ -598,6 +599,8 @@ def update_sleep():
             character_data.action_info.h_interrupt = 0
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
+            # 计算受精概率并判断是否怀孕
+            pregnancy.check_fertilization(character_id)
 
     # 非角色部分
     update_save()

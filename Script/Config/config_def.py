@@ -404,6 +404,17 @@ class Recipes:
     """ 说明介绍 """
 
 
+class Reproduction_period:
+    """ 生理期周期 """
+
+    cid: int
+    """ 模板id """
+    name: str
+    """ 日期名 """
+    type: int
+    """ 日期类型(0安全1普通2危险3排卵) """
+
+
 class Resouce:
     """ 各类基地使用资源一览 """
 

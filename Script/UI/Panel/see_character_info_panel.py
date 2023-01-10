@@ -2108,8 +2108,8 @@ class PlayerAbilityText:
                 now_text += f"  {ability_name}：{ability_info}\n"
         ability_text_list.append(now_text)
 
-        # 嗅觉能力#
-        now_text = f"\n 【嗅觉系】\n"
+        # 激素能力#
+        now_text = f"\n 【激素系】\n"
         for i in {304, 305, 306}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name

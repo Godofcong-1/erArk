@@ -46,6 +46,15 @@ def get_entertainment_zero() -> dict:
 
     return entertainment_data
 
+def get_pregnancy_zero() -> dict:
+    """
+    初始化受精怀孕情况数据结构体
+    """
+    pregnancy_data = game_type.PREGNANCY()
+    pregnancy_data.reproduction_period = random.randint(0,6)
+
+    return pregnancy_data
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0

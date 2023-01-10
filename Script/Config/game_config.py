@@ -58,6 +58,8 @@ config_work_type: Dict[int, config_def.WorkType] = {}
 """ 工作种类配置数据 """
 config_entertainment: Dict[int, config_def.Entertainment] = {}
 """ 娱乐配置数据 """
+config_reproduction_period: Dict[int, config_def.Reproduction_period] = {}
+""" 生理周期数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
@@ -510,6 +512,16 @@ def load_entertainment():
         now_type = config_def.Entertainment()
         now_type.__dict__ = tem_data
         config_entertainment[now_type.cid] = now_type
+
+
+def load_reproduction_period():
+    """载入生理周期数据"""
+    now_data = config_data["Reproduction_period"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Reproduction_period()
+        now_type.__dict__ = tem_data
+        config_reproduction_period[now_type.cid] = now_type
 
 
 def load_body_part():

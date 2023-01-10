@@ -285,6 +285,17 @@ class DIRTY:
         """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
 
 
+class PREGNANCY:
+    """受精怀孕情况数据结构体"""
+
+    def __init__(self):
+
+        self.fertilization_rate: int = 0
+        """ 受精概率 """
+        self.reproduction_period: int = 0
+        """ 生殖周期的第几天 """
+
+
 class CLOTH:
 
     # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
@@ -871,6 +882,8 @@ class Character:
         """ 角色的工作情况 """
         self.entertainment: CHARA_ENTERTAINMENT = CHARA_ENTERTAINMENT()
         """ 角色的娱乐情况 """
+        self.pregnancy: PREGNANCY = PREGNANCY()
+        """ 角色的怀孕情况 """
 
 
 class Cache:
