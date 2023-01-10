@@ -294,6 +294,8 @@ class PREGNANCY:
         """ 受精概率 """
         self.reproduction_period: int = 0
         """ 生殖周期的第几天 """
+        self.fertilization_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色开始受精的时间 """
 
 
 class CLOTH:
