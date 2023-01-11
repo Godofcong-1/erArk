@@ -633,6 +633,7 @@ def update_new_day():
                 entertainment_list = [i for i in game_config.config_entertainment]
                 character_data.entertainment.entertainment_type = random.choice(entertainment_list)
             # 刷新生理周期
+            pregnancy.update_reproduction_period(character_id)
 
     # 非角色部分
     update_base_resouce()

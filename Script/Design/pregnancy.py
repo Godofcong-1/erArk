@@ -54,7 +54,7 @@ def get_fertilization_rate(character_id: int):
     now_rate = math.pow(semen_count / 1000,2) * 100 + semen_level * 5
     # 生理周期修正
     now_rate *= game_config.config_reproduction_period[now_reproduction].type
-    character_data.pregnancy.fertilization_rate = now_rate
+    character_data.pregnancy.fertilization_rate += now_rate
 
 
 def check_fertilization(character_id: int):
@@ -62,19 +62,24 @@ def check_fertilization(character_id: int):
     根据受精概率并判断是否受精
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    # 仅在排卵日进行判定
+    if character_data.pregnancy.reproduction_period != 5:
+        return 0
     # 如果当前已受精，则跳过判断
     for i in {20,21,22}:
         if character_data.talent[i] == 1:
+            character_data.pregnancy.fertilization_rate = 0
             return 0
     # 随机数判断是否受精
     if character_data.pregnancy.fertilization_rate:
         if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
-            draw_text = f"\n精子在{character_data.name}的阴道中游荡，成功与卵子结合了\n"
+            draw_text = f"\n精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
             draw_text += f"\n{character_data.name}获得了[受精]\n"
             character_data.talent[20] = 1
             character_data.pregnancy.fertilization_time = cache.game_time
         else:
             draw_text = f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
+            character_data.pregnancy.fertilization_rate = 0
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         now_draw.text = draw_text
