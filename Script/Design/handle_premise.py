@@ -1404,6 +1404,54 @@ def handle_instruct_judge_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NORMAL)
+def handle_normal(character_id: int) -> int:
+    """
+    没有任何异常的普通状态
+    \n包括1:疲劳、气力0、困倦、尿意、饥饿
+    \n包括2:怀孕、临盆、产后
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if(
+        handle_hp_1(character_id)
+        or handle_mp_0(character_id)
+        or handle_sleep_ge_90(character_id)
+        or handle_urinate_ge_80(character_id)
+        or handle_hunger_ge_80(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.UNNORMAL)
+def handle_unnormal(character_id: int) -> int:
+    """
+    有特殊需求的异常状态
+    \n包括:疲劳、气力0、困倦、尿意、饥饿
+    \n包括2:怀孕、临盆、产后
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if(
+        handle_hp_1(character_id)
+        or handle_mp_0(character_id)
+        or handle_sleep_ge_90(character_id)
+        or handle_urinate_ge_80(character_id)
+        or handle_hunger_ge_80(character_id)
+    ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HP_1)
 def handle_hp_1(character_id: int) -> int:
     """

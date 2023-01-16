@@ -347,6 +347,10 @@ class Premise:
     TARGET_NOT_FOLLOW = "t_not_follow"
     """ 属性_助理与跟随 交互对象当前没跟随玩家 """
 
+    NORMAL = "normal"
+    """ 属性_基础 没有任何异常的普通状态 """
+    UNNORMAL = "unnormal"
+    """ 属性_基础 有特殊需求的异常状态 """
     HP_1 = "hp_1"
     """ 属性_基础 自身疲劳（体力=1） """
     HP_LOW = "hp_low"
