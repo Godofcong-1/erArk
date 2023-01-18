@@ -82,6 +82,21 @@ def handle_shower_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_SHOWER_TIME)
+def handle_not_shower_time(character_id: int) -> int:
+    """
+    非淋浴时间（晚上8点到晚上12点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.start_time.hour in {20, 21, 22, 23}:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.SLEEP_TIME)
 def handle_sleep_time(character_id: int) -> int:
     """
@@ -1404,24 +1419,136 @@ def handle_instruct_judge_h(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.NORMAL)
-def handle_normal(character_id: int) -> int:
+@add_premise(constant_promise.Premise.NORMAL_ALL)
+def handle_normal_all(character_id: int) -> int:
     """
     没有任何异常的普通状态
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:怀孕、临盆、产后
+    \n包括2:临盆、产后
+    \n包括3:助理、跟随模式下
+    \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     if(
         handle_hp_1(character_id)
         or handle_mp_0(character_id)
         or handle_sleep_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
+
+        or handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+
+        or handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+
+        or handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_1_2_4)
+def handle_normal_1_2_4(character_id: int) -> int:
+    """
+    124正常的普通状态
+    \n包括1:疲劳、气力0、困倦、尿意、饥饿
+    \n包括2:临盆、产后
+    \n包括4:大致全裸、全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_hp_1(character_id)
+        or handle_mp_0(character_id)
+        or handle_sleep_ge_90(character_id)
+        or handle_urinate_ge_80(character_id)
+        or handle_hunger_ge_80(character_id)
+
+        or handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+
+        or handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+
+        or handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_2_3_4)
+def handle_normal_2_3_4(character_id: int) -> int:
+    """
+    234正常的普通状态
+    \n包括2:临盆、产后
+    \n包括3:助理、跟随模式下
+    \n包括4:大致全裸、全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+
+        or handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+
+        or handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_2)
+def handle_normal_2(character_id: int) -> int:
+    """
+    2正常的普通状态
+    \n包括2:临盆、产后
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_2_4)
+def handle_normal_2_4(character_id: int) -> int:
+    """
+    24正常的普通状态
+    \n包括2:临盆、产后
+    \n包括4:大致全裸、全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+
+        or handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
     ):
         return 0
     else:
@@ -1432,20 +1559,30 @@ def handle_normal(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n包括:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:怀孕、临盆、产后
+    \n包括1:疲劳、气力0、困倦、尿意、饥饿
+    \n包括2:临盆、产后
+    \n包括3:助理、跟随模式下
+    \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     if(
         handle_hp_1(character_id)
         or handle_mp_0(character_id)
         or handle_sleep_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
+
+        or handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+
+        or handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+
+        or handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
     ):
         return 1
     else:
@@ -4575,6 +4712,19 @@ def handle_entertainment_is_read(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.entertainment.entertainment_type == 101
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TRAINING)
+def handle_entertainment_is_training(character_id: int) -> int:
+    """
+    自己的娱乐为训练
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 91
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)
@@ -9693,7 +9843,7 @@ def handle_t_lactation_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[23] == 1:
+    if target_data.talent[31] == 1:
         return 1
     return 0
 
@@ -9709,6 +9859,470 @@ def handle_t_lactation_0(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[31] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FERTILIZATION_0)
+def handle_fertilization_0(character_id: int) -> int:
+    """
+    校验角色是否受精==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[20] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FERTILIZATION_1)
+def handle_fertilization_1(character_id: int) -> int:
+    """
+    校验角色是否受精==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[20] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PREGNANCY_0)
+def handle_pregnancy_0(character_id: int) -> int:
+    """
+    校验角色是否妊娠==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[21] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PREGNANCY_1)
+def handle_pregnancy_1(character_id: int) -> int:
+    """
+    校验角色是否妊娠==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[21] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_FERTILIZATION_0)
+def handle_t_fertilization_0(character_id: int) -> int:
+    """
+    校验交互对象是否受精==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[20] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_FERTILIZATION_1)
+def handle_t_fertilization_1(character_id: int) -> int:
+    """
+    校验交互对象是否受精==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[20] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PREGNANCY_0)
+def handle_t_pregnancy_0(character_id: int) -> int:
+    """
+    校验交互对象是否妊娠==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[21] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PREGNANCY_1)
+def handle_t_pregnancy_1(character_id: int) -> int:
+    """
+    校验交互对象是否妊娠==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[21] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PARTURIENT_0)
+def handle_parturient_0(character_id: int) -> int:
+    """
+    校验角色是否临盆==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[22] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PARTURIENT_1)
+def handle_parturient_1(character_id: int) -> int:
+    """
+    校验角色是否临盆==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[22] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PARTURIENT_1)
+def handle_t_parturient_1(character_id: int) -> int:
+    """
+    校验交互对象是否临盆==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[22] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_PARTURIENT_0)
+def handle_t_parturient_0(character_id: int) -> int:
+    """
+    校验交互对象是否临盆==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[22] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.POSTPARTUM_0)
+def handle_postpartum_0(character_id: int) -> int:
+    """
+    校验角色是否产后==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[23] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.POSTPARTUM_1)
+def handle_postpartum_1(character_id: int) -> int:
+    """
+    校验角色是否产后==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[23] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_POSTPARTUM_0)
+def handle_t_postpartum_0(character_id: int) -> int:
+    """
+    校验交互对象是否产后==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
     if target_data.talent[23] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_POSTPARTUM_1)
+def handle_t_postpartum_1(character_id: int) -> int:
+    """
+    校验交互对象是否产后==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[23] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.REARING_0)
+def handle_rearing_0(character_id: int) -> int:
+    """
+    校验角色是否育儿==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[24] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.REARING_1)
+def handle_rearing_1(character_id: int) -> int:
+    """
+    校验角色是否育儿==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[24] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_REARING_0)
+def handle_t_rearing_0(character_id: int) -> int:
+    """
+    校验交互对象是否育儿==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[24] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_REARING_1)
+def handle_t_rearing_1(character_id: int) -> int:
+    """
+    校验交互对象是否育儿==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[24] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INFLATION_0)
+def handle_inflation_0(character_id: int) -> int:
+    """
+    校验角色是否孕肚==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[30] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INFLATION_1)
+def handle_inflation_1(character_id: int) -> int:
+    """
+    校验角色是否孕肚==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[30] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_INFLATION_0)
+def handle_t_inflation_0(character_id: int) -> int:
+    """
+    校验交互对象是否孕肚==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[30] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_INFLATION_1)
+def handle_t_inflation_1(character_id: int) -> int:
+    """
+    校验交互对象是否孕肚==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[30] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.CUMFLATION_0)
+def handle_cumflation_0(character_id: int) -> int:
+    """
+    校验角色是否精液膨腹==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[32] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.CUMFLATION_1)
+def handle_cumflation_1(character_id: int) -> int:
+    """
+    校验角色是否精液膨腹==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[32] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_CUMFLATION_0)
+def handle_t_cumflation_0(character_id: int) -> int:
+    """
+    校验交互对象是否精液膨腹==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[32] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_CUMFLATION_1)
+def handle_t_cumflation_1(character_id: int) -> int:
+    """
+    校验交互对象是否精液膨腹==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[32] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LACTATION_0)
+def handle_lactation_0(character_id: int) -> int:
+    """
+    校验角色是否泌乳==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[31] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LACTATION_1)
+def handle_lactation_1(character_id: int) -> int:
+    """
+    校验角色是否泌乳==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[31] == 1:
         return 1
     return 0

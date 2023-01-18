@@ -40,7 +40,7 @@ def creator_character_panel():
         if input_name_panel():
             character.init_attr(0)
             # game_start()
-            cache.base_resouce = attr_calculation.get_base_zero()
+            cache.base_resouce = basement.get_base_zero()
             if confirm_character_attr_panel():
                 game_start()
                 break
@@ -66,6 +66,7 @@ def game_start():
     cache.school_longitude = random.uniform(120.9, 122.12)
     cache.school_latitude = random.uniform(30.7, 31.53)
     basement.get_base_updata()
+    # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")
 
 def confirm_game_info_panel():
     """确认游戏说明面板"""

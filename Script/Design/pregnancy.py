@@ -101,8 +101,8 @@ def check_pregnancy(character_id: int):
         if past_day >= 30:
             character_data.talent[20] = 0
             character_data.talent[21] = 1
-            character_data.talent[24] = 1
             character_data.talent[30] = 1
+            character_data.talent[31] = 1
             draw_text = f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
             draw_text += f"\n{character_data.name}有孕在身，将会暂停工作和部分娱乐\n"
             draw_text += f"\n{character_data.name}从[受精]转变为[妊娠]\n"

@@ -730,8 +730,6 @@ class StateMachine:
     """ 唱歌 """
     PLAY_INSTRUMENT = 46
     """ 演奏乐器 """
-    TRAINING = 47
-    """ 战斗训练 """
     PEE = 50
     """ 解手 """
     TAKE_SHOWER = 51
@@ -767,6 +765,8 @@ class StateMachine:
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
+    ENTERTAIN_TRAINING = 402
+    """ 娱乐：训练 """
 
 
     # MOVE_TO_CLASS = 0

@@ -228,22 +228,9 @@ def get_cloth_wear_zero() -> dict:
     return coloth_wear_data
 
 
-def get_cloth_wear_zero_except_jewellery(character_id: int) -> dict:
-    """
-    遍历当前穿着服装类型，将首饰以外的设为空
-    """
-    character_data = cache.character_data[character_id]
-    for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth.cloth_wear[clothing_type]):
-            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
-                # 只要不是首饰，就删掉该服装
-                if game_config.config_clothing_tem[cloth_id].tag != 6:
-                    character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
-
-
 def get_cloth_locker_zero() -> dict:
     """
-    遍历当前穿着服装类型，将每个都设为空
+    将衣柜里的每个衣服类型都设为空
     """
     cloth_locker_data = game_type.CLOTH().cloth_locker
 
@@ -269,40 +256,6 @@ def get_collection_zero() -> dict:
         collection_data.npc_socks[npc_id] = []
 
     return collection_data
-
-
-def get_base_zero() -> dict:
-    """
-    基地情况结构体，设为空
-    """
-
-    base_data = game_type.Base_resouce()
-
-    # 遍历全设施清单
-    for all_cid in game_config.config_facility:
-        # 全设施等级设为1
-        base_data.facility_level[all_cid] = 1
-
-    # 遍历全设施开放
-    for all_cid in game_config.config_facility_open:
-        # 全设施初始关闭
-        base_data.facility_open[all_cid] = False
-
-    # 遍历全资源清单
-    for all_cid in game_config.config_resouce:
-        # 全资源数量设为0
-        base_data.materials_resouce[all_cid] = 0
-
-    # 遍历全部书籍
-    for book_id in game_config.config_book:
-        # 全书籍设为未借出
-        base_data.book_borrow_dict[book_id] = -1
-
-    # 派对设为空
-    for i in range(7):
-        base_data.party_day_of_week[i] = 0
-
-    return base_data
 
 
 def get_item_zero(item_dict) -> dict:

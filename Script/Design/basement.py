@@ -10,6 +10,39 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
 
 
+def get_base_zero() -> dict:
+    """
+    基地情况结构体，设为空
+    """
+
+    base_data = game_type.Base_resouce()
+
+    # 遍历全设施清单
+    for all_cid in game_config.config_facility:
+        # 全设施等级设为1
+        base_data.facility_level[all_cid] = 1
+
+    # 遍历全设施开放
+    for all_cid in game_config.config_facility_open:
+        # 全设施初始关闭
+        base_data.facility_open[all_cid] = False
+
+    # 遍历全资源清单
+    for all_cid in game_config.config_resouce:
+        # 全资源数量设为0
+        base_data.materials_resouce[all_cid] = 0
+
+    # 遍历全部书籍
+    for book_id in game_config.config_book:
+        # 全书籍设为未借出
+        base_data.book_borrow_dict[book_id] = -1
+
+    # 派对设为空
+    for i in range(7):
+        base_data.party_day_of_week[i] = 0
+
+    return base_data
+
 def get_base_updata():
     """
     遍历基地情况结构体，根据设施等级更新全部数值
@@ -30,6 +63,8 @@ def get_base_updata():
         # 如果满足设施开放的前提条件，则开放该设施
         for open_cid in game_config.config_facility_open:
             if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
+                print(f"debug zone_cid = {game_config.config_facility_open[open_cid].zone_cid}")
+                print(f"debug facility_cid = {facility_cid}")
                 cache.base_resouce.facility_open[open_cid] = True
 
     # print(f"debug power_use = {base_data.power_use}")

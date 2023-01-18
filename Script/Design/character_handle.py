@@ -209,6 +209,9 @@ def init_character_facility_open():
     """初始化角色开放设施"""
     for open_cid in game_config.config_facility_open:
         for character_id in cache.npc_id_got:
+            # 跳过玩家id
+            if character_id == 0:
+                continue
             if game_config.config_facility_open[open_cid].NPC_id == cache.character_data[character_id].adv:
                 cache.base_resouce.facility_open[open_cid] = True
                 break

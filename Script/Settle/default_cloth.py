@@ -330,6 +330,7 @@ def handle_locker_cloth_reset(
         return
     character_data = cache.character_data[character_id]
     character_data.cloth.cloth_locker = attr_calculation.get_cloth_locker_zero()
+    # print(f"debug {character_data.name} cloth_locker = {character_data.cloth.cloth_locker}")
     character_data.dirty.cloth_locker_semen = []
 
 

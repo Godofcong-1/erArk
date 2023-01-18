@@ -117,7 +117,7 @@ def get_shower_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        get_cloth_wear_zero_except_jewellery(character_id)
         character_data.cloth.cloth_wear[0].append(51)
         character_data.cloth.cloth_wear[5].append(551)
         character_data.cloth.cloth_wear[8].append(851)
@@ -134,7 +134,7 @@ def get_sleep_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        get_cloth_wear_zero_except_jewellery(character_id)
         choic_flag = random.randint(0,1)
         if choic_flag:
             character_data.cloth.cloth_wear[5].append(552)
@@ -163,6 +163,28 @@ def chara_special_wear_cloth(character_id: int):
             if 701 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(701)
                 # print("换上戒指了")
+
+
+
+def get_cloth_wear_zero_except_jewellery(character_id: int) -> dict:
+    """
+    遍历当前穿着服装类型，将首饰以外的设为空
+    """
+    character_data = cache.character_data[character_id]
+    # print(f"debug 脱衣服前 = {character_data.cloth.cloth_wear}")
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            remove_tem_list = []
+            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+                # 只要不是首饰，就把该服装加入删掉的list里
+                if game_config.config_clothing_tem[cloth_id].tag != 6:
+                    remove_tem_list.append(cloth_id)
+            # 获得两个list的差，并赋值给当前服装
+            result = [item for item in  character_data.cloth.cloth_wear[clothing_type] if item not in remove_tem_list]
+            character_data.cloth.cloth_wear[clothing_type] = result
+    # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
+
+
 
 '''
 不用的旧函数

@@ -679,7 +679,7 @@ def character_play_instrument(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.TRAINING)
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TRAINING)
 def character_training(character_id: int):
     """
     角色战斗训练

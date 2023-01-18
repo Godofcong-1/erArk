@@ -594,7 +594,7 @@ def judge_scene_name_open(full_scene_str : str) -> int :
     from Script.Config import game_config
     now_scene_data = cache.scene_data[full_scene_str]
 
-    # print(f"debug scene_name = {scene_name}")
+    # print(f"debug scene_name = {now_scene_data.scene_name}")
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
     for open_cid in game_config.config_facility_open:
         # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
