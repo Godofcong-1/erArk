@@ -21,6 +21,7 @@ from Script.UI.Panel import (
     check_locker_panel,
     borrow_book_panel,
     manage_library,
+    debug_panel,
 )
 from Script.Config import normal_config
 
@@ -165,4 +166,10 @@ def borrow_book_flow():
 def manage_library_flow():
     """图书馆管理面板"""
     now_panel = manage_library.Manage_Library_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.DEBUG_ADJUST)
+def manage_debug_flow():
+    """debug数值调整面板"""
+    now_panel = debug_panel.Debug_Panel(width)
     now_panel.draw()

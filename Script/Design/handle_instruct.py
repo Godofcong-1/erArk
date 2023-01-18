@@ -249,6 +249,13 @@ def debug_mode_off():
     cache.debug_mode = False
 
 
+@add_instruct(constant.Instruct.DEBUG_ADJUST, constant.InstructType.SYSTEM, _("debug数值调整"),
+              {constant_promise.Premise.DEBUG_MODE_ON})
+def debug_adjust():
+    """处理debug数值调整指令"""
+    cache.now_panel_id = constant.Panel.DEBUG_ADJUST
+
+
 @add_instruct(
     constant.Instruct.SEE_COLLECTION,
     constant.InstructType.WORK,

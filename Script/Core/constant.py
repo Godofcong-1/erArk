@@ -878,6 +878,8 @@ class Panel:
     """ 借阅书籍面板 """
     MANAGE_LIBRARY = 21
     """ 图书馆管理面板 """
+    DEBUG_ADJUST = 22
+    """ DEBUG面板 """
 
 
 class SecondBehavior:
@@ -1619,6 +1621,8 @@ class Instruct:
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0
     """ 关闭debug模式 """
+    DEBUG_ADJUST = 0
+    """ debug数值调整 """
 
 
 i = 0

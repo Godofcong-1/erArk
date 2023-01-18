@@ -916,8 +916,8 @@ class Cache:
         """ 富文本记录输出样式临时缓存 """
         self.text_style_position: int = 0
         """ 富文本回溯样式记录用定位 """
-        self.clothing_type_data: dict = {}
-        """ 存储服装类型数据 """
+        # self.clothing_type_data: dict = {}
+        # """ 存储服装类型数据 """
         self.text_style_cache: List[str] = []
         """ 富文本样式记录 """
         self.text_one_by_one_rich_cache: dict = {}
@@ -944,8 +944,8 @@ class Cache:
         """ 游戏场景数据 场景路径:场景数据 """
         self.random_npc_list: List[NpcTem] = []
         """ 随机npc数据 """
-        self.wear_item_type_data: dict = {}
-        """ 可穿戴道具类型数据 """
+        # self.wear_item_type_data: dict = {}
+        # """ 可穿戴道具类型数据 """
         self.over_behavior_character: Set = set()
         """ 本次update中已结束结算的npc """
         self.recipe_data: Dict[int, Recipes] = {}

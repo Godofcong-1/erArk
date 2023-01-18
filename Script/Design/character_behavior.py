@@ -140,6 +140,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_id != 0:
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
+        judge_character_pregnancy(character_id) # 临盆和产后
 
     # 先处理玩家部分
     if character_id == 0:
