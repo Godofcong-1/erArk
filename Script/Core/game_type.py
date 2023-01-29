@@ -839,7 +839,7 @@ class Character:
         self.last_hunger_time: datetime.datetime = None
         """ 最后一次结算饥饿的时间 """
         self.ability: Dict[int, int] = {}
-        """ 角色能力类型 """
+        """ 角色能力 """
         self.experience: Dict[int, int] = {}
         """ 角色经验 """
         self.juel: Dict[int, int] = {}

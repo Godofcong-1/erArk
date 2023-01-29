@@ -38,7 +38,7 @@ class Debug_Panel:
         """绘制对象"""
 
         title_text = "部门运作情况"
-        department_type_list = [_("全局变量"),_("玩家角色"),_("NPC角色")]
+        department_type_list = [_("全局变量"),_("玩家属性"),_("NPC角色")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -84,7 +84,7 @@ class Debug_Panel:
             if self.now_panel == "全局变量":
 
                 all_info_draw = draw.NormalDraw()
-                all_info_text = "\n全局变量一览："
+                all_info_text = "全局变量一览："
                 all_info_draw.text = all_info_text
                 all_info_draw.width = self.width
                 now_draw.draw_list.append(all_info_draw)
@@ -94,137 +94,104 @@ class Debug_Panel:
                 now_draw.width += line_feed.width
 
                 # 要输出的变量名称以及注释
-                cache_dict = {"game_time":"游戏时间","pre_game_time":"前一循环时的游戏时间","npc_id_got":"已拥有的干员id数据","base_resouce":"基地的资源情况"}
+                draw_text_list = []
+                draw_text_list.append(f"[000]:游戏时间：{cache.game_time}")
+                draw_text_list.append(f"[001]:前一循环时的游戏时间：{cache.pre_game_time}")
+                draw_text_list.append(f"[002]:已拥有的干员id列表：{cache.npc_id_got}")
+                draw_text_list.append(f"[003]:龙门币：{cache.base_resouce.money}")
+                draw_text_list.append(f"[004]:合成玉：{cache.base_resouce.orundum}")
+                draw_text_list.append(f"[005]:粉红凭证：{cache.base_resouce.pink_certificate}")
+                draw_text_list.append(f"[006]:基地当前所有待开放设施的开放情况")
+                draw_text_list.append(f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}")
+                draw_text_list.append(f"[008]:当前招募进度：{cache.base_resouce.recruit_now}")
+                draw_text_list.append(f"[009]:已招募待确认的干员id：{cache.base_resouce.recruited_id}")
 
-                button_count = 0
-                for show_key in cache_dict:
-                    draw_text = f"[00{button_count}]:{cache_dict[show_key]}"
-                    draw_text += cache.show_key
-
+                for i in range(len(draw_text_list)):
 
                     button_draw = draw.LeftButton(
-                        draw_text,
-                        f"\n1",
+                        draw_text_list[i],
+                        f"\n{i}",
                         self.width ,
                         cmd_func=self.change_value,
-                        args=show_key
+                        args=i
+                    )
+                    now_draw.draw_list.append(button_draw)
+                    now_draw.width += len(button_draw.text)
+                    now_draw.draw_list.append(line_feed)
+                    return_list.append(button_draw.return_text)
+
+            elif self.now_panel == "玩家属性":
+
+                all_info_draw = draw.NormalDraw()
+                all_info_text = "玩家的各项属性"
+                all_info_draw.text = all_info_text
+                all_info_draw.width = self.width
+                now_draw.draw_list.append(all_info_draw)
+                now_draw.width += len(all_info_draw.text)
+
+                now_draw.draw_list.append(line_feed)
+                now_draw.width += line_feed.width
+
+                # 要输出的变量名称以及注释
+                draw_text_list = []
+                draw_text_list.append(f"[000]:当前HP：{cache.character_data[0].hit_point}")
+                draw_text_list.append(f"[001]:最大HP：{cache.character_data[0].hit_point_max}")
+                draw_text_list.append(f"[002]:当前MP：{cache.character_data[0].mana_point}")
+                draw_text_list.append(f"[003]:最大MP：{cache.character_data[0].mana_point_max}")
+                draw_text_list.append(f"[004]:当前射精槽：{cache.character_data[0].eja_point}")
+                draw_text_list.append(f"[005]:困倦值 6m=1点，16h=160点(max)：{cache.character_data[0].sleep_point}")
+                draw_text_list.append(f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}")
+                draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
+
+
+                for i in range(len(draw_text_list)):
+
+                    button_draw = draw.LeftButton(
+                        draw_text_list[i],
+                        f"\n{i}",
+                        self.width ,
+                        cmd_func=self.change_value,
+                        args=i
+                    )
+                    now_draw.draw_list.append(button_draw)
+                    now_draw.width += len(button_draw.text)
+                    now_draw.draw_list.append(line_feed)
+                    return_list.append(button_draw.return_text)
+
+            elif self.now_panel == "NPC角色":
+
+                all_info_draw = draw.NormalDraw()
+                all_info_text = "选择角色："
+                all_info_draw.text = all_info_text
+                all_info_draw.width = self.width
+                now_draw.draw_list.append(all_info_draw)
+                now_draw.width += len(all_info_draw.text)
+
+                now_draw.draw_list.append(line_feed)
+                now_draw.width += line_feed.width
+
+                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                npc_count = 0
+
+                for NPC_id in id_list:
+                    target_data: game_type.Character = cache.character_data[NPC_id]
+                    button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
+
+                    button_draw = draw.LeftButton(
+                        button_text,
+                        f"\n{NPC_id}",
+                        self.width/6 ,
+                        cmd_func=self.change_target_character,
+                        args=NPC_id
                     )
                     now_draw.draw_list.append(button_draw)
                     now_draw.width += len(button_draw.text)
                     return_list.append(button_draw.return_text)
-                    button_count += 1
+                    npc_count += 1
+                    if npc_count % 6 == 0:
+                        now_draw.draw_list.append(line_feed)
+                now_draw.draw_list.append(line_feed)
 
-            elif self.now_panel == "玩家角色":
-
-                medical_info_draw = draw.NormalDraw()
-                medical_info_text = "\n当前玩家角色门情况："
-                patient_cured,patient_now = str(cache.base_resouce.patient_cured),str(cache.base_resouce.patient_now)
-                medical_info_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
-                medical_info_text += f"\n  当前正在坐诊的医生："
-                doctor_name_str = ""
-                for npc_id in cache.base_resouce.doctor_id_set:
-                    npc_name = cache.character_data[npc_id].name
-                    doctor_name_str += f" {npc_name}"
-                if len(doctor_name_str):
-                    medical_info_text += doctor_name_str
-                else:
-                    medical_info_text += " 暂无"
-                cure_income = str(cache.base_resouce.cure_income)
-                medical_info_text += f"\n  截至目前为止，今日玩家角色门龙门币总收入为：{cure_income}\n"
-
-                medical_info_draw.text = medical_info_text
-                medical_info_draw.width = self.width
-                now_draw.draw_list.append(medical_info_draw)
-                now_draw.width += len(medical_info_draw.text)
-
-            elif self.now_panel == "NPC角色":
-
-                civil_info_draw = draw.NormalDraw()
-                civil_info_text = "\n当前NPC角色门情况："
-                if len(cache.base_resouce.recruited_id):
-                    civil_info_text += f"\n  当前已招募未确认干员人数为：{len(cache.base_resouce.recruited_id)}人，请前往博士办公室确认"
-                else:
-                    civil_info_text += f"\n  当前没有已招募干员，请等待招募完成"
-                for i in {0,1,2}:
-                    if i in cache.base_resouce.recruit_now:
-                        civil_info_text += f"\n  {i+1}号招募位进度：{round(cache.base_resouce.recruit_now[0],1)}%/100%"
-                civil_info_text += f"\n  当前正在进行招募工作的人事："
-                HR_name_str = ""
-                for npc_id in cache.base_resouce.HR_id_set:
-                    npc_name = cache.character_data[npc_id].name
-                    HR_name_str += f" {npc_name}"
-                if len(HR_name_str):
-                    civil_info_text += HR_name_str
-                else:
-                    civil_info_text += " 暂无"
-                civil_info_text += "\n"
-
-                civil_info_draw.text = civil_info_text
-                civil_info_draw.width = self.width
-                now_draw.draw_list.append(civil_info_draw)
-                now_draw.width += len(civil_info_draw.text)
-
-            elif self.now_panel == "图书馆":
-
-                library_info_draw = draw.NormalDraw()
-                library_info_text = "\n当前图书馆部门情况："
-
-                reader_count = cache.base_resouce.reader_now
-                library_info_text += f"\n  当前读者人数：{reader_count} 人"
-                library_info_text += f"\n  当前正在工作的管理员："
-                manager_name_str = ""
-                for npc_id in cache.base_resouce.library_manager_set:
-                    npc_name = cache.character_data[npc_id].name
-                    manager_name_str += f" {npc_name}"
-                if len(manager_name_str):
-                    library_info_text += manager_name_str
-                else:
-                    library_info_text += " 暂无"
-
-                library_info_draw.text = library_info_text
-                library_info_draw.width = self.width
-                now_draw.draw_list.append(library_info_draw)
-                now_draw.width += len(library_info_draw.text)
-
-            elif self.now_panel == "宿舍":
-
-                dormitory_info_draw = draw.NormalDraw()
-                dormitory_info_text = "\n当前宿舍情况："
-                npc_count = str(len(cache.npc_id_got))
-                dormitory_info_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.base_resouce.people_max}"
-                dormitory_info_text += f"\n  具体居住情况："
-                doctor_name_str = ""
-                live_npc_id_set = cache.npc_id_got.copy()
-                Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
-                # 遍历所有宿舍
-                for dormitory_place in Dormitory_all:
-                    count = 0
-                    tem_remove_id_set = set() # 用来保存需要删除id的临时set
-                    dormitory_name = dormitory_place.split("\\")[-1]
-                    dormitory_son_text = f"\n    {dormitory_name}："
-                    # 遍历角色id
-                    for npc_id in live_npc_id_set:
-                        live_dormitory = cache.character_data[npc_id].dormitory
-                        # 如果该角色住在该宿舍，则在text中加入名字信息
-                        if live_dormitory == dormitory_place:
-                            dormitory_son_text += f"{cache.character_data[npc_id].name}  "
-                            count += 1
-                            tem_remove_id_set.add(npc_id)
-                        # 宿舍满2人则中断循环
-                        if count >= 2:
-                            break
-                    # 在id集合中删掉本次已经出现过的id
-                    for npc_id in tem_remove_id_set:
-                        live_npc_id_set.discard(npc_id)
-                    # 宿舍有人则显示该宿舍
-                    if count:
-                        dormitory_info_text += dormitory_son_text
-                dormitory_info_text += "\n"
-
-                dormitory_info_draw.text = dormitory_info_text
-                dormitory_info_draw.width = self.width
-                now_draw.draw_list.append(dormitory_info_draw)
-                now_draw.width += len(dormitory_info_draw.text)
 
             self.draw_list: List[draw.NormalDraw] = []
             """ 绘制的文本列表 """
@@ -255,11 +222,108 @@ class Debug_Panel:
 
         self.now_panel = department_type
 
+
+    def change_target_character(self,NPC_id):
+        """
+        选择目标角色
+        """
+        self.target_character_id = NPC_id
+
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            return_list = []
+            now_draw = panel.LeftDrawTextListPanel()
+
+            target_data: game_type.Character = cache.character_data[self.target_character_id]
+            info_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}\n\n"
+            info_draw.text = info_text
+            info_draw.draw()
+
+            # 要输出的变量名称以及注释
+            draw_text_list = []
+            draw_text_list.append(f"[000]:基础属性")
+            draw_text_list.append(f"[001]:道具")
+            draw_text_list.append(f"[002]:衣服")
+            draw_text_list.append(f"[003]:当前行为状态")
+            draw_text_list.append(f"[004]:当前二段行为状态")
+            draw_text_list.append(f"[005]:当前事件状态")
+            draw_text_list.append(f"[006]:状态")
+            draw_text_list.append(f"[007]:能力")
+            draw_text_list.append(f"[008]:经验")
+            draw_text_list.append(f"[009]:宝珠")
+            draw_text_list.append(f"[010]:素质")
+            draw_text_list.append(f"[011]:初次状态记录")
+            draw_text_list.append(f"[012]:污浊")
+            draw_text_list.append(f"[013]:本次H")
+            draw_text_list.append(f"[014]:助理情况")
+            draw_text_list.append(f"[015]:行动记录")
+            draw_text_list.append(f"[016]:工作")
+            draw_text_list.append(f"[017]:娱乐")
+            draw_text_list.append(f"[018]:怀孕")
+
+
+            # draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
+            # draw_text_list.append(f"[001]:最大HP：{target_data.hit_point_max}")
+            # draw_text_list.append(f"[002]:当前MP：{target_data.mana_point}")
+            # draw_text_list.append(f"[003]:最大MP：{target_data.mana_point_max}")
+            # draw_text_list.append(f"[004]:好感度：{target_data.favorability[0]}")
+            # draw_text_list.append(f"[005]:信赖度：{target_data.trust}")
+            # draw_text_list.append(f"[006]:当前愤怒槽：{target_data.angry_point}")
+            # draw_text_list.append(f"[007]:困倦值 6m=1点，16h=160点(max)：{target_data.sleep_point}")
+            # draw_text_list.append(f"[008]:尿意值 1m=1点，4h=240点(max)：{target_data.urinate_point}")
+            # draw_text_list.append(f"[009]:饥饿值 1m=1点，4h=240点(max)：{target_data.hunger_point}")
+            # draw_text_list.append(f"[010]:当前状态：{target_data.state}")
+            # draw_text_list.append(f"[011]:宿舍坐标：{target_data.dormitory}")
+            # draw_text_list.append(f"[012]:当前交互对象id：{target_data.target_character_id}")
+            # draw_text_list.append(f"[013]:AI行动里的原地发呆判定：{target_data.wait_flag}")
+            # draw_text_list.append(f"[014]:在H模式中：{target_data.is_h}")
+            # draw_text_list.append(f"[015]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.is_follow}")
+            # draw_text_list.append(f"[016]:疲劳状态（HP=1）：{target_data.tired}")
+            # draw_text_list.append(f"[017]:被玩家惹生气：{target_data.angry_with_player}")
+
+
+            for i in range(len(draw_text_list)):
+
+                button_draw = draw.LeftButton(
+                    draw_text_list[i],
+                    f"\n{i}",
+                    self.width ,
+                    cmd_func=self.change_target_value,
+                    args=i
+                )
+                now_draw.draw_list.append(button_draw)
+                now_draw.width += len(button_draw.text)
+                now_draw.draw_list.append(line_feed)
+                return_list.append(button_draw.return_text)
+
+            self.draw_list: List[draw.NormalDraw] = []
+            """ 绘制的文本列表 """
+            self.draw_list.extend(now_draw.draw_list)
+
+            for label in self.draw_list:
+                if isinstance(label, list):
+                    for value in label:
+                        value.draw()
+                    line_feed.draw()
+                else:
+                    label.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
     def change_value(self,key_index):
         """
         调整该变量的值
         """
-
 
         while 1:
             line = draw.LineDraw("-", self.width)
@@ -269,14 +333,248 @@ class Debug_Panel:
             info_draw.width = self.width
             return_list = []
 
-            # 玩家角色
-            info_text = f"\n  玩家角色："
-            info_draw.text = info_text
-            info_draw.draw()
-            # handle_doctor_panel.text_list = list(cache.base_resouce.doctor_id_set)
-            # handle_doctor_panel.update()
-            # handle_doctor_panel.draw()
-            # return_list.extend(handle_doctor_panel.return_list)
+            if self.now_panel == "全局变量":
+                if key_index == 0:
+                    info_text = f"[000]:游戏时间：{cache.game_time}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.game_time = new_value
+                elif key_index == 1:
+                    info_text = f"[001]:前一循环时的游戏时间：{cache.pre_game_time}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.pre_game_time = new_value
+                elif key_index == 2:
+                    info_text = f"[002]:已拥有的干员id列表：{cache.npc_id_got}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.npc_id_got = new_value
+                elif key_index == 3:
+                    info_text = f"[003]:龙门币：{cache.base_resouce.money}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.money = new_value
+                elif key_index == 4:
+                    info_text = f"[004]:合成玉：{cache.base_resouce.orundum}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.orundum = new_value
+                elif key_index == 5:
+                    info_text = f"[005]:粉红凭证：{cache.base_resouce.pink_certificate}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.pink_certificate = new_value
+                elif key_index == 6:
+                    info_text = f"[006]:基地当前所有待开放设施的开放情况"
+                    info_text += f"{cache.base_resouce.facility_open}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    # cache.base_resouce.money = new_value
+                elif key_index == 7:
+                    info_text = f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.party_day_of_week = new_value
+                elif key_index == 8:
+                    info_text = f"[008]:当前招募进度：{cache.base_resouce.recruit_now}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.recruit_now = new_value
+                elif key_index == 9:
+                    info_text = f"[009]:已招募待确认的干员id：{cache.base_resouce.recruited_id}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.base_resouce.recruited_id = new_value
+
+            elif self.now_panel == "玩家属性":
+
+                if key_index == 0:
+                    info_text = f"[000]:当前HP：{cache.character_data[0].hit_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].hit_point = new_value
+                elif key_index == 1:
+                    info_text = f"[001]:最大HP：{cache.character_data[0].hit_point_max}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].hit_point_max = new_value
+                elif key_index == 2:
+                    info_text = f"[002]:当前MP：{cache.character_data[0].mana_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].mana_point = new_value
+                elif key_index == 3:
+                    info_text = f"[003]:最大MP：{cache.character_data[0].mana_point_max}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].mana_point_max = new_value
+                elif key_index == 4:
+                    info_text = f"[004]:当前射精槽：{cache.character_data[0].eja_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].eja_point = new_value
+                elif key_index == 5:
+                    info_text = f"[005]:困倦值 6m=1点，16h=160点(max)：{cache.character_data[0].sleep_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].sleep_point = new_value
+                elif key_index == 6:
+                    info_text = f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].urinate_point = new_value
+                elif key_index == 7:
+                    info_text = f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = change_value_panel.draw()
+                    cache.character_data[0].hunger_point = new_value
+
+            line_feed.draw()
+            # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            # back_draw.draw()
+            # line_feed.draw()
+            # return_list.append(back_draw.return_text)
+            # yrn = flow_handle.askfor_all(return_list)
+            # if yrn == back_draw.return_text:
+            #     break
+            break
+
+
+    def change_target_value(self,key_index):
+        """
+        调整目标角色变量的值
+        """
+
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            target_data: game_type.Character = cache.character_data[self.target_character_id]
+            name_draw,info_draw = draw.NormalDraw(),draw.NormalDraw()
+            name_draw.text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}\n\n"
+            name_draw.width = self.width
+            name_draw.draw()
+
+            return_list = []
+
+            if key_index == 18:
+                draw_text_list = []
+                draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
+                draw_text_list.append(f"[001]:生殖周期的第几天：{target_data.pregnancy.reproduction_period}")
+                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
+                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
+                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
+                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
+
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+                value_index_panel = panel.AskForOneMessage()
+                value_index_panel.set(_("输入改变第几项"), 100)
+                value_index = value_index_panel.draw()
+                change_value_panel = panel.AskForOneMessage()
+                change_value_panel.set(_("输入改变后的值"), 100)
+                new_value = change_value_panel.draw()
+                print(f"debug value_index = {value_index},new_value = {new_value}")
+                if value_index == 0:
+                    target_data.pregnancy.fertilization_rate = new_value
+                    print(f"debug value_index = {value_index},new_value = {new_value}")
+                elif value_index == 1:
+                    target_data.pregnancy.reproduction_period = new_value
+                elif value_index == 2:
+                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
+                elif value_index == 3:
+                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(month = new_value)
+                elif value_index == 4:
+                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
+
+
+                draw_text_list = []
+                draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
+                draw_text_list.append(f"[001]:生殖周期的第几天：{target_data.pregnancy.reproduction_period}")
+                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
+                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
+                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
+                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
+
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -348,7 +646,7 @@ class ChangeWorkButtonList:
             target_data: game_type.Character = cache.character_data[self.NPC_id]
             info_text = f"{target_data.name}的当前工作为："
             if target_data.work.work_type == 61:
-                info_text += "坐诊(玩家角色)"
+                info_text += "坐诊(玩家属性)"
             elif target_data.work.work_type == 71:
                 info_text += "招募(NPC角色)"
             elif target_data.work.work_type == 101:
