@@ -80,24 +80,31 @@ class Born_Panel:
             while 1:
                 line = draw.LineDraw("-", window_width)
                 line.draw()
-                line_feed.draw()
                 return_list = []
 
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
                 info_draw.width = self.width
-                info_draw.text = f"\n得知了{mom_character_data.name}即将生产的消息后，你第一时间来到了候产室外等候\n"
+                info_draw.text = f"\n 得知了{mom_character_data.name}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n"
                 info_draw.draw()
                 line_feed.draw()
-                button_text = "等待"
+                button_text = " 焦急等待"
                 button_draw = draw.LeftButton( _(button_text), _("\n"), self.width)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn in return_list:
                     break
+            # 内循环2：起名字
             while 1:
-                info_draw.text = f"经过了漫长的等待之后，{doctor_character_data.name}推开手术室的门，告诉你{mom_character_data.name}生了一个可爱的女儿，母女平安\n"
+                info_draw.text = f" 经过了漫长的等待之后，随着响亮的哭声，{doctor_character_data.name}推开产房的门，告诉你{mom_character_data.name}生了一个可爱的女儿，母女平安\n"
+                info_draw.text += f" {mom_character_data.name}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n"
+                info_draw.draw()
+                line_feed.draw()
+                change_value_panel = panel.AskForOneMessage()
+                change_value_panel.set(_(" 你决定给女儿取名为——"), 100)
+                new_name = change_value_panel.draw()
+                info_draw.text += f"\n孩子的名字叫做{new_name}，她是{pl_character_data.name}的第{1}个孩子，也是{mom_character_data.name}的第{1}个孩子，请慢慢养育她长大成人吧\n"
                 info_draw.draw()
                 line_feed.draw()
                 break
@@ -108,8 +115,7 @@ class Born_Panel:
             mom_character_data.talent[23] = 1
             mom_character_data.talent[30] = 0
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n{mom_character_data.name}的生产结束了，母女平安，孩子很健康\n"
-            draw_text += f"\n{mom_character_data.name}仍需要在住院部休息几天，之后会恢复正常的工作和生活\n"
+            draw_text += f"\n{mom_character_data.name}的生产结束了，但她仍需要在住院部休息几天\n"
             draw_text += f"\n{mom_character_data.name}从[临盆]转变为[产后]\n"
             draw_text += f"\n{mom_character_data.name}失去了[孕肚]\n"
             draw_text += "\n※※※※※※※※※\n"
