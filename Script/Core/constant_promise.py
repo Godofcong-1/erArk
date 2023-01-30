@@ -1300,6 +1300,9 @@ class Premise:
     NEW_NPC_WAIT = "new_npc_wait"
     """ 经营 有已招募待确认的干员 """
 
+    BORN_FLAG = "born_flag"
+    """ 特殊事件 生孩子 """
+
     TO_DO = "to_do"
     """ 未分类 未实装 """
 

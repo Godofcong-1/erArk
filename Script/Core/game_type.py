@@ -423,6 +423,14 @@ class ACTION_INFO:
         """ 角色H被打断 """
 
 
+class SPECIAL_EVENT_FLAG:
+    """特殊事件的flag"""
+
+    def __init__(self):
+        self.born: bool = False
+        """ 生孩子事件 """
+
+
 class CHARA_WORK:
     """角色的工作信息结构体"""
 
@@ -876,6 +884,8 @@ class Character:
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
         """ 玩家的收藏品 """
+        self.sp_event_flag: SPECIAL_EVENT_FLAG = SPECIAL_EVENT_FLAG()
+        """ 特殊事件的flag """
         self.action_info: ACTION_INFO = ACTION_INFO()
         """ 角色的行动记录 """
         self.move_stop: bool = 0

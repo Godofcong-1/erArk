@@ -87,6 +87,34 @@ def init_character_tem():
     cache.npc_tem_data = character_config.character_tem_list
 
 
+def born_new_character(mother_id):
+    """
+    生成新的角色模板数据
+    """
+    #init_random_npc_data()
+    #npc_data = cache.random_npc_list
+    #numpy.random.shuffle(npc_data)
+    # print("初始化角色模板数据")
+    mom_character_data: game_type.Character = cache.character_data[mother_id]
+    now_tem = game_type.NpcTem()
+    now_tem.Name = "女儿"
+    now_tem.Sex = 1
+    now_tem.Profession = random.randint(0,8)
+    now_tem.Race = mom_character_data.race
+    now_tem.AdvNpc = random.randint(9000,9999)
+    now_tem.Ability = {}
+    now_tem.Experience = {}
+    now_tem.Talent = {}
+    now_tem.Hp = 1
+    now_tem.Mp = 1
+    now_tem.Dormitory = "无"
+    now_tem.Token = "无"
+    now_tem.Cloth = []
+    cache.npc_tem_data.append(now_tem)
+    now_id  = len(cache.npc_tem_data) + 1
+    # cache.npc_id_got.add(now_id)
+    init_character(now_id, cache.npc_tem_data[-1])
+
 # random_npc_max = normal_config.config_normal.random_npc_max
 # random_teacher_proportion = normal_config.config_normal.proportion_teacher
 # random_student_proportion = normal_config.config_normal.proportion_student

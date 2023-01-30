@@ -26,7 +26,7 @@ from Script.Design import (
     character_move
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import draw_event_text_panel
+from Script.UI.Panel import sp_event_panel
 from Script.Config import game_config, normal_config
 import time
 
@@ -144,6 +144,25 @@ def check_near_born(character_id: int):
             now_draw.draw()
 
 
+def check_born(character_id: int):
+    """
+    判断是否开始生产
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要已经是临盆状态
+    if character_data.talent[22]:
+        # 计算经过的天数
+        start_date = cache.game_time
+        end_date = character_data.pregnancy.fertilization_time
+        past_day = (start_date - end_date).days - 84
+        # 每过一天+20%几率判断是否生产
+        now_rate = past_day * 20
+        # print(f"debug {character_data.name}进入生产检测，当前生产几率为{now_rate}%")
+        if random.randint(1,100) <= now_rate:
+            draw_panel = sp_event_panel.Born_Panel(character_id)
+            draw_panel.draw()
+
+
 def check_all_pregnancy(character_id: int):
     """
     进行受精怀孕的全流程检查
@@ -154,6 +173,7 @@ def check_all_pregnancy(character_id: int):
     check_fertilization(character_id)
     check_pregnancy(character_id)
     check_near_born(character_id)
+    check_born(character_id)
 
 
 def update_reproduction_period(character_id: int):

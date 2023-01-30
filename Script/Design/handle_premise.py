@@ -3607,6 +3607,20 @@ def handle_new_npc_wait(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.BORN_FLAG)
+def handle_born_flag(character_id: int) -> int:
+    """
+    特殊事件 生孩子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if len(cache.base_resouce.recruited_id):
+        return 1
+    return 0
+
+
 # @add_premise(constant_promise.Premise.TARGET_AGE_SIMILAR)
 # def handle_target_age_similar(character_id: int) -> int:
 #     """

@@ -552,6 +552,8 @@ class Debug_Panel:
                     value_index = value_index_panel.draw()
                     if "," in value_index: # 转成全int的list
                         value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
@@ -575,22 +577,25 @@ class Debug_Panel:
                 draw_text_list = []
                 draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
                 draw_text_list.append(f"[001]:生殖周期的第几天(0安全1普通2危险3排卵，0110232)：{target_data.pregnancy.reproduction_period}")
-                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
-                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
-                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
-                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
+                draw_text_list.append(f"[002]:开始受精的时间：{target_data.pregnancy.fertilization_time}      年月日分别为0,1,2")
+                draw_text_list.append(f"[003]:当前妊娠素质：0受精-{target_data.talent[20]}，1妊娠-{target_data.talent[21]}，2临盆-{target_data.talent[22]}，3产后-{target_data.talent[23]}，4育儿-{target_data.talent[24]}")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
                     info_draw.text = draw_text_list[i]
                     info_draw.draw()
                     line_feed.draw()
+                line_feed.draw()
 
                 # 如果需要输入，则进行两次输入
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
-                    value_index_panel.set(_("输入改变第几项"), 100)
-                    value_index = int(value_index_panel.draw())
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
@@ -602,12 +607,16 @@ class Debug_Panel:
                         # print(f"debug value_index = {value_index},new_value = {new_value}")
                     elif value_index == 1:
                         target_data.pregnancy.reproduction_period = new_value
-                    elif value_index == 2:
-                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
-                    elif value_index == 3:
-                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(month = new_value)
-                    elif value_index == 4:
-                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
+                    elif value_index[0] == 2:
+                        if value_index[1] == 0:
+                            target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
+                        elif value_index[1] == 1:
+                            target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(month = new_value)
+                        elif value_index[1] == 2:
+                            target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
+                    elif value_index[0] == 3:
+                        target_data.talent[20 + value_index[1]] = new_value
+                        target_data.pregnancy.fertilization_time = cache.game_time
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
