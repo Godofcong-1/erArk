@@ -257,13 +257,13 @@ class Debug_Panel:
             draw_text_list.append(f"[009]:宝珠")
             draw_text_list.append(f"[010]:素质")
             draw_text_list.append(f"[011]:初次状态记录")
-            draw_text_list.append(f"[012]:污浊")
+            draw_text_list.append(f"[012]:污浊（已实装）")
             draw_text_list.append(f"[013]:本次H")
             draw_text_list.append(f"[014]:助理情况")
             draw_text_list.append(f"[015]:行动记录")
             draw_text_list.append(f"[016]:工作")
             draw_text_list.append(f"[017]:娱乐")
-            draw_text_list.append(f"[018]:怀孕")
+            draw_text_list.append(f"[018]:怀孕（已实装）")
 
 
             # draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
@@ -341,7 +341,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.game_time = new_value
                 elif key_index == 1:
                     info_text = f"[001]:前一循环时的游戏时间：{cache.pre_game_time}"
@@ -350,7 +350,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.pre_game_time = new_value
                 elif key_index == 2:
                     info_text = f"[002]:已拥有的干员id列表：{cache.npc_id_got}"
@@ -359,7 +359,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.npc_id_got = new_value
                 elif key_index == 3:
                     info_text = f"[003]:龙门币：{cache.base_resouce.money}"
@@ -368,7 +368,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.money = new_value
                 elif key_index == 4:
                     info_text = f"[004]:合成玉：{cache.base_resouce.orundum}"
@@ -377,7 +377,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.orundum = new_value
                 elif key_index == 5:
                     info_text = f"[005]:粉红凭证：{cache.base_resouce.pink_certificate}"
@@ -386,7 +386,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.pink_certificate = new_value
                 elif key_index == 6:
                     info_text = f"[006]:基地当前所有待开放设施的开放情况"
@@ -396,7 +396,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     # cache.base_resouce.money = new_value
                 elif key_index == 7:
                     info_text = f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}"
@@ -405,7 +405,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.party_day_of_week = new_value
                 elif key_index == 8:
                     info_text = f"[008]:当前招募进度：{cache.base_resouce.recruit_now}"
@@ -414,7 +414,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.recruit_now = new_value
                 elif key_index == 9:
                     info_text = f"[009]:已招募待确认的干员id：{cache.base_resouce.recruited_id}"
@@ -423,7 +423,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.base_resouce.recruited_id = new_value
 
             elif self.now_panel == "玩家属性":
@@ -435,7 +435,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].hit_point = new_value
                 elif key_index == 1:
                     info_text = f"[001]:最大HP：{cache.character_data[0].hit_point_max}"
@@ -444,7 +444,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].hit_point_max = new_value
                 elif key_index == 2:
                     info_text = f"[002]:当前MP：{cache.character_data[0].mana_point}"
@@ -453,7 +453,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].mana_point = new_value
                 elif key_index == 3:
                     info_text = f"[003]:最大MP：{cache.character_data[0].mana_point_max}"
@@ -462,7 +462,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].mana_point_max = new_value
                 elif key_index == 4:
                     info_text = f"[004]:当前射精槽：{cache.character_data[0].eja_point}"
@@ -471,7 +471,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].eja_point = new_value
                 elif key_index == 5:
                     info_text = f"[005]:困倦值 6m=1点，16h=160点(max)：{cache.character_data[0].sleep_point}"
@@ -480,7 +480,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].sleep_point = new_value
                 elif key_index == 6:
                     info_text = f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}"
@@ -489,7 +489,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].urinate_point = new_value
                 elif key_index == 7:
                     info_text = f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}"
@@ -498,7 +498,7 @@ class Debug_Panel:
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = change_value_panel.draw()
+                    new_value = int(change_value_panel.draw())
                     cache.character_data[0].hunger_point = new_value
 
             line_feed.draw()
@@ -517,6 +517,8 @@ class Debug_Panel:
         调整目标角色变量的值
         """
 
+        change_draw_flag = True
+
         while 1:
             line = draw.LineDraw("-", self.width)
             line.draw()
@@ -526,64 +528,105 @@ class Debug_Panel:
             name_draw.text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}\n\n"
             name_draw.width = self.width
             name_draw.draw()
-
             return_list = []
 
-            if key_index == 18:
+            # 污浊数据
+            if key_index == 12:
                 draw_text_list = []
-                draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
-                draw_text_list.append(f"[001]:生殖周期的第几天：{target_data.pregnancy.reproduction_period}")
-                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
-                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
-                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
-                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
+                draw_text_list.append(f"[000]:身体精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.body_semen}")
+                draw_text_list.append(f"\n[001]:服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_semen}")
+                draw_text_list.append(f"\n[002]:衣柜里的服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_locker_semen}")
+                draw_text_list.append(f"\n[003]:A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠]：{target_data.dirty.a_clean}")
 
-                for i in range(len(draw_text_list)):
-                    info_draw.text = draw_text_list[i]
-                    info_draw.draw()
-                    line_feed.draw()
-                value_index_panel = panel.AskForOneMessage()
-                value_index_panel.set(_("输入改变第几项"), 100)
-                value_index = value_index_panel.draw()
-                change_value_panel = panel.AskForOneMessage()
-                change_value_panel.set(_("输入改变后的值"), 100)
-                new_value = change_value_panel.draw()
-                print(f"debug value_index = {value_index},new_value = {new_value}")
-                if value_index == 0:
-                    target_data.pregnancy.fertilization_rate = new_value
-                    print(f"debug value_index = {value_index},new_value = {new_value}")
-                elif value_index == 1:
-                    target_data.pregnancy.reproduction_period = new_value
-                elif value_index == 2:
-                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
-                elif value_index == 3:
-                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(month = new_value)
-                elif value_index == 4:
-                    target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
-
-
-                draw_text_list = []
-                draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
-                draw_text_list.append(f"[001]:生殖周期的第几天：{target_data.pregnancy.reproduction_period}")
-                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
-                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
-                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
-                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
-
+                # 进行显示
                 for i in range(len(draw_text_list)):
                     info_draw.text = draw_text_list[i]
                     info_draw.draw()
                     line_feed.draw()
 
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    # 根据第几项更改对应值
+                    if value_index[0] == 0:
+                        target_data.dirty.body_semen[value_index[1]][value_index[2]] = new_value
+                    elif value_index[0] == 1:
+                        target_data.dirty.cloth_semen[value_index[1]][value_index[2]] = new_value
+                    elif value_index[0] == 2:
+                        target_data.dirty.cloth_locker_semen[value_index[1]][value_index[2]] = new_value
+                    elif value_index[0] == 3:
+                        target_data.dirty.a_clean = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+            # 怀孕数据
+            elif key_index == 18:
+                draw_text_list = []
+                draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
+                draw_text_list.append(f"[001]:生殖周期的第几天(0安全1普通2危险3排卵，0110232)：{target_data.pregnancy.reproduction_period}")
+                draw_text_list.append(f"开始受精的时间：{target_data.pregnancy.fertilization_time}")
+                draw_text_list.append(f"[002]:开始受精的年份：{target_data.pregnancy.fertilization_time.year}")
+                draw_text_list.append(f"[003]:开始受精的月份：{target_data.pregnancy.fertilization_time.month}")
+                draw_text_list.append(f"[004]:开始受精的日期：{target_data.pregnancy.fertilization_time.day}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项"), 100)
+                    value_index = int(value_index_panel.draw())
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+                    # print(f"debug value_index = {value_index},new_value = {new_value}")
+
+                    # 根据第几项更改对应值
+                    if value_index == 0:
+                        target_data.pregnancy.fertilization_rate = new_value
+                        # print(f"debug value_index = {value_index},new_value = {new_value}")
+                    elif value_index == 1:
+                        target_data.pregnancy.reproduction_period = new_value
+                    elif value_index == 2:
+                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
+                    elif value_index == 3:
+                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(month = new_value)
+                    elif value_index == 4:
+                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
 
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width/2)
             back_draw.draw()
+            again_draw = draw.CenterButton(_("[继续修改]"), _("继续修改"), window_width/2)
+            again_draw.draw()
+            return_list.append(again_draw.return_text)
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+            else:
+                change_draw_flag = True
+                continue
 
 
 class ChangeWorkButtonList:

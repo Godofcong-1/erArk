@@ -588,7 +588,7 @@ def judge_character_pregnancy(character_id: int) -> int:
         now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
         now_scene_data = cache.scene_data[now_scene_str]
         if "Inpatient_Department" not in now_scene_data.scene_tag:
-            to_Inpatient_Department = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["to_Inpatient_Department"]))
+            to_Inpatient_Department = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Inpatient_Department"]))
             map_handle.character_move_scene(character_data.position, to_Inpatient_Department, character_id)
 
     return 1

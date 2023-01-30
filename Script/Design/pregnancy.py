@@ -73,8 +73,10 @@ def check_fertilization(character_id: int):
     # 随机数判断是否受精
     if character_data.pregnancy.fertilization_rate:
         if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
-            draw_text = f"\n精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
             draw_text += f"\n{character_data.name}获得了[受精]\n"
+            draw_text += "\n※※※※※※※※※\n"
             character_data.talent[20] = 1
             character_data.pregnancy.fertilization_time = cache.game_time
         else:
@@ -103,11 +105,13 @@ def check_pregnancy(character_id: int):
             character_data.talent[21] = 1
             character_data.talent[30] = 1
             character_data.talent[31] = 1
-            draw_text = f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
             draw_text += f"\n{character_data.name}有孕在身，将会暂停工作和部分娱乐\n"
             draw_text += f"\n{character_data.name}从[受精]转变为[妊娠]\n"
             draw_text += f"\n{character_data.name}获得了[孕肚]\n"
             draw_text += f"\n{character_data.name}获得了[泌乳]\n"
+            draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
             now_draw.text = draw_text
@@ -129,9 +133,11 @@ def check_near_born(character_id: int):
         if past_day >= 85:
             character_data.talent[21] = 0
             character_data.talent[22] = 1
-            draw_text = f"\n随着怀孕的进程，{character_data.name}临近生产，即将诞下爱的结晶\n"
-            draw_text += f"\n{character_data.name}在临盆期内会一直躺在医疗部住院区，多去陪陪她，静候生产的来临吧\n"
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n随着怀孕的进程，{character_data.name}临近生产，即将诞下爱的结晶\n"
+            draw_text += f"\n{character_data.name}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n"
             draw_text += f"\n{character_data.name}从[妊娠]转变为[临盆]\n"
+            draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
             now_draw.text = draw_text

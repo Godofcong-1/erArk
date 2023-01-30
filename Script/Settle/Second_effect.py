@@ -520,10 +520,12 @@ def handle_down_small_hit_point(
         character_data.hit_point = 1
         if not character_data.tired:
             character_data.tired = 1
-            now_draw = draw.NormalDraw()
-            now_draw.width = window_width
-            now_draw.text = "\n" + character_data.name + "太累了\n"
-            now_draw.draw()
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.DOWN_SMALL_MANA_POINT)
@@ -555,10 +557,12 @@ def handle_down_small_mana_point(
             character_data.hit_point = 1
             if not character_data.tired:
                 character_data.tired = 1
-                now_draw = draw.NormalDraw()
-                now_draw.width = window_width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = window_width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_N_FEEL)

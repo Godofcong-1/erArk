@@ -861,6 +861,7 @@ def init():
     load_clothing_use_type()
     load_work_type()
     load_entertainment()
+    load_reproduction_period()
     load_body_part()
     load_collection_bonus_data()
     load_facility()

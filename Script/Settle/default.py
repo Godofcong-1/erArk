@@ -279,10 +279,12 @@ def handle_sub_both_small_hit_point(
                 character_behavior.judge_character_tired_sleep(0)
                 handle_instruct.handle_end_h()
             else:
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -306,10 +308,12 @@ def handle_sub_both_small_hit_point(
                     character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                     handle_instruct.handle_end_h()
                 else:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + target_data.name + "太累了\n"
-                    now_draw.draw()
+                    # 如果和玩家位于同一地点，则输出提示信息
+                    if character_data.position == cache.character_data[0].position:
+                        now_draw = draw.NormalDraw()
+                        now_draw.width = width
+                        now_draw.text = "\n" + target_data.name + "太累了\n"
+                        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
@@ -352,10 +356,12 @@ def handle_sub_both_small_mana_point(
                     character_behavior.judge_character_tired_sleep(0)
                     handle_instruct.handle_end_h()
                 else:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
-                    now_draw.draw()
+                    # 如果和玩家位于同一地点，则输出提示信息
+                    if character_data.position == cache.character_data[0].position:
+                        now_draw = draw.NormalDraw()
+                        now_draw.width = width
+                        now_draw.text = "\n" + character_data.name + "太累了\n"
+                        now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -381,10 +387,12 @@ def handle_sub_both_small_mana_point(
                         character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                         handle_instruct.handle_end_h()
                     else:
-                        now_draw = draw.NormalDraw()
-                        now_draw.width = width
-                        now_draw.text = "\n" + target_data.name + "太累了\n"
-                        now_draw.draw()
+                        # 如果和玩家位于同一地点，则输出提示信息
+                        if character_data.position == cache.character_data[0].position:
+                            now_draw = draw.NormalDraw()
+                            now_draw.width = width
+                            now_draw.text = "\n" + target_data.name + "太累了\n"
+                            now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
@@ -420,10 +428,12 @@ def handle_sub_self_small_hit_point(
         character_data.hit_point = 1
         if not character_data.tired:
             character_data.tired = 1
-            now_draw = draw.NormalDraw()
-            now_draw.width = width
-            now_draw.text = "\n" + character_data.name + "太累了\n"
-            now_draw.draw()
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
@@ -460,10 +470,12 @@ def handle_sub_self_small_mana_point(
             character_data.hit_point = 1
             if not character_data.tired:
                 character_data.tired = 1
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)

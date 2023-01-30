@@ -293,7 +293,7 @@ class PREGNANCY:
         self.fertilization_rate: int = 0
         """ 受精概率 """
         self.reproduction_period: int = 0
-        """ 生殖周期的第几天 """
+        """ 生殖周期的第几天(0安全1普通2危险3排卵，0110232) """
         self.fertilization_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色开始受精的时间 """
 
