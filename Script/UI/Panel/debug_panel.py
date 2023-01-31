@@ -255,7 +255,7 @@ class Debug_Panel:
             draw_text_list.append(f"[007]:能力")
             draw_text_list.append(f"[008]:经验")
             draw_text_list.append(f"[009]:宝珠")
-            draw_text_list.append(f"[010]:素质")
+            draw_text_list.append(f"[010]:素质（已实装）")
             draw_text_list.append(f"[011]:初次状态记录")
             draw_text_list.append(f"[012]:污浊（已实装）")
             draw_text_list.append(f"[013]:本次H")
@@ -264,6 +264,7 @@ class Debug_Panel:
             draw_text_list.append(f"[016]:工作")
             draw_text_list.append(f"[017]:娱乐")
             draw_text_list.append(f"[018]:怀孕（已实装）")
+            draw_text_list.append(f"[019]:社会关系（已实装）")
 
 
             # draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
@@ -542,8 +543,43 @@ class Debug_Panel:
             name_draw.draw()
             return_list = []
 
+            # 素质数据
+            if key_index == 10:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in target_data.talent:
+                    name = game_config.config_talent[cid].name
+                    info_text += f"{cid}:{name}={target_data.talent[cid]} "
+                draw_text_list.append(f"[000]:素质列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.talent[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
             # 污浊数据
-            if key_index == 12:
+            elif key_index == 12:
                 draw_text_list = []
                 draw_text_list.append(f"[000]:身体精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.body_semen}")
                 draw_text_list.append(f"\n[001]:服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_semen}")
@@ -649,6 +685,38 @@ class Debug_Panel:
                             target_data.pregnancy.born_time = target_data.pregnancy.born_time.replace(month = new_value)
                         elif value_index[1] == 2:
                             target_data.pregnancy.born_time = target_data.pregnancy.born_time.replace(day = new_value)
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+            # 社会关系数据
+            elif key_index == 19:
+                info_text = f"[000]:父亲id：{target_data.relationship.father_id}\n"
+                info_text += f"[001]:母亲id：{target_data.relationship.mother_id}\n"
+                info_text += f"[002]:孩子id列表：{target_data.relationship.child_id_list}\n"
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+
+                if change_draw_flag:
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    if value_index[0] == 0:
+                        target_data.relationship.father_id = value_index[1]
+                    elif value_index[0] == 1:
+                        target_data.relationship.mother_id = value_index[1]
+                    elif value_index[0] == 2:
+                        if value_index[1] == 1:
+                            target_data.relationship.child_id_list.append(value_index[2])
+                        else:
+                            target_data.relationship.child_id_list.remove(value_index[2])
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

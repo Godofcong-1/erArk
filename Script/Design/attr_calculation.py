@@ -55,6 +55,17 @@ def get_pregnancy_zero() -> dict:
 
     return pregnancy_data
 
+def get_relationship_zero(relationship_dict) -> dict:
+    """
+    检查初始关系，将为空的项补为0
+    """
+    relationship_data = relationship_dict
+    # for status in game_config.tio:
+    #     if status not in status_dict:
+    #         status_list[status] = 0
+    return relationship_data
+
+
 def get_status_zero(status_dict) -> dict:
     """
     检查初始状态，将为空的项补为0
@@ -64,7 +75,6 @@ def get_status_zero(status_dict) -> dict:
         if status not in status_dict:
             status_list[status] = 0
     return status_list
-
 def get_talent_zero(talent_dict) -> dict:
     """
     检查初始素质，将为空的项补为0
