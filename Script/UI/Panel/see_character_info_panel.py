@@ -1648,6 +1648,8 @@ class CharacterTalentText:
         character_data = cache.character_data[character_id]
         profession_text = game_config.config_profession[character_data.profession].name
         race_text = game_config.config_race[character_data.race].name
+        birthplace_text = game_config.config_birthplace[character_data.relationship.birthplace].name
+        nation_text = game_config.config_nation[character_data.relationship.nation].name
         type_data = "素质"
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
@@ -1669,6 +1671,14 @@ class CharacterTalentText:
                     race_text=race_text,
                 )
                 talent_text_list.append(message_race)
+                message_nation = _("\n 势力    ：[{nation_text}]").format(
+                    nation_text=nation_text,
+                )
+                talent_text_list.append(message_nation)
+                message_birthplace = _("\n 出身地  ：[{birthplace_text}]").format(
+                    birthplace_text=birthplace_text,
+                )
+                talent_text_list.append(message_birthplace)
                 conut = 1
             race_type = type_data.name
             if talent_type == 0:

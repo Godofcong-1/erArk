@@ -53,6 +53,12 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.sex = character_tem.Sex
     now_character.profession= character_tem.Profession
     now_character.race= character_tem.Race
+    now_character.relationship.nation= character_tem.Nation
+    now_character.relationship.birthplace= character_tem.Birthplace
+    # 如果有母亲的话则加上亲子关系
+    if character_tem.Mother_id:
+        now_character.relationship.father_id = 0
+        now_character.relationship.mother_id = character_tem.Mother_id
     now_character.adv = character_tem.AdvNpc
     now_character.target_character_id = character_id
     now_character.favorability = {0:0}
@@ -87,9 +93,9 @@ def init_character_tem():
     cache.npc_tem_data = character_config.character_tem_list
 
 
-def born_new_character(mother_id):
+def born_new_character(mother_id,child_name):
     """
-    生成新的角色模板数据
+    生成新的小孩模板数据
     """
     #init_random_npc_data()
     #npc_data = cache.random_npc_list
@@ -97,21 +103,27 @@ def born_new_character(mother_id):
     # print("初始化角色模板数据")
     mom_character_data: game_type.Character = cache.character_data[mother_id]
     now_tem = game_type.NpcTem()
-    now_tem.Name = "女儿"
+    now_tem.Name = child_name
     now_tem.Sex = 1
     now_tem.Profession = random.randint(0,8)
     now_tem.Race = mom_character_data.race
+    now_tem.Nation = 0
+    now_tem.Birthplace = 0
+    now_tem.Mother_id = mother_id
     now_tem.AdvNpc = random.randint(9000,9999)
     now_tem.Ability = {}
     now_tem.Experience = {}
     now_tem.Talent = {}
-    now_tem.Hp = 1
-    now_tem.Mp = 1
+    now_tem.Hp = random.randint(1000,2000)
+    now_tem.Mp = random.randint(1000,2000)
     now_tem.Dormitory = "无"
     now_tem.Token = "无"
     now_tem.Cloth = []
     cache.npc_tem_data.append(now_tem)
     now_id  = len(cache.npc_tem_data) + 1
+    # 给父母加上该孩子的社会关系
+    cache.character_data[0].relationship.child_id_list.append(now_id)
+    mom_character_data.relationship.child_id_list.append(now_id)
     # cache.npc_id_got.add(now_id)
     init_character(now_id, cache.npc_tem_data[-1])
 

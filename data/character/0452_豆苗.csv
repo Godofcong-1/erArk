@@ -5,6 +5,8 @@ Name,str,豆苗,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
 Race,int,33,0,瑞柏巴
+Nation,int,41,0,哥伦比亚
+Birthplace,int,4,0,哥伦比亚
 Hp,int,1800,0,初始体力
 Mp,int,1600,0,初始气力
 Dormitory,str,无,1,初始宿舍

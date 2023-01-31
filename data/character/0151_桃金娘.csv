@@ -5,6 +5,8 @@ Name,str,桃金娘,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
 Race,int,12,0,杜林
+Nation,int,0,0,罗德岛
+Birthplace,int,19,0,杜林
 Hp,int,1300,0,初始体力
 Mp,int,900,0,初始气力
 Dormitory,str,无,1,初始宿舍

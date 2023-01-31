@@ -5,6 +5,8 @@ Name,str,华法琳,1,姓名
 Sex,int,1,0,女
 Profession,int,3,0,医疗
 Race,int,25,0,萨卡兹
+Nation,int,0,0,罗德岛
+Birthplace,int,6,0,卡兹戴尔
 Hp,int,1400,0,初始体力
 Mp,int,1100,0,初始气力
 Dormitory,str,无,1,初始宿舍

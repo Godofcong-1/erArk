@@ -39,7 +39,7 @@ class NpcTem:
     def __init__(self):
         self.Name: str = ""
         """ npc名字 """
-        self.Sex: str = ""
+        self.Sex: int = 0
         """ npc性别 """
         # self.Age: str = ""
         # """ npc年龄模板 """
@@ -64,10 +64,14 @@ class NpcTem:
         """ 经验预设 """
         self.Juel: Dict[int, int] = {}
         """ 宝珠预设 """
-        self.Profession: str = ""
+        self.Profession: int = 0
         """ 职业预设 """
-        self.Race: str = ""
+        self.Race: int = 0
         """ 种族预设 """
+        self.Nation: int = 0
+        """ 势力预设 """
+        self.Birthplace: int = 0
+        """ 出生地预设 """
         self.Talent: Dict[int, int] = {}
         """ 素质预设 """
         self.Cloth: list = []
@@ -76,9 +80,11 @@ class NpcTem:
         """ HP预设 """
         self.Mp: int = 0
         """ MP预设 """
-        self.Dormitory: int = 0
+        self.Mother_id: int = 0
+        """ 母亲id """
+        self.Dormitory: str = ""
         """ 宿舍预设 """
-        self.Token: int = 0
+        self.Token: str = ""
         """ 信物预设 """
 
 
@@ -296,6 +302,27 @@ class PREGNANCY:
         """ 生殖周期的第几天(0安全1普通2危险3排卵，0110232) """
         self.fertilization_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色开始受精的时间 """
+        self.born_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色出生的时间 """
+
+
+class RELATIONSHIP:
+    """社交关系数据结构体"""
+
+    def __init__(self):
+
+        self.father_id: int = -1
+        """ 父亲id """
+        self.mother_id: int = -1
+        """ 母亲id """
+        self.child_id_list: List = []
+        """ 孩子id列表 """
+        self.firend_id_list: List = []
+        """ 朋友id列表 """
+        self.birthplace: int = 0
+        """ 出生地 """
+        self.nation: int = 0
+        """ 势力 """
 
 
 class CLOTH:
@@ -824,10 +851,10 @@ class Character:
         """ 角色HP模板 """
         self.mana_point_tem: int = 1
         """ 角色MP模板 """
-        self.social_contact: Dict[int, Set] = {}
-        """ 角色社交关系数据 关系类型:角色id集合 """
-        self.social_contact_data: Dict[int, int] = {}
-        """ 角色社交关系数据 角色id:关系类型 """
+        # self.social_contact: Dict[int, Set] = {}
+        # """ 角色社交关系数据 关系类型:角色id集合 """
+        # self.social_contact_data: Dict[int, int] = {}
+        # """ 角色社交关系数据 角色id:关系类型 """
         self.favorability: Dict[int, int] = {}
         """ 角色好感度数据 角色id:好感度 """
         self.trust: int = 0
@@ -896,6 +923,8 @@ class Character:
         """ 角色的娱乐情况 """
         self.pregnancy: PREGNANCY = PREGNANCY()
         """ 角色的怀孕情况 """
+        self.relationship: RELATIONSHIP = RELATIONSHIP()
+        """ 角色的社会关系 """
 
 
 class Cache:

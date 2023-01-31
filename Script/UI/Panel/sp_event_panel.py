@@ -104,12 +104,16 @@ class Born_Panel:
                 change_value_panel = panel.AskForOneMessage()
                 change_value_panel.set(_(" 你决定给女儿取名为——"), 100)
                 new_name = change_value_panel.draw()
-                info_draw.text += f"\n孩子的名字叫做{new_name}，她是{pl_character_data.name}的第{1}个孩子，也是{mom_character_data.name}的第{1}个孩子，请慢慢养育她长大成人吧\n"
+
+                # 创建该角色
+                character_handle.born_new_character(self.mother_character_id,new_name)
+                child_character_data: game_type.Character = cache.character_data[len(cache.npc_tem_data) + 1]
+                child_character_data.pregnancy.born_time = cache.game_time
+
+                info_draw.text += f"\n孩子的名字叫做{child_character_data.name}，她是{pl_character_data.name}的第{len(pl_character_data.relationship.child_id_list)}个孩子，也是{mom_character_data.name}的第{len(mom_character_data.relationship.child_id_list)}个孩子，请慢慢养育她长大成人吧\n"
                 info_draw.draw()
                 line_feed.draw()
                 break
-
-            character_handle.born_new_character(self.mother_character_id)
 
             mom_character_data.talent[22] = 0
             mom_character_data.talent[23] = 1
@@ -123,19 +127,10 @@ class Born_Panel:
             now_draw.width = window_width
             now_draw.text = draw_text
             now_draw.draw()
+            now_draw.text = "\n"
+            now_draw.draw()
+            now_draw.text = "\n"
+            now_draw.draw()
 
-
-            # askfor_panel = panel.OneMessageAndSingleColumnButton()
-            # askfor_list = [_("是"), _("否")]
-            # askfor_panel.set(askfor_list, _(info_text), 0)
-            # askfor_panel_return_list = askfor_panel.get_return_list()
-            # return_list.extend(askfor_panel_return_list.keys())
-            # now_draw.draw_list.append(askfor_panel)
-
-            # yrn = flow_handle.askfor_all(return_list)
-            # if yrn in return_list:
-            #     if askfor_panel_return_list[yrn] == askfor_list[0]:
-            #         return 1
-            #     return 0
             break
 

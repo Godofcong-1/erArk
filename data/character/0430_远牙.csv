@@ -5,6 +5,8 @@ Name,str,远牙,1,姓名
 Sex,int,1,0,女
 Profession,int,2,0,狙击
 Race,int,19,0,黎博利
+Nation,int,62,0,红松骑士团
+Birthplace,int,5,0,卡西米尔
 Hp,int,1700,0,初始体力
 Mp,int,1600,0,初始气力
 Dormitory,str,无,1,初始宿舍

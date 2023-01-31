@@ -5,6 +5,8 @@ Name,str,凯尔希,1,姓名
 Sex,int,1,0,女
 Profession,int,3,0,医疗
 Race,int,13,0,菲林
+Nation,int,0,0,罗德岛
+Birthplace,int,0,0,罗德岛
 Hp,int,2000,0,初始体力
 Mp,int,1500,0,初始气力
 Dormitory,str,无,1,初始宿舍

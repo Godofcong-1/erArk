@@ -57,6 +57,15 @@ class BehaviorEffect:
     """ 结算器id """
 
 
+class Birthplace:
+    """ 出生地列表 """
+
+    cid: int
+    """ 出生地id """
+    name: str
+    """ 出生地名 """
+
+
 class BodyPart:
     """ 身体部位表 """
 
@@ -356,6 +365,15 @@ class MoveMenuType:
     """ 移动类型id """
     name: str
     """ 名字 """
+
+
+class Nation:
+    """ 势力列表 """
+
+    cid: int
+    """ 势力id """
+    name: str
+    """ 势力名 """
 
 
 class Organ:

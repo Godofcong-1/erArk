@@ -5,6 +5,8 @@ Name,str,火神,1,姓名
 Sex,int,1,0,女
 Profession,int,6,0,重装
 Race,int,14,0,丰蹄
+Nation,int,101,0,米诺斯
+Birthplace,int,10,0,米诺斯
 Hp,int,1700,0,初始体力
 Mp,int,1400,0,初始气力
 Dormitory,str,无,1,初始宿舍

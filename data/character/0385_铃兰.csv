@@ -5,6 +5,8 @@ Name,str,铃兰,1,姓名
 Sex,int,1,0,女
 Profession,int,7,0,辅助
 Race,int,28,0,沃尔珀
+Nation,int,131,0,叙拉古
+Birthplace,int,3,0,东
 Hp,int,1000,0,初始体力
 Mp,int,1300,0,初始气力
 Dormitory,str,无,1,初始宿舍

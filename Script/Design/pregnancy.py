@@ -163,6 +163,34 @@ def check_born(character_id: int):
             draw_panel.draw()
 
 
+def check_rearing(character_id: int):
+    """
+    判断是否开始育儿
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要已经是产后状态
+    if character_data.talent[23]:
+        # 计算经过的天数
+        child_id = character_data.relationship.child_id_list[-1]
+        child_character_data: game_type.Character = cache.character_data[child_id]
+        start_date = cache.game_time
+        end_date = child_character_data.pregnancy.born_time
+        past_day = (start_date - end_date).days
+        # 
+        if past_day >= 2:
+            character_data.talent[23] = 0
+            character_data.talent[24] = 1
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n{character_data.name}的产后休息结束了\n"
+            draw_text += f"\n{character_data.name}接下来的行动重心会以照顾{child_character_data.name}为主\n"
+            draw_text += f"\n{character_data.name}从[产后]转变为[育儿]\n"
+            draw_text += "\n※※※※※※※※※\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = draw_text
+            now_draw.draw()
+
+
 def check_all_pregnancy(character_id: int):
     """
     进行受精怀孕的全流程检查

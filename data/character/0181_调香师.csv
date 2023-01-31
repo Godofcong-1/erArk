@@ -5,6 +5,8 @@ Name,str,调香师,1,姓名
 Sex,int,1,0,女
 Profession,int,3,0,医疗
 Race,int,28,0,沃尔珀
+Nation,int,0,0,罗德岛
+Birthplace,int,10,0,米诺斯
 Hp,int,1300,0,初始体力
 Mp,int,1000,0,初始气力
 Dormitory,str,莱娜的憩所,1,初始宿舍

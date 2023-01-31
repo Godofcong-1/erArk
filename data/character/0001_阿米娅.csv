@@ -5,6 +5,8 @@ Name,str,阿米娅,1,姓名
 Sex,int,1,0,女
 Profession,int,4,0,术师
 Race,int,1,0,卡特斯/奇美拉
+Nation,int,0,0,罗德岛
+Birthplace,int,9,0,雷姆必拓
 Hp,int,1400,0,初始体力
 Mp,int,1100,0,初始气力
 Dormitory,str,无,1,初始宿舍

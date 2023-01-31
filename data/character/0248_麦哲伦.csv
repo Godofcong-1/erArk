@@ -5,6 +5,8 @@ Name,str,麦哲伦,1,姓名
 Sex,int,1,0,女
 Profession,int,7,0,辅助
 Race,int,19,0,黎博利
+Nation,int,42,0,莱茵生命
+Birthplace,int,4,0,哥伦比亚
 Hp,int,1400,0,初始体力
 Mp,int,1100,0,初始气力
 Dormitory,str,无,1,初始宿舍

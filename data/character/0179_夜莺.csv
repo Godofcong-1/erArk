@@ -5,6 +5,8 @@ Name,str,夜莺,1,姓名
 Sex,int,1,0,女
 Profession,int,3,0,医疗
 Race,int,25,0,萨卡兹
+Nation,int,504,0,使徒
+Birthplace,int,6,0,卡兹戴尔
 Hp,int,1000,0,初始体力
 Mp,int,500,0,初始气力
 Dormitory,str,无,1,初始宿舍

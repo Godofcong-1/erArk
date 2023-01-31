@@ -117,6 +117,10 @@ config_profession: Dict[int, config_def.Profession] = {}
 """ 职业配置 """
 config_race: Dict[int, config_def.Race] = {}
 """ 种族配置 """
+config_birthplace: Dict[int, config_def.Birthplace] = {}
+""" 出生地配置 """
+config_nation: Dict[int, config_def.Nation] = {}
+""" 势力配置 """
 config_talent_type: Dict[int, config_def.TalentType] = {}
 """ 素质种类配置 """
 config_talent_type_data: Dict[int, Set] = {}
@@ -323,6 +327,7 @@ def load_profession():
         now_tem.__dict__ = tem_data
         config_profession[now_tem.cid] = now_tem
 
+
 def load_race():
     """载入职业数据"""
     now_data = config_data["Race"]
@@ -331,6 +336,27 @@ def load_race():
         now_tem = config_def.Race()
         now_tem.__dict__ = tem_data
         config_race[now_tem.cid] = now_tem
+
+
+def load_birthplace():
+    """载入出生地数据"""
+    now_data = config_data["Birthplace"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Birthplace()
+        now_tem.__dict__ = tem_data
+        config_birthplace[now_tem.cid] = now_tem
+
+
+def load_nation():
+    """载入势力数据"""
+    now_data = config_data["Nation"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Nation()
+        now_tem.__dict__ = tem_data
+        config_nation[now_tem.cid] = now_tem
+
 
 def load_talent_type():
     """载入素质类型具体配置数据（按能力类型分类）"""
@@ -879,6 +905,8 @@ def init():
     load_organ_data()
     load_profession()
     load_race()
+    load_birthplace()
+    load_nation()
     load_recipes()
     load_season()
     load_sex_tem()

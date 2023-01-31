@@ -5,6 +5,8 @@ Name,str,羽毛笔,1,姓名
 Sex,int,1,0,女
 Profession,int,5,0,近卫
 Race,int,19,0,黎博利
+Nation,int,171,0,玻利瓦尔
+Birthplace,int,2,0,玻利瓦尔
 Hp,int,1800,0,初始体力
 Mp,int,1500,0,初始气力
 Dormitory,str,无,1,初始宿舍
