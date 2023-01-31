@@ -591,6 +591,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[001]:生殖周期的第几天(0安全1普通2危险3排卵，0110232)：{target_data.pregnancy.reproduction_period}")
                 draw_text_list.append(f"[002]:开始受精的时间：{target_data.pregnancy.fertilization_time}      年月日分别为0,1,2")
                 draw_text_list.append(f"[003]:当前妊娠素质：0受精-{target_data.talent[20]}，1妊娠-{target_data.talent[21]}，2临盆-{target_data.talent[22]}，3产后-{target_data.talent[23]}，4育儿-{target_data.talent[24]}")
+                draw_text_list.append(f"[004]:出生的时间：{target_data.pregnancy.born_time}      年月日分别为0,1,2")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -637,6 +638,17 @@ class Debug_Panel:
                             continue
                         target_data.talent[20 + value_index[1]] = new_value
                         target_data.pregnancy.fertilization_time = cache.game_time
+                    elif value_index[0] == 4:
+                        if len(value_index) == 1:
+                            info_draw.text = "\n输出格式错误，请重试\n"
+                            info_draw.draw()
+                            continue
+                        if value_index[1] == 0:
+                            target_data.pregnancy.born_time = target_data.pregnancy.born_time.replace(year = new_value)
+                        elif value_index[1] == 1:
+                            target_data.pregnancy.born_time = target_data.pregnancy.born_time.replace(month = new_value)
+                        elif value_index[1] == 2:
+                            target_data.pregnancy.born_time = target_data.pregnancy.born_time.replace(day = new_value)
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

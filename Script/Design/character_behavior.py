@@ -61,7 +61,7 @@ def init_character_behavior():
         update_cafeteria()
         # 睡觉刷新
         PL_data: game_type.Character = cache.character_data[0]
-        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP:
+        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP and PL_data.action_info.sleep_time != cache.game_time:
             update_sleep()
         # 新一天刷新
         if cache.game_time.day != cache.pre_game_time.day:
@@ -615,6 +615,7 @@ def update_sleep():
         # 清零射精槽
         if character_id == 0:
             character_data.eja_point = 0
+            character_data.action_info.sleep_time = cache.game_time
         else:
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero()

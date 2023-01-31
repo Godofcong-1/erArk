@@ -14,7 +14,7 @@ from Script.Core import (
     save_handle,
 )
 from Script.Design import (
-    settle_behavior,
+    character_handle,
     game_time,
     character,
     handle_premise,
@@ -191,6 +191,38 @@ def check_rearing(character_id: int):
             now_draw.draw()
 
 
+def check_rearing_complete(character_id: int):
+    """
+    判断是否完成育儿
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要已经是育儿状态
+    if character_data.talent[24]:
+        # 计算经过的天数
+        child_id = character_data.relationship.child_id_list[-1]
+        child_character_data: game_type.Character = cache.character_data[child_id]
+        start_date = cache.game_time
+        end_date = child_character_data.pregnancy.born_time
+        past_day = (start_date - end_date).days
+        # 
+        if past_day >= 30:
+            character_data.talent[24] = 0
+            character_data.talent[30] = 0
+            character_handle.get_new_character(child_id)
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n"
+            draw_text += f"\n{character_data.name}完成了育儿行动，开始回到正常的工作生活中来\n"
+            draw_text += f"\n{child_character_data.name}能够初步独立了，在长大成人之前会一直在教育区上课学习\n"
+            draw_text += f"\n{character_data.name}失去了[育儿]\n"
+            draw_text += f"\n{character_data.name}失去了[泌乳]\n"
+            draw_text += f"\n{child_character_data.name}成为了一名准干员\n"
+            draw_text += "\n※※※※※※※※※\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = draw_text
+            now_draw.draw()
+
+
 def check_all_pregnancy(character_id: int):
     """
     进行受精怀孕的全流程检查
@@ -202,6 +234,8 @@ def check_all_pregnancy(character_id: int):
     check_pregnancy(character_id)
     check_near_born(character_id)
     check_born(character_id)
+    check_rearing(character_id)
+    check_rearing_complete(character_id)
 
 
 def update_reproduction_period(character_id: int):

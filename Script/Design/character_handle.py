@@ -113,14 +113,14 @@ def born_new_character(mother_id,child_name):
     now_tem.AdvNpc = random.randint(9000,9999)
     now_tem.Ability = {}
     now_tem.Experience = {}
-    now_tem.Talent = {}
+    now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,60:1}
     now_tem.Hp = random.randint(1000,2000)
     now_tem.Mp = random.randint(1000,2000)
     now_tem.Dormitory = "无"
     now_tem.Token = "无"
     now_tem.Cloth = []
     cache.npc_tem_data.append(now_tem)
-    now_id  = len(cache.npc_tem_data) + 1
+    now_id  = len(cache.npc_tem_data)
     # 给父母加上该孩子的社会关系
     cache.character_data[0].relationship.child_id_list.append(now_id)
     mom_character_data.relationship.child_id_list.append(now_id)

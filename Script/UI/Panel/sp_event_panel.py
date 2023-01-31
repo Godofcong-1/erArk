@@ -107,7 +107,7 @@ class Born_Panel:
 
                 # 创建该角色
                 character_handle.born_new_character(self.mother_character_id,new_name)
-                child_character_data: game_type.Character = cache.character_data[len(cache.npc_tem_data) + 1]
+                child_character_data: game_type.Character = cache.character_data[len(cache.npc_tem_data)]
                 child_character_data.pregnancy.born_time = cache.game_time
 
                 info_draw.text += f"\n孩子的名字叫做{child_character_data.name}，她是{pl_character_data.name}的第{len(pl_character_data.relationship.child_id_list)}个孩子，也是{mom_character_data.name}的第{len(mom_character_data.relationship.child_id_list)}个孩子，请慢慢养育她长大成人吧\n"
