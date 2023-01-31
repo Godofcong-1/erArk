@@ -3,7 +3,7 @@ from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement
+from Script.Design import basement,character_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -96,8 +96,8 @@ class Debug_Panel:
                 # 要输出的变量名称以及注释
                 draw_text_list = []
                 draw_text_list.append(f"[000]:游戏时间：{cache.game_time}")
-                draw_text_list.append(f"[001]:前一循环时的游戏时间：{cache.pre_game_time}")
-                draw_text_list.append(f"[002]:已拥有的干员id列表：{cache.npc_id_got}")
+                draw_text_list.append(f"[001]:已拥有的干员id列表：{cache.npc_id_got}")
+                draw_text_list.append(f"[002]:全干员id列表：{[i + 1 for i in range(len(cache.npc_tem_data))]}")
                 draw_text_list.append(f"[003]:龙门币：{cache.base_resouce.money}")
                 draw_text_list.append(f"[004]:合成玉：{cache.base_resouce.orundum}")
                 draw_text_list.append(f"[005]:粉红凭证：{cache.base_resouce.pink_certificate}")
@@ -344,23 +344,35 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.game_time = new_value
                 elif key_index == 1:
-                    info_text = f"[001]:前一循环时的游戏时间：{cache.pre_game_time}"
+                    info_text = f"[001]:已拥有的干员id列表：\n"
+                    for chara_id in cache.npc_id_got:
+                        name = cache.character_data[chara_id].name
+                        info_text += f"{chara_id}:{name} "
+                    info_text += f"\n\n全干员id列表：\n"
+                    for i in range(len(cache.npc_tem_data)):
+                        chara_id = i + 1
+                        name = cache.character_data[chara_id].name
+                        info_text += f"{chara_id}:{name} "
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = int(change_value_panel.draw())
-                    cache.pre_game_time = new_value
-                elif key_index == 2:
-                    info_text = f"[002]:已拥有的干员id列表：{cache.npc_id_got}"
-                    info_draw.text = info_text
-                    info_draw.draw()
                     line_feed.draw()
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("输入改变后的值"), 100)
-                    new_value = int(change_value_panel.draw())
-                    cache.npc_id_got = new_value
+
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入要改变第几号角色，以及这一项变成0或者1，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    if len(value_index) == 1:
+                        info_draw.text = "\n输出格式错误，请重试\n"
+                        info_draw.draw()
+                        continue
+                    elif value_index[1] == 0:
+                        cache.npc_id_got.discard(value_index[0])
+                    elif value_index[1] == 1:
+                        character_handle.get_new_character(value_index[0])
                 elif key_index == 3:
                     info_text = f"[003]:龙门币：{cache.base_resouce.money}"
                     info_draw.text = info_text
@@ -608,6 +620,10 @@ class Debug_Panel:
                     elif value_index == 1:
                         target_data.pregnancy.reproduction_period = new_value
                     elif value_index[0] == 2:
+                        if len(value_index) == 1:
+                            info_draw.text = "\n输出格式错误，请重试\n"
+                            info_draw.draw()
+                            continue
                         if value_index[1] == 0:
                             target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_value)
                         elif value_index[1] == 1:
@@ -615,6 +631,10 @@ class Debug_Panel:
                         elif value_index[1] == 2:
                             target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(day = new_value)
                     elif value_index[0] == 3:
+                        if len(value_index) == 1:
+                            info_draw.text = "\n输出格式错误，请重试\n"
+                            info_draw.draw()
+                            continue
                         target_data.talent[20 + value_index[1]] = new_value
                         target_data.pregnancy.fertilization_time = cache.game_time
 
