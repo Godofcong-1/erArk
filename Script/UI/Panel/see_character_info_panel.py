@@ -1535,6 +1535,8 @@ class CharacterImage:
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.title_list.append(type_line)
         self.image_name = character_data.name
+        if character_data.relationship.father_id == 0:
+            self.image_name = "女儿_1"
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
         now_draw_1.width = 2

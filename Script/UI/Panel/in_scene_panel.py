@@ -605,10 +605,10 @@ class CharacterImageButton:
     def draw(self):
         """绘制图片对象"""
         character_data: game_type.Character = cache.character_data[self.character_id]
-        print(f"debug {character_data.name} = {character_data.relationship.father_id}")
+        # print(f"debug {character_data.name} = {character_data.relationship.father_id}")
         if character_data.relationship.father_id == 0:
-            print(f"debug 打印女儿头像")
-            now_draw = draw.ImageButton("女儿_1", "女儿_1头像", self.width, self.change_target)
+            # print(f"debug 打印女儿头像")
+            now_draw = draw.ImageButton("女儿_1", character_data.name + "头像", self.width, self.change_target)
         else:
             now_draw = draw.ImageButton(character_data.name, character_data.name + "头像", self.width, self.change_target)
         now_draw.draw()
