@@ -409,6 +409,12 @@ class SeeInstructPanel:
             now_button.width = int(self.width / (len(cache.instruct_type_filter) - 1))
             self.return_list.append(now_button.return_text)
             now_button.draw()
+
+        # 如果交互对象是临盆、产后或婴儿的话，不显示性骚扰和H类指令
+        if not handle_premise.handle_t_normal_2(0):
+            cache.instruct_type_filter[4] = 0
+            cache.instruct_type_filter[5] = 0
+
         line_feed.draw()
         line = draw.LineDraw("~..", self.width)
         line.draw()

@@ -1424,7 +1424,7 @@ def handle_normal_all(character_id: int) -> int:
     """
     没有任何异常的普通状态
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1441,6 +1441,7 @@ def handle_normal_all(character_id: int) -> int:
 
         or handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
 
         or handle_is_assistant(character_id)
         or handle_is_follow(character_id)
@@ -1458,7 +1459,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
@@ -1474,6 +1475,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
 
         or handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
 
         or handle_is_assistant(character_id)
         or handle_is_follow(character_id)
@@ -1490,7 +1492,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
 def handle_normal_2_3_4(character_id: int) -> int:
     """
     234正常的普通状态
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1501,6 +1503,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
     if(
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
 
         or handle_is_assistant(character_id)
         or handle_is_follow(character_id)
@@ -1517,7 +1520,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
 def handle_normal_2(character_id: int) -> int:
     """
     2正常的普通状态
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1526,6 +1529,7 @@ def handle_normal_2(character_id: int) -> int:
     if(
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
     ):
         return 0
     else:
@@ -1536,7 +1540,7 @@ def handle_normal_2(character_id: int) -> int:
 def handle_normal_2_4(character_id: int) -> int:
     """
     24正常的普通状态
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
@@ -1546,9 +1550,31 @@ def handle_normal_2_4(character_id: int) -> int:
     if(
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
 
         or handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_2)
+def handle_t_normal_2(character_id: int) -> int:
+    """
+    交互对象2正常的普通状态
+    \n包括2:临盆、产后、婴儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if(
+        handle_parturient_1(character_data.target_character_id)
+        or handle_postpartum_1(character_data.target_character_id)
+        or handle_t_baby_1(character_data.target_character_id)
     ):
         return 0
     else:
@@ -1560,7 +1586,7 @@ def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:临盆、产后
+    \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1577,6 +1603,7 @@ def handle_unnormal(character_id: int) -> int:
 
         or handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
 
         or handle_is_assistant(character_id)
         or handle_is_follow(character_id)
@@ -10432,3 +10459,19 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.T_BABY_1)
+def handle_t_baby_1(character_id: int) -> int:
+    """
+    校验交互对象是否婴儿==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[101] == 1:
+        return 1
+    return 0

@@ -114,7 +114,7 @@ def born_new_character(mother_id,child_name):
     now_tem.Ability = {}
     now_tem.Experience = {}
     # 基础的素质
-    now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,102:1,121:1,126:1,129:1,131:1,451:1}
+    now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,101:1,121:1,126:1,129:1,131:1,451:1}
     # 遗传母亲的可遗传素质
     for talent_id in game_config.config_talent:
         if game_config.config_talent[talent_id].heredity and mom_character_data.talent[talent_id]:

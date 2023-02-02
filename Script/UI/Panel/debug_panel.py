@@ -37,7 +37,7 @@ class Debug_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "部门运作情况"
+        title_text = "debug面板"
         department_type_list = [_("全局变量"),_("玩家属性"),_("NPC角色")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
