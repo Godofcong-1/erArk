@@ -113,7 +113,12 @@ def born_new_character(mother_id,child_name):
     now_tem.AdvNpc = random.randint(9000,9999)
     now_tem.Ability = {}
     now_tem.Experience = {}
-    now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,60:1}
+    # 基础的素质
+    now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,102:1,121:1,126:1,129:1,131:1,451:1}
+    # 遗传母亲的可遗传素质
+    for talent_id in game_config.config_talent:
+        if game_config.config_talent[talent_id].heredity and mom_character_data.talent[talent_id]:
+            now_tem.Talent[talent_id] = 1
     now_tem.Hp = random.randint(1000,2000)
     now_tem.Mp = random.randint(1000,2000)
     now_tem.Dormitory = "无"

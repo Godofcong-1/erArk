@@ -5,12 +5,12 @@ from Script.Config import game_config
 '''
 
 
-# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件
-mode = 3
-command_str = "t_lubrication_l_7"
+# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件,6前提文件转在线表格
+mode = 1
+command_str = "lactation_1"
 capital_command = command_str.upper()
-dataname = "润滑"
-datetype = "S"
+dataname = "泌乳"
+datetype = "T"
 premise_type_diy = "自定义内容"
 premise_type_dict = {"A":"属性_能力","S":"属性_状态","T":"属性_素质","X":premise_type_diy}
 premise_type = premise_type_dict[datetype]
@@ -74,10 +74,16 @@ def constand_2_handle():
     # 生成constant_promise的out_str
     out_str = "\n"
     out_str += f"    {command_str.upper()} = \"{command_str}\"\n"
-    out_str += f"    \"\"\" {premise_type} 交互对象{dataname}{operation}{command_list[-1]} \"\"\"\n"
+    out_str += f"    \"\"\" {premise_type} "
+    if target_flag:
+        out_str += f"交互对象"
+    else:
+        out_str += f"自己"
+    out_str += f"{dataname}{operation}{command_list[-1]} \"\"\"\n"
     print(out_str)
 
-    # 输出到constant_promise里
+    # 输出到constant_promise里，还没写出来
+    '''
     break_flag = 0
     with open("Script\\Core\\constant_promise.py", "r+",encoding="utf-8") as f:
         while 1:
@@ -94,6 +100,7 @@ def constand_2_handle():
                         break
         f.close()
     out_str = "\n"
+    '''
 
     # 进行前提输出
     out_str = "\n\n"
@@ -120,7 +127,7 @@ def constand_2_handle():
 
     # 开始保存
     with open("Script\\Design\\handle_premise.py", "a",encoding="utf-8") as f:
-        # f.write(out_str)
+        f.write(out_str)
         f.close()
     print(f"已写入前提文件末尾")
 

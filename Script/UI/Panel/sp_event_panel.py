@@ -117,7 +117,7 @@ class Born_Panel:
 
             mom_character_data.talent[22] = 0
             mom_character_data.talent[23] = 1
-            mom_character_data.talent[30] = 0
+            mom_character_data.talent[26] = 0
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n{mom_character_data.name}的生产结束了，但她仍需要在住院部休息几天\n"
             draw_text += f"\n{mom_character_data.name}从[临盆]转变为[产后]\n"

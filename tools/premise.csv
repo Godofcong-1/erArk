@@ -426,9 +426,9 @@ breast_1,TARGET_CHEST_IS_SMALL,属性_素质,交互对象胸部大小是贫乳
 breast_2,TARGET_CHEST_IS_NORMAL,属性_素质,交互对象胸部大小是普乳
 breast_3,TARGET_CHEST_IS_BIG,属性_素质,交互对象胸部大小是巨乳
 breast_4,TARGET_CHEST_IS_SUPER,属性_素质,交互对象胸部大小是爆乳
-buttock_0,TARGET_BUTTOCKS_IS_SMALL,属性_素质,交互对象臀部大小是小尻
-buttock_1,TARGET_BUTTOCKS_IS_NORMAL,属性_素质,交互对象臀部大小是普尻
-buttock_2,TARGET_BUTTOCKS_IS_BIG,属性_素质,交互对象臀部大小是巨尻
+buttock_0,TARGET_BUTTOCKS_IS_SMALL,属性_素质,交互对象臀部大小是小臀
+buttock_1,TARGET_BUTTOCKS_IS_NORMAL,属性_素质,交互对象臀部大小是普臀
+buttock_2,TARGET_BUTTOCKS_IS_BIG,属性_素质,交互对象臀部大小是巨臀
 
 ear_0,TARGET_HAVE_NO_EARS,属性_素质,交互对象没有兽耳
 ear_1,TARGET_HAVE_EARS,属性_素质,交互对象有兽耳

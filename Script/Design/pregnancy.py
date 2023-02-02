@@ -103,8 +103,8 @@ def check_pregnancy(character_id: int):
         if past_day >= 30:
             character_data.talent[20] = 0
             character_data.talent[21] = 1
-            character_data.talent[30] = 1
-            character_data.talent[31] = 1
+            character_data.talent[26] = 1
+            character_data.talent[27] = 1
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
             draw_text += f"\n{character_data.name}有孕在身，将会暂停工作和部分娱乐\n"
@@ -207,7 +207,7 @@ def check_rearing_complete(character_id: int):
         # 
         if past_day >= 30:
             character_data.talent[24] = 0
-            character_data.talent[30] = 0
+            character_data.talent[26] = 0
             character_handle.get_new_character(child_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n"

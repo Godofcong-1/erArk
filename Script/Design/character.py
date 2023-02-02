@@ -161,13 +161,13 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
 
     # 素质相关计算#
     # 爱情与隶属系加成0.5~2.0#
-    if target_data.talent[10] or target_data.talent[15]:
+    if target_data.talent[201] or target_data.talent[211]:
         fix += 0.5
-    if target_data.talent[11] or target_data.talent[16]:
+    if target_data.talent[202] or target_data.talent[212]:
         fix += 1.0
-    if target_data.talent[12] or target_data.talent[17]:
+    if target_data.talent[203] or target_data.talent[213]:
         fix += 1.5
-    if target_data.talent[13] or target_data.talent[18]:
+    if target_data.talent[204] or target_data.talent[214]:
         fix += 2.0
     # 受精、妊娠、育儿均+0.5#
     if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
@@ -281,9 +281,9 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         calculation_text += "+心情修正(" + str(judge_angry) + ")"
 
     # 陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
-    judge_fall = target_data.talent[10] * 30 + target_data.talent[11] * 50 + target_data.talent[12] * 80 + \
-                 target_data.talent[13] * 100 + target_data.talent[15] * 30 + target_data.talent[16] * 50 + \
-                 target_data.talent[17] * 80 + target_data.talent[18] * 100
+    judge_fall = target_data.talent[201] * 30 + target_data.talent[202] * 50 + target_data.talent[203] * 80 + \
+                 target_data.talent[204] * 100 + target_data.talent[211] * 30 + target_data.talent[212] * 50 + \
+                 target_data.talent[213] * 80 + target_data.talent[214] * 100
     judge += judge_fall
     if judge_fall:
         calculation_text += "+陷落修正(" + str(judge_fall) + ")"

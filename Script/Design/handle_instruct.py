@@ -973,13 +973,13 @@ def handle_confession():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[11] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
+    if target_data.talent[202] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
                                                                             "告白"):
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，获得角色的信物
-        target_data.talent[11] = 0
-        target_data.talent[12] = 1
+        target_data.talent[202] = 0
+        target_data.talent[203] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
@@ -1009,14 +1009,14 @@ def handle_give_necklace():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[15] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
+    if target_data.talent[211] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
                                                                             "戴上项圈"):
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质，获得角色的信物
-        target_data.talent[15] = 0
-        target_data.talent[16] = 1
-        target_data.talent[19] = 1
+        target_data.talent[211] = 0
+        target_data.talent[212] = 1
+        target_data.talent[215] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width

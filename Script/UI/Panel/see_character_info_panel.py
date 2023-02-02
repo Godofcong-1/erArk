@@ -1331,35 +1331,35 @@ class Character_talent_show_Text:
         love = 0
         obey = 0
         # 恋慕分支#
-        if game_config.config_talent[10] == 1:
+        if game_config.config_talent[201] == 1:
             love = 11
-            button_text_love = game_config.config_talent[11].name
-        elif game_config.config_talent[11] == 1:
+            button_text_love = game_config.config_talent[202].name
+        elif game_config.config_talent[202] == 1:
             love = 12
-            button_text_love = game_config.config_talent[12].name
-        elif game_config.config_talent[12] == 1:
+            button_text_love = game_config.config_talent[203].name
+        elif game_config.config_talent[203] == 1:
             love = 13
-            button_text_love = game_config.config_talent[13].name
-        elif game_config.config_talent[13] == 1:
+            button_text_love = game_config.config_talent[204].name
+        elif game_config.config_talent[204] == 1:
             love = 14
         else:
             love = 10
-            button_text_love = game_config.config_talent[10].name
+            button_text_love = game_config.config_talent[201].name
         # 隶属分支#
-        if game_config.config_talent[15] == 1:
+        if game_config.config_talent[211] == 1:
             obey = 16
-            button_text_obey = game_config.config_talent[16].name
-        elif game_config.config_talent[16] == 1:
+            button_text_obey = game_config.config_talent[212].name
+        elif game_config.config_talent[212] == 1:
             obey = 17
-            button_text_obey = game_config.config_talent[17].name
-        elif game_config.config_talent[17] == 1:
+            button_text_obey = game_config.config_talent[213].name
+        elif game_config.config_talent[213] == 1:
             obey = 18
-            button_text_obey = game_config.config_talent[18].name
-        elif game_config.config_talent[18] == 1:
+            button_text_obey = game_config.config_talent[214].name
+        elif game_config.config_talent[214] == 1:
             obey = 19
         else:
             obey = 15
-            button_text_obey = game_config.config_talent[15].name
+            button_text_obey = game_config.config_talent[211].name
         # 爱情文本#
         text_draw_love = draw.NormalDraw()
         text_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级高于顺从等级\n"

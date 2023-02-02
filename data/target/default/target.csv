@@ -48,14 +48,14 @@ ai的目标,,,
 
 60,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
 
-100,100,place_0,和玩家聊天
-101,101,place_0,和玩家身体接触
-102,102,place_0,给玩家泡咖啡
+100,100,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
+101,101,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触
+102,102,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机给玩家泡咖啡
 
-200,200,place_11,和房间里的人聊天
-201,201,place_11,和房间里的人身体接触
-202,202,in_music_room,如果在音乐室里，则唱歌给房间里随机角色听
-203,203,in_music_room,如果在音乐室里，则演奏乐器给房间里随机角色听
+200,200,place_over_one,房间里有其他人，则可能随机和房间里的人聊天
+201,201,place_over_one,房间里有其他人，则可能随机和房间里的人身体接触
+202,202,in_music_room|place_over_one,在音乐室里，房间里有其他人，则唱歌给房间里随机角色听
+203,203,in_music_room|place_over_one,在音乐室里，房间里有其他人，则演奏乐器给房间里随机角色听
 
 301,22,normal_all|work_is_doctor|work_time|not_in_clinic,正常状态下，工作为医生，在工作时间如果不在门诊，则去门诊
 302,301,normal_all|work_is_doctor|work_time|in_clinic|patient_wait,正常状态下，工作为医生，在工作时间如果在门诊，而且有正在排队的患者，则接诊

@@ -65,7 +65,7 @@ def get_underwear(character_id: int):
                 pan_H_list.append(cloth_id)
 
     # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
-        for i in {11,12,13,16,17,18}:
+        for i in {202,203,204,212,213,214}:
             if character_data.talent[i]:
                 if cache.character_data[0].pl_collection.collection_bonus[102]:
                     bra_nor_list += bra_H_list
@@ -77,7 +77,7 @@ def get_underwear(character_id: int):
     # 判断是否当前已经穿了胸衣和内裤
     if not len(character_data.cloth.cloth_wear[6]):
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
-        if character_data.talent[60] or character_data.talent[61]:
+        if character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
         else:
@@ -85,7 +85,7 @@ def get_underwear(character_id: int):
             character_data.cloth.cloth_wear[6].append(bra_id)
 
     if not len(character_data.cloth.cloth_wear[9]):
-        if character_data.talent[60] or character_data.talent[61]:
+        if character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
         else:

@@ -2,7 +2,7 @@ import datetime
 import random
 from typing import List
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
 from Script.Core import cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -521,10 +521,11 @@ def character_chat_rand_character(character_id: int):
     character_list = list(character_set)
     if len(character_list):
         target_id = random.choice(character_list)
-        character_data.behavior.behavior_id = constant.Behavior.CHAT
-        character_data.behavior.duration = 10
-        character_data.target_character_id = target_id
-        character_data.state = constant.CharacterStatus.STATUS_CHAT
+        if handle_premise.handle_action_not_sleep(target_id):
+            character_data.behavior.behavior_id = constant.Behavior.CHAT
+            character_data.behavior.duration = 10
+            character_data.target_character_id = target_id
+            character_data.state = constant.CharacterStatus.STATUS_CHAT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.STROKE_RAND_CHARACTER)
@@ -542,10 +543,11 @@ def character_stroke_rand_character(character_id: int):
     character_list = list(character_set)
     if len(character_list):
         target_id = random.choice(character_list)
-        character_data.behavior.behavior_id = constant.Behavior.STROKE
-        character_data.behavior.duration = 10
-        character_data.target_character_id = target_id
-        character_data.state = constant.CharacterStatus.STATUS_STROKE
+        if handle_premise.handle_action_not_sleep(target_id):
+            character_data.behavior.behavior_id = constant.Behavior.STROKE
+            character_data.behavior.duration = 10
+            character_data.target_character_id = target_id
+            character_data.state = constant.CharacterStatus.STATUS_STROKE
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_TO_DR)

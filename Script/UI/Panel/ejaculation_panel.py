@@ -235,11 +235,11 @@ class Ejaculation_NameDraw:
             elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
                 return False
             # 没有长对应器官，则无法射在对应部位
-            elif body_part == 12 and not target_data.talent[72]:
+            elif body_part == 12 and not target_data.talent[113]:
                 return False
-            elif body_part == 13 and not target_data.talent[71]:
+            elif body_part == 13 and not target_data.talent[112]:
                 return False
-            elif body_part == 14 and not target_data.talent[70]:
+            elif body_part == 14 and not target_data.talent[111]:
                 return False
             # 对应部位有衣服，则无法射在对应部位
             if isinstance(body_cloth[body_part], list):
