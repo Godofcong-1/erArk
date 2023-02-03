@@ -1111,6 +1111,24 @@ def handle_in_locker_room_or_dormitory(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_NURSERY)
+def handle_in_nursery(character_id: int) -> int:
+    """
+    校验角色是否在育儿室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Nursery" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PLACE_DOOR_OPEN)
 def handle_place_door_open(character_id: int) -> int:
     """
@@ -3634,17 +3652,19 @@ def handle_new_npc_wait(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.BORN_FLAG)
-def handle_born_flag(character_id: int) -> int:
+@add_premise(constant_promise.Premise.FLAG_BABY_EXIST)
+def handle_flag_baby_exist(character_id: int) -> int:
     """
-    特殊事件 生孩子
+    特殊flag 当前有婴儿存在
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if len(cache.base_resouce.recruited_id):
-        return 1
+    for i in range(len(cache.npc_tem_data)):
+        chara_id = i + 1
+        if cache.character_data[chara_id].talent[101]:
+            return 1
     return 0
 
 
@@ -10473,5 +10493,21 @@ def handle_t_baby_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.talent[101] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_CHILD_OR_LOLI_1)
+def handle_t_child_or_loli_1(character_id: int) -> int:
+    """
+    校验交互对象是否幼女或萝莉==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[102] == 1 or target_data.talent[103] == 1 :
         return 1
     return 0

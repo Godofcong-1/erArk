@@ -83,10 +83,12 @@ class CharacterStatus:
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
-    STATUS_CHECK_LOCKER = 161
-    """ 检查衣柜 """
     STATUS_SMELL_UNDERWEAR = 162
     """ 闻内衣 """
+    STATUS_LISTEN_INFLATION = 171
+    """ 听肚子里的动静 """
+    STATUS_PLAY_WITH_CHILD = 172
+    """ 一起玩耍 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_APPOINTED_ASSISTANT = 204
@@ -331,6 +333,18 @@ class CharacterStatus:
     """ 针 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
+    STATUS_HOLD_CHILD = 801
+    """ 抱小孩 """
+    STATUS_SING_CHILDREN_SONG = 802
+    """ 哼唱儿歌 """
+    STATUS_NUIRSE_CHILD = 803
+    """ 喂奶 """
+    STATUS_CHANGE_DIAPERS = 804
+    """ 换尿布 """
+    STATUS_TEACH_TALK = 805
+    """ 教说话 """
+    STATUS_GIVE_TOY = 806
+    """ 给玩具 """
 
 
 class Behavior:
@@ -414,8 +428,10 @@ class Behavior:
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
-    CHECK_LOCKER = 161
-    """ 检查衣柜 """
+    LISTEN_INFLATION = 171
+    """ 听肚子里的动静 """
+    PLAY_WITH_CHILD = 172
+    """ 一起玩耍 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -668,6 +684,19 @@ class Behavior:
 
     UNDRESS = 701
     """ 脱衣服 """
+
+    HOLD_CHILD = 801
+    """ 抱小孩 """
+    SING_CHILDREN_SONG = 802
+    """ 哼唱儿歌 """
+    NUIRSE_CHILD = 803
+    """ 喂奶 """
+    CHANGE_DIAPERS = 804
+    """ 换尿布 """
+    TEACH_TALK = 805
+    """ 教说话 """
+    GIVE_TOY = 806
+    """ 给玩具 """
 
 
 class StateMachine:
@@ -1293,8 +1322,6 @@ class Instruct:
     """ 听牢骚 """
     PRAY = 0
     """ 祈愿 """
-    CHECK_LOCKER = 0
-    """ 检查衣柜 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0
@@ -1305,12 +1332,18 @@ class Instruct:
     """ 解手 """
     COLLECT = 0
     """ 摆放藏品 """
+    TAKE_CARE_BABY = 0
+    """ 照顾婴儿 """
 
     #娱乐#
     SINGING = 0
     """ 唱歌 """
     PLAY_INSTRUMENT = 0
     """ 演奏乐器 """
+    LISTEN_INFLATION = 0
+    """ 听肚子里的动静 """
+    PLAY_WITH_CHILD = 0
+    """ 一起玩耍 """
 
 
     #工作#
@@ -1388,6 +1421,8 @@ class Instruct:
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    CHECK_LOCKER = 0
+    """ 检查衣柜 """
     DO_H = 0
     """ 邀请H """
     CONFESSION = 0

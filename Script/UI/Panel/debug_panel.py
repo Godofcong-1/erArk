@@ -628,6 +628,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[002]:开始受精的时间：{target_data.pregnancy.fertilization_time}      年月日分别为0,1,2")
                 draw_text_list.append(f"[003]:当前妊娠素质：0受精-{target_data.talent[20]}，1妊娠-{target_data.talent[21]}，2临盆-{target_data.talent[22]}，3产后-{target_data.talent[23]}，4育儿-{target_data.talent[24]}")
                 draw_text_list.append(f"[004]:出生的时间：{target_data.pregnancy.born_time}      年月日分别为0,1,2")
+                draw_text_list.append(f"[005]:一键触发生产事件")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -656,6 +657,11 @@ class Debug_Panel:
                         # print(f"debug value_index = {value_index},new_value = {new_value}")
                     elif value_index == 1:
                         target_data.pregnancy.reproduction_period = new_value
+                    elif value_index == 5:
+                        target_data.talent[22] = 1
+                        target_data.pregnancy.fertilization_time = cache.game_time
+                        new_year = target_data.pregnancy.fertilization_time.year - 1
+                        target_data.pregnancy.fertilization_time = target_data.pregnancy.fertilization_time.replace(year = new_year)
                     elif value_index[0] == 2:
                         if len(value_index) == 1:
                             info_draw.text = "\n输出格式错误，请重试\n"

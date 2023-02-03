@@ -115,13 +115,23 @@ class Born_Panel:
                 line_feed.draw()
                 break
 
-            mom_character_data.talent[22] = 0
-            mom_character_data.talent[23] = 1
-            mom_character_data.talent[26] = 0
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n{mom_character_data.name}的生产结束了，但她仍需要在住院部休息几天\n"
+            mom_character_data.talent[22] = 0
+            mom_character_data.talent[23] = 1
             draw_text += f"\n{mom_character_data.name}从[临盆]转变为[产后]\n"
+            mom_character_data.talent[26] = 0
             draw_text += f"\n{mom_character_data.name}失去了[孕肚]\n"
+            mom_character_data.experience[55] += 10
+            mom_character_data.experience[58] += 10
+            mom_character_data.experience[86] += 1
+            draw_text += f"\n{mom_character_data.name}的Ｖ扩张经验+10，Ｗ扩张经验+10，妊娠经验+1\n"
+            if mom_character_data.ability[9] < 5:
+                mom_character_data.ability[9] = 5
+                draw_text += f"\n{mom_character_data.name}的Ｖ扩张上升至5级\n"
+            if mom_character_data.ability[12] < 5:
+                mom_character_data.ability[12] = 5
+                draw_text += f"\n{mom_character_data.name}的Ｗ扩张上升至5级\n"
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width

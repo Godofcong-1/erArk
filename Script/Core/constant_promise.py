@@ -278,6 +278,8 @@ class Premise:
     """ 地点_定位 不在大浴场的更衣室 """
     IN_LOCKER_ROOM_OR_DORMITORY = "in_locker_room_or_dormitory"
     """ 地点_定位 在更衣室或宿舍 """
+    IN_NURSERY = "in_nursery"
+    """ 地点_定位 在育儿室 """
 
     MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
     """ 地点_移动 角色抵达女士洗手间 """
@@ -938,6 +940,8 @@ class Premise:
     T_BABY_1 = "t_baby_1"
     """ 属性_素质 交互对象婴儿==1 """
 
+    T_CHILD_OR_LOLI_1 = "t_child_or_loli_1"
+    """ 属性_素质 交互对象幼女或萝莉==1 """
     TARGET_CHEST_IS_CLIFF = "breast_0"
     """ 属性_素质 交互对象胸部大小是绝壁 """
     TARGET_CHEST_IS_SMALL = "breast_1"
@@ -1317,8 +1321,8 @@ class Premise:
     T_ACTION_NOT_SLEEP = "t_action_not_sleep"
     """ 行动 交互对象没有在睡觉 """
 
-    BORN_FLAG = "born_flag"
-    """ 特殊事件 生孩子 """
+    FLAG_BABY_EXIST = "flag_baby_exist"
+    """ 特殊flag 当前有婴儿存在 """
 
     TO_DO = "to_do"
     """ 未分类 未实装 """

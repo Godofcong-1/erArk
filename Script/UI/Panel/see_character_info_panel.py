@@ -2045,6 +2045,11 @@ class CharacterBodyText:
             now_text = f"\n 【宫】\n"
             if character_data.experience[86] == 0:
                 now_text += "  未怀孕过\n"
+            else:
+                now_text += f"  为博士生下了  "
+                for chara_id in character_data.relationship.child_id_list:
+                    now_text += f"{cache.character_data[chara_id].name}  "
+                now_text += f"共{len(character_data.relationship.child_id_list)}个孩子\n"
             body_text_list.append(now_text)
             # 尿道信息#
             now_text = f"\n 【尿】\n"

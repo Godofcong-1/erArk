@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, attr_calculation
+from Script.Design import update, map_handle, character
 
 panel_info_data = {}
 
@@ -159,19 +159,6 @@ class Read_Book_Panel:
                     return_list.append(button_draw.return_text)
                     button_draw.draw()
                     line_feed.draw()
-                    # now_draw.draw_list.append(button_draw)
-
-            # self.draw_list: List[draw.NormalDraw] = []
-            # """ 绘制的文本列表 """
-            # self.draw_list.extend(now_draw.draw_list)
-
-            # for label in self.draw_list:
-            #     if isinstance(label, list):
-            #         for value in label:
-            #             value.draw()
-            #         line_feed.draw()
-            #     else:
-            #         label.draw()
 
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -183,11 +170,141 @@ class Read_Book_Panel:
 
     def read(self, book_id):
         """读选择的书"""
+        character.init_character_behavior_start_time(0, cache.game_time)
         character_data: game_type.Character = cache.character_data[0]
         book_data = game_config.config_book[book_id]
         character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
         character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
         character_data.behavior.book_id = book_id
         character_data.behavior.book_name = book_data.name
+        character_data.behavior.duration = 30
+        update.game_update_flow(30)
+
+
+class Take_Care_Baby_Panel:
+    """
+    用于读书的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.now_panel = _("照顾婴儿")
+        """ 当前绘制的页面 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = "照顾婴儿"
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_text = "\n当前育儿室正在照料的婴儿有：\n\n"
+            info_draw.text = info_text
+            info_draw.draw()
+
+            # 遍历婴儿名字并输出按钮
+            for i in range(len(cache.npc_tem_data)):
+                chara_id = i + 1
+                if cache.character_data[chara_id].talent[101]:
+                    name = cache.character_data[chara_id].name
+                    adv_id = cache.character_data[chara_id].adv
+                    button_text = f"[{str(adv_id).rjust(4,'0')}]:{name} "
+
+                    button_draw = draw.LeftButton(
+                        _(button_text),
+                        _(str(adv_id)),
+                        self.width,
+                        cmd_func=self.choice_take_care,
+                        args=(chara_id,),
+                        )
+                    # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                    line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def choice_take_care(self, chara_id):
+        """选择照顾的方式"""
+        self.target_chara_id = chara_id
+        name = cache.character_data[self.target_chara_id].name
+
+        button_text_list = ["抱一抱她","哼唱儿歌","喂奶","换尿布","教她说话","给她玩玩具"]
+
+        while 1:
+            return_list = []
+
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_text = f"\n选择照顾[{name}]的方式：\n\n"
+            info_draw.text = info_text
+            info_draw.draw()
+
+            for button_id in range(len(button_text_list)):
+                button_text = f"[00{button_id}]:{button_text_list[button_id]}"
+                button_draw = draw.LeftButton(
+                    _(button_text),
+                    _(str(button_id)),
+                    self.width,
+                    cmd_func=self.settle_take_care,
+                    args=(button_id,),
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
+    def settle_take_care(self, instruct_id):
+        """结算照顾指令"""
+        character.init_character_behavior_start_time(0, cache.game_time)
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.target_character_id = self.target_chara_id
+
+        # button_text_list = ["抱一抱她","哼唱儿歌","喂奶","换尿布","教她说话","给她玩玩具"]
+
+        if instruct_id == 0:
+            character_data.behavior.behavior_id = constant.Behavior.HOLD_CHILD
+            character_data.state = constant.CharacterStatus.STATUS_HOLD_CHILD
+        elif instruct_id == 1:
+            character_data.behavior.behavior_id = constant.Behavior.SING_CHILDREN_SONG
+            character_data.state = constant.CharacterStatus.STATUS_SING_CHILDREN_SONG
+        elif instruct_id == 2:
+            character_data.behavior.behavior_id = constant.Behavior.NUIRSE_CHILD
+            character_data.state = constant.CharacterStatus.STATUS_NUIRSE_CHILD
+        elif instruct_id == 3:
+            character_data.behavior.behavior_id = constant.Behavior.CHANGE_DIAPERS
+            character_data.state = constant.CharacterStatus.STATUS_CHANGE_DIAPERS
+        elif instruct_id == 4:
+            character_data.behavior.behavior_id = constant.Behavior.TEACH_TALK
+            character_data.state = constant.CharacterStatus.STATUS_TEACH_TALK
+        elif instruct_id == 5:
+            character_data.behavior.behavior_id = constant.Behavior.GIVE_TOY
+            character_data.state = constant.CharacterStatus.STATUS_GIVE_TOY
+
         character_data.behavior.duration = 30
         update.game_update_flow(30)

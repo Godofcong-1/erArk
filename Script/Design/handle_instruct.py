@@ -900,6 +900,61 @@ def handle_pray():
 
 
 @add_instruct(
+    constant.Instruct.LISTEN_INFLATION,
+    constant.InstructType.DAILY,
+    _("听肚子里的动静"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.T_INFLATION_1,
+     constant_promise.Premise.SLEEP_LE_89}
+)
+def handle_listen_inflation():
+    """处理听肚子里的动静指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.LISTEN_INFLATION
+    character_data.state = constant.CharacterStatus.STATUS_LISTEN_INFLATION
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_WITH_CHILD,
+    constant.InstructType.DAILY,
+    _("一起玩耍"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.T_CHILD_OR_LOLI_1,
+     constant_promise.Premise.SLEEP_LE_89}
+)
+def handle_play_with_child():
+    """处理一起玩耍指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_WITH_CHILD
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_WITH_CHILD
+    character_data.behavior.duration = 30
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.TAKE_CARE_BABY,
+    constant.InstructType.DAILY,
+    _("照顾婴儿"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_NURSERY,
+     constant_promise.Premise.FLAG_BABY_EXIST,
+     constant_promise.Premise.SLEEP_LE_89},
+)
+def handle_take_care_baby():
+    """处理照顾婴儿指令"""
+    now_draw = normal_panel.Take_Care_Baby_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.LISTEN_MISSION,
     constant.InstructType.WORK,
     _("听取委托_未实装"),
@@ -917,7 +972,7 @@ def handle_listen_mission():
 
 @add_instruct(
     constant.Instruct.CHECK_LOCKER,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("检查衣柜"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY,
