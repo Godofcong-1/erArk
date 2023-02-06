@@ -74,8 +74,7 @@ class Close_Door_Panel:
             elif now_scene_data.close_type == 1:
                 info_text = "\n当前地点可以关门，关上之后其他人就进不来了，要关门吗："
             else:
-                info_text = "\n当前地点可以关门，但别人还是可以进入该地点，只是无法发现你们，要关门吗："
-
+                info_text = "\n当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，要关门吗："
 
             askfor_panel = panel.OneMessageAndSingleColumnButton()
             askfor_list = [_("是"), _("否")]

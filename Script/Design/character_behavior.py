@@ -46,27 +46,36 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
+    cache.over_behavior_character = set()
+    sleep_flag,new_day_flag = True,True
     while 1:
         id_list = cache.npc_id_got
-        id_list.add(0)
-        if len(cache.over_behavior_character) >= len(id_list):
+        id_list.discard(0)
+        if len(cache.over_behavior_character) >= len(id_list) + 1:
             break
-        for character_id in id_list:
-            if character_id in cache.over_behavior_character:
-                continue
-            character_behavior(character_id, cache.game_time)
-            # judge_character_dead(character_id)
-            judge_character_tired_sleep(character_id)
-            # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
+        # 先结算其他NPC部分
+        while len(cache.over_behavior_character) < len(id_list):
+            for character_id in id_list:
+                if character_id in cache.over_behavior_character:
+                    continue
+                character_behavior(character_id, cache.game_time)
+                # judge_character_dead(character_id)
+                judge_character_tired_sleep(character_id)
+                # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
+        # 后结算玩家部分
+        while 0 not in cache.over_behavior_character:
+            character_behavior(0, cache.game_time)
+            judge_character_tired_sleep(0)
         update_cafeteria()
         # 睡觉刷新
         PL_data: game_type.Character = cache.character_data[0]
-        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP and PL_data.action_info.sleep_time != cache.game_time:
+        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP and sleep_flag:
+            sleep_flag = False
             update_sleep()
         # 新一天刷新
-        if cache.game_time.day != cache.pre_game_time.day:
+        if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
+            new_day_flag = False
             update_new_day()
-    cache.over_behavior_character = set()
 
 
 def update_cafeteria():
