@@ -1323,190 +1323,154 @@ class Character_talent_show_Text:
         type_line.draw()
         # 前提说明#
         text_draw_introduce = draw.NormalDraw()
-        text_draw_introduce.text = "基础前提条件： 好感度500以上 信任度50%以上 反发刻印0\n分为爱情系与隶属系两条路线\n"
+        text_draw_introduce.text = "共通基础前提： 好感度500以上 信任度50%以上 反发刻印0\n分为爱情系与隶属系两条路线\n"
         text_draw_introduce.width = 1
         text_draw_introduce.draw()
-        line = draw.LineDraw("-", self.width)
-        line.draw()
-        love = 0
-        obey = 0
-        # 恋慕分支#
-        if game_config.config_talent[201] == 1:
-            love = 11
-            button_text_love = game_config.config_talent[202].name
-        elif game_config.config_talent[202] == 1:
-            love = 12
-            button_text_love = game_config.config_talent[203].name
-        elif game_config.config_talent[203] == 1:
-            love = 13
-            button_text_love = game_config.config_talent[204].name
-        elif game_config.config_talent[204] == 1:
-            love = 14
+
+        # 检测是哪个路线
+        next_love_id,next_obey_id = 0,0
+        for talent_id in {201,202,203,204}:
+            if self.character_data.talent[talent_id]:
+                next_love_id = talent_id + 1
+        for talent_id in {211,212,213,214}:
+            if self.character_data.talent[talent_id]:
+                next_obey_id = talent_id + 1
+
+        # 爱情路线
+        if next_love_id or not next_obey_id:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            info_draw_love = draw.NormalDraw()
+            info_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级高于顺从等级\n"
+            info_draw_love.width = 1
+            info_draw_love.draw()
+
+            text_draw_love = draw.NormalDraw()
+            text_draw_love.width = 1
+            text_draw_love_text = ""
+            if self.character_data.talent[204]:
+                text_draw_love_text += "已达到最高级-爱侣\n"
+            else:
+                judge = 1
+                if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
+                    text_draw_love_text += "未满足共通基础前提\n"
+                    judge = 0
+                if self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or self.character_data.ability[32] <= self.character_data.ability[31]:
+                    text_draw_love_text += "未满足爱情路线前提\n"
+                    judge = 0
+                text_draw_love.text = text_draw_love_text
+                text_draw_love.draw()
+
+                # 详细需求
+                if next_love_id == 0:
+                    self.show_gain_need(201, judge)
+                else:
+                    self.show_gain_need(next_love_id, judge)
+
+        # 隶属路线
+        if next_obey_id or not next_love_id:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            info_draw_obey = draw.NormalDraw()
+            info_draw_obey.text = "隶属路线前提： 快乐刻印>=1 屈服刻印>=1 顺从等级高于亲密等级\n"
+            info_draw_obey.width = 1
+            info_draw_obey.draw()
+
+            text_draw_obey = draw.NormalDraw()
+            text_draw_obey.width = 1
+            text_draw_obey_text = ""
+            if self.character_data.talent[214]:
+                    text_draw_obey_text += "已达到最高级-奴隶\n"
+            else:
+                judge = 1
+                if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
+                    text_draw_obey_text += "未满足共通基础前提\n"
+                    judge = 0
+                if self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or self.character_data.ability[31] <= self.character_data.ability[32]:
+                    text_draw_obey_text += "未满足隶属路线前提\n"
+                    judge = 0
+                text_draw_obey.text = text_draw_obey_text
+                text_draw_obey.draw()
+
+                # 详细需求
+                if next_love_id == 0:
+                    self.show_gain_need(211, judge)
+                else:
+                    self.show_gain_need(next_obey_id, judge)
+
+
+    def show_gain_need(self, talent_id, judge):
+        """具体显示需要什么"""
+
+        need_all = game_config.config_talent_gain_data[talent_id]
+        need_list = []
+        talent_name = game_config.config_talent[talent_id].name
+
+        # 输出素质名
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"下一级为：[{talent_name}]\n"
+        now_draw.draw()
+
+        # 以&为分割判定是否有多个需求
+        if "&" not in need_all.gain_need:
+            need_list.append(need_all.gain_need)
         else:
-            love = 10
-            button_text_love = game_config.config_talent[201].name
-        # 隶属分支#
-        if game_config.config_talent[211] == 1:
-            obey = 16
-            button_text_obey = game_config.config_talent[212].name
-        elif game_config.config_talent[212] == 1:
-            obey = 17
-            button_text_obey = game_config.config_talent[213].name
-        elif game_config.config_talent[213] == 1:
-            obey = 18
-            button_text_obey = game_config.config_talent[214].name
-        elif game_config.config_talent[214] == 1:
-            obey = 19
+            need_list = need_all.gain_need.split('&')
+            for gain_need in need_list:
+                need_list.append(gain_need)
+
+        # 遍历升级需求，并输出信息
+        for need_text in need_list:
+            # print(f"debug need_text = {need_text}")
+            need_type = need_text.split('|')[0][0]
+            need_type_id = int(need_text.split('|')[0][1:])
+            need_value = int(need_text.split('|')[1])
+            # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
+            if need_type == "A":
+                abi_name = game_config.config_ability[need_type_id].name
+                button_text = "  需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
+                if self.character_data.ability[need_type_id] < need_value:
+                    judge = 0
+            elif need_type == "J":
+                juel_name = game_config.config_juel[need_type_id].name
+                button_text = "  需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
+                if self.character_data.juel[need_type_id] < need_value:
+                    judge = 0
+                self.jule_dict[need_type_id] = need_value
+            elif need_type == "E":
+                experience_name = game_config.config_experience[need_type_id].name
+                button_text = "  需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
+                if self.character_data.experience[need_type_id] < need_value:
+                    judge = 0
+            elif need_type == "F":
+                button_text = "  需要好感至少为" + str(need_value) + "\n"
+                if self.character_data.favorability[0] < need_value:
+                    judge = 0
+            elif need_type == "X":
+                button_text = "  需要信赖至少为" + str(need_value) + "%\n"
+                if self.character_data.trust < need_value:
+                    judge = 0
+            now_draw = draw.NormalDraw()
+            now_draw.text = button_text
+            now_draw.draw()
+
+        line_feed.draw()
+        if judge:
+            now_draw_succed = draw.NormalDraw()
+            now_draw_succed.text = "满足条件，要升级吗？\n"
+            now_draw_succed.draw()
+
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args = talent_id)
+            yes_draw.draw()
+            self.return_list.append(yes_draw.return_text)
+
         else:
-            obey = 15
-            button_text_obey = game_config.config_talent[211].name
-        # 爱情文本#
-        text_draw_love = draw.NormalDraw()
-        text_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级高于顺从等级\n"
-        text_draw_love.width = 1
-        text_draw_love.draw()
-        # 没进入隶属路线则触发#
-        if obey == 15:
-            if love == 14:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "已达到最高级-爱侣\n"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or \
-                    self.character_data.ability[18] != 0:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "未满足基础前提\n"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            elif self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or \
-                    self.character_data.ability[32] <= self.character_data.ability[31]:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "未满足爱情路线前提\n"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            else:
-                now_abi_up_panel = Charactertal_cmd_Text(self.character_id, self.width, love)
-                button_draw = draw.LeftButton(
-                    _(button_text_love),
-                    _(button_text_love),
-                    self.width / 10,
-                    cmd_func=now_abi_up_panel.draw)
-                self.return_list.append(button_draw.return_text)
-                button_draw.draw()
-        line = draw.LineDraw("-", self.width)
-        line.draw()
-        # 隶属文本#
-        text_draw_love = draw.NormalDraw()
-        text_draw_love.text = "隶属路线前提： 快乐刻印>=1 屈服刻印>=1 顺从等级高于亲密等级\n"
-        text_draw_love.width = 1
-        text_draw_love.draw()
-        # 没进入爱情路线则触发#
-        if love == 10:
-            if obey == 19:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "已达到最高级-奴隶"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            elif self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or \
-                    self.character_data.ability[18] != 0:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "未满足基础前提"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            elif self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or \
-                    self.character_data.ability[31] <= self.character_data.ability[32]:
-                text_draw_love = draw.NormalDraw()
-                text_draw_love.text = "未满足隶属路线前提"
-                text_draw_love.width = 1
-                text_draw_love.draw()
-            else:
-                now_abi_up_panel = Charactertal_cmd_Text(self.character_id, self.width, obey)
-                button_draw = draw.LeftButton(
-                    _(button_text_obey),
-                    _(button_text_obey),
-                    self.width / 10,
-                    cmd_func=now_abi_up_panel.draw)
-                self.return_list.append(button_draw.return_text)
-                button_draw.draw()
+            now_draw_failed = draw.NormalDraw()
+            now_draw_failed.text = "不满足条件，无法升级\n"
+            now_draw_failed.draw()
 
-
-class Charactertal_cmd_Text:
-    """
-    角色素质升级指令面板
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 最大宽度
-    """
-
-    def __init__(self, character_id: int, width: int, talent_id: int, ):
-        """初始化绘制对象"""
-        self.character_id = character_id
-        """ 绘制的角色id """
-        self.width = width
-        """ 当前最大可绘制宽度 """
-        self.talent_id = talent_id
-        """ 当前的能力id """
-        self.return_list: List[str] = []
-        """ 监听的按钮列表 """
-        self.character_data = cache.character_data[self.character_id]
-        """ 角色数据 """
-
-    def draw(self):
-        """绘制对象"""
-        self.return_list = []
-        self.jule_dict = {}
-        judge = 1
-        # 绘制标题#
-        while 1:
-            need_list = game_config.config_talent_up_data[self.talent_id]
-            for need_id in need_list:
-                need_type = need_list[need_id].need_type
-                need_type_id = need_list[need_id].need_type_id
-                need_value = need_list[need_id].value
-                if need_type == "A":
-                    abi_name = game_config.config_ability[need_type_id].name
-                    button_text = "需要能力 :" + abi_name + "至少为" + str(need_value) + "\n"
-                    if self.character_data.ability[need_type_id] < need_value:
-                        judge = 0
-                elif need_type == "E":
-                    experience_name = game_config.config_experience[need_type_id].name
-                    button_text = "需要经验 :" + experience_name + "至少为" + str(need_value) + "\n"
-                    if self.character_data.experience[need_type_id] < need_value:
-                        judge = 0
-                elif need_type == "F":
-                    button_text = "需要好感至少为" + str(need_value) + "\n"
-                    if self.character_data.favorability[0] < need_value:
-                        judge = 0
-                elif need_type == "F":
-                    button_text = "需要信赖至少为" + str(need_value) + "%\n"
-                    if self.character_data.trust < need_value:
-                        judge = 0
-                now_draw = draw.NormalDraw()
-                now_draw.text = button_text
-                now_draw.draw()
-            if judge:
-                now_draw_succed = draw.NormalDraw()
-                now_draw_succed.text = "满足条件，要升级吗？\n"
-                now_draw_succed.draw()
-            else:
-                now_draw_failed = draw.NormalDraw()
-                now_draw_failed.text = "不满足条件，无法升级\n"
-                now_draw_failed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
-            back_draw.draw()
-            self.return_list.append(back_draw.return_text)
-            if judge:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up)
-                yes_draw.draw()
-                self.return_list.append(yes_draw.return_text)
-            yrn = flow_handle.askfor_all(self.return_list)
-            py_cmd.clr_cmd()
-            line_feed.draw()
-            if yrn == back_draw.return_text:
-                break
-
-    def level_up(self):
-        cache.character_data[self.character_id].talent[self.talent_id] = 1
+    def level_up(self, talent_id):
+        cache.character_data[self.character_id].talent[talent_id] = 1
 
 
 class CharacterImage:

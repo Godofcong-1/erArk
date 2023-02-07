@@ -730,6 +730,7 @@ def handle_make_coffee():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.SLEEP_LE_89}
 )
 def handle_make_coffee_add():

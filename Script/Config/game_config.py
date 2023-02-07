@@ -134,13 +134,13 @@ config_talent: Dict[int,config_def.Talent] = {}
 # """ 根据能力id和等级来判断升级的前提编号 """
 config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 """
-载入根据前提编号来判断具体的能力升级的具体前提数据
-需求id:[类型,类型子id,需求值]
+能力升级数据
+能力id:当前等级:需求分项:需求内容
 """
-config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
+config_talent_gain_data: Dict[int, config_def.TalentUp] = {}
 """
-载入根据前提编号来判断具体的素质升级的具体前提数据
-需求id:[类型,类型子id,需求值]
+获得素质数据
+素质id:条目内容
 """
 config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
 """ 每个指令的实行值判定数据 """
@@ -277,16 +277,15 @@ def load_ability_up_data():
         # print("config_ability_up_data[now_tem.ability_id][now_tem.now_level] :",config_ability_up_data[now_tem.ability_id][now_tem.now_level])
         # print()
 
-def load_talent_up_data():
-    """载入根据前提编号来判断具体的素质升级的具体前提数据"""
+def load_talent_gain_data():
+    """载入获得素质数据"""
     now_data = config_data["TalentUp"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.TalentUp()
         now_tem.__dict__ = tem_data
-        config_talent_up_data.setdefault(now_tem.talent_id, {})
-        config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
-        config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
+        config_talent_gain_data.setdefault(now_tem.talent_id, {})
+        config_talent_gain_data[now_tem.talent_id] = now_tem
 
 
 def load_instruct_judge_data():
@@ -918,7 +917,7 @@ def init():
     load_talk()
     load_talent_type()
     load_talent_type_data()
-    load_talent_up_data()
+    load_talent_gain_data()
     load_target()
     load_target_effect()
     load_week_day()
