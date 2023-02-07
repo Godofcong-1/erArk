@@ -334,16 +334,39 @@ class Debug_Panel:
             info_draw.width = self.width
             return_list = []
 
+
             if self.now_panel == "全局变量":
                 if key_index == 0:
-                    info_text = f"[000]:游戏时间：{cache.game_time}"
+                    info_text = f"[000]:游戏时间：{cache.game_time}      年月日分别为0,1,2"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
+
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.game_time = new_value
+                    # print(f"debug value_index = {value_index},new_value = {new_value}")
+
+                    # 根据第几项更改对应值
+                    if len(value_index) == 1:
+                        info_draw.text = "\n输出格式错误，请重试\n"
+                        info_draw.draw()
+                        continue
+                    if value_index[1] == 0:
+                        cache.game_time = cache.game_time.replace(year = new_value)
+                    elif value_index[1] == 1:
+                        cache.game_time = cache.game_time.replace(month = new_value)
+                    elif value_index[1] == 2:
+                        cache.game_time = cache.game_time.replace(day = new_value)
+
+
                 elif key_index == 1:
                     info_text = f"[001]:已拥有的干员id列表：\n"
                     for chara_id in cache.npc_id_got:

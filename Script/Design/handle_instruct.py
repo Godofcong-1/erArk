@@ -153,13 +153,13 @@ def handle_chat():
 
 
 @add_instruct(
-    constant.Instruct.BUY_ITEM, constant.InstructType.DAILY, _("购买道具"),
-    # {constant_promise.Premise.IN_SHOP,
-    {constant_promise.Premise.NOT_H}
+    constant.Instruct.BUY_H_ITEM, constant.InstructType.DAILY, _("购买成人用品"),
+    {constant_promise.Premise.IN_H_SHOP,
+     constant_promise.Premise.NOT_H, }
 )
-def handle_buy_item():
-    """处理购买道具指令"""
-    cache.now_panel_id = constant.Panel.ITEM_SHOP
+def handle_buy_h_item():
+    """处理购买成人用品指令"""
+    cache.now_panel_id = constant.Panel.H_ITEM_SHOP
 
 
 @add_instruct(

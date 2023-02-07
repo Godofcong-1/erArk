@@ -875,8 +875,8 @@ class Panel:
     """ 食物商店面板 """
     FOOD_BAG = 5
     """ 食物背包面板 """
-    ITEM_SHOP = 6
-    """ 道具商店面板 """
+    H_ITEM_SHOP = 6
+    """ 成人用品商店面板 """
     MAKE_FOOD = 7
     """ 做饭面板 """
     FIND_CALL = 8
@@ -1308,8 +1308,8 @@ class Instruct:
     """ 睡觉 """
     TAKE_SHOWER = 0
     """ 淋浴 """
-    BUY_ITEM = 0
-    """ 购买道具 """
+    BUY_H_ITEM = 0
+    """ 购买成人用品 """
     BUY_FOOD = 0
     """ 购买食物 """
     FOLLOW = 0

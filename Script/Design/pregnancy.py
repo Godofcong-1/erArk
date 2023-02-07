@@ -99,8 +99,8 @@ def check_pregnancy(character_id: int):
         start_date = cache.game_time
         end_date = character_data.pregnancy.fertilization_time
         past_day = (start_date - end_date).days
-        # 
-        if past_day >= 30:
+        # 90天在游戏内实际体验是30天
+        if past_day >= 90:
             character_data.talent[20] = 0
             character_data.talent[21] = 1
             character_data.talent[26] = 1
@@ -129,8 +129,8 @@ def check_near_born(character_id: int):
         start_date = cache.game_time
         end_date = character_data.pregnancy.fertilization_time
         past_day = (start_date - end_date).days
-        # 
-        if past_day >= 85:
+        # 从受精开始算，标准妊娠时间是265天
+        if past_day >= 260:
             character_data.talent[21] = 0
             character_data.talent[22] = 1
             draw_text = "\n※※※※※※※※※\n"
@@ -154,7 +154,7 @@ def check_born(character_id: int):
         # 计算经过的天数
         start_date = cache.game_time
         end_date = character_data.pregnancy.fertilization_time
-        past_day = (start_date - end_date).days - 84
+        past_day = (start_date - end_date).days - 260
         # 每过一天+20%几率判断是否生产
         now_rate = past_day * 20
         # print(f"debug {character_data.name}进入生产检测，当前生产几率为{now_rate}%")
@@ -204,8 +204,8 @@ def check_rearing_complete(character_id: int):
         start_date = cache.game_time
         end_date = child_character_data.pregnancy.born_time
         past_day = (start_date - end_date).days
-        # 
-        if past_day >= 30:
+        # 90天在游戏内实际体验是30天
+        if past_day >= 90:
             character_data.talent[24] = 0
             character_data.talent[26] = 0
             character_handle.get_new_character(child_id)

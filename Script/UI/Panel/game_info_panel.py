@@ -23,20 +23,24 @@ class GameTimeInfoPanel:
         """ 面板的最大宽度 """
         now_width = 0
         now_draw = draw.CenterMergeDraw(self.width)
-        date_draw = draw.NormalDraw()
-        date_draw.width = self.width
-        date_draw.text = f"{game_time.get_date_text()} {game_time.get_week_day_text()} "
-        now_draw.draw_list.append(date_draw)
-        now_width += len(date_draw)
+        year_draw = draw.NormalDraw()
+        year_draw.width = self.width
+        year_draw.text = f"{game_time.get_year_text()} "
+        now_draw.draw_list.append(year_draw)
+        now_width += len(year_draw)
         solar_period = game_time.get_solar_period(cache.game_time)
-        season = game_config.config_solar_period[solar_period].season
-        season_config = game_config.config_season[season]
-        season_draw = draw.NormalDraw()
-        season_draw.text = f"{season_config.name} "
-        season_draw.style = "season"
-        season_draw.width = self.width - now_width
-        now_draw.draw_list.append(season_draw)
-        now_width += len(season_draw)
+        # 月
+        month_draw = draw.NormalDraw()
+        month_draw.text = f"{game_time.get_month_text()} "
+        month_draw.style = "season"
+        month_draw.width = self.width - now_width
+        now_draw.draw_list.append(month_draw)
+        now_width += len(month_draw)
+        # 日和时间和星期
+        day_draw = draw.NormalDraw()
+        day_draw.text = f"{game_time.get_day_and_time_text()} {game_time.get_week_day_text()} "
+        now_draw.draw_list.append(day_draw)
+        now_width += len(day_draw)
         judge, solar_period = game_time.judge_datetime_solar_period(cache.game_time)
         if judge:
             solar_period_config = game_config.config_solar_period[solar_period]

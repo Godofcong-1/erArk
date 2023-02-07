@@ -110,7 +110,25 @@ class SaveInfoDraw:
             save_head = save_handle.load_save_info_head(self.text)
             game_time: datetime.datetime = save_head["game_time"]
             save_time: datetime.datetime = save_head["save_time"]
-            game_time_text = _("游戏时间:") + game_time.strftime("%Y-%m-%d %H:%M")
+
+            # 更改月份的输出
+            if game_time.month == 3:
+                month_text = "春"
+            elif game_time.month == 6:
+                month_text = "夏"
+            elif game_time.month == 9:
+                month_text = "秋"
+            elif game_time.month == 12:
+                month_text = "冬"
+            game_time_text = ("{year}年{month}月{day}日{hour}点{minute}分").format(
+                year=game_time.year,
+                month=month_text,
+                day=game_time.day,
+                hour=game_time.hour,
+                minute=game_time.minute,
+            )
+
+            game_time_text = _("游戏时间:") + game_time_text
             save_time_text = _("存档时间:") + save_time.strftime("%Y-%m-%d %H:%M")
             save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text} {save_head['character_name']}博士 {save_time_text}"
         if is_button:

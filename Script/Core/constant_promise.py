@@ -280,6 +280,8 @@ class Premise:
     """ 地点_定位 在更衣室或宿舍 """
     IN_NURSERY = "in_nursery"
     """ 地点_定位 在育儿室 """
+    IN_H_SHOP = "in_h_shop"
+    """ 地点_定位 在成人用品商店 """
 
     MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
     """ 地点_移动 角色抵达女士洗手间 """

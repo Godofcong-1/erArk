@@ -12,6 +12,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config, game_config
+from Script.Design import character
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -46,9 +47,66 @@ def get_date_text(game_time_data: datetime.datetime = None) -> str:
     """
     if game_time_data is None:
         game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
     return _("时间:{year}年{month}月{day}日{hour}点{minute}分").format(
         year=game_time_data.year,
-        month=game_time_data.month,
+        month=month_text,
+        day=game_time_data.day,
+        hour=game_time_data.hour,
+        minute=game_time_data.minute,
+    )
+
+
+def get_year_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取时间信息描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    return _("时间:{year}年").format(
+        year=game_time_data.year,
+    )
+
+
+def get_month_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取时间信息描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
+    return _("{month}").format(
+        month=month_text,
+    )
+
+
+def get_day_and_time_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取时间信息描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    return _("{day}日 {hour}点{minute}分").format(
         day=game_time_data.day,
         hour=game_time_data.hour,
         minute=game_time_data.minute,
@@ -75,6 +133,27 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     year -- 增加的年数
     """
     new_date = get_sub_date(minute, hour, day, month, year)
+
+    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
+    month_change_flag = False
+    if new_date.month in {1,2}:
+        new_date = new_date.replace(month = 3)
+        month_change_flag = True
+    elif new_date.month in {4,5}:
+        new_date = new_date.replace(month = 6)
+        month_change_flag = True
+    elif new_date.month in {7,8}:
+        new_date = new_date.replace(month = 9)
+        month_change_flag = True
+    elif new_date.month in {10,11}:
+        new_date = new_date.replace(month = 12)
+        month_change_flag = True
+    # 切月时对全角色的行为开始时间进行重置
+    if month_change_flag:
+        new_date = new_date.replace(day = 1)
+        for character_id in cache.npc_id_got:
+            character.init_character_behavior_start_time(character_id, new_date)
+
     cache.game_time = new_date
 
 

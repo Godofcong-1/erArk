@@ -16,9 +16,9 @@ line_feed.text = "\n"
 line_feed.width = 1
 
 
-class ItemShopPanel:
+class HItemShopPanel:
     """
-    用于查看道具商店界面面板对象
+    用于查看成人用品商店界面面板对象
     Keyword arguments:
     width -- 绘制宽度
     """
@@ -34,7 +34,7 @@ class ItemShopPanel:
         scene_position = character_data.position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         # scene_name = cache.scene_data[scene_position_str].scene_name
-        title_draw = draw.TitleLineDraw("道具商店", self.width)
+        title_draw = draw.TitleLineDraw("成人用品商店", self.width)
 
         # 按类别统计全部道具
         item_list_all = []
@@ -195,7 +195,7 @@ class BuyItemByItemNameDraw:
         elif self.character_data.item[self.text] == 99:
             now_text = "已达到最高堆叠上限"
         else:
-            now_text = "你没有足够的金钱"
+            now_text = "你没有足够的粉色凭证"
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width

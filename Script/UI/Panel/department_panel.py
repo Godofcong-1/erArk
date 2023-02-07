@@ -407,22 +407,21 @@ class ChangeWorkButtonList:
 
             # 遍历工作列表，获取每个工作的信息
             for cid in game_config.config_work_type.keys():
-                if cid:
-                    work_cid = game_config.config_work_type[cid].cid
-                    work_name = game_config.config_work_type[cid].name
-                    work_place = game_config.config_work_type[cid].department
-                    work_describe = game_config.config_work_type[cid].describe
+                work_cid = game_config.config_work_type[cid].cid
+                work_name = game_config.config_work_type[cid].name
+                work_place = game_config.config_work_type[cid].department
+                work_describe = game_config.config_work_type[cid].describe
 
-                    button_draw = draw.LeftButton(
-                        f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})：{work_describe}",
-                        f"\n{work_cid}",
-                        window_width ,
-                        cmd_func=self.select_new_work,
-                        args=work_cid
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                    line_feed.draw()
+                button_draw = draw.LeftButton(
+                    f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})：{work_describe}",
+                    f"\n{work_cid}",
+                    window_width ,
+                    cmd_func=self.select_new_work,
+                    args=work_cid
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

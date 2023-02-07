@@ -1,6 +1,7 @@
 from Script.Core import constant
 from Script.Design import handle_panel
 from Script.UI.Panel import (
+    h_item_shop_panel,
     in_scene_panel,
     assistant_panel,
     building_panel,
@@ -11,7 +12,6 @@ from Script.UI.Panel import (
     make_food_panel,
     food_bag_panel,
     food_shop_panel,
-    item_shop_panel,
     see_item_info_panel,
     see_map_panel,
     undress_panel,
@@ -99,10 +99,10 @@ def make_food_flow():
     now_panel.draw()
 
 
-@handle_panel.add_panel(constant.Panel.ITEM_SHOP)
-def item_shop_flow():
-    """道具商店面板"""
-    now_panel = item_shop_panel.ItemShopPanel(width)
+@handle_panel.add_panel(constant.Panel.H_ITEM_SHOP)
+def item_h_shop_flow():
+    """成人用品商店面板"""
+    now_panel = h_item_shop_panel.HItemShopPanel(width)
     now_panel.draw()
 
 
