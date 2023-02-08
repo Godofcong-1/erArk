@@ -1038,13 +1038,13 @@ def handle_confession():
                                                                             "告白"):
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
-        # 将对象的恋慕转为恋人，获得角色的信物
+        # 将对象的恋慕转为恋人，对方获得戒指
         target_data.talent[202] = 0
         target_data.talent[203] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _("\告白成功，[恋慕]转为[恋人]，获得了对方赠与的[信物]\n")
+        now_draw.text = _(f"\告白成功，[恋慕]转为[恋人]，{target_data.name}收下了你赠予的[戒指]\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
@@ -1074,14 +1074,14 @@ def handle_give_necklace():
                                                                             "戴上项圈"):
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
-        # 将对象的驯服转为宠物，增加项圈素质，获得角色的信物
+        # 将对象的驯服转为宠物，增加项圈素质
         target_data.talent[211] = 0
         target_data.talent[212] = 1
         target_data.talent[215] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]，获得了对方赠与的[信物]\n")
+        now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED

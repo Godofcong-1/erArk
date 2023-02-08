@@ -137,9 +137,14 @@ config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 能力升级数据
 能力id:当前等级:需求分项:需求内容
 """
-config_talent_gain_data: Dict[int, config_def.TalentUp] = {}
+config_talent_gain: Dict[int, config_def.TalentGain] = {}
 """
-获得素质数据
+获得素质原数据
+条目cid:条目内容
+"""
+config_talent_gain_data: Dict[int, config_def.TalentGain] = {}
+"""
+获得素质_素质排列数据
 素质id:条目内容
 """
 config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
@@ -279,11 +284,12 @@ def load_ability_up_data():
 
 def load_talent_gain_data():
     """载入获得素质数据"""
-    now_data = config_data["TalentUp"]
+    now_data = config_data["TalentGain"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
-        now_tem = config_def.TalentUp()
+        now_tem = config_def.TalentGain()
         now_tem.__dict__ = tem_data
+        config_talent_gain[now_tem.cid] = now_tem
         config_talent_gain_data.setdefault(now_tem.talent_id, {})
         config_talent_gain_data[now_tem.talent_id] = now_tem
 

@@ -1323,7 +1323,7 @@ class Character_talent_show_Text:
         type_line.draw()
         # 前提说明#
         text_draw_introduce = draw.NormalDraw()
-        text_draw_introduce.text = "共通基础前提： 好感度500以上 信任度50%以上 反发刻印0\n分为爱情系与隶属系两条路线\n"
+        text_draw_introduce.text = "陷落系素质\n 共通基础前提： 好感度500以上 信任度50%以上 反发刻印0\n 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n"
         text_draw_introduce.width = 1
         text_draw_introduce.draw()
 
@@ -1348,24 +1348,25 @@ class Character_talent_show_Text:
             text_draw_love = draw.NormalDraw()
             text_draw_love.width = 1
             text_draw_love_text = ""
+            judge = 1
+            # 输出最高级的提示信息
             if self.character_data.talent[204]:
                 text_draw_love_text += "已达到最高级-爱侣\n"
-            else:
-                judge = 1
+            # 路线选择
+            elif next_love_id == 0:
+
                 if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
-                    text_draw_love_text += "未满足共通基础前提\n"
+                    text_draw_love_text += "  未满足共通基础前提\n"
                     judge = 0
                 if self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or self.character_data.ability[32] <= self.character_data.ability[31]:
-                    text_draw_love_text += "未满足爱情路线前提\n"
+                    text_draw_love_text += "  未满足爱情路线前提\n"
                     judge = 0
                 text_draw_love.text = text_draw_love_text
                 text_draw_love.draw()
 
-                # 详细需求
-                if next_love_id == 0:
-                    self.show_gain_need(201, judge)
-                else:
-                    self.show_gain_need(next_love_id, judge)
+                self.show_gain_need(201, judge)
+            else:
+                self.show_gain_need(next_love_id, judge)
 
         # 隶属路线
         if next_obey_id or not next_love_id:
@@ -1379,31 +1380,29 @@ class Character_talent_show_Text:
             text_draw_obey = draw.NormalDraw()
             text_draw_obey.width = 1
             text_draw_obey_text = ""
+            judge = 1
             if self.character_data.talent[214]:
                     text_draw_obey_text += "已达到最高级-奴隶\n"
-            else:
-                judge = 1
+            elif next_obey_id == 0:
+
                 if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
-                    text_draw_obey_text += "未满足共通基础前提\n"
+                    text_draw_obey_text += "  未满足共通基础前提\n"
                     judge = 0
                 if self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or self.character_data.ability[31] <= self.character_data.ability[32]:
-                    text_draw_obey_text += "未满足隶属路线前提\n"
+                    text_draw_obey_text += "  未满足隶属路线前提\n"
                     judge = 0
                 text_draw_obey.text = text_draw_obey_text
                 text_draw_obey.draw()
 
-                # 详细需求
-                if next_love_id == 0:
-                    self.show_gain_need(211, judge)
-                else:
-                    self.show_gain_need(next_obey_id, judge)
+                self.show_gain_need(211, judge)
+            else:
+                self.show_gain_need(next_obey_id, judge)
 
 
     def show_gain_need(self, talent_id, judge):
         """具体显示需要什么"""
 
         need_all = game_config.config_talent_gain_data[talent_id]
-        need_list = []
         talent_name = game_config.config_talent[talent_id].name
 
         # 输出素质名
@@ -1413,64 +1412,67 @@ class Character_talent_show_Text:
 
         # 以&为分割判定是否有多个需求
         if "&" not in need_all.gain_need:
+            need_list = []
             need_list.append(need_all.gain_need)
         else:
             need_list = need_all.gain_need.split('&')
-            for gain_need in need_list:
-                need_list.append(gain_need)
 
         # 遍历升级需求，并输出信息
         for need_text in need_list:
-            # print(f"debug need_text = {need_text}")
             need_type = need_text.split('|')[0][0]
-            need_type_id = int(need_text.split('|')[0][1:])
+            if len(need_text.split('|')[0]) >= 2:
+                need_type_id = int(need_text.split('|')[0][1:])
             need_value = int(need_text.split('|')[1])
             # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
             if need_type == "A":
                 abi_name = game_config.config_ability[need_type_id].name
-                button_text = "  需要能力 : " + abi_name + " 至少为" + str(need_value) + "\n"
+                button_text = f"  需要能力[{abi_name}] 至少为{str(need_value)}\n"
                 if self.character_data.ability[need_type_id] < need_value:
                     judge = 0
             elif need_type == "J":
                 juel_name = game_config.config_juel[need_type_id].name
-                button_text = "  需要宝珠 : " + juel_name + " 至少为" + str(need_value) + "\n"
+                button_text = f"  需要宝珠[{juel_name}] 至少为{str(need_value)}\n"
                 if self.character_data.juel[need_type_id] < need_value:
                     judge = 0
-                self.jule_dict[need_type_id] = need_value
+                # self.jule_dict[need_type_id] = need_value
             elif need_type == "E":
                 experience_name = game_config.config_experience[need_type_id].name
-                button_text = "  需要经验 : " + experience_name + " 至少为" + str(need_value) + "\n"
+                button_text = f"  需要经验[{experience_name}] 至少为{str(need_value)}\n"
                 if self.character_data.experience[need_type_id] < need_value:
                     judge = 0
             elif need_type == "F":
-                button_text = "  需要好感至少为" + str(need_value) + "\n"
+                button_text = f"  需要好感至少为{str(need_value)}\n"
                 if self.character_data.favorability[0] < need_value:
                     judge = 0
             elif need_type == "X":
-                button_text = "  需要信赖至少为" + str(need_value) + "%\n"
+                button_text = f"  需要信赖至少为{str(need_value)}\n"
                 if self.character_data.trust < need_value:
                     judge = 0
             now_draw = draw.NormalDraw()
             now_draw.text = button_text
             now_draw.draw()
 
-        line_feed.draw()
-        if judge:
-            now_draw_succed = draw.NormalDraw()
-            now_draw_succed.text = "满足条件，要升级吗？\n"
-            now_draw_succed.draw()
+        if talent_id in {201,211}:
+            line_feed.draw()
+            if judge:
+                now_draw_succed = draw.NormalDraw()
+                now_draw_succed.text = "满足条件，确定选择此路线吗？\n"
+                now_draw_succed.draw()
 
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args = talent_id)
-            yes_draw.draw()
-            self.return_list.append(yes_draw.return_text)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args = talent_id)
+                yes_draw.draw()
+                self.return_list.append(yes_draw.return_text)
 
-        else:
-            now_draw_failed = draw.NormalDraw()
-            now_draw_failed.text = "不满足条件，无法升级\n"
-            now_draw_failed.draw()
+            else:
+                now_draw_failed = draw.NormalDraw()
+                now_draw_failed.text = "不满足条件，无法选择\n"
+                now_draw_failed.draw()
 
     def level_up(self, talent_id):
         cache.character_data[self.character_id].talent[talent_id] = 1
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = "选择成功，将在博士入睡醒来后进入对应路线\n"
+        now_draw_succed.draw()
 
 
 class CharacterImage:

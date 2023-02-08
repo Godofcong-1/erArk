@@ -525,16 +525,7 @@ class Talent:
     """ 备注说明 """
 
 
-class TalentType:
-    """ 角色能力类型 """
-
-    cid: int
-    """ 类型id """
-    name: str
-    """ 类型名 """
-
-
-class TalentUp:
+class TalentGain:
     """ 素质的获得 """
 
     cid: int
@@ -542,9 +533,18 @@ class TalentUp:
     talent_id: int
     """ 素质id """
     gain_type: int
-    """ 获得类型 """
+    """ 获得类型(0自动，1手动，2指令绑定) """
     gain_need: str
     """ 获得需求 """
+
+
+class TalentType:
+    """ 角色能力类型 """
+
+    cid: int
+    """ 类型id """
+    name: str
+    """ 类型名 """
 
 
 class Tip:
