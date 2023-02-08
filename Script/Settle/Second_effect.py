@@ -43,6 +43,34 @@ cache: game_type.Cache = cache_control.cache
 #         character_data.h_state.orgasm_count[0] += 1
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.Nothing)
+def handle_nothing(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    空白结算
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    _ = 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.Must_Show)
+def handle_must_show(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    必须显示的空白结算
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    _ = 1
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_NClimax_EXPERIENCE)
 def handle_add_1_nclimax_experience(
     character_id: int,

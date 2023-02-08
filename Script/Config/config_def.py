@@ -532,6 +532,8 @@ class TalentGain:
     """ 编号id """
     talent_id: int
     """ 素质id """
+    second_behavior_id: int
+    """ 二段行为结算id """
     gain_type: int
     """ 获得类型(0随时自动，1手动，2指令绑定，3睡觉自动) """
     gain_need: str

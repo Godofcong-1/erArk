@@ -223,3 +223,16 @@ def handle_talk_draw(character_id: int, now_talk_data: dict):
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         now_draw.draw()
+
+def must_show_talk_check(character_id: int):
+    """
+    检查是否有必须显示的二段行为文本
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0:
+            if 998 in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                return 1
+

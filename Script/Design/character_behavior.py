@@ -61,13 +61,10 @@ def init_character_behavior():
                 if character_id in cache.over_behavior_character:
                     continue
                 character_behavior(character_id, cache.game_time)
-                # judge_character_dead(character_id)
-                judge_character_tired_sleep(character_id)
                 # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         # 后结算玩家部分
         while 0 not in cache.over_behavior_character:
             character_behavior(0, cache.game_time)
-            judge_character_tired_sleep(0)
         update_cafeteria()
         # 睡觉刷新
         PL_data: game_type.Character = cache.character_data[0]
@@ -149,6 +146,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character.init_character_behavior_start_time(character_id, now_time)
     # 处理特殊模式
     if character_id != 0:
+        judge_character_tired_sleep(character_id)
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
         judge_character_pregnancy(character_id) # 临盆和产后
@@ -174,6 +172,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             status_judge = judge_character_status(character_id, now_time)
             if status_judge:
                 cache.over_behavior_character.add(character_id)
+        # 最后结算疲劳
+        judge_character_tired_sleep(character_id)
 
     # 再处理NPC部分
     if character_id:
@@ -639,7 +639,7 @@ def update_sleep():
             # 检查并处理受精怀孕部分
             pregnancy.check_all_pregnancy(character_id)
             # 检查是否有可以获得的素质
-            handle_talent.sleep_gain_talent(character_id)
+            handle_talent.gain_talent(character_id,now_gain_type = 3)
 
     # 非角色部分
     update_save()

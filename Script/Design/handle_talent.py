@@ -33,11 +33,12 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-def sleep_gain_talent(character_id: int):
+def gain_talent(character_id: int, now_gain_type: int):
     """
-    获得在睡觉时结算的素质\n
+    结算可以获得的素质\n
     Keyword arguments:
     character_id -- 角色id\n
+    now_gain_type -- 素质获得类型(0随时自动，1手动，2指令绑定，3睡觉自动)\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # 遍历全素质获得
@@ -45,8 +46,8 @@ def sleep_gain_talent(character_id: int):
         gain_talent_data = game_config.config_talent_gain[gain_talent_cid]
         gain_type = gain_talent_data.gain_type
         talent_id = gain_talent_data.talent_id
-        # 需要为睡觉结算素质，而且NPC没有该素质
-        if gain_type == 3 and character_data.talent[talent_id] == 0:
+        # 需要为对应的结算时机，而且NPC没有该素质
+        if gain_type == now_gain_type and character_data.talent[talent_id] == 0:
 
             # 以&为分割判定是否有多个需求
             if "&" not in gain_talent_data.gain_need:
@@ -89,9 +90,14 @@ def sleep_gain_talent(character_id: int):
                         break
 
             # 如果符合获得条件，则获得该素质
-            if judge:
+            if judge or 1:
                 character_data.talent[talent_id] = 1
                 talent_name = game_config.config_talent[talent_id].name
+
+                # 触发对应的二段行为结算
+                if gain_talent_data.second_behavior_id:
+                    second_behavior_id = gain_talent_data.second_behavior_id
+                    character_data.second_behavior[second_behavior_id] = 1
 
                 # 判断是否需要进行替代旧素质
                 if gain_talent_data.replace_talent_id:
