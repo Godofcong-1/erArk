@@ -24,7 +24,9 @@ from Script.Design import (
     cooking,
     attr_calculation,
     character_move,
-    pregnancy
+    pregnancy,
+    basement,
+    handle_talent
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel
@@ -636,6 +638,8 @@ def update_sleep():
             # character_data.dirty = attr_calculation.get_dirty_zero()
             # 检查并处理受精怀孕部分
             pregnancy.check_all_pregnancy(character_id)
+            # 检查是否有可以获得的素质
+            handle_talent.sleep_gain_talent(character_id)
 
     # 非角色部分
     update_save()
@@ -671,23 +675,10 @@ def update_new_day():
             pregnancy.update_reproduction_period(character_id)
 
     # 非角色部分
-    update_base_resouce()
+    basement.update_base_resouce_newday()
     cache.pre_game_time = cache.game_time
     update_save()
 
-def update_base_resouce():
-    """
-    刷新基地资源数据\n
-    Keyword arguments:
-    无\n
-    Return arguments:
-    无
-    """
-    # 刷新新病人数量，已治愈病人数量和治疗收入归零
-    cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
-    cache.base_resouce.patient_cured = 0
-    cache.base_resouce.cure_income = 0
-    cache.base_resouce.all_income = 0
 
 def update_save():
     """

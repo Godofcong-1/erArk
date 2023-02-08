@@ -1426,26 +1426,31 @@ class Character_talent_show_Text:
             # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
             if need_type == "A":
                 abi_name = game_config.config_ability[need_type_id].name
-                button_text = f"  需要能力[{abi_name}] 至少为{str(need_value)}\n"
+                button_text = f"  需要能力[{abi_name}]至少为 {str(need_value)}\n"
                 if self.character_data.ability[need_type_id] < need_value:
+                    judge = 0
+            elif need_type == "T":
+                tal_name = game_config.config_talent[need_value].name
+                button_text = f"  需要素质[{tal_name}]\n"
+                if not self.character_data.talent[need_value]:
                     judge = 0
             elif need_type == "J":
                 juel_name = game_config.config_juel[need_type_id].name
-                button_text = f"  需要宝珠[{juel_name}] 至少为{str(need_value)}\n"
+                button_text = f"  需要宝珠[{juel_name}]至少为 {str(need_value)}\n"
                 if self.character_data.juel[need_type_id] < need_value:
                     judge = 0
                 # self.jule_dict[need_type_id] = need_value
             elif need_type == "E":
                 experience_name = game_config.config_experience[need_type_id].name
-                button_text = f"  需要经验[{experience_name}] 至少为{str(need_value)}\n"
+                button_text = f"  需要经验[{experience_name}]至少为 {str(need_value)}\n"
                 if self.character_data.experience[need_type_id] < need_value:
                     judge = 0
             elif need_type == "F":
-                button_text = f"  需要好感至少为{str(need_value)}\n"
+                button_text = f"  需要好感至少为 {str(need_value)}\n"
                 if self.character_data.favorability[0] < need_value:
                     judge = 0
             elif need_type == "X":
-                button_text = f"  需要信赖至少为{str(need_value)}\n"
+                button_text = f"  需要信赖至少为 {str(need_value)}\n"
                 if self.character_data.trust < need_value:
                     judge = 0
             now_draw = draw.NormalDraw()

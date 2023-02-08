@@ -104,6 +104,21 @@ def get_base_updata():
                 cache.base_resouce.recruit_now[0] = 0
 
 
+def update_base_resouce_newday():
+    """
+    刷新基地资源数据\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+    # 刷新新病人数量，已治愈病人数量和治疗收入归零
+    cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
+    cache.base_resouce.patient_cured = 0
+    cache.base_resouce.cure_income = 0
+    cache.base_resouce.all_income = 0
+
+
 def update_work_people():
     """
     刷新各干员的职位和当前正在工作的干员
