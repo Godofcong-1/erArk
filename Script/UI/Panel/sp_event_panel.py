@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import character_handle, map_handle, attr_calculation
+from Script.Design import character_handle, talk, attr_calculation
 import random
 
 panel_info_data = {}
@@ -82,6 +82,8 @@ class Born_Panel:
                 line.draw()
                 return_list = []
 
+                mom_character_data.second_behavior[1315] = 1
+                talk.must_show_talk_check(character_id)
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
                 info_draw.width = self.width
@@ -115,6 +117,8 @@ class Born_Panel:
                 line_feed.draw()
                 break
 
+            character_data.second_behavior[1317] = 1
+            talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n{mom_character_data.name}的生产结束了，但她仍需要在住院部休息几天\n"
             mom_character_data.talent[22] = 0
@@ -137,8 +141,10 @@ class Born_Panel:
             now_draw.width = window_width
             now_draw.text = draw_text
             now_draw.draw()
+            now_draw = draw.WaitDraw()
             now_draw.text = "\n"
             now_draw.draw()
+            now_draw = draw.WaitDraw()
             now_draw.text = "\n"
             now_draw.draw()
 

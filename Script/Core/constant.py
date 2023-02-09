@@ -1076,6 +1076,23 @@ class SecondBehavior:
     OBEY_4 = 1308
     """ 结算获得奴隶 """
 
+    FERTILIZATION = 1311
+    """ 结算获得受精 """
+    FERTILIZATION_FAILD = 1312
+    """ 结算受精失败 """
+    PREGNANCY = 1313
+    """ 结算获得妊娠 """
+    PARTURIENT = 1314
+    """ 结算获得临盆 """
+    BORN = 1315
+    """ 生产前的对话 """
+    POSTPARTUM = 1317
+    """ 生产后的对话+获得产后 """
+    REARING = 1318
+    """ 结算获得育儿 """
+    REARING_COMPLETE = 1319
+    """ 结算育儿完成 """
+
 
 class SecondEffect:
     """二段结算效果函数"""

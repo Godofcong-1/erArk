@@ -79,9 +79,12 @@ def check_fertilization(character_id: int):
             draw_text += "\n※※※※※※※※※\n"
             character_data.talent[20] = 1
             character_data.pregnancy.fertilization_time = cache.game_time
+            character_data.second_behavior[1311] = 1
         else:
             draw_text = f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
             character_data.pregnancy.fertilization_rate = 0
+            character_data.second_behavior[1312] = 1
+        talk.must_show_talk_check(character_id)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         now_draw.text = draw_text
@@ -105,6 +108,8 @@ def check_pregnancy(character_id: int):
             character_data.talent[21] = 1
             character_data.talent[26] = 1
             character_data.talent[27] = 1
+            character_data.second_behavior[1313] = 1
+            talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
             draw_text += f"\n{character_data.name}有孕在身，将会暂停工作和部分娱乐\n"
@@ -133,6 +138,8 @@ def check_near_born(character_id: int):
         if past_day >= 260:
             character_data.talent[21] = 0
             character_data.talent[22] = 1
+            character_data.second_behavior[1314] = 1
+            talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n随着怀孕的进程，{character_data.name}临近生产，即将诞下爱的结晶\n"
             draw_text += f"\n{character_data.name}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n"
@@ -180,6 +187,8 @@ def check_rearing(character_id: int):
         if past_day >= 2:
             character_data.talent[23] = 0
             character_data.talent[24] = 1
+            character_data.second_behavior[1318] = 1
+            talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n{character_data.name}的产后休息结束了\n"
             draw_text += f"\n{character_data.name}接下来的行动重心会以照顾{child_character_data.name}为主\n"
@@ -209,6 +218,8 @@ def check_rearing_complete(character_id: int):
             character_data.talent[24] = 0
             character_data.talent[26] = 0
             character_handle.get_new_character(child_id)
+            character_data.second_behavior[1319] = 1
+            talk.must_show_talk_check(character_id)
             child_character_data.talent[101] = 0
             child_character_data.talent[102] = 1
             draw_text = "\n※※※※※※※※※\n"

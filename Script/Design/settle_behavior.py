@@ -56,6 +56,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 character_id, add_time, status_data, now_time
             )
 
+    # 子事件
     son_event_id = now_character_data.event.son_event_id
     if son_event_id != "":
         # 进行事件结算
@@ -534,12 +535,11 @@ def check_second_effect(
         # print("debug target_character_id = ",target_character_id)
         # 阴茎位置结算
         insert_position_effect(target_character_id)
-
         # 高潮结算
         orgasm_effect(target_character_id)
-
         # 道具结算
         item_effect(target_character_id)
+        # 素质结算
 
         # 遍历二段行为id，进行结算
         for behavior_id, behavior_data in target_character_data.second_behavior.items():
