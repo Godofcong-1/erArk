@@ -1093,6 +1093,11 @@ class SecondBehavior:
     REARING_COMPLETE = 1319
     """ 结算育儿完成 """
 
+    FIRST_MEET = 1331
+    """ 初次见面 """
+    DAY_HELLO = 1332
+    """ 每日打招呼 """
+
 
 class SecondEffect:
     """二段结算效果函数"""

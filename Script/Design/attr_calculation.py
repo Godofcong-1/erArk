@@ -75,6 +75,8 @@ def get_status_zero(status_dict) -> dict:
         if status not in status_dict:
             status_list[status] = 0
     return status_list
+
+
 def get_talent_zero(talent_dict) -> dict:
     """
     检查初始素质，将为空的项补为0

@@ -146,7 +146,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         character.init_character_behavior_start_time(character_id, now_time)
     # 处理特殊模式
     if character_id != 0:
-        judge_character_tired_sleep(character_id)
+        judge_character_first_meet(character_id) # 初见和每日招呼
+        judge_character_tired_sleep(character_id) # 疲劳和睡眠
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
         judge_character_pregnancy(character_id) # 临盆和产后
@@ -565,6 +566,7 @@ def judge_character_follow(character_id: int) -> int:
             character_data.state = constant.CharacterStatus.STATUS_MOVE
     return 1
 
+
 def judge_character_h(character_id: int) -> int:
     """
     维持H状态\n
@@ -579,6 +581,7 @@ def judge_character_h(character_id: int) -> int:
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
     return 1
+
 
 def judge_character_pregnancy(character_id: int) -> int:
     """
@@ -603,6 +606,27 @@ def judge_character_pregnancy(character_id: int) -> int:
             map_handle.character_move_scene(character_data.position, to_Inpatient_Department, character_id)
 
     return 1
+
+
+def judge_character_first_meet(character_id: int) -> int:
+    """
+    判断初见和每日招呼\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 优先输出初见，次要输出每日招呼
+    if character_data.first_record.first_meet:
+        character_data.second_behavior[1331] = 1
+        character_data.first_record.first_meet = 0
+        character_data.first_record.day_first_meet = 0
+    elif character_data.first_record.day_first_meet:
+        character_data.first_record.day_first_meet = 0
+        character_data.second_behavior[1332] = 1
+
 
 def update_sleep():
     """
@@ -634,6 +658,8 @@ def update_sleep():
             character_data.angry_point = random.randrange(1,35)
             # 清零H被撞破的flag
             character_data.action_info.h_interrupt = 0
+            # 重置每天第一次见面
+            character_data.first_record.day_first_meet = 1
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
             # 检查并处理受精怀孕部分

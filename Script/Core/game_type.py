@@ -398,6 +398,10 @@ class FIRST_RECORD:
     """初次状态记录结构体"""
 
     def __init__(self):
+        self.first_meet: int = 1
+        """ 第一次见面，1为未见面过，0为已见面过 """
+        self.day_first_meet: int = 1
+        """ 每天第一次见面，1为未见面过，0为已见面过 """
         self.first_hand_in_hand: int = -1
         """ 初次牵手对象 -1为无 """
         self.first_kiss_id: int = -1
