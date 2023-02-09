@@ -90,7 +90,7 @@ def gain_talent(character_id: int, now_gain_type: int):
                         break
 
             # 如果符合获得条件，则获得该素质
-            if judge or 1:
+            if judge:
                 character_data.talent[talent_id] = 1
                 talent_name = game_config.config_talent[talent_id].name
 

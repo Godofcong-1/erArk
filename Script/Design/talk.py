@@ -28,6 +28,7 @@ def handle_talk(character_id: int):
             character_data.position != cache.character_data[0].position
             and character_data.behavior.move_src != cache.character_data[0].position
     ):
+        must_show_talk_check(character_id)
         return
     # 第一段行为结算的口上
     if behavior_id in game_config.config_talk_data:
@@ -233,6 +234,10 @@ def must_show_talk_check(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
+            # print(f"debug 检测到{second_behavior_id}可能需要显示")
+            # 需要有必须显示
             if 998 in game_config.config_second_behavior_effect_data[second_behavior_id]:
-                return 1
-
+                now_talk_data = handle_talk_sub(character_id, second_behavior_id)
+                # 触发后该行为值归零
+                character_data.second_behavior[second_behavior_id] = 0
+                handle_talk_draw(character_id, now_talk_data)
