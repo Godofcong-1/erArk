@@ -103,6 +103,10 @@ class CharacterStatus:
     """ 招募干员 """
     STATUS_READ_BOOK = 210
     """ 读书 """
+    STATUS_TEACH = 213
+    """ 授课 """
+    STATUS_ATTENT_CLASS = 214
+    """ 上学 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -450,6 +454,10 @@ class Behavior:
     """ 招募干员 """
     READ_BOOK = 210
     """ 读书 """
+    TEACH = 213
+    """ 授课 """
+    ATTENT_CLASS = 214
+    """ 上学 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -740,6 +748,10 @@ class StateMachine:
     """ 移动到图书馆办公室 """
     MOVE_TO_LIBRARY = 25
     """ 移动到图书馆 """
+    MOVE_TO_CLASS_ROOM = 26
+    """ 移动到教室 """
+    MOVE_TO_TEACHER_OFFICE = 27
+    """ 移动到教师办公室 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
     MOVE_TO_BATH_ROOM = 33
@@ -791,6 +803,10 @@ class StateMachine:
     """ 工作：诊疗病人 """
     WORK_RECRUIT = 302
     """ 工作：招募干员 """
+    WORK_TEACH = 303
+    """ 工作：授课 """
+    WORK_ATTENT_CLASS = 304
+    """ 工作：上学 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1409,6 +1425,8 @@ class Instruct:
     """ 招募干员 """
     CONFIM_RECRUIT = 0
     """ 确认已招募的干员 """
+    TEACH = 0
+    """ 授课 """
     BORROW_BOOK = 0
     """ 借阅书籍 """
     READ_BOOK = 0

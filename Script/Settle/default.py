@@ -184,6 +184,7 @@ def handle_add_small_trust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 首先需要有交互对象，然后要么是玩家发起指令，要么是NPC对玩家发起指令
     if character_data.target_character_id != character_id and (
             not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -198,6 +199,7 @@ def handle_add_small_trust(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.trust += now_lust_multiple
+        # NPC对玩家发起指令的情况
         if (character_id != 0) and (character_data.target_character_id == 0):
             character_data.trust += now_lust_multiple
             change_data.trust += now_lust_multiple
@@ -3065,6 +3067,87 @@ def handle_read_add_adjust(
         character_data.entertainment.book_return_possibility += return_rate
         basement.check_return_book(character_id)
 
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)
+def handle_teach_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （教学用）自己增加习得和学识经验，所有当前场景里状态是上课的角色增加习得和学识经验，如果玩家是老师则再加好感和信赖，最后结束
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
+    # 获得加成 #
+    now_add_lust = adjust * add_time * random.uniform(0.5, 1.5)
+
+    # 增加自己的习得和学识经验
+    character_data.status_data[9] += now_add_lust
+    change_data.status_data.setdefault(9, 0)
+    change_data.status_data[9] += now_add_lust
+
+    character_data.experience.setdefault(82, 0)
+    character_data.experience[82] += 1
+    change_data.experience.setdefault(82, 0)
+    change_data.experience[82] += 1
+
+    # 遍历当前场景的其他角色
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 跳过自己
+            if chara_id == character_id:
+                continue
+            else:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                # 如果对方在听课
+                if other_character_data.state == constant.CharacterStatus.STATUS_ATTENT_CLASS:
+
+                    # 增加习得和学识经验
+                    other_character_data.status_data[9] += now_add_lust
+                    other_character_data.experience.setdefault(82, 0)
+                    other_character_data.experience[82] += 1
+                    change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
+                    target_change: game_type.TargetChange = change_data.target_change[other_character_data.cid]
+                    target_change.status_data.setdefault(9, 0)
+                    target_change.status_data[9] += now_add_lust
+                    target_change.experience.setdefault(82, 0)
+                    target_change.experience[82] += 1
+
+                    # 如果老师是玩家
+                    if character_id == 0:
+
+                        # 加好感
+                        add_favorability = character.calculation_favorability(character_id, other_character_data.cid, add_time)
+                        character_handle.add_favorability(
+                            character_id, other_character_data.cid, add_favorability, change_data, target_change, now_time
+                        )
+
+                        # 加信赖
+                        now_lust_multiple = attr_calculation.get_ability_adjust(other_character_data.ability[32])
+                        other_character_data.trust += now_lust_multiple
+                        change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
+                        target_change.trust += now_lust_multiple
+
+                    # 手动结算该状态
+                    character_behavior.judge_character_status(chara_id,cache.game_time)
+                    # other_character_data.state = constant.CharacterStatus.STATUS_ARDER
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
         character_id: int,
@@ -3089,10 +3172,12 @@ def handle_add_hpmp_max(
     add_mp = int(20 * random.uniform(0.75, 1.25))
     character_data.hit_point_max += add_hp
     character_data.mana_point_max += add_mp
-    now_draw = draw.NormalDraw()
-    now_draw.text = f"\n{character_data.name}博士的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
-    now_draw.width = width
-    now_draw.draw()
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"\n{character_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
+        now_draw.width = width
+        now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -3100,10 +3185,12 @@ def handle_add_hpmp_max(
         add_mp = 20 * random.uniform(0.75, 1.25)
         target_data.hit_point_max += add_hp
         target_data.mana_point_max += add_mp
-        now_draw = draw.NormalDraw()
-        now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
-        now_draw.width = width
-        now_draw.draw()
+        # 如果和玩家位于同一地点，则输出提示信息
+        if character_data.position == cache.character_data[0].position:
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
+            now_draw.width = width
+            now_draw.draw()
     else:
         now_draw = draw.NormalDraw()
         now_draw.text = "\n"

@@ -724,6 +724,12 @@ class Base_resouce:
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
 
+        # 教育区
+        self.teacher_set: Set = set()
+        """ 教师干员id合集 """
+        self.student_set: Set = set()
+        """ 学生干员id合集 """
+
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
         self.shop_max: int = 0

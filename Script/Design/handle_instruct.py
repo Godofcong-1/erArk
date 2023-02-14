@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle
+from Script.Design import update, character, attr_calculation, character_handle, map_handle
 from Script.UI.Panel import normal_panel, see_character_info_panel, see_save_info_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -269,6 +269,43 @@ def handle_see_collection():
 
 
 @add_instruct(
+    constant.Instruct.TEACH,
+    constant.InstructType.WORK,
+    _("授课"),
+    {constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_CLASS_ROOM,
+     constant_promise.Premise.SLEEP_LE_74}
+)
+def handle_teach():
+    """处理授课指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.TEACH
+    character_data.behavior.duration = 45
+    character_data.state = constant.CharacterStatus.STATUS_TEACH
+    # 将当前场景里所有工作是上学的角色变为学习状态
+    # 遍历当前场景的其他角色
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 跳过自己
+            if chara_id == 0:
+                continue
+            else:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                # 让对方变成听课状态
+                if other_character_data.work.work_type == 152:
+                    other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+                    other_character_data.behavior.duration = 45
+                    other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
+    update.game_update_flow(45)
+
+
+@add_instruct(
     constant.Instruct.BORROW_BOOK,
     constant.InstructType.WORK,
     _("借阅书籍"),
@@ -288,7 +325,7 @@ def handle_borrow_book():
     _("读书"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.SLEEP_LE_89,
+        constant_promise.Premise.SLEEP_LE_74,
     })
 def handle_read_book():
     """处理读书指令"""

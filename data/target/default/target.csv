@@ -63,6 +63,13 @@ ai的目标,,,
 306,302,normal_all|work_is_hr|work_time|in_hr_office,正常状态下，工作为人事，在工作时间如果在人事部办公室，则进行招募工作
 307,24,normal_all|work_is_library_manager|work_time|not_in_library_or_library_office,正常状态下，工作为图书馆管理员，在工作时间如果不在图书馆或图书馆办公室，则去图书馆办公室
 
+311,26,normal_all|work_is_teacher|to_work_time|not_in_class_room,正常状态下，工作为教师，在到岗时间，如果不在教室，则去教室
+312,26,normal_all|work_is_student|to_work_time|not_in_class_room,正常状态下，工作为学生，在到岗时间，如果不在教室，则去教室
+313,26,normal_all|work_is_teacher|work_time|not_in_class_room,正常状态下，工作为教师，在工作时间，如果不在教室，则去教室
+314,26,normal_all|work_is_student|work_time|not_in_class_room,正常状态下，工作为学生，在工作时间，如果不在教室，则去教室
+315,303,normal_all|work_is_teacher|work_time|in_class_room,正常状态下，工作为教师，在工作时间，如果在教室，则开始授课
+316,304,normal_all|work_is_student|work_time|in_class_room|teacher_teaching_in_classroom,正常状态下，工作为学生，在工作时间，如果在教室，而且教室里有老师正在授课，则加入上课行列
+
 401,25,normal_all|entertainment_time|entertainment_is_read|not_in_library,正常状态下，下班娱乐时间，娱乐是读书，不在图书馆，则去图书馆
 402,401,normal_all|entertainment_time|entertainment_is_read|in_library,正常状态下，下班娱乐时间，娱乐是读书，在图书馆，则读书
 

@@ -130,6 +130,8 @@ def update_work_people():
     cache.base_resouce.HR_id_set = set()
     cache.base_resouce.library_manager_now = 0
     cache.base_resouce.library_manager_set = set()
+    cache.base_resouce.teacher_set = set()
+    cache.base_resouce.student_set = set()
     cache.base_resouce.work_people_now = 0
 
     cache.npc_id_got.discard(0)
@@ -153,6 +155,16 @@ def update_work_people():
             cache.base_resouce.library_manager_set.add(id)
             if handle_premise.handle_in_library_office(id) or handle_premise.handle_in_library(id):
                 cache.base_resouce.library_manager_now += 1
+                cache.base_resouce.work_people_now += 1
+        # 老师统计
+        elif character_data.work.work_type == 151:
+            cache.base_resouce.teacher_set.add(id)
+            if handle_premise.handle_in_class_room(id):
+                cache.base_resouce.work_people_now += 1
+        # 学生统计
+        elif character_data.work.work_type == 152:
+            cache.base_resouce.student_set.add(id)
+            if handle_premise.handle_in_class_room(id):
                 cache.base_resouce.work_people_now += 1
 
 

@@ -50,7 +50,7 @@ def handle_premise(premise: str, character_id: int) -> int:
 @add_premise(constant_promise.Premise.EAT_TIME)
 def handle_eat_time(character_id: int) -> int:
     """
-    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上17~18点）
+    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上18~20点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -60,7 +60,7 @@ def handle_eat_time(character_id: int) -> int:
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     # print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
-    if character_data.behavior.start_time.hour in {7, 8, 12, 13, 17, 18}:
+    if character_data.behavior.start_time.hour in {7, 8, 12, 13, 18, 19, 20}:
         # print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
         return 1
     return 0
@@ -139,10 +139,10 @@ def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.WORK_TIME)
-def handle_work_time(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TO_WORK_TIME)
+def handle_to_work_time(character_id: int) -> int:
     """
-    工作时间（早上9:00~下午4:59）
+    到岗时间（早上8:40~早上9:00，下午13:40~下午14:00）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -151,7 +151,24 @@ def handle_work_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if 9 <= character_data.behavior.start_time.hour < 17:
+    if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 17:
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.WORK_TIME)
+def handle_work_time(character_id: int) -> int:
+    """
+    工作时间（早上9:00~中午12:00，下午14:00~下午18:00）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 18:
         return 50
     return 0
 
@@ -412,7 +429,7 @@ def handle_in_dr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_office" in now_scene_data.scene_tag:
+    if "Dr_Office" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -430,7 +447,7 @@ def handle_not_in_dr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_office" in now_scene_data.scene_tag:
+    if "Dr_Office" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -448,7 +465,7 @@ def handle_in_dr_office_or_debug(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_office" in now_scene_data.scene_tag or cache.debug_mode:
+    if "Dr_Office" in now_scene_data.scene_tag or cache.debug_mode:
         return 1
     return 0
 
@@ -944,7 +961,7 @@ def handle_in_hr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "HR_office" in now_scene_data.scene_tag:
+    if "HR_Office" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -962,7 +979,7 @@ def handle_not_in_hr_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "HR_office" in now_scene_data.scene_tag:
+    if "HR_Office" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -998,7 +1015,7 @@ def handle_in_library_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Library_office" in now_scene_data.scene_tag:
+    if "Library_Office" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -1016,7 +1033,7 @@ def handle_not_in_library_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Library_office" in now_scene_data.scene_tag:
+    if "Library_Office" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -1034,7 +1051,7 @@ def handle_in_library_or_library_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+    if "Library_Office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
         return 1
     return 0
 
@@ -1052,7 +1069,7 @@ def handle_not_in_library_or_library_office(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Library_office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
+    if "Library_Office" in now_scene_data.scene_tag or "Library" in now_scene_data.scene_tag:
         return 0
     return 1
 
@@ -1145,6 +1162,78 @@ def handle_in_h_shop(character_id: int) -> int:
     if "H_Shop" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.IN_CLASS_ROOM)
+def handle_in_class_room(character_id: int) -> int:
+    """
+    校验角色是否在教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Class_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_CLASS_ROOM)
+def handle_not_in_class_room(character_id: int) -> int:
+    """
+    校验角色是否不在教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Class_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_TEACHER_OFFICE)
+def handle_in_teacher_office(character_id: int) -> int:
+    """
+    校验角色是否在教师办公室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Teacher_Office" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_TEACHER_OFFICE)
+def handle_not_in_teacher_office(character_id: int) -> int:
+    """
+    校验角色是否不在教师办公室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Teacher_Office" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.PLACE_DOOR_OPEN)
@@ -3953,6 +4042,53 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TEACHER_TEACHING_IN_CLASSROOM)
+def handle_teacher_teaching_in_classroom(character_id: int) -> int:
+    """
+    当前有教师在教室里讲课
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    for character_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 首先需要是老师，然后正在授课
+        if (
+            character_data.work.work_type == 151
+            and character_data.state == constant.CharacterStatus.STATUS_TEACH
+        ):
+            # 接着需要地点在教室里
+            now_position = character_data.position
+            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+            now_scene_data = cache.scene_data[now_scene_str]
+            if "Class_Room" in now_scene_data.scene_tag:
+                return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.STUDENT_IN_CLASSROOM)
+def handle_student_in_classroom(character_id: int) -> int:
+    """
+    教室里有没在上课的学生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    for character_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 首先需要是学生，而且没有在上课
+        if character_data.work.work_type == 152 and character_data.state != constant.CharacterStatus.STATUS_ATTENT_CLASS:
+            # 接着需要地点在教室里
+            now_position = character_data.position
+            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+            now_scene_data = cache.scene_data[now_scene_str]
+            if "Class_Room" in now_scene_data.scene_tag:
+                return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
 def handle_player_come_scene(character_id: int) -> int:
     """
@@ -4778,6 +4914,32 @@ def handle_work_is_hr(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 71
+
+
+@add_premise(constant_promise.Premise.WORK_IS_TEACHER)
+def handle_work_is_teacher(character_id: int) -> int:
+    """
+    自己的工作为教师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 151
+
+
+@add_premise(constant_promise.Premise.WORK_IS_STUDENT)
+def handle_work_is_student(character_id: int) -> int:
+    """
+    自己的工作为学生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 152
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)

@@ -168,7 +168,7 @@ def character_move_to_dr_office(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     to_dr_office = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Dr_office"])
+        random.choice(constant.place_data["Dr_Office"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_dr_office)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -303,7 +303,7 @@ def character_move_to_hr_office(character_id: int):
     character_data.target_character_id = character_id
 
     to_hr_office = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["HR_office"])
+        random.choice(constant.place_data["HR_Office"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_hr_office)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -323,7 +323,7 @@ def character_move_to_library_office(character_id: int):
     character_data.target_character_id = character_id
 
     to_library_office = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Library_office"])
+        random.choice(constant.place_data["Library_Office"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_library_office)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -346,6 +346,46 @@ def character_move_to_library(character_id: int):
         random.choice(constant.place_data["Library"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_library)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASS_ROOM)
+def character_move_to_class_room(character_id: int):
+    """
+    移动到教室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_class_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Class_Room"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_class_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TEACHER_OFFICE)
+def character_move_to_teacher_office(character_id: int):
+    """
+    移动到教师办公室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_teacher_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Teacher_Office"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_teacher_office)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
@@ -894,6 +934,52 @@ def character_work_recruit(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.RECRUIT
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_RECRUIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_TEACH)
+def character_work_teach(character_id: int):
+    """
+    角色工作：授课
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.TEACH
+    character_data.behavior.duration = 45
+    character_data.state = constant.CharacterStatus.STATUS_TEACH
+    # 将当前场景里所有工作是上学的角色变为学习状态
+    # 遍历当前场景的其他角色
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 跳过自己
+            if chara_id == character_id:
+                continue
+            else:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                # 让对方变成听课状态
+                if other_character_data.work.work_type == 152:
+                    other_character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+                    other_character_data.behavior.duration = 45
+                    other_character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_ATTENT_CLASS)
+def character_work_teach(character_id: int):
+    """
+    角色工作：上学
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.ATTENT_CLASS
+    character_data.behavior.duration = 45
+    character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
