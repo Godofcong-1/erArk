@@ -119,6 +119,10 @@ def born_new_character(mother_id,child_name):
     for talent_id in game_config.config_talent:
         if game_config.config_talent[talent_id].heredity and mom_character_data.talent[talent_id]:
             now_tem.Talent[talent_id] = 1
+    # 胸部锁为绝壁
+    for i in {122,123,124,125}:
+        now_tem.Talent[i] = 0
+    now_tem.Talent[121] = 1
     now_tem.Hp = random.randint(1000,2000)
     now_tem.Mp = random.randint(1000,2000)
     now_tem.Dormitory = "无"

@@ -62,17 +62,26 @@ def check_fertilization(character_id: int):
     根据受精概率并判断是否受精
     """
     character_data: game_type.Character = cache.character_data[character_id]
+
     # 仅在排卵日进行判定
     if character_data.pregnancy.reproduction_period != 5:
         return 0
+
     # 如果当前已受精，则跳过判断
     for i in {20,21,22}:
         if character_data.talent[i] == 1:
             character_data.pregnancy.fertilization_rate = 0
             return 0
-    # 随机数判断是否受精
+
+    # 只判断有受精可能的
     if character_data.pregnancy.fertilization_rate:
-        if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
+
+        # 如果未初潮，则无法受精并触发对话
+        if character_data.talent[6] == 1:
+            draw_text = f"\n因为{character_data.name}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n"
+
+        # 正常情况下随机数判断是否受精
+        elif random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
             draw_text += f"\n{character_data.name}获得了[受精]\n"
@@ -82,8 +91,9 @@ def check_fertilization(character_id: int):
             character_data.second_behavior[1311] = 1
         else:
             draw_text = f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
-            character_data.pregnancy.fertilization_rate = 0
             character_data.second_behavior[1312] = 1
+
+        character_data.pregnancy.fertilization_rate = 0
         talk.must_show_talk_check(character_id)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
@@ -222,14 +232,81 @@ def check_rearing_complete(character_id: int):
             talk.must_show_talk_check(character_id)
             child_character_data.talent[101] = 0
             child_character_data.talent[102] = 1
+            child_character_data.work.work_type = 152
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n"
             draw_text += f"\n{character_data.name}完成了育儿行动，开始回到正常的工作生活中来\n"
             draw_text += f"\n{child_character_data.name}能够初步独立了，在长大成人之前会一直在教育区上课学习\n"
+            if len(cache.base_resouce.teacher_set) == 0:
+                draw_text += f"\n当前教育区没有进行授课工作的老师，请尽快安排一名干员负责教师工作\n"
             draw_text += f"\n{character_data.name}失去了[育儿]\n"
             draw_text += f"\n{character_data.name}失去了[泌乳]\n"
             draw_text += f"\n{child_character_data.name}从[婴儿]成长为了[幼女]\n"
             draw_text += f"\n{child_character_data.name}成为了一名准干员\n"
+            draw_text += "\n※※※※※※※※※\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = draw_text
+            now_draw.draw()
+
+
+def check_grow_to_loli(character_id: int):
+    """
+    判断是否成长为萝莉
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要是女儿，而且已经是幼女状态
+    if character_data.relationship.father_id == 0 and character_data.talent[102]:
+        # 计算经过的天数
+        start_date = cache.game_time
+        end_date = character_data.pregnancy.born_time
+        past_day = (start_date - end_date).days
+        # 在幼女后又过了两个月
+        if past_day >= 270:
+            character_data.second_behavior[1320] = 1
+            talk.must_show_talk_check(character_id)
+            character_data.talent[102] = 0
+            character_data.talent[103] = 1
+            character_data.talent[6] = 0
+            chest_grow_text = chest_grow(character_id)
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n{character_data.name}的身体渐渐成长，开始进入青春期，在第二性征发育的同时，也迎来了第一次的初潮\n"
+            draw_text += f"\n{character_data.name}从[幼女]成长为了[萝莉]\n"
+            draw_text += f"\n{character_data.name}失去了[未初潮]\n"
+            draw_text += chest_grow_text
+            draw_text += f"\n{character_data.name}可以参加上课以外的工作了\n"
+            draw_text += "\n※※※※※※※※※\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = draw_text
+            now_draw.draw()
+
+
+def check_grow_to_girl(character_id: int):
+    """
+    判断是否成长为少女
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 需要是女儿，而且已经是萝莉状态
+    if character_data.relationship.father_id == 0 and character_data.talent[103]:
+        # 计算经过的天数
+        start_date = cache.game_time
+        end_date = character_data.pregnancy.born_time
+        past_day = (start_date - end_date).days
+        # 在萝莉后又过了两个月
+        if past_day >= 450:
+            character_data.second_behavior[1321] = 1
+            talk.must_show_talk_check(character_id)
+            character_data.talent[103] = 0
+            character_data.talent[104] = 1
+            character_data.talent[7] = 0
+            chest_grow_text = chest_grow(character_id)
+            draw_text = "\n※※※※※※※※※\n"
+            draw_text += f"\n{character_data.name}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n"
+            draw_text += f"\n{character_data.name}从[萝莉]成长为了[少女]\n"
+            draw_text += f"\n{character_data.name}失去了[未成年]\n"
+            draw_text += chest_grow_text
+            draw_text += f"\n{character_data.name}可以进行正常的工作了\n"
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -250,6 +327,8 @@ def check_all_pregnancy(character_id: int):
     check_born(character_id)
     check_rearing(character_id)
     check_rearing_complete(character_id)
+    check_grow_to_loli(character_id)
+    check_grow_to_girl(character_id)
 
 
 def update_reproduction_period(character_id: int):
@@ -263,3 +342,55 @@ def update_reproduction_period(character_id: int):
         character_data.pregnancy.reproduction_period = 0
     else:
         character_data.pregnancy.reproduction_period += 1
+
+
+def chest_grow(character_id: int,print_flag = False):
+    """
+    进行胸部生长判定
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    mom_id = character_data.relationship.mother_id
+    mom_character_data: game_type.Character = cache.character_data[mom_id]
+    # 获得本人的旧胸部大小和母亲的胸部大小
+    for i in {121,122,123,124,125}:
+        if character_data.talent[i]:
+            old_chest_id = i
+        if mom_character_data.talent[i]:
+            mom_chest_id = i
+
+    # 用随机数计算生长，可能长3、长2或者长1，母亲胸部越大生长比例就越高
+    # 母亲胸部0时从长0~长3生长比例是 0.6 0.25 0.1 0.05，母亲胸部6时反过来
+    randow_grow = random.randint(1,100)
+    grow_rate = mom_chest_id - 121
+    grow_0 = 60 - 11 * grow_rate
+    grow_1 = 25 - 3 *grow_rate
+    grow_2 = 10 + 3 *grow_rate
+    if randow_grow > grow_0 + grow_1 + grow_2:
+        new_chest_id = min(old_chest_id + 3 ,125)
+    elif randow_grow > grow_0 + grow_1:
+        new_chest_id = min(old_chest_id + 2 ,125)
+    elif randow_grow > grow_0 :
+        new_chest_id = min(old_chest_id + 1 ,125)
+    else:
+        new_chest_id = old_chest_id
+
+    # 把旧的胸部素质换成新的
+    character_data.talent[old_chest_id] = 0
+    character_data.talent[new_chest_id] = 1
+
+    # 根据flag判定是否要绘制输出
+    old_name = game_config.config_talent[old_chest_id].name
+    new_name = game_config.config_talent[new_chest_id].name
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    if new_chest_id != old_chest_id:
+        now_text = f"\n{character_data.name}的胸部从[{old_name}]成长为了[{new_name}]\n"
+    else:
+        now_text = f"\n{character_data.name}的胸部依旧保持在[{old_name}]没有成长\n"
+    if print_flag:
+        now_draw.text = now_text
+        now_draw.draw()
+
+    # 返回胸部成长情况的文本
+    return now_text

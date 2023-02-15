@@ -4067,8 +4067,8 @@ def handle_teacher_teaching_in_classroom(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.STUDENT_IN_CLASSROOM)
-def handle_student_in_classroom(character_id: int) -> int:
+@add_premise(constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM)
+def handle_student_not_study_in_classroom(character_id: int) -> int:
     """
     教室里有没在上课的学生
     Keyword arguments:

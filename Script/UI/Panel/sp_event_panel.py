@@ -83,7 +83,7 @@ class Born_Panel:
                 return_list = []
 
                 mom_character_data.second_behavior[1315] = 1
-                talk.must_show_talk_check(character_id)
+                talk.must_show_talk_check(self.mother_character_id)
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
                 info_draw.width = self.width
@@ -112,13 +112,13 @@ class Born_Panel:
                 child_character_data: game_type.Character = cache.character_data[len(cache.npc_tem_data)]
                 child_character_data.pregnancy.born_time = cache.game_time
 
-                info_draw.text += f"\n孩子的名字叫做{child_character_data.name}，她是{pl_character_data.name}的第{len(pl_character_data.relationship.child_id_list)}个孩子，也是{mom_character_data.name}的第{len(mom_character_data.relationship.child_id_list)}个孩子，请慢慢养育她长大成人吧\n"
+                info_draw.text = f"\n孩子的名字叫做{child_character_data.name}，她是{pl_character_data.name}的第{len(pl_character_data.relationship.child_id_list)}个孩子，也是{mom_character_data.name}的第{len(mom_character_data.relationship.child_id_list)}个孩子，请慢慢养育她长大成人吧\n"
                 info_draw.draw()
                 line_feed.draw()
                 break
 
-            character_data.second_behavior[1317] = 1
-            talk.must_show_talk_check(character_id)
+            mom_character_data.second_behavior[1317] = 1
+            talk.must_show_talk_check(self.mother_character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += f"\n{mom_character_data.name}的生产结束了，但她仍需要在住院部休息几天\n"
             mom_character_data.talent[22] = 0

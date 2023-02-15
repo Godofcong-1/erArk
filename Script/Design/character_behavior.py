@@ -51,10 +51,8 @@ def init_character_behavior():
     cache.over_behavior_character = set()
     sleep_flag,new_day_flag = True,True
     while 1:
-        id_list = cache.npc_id_got
+        id_list = cache.npc_id_got.copy()
         id_list.discard(0)
-        if len(cache.over_behavior_character) >= len(id_list) + 1:
-            break
         # 先结算其他NPC部分
         while len(cache.over_behavior_character) < len(id_list):
             for character_id in id_list:
@@ -65,7 +63,6 @@ def init_character_behavior():
         # 后结算玩家部分
         while 0 not in cache.over_behavior_character:
             character_behavior(0, cache.game_time)
-        update_cafeteria()
         # 睡觉刷新
         PL_data: game_type.Character = cache.character_data[0]
         if PL_data.behavior.behavior_id == constant.Behavior.SLEEP and sleep_flag:
@@ -75,6 +72,9 @@ def init_character_behavior():
         if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
             new_day_flag = False
             update_new_day()
+        # 结束循环
+        if len(cache.over_behavior_character) >= len(id_list) + 1:
+            break
 
 
 def update_cafeteria():
@@ -95,7 +95,7 @@ def update_cafeteria():
     #         break
     # if food_judge:
     # 食物数量不足且当前时间在饭点时，刷新食物
-    if (food_count * 2) <= max_people and cache.game_time.hour in {7,8,12,13,17,18}:
+    if food_count <= max_people * 3 and handle_premise.handle_eat_time(0):
         cooking.init_restaurant_data()
 
 def update_recruit():
@@ -151,6 +151,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
         judge_character_pregnancy(character_id) # 临盆和产后
+
+    # 处理公共资源
+    update_cafeteria() # 刷新食堂的饭
 
     # 先处理玩家部分
     if character_id == 0:
@@ -641,9 +644,11 @@ def update_sleep():
     now_draw.width = window_width
     now_draw.text = "\n博士入睡，开始结算各种数据\n"
     now_draw.draw()
+    id_list = cache.npc_id_got.copy()
+    id_list.discard(0)
 
     # 角色刷新
-    for character_id in cache.npc_id_got:
+    for character_id in id_list:
         character_data: game_type.Character = cache.character_data[character_id]
         # 结算数值为珠
         settle_character_juel(character_id)

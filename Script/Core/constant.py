@@ -1108,6 +1108,10 @@ class SecondBehavior:
     """ 结算获得育儿 """
     REARING_COMPLETE = 1319
     """ 结算育儿完成 """
+    CHILD_TO_LOLI = 1320
+    """ 结算幼女长成萝莉 """
+    LOLI_TO_GIRL = 1321
+    """ 结算萝莉长成少女 """
 
     FIRST_MEET = 1331
     """ 初次见面 """
