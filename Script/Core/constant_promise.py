@@ -374,6 +374,7 @@ class Premise:
     2:临盆、产后、婴儿
     3:助理、跟随模式下
     4:大致全裸、全裸
+    5:监禁
     """
 
     NORMAL_ALL = "normal_all"

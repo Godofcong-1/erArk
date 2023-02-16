@@ -395,7 +395,7 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     # 给无法自由行动的交互对象结算
     if character_id == 0 and player_character_data.target_character_id:
         target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
-        if target_character_data.is_follow or target_character_data.is_h:
+        if target_character_data.sp_flag.is_follow or target_character_data.sp_flag.is_h:
             target_character_data.sleep_point += add_sleep
             target_character_data.urinate_point += add_urinate
             target_character_data.hunger_point += add_hunger

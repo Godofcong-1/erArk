@@ -1343,7 +1343,7 @@ def handle_ai_wait(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.wait_flag:
+    if character_data.sp_flag.wait_flag:
         # print("判断到需要进行等待，character_id = ",character_id)
         return 999
     else:
@@ -1552,6 +1552,7 @@ def handle_normal_all(character_id: int) -> int:
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
+    \n包括5:监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1586,6 +1587,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
+    \n包括5:监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1620,6 +1622,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
+    \n包括5:监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1667,6 +1670,7 @@ def handle_normal_2_4(character_id: int) -> int:
     24正常的普通状态
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
+    \n包括5:监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1714,6 +1718,7 @@ def handle_unnormal(character_id: int) -> int:
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
+    \n包括5:监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1751,7 +1756,7 @@ def handle_hp_1(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.tired == 1:
+    if character_data.sp_flag.tired == 1:
         return 999
     else:
         return 0
@@ -2255,7 +2260,7 @@ def handle_target_angry_with_player(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.angry_with_player:
+    if target_data.sp_flag.angry_with_player:
         return 1
     else:
         return 0
@@ -2272,7 +2277,7 @@ def handle_target_not_angry_with_player(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.angry_with_player:
+    if target_data.sp_flag.angry_with_player:
         return 0
     else:
         return 1
@@ -4003,14 +4008,14 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     # 场景角色数大于2时进行检测
-    if len(scene_data.character_list) > 2 and not (character_data.is_follow or character_data.is_h):
+    if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
             # 遍历非自己且非玩家的角色
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 检测是否在H
-                if other_character_data.is_h:
+                if other_character_data.sp_flag.is_h:
                     return 999
     return 0
 
@@ -7990,7 +7995,7 @@ def handle_is_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.is_h
+    return target_data.sp_flag.is_h
 
 
 @add_premise(constant_promise.Premise.NOT_H)
@@ -8004,7 +8009,7 @@ def handle_not_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    return not target_data.is_h
+    return not target_data.sp_flag.is_h
 
 
 @add_premise(constant_promise.Premise.OPTION_SON)
@@ -8091,7 +8096,7 @@ def handle_is_follow(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.is_follow
+    return character_data.sp_flag.is_follow
 
 
 @add_premise(constant_promise.Premise.NOT_FOLLOW)
@@ -8104,7 +8109,7 @@ def handle_not_follow(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return not character_data.is_follow
+    return not character_data.sp_flag.is_follow
 
 
 @add_premise(constant_promise.Premise.IS_FOLLOW_1)
@@ -8117,7 +8122,7 @@ def handle_is_follow_1(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.is_follow == 1:
+    if character_data.sp_flag.is_follow == 1:
         return 100
     return 0
 
@@ -8132,7 +8137,7 @@ def handle_not_follow_1(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return not character_data.is_follow == 1
+    return not character_data.sp_flag.is_follow == 1
 
 
 @add_premise(constant_promise.Premise.IS_FOLLOW_3)
@@ -8145,7 +8150,7 @@ def handle_is_follow_3(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.is_follow == 3:
+    if character_data.sp_flag.is_follow == 3:
         return 100
     return 0
 
@@ -8161,7 +8166,7 @@ def handle_target_is_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.is_follow
+    return target_data.sp_flag.is_follow
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_FOLLOW)
@@ -8175,7 +8180,7 @@ def handle_target_not_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not target_data.is_follow
+    return not target_data.sp_flag.is_follow
 
 
 # @add_premise(constant_promise.Premise.TARGET_IS_COLLECTION)

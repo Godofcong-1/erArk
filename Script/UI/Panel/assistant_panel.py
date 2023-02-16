@@ -275,7 +275,7 @@ class SeeAssistantButtonList:
             else:
                 target_data.assistant_state.always_follow += 1
             # 同时结算跟随状态
-            target_data.is_follow = target_data.assistant_state.always_follow
+            target_data.sp_flag.is_follow = target_data.assistant_state.always_follow
 
         # 2号指令,仅由助理辅助工作系指令
         elif self.button_id == 2:

@@ -827,7 +827,7 @@ def handle_followed():
     character_data.behavior.behavior_id = constant.Behavior.FOLLOW
     character_data.state = constant.CharacterStatus.STATUS_FOLLOW
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.is_follow = 1
+    target_data.sp_flag.is_follow = 1
     # print("进入同行模式")
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
     update.game_update_flow(5)
@@ -840,8 +840,8 @@ def handle_followed():
         for npc_id in cache.npc_id_got:
             if npc_id not in {0, character_data.target_character_id, character_data.assistant_character_id}:
                 other_character_data = cache.character_data[npc_id]
-                if other_character_data.is_follow:
-                    other_character_data.is_follow = 0
+                if other_character_data.sp_flag.is_follow:
+                    other_character_data.sp_flag.is_follow = 0
                     now_draw.text += f"当前最大跟随数量：1人（助理除外），{other_character_data.name}退出跟随模式\n"
     now_draw.width = 1
     now_draw.draw()
@@ -863,7 +863,7 @@ def handle_end_followed():
     character_data.behavior.behavior_id = constant.Behavior.END_FOLLOW
     character_data.state = constant.CharacterStatus.STATUS_END_FOLLOW
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.is_follow = 0
+    target_data.sp_flag.is_follow = 0
     if character_data.target_character_id == character_data.assistant_character_id:
         target_data.assistant_state.always_follow = 0
     update.game_update_flow(1)
@@ -892,7 +892,7 @@ def handle_apologize():
     if target_data.angry_point <= 30:
         character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE
         character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE
-        target_data.angry_with_player = False
+        target_data.sp_flag.angry_with_player = False
     else:
         character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE_FAILED
         character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE_FAILED
@@ -1236,8 +1236,8 @@ def handle_do_h():
     if now_draw.draw():
         if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
             h_flag = True
-            target_data.is_h = 1
-            target_data.is_follow = 0
+            target_data.sp_flag.is_h = 1
+            target_data.sp_flag.is_follow = 0
             character_data.behavior.behavior_id = constant.Behavior.H
             character_data.state = constant.CharacterStatus.STATUS_H
             now_draw = draw.WaitDraw()
@@ -1286,10 +1286,10 @@ def handle_end_h():
         cache.instruct_type_filter[i] = 1
 
     # H结束时的其他处理
-    if target_data.is_h == 1:
+    if target_data.sp_flag.is_h == 1:
         # 对象NPC进入跟随，并原地待机十分钟
-        target_data.is_h = 0
-        target_data.is_follow = 1
+        target_data.sp_flag.is_h = 0
+        target_data.sp_flag.is_follow = 1
         character.init_character_behavior_start_time(character_data.target_character_id, cache.game_time)
         target_data.behavior.behavior_id = constant.Behavior.WAIT
         target_data.behavior.duration = 10

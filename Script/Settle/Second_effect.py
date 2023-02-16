@@ -39,7 +39,7 @@ cache: game_type.Cache = cache_control.cache
 #     if character_data.dead:
 #         return
 #     #仅在H模式下才计算高潮次数计数
-#     if character_data.is_h == 1:
+#     if character_data.sp_flag.is_h == 1:
 #         character_data.h_state.orgasm_count[0] += 1
 
 
@@ -93,7 +93,7 @@ def handle_add_1_nclimax_experience(
     change_data.experience[10] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[0][0] += 1
         character_data.h_state.orgasm_count[0][1] += 1
 
@@ -120,7 +120,7 @@ def handle_add_1_bclimax_experience(
     change_data.experience[11] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[1][0] += 1
         character_data.h_state.orgasm_count[1][1] += 1
 
@@ -146,7 +146,7 @@ def handle_add_1_cclimax_experience(
     change_data.experience[12] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[2][0] += 1
         character_data.h_state.orgasm_count[2][1] += 1
 
@@ -197,7 +197,7 @@ def handle_add_1_vclimax_experience(
     change_data.experience[14] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[4][0] += 1
         character_data.h_state.orgasm_count[4][1] += 1
 
@@ -223,7 +223,7 @@ def handle_add_1_aclimax_experience(
     change_data.experience[15] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[5][0] += 1
         character_data.h_state.orgasm_count[5][1] += 1
 
@@ -249,7 +249,7 @@ def handle_add_1_uclimax_experience(
     change_data.experience[16] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[6][0] += 1
         character_data.h_state.orgasm_count[6][1] += 1
 
@@ -275,7 +275,7 @@ def handle_add_1_wclimax_experience(
     change_data.experience[17] += 1
     change_data.experience.setdefault(20, 0)
     change_data.experience[20] += 1
-    if character_data.is_h == 1:
+    if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[7][0] += 1
         character_data.h_state.orgasm_count[7][1] += 1
 
@@ -546,8 +546,8 @@ def handle_down_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
-        if not character_data.tired:
-            character_data.tired = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
             # 如果和玩家位于同一地点，则输出提示信息
             if character_data.position == cache.character_data[0].position:
                 now_draw = draw.NormalDraw()
@@ -583,8 +583,8 @@ def handle_down_small_mana_point(
         change_data.hit_point -= sub_mana
         if character_data.hit_point <= 0:
             character_data.hit_point = 1
-            if not character_data.tired:
-                character_data.tired = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
                 # 如果和玩家位于同一地点，则输出提示信息
                 if character_data.position == cache.character_data[0].position:
                     now_draw = draw.NormalDraw()

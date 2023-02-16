@@ -213,7 +213,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     if PC_character_data.target_character_id == character_id:
         # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
         if character_data.state not in safe_instruct:
-            character_data.wait_flag = 1
+            character_data.sp_flag.wait_flag = 1
 
     target, _, judge = search_target(
         character_id,
@@ -227,7 +227,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动是普通交互指令，则将等待flag设为1
         if state_machine_id >= 100:
-            character_data.wait_flag = 1
+            character_data.sp_flag.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
         # event_draw = event.handle_event(character_id, 1)
@@ -282,27 +282,27 @@ def judge_character_tired_sleep(character_id : int):
     character_data: game_type.Character = cache.character_data[character_id]
     #交互对象结算
     if character_id:
-        if character_data.is_h or character_data.is_follow:
+        if character_data.sp_flag.is_h or character_data.sp_flag.is_follow:
             
-            if character_data.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
+            if character_data.sp_flag.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.NormalDraw()
                 now_draw.width = width
                 # 跟随和H的分歧，忽略H后停留的情况
-                if character_data.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
-                    draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.tired else "太困了，开始回房间睡觉\n"
+                if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
+                    draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.sp_flag.tired else "太困了，开始回房间睡觉\n"
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
-                    character_data.is_follow = 0
+                    character_data.sp_flag.is_follow = 0
                 # H时
                 else:
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
 
                 # 新：交给指令里的end_h结算(旧：数据结算)
-                # character_data.is_h = False
-                # character_data.is_follow = 0
+                # character_data.sp_flag.is_h = False
+                # character_data.sp_flag.is_follow = 0
 
                 # 新：暂时注释，保持跟随状态（旧：助手取消助手栏里的跟随）
                 # if character_id == pl_character_data.assistant_character_id:
@@ -310,10 +310,10 @@ def judge_character_tired_sleep(character_id : int):
     # 玩家疲劳计算
     else:
         target_data = cache.character_data[character_data.target_character_id]
-        if character_data.tired and target_data.is_h:
+        if character_data.sp_flag.tired and target_data.sp_flag.is_h:
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
-            character_data.tired = 0
+            character_data.sp_flag.tired = 0
 
 
 def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
@@ -551,10 +551,10 @@ def judge_character_follow(character_id: int) -> int:
 
     # 锁定助理的跟随状态
     if character_data.assistant_state.always_follow in {1,2}:
-        character_data.is_follow = character_data.assistant_state.always_follow
+        character_data.sp_flag.is_follow = character_data.assistant_state.always_follow
 
     # 维持跟随的状态
-    if character_data.is_follow == 2:
+    if character_data.sp_flag.is_follow == 2:
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
@@ -579,7 +579,7 @@ def judge_character_h(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.is_h:
+    if character_data.sp_flag.is_h:
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT

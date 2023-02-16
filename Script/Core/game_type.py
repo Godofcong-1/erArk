@@ -456,12 +456,22 @@ class ACTION_INFO:
         """ 角色H被打断 """
 
 
-class SPECIAL_EVENT_FLAG:
-    """特殊事件的flag"""
+class SPECIAL_FLAG:
+    """特殊的flag"""
 
     def __init__(self):
-        self.born: bool = False
-        """ 生孩子事件 """
+        self.is_h: bool = 0
+        """ 在H模式中 """
+        self.wait_flag: bool = 0
+        """ AI行动里的原地发呆判定 """
+        self.is_follow: int = 0
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
+        self.tired: bool = 0
+        """ 疲劳状态（HP=1） """
+        self.angry_with_player: bool = 0
+        """ 被玩家惹生气 """
+        self.move_stop: bool = 0
+        """ 角色停止移动 """
 
 
 class CHARA_WORK:
@@ -877,8 +887,8 @@ class Character:
         """ 角色当前交互对象id """
         self.adv: int = 0
         """ 剧情npc校验 """
-        self.no_wear: bool = 0
-        """ 是否不想穿衣服 """
+        # self.no_wear: bool = 0
+        # """ 是否不想穿衣服 """
         self.dead: bool = 0
         """ 角色已死亡 """
         self.collection_character: Set = set()
@@ -897,18 +907,8 @@ class Character:
         """ 角色种族 """
         self.talent: Dict[int, int] = {}
         """ 角色素质 """
-        self.wait_flag: bool = 0
-        """ AI行动里的原地发呆判定 """
-        self.is_h: bool = 0
-        """ 在H模式中 """
-        self.is_follow: int = 0
-        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
         self.token_text: str = ""
         """ 角色信物文本 """
-        self.tired: bool = 0
-        """ 疲劳状态（HP=1） """
-        self.angry_with_player: bool = 0
-        """ 被玩家惹生气 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
@@ -923,12 +923,10 @@ class Character:
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
         """ 玩家的收藏品 """
-        self.sp_event_flag: SPECIAL_EVENT_FLAG = SPECIAL_EVENT_FLAG()
-        """ 特殊事件的flag """
+        self.sp_flag: SPECIAL_FLAG = SPECIAL_FLAG()
+        """ 特殊flag """
         self.action_info: ACTION_INFO = ACTION_INFO()
         """ 角色的行动记录 """
-        self.move_stop: bool = 0
-        """ 角色停止移动 """
         self.work: CHARA_WORK = CHARA_WORK()
         """ 角色的工作情况 """
         self.entertainment: CHARA_ENTERTAINMENT = CHARA_ENTERTAINMENT()

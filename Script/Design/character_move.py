@@ -13,8 +13,8 @@ def own_charcter_move(target_scene: list):
     """
     while 1:
         character_data: game_type.Character = cache.character_data[0]
-        if character_data.move_stop:
-            character_data.move_stop = 0
+        if character_data.sp_flag.move_stop:
+            character_data.sp_flag.move_stop = 0
             break
         if character_data.position != target_scene:
             (

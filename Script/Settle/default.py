@@ -273,11 +273,11 @@ def handle_sub_both_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
-        if not character_data.tired:
-            character_data.tired = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
             # H时单独结算
             target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            if target_data.is_h:
+            if target_data.sp_flag.is_h:
                 character_behavior.judge_character_tired_sleep(0)
                 handle_instruct.handle_end_h()
             else:
@@ -303,10 +303,10 @@ def handle_sub_both_small_hit_point(
         else:
             target_change.hit_point -= target_data.hit_point
             target_data.hit_point = 1
-            if not target_data.tired:
-                target_data.tired = 1
+            if not target_data.sp_flag.tired:
+                target_data.sp_flag.tired = 1
                 # H时单独结算
-                if target_data.is_h:
+                if target_data.sp_flag.is_h:
                     character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                     handle_instruct.handle_end_h()
                 else:
@@ -350,11 +350,11 @@ def handle_sub_both_small_mana_point(
         change_data.hit_point -= sub_mana
         if character_data.hit_point <= 0:
             character_data.hit_point = 1
-            if not character_data.tired:
-                character_data.tired = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
                 # H时单独结算
                 target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-                if target_data.is_h:
+                if target_data.sp_flag.is_h:
                     character_behavior.judge_character_tired_sleep(0)
                     handle_instruct.handle_end_h()
                 else:
@@ -382,10 +382,10 @@ def handle_sub_both_small_mana_point(
             if target_data.hit_point <= 0:
                 target_data.hit_point = 1
 
-                if not target_data.tired:
-                    target_data.tired = 1
+                if not target_data.sp_flag.tired:
+                    target_data.sp_flag.tired = 1
                     # H时单独结算
-                    if target_data.is_h:
+                    if target_data.sp_flag.is_h:
                         character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                         handle_instruct.handle_end_h()
                     else:
@@ -428,8 +428,8 @@ def handle_sub_self_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
-        if not character_data.tired:
-            character_data.tired = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
             # 如果和玩家位于同一地点，则输出提示信息
             if character_data.position == cache.character_data[0].position:
                 now_draw = draw.NormalDraw()
@@ -470,8 +470,8 @@ def handle_sub_self_small_mana_point(
         change_data.hit_point -= sub_mana
         if character_data.hit_point <= 0:
             character_data.hit_point = 1
-            if not character_data.tired:
-                character_data.tired = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
                 # 如果和玩家位于同一地点，则输出提示信息
                 if character_data.position == cache.character_data[0].position:
                     now_draw = draw.NormalDraw()
@@ -1182,7 +1182,7 @@ def handle_not_tired(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.tired = 0
+    character_data.sp_flag.tired = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF)
@@ -2650,7 +2650,7 @@ def handle_move_to_pre_scene(
     if len(character_data.behavior.move_src) and not character_id:
         character_data.behavior.move_target = character_data.behavior.move_src
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
-        character_data.move_stop = 1
+        character_data.sp_flag.move_stop = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
@@ -3936,7 +3936,7 @@ def handle_low_obscenity_failed_adjust(
         target_change.status_data[20] += now_add_lust
         # 加愤怒
         target_data.angry_point += 20
-        target_data.angry_with_player = True
+        target_data.sp_flag.angry_with_player = True
         # 降好感
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         character_handle.add_favorability(
@@ -3983,7 +3983,7 @@ def handle_high_obscenity_failed_adjust(
         target_change.status_data[20] = now_add_lust
         # 加愤怒
         target_data.angry_point += 50
-        target_data.angry_with_player = True
+        target_data.sp_flag.angry_with_player = True
         # 降好感
         minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
         minus_favorability *= 5

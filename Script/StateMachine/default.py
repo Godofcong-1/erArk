@@ -26,7 +26,7 @@ def character_wait_5_min(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.wait_flag = 0
+    character_data.sp_flag.wait_flag = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_10_MIN)
@@ -55,7 +55,7 @@ def character_wait_30_min(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.is_follow = 0
+    character_data.sp_flag.is_follow = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
@@ -90,7 +90,7 @@ def character_sleep(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
-    character_data.tired = 0
+    character_data.sp_flag.tired = 0
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
 # def character_follow(character_id: int):
@@ -542,8 +542,8 @@ def character_move_to_player(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
-    # if character_data.is_follow:
-    #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.is_follow}")
+    # if character_data.sp_flag.is_follow:
+    #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.sp_flag.is_follow}")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)

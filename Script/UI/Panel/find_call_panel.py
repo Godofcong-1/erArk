@@ -112,11 +112,11 @@ class FindDraw:
         now_draw_text = f"[{id}]{name}:{scene_position_str}   "
 
         # 输出跟随信息
-        if character_data.is_follow == 1:
+        if character_data.sp_flag.is_follow == 1:
             now_draw_text += "智能跟随中"
-        elif character_data.is_follow == 2:
+        elif character_data.sp_flag.is_follow == 2:
             now_draw_text += "强制跟随中"
-        elif character_data.is_follow == 3:
+        elif character_data.sp_flag.is_follow == 3:
             now_draw_text += "前往博士办公室中"
         else:
             status_text = game_config.config_status[character_data.state].name
@@ -143,13 +143,13 @@ class FindDraw:
         line = draw.LineDraw("-", window_width)
         line.draw()
         character_data: game_type.Character = cache.character_data[self.npc_id]
-        if character_data.is_follow == 0:
+        if character_data.sp_flag.is_follow == 0:
             if cache.debug_mode:
-                character_data.is_follow = 1
+                character_data.sp_flag.is_follow = 1
                 now_draw = draw.NormalDraw()
                 now_draw.text = character_data.name + "进入跟随模式\n"
             else:
-                character_data.is_follow = 3
+                character_data.sp_flag.is_follow = 3
                 now_draw = draw.NormalDraw()
                 now_draw.text = character_data.name + "正在前往博士办公室\n"
 
@@ -158,16 +158,16 @@ class FindDraw:
             #     for npc_id in cache.npc_id_got:
             #         if npc_id != 0 and npc_id != character_id:
             #             other_character_data = cache.character_data[npc_id]
-            #             if other_character_data.is_follow:
-            #                 other_character_data.is_follow = 0
+            #             if other_character_data.sp_flag.is_follow:
+            #                 other_character_data.sp_flag.is_follow = 0
             #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
-        elif character_data.is_follow == 1 and cache.debug_mode:
-            character_data.is_follow = 3
+        elif character_data.sp_flag.is_follow == 1 and cache.debug_mode:
+            character_data.sp_flag.is_follow = 3
             now_draw = draw.NormalDraw()
             now_draw.text = character_data.name + "正在前往博士办公室\n"
 
         else:
-            character_data.is_follow = 0
+            character_data.sp_flag.is_follow = 0
             now_draw = draw.NormalDraw()
             now_draw.text = character_data.name + "退出跟随模式\n"
         now_draw.width = 1

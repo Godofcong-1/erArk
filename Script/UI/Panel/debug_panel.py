@@ -280,11 +280,11 @@ class Debug_Panel:
             # draw_text_list.append(f"[010]:当前状态：{target_data.state}")
             # draw_text_list.append(f"[011]:宿舍坐标：{target_data.dormitory}")
             # draw_text_list.append(f"[012]:当前交互对象id：{target_data.target_character_id}")
-            # draw_text_list.append(f"[013]:AI行动里的原地发呆判定：{target_data.wait_flag}")
-            # draw_text_list.append(f"[014]:在H模式中：{target_data.is_h}")
-            # draw_text_list.append(f"[015]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.is_follow}")
-            # draw_text_list.append(f"[016]:疲劳状态（HP=1）：{target_data.tired}")
-            # draw_text_list.append(f"[017]:被玩家惹生气：{target_data.angry_with_player}")
+            # draw_text_list.append(f"[013]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}")
+            # draw_text_list.append(f"[014]:在H模式中：{target_data.sp_flag.is_h}")
+            # draw_text_list.append(f"[015]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.sp_flag.is_follow}")
+            # draw_text_list.append(f"[016]:疲劳状态（HP=1）：{target_data.sp_flag.tired}")
+            # draw_text_list.append(f"[017]:被玩家惹生气：{target_data.sp_flag.angry_with_player}")
 
 
             for i in range(len(draw_text_list)):
