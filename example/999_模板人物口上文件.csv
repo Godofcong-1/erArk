@@ -31,8 +31,8 @@ str,int,int,str,str
 44,101,999,sys_0&t_hp_low,博士主动和干员{TargetName}聊天的口上，对方体力低于30%
 45,101,999,sys_0&good_mood,博士主动和干员{TargetName}聊天的口上，对方心情愉快
 46,101,999,sys_0&bad_or_angry_mood,博士主动和干员{TargetName}聊天的口上，对方心情不好或愤怒
-47,101,999,sys_0&t_sleep_ge_75,博士主动和干员{TargetName}聊天的口上，对方困倦条≥75%，部分指令受限
-48,101,999,sys_0&t_sleep_ge_90,博士主动和干员{TargetName}聊天的口上，对方困倦条≥90%，必须回去睡觉
+47,101,999,sys_0&t_tired_ge_75,博士主动和干员{TargetName}聊天的口上，对方疲劳条≥75%，部分指令受限
+48,101,999,sys_0&t_tired_ge_90,博士主动和干员{TargetName}聊天的口上，对方疲劳条≥90%，必须回去睡觉
 49,101,999,sys_0&t_urinate_ge_80,博士主动和干员{TargetName}聊天的口上，对方尿意条≥80%，需要排尿
 50,101,999,sys_0&t_hunger_ge_80,博士主动和干员{TargetName}聊天的口上，对方饥饿值≥80%，需要吃饭
 

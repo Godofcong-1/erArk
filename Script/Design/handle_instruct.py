@@ -74,7 +74,7 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),
               {constant_promise.Premise.NOT_H,
-               constant_promise.Premise.SLEEP_LE_89}
+               constant_promise.Premise.TIRED_LE_89}
               )
 def handle_rest():
     """处理休息指令"""
@@ -90,7 +90,7 @@ def handle_rest():
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
     {constant_promise.Premise.IN_FOOD_SHOP,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_buy_food():
     """处理购买食物指令"""
@@ -101,7 +101,7 @@ def handle_buy_food():
     constant.Instruct.EAT, constant.InstructType.DAILY, _("进食"),
     {constant_promise.Premise.HAVE_FOOD,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_eat():
     """处理进食指令"""
@@ -133,7 +133,7 @@ def handle_see_attr():
     constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_chat():
     """处理聊天指令"""
@@ -275,7 +275,7 @@ def handle_see_collection():
     {constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLASS_ROOM,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_teach():
     """处理授课指令"""
@@ -312,7 +312,7 @@ def handle_teach():
     {
         constant_promise.Premise.IN_LIBRARY,
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.SLEEP_LE_89,
+        constant_promise.Premise.TIRED_LE_89,
     })
 def handle_borrow_book():
     """处理借阅书籍指令"""
@@ -325,7 +325,7 @@ def handle_borrow_book():
     _("读书"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.SLEEP_LE_74,
+        constant_promise.Premise.TIRED_LE_74,
     })
 def handle_read_book():
     """处理读书指令"""
@@ -339,7 +339,7 @@ def handle_read_book():
     _("管理图书馆"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.SLEEP_LE_89,
+        constant_promise.Premise.TIRED_LE_89,
         constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE,
         constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER,
     })
@@ -380,7 +380,7 @@ def handle_see_department():
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant_promise.Premise.IN_DORMITORY,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_GE_75_OR_SLEEP_TIME}
+     constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME}
 )
 def handle_sleep():
     """处理睡觉指令"""
@@ -404,7 +404,7 @@ def handle_sleep():
     _("淋浴"),
     {constant_promise.Premise.IN_BATHROOM,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_take_shower():
     """处理淋浴指令"""
@@ -453,7 +453,7 @@ def handle_take_shower():
     constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -471,7 +471,7 @@ def handle_embrace():
     _("亲吻"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_kiss():
     """处理亲吻指令"""
@@ -493,7 +493,7 @@ def handle_kiss():
     _("身体接触"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_stroke():
     """处理身体接触指令"""
@@ -748,7 +748,7 @@ def handle_wait_6_hour():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_make_coffee():
     """处理泡咖啡指令"""
@@ -768,7 +768,7 @@ def handle_make_coffee():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.SCENE_ONLY_ONE,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_make_coffee_add():
     """处理泡咖啡（加料）指令"""
@@ -787,7 +787,7 @@ def handle_make_coffee_add():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_ask_make_coffee():
     """处理让对方泡咖啡指令"""
@@ -950,7 +950,7 @@ def handle_pray():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_INFLATION_1,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_listen_inflation():
     """处理听肚子里的动静指令"""
@@ -970,7 +970,7 @@ def handle_listen_inflation():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_CHILD_OR_LOLI_1,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_play_with_child():
     """处理一起玩耍指令"""
@@ -989,7 +989,7 @@ def handle_play_with_child():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_NURSERY,
      constant_promise.Premise.FLAG_BABY_EXIST,
-     constant_promise.Premise.SLEEP_LE_89},
+     constant_promise.Premise.TIRED_LE_89},
 )
 def handle_take_care_baby():
     """处理照顾婴儿指令"""
@@ -1019,7 +1019,7 @@ def handle_listen_mission():
     _("检查衣柜"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY,
-     constant_promise.Premise.SLEEP_LE_89},
+     constant_promise.Premise.TIRED_LE_89},
 )
 def handle_check_locker():
     """处理检查衣柜指令"""
@@ -1065,7 +1065,7 @@ def handle_ask_date():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_LOVE_2,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_confession():
     """处理告白指令"""
@@ -1103,7 +1103,7 @@ def handle_confession():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_OBEY_2,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_give_necklace():
     """处理戴上项圈指令"""
@@ -1157,7 +1157,7 @@ def handle_drink_alcohol():
     {constant_promise.Premise.IN_TOILET_MAN,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.URINATE_GE_80,
-     constant_promise.Premise.SLEEP_LE_89},
+     constant_promise.Premise.TIRED_LE_89},
 )
 def handle_pee():
     """处理解手指令"""
@@ -1176,7 +1176,7 @@ def handle_pee():
     {constant_promise.Premise.IN_COLLECTION_ROOM,
      constant_promise.Premise.HAVE_COLLECTION,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89},
+     constant_promise.Premise.TIRED_LE_89},
 )
 def handle_collect():
     """处理摆放藏品指令"""
@@ -1227,7 +1227,7 @@ def handle_collect():
     _("邀请H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_do_h():
     """处理邀请H指令"""
@@ -1316,7 +1316,7 @@ def handle_end_h():
     _("唱歌"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.SLEEP_LE_74}
+        constant_promise.Premise.TIRED_LE_74}
 )
 def handle_singing():
     """处理唱歌指令"""
@@ -1335,7 +1335,7 @@ def handle_singing():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_INSTRUMENT,
-        constant_promise.Premise.SLEEP_LE_74}
+        constant_promise.Premise.TIRED_LE_74}
 )
 def handle_play_instrument():
     """处理演奏乐器指令"""
@@ -1355,7 +1355,7 @@ def handle_play_instrument():
     _("处理公务"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_official_work():
     """处理处理公务指令"""
@@ -1373,7 +1373,7 @@ def handle_official_work():
     _("指挥作战（未实装）"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_COMMAND_ROOM,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_battle_command():
     """处理指挥作战指令"""
@@ -1409,7 +1409,7 @@ def handle_building():
     _("战斗训练"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_TRAINING_ROOM,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_training():
     """处理战斗训练指令"""
@@ -1427,7 +1427,7 @@ def handle_training():
     _("锻炼身体"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_GYM_ROOM,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_exercise():
     """处理锻炼身体指令"""
@@ -1445,7 +1445,7 @@ def handle_exercise():
     _("诊疗病人"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
@@ -1463,7 +1463,7 @@ def handle_cure_patient():
     _("招募干员"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_HR_OFFICE,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_recruit():
     """处理招募干员指令"""
@@ -1482,7 +1482,7 @@ def handle_recruit():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
      constant_promise.Premise.NEW_NPC_WAIT,
-     constant_promise.Premise.SLEEP_LE_74}
+     constant_promise.Premise.TIRED_LE_74}
 )
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
@@ -1509,7 +1509,7 @@ def handle_confim_recruit():
     _("摸头"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_head():
     """处理摸头指令"""
@@ -1531,7 +1531,7 @@ def handle_touch_head():
     _("摸胸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_breast():
     """处理摸胸指令"""
@@ -1553,7 +1553,7 @@ def handle_touch_breast():
     _("摸屁股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_buttocks():
     """处理摸屁股指令"""
@@ -1729,7 +1729,7 @@ def handle_touch_car():
     _("牵手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_handle_in_handle():
     """处理牵手指令"""
@@ -1752,7 +1752,7 @@ def handle_handle_in_handle():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_HAVE_FURNITURE,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_lap_pillow():
     """处理膝枕指令"""
@@ -1775,7 +1775,7 @@ def handle_lap_pillow():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_WEAR_SKIRT,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_raise_skirt():
     """处理掀起裙子指令"""
@@ -1799,7 +1799,7 @@ def handle_raise_skirt():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_WEAR_PAN,
      constant_promise.Premise.COLLECT_BONUS_103,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_ask_for_pan():
     """处理索要内裤指令"""
@@ -1823,7 +1823,7 @@ def handle_ask_for_pan():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
      constant_promise.Premise.COLLECT_BONUS_203,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_ask_for_socks():
     """处理索要袜子指令"""
@@ -1845,7 +1845,7 @@ def handle_ask_for_socks():
     _("阴蒂爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
@@ -1867,7 +1867,7 @@ def handle_touch_clitoris():
     _("手指插入（V）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_vagina():
     """处理手指插入（V）指令"""
@@ -1889,7 +1889,7 @@ def handle_touch_vagina():
     _("手指插入（A）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TIRED_LE_89}
 )
 def handle_touch_anus():
     """处理手指插入（A）指令"""

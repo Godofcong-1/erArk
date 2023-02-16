@@ -157,7 +157,7 @@ time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
 eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上17~18点）
 shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
-sleep_ge_75_or_sleep_time,SLEEP_GE_75_OR_SLEEP_TIME,时间_当前,困倦条≥75%或到了睡觉的时间
+tired_ge_75_or_sleep_time,TIRED_GE_75_OR_SLEEP_TIME,时间_当前,疲劳条≥75%或到了睡觉的时间
 work_time,WORK_TIME,时间_当前,工作时间（早上9:00~下午4:59）
 
 is_assistant,IS_ASSISTANT,属性_助理与跟随,自己是当前的助理干员
@@ -183,12 +183,12 @@ t_hp_high,TARGET_HP_HIGH,属性_基础,交互对象体力高于70%
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
 t_mp_low,TARGET_MP_LOW,属性_基础,交互对象气力低于30%
 t_mp_high,TARGET_MP_HIGH,属性_基础,交互对象气力高于70%
-sleep_ge_50,SLEEP_GE_50,属性_基础,困倦条≥50%
-sleep_le_74,SLEEP_LE_74,属性_基础,困倦条≤74%，全指令自由
-sleep_ge_75,SLEEP_GE_75,属性_基础,困倦条≥75%，部分指令受限
-sleep_le_89,SLEEP_LE_89,属性_基础,困倦条≤89%，自由活动的极限
-sleep_ge_90,SLEEP_GE_90,属性_基础,困倦条≥90%，必须回去睡觉
-sleep_100,SLEEP_100,属性_基础,困倦条100%，当场爆睡
+tired_ge_50,TIRED_GE_50,属性_基础,疲劳条≥50%
+tired_le_74,TIRED_LE_74,属性_基础,疲劳条≤74%，全指令自由
+tired_ge_75,TIRED_GE_75,属性_基础,疲劳条≥75%，部分指令受限
+tired_le_89,TIRED_LE_89,属性_基础,疲劳条≤89%，自由活动的极限
+tired_ge_90,TIRED_GE_90,属性_基础,疲劳条≥90%，必须回去睡觉
+tired_100,TIRED_100,属性_基础,疲劳条100%，当场爆睡
 urinate_le_79,URINATE_LE_79,属性_基础,尿意条≤79%，不需要排尿
 urinate_ge_80,URINATE_GE_80,属性_基础,尿意条≥80%，需要排尿
 t_urinate_le_79,TARGET_URINATE_LE_79,属性_基础,交互对象尿意条≤79%，不需要排尿

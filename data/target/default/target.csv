@@ -20,9 +20,9 @@ ai的目标,,,
 
 30,11,normal_2|not_in_dor|hp_1,正常状态（2）下，疲劳时，且不在宿舍，则回宿舍
 31,44,normal_2|in_dor|hp_1,正常状态（2）下，疲劳时，且已回宿舍，则睡觉
-32,11,normal_2|not_in_dor|sleep_ge_90,正常状态（2）下，困倦时，且不在宿舍，则回宿舍
-33,44,normal_2|in_dor|sleep_ge_90,正常状态（2）下，困倦时，且在宿舍，则睡觉
-34,12,normal_2_4|urinate_ge_80|not_in_toilet|sleep_le_89,正常状态（2和4）下，尿意值到80%，不在洗手间里，不困，则去洗手间
+32,11,normal_2|not_in_dor|tired_ge_90,正常状态（2）下，困倦时，且不在宿舍，则回宿舍
+33,44,normal_2|in_dor|tired_ge_90,正常状态（2）下，困倦时，且在宿舍，则睡觉
+34,12,normal_2_4|urinate_ge_80|not_in_toilet|tired_le_89,正常状态（2和4）下，尿意值到80%，不在洗手间里，不困，则去洗手间
 35,50,normal_2_4|urinate_ge_80|in_toilet_female,正常状态（2和4）下，尿意值到80%，且正在洗手间里，则解手
 
 36,16,normal_2_4|hunger_ge_80|eat_time|not_have_food|not_in_food_shop,正常状态（2和4）下，饥饿值到80%，且在饭点，且背包里没有食物，且不在取餐区里，则去取餐区
@@ -36,8 +36,8 @@ ai的目标,,,
 43,44,sleep_time|ai_have_showered|in_dor,就寝时间，今天已经洗过澡，且在宿舍，则睡觉
 44,11,normal_2_4|sleep_time|not_shower_time|not_in_dor,正常状态（2和4）下，就寝时间，不是淋浴时间，且不在宿舍，则回宿舍
 45,44,normal_2_4|sleep_time|not_shower_time|in_dor,正常状态（2和4）下，就寝时间，不是淋浴时间，且在宿舍，则睡觉
-46,11,sleep_ge_90|urinate_ge_80|not_in_dor,困倦，且尿意值值到80%，且不在宿舍，则回宿舍
-47,50,sleep_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
+46,11,tired_ge_90|urinate_ge_80|not_in_dor,困倦，且尿意值值到80%，且不在宿舍，则回宿舍
+47,50,tired_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 
 50,31,normal_2|shower_time|ai_not_shower|not_in_bathzone_locker_room,正常状态（2）下，淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
 51,71,normal_2|shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_most_off,正常状态（2）下，淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是大致全裸，则脱成全裸

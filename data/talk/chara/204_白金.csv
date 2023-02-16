@@ -92,14 +92,14 @@ str,int,int,str,str
 87,101,204,sys_0&t_is_assistant,{TargetName}似乎有些困扰地在摆弄自己的头发，“最近工作有点多，没有好好护理，都分叉了啊……”\n“唉……，晚上回去好好打理一下好了。”
 88,101,204,sys_0&t_is_assistant,{TargetName}认真地再确认手上的时间表的样子，“稍等一会。”\n“好了，这样应该就没有问题。怎么{PlayerNickName}一副奇怪的表情。”\n“作为{PlayerNickName}的助理，工作的时候还是会好好工作的，只是有时候感觉很麻烦而已。”\n“嘛，{PlayerNickName}有什么事情吗？”
 89,101,204,sys_0&t_is_assistant&love_ge_3,“{PlayerNickName}，关于接下来的工作，我已经联系好了。”\n“顺便说一下，凯尔西女士刚刚说明天又会有一批文件需要{PlayerNickName}检查。”\n“……抱歉，好像说的太多了。如果{PlayerNickName}累了的话随时可以休息一会。”
-90,101,204,sys_0&t_is_assistant&love_le_2&sleep_ge_50,“哈啊……”{TargetName}小小地打了个哈欠。\n“总感觉最近事情变的好多，是答应了当{PlayerNickName}的助理的缘故吗？”\n“有点困。早知道今天请假一下好了。”
+90,101,204,sys_0&t_is_assistant&love_le_2&tired_ge_50,“哈啊……”{TargetName}小小地打了个哈欠。\n“总感觉最近事情变的好多，是答应了当{PlayerNickName}的助理的缘故吗？”\n“有点困。早知道今天请假一下好了。”
 91,101,204,sys_0&place_have_furniture&in_din&high_2&t_not_follow,{TargetName}正坐在桌子边上吃着蛋糕。\n“{PlayerNickName}要来一块吗？和慕斯小姐一起做的慕斯蛋糕。”\n“要是所有的菲林都像慕斯小姐一样可爱就好了。”
 92,101,204,sys_1&love_4&t_virgin_0&t_desire_ge_7&place_10&high_10,{TargetName}慢慢贴在了{Name}的身上，混合着湿热的吐息低低地在耳边轻语，\n“亲爱的黑国王，不想用您的剑刺穿这位近在咫尺的白皇后吗？”
 93,101,204,sys_1&t_hunger_ge_80,“咕唔……”\n不知道从哪里传来了肚子的空空的叫声\n“嗯……”{Name}装作一副若无其事的样子看向了别的地方。
 94,101,204,sys_1&t_not_wear_pan&t_not_wear_bra&love_4&high_10&t_exhibit_ge_5,盯着{TargetName}的{Name}迈着轻佻的脚步走到{TargetName}的面前。\n不知道为什么红着脸的{Name}偷偷地掀起了上衣对着{TargetName}露出了娇嫩的乳头。\n观察着{TargetName}的表情，狡黠地眯起眼睛露出笑容的{Name}牵起{TargetName}的手，放在了自己的胸部上。\n“嘘……”，另一只手慢慢地解开裙带拉开一点缝隙，“这边。”\n示意着{TargetName}保持安静，让{TargetName}的手滑入股间，柔软的蜜穴触感亲吻在了{TargetName}的手指上。\n“特殊服务结束了。”享受了一小会之后{Name}轻轻地推开了{TargetName}，狡猾地闭上一只眼睛手指放在嘴唇前做出了安静地手势，“剩下的部分请{PlayerNickName}到床上再说吧~”
 95,101,204,sys_1&t_not_wear_pan&t_not_wear_bra&love_ge_2&high_5&t_exhibit_ge_5,不知道为什么{Name}一直盯着{TargetName}。\n“{PlayerNickName}……”{Name}小声地呼唤着，让{Name}转过头来。\n在{TargetName}的面前纤细地玉指一点点掀开{Name}的上衣，直到少女像是新生的嫩芽一样向上颤抖着翘起的乳头从衣服的缝隙中偷偷地探出头。\n{Name}轻轻地咬着嘴唇，努力地摆出平静的样子向{TargetName}展示了自己没有穿内衣的姣好身体。\n……只是露出了一小会{Name}就快速地把衣服放了下来，带着微红地脸颊转过身去。
 96,101,204,sys_1&t_not_wear_pan&t_not_wear_bra&love_ge_3&high_5&t_exhibit_ge_5,“{PlayerNickName}，过来一下。”牵着{TargetName}的手，走到了房间的角落的{Name}抬头带着奇怪的神情盯着{Name}。\n“那个……”{Name}犹豫了一会，用手指拉开了自己的上衣，往下拉下自己的小热裤。\n偷偷地向{TargetName}近距离展示了自己没有被布料包裹的充满朝气地乳头和娇嫩的耻丘。\n“H……”{Name}羞怯地偷瞄着一直盯着自己的肉体的{Name}，吐出细微的紧张喘息\n……”结束了。”{Name}轻轻地把贴在自己身体上的{TargetName}推开，整理好自己的衣服，不敢再看向{TargetName}，深呼吸着努力地回复平时的矜持。
-97,101,204,sys_1&t_sleep_ge_90,“已经……好累，哈~~，困……”\n{Name}打了一个长长的哈欠。
+97,101,204,sys_1&t_tired_ge_90,“已经……好累，哈~~，困……”\n{Name}打了一个长长的哈欠。
 98,101,204,sys_1&t_urinate_ge_80,“嗯……”\n不知道为什么，{Name}一直盯着{TargetName}的眼睛一副躁动不安的样子。\n而且下半身的大腿一直紧紧地夹着，似乎是想要去采花的样子。
 99,101,204,sys_1&t_wear_pan&t_wear_bra&love_ge_3&t_exhibit_ge_3,被{Name}拉着衣袖走到了房间的角落。\n“……”似乎是在犹豫着什么一样淡金色的双眼盯了{TargetName}一会，然后慢慢地解开了上衣的纽扣。\n纤细的手指捏着衣服的边缘掀起来，让包裹着少女的乳房的胸罩露了出来。\n似乎是在等待{TargetName}的评价一样，{Name}羞怯地躲闪着视线，“这个是……恋人的特别服务。”\n“就到这里……”害羞地低下头的{Name}整理好自己的衣服，回到自己的位置上。
 100,102,204,sys_0,“……哈……嗯唔……”\n{TargetName}打了个哈欠。

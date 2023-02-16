@@ -166,7 +166,7 @@ cid,effect_name,effect_type,effect
 506,KONWLEDGE_ADD_PINK_MONEY,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证
 507,CURE_PATIENT_ADD_ADJUST,指令_专用结算,（诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
 508,ADD_HPMP_MAX,指令_专用结算,（锻炼身体用）增加体力气力上限
-509,SLEEP_POINT_DOWN,指令_专用结算,（睡觉用）降低困倦值
+509,TIRED_POINT_DOWN,指令_专用结算,（睡觉用）降低疲劳值
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

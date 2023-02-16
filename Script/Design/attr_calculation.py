@@ -609,7 +609,7 @@ def get_semen_now_level(value: int) -> int:
         return 5
 
 
-def get_sleep_level(value: int) -> int:
+def get_tired_level(value: int) -> int:
     """
     按当前困倦程度返回困倦等级[0:0~74,1:75~89,2:89~99,3:100以上]
     Keyword arguments:

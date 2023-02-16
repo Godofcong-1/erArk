@@ -64,7 +64,7 @@ def init_attr(character_id: int):
         character_data.eja_point_max = 1000
         character_data.pl_collection.token_list = attr_calculation.get_token_zero(
             character_data.pl_collection.token_list)
-        character_data.sleep_point = 0
+        character_data.tired_point = 0
         character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()

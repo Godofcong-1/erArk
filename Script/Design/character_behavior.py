@@ -284,7 +284,7 @@ def judge_character_tired_sleep(character_id : int):
     if character_id:
         if character_data.sp_flag.is_h or character_data.sp_flag.is_follow:
             
-            if character_data.sp_flag.tired or (attr_calculation.get_sleep_level(character_data.sleep_point) >= 2):
+            if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.NormalDraw()

@@ -30,7 +30,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
 
-    # 结算角色随时间增加的一些数值（困倦值/尿意值）
+    # 结算角色随时间增加的一些数值（疲劳值/尿意值）
     change_character_value_add_as_time(character_id, add_time)
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
@@ -373,7 +373,7 @@ def change_character_talkcount_for_time(character_id: int, now_time: datetime.da
 
 def change_character_value_add_as_time(character_id: int, add_time: int):
     """
-    结算角色随时间增加的一些数值（困倦值/尿意值）
+    结算角色随时间增加的一些数值（疲劳值/尿意值）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 距离上次结算过去的时间
@@ -382,9 +382,9 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     player_character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
-    # 结算困倦值
-    add_sleep = int(add_time / 6)
-    now_character_data.sleep_point += add_sleep
+    # 结算疲劳值
+    add_tired = int(add_time / 6)
+    now_character_data.tired_point += add_tired
 
     # 结算尿意值
     add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
@@ -398,7 +398,7 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     if character_id == 0 and player_character_data.target_character_id:
         target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
         if target_character_data.sp_flag.is_follow or target_character_data.sp_flag.is_h:
-            target_character_data.sleep_point += add_sleep
+            target_character_data.tired_point += add_tired
             target_character_data.urinate_point += add_urinate
             target_character_data.hunger_point += add_hunger
 

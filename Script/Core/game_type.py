@@ -472,6 +472,8 @@ class SPECIAL_FLAG:
         """ 被玩家惹生气 """
         self.move_stop: bool = 0
         """ 角色停止移动 """
+        self.is_sleeping: bool = 0
+        """ 正在睡觉 """
 
 
 class CHARA_WORK:
@@ -816,8 +818,8 @@ class Character:
         """ 角色当前射精槽 """
         self.angry_point: int = 0
         """ 角色当前愤怒槽 """
-        self.sleep_point: int = 0
-        """ 困倦值 6m=1点，16h=160点(max)"""
+        self.tired_point: int = 0
+        """ 疲劳值 6m=1点，16h=160点(max)"""
         self.urinate_point: int = 0
         """ 尿意值 1m=1点，4h=240点(max)"""
         self.hunger_point: int = 0

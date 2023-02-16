@@ -139,7 +139,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[002]:当前MP：{cache.character_data[0].mana_point}")
                 draw_text_list.append(f"[003]:最大MP：{cache.character_data[0].mana_point_max}")
                 draw_text_list.append(f"[004]:当前射精槽：{cache.character_data[0].eja_point}")
-                draw_text_list.append(f"[005]:困倦值 6m=1点，16h=160点(max)：{cache.character_data[0].sleep_point}")
+                draw_text_list.append(f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}")
                 draw_text_list.append(f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}")
                 draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
 
@@ -274,7 +274,7 @@ class Debug_Panel:
             # draw_text_list.append(f"[004]:好感度：{target_data.favorability[0]}")
             # draw_text_list.append(f"[005]:信赖度：{target_data.trust}")
             # draw_text_list.append(f"[006]:当前愤怒槽：{target_data.angry_point}")
-            # draw_text_list.append(f"[007]:困倦值 6m=1点，16h=160点(max)：{target_data.sleep_point}")
+            # draw_text_list.append(f"[007]:疲劳值 6m=1点，16h=160点(max)：{target_data.tired_point}")
             # draw_text_list.append(f"[008]:尿意值 1m=1点，4h=240点(max)：{target_data.urinate_point}")
             # draw_text_list.append(f"[009]:饥饿值 1m=1点，4h=240点(max)：{target_data.hunger_point}")
             # draw_text_list.append(f"[010]:当前状态：{target_data.state}")
@@ -510,14 +510,14 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].eja_point = new_value
                 elif key_index == 5:
-                    info_text = f"[005]:困倦值 6m=1点，16h=160点(max)：{cache.character_data[0].sleep_point}"
+                    info_text = f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.character_data[0].sleep_point = new_value
+                    cache.character_data[0].tired_point = new_value
                 elif key_index == 6:
                     info_text = f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}"
                     info_draw.text = info_text

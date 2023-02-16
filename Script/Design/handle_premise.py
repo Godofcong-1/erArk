@@ -117,10 +117,10 @@ def handle_sleep_time(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_GE_75_OR_SLEEP_TIME)
-def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME)
+def handle_tired_ge_75_or_sleep_time(character_id: int) -> int:
     """
-    困倦条≥75%或到了睡觉的时间
+    疲劳条≥75%或到了睡觉的时间
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -133,7 +133,7 @@ def handle_sleep_ge_75_or_sleep_time(character_id: int) -> int:
         if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
             now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
             return (now_hour - 21) * 100
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value > 0.74:
         return 1
     return 0
@@ -1561,7 +1561,7 @@ def handle_normal_all(character_id: int) -> int:
     if(
         handle_hp_1(character_id)
         or handle_mp_0(character_id)
-        or handle_sleep_ge_90(character_id)
+        or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
 
@@ -1596,7 +1596,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
     if(
         handle_hp_1(character_id)
         or handle_mp_0(character_id)
-        or handle_sleep_ge_90(character_id)
+        or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
 
@@ -1727,7 +1727,7 @@ def handle_unnormal(character_id: int) -> int:
     if(
         handle_hp_1(character_id)
         or handle_mp_0(character_id)
-        or handle_sleep_ge_90(character_id)
+        or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
 
@@ -1937,10 +1937,10 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_GE_50)
-def handle_sleep_ge_50(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_GE_50)
+def handle_tired_ge_50(character_id: int) -> int:
     """
-    困倦条≥50%
+    疲劳条≥50%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1948,17 +1948,17 @@ def handle_sleep_ge_50(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value >= 0.5:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_LE_74)
-def handle_sleep_le_74(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_LE_74)
+def handle_tired_le_74(character_id: int) -> int:
     """
-    困倦条≤74%，全指令自由
+    疲劳条≤74%，全指令自由
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1966,17 +1966,17 @@ def handle_sleep_le_74(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value <= 0.74:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_GE_75)
-def handle_sleep_ge_75(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_GE_75)
+def handle_tired_ge_75(character_id: int) -> int:
     """
-    困倦条≥75%
+    疲劳条≥75%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1984,17 +1984,17 @@ def handle_sleep_ge_75(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value > 0.74:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_LE_89)
-def handle_sleep_le_89(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_LE_89)
+def handle_tired_le_89(character_id: int) -> int:
     """
-    困倦条≤89%，自由活动的极限
+    疲劳条≤89%，自由活动的极限
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2002,17 +2002,17 @@ def handle_sleep_le_89(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value <= 0.89:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_GE_90)
-def handle_sleep_ge_90(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_GE_90)
+def handle_tired_ge_90(character_id: int) -> int:
     """
-    困倦条≥90%
+    疲劳条≥90%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2020,17 +2020,17 @@ def handle_sleep_ge_90(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value > 0.89:
-        return character_data.sleep_point * 5
+        return character_data.tired_point * 5
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.SLEEP_100)
-def handle_sleep_100(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_100)
+def handle_tired_100(character_id: int) -> int:
     """
-    困倦条100%，当场爆睡
+    疲劳条100%，当场爆睡
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2038,17 +2038,17 @@ def handle_sleep_100(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
-    value = character_data.sleep_point / 160
+    value = character_data.tired_point / 160
     if value >= 1:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_50)
-def handle_t_sleep_ge_50(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_GE_50)
+def handle_t_tired_ge_50(character_id: int) -> int:
     """
-    交互对象困倦条≥50%
+    交互对象疲劳条≥50%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2057,17 +2057,17 @@ def handle_t_sleep_ge_50(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value >= 0.5:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_74)
-def handle_t_sleep_le_74(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_LE_74)
+def handle_t_tired_le_74(character_id: int) -> int:
     """
-    交互对象困倦条≤74%，全指令自由
+    交互对象疲劳条≤74%，全指令自由
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2076,17 +2076,17 @@ def handle_t_sleep_le_74(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value <= 0.74:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_75)
-def handle_t_sleep_ge_75(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_GE_75)
+def handle_t_tired_ge_75(character_id: int) -> int:
     """
-    交互对象困倦条≥75%
+    交互对象疲劳条≥75%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2095,17 +2095,17 @@ def handle_t_sleep_ge_75(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value > 0.74:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_LE_89)
-def handle_t_sleep_le_89(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_LE_89)
+def handle_t_tired_le_89(character_id: int) -> int:
     """
-    交互对象困倦条≤89%，自由活动的极限
+    交互对象疲劳条≤89%，自由活动的极限
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2114,17 +2114,17 @@ def handle_t_sleep_le_89(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value <= 0.89:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_GE_90)
-def handle_t_sleep_ge_90(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_GE_90)
+def handle_t_tired_ge_90(character_id: int) -> int:
     """
-    交互对象困倦条≥90%
+    交互对象疲劳条≥90%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2133,17 +2133,17 @@ def handle_t_sleep_ge_90(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value > 0.89:
-        return target_data.sleep_point * 5
+        return target_data.tired_point * 5
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SLEEP_100)
-def handle_t_sleep_100(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_100)
+def handle_t_tired_100(character_id: int) -> int:
     """
-    交互对象困倦条100%，当场爆睡
+    交互对象疲劳条100%，当场爆睡
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2152,7 +2152,7 @@ def handle_t_sleep_100(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
 
-    value = target_data.sleep_point / 160
+    value = target_data.tired_point / 160
     if value >= 1:
         return 1
     else:

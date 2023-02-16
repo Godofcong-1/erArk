@@ -626,11 +626,11 @@ class CharacterInfoHead:
 
         # 非清醒时输出当前状态
         sleep_text_list = [" <清醒>", " <疲劳>", " <昏昏欲睡>", " <随时睡着>"]
-        sleep_text = sleep_text_list[attr_calculation.get_sleep_level(character_data.sleep_point)]
+        sleep_text = sleep_text_list[attr_calculation.get_tired_level(character_data.tired_point)]
         status_text = game_config.config_status[character_data.state].name
 
         # if character_id != 0:
-        #     print("debug character_id = ",character_id,"    character_data.sleep_point = ",character_data.sleep_point,"   sleep_text = ",sleep_text)
+        #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == " <清醒>" else sleep_text
         sleep_text = " <睡眠中>" if status_text == "睡觉" else sleep_text
 
