@@ -1064,20 +1064,22 @@ def handle_ask_date():
     _("告白"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TARGET_LOVE_2,
+     constant_promise.Premise.SLEEP_LE_74}
 )
 def handle_confession():
     """处理告白指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[202] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
-                                                                            "告白"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "告白"):
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，对方获得戒指
         target_data.talent[202] = 0
         target_data.talent[203] = 1
+        target_data.talent[205] = 1
+        target_data.talent[411] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
@@ -1100,21 +1102,22 @@ def handle_confession():
     _("戴上项圈"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.SLEEP_LE_89}
+     constant_promise.Premise.TARGET_OBEY_2,
+     constant_promise.Premise.SLEEP_LE_74}
 )
 def handle_give_necklace():
     """处理戴上项圈指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[211] == 1 and character.calculation_instuct_judege(0, character_data.target_character_id,
-                                                                            "戴上项圈"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "戴上项圈"):
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
         target_data.talent[211] = 0
         target_data.talent[212] = 1
         target_data.talent[215] = 1
+        target_data.talent[411] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
