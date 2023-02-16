@@ -4000,15 +4000,15 @@ def handle_high_obscenity_failed_adjust(
         target_change.trust -= now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIRED_POINT_DOWN)
-def handle_tired_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAK_UP)
+def handle_weak_up(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    睡觉时降低疲劳值
+    （睡觉用）清除睡觉状态，清零熟睡值
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4018,9 +4018,8 @@ def handle_tired_point_down(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-
-    value = int(add_time / 3)
-    character_data.tired_point -= value
+    character_data.sp_flag.is_sleeping = 0
+    character_data.sleep_point = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)

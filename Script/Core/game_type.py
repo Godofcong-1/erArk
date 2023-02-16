@@ -824,6 +824,8 @@ class Character:
         """ 尿意值 1m=1点，4h=240点(max)"""
         self.hunger_point: int = 0
         """ 饥饿值 1m=1点，4h=240点(max)"""
+        self.sleep_point: int = 0
+        """ 熟睡值 1m=10点，10min=100点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}

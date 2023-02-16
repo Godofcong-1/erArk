@@ -226,8 +226,8 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动是普通交互指令，则将等待flag设为1
-        if state_machine_id >= 100:
-            character_data.sp_flag.wait_flag = 1
+        # if state_machine_id >= 100:
+        #     character_data.sp_flag.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
         # event_draw = event.handle_event(character_id, 1)

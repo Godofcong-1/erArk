@@ -382,9 +382,25 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     player_character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
-    # 结算疲劳值
-    add_tired = int(add_time / 6)
-    now_character_data.tired_point += add_tired
+    # 根据是否在睡觉结算疲劳值与熟睡值
+    # 睡着时减少疲劳值
+    if now_character_data.sp_flag.is_sleeping:
+        add_tired = int(add_time / 3)
+        now_character_data.tired_point -= add_tired
+        # 熟睡值不到60时只增加
+        if now_character_data.sleep_point < 60:
+            add_sleep = int(add_time * 10)
+            now_character_data.sleep_point += add_sleep
+        # 熟睡值到60后上下波动，加的可能性比减的小
+        else:
+            add_sleep = random.randint(int(add_time * -5),int(add_time * 10))
+            now_character_data.sleep_point += add_sleep
+        # 最高上限100
+        now_character_data.sleep_point = min(now_character_data.sleep_point,100)
+    # 不睡觉则加疲劳值
+    else:
+        add_tired = int(add_time / 6)
+        now_character_data.tired_point += add_tired
 
     # 结算尿意值
     add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))

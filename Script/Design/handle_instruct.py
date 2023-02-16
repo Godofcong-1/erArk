@@ -394,6 +394,7 @@ def handle_sleep():
     character_data.behavior.duration = 480
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
+    character_data.sp_flag.is_sleeping = 1
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
     update.game_update_flow(480)
 
