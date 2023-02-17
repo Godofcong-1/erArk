@@ -83,6 +83,7 @@ def handle_rest():
     character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.REST
     character_data.state = constant.CharacterStatus.STATUS_REST
+    character_data.sp_flag.is_resting = 1
     update.game_update_flow(60)
 
 

@@ -91,6 +91,7 @@ def character_sleep(character_id: int):
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     character_data.sp_flag.tired = 0
+    character_data.sp_flag.is_sleeping = 1
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
 # def character_follow(character_id: int):
@@ -114,6 +115,7 @@ def character_rest(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.REST
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_REST
+    character_data.sp_flag.is_resting = 1
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RAND_SCENE)

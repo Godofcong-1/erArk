@@ -29,11 +29,12 @@ def get_npc_cloth(character_id: int):
             character_data.cloth.cloth_wear[type].append(cloth_id)
         get_underwear(character_id)
 
-def get_underwear(character_id: int):
+def get_underwear(character_id: int, part_flag = 0):
     """
     随机穿内衣，包括胸罩和内裤
     Keyword arguments:
     character_id -- 角色id
+    part_flag -- 是否只穿某个部件，0都穿，1仅胸罩，2仅内裤
     Return arguments:
     无
     """
@@ -74,8 +75,8 @@ def get_underwear(character_id: int):
                     pan_loli_list += pan_H_list
                     break
 
-    # 判断是否当前已经穿了胸衣和内裤
-    if not len(character_data.cloth.cloth_wear[6]):
+    # 判断是否需要穿，包括是否已传和part_flag限制
+    if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2:
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
         if character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
@@ -84,7 +85,7 @@ def get_underwear(character_id: int):
             bra_id = random.choice(bra_nor_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
 
-    if not len(character_data.cloth.cloth_wear[9]):
+    if not len(character_data.cloth.cloth_wear[9]) and part_flag != 1:
         if character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
@@ -126,7 +127,7 @@ def get_shower_cloth(character_id: int):
 
 def get_sleep_cloth(character_id: int):
     """
-    换上睡衣和内衣
+    换上睡衣和内裤
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -142,7 +143,7 @@ def get_sleep_cloth(character_id: int):
         else:
             character_data.cloth.cloth_wear[5].append(553)
             character_data.cloth.cloth_wear[8].append(853)
-        get_underwear(character_id)
+        get_underwear(character_id, part_flag = 2)
         chara_special_wear_cloth(character_id)
 
 

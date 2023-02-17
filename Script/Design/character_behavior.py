@@ -144,10 +144,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         return
     if character_data.behavior.start_time is None:
         character.init_character_behavior_start_time(character_id, now_time)
+    # 刷新会根据时间即时增加的角色数值
+    character_aotu_change_value(character_id, now_time)
+
     # 处理特殊模式
     if character_id != 0:
         judge_character_first_meet(character_id) # 初见和每日招呼
-        judge_character_tired_sleep(character_id) # 疲劳和睡眠
+        judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
         judge_character_pregnancy(character_id) # 临盆和产后
@@ -316,11 +319,12 @@ def judge_character_tired_sleep(character_id : int):
             character_data.sp_flag.tired = 0
 
 
-def judge_character_status(character_id: int, now_time: datetime.datetime) -> int:
+def judge_character_status(character_id: int, now_time: datetime.datetime, end_now = 0) -> int:
     """
     校验并结算角色状态
     Keyword arguments:
     character_id -- 角色id
+    end_now -- 是否要强制结算
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
@@ -351,6 +355,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime) -> in
     # character_data.status[27] += hunger_time * 0.02
     # character_data.status[28] += hunger_time * 0.02
     # character_data.last_hunger_time = now_time
+    if end_now:
+        time_judge = end_now
     if time_judge:
         # 查询当前玩家是否触发了事件
         start_event_draw = None if character_id else event.handle_event(character_id)
@@ -731,3 +737,58 @@ def update_save():
     now_draw.text += f"\n请博士在保存时阅读今日的小贴士：\n\n  {info_text}\n\n\n"
     now_draw.draw()
     save_handle.establish_save("auto")
+
+
+def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
+    """
+    结算角色随时间自动增加的数值
+    Keyword arguments:
+    character_id -- 角色id
+    now_time -- 指定时间
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    player_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+    start_time = player_character_data.behavior.start_time
+    add_time = int((now_time - start_time).seconds / 60)
+
+    # 如果玩家视觉下的经过时间超过12分钟，则每12分钟结算一次
+    past_time = 12
+    while 1:
+        if add_time <= 0:
+            break
+
+        if add_time <= past_time:
+            past_time = add_time
+        add_time -= past_time
+
+        # 休息时小幅度减少疲劳值
+        if now_character_data.sp_flag.is_resting:
+            add_tired = int(past_time / 6)
+            now_character_data.tired_point -= add_tired
+            now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
+
+            # 非睡觉时间内，疲劳归零则直接结算当前行动
+            if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
+                judge_character_status(character_id, now_time, end_now = 2)
+
+        # 睡觉或休息时减少疲劳值
+        if now_character_data.sp_flag.is_sleeping:
+            add_tired = int(past_time / 3)
+            now_character_data.tired_point -= add_tired
+            now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
+            # 熟睡值不到60时只增加
+            if now_character_data.sleep_point < 60:
+                add_sleep = int(past_time * 1.5)
+                now_character_data.sleep_point += add_sleep
+            # 熟睡值到60后上下波动，加的可能性比减的可能性大一点点
+            else:
+                add_sleep = random.randint(int(past_time * -0.5),int(past_time * 0.6))
+                now_character_data.sleep_point += add_sleep
+            # 最高上限100
+            now_character_data.sleep_point = min(now_character_data.sleep_point,100)
+            # print(f"debug {now_character_data.name}疲劳值-{add_tired}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}")
+
+            # 非睡觉时间内，疲劳归零则直接结算当前行动
+            if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
+                judge_character_status(character_id, now_time, end_now = 2)

@@ -632,7 +632,15 @@ class CharacterInfoHead:
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == " <清醒>" else sleep_text
-        sleep_text = " <睡眠中>" if status_text == "睡觉" else sleep_text
+        if status_text == "睡觉":
+            if character_data.sleep_point <= 30:
+                sleep_text = " <随时醒来>"
+            elif character_data.sleep_point <= 60:
+                sleep_text = " <浅睡>"
+            elif character_data.sleep_point <= 80:
+                sleep_text = " <熟睡>"
+            else:
+                sleep_text = " <完全深眠>"
 
         # 非普通时输出当前心情
         angry_text = attr_calculation.get_angry_text(character_data.angry_point)

@@ -474,6 +474,8 @@ class SPECIAL_FLAG:
         """ 角色停止移动 """
         self.is_sleeping: bool = 0
         """ 正在睡觉 """
+        self.is_resting: bool = 0
+        """ 正在休息 """
 
 
 class CHARA_WORK:

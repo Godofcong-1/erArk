@@ -16,7 +16,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag: int):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = 2):
     """
     处理结算角色行为
     Keyword arguments:
@@ -30,7 +30,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
 
-    # 结算角色随时间增加的一些数值（疲劳值/尿意值）
+    # 结算角色随时间增加的一些数值（疲劳值/尿意值/饥饿值）
     change_character_value_add_as_time(character_id, add_time)
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
@@ -382,23 +382,8 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     player_character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
-    # 根据是否在睡觉结算疲劳值与熟睡值
-    # 睡着时减少疲劳值
-    if now_character_data.sp_flag.is_sleeping:
-        add_tired = int(add_time / 3)
-        now_character_data.tired_point -= add_tired
-        # 熟睡值不到60时只增加
-        if now_character_data.sleep_point < 60:
-            add_sleep = int(add_time * 10)
-            now_character_data.sleep_point += add_sleep
-        # 熟睡值到60后上下波动，加的可能性比减的小
-        else:
-            add_sleep = random.randint(int(add_time * -5),int(add_time * 10))
-            now_character_data.sleep_point += add_sleep
-        # 最高上限100
-        now_character_data.sleep_point = min(now_character_data.sleep_point,100)
-    # 不睡觉则加疲劳值
-    else:
+    # 仅计算在不睡觉时的正常行动结算疲劳值
+    if not now_character_data.sp_flag.is_sleeping or not now_character_data.sp_flag.is_resting:
         add_tired = int(add_time / 6)
         now_character_data.tired_point += add_tired
 
@@ -414,7 +399,8 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     if character_id == 0 and player_character_data.target_character_id:
         target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
         if target_character_data.sp_flag.is_follow or target_character_data.sp_flag.is_h:
-            target_character_data.tired_point += add_tired
+            if not target_character_data.sp_flag.is_sleeping:
+                target_character_data.tired_point += add_tired
             target_character_data.urinate_point += add_urinate
             target_character_data.hunger_point += add_hunger
 

@@ -4000,8 +4000,8 @@ def handle_high_obscenity_failed_adjust(
         target_change.trust -= now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAK_UP)
-def handle_weak_up(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_ADD_ADJUST)
+def handle_sleep_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4020,6 +4020,27 @@ def handle_weak_up(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.is_sleeping = 0
     character_data.sleep_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_ADD_ADJUST)
+def handle_rest_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （休息用）清除休息状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.is_resting = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)
