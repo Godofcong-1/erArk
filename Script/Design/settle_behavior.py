@@ -383,26 +383,32 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
     # 仅计算在不睡觉时的正常行动结算疲劳值
-    if not now_character_data.sp_flag.is_sleeping or not now_character_data.sp_flag.is_resting:
+    if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
         add_tired = int(add_time / 6)
         now_character_data.tired_point += add_tired
+        now_character_data.tired_point = min(now_character_data.tired_point,160)
 
     # 结算尿意值
     add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
     now_character_data.urinate_point += add_urinate
+    now_character_data.urinate_point = min(now_character_data.urinate_point,240)
 
     # 结算饥饿值
     add_hunger = random.randint(int(add_time * 0.8), int(add_time * 1.2))
     now_character_data.hunger_point += add_hunger
+    now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
     # 给无法自由行动的交互对象结算
     if character_id == 0 and player_character_data.target_character_id:
         target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
         if target_character_data.sp_flag.is_follow or target_character_data.sp_flag.is_h:
-            if not target_character_data.sp_flag.is_sleeping:
+            if game_config.config_status[target_character_data.state].name not in {"睡觉","休息"}:
                 target_character_data.tired_point += add_tired
+                target_character_data.tired_point = min(target_character_data.tired_point,160)
             target_character_data.urinate_point += add_urinate
+            target_character_data.urinate_point = (target_character_data.urinate_point,240)
             target_character_data.hunger_point += add_hunger
+            target_character_data.hunger_point = (target_character_data.hunger_point,240)
 
     # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 

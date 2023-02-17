@@ -1574,6 +1574,8 @@ def handle_normal_all(character_id: int) -> int:
 
         or handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
+
+        or handle_action_sleep(character_id)
     ):
         return 0
     else:
@@ -1587,7 +1589,6 @@ def handle_normal_1_2_4(character_id: int) -> int:
     \n包括1:疲劳、气力0、困倦、尿意、饥饿
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
-    \n包括5:睡眠（全程度），安眠药
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1622,7 +1623,6 @@ def handle_normal_2_3_4(character_id: int) -> int:
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
-    \n包括5:睡眠（全程度），安眠药
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1740,6 +1740,8 @@ def handle_unnormal(character_id: int) -> int:
 
         or handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
+
+        or handle_action_sleep(character_id)
     ):
         return 1
     else:

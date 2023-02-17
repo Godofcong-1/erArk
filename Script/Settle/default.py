@@ -1122,6 +1122,8 @@ def handle_interrupt_target_activity(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
+    if character_data.target_character_id == 0:
+        return
     # if target_data.state == constant.CharacterStatus.STATUS_DEAD:
     #     return
     if target_data.behavior.behavior_id:
@@ -4008,7 +4010,7 @@ def handle_sleep_add_adjust(
         now_time: datetime.datetime,
 ):
     """
-    （睡觉用）清除睡觉状态，清零熟睡值
+    （睡觉用）清零熟睡值
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4018,29 +4020,7 @@ def handle_sleep_add_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.is_sleeping = 0
     character_data.sleep_point = 0
-
-
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_ADD_ADJUST)
-def handle_rest_add_adjust(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    （休息用）清除休息状态
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.is_resting = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)

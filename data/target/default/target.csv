@@ -18,10 +18,10 @@ ai的目标,,,
 13,14,not_follow,未跟随时自主移动，移动至现代音乐室
 14,15,not_follow|place_1,未跟随时自主移动，且与玩家位于不同位置，移动至玩家位置
 
-30,11,normal_2|not_in_dor|hp_1,正常状态（2）下，疲劳时，且不在宿舍，则回宿舍
-31,44,normal_2|in_dor|hp_1,正常状态（2）下，疲劳时，且已回宿舍，则睡觉
-32,11,normal_2|not_in_dor|tired_ge_90,正常状态（2）下，困倦时，且不在宿舍，则回宿舍
-33,44,normal_2|in_dor|tired_ge_90,正常状态（2）下，困倦时，且在宿舍，则睡觉
+30,11,normal_2|not_in_dor|hp_1,正常状态（2）下，hp1时，且不在宿舍，则回宿舍
+31,44,normal_2|in_dor|hp_1,正常状态（2）下，hp1时，且已回宿舍，则睡觉
+32,11,normal_2|not_in_dor|tired_ge_90,正常状态（2）下，疲劳值到90%时，且不在宿舍，则回宿舍
+33,44,normal_2|in_dor|tired_ge_90,正常状态（2）下，疲劳值到90%时，且在宿舍，则睡觉
 34,12,normal_2_4|urinate_ge_80|not_in_toilet|tired_le_89,正常状态（2和4）下，尿意值到80%，不在洗手间里，不困，则去洗手间
 35,50,normal_2_4|urinate_ge_80|in_toilet_female,正常状态（2和4）下，尿意值到80%，且正在洗手间里，则解手
 

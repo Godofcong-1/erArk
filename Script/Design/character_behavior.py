@@ -763,7 +763,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
         add_time -= past_time
 
         # 休息时小幅度减少疲劳值
-        if now_character_data.sp_flag.is_resting:
+        if now_character_data.state == constant.CharacterStatus.STATUS_REST:
             add_tired = int(past_time / 6)
             now_character_data.tired_point -= add_tired
             now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
@@ -772,8 +772,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
                 judge_character_status(character_id, now_time, end_now = 2)
 
-        # 睡觉或休息时减少疲劳值
-        if now_character_data.sp_flag.is_sleeping:
+        # 睡觉时减少疲劳值
+        if now_character_data.state == constant.CharacterStatus.STATUS_SLEEP:
             add_tired = int(past_time / 3)
             now_character_data.tired_point -= add_tired
             now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
