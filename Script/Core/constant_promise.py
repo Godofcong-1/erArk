@@ -345,36 +345,13 @@ class Premise:
     ENTERTAINMENT_TIME = "entertainment_time"
     """ 时间_当前 娱乐时间（下午5:00~晚上9:59） """
 
-    IS_ASSISTANT = "is_assistant"
-    """ 属性_助理与跟随 自己是当前的助理干员 """
-    NOT_ASSISTANT = "not_assistant"
-    """ 属性_助理与跟随 自己不是当前的助理干员 """
-    TARGET_IS_ASSISTANT = "t_is_assistant"
-    """ 属性_助理与跟随 交互对象是当前的助理干员 """
-    TARGET_NOT_ASSISTANT = "t_not_assistant"
-    """ 属性_助理与跟随 交互对象不是当前的助理干员 """
-    IS_FOLLOW = "is_follow"
-    """ 属性_助理与跟随 当前正跟随玩家 """
-    NOT_FOLLOW = "not_follow"
-    """ 属性_助理与跟随 当前没跟随玩家 """
-    IS_FOLLOW_1 = "is_follow_1"
-    """ 属性_助理与跟随 当前正智能跟随玩家 """
-    NOT_FOLLOW_1 = "not_follow_1"
-    """ 属性_助理与跟随 当前没智能跟随玩家 """
-    IS_FOLLOW_3 = "is_follow_3"
-    """ 属性_助理与跟随 当前正前往博士办公室 """
-    TARGET_IS_FOLLOW = "t_is_follow"
-    """ 属性_助理与跟随 交互对象当前正跟随玩家 """
-    TARGET_NOT_FOLLOW = "t_not_follow"
-    """ 属性_助理与跟随 交互对象当前没跟随玩家 """
-
     """
     异常状态类型：
     1:疲劳、气力0、困倦、尿意、饥饿
     2:临盆、产后、婴儿
     3:助理、跟随模式下
     4:大致全裸、全裸
-    5:监禁
+    5:睡眠（全程度），安眠药
     """
 
     NORMAL_ALL = "normal_all"
@@ -391,8 +368,6 @@ class Premise:
     """ 属性_基础 交互对象2正常的普通状态 """
     UNNORMAL = "unnormal"
     """ 属性_基础 有特殊需求的异常状态 """
-    HP_1 = "hp_1"
-    """ 属性_基础 自身疲劳（体力=1） """
     HP_LOW = "hp_low"
     """ 属性_基础 自身体力低于30% """
     HP_HIGH = "hp_high"
@@ -453,6 +428,33 @@ class Premise:
     """ 属性_基础 交互对象饥饿值≤79%，不需要吃饭 """
     TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
     """ 属性_基础 交互对象饥饿值≥80%，需要吃饭 """
+
+    IS_ASSISTANT = "is_assistant"
+    """ 属性_助理与跟随 自己是当前的助理干员 """
+    NOT_ASSISTANT = "not_assistant"
+    """ 属性_助理与跟随 自己不是当前的助理干员 """
+    TARGET_IS_ASSISTANT = "t_is_assistant"
+    """ 属性_助理与跟随 交互对象是当前的助理干员 """
+    TARGET_NOT_ASSISTANT = "t_not_assistant"
+    """ 属性_助理与跟随 交互对象不是当前的助理干员 """
+    IS_FOLLOW = "is_follow"
+    """ 属性_助理与跟随 当前正跟随玩家 """
+    NOT_FOLLOW = "not_follow"
+    """ 属性_助理与跟随 当前没跟随玩家 """
+    IS_FOLLOW_1 = "is_follow_1"
+    """ 属性_助理与跟随 当前正智能跟随玩家 """
+    NOT_FOLLOW_1 = "not_follow_1"
+    """ 属性_助理与跟随 当前没智能跟随玩家 """
+    IS_FOLLOW_3 = "is_follow_3"
+    """ 属性_助理与跟随 当前正前往博士办公室 """
+    TARGET_IS_FOLLOW = "t_is_follow"
+    """ 属性_助理与跟随 交互对象当前正跟随玩家 """
+    TARGET_NOT_FOLLOW = "t_not_follow"
+    """ 属性_助理与跟随 交互对象当前没跟随玩家 """
+
+    HP_1 = "hp_1"
+    """ 属性_特殊flag 自身疲劳（体力=1） """
+
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """
