@@ -347,11 +347,13 @@ class Premise:
 
     """
     异常状态类型：
-    1:疲劳、气力0、困倦、尿意、饥饿
-    2:临盆、产后、婴儿
-    3:助理、跟随模式下
-    4:大致全裸、全裸
-    5:睡眠（全程度），安眠药
+    \n1:基础数值异常：hp1、气力0、高困倦、高尿意、高饥饿
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n3:AI行动受限：助理、跟随模式下
+    \n4:服装异常：大致全裸、全裸
+    \n5:意识模糊，或弱交互：醉酒，催眠
+    \n6:完全意识不清醒，或无交互：睡眠（全程度），时停，无存在感
+    \n7:监禁：监禁
     """
 
     NORMAL_ALL = "normal_all"
@@ -454,6 +456,12 @@ class Premise:
 
     HP_1 = "hp_1"
     """ 属性_特殊flag 自身疲劳（体力=1） """
+    IMPRISONMENT_1 = "imprisonment_1"
+    """ 属性_特殊flag 自身被监禁 """
+    T_IMPRISONMENT_0 = "t_imprisonment_0"
+    """ 属性_特殊flag 交互对象没有被监禁 """
+    T_IMPRISONMENT_1 = "t_imprisonment_1"
+    """ 属性_特殊flag 交互对象被监禁 """
 
 
     TARGET_GOOD_MOOD = "good_mood"

@@ -472,6 +472,8 @@ class SPECIAL_FLAG:
         """ 被玩家惹生气 """
         self.move_stop: bool = 0
         """ 角色停止移动 """
+        self.imprisonment: bool = 0
+        """ 被监禁状态 """
 
 
 class CHARA_WORK:

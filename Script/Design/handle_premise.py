@@ -1547,12 +1547,7 @@ def handle_instruct_judge_h(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_ALL)
 def handle_normal_all(character_id: int) -> int:
     """
-    没有任何异常的普通状态
-    \n包括1:疲劳、气力0、困倦、尿意、饥饿
-    \n包括2:临盆、产后、婴儿
-    \n包括3:助理、跟随模式下
-    \n包括4:大致全裸、全裸
-    \n包括5:睡眠（全程度），安眠药
+    没有任何异常的绝对正常状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1586,7 +1581,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n包括1:疲劳、气力0、困倦、尿意、饥饿
+    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1714,7 +1709,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n包括1:疲劳、气力0、困倦、尿意、饥饿
+    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
@@ -1760,6 +1755,56 @@ def handle_hp_1(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.tired == 1:
         return 999
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.IMPRISONMENT_1)
+def handle_imprisonment_1(character_id: int) -> int:
+    """
+    自身被监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.imprisonment == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_IMPRISONMENT_0)
+def handle_t_imprisonment_0(character_id: int) -> int:
+    """
+    交互对象没有被监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.imprisonment == 1:
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.T_IMPRISONMENT_1)
+def handle_t_imprisonment_1(character_id: int) -> int:
+    """
+    交互对象被监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.imprisonment == 1:
+        return 1
     else:
         return 0
 
