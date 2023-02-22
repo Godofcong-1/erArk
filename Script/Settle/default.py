@@ -824,7 +824,7 @@ def handle_first_kiss(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
+    # target_data.social_contact_data.setdefault(character_id, 0)
 
     if character_data.talent[4] == 1:
         character_data.talent[4] = 0
@@ -858,34 +858,34 @@ def handle_first_kiss(
             target_data.second_behavior[1050] = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
-def handle_first_hand_in_hand(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    记录初次牵手
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
-    social = 0
-    if character_id in target_data.social_contact_data:
-        social = target_data.social_contact_data[character_id]
-    if social >= 2:
-        if character_data.first_hand_in_hand == -1:
-            character_data.first_kiss = target_data.cid
-        if target_data.first_hand_in_hand == -1:
-            target_data.first_kiss = character_id
+# @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
+# def handle_first_hand_in_hand(
+#         character_id: int,
+#         add_time: int,
+#         change_data: game_type.CharacterStatusChange,
+#         now_time: datetime.datetime,
+# ):
+#     """
+#     记录初次牵手
+#     Keyword arguments:
+#     character_id -- 角色id
+#     add_time -- 结算时间
+#     change_data -- 状态变更信息记录对象
+#     now_time -- 结算的时间
+#     """
+#     if not add_time:
+#         return
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     target_data.social_contact_data.setdefault(character_id, 0)
+#     social = 0
+#     if character_id in target_data.social_contact_data:
+#         social = target_data.social_contact_data[character_id]
+#     if social >= 2:
+#         if character_data.first_hand_in_hand == -1:
+#             character_data.first_kiss = target_data.cid
+#         if target_data.first_hand_in_hand == -1:
+#             target_data.first_kiss = character_id
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_SEX)
@@ -907,7 +907,6 @@ def handle_first_sex(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
 
     # 判定是否为道具性交
     item_flag = False
@@ -994,7 +993,6 @@ def handle_first_a_sex(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
 
     # 判定是否为道具性交
     item_flag = False

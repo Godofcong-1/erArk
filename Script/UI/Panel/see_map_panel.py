@@ -498,49 +498,49 @@ class ScenePathNameMoveDraw:
         character_move.own_charcter_move(self.scene_path)
 
 
-class entertainmentSceneNamePanel:
-    """
-    绘制娱乐地点对象所在场景快捷寻路按钮列表
-    Keyword arguments:
-    now_map -- 地图路径
-    width -- 绘制宽度
-    """
+# class entertainmentSceneNamePanel:
+#     """
+#     绘制娱乐地点对象所在场景快捷寻路按钮列表
+#     Keyword arguments:
+#     now_map -- 地图路径
+#     width -- 绘制宽度
+#     """
 
-    def __init__(self, now_map: List[str], width: int):
-        self.width: int = width
-        """ 绘制的最大宽度 """
-        self.now_map: List[str] = now_map
-        """ 当前查看的地图坐标 """
-        self.return_list: List[str] = []
-        """ 当前面板的按钮返回 """
-        character_data: game_type.Character = cache.character_data[0]
-        self.handle_panel = panel.PageHandlePanel(
-            [k for k in character_data.social_contact_data if character_data.social_contact_data[k]],
-            SocialSceneNameDraw,
-            20,
-            3,
-            self.width,
-            1,
-        )
-        self.end_index = self.handle_panel.end_index
-        """ 结束按钮id """
+#     def __init__(self, now_map: List[str], width: int):
+#         self.width: int = width
+#         """ 绘制的最大宽度 """
+#         self.now_map: List[str] = now_map
+#         """ 当前查看的地图坐标 """
+#         self.return_list: List[str] = []
+#         """ 当前面板的按钮返回 """
+#         character_data: game_type.Character = cache.character_data[0]
+#         self.handle_panel = panel.PageHandlePanel(
+#             [k for k in character_data.social_contact_data if character_data.social_contact_data[k]],
+#             SocialSceneNameDraw,
+#             20,
+#             3,
+#             self.width,
+#             1,
+#         )
+#         self.end_index = self.handle_panel.end_index
+#         """ 结束按钮id """
 
-    def update(self, now_map: List[str], start_index: int):
-        """
-        更新当前面板对象
-        Keyword arguments:
-        now_map -- 当前地
-        start_index -- 起始按钮id
-        """
-        self.now_map = now_map
-        self.handle_panel.button_start_id = start_index
-        self.handle_panel.update()
-        self.end_index = self.handle_panel.end_index
+#     def update(self, now_map: List[str], start_index: int):
+#         """
+#         更新当前面板对象
+#         Keyword arguments:
+#         now_map -- 当前地
+#         start_index -- 起始按钮id
+#         """
+#         self.now_map = now_map
+#         self.handle_panel.button_start_id = start_index
+#         self.handle_panel.update()
+#         self.end_index = self.handle_panel.end_index
 
-    def draw(self):
-        """绘制面板"""
-        self.handle_panel.draw()
-        self.return_list = self.handle_panel.return_list
+#     def draw(self):
+#         """绘制面板"""
+#         self.handle_panel.draw()
+#         self.return_list = self.handle_panel.return_list
 
 
 class SocialSceneNameDraw:
