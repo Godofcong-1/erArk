@@ -67,7 +67,7 @@ str,int,int,str,str
 62,101,204,sys_0&love_ge_2&high_1,“卡西米尔，就像是一座塔，当你往上走一层就会发现，永远还有更高的人在监视你。”\n“在普通人眼里，成为骑士只需要稍微努努力就能够过上无忧无虑的生活。”\n“但是，不是那样的哦。傲慢的骑士上面是冷酷的无胄盟。”\n“而无胄盟的上面是狡猾的商业联盟。”\n“到了最后纵使是手握大量资源的商业巨头，也要防范来自同伴的背叛。”\n“这座塔本身……或者说这座用资本和权力建造起来的城市，总是能够恰到好处地将每一个人变成奴隶。”\n“从上往下一条完美的食物链，一旦陷入就难以全身而退的循环。”\n“所以累了，与其做无用的努力往上爬，不如多享受一会休假。”
 63,101,204,sys_0&love_ge_2&high_2,“卡西米尔啊，其实永远都是黑夜哦。虽然有那么多霓虹灯，被大家称为不夜城。”\n“天上总是盖着一层厚厚的乌云，遮住了所有的光。”\n“然后他们指着那片被照亮的乌云说，他们用社会的进步之光照亮了夜空。让大家开心地被城市吞噬，一点一点地吸食光所有的血液。”\n“{TargetName}还不想那么早被用光价值哦，至少也要穿透乌云，看看真正的月亮。”
 64,101,204,sys_0&love_ge_2&in_din,“说起来，博士是不是最近油腻的东西吃的多了一些？”\n“虽然，{TargetName}不是芙蓉小姐，但是至少还是知道哪些是不健康的。”\n“不健康的东西吃多了的话体质会变差的，还请{PlayerNickName}注意一下。”
-65,101,204,sys_0&love_ge_2&t_desire_ge_5&high_1,“我的衣服？嗯，是有点place_exposed呢，毕竟的为了方便刺杀任务而设计的。要掀开试试看吗？”\n{TargetName}露出了一脸坏笑\n“……大笨蛋……”
+65,101,204,sys_0&love_ge_2&t_desire_ge_5&high_1,“我的衣服？嗯，是有点暴露呢，毕竟的为了方便刺杀任务而设计的。要掀开试试看吗？”\n{TargetName}露出了一脸坏笑\n“……大笨蛋……”
 66,101,204,sys_0&love_ge_2&t_wear_bra,“……？看到了？{PlayerNickName}从刚刚开始就一直很在意这件披风缝隙里面的东西的样子”\n“嘛，如果是你的话……掀开看看也可以就是了”
 67,101,204,sys_0&love_ge_2&t_wear_socks&high_1,“丝袜的颜色？诶，那种东西基本上看心情吧。\n不过真亏你能注意到呢，最近确实是黑色的穿的比较多。”\n“话说回来{Name}会问这种问题，难道说{Name}更加喜欢白色的？”
 68,101,204,sys_0&love_ge_3&high_2,“东国的温泉旅馆似乎很棒的样子。下次休假的时候一起去怎么样呀。”\n“诶……很忙吗？还想着让你帮忙挑选一些当地漂亮的传统服饰的。”\n{TargetName}拿着一本像是旅游攻略的东西翻看着\n“说是叫汉服和另外一种叫和服的东西……不过我感觉区别不是很大的样子，问问年小姐可能知道吧。”
@@ -439,7 +439,7 @@ str,int,int,str,str
 476,316,204,sys_0&love_ge_3&t_not_wear_pan&t_desire_ge_5,“嗯……过来一点。”拉着{Name}的手，让{Name}靠近一点放在自己的腰上。\n牵着{Name}的手腕让{Name}的手沿着自己的小腹滑了进去。\n{TargetName}好像没有穿的样子，手指直接碰到了{TargetName}光滑的耻丘和阴唇。\n似乎像是做错了事情一样红着脸低着头的{TargetName}耷拉着耳朵，“现在没有穿内裤，对不起。”
 477,316,204,sys_0&love_ge_3&t_wear_pan,{TargetName}红着脸困扰地看着{Name}，“那个……脱掉的话里面会变成真空。”\n“想要看到{TargetName}真空的样子……诶……痴汉。”\n稍微有点生气地鼓着脸，将自己的{TagetPanName}脱下来的{TargetName}一边不安地磨蹭着什么都没有的股间，一边把内裤递给了{Name}。\n“到底是要内裤还是想要看女孩子真空啊……这个笨蛋”{TargetName}气呼呼地嘟囔着。
 478,316,204,sys_0&love_ge_3&t_wear_pan&t_desire_ge_5,带着幽怨的表情，{TargetName}微微侧着头将刚刚脱下来还散发着热气的{TagetSocName}递给{Name}。\n一副似乎想说什么的样子的{TargetName}，细微地吐着害羞的热气，用漂亮的眼眸盯了{Name}好一会才移开。\n“明明直接用这边就好了……”
-479,316,204,sys_0&love_ge_3&t_wear_pan&t_desire_ge_5&high_2&t_exhibit_ge_3,“……”沉默着低垂着眼睛的{TargetName}用嘴叼着自己的上衣下摆，将腹部完全place_exposed在了{Name}的面前。\n一边红着脸一边一件件脱掉下半身的衣物，直至拉下自己的{TagetPanName}露出白嫩的下腹部。\n……略微有点慌张地把下半身的衣服一件件穿好的{TargetName}，一只手捂着变成了真空的下体，一只手将还带着些许湿气的{TagetPanName}递给{Name}。\n因为极度地害羞{TargetName}带着一些湿气的眼睛看着了其他方向，“请好好使用……”
+479,316,204,sys_0&love_ge_3&t_wear_pan&t_desire_ge_5&high_2&t_exhibit_ge_3,“……”沉默着低垂着眼睛的{TargetName}用嘴叼着自己的上衣下摆，将腹部完全暴露在了{Name}的面前。\n一边红着脸一边一件件脱掉下半身的衣物，直至拉下自己的{TagetPanName}露出白嫩的下腹部。\n……略微有点慌张地把下半身的衣服一件件穿好的{TargetName}，一只手捂着变成了真空的下体，一只手将还带着些许湿气的{TagetPanName}递给{Name}。\n因为极度地害羞{TargetName}带着一些湿气的眼睛看着了其他方向，“请好好使用……”
 480,316,204,sys_0&love_ge_3&t_wear_pan&t_desire_ge_5&t_exhibit_ge_3,“诶……”{TargetName}露出了有些不知所措的表情，“变态的家伙。”\n{TargetName}转过身，背对着{Name}翘起屁股一只一只地抬起脚将{TagetPanName}从股间脱下。\n短小的上衣完全没法遮盖{TargetName}的臀部。\n“好了，给。”淡色的眼睛带着幽怨的情绪看着{Name}，“不要用的太过头了。”
 481,316,204,sys_0&love_ge_3&t_wear_pan&t_yield_mark_ge_1,听到了奇怪的要求的{TargetName}前后抖着耳朵思考了一会，“{PlayerNickName}想要女孩子的内裤做什么呢？”\n苦恼地用淡金色的眼睛稍微盯了{Name}一会，“……算了。虽然也能猜出来就是了。”\n微红着脸弯下腰开始脱内裤的{TargetName}，“下次要陪我去买新的内裤，知道了吗？”
 482,317,204,sys_0&love_4&t_wear_socks&high_5&t_desire_ge_5,“……那样的话，可以请{PlayerNickName}帮忙脱下来吗？”\n高高地抬起脱掉了鞋子的腿的{TargetName}用惊人的柔韧性将小腿搭在了{Name}的肩膀上。\n牵着{Name}的手放在{TagetSocName}的边缘，一字马地大大地张开腿，完全不在意地大片大片漏出的春光的样子。\n“按照{PlayerNickName}的想法慢慢脱也可以，反正已经送给{PlayerNickName}了。”指尖从脚背一路下滑直到手指消失在大腿的根部，{TargetName}用充满暗示的眼神盯着{Name}的眼睛。
@@ -475,7 +475,7 @@ str,int,int,str,str
 513,331,204,sys_0&place_11&t_cfeel_ge_5&love_ge_1,因为无法忍耐的快感，{TargetName}低垂着头咬着自己的手指发出无法克制的闷闷的呻吟声。\n“{PlayerNickName}不行……嗯……哈嗯，有人在看……嗯”\n可能会被发现的露出感让阴蒂更加地敏感，{TargetName}被抚摸着微微踮起脚尖，小腹也紧紧的绷紧了起来。
 514,331,204,sys_0&t_not_wear_pan&high_2,“等……等一下。”{TargetName}按住放在自己姣好的小腹上的手摇摇头。\n“里面那个……没有穿……”小声地说明原因的{TargetName}红着脸从下面看着{Name}。\n结果还是被{Name}抓住了因为真空而变得敏感的阴蒂小心地爱抚，让{TargetName}耻辱地咬着下嘴唇发出低低地哼声。
 515,331,204,sys_0&t_not_wear_pan&love_ge_3&high_2&t_desire_ge_5,没有被布料包裹，因为真空而兴奋地凸起的阴蒂被{Name}的指尖轻轻地按住。\n{TargetName}带着羞耻的表情推着{Name}的胸口，用些湿润的淡色瞳孔与{Name}对视着，“没有穿内裤……那个……”\n双腿羞耻地搅在一起，接受着{Name}下流的惩罚的{TargetName}咬着自己的手指发出一阵阵喘息。
-516,331,204,sys_0&t_not_wear_pan&love_le_2&high_2,“等……”还没等{TargetName}说完，{Name}的手指就触碰到了{TargetName}娇嫩的阴唇。\n完全没有布料覆盖，真空的股间触感完全place_exposed给了{Name}。\n“……变态。”似乎是完全被击碎了反抗的想法，{TargetName}耷拉着耳朵一阵一阵颤抖着身体接受了{Name}的手指责罚。
+516,331,204,sys_0&t_not_wear_pan&love_le_2&high_2,“等……”还没等{TargetName}说完，{Name}的手指就触碰到了{TargetName}娇嫩的阴唇。\n完全没有布料覆盖，真空的股间触感完全暴露给了{Name}。\n“……变态。”似乎是完全被击碎了反抗的想法，{TargetName}耷拉着耳朵一阵一阵颤抖着身体接受了{Name}的手指责罚。
 517,331,204,sys_0&t_lubrication_l_3&love_ge_2,{Name}的手指按在还没有被润滑的蜜裂上粗糙地滑动。\n因为股间生涩粗糙的触感让{TargetName}皱起了眉头发出了不满的哼哼声，只是让{Name}摸了一会就推开了{Name}。
 518,331,204,sys_0&t_lubrication_ge_7&love_ge_2&t_cfeel_ge_3&t_desire_ge_5&t_yield_mark_ge_1,完全被弄得湿乎乎的股间，为{Name}的手指提供了大量的润滑。\n轻松地被{Name}的滑溜溜的手指剥出来的小豆豆，在{Name}的指尖上颤抖着。\n努力地想要保持平静的{TargetName}不安地扭着酥麻的腰肢，“才不是想要被摸，变得这么湿……嗯……”\n矢口否认的{TargetName}，仅仅是被{Name}稍微拨弄了一下阴蒂，就红着脸瞪着{Name}低低地发出了叫声。
 520,331,204,sys_0&love_ge_3&t_yield_mark_ge_1,察觉到了{Name}的手指的{TargetName}默默地夹紧了大腿。\n“这样会舒服一点吗？”{TargetName}有些害羞地样子，“只是帮{PlayerNickName}暖一下手……不要做的太过可以吗？”\n被抚摸着小豆豆的{TargetName}不时地轻颤身体，继续做起了手中的事情。
@@ -732,7 +732,7 @@ str,int,int,str,str
 782,512,204,sys_0&love_le_2&love_ge_1,被顶到了阴道的最深处的{TargetName}，感受着{Name}的龟头在凸起的子宫口周围来回搅拌玩弄的感觉，皱起眉头发出一阵阵细微的娇喘。\n“嗯……才没有……很舒服……嗯……”柔软的膣肉本能地簇拥在深深地插入的龟头周围缠住了阴茎。\n“{PlayerNickName}刚刚撞上来的时候……很疼……呼……嗯”
 783,702,204,sys_0&love_le_2&love_ge_1&t_wear_pan&t_wear_bra,将脱下来的衣服整理好放在一边，{TargetName}用手护住自己的胸部。\n“这样子就能让{PlayerNickName}兴奋起来了吧，女孩子只穿着内衣的样子。”\n“……可以不要一直盯着吗？感觉就像在被{PlayerNickName}评价内衣一样。”
 784,702,204,sys_0&love_le_2&love_ge_1,“……总感觉最近胖了一点。”{TargetName}捏着自己的腰自言自语，但是肉眼看不出来有什么明显的变化。\n“总感觉{PlayerNickName}回答的很敷衍，虽然我也没有在问{PlayerNickName}的意见。”\n“好了，快点继续？一直这样露着身体不太舒服。”
-785,702,204,sys_0&love_le_2&love_ge_1&t_not_wear_pan&high_999,被要求脱掉衣服，扭捏地捂住下体的{TargetName}飘逸着视线place_exposed了自己下身什么都没有穿的事实。\n“……请先……不要和我说话。”努力地在克服羞耻感的{TargetName}抖着身体，不敢看向{Name}。
+785,702,204,sys_0&love_le_2&love_ge_1&t_not_wear_pan&high_999,被要求脱掉衣服，扭捏地捂住下体的{TargetName}飘逸着视线暴露了自己下身什么都没有穿的事实。\n“……请先……不要和我说话。”努力地在克服羞耻感的{TargetName}抖着身体，不敢看向{Name}。
 786,702,204,sys_0&love_le_2&love_ge_1&t_yield_mark_3&t_wear_pan,“内衣，不要脱掉吗？”脱得只剩下内衣的{TargetName}，用手指整理了一下内裤的边缘抬头询问{Name}。\n“{PlayerNickName}觉得不碍事，那就这样好了。”\n“{PlayerNickName}能够兴奋起来的话，这边的效率也会比较高，只是这样而已。”{TargetName}默默地移开了视线。
 787,703,204,sys_0&love_le_2&love_ge_1&t_wear_gloves&t_wear_socks,“嗯……为什么不让脱掉手套和袜子。”{TargetName}露出了奇怪的表情，夹紧了自己的双腿试图遮挡自己裸露出来的性器。\n“感觉比脱光更加羞耻了，{PlayerNickName}……绝对是故意的吧。”深呼吸着压制内心的波动的{TargetName}，幽幽地盯着{Name}。
 788,703,204,sys_0&love_le_2&love_ge_1,“故意留下不必要的东西，{PlayerNickName}，恶趣味。”\n{TargetName}不安地用手遮挡住重要的部位，“明明还穿着各种装饰物，但是已经是裸体的状态的样子……”\n“{PlayerNickName}很喜欢这种情趣玩法吗？”
