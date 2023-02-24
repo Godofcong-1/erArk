@@ -1905,6 +1905,27 @@ def handle_touch_anus():
     update.game_update_flow(5)
 
 
+@add_instruct(
+    constant.Instruct.BAGGING_AND_MOVING,
+    constant.InstructType.OBSCENITY,
+    _("装袋搬走"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_IMPRISONMENT_0,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_bagging_and_moving():
+    """处理装袋搬走指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.BAGGING_AND_MOVING
+    character_data.state = constant.CharacterStatus.STATUS_BAGGING_AND_MOVING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
 # 以下为性爱#
 
 

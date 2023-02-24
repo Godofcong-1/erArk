@@ -1583,7 +1583,8 @@ def handle_normal_all(character_id: int) -> int:
     ):
         return 0
     elif(
-        handle_imprisonment_1(character_id)
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
     ):
         return 0
     else:
@@ -1824,6 +1825,22 @@ def handle_imprisonment_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.imprisonment == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.BE_BAGGED_1)
+def handle_be_bagged_1(character_id: int) -> int:
+    """
+    自身被装袋搬走
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.be_gagged == 1:
         return 1
     else:
         return 0

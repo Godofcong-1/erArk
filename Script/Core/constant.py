@@ -147,6 +147,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
+    STATUS_BAGGING_AND_MOVING = 351
+    """ 装袋搬走 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -500,6 +502,8 @@ class Behavior:
     """ 手指插入（A） """
     SMELL_UNDERWEAR = 341
     """ 闻内衣 """
+    BAGGING_AND_MOVING = 351
+    """ 装袋搬走 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -1485,6 +1489,8 @@ class Instruct:
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    BAGGING_AND_MOVING = 0
+    """ 装袋搬走 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
     DO_H = 0

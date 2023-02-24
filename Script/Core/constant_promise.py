@@ -353,7 +353,7 @@ class Premise:
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：醉酒，催眠
     \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
-    \n7:监禁：监禁
+    \n7:监禁：装袋搬走、监禁
     """
 
     NORMAL_ALL = "normal_all"
@@ -462,6 +462,8 @@ class Premise:
 
     HP_1 = "hp_1"
     """ 属性_特殊flag 自身疲劳（体力=1） """
+    BE_BAGGED_1 = "be_bagged_1"
+    """ 属性_特殊flag 自身被装袋搬走 """
     IMPRISONMENT_1 = "imprisonment_1"
     """ 属性_特殊flag 自身被监禁 """
     IMPRISONMENT_0 = "imprisonment_0"

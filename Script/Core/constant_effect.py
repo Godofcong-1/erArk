@@ -38,14 +38,18 @@ class BehaviorEffect:
     """ 属性_基础 降低基础互动信赖 """
     NOT_TIRED = 31
     """ 属性_基础 从疲劳中恢复 """
-    URINATE_POINT_DOWN = 32
+    URINATE_POINT_ZERO = 32
     """ 属性_基础 尿意值归零 """
-    TARGET_URINATE_POINT_DOWN = 33
+    TARGET_URINATE_POINT_ZERO = 33
     """ 属性_基础 交互对象尿意值归零 """
-    HUNGER_POINT_DOWN = 34
+    HUNGER_POINT_ZERO = 34
     """ 属性_基础 饥饿值归零 """
-    TARGET_HUNGER_POINT_DOWN = 35
+    TARGET_HUNGER_POINT_ZERO = 35
     """ 属性_基础 交互对象饥饿值归零 """
+    SLEEP_POINT_ZERO = 36
+    """ 属性_基础 熟睡值归零 """
+    TARGET_SLEEP_POINT_ZERO = 37
+    """ 属性_基础 交互对象熟睡值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
@@ -314,6 +318,11 @@ class BehaviorEffect:
     BOTH_H_STATE_RESET = 404
     """ 属性_结构体 双方H状态结构体归零 """
 
+    T_BE_BAGGED = 451
+    """ 属性_特殊flag 交互对象变成被装袋搬走状态 """
+    T_BE_IMPRISONMENT = 452
+    """ 属性_特殊flag 交互对象变成被监禁状态 """
+
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
     COFFEE_ADD_ADJUST = 502
@@ -331,7 +340,7 @@ class BehaviorEffect:
     ADD_HPMP_MAX = 508
     """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
     SLEEP_ADD_ADJUST = 509
-    """ 指令_专用结算 （睡觉用）清零熟睡值 """
+    """ 指令_专用结算 （睡觉用）清零熟睡值（暂弃用） """
     RECRUIT_ADD_ADJUST = 510
     """ 指令_专用结算 （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽 """
     READ_ADD_ADJUST = 511

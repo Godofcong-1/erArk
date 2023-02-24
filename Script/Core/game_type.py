@@ -472,6 +472,8 @@ class SPECIAL_FLAG:
         """ 被玩家惹生气 """
         self.move_stop: bool = 0
         """ 角色停止移动 """
+        self.be_gagged: bool = 0
+        """ 被装袋搬走状态 """
         self.imprisonment: bool = 0
         """ 被监禁状态 """
 

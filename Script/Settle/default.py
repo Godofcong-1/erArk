@@ -2676,6 +2676,50 @@ def handle_both_h_state_reset(
     target_data.h_state = attr_calculation.get_h_state_zero()
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)
+def handle_t_be_bagged(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象变成被装袋搬走状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.be_gagged = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_IMPRISONMENT)
+def handle_t_be_imprisonment(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象变成被监禁状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.imprisonment = 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TALK_ADD_ADJUST)
 def handle_talk_add_adjust(
         character_id: int,
@@ -4021,8 +4065,8 @@ def handle_sleep_add_adjust(
     character_data.sleep_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)
-def handle_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_ZERO)
+def handle_urinate_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4042,8 +4086,8 @@ def handle_urinate_point_down(
     character_data.urinate_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_DOWN)
-def handle_target_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_ZERO)
+def handle_target_urinate_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4064,8 +4108,8 @@ def handle_target_urinate_point_down(
     target_data.urinate_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_DOWN)
-def handle_hunger_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_ZERO)
+def handle_hunger_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4085,8 +4129,8 @@ def handle_hunger_point_down(
     character_data.hunger_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HUNGER_POINT_DOWN)
-def handle_target_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HUNGER_POINT_ZERO)
+def handle_target_hunger_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4105,6 +4149,49 @@ def handle_target_urinate_point_down(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.hunger_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_POINT_ZERO)
+def handle_sleep_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    熟睡值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sleep_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_SLEEP_POINT_ZERO)
+def handle_target_sleep_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象熟睡值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sleep_point = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_TRAINING_TIME)
