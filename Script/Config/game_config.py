@@ -201,6 +201,8 @@ config_event_target: Dict[int, game_type.Target] = {}
 """ 目标配置数据 """
 config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
+config_sleep_level: Dict[int, config_def.Sleep_Level] = {}
+""" 睡眠等级数据 """
 
 
 def load_data_json():
@@ -872,6 +874,16 @@ def load_event_target():
             config_event_effect_target_data[effect].add(now_tem.uid)
 
 
+def load_sleep_level():
+    """载入睡眠等级数据"""
+    now_data = config_data["Sleep_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Sleep_Level()
+        now_tem.__dict__ = tem_data
+        config_sleep_level[now_tem.cid] = now_tem
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -929,3 +941,4 @@ def init():
     load_week_day()
     load_event()
     # load_event_target()
+    load_sleep_level()

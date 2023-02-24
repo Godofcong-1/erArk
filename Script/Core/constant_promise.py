@@ -352,7 +352,7 @@ class Premise:
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：醉酒，催眠
-    \n6:完全意识不清醒，或无交互：睡眠（全程度），时停，无存在感
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
     \n7:监禁：监禁
     """
 
@@ -370,6 +370,8 @@ class Premise:
     """ 属性_基础 交互对象2正常的普通状态 """
     UNNORMAL = "unnormal"
     """ 属性_基础 有特殊需求的异常状态 """
+    T_UNNORMAL_5_6 = "t_unnormal_5_6"
+    """ 属性_基础 交互对象5异常或6异常 """
     HP_LOW = "hp_low"
     """ 属性_基础 自身体力低于30% """
     HP_HIGH = "hp_high"
@@ -430,6 +432,10 @@ class Premise:
     """ 属性_基础 交互对象饥饿值≤79%，不需要吃饭 """
     TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
     """ 属性_基础 交互对象饥饿值≥80%，需要吃饭 """
+    SLEEP_LEVEL_2 = "sleep_level_2"
+    """ 属性_基础 睡眠等级：熟睡 """
+    SLEEP_LEVEL_3 = "sleep_level_3"
+    """ 属性_基础 睡眠等级：完全深眠 """
 
     IS_ASSISTANT = "is_assistant"
     """ 属性_助理与跟随 自己是当前的助理干员 """
@@ -458,6 +464,8 @@ class Premise:
     """ 属性_特殊flag 自身疲劳（体力=1） """
     IMPRISONMENT_1 = "imprisonment_1"
     """ 属性_特殊flag 自身被监禁 """
+    IMPRISONMENT_0 = "imprisonment_0"
+    """ 属性_特殊flag 自身没有被监禁 """
     T_IMPRISONMENT_0 = "t_imprisonment_0"
     """ 属性_特殊flag 交互对象没有被监禁 """
     T_IMPRISONMENT_1 = "t_imprisonment_1"

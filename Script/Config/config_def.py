@@ -481,6 +481,17 @@ class SexTem:
     """ 随机npc生成性别权重 """
 
 
+class Sleep_Level:
+    """ 睡眠等级 """
+
+    cid: int
+    """ 睡眠等级cid """
+    name: str
+    """ 等级名 """
+    sleep_point: int
+    """ 熟睡值最大值 """
+
+
 class SolarPeriod:
     """ 节气配置 """
 

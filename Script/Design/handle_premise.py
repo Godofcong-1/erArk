@@ -1570,7 +1570,10 @@ def handle_normal_all(character_id: int) -> int:
         or handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
 
-        or handle_action_sleep(character_id)
+        or handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
+
+        or handle_imprisonment_1(character_id)
     ):
         return 0
     else:
@@ -1665,7 +1668,6 @@ def handle_normal_2_4(character_id: int) -> int:
     24正常的普通状态
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
-    \n包括5:睡眠（全程度），安眠药
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1743,6 +1745,27 @@ def handle_unnormal(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_UNNORMAL_5_6)
+def handle_t_unnormal_5_6(character_id: int) -> int:
+    """
+    交互对象5异常或6异常
+    \n包括5:意识模糊，或弱交互：醉酒，催眠
+    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if(
+        handle_sleep_level_2(character_data.target_character_id)
+        or handle_sleep_level_3(character_data.target_character_id)
+    ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HP_1)
 def handle_hp_1(character_id: int) -> int:
     """
@@ -1773,6 +1796,22 @@ def handle_imprisonment_1(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.IMPRISONMENT_0)
+def handle_imprisonment_0(character_id: int) -> int:
+    """
+    自身没有被监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.imprisonment == 1:
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.T_IMPRISONMENT_0)
@@ -7595,6 +7634,42 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
 
     value = target_data.hunger_point / 240
     if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_LEVEL_2)
+def handle_sleep_level_2(character_id: int) -> int:
+    """
+    睡眠等级：熟睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_sleep_level(character_data.sleep_point)
+    if level == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_LEVEL_3)
+def handle_sleep_level_3(character_id: int) -> int:
+    """
+    睡眠等级：完全深眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_sleep_level(character_data.sleep_point)
+    if level == 3:
         return 1
     else:
         return 0

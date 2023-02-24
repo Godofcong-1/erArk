@@ -626,3 +626,19 @@ def get_tired_level(value: int) -> int:
     elif value / 160 >= 1:
         return 3
 
+
+def get_sleep_level(value: int):
+    """
+    按当前熟睡值返回当前睡眠等级的str
+    Keyword arguments:
+    value -- 熟睡值
+    Return arguments:
+    int -- 睡眠等级
+    str -- 睡眠等级名
+    """
+    for now_cid in game_config.config_sleep_level:
+        now_data = game_config.config_sleep_level[now_cid]
+        if value > now_data.sleep_point:
+            continue
+        else:
+            return now_cid,now_data.name
