@@ -1559,21 +1559,31 @@ def handle_normal_all(character_id: int) -> int:
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
-
-        or handle_parturient_1(character_id)
+    ):
+        return 0
+    elif(
+         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-
-        or handle_is_assistant(character_id)
+    ):
+        return 0
+    elif(
+         handle_is_assistant(character_id)
         or handle_is_follow(character_id)
-
-        or handle_cloth_off(character_id)
+    ):
+        return 0
+    elif(
+         handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
-
-        or handle_sleep_level_2(character_id)
+    ):
+        return 0
+    elif(
+         handle_sleep_level_2(character_id)
         or handle_sleep_level_3(character_id)
-
-        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    elif(
+        handle_imprisonment_1(character_id)
     ):
         return 0
     else:
@@ -1598,15 +1608,21 @@ def handle_normal_1_2_4(character_id: int) -> int:
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
-
-        or handle_parturient_1(character_id)
+    ):
+        return 0
+    elif(
+        handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-
-        or handle_is_assistant(character_id)
+    ):
+        return 0
+    elif(
+        handle_is_assistant(character_id)
         or handle_is_follow(character_id)
-
-        or handle_cloth_off(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
     ):
         return 0
@@ -1630,11 +1646,15 @@ def handle_normal_2_3_4(character_id: int) -> int:
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-
-        or handle_is_assistant(character_id)
+    ):
+        return 0
+    elif(
+        handle_is_assistant(character_id)
         or handle_is_follow(character_id)
-
-        or handle_cloth_off(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
     ):
         return 0
@@ -1677,8 +1697,10 @@ def handle_normal_2_4(character_id: int) -> int:
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-
-        or handle_cloth_off(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
     ):
         return 0
@@ -1727,18 +1749,27 @@ def handle_unnormal(character_id: int) -> int:
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
         or handle_hunger_ge_80(character_id)
-
-        or handle_parturient_1(character_id)
+    ):
+        return 1
+    elif(
+        handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-
-        or handle_is_assistant(character_id)
+    ):
+        return 1
+    elif(
+        handle_is_assistant(character_id)
         or handle_is_follow(character_id)
-
-        or handle_cloth_off(character_id)
+    ):
+        return 1
+    elif(
+        handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
-
-        or handle_action_sleep(character_id)
+    ):
+        return 1
+    elif(
+        handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
     ):
         return 1
     else:
