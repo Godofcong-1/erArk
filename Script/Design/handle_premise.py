@@ -1746,7 +1746,7 @@ def handle_normal_2_4(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.NORMAL_267)
-def handle_normal_2467(character_id: int) -> int:
+def handle_normal_267(character_id: int) -> int:
     """
     267正常（可能基础异常、AI跟随、服装异常或意识模糊）
     \n2:妊娠限制：临盆、产后、婴儿
@@ -1838,6 +1838,45 @@ def handle_normal_23467(character_id: int) -> int:
     elif(
          handle_is_assistant(character_id)
         or handle_is_follow(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_24567)
+def handle_normal_24567(character_id: int) -> int:
+    """
+    24567正常（可能基础异常、AI跟随）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n4:服装异常：大致全裸、全裸
+    \n5:意识模糊，或弱交互：醉酒，催眠
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
     ):
         return 0
     elif(
@@ -2024,8 +2063,34 @@ def handle_unnormal(character_id: int) -> int:
     ):
         return 1
     elif(
-        handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.UNNORMAL_27)
+def handle_unnormal_27(character_id: int) -> int:
+    """
+    27异常（妊娠限制或监禁）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 1
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
     ):
         return 1
     else:
@@ -2045,8 +2110,8 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if(
-        handle_sleep_level_2(character_data.target_character_id)
-        or handle_sleep_level_3(character_data.target_character_id)
+         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
     ):
         return 1
     else:
@@ -2083,6 +2148,22 @@ def handle_imprisonment_1(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.BE_BAGGED_0)
+def handle_be_bagged_0(character_id: int) -> int:
+    """
+    自身没有被装袋搬走
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.be_bagged == 1:
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.BE_BAGGED_1)

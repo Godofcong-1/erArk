@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update
+from Script.Design import map_handle, handle_premise, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -75,7 +75,7 @@ class FindDraw:
     """
     显示可点击的NPC名字+位置按钮对象
     Keyword arguments:
-    text -- 食物名字
+    npc_id -- 干员角色编号
     width -- 最大宽度
     is_button -- 绘制按钮
     num_button -- 绘制数字按钮
@@ -89,7 +89,7 @@ class FindDraw:
         self.npc_id: int = NPC_id
         """ 干员角色编号 """
         self.draw_text: str = ""
-        """ 食物名字绘制文本 """
+        """ 名字绘制文本 """
         self.width: int = width
         """ 最大宽度 """
         self.num_button: bool = num_button
@@ -122,11 +122,10 @@ class FindDraw:
             status_text = game_config.config_status[character_data.state].name
             now_draw_text += f"正在：{status_text}"
 
-        button_text = f"{now_draw_text}"
         name_draw = draw.LeftButton(
-            button_text, self.button_return, self.width, cmd_func=self.see_call_list
+            now_draw_text, self.button_return, self.width, cmd_func=self.see_call_list
         )
-        self.draw_text = button_text
+        self.draw_text = now_draw_text
         self.now_draw = name_draw
         """ 绘制的对象 """
 
@@ -143,14 +142,15 @@ class FindDraw:
         line = draw.LineDraw("-", window_width)
         line.draw()
         character_data: game_type.Character = cache.character_data[self.npc_id]
-        if character_data.sp_flag.is_follow == 0:
+        now_draw = draw.NormalDraw()
+        if not handle_premise.handle_normal_24567(self.npc_id):
+            now_draw.text = f"***{character_data.name}状态异常，无法召集***\n"
+        elif character_data.sp_flag.is_follow == 0:
             if cache.debug_mode:
                 character_data.sp_flag.is_follow = 1
-                now_draw = draw.NormalDraw()
                 now_draw.text = character_data.name + "进入跟随模式\n"
             else:
                 character_data.sp_flag.is_follow = 3
-                now_draw = draw.NormalDraw()
                 now_draw.text = character_data.name + "正在前往博士办公室\n"
 
             # 去掉其他NPC的跟随
@@ -163,12 +163,10 @@ class FindDraw:
             #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
         elif character_data.sp_flag.is_follow == 1 and cache.debug_mode:
             character_data.sp_flag.is_follow = 3
-            now_draw = draw.NormalDraw()
             now_draw.text = character_data.name + "正在前往博士办公室\n"
 
         else:
             character_data.sp_flag.is_follow = 0
-            now_draw = draw.NormalDraw()
             now_draw.text = character_data.name + "退出跟随模式\n"
         now_draw.width = 1
         now_draw.draw()

@@ -210,8 +210,7 @@ class SeeMapPanel:
         character_data: game_type.Character = cache.character_data[0]
         flag_map_open = False
         # 从大地图移动到另一个区块时，不关闭地图面板，且切换到下级地图面板
-        # print(f"debug character_data.position[0] = {character_data.position[0]}，scene_path = {scene_path}")
-        if character_data.position[0] != scene_path[-2] and scene_path[-1] == "0":
+        if character_data.position[-2] != scene_path[-2] and scene_path[-1] == "0":
             flag_map_open = True
         character_move.own_charcter_move(scene_path)
         if flag_map_open:

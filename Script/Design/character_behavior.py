@@ -151,10 +151,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_id != 0:
         judge_character_first_meet(character_id) # 初见和每日招呼
         judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
-        judge_character_imprisonment(character_id) # 判断监禁
+        judge_character_cant_move(character_id) # 无法自由移动的角色
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
-        judge_character_pregnancy(character_id) # 临盆和产后
 
     # 处理公共资源
     update_cafeteria() # 刷新食堂的饭
@@ -549,19 +548,39 @@ def settle_character_juel(character_id: int) -> int:
     return 1
 
 
-def judge_character_imprisonment(character_id: int) -> int:
+def judge_character_cant_move(character_id: int) -> int:
     """
-    维持监禁状态\n
+    无法自由移动的角色\n
     Keyword arguments:
     character_id -- 角色id\n
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
+
+    cant_move_flag = False
+
+    # 被囚禁
     if character_data.sp_flag.imprisonment:
+        cant_move_flag = True
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # 临盆和产后
+    if character_data.talent[22] == 1 or character_data.talent[23] == 1:
+        cant_move_flag = True
+        character.init_character_behavior_start_time(character_id, cache.game_time)
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+        # 检测当前位置是否在医疗区的住院部，如果不在的话则移动至住院部
+        now_position = character_data.position
+        now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+        now_scene_data = cache.scene_data[now_scene_str]
+        if "Inpatient_Department" not in now_scene_data.scene_tag:
+            to_Inpatient_Department = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Inpatient_Department"]))
+            map_handle.character_move_scene(character_data.position, to_Inpatient_Department, character_id)
     return 1
 
 
@@ -609,31 +628,6 @@ def judge_character_h(character_id: int) -> int:
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
-    return 1
-
-
-def judge_character_pregnancy(character_id: int) -> int:
-    """
-    维持怀孕相关状态\n
-    Keyword arguments:
-    character_id -- 角色id\n
-    Return arguments:
-    bool -- 本次update时间切片内活动是否已完成
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.talent[22] == 1 or character_data.talent[23] == 1:
-        character.init_character_behavior_start_time(character_id, cache.game_time)
-        character_data.behavior.behavior_id = constant.Behavior.WAIT
-        character_data.state = constant.CharacterStatus.STATUS_WAIT
-
-        # 检测当前位置是否在医疗区的住院部，如果不在的话则移动至住院部
-        now_position = character_data.position
-        now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-        now_scene_data = cache.scene_data[now_scene_str]
-        if "Inpatient_Department" not in now_scene_data.scene_tag:
-            to_Inpatient_Department = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Inpatient_Department"]))
-            map_handle.character_move_scene(character_data.position, to_Inpatient_Department, character_id)
-
     return 1
 
 

@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update
+from Script.Design import handle_premise, cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -397,13 +397,16 @@ class SeeNPCButtonList:
 
         if self.NPC_id == character_data.assistant_character_id:
             character_data.assistant_character_id = 0
+        elif handle_premise.handle_unnormal_27(self.NPC_id):
+            info_text += f"\n{new_assistant_data.name}的状态异常，无法任命为助理干员\n"
+            pl_flag = True
         else:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             new_assistant_data.assistant_state.always_follow = 1
             info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
         if not pl_flag:
-            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，她的跟随状态也一并取消\n\n"
+            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，跟随状态也一并取消\n\n"
         info_draw.text = info_text
         info_draw.width = self.width
         info_draw.draw()

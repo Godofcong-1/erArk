@@ -817,6 +817,7 @@ def handle_make_food():
     _("邀请同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NORMAL_267,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
@@ -1292,14 +1293,15 @@ def handle_end_h():
 
     # H结束时的其他处理
     if target_data.sp_flag.is_h == 1:
-        # 对象NPC进入跟随，并原地待机十分钟
         target_data.sp_flag.is_h = 0
-        target_data.sp_flag.is_follow = 1
-        character.init_character_behavior_start_time(character_data.target_character_id, cache.game_time)
-        target_data.behavior.behavior_id = constant.Behavior.WAIT
-        target_data.behavior.duration = 10
-        target_data.state = constant.CharacterStatus.STATUS_WAIT
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        # 如果是非监禁对象，则进入跟随，并原地待机十分钟
+        if not target_data.sp_flag.imprisonment:
+            target_data.sp_flag.is_follow = 1
+            character.init_character_behavior_start_time(character_data.target_character_id, cache.game_time)
+            target_data.behavior.behavior_id = constant.Behavior.WAIT
+            target_data.behavior.duration = 10
+            target_data.state = constant.CharacterStatus.STATUS_WAIT
+            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

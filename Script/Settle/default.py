@@ -3200,7 +3200,7 @@ def handle_bagging_and_moving_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （装袋搬走用）交互对象获得装袋搬走flag，并从当前场景移除角色id，玩家增加搬运人id
+    （装袋搬走用）交互对象获得装袋搬走flag，清除跟随和助理状态。并从当前场景移除角色id，玩家增加搬运人id
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3214,8 +3214,12 @@ def handle_bagging_and_moving_add_just(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 玩家数据结算
     character_data.sp_flag.bagging_chara_id = character_data.target_character_id
+    if character_data.assistant_character_id == character_data.target_character_id:
+        character_data.assistant_character_id = 0
     # 对方数据结算
     target_data.sp_flag.be_bagged = 1
+    target_data.assistant_state.always_follow = 0
+    target_data.sp_flag.is_follow = 0
     # 地图数据结算
     old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
     cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
