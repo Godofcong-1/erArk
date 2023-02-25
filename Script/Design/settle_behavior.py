@@ -149,7 +149,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
         # 状态的结算输出
         if len(status_data.status_data) and not change_flag:
-            now_text_list += "\n"
             now_text_list.extend(
                 [
                     f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
@@ -159,7 +158,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
         # 经验的结算输出
         if len(status_data.experience):
-            now_text_list += "\n"
             now_text_list.extend(
                 [
                     _("\n  ")
@@ -178,6 +176,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         #         ]
         #     )
 
+        # 最后补个回车
+        if now_text_list != []:
+            now_text_list.extend("\n")
+
         # 交互对象的结算输出
         if len(status_data.target_change):
             for target_character_id in status_data.target_change:
@@ -191,7 +193,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     target_data: game_type.Character = cache.character_data[target_character_id]
                 else:
                     judge = 1
-                name = f"\n\n{target_data.name}:"
+                name = f"\n{target_data.name}:"
                 now_text = name
 
                 # 体力/气力/好感/信赖的结算输出
@@ -223,7 +225,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 #     judge = 1
                 # 状态的结算输出
                 if len(target_change.status_data):
-                    now_text += "\n"
                     for status_id in target_change.status_data:
                         if target_change.status_data[status_id]:
                             now_text += (
@@ -236,7 +237,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                             judge = 1
                 # 经验的结算输出
                 if len(target_change.experience):
-                    now_text += "\n"
                     for experience_id in target_change.experience:
                         if target_change.experience[experience_id]:
                             now_text += (
@@ -250,9 +250,9 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 if judge and (now_text != name):
                     now_text_list.append(now_text)
         if not change_flag:
-            now_text_time = "\n\n  " + str(add_time) + "分钟过去了"
+            now_text_time = "\n\n " + str(add_time) + "分钟过去了\n"
         else:
-            now_text_time = "\n\n  该行动将持续" + str(add_time) + "分钟"
+            now_text_time = "\n\n 该行动将持续" + str(add_time) + "分钟\n"
         if now_text_list:
             now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
@@ -406,9 +406,9 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
                 target_character_data.tired_point += add_tired
                 target_character_data.tired_point = min(target_character_data.tired_point,160)
             target_character_data.urinate_point += add_urinate
-            target_character_data.urinate_point = (target_character_data.urinate_point,240)
+            target_character_data.urinate_point = min(target_character_data.urinate_point,240)
             target_character_data.hunger_point += add_hunger
-            target_character_data.hunger_point = (target_character_data.hunger_point,240)
+            target_character_data.hunger_point = min(target_character_data.hunger_point,240)
 
     # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 

@@ -1558,7 +1558,7 @@ def handle_normal_all(character_id: int) -> int:
         or handle_mp_0(character_id)
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
-        or handle_hunger_ge_80(character_id)
+        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
     ):
         return 0
     elif(
@@ -1595,7 +1595,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿
+    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿+饭点
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1608,7 +1608,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
         or handle_mp_0(character_id)
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
-        or handle_hunger_ge_80(character_id)
+        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
     ):
         return 0
     elif(
@@ -1709,6 +1709,193 @@ def handle_normal_2_4(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_2467)
+def handle_normal_2467(character_id: int) -> int:
+    """
+    2467正常（可能基础异常、AI跟随或意识模糊）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n4:服装异常：大致全裸、全裸
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_23467)
+def handle_normal_23467(character_id: int) -> int:
+    """
+    23467正常（可能基础异常或意识模糊）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n3:AI行动受限：助理、跟随模式下
+    \n4:服装异常：大致全裸、全裸
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+         handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_12367)
+def handle_normal_12367(character_id: int) -> int:
+    """
+    12367正常（可能服装异常或意识模糊）
+    \n1:基础数值异常：hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n3:AI行动受限：助理、跟随模式下
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_hp_1(character_id)
+        or handle_mp_0(character_id)
+        or handle_tired_ge_90(character_id)
+        or handle_urinate_ge_80(character_id)
+        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+    ):
+        return 0
+    elif(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+         handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_123467)
+def handle_normal_123467(character_id: int) -> int:
+    """
+    123467正常（可能意识模糊）
+    \n1:基础数值异常：hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n3:AI行动受限：助理、跟随模式下
+    \n4:服装异常：大致全裸、全裸
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_hp_1(character_id)
+        or handle_mp_0(character_id)
+        or handle_tired_ge_90(character_id)
+        or handle_urinate_ge_80(character_id)
+        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+    ):
+        return 0
+    elif(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+         handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         handle_sleep_level_2(character_id)
+        or handle_sleep_level_3(character_id)
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.T_NORMAL_2)
 def handle_t_normal_2(character_id: int) -> int:
     """
@@ -1734,7 +1921,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿
+    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿+饭点
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
@@ -1749,7 +1936,7 @@ def handle_unnormal(character_id: int) -> int:
         or handle_mp_0(character_id)
         or handle_tired_ge_90(character_id)
         or handle_urinate_ge_80(character_id)
-        or handle_hunger_ge_80(character_id)
+        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
     ):
         return 1
     elif(
