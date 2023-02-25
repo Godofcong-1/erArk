@@ -324,6 +324,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_h_interrupt:
         calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
 
+    # 监禁模式修正
+    if target_data.sp_flag.imprisonment:
+        judge += 400
+        calculation_text += "+监禁中(+400)"
+ 
     # debug模式修正
     if cache.debug_mode == True:
         judge += 99999

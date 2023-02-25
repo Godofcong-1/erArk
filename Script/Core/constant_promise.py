@@ -295,6 +295,10 @@ class Premise:
     """ 地点_定位 在教师办公室 """
     NOT_IN_TEACHER_OFFICE = "not_in_teacher_office"
     """ 地点_定位 不在教师办公室 """
+    IN_PRISON = "in_prison"
+    """ 地点_定位 在监牢 """
+    NOT_IN_PRISON = "not_in_prison"
+    """ 地点_定位 不在监牢 """
 
     MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
     """ 地点_移动 角色抵达女士洗手间 """
@@ -362,6 +366,8 @@ class Premise:
     """ 属性_基础 2正常的普通状态 """
     NORMAL_2_4 = "normal_2_4"
     """ 属性_基础 24正常的普通状态 """
+    NORMAL_267 = "normal_267"
+    """ 属性_基础 267正常（可能基础异常、AI跟随、服装异常或意识模糊） """
     NORMAL_2467 = "normal_2467"
     """ 属性_基础 2467正常（可能基础异常、AI跟随或意识模糊） """
     NORMAL_23467 = "normal_23467"
@@ -472,6 +478,10 @@ class Premise:
     """ 属性_特殊flag 自身疲劳（体力=1） """
     BE_BAGGED_1 = "be_bagged_1"
     """ 属性_特殊flag 自身被装袋搬走 """
+    PL_BAGGING_CHARA = "pl_bagging_chara"
+    """ 属性_特殊flag 玩家正在装袋搬走某个角色 """
+    PL_NOT_BAGGING_CHARA = "pl_not_bagging_chara"
+    """ 属性_特殊flag 玩家没有正在装袋搬走某个角色 """
     IMPRISONMENT_1 = "imprisonment_1"
     """ 属性_特殊flag 自身被监禁 """
     IMPRISONMENT_0 = "imprisonment_0"
@@ -480,7 +490,6 @@ class Premise:
     """ 属性_特殊flag 交互对象没有被监禁 """
     T_IMPRISONMENT_1 = "t_imprisonment_1"
     """ 属性_特殊flag 交互对象被监禁 """
-
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """

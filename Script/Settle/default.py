@@ -2695,7 +2695,7 @@ def handle_t_be_bagged(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.sp_flag.be_gagged = 1
+    target_data.sp_flag.be_bagged = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_IMPRISONMENT)
@@ -3190,6 +3190,104 @@ def handle_teach_add_just(
                     # 手动结算该状态
                     character_behavior.judge_character_status(chara_id,cache.game_time)
                     # other_character_data.state = constant.CharacterStatus.STATUS_ARDER
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BAGGING_AND_MOVING_ADD_ADJUST)
+def handle_bagging_and_moving_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （装袋搬走用）交互对象获得装袋搬走flag，并从当前场景移除角色id，玩家增加搬运人id
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    # 玩家数据结算
+    character_data.sp_flag.bagging_chara_id = character_data.target_character_id
+    # 对方数据结算
+    target_data.sp_flag.be_bagged = 1
+    # 地图数据结算
+    old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
+    cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
+    target_data.position = ["0", "0"]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PUT_INTO_PRISON_ADD_ADJUST)
+def handle_put_into_prison_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖2，并从当前场景增加角色id
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[0]
+    target_id = character_data.sp_flag.bagging_chara_id
+    target_data: game_type.Character = cache.character_data[target_id]
+    # 玩家数据结算
+    character_data.sp_flag.bagging_chara_id = 0
+    # 对方数据结算
+    target_data.sp_flag.be_bagged = 0
+    target_data.sp_flag.imprisonment = 1
+    # 屈服1，恐怖1，反发2
+    if target_data.ability[14] <= 0:
+        target_data.ability[14] = 1
+        target_data.second_behavior[1033] = 1
+    if target_data.ability[14] <= 0:
+        target_data.ability[17] = 1
+        target_data.second_behavior[1042] = 1
+    if target_data.ability[18] <= 1:
+        target_data.ability[18] = 2
+        target_data.second_behavior[1046] = 1
+    # 对方位置结算
+    target_data.position = character_data.position
+    target_data.behavior.move_src = character_data.position
+    target_data.behavior.move_target = character_data.position
+    # 地图数据结算
+    old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    cache.scene_data[old_scene_path_str].character_list.add(target_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)
+def handle_set_free_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （解除囚禁）交互对象失去监禁flag
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.imprisonment = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)

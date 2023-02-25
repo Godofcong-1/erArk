@@ -149,6 +149,10 @@ class CharacterStatus:
     """ 手指插入（A） """
     STATUS_BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
+    STATUS_PUT_INTO_PRISON = 352
+    """ 投入监牢 """
+    STATUS_SET_FREE = 353
+    """ 解除囚禁 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -504,6 +508,10 @@ class Behavior:
     """ 闻内衣 """
     BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
+    PUT_INTO_PRISON = 352
+    """ 投入监牢 """
+    SET_FREE = 353
+    """ 解除囚禁 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -1491,6 +1499,10 @@ class Instruct:
     """ 手指插入（A） """
     BAGGING_AND_MOVING = 0
     """ 装袋搬走 """
+    PUT_INTO_PRISON = 0
+    """ 投入监牢 """
+    SET_FREE = 0
+    """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
     DO_H = 0

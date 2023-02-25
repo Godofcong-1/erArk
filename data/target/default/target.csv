@@ -33,8 +33,8 @@ ai的目标,,,
 41,43,mp_0|in_restroom|urinate_le_79,气力=0，且在休息室，且不想尿尿，则休息
 42,11,sleep_time|ai_have_showered|not_in_dor,就寝时间，今天已经洗过澡，且不在宿舍，则回宿舍
 43,44,sleep_time|ai_have_showered|in_dor,就寝时间，今天已经洗过澡，且在宿舍，则睡觉
-44,11,normal_2467|sleep_time|not_shower_time|not_in_dor,2467正常（可能基础异常、AI跟随或意识模糊），就寝时间，不是淋浴时间，且不在宿舍，则回宿舍
-45,44,normal_2467|sleep_time|not_shower_time|in_dor,2467正常（可能基础异常、AI跟随或意识模糊），就寝时间，不是淋浴时间，且在宿舍，则睡觉
+44,11,normal_267|sleep_time|not_shower_time|not_in_dor,267正常（可能基础异常、AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，且不在宿舍，则回宿舍
+45,44,normal_267|sleep_time|not_shower_time|in_dor,267正常（可能基础异常、AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，且在宿舍，则睡觉
 46,11,tired_ge_90|urinate_ge_80|not_in_dor,困倦，且尿意值值到80%，且不在宿舍，则回宿舍
 47,50,tired_ge_90|urinate_ge_80|in_dor,困倦，且尿意值值到80%，且在宿舍，则解手
 

@@ -151,6 +151,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     if character_id != 0:
         judge_character_first_meet(character_id) # 初见和每日招呼
         judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
+        judge_character_imprisonment(character_id) # 判断监禁
         judge_character_follow(character_id) # 跟随模式
         judge_character_h(character_id) # H模式
         judge_character_pregnancy(character_id) # 临盆和产后
@@ -337,7 +338,9 @@ def judge_character_status(character_id: int, now_time: datetime.datetime, end_n
         character_data.target_character_id != character_id
         and character_data.target_character_id not in scene_data.character_list
     ):
-        end_time = now_time
+        # 例外：玩家在搬运该角色
+        if character_data.target_character_id != character_data.sp_flag.bagging_chara_id:
+            end_time = now_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
@@ -544,6 +547,23 @@ def settle_character_juel(character_id: int) -> int:
             # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
     return 1
+
+
+def judge_character_imprisonment(character_id: int) -> int:
+    """
+    维持监禁状态\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.imprisonment:
+        character.init_character_behavior_start_time(character_id, cache.game_time)
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+    return 1
+
 
 def judge_character_follow(character_id: int) -> int:
     """

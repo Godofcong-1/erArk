@@ -875,7 +875,8 @@ def handle_end_followed():
     _("道歉"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_ANGRY_WITH_PLAYER},
+     constant_promise.Premise.TARGET_ANGRY_WITH_PLAYER,
+     constant_promise.Premise.TIRED_LE_74},
 )
 def handle_apologize():
     """处理道歉指令"""
@@ -907,7 +908,8 @@ def handle_apologize():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_ABD_OR_ANGRY_MOOD,
-     constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER, },
+     constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,
+     constant_promise.Premise.TIRED_LE_89, },
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
@@ -1575,7 +1577,7 @@ def handle_touch_buttocks():
     _("摸耳朵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_EARS, },
+     constant_promise.Premise.TIRED_LE_89, },
 )
 def handle_touch_ears():
     """处理摸耳朵指令"""
@@ -1597,7 +1599,8 @@ def handle_touch_ears():
     _("摸角"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_HORN, },
+     constant_promise.Premise.TARGET_HAVE_HORN,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_horn():
     """处理摸角指令"""
@@ -1619,7 +1622,8 @@ def handle_touch_horn():
     _("摸尾巴"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_TAIL, },
+     constant_promise.Premise.TARGET_HAVE_TAIL,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_tail():
     """处理摸尾巴指令"""
@@ -1641,7 +1645,8 @@ def handle_touch_tail():
     _("摸光环"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_RING, },
+     constant_promise.Premise.TARGET_HAVE_RING,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_ring():
     """处理摸光环指令"""
@@ -1663,7 +1668,8 @@ def handle_touch_ring():
     _("摸光翼"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_WING, },
+     constant_promise.Premise.TARGET_HAVE_WING,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_wing():
     """处理摸光翼指令"""
@@ -1685,7 +1691,8 @@ def handle_touch_wing():
     _("摸触手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_TENTACLE, },
+     constant_promise.Premise.TARGET_HAVE_TENTACLE,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_tentacle():
     """处理摸触手指令"""
@@ -1707,7 +1714,8 @@ def handle_touch_tentacle():
     _("摸小车"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TARGET_HAVE_CAR, },
+     constant_promise.Premise.TARGET_HAVE_CAR,
+     constant_promise.Premise.TIRED_LE_89,},
 )
 def handle_touch_car():
     """处理摸小车指令"""
@@ -1914,6 +1922,7 @@ def handle_touch_anus():
      constant_promise.Premise.T_IMPRISONMENT_0,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.PL_NOT_BAGGING_CHARA,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_bagging_and_moving():
@@ -1922,6 +1931,48 @@ def handle_bagging_and_moving():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.BAGGING_AND_MOVING
     character_data.state = constant.CharacterStatus.STATUS_BAGGING_AND_MOVING
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.PUT_INTO_PRISON,
+    constant.InstructType.OBSCENITY,
+    _("投入监牢"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_PRISON,
+     constant_promise.Premise.SCENE_ONLY_ONE,
+     constant_promise.Premise.PL_BAGGING_CHARA,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_put_into_prision():
+    """处理投入监牢指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.PUT_INTO_PRISON
+    character_data.state = constant.CharacterStatus.STATUS_PUT_INTO_PRISON
+    character_data.behavior.duration = 10
+    character_data.target_character_id = character_data.sp_flag.bagging_chara_id
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.SET_FREE,
+    constant.InstructType.OBSCENITY,
+    _("解除囚禁"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IN_PRISON,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.T_IMPRISONMENT_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_set_free():
+    """处理解除囚禁指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.SET_FREE
+    character_data.state = constant.CharacterStatus.STATUS_SET_FREE
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 

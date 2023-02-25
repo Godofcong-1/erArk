@@ -1236,6 +1236,42 @@ def handle_not_in_teacher_office(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_PRISON)
+def handle_in_prison(character_id: int) -> int:
+    """
+    校验角色是否在监牢
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Prison" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_PRISON)
+def handle_not_in_prison(character_id: int) -> int:
+    """
+    校验角色是否不在监牢
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Prison" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.PLACE_DOOR_OPEN)
 def handle_place_door_open(character_id: int) -> int:
     """
@@ -1578,8 +1614,8 @@ def handle_normal_all(character_id: int) -> int:
     ):
         return 0
     elif(
-         handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     elif(
@@ -1709,6 +1745,38 @@ def handle_normal_2_4(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_267)
+def handle_normal_2467(character_id: int) -> int:
+    """
+    267正常（可能基础异常、AI跟随、服装异常或意识模糊）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.NORMAL_2467)
 def handle_normal_2467(character_id: int) -> int:
     """
@@ -1734,8 +1802,8 @@ def handle_normal_2467(character_id: int) -> int:
     ):
         return 0
     elif(
-         handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     elif(
@@ -1778,8 +1846,8 @@ def handle_normal_23467(character_id: int) -> int:
     ):
         return 0
     elif(
-         handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     elif(
@@ -1830,8 +1898,8 @@ def handle_normal_12367(character_id: int) -> int:
     ):
         return 0
     elif(
-         handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     elif(
@@ -1883,8 +1951,8 @@ def handle_normal_123467(character_id: int) -> int:
     ):
         return 0
     elif(
-         handle_sleep_level_2(character_id)
-        or handle_sleep_level_3(character_id)
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     elif(
@@ -2027,10 +2095,42 @@ def handle_be_bagged_1(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.sp_flag.be_gagged == 1:
+    if character_data.sp_flag.be_bagged == 1:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.PL_BAGGING_CHARA)
+def handle_pl_bagging_chara(character_id: int) -> int:
+    """
+    玩家正在装袋搬走某个角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.sp_flag.bagging_chara_id:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.PL_NOT_BAGGING_CHARA)
+def handle_pl_not_bagging_chara(character_id: int) -> int:
+    """
+    玩家没有正在装袋搬走某个角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    if character_data.sp_flag.bagging_chara_id:
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.IMPRISONMENT_0)
