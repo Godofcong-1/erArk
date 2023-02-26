@@ -51,6 +51,7 @@ ai的目标,,,
 72,43,unnormal_27|be_bagged_0|mp_0,27异常（妊娠限制或监禁），没有在被装袋搬走，气力0，则休息
 73,44,unnormal_27|be_bagged_0|hp_1,27异常（妊娠限制或监禁），没有在被装袋搬走，hp1，则睡觉
 74,44,unnormal_27|be_bagged_0|sleep_time,27异常（妊娠限制或监禁），没有在被装袋搬走，hp1，则睡觉
+75,50,unnormal_27|be_bagged_0|urinate_ge_80,27异常（妊娠限制或监禁），没有在被装袋搬走，尿意值到80%，则解手
 
 100,100,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
 101,101,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触

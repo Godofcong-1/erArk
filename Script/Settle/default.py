@@ -3220,6 +3220,7 @@ def handle_bagging_and_moving_add_just(
     target_data.sp_flag.be_bagged = 1
     target_data.assistant_state.always_follow = 0
     target_data.sp_flag.is_follow = 0
+    cache.npc_id_got.remove(character_data.target_character_id)
     # 地图数据结算
     old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
     cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
@@ -3234,7 +3235,7 @@ def handle_put_into_prison_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖2，并从当前场景增加角色id
+    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3252,11 +3253,12 @@ def handle_put_into_prison_add_just(
     # 对方数据结算
     target_data.sp_flag.be_bagged = 0
     target_data.sp_flag.imprisonment = 1
+    cache.npc_id_got.add(target_id)
     # 屈服1，恐怖1，反发2
     if target_data.ability[14] <= 0:
         target_data.ability[14] = 1
         target_data.second_behavior[1033] = 1
-    if target_data.ability[14] <= 0:
+    if target_data.ability[17] <= 0:
         target_data.ability[17] = 1
         target_data.second_behavior[1042] = 1
     if target_data.ability[18] <= 1:

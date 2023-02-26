@@ -563,16 +563,16 @@ def judge_character_cant_move(character_id: int) -> int:
     # 被囚禁
     if character_data.sp_flag.imprisonment:
         cant_move_flag = True
-        character.init_character_behavior_start_time(character_id, cache.game_time)
-        character_data.behavior.behavior_id = constant.Behavior.WAIT
-        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        # character.init_character_behavior_start_time(character_id, cache.game_time)
+        # character_data.behavior.behavior_id = constant.Behavior.WAIT
+        # character_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 临盆和产后
     if character_data.talent[22] == 1 or character_data.talent[23] == 1:
         cant_move_flag = True
-        character.init_character_behavior_start_time(character_id, cache.game_time)
-        character_data.behavior.behavior_id = constant.Behavior.WAIT
-        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        # character.init_character_behavior_start_time(character_id, cache.game_time)
+        # character_data.behavior.behavior_id = constant.Behavior.WAIT
+        # character_data.state = constant.CharacterStatus.STATUS_WAIT
 
         # 检测当前位置是否在医疗区的住院部，如果不在的话则移动至住院部
         now_position = character_data.position
