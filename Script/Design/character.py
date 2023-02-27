@@ -218,40 +218,12 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge = 0
 
     # 好感判定#
-    favorability = target_data.favorability[0]
-    judge_favorability = 0
-    if favorability < 100:
-        judge_favorability -= 20
-    if favorability < 1000:
-        judge_favorability += 0
-    elif favorability < 3000:
-        judge_favorability += 50
-    elif favorability < 5000:
-        judge_favorability += 75
-    elif favorability < 10000:
-        judge_favorability += 100
-    elif favorability < 30000:
-        judge_favorability += 150
-    else:
-        judge_favorability += 200
+    favorability_level,judge_favorability = attr_calculation.get_favorability_level(target_data.favorability[0])
     calculation_text += "好感修正(" + str(judge_favorability) + ")"
     judge += judge_favorability
 
     # 信赖判定#
-    trust = target_data.trust
-    judge_trust = 0
-    if trust < 50:
-        judge_trust -= 50
-    elif trust < 100:
-        judge_trust -= 20
-    elif trust < 150:
-        judge_trust += 0
-    elif trust < 200:
-        judge_trust += 30
-    elif trust < 250:
-        judge_trust += 50
-    else:
-        judge_trust += 100
+    trust_level,judge_trust = attr_calculation.get_trust_level(target_data.trust)
     judge += judge_trust
     calculation_text += "+信赖修正(" + str(judge_trust) + ")"
 

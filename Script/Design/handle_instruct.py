@@ -1238,29 +1238,30 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     h_flag = False
-    now_draw = normal_panel.Close_Door_Panel(width)
-    if now_draw.draw():
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
-            h_flag = True
-            target_data.sp_flag.is_h = 1
-            target_data.sp_flag.is_follow = 0
-            character_data.behavior.behavior_id = constant.Behavior.H
-            character_data.state = constant.CharacterStatus.STATUS_H
-            now_draw = draw.WaitDraw()
-            now_draw.width = width
-            now_draw.text = _("\n进入H模式\n")
-            now_draw.draw()
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
+        now_draw = normal_panel.Close_Door_Panel(width)
+        # if now_draw.draw():
+        now_draw.draw()
+        h_flag = True
+        target_data.sp_flag.is_h = 1
+        target_data.sp_flag.is_follow = 0
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入H模式\n")
+        now_draw.draw()
 
-            # 自动开启性爱面板并关闭其他面板
-            cache.instruct_type_filter[5] = 1
-            for i in {1, 2, 3, 4}:
-                cache.instruct_type_filter[i] = 0
+        # 自动开启性爱面板并关闭其他面板
+        cache.instruct_type_filter[5] = 1
+        for i in {1, 2, 3, 4}:
+            cache.instruct_type_filter[i] = 0
 
-        else:
-            character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-            character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
-        character_data.behavior.duration = 5
-        update.game_update_flow(5)
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
     if not h_flag:
         now_draw = draw.WaitDraw()

@@ -261,6 +261,17 @@ class Facility_open:
     """ 介绍信息 """
 
 
+class Favorability_Level:
+    """ 好感等级 """
+
+    cid: int
+    """ 好感等级cid """
+    Favorability_point: int
+    """ 当前等级好感度最大值 """
+    judge_add: int
+    """ 实行值加成 """
+
+
 class FontConfig:
     """ 字体样式配置数据(富文本用) """
 
@@ -571,6 +582,17 @@ class Tip:
     """ 提示类型 """
     info: str
     """ 提示内容 """
+
+
+class Trust_Level:
+    """ 信赖等级 """
+
+    cid: int
+    """ 信赖等级cid """
+    Trust_point: int
+    """ 当前等级信赖最大值 """
+    judge_add: int
+    """ 实行值加成 """
 
 
 class WeekDay:

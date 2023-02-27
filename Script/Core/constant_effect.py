@@ -125,6 +125,8 @@ class BehaviorEffect:
     """ 属性_失败状态 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """
     HIGH_OBSCENITY_FAILED_ADJUST = 152
     """ 属性_失败状态 重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正 """
+    DO_H_FAILED_ADJUST = 153
+    """ 属性_失败状态 邀请H失败的加反感、加愤怒、降好感度、降信赖修正 """
 
     TARGET_ADD_1_N_EXPERIENCE = 200
     """ 属性_经验 交互对象增加1N经验 """

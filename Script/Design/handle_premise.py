@@ -8091,6 +8091,42 @@ def handle_sleep_level_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.FAVORABILITY_LE_2)
+def handle_favorability_le_2(character_id: int) -> int:
+    """
+    好感等级小于等于2（1000点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+    if level <= 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.FAVORABILITY_GE_3)
+def handle_favorability_ge_3(character_id: int) -> int:
+    """
+    好感等级小于等于3（2500点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+    if level >= 3:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.WEAR_BRA)
 def handle_wear_bra(character_id: int) -> int:
     """

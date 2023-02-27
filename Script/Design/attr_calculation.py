@@ -642,3 +642,38 @@ def get_sleep_level(value: int):
             continue
         else:
             return now_cid,now_data.name
+
+
+def get_favorability_level(value: int):
+    """
+    按当前好感度返回当前睡眠等级的str
+    Keyword arguments:
+    value -- 好感度
+    Return arguments:
+    int -- 好感度等级
+    int -- 实行值加成
+    """
+    for now_cid in game_config.config_favorability_level:
+        now_data = game_config.config_favorability_level[now_cid]
+        if value > now_data.Favorability_point:
+            continue
+        else:
+            return now_cid,now_data.judge_add
+
+
+def get_trust_level(value: int):
+    """
+    按当前信赖度返回当前睡眠等级的str
+    Keyword arguments:
+    value -- 信赖度
+    Return arguments:
+    int -- 信赖度等级
+    int -- 实行值加成
+    """
+    for now_cid in game_config.config_trust_level:
+        now_data = game_config.config_trust_level[now_cid]
+        if value > now_data.Trust_point:
+            continue
+        else:
+            return now_cid,now_data.judge_add
+

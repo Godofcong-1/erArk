@@ -203,6 +203,10 @@ config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
 config_sleep_level: Dict[int, config_def.Sleep_Level] = {}
 """ 睡眠等级数据 """
+config_favorability_level: Dict[int, config_def.Favorability_Level] = {}
+""" 好感度等级数据 """
+config_trust_level: Dict[int, config_def.Trust_Level] = {}
+""" 信赖等级数据 """
 
 
 def load_data_json():
@@ -884,6 +888,26 @@ def load_sleep_level():
         config_sleep_level[now_tem.cid] = now_tem
 
 
+def load_favorability_level():
+    """载入好感度等级数据"""
+    now_data = config_data["Favorability_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Favorability_Level()
+        now_tem.__dict__ = tem_data
+        config_favorability_level[now_tem.cid] = now_tem
+
+
+def load_trust_level():
+    """载入信赖等级数据"""
+    now_data = config_data["Trust_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Trust_Level()
+        now_tem.__dict__ = tem_data
+        config_trust_level[now_tem.cid] = now_tem
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -942,3 +966,5 @@ def init():
     load_event()
     # load_event_target()
     load_sleep_level()
+    load_favorability_level()
+    load_trust_level()

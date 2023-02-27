@@ -459,6 +459,11 @@ class Premise:
     SLEEP_LEVEL_3 = "sleep_level_3"
     """ 属性_基础 睡眠等级：完全深眠 """
 
+    FAVORABILITY_LE_2 = "favorability_le_2"
+    """ 属性_好感与信赖 好感等级小于等于2（1000点） """
+    FAVORABILITY_GE_3 = "favorability_ge_3"
+    """ 属性_好感与信赖 好感等级小于等于3（2500点） """
+
     IS_ASSISTANT = "is_assistant"
     """ 属性_助理与跟随 自己是当前的助理干员 """
     NOT_ASSISTANT = "not_assistant"
