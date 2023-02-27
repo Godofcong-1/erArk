@@ -2,7 +2,7 @@
   "SceneName":"博士办公室",
   "InOutDoor":"In",
   "Exposed":"1",
-  "Have_Furniture":"1",
+  "Have_Furniture":"2",
   "Close_Type":"1",
   "SceneTag":"Dr_Office"
 }

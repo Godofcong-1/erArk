@@ -2,7 +2,7 @@
   "SceneName":"医疗器械",
   "InOutDoor":"In",
   "Exposed":"0",
-  "Have_Furniture":"1",
+  "Have_Furniture":"2",
   "Close_Type":"1",
   "SceneTag":"Room"
 }
