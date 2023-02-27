@@ -747,7 +747,7 @@ def handle_wait_6_hour():
     _("泡咖啡"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.PLACE_HAVE_FURNITURE,
      constant_promise.Premise.TIRED_LE_89}
 )
 def handle_make_coffee():
@@ -766,7 +766,7 @@ def handle_make_coffee():
     _("泡咖啡（加料）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.PLACE_HAVE_FURNITURE,
      constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.TIRED_LE_89}
 )

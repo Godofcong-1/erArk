@@ -308,8 +308,44 @@ def handle_place_have_furniture(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.PLACE_NOT_FURNITURE)
-def handle_place_not_furniture(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PLACE_FURNITURE_1)
+def handle_place_furniture_1(character_id: int) -> int:
+    """
+    当前地点仅有基础家具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.have_furniture == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLACE_FURNITURE_2)
+def handle_place_furniture_2(character_id: int) -> int:
+    """
+    当前地点有完备家具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.have_furniture == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLACE_FURNITURE_0)
+def handle_place_furniture_0(character_id: int) -> int:
     """
     校验角色当前地点没家具
     Keyword arguments:
@@ -8094,15 +8130,20 @@ def handle_sleep_level_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.FAVORABILITY_LE_2)
 def handle_favorability_le_2(character_id: int) -> int:
     """
-    好感等级小于等于2（1000点）
+    指令双方中NPC方对玩家的好感等级小于等于2（1000点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
 
-    level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+    level = 3
+    if character_id == 0:
+        level,tem = attr_calculation.get_favorability_level(target_data.favorability[0])
+    elif character_data.target_character_id == 0:
+        level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
     if level <= 2:
         return 1
     else:
@@ -8112,15 +8153,20 @@ def handle_favorability_le_2(character_id: int) -> int:
 @add_premise(constant_promise.Premise.FAVORABILITY_GE_3)
 def handle_favorability_ge_3(character_id: int) -> int:
     """
-    好感等级小于等于3（2500点）
+    指令双方中NPC方对玩家的好感等级小于等于3（2500点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
 
-    level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+    level = 0
+    if character_id == 0:
+        level,tem = attr_calculation.get_favorability_level(target_data.favorability[0])
+    elif character_data.target_character_id == 0:
+        level,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
     if level >= 3:
         return 1
     else:
