@@ -95,7 +95,7 @@ place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的
 
 place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
 place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
-place_have_furniture,PLACE_HAVE_FURNITURE,地点_属性,当前地点有家具
+place_furniture_ge_1,PLACE_FURNITURE_GE_1,地点_属性,当前地点有家具
 place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）

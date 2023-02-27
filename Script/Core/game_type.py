@@ -664,7 +664,7 @@ class Scene:
         """ 在室内 """
         self.exposed: bool = 0
         """ 地点暴露 """
-        self.have_furniture: bool = 0
+        self.have_furniture: int = 0
         """ 有家具 """
         self.close_type: int = 0
         """ 关门类型 """

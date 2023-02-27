@@ -93,7 +93,7 @@ str,int,int,str,str
 88,101,204,sys_0&t_is_assistant,{TargetName}认真地再确认手上的时间表的样子，“稍等一会。”\n“好了，这样应该就没有问题。怎么{PlayerNickName}一副奇怪的表情。”\n“作为{PlayerNickName}的助理，工作的时候还是会好好工作的，只是有时候感觉很麻烦而已。”\n“嘛，{PlayerNickName}有什么事情吗？”
 89,101,204,sys_0&t_is_assistant&love_ge_3,“{PlayerNickName}，关于接下来的工作，我已经联系好了。”\n“顺便说一下，凯尔西女士刚刚说明天又会有一批文件需要{PlayerNickName}检查。”\n“……抱歉，好像说的太多了。如果{PlayerNickName}累了的话随时可以休息一会。”
 90,101,204,sys_0&t_is_assistant&love_le_2&tired_ge_50,“哈啊……”{TargetName}小小地打了个哈欠。\n“总感觉最近事情变的好多，是答应了当{PlayerNickName}的助理的缘故吗？”\n“有点困。早知道今天请假一下好了。”
-91,101,204,sys_0&place_have_furniture&in_din&high_2&t_not_follow,{TargetName}正坐在桌子边上吃着蛋糕。\n“{PlayerNickName}要来一块吗？和慕斯小姐一起做的慕斯蛋糕。”\n“要是所有的菲林都像慕斯小姐一样可爱就好了。”
+91,101,204,sys_0&place_furniture_ge_1&in_din&high_2&t_not_follow,{TargetName}正坐在桌子边上吃着蛋糕。\n“{PlayerNickName}要来一块吗？和慕斯小姐一起做的慕斯蛋糕。”\n“要是所有的菲林都像慕斯小姐一样可爱就好了。”
 92,101,204,sys_1&love_4&t_virgin_0&t_desire_ge_7&place_10&high_10,{TargetName}慢慢贴在了{Name}的身上，混合着湿热的吐息低低地在耳边轻语，\n“亲爱的黑国王，不想用您的剑刺穿这位近在咫尺的白皇后吗？”
 93,101,204,sys_1&t_hunger_ge_80,“咕唔……”\n不知道从哪里传来了肚子的空空的叫声\n“嗯……”{Name}装作一副若无其事的样子看向了别的地方。
 94,101,204,sys_1&t_not_wear_pan&t_not_wear_bra&love_4&high_10&t_exhibit_ge_5,盯着{TargetName}的{Name}迈着轻佻的脚步走到{TargetName}的面前。\n不知道为什么红着脸的{Name}偷偷地掀起了上衣对着{TargetName}露出了娇嫩的乳头。\n观察着{TargetName}的表情，狡黠地眯起眼睛露出笑容的{Name}牵起{TargetName}的手，放在了自己的胸部上。\n“嘘……”，另一只手慢慢地解开裙带拉开一点缝隙，“这边。”\n示意着{TargetName}保持安静，让{TargetName}的手滑入股间，柔软的蜜穴触感亲吻在了{TargetName}的手指上。\n“特殊服务结束了。”享受了一小会之后{Name}轻轻地推开了{TargetName}，狡猾地闭上一只眼睛手指放在嘴唇前做出了安静地手势，“剩下的部分请{PlayerNickName}到床上再说吧~”
@@ -185,9 +185,9 @@ str,int,int,str,str
 180,110,204,sys_0&love_ge_3,“累了吗？工作辛苦了。在这里稍微休息一会怎么样。”\n坐在一旁的{TargetName}拍了拍自己的大腿示意{Name}躺下。\n一只手抚摸着{Name}的头发一只手翻看着一本杂志，好像是在做旅行攻略的样子。
 181,110,204,sys_0&love_ge_3,“累了吗？”{TargetName}扶着{Name}的身体让{Name}躺在自己的大腿上。\n“辛苦了，现在就稍微休息一会好了。”\n{TargetName}一边轻柔地抚弄着{Name}的头一边给予了{Name}膝枕。
 182,110,204,sys_0&love_ge_3&place_10,{TargetName}安静地趴在了{Name}的肩膀上。\n“……没什么，只是比较喜欢现在这个样子”
-183,110,204,sys_0&love_ge_3&place_have_furniture,“呼唔……”\n{TargetName}一脸幸福地依偎在{Name}怀里
-184,110,204,sys_0&love_ge_3&place_have_furniture,{TargetName}拿出一根棉棒示意{Name}过来躺在她的大腿上。\n“需要帮忙清理一下耳朵放松一下吗？”
-185,110,204,sys_0&place_10&love_3&place_have_furniture,“呼唔……”\n{TargetName}一脸幸福地依偎在{Name}怀里
+183,110,204,sys_0&love_ge_3&place_furniture_ge_1,“呼唔……”\n{TargetName}一脸幸福地依偎在{Name}怀里
+184,110,204,sys_0&love_ge_3&place_furniture_ge_1,{TargetName}拿出一根棉棒示意{Name}过来躺在她的大腿上。\n“需要帮忙清理一下耳朵放松一下吗？”
+185,110,204,sys_0&place_10&love_3&place_furniture_ge_1,“呼唔……”\n{TargetName}一脸幸福地依偎在{Name}怀里
 186,110,204,sys_1&love_ge_2,“稍微，让我靠一会。”\n{Name}靠在{TargetName}的肩膀上闭上了眼睛
 187,111,204,sys_0&love_3&place_10&time_night&high_2,临睡前，{TargetName}红着脸亲吻了{Name}的脸颊。\n“啾……嗯……晚安吻而已，晚安。”
 188,111,204,sys_0&love_4&time_night&high_2,临睡前，{TargetName}红着脸亲吻了{Name}的脸颊。\n“啾……嗯……晚安吻而已，晚安。”
@@ -226,7 +226,7 @@ str,int,int,str,str
 221,125,204,sys_0&love_le_2&place_11&t_virgin_0&high_5,“一定要在这里做吗……”扯了扯正打算脱掉衣服的{TargetName}的衣袖的{TargetName}露出了困扰的表情。\n“这里还有别人在……所以就算是做，不要弄得太激烈好吗？”\n低垂下淡色的瞳孔的{TargetName}叹了口气低声嘱咐，“女孩子是很容易害羞的。所以处理完了就快点结束好吗？”
 222,125,204,sys_0&love_le_2&t_virgin_0,“为什么又多了一个处理博士的性欲的工作呢。”淡淡地叹了口气自言自语的{TargetName}飘逸着视线。\n“虽然基本上是{TargetName}自作自受就是了。”放弃了似的，{TargetName}伸手抱上了{Name}将身体交给了对方，“做的时候麻烦温柔一点……”
 223,125,204,sys_0&love_le_2&place_exposed&t_virgin_0&t_yield_mark_ge_1,{TargetName}有点紧张地看着周围，用手遮挡住自己重要的部位。\n“真的要在这里做吗？要是被别人看到了怎么办……”\n“啊……好了我知道了，我脱就是了。”被抱住再次请求H的{TargetName}无奈地红着脸推开{Name}，闭上眼睛一点点脱掉衣服。\n“享受完了就快点结束可以吗？”
-224,125,204,sys_0&love_le_2&place_exposed&t_virgin_0&place_have_furniture&love_ge_1,坐在了适合的位置上的{TargetName}拘束地调整着姿势，用不安地眼神看着{Name}。\n“在{SceneName}做的话会被人发现的吧。”似乎是因为环境而不安着的{TargetName}抓着自己的衣服。\n“……好吧”最终接受了{Name}的再次请求的{TargetName}害羞地吐息着飘逸开视线，“真拿你没有办法……”
+224,125,204,sys_0&love_le_2&place_exposed&t_virgin_0&place_furniture_ge_1&love_ge_1,坐在了适合的位置上的{TargetName}拘束地调整着姿势，用不安地眼神看着{Name}。\n“在{SceneName}做的话会被人发现的吧。”似乎是因为环境而不安着的{TargetName}抓着自己的衣服。\n“……好吧”最终接受了{Name}的再次请求的{TargetName}害羞地吐息着飘逸开视线，“真拿你没有办法……”
 225,125,204,sys_0&love_le_2&t_virgin_0,“想要了解女孩子的身体……？为什么{TargetName}非要陪{PlayerNickName}做这种事情。”{TargetName}困扰地转过头去。\n“就算是这样抱着求我，{TargetName}也不想增加这种奇怪的工作量。”\n“……”最终放弃了的{TargetName}露出了一副已经无所谓了的表情幽怨地看着{Name}，“不要做什么奇怪的期待可以吗，只是帮变态的{PlayerNickName}解决一下性欲。”
 226,125,204,sys_0&love_le_2&t_virgin_0&t_yield_mark_ge_1,轻轻地叹了一口气的{TargetName}露出了无奈的表情，“好的，我知道了。”\n“但是，不要那么着急。”{TargetName}飘逸着眼神，伸出手按在了伸过来的性器上。\n“事先说好，只是因为觉得很麻烦所以同意帮{PlayerNickName}处理，只是当做额外的工作对待。抱着什么奇怪的想法想要反过来调教的话我也是会很头痛的。”
 227,125,204,sys_0&love_le_2&t_yield_mark_1&t_virgin_0,“……？”{TargetName}一边脱掉多余的衣服一边盯着{Name}的身体，“并不是因为很舒服什么的这种奇怪的理由所以同意和{PlayerNickName}做的。”\n“只是单纯的觉得很麻烦而已，唉……要是拒绝的话，{PlayerNickName}说不定会一直缠着，而且袭击别的女孩子就不好了。”\n{TargetName}微红着脸闭上眼睛长长地吐息，“不过也确实不反感和{PlayerNickName}做就是了。”\n“{PlayerNickName}也可以多运动一会，老是坐着身体会走形……”说到最后的时候{TargetName}的声音越来越小直至听不清楚。
@@ -236,7 +236,7 @@ str,int,int,str,str
 231,125,204,sys_0&love_le_2&t_yield_mark_ge_1&t_virgin_0,“行……我也可以正好休息一会……”{TargetName}长长吐出一口气扎起高马尾，“只是因为这种工作相比于其他的，不那么无聊而已。”\n“而且只需要把{PlayerNickName}弄到直不起腰就可以获得很多正规的休息时间的话，我也不讨厌。”\n准备好了的{TargetName}闭上眼似乎是做好了心理准备，拍了拍自己旁边的位置示意{Name}靠近一点，“{PlayerNickName}，真是不懂气氛的家伙。”
 232,125,204,sys_0&love_le_2&t_yield_mark_ge_1&t_virgin_0&love_ge_1,{TargetName}推开邀请着H靠上来的{Name}的胸口，“……让我准备五分钟。”\n沉默着脱掉多余的衣服叠好，做好了心理准备的{TargetName}，抓住{Name}的手放在自己的身体上。\n“……没什么，只是和{PlayerNickName}的枕工作的话，没有特别反感什么的。”\n“毕竟要做的事情也很简单，只需要让{PlayerNickName}释放性欲就可以轻松地结束了。”\n微红着脸的{TargetName}转移开视线，“但是说到底这只是顺带的工作而已哦……要是想要提高女孩子的好感的话，还是请正常地进行交往……”
 233,125,204,sys_0&love_le_2&place_covert&t_virgin_0,“{PlayerNickName}想要在这里做吗？”接受了H的邀请的{TargetName}微红着脸颊低下头慢慢地解开了衣服。\n“真拿你没有办法。”{TargetName}转过身盯着{Name}的眼睛，“这只是附赠的服务而已，所以快点发泄出来就结束吧。”
-234,125,204,sys_0&love_le_2&place_covert&t_virgin_0&place_have_furniture,“诶……已经变得这么想要了吗？”{TargetName}有些无奈地抬头看着{Name}。\n慢慢地解开衣服的{TargetName}找到适合的地方坐了下来，对着{Name}招了招手。\n“让{PlayerNickName}那个东西快点射出来就可以了吧。”近距离地看着{Name}的东西无奈地叹了口气。
+234,125,204,sys_0&love_le_2&place_covert&t_virgin_0&place_furniture_ge_1,“诶……已经变得这么想要了吗？”{TargetName}有些无奈地抬头看着{Name}。\n慢慢地解开衣服的{TargetName}找到适合的地方坐了下来，对着{Name}招了招手。\n“让{PlayerNickName}那个东西快点射出来就可以了吧。”近距离地看着{Name}的东西无奈地叹了口气。
 235,125,204,sys_0&t_virgin_1&high_2,被{Name}邀请着上床的{TargetName}微红着脸点点头，伸手梳理起垂落下来的散发。\n“嗯……可以哦。”\n“好了，我也不是什么都不懂的小女孩，基础的性知识还是有的，不用说的那么详细。”细微地调整着呼吸节奏的{TargetName}按住{Name}的嘴唇。\n垂下眼眸看着自己的脚尖，“当女孩子同意的时候就不要再多嘴可以吗？”
 236,125,204,sys_0&t_virgin_1&love_ge_2&high_2,“诶……”似乎是没有想到会被邀请H的{TargetName}眨着清澈的双眼呆呆地看着{Name}。\n“……啊，嗯，可以哦。”似乎是下意识地红着脸同意了的{TargetName}点点头。\n“……啊……说出来了。”慢慢地回过神来的{TargetName}捂住自己发热的脸颊，偷偷地用淡色的眼睛偷瞄着{Name}的脸颊，“{PlayerNickName}……事后也会好好地负责的对吧。”
 237,125,204,sys_0&t_virgin_1&love_ge_3&high_10,轻轻地点了点头同意的{TargetName}牵起{Name}的手放在自己的腰间，“嗯……可以哦。”\n“因为我们是恋人嘛。作为恋人结合，加深感情，都是很正常的事情。”脸颊染上了可爱的红晕的{TargetName}靠在{Name}的肩膀上轻轻抱住。\n“{TargetName}……还是处女哦，多亏好色的{Name}能够忍到现在。”\n即使是隔着衣服也能很明显地感受到{TargetName}剧烈跳动着的心跳，“没什么，如果是{PlayerNickName}的话，本来就是要用处女作为礼物的。”\n“稍微温柔一些……可以吗？”似乎是略微有些紧张害怕的{TargetName}进一步抱紧了{Name}在耳边低语，软软地放松了腰肢让{Name}将自己推倒。
@@ -263,7 +263,7 @@ str,int,int,str,str
 264,126,204,sys_0&love_le_2&t_turn_v_orgasm_g_3&high_2,趴在{Name}的胸口上轻轻抖着身体的{TargetName}一声声地喘息，被{Name}仔细地照顾了的小穴随着呼吸颤抖着。\n“下面，呼……去了好多次……”迷糊地抓着{Name}的肩膀的{TargetName}闭上了淡金色的双瞳，“再稍微，让我休息一会……就好”
 266,126,204,sys_0&love_le_2&last_cmd_blowjob_type&high_1,嘴唇慢慢地张开，让被含住的阴茎退了出去。\n“咳……咳……”似乎是因为唇中残留的雄性气味，让{TargetName}轻轻地咳嗽起来。\n{TargetName}红着脸幽怨地看着{Name}。”让女孩子用口交结束……变态。”
 268,126,204,sys_0&love_le_2&last_cmd_handjob_type&high_1,“想要结束了吗？”抓着阴茎的{TargetName}放开了灵活的手指，“还以为{PlayerNickName}会想要再久一点。”\n“没，只是觉得这样{PlayerNickName}会把性欲排的干净一点，可以减少一点工作量。”\n“既然{PlayerNickName}想要结束了的话就这样好了。辛苦了。”
-270,126,204,sys_0&love_le_2&place_have_furniture,看着{Name}从自己的身体上离开，{TargetName}如释重负地长长吐出了一口气。\n“H结束了。……让我休息一会好吗，感觉好累。”\n散着头发躺着的{TargetName}用手臂遮住眼睛，休息了一会才起来收拾起自己的身体。
+270,126,204,sys_0&love_le_2&place_furniture_ge_1,看着{Name}从自己的身体上离开，{TargetName}如释重负地长长吐出了一口气。\n“H结束了。……让我休息一会好吗，感觉好累。”\n散着头发躺着的{TargetName}用手臂遮住眼睛，休息了一会才起来收拾起自己的身体。
 271,126,204,sys_0&love_le_2&turn_p_orgasm_g_3&high_1,“辛苦了。这次射了很多呢……黏糊糊的……”脸红的不行的{TargetName}担心地看着{Name}的阴茎。\n“虽然这么说有点奇怪，射出来那么多真的没事吗，跟书上说的不一样。”\n“虽然知道{PlayerNickName}欲望可能有点强……但是不舒服的话不要勉强自己比较好。”
 275,126,204,sys_0&t_virgin_0&love_le_2&last_cmd_sex&high_1,“呼……嗯……”依靠在{Name}的身上，抬起腰让阴茎滑出来的{TargetName}红着脸吐息着看着{Name}。\n“已经……结束了吗？这样啊……工作结束了……让我休息一会可以吗？”
 281,126,204,sys_0&t_virgin_1&love_le_2&high_5,“结束了……呼唔……”不知道为什么安心地叹了一口气的{TargetName}慢慢地深呼吸着，安静地看向快要晕厥的{Name}\n“那么额外的工作也结束了，可以穿上衣服了吧。这边也想去清理一下。”\n“{PlayerNickName}先休息一会吧，不过不快点穿衣服的话可能会感冒的。”
@@ -282,7 +282,7 @@ str,int,int,str,str
 298,132,204,sys_0&love_le_2&t_hp_low&hp_low&high_5&t_turn_orgasm_g_1&love_ge_1,“哈……嗯，哈……哈……”汗流浃背地两人抱在一起辛苦地吐息的同时，疲倦地睁不开眼睛的{Name}感觉到自己的手被{TargetName}牵起来十指相扣地握紧。\n“……嘘……”疲惫的淡金色瞳孔盯了{Name}一会又慢慢地闭上，“只是……稍微奖励一下努力的{PlayerNickName}……”\n……\n在结束之后很久一段时间里面，两人只能相互的听到对方的心跳声。
 301,132,204,sys_0&love_le_2&t_turn_orgasm_0&high_5,“诶……这就已经结束了吗”{TargetName}抚摸着自己还没法冷静下来的身体。\n“{PlayerNickName}……已经没反应了……”{TargetName}幽怨地盯着{Name}的脸，“在兴奋的女孩子满足之前就自己先晕过去了，真是……自私的家伙。”
 302,132,204,sys_0&love_le_2&t_turn_orgasm_g_5&high_5,“呼……唔……”一脸潮红的{TargetName}伏在{Name}的身上慢慢地喘息回复平静。\n“工作辛苦了……”{TargetName}慢慢地睁开害羞的双眼盯着已经精疲力竭的{Name}，“原本说是这边要帮{PlayerNickName}处理性欲的，结果反过来被{PlayerNickName}照顾了。”\n“嘛，作为回报{PlayerNickName}好好休息就好了。事后的清理我会做的。”
-307,132,204,sys_0&love_le_2&place_have_furniture,“这样也算是工作结束了吧。”{TargetName}抱着瘫软的{Name}用纸巾擦拭额头上的汗水。\n“一下子就软下来了，{PlayerNickName}也应该对自己的体力有点自知之明吧。”\n“这样不就又增加了我的工作量嘛……唉。”{TargetName}说着擦干净了{Name}股间的粘液。
+307,132,204,sys_0&love_le_2&place_furniture_ge_1,“这样也算是工作结束了吧。”{TargetName}抱着瘫软的{Name}用纸巾擦拭额头上的汗水。\n“一下子就软下来了，{PlayerNickName}也应该对自己的体力有点自知之明吧。”\n“这样不就又增加了我的工作量嘛……唉。”{TargetName}说着擦干净了{Name}股间的粘液。
 308,132,204,sys_0&love_le_2&turn_p_orgasm_g_3&high_1,扶着{Name}的腰，{TargetName}一脸担心地看着{Name}。\n“{PlayerNickName}已经不行了吗？果然是刚才一次性射的太多了吧。”\n“下次可以请{PlayerNickName}不要勉强自己吗？如果因为这个生病的话我也会很担心的。”
 309,133,204,sys_0&love_le_2,已经没法动弹的{TargetName}疲惫地靠在{Name}怀里喘息着。\n“{TargetName}……可不是{PlayerNickName}的玩具啊……哈……”{TargetName}勉强地睁开双眼幽怨地盯着{Name}。\n“下次再有这种……吃力不讨好的工作……{TargetName}可以拒绝吗？”
 310,133,204,sys_0&love_le_2,“让我……休息一会……”上下起伏着胸口，躺着辛苦地喘息的{TargetName}用手臂遮挡住疲惫的双眼。\n“……可以让我安静一会吗……稍微一会就好……”\n“这么辛苦的工作……早知道一开始就应该拒绝的……哈……”
@@ -293,7 +293,7 @@ str,int,int,str,str
 315,133,204,sys_0&love_le_2&penis_in_t_mouse&high_2&t_submit_l_3,疲劳地满头是汗的{TargetName}按住{Name}的大腿，将{Name}的阴茎从嘴里推了出去。\n“咳……哈……啊嗯”吐着粉色的舌头，气喘吁吁地垂下头。”已经可以……可以结束了吧”\n“{PlayerNickName}做的太过火……哈……”{TargetName}从下面恶狠狠地盯着{Name}，“要晕过去了……哈……”
 316,133,204,sys_0&love_le_2&t_hp_low&hp_low&high_5&t_turn_orgasm_g_1&love_ge_1,在{Name}之前颤抖着嘴唇发出结束请求的{TargetName}激烈地喘息着，汗湿的头发遮挡住了{TargetName}的眼睛。\n“已经不行了……呼……对不起……嗯……快要晕过去”\n“{PlayerNickName}做的太激烈了……虽然中间也舒服了一会……但果然还是……哈……”没有力气继续说下去的{TargetName}疲惫地闭上了眼睛。
 317,133,204,sys_0&love_le_2&penis_in_t_vagina&今日已中出&high_2&t_virgin_0,越来越松弛的膣穴只能被动地接受插入物的顶弄，伴随着越来越低的呻吟声{TargetName}气绝了。\n“……”过了好一会才慢慢转醒的{TargetName}，疲倦地睁着眼睛看着{Name}的脸。\n暂时没法合拢的双腿中间，射入的精液沿着还在微微颤抖的膣穴流了出来。\n“已经结束了吗……太好了……”
-325,133,204,sys_0&love_le_2&place_have_furniture,头发散乱地散开的{TargetName}就像是睡着了一样一动不动地躺着。\n当{Name}想要确认情况伸出手想要抚摸{TargetName}的脸时，被{TargetName}有气无力地地推开到一边。\n“……”混合着复杂的感情，几乎睁不开的淡金色眼睛安静地盯了{Name}一会，接着又疲惫地闭上了眼睑。
+325,133,204,sys_0&love_le_2&place_furniture_ge_1,头发散乱地散开的{TargetName}就像是睡着了一样一动不动地躺着。\n当{Name}想要确认情况伸出手想要抚摸{TargetName}的脸时，被{TargetName}有气无力地地推开到一边。\n“……”混合着复杂的感情，几乎睁不开的淡金色眼睛安静地盯了{Name}一会，接着又疲惫地闭上了眼睑。
 326,134,204,sys_0&love_le_2,“啊……”\n{TargetName}微红着脸用力地推开{Name}，冷静地整理好凌乱的衣服。\n“{入侵者}小姐……没什么……刚刚只是帮{PlayerNickName}做工作而已……”{TargetName}装出什么都没有发生的样子拉开了与{Name}的距离。
 327,134,204,sys_0&love_le_2,“{PlayerNickName}，让一下……{入侵者}来了。”\n{TargetName}拍打抱着自己的{Name}的胸口要求停下。\n“……下次至少把门关上……”{TargetName}闭上眼睛恢复了平时冷静的样子。
 328,134,204,sys_0&love_le_2&last_cmd_back_sex&high_2,像野兽一样被{Name}压在身下交配的{TargetName}看着进入房间的{入侵者}羞红了脸。\n“{入侵者}小姐……请不要看……唔……”不敢直视{入侵者}的眼睛的{TargetName}在身下用力地挣扎着想要{Name}停止，“{PlayerNickName}也不要再玩了……快点离开……”\n最后中断了H的{TargetName}害羞地用衣服藏起自己的脸，过了好一会才重新露出平时的表情。
@@ -307,7 +307,7 @@ str,int,int,str,str
 344,201,204,sys_0,“啊……这个家伙。没事，只是看到了以前的任务目标。”\n{TargetName}撩起垂落的头发，拿起文件回忆了一会。\n“因为是很强的家伙，所以只是调查了一下就回去交差了。”
 345,201,204,sys_0&love_ge_1,“夹子……签字……时间是……”\n{TargetName}似乎是进入了工作状态。
 346,201,204,sys_0&love_ge_2,“意外地很认真？”\n闲暇的时候{TargetName}重新扎了一下稍微有点松动的马尾\n“平时只是嫌麻烦而已啦，不过如果{Name}说这是必要的工作的话，那就是另一回事情了。”
-347,201,204,sys_0&love_ge_2&place_have_furniture,“休息和工作之间要取得平衡才行，劳逸结合也是很有必要的。”\n在工作的休息期间摊在椅子上的{TargetName}闭上了眼睛休息了一会，“把身体累垮了就不好了。”
+347,201,204,sys_0&love_ge_2&place_furniture_ge_1,“休息和工作之间要取得平衡才行，劳逸结合也是很有必要的。”\n在工作的休息期间摊在椅子上的{TargetName}闭上了眼睛休息了一会，“把身体累垮了就不好了。”
 348,201,204,sys_0&love_ge_3,“工作辛苦了，签完这份文件之后需要我去泡一杯咖啡吗？”
 349,201,204,sys_0&love_ge_3,“{Name}去稍微休息一会吧，还需要新的咖啡吗？”
 350,201,204,sys_0&love_ge_3&work_time,“{Name}先去休息一会，剩下的部分我来整理吧，重要的部分我会记录下来跟你报告的。”
@@ -322,10 +322,10 @@ str,int,int,str,str
 359,301,204,sys_0&love_ge_1,“啊啊……真是的，不要一直摸头。”\n在{Name}的身前被揉着头的{TargetName}被揉地闭上一只眼睛抱怨着。\n“再这样下去就是性骚扰了哦，{PlayerNickName}。”
 360,301,204,sys_0&love_ge_2,“嗯……乱摸女孩子头是不好的。”\n{TargetName}从下面看着{Name}的眼睛，但是没有讨厌的样子。
 361,301,204,sys_0&love_ge_2,即使是被摸着头也继续着手上的事情的{TargetName}，左右甩动起尾巴。\n虽然表情上没有什么变化，但是看起来应该很开心的样子。
-362,301,204,sys_0&love_ge_2&place_have_furniture,“这样随便地摸别的女孩子的头是不行的哦。我的话，倒是不是非常讨厌就是了。”\n坐在了{Name}身边的{TargetName}微微抖动着两侧的耳朵。
+362,301,204,sys_0&love_ge_2&place_furniture_ge_1,“这样随便地摸别的女孩子的头是不行的哦。我的话，倒是不是非常讨厌就是了。”\n坐在了{Name}身边的{TargetName}微微抖动着两侧的耳朵。
 363,301,204,sys_0&love_ge_3,“嗯嗯……”\n{TargetName}眯起眼睛似乎很喜欢被{Name}的手摸头的样子。
 364,301,204,sys_0&love_ge_3&high_2&good_mood,被抚摸着头的{TargetName}闭上了眼睛幸福地笑着。\n“诶嘿嘿……”开心地左右甩动尾巴\n而当{Name}移开手时，被{TargetName}抓住了手腕又放在了头上。\n“诶……已经结束了吗……”带着些许遗憾的表情仰着头看着{Name}。\n……\n就这样重复地摸了好几次。
-365,301,204,sys_0&love_ge_3&t_desire_ge_5&place_have_furniture,“这样太狡猾了，嗯……”\n似乎像是被夸奖了一样，{TargetName}不由自主地左右摇晃起尾巴。\n侧身坐进{Name}的怀里的{TargetName}靠在{Name}的胸口上，眯着眼睛享受着悠闲的时间。
+365,301,204,sys_0&love_ge_3&t_desire_ge_5&place_furniture_ge_1,“这样太狡猾了，嗯……”\n似乎像是被夸奖了一样，{TargetName}不由自主地左右摇晃起尾巴。\n侧身坐进{Name}的怀里的{TargetName}靠在{Name}的胸口上，眯着眼睛享受着悠闲的时间。
 366,301,204,sys_0&love_ge_3&t_desire_ge_7&place_10,“嗯……嗯”\n{TargetName}闭上一只眼睛舒服地享受了一会之后，将{Name}的手抓住拿下来。\n“单单只是摸头的话……嗯……啾……不会很无聊吗”\n{TargetName}张嘴含住{Name}的手指，一边带着狡黠的表情看着{Name}的眼睛一边轻轻地吮吸着。
 367,301,204,sys_0&love_le_2,“嗯？有什么事情吗”\n{TargetName}露出了一副有些不解的表情看着{Name}\n“就是单纯的想要摸摸头？”
 368,301,204,sys_0&love_le_2,“嗯嗯，头发要被摸乱了”\n默默地接受了抚摸的{TargetName}发出了一点点抱怨的声音。\n在结束之后{TargetName}有点生气看着{Name}的眼睛，叼着发圈重新扎了一下马尾。
@@ -376,10 +376,10 @@ str,int,int,str,str
 413,306,204,sys_0&love_ge_2,在被{Name}摸完尾巴之后，{TargetName}缓缓地恢复兴奋的身体，忿忿地抚平自己被摸得乱乱的白尾。\n“因为是{PlayerNickName}所以可以摸这么久哦。对于库兰塔的女孩子也好还是别的有大尾巴的女孩子也好，尾巴跟女孩子漂亮的长头发一样都是很重要。”\n“这样随便乱摸的话，跟性骚扰一样。”
 414,306,204,sys_0&love_ge_2&t_desire_ge_5&high_2&technique_ge_3&t_nfeel_ge_3,“呼……嗯……嗯嗯……”\n完全不顾周围有没有人的{TargetName}扶着桌子微微仰起头发出了奇怪的叫声。\n“已经够了，好了停下。呼……嗯……”\n喘着气身体颤抖的{TargetName}抱着自己的屁股就像是在躲避{Name}一样保护着自己的尾巴。\n“你这个家伙，下次不许这样摸女孩子的尾巴知道吗。坏蛋。”\n似乎是因为自己的丑态有点恼羞成怒了的样子。
 415,306,204,sys_0&love_ge_3&high_1,在摸尾巴之前，{TargetName}递给了{Name}一把梳子。\n“专门用来梳尾巴的梳子，找炎国的工匠帮忙做的。”\n“对于很在意自己的外表的库兰塔女孩来说，漂亮的尾巴和顺滑的头发是一样重要的。”\n“因为与{PlayerNickName}成为了恋人，所以才希望{PlayerNickName}能够认真对待。”
-416,306,204,sys_0&love_ge_3&place_have_furniture,放松地眯着眼睛坐在身边的{TargetName}不时地抖动耳朵。\n虽然一开始被抓住尾巴的时候紧张了一下，但是发现是{Name}在摸之后很快变成了这样放松的状态。\n“……♪”和悠闲地靠到了{Name}的胸口上的{TargetName}享受了一段不错的时光。
+416,306,204,sys_0&love_ge_3&place_furniture_ge_1,放松地眯着眼睛坐在身边的{TargetName}不时地抖动耳朵。\n虽然一开始被抓住尾巴的时候紧张了一下，但是发现是{Name}在摸之后很快变成了这样放松的状态。\n“……♪”和悠闲地靠到了{Name}的胸口上的{TargetName}享受了一段不错的时光。
 417,306,204,sys_0&love_le_2,“嘶……”\n突然被摸尾巴的{TargetName}弯下腰，就像是在忍耐着什么一样。\n“{PlayerNickName}……随便地摸库兰塔的女孩子的尾巴的话，是要被踢的哦。”
 418,306,204,sys_0&love_le_2&t_nfeel_ge_3,“尾巴……？好吧，但是要轻一点，不能逆毛也不能用力抓知道了吗。还有，不许摸很久。”\n{TargetName}一脸严肃地强调摸尾巴的要求。\n“还有，不许用色色的手法摸，就是那种，嗯，挑逗的感觉的那种。”\n找不到合适的形容词的{TargetName}努力用手势模仿着设置了很多禁止使用的手法。
-419,306,204,sys_0&N感觉>1&place_have_furniture,“嗯……嗯……”{TargetName}锁着眉头，扶着边上的桌子发出低低的哼声。\n被抚摸着的尾巴也微微地颤抖着，好像很舒服的样子。
+419,306,204,sys_0&N感觉>1&place_furniture_ge_1,“嗯……嗯……”{TargetName}锁着眉头，扶着边上的桌子发出低低的哼声。\n被抚摸着的尾巴也微微地颤抖着，好像很舒服的样子。
 420,311,204,sys_0&love_2,轻轻地吐息的{TargetName}放任{Name}牵起自己的手。\n“如果只是一会的话……随便你了。”\n“……如果能够一直……不，没什么。”
 421,311,204,sys_0&love_ge_1,装作什么都没有发生的样子的{TargetName}平静地盯着别的地方，只是稍微地捏了一下握上来的手指就放任{Name}继续牵着。
 422,311,204,sys_0&love_ge_2,{TargetName}眨了眨眼睛，紧紧地回握了{Name}牵上来的手。\n身后的尾巴左右慢慢地甩动着似乎心情很好的样子。
@@ -452,7 +452,7 @@ str,int,int,str,str
 489,317,204,sys_0&love_ge_2&t_wear_socks&t_yield_mark_ge_1,“关于袜子的，请求吗？嘛，虽然也不是不可以。”{TargetName}将{TagetSocName}脱下递给了{Name}。\n“只是因为被{PlayerNickName}拜托了所以愿意给而已。”似乎是不适应没穿袜子的感觉的{TargetName}似乎很在意自己露出来的脚。\n“脱掉了果然感觉很不舒服，不过被{PlayerNickName}拜托了也没有什么办法……”
 490,317,204,sys_0&love_ge_3&t_wear_socks&t_desire_ge_5&t_yield_mark_ge_1&high_2,轻巧地从{TagetSocName}中抽出精致的双足的{TargetName}，平淡地用淡金色的眼瞳观察着{Name}，最后得出了一个结论。\n“……大变态。”\n裸着白嫩的双腿，{TargetName}将刚刚脱下的{TagetSocName}放入{Name}的手中。\n一副不在意地表情，红着脸的{TargetName}低声地补充了一句要求，“如果想要使用的话，记得报告一下感想。”
 491,317,204,sys_0&love_ge_3&t_wear_socks&t_yield_mark_ge_1,“喜欢袜子的大色狼……”小声地骂了一句，弯下腰开始脱{TagetSocName}的{TargetName}不知道为什么左右摇晃着尾巴。\n刘海半遮挡着低垂的眼睛，似乎有些害羞的{TargetName}把还残留着温度的{TagetSocName}的递给{Name}。\n“虽然说是送给你了，但是不要用太过头了，好吗？”
-493,331,204,sys_0&love_4&t_cfeel_ge_7&high_1&place_have_furniture&t_happy_mark_ge_1,焦躁地喘息着吐出热气的{TargetName}坐在{Name}的怀里，因为{Name}手指的动作而心醉神迷地扭动着小蛮腰。\n被汗水打湿的刘海遮住了{TargetName}已经被情欲浸染的双眼。\n“{PlayerNickName}……{PlayerNickName}……嗯~~！”，呼唤着{Name}的{TargetName}因为又一次被手指夹住已经湿润的不行的小豆豆，高高地抬起大开的双腿无法克制地颤抖。
+493,331,204,sys_0&love_4&t_cfeel_ge_7&high_1&place_furniture_ge_1&t_happy_mark_ge_1,焦躁地喘息着吐出热气的{TargetName}坐在{Name}的怀里，因为{Name}手指的动作而心醉神迷地扭动着小蛮腰。\n被汗水打湿的刘海遮住了{TargetName}已经被情欲浸染的双眼。\n“{PlayerNickName}……{PlayerNickName}……嗯~~！”，呼唤着{Name}的{TargetName}因为又一次被手指夹住已经湿润的不行的小豆豆，高高地抬起大开的双腿无法克制地颤抖。
 494,331,204,sys_0&love_4&t_desire_ge_7&high_2&technique_ge_3&t_cfeel_ge_5,“嗯……嗯唔”在{Name}的指尖上轻飘飘地扭着腰的{TargetName}抱住了{Name}。\n“变态的{PlayerNickName}，随便地摸喜欢的女孩子的私处，是会有惩罚的知道吗？”\n微微眯着眼睛，淡金色眼眸就像是看着猎物一样牢牢地盯着{Name}。\n“对于这样不知道尊重女孩子的{PlayerNickName}，是不是应该在床上榨干比较好呢。欣特莱雅是这样想得呢。”\n伏在{Name}的耳边，轻柔地低语着魅惑的言语的{TargetName}舔了舔嘴唇。
 495,331,204,sys_0&love_ge_2,因为下半身的快感微微地颤抖着身体，脸颊微红的{TargetName}露出了些许困扰的表情看向了别的地方，轻轻地推搡{Name}。\n“不能这样骚扰女孩子，粗鲁的家伙。”
 496,331,204,sys_0&love_ge_2,“呼……唔”露出来的小腹前后收缩着，从鼻息之间吐出细微的热气的{TargetName}，露出了复杂的表情抬头看着{Name}。\n“变态……”双手按在{Name}的手臂上轻轻地推着想要{Name}抽出来，“快点结束……”
@@ -463,7 +463,7 @@ str,int,int,str,str
 501,331,204,sys_0&love_ge_3&t_cfeel_ge_3,“诶……”感受着{Name}的手掌沿着自己的小腹滑入股间的{TargetName}有些羞涩地用纯净的双眼看着{Name}。\n“要摸，那个吗……？”{TargetName}的娇嫩的小腹在手心中轻轻地磨蹭。\n“只能摸一小会。”小声地嘱咐了一句的{TargetName}带着红晕继续做起了手上的工作。
 502,331,204,sys_0&love_ge_3&t_cfeel_ge_3,“呼……嗯……”细微的吐着热气的{TargetName}些许动情地看着正在抚摸自己的股间的{Name}。\n每次被轻轻地挑逗小豆豆都会让{TargetName}的腰舒服地浮起来一点。\n“{PlayerNickName}……坏人”察觉到正被{Name}盯着欣赏着自己的痴态，{TargetName}羞耻地低垂着眼转过头去。
 503,331,204,sys_0&love_ge_3&t_cfeel_ge_5&t_happy_mark_ge_1,抓着{Name}的衣襟努力地想要掩饰自己的快乐的{TargetName}无法忍受地在{Name}的轻抚下抖着腰肢。\n“坏蛋……明明知道，欣特莱雅受不了这个。”埋在{Name}的胸口，露出一只幽怨的眼睛盯着{Name}。\n“啊……嗯，嗯唔❤”想要推搡开{Name}的{TargetName}，又因为被{Name}温柔地抚过敏感的小豆豆的{TargetName}发出了甜蜜的娇声。
-504,331,204,sys_0&love_ge_3&t_cfeel_ge_5&place_have_furniture&t_happy_mark_ge_1,在{Name}温柔的手指挑逗下下流地一点点抬起屁股的{TargetName}红着脸努力地克制着自己的痴态。\n“不要……哈嗯……”在{Name}的怀中不停地吐出热气，寻求安慰的{TargetName}靠在{Name}的肩头无力地发出呻吟。\n直到{Name}停下之后好长一段时间，不满地嘟起嘴的{Name}一直趴在{TargetName}的胸口上缓解下身的快感。
+504,331,204,sys_0&love_ge_3&t_cfeel_ge_5&place_furniture_ge_1&t_happy_mark_ge_1,在{Name}温柔的手指挑逗下下流地一点点抬起屁股的{TargetName}红着脸努力地克制着自己的痴态。\n“不要……哈嗯……”在{Name}的怀中不停地吐出热气，寻求安慰的{TargetName}靠在{Name}的肩头无力地发出呻吟。\n直到{Name}停下之后好长一段时间，不满地嘟起嘴的{Name}一直趴在{TargetName}的胸口上缓解下身的快感。
 505,331,204,sys_0&love_ge_3,“……”被做着过分的性骚扰的{TargetName}有些无奈地用漂亮的双眼看着{Name}。\n“{PlayerNickName}……虽然我们确实已经是那种关系了。”\n虽然因为{Name}的手指发出了一些舒服的喘息，但是{TargetName}还是露出了困扰的表情，“能不能稍微收敛一点呢。”
 506,331,204,sys_0&love_le_2&t_cfeel_l_3&t_wear_pan,被手指侵入了{TagetPanName}，抓住小小的阴蒂揉搓的{TargetName}皱起眉头。\n“反正没有什么感觉，跟自慰差不多。”仿佛是在小声地说给自己听的一样。\n{TargetName}看向房间里面什么都没有的角落忍受着性骚扰，用大腿夹着{Name}上下搓弄的手指表示抗议。
 507,331,204,sys_0&love_le_2&t_cfeel_ge_3,“……啊……”下半身重要的部位上传来的异物感让{TargetName}下意识地夹紧了大腿。\n“……猥琐的家伙。”被抱住的{TargetName}抬头用淡金色的眼睛带着怨气和无奈地看着{Name}\n“……快点停下来。”{TargetName}抓住伸入股间的手指生气地拔了出去。
@@ -479,7 +479,7 @@ str,int,int,str,str
 517,331,204,sys_0&t_lubrication_l_3&love_ge_2,{Name}的手指按在还没有被润滑的蜜裂上粗糙地滑动。\n因为股间生涩粗糙的触感让{TargetName}皱起了眉头发出了不满的哼哼声，只是让{Name}摸了一会就推开了{Name}。
 518,331,204,sys_0&t_lubrication_ge_7&love_ge_2&t_cfeel_ge_3&t_desire_ge_5&t_yield_mark_ge_1,完全被弄得湿乎乎的股间，为{Name}的手指提供了大量的润滑。\n轻松地被{Name}的滑溜溜的手指剥出来的小豆豆，在{Name}的指尖上颤抖着。\n努力地想要保持平静的{TargetName}不安地扭着酥麻的腰肢，“才不是想要被摸，变得这么湿……嗯……”\n矢口否认的{TargetName}，仅仅是被{Name}稍微拨弄了一下阴蒂，就红着脸瞪着{Name}低低地发出了叫声。
 520,331,204,sys_0&love_ge_3&t_yield_mark_ge_1,察觉到了{Name}的手指的{TargetName}默默地夹紧了大腿。\n“这样会舒服一点吗？”{TargetName}有些害羞地样子，“只是帮{PlayerNickName}暖一下手……不要做的太过可以吗？”\n被抚摸着小豆豆的{TargetName}不时地轻颤身体，继续做起了手中的事情。
-521,332,204,sys_0&love_4&t_desire_ge_7&high_2&technique_ge_3&t_vfeel_ge_5&place_have_furniture&t_happy_mark_ge_1,“嗯……嗯唔”低着头发出灼热的喘息的{TargetName}，双手用衣袖勉强遮挡住坐在{Name}的大腿上大大地向两边张开的下流阴部。\n“滋噜……”已经兴奋地不行的紧致小穴幸福地含住{Name}插入的手指不愿意放开。\n“……{PlayerNickName}，坏人，呼……”被托着下巴抬起头的{TargetName}露出了一副快要融化的表情依偎在{Name}的怀里。\n“作为惩罚，嗯……亲我……”因为手指的搅动逐渐逼近高潮的{TargetName}高高地抬起腿坐在{Name}的手指上，张开红润的嘴唇用充满情欲的双眼向{Name}索求安心的亲吻。
+521,332,204,sys_0&love_4&t_desire_ge_7&high_2&technique_ge_3&t_vfeel_ge_5&place_furniture_ge_1&t_happy_mark_ge_1,“嗯……嗯唔”低着头发出灼热的喘息的{TargetName}，双手用衣袖勉强遮挡住坐在{Name}的大腿上大大地向两边张开的下流阴部。\n“滋噜……”已经兴奋地不行的紧致小穴幸福地含住{Name}插入的手指不愿意放开。\n“……{PlayerNickName}，坏人，呼……”被托着下巴抬起头的{TargetName}露出了一副快要融化的表情依偎在{Name}的怀里。\n“作为惩罚，嗯……亲我……”因为手指的搅动逐渐逼近高潮的{TargetName}高高地抬起腿坐在{Name}的手指上，张开红润的嘴唇用充满情欲的双眼向{Name}索求安心的亲吻。
 523,332,204,sys_0&love_le_2,突然被{TargetName}插入了手指而全身颤抖了一下。\n“{PlayerNickName}……这样是不行的。”{TargetName}叹了口气，“再怎么说，用手指骚扰女孩子最重要的地方。”\n{TargetName}抓住伸入股间的手指从阴道中拔出来，“可是要减很多分数的。”
 524,332,204,sys_0&love_le_2,“不~行。”按住{Name}的手腕踮起脚的{TargetName}，羞恼地瞪了{Name}一眼。\n“不能理解为什么{PlayerNickName}想要做这种让女孩子羞耻的事情。”\n“因为{TargetName}里面软软的很舒服……？唔……”{TargetName}害羞地瞪了{Name}一眼。
 525,332,204,sys_0&love_ge_2&t_yield_mark_1,因为手指的插入下意识地僵直了身体的{TargetName}轻轻地吐息着，用膣肉用力地挤压入侵的手指。\n“……{PlayerNickName}，下次可以请您不要这样袭击女孩子吗？呼……嗯……”{TargetName}羞恼地别过脸看向别的地方，默默地接受了性骚扰。\n“这次是这边的失误……下次可不会这样，对{PlayerNickName}这种变态放松警惕的。”
@@ -489,13 +489,13 @@ str,int,int,str,str
 529,332,204,sys_0&love_ge_3&t_vfeel_ge_3,“啊……嗯……”带着不满和害羞的表情瞪了{Name}一眼的{TargetName}，转过头去。\n装做出一副无事发生的表情继续起手上的事情，“满足了就快点拔出去可以吗……”。\n轻微地跟随着手指的搅动抖着腰肢的{TargetName}小声地请求{Name}
 530,332,204,sys_0&love_ge_3&t_vfeel_ge_3&t_yield_mark_ge_1,默默地向前挺出腰配合着{Name}的{TargetName}，露出了羞涩和困扰的表情看向了别的地方。\n“只是手指插进去，真的有那么舒服吗？诶……随便你了。”\n得到了肯定的回复的{TargetName}红着脸，含住手指的小腹平稳地起伏着，偶尔在{Name}调皮地磨蹭肉壁的时候发出轻轻的哼声。
 531,332,204,sys_0&love_ge_3&t_vfeel_ge_5&t_happy_mark_ge_1,伏在{Name}的肩膀上的{TargetName}垫着脚尖轻颤着耳朵，颤抖着用下半身紧紧地咬住插入的手指。\n仅仅只是插入了一会，{TargetName}的小穴就紧紧地缠绕上来，气息不稳地收缩着小腹。\n“……变态……呼”埋在胸口看不见脸的{TargetName}闷闷地喘息着，“不许看。摸舒服了，唔，就快点拔出去……”
-532,332,204,sys_0&love_ge_3&t_vfeel_ge_5&place_have_furniture&t_happy_mark_ge_1,坐在了{Name}怀中的{TargetName}不由自主地张开了被手指侵入的大腿，垂在两侧。\n“嗯……嗯唔……”用宽松的衣袖遮挡住正在进行秘事的股间的{TargetName}带着幽怨的表情抬头看着{Name}。\n慌乱的吐息着的{TargetName}用乏力的小手按住了{Name}的手腕不让{Name}激烈地欺负已经被开发好的膣穴。\n“……”就这样坚持了一会的{TargetName}红着脸，抖着已经没法站稳的双腿，最终坐在了{Name}的手指上。
+532,332,204,sys_0&love_ge_3&t_vfeel_ge_5&place_furniture_ge_1&t_happy_mark_ge_1,坐在了{Name}怀中的{TargetName}不由自主地张开了被手指侵入的大腿，垂在两侧。\n“嗯……嗯唔……”用宽松的衣袖遮挡住正在进行秘事的股间的{TargetName}带着幽怨的表情抬头看着{Name}。\n慌乱的吐息着的{TargetName}用乏力的小手按住了{Name}的手腕不让{Name}激烈地欺负已经被开发好的膣穴。\n“……”就这样坚持了一会的{TargetName}红着脸，抖着已经没法站稳的双腿，最终坐在了{Name}的手指上。
 533,332,204,sys_0&love_ge_3&t_yield_mark_ge_1,“诶……就算我们已经是恋人的关系了，这么突然地插进来……”{TargetName}不安地夹着大腿，按住准备进一步深入的手指。\n“……很想看{TargetName}的表情……？”明显地羞红了脸的{TargetName}急促的喘息着，转移开视线。\n“不行，不许看。”说着催促着{TargetName}拔出手指，“已经玩够了的话就快点出来……色鬼。”
 534,332,204,sys_0&love_le_2&t_vfeel_l_3,因为手指的入侵，还没经过怎么开发的膣穴用力地缠住了手指就像是要挤出去一样蠕动着。\n“快点，拔出去……”带着又羞又怒的表情，{TargetName}压低了声音瞪着{Name}。\n推开了{Name}之后的{TargetName}捂着下体和{Name}保持着距离。
 535,332,204,sys_0&love_le_2&t_vfeel_l_3&t_wear_pan,分开{TargetName}股间的{TagetPanName}，向小穴中插入了手指。\n“……！”{TargetName}就发出了疑惑的叫声。\n还不能好好地理解快感的锻炼过的紧致小穴用力地缠在了手指上，“快点，拔出去。”带着愠怒的表情，{TargetName}紧紧地盯着{Name}。
 536,332,204,sys_0&love_le_2&t_vfeel_ge_3,“嗯……！”下意识地缩紧了膣穴想要排出异物的{TargetName}带着惊讶的表情抬头看着{Name}。\n“……不行”在手指变得激烈起来之前，{TargetName}嘟着嘴带着怒气推开了{Name}。\n“呼……嗯……”似乎是稍微有点感觉了的{TargetName}小小地抖着小腹喘着气，“{PlayerNickName}，有点太过分了。”
 537,332,204,sys_0&love_le_2&t_vfeel_ge_3,“……嗯！？”露出难以置信地表情的{TargetName}拒绝似的加紧了双腿阻止了{Name}的进一步行动。\n“不许乱动……”小腹紧张地起伏着，红着脸的{TargetName}抓住手腕一点点地从小穴里面拔出手指。\n手指每次不听话的扣弄都让{TargetName}微微地颤抖身体皱起眉头。\n最终拔出去的{TargetName}恶狠狠地瞪了{Name}一眼就扭过头去。
-538,332,204,sys_0&love_le_2&t_vfeel_ge_5&t_wear_pan&place_have_furniture&t_happy_mark_ge_1,从背后挑开股间的{TagetPanName}，向着{TargetName}的膣穴插入的手指很顺利地陷了进去，两侧的肉壁有些慌乱地挤压在插入的手指上。\n“等……嗯……”想要反抗的{TargetName}因为被顶到了舒服的地方，抖着大腿向前扶住东西撑起自己的身体。\n“坏人……快点……嗯……出去。”小腹不安地上下起伏着，{TargetName}带着羞怒的表情回头看着{Name}。
+538,332,204,sys_0&love_le_2&t_vfeel_ge_5&t_wear_pan&place_furniture_ge_1&t_happy_mark_ge_1,从背后挑开股间的{TagetPanName}，向着{TargetName}的膣穴插入的手指很顺利地陷了进去，两侧的肉壁有些慌乱地挤压在插入的手指上。\n“等……嗯……”想要反抗的{TargetName}因为被顶到了舒服的地方，抖着大腿向前扶住东西撑起自己的身体。\n“坏人……快点……嗯……出去。”小腹不安地上下起伏着，{TargetName}带着羞怒的表情回头看着{Name}。
 539,332,204,sys_0&love_le_2&t_vfeel_ge_5&t_happy_mark_ge_1&t_yield_mark_ge_1,充分地调教过了的膣穴顺利地含住了插入了手指。\n“……变态……”脸红红的{TargetName}因为自己顺从的接受了性骚扰的性器而羞耻着摩擦着大腿。\n“呼……嗯……不行”默默地用乏力的手指抓着在股间扭动的手腕，不敢与{Name}对视。\n“快点……呼……拔出去……”{TargetName}细微地喘出热气，用发颤的声音命令着{Name}。
 540,332,204,sys_0&place_11&t_vfeel_ge_3&love_ge_1,“这里还有，别的人，快点放开……”，用衣袖遮挡住股间的{TargetName}嘟着嘴幽怨地看着{Name}。\n小腹因为手指的入侵紧张地起伏着，努力想要保持平常的样子克制着喘息的欲望的{TargetName}最后用力地推开了贴在身上的{Name}。
 541,332,204,sys_0&place_11&t_vfeel_ge_5&love_ge_1&t_happy_mark_ge_1,纤细的小腿一直在抖的{TargetName}向前弯着腰，努力地克制娇喘的欲望。\n“{PlayerNickName}，这里还有别的人。”忍耐地流下香汗的{TargetName}按住{Name}的手腕想要拔出来，“快点……快点结束……”\n然而直到{Name}停止为止，{TargetName}的屁股一直颤抖着抬着。
@@ -528,11 +528,11 @@ str,int,int,str,str
 569,399,204,sys_0,{TargetName}抓住伸过来的手腕对着{Name}轻轻摇了摇头。\n“现在还不行吧。唉……怎么男生各个这么性急的样子。”
 570,399,204,sys_0,“{PlayerNickName}，再对女孩子多上点心比较好吧。”\n{TargetName}抓住伸过来的手，对着{Name}眨了眨眼睛。\n“女孩子可不是什么随随便便就能弄到手的。”
 571,399,204,sys_0,“不行。”阻止了{Name}的{TargetName}露出了困扰的表情按住{Name}。\n“女孩子的好感度还不够哦。在这之前再做点什么讨好女孩子先比较好吧。”
-572,101,204,sys_0&love_ge_2&place_have_furniture,{TargetName}托着下巴似乎正盯着{Name}的脸在发呆的样子。\n“……嗯？啊……没什么，只是在想{PlayerNickName}什么时候会变成猪。虽然就我而言，我希望{PlayerNickName}永远不会变成猪就是了。”\n“……男人们到了一定的年龄好像就会变成那个样子呢，像猪一样。突然之间失去了梦想，变成了没有勇气的样子。”\n“这样的人在卡西米尔有很多哦，被生活的压力追上，被碾压着放弃了自己过去重视的东西。”\n“{PlayerNickName}的话，应该不会变成那样的吧。”
+572,101,204,sys_0&love_ge_2&place_furniture_ge_1,{TargetName}托着下巴似乎正盯着{Name}的脸在发呆的样子。\n“……嗯？啊……没什么，只是在想{PlayerNickName}什么时候会变成猪。虽然就我而言，我希望{PlayerNickName}永远不会变成猪就是了。”\n“……男人们到了一定的年龄好像就会变成那个样子呢，像猪一样。突然之间失去了梦想，变成了没有勇气的样子。”\n“这样的人在卡西米尔有很多哦，被生活的压力追上，被碾压着放弃了自己过去重视的东西。”\n“{PlayerNickName}的话，应该不会变成那样的吧。”
 573,101,204,sys_0&love_ge_2,“{PlayerNickName}兜帽下面的样子，虽然最开始的时候有点在意，但是现在反倒是因为{PlayerNickName}没有长着一副见不得人的脸而松了一口气呢。”\n“虽然说不上是特别的帅气吧，但还算不错？”{TargetName}挠着下巴仔细思考着具体的评价。\n“虽然知道男性都是好胜的生物，但这边自认为在卡西米尔见到的帅哥已经够多了。”\n“而且相比于外表，{TargetName}更加喜欢靠得住的男性，{PlayerNickName}也没有必要太纠结这个问题吧。”
 574,101,204,sys_0&love_ge_2,“{PlayerNickName}接下来几天有什么事情吗？……这样啊，因为公务原因必须呆在罗德岛上。”\n{TargetName}似乎是有点失望地低垂下眼睛，在笔记本上写了一些什么。\n“嗯……？我只是在做日程规划……”\n“虽然我确实很讨厌麻烦的事情，但是不代表我是一个做事完全没有计划的人。”\n“唉……{PlayerNickName}到底是怎么看待我的。”
 575,101,204,sys_0&love_le_2&love_ge_1,“诶……恋爱相关的话题，虽然说很有兴趣，但是跟{PlayerNickName}谈论这个的话好像有点微妙。”\n“简单地来说的话……就是0来着。”\n“因为各种各样的事情搁置了，一开始是学业，后来是骑士活动。最近的话，啊……无胄盟的工作太多了完全没时间考虑这种事情。”\n“虽然说过去也有几个关系还算不错的家伙，但是都因为不热衷于拉关系，最后也就那样了……”\n“最近几年到底在做什么啊……欣特莱雅”{TargetName}说着说着皱起了眉头长长地叹了口气，“……唉……总感觉莫名其妙地焦虑起来了。”
-576,101,204,sys_0&love_ge_2&place_have_furniture,“……”坐下来的{TargetName}突然捏起自己的肚子，一副非常在意的表情的样子。\n“总感觉好像因为在岛上过得太悠闲了，多了一点肥肉……呃……”{TargetName}低低地发出了痛苦的声音。\n“果然应该少吃点甜食比较好吗？”
+576,101,204,sys_0&love_ge_2&place_furniture_ge_1,“……”坐下来的{TargetName}突然捏起自己的肚子，一副非常在意的表情的样子。\n“总感觉好像因为在岛上过得太悠闲了，多了一点肥肉……呃……”{TargetName}低低地发出了痛苦的声音。\n“果然应该少吃点甜食比较好吗？”
 577,101,204,sys_0&love_ge_2,“在卡西米尔当独立骑士的时候，从出道表演的奶油小生，到全身都是肌肉的彪形大汉，各种各样的人都有过一点接触。”\n“也有不少向我示好的帅哥，还有死缠烂打到最后动手动脚的麻烦家伙。唉……”\n“因为对那些家伙完全没有兴趣，所以一开始的时候就全部拒绝了。不过嘛，{PlayerNickName}有着他们所有没有的东西，稍微产生了一点兴趣。”\n“……具体的话，秘密。”
 578,401,204,sys_0&love_le_2&love_ge_1,“呼嗯……”{TargetName}紧张的身体在{Name}的手指下慢慢放松下来了一些。\n“感觉……好了一些……”
 579,403,204,sys_0&love_le_2&love_ge_1&breast_1,“……小的{PlayerNickName}也喜欢吗？还是说只要是少女的胸部都喜欢。”\n被揉着胸部的{TargetName}有些忧郁地叹气。
@@ -558,7 +558,7 @@ str,int,int,str,str
 600,413,204,sys_0&love_le_2&love_ge_1&t_wear_pan,在{Name}的请求下，用手指移开了包裹着自己的下身的布料的{TargetName}咬着嘴唇在{Name}的面前开始了自慰。\n“竟然想要看女孩子自慰……唔……嗯。可以不要一直盯着那里吗……”\n正辛苦地与自己的羞耻心斗争着的{TargetName}按住自己的阴蒂，在{Name}的面前慢慢揉搓。
 601,413,204,sys_0&love_le_2&love_ge_1&t_yield_mark_ge_1,{TargetName}在听到要求之后抖了抖耳朵，“在{PlayerNickName}的面前自慰的话，会让{PlayerNickName}更加兴奋吗？”\n“……只是因为这样会让{TargetName}之后更加轻松一点，所以才做给{PlayerNickName}看。”\n露出了困扰的表情的{TargetName}在{Name}的面前羞耻地张开大腿，用手指揉搓起自己舒服的地方。
 602,415,204,sys_0&love_le_2&love_ge_1,“休息时间？”{TargetName}紧张的身体慢慢地放松了下来。\n“那我也休息一会……”
-603,415,204,sys_0&love_ge_2&place_have_furniture,坐在{Name}的身边的{TargetName}有点担心地看着{Name}，“身体不舒服吗？突然停下来了。”
+603,415,204,sys_0&love_ge_2&place_furniture_ge_1,坐在{Name}的身边的{TargetName}有点担心地看着{Name}，“身体不舒服吗？突然停下来了。”
 604,415,204,sys_0&love_le_2&love_ge_1&t_hp_low&high_2,“呼……呼……”被汗水浸湿了前发，遮挡住了疲惫的眼睛的{TargetName}倚靠在{Name}的身上喘息着。\n“……借我靠一下。”
 605,420,204,sys_0&love_le_2&love_ge_1,“这样子用手帮{PlayerNickName}做的话会比{PlayerNickName}自己来更加舒服吗？”\n{TargetName}抓住{Name}翘起的阴茎前后撸动着，“明明都是用手……自己来会更加方便一点吧。”
 606,420,204,sys_0&love_le_2&love_ge_1,“嗯……这样比较舒服吗？”\n观察着被抓在手中撸动的阴茎，{TargetName}一边注意着从铃口流出来的体液，一边变换着手法。\n“只是希望能够高效率地榨出来而已，希望{PlayerNickName}不要故意忍耐可以吗？”
@@ -583,7 +583,7 @@ str,int,int,str,str
 626,422,204,sys_0&love_le_2&love_ge_1&high_2,{TargetName}不是很情愿地用胸部抱住阴茎上下摇晃身体。\n“明明用别的方法，可以更舒服地弄出来吧，呼。”\n“这样子，感觉好费力。嗯。”
 627,423,204,sys_0&love_le_2&love_ge_1,“大概这样踩可以吗？”注意着脚上的力度的{TargetName}踩在{Name}的阴茎上碾压。\n“主动把弱点露出来给女孩子踩……不能理解。”
 628,423,204,sys_0&love_le_2&love_ge_1,{TargetName}面无表情地挑起阴茎，用两脚夹住慢慢地撸动。\n“不舒服的时候说出来可以吗？”\n“要是{PlayerNickName}因为这个变成奇怪的样子的话，我也会很头疼的。”
-629,423,204,sys_0&love_le_2&love_ge_1&t_wear_socks&place_have_furniture,“确定要用脚吗？”穿着{TagetSocName}的双足从两边压在了阴茎上。\n慢慢地夹住开始了撸动，“这样子感觉舒服吗？嘛，{PlayerNickName}觉得可以就好。”
+629,423,204,sys_0&love_le_2&love_ge_1&t_wear_socks&place_furniture_ge_1,“确定要用脚吗？”穿着{TagetSocName}的双足从两边压在了阴茎上。\n慢慢地夹住开始了撸动，“这样子感觉舒服吗？嘛，{PlayerNickName}觉得可以就好。”
 630,423,204,sys_0&love_le_2&love_ge_1&t_wear_socks,{TargetName}伸出灵巧的脚尖用脚趾夹住{Name}的阴茎尖端慢慢地撸动着。\n明显能够感觉到{TagetSocName}特别的触感，“没有感觉不舒服的话，就这样可以吗？”\n“感觉触感太粗糙了的话停下来也可以。”
 631,1009,204,sys_0&love_le_2&love_ge_1&penis_in_t_breast,俯视着在胸部中来回进出的龟头的{TargetName}察觉到了阴茎的抽动。\n“等，嗯！”下意识地别过脸避开高高地射出来的精液的{TargetName}无奈地看着射精中的{Name}。\n“……射出来之前可以好好地说一声吗？”
 632,1009,204,sys_0&love_le_2&love_ge_1&penis_in_t_breast&breast_1&shoot_in_t_breast&high_2,“诶……是不是{PlayerNickName}太兴奋了。真的射出来了。”看着在自己的起伏着的胸部上吐出精液的阴茎{TargetName}露出了一些惊讶的表情。\n“……就算是被射在胸上也不能算是某种表扬吧。”
@@ -616,7 +616,7 @@ str,int,int,str,str
 659,429,204,sys_0&love_le_2&love_ge_1&high_2,“用力吸的话，感觉会很难看。”叼着{Name}的阴茎想要拒绝的{TargetName}困扰地看着{Name}。\n“一定想要吗？嗯，唔，好了，不要顶进来。”被顶着摇晃起头的{TargetName}无奈地开始吮吸插入的阴茎。
 660,430,204,sys_0&love_le_2&love_ge_1,被强硬地塞入阴茎，深深地插入喉中的{TargetName}发出了痛苦的声音。\n“咕……嗯！咕唔……”因为不适应，{TargetName}的喉咙胡乱地挤压在阴茎上，“出去……咕……嗯。”
 661,430,204,sys_0&love_le_2&love_ge_1&t_yield_mark_ge_1&t_m_l_3&t_submit_l_5,“呜……”虽然同意了进行深喉口交，但是还没有完全习惯的{TargetName}发出难受的声音。\n“咕……咕嗯……”咽喉被阴茎撑满，被紧紧地抱在胯下的{TargetName}不时地拍打{Name}的大腿。\n“很难受……唔，停……”
-662,430,204,sys_0&love_le_2&love_ge_1&t_yield_mark_ge_1&place_have_furniture,“咕…………咕嗯”躺着被抱住头进行深喉的{TargetName}不时地发出吞咽困难的声音。\n随着阴茎的插入腰腹也难受的一次次抬起来，“咕……呼……嗯……等……咕……”\n直到{Name}完全拔出为止，被强制吞入整根肉茎的{TargetName}都在阴囊的下方努力地克制着。
+662,430,204,sys_0&love_le_2&love_ge_1&t_yield_mark_ge_1&place_furniture_ge_1,“咕…………咕嗯”躺着被抱住头进行深喉的{TargetName}不时地发出吞咽困难的声音。\n随着阴茎的插入腰腹也难受的一次次抬起来，“咕……呼……嗯……等……咕……”\n直到{Name}完全拔出为止，被强制吞入整根肉茎的{TargetName}都在阴囊的下方努力地克制着。
 663,430,204,sys_0&love_le_2&love_ge_1&t_yield_mark_ge_1,“用深喉做……感觉喉咙会很难受。”跪在{Name}的跨间的{TargetName}看着凑过来的阴茎皱起了眉头。\n“一定要做吗？嗯……好吧，啊……咕嗯。”\n被阴茎塞住唇齿，慢慢地感受着喉咙被撑开的{TargetName}生理反射地收紧咽喉挤压着侵入物想要排出去。\n“咕……嗯……嗯……”努力地克制生理反射的{TargetName}不时地抖着身体，抬头看着{Name}。
 664,1009,204,sys_0&love_le_2&love_ge_1&last_cmd_focus_blowjob&shoot_in_t_mouse&high_2,“滋……滋唔！？嗯……嗯”被突然射入口中的热流刺激到了的{TargetName}慢慢地放松了吮吸的力度，包容地承接住了精液。\n“……哈……嗯”吐出了开始变软的阴茎的{TargetName}将精液处理掉了。\n“虽然知道被要求吮吸的时候肯定会射在最里面，唔……”皱着眉头似乎很在意嘴中的气味一样的{TargetName}，不满地看向{Name}。
 665,1009,204,sys_0&love_le_2&love_ge_1&last_cmd_focus_blowjob,紧紧地含住插入的阴茎吮吸的{TargetName}察觉到了阴茎越发激烈的抖动。\n“滋……滋噜，嗯。”因为猛烈的吮吸不出所料地射了出来的{TargetName}快速地将开始射精的阴茎从嘴里吐了出来。\n“咳……嗯……嗯唔。”带着复杂的表情看着{Name}的{TargetName}似乎是因为吸得有些用力，一些精液还是射到了喉咙上的样子。\n“{PlayerNickName}……变态。”
@@ -631,7 +631,7 @@ str,int,int,str,str
 674,1009,204,sys_0&love_le_2&love_ge_1&penis_in_t_hand&shoot_in_t_face,正专心地用手撸动着的{TargetName}快速地对{Name}的阴茎进行着刺激。\n“啊……”直到高高喷出的精液突然射在了{TargetName}的脸上才慢慢放缓了撸动的速度。\n“呼……嗯……”默默地用脸接住了精液的{TargetName}在喷淋结束之后才放开手中的阴茎，“好像刚刚这边做的有点太过了……嗯。”\n擦掉了射在睫毛上的精液的{TargetName}露出了无奈的眼神。
 675,432,204,sys_0&love_le_2&love_ge_1,扶着{Name}的腰{TargetName}用并拢的大腿夹紧了阴茎，“这样会不会太紧了。”\n开始前后摇摆着腰的{TargetName}用奇怪的表情看着{Name}，“……如果夹得很痛的话要及时说出来可以吗？”
 676,432,204,sys_0&love_le_2&love_ge_1,“帮我一下好吗？扶一下我的腰就行。”{TargetName}高高地抬起修长的长腿搭在阴茎上缠住。\n“嗯……就这样不要太激烈地动就行了，太用力地话这边也会很累。”
-677,432,204,sys_0&love_le_2&love_ge_1&place_have_furniture,坐下了的{TargetName}曲起腿示意{Name}过来，“只是想用腿做的话，这样就可以了吧。”\n圆润修长的双腿夹在一起放在{TargetName}的肩膀上，“唉……好了，接下来自己动？”
+677,432,204,sys_0&love_le_2&love_ge_1&place_furniture_ge_1,坐下了的{TargetName}曲起腿示意{Name}过来，“只是想用腿做的话，这样就可以了吧。”\n圆润修长的双腿夹在一起放在{TargetName}的肩膀上，“唉……好了，接下来自己动？”
 678,432,204,sys_0&love_le_2&love_ge_1&high_2,“只是用腿的话，我是不会反对的。但是一直夹着会很累的呀。”\n“而且这边平时也有在练腿，一不小心夹得太用力了{PlayerNickName}也会疼的吧。”\n“反倒希望这边用力地夹比较好吗？{PlayerNickName}真是奇怪的家伙。”\n{TargetName}用锻炼地没有多余的赘肉的柔韧双腿夹紧了阴茎，前后缓慢地摇摆着腰用大腿撸动。
 679,433,204,sys_0&love_le_2&love_ge_1,不安地用尾巴一松一紧地缠住抽动的阴茎的{TargetName}发出轻轻的哼声。\n“嗯……嗯唔……动得慢一点。还有……可以不要用力地抓着尾巴吗……嗯……”
 680,433,204,sys_0&love_le_2&love_ge_1,微微侧过身不满地看着{Name}的{TargetName}因为尾巴正与阴茎缠在一起而发出了低低的声音。\n“不要……用力地抓……{PlayerNickName}，尾巴会被弄乱的。”平时被精细地打理的蓬松白尾已经因为双方的汗水和体液变得有些潮湿和厚重。\n“呼……嗯，舒服了就快点拿出去好吗？我的尾巴不是拿来做这个的。”
@@ -728,7 +728,7 @@ str,int,int,str,str
 778,512,204,sys_0&love_le_2&love_ge_1&last_cmd_face_seat_sex,“啊。”被紧紧地抱住的{TargetName}，用下体完全接受了插到了子宫口附近的阴茎。\n“{PlayerNickName}先别……啊。”正想要分开一点的{TargetName}被抱着开始了缓慢地摇晃。\n受到了刺激的膣穴一点点缠住了正在子宫口上绕圈的阴茎，“快……放开，不舒服……哈……嗯。”
 779,512,204,sys_0&love_le_2&love_ge_1&last_cmd_back_seat_sex,“有点……太深……呼嗯……嗯”被扶着小腹，接受了整根阴茎的{TargetName}皱着眉头，努力地适应顶子宫口的感觉。\n“{TargetName}，不是玩具……稍微拔出去……嗯啊。”因为龟头开始在子宫口边缘戳弄挤压的触感，{TargetName}不安地左右扭起腰肢。
 780,512,204,sys_0&love_le_2&love_ge_1&last_cmd_face_stand_sex,趴在{Name}的肩头上，因为股间深深地插入深处的阴茎无法合拢双腿的{TargetName}不安地在{Name}的耳边吐息着。\n“{PlayerNickName}……有点太深……啊……先不要嗯，乱动……呼嗯……”\n随着龟头顶着子宫口的周围开始滑动，露出了混乱的表情的{TargetName}不满地抓挠{Name}的脊背，“嗯……不要……动……嗯唔……”
-781,512,204,sys_0&love_le_2&love_ge_1&last_cmd_back_stand_sex&place_have_furniture,大大地张开双腿，扶着周围的东西勉强地支撑起腰的{TargetName}被阴茎顶到了最深的地方。\n“不要……再插进来……嗯……！”无法腾出双手，只能更高地抬起臀部接受阴茎的碾压的{TargetName}发出苦恼的喘息。\n“稍微……拔出去……呼嗯……腰快要没力气……啊……嗯。”
+781,512,204,sys_0&love_le_2&love_ge_1&last_cmd_back_stand_sex&place_furniture_ge_1,大大地张开双腿，扶着周围的东西勉强地支撑起腰的{TargetName}被阴茎顶到了最深的地方。\n“不要……再插进来……嗯……！”无法腾出双手，只能更高地抬起臀部接受阴茎的碾压的{TargetName}发出苦恼的喘息。\n“稍微……拔出去……呼嗯……腰快要没力气……啊……嗯。”
 782,512,204,sys_0&love_le_2&love_ge_1,被顶到了阴道的最深处的{TargetName}，感受着{Name}的龟头在凸起的子宫口周围来回搅拌玩弄的感觉，皱起眉头发出一阵阵细微的娇喘。\n“嗯……才没有……很舒服……嗯……”柔软的膣肉本能地簇拥在深深地插入的龟头周围缠住了阴茎。\n“{PlayerNickName}刚刚撞上来的时候……很疼……呼……嗯”
 783,702,204,sys_0&love_le_2&love_ge_1&t_wear_pan&t_wear_bra,将脱下来的衣服整理好放在一边，{TargetName}用手护住自己的胸部。\n“这样子就能让{PlayerNickName}兴奋起来了吧，女孩子只穿着内衣的样子。”\n“……可以不要一直盯着吗？感觉就像在被{PlayerNickName}评价内衣一样。”
 784,702,204,sys_0&love_le_2&love_ge_1,“……总感觉最近胖了一点。”{TargetName}捏着自己的腰自言自语，但是肉眼看不出来有什么明显的变化。\n“总感觉{PlayerNickName}回答的很敷衍，虽然我也没有在问{PlayerNickName}的意见。”\n“好了，快点继续？一直这样露着身体不太舒服。”

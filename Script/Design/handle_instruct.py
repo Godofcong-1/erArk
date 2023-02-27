@@ -326,6 +326,7 @@ def handle_borrow_book():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_74,
+        constant_promise.Premise.PLACE_FURNITURE_GE_2,
     })
 def handle_read_book():
     """处理读书指令"""
@@ -747,7 +748,7 @@ def handle_wait_6_hour():
     _("泡咖啡"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_89}
 )
 def handle_make_coffee():
@@ -766,7 +767,7 @@ def handle_make_coffee():
     _("泡咖啡（加料）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.TIRED_LE_89}
 )
@@ -786,7 +787,7 @@ def handle_make_coffee_add():
     _("让对方泡咖啡"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.NOT_IN_TOILET,
+     constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_89}
 )
 def handle_ask_make_coffee():
@@ -1762,7 +1763,7 @@ def handle_handle_in_handle():
     _("膝枕"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_GE_1,
      constant_promise.Premise.TIRED_LE_89}
 )
 def handle_lap_pillow():
@@ -2459,6 +2460,7 @@ def handle_deep_throat():
     _("六九式"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_CUNNILINGUS,
      constant_promise.Premise.TECHNIQUE_GE_3,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
@@ -3155,7 +3157,7 @@ def handle_clomid():
     _("正常位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_normal_sex():
@@ -3175,7 +3177,7 @@ def handle_normal_sex():
     _("背后位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_back_sex():
@@ -3195,7 +3197,7 @@ def handle_back_sex():
     _("骑乘位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_riding_sex():
@@ -3215,7 +3217,7 @@ def handle_riding_sex():
     _("对面座位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_face_seat_sex():
@@ -3235,7 +3237,7 @@ def handle_face_seat_sex():
     _("背面座位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
 def handle_back_seat_sex():
@@ -3356,7 +3358,7 @@ def handle_womb_insertion():
     _("正常位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_normal_anal_sex():
@@ -3376,7 +3378,7 @@ def handle_normal_anal_sex():
     _("后背位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_back_anal_sex():
@@ -3396,7 +3398,7 @@ def handle_back_anal_sex():
     _("骑乘位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_riding_anal_sex():
@@ -3417,7 +3419,7 @@ def handle_riding_anal_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE},
+     constant_promise.Premise.PLACE_FURNITURE_2},
 )
 def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
@@ -3436,7 +3438,7 @@ def handle_face_seat_anal_sex():
     _("背面座位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_HAVE_FURNITURE,
+     constant_promise.Premise.PLACE_FURNITURE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
 def handle_back_seat_anal_sex():

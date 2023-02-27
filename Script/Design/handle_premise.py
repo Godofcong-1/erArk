@@ -290,8 +290,8 @@ def handle_place_covert(character_id: int) -> int:
     return 1
 
 
-@add_premise(constant_promise.Premise.PLACE_HAVE_FURNITURE)
-def handle_place_have_furniture(character_id: int) -> int:
+@add_premise(constant_promise.Premise.PLACE_FURNITURE_GE_1)
+def handle_place_furniture_ge_1(character_id: int) -> int:
     """
     校验角色当前地点有家具
     Keyword arguments:
@@ -304,6 +304,24 @@ def handle_place_have_furniture(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if now_scene_data.have_furniture:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLACE_FURNITURE_GE_2)
+def handle_place_furniture_ge_2(character_id: int) -> int:
+    """
+    当前地点至少有办公级家具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if now_scene_data.have_furniture >= 2:
         return 1
     return 0
 
