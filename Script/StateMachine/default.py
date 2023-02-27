@@ -793,18 +793,15 @@ def character_pee(character_id: int):
     character_data.behavior.duration = 5
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.TAKE_SHOWER)
-def character_take_shower(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.START_SHOWER)
+def character_start_shower(character_id: int):
     """
-    角色淋浴
+    进入要更衣状态
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.target_character_id = character_id
-    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
-    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
-    character_data.behavior.duration = 30
+    character_data.sp_flag.shower = 1
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
@@ -819,11 +816,27 @@ def character_wear_to_locker(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WEAR_TO_LOCKER
     character_data.state = constant.CharacterStatus.STATUS_WEAR_TO_LOCKER
     character_data.behavior.duration = 10
+    character_data.sp_flag.shower = 2
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.text = character_data.name + "脱成全裸了"
         now_draw.draw()
         line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.TAKE_SHOWER)
+def character_take_shower(character_id: int):
+    """
+    角色淋浴
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
+    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
+    character_data.behavior.duration = 30
+    character_data.sp_flag.shower = 3
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.GET_SHOWER_CLOTH)
@@ -838,6 +851,7 @@ def character_get_shower_cloth(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.PUT_SHOWER_CLOTH
     character_data.state = constant.CharacterStatus.STATUS_PUT_SHOWER_CLOTH
     character_data.behavior.duration = 10
+    character_data.sp_flag.shower = 4
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.text = character_data.name + "换上了浴帽和浴巾"

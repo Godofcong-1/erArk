@@ -2336,6 +2336,86 @@ def handle_t_imprisonment_1(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SHOWER_FLAG_0)
+def handle_shower_flag_0(character_id: int) -> int:
+    """
+    自身没有洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SHOWER_FLAG_1)
+def handle_shower_flag_1(character_id: int) -> int:
+    """
+    自身要更衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SHOWER_FLAG_2)
+def handle_shower_flag_2(character_id: int) -> int:
+    """
+    自身要洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower == 2:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SHOWER_FLAG_3)
+def handle_shower_flag_3(character_id: int) -> int:
+    """
+    自身要披浴巾状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower == 3:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SHOWER_FLAG_4)
+def handle_shower_flag_4(character_id: int) -> int:
+    """
+    自身已洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower == 4:
+        return 400
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HP_LOW)
 def handle_hp_low(character_id: int) -> int:
     """

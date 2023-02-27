@@ -785,12 +785,14 @@ class StateMachine:
     """ 演奏乐器 """
     PEE = 50
     """ 解手 """
-    TAKE_SHOWER = 51
-    """ 淋浴 """
 
-    WEAR_TO_LOCKER = 71
+    START_SHOWER = 71
+    """ 进入要更衣状态 """
+    WEAR_TO_LOCKER = 72
     """ 当前身上衣服转移到衣柜里 """
-    GET_SHOWER_CLOTH = 72
+    TAKE_SHOWER = 73
+    """ 淋浴 """
+    GET_SHOWER_CLOTH = 74
     """ 换上浴帽和浴巾 """
 
     CHAT_TO_DR = 100

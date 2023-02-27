@@ -38,12 +38,13 @@ ai的目标,,,
 46,11,normal_267|tired_ge_90|urinate_ge_80|not_in_dor,267正常（可能基础异常、AI跟随、服装异常或意识模糊），困倦，且尿意值值到80%，且不在宿舍，则回宿舍
 47,50,normal_267|tired_ge_90|urinate_ge_80|in_dor,267正常（可能基础异常、AI跟随、服装异常或意识模糊），困倦，且尿意值值到80%，且在宿舍，则解手
 
-50,31,normal_12367|shower_time|ai_not_shower|not_in_bathzone_locker_room,12367正常（可能服装异常或意识模糊），淋浴时间，今天没洗过澡，当前不在大浴室的更衣室，则去大浴室的更衣室
-51,71,normal_12367|shower_time|ai_not_shower|in_bathzone_locker_room|not_cloth_most_off,12367正常（可能服装异常或意识模糊），淋浴时间，今天没洗过澡，当前在大浴室的更衣室，衣服不是大致全裸，则脱成全裸
-52,33,normal_12367|shower_time|ai_not_shower|not_in_bathroom|cloth_most_off,12367正常（可能服装异常或意识模糊），淋浴时间，今天没洗过澡，当前不在淋浴间，已经脱成大致全裸，则去淋浴区
-53,51,normal_12367|shower_time|ai_not_shower|in_bathroom|cloth_most_off,12367正常（可能服装异常或意识模糊），淋浴时间，今天没洗过澡，当前在淋浴间，已经脱成大致全裸，则开始淋浴
-54,31,normal_12367|shower_time|ai_have_showered|not_in_bathzone_locker_room|cloth_most_off,12367正常（可能服装异常或意识模糊），淋浴时间，今天已经洗过澡，当前不在大浴室的更衣室，已经脱成大致全裸，则去大浴室的更衣室
-55,72,normal_12367|shower_time|ai_have_showered|in_bathzone_locker_room|cloth_most_off,12367正常（可能服装异常或意识模糊），淋浴时间，今天已经洗过澡，当前在大浴室的更衣室，已经脱成大致全裸，则围上浴巾
+51,71,normal_12367|shower_time|ai_not_shower|shower_flag_0,12367正常（可能服装异常或意识模糊），淋浴时间，今天没洗过澡，自身没有洗澡状态，则进入要更衣状态
+52,31,shower_flag_1|not_in_bathzone_locker_room,要更衣状态下，当前不在大浴室的更衣室，则去大浴室的更衣室
+53,72,shower_flag_1|in_bathzone_locker_room,要更衣状态下，当前在大浴室的更衣室，则脱成全裸
+54,33,shower_flag_2|not_in_bathroom,要洗澡状态下，当前不在淋浴间，则去淋浴间
+55,73,shower_flag_2|in_bathroom,要洗澡状态下，当前在淋浴间，则开始淋浴
+56,31,shower_flag_3|not_in_bathzone_locker_room,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
+57,74,shower_flag_3|in_bathzone_locker_room,要披浴巾状态，当前在大浴室的更衣室，则围上浴巾
 
 60,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
 

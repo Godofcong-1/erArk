@@ -685,6 +685,8 @@ def update_sleep():
             character_data.action_info.h_interrupt = 0
             # 重置每天第一次见面
             character_data.first_record.day_first_meet = 1
+            # 重置洗澡状态
+            character_data.sp_flag.shower = 0
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
             # 检查并处理受精怀孕部分

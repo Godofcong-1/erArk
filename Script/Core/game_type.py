@@ -478,6 +478,8 @@ class SPECIAL_FLAG:
         """ 玩家正在装袋搬走的角色的id """
         self.imprisonment: bool = 0
         """ 被监禁状态 """
+        self.shower: int = 0
+        """ 洗澡状态 """
 
 
 class CHARA_WORK:

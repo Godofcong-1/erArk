@@ -25,12 +25,12 @@ str,int,int,str,str
 1018,102,0,high_1,聊天的过程中，{TargetName}显得有些心不在焉，让气氛更加尴尬。
 1019,102,0,high_1,{Name}和{TargetName}在聊天过程中产生了一些误解，导致彼此之间的交流变得非常尴尬。
 1020,102,0,high_1,聊天的过程中，{Name}和{TargetName}总是互相抢话，无法建立良好的沟通，气氛十分失败。
-1021,102,0,high_1|favorability_ge_3,{Name}想要和{TargetName}一起聊天，但气氛有些尴尬，像是没什么话说了。
-1022,102,0,high_1|favorability_ge_3,聊天开始挺顺利，但不知道为什么，现在{Name}和{TargetName}的话题都有些避重就轻。
-1023,102,0,high_1|favorability_ge_3,{Name}和{TargetName}有时候聊天没什么话题，就变得尴尬了。
-1024,102,0,high_1|favorability_ge_3,{Name}和{TargetName}曾经聊得很嗨，但现在似乎都不太想说话了。
-1025,102,0,high_1|favorability_ge_3,聊天一开始挺好，但现在{Name}和{TargetName}的话题似乎越来越凑不到一块去了。
-1026,102,0,high_1|favorability_ge_3,聊天本来很愉快，但后来似乎出了点差错，{Name}和{TargetName}的气氛变得有些尴尬了。
-1027,102,0,high_1|favorability_ge_3,{Name}和{TargetName}刚刚还一起笑得很开心，但现在却有些尴尬，好像没有什么好说的了。
-1028,102,0,high_1|favorability_ge_3,聊天开始时{Name}和{TargetName}的话题还不错，但现在两人都陷入了沉默。
+1021,102,0,high_1&favorability_ge_3,{Name}想要和{TargetName}一起聊天，但气氛有些尴尬，像是没什么话说了。
+1022,102,0,high_1&favorability_ge_3,聊天开始挺顺利，但不知道为什么，现在{Name}和{TargetName}的话题都有些避重就轻。
+1023,102,0,high_1&favorability_ge_3,{Name}和{TargetName}有时候聊天没什么话题，就变得尴尬了。
+1024,102,0,high_1&favorability_ge_3,{Name}和{TargetName}曾经聊得很嗨，但现在似乎都不太想说话了。
+1025,102,0,high_1&favorability_ge_3,聊天一开始挺好，但现在{Name}和{TargetName}的话题似乎越来越凑不到一块去了。
+1026,102,0,high_1&favorability_ge_3,聊天本来很愉快，但后来似乎出了点差错，{Name}和{TargetName}的气氛变得有些尴尬了。
+1027,102,0,high_1&favorability_ge_3,{Name}和{TargetName}刚刚还一起笑得很开心，但现在却有些尴尬，好像没有什么好说的了。
+1028,102,0,high_1&favorability_ge_3,聊天开始时{Name}和{TargetName}的话题还不错，但现在两人都陷入了沉默。
 
