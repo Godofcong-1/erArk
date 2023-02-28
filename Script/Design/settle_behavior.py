@@ -3,7 +3,7 @@ import time, random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_talent
+from Script.Design import attr_text, attr_calculation, handle_premise, handle_talent, handle_ability
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel
@@ -34,8 +34,9 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     change_character_value_add_as_time(character_id, add_time)
     # 结算角色的持续状态
     change_character_persistent_state(character_id, now_time, add_time)
-    # 自动获得对应素质
+    # 自动获得对应素质和能力
     handle_talent.gain_talent(character_id,now_gain_type = 0)
+    handle_ability.gain_ability(character_id)
 
     behavior_id = now_character_data.behavior.behavior_id
     if event_flag:  # 在事件的开始结算中不结算以下内容
