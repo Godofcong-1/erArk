@@ -110,7 +110,7 @@ def handle_sleep_time(character_id: int) -> int:
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
-        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
+        now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 21 else character_data.behavior.start_time.hour + 24
         # print(f"debug {character_data.name}的睡觉前提判定，当前时间为{character_data.behavior.start_time}")
         # print(f"成功进入睡觉前提if，返回值为{(now_hour-21) *100}")
         return (now_hour - 21) * 100
@@ -640,6 +640,24 @@ def handle_in_toilet_female(character_id: int) -> int:
     if "Toilet_Female" in now_scene_data.scene_tag:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_TOILET_FEMALE)
+def handle_not_in_toilet_female(character_id: int) -> int:
+    """
+    校验角色是否不在女士洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Toilet_Female" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.MOVE_TO_TOILET_FEMALE)
@@ -1662,11 +1680,11 @@ def handle_normal_all(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_hp_1(character_id)
-        or handle_mp_0(character_id)
-        or handle_tired_ge_90(character_id)
-        or handle_urinate_ge_80(character_id)
-        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
     ):
         return 0
     elif(
@@ -1703,7 +1721,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -1712,11 +1730,11 @@ def handle_normal_1_2_4(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_hp_1(character_id)
-        or handle_mp_0(character_id)
-        or handle_tired_ge_90(character_id)
-        or handle_urinate_ge_80(character_id)
-        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
     ):
         return 0
     elif(
@@ -1771,10 +1789,32 @@ def handle_normal_2_3_4(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_1)
+def handle_normal_1(character_id: int) -> int:
+    """
+    1正常的普通状态
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.NORMAL_2)
 def handle_normal_2(character_id: int) -> int:
     """
-    2正常的普通状态
+    \n2:妊娠限制：临盆、产后、婴儿
     \n包括2:临盆、产后、婴儿
     Keyword arguments:
     character_id -- 角色id
@@ -1785,6 +1825,100 @@ def handle_normal_2(character_id: int) -> int:
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_3)
+def handle_normal_3(character_id: int) -> int:
+    """
+    3正常的普通状态
+    \n3:AI行动受限：助理、跟随模式下
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         handle_is_assistant(character_id)
+        or handle_is_follow(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_4)
+def handle_normal_4(character_id: int) -> int:
+    """
+    4正常的普通状态
+    \n4:服装异常：大致全裸、全裸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_5)
+def handle_normal_5(character_id: int) -> int:
+    """
+    5正常的普通状态
+    \n5:意识模糊，或弱交互：醉酒，催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        0
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_6)
+def handle_normal_6(character_id: int) -> int:
+    """
+    6正常的普通状态
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.NORMAL_7)
+def handle_normal_7(character_id: int) -> int:
+    """
+    7正常的普通状态
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
     ):
         return 0
     else:
@@ -1970,13 +2104,12 @@ def handle_normal_24567(character_id: int) -> int:
         return 1
 
 
-@add_premise(constant_promise.Premise.NORMAL_12367)
-def handle_normal_12367(character_id: int) -> int:
+@add_premise(constant_promise.Premise.NORMAL_1267)
+def handle_normal_1267(character_id: int) -> int:
     """
-    12367正常（可能服装异常或意识模糊）
-    \n1:基础数值异常：hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    1267正常（可能AI跟随、服装异常或意识模糊）
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
     \n2:妊娠限制：临盆、产后、婴儿
-    \n3:AI行动受限：助理、跟随模式下
     \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -1985,27 +2118,17 @@ def handle_normal_12367(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_hp_1(character_id)
-        or handle_mp_0(character_id)
-        or handle_tired_ge_90(character_id)
-        or handle_urinate_ge_80(character_id)
-        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
     ):
         return 0
     elif(
          handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
     ):
         return 0
     elif(
@@ -2026,7 +2149,7 @@ def handle_normal_12367(character_id: int) -> int:
 def handle_normal_123467(character_id: int) -> int:
     """
     123467正常（可能意识模糊）
-    \n1:基础数值异常：hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
@@ -2038,11 +2161,11 @@ def handle_normal_123467(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_hp_1(character_id)
-        or handle_mp_0(character_id)
-        or handle_tired_ge_90(character_id)
-        or handle_urinate_ge_80(character_id)
-        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+        handle_sleep_flag_1(character_id)
+        or handle_rest_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
     ):
         return 0
     elif(
@@ -2100,7 +2223,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n包括1:hp1、气力0、高困倦、高尿意、高饥饿+饭点
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
@@ -2111,11 +2234,11 @@ def handle_unnormal(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_hp_1(character_id)
-        or handle_mp_0(character_id)
-        or handle_tired_ge_90(character_id)
-        or handle_urinate_ge_80(character_id)
-        or (handle_hunger_ge_80(character_id) and handle_eat_time(character_id))
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
     ):
         return 1
     elif(
@@ -2352,6 +2475,38 @@ def handle_shower_flag_0(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SHOWER_FLAG_GE_1)
+def handle_shower_flag_ge_1(character_id: int) -> int:
+    """
+    自身有某一种洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower >= 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SHOWER_FLAG_123)
+def handle_shower_flag_123(character_id: int) -> int:
+    """
+    自身有正在进行的洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.shower in {1,2,3}:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.SHOWER_FLAG_1)
 def handle_shower_flag_1(character_id: int) -> int:
     """
@@ -2411,6 +2566,102 @@ def handle_shower_flag_4(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.shower == 4:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.EAT_FOOD_FLAG_GE_1)
+def handle_eat_food_flag_ge_1(character_id: int) -> int:
+    """
+    自身有某一种吃饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.eat_food >= 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.EAT_FOOD_FLAG_1)
+def handle_eat_food_flag_1(character_id: int) -> int:
+    """
+    自身要取餐状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.eat_food == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.EAT_FOOD_FLAG_2)
+def handle_eat_food_flag_2(character_id: int) -> int:
+    """
+    自身要进食状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.eat_food == 2:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_FLAG_1)
+def handle_sleep_flag_1(character_id: int) -> int:
+    """
+    自身要睡觉状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.sleep == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.REST_FLAG_1)
+def handle_rest_flag_1(character_id: int) -> int:
+    """
+    自身要休息状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.rest == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.PEE_FLAG_1)
+def handle_pee_flag_1(character_id: int) -> int:
+    """
+    自身要撒尿状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.pee == 1:
         return 400
     else:
         return 0

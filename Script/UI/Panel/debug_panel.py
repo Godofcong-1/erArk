@@ -3,7 +3,7 @@ from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,character_handle
+from Script.Design import basement,character_handle, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -265,6 +265,7 @@ class Debug_Panel:
             draw_text_list.append(f"[017]:娱乐")
             draw_text_list.append(f"[018]:怀孕（已实装）")
             draw_text_list.append(f"[019]:社会关系（已实装）")
+            draw_text_list.append(f"[020]:特殊flag（已实装）")
 
 
             # draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
@@ -754,6 +755,80 @@ class Debug_Panel:
                             target_data.relationship.child_id_list.append(value_index[2])
                         else:
                             target_data.relationship.child_id_list.remove(value_index[2])
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+
+            # 特殊flag数据
+            elif key_index == 20:
+                info_text = f"1~7异常状态："
+                info_text += f"    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）：{handle_premise.handle_normal_1(self.target_character_id)}"
+                info_text += f"    \n2:妊娠限制：临盆、产后、婴儿：{handle_premise.handle_normal_2(self.target_character_id)}"
+                info_text += f"    \n3:AI行动受限：助理、跟随模式下：{handle_premise.handle_normal_3(self.target_character_id)}"
+                info_text += f"    \n4:服装异常：大致全裸、全裸：{handle_premise.handle_normal_4(self.target_character_id)}"
+                info_text += f"    \n5:意识模糊，或弱交互：醉酒，催眠：{handle_premise.handle_normal_5(self.target_character_id)}"
+                info_text += f"    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感：{handle_premise.handle_normal_6(self.target_character_id)}"
+                info_text += f"    \n7:监禁：装袋搬走、监禁：{handle_premise.handle_normal_7(self.target_character_id)}"
+                info_text += f"\n\n"
+                info_text += f"[000]:在H模式中：{target_data.sp_flag.is_h}\n"
+                info_text += f"[001]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}\n"
+                info_text += f"[002]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.sp_flag.is_follow}\n"
+                info_text += f"[003]:疲劳状态（HP=1）：{target_data.sp_flag.tired}\n"
+                info_text += f"[004]:被玩家惹生气：{target_data.sp_flag.angry_with_player}\n"
+                info_text += f"[005]:角色停止移动：{target_data.sp_flag.move_stop}\n"
+                info_text += f"[006]:被装袋搬走状态：{target_data.sp_flag.be_bagged}\n"
+                info_text += f"[007]:玩家正在装袋搬走的角色的id：{target_data.sp_flag.bagging_chara_id}\n"
+                info_text += f"[008]:被监禁状态：{target_data.sp_flag.imprisonment}\n"
+                info_text += f"[009]:洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡]：{target_data.sp_flag.shower}\n"
+                info_text += f"[010]:吃饭状态，int [0无,1要取餐,2要吃饭]：{target_data.sp_flag.eat_food}\n"
+                info_text += f"[011]:要睡觉状态：{target_data.sp_flag.sleep}\n"
+                info_text += f"[012]:要休息状态：{target_data.sp_flag.rest}\n"
+                info_text += f"[013]:要撒尿状态：{target_data.sp_flag.pee}\n"
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+
+                if change_draw_flag:
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        info_draw.text = "\n输出格式错误，请重试\n"
+                        info_draw.draw()
+                        continue
+                    if value_index[0] == 0:
+                        target_data.sp_flag.is_h = value_index[1]
+                    elif value_index[0] == 1:
+                        target_data.sp_flag.wait_flag = value_index[1]
+                    elif value_index[0] == 2:
+                        target_data.sp_flag.is_follow = value_index[1]
+                    elif value_index[0] == 3:
+                        target_data.sp_flag.tired = value_index[1]
+                    elif value_index[0] == 4:
+                        target_data.sp_flag.angry_with_player = value_index[1]
+                    elif value_index[0] == 5:
+                        target_data.sp_flag.move_stop = value_index[1]
+                    elif value_index[0] == 6:
+                        target_data.sp_flag.be_bagged = value_index[1]
+                    elif value_index[0] == 7:
+                        target_data.sp_flag.bagging_chara_id = value_index[1]
+                    elif value_index[0] == 8:
+                        target_data.sp_flag.imprisonment = value_index[1]
+                    elif value_index[0] == 9:
+                        target_data.sp_flag.shower = value_index[1]
+                    elif value_index[0] == 10:
+                        target_data.sp_flag.eat_food = value_index[1]
+                    elif value_index[0] == 11:
+                        target_data.sp_flag.sleep = value_index[1]
+                    elif value_index[0] == 12:
+                        target_data.sp_flag.rest = value_index[1]
+                    elif value_index[0] == 13:
+                        target_data.sp_flag.pee = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

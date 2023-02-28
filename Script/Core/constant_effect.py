@@ -324,6 +324,32 @@ class BehaviorEffect:
     """ 属性_特殊flag 交互对象变成被装袋搬走状态 """
     T_BE_IMPRISONMENT = 452
     """ 属性_特殊flag 交互对象变成被监禁状态 """
+    SHOWER_FLAG_TO_1 = 453
+    """ 属性_特殊flag 自身变成要更衣状态 """
+    SHOWER_FLAG_TO_2 = 454
+    """ 属性_特殊flag 自身变成要洗澡状态 """
+    SHOWER_FLAG_TO_3 = 455
+    """ 属性_特殊flag 自身变成要披浴巾状态 """
+    SHOWER_FLAG_TO_4 = 456
+    """ 属性_特殊flag 自身变成洗完澡状态 """
+    EAT_FOOD_FLAG_TO_0 = 457
+    """ 属性_特殊flag 自身清零吃饭状态 """
+    EAT_FOOD_FLAG_TO_1 = 458
+    """ 属性_特殊flag 自身变成要取餐状态 """
+    EAT_FOOD_FLAG_TO_2 = 459
+    """ 属性_特殊flag 自身变成要进食状态 """
+    SLEEP_FLAG_TO_0 = 460
+    """ 属性_特殊flag 自身清零要睡眠状态 """
+    SLEEP_FLAG_TO_1 = 461
+    """ 属性_特殊flag 自身变成要睡眠状态 """
+    REST_FLAG_TO_0 = 462
+    """ 属性_特殊flag 自身清零要休息状态 """
+    REST_FLAG_TO_1 = 463
+    """ 属性_特殊flag 自身变成要休息状态 """
+    PEE_FLAG_TO_0 = 464
+    """ 属性_特殊flag 自身清零要撒尿状态 """
+    PEE_FLAG_TO_1 = 465
+    """ 属性_特殊flag 自身变成要撒尿状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

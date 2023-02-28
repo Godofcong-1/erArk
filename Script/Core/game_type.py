@@ -479,7 +479,15 @@ class SPECIAL_FLAG:
         self.imprisonment: bool = 0
         """ 被监禁状态 """
         self.shower: int = 0
-        """ 洗澡状态 """
+        """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
+        self.eat_food: int = 0
+        """ 吃饭状态，int [0无,1要取餐,2要吃饭] """
+        self.sleep: bool = 0
+        """ 要睡觉状态 """
+        self.rest: bool = 0
+        """ 要休息状态 """
+        self.pee: bool = 0
+        """ 要撒尿状态 """
 
 
 class CHARA_WORK:

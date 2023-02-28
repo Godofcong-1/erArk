@@ -771,10 +771,6 @@ class StateMachine:
 
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
-    BUY_RAND_FOOD_AT_FOODSHOP = 41
-    """ 在取餐区购买随机食物 """
-    EAT_BAG_RAND_FOOD = 42
-    """ 食用背包内随机食物 """
     REST = 43
     """ 休息一会儿 """
     SLEEP = 44
@@ -794,6 +790,18 @@ class StateMachine:
     """ 淋浴 """
     GET_SHOWER_CLOTH = 74
     """ 换上浴帽和浴巾 """
+    START_EAT_FOOD = 75
+    """ 进入要取餐状态 """
+    BUY_RAND_FOOD_AT_FOODSHOP = 76
+    """ 在取餐区购买随机食物 """
+    EAT_BAG_RAND_FOOD = 77
+    """ 食用背包内随机食物 """
+    START_SLEEP = 78
+    """ 进入要睡眠状态 """
+    START_REST = 79
+    """ 进入要休息状态 """
+    START_PEE = 80
+    """ 进入要撒尿状态 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
