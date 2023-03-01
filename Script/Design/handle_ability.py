@@ -47,20 +47,15 @@ def gain_ability(character_id: int):
         if ability_data.ability_type == 2:
             continue
         ability_level = character_data.ability[ability_cid]
-        ability_up_data = game_config.config_ability_up_data[ability_cid][ability_level]
+        need_list = game_config.config_ability_up_data[ability_cid][ability_level]
 
-        # 以&为分割判定是否有多个需求
-        if "&" not in ability_up_data.up_need:
-            need_list = []
-            need_list.append(ability_up_data.up_need)
-        else:
-            need_list = ability_up_data.up_need.split('&')
 
         # 遍历升级需求，判断是否符合升级要求
         judge = 1
         jule_dict = {}
         for need_text in need_list:
             need_type = need_text.split('|')[0][0]
+            # need_type_id = int(need_text.split('|')[0][1:])
             if len(need_text.split('|')[0]) >= 2:
                 need_type_id = int(need_text.split('|')[0][1:])
             need_value = int(need_text.split('|')[1])
