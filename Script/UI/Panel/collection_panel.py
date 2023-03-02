@@ -123,13 +123,15 @@ class Collection_Panel:
             if self.now_panel == "信物":
                 # 统计当前信物收集数
                 self.token_count = 0
-
-                for i in range(len(character_data.pl_collection.token_list)):
-                    if character_data.pl_collection.token_list[i]:
-                        npc_name = cache.character_data[i].name
-                        npc_token = cache.character_data[i].token_text
+                for npc_id in cache.npc_id_got:
+                    if npc_id == 0:
+                        continue
+                    if character_data.pl_collection.token_list[npc_id]:
+                        npc_name = cache.character_data[npc_id].name
+                        npc_token = cache.character_data[npc_id].token_text
                         collection_text += f"\n  {npc_name}：{npc_token}"
                         self.token_count += 1
+                collection_text += f"\n当前共{self.token_count}个\n"
 
             elif self.now_panel == "内裤":
 
@@ -151,6 +153,7 @@ class Collection_Panel:
                                     collection_text += f" {pan}"
                                     self.pan_count += 1
                             collection_text += f"\n"
+                collection_text += f"\n当前共{self.pan_count}条\n"
 
 
 
@@ -170,6 +173,7 @@ class Collection_Panel:
                                     collection_text += f" {socks}"
                                     self.sock_count += 1
                             collection_text += f"\n"
+                collection_text += f"\n当前共{self.sock_count}双\n"
 
 
             collection_draw.text = collection_text
@@ -228,7 +232,7 @@ class Collection_Panel:
                 character_data.talent[307] = 1
 
         # 输出提示信息
-        info_draw = draw.WaitDraw()
+        info_draw = draw.NormalDraw()
         if bonus_flag:
             info_draw.text = "\n  解锁成功\n"
         else:
