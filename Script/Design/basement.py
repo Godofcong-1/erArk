@@ -141,31 +141,29 @@ def update_work_people():
         # 医生统计
         if character_data.work.work_type == 61:
             cache.base_resouce.doctor_id_set.add(id)
+            cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_clinic(id):
                 cache.base_resouce.doctor_now += 1
-                cache.base_resouce.work_people_now += 1
         # HR统计
         elif character_data.work.work_type == 71:
             cache.base_resouce.HR_id_set.add(id)
+            cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_hr_office(id):
                 cache.base_resouce.HR_now += 1
-                cache.base_resouce.work_people_now += 1
         # 图书馆管理员统计
         elif character_data.work.work_type == 101:
             cache.base_resouce.library_manager_set.add(id)
+            cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_library_office(id) or handle_premise.handle_in_library(id):
                 cache.base_resouce.library_manager_now += 1
-                cache.base_resouce.work_people_now += 1
         # 老师统计
         elif character_data.work.work_type == 151:
             cache.base_resouce.teacher_set.add(id)
-            if handle_premise.handle_in_class_room(id):
-                cache.base_resouce.work_people_now += 1
+            cache.base_resouce.work_people_now += 1
         # 学生统计
         elif character_data.work.work_type == 152:
             cache.base_resouce.student_set.add(id)
-            if handle_premise.handle_in_class_room(id):
-                cache.base_resouce.work_people_now += 1
+            cache.base_resouce.work_people_now += 1
 
 
 def update_facility_people():

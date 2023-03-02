@@ -14,7 +14,7 @@ from Script.Design import (
     basement,
 )
 from Script.UI.Moudle import panel, draw
-from Script.UI.Panel import see_character_info_panel,assistant_panel
+from Script.UI.Panel import see_character_info_panel,assistant_panel, department_panel
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
@@ -173,7 +173,7 @@ class Character_creat_Handle:
         firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
-        tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
+        # tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             info_draw,
             sex_draw,
@@ -182,7 +182,7 @@ class Character_creat_Handle:
             firstNpc_draw,
             bonus_draw,
             # abi_draw,
-            tal_draw,
+            # tal_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -414,16 +414,28 @@ class Character_FirstNPC:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        button_text = f"   【选择初期干员】"
-        button_select_draw = draw.LeftButton(
+        button_text = f"【选择初期干员】"
+        button_select_draw = draw.CenterButton(
             _(button_text),
             _('选择初期干员'),
-            self.width,
+            self.width/8,
             cmd_func=self.select_npc,
             )
         self.return_list.append(button_select_draw.return_text)
         now_draw.draw_list.append(button_select_draw)
         now_draw.width += len(button_select_draw.text)
+
+        button_text = f"【指派干员工作】"
+        button_select_draw = draw.CenterButton(
+            _(button_text),
+            _('指派干员工作'),
+            self.width/8,
+            cmd_func=self.change_npc_work,
+            )
+        self.return_list.append(button_select_draw.return_text)
+        now_draw.draw_list.append(button_select_draw)
+        now_draw.width += len(button_select_draw.text)
+
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
@@ -437,6 +449,10 @@ class Character_FirstNPC:
             info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
         else:
             info_last_draw.text = f" 已选择全部初始干员"
+
+        work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
+        info_last_draw.text += f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
+
         now_draw.draw_list.append(info_last_draw)
         now_draw.width += len(info_last_draw.text)
 
@@ -481,6 +497,90 @@ class Character_FirstNPC:
             self.handle_panel.draw()
             return_list = []
             return_list.extend(self.handle_panel.return_list)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back_draw.draw()
+            line_feed_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def change_npc_work(self):
+        """
+        调整干员的工作岗位
+        """
+
+        handle_leisure_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_doctor_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_HR_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_library_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_education_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            return_list = []
+
+            # 空闲干员
+            info_text = f"\n  空闲干员："
+            info_draw.text = info_text
+            info_draw.draw()
+            leisure_list = []
+            cache.npc_id_got.discard(0)
+            for id in cache.npc_id_got:
+                if (
+                    id not in cache.base_resouce.doctor_id_set
+                    and id not in cache.base_resouce.HR_id_set
+                    and id not in cache.base_resouce.library_manager_set
+                    and id not in cache.base_resouce.teacher_set
+                    and id not in cache.base_resouce.student_set
+                ):
+                    leisure_list.append(id)
+            handle_leisure_panel.text_list = leisure_list
+            handle_leisure_panel.update()
+            handle_leisure_panel.draw()
+            return_list.extend(handle_leisure_panel.return_list)
+
+            # 医疗部
+            info_text = f"\n  医疗部："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_doctor_panel.text_list = list(cache.base_resouce.doctor_id_set)
+            handle_doctor_panel.update()
+            handle_doctor_panel.draw()
+            return_list.extend(handle_doctor_panel.return_list)
+
+            # 文职部
+            info_text = f"\n  文职部："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_HR_panel.text_list = list(cache.base_resouce.HR_id_set)
+            handle_HR_panel.update()
+            handle_HR_panel.draw()
+            return_list.extend(handle_HR_panel.return_list)
+
+            # 图书馆
+            info_text = f"\n  图书馆："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_library_panel.text_list = list(cache.base_resouce.library_manager_set)
+            handle_library_panel.update()
+            handle_library_panel.draw()
+            return_list.extend(handle_library_panel.return_list)
+
+            # 教育区
+            info_text = f"\n  教育区："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_education_panel.text_list = list(cache.base_resouce.teacher_set) + list(cache.base_resouce.student_set)
+            handle_education_panel.update()
+            handle_education_panel.draw()
+            return_list.extend(handle_education_panel.return_list)
+
+            line_feed_draw.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed_draw.draw()

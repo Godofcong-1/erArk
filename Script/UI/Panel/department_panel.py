@@ -477,3 +477,4 @@ class ChangeWorkButtonList:
         target_data: game_type.Character = cache.character_data[self.NPC_id]
         target_data.work.work_type = work_id
         basement.update_work_people()
+        basement.update_facility_people()
