@@ -22,6 +22,7 @@ from Script.UI.Panel import (
     borrow_book_panel,
     manage_library,
     debug_panel,
+    originium_arts,
 )
 from Script.Config import normal_config
 
@@ -169,7 +170,13 @@ def manage_library_flow():
     now_panel.draw()
 
 @handle_panel.add_panel(constant.Panel.DEBUG_ADJUST)
-def manage_debug_flow():
+def debug_flow():
     """debug数值调整面板"""
     now_panel = debug_panel.Debug_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.ORIGINIUM_ARTS)
+def originium_arts_flow():
+    """源石技艺面板"""
+    now_panel = originium_arts.Originium_Arts_Panel(width)
     now_panel.draw()

@@ -182,7 +182,7 @@ class Read_Book_Panel:
 
 class Take_Care_Baby_Panel:
     """
-    用于读书的面板对象
+    用于照顾婴儿的面板对象
     Keyword arguments:
     width -- 绘制宽度
     """
@@ -307,3 +307,4 @@ class Take_Care_Baby_Panel:
 
         character_data.behavior.duration = 30
         update.game_update_flow(30)
+

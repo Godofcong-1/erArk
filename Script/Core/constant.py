@@ -947,6 +947,8 @@ class Panel:
     """ 图书馆管理面板 """
     DEBUG_ADJUST = 22
     """ DEBUG面板 """
+    ORIGINIUM_ARTS = 23
+    """ 源石技艺面板 """
 
 
 class SecondBehavior:
@@ -1404,8 +1406,8 @@ class Instruct:
     """ 道歉 """
     LISTEN_COMPLAINT = 0
     """ 听牢骚 """
-    PRAY = 0
-    """ 祈愿 """
+    ORIGINIUM_ARTS = 0
+    """ 源石技艺 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0

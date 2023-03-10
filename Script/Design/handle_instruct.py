@@ -931,19 +931,15 @@ def handle_listen_complaint():
 
 
 @add_instruct(
-    constant.Instruct.PRAY,
+    constant.Instruct.ORIGINIUM_ARTS,
     constant.InstructType.DAILY,
-    _("祈愿_未实装"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO},
+    _("源石技艺"),
+    {constant_promise.Premise.TIRED_LE_89,
+     constant_promise.Premise.NOT_H},
 )
-def handle_pray():
-    """处理祈愿指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+def handle_originium_arts():
+    """处理源石技艺指令"""
+    cache.now_panel_id = constant.Panel.ORIGINIUM_ARTS
 
 
 @add_instruct(
