@@ -36,7 +36,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     change_character_persistent_state(character_id, now_time, add_time)
     # 自动获得对应素质和能力
     handle_talent.gain_talent(character_id,now_gain_type = 0)
-    handle_ability.gain_ability(character_id)
 
     behavior_id = now_character_data.behavior.behavior_id
     if event_flag:  # 在事件的开始结算中不结算以下内容

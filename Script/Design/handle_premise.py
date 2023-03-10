@@ -488,6 +488,25 @@ def handle_not_in_food_shop(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_OFFICE)
+def handle_in_office(character_id: int) -> int:
+    """
+    校验角色是否在办公室（含全部办公室）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    for single_tag in now_scene_data.scene_tag:
+        if "Office" in single_tag:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IN_DR_OFFICE)
 def handle_in_dr_office(character_id: int) -> int:
     """
@@ -858,6 +877,23 @@ def handle_in_library(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_LIBRARY_ZONE)
+def handle_in_library_zone(character_id: int) -> int:
+    """
+    校验角色是否在图书馆区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    if "图书馆" in now_scene_str:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NOT_IN_LIBRARY)
 def handle_not_in_library(character_id: int) -> int:
     """
@@ -1016,6 +1052,23 @@ def handle_in_clinic(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if "Clinic" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_MEDICAL_ZONE)
+def handle_in_medical_zone(character_id: int) -> int:
+    """
+    校验角色是否在医疗区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    if "医疗区" in now_scene_str:
         return 1
     return 0
 
@@ -4639,6 +4692,20 @@ def handle_is_medical(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.profession == 3
+
+
+@add_premise(constant_promise.Premise.T_IS_MEDICAL)
+def handle_t_is_medical(character_id: int) -> int:
+    """
+    校验交互对象的职业为医疗
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.profession == 3
 
 
 @add_premise(constant_promise.Premise.PATIENT_WAIT)

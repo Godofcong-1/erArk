@@ -26,7 +26,8 @@ from Script.Design import (
     character_move,
     pregnancy,
     basement,
-    handle_talent
+    handle_talent,
+    handle_ability,
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel
@@ -693,6 +694,8 @@ def update_sleep():
             pregnancy.check_all_pregnancy(character_id)
             # 检查是否有可以获得的素质
             handle_talent.gain_talent(character_id,now_gain_type = 3)
+            # 检查是否有可以升级的能力
+            handle_ability.gain_ability(character_id)
 
     # 非角色部分
     update_save()

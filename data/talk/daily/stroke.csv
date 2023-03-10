@@ -36,11 +36,11 @@ str,int,int,str,str
 1018,103,0,favorability_ge_3,{Name}和{TargetName}的身体紧贴在一起，感受着对方的呼吸。
 1019,103,0,favorability_ge_3,{Name}为{TargetName}揉了揉手，手指在{TargetName}的掌心上细腻地揉搓。
 
-1021,103,0,high_1&in_dr_off,{Name}在文件架上取文件时，手指不小心碰到了{TargetName}的手，两人的手指短暂地交错在一起。
-1022,103,0,high_1&in_dr_off,{Name}靠过来看着{TargetName}的屏幕时，两人的肩膀紧贴着，{name}感觉到了{TargetName}的体温。
-1023,103,0,high_1&in_dr_off,当{TargetName}从椅子上起身时，手不小心碰到了{Name}的肩膀，两人的眼神也瞬间交汇在一起。
-1024,103,0,high_1&in_dr_off,{Name}不小心把笔掉在了地上，{TargetName}帮忙捡起来，两人的手不经意地碰了一下。
-1025,103,0,high_1&in_dr_off,{Name}帮{TargetName}完成了一项重要的工作，两人跳起来击了个掌来庆祝胜利。
+1021,103,0,high_1&in_office,{Name}在文件架上取文件时，手指不小心碰到了{TargetName}的手，两人的手指短暂地交错在一起。
+1022,103,0,high_1&in_office,{Name}靠过来看着{TargetName}的屏幕时，两人的肩膀紧贴着，{name}感觉到了{TargetName}的体温。
+1023,103,0,high_1&in_office,当{TargetName}从椅子上起身时，手不小心碰到了{Name}的肩膀，两人的眼神也瞬间交汇在一起。
+1024,103,0,high_1&in_office,{Name}不小心把笔掉在了地上，{TargetName}帮忙捡起来，两人的手不经意地碰了一下。
+1025,103,0,high_1&in_office,{Name}帮{TargetName}完成了一项重要的工作，两人跳起来击了个掌来庆祝胜利。
 
 1031,103,0,high_1&in_library,{TargetName}正在寻找一本书，{Name}偶然间看到了这本书并帮忙从书架里取下来，递到了{TargetName}的怀里。
 1032,103,0,high_1&in_library,{TargetName}在看书时不小心掉了书，{Name}帮助{TargetName}把书捡起来，两个人的手叠在了一起。
