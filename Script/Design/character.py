@@ -13,6 +13,7 @@ from Script.Design import (
     attr_calculation,
     clothing,
     game_time,
+    handle_talent,
 
 )
 from Script.Config import game_config
@@ -62,6 +63,8 @@ def init_attr(character_id: int):
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
+        character_data.sanity_point = 0
+        character_data.sanity_point_max = 100
         character_data.pl_collection.token_list = attr_calculation.get_token_zero(
             character_data.pl_collection.token_list)
         character_data.tired_point = 0
@@ -269,12 +272,16 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge -= judge_hardlove
     if judge_hardlove:
         calculation_text += "+难以越过的底线(-" + str(judge_hardlove) + ")"
-    # 博士信息素修正#
-    judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
-        306] * 50
-    judge += judge_information
-    if judge_information:
-        calculation_text += "+博士信息素(" + str(judge_information) + ")"
+
+    # 激素系能力修正#
+    if character_data.pl_ability.hormone > 0:
+        judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
+            306] * 50
+        judge += judge_information
+        talent_id = handle_talent.have_hormone_talent()
+        talent_name = game_config.config_talent[talent_id].name
+        if judge_information:
+            calculation_text += f"+{talent_name}({str(judge_information)})"
 
     # 当前场景有人修正
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)

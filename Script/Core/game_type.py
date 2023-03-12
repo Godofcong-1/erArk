@@ -540,6 +540,8 @@ class PLAYER_ABILITY:
         """ 最大同时跟随人数 """
         self.jj_size: int = 1
         """ 阴茎大小，0短小,1普通,2粗大,3巨根 """
+        self.hormone: int = 0
+        """ 激素系能力 """
 
 
 # class Height:
@@ -826,6 +828,10 @@ class Character:
         """ 角色最大MP """
         self.mana_point: int = 0
         """ 角色当前MP """
+        self.sanity_point_max: int = 0
+        """ 角色最大理智 """
+        self.sanity_point: int = 0
+        """ 角色当前理智 """
         self.eja_point_max: int = 0
         """ 角色最大射精槽 """
         self.eja_point: int = 0

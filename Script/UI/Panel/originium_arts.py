@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, attr_calculation, update, attr_text
+from Script.Design import handle_talent, attr_calculation, update, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import random
@@ -33,6 +33,8 @@ class Originium_Arts_Panel:
         # """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
+        self.pl_character_data = cache.character_data[0]
+        """ 玩家的属性 """
 
     def draw(self):
         """绘制对象"""
@@ -104,14 +106,20 @@ class Originium_Arts_Panel:
                 button4_draw.draw()
                 return_list.append(button4_draw.return_text)
 
-            if 1:
-                button5_text = f"[005]激素系能力(未实装)"
+            if handle_talent.have_hormone_talent():
+                button5_text = f"[005]激素系能力"
+                hormone_id = self.pl_character_data.pl_ability.hormone
+                if hormone_id > 0:
+                    ability_name = game_config.config_talent[hormone_id].name
+                    button5_text += f"(开启中-{ability_name})(10理智/h)"
+                else:
+                    button5_text += f"(未开启)"
                 button5_draw = draw.LeftButton(
                     _(button5_text),
                     _("5"),
                     window_width,
-                    cmd_func=self.to_do,
-                    args=(),
+                    cmd_func=self.ability_switch,
+                    args=(5),
                     )
                 line_feed.draw()
                 button5_draw.draw()
@@ -160,6 +168,15 @@ class Originium_Arts_Panel:
         now_draw.width = window_width
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
+
+    def ability_switch(self,ability_type):
+        """能力开关"""
+
+        if ability_type == 5:
+            self.pl_character_data.pl_ability.hormone *= -1
+            # 第一次开始则进行初始化
+            if self.pl_character_data.pl_ability.hormone == 0:
+                self.pl_character_data.pl_ability.hormone = handle_talent.have_hormone_talent()
 
 
 class Down_Negative_Talent_Panel:

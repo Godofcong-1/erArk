@@ -108,3 +108,13 @@ def gain_talent(character_id: int, now_gain_type: int):
                 now_draw_succed.text = f"\n{character_data.name}获得了{talent_name}\n"
                 now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
+
+def have_hormone_talent():
+    """
+    验证是否有激素系素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    for talent_id in {306,305,304}:
+        if pl_character_data.talent[talent_id]:
+            return talent_id
+    return 0
