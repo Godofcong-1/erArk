@@ -1406,8 +1406,6 @@ class Instruct:
     """ 道歉 """
     LISTEN_COMPLAINT = 0
     """ 听牢骚 """
-    ORIGINIUM_ARTS = 0
-    """ 源石技艺 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0
@@ -1736,6 +1734,8 @@ class Instruct:
     """ 查看属性 """
     ITEM = 0
     """ 道具 """
+    ORIGINIUM_ARTS = 0
+    """ 源石技艺 """
     SAVE = 0
     """ 读写存档 """
     ABL_UP = 0

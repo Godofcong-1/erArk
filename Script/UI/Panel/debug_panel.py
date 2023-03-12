@@ -252,9 +252,9 @@ class Debug_Panel:
             draw_text_list.append(f"[004]:当前二段行为状态")
             draw_text_list.append(f"[005]:当前事件状态")
             draw_text_list.append(f"[006]:状态")
-            draw_text_list.append(f"[007]:能力")
-            draw_text_list.append(f"[008]:经验")
-            draw_text_list.append(f"[009]:宝珠")
+            draw_text_list.append(f"[007]:能力（已实装）")
+            draw_text_list.append(f"[008]:经验（已实装）")
+            draw_text_list.append(f"[009]:宝珠（已实装）")
             draw_text_list.append(f"[010]:素质（已实装）")
             draw_text_list.append(f"[011]:初次状态记录")
             draw_text_list.append(f"[012]:污浊（已实装）")
@@ -567,8 +567,113 @@ class Debug_Panel:
             name_draw.draw()
             return_list = []
 
+            # 能力数据
+            if key_index == 7:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in target_data.ability:
+                    name = game_config.config_ability[cid].name
+                    info_text += f"{cid}:{name}={target_data.ability[cid]} "
+                draw_text_list.append(f"[000]:能力列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.ability[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+            # 经验数据
+            elif key_index == 8:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in target_data.experience:
+                    name = game_config.config_experience[cid].name
+                    info_text += f"{cid}:{name}={target_data.experience[cid]} "
+                draw_text_list.append(f"[000]:经验列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.experience[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+            # 宝珠数据
+            elif key_index == 9:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in target_data.juel:
+                    name = game_config.config_juel[cid].name
+                    info_text += f"{cid}:{name}={target_data.juel[cid]} "
+                draw_text_list.append(f"[000]:宝珠列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.juel[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
             # 素质数据
-            if key_index == 10:
+            elif key_index == 10:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.talent:

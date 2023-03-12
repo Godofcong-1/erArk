@@ -46,7 +46,7 @@ class Originium_Arts_Panel:
             # line = draw.LineDraw("-", window_width)
             # line.draw()
             cinfo_draw = draw.NormalDraw()
-            info_text = f"\n要进行哪方面的管理呢？\n"
+            info_text = f"\n要使用哪一个源石技艺呢？\n"
             cinfo_draw.text = info_text
             cinfo_draw.draw()
 
@@ -54,35 +54,22 @@ class Originium_Arts_Panel:
             # button_all_draw = panel.LeftDrawTextListPanel()
 
             DNT_Panel = Down_Negative_Talent_Panel(self.width)
-            button0_text = f"[001]消除负面刻印"
-            button0_draw = draw.LeftButton(
-                _(button0_text),
+            button1_text = f"[001]消除负面刻印"
+            button1_draw = draw.LeftButton(
+                _(button1_text),
                 _("1"),
                 window_width,
                 cmd_func=DNT_Panel.draw
                 )
             line_feed.draw()
-            button0_draw.draw()
-            return_list.append(button0_draw.return_text)
+            button1_draw.draw()
+            return_list.append(button1_draw.return_text)
 
             if 1:
-                button1_text = f"[002]时间停止(未实装)"
-                button1_draw = draw.LeftButton(
-                    _(button1_text),
-                    _("2"),
-                    window_width,
-                    cmd_func=self.to_do,
-                    args=(),
-                    )
-                line_feed.draw()
-                button1_draw.draw()
-                return_list.append(button1_draw.return_text)
-
-            if 1:
-                button2_text = f"[003]催眠(未实装)"
+                button2_text = f"[002]时间停止(未实装)"
                 button2_draw = draw.LeftButton(
                     _(button2_text),
-                    _("3"),
+                    _("2"),
                     window_width,
                     cmd_func=self.to_do,
                     args=(),
@@ -92,10 +79,10 @@ class Originium_Arts_Panel:
                 return_list.append(button2_draw.return_text)
 
             if 1:
-                button3_text = f"[004]触觉系能力(未实装)"
+                button3_text = f"[003]催眠(未实装)"
                 button3_draw = draw.LeftButton(
                     _(button3_text),
-                    _("4"),
+                    _("3"),
                     window_width,
                     cmd_func=self.to_do,
                     args=(),
@@ -103,6 +90,58 @@ class Originium_Arts_Panel:
                 line_feed.draw()
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
+
+            if 1:
+                button4_text = f"[004]自我强化(未实装)"
+                button4_draw = draw.LeftButton(
+                    _(button4_text),
+                    _("4"),
+                    window_width,
+                    cmd_func=self.to_do,
+                    args=(),
+                    )
+                line_feed.draw()
+                button4_draw.draw()
+                return_list.append(button4_draw.return_text)
+
+            if 1:
+                button5_text = f"[005]激素系能力(未实装)"
+                button5_draw = draw.LeftButton(
+                    _(button5_text),
+                    _("5"),
+                    window_width,
+                    cmd_func=self.to_do,
+                    args=(),
+                    )
+                line_feed.draw()
+                button5_draw.draw()
+                return_list.append(button5_draw.return_text)
+
+            if 1:
+                button6_text = f"[006]视觉系能力(未实装)"
+                button6_draw = draw.LeftButton(
+                    _(button6_text),
+                    _("6"),
+                    window_width,
+                    cmd_func=self.to_do,
+                    args=(),
+                    )
+                line_feed.draw()
+                button6_draw.draw()
+                return_list.append(button6_draw.return_text)
+
+            if 1:
+                button7_text = f"[007]触觉系能力(未实装)"
+                button7_draw = draw.LeftButton(
+                    _(button7_text),
+                    _("7"),
+                    window_width,
+                    cmd_func=self.to_do,
+                    args=(),
+                    )
+                line_feed.draw()
+                button7_draw.draw()
+                return_list.append(button7_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -121,60 +160,6 @@ class Originium_Arts_Panel:
         now_draw.width = window_width
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
-
-
-class SelectRecommendBookButton:
-    """
-    点击后可选择作为推荐书籍类别的按钮对象
-    Keyword arguments:
-    text -- 选项名字
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
-
-    def __init__(
-        self, book_type_id: int, width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
-
-        self.book_type_id: int = book_type_id
-        """ 书籍类型编号 """
-        self.draw_text: str = ""
-        """ 绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-
-        type_data = game_config.config_book_type[self.book_type_id]
-        button_text = f"[{str(type_data.cid).rjust(2,'0')}]：{type_data.father_type_name}-{type_data.son_type_name}"
-        name_draw = draw.LeftDraw()
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
-            button_text += f" (已推荐)"
-            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
-        else:
-            name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
-
-        """ 绘制的对象 """
-        self.now_draw = name_draw
-
-    def button_0(self):
-        """选项1"""
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
-            cache.base_resouce.recommend_book_type_set.remove(self.book_type_id)
-        elif 3 - len(cache.base_resouce.recommend_book_type_set):
-            cache.base_resouce.recommend_book_type_set.add(self.book_type_id)
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
 
 
 class Down_Negative_Talent_Panel:
@@ -249,7 +234,7 @@ class Down_Negative_Talent_Panel:
                 break
 
     def choice_down_which(self, chara_id):
-        """选择照顾的方式"""
+        """选择降低哪一个"""
         character_data = cache.character_data[chara_id]
         self.chara_id = chara_id
         name = character_data.name
@@ -264,6 +249,8 @@ class Down_Negative_Talent_Panel:
             # 输出提示信息
             info_draw = draw.NormalDraw()
             info_text = f"\n要降低[{name}]的哪个刻印呢？(需要消耗5条内裤，当前共{len(panties_data)}条)\n\n"
+            if cache.debug_mode:
+                info_text += "当前为debug模式，不需要消耗内裤\n\n"
             info_draw.text = info_text
             info_draw.draw()
 
@@ -271,7 +258,7 @@ class Down_Negative_Talent_Panel:
                 if character_data.ability[ability_id]:
                     ability_name = game_config.config_ability[ability_id].name
                     ability_lv = character_data.ability[ability_id]
-                    button_text = f"{ability_name}[lv{ability_lv}] "
+                    button_text = f"  {ability_name}[lv{ability_lv}]"
 
                     button_draw = draw.LeftButton(
                         _(button_text),
@@ -303,8 +290,9 @@ class Down_Negative_Talent_Panel:
         pl_character_data = cache.character_data[0]
         panties_data = pl_character_data.pl_collection.npc_panties[self.chara_id]
         if len(panties_data) >= 5 or cache.debug_mode:
-            for i in range(5):
-                panties_data.pop()
+            if not cache.debug_mode:
+                for i in range(5):
+                    panties_data.pop()
             character_data.ability[ability_id] -= 1
             info_text = "  随着一阵火焰，5条内裤化为一缕青烟，消散在空中\n"
             info_text += f"  {character_data.name}感觉心里轻松了很多，对{pl_character_data.name}的印象有些改观了，{game_config.config_ability[ability_id].name}下降到了{character_data.ability[ability_id]}级\n"
@@ -312,4 +300,6 @@ class Down_Negative_Talent_Panel:
             info_text = "  内裤数量不足\n"
         info_draw.text = info_text
         info_draw.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
 

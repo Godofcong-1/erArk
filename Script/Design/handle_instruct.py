@@ -932,7 +932,7 @@ def handle_listen_complaint():
 
 @add_instruct(
     constant.Instruct.ORIGINIUM_ARTS,
-    constant.InstructType.DAILY,
+    constant.InstructType.SYSTEM,
     _("源石技艺"),
     {constant_promise.Premise.TIRED_LE_89,
      constant_promise.Premise.NOT_H},
