@@ -680,31 +680,26 @@ class Character_Bonus:
         line = draw.LineDraw("↘", 1)
         now_draw.draw_list.append(line)
 
-        info_draw = draw.LeftDraw()
-        info_draw.width = 1
-        info_draw.text = f" 当前为第 {str(cache.game_round)} 周目\n"
-        info_draw.text += f" 当前总奖励点数 ="
         if cache.game_round == 1:
             bonus_all += 20
-            info_draw.text += f" {bonus_all} (新玩家奖励+20)"
         if cache.debug_mode:
             bonus_all += 999
         self.bonus_now = bonus_all
 
-        now_draw.draw_list.append(info_draw)
-        now_draw.width += len(info_draw.text)
-
         info_talent_draw = draw.LeftDraw()
         info_talent_draw.width = 1
-        info_talent_draw.text = f"\n 可选奖励有：\n"
+        info_talent_draw.text = f" 可选奖励有：\n"
         now_draw.draw_list.append(info_talent_draw)
         now_draw.width += len(info_talent_draw.text)
+
+        bonus_use_text = ""
 
         talent_data_304 = game_config.config_talent[304]
         if character_data.talent[304]:
             button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
             self.bonus_now -= 10
             draw_style = "nowmap"
+            bonus_use_text += f" - {talent_data_304.name}(10)"
         else:
             button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
             draw_style = "standard"
@@ -726,6 +721,7 @@ class Character_Bonus:
             button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
             self.bonus_now -= 10
             draw_style = "nowmap"
+            bonus_use_text += f" - {talent_data_307.name}(10)"
         else:
             button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
             draw_style = "standard"
@@ -746,6 +742,7 @@ class Character_Bonus:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
             draw_style = "nowmap"
+            bonus_use_text += f" - 启动资金(5)"
         else:
             button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
             draw_style = "standard"
@@ -767,6 +764,7 @@ class Character_Bonus:
             button_text = f"   ●助理干员(5)：选择[{target_data.name}]成为助理干员，初始拥有1000点好感和50%信赖度"
             self.bonus_now -= 5
             draw_style = "nowmap"
+            bonus_use_text += f" - 助理干员(5)"
         else:
             button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
             draw_style = "standard"
@@ -783,14 +781,14 @@ class Character_Bonus:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        info_last_draw = draw.LeftDraw()
-        info_last_draw.width = 1
-        if self.bonus_now:
-            info_last_draw.text = f" 当前剩余奖励点数 = {self.bonus_now}\n"
-        else:
-            info_last_draw.text = f" 奖励点数消耗完毕\n"
-        now_draw.draw_list.append(info_last_draw)
-        now_draw.width += len(info_last_draw.text)
+        info_draw = draw.LeftDraw()
+        info_draw.width = 1
+        info_draw.text = f" \n 当前为第 {str(cache.game_round)} 周目\n"
+        info_draw.text += f" 当前剩余奖励点数 ="
+        info_draw.text += f" {self.bonus_now} 【新玩家奖励(20)"
+        info_draw.text += f"{bonus_use_text}】\n"
+        now_draw.draw_list.append(info_draw)
+        now_draw.width += len(info_draw.text)
 
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
@@ -813,6 +811,11 @@ class Character_Bonus:
             character_data.talent[talent_id] = 0
         elif self.bonus_now >= 10:
             character_data.talent[talent_id] = 1
+            # 获得对应素质则同步至对应收集解锁页面
+            if talent_id == 304:
+                character_data.pl_collection.collection_bonus[1] = True
+            elif talent_id == 307:
+                character_data.pl_collection.collection_bonus[101] = True
         else:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1

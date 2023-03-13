@@ -228,6 +228,10 @@ class Collection_Panel:
         if bonus_flag:
             if bonus_id == 1:
                 character_data.talent[304] = 1
+            if bonus_id == 2:
+                character_data.talent[305] = 1
+            if bonus_id == 3:
+                character_data.talent[306] = 1
             elif bonus_id == 101:
                 character_data.talent[307] = 1
 
