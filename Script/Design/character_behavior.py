@@ -663,7 +663,7 @@ def update_sleep():
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n博士入睡，开始结算各种数据\n"
+    now_draw.text = "\n博士入睡，开始结算各种数据\n\n"
     now_draw.draw()
     id_list = cache.npc_id_got.copy()
     id_list.add(0)
@@ -713,7 +713,7 @@ def update_new_day():
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n已过24点，开始结算各种数据\n"
+    now_draw.text = "\n已过24点，开始结算各种数据\n\n"
     now_draw.draw()
     week_day = cache.game_time.weekday()
 
@@ -734,7 +734,7 @@ def update_new_day():
     # 非角色部分
     basement.update_base_resouce_newday()
     cache.pre_game_time = cache.game_time
-    update_save()
+    # update_save()
 
 
 def update_save():

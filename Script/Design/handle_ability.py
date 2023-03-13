@@ -49,7 +49,6 @@ def gain_ability(character_id: int):
         ability_level = character_data.ability[ability_cid]
         need_list = game_config.config_ability_up_data[ability_cid][ability_level]
 
-
         # 遍历升级需求，判断是否符合升级要求
         judge = 1
         jule_dict = {}
@@ -86,16 +85,16 @@ def gain_ability(character_id: int):
                     judge = 0
                     break
 
-            # 如果符合获得条件，则该能力升级
-            if judge:
-                character_data.ability[ability_cid] += 1
-                ability_name = ability_data.name
+        # 如果符合获得条件，则该能力升级
+        if judge:
+            character_data.ability[ability_cid] += 1
+            ability_name = ability_data.name
 
-                # 减少对应的珠
-                for need_type_id in jule_dict:
-                    character_data.juel[need_type_id] -= jule_dict[need_type_id]
+            # 减少对应的珠
+            for need_type_id in jule_dict:
+                character_data.juel[need_type_id] -= jule_dict[need_type_id]
 
-                now_draw_succed = draw.WaitDraw()
-                now_draw_succed.text = f"\n{character_data.name}的{ability_name}提升到{str(ability_level+1)}级\n"
-                now_draw_succed.draw()
+            now_draw_succed = draw.WaitDraw()
+            now_draw_succed.text = f"{character_data.name}的{ability_name}提升到{str(ability_level+1)}级\n"
+            now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")

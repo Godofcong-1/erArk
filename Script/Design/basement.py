@@ -3,11 +3,16 @@ from Script.Core import (
     cache_control,
     game_type,
 )
-from Script.Config import game_config
+from Script.Config import game_config, normal_config
 from Script.Design import handle_premise
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
+window_width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
+width = normal_config.config_normal.text_width
+""" 屏幕宽度 """
 
 
 def get_base_zero() -> dict:
@@ -112,6 +117,12 @@ def update_base_resouce_newday():
     Return arguments:
     无
     """
+
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
+    now_draw.draw()
+
     # 刷新新病人数量，已治愈病人数量和治疗收入归零
     cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
     cache.base_resouce.patient_cured = 0
