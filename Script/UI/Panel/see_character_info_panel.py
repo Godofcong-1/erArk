@@ -417,9 +417,11 @@ class SeeCharacterClothPanel:
                 # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
                 if clothing_type in {6, 9} and not cache.debug_mode:
                     # print(f"debug {target_character_data.name}.cloth_see[clothing_type] = {target_character_data.cloth_see[clothing_type]}")
-                    # 如果有内衣透视素质，则自动变为显示
+                    # 以下情况自动显示：
+                    # 1.开启透视能力
+                    # 2.没穿对应部位外面的衣服
                     if (
-                            character_data.talent[307]
+                            (character_data.pl_ability.visual and character_data.talent[307])
                             or len(target_character_data.cloth.cloth_wear[clothing_type - 1]) == 0
                     ):
                         target_character_data.cloth.cloth_see[clothing_type] = True
@@ -671,7 +673,7 @@ class CharacterInfoHead:
                 urinate=urinate_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 3
+        message_draw.width = width / 3.5
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
         hp_draw.width = width / 6
@@ -692,6 +694,15 @@ class CharacterInfoHead:
             _("气力"),
         )
         if character_id == 0:
+            sp_draw = draw.InfoBarDraw()
+            sp_draw.width = width / 6
+            sp_draw.scale = 0.8
+            sp_draw.set(
+                "SanityPointbar",
+                int(character_data.sanity_point_max),
+                int(character_data.sanity_point),
+                _("理智"),
+            )
             ep_draw = draw.InfoBarDraw()
             ep_draw.width = width / 6
             ep_draw.scale = 0.8
@@ -710,7 +721,7 @@ class CharacterInfoHead:
         None_draw.text = (" ")
         if character_id == 0:
             self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw, None_draw, mp_draw, ep_draw),
+                (message_draw, hp_draw, None_draw, mp_draw, sp_draw, ep_draw),
                 # (status_draw),
             ]
         else:

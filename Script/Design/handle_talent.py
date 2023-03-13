@@ -114,7 +114,27 @@ def have_hormone_talent():
     验证是否有激素系素质\n
     """
     pl_character_data = cache.character_data[0]
-    for talent_id in {306,305,304}:
+    for talent_id in [306,305,304]:
+        if pl_character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_visual_talent():
+    """
+    验证是否有视觉系素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    for talent_id in [309,308,307]:
+        if pl_character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_tactile_talent():
+    """
+    验证是否有触觉系素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    for talent_id in [312,311,310]:
         if pl_character_data.talent[talent_id]:
             return talent_id
     return 0

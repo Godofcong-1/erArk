@@ -75,13 +75,17 @@ class Dirty_Panel:
             name_draw = draw.NormalDraw()
 
             # 遍历全部位并输出结果
-            # 部位列表[0"头发",1"脸部",2"口腔",3"胸部",4"腋部",5"手部",6"小穴",7"后穴",8"尿道",9"腿部",10"脚部",11"尾巴",12"兽角",13"兽耳"]
-            # 服装列表[0"帽子",1"眼镜",2"耳部",3"脖子",4"嘴部",5"上衣",6"内衣（上）",7"手套",8"下衣",9"内衣（下）",10"袜子",11"鞋子",12"武器",13"附属物1",14"附属物2",15"附属物3",16"附属物4",17"附属物5"]
             if self.now_panel == "身体":
                 a_clean_list = [" <脏污>", " <灌肠中>", " <已灌肠清洁过>", " <精液灌肠中>", " <已精液灌肠过>"]
                 now_text = "\n"
-                for i in range(11):
+                for i in range(15):
                     now_text += "  " + target_data.dirty.body_semen[i][0] + "："
+
+                    # 腔内透视判定
+                    if i in {6,7,8,9}:
+                        if not (character_data.pl_ability.visual and character_data.talent[308]):
+                            now_text += "<未知>（需要腔内透视）\n"
+                            continue
 
                     # 小穴
                     if i == 6:
@@ -136,11 +140,12 @@ class Dirty_Panel:
                     type_name = game_config.config_clothing_type[clothing_type].name
                     # 当该类型里有衣服存在的时候才显示
                     if len(target_data.cloth.cloth_wear[clothing_type]):
+                        now_text += f"  [{type_name}]:"
                         # 正常情况下不显示胸部和内裤的服装,debug或该部位可以显示则显示
                         if clothing_type in {6, 9} and not cache.debug_mode:
                             if not target_data.cloth.cloth_see[clothing_type]:
+                                now_text += " 未知（需要内衣透视）\n"
                                 continue
-                        now_text += f"  [{type_name}]:"
                         # 如果有多件衣服，则依次显示
                         for cloth_id in target_data.cloth.cloth_wear[clothing_type]:
                             cloth_name = game_config.config_clothing_tem[cloth_id].name

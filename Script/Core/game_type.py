@@ -542,6 +542,10 @@ class PLAYER_ABILITY:
         """ 阴茎大小，0短小,1普通,2粗大,3巨根 """
         self.hormone: int = 0
         """ 激素系能力 """
+        self.visual: bool = False
+        """ 视觉系能力 """
+        self.tactile: bool = False
+        """ 触觉系能力 """
 
 
 # class Height:

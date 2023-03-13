@@ -666,16 +666,17 @@ def update_sleep():
     now_draw.text = "\n博士入睡，开始结算各种数据\n"
     now_draw.draw()
     id_list = cache.npc_id_got.copy()
-    id_list.discard(0)
+    id_list.add(0)
 
     # 角色刷新
     for character_id in id_list:
         character_data: game_type.Character = cache.character_data[character_id]
         # 结算数值为珠
         settle_character_juel(character_id)
-        # 清零射精槽
+        # 玩家结算
         if character_id == 0:
-            character_data.eja_point = 0
+            character_data.eja_point = 0 # 清零射精槽
+            character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.action_info.sleep_time = cache.game_time
         else:
             # 清零H状态
@@ -811,3 +812,23 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             # 非睡觉时间内，疲劳归零则直接结算当前行动
             if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
                 judge_character_status(character_id, now_time, end_now = 2)
+
+        # 结算玩家源石技艺的理智值消耗
+        if character_id == 0:
+            # 激素系
+            if now_character_data.pl_ability.hormone > 0:
+                down_sp = max(int(past_time / 6),1)
+                now_character_data.sanity_point -= down_sp
+            # 视觉系
+            if now_character_data.pl_ability.visual:
+                down_sp = max(int(past_time / 6),1)
+                now_character_data.sanity_point -= down_sp
+            # 理智值不足则归零并中断所有开启中的源石技艺
+            if now_character_data.sanity_point < 0:
+                now_character_data.sanity_point = 0
+                now_character_data.pl_ability.hormone *= -1
+                # 输出提示信息
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n理智值不足，开启的源石技艺已全部中断\n"
+                now_draw.draw()

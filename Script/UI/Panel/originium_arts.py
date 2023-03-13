@@ -67,7 +67,7 @@ class Originium_Arts_Panel:
             button1_draw.draw()
             return_list.append(button1_draw.return_text)
 
-            if 1:
+            if 0:
                 button2_text = f"[002]时间停止(未实装)"
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -80,7 +80,7 @@ class Originium_Arts_Panel:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            if 1:
+            if 0:
                 button3_text = f"[003]催眠(未实装)"
                 button3_draw = draw.LeftButton(
                     _(button3_text),
@@ -93,7 +93,7 @@ class Originium_Arts_Panel:
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
 
-            if 1:
+            if 0:
                 button4_text = f"[004]自我强化(未实装)"
                 button4_draw = draw.LeftButton(
                     _(button4_text),
@@ -110,8 +110,8 @@ class Originium_Arts_Panel:
                 button5_text = f"[005]激素系能力"
                 hormone_id = self.pl_character_data.pl_ability.hormone
                 if hormone_id > 0:
-                    ability_name = game_config.config_talent[hormone_id].name
-                    button5_text += f"(开启中-{ability_name})(10理智/h)"
+                    talent_name = game_config.config_talent[hormone_id].name
+                    button5_text += f"(开启中-{talent_name})(10理智/h)"
                 else:
                     button5_text += f"(未开启)"
                 button5_draw = draw.LeftButton(
@@ -125,27 +125,38 @@ class Originium_Arts_Panel:
                 button5_draw.draw()
                 return_list.append(button5_draw.return_text)
 
-            if 1:
-                button6_text = f"[006]视觉系能力(未实装)"
+            if handle_talent.have_visual_talent():
+                button6_text = f"[006]视觉系能力"
+                if self.pl_character_data.pl_ability.visual:
+                    button6_text += f"(开启中-"
+                    for talent_id in {307,308,309}:
+                        if self.pl_character_data.talent[talent_id]:
+                            talent_name = game_config.config_talent[talent_id].name[:2]
+                            if talent_id != 307:
+                                button6_text += "+"
+                            button6_text += f"{talent_name}"
+                    button6_text += f"透视)(10理智/h)"
+                else:
+                    button6_text += f"(未开启)"
                 button6_draw = draw.LeftButton(
                     _(button6_text),
                     _("6"),
                     window_width,
-                    cmd_func=self.to_do,
-                    args=(),
+                    cmd_func=self.ability_switch,
+                    args=(6),
                     )
                 line_feed.draw()
                 button6_draw.draw()
                 return_list.append(button6_draw.return_text)
 
-            if 1:
+            if handle_talent.have_tactile_talent():
                 button7_text = f"[007]触觉系能力(未实装)"
                 button7_draw = draw.LeftButton(
                     _(button7_text),
                     _("7"),
                     window_width,
-                    cmd_func=self.to_do,
-                    args=(),
+                    cmd_func=self.ability_switch,
+                    args=(7),
                     )
                 line_feed.draw()
                 button7_draw.draw()
@@ -172,11 +183,18 @@ class Originium_Arts_Panel:
     def ability_switch(self,ability_type):
         """能力开关"""
 
+        # 激素系
         if ability_type == 5:
             self.pl_character_data.pl_ability.hormone *= -1
             # 第一次开始则进行初始化
             if self.pl_character_data.pl_ability.hormone == 0:
                 self.pl_character_data.pl_ability.hormone = handle_talent.have_hormone_talent()
+        # 视觉系
+        elif ability_type == 6:
+            self.pl_character_data.pl_ability.visual = not self.pl_character_data.pl_ability.visual
+        # 触觉系
+        elif ability_type == 7:
+            self.pl_character_data.pl_ability.tactile = not self.pl_character_data.pl_ability.tactile
 
 
 class Down_Negative_Talent_Panel:

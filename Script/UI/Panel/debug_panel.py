@@ -142,6 +142,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}")
                 draw_text_list.append(f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}")
                 draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
+                draw_text_list.append(f"[008]:全源石技艺一键全开")
 
 
                 for i in range(len(draw_text_list)):
@@ -171,6 +172,7 @@ class Debug_Panel:
                 now_draw.width += line_feed.width
 
                 id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                id_list.append(0)
                 npc_count = 0
 
                 for NPC_id in id_list:
@@ -537,6 +539,9 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].hunger_point = new_value
+                elif key_index == 8:
+                    for talent_id in {304,305,306,307,308,309,310,311,312}:
+                        cache.character_data[0].talent[talent_id] = 1
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
