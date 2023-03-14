@@ -778,6 +778,9 @@ class Base_resouce:
         self.pink_certificate: int = 0
         """ 粉红凭证数量 """
 
+        self.total_favorability_increased: int = 0
+        """ 每日总好感度提升 """
+
         self.warehouse_capacity: int = 0
         """ 仓库容量 """
         self.materials_resouce: Dict[int, int] = {}

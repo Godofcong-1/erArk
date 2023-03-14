@@ -346,3 +346,7 @@ def add_favorability(
     # target_data.social_contact_last_cut_down_time[character_id] = now_time
     # if target_change is not None:
     #     add_favorability(target_id, character_id, old_add_favorability, None, None, now_time)
+
+    # 记录好感度增加
+    if character_id == 0 or character_data.target_character_id == 0:
+        cache.base_resouce.total_favorability_increased += now_add_favorability

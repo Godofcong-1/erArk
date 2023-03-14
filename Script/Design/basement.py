@@ -118,6 +118,7 @@ def update_base_resouce_newday():
     无
     """
 
+    # 输出收入合计
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
@@ -128,6 +129,15 @@ def update_base_resouce_newday():
     cache.base_resouce.patient_cured = 0
     cache.base_resouce.cure_income = 0
     cache.base_resouce.all_income = 0
+
+    # 输出好感度合计与粉红凭证增加
+    pink_certificate_add = int(cache.base_resouce.total_favorability_increased / 100)
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = f"\n今日全角色总好感度上升为： {int(cache.base_resouce.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
+    now_draw.draw()
+    # 清零计数
+    cache.base_resouce.total_favorability_increased = 0
 
 
 def update_work_people():
