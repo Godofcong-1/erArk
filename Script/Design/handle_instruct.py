@@ -763,10 +763,9 @@ def handle_make_coffee():
 
 @add_instruct(
     constant.Instruct.MAKE_COFFEE_ADD,
-    constant.InstructType.DAILY,
+    constant.InstructType.OBSCENITY,
     _("泡咖啡（加料）"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
+    {constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.TIRED_LE_89}

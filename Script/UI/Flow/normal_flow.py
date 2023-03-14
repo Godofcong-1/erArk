@@ -95,7 +95,7 @@ def food_shop_flow():
 
 @handle_panel.add_panel(constant.Panel.MAKE_FOOD)
 def make_food_flow():
-    """食物商店面板"""
+    """制作食物面板"""
     now_panel = make_food_panel.Make_food_Panel(width)
     now_panel.draw()
 

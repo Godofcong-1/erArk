@@ -25,33 +25,29 @@ class Make_food_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, width: int, make_food_type: int = 0):
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
         self.now_panel = _("主食")
         """ 当前绘制的食物类型 """
         self.handle_panel: panel.PageHandlePanel = None
-        """ 当前名字列表控制面板 """
+        """ 当前名字列表控制面板make_food_type """
+        self.make_food_type = make_food_type
+        """ 0普通做饭，1泡咖啡 """
+        self.special_seasoning = 0
+        """ 调味类型 """
 
     def draw(self):
         """绘制对象"""
-        scene_position = cache.character_data[0].position
-        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        scene_name = cache.scene_data[scene_position_str].scene_name
-        title_draw = draw.TitleLineDraw(scene_name, self.width)
+        character_data: game_type.Character = cache.character_data[0]
+        title_draw = draw.TitleLineDraw("制作食物", self.width)
         food_type_list = [_("主食")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, 1, 1, 0)
         cooking.init_makefood_data()
         while 1:
             py_cmd.clr_cmd()
-            food_name_list = list(
-                cooking.get_cook_level_food_type(self.now_panel).items()
-            )
-            
-            self.handle_panel.text_list = food_name_list
-            self.handle_panel.update()
             title_draw.draw()
             return_list = []
             for food_type in food_type_list:
@@ -74,6 +70,45 @@ class Make_food_Panel:
             line_feed.draw()
             line = draw.LineDraw("+", self.width)
             line.draw()
+
+            # 加料说明
+            now_seasoning_name = game_config.config_seasoning[self.special_seasoning].name
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"○选择是要否进行特殊调味： {now_seasoning_name}\n"
+            now_draw.width = 1
+            now_draw.draw()
+
+            # 加料面板
+            for seasoning_cid in game_config.config_seasoning:
+                # 如果是加药物需要已拥有药物
+                if seasoning_cid > 100:
+                    if not character_data.item[seasoning_cid]:
+                        continue
+                
+                button_text = f"[{game_config.config_seasoning[seasoning_cid].name}]"
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text),
+                    self.width/11,
+                    cmd_func=self.choice_seasoning,
+                    args=(seasoning_cid,),
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+            line_feed.draw()
+            line_feed.draw()
+
+            # 食物面板
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"○选择要制作的食物：\n"
+            now_draw.width = 1
+            now_draw.draw()
+            food_name_list = list(
+                cooking.get_cook_level_food_type(self.now_panel).items()
+            )
+            
+            self.handle_panel.text_list = food_name_list
+            self.handle_panel.update()
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -81,7 +116,7 @@ class Make_food_Panel:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == back_draw.return_text or yrn in self.handle_panel.return_list:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -98,6 +133,11 @@ class Make_food_Panel:
             now_food_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
 
+    def choice_seasoning(self, seasoning_cid):
+        """选择味道"""
+        self.special_seasoning = seasoning_cid
+
+
 class SeeFoodListByFoodNameDraw:
     """
     点击后可查看食物列表的食物名字按钮对象
@@ -110,7 +150,7 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
+        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int, special_seasoning: int
     ):
         """初始化绘制对象"""
         self.cid: str = text[0]
@@ -133,6 +173,8 @@ class SeeFoodListByFoodNameDraw:
         # """ 做饭效果绘制 """
         self.food_name: str = ""
         """ 食物名字 """
+        self.special_seasoning = 0
+        """ 调味类型 """
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
         # draw_effect_text = ""
 
@@ -183,16 +225,19 @@ class SeeFoodListByFoodNameDraw:
 
     def make_food(self):
         """玩家制作食物"""
-        update.game_update_flow(0)
         character_data: game_type.Character = cache.character_data[0]
+        # 赋予作者和味道
+        cache.makefood_data[self.food_cid][self.food_text].maker = character_data.name
+        cache.makefood_data[self.food_cid][self.food_text].special_seasoning = self.special_seasoning
+        # 放到玩家背包里
         character_data.food_bag[self.food_text] = cache.makefood_data[self.food_cid][self.food_text]
+        # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
         character_data.behavior.duration = self.make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
         update.game_update_flow(self.make_food_time)
-        cache.now_panel_id = constant.Panel.IN_SCENE
 
     def draw(self):
         """绘制对象"""

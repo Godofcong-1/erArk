@@ -128,10 +128,12 @@ class Food:
         # """ 食物重量 """
         # self.feel: dict = {}
         # """ 食物效果 """
-        # self.maker: str = ""
-        # """ 食物制作者 """
+        self.maker: str = ""
+        """ 食物制作者 """
         self.recipe: int = -1
         """ 食谱id """
+        self.special_seasoning: int = 0
+        """ 调味类型 """
         # self.cook: bool = False
         # """ 可烹饪 """
         # self.eat: bool = False

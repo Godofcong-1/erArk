@@ -143,11 +143,17 @@ class SeeFoodListByFoodNameDraw:
             food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
             food_name = food_recipe.name
             food_introduce = food_recipe.introduce
+        food_maker,food_seasoning = "",""
+        if food_data.maker != cache.character_data[0].name:
+            food_maker = f"({food_data.maker}亲手做的)"
+        # 如果不是正常，则标注味道
+        if food_data.special_seasoning != 0:
+            food_seasoning += f"({game_config.config_seasoning[food_data.special_seasoning].name})"
 
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{food_name}：{food_introduce}"
+                button_text = f"{index_text}{food_name}{food_seasoning}{food_maker}：{food_introduce}"
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.eat_food
                 )

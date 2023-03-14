@@ -80,10 +80,10 @@ def get_unused_cmd_num():
 # 清除命令，没有参数则清除所有命令
 def clr_cmd(*number, clr_default_flow=True):
     """
-    清楚绑定命令和默认处理函数
+    清除绑定命令和默认处理函数
     Keyword arguments:
     number -- 清楚绑定命令数字
-    clr_default_flow -- 是否同时清楚默认处理函数
+    clr_default_flow -- 是否同时清除默认处理函数
     """
     if clr_default_flow:
         clear_default_flow()

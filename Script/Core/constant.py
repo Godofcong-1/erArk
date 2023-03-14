@@ -1380,8 +1380,6 @@ class Instruct:
     """ 身体接触 """
     MAKE_COFFEE = 0
     """ 泡咖啡 """
-    MAKE_COFFEE_ADD = 0
-    """ 泡咖啡（加料） """
     ASK_MAKE_COFFEE = 0
     """ 让对方泡咖啡 """
     MAKE_FOOD = 0
@@ -1467,6 +1465,8 @@ class Instruct:
     """ 查看部门运作情况 """
 
     #猥亵#
+    MAKE_COFFEE_ADD = 0
+    """ 泡咖啡（加料） """
     TOUCH_HEAD = 0
     """ 摸头 """
     TOUCH_BREAST = 0

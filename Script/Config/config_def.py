@@ -466,6 +466,15 @@ class Season:
     """ 季节名 """
 
 
+class Seasoning:
+    """ 特殊调味表 """
+
+    cid: int
+    """ 配表id """
+    name: str
+    """ 调味名字 """
+
+
 class SecondEffect:
     """ 行为结算器配置 """
 
