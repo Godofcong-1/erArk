@@ -45,8 +45,8 @@ class Make_food_Panel:
         food_type_list = [_("主食")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, 1, 1, 0)
-        cooking.init_makefood_data()
         while 1:
+            cooking.init_makefood_data()
             py_cmd.clr_cmd()
             title_draw.draw()
             return_list = []
@@ -106,6 +106,8 @@ class Make_food_Panel:
             food_name_list = list(
                 cooking.get_cook_level_food_type(self.now_panel).items()
             )
+            # 将调味增加进去
+            food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
             
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
@@ -150,13 +152,15 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int, special_seasoning: int
+        self, text: Tuple[str, UUID, int], width: int, is_button: bool, num_button: bool, button_id: int,
     ):
         """初始化绘制对象"""
         self.cid: str = text[0]
         """ 食物商店索引id """
         self.text: UUID = text[1]
         """ 食物uid """
+        self.special_seasoning = text[2]
+        """ 调味类型 """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -173,8 +177,6 @@ class SeeFoodListByFoodNameDraw:
         # """ 做饭效果绘制 """
         self.food_name: str = ""
         """ 食物名字 """
-        self.special_seasoning = 0
-        """ 调味类型 """
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
         # draw_effect_text = ""
 
@@ -186,7 +188,7 @@ class SeeFoodListByFoodNameDraw:
         # print("debug now_food_list = ",now_food_list)
         self.food_cid: str = now_food_list[0][0]
         """ 食物商店索引id """
-        self.food_text: UUID = now_food_list[0][1]
+        self.food_uid: UUID = now_food_list[0][1]
         """ 食物uid """
 
 
@@ -227,10 +229,10 @@ class SeeFoodListByFoodNameDraw:
         """玩家制作食物"""
         character_data: game_type.Character = cache.character_data[0]
         # 赋予作者和味道
-        cache.makefood_data[self.food_cid][self.food_text].maker = character_data.name
-        cache.makefood_data[self.food_cid][self.food_text].special_seasoning = self.special_seasoning
+        cache.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
+        cache.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
         # 放到玩家背包里
-        character_data.food_bag[self.food_text] = cache.makefood_data[self.food_cid][self.food_text]
+        character_data.food_bag[self.food_uid] = cache.makefood_data[self.food_cid][self.food_uid]
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time

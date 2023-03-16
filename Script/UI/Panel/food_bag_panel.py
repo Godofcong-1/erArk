@@ -43,18 +43,15 @@ class FoodBagPanel:
             [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
         while 1:
+            character_data: game_type.Character = cache.character_data[0]
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
 
             # 读取背包食物，并只提取uid列表
-            food_id_list = list(
-                cooking.get_character_food_bag_type_list_buy_food_type(0, self.now_panel).items()
-            )
             id_list = []
-            for i in range(len(food_id_list)):
-                id_list.append(list(food_id_list[i][1])[0])
-            # print(f"debug food_id_list = {food_id_list}")
-            # print(f"debug id_list = {id_list}")
+            for i in character_data.food_bag:
+                id_list.append(i)
+
             self.handle_panel.text_list = id_list
             self.handle_panel.update()
             title_draw.draw()
