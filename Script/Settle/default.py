@@ -960,11 +960,11 @@ def handle_first_sex(
         if not no_pan_flag:
             pan_name = game_config.config_clothing_tem[pan_id].name
             target_data.cloth.cloth_wear[9] = []
-            now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
+            now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n\n"
             now_draw.draw()
             character_data.pl_collection.first_panties[character_data.target_character_id] = f"{pan_name}(沾有处子血)"
         else:
-            now_draw.text = f"\n{target_data.name}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n"
+            now_draw.text = f"\n{target_data.name}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n\n"
             character_data.pl_collection.first_panties[
                 character_data.target_character_id] = f"一滴{target_data.name}的处子血"
             now_draw.draw()
