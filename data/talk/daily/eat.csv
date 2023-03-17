@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,108,0,high_1,{Name}触发了进食{FoodName}的地文
-1,108,0,sys_0,{Name}食用了随身携带的{FoodName}
-2,108,0,sys_0,{Name}食用了制作好的{FoodName}
+0,135,0,high_1,{Name}触发了进食{FoodName}的地文
+1,135,0,sys_0,{Name}食用了随身携带的{FoodName}
+2,135,0,sys_0,{Name}食用了制作好的{FoodName}

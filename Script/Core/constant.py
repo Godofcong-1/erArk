@@ -19,18 +19,6 @@ class CharacterStatus:
     """ 谈话次数过多的状态 """
     STATUS_STROKE = 103
     """ 身体接触 """
-    STATUS_MAKE_COFFEE = 104
-    """ 泡咖啡 """
-    STATUS_MAKE_COFFEE_ADD = 105
-    """ 泡咖啡（加料） """
-    STATUS_ASK_MAKE_COFFEE = 106
-    """ 让对方泡咖啡 """
-    STATUS_MAKE_FOOD = 107
-    """ 做饭 """
-    STATUS_EAT = 108
-    """ 进食状态 """
-    STATUS_BUY_FOOD = 109
-    """ 购买食物 """
     STATUS_REST = 110
     """ 休息状态 """
     STATUS_SLEEP = 111
@@ -47,26 +35,18 @@ class CharacterStatus:
     """ 道歉失败 """
     STATUS_LISTEN_COMPLAINT = 119
     """ 听牢骚 """
-    STATUS_CONFESSION = 121
-    """ 告白 """
-    STATUS_CONFESSION_FAILED = 122
-    """ 告白失败 """
-    STATUS_GIVE_NECKLACE = 123
-    """ 戴上项圈 """
-    STATUS_GIVE_NECKLACE_FAILED = 124
-    """ 戴上项圈失败 """
-    STATUS_H = 125
-    """ 进入H状态 """
-    STATUS_END_H = 126
-    """ 结束H状态 """
-    STATUS_DO_H_FAIL = 131
-    """ 邀请H失败 """
-    STATUS_H_HP_0 = 132
-    """ H时博士体力为零中断 """
-    STATUS_T_H_HP_0 = 133
-    """ H时交互对象体力为零中断 """
-    STATUS_H_INTERRUPT = 134
-    """ H时被人目击闯入中断 """
+    STATUS_MAKE_COFFEE = 131
+    """ 泡咖啡 """
+    STATUS_MAKE_COFFEE_ADD = 132
+    """ 泡咖啡（加料） """
+    STATUS_ASK_MAKE_COFFEE = 133
+    """ 让对方泡咖啡 """
+    STATUS_MAKE_FOOD = 134
+    """ 做饭 """
+    STATUS_EAT = 135
+    """ 进食状态 """
+    STATUS_BUY_FOOD = 136
+    """ 购买食物 """
     STATUS_PEE = 140
     """ 解手 """
     STATUS_CLOTH_OFF = 141
@@ -153,6 +133,26 @@ class CharacterStatus:
     """ 投入监牢 """
     STATUS_SET_FREE = 353
     """ 解除囚禁 """
+    STATUS_H = 361
+    """ 进入H状态 """
+    STATUS_END_H = 362
+    """ 结束H状态 """
+    STATUS_DO_H_FAIL = 363
+    """ 邀请H失败 """
+    STATUS_H_HP_0 = 364
+    """ H时博士体力为零中断 """
+    STATUS_T_H_HP_0 = 365
+    """ H时交互对象体力为零中断 """
+    STATUS_H_INTERRUPT = 366
+    """ H时被人目击闯入中断 """
+    STATUS_CONFESSION = 371
+    """ 告白 """
+    STATUS_CONFESSION_FAILED = 372
+    """ 告白失败 """
+    STATUS_GIVE_NECKLACE = 373
+    """ 戴上项圈 """
+    STATUS_GIVE_NECKLACE_FAILED = 374
+    """ 戴上项圈失败 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -374,18 +374,6 @@ class Behavior:
     """ 谈话次数过多而失败 """
     STROKE = 103
     """ 身体接触 """
-    MAKE_COFFEE = 104
-    """ 泡咖啡 """
-    MAKE_COFFEE_ADD = 105
-    """ 泡咖啡（加料） """
-    ASK_MAKE_COFFEE = 106
-    """ 让对方泡咖啡 """
-    MAKE_FOOD = 107
-    """ 做饭 """
-    EAT = 108
-    """ 进食 """
-    BUY_FOOD = 109
-    """ 购买食物 """
     REST = 110
     """ 休息 """
     SLEEP = 111
@@ -402,26 +390,18 @@ class Behavior:
     """ 道歉失败 """
     LISTEN_COMPLAINT = 119
     """ 听牢骚 """
-    CONFESSION = 121
-    """ 告白 """
-    CONFESSION_FAILED = 122
-    """ 告白失败 """
-    GIVE_NECKLACE = 123
-    """ 戴上项圈 """
-    GIVE_NECKLACE_FAILED = 124
-    """ 戴上项圈失败 """
-    H = 125
-    """ 进入H状态 """
-    END_H = 126
-    """ 结束H """
-    DO_H_FAIL = 131
-    """ 邀请H失败 """
-    H_HP_0 = 132
-    """ H时博士体力为零中断 """
-    T_H_HP_0 = 133
-    """ H时交互对象体力为零中断 """
-    H_INTERRUPT = 134
-    """ H时被人目击闯入中断 """
+    MAKE_COFFEE = 131
+    """ 泡咖啡 """
+    MAKE_COFFEE_ADD = 132
+    """ 泡咖啡（加料） """
+    ASK_MAKE_COFFEE = 133
+    """ 让对方泡咖啡 """
+    MAKE_FOOD = 134
+    """ 做饭 """
+    EAT = 135
+    """ 进食 """
+    BUY_FOOD = 136
+    """ 购买食物 """
     PEE = 140
     """ 解手 """
     CLOTH_OFF = 141
@@ -512,6 +492,26 @@ class Behavior:
     """ 投入监牢 """
     SET_FREE = 353
     """ 解除囚禁 """
+    H = 361
+    """ 进入H状态 """
+    END_H = 362
+    """ 结束H """
+    DO_H_FAIL = 363
+    """ 邀请H失败 """
+    H_HP_0 = 364
+    """ H时博士体力为零中断 """
+    T_H_HP_0 = 365
+    """ H时交互对象体力为零中断 """
+    H_INTERRUPT = 366
+    """ H时被人目击闯入中断 """
+    CONFESSION = 371
+    """ 告白 """
+    CONFESSION_FAILED = 372
+    """ 告白失败 """
+    GIVE_NECKLACE = 373
+    """ 戴上项圈 """
+    GIVE_NECKLACE_FAILED = 374
+    """ 戴上项圈失败 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -1386,6 +1386,8 @@ class Instruct:
     """ 做饭 """
     EAT = 0
     """ 进食 """
+    GIVE_FOOD = 0
+    """ 让对方食用 """
     REST = 0
     """ 休息 """
     SLEEP = 0
