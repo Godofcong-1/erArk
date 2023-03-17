@@ -5224,6 +5224,22 @@ def handle_time_moon(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TIME_AFTERMOON)
+def handle_time_aftermoon(character_id: int) -> int:
+    """
+    时间:下午（15点~18点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 15 and now_time.hour <= 17:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_ONLY_ONE)
 def handle_scene_only_one(character_id: int) -> int:
     """

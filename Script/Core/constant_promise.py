@@ -348,6 +348,8 @@ class Premise:
     """ 时间_当前 时间:清晨（4点~8点） """
     TIME_MOON = "time_moon"
     """ 时间_当前 时间:中午（10点~14点） """
+    TIME_AFTERMOON = "time_aftermoon"
+    """ 时间_当前 时间:下午（15点~18点） """
     EAT_TIME = "eat_time"
     """ 时间_当前 饭点（早上7~8点、中午12~13点、晚上18~20点） """
     SHOWER_TIME = "shower_time"
