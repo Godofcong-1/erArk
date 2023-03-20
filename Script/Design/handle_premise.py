@@ -2366,6 +2366,59 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.UNNORMAL_567)
+def handle_unnormal_567(character_id: int) -> int:
+    """
+    自身5或6或7异常
+    \n包括5:意识模糊，或弱交互：醉酒，催眠
+    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 1
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNNORMAL_567)
+def handle_t_unnormal_567(character_id: int) -> int:
+    """
+    交互对象5或6或7异常
+    \n包括5:意识模糊，或弱交互：醉酒，催眠
+    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if(
+         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+    ):
+        return 1
+    elif(
+        handle_be_bagged_1(character_data.target_character_id)
+        or handle_imprisonment_1(character_data.target_character_id)
+    ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HP_1)
 def handle_hp_1(character_id: int) -> int:
     """
@@ -11734,6 +11787,111 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_SOUR)
+def handle_pl_action_makefood_sour(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_酸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_SWEET)
+def handle_pl_action_makefood_sweet(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_甜
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_BITTER)
+def handle_pl_action_makefood_bitter(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_苦
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_SPICY)
+def handle_pl_action_makefood_spicy(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_辣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 4:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_SEMEN_HIDDEN)
+def handle_pl_action_makefood_sement_hidden(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_巧妙加精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 11:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_SEMEN_DIRECT)
+def handle_pl_action_makefood_sement_direct(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_直接加精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning == 12:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MAKEFOOD_MEDICINE)
+def handle_pl_action_makefood_medicine(character_id: int) -> int:
+    """
+    校验玩家做饭_调味_加药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.state == constant.CharacterStatus.STATUS_MAKE_FOOD and character_data.behavior.make_food_seasoning >= 100:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.T_BABY_1)

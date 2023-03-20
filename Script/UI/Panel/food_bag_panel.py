@@ -31,16 +31,21 @@ class FoodBagPanel:
         """ 绘制的最大宽度 """
         self.now_panel = _("当前持有食物")
         """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = None
-        """ 当前名字列表控制面板 """
+        self.handle_panel_normal: panel.PageHandlePanel = None
+        """ 正常调味食物列表控制面板 """
+        self.handle_panel_special: panel.PageHandlePanel = None
+        """ 特殊调味食物列表控制面板 """
 
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("食物背包"), self.width)
         food_type_list = [_("当前持有食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 1, 0
+        self.handle_panel_normal = panel.PageHandlePanel(
+            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 0, 0
+        )
+        self.handle_panel_special = panel.PageHandlePanel(
+            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 0, 0
         )
         while 1:
             character_data: game_type.Character = cache.character_data[0]
@@ -48,14 +53,19 @@ class FoodBagPanel:
                 break
 
             # 读取背包食物，并只提取uid列表
-            id_list = []
+            id_list_normal,id_list_special = [],[]
             for i in character_data.food_bag:
-                id_list.append(i)
+                food_data: game_type.Food = cache.character_data[0].food_bag[i]
+                if food_data.special_seasoning == 0:
+                    id_list_normal.append(i)
+                else:
+                    id_list_special.append(i)
 
-            self.handle_panel.text_list = id_list
-            self.handle_panel.update()
+            self.handle_panel_normal.text_list = id_list_normal
+            self.handle_panel_normal.update()
+            self.handle_panel_special.text_list = id_list_special
+            self.handle_panel_special.update()
             title_draw.draw()
-            line_feed.draw()
             return_list = []
             for food_type in food_type_list:
                 if food_type == self.now_panel:
@@ -76,8 +86,27 @@ class FoodBagPanel:
                     return_list.append(now_draw.return_text)
             line = draw.LineDraw("+", self.width)
             line.draw()
-            self.handle_panel.draw()
-            return_list.extend(self.handle_panel.return_list)
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n"
+            now_draw.width = 1
+            now_draw.draw()
+            line_feed.draw()
+
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"○正常调味食物\n"
+            now_draw.width = 1
+            now_draw.draw()
+            self.handle_panel_normal.draw()
+            line_feed.draw()
+
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"○特殊调味食物\n"
+            now_draw.width = 1
+            now_draw.draw()
+            self.handle_panel_special.draw()
+
+            return_list.extend(self.handle_panel_normal.return_list)
+            return_list.extend(self.handle_panel_special.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -93,14 +122,27 @@ class FoodBagPanel:
         food_type -- 要切换的食物类型
         """
         self.now_panel = food_type
-        food_id_list = list(
-            cooking.get_character_food_bag_type_list_buy_food_type(0, self.now_panel).items()
+        character_data: game_type.Character = cache.character_data[0]
+
+        # 读取背包食物，并只提取uid列表
+        id_list_normal,id_list_special = [],[]
+        for i in character_data.food_bag:
+            food_data: game_type.Food = cache.character_data[0].food_bag[i]
+            if food_data.special_seasoning == 0:
+                id_list_normal.append(i)
+            else:
+                id_list_special.append(i)
+
+        self.handle_panel_normal.text_list = id_list_normal
+        self.handle_panel_normal.update()
+        self.handle_panel_special.text_list = id_list_special
+        self.handle_panel_special.update()
+
+        self.handle_panel_normal = panel.PageHandlePanel(
+            id_list_normal, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 0, 0
         )
-        id_list = []
-        for i in range(len(food_id_list)):
-            id_list.append(list(food_id_list[i][1])[0])
-        self.handle_panel = panel.PageHandlePanel(
-            id_list, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 1, 0
+        self.handle_panel_special = panel.PageHandlePanel(
+            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 0, 0
         )
 
 
@@ -146,24 +188,18 @@ class SeeFoodListByFoodNameDraw:
         # 如果不是正常，则标注味道
         if food_data.special_seasoning != 0:
             food_seasoning += f"({game_config.config_seasoning[food_data.special_seasoning].name})"
+        
+        button_text = f"  {food_name}{food_seasoning}{food_maker}：{food_introduce}"
 
-        if is_button:
-            if num_button:
-                index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{food_name}{food_seasoning}{food_maker}：{food_introduce}"
-                name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.eat_food
-                )
-            else:
-                button_text = f"[{food_name}]"
-                name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.eat_food
-                )
-                self.button_return = text
+        if (food_data.special_seasoning == 0 or
+            (food_data.special_seasoning != 0 and cache.character_data[0].target_character_id != 0)):
+            name_draw = draw.LeftButton(
+                button_text, str(self.text), self.width, cmd_func=self.eat_food
+            )
             self.draw_text = button_text
         else:
-            name_draw = draw.CenterDraw()
-            name_draw.text = f"[{food_name}]"
+            name_draw = draw.LeftDraw()
+            name_draw.text = button_text
             name_draw.width = self.width
             self.draw_text = name_draw.text
         self.now_draw = name_draw

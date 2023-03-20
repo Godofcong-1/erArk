@@ -423,6 +423,8 @@ class Recipes:
     """ 菜谱id """
     name: str
     """ 菜谱名字 """
+    type: int
+    """ 菜的类型（0正餐1零食2饮品3酒类8加料咖啡9其他） """
     time: int
     """ 烹饪时间 """
     difficulty: int

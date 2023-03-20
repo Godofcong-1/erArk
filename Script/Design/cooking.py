@@ -5,6 +5,7 @@ from typing import Dict, Set
 from Script.Core.game_type import Recipes, Food
 from Script.Core import cache_control, value_handle, game_type, get_text
 from Script.Config import game_config
+from Script.Design import handle_premise
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -23,11 +24,12 @@ def init_recipes():
             recipe_data.difficulty,
             recipe_data.money,
             recipe_data.introduce,
+            recipe_data.type,
         )
         cache.recipe_data[len(cache.recipe_data)] = recipe
 
 
-def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str) -> Recipes:
+def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str, type: int) -> Recipes:
     """
     创建菜谱对象
     Keyword arguments:
@@ -43,6 +45,7 @@ def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: 
     recipe.difficulty = difficulty
     recipe.money = money
     recipe.introduce = introduce
+    recipe.type = type
     return recipe
 
 
@@ -421,9 +424,81 @@ def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
     for food_id in cache.makefood_data:
         if not len(cache.makefood_data[food_id]):
             continue
-        if food_type == _("主食"):
-            now_food_uid = list(cache.makefood_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.makefood_data[food_id][now_food_uid]
-            if now_food.recipe != -1:
-                food_list[food_id] = cache.recipe_data[int(food_id)].name
+
+        # 选择对应食物种类
+        if food_type == _("主食") and cache.recipe_data[int(food_id)].type != 0:
+            continue
+        elif food_type == _("零食") and cache.recipe_data[int(food_id)].type != 1:
+            continue
+        elif food_type == _("饮品") and cache.recipe_data[int(food_id)].type != 2:
+            continue
+        elif food_type == _("酒类") and cache.recipe_data[int(food_id)].type != 3:
+            continue
+        elif food_type == _("咖啡") and cache.recipe_data[int(food_id)].type != 8:
+            continue
+        elif food_type == _("其他") and cache.recipe_data[int(food_id)].type != 9:
+            continue
+
+        # 赋予食物其他属性
+        now_food_uid = list(cache.makefood_data[food_id].keys())[0]
+        now_food: game_type.Food = cache.makefood_data[food_id][now_food_uid]
+        if now_food.recipe != -1:
+            food_list[food_id] = cache.recipe_data[int(food_id)].name
     return food_list
+
+def judge_accept_special_seasoning_food(character_id: int):
+    """
+    是否接受特殊调味的食物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 接受或不接受
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_id]
+    return_d100 = random.randint(1,100)
+    # 口才+厨艺的双重加成判定
+    accept_rate = pl_character_data.ability[40] *10 + pl_character_data.ability[43] * 10
+    accept_rate = max(accept_rate,5) # 保底5%几率
+
+    # debug模式直接过
+    if cache.debug_mode:
+        return 1
+    # 567异常则直接通过
+    if handle_premise.handle_unnormal_567(character_id):
+        return 1
+    # 普通调味直接进行判定
+    if pl_character_data.behavior.make_food_seasoning <= 10:
+        return return_d100 <= accept_rate
+    # 其他特殊调味
+    else:
+        # 精液判定
+        if pl_character_data.behavior.make_food_seasoning in {11,12}:
+            # 性无知则直接接受精液食物
+            if target_data.talent[222]:
+                return 1
+            # 精爱味觉或淫乱则直接通过
+            if target_data.talent[31] or target_data.talent[40]:
+                return 1
+
+            # 精液_巧妙混合
+            if pl_character_data.behavior.make_food_seasoning == 11:
+                # 3级爱情系或至少2级隶属系的话才接受
+                for talent_id in {203,204,212,213,214}:
+                    if target_data.talent[talent_id]:
+                        return 1
+                # 进行概率判定，难度*5
+                return return_d100 * 5 <= accept_rate
+            # 精液_直接盖上
+            elif pl_character_data.behavior.make_food_seasoning == 12:
+                # 4级爱情系或至少3级隶属系的话才接受
+                for talent_id in {204,213,214}:
+                    return 1
+                # 进行概率判定，难度*10
+                return return_d100 * 10 <= accept_rate
+        # 药物判定
+        elif pl_character_data.behavior.make_food_seasoning >= 101:
+            # 进行概率判定，难度*2
+            return return_d100 * 2 <= accept_rate
+
+    return 0

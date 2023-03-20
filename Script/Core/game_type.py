@@ -152,6 +152,8 @@ class Recipes:
     def __init__(self):
         self.name: str = ""
         """ 菜谱名字 """
+        self.type: int = 0
+        """ 菜的类型（0正餐1零食2饮品8加料咖啡9其他） """
         self.time: int = 0
         """ 标准烹饪时间 """
         self.difficulty: int = 0
@@ -588,6 +590,8 @@ class Behavior:
         """ 前提结算用:进食行为消耗的食物品质 """
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
+        self.make_food_seasoning: int = 0
+        """ 前提结算用:做饭指令用调味类型 """
         self.pan_name: str = ""
         """ 前提结算用:内裤名字 """
         self.socks_name: str = ""
