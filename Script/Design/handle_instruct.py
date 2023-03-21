@@ -772,12 +772,9 @@ def handle_make_coffee():
 )
 def handle_make_coffee_add():
     """处理泡咖啡（加料）指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE_ADD
-    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
-    character_data.behavior.duration = 15
-    update.game_update_flow(15)
+    from Script.UI.Panel import make_food_panel
+    now_draw = make_food_panel.Make_food_Panel(width,make_food_type=1)
+    now_draw.draw()
 
 
 @add_instruct(

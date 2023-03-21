@@ -3,6 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
+0,135,0,pl_action_food_normal,{TargetName}食用了{FoodName}
 1,135,0,sys_0&pl_action_food_sour,{TargetName}食用了{FoodName}，酸得她咬住了下嘴唇，但还是努力吃完了
 2,135,0,sys_0&pl_action_food_sweet,{TargetName}食用了{FoodName}，甜得她感觉喉咙都齁住了，但还是努力吃完了
 3,135,0,sys_0&pl_action_food_bitter,{TargetName}食用了{FoodName}，苦得她皱眉头，但还是努力吃完了

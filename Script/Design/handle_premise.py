@@ -11855,6 +11855,21 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.PL_ACTION_FOOD_NORMAL)
+def handle_pl_action_food_normal(character_id: int) -> int:
+    """
+    校验食物调味_正常
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    if character_data.behavior.food_seasoning == 0:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PL_ACTION_FOOD_SOUR)
 def handle_pl_action_food_sour(character_id: int) -> int:
     """

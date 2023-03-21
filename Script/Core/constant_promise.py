@@ -1460,6 +1460,8 @@ class Premise:
     """ 行动 交互对象正在睡觉 """
     T_ACTION_NOT_SLEEP = "t_action_not_sleep"
     """ 行动 交互对象没有在睡觉 """
+    PL_ACTION_FOOD_NORMAL = "pl_action_food_normal"
+    """ 行动 食物调味_正常 """
     PL_ACTION_FOOD_SOUR = "pl_action_food_sour"
     """ 行动 食物调味_酸 """
     PL_ACTION_FOOD_SWEET = "pl_action_food_sweet"

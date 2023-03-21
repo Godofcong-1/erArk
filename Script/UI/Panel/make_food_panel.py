@@ -77,17 +77,21 @@ class Make_food_Panel:
             # 加料说明
             now_seasoning_name = game_config.config_seasoning[self.special_seasoning].name
             now_draw = draw.NormalDraw()
-            now_draw.text = f"○当前的调味： {now_seasoning_name}\n  基础:    "
+            now_draw.text = f"○当前的调味： {now_seasoning_name}"
             now_draw.width = 1
             now_draw.draw()
 
             # 加料面板
-            button_width = self.width/8
             for seasoning_cid in game_config.config_seasoning:
                 # 如果泡加料咖啡则跳过普通味道
-                if self.now_panel == _("咖啡") and seasoning_cid == 0:
-                    self.special_seasoning = 1
+                if self.now_panel == _("咖啡") and seasoning_cid <= 10:
                     continue
+                if seasoning_cid == 0:
+                    button_width = self.width/16
+                    now_draw = draw.NormalDraw()
+                    now_draw.text = f"\n  基础:    "
+                    now_draw.width = 1
+                    now_draw.draw()
                 # 精液或下药则换行并加长文本宽度
                 if seasoning_cid == 11:
                     button_width = self.width/4
@@ -244,7 +248,7 @@ class SeeFoodListByFoodNameDraw:
                 name_draw = draw.CenterButton(
                     button_text, self.text, self.width, cmd_func=self.make_food
                 )
-                self.button_return = text
+            self.button_return = name_draw.return_text
             self.draw_text = button_text
         else:
             name_draw = draw.CenterDraw()

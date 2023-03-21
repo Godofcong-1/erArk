@@ -73,6 +73,7 @@ def init_attr(character_id: int):
         character_data.cloth = attr_calculation.get_cloth_zero()
 
     # 一系列初始化函数
+    init_character_behavior_start_time(character_id,cache.game_time)
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     character_data.angry_point = random.randrange(1, 35)
