@@ -257,7 +257,8 @@ class SeeFoodListByFoodNameDraw:
     def make_food(self):
         """玩家制作食物"""
         character_data: game_type.Character = cache.character_data[0]
-        # 赋予作者和味道
+        # 赋予名字、作者和味道
+        cache.makefood_data[self.food_cid][self.food_uid].name = self.food_name
         cache.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
         cache.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
         # 放到玩家背包里
@@ -265,7 +266,7 @@ class SeeFoodListByFoodNameDraw:
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time
-        character_data.behavior.make_food_seasoning = self.special_seasoning
+        character_data.behavior.food_seasoning = self.special_seasoning
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
         character_data.behavior.duration = self.make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD

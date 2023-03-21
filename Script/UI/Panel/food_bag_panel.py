@@ -194,9 +194,10 @@ class SeeFoodListByFoodNameDraw:
         if (food_data.special_seasoning == 0 or
             (food_data.special_seasoning != 0 and cache.character_data[0].target_character_id != 0)):
             name_draw = draw.LeftButton(
-                button_text, str(self.text), self.width, cmd_func=self.eat_food
+                button_text, str(self.text)[:3], self.width, cmd_func=self.eat_food
             )
             self.draw_text = button_text
+            self.button_return = name_draw.return_text
         else:
             name_draw = draw.LeftDraw()
             name_draw.text = button_text
@@ -216,7 +217,9 @@ class SeeFoodListByFoodNameDraw:
         now_food = character_data.food_bag[self.text]
         character_data.behavior.behavior_id = constant.Behavior.EAT
         character_data.state = constant.CharacterStatus.STATUS_EAT
+        character_data.behavior.food_name = now_food.name
+        character_data.behavior.food_seasoning = now_food.special_seasoning
         character_data.behavior.eat_food = now_food
-        character_data.behavior.duration = 1
-        update.game_update_flow(1)
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
         # cache.now_panel_id = constant.Panel.IN_SCENE

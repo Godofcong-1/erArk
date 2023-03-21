@@ -492,6 +492,8 @@ class SPECIAL_FLAG:
         """ 要休息状态 """
         self.pee: bool = 0
         """ 要撒尿状态 """
+        self.find_food_weird: bool = 0
+        """ 发现食物不对劲 """
 
 
 class CHARA_WORK:
@@ -590,8 +592,8 @@ class Behavior:
         """ 前提结算用:进食行为消耗的食物品质 """
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
-        self.make_food_seasoning: int = 0
-        """ 前提结算用:做饭指令用调味类型 """
+        self.food_seasoning: int = 0
+        """ 前提结算用:做饭/进食指令用调味类型 """
         self.pan_name: str = ""
         """ 前提结算用:内裤名字 """
         self.socks_name: str = ""

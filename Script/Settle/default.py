@@ -3578,7 +3578,7 @@ def handle_eat_add_just(
 
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
-    if pl_character_data.behavior.make_food_seasoning == 0:
+    if pl_character_data.behavior.food_seasoning == 0:
         eat_food_chara_id_list.append(0)
         if pl_character_data.target_character_id:
             eat_food_chara_id_list.append(pl_character_data.target_character_id)
@@ -3586,18 +3586,18 @@ def handle_eat_add_just(
         eat_food_chara_id_list.append(pl_character_data.target_character_id)
 
     # 吃掉该食物
-    handle_eat_food(character_id)
+    handle_eat_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
     # 对要吃食物的人进行结算
     for chara_id in eat_food_chara_id_list:
         target_data: game_type.Character = cache.character_data[chara_id]
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
 
         if chara_id:
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change = change_data.target_change[target_data.cid]
             add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
 
             # 正常食物，或异常食物但没有发现则加好感
-            if pl_character_data.behavior.make_food_seasoning == 0 or cooking.judge_accept_special_seasoning_food(chara_id):
+            if pl_character_data.behavior.food_seasoning == 0 or cooking.judge_accept_special_seasoning_food(chara_id):
                 character_handle.add_favorability(
                     character_id, target_data.cid, add_favorability, change_data, target_change, now_time
                 )
@@ -3610,14 +3610,14 @@ def handle_eat_add_just(
                 continue
 
         # 加体力气力，清零饥饿值和进食状态
-        handle_add_small_hit_point(chara_id)
-        handle_add_small_mana_point(chara_id)
-        handle_hunger_point_zero(chara_id)
-        handle_eat_food_flag_to_0(chara_id)
+        handle_add_small_hit_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_add_small_mana_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
         # 精液食物则加精液经验
-        if pl_character_data.behavior.make_food_seasoning in {11,12}:
-            default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=1,change_data=change_data,now_time=now_time)
+        if pl_character_data.behavior.food_seasoning in {11,12}:
+            default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
