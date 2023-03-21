@@ -11865,7 +11865,7 @@ def handle_pl_action_food_sour(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 1:
+    if character_data.behavior.food_seasoning == 1:
         return 1
     return 0
 
@@ -11880,7 +11880,7 @@ def handle_pl_action_food_sweet(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 2:
+    if character_data.behavior.food_seasoning == 2:
         return 1
     return 0
 
@@ -11895,7 +11895,7 @@ def handle_pl_action_food_bitter(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 3:
+    if character_data.behavior.food_seasoning == 3:
         return 1
     return 0
 
@@ -11910,7 +11910,7 @@ def handle_pl_action_food_spicy(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 4:
+    if character_data.behavior.food_seasoning == 4:
         return 1
     return 0
 
@@ -11925,7 +11925,7 @@ def handle_pl_action_food_sement_hidden(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 11:
+    if character_data.behavior.food_seasoning == 11:
         return 1
     return 0
 
@@ -11940,7 +11940,7 @@ def handle_pl_action_food_sement_direct(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning == 12:
+    if character_data.behavior.food_seasoning == 12:
         return 1
     return 0
 
@@ -11955,7 +11955,7 @@ def handle_pl_action_food_medicine(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state in {constant.CharacterStatus.STATUS_MAKE_FOOD,constant.CharacterStatus.STATUS_EAT} and character_data.behavior.food_seasoning >= 100:
+    if character_data.behavior.food_seasoning >= 100:
         return 1
     return 0
 

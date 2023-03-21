@@ -1,0 +1,15 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,136,0,sys_0&pl_action_food_sour,{TargetName}刚尝了一口{FoodName}就酸得她咬住了下嘴唇，生气地看向{Name}并拒绝再试第二口
+2,136,0,sys_0&pl_action_food_sweet,{TargetName}刚尝了一口{FoodName}就甜得她感觉喉咙都齁住了，生气地看向{Name}并拒绝再试第二口
+3,136,0,sys_0&pl_action_food_bitter,{TargetName}刚尝了一口{FoodName}就苦得她皱眉头，生气地看向{Name}并拒绝再试第二口
+4,136,0,sys_0&pl_action_food_spicy,{TargetName}刚尝了一口{FoodName}就辣得她直喝水，生气地看向{Name}并拒绝再试第二口
+5,136,0,sys_0&pl_action_food_sement_hidden&t_find_food_weird_flag_0,{TargetName}尝了几口{FoodName}，感觉到里面有什么腥臭的东西，虽然不确定是什么，但还是拒绝继续食用
+6,136,0,sys_0&pl_action_food_sement_hidden&t_find_food_weird_flag_1,尽管你已经努力巧妙掩盖了，但{TargetName}还是很快就察觉到{FoodName}里面加了精液。{TargetName}气得把{FoodName}扔了出去，跑去漱口了
+7,136,0,sys_0&pl_action_food_sement_direct&t_find_food_weird_flag_0,{TargetName}虽然不知道{FoodName}上面盖得满满当当的白浊液体是什么东西，但闻到这股腥臭味，还是坚定地拒绝食用
+8,136,0,sys_0&pl_action_food_sement_direct&t_find_food_weird_flag_1,{FoodName}刚端上来，{TargetName}就一下子就意识到上面明目张胆的白浊液体是什么东西。{TargetName}以看白痴的眼神看着{Name}，气的都不想理你了
+9,136,0,sys_0&pl_action_food_medicine&t_find_food_weird_flag_0,{TargetName}闻到{FoodName}里面有些怪味，拒绝食用
+10,136,0,sys_0&pl_action_food_medicine&t_find_food_weird_flag_1,{TargetName}一下子就闻到了{FoodName}里的药味，坚定地拒绝食用

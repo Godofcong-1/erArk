@@ -3564,7 +3564,7 @@ def handle_eat_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （进食）根据当前场景的有无目标，以及食物的调味来区分进行食用人的判断
+    （进食）根据当前场景的有无目标，以及食物的调味来区分进行食用人的判断和相应的结算
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3593,21 +3593,12 @@ def handle_eat_add_just(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
 
+        # 加好感
         if chara_id:
             add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-
-            # 正常食物，或异常食物但没有发现则加好感
-            if pl_character_data.behavior.food_seasoning == 0 or cooking.judge_accept_special_seasoning_food(chara_id):
-                character_handle.add_favorability(
+            character_handle.add_favorability(
                     character_id, target_data.cid, add_favorability, change_data, target_change, now_time
                 )
-            # 发现是异常食物，则拒绝并降好感
-            else:
-                add_favorability *= -1
-                character_handle.add_favorability(
-                    character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-                )
-                continue
 
         # 加体力气力，清零饥饿值和进食状态
         handle_add_small_hit_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)

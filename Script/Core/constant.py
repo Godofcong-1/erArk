@@ -45,7 +45,9 @@ class CharacterStatus:
     """ 做饭 """
     STATUS_EAT = 135
     """ 进食状态 """
-    STATUS_BUY_FOOD = 136
+    STATUS_REFUSE_EAT = 136
+    """ 拒绝进食 """
+    STATUS_BUY_FOOD = 137
     """ 购买食物 """
     STATUS_PEE = 140
     """ 解手 """
@@ -400,7 +402,9 @@ class Behavior:
     """ 做饭 """
     EAT = 135
     """ 进食 """
-    BUY_FOOD = 136
+    REFUSE_EAT = 136
+    """ 拒绝进食 """
+    BUY_FOOD = 137
     """ 购买食物 """
     PEE = 140
     """ 解手 """

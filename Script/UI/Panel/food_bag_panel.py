@@ -111,7 +111,7 @@ class FoodBagPanel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -212,14 +212,18 @@ class SeeFoodListByFoodNameDraw:
 
     def eat_food(self):
         """食用食物"""
-        update.game_update_flow(0)
         character_data: game_type.Character = cache.character_data[0]
         now_food = character_data.food_bag[self.text]
-        character_data.behavior.behavior_id = constant.Behavior.EAT
-        character_data.state = constant.CharacterStatus.STATUS_EAT
         character_data.behavior.food_name = now_food.name
         character_data.behavior.food_seasoning = now_food.special_seasoning
         character_data.behavior.eat_food = now_food
         character_data.behavior.duration = 5
+        character_data.behavior.behavior_id = constant.Behavior.EAT
+        character_data.state = constant.CharacterStatus.STATUS_EAT
+        if now_food.special_seasoning != 0:
+            if not cooking.judge_accept_special_seasoning_food(character_data.target_character_id):
+                character_data.behavior.behavior_id = constant.Behavior.REFUSE_EAT
+                character_data.state = constant.CharacterStatus.STATUS_REFUSE_EAT
+        line_feed.draw()
+        cache.now_panel_id = constant.Panel.IN_SCENE
         update.game_update_flow(5)
-        # cache.now_panel_id = constant.Panel.IN_SCENE

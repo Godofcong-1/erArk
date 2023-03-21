@@ -506,8 +506,9 @@ def judge_accept_special_seasoning_food(character_id: int):
             elif pl_character_data.behavior.food_seasoning == 12:
                 # 4级爱情系或至少3级隶属系的话才接受
                 for talent_id in {204,213,214}:
-                    target_data.sp_flag.find_food_weird = 1
-                    return 1
+                    if target_data.talent[talent_id]:
+                        target_data.sp_flag.find_food_weird = 1
+                        return 1
                 # 进行概率判定，难度*10
                 if return_d100 * 10 <= accept_rate:
                     target_data.sp_flag.find_food_weird = 0
