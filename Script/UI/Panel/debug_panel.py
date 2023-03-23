@@ -247,7 +247,7 @@ class Debug_Panel:
 
             # 要输出的变量名称以及注释
             draw_text_list = []
-            draw_text_list.append(f"[000]:基础属性")
+            draw_text_list.append(f"[000]:基础属性（已实装）")
             draw_text_list.append(f"[001]:道具")
             draw_text_list.append(f"[002]:衣服")
             draw_text_list.append(f"[003]:当前行为状态")
@@ -572,8 +572,73 @@ class Debug_Panel:
             name_draw.draw()
             return_list = []
 
+            # 基础属性
+            if key_index == 0:
+                draw_text_list = []
+                draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
+                draw_text_list.append(f"[001]:最大HP：{target_data.hit_point_max}")
+                draw_text_list.append(f"[002]:当前MP：{target_data.mana_point}")
+                draw_text_list.append(f"[003]:最大MP：{target_data.mana_point_max}")
+                draw_text_list.append(f"[004]:当前理智：{target_data.sanity_point}")
+                draw_text_list.append(f"[005]:最大理智：{target_data.sanity_point_max}")
+                draw_text_list.append(f"[011]:疲劳值 6m=1点，16h=160点(max)：{target_data.tired_point}")
+                draw_text_list.append(f"[012]:尿意值 1m=1点，4h=240点(max)：{target_data.urinate_point}")
+                draw_text_list.append(f"[013]:饥饿值 1m=1点，4h=240点(max)：{target_data.hunger_point}")
+                draw_text_list.append(f"[014]:熟睡值 1m=10点，10min=100点(max)：{target_data.sleep_point}")
+                draw_text_list.append(f"[015]:愤怒槽：{target_data.angry_point}")
+                draw_text_list.append(f"[016]:射精槽：{target_data.eja_point}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    if value_index == 0:
+                        target_data.hit_point = new_value
+                    elif value_index == 1:
+                        target_data.hit_point_max = new_value
+                    elif value_index == 2:
+                        target_data.mana_point = new_value
+                    elif value_index == 3:
+                        target_data.mana_point_max = new_value
+                    elif value_index == 4:
+                        target_data.sanity_point = new_value
+                    elif value_index == 5:
+                        target_data.sanity_point_max = new_value
+                    elif value_index == 11:
+                        target_data.tired_point = new_value
+                    elif value_index == 12:
+                        target_data.urinate_point = new_value
+                    elif value_index == 13:
+                        target_data.hunger_point = new_value
+                    elif value_index == 14:
+                        target_data.sleep_point = new_value
+                    elif value_index == 15:
+                        target_data.angry_point = new_value
+                    elif value_index == 16:
+                        target_data.eja_point = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
             # 能力数据
-            if key_index == 7:
+            elif key_index == 7:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.ability:

@@ -3068,10 +3068,10 @@ def handle_tired_ge_75(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.TIRED_LE_89)
-def handle_tired_le_89(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_LE_84)
+def handle_tired_le_84(character_id: int) -> int:
     """
-    疲劳条≤89%，自由活动的极限
+    疲劳条≤84%，自由活动的极限
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3086,8 +3086,8 @@ def handle_tired_le_89(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.TIRED_GE_90)
-def handle_tired_ge_90(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TIRED_GE_85)
+def handle_tired_ge_85(character_id: int) -> int:
     """
     疲劳条≥90%
     Keyword arguments:
@@ -3100,6 +3100,24 @@ def handle_tired_ge_90(character_id: int) -> int:
     value = character_data.tired_point / 160
     if value > 0.89:
         return character_data.tired_point * 5
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TIRED_L_100)
+def handle_tired_l_100(character_id: int) -> int:
+    """
+    疲劳条<100%，还不至于当场爆睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.tired_point / 160
+    if value < 1:
+        return 1
     else:
         return 0
 
@@ -3117,7 +3135,7 @@ def handle_tired_100(character_id: int) -> int:
 
     value = character_data.tired_point / 160
     if value >= 1:
-        return 1
+        return character_data.tired_point * 5
     else:
         return 0
 
@@ -3179,10 +3197,10 @@ def handle_t_tired_ge_75(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_TIRED_LE_89)
-def handle_t_tired_le_89(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_LE_84)
+def handle_t_tired_le_84(character_id: int) -> int:
     """
-    交互对象疲劳条≤89%，自由活动的极限
+    交互对象疲劳条≤84%，自由活动的极限
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3192,14 +3210,14 @@ def handle_t_tired_le_89(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
 
     value = target_data.tired_point / 160
-    if value <= 0.89:
+    if value <= 0.84:
         return 1
     else:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_TIRED_GE_90)
-def handle_t_tired_ge_90(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_TIRED_GE_85)
+def handle_t_tired_ge_85(character_id: int) -> int:
     """
     交互对象疲劳条≥90%
     Keyword arguments:
@@ -3211,7 +3229,7 @@ def handle_t_tired_ge_90(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
 
     value = target_data.tired_point / 160
-    if value > 0.89:
+    if value > 0.85:
         return target_data.tired_point * 5
     else:
         return 0
@@ -3596,6 +3614,21 @@ def handle_music_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if character_data.ability[44] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MUSIC_GE_2_LE_4)
+def handle_music_ge_2_le_4(character_id: int) -> int:
+    """
+    校验自身音乐技能>=2,<=4
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if 2 <= character_data.ability[44] <= 4:
         return 1
     return 0
 

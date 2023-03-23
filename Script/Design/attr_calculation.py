@@ -611,7 +611,7 @@ def get_semen_now_level(value: int) -> int:
 
 def get_tired_level(value: int) -> int:
     """
-    按当前困倦程度返回困倦等级[0:0~74,1:75~89,2:89~99,3:100以上]
+    按当前困倦程度返回困倦等级[0:0~74,1:75~84,2:85~99,3:100以上]
     Keyword arguments:
     value -- 困倦程度
     Return arguments:
@@ -619,9 +619,9 @@ def get_tired_level(value: int) -> int:
     """
     if value / 160 <= 0.74:
         return 0
-    elif 0.74 < value / 160 and value / 160 <= 0.89:
+    elif 0.74 < value / 160 <= 0.84:
         return 1
-    elif 0.89 < value / 160 and value / 160 <= 0.99:
+    elif 0.84 < value / 160 < 1:
         return 2
     elif value / 160 >= 1:
         return 3

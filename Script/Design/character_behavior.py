@@ -295,7 +295,7 @@ def judge_character_tired_sleep(character_id : int):
                 now_draw.width = width
                 # 跟随和H的分歧，忽略H后停留的情况
                 if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
-                    draw_text = "太累了，无法继续跟随，开始回房间睡觉\n" if character_data.sp_flag.tired else "太困了，开始回房间睡觉\n"
+                    draw_text = "太累了，无法继续跟随\n" if character_data.sp_flag.tired else "太困了，无法继续跟随\n"
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
