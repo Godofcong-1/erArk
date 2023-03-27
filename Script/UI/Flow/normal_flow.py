@@ -23,6 +23,7 @@ from Script.UI.Panel import (
     manage_library,
     debug_panel,
     originium_arts,
+    prts_panel,
 )
 from Script.Config import normal_config
 
@@ -179,4 +180,10 @@ def debug_flow():
 def originium_arts_flow():
     """源石技艺面板"""
     now_panel = originium_arts.Originium_Arts_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.PRTS)
+def prts_flow():
+    """普瑞赛斯面板"""
+    now_panel = prts_panel.Prts_Panel(width)
     now_panel.draw()

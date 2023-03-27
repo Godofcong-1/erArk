@@ -407,6 +407,21 @@ class Profession:
     """ 职业名 """
 
 
+class Prts:
+    """ 教程的问题及回答 """
+
+    cid: int
+    """ 编号id """
+    fater_type: int
+    """ 父类id(0系统，1日常，2攻略，3H，4经营) """
+    son_type: int
+    """ 子类id """
+    qa: str
+    """ 问题还是回答 """
+    text: str
+    """ 内容 """
+
+
 class Race:
     """ 种族类型名称 """
 

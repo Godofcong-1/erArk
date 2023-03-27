@@ -953,7 +953,8 @@ class Panel:
     """ DEBUG面板 """
     ORIGINIUM_ARTS = 23
     """ 源石技艺面板 """
-
+    PRTS = 24
+    """ 普瑞赛斯面板 """
 
 class SecondBehavior:
     """二段结算行为函数"""
@@ -1437,6 +1438,8 @@ class Instruct:
     #工作#
     BUILDING = 0
     """ 基建系统 """
+    PRTS = 0
+    """ 普瑞赛斯 """
     OFFICIAL_WORK = 0
     """ 处理公务 """
     BATTLE_COMMAND = 0

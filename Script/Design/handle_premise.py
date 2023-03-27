@@ -1037,6 +1037,45 @@ def handle_in_building_room(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.IN_SERVER_ROOM)
+def handle_in_server_room(character_id: int) -> int:
+    """
+    校验角色是否在机房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Server_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG)
+def handle_in_dr_off_or_server_room_or_debug(character_id: int) -> int:
+    """
+    校验角色是否在博士办公室/机房/debug模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Server_Room" in now_scene_data.scene_tag:
+        return 1
+    elif "Dr_Office" in now_scene_data.scene_tag:
+        return 1
+    elif cache.debug_mode:
+        return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.IN_CLINIC)
 def handle_in_clinic(character_id: int) -> int:

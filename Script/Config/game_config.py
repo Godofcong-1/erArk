@@ -209,6 +209,11 @@ config_trust_level: Dict[int, config_def.Trust_Level] = {}
 """ 信赖等级数据 """
 config_seasoning: Dict[int, config_def.Seasoning] = {}
 """ 调味数据 """
+config_prts: Dict[int, config_def.Prts] = {}
+""" 教程数据 """
+config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
+""" 教程数据的具体整理 父id:子id:0问1答:内容 """
+
 
 
 def load_data_json():
@@ -920,6 +925,34 @@ def load_seasoning():
         config_seasoning[now_tem.cid] = now_tem
 
 
+def load_prts():
+    """载入教程数据"""
+    now_data = config_data["Prts"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Prts()
+        now_tem.__dict__ = tem_data
+        config_prts[now_tem.cid] = now_tem
+
+        config_prts_data.setdefault(now_tem.fater_type, {})
+        config_prts_data[now_tem.fater_type].setdefault(now_tem.son_type, {})
+        if now_tem.qa == "q":
+            config_prts_data[now_tem.fater_type][now_tem.son_type][0] = now_tem
+        else:
+            config_prts_data[now_tem.fater_type][now_tem.son_type][1] = now_tem
+
+    """
+    draw_text_list = []
+    for son_type in config_prts_data[0]:
+        Q_data = config_prts_data[0][son_type][0]
+        draw_text_list.append(Q_data.text)
+    for son_type in config_prts_data[0]:
+        A_data = config_prts_data[0][son_type][1]
+        draw_text_list.append(A_data.text)
+    print(draw_text_list)
+    """
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -981,3 +1014,4 @@ def init():
     load_favorability_level()
     load_trust_level()
     load_seasoning()
+    load_prts()

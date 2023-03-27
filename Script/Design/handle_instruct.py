@@ -1390,7 +1390,6 @@ def handle_appointed_assistant():
     """处理指派助理指令"""
     cache.now_panel_id = constant.Panel.ASSISTANT
 
-
 @add_instruct(
     constant.Instruct.BUILDING, constant.InstructType.WORK, _("基建系统"),
     {constant_promise.Premise.NOT_H,
@@ -1399,6 +1398,15 @@ def handle_appointed_assistant():
 def handle_building():
     """处理基建系统指令"""
     cache.now_panel_id = constant.Panel.BUILDING
+
+@add_instruct(
+    constant.Instruct.PRTS, constant.InstructType.WORK, _("普瑞赛斯"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG, }
+)
+def handle_prts():
+    """处理普瑞赛斯指令"""
+    cache.now_panel_id = constant.Panel.PRTS
 
 
 @add_instruct(
