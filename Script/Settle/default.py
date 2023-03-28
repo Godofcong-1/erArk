@@ -3256,7 +3256,7 @@ def handle_recruit_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽
+    （招募干员用）根据发起者的话术技能增加招募槽
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3278,11 +3278,6 @@ def handle_recruit_add_just(
     now_add_lust = adjust * random.uniform(0.5, 1.5)
     if cache.debug_mode:
         now_add_lust += 100
-
-    # 如果有交互对象，则算上对方的医疗加成
-    if character_data.target_character_id != character_id:
-        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[40])
-        now_add_lust += adjust_target
 
     # 如果角色没有确定招募栏位，则选一个当前空的指派过去
     if character_data.work.recruit_index == -1:

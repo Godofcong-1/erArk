@@ -50,8 +50,9 @@ class Prts_Panel:
             now_draw = panel.LeftDrawTextListPanel()
 
             pl_name = cache.character_data[0].name
-            info_text = f"身份验证通过，最高权限账户——Dr.{pl_name}\n\n"
+            info_text = f"身份验证通过，最高权限账户——管理员账户\n\n"
             info_text += f"Dr.{pl_name}，欢迎访问普瑞赛斯终端，请问我可以为您做什么？\n\n"
+            info_text += f"○请注意，本终端内的资料查询功能会直接涉及游戏流程和实际内容的介绍和剧透，如果更倾向于自己体验和摸索的话，请仅在必要时刻再使用本功能。\n\n"
             info_draw.text = info_text
             info_draw.draw()
 
