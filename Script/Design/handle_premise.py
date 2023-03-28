@@ -983,6 +983,210 @@ def handle_not_in_moden_music_room(character_id: int) -> int:
         return 0
     return 1
 
+@add_premise(constant_promise.Premise.IN_MULTIMEDIA_ROOM)
+def handle_in_multimedia_room(character_id: int) -> int:
+    """
+    校验角色是否在多媒体室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Multimedia_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_MULTIMEDIA_ROOM)
+def handle_not_in_multimedia_room(character_id: int) -> int:
+    """
+    校验角色是否不在多媒体室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Multimedia_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_PHOTOGRAPHY_STUDIO)
+def handle_in_photography_studio(character_id: int) -> int:
+    """
+    校验角色是否在摄影爱好者影棚中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Photography_Studio" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_PHOTOGRAPHY_STUDIO)
+def handle_not_in_photography_studio(character_id: int) -> int:
+    """
+    校验角色是否不在摄影爱好者影棚中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Photography_Studio" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_AQUAPIT_EXPERIENTORIUM)
+def handle_in_aquapit_experientorium(character_id: int) -> int:
+    """
+    校验角色是否在大水坑快活体验屋中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Aquapit_Experientorium" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_AQUAPIT_EXPERIENTORIUM)
+def handle_not_in_aquapit_experientorium(character_id: int) -> int:
+    """
+    校验角色是否不在大水坑快活体验屋中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Aquapit_Experientorium" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_BOARD_GAMES_ROOM)
+def handle_in_board_games_room(character_id: int) -> int:
+    """
+    校验角色是否在棋牌室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Board_Games_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_BOARD_GAMES_ROOM)
+def handle_not_in_board_games_room(character_id: int) -> int:
+    """
+    校验角色是否不在棋牌室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Board_Games_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_FAIRY_BANQUET)
+def handle_in_fairy_banquet(character_id: int) -> int:
+    """
+    校验角色是否在糖果仙子宴会厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Fairy_Banquet" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_FAIRY_BANQUET)
+def handle_not_in_fairy_banquet(character_id: int) -> int:
+    """
+    校验角色是否不在糖果仙子宴会厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Fairy_Banquet" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_AVANT_GARDE_ARCADE)
+def handle_in_avant_garde_arcade(character_id: int) -> int:
+    """
+    校验角色是否在前卫街机厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Avant_Garde_Arcade" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_AVANT_GARDE_ARCADE)
+def handle_not_in_avant_garde_arcade(character_id: int) -> int:
+    """
+    校验角色是否不在前卫街机厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Avant_Garde_Arcade" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
 
 @add_premise(constant_promise.Premise.IN_LIBRARY)
 def handle_in_library(character_id: int) -> int:

@@ -1328,7 +1328,7 @@ def handle_singing():
 
 @add_instruct(
     constant.Instruct.PLAY_INSTRUMENT,
-    constant.InstructType.DAILY,
+    constant.InstructType.PLAY,
     _("演奏乐器"),
     {
         constant_promise.Premise.NOT_H,
@@ -1343,6 +1343,160 @@ def handle_play_instrument():
     character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
     update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.WATCH_MOVIE,
+    constant.InstructType.PLAY,
+    _("看电影"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_MULTIMEDIA_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_watch_movie():
+    """处理看电影指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.WATCH_MOVIE
+    character_data.state = constant.CharacterStatus.STATUS_WATCH_MOVIE
+    update.game_update_flow(120)
+
+@add_instruct(
+    constant.Instruct.PHOTOGRAPHY,
+    constant.InstructType.PLAY,
+    _("摄影"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_PHOTOGRAPHY_STUDIO,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_photography():
+    """处理摄影指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PHOTOGRAPHY
+    character_data.state = constant.CharacterStatus.STATUS_PHOTOGRAPHY
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_WATER,
+    constant.InstructType.PLAY,
+    _("玩水"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_AQUAPIT_EXPERIENTORIUM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_water():
+    """处理玩水指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_WATER
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_WATER
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_CHESS,
+    constant.InstructType.PLAY,
+    _("下棋"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_chess():
+    """处理下棋指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_CHESS
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_CHESS
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_MAHJONG,
+    constant.InstructType.PLAY,
+    _("打麻将"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_mahjong():
+    """处理打麻将指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_MAHJONG
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_MAHJONG
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_CARDS,
+    constant.InstructType.PLAY,
+    _("打牌"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_cards():
+    """处理打牌指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_CARDS
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_CARDS
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.REHEARSE_DANCE,
+    constant.InstructType.PLAY,
+    _("排演舞剧"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_FAIRY_BANQUET,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_rehearse_dance():
+    """处理排演舞剧指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.REHEARSE_DANCE
+    character_data.state = constant.CharacterStatus.STATUS_REHEARSE_DANCE
+    update.game_update_flow(120)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_ARCADE_GAME,
+    constant.InstructType.PLAY,
+    _("玩街机游戏"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_AVANT_GARDE_ARCADE,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_arcade_game():
+    """处理玩街机游戏指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_ARCADE_GAME
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME
+    update.game_update_flow(60)
 
 
 # 以下为工作#

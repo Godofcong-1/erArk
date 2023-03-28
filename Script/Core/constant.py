@@ -65,6 +65,22 @@ class CharacterStatus:
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    STATUS_WATCH_MOVIE = 153
+    """ 看电影 """
+    STATUS_PHOTOGRAPHY = 154
+    """ 摄影 """
+    STATUS_PLAY_WATER = 155
+    """ 玩水 """
+    STATUS_PLAY_CHESS = 156
+    """ 下棋 """
+    STATUS_PLAY_MAHJONG = 157
+    """ 打麻将 """
+    STATUS_PLAY_CARDS = 158
+    """ 打牌 """
+    STATUS_REHEARSE_DANCE = 159
+    """ 排演舞剧 """
+    STATUS_PLAY_ARCADE_GAME = 160
+    """ 玩街机游戏 """
     STATUS_SMELL_UNDERWEAR = 162
     """ 闻内衣 """
     STATUS_LISTEN_INFLATION = 171
@@ -422,6 +438,22 @@ class Behavior:
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
+    WATCH_MOVIE = 153
+    """ 看电影 """
+    PHOTOGRAPHY = 154
+    """ 摄影 """
+    PLAY_WATER = 155
+    """ 玩水 """
+    PLAY_CHESS = 156
+    """ 下棋 """
+    PLAY_MAHJONG = 157
+    """ 打麻将 """
+    PLAY_CARDS = 158
+    """ 打牌 """
+    REHEARSE_DANCE = 159
+    """ 排演舞剧 """
+    PLAY_ARCADE_GAME = 160
+    """ 玩街机游戏 """
     LISTEN_INFLATION = 171
     """ 听肚子里的动静 """
     PLAY_WITH_CHILD = 172
@@ -1451,6 +1483,22 @@ class Instruct:
     """ 借阅书籍 """
     READ_BOOK = 0
     """ 读书 """
+    WATCH_MOVIE = 0
+    """ 看电影 """
+    PHOTOGRAPHY = 0
+    """ 摄影 """
+    PLAY_WATER = 0
+    """ 玩水 """
+    PLAY_CHESS = 0
+    """ 下棋 """
+    PLAY_MAHJONG = 0
+    """ 打麻将 """
+    PLAY_CARDS = 0
+    """ 打牌 """
+    REHEARSE_DANCE = 0
+    """ 排演舞剧 """
+    PLAY_ARCADE_GAME = 0
+    """ 玩街机游戏 """
 
 
     #工作#
