@@ -833,6 +833,10 @@ class StateMachine:
     """ 工作：授课 """
     WORK_ATTENT_CLASS = 304
     """ 工作：上学 """
+    WORK_LIBRARY_1 = 305
+    """ 工作：三成去图书馆，七成原地等待30分钟 """
+    WORK_LIBRARY_2 = 306
+    """ 工作：三成去图书馆办公室，七成看书 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """

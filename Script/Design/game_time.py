@@ -465,7 +465,7 @@ def judge_work_today(character_id: int) -> bool:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 权重
+    int -- 周一到周五为1，周末为0
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time

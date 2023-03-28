@@ -1037,6 +1037,62 @@ def character_work_teach(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_ATTENT_CLASS
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_1)
+def character_work_library_1(character_id: int):
+    """
+    工作：三成去图书馆，七成原地等待30分钟
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    rand_num = random.randint(0, 99)
+    if rand_num < 30:
+        to_library = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Library"])
+        )
+        _, _, move_path, move_time = character_move.character_move(character_id, to_library)
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.behavior.duration = 30
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_LIBRARY_2)
+def character_work_library_2(character_id: int):
+    """
+    工作：三成去图书馆办公室，七成看书
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    rand_num = random.randint(0, 99)
+    if rand_num < 30:
+        to_library = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Library_Office"])
+        )
+        _, _, move_path, move_time = character_move.character_move(character_id, to_library)
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
+    else:
+        basement.check_random_borrow_book(character_id)# 检查是否要借书
+        for book_id_all in character_data.entertainment.borrow_book_id_set:
+            book_id = book_id_all
+        book_data = game_config.config_book[book_id]
+        character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
+        character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
+        character_data.behavior.book_id = book_id
+        character_data.behavior.book_name = book_data.name
+        character_data.behavior.duration = 30
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
 def character_entertain_read(character_id: int):
     """

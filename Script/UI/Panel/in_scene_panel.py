@@ -441,7 +441,8 @@ class SeeInstructPanel:
                                 if not now_premise_value:
                                     premise_judge = 1
                                     break
-                    if premise_judge:
+                    # 如果是debug模式，则不满足也显示
+                    if premise_judge and not cache.debug_mode:
                         continue
                     now_instruct_list.append(instruct)
         now_instruct_list.sort()

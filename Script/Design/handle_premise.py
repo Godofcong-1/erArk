@@ -151,15 +151,18 @@ def handle_to_work_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 17:
-        return 50
+    # 首先需要是工作日
+    if game_time.judge_work_today(0):
+        if ((character_data.behavior.start_time.hour == 8 and character_data.behavior.start_time.minute >= 40)
+        or (character_data.behavior.start_time.hour == 13 and character_data.behavior.start_time.minute >= 40)):
+            return 50
     return 0
 
 
 @add_premise(constant_promise.Premise.WORK_TIME)
 def handle_work_time(character_id: int) -> int:
     """
-    工作时间（早上9:00~中午12:00，下午14:00~下午18:00）
+    工作时间（工作日早上9:00~中午12:00，下午14:00~下午18:00）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -168,15 +171,39 @@ def handle_work_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 18:
-        return 50
+    # 首先需要是工作日
+    if game_time.judge_work_today(0):
+        if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 18:
+            return 50
     return 0
 
 
-@add_premise(constant_promise.Premise.ENTERTAINMENT_TIME)
-def handle_entertainment_time(character_id: int) -> int:
+@add_premise(constant_promise.Premise.ALL_ENTERTAINMENT_TIME)
+def handle_all_entertainment_time(character_id: int) -> int:
     """
-    娱乐时间（下午5:00~晚上9:59）
+    全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 如果是非工作日，则为工作时间+下班
+    if not game_time.judge_work_today(0):
+        if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 22:
+            return 50
+    # 如果是工作日，仅取18:00~22:00的下班时间
+    else:
+        if 18 <= character_data.behavior.start_time.hour < 22:
+            return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.WORKDAYD_ENTERTAINMENT_TIME)
+def handle_workday_entertainment_time(character_id: int) -> int:
+    """
+    工作日娱乐时间（下午6:00~晚上9:59）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -185,9 +212,35 @@ def handle_entertainment_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    if 17 <= character_data.behavior.start_time.hour < 22:
-        return 50
+    # 首先需要是工作日
+    if game_time.judge_work_today(0):
+        if 18 <= character_data.behavior.start_time.hour < 22:
+            return 50
     return 0
+
+
+@add_premise(constant_promise.Premise.TIME_WORKDAYD)
+def handle_time_workday(character_id: int) -> int:
+    """
+    今天为工作日（周一到周五）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return game_time.judge_work_today(0)
+
+
+@add_premise(constant_promise.Premise.TIME_WEEKEND)
+def handle_time_weekend(character_id: int) -> int:
+    """
+    今天为周末（周六或周日）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not game_time.judge_work_today(0)
 
 
 @add_premise(constant_promise.Premise.HAVE_FOOD)
