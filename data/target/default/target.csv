@@ -88,4 +88,11 @@ ai的目标,,,
 406,21,normal_all|all_entertainment_time|entertainment_is_training|not_in_training_room,正常状态下，全娱乐时间，娱乐是训练，当前不在训练室，则移动至训练室
 407,402,normal_all|all_entertainment_time|entertainment_is_training|in_training_room,正常状态下，全娱乐时间，娱乐是训练，且当前在训练室，则训练
 
+411,20,normal_all|all_entertainment_time|entertainment_is_sing|not_in_moden_music_room,正常状态下，全娱乐时间，娱乐是唱歌，当前不在现代音乐排练室，则移动至现代音乐排练室
+412,403,normal_all|all_entertainment_time|entertainment_is_sing|in_moden_music_room,正常状态下，全娱乐时间，娱乐是唱歌，且当前在现代音乐排练室，则唱歌
+413,19,normal_all|all_entertainment_time|entertainment_is_play_classic_instrument|not_in_classic_music_room,正常状态下，全娱乐时间，娱乐是演奏传统乐器，当前不在夕照区音乐室，则移动至夕照区音乐室
+414,404,normal_all|all_entertainment_time|entertainment_is_play_classic_instrument|in_classic_music_room,正常状态下，全娱乐时间，娱乐是演奏传统乐器，且当前在夕照区音乐室，则演奏传统乐器
+415,20,normal_all|all_entertainment_time|entertainment_is_play_moden_instrument|not_in_moden_music_room,正常状态下，全娱乐时间，娱乐是演奏现代乐器，当前不在现代音乐排练室，则移动至现代音乐排练室
+416,405,normal_all|all_entertainment_time|entertainment_is_play_moden_instrument|in_moden_music_room,正常状态下，全娱乐时间，娱乐是演奏现代乐器，且当前在现代音乐排练室，则演奏现代乐器
+
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍

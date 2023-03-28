@@ -151,10 +151,12 @@ class SeeCharacterFirstPanel:
         head_draw = CharacterInfoHead(character_id, width)
         image_draw = CharacterImage(character_id, width)
         Talent_draw = CharacterTalentText(character_id, width, 8, 0)
+        Daily_draw = CharacterDailyText(character_id, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
             image_draw,
             Talent_draw,
+            Daily_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -1518,9 +1520,12 @@ class CharacterImage:
         title_text = "立绘"
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.title_list.append(type_line)
+
+        # 正常的立绘图片名为角色名，但女儿的情况下单独使用女儿图片
         self.image_name = character_data.name
         if character_data.relationship.father_id == 0:
             self.image_name = "女儿_1"
+
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
         now_draw_1.width = 2
@@ -1533,6 +1538,10 @@ class CharacterImage:
                 value.draw()
             # for value in self.draw_list:
             #     value.draw()
+            now_draw_1 = draw.NormalDraw()
+            now_draw_1.text = " "
+            now_draw_1.width = 1
+            now_draw_1.draw()
             flow_handle.print_image_cmd(self.image_name, "立绘按钮")
 
 
@@ -1696,9 +1705,9 @@ class CharacterTalentText:
                 label.draw()
 
 
-class CharacterWorkText:
+class CharacterDailyText:
     """
-    显示角色工作面板对象
+    显示角色日程面板对象
     Keyword arguments:
     character_id -- 角色id
     width -- 绘制宽度
@@ -1721,56 +1730,24 @@ class CharacterWorkText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
-        work_type = character_data.work.work_type
+        work_text = game_config.config_work_type[character_data.work.work_type].name
+        entertainment_text = game_config.config_entertainment[character_data.entertainment.entertainment_type].name
 
-        work_cid = game_config.config_work_type[work_type].cid
-        work_name = game_config.config_work_type[work_type].name
-        work_place = game_config.config_work_type[work_type].department
-        work_describe = game_config.config_work_type[work_type].describe
+        if character_id == 0:
+            work_text,entertainment_text = "无","无"
 
-        f"[{work_cid}]{work_name}({work_place})：{work_describe}",
-
-        profession_text = game_config.config_profession[character_data.profession].name
-        race_text = game_config.config_race[character_data.race].name
-        type_data = "工作"
+        type_data = "日程"
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
-        talent_list = game_config.config_talent_type_data
-        # print("进入for之前")
-        conut = 0
-        for talent_type in talent_list:
-            type_data = game_config.config_talent_type[talent_type]
-            type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
-            # print("type_data.name :",type_data.name)
-            type_set = talent_list[talent_type]
-            talent_text_list = []
-            if conut == 0:
-                message_profession = _(" 职业    ：[{profession_text}]").format(
-                    profession_text=profession_text,
-                )
-                talent_text_list.append(message_profession)
-                message_race = _("\n 种族    ：[{race_text}]").format(
-                    race_text=race_text,
-                )
-                talent_text_list.append(message_race)
-                conut = 1
-            race_type = type_data.name
-            if talent_type == 0:
-                message_race = f"\n {race_type}  ："
-            else:
-                message_race = f"\n {race_type}："
-            for talent_id in type_set:
-                talent_text = game_config.config_talent[talent_id].name
-                if character_data.talent[talent_id]:
-                    now_text = f"[{talent_text}]"
-                    message_race += now_text
-            talent_text_list.append(message_race)
-            if self.center_status:
-                now_draw = panel.CenterDrawTextListPanel()
-            else:
-                now_draw = panel.LeftDrawTextListPanel()
-            now_draw.set(talent_text_list, self.width, self.column)
-            self.draw_list.extend(now_draw.draw_list)
+
+        now_draw = panel.LeftDrawTextListPanel()
+        text_list = f"当前工作：{work_text}     今日娱乐：{entertainment_text}"
+        text_draw = draw.LeftDraw()
+        text_draw.text = text_list
+        text_draw.width = self.width
+        now_draw.draw_list.append(text_draw)
+        now_draw.width += len(text_draw.text)
+        self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):
         """绘制面板"""

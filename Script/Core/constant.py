@@ -754,6 +754,8 @@ class StateMachine:
     """ 移动至休息室 """
     MOVE_TO_CLASSIC_MUSIC_ROOM = 19
     """ 移动至夕照区音乐室 """
+    MOVE_TO_MODEN_MUSIC_ROOM = 20
+    """ 移动至现代音乐排练室 """
     MOVE_TO_TRAINING_ROOM = 21
     """ 根据职业自动移动至对应训练室 """
     MOVE_TO_CLINIC = 22
@@ -842,6 +844,12 @@ class StateMachine:
     """ 娱乐：读书 """
     ENTERTAIN_TRAINING = 402
     """ 娱乐：训练 """
+    ENTERTAIN_SINGING = 403
+    """ 娱乐：唱歌 """
+    ENTERTAIN_PLAY_CLASSIC_INSTRUMENT = 404
+    """ 娱乐：演奏传统乐器 """
+    ENTERTAIN_PLAY_MODEN_INSTRUMENT = 405
+    """ 娱乐：演奏现代乐器 """
 
 
     # MOVE_TO_CLASS = 0
@@ -1437,6 +1445,12 @@ class Instruct:
     """ 听肚子里的动静 """
     PLAY_WITH_CHILD = 0
     """ 一起玩耍 """
+    EXERCISE = 0
+    """ 锻炼身体 """
+    BORROW_BOOK = 0
+    """ 借阅书籍 """
+    READ_BOOK = 0
+    """ 读书 """
 
 
     #工作#
@@ -1454,8 +1468,6 @@ class Instruct:
     """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
-    EXERCISE = 0
-    """ 锻炼身体 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
     RECRUIT = 0
@@ -1464,10 +1476,6 @@ class Instruct:
     """ 确认已招募的干员 """
     TEACH = 0
     """ 授课 """
-    BORROW_BOOK = 0
-    """ 借阅书籍 """
-    READ_BOOK = 0
-    """ 读书 """
     MANAGE_LIBRARY = 0
     """ 管理图书馆 """
     SEE_COLLECTION = 0

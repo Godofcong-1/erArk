@@ -727,6 +727,7 @@ def update_new_day():
             # 否则随机当天的娱乐活动
             else:
                 entertainment_list = [i for i in game_config.config_entertainment]
+                entertainment_list.remove(0)
                 character_data.entertainment.entertainment_type = random.choice(entertainment_list)
             # 刷新生理周期
             pregnancy.update_reproduction_period(character_id)

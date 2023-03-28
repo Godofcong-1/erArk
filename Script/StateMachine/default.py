@@ -392,6 +392,46 @@ def character_move_to_teacher_office(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASSIC_MUSIC_ROOM)
+def character_move_to_classic_music_room(character_id: int):
+    """
+    移动至夕照区音乐室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_teacher_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Classic_Musicroom"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_teacher_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MODEN_MUSIC_ROOM)
+def character_move_to_moden_music_room(character_id: int):
+    """
+    移动至现代音乐排练室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_teacher_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Modern_Musicroom"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_teacher_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -733,6 +773,48 @@ def character_training(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.TRAINING
     character_data.behavior.duration = 120
     character_data.state = constant.CharacterStatus.STATUS_TRAINING
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_SINGING)
+def character_training(character_id: int):
+    """
+    娱乐：唱歌
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SINGING
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_SINGING
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_CLASSIC_INSTRUMENT)
+def character_play_classic_instrument(character_id: int):
+    """
+    娱乐：演奏传统乐器
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_MODEN_INSTRUMENT)
+def character_play_moden_instrument(character_id: int):
+    """
+    娱乐：演奏现代乐器
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)

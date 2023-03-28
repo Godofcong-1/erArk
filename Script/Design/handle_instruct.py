@@ -307,7 +307,7 @@ def handle_teach():
 
 @add_instruct(
     constant.Instruct.BORROW_BOOK,
-    constant.InstructType.WORK,
+    constant.InstructType.PLAY,
     _("借阅书籍"),
     {
         constant_promise.Premise.IN_LIBRARY,
@@ -321,7 +321,7 @@ def handle_borrow_book():
 
 @add_instruct(
     constant.Instruct.READ_BOOK,
-    constant.InstructType.WORK,
+    constant.InstructType.PLAY,
     _("读书"),
     {
         constant_promise.Premise.NOT_H,
@@ -1429,7 +1429,7 @@ def handle_training():
 
 @add_instruct(
     constant.Instruct.EXERCISE,
-    constant.InstructType.WORK,
+    constant.InstructType.PLAY,
     _("锻炼身体"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_GYM_ROOM,

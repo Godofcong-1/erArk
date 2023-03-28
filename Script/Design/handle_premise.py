@@ -912,6 +912,78 @@ def handle_in_music_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_CLASSIC_MUSIC_ROOM)
+def handle_in_classic_music_room(character_id: int) -> int:
+    """
+    校验角色是否在夕照区音乐室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Classic_Musicroom" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_CLASSIC_MUSIC_ROOM)
+def handle_not_in_classic_music_room(character_id: int) -> int:
+    """
+    校验角色是否不在夕照区音乐室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Classic_Musicroom" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_MODEN_MUSIC_ROOM)
+def handle_in_moden_music_room(character_id: int) -> int:
+    """
+    校验角色是否在现代音乐排练室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Modern_Musicroom" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_MODEN_MUSIC_ROOM)
+def handle_not_in_moden_music_room(character_id: int) -> int:
+    """
+    校验角色是否不在现代音乐排练室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Modern_Musicroom" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_LIBRARY)
 def handle_in_library(character_id: int) -> int:
     """
@@ -4481,7 +4553,7 @@ def handle_target_not_fall(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {10, 11, 12, 13, 15, 16, 17, 18}:
+    for i in {201, 202, 203, 204, 211, 212, 213, 214}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -4562,7 +4634,7 @@ def handle_target_love_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {10, 11, 12, 13}:
+    for i in {201, 202, 203, 204}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4579,7 +4651,7 @@ def handle_target_love_ge_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {11, 12, 13}:
+    for i in {202, 203, 204}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4596,7 +4668,7 @@ def handle_target_love_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {12, 13}:
+    for i in {203, 204}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4613,7 +4685,7 @@ def handle_target_love_le_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {12, 13}:
+    for i in {201, 202}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -4694,7 +4766,7 @@ def handle_target_obey_ge_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {15, 16, 17, 18}:
+    for i in {211, 212, 213, 214}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4711,7 +4783,7 @@ def handle_target_obey_ge_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {16, 17, 18}:
+    for i in {212, 213, 214}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4728,7 +4800,7 @@ def handle_target_obey_ge_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {17, 18}:
+    for i in {213, 214}:
         if target_data.talent[i]:
             return 1
     return 0
@@ -4745,7 +4817,7 @@ def handle_target_obey_le_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for i in {17, 18}:
+    for i in {211, 212}:
         if target_data.talent[i]:
             return 0
     return 1
@@ -6203,6 +6275,45 @@ def handle_entertainment_is_training(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.entertainment.entertainment_type == 91
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SING)
+def handle_entertainment_is_sing(character_id: int) -> int:
+    """
+    自己的娱乐为唱歌
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 51
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CLASSIC_INSTRUMENT)
+def handle_entertainment_is_play_classic_instrument(character_id: int) -> int:
+    """
+    自己的娱乐为演奏传统乐器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 53
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_MODEN_INSTRUMENT)
+def handle_ENTERTAINMENT_IS_PLAY_MODEN_INSTRUMENT(character_id: int) -> int:
+    """
+    自己的娱乐为演奏现代乐器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 54
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)

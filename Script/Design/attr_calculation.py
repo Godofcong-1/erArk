@@ -42,6 +42,7 @@ def get_entertainment_zero() -> dict:
     """
     entertainment_data = game_type.CHARA_ENTERTAINMENT()
     entertainment_list = [i for i in game_config.config_entertainment]
+    entertainment_list.remove(0)
     entertainment_data.entertainment_type = random.choice(entertainment_list)
 
     return entertainment_data

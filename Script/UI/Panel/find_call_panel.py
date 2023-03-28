@@ -40,7 +40,7 @@ class Find_call_Panel:
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 3, self.width, 1, 1, 0)
         while 1:
             py_cmd.clr_cmd()
-            npc_list = []
+            npc_list,return_list = [],[]
             title_draw.draw()
             info_draw = draw.NormalDraw()
             follow_count = cache.character_data[0].pl_ability.follow_count
@@ -52,13 +52,19 @@ class Find_call_Panel:
             # 暂不输出跟随角色信息，等加了该功能后再输出
             # info_draw.draw()
             line_feed.draw()
+            if cache.debug_mode:
+                text = "  [一键全召集]"
+                name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.call_all)
+                name_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+                return_list.append(name_draw.return_text)
             # 遍历角色id
             for npc_id in cache.npc_id_got:
                 if npc_id != 0:
                     npc_list.append(npc_id)
             self.handle_panel.text_list = npc_list
             self.handle_panel.update()
-            return_list = []
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
@@ -70,6 +76,13 @@ class Find_call_Panel:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
+    def call_all(self):
+        """一键全召集"""
+        for npc_id in cache.npc_id_got:
+            if npc_id != 0:
+                character_data = cache.character_data[npc_id]
+                character_data.sp_flag.is_follow = 1
 
 class FindDraw:
     """

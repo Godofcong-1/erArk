@@ -264,30 +264,10 @@ class Debug_Panel:
             draw_text_list.append(f"[014]:助理情况")
             draw_text_list.append(f"[015]:行动记录")
             draw_text_list.append(f"[016]:工作")
-            draw_text_list.append(f"[017]:娱乐")
+            draw_text_list.append(f"[017]:娱乐（已实装）")
             draw_text_list.append(f"[018]:怀孕（已实装）")
             draw_text_list.append(f"[019]:社会关系（已实装）")
             draw_text_list.append(f"[020]:特殊flag（已实装）")
-
-
-            # draw_text_list.append(f"[000]:当前HP：{target_data.hit_point}")
-            # draw_text_list.append(f"[001]:最大HP：{target_data.hit_point_max}")
-            # draw_text_list.append(f"[002]:当前MP：{target_data.mana_point}")
-            # draw_text_list.append(f"[003]:最大MP：{target_data.mana_point_max}")
-            # draw_text_list.append(f"[004]:好感度：{target_data.favorability[0]}")
-            # draw_text_list.append(f"[005]:信赖度：{target_data.trust}")
-            # draw_text_list.append(f"[006]:当前愤怒槽：{target_data.angry_point}")
-            # draw_text_list.append(f"[007]:疲劳值 6m=1点，16h=160点(max)：{target_data.tired_point}")
-            # draw_text_list.append(f"[008]:尿意值 1m=1点，4h=240点(max)：{target_data.urinate_point}")
-            # draw_text_list.append(f"[009]:饥饿值 1m=1点，4h=240点(max)：{target_data.hunger_point}")
-            # draw_text_list.append(f"[010]:当前状态：{target_data.state}")
-            # draw_text_list.append(f"[011]:宿舍坐标：{target_data.dormitory}")
-            # draw_text_list.append(f"[012]:当前交互对象id：{target_data.target_character_id}")
-            # draw_text_list.append(f"[013]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}")
-            # draw_text_list.append(f"[014]:在H模式中：{target_data.sp_flag.is_h}")
-            # draw_text_list.append(f"[015]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.sp_flag.is_follow}")
-            # draw_text_list.append(f"[016]:疲劳状态（HP=1）：{target_data.sp_flag.tired}")
-            # draw_text_list.append(f"[017]:被玩家惹生气：{target_data.sp_flag.angry_with_player}")
 
 
             for i in range(len(draw_text_list)):
@@ -819,6 +799,39 @@ class Debug_Panel:
                     change_draw_flag = False
                     continue
 
+            # 娱乐数据
+            elif key_index == 17:
+                info_text = f"[000]:娱乐活动的类型：{target_data.entertainment.entertainment_type}\n"
+                info_text += f"[001]:借的书的id：{target_data.entertainment.borrow_book_id_set}\n"
+                info_text += f"[002]:归还当前阅读书籍的可能性比例：{target_data.entertainment.book_return_possibility}\n"
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+
+                if change_draw_flag:
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开。列表的内容元素0为删除1为增加"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    if value_index[0] == 0:
+                        target_data.entertainment.entertainment_type = value_index[1]
+                    elif value_index[0] == 1:
+                        if value_index[1] == 1:
+                            target_data.entertainment.borrow_book_id_set.add(value_index[2])
+                        else:
+                            target_data.entertainment.borrow_book_id_set.remove(value_index[2])
+                    elif value_index[0] == 2:
+                        target_data.entertainment.book_return_possibility = value_index[1]
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+
             # 怀孕数据
             elif key_index == 18:
                 draw_text_list = []
@@ -915,7 +928,7 @@ class Debug_Panel:
 
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
-                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开"), 100)
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开。列表的内容元素0为删除1为增加"), 100)
                     value_index = value_index_panel.draw()
                     if "," in value_index: # 转成全int的list
                         value_index = list(map(int, value_index.split(",")))
