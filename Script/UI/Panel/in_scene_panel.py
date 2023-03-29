@@ -529,6 +529,7 @@ class CharacterImageListDraw:
     def draw(self):
         """绘制列表"""
         head_width = len(self.character_list) * 16
+        head_width = min(head_width,160) # 最多修正十个人
         center_fix = text_handle.align("*" * head_width, "center", 1, 1)
         fix_draw = draw.NormalDraw()
         fix_draw.width = self.width
@@ -540,7 +541,7 @@ class CharacterImageListDraw:
         if len(self.character_list):
             text_draw = draw.NormalDraw()
             text_draw.width = 1
-            text_draw.text = "→"
+            text_draw.text = "▷ "
             text_draw.draw()
 
             # 绘制交互对象
@@ -551,7 +552,7 @@ class CharacterImageListDraw:
 
             text_draw = draw.NormalDraw()
             text_draw.width = 1
-            text_draw.text = "←"
+            text_draw.text = " ◁ "
             text_draw.draw()
 
         # 超过10人，则只绘制10个
@@ -571,6 +572,10 @@ class CharacterImageListDraw:
                 continue
             now_draw = CharacterImageButton(now_character, self.width)
             now_draw.draw()
+            space_draw = draw.NormalDraw()
+            space_draw.width = 1
+            space_draw.text = " "
+            space_draw.draw()
             self.return_list.append(now_draw.return_text)
 
         # 绘制下一页按钮
