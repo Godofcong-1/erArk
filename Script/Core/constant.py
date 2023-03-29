@@ -802,10 +802,22 @@ class StateMachine:
     """ 移动到教室 """
     MOVE_TO_TEACHER_OFFICE = 27
     """ 移动到教师办公室 """
+    MOVE_TO_MULTIMEDIA_ROOM = 28
+    """ 移动至多媒体室 """
+    MOVE_TO_PHOTOGRAPHY_STUDIO = 29
+    """ 移动至摄影爱好者影棚 """
+    MOVE_TO_AQUAPIT_EXPERIENTORIUM = 30
+    """ 移动至大水坑快活体验屋 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 31
     """ 移动至大浴场的更衣室 """
     MOVE_TO_BATH_ROOM = 33
     """ 移动至淋浴室 """
+    MOVE_TO_BOARD_GAMES_ROOM = 34
+    """ 移动至棋牌室 """
+    MOVE_TO_FAIRY_BANQUET = 35
+    """ 移动至糖果仙子宴会厅 """
+    MOVE_TO_AVANT_GARDE_ARCADE = 36
+    """ 移动至前卫街机厅 """
 
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
@@ -882,6 +894,22 @@ class StateMachine:
     """ 娱乐：演奏传统乐器 """
     ENTERTAIN_PLAY_MODEN_INSTRUMENT = 405
     """ 娱乐：演奏现代乐器 """
+    ENTERTAIN_WATCH_MOVIE = 406
+    """ 娱乐：看电影 """
+    ENTERTAIN_PHOTOGRAPHY = 407
+    """ 娱乐：摄影 """
+    ENTERTAIN_PLAY_WATER = 408
+    """ 娱乐：玩水 """
+    ENTERTAIN_PLAY_CHESS = 409
+    """ 娱乐：下棋 """
+    ENTERTAIN_PLAY_MAHJONG = 410
+    """ 娱乐：打麻将 """
+    ENTERTAIN_PLAY_CARDS = 411
+    """ 娱乐：打牌 """
+    ENTERTAIN_REHEARSE_DANCE = 412
+    """ 娱乐：排演舞剧 """
+    ENTERTAIN_PLAY_ARCADE_GAME = 413
+    """ 娱乐：玩街机游戏 """
 
 
     # MOVE_TO_CLASS = 0

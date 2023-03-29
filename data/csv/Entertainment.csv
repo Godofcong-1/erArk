@@ -9,5 +9,13 @@ int,str,int,str,int,str
 51,唱歌,151,Modern_Musicroom,0,去现代音乐排练室唱歌。
 53,演奏传统乐器,152,Classic_Musicroom,0,去夕照区音乐室演奏乐器。
 54,演奏现代乐器,152,Modern_Musicroom,0,去现代音乐排练室演奏乐器。
+55,看电影,153,Multimedia_Room,0,去多媒体室看电影。
+56,摄影,154,Photography_Studio,0,去摄影爱好者影棚拍照。
+57,玩水,155,Aquapit_Experientorium,0,去大水坑快活体验屋玩水。
+58,下棋,156,Board_Games_Room,0,去棋牌室下棋。
+59,打麻将,157,Board_Games_Room,0,去棋牌室打麻将。
+60,打牌,158,Board_Games_Room,0,去棋牌室打牌。
+61,排演舞剧,159,Fairy_Banquet,0,去糖果仙子宴会厅排演舞剧。
 91,训练,402,Training_Room,0,去训练场训练，会根据职业自动到近战的木桩房或远程的射击房进行训练。
 101,读书,210,Library,0,在图书馆借书读书。如果没有已经借的书会先随机借一本，否则直接看。每次看完之后有一定几率还回当前这本书。
+111,玩街机游戏,160,Avant_Garde_Arcade,0,去前卫街机厅打街机。

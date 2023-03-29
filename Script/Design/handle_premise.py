@@ -190,7 +190,7 @@ def handle_all_entertainment_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 如果是非工作日，则为工作时间+下班
-    if not game_time.judge_work_today(0):
+    if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
         if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 22:
             return 50
     # 如果是工作日，仅取18:00~22:00的下班时间
@@ -6518,6 +6518,110 @@ def handle_ENTERTAINMENT_IS_PLAY_MODEN_INSTRUMENT(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.entertainment.entertainment_type == 54
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_WATCH_MOVIE)
+def handle_entertainment_is_watch_movie(character_id: int) -> int:
+    """
+    自己的娱乐为看电影
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 55
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PHOTOGRAPHY)
+def handle_entertainment_is_photography(character_id: int) -> int:
+    """
+    自己的娱乐为摄影
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 56
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_WATER)
+def handle_entertainment_is_play_water(character_id: int) -> int:
+    """
+    自己的娱乐为玩水
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 57
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CHESS)
+def handle_entertainment_is_play_chess(character_id: int) -> int:
+    """
+    自己的娱乐为下棋
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 58
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_MAHJONG)
+def handle_entertainment_is_play_mahjong(character_id: int) -> int:
+    """
+    自己的娱乐为打麻将
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 59
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CARDS)
+def handle_entertainment_is_play_cards(character_id: int) -> int:
+    """
+    自己的娱乐为打牌
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 60
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_REHEARSE_DANCE)
+def handle_entertainment_is_rehearse_dance(character_id: int) -> int:
+    """
+    自己的娱乐为排演舞剧
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 61
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_ARCADE_GAME)
+def handle_entertainment_is_play_arcade_game(character_id: int) -> int:
+    """
+    自己的娱乐为玩街机游戏
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 111
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)

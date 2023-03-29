@@ -432,6 +432,126 @@ def character_move_to_moden_music_room(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MULTIMEDIA_ROOM)
+def character_move_to_multimedia_room(character_id: int):
+    """
+    移动至多媒体室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_multimedia_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Multimedia_Room"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_multimedia_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PHOTOGRAPHY_STUDIO)
+def character_move_to_photography_studio(character_id: int):
+    """
+    移动至摄影爱好者影棚
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_photography_studio = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Photography_Studio"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_photography_studio)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_AQUAPIT_EXPERIENTORIUM)
+def character_move_to_aquapit_experientorium(character_id: int):
+    """
+    移动至大水坑快活体验屋
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_aquapit_experientorium = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Aquapit_Experientorium"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_aquapit_experientorium)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BOARD_GAMES_ROOM)
+def character_move_to_board_games_room(character_id: int):
+    """
+    移动至棋牌室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_board_games_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Board_Games_Room"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_board_games_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FAIRY_BANQUET)
+def character_move_to_fairy_banquet(character_id: int):
+    """
+    移动至糖果仙子宴会厅
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_fairy_banquet = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Fairy_Banquet"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_fairy_banquet)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_AVANT_GARDE_ARCADE)
+def character_move_to_avant_garde_arcade(character_id: int):
+    """
+    移动至前卫街机厅
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_avant_garde_arcade = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Avant_Garde_Arcade"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_avant_garde_arcade)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -815,6 +935,116 @@ def character_play_moden_instrument(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
     character_data.behavior.duration = 10
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_WATCH_MOVIE)
+def character_watch_movie(character_id: int):
+    """
+    娱乐：看电影
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.WATCH_MOVIE
+    character_data.state = constant.CharacterStatus.STATUS_WATCH_MOVIE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PHOTOGRAPHY)
+def character_photography(character_id: int):
+    """
+    娱乐：摄影
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PHOTOGRAPHY
+    character_data.state = constant.CharacterStatus.STATUS_PHOTOGRAPHY
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_WATER)
+def character_play_water(character_id: int):
+    """
+    娱乐：玩水
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_WATER
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_WATER
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_CHESS)
+def character_play_chess(character_id: int):
+    """
+    娱乐：下棋
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_CHESS
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_CHESS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_MAHJONG)
+def character_play_mahjong(character_id: int):
+    """
+    娱乐：打麻将
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_MAHJONG
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_MAHJONG
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_CARDS)
+def character_play_cards(character_id: int):
+    """
+    娱乐：打牌
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_CARDS
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_CARDS
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_REHEARSE_DANCE)
+def character_rehearse_dance(character_id: int):
+    """
+    娱乐：排演舞剧
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.REHEARSE_DANCE
+    character_data.state = constant.CharacterStatus.STATUS_REHEARSE_DANCE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_ARCADE_GAME)
+def character_play_arcade_game(character_id: int):
+    """
+    娱乐：玩街机游戏
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_ARCADE_GAME
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)

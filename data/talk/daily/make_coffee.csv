@@ -22,7 +22,7 @@ str,int,int,str,str
 1105,131,0,cook_le_1,虽然这是一杯简单的手冲咖啡，但{TargetName}还是感受到了{Name}的心意。
 1106,131,0,cook_le_1&sys_1,{Name}也喝起了自己泡的咖啡，有些苦涩的味道让{Name}快速喝完，不敢看向{TargetName}的表情。
 1107,131,0,cook_le_1&sys_1,{TargetName}放下咖啡杯，对{Name}幽幽道谢，{Name}的心被温暖填满了。
-1108,131,0,cook_le_1&sys_1,{Name}尝试着来回晃动咖啡杯，模仿着专业的泡咖啡方法，{TargetName}被{name}的可爱举动逗笑了。
+1108,131,0,cook_le_1&sys_1,{Name}尝试着来回晃动咖啡杯，模仿着专业的泡咖啡方法，{TargetName}被{Name}的可爱举动逗笑了。
 1109,131,0,cook_le_1,两人边品咖啡，边聊天，仿佛时间变得缓慢了许多，彼此间的距离也逐渐拉近了。
 1110,131,0,cook_le_1,{Name}看着{TargetName}对自己手冲的咖啡赞不绝口，觉得即使技术不是很好也不要轻易放弃尝试。
 1111,131,0,cook_le_1,{Name}不太会泡咖啡，但还是尝试给{TargetName}冲上了一杯，咖啡因为温度过高稍稍有些苦涩。
@@ -32,7 +32,7 @@ str,int,int,str,str
 1115,131,0,cook_le_1&sys_1,虽然是简单的咖啡，但{TargetName}仍能感受到{Name}想为自己做点什么的用心和爱意。
 1116,131,0,cook_le_1,{Name}呷起来自己泡的咖啡，尝到了些许苦涩，想方设法回避{TargetName}的注视。
 1117,131,0,cook_le_1&sys_1,{TargetName}放下咖啡，对{Name}表示由衷的感激，{Name}的心中感到满足。
-1118,131,0,cook_le_1&sys_1,{Name}摇晃着咖啡杯，期待着自己能够像专业人士一样泡好咖啡，{TargetName}被{name}的举动逗笑了。
+1118,131,0,cook_le_1&sys_1,{Name}摇晃着咖啡杯，期待着自己能够像专业人士一样泡好咖啡，{TargetName}被{Name}的举动逗笑了。
 1120,131,0,cook_le_1,{Name}听着{TargetName}频频称赞自己泡的咖啡，明白即使技术不好，只要用心尝试，也能感受到幸福快乐。
 1121,131,0,cook_le_1,{Name}虽然顾虑着自己泡咖啡的技术不好，但还是义无反顾地尝试了一下，奉上了一杯热气腾腾的咖啡给{TargetName}。
 1122,131,0,cook_le_1&sys_1,{TargetName}欣喜地尝了一口，感受到了{Name}的用心之处。于是夸赞了{Name}的勇气和尝试精神。
