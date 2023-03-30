@@ -250,7 +250,7 @@ def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime
     if time_a == time_b:
         return 2
     else:
-        return time_b < time_a
+        return time_a > time_b
 
 
 def ecliptic_lon(now_time: datetime.datetime) -> float:

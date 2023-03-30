@@ -679,8 +679,6 @@ def update_sleep():
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.action_info.sleep_time = cache.game_time
         else:
-            # 清零H状态
-            character_data.h_state = attr_calculation.get_h_state_zero()
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
             # 清零H被撞破的flag
@@ -697,6 +695,8 @@ def update_sleep():
             handle_talent.gain_talent(character_id,now_gain_type = 3)
             # 检查是否有可以升级的能力
             handle_ability.gain_ability(character_id)
+            # 清零H状态
+            character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
 
     # 非角色部分
     update_save()

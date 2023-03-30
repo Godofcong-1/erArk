@@ -498,6 +498,14 @@ class BehaviorEffect:
     """ 道具_使用 使用了一个一次性利尿剂 """
     USE_DIURETICS_PERSISTENT = 945
     """ 道具_使用 使用了一个持续性利尿剂 """
+    USE_SLEEPING_PILLS = 946
+    """ 道具_使用 使用了一个安眠药 """
+    USE_OVULATION_PROMOTING_DRUGS = 947
+    """ 道具_使用 使用了一个排卵促进药 """
+    USE_CONTRACEPTIVE_BEFORE = 948
+    """ 道具_使用 使用了一个事前避孕药 """
+    USE_CONTRACEPTIVE_AFTER = 949
+    """ 道具_使用 使用了一个事后避孕药 """
     EAT_FOOD = 991
     """ 道具_使用 进食指定食物 """
     MAKE_FOOD = 992
@@ -515,6 +523,14 @@ class BehaviorEffect:
     """ 道具_使用效果 交互对象尿意值全满 """
     TARGET_DIURETICS_ON = 1006
     """ 道具_使用效果 交互对象获得利尿剂状态 """
+    TARGET_ADD_TIRED_TO_SLEEP = 1007
+    """ 道具_使用效果 交互对象疲劳值全满，进入8h的睡眠 """
+    TARGET_ADD_PREGNANCY_CHANCE = 1008
+    """ 道具_使用效果 交互对象获得排卵促进药状态 """
+    TARGET_NO_PREGNANCY_NEXT_DAY = 1009
+    """ 道具_使用效果 交互对象获得事前避孕药状态 """
+    TARGET_NO_PREGNANCY_FROM_LAST_H = 1010
+    """ 道具_使用效果 交互对象获得事后避孕药状态 """
 
     FIRST_KISS = 1101
     """ 初次 记录初吻 """

@@ -260,7 +260,7 @@ class CharacterStatus:
     STATUS_DIURETICS_PERSISTENT = 457
     """ 持续性利尿剂 """
     STATUS_SLEEPING_PILLS = 458
-    """ 睡眠药 """
+    """ 安眠药 """
     STATUS_SLEEPING_PILLS = 459
     """ 排卵促进药 """
     STATUS_PUT_CONDOM = 471
@@ -637,7 +637,7 @@ class Behavior:
     DIURETICS_PERSISTENT = 457
     """ 持续性利尿剂 """
     SLEEPING_PILLS = 458
-    """ 睡眠药 """
+    """ 安眠药 """
     SLEEPING_PILLS = 459
     """ 排卵促进药 """
     PUT_CONDOM = 471
@@ -1141,7 +1141,7 @@ class SecondBehavior:
     DIURETICS = 1108
     """ 结算利尿剂 """
     SLEEPING_PILLS = 1109
-    """ 结算睡眠药 """
+    """ 结算安眠药 """
 
     PENIS_IN_HAIR = 1201
     """ 结算发交中 """
@@ -1701,7 +1701,7 @@ class Instruct:
     DIURETICS_PERSISTENT = 0
     """ 持续性利尿剂 """
     SLEEPING_PILLS = 0
-    """ 睡眠药 """
+    """ 安眠药 """
     CLOMID = 0
     """ 排卵促进药 """
     PUT_CONDOM = 0

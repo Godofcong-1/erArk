@@ -584,7 +584,7 @@ have_philter,HAVE_PHILTER,道具_持有,已持有媚药
 have_enemas,HAVE_ENEMAS,道具_持有,已持有灌肠液
 have_diuretics_once,HAVE_DIURETICS_ONCE,道具_持有,已持有一次性利尿剂
 have_diuretics_persistent,HAVE_DIURETICS_PERSISTENT,道具_持有,已持有持续性利尿剂
-have_sleeping_pills,HAVE_SLEEPING_PILLS,道具_持有,已持有睡眠药
+have_sleeping_pills,HAVE_SLEEPING_PILLS,道具_持有,已持有安眠药
 have_clomid,HAVE_CLOMID,道具_持有,已持有排卵促进药
 
 target_now_nipple_clamp,TARGET_NOW_NIPPLE_CLAMP,道具_使用,交互对象正在乳头夹

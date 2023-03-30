@@ -1479,7 +1479,7 @@ class Premise:
     HAVE_DIURETICS_PERSISTENT = "have_diuretics_persistent"
     """ 道具_持有 已持有持续性利尿剂 """
     HAVE_SLEEPING_PILLS = "have_sleeping_pills"
-    """ 道具_持有 已持有睡眠药 """
+    """ 道具_持有 已持有安眠药 """
     HAVE_CLOMID = "have_clomid"
     """ 道具_持有 已持有排卵促进药 """
 

@@ -45,7 +45,7 @@ def init_attr(character_id: int):
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)
-    character_data.h_state = attr_calculation.get_h_state_zero()
+    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
     character_data.assistant_state = attr_calculation.get_assistant_state_zero()
     character_data.first_record = attr_calculation.get_first_record_zero()
     character_data.action_info = attr_calculation.get_action_info_state_zero()

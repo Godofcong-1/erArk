@@ -54,6 +54,15 @@ def get_fertilization_rate(character_id: int):
     now_rate = math.pow(semen_count / 1000,2) * 100 + semen_level * 5
     # 生理周期修正
     now_rate *= game_config.config_reproduction_period[now_reproduction].type
+    # 事前避孕药修正
+    if character_data.h_state.body_item[11][1]:
+        now_rate = 0
+        if game_time.judge_date_big_or_small(cache.game_time,character_data.h_state.body_item[11][2]):
+            character_data.h_state.body_item[11][1] = False
+    # 事后避孕药修正
+    if character_data.h_state.body_item[12][1]:
+        now_rate = 0
+        character_data.h_state.body_item[12][1] = False
     character_data.pregnancy.fertilization_rate += now_rate
 
 
@@ -75,23 +84,33 @@ def check_fertilization(character_id: int):
 
     # 只判断有受精可能的
     if character_data.pregnancy.fertilization_rate:
+        draw_text = ""
 
         # 如果未初潮，则无法受精并触发对话
         if character_data.talent[6] == 1:
-            draw_text = f"\n因为{character_data.name}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n"
+            draw_text += f"\n因为{character_data.name}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n"
 
-        # 正常情况下随机数判断是否受精
-        elif random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
-            draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
-            draw_text += f"\n{character_data.name}获得了[受精]\n"
-            draw_text += "\n※※※※※※※※※\n"
-            character_data.talent[20] = 1
-            character_data.pregnancy.fertilization_time = cache.game_time
-            character_data.second_behavior[1311] = 1
+        # 正常情况下可以受精
         else:
-            draw_text = f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
-            character_data.second_behavior[1312] = 1
+            # 排卵促进药使受精概率*5
+            if character_data.h_state.body_item[10][1]:
+                new_rate = min(100,character_data.pregnancy.fertilization_rate * 5)
+                draw_text += f"\n在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}\n"
+                character_data.pregnancy.fertilization_rate = new_rate
+                character_data.h_state.body_item[10][1] = False
+
+            # 最后由随机数判断是否受精
+            if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
+                draw_text += "\n※※※※※※※※※\n"
+                draw_text += f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
+                draw_text += f"\n{character_data.name}获得了[受精]\n"
+                draw_text += "\n※※※※※※※※※\n"
+                character_data.talent[20] = 1
+                character_data.pregnancy.fertilization_time = cache.game_time
+                character_data.second_behavior[1311] = 1
+            else:
+                draw_text += f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
+                character_data.second_behavior[1312] = 1
 
         character_data.pregnancy.fertilization_rate = 0
         talk.must_show_talk_check(character_id)

@@ -3272,13 +3272,13 @@ def handle_diuretics_persistent():
 @add_instruct(
     constant.Instruct.SLEEPING_PILLS,
     constant.InstructType.SEX,
-    _("睡眠药"),
+    _("安眠药"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_SLEEPING_PILLS},
 )
 def handle_sleeping_pills():
-    """处理睡眠药指令"""
+    """处理安眠药指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.SLEEPING_PILLS

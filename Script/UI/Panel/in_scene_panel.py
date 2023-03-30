@@ -267,7 +267,9 @@ class InScenePanel:
                 character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
                     character_data.cid, self.width, 9, 0, 0
                 )
+                character_H_status_draw.draw()
 
+                """
                 now_line = len(character_H_status_draw.draw_list)
 
                 for i in range(now_line):
@@ -306,7 +308,7 @@ class InScenePanel:
                             line_feed.draw()
                         else:
                             label.draw()
-
+"""
             # 以下为图片面板#
             line_draw = draw.LineDraw("-.-", self.width)
             line_draw.draw()

@@ -551,9 +551,9 @@ class SeeCharacterHStatePanel:
 
         type_line = draw.LittleTitleLineDraw("H状态", width, ":")
         # print("type_data.name :",type_data.name)
-        self.draw_list.append(type_line)
+        now_draw = panel.LeftDrawTextListPanel()
+        text_draw = draw.NormalDraw()
 
-        status_text_list = []
         bondage_text_list = ["未捆绑", "后高手缚", "直立缚", "驷马捆绑", "直臂缚", "双手缚", "菱绳缚", "龟甲缚", "团缚",
                              "逆团缚", "吊缚", "后手吊缚", "单足吊缚", "后手观音", "苏秦背剑", "五花大绑"]
         enemas_text_list = ["脏污", "灌肠中", "已灌肠", "精液灌肠中", "已精液灌肠"]
@@ -568,38 +568,34 @@ class SeeCharacterHStatePanel:
             now_text += f""
         else:
             now_text += f"   <{insert_text_list[insert_index]}>"
-        status_text_list.append(now_text)
 
         # 道具文本
-        for i in range(10):
+        for i in range(len(body_item_set)):
             # print("status_type :",status_type)
             if body_item_set[i][1]:
                 status_text = body_item_set[i][0]
-
-                now_text = f"   <{status_text}>"
-                status_text_list.append(now_text)
-            # print("status_text_list :",status_text_list)
+                now_text += f"   <{status_text}>"
 
         # 绳子文本
         if target_character_data.h_state.bondage:
-            now_text = f"   <{bondage_text_list[target_character_data.h_state.bondage]}>"
-            status_text_list.append(now_text)
+            now_text += f"   <{bondage_text_list[target_character_data.h_state.bondage]}>"
 
         # 灌肠文本
         if target_character_data.dirty.a_clean:
-            now_text = f"   <{enemas_text_list[target_character_data.dirty.a_clean]}>"
-            status_text_list.append(now_text)
+            now_text += f"   <{enemas_text_list[target_character_data.dirty.a_clean]}>"
 
-        if self.center_status:
-            now_draw = panel.CenterDrawTextListPanel()
-        else:
-            now_draw = panel.LeftDrawTextListPanel()
-        now_draw.set(status_text_list, self.width, self.column)
+        # 如果没有H状态，则不显示该栏
+        if now_text != "":
+            self.draw_list.append(type_line)
+            now_text += "\n"
+        text_draw.text = now_text
+        now_draw.draw_list.append(text_draw)
+        now_draw.width += len(text_draw.text)
+
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):
         """绘制面板"""
-        line_feed.draw()
         for label in self.draw_list:
             if isinstance(label, list):
                 for value in label:

@@ -155,17 +155,22 @@ def get_dirty_zero() -> dict:
 
     return dirty_data
 
-def get_h_state_zero() -> dict:
+def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     """
     直接将H状态结构体归0
     """
-    h_state_data = game_type.BODY_H_STATE()
-    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","持续性利尿剂","睡眠药"]
+    h_state_data = old_h_state_data
+    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","持续性利尿剂","安眠药","排卵促进药","事前避孕药","事后避孕药"]
     # bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
 
-    for body_item in body_item_list:
-        now_list = [body_item,False,None]
-        h_state_data.body_item.append(now_list)
+    if len(h_state_data.body_item) == 0:
+        for body_item in body_item_list:
+            now_list = [body_item,False,None]
+            h_state_data.body_item.append(now_list)
+    else:
+        for i in range(len(h_state_data.body_item)):
+            if i not in {8,9,10,11,12}:
+                h_state_data.body_item[i] = [body_item,False,None]
 
     for body_part in game_config.config_body_part:
         h_state_data.orgasm_level[body_part] = 0

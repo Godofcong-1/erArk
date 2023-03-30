@@ -8868,7 +8868,7 @@ def handle_have_diuretics_persistent(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_SLEEPING_PILLS)
 def handle_have_sleeping_pills(character_id: int) -> int:
     """
-    校验角色是否已持有睡眠药
+    校验角色是否已持有安眠药
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
