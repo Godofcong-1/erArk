@@ -300,7 +300,7 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
                 # H时
-                else:
+                elif character_data.sp_flag.is_h:
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
 

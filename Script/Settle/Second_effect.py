@@ -11,7 +11,7 @@ from Script.Design import (
     update,
     attr_text,
 )
-from Script.Core import cache_control, constant, game_type, get_text
+from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
@@ -24,7 +24,7 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-# @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.N_orgasm_small)
+# @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.N_orgasm_small)
 # def handle_n_orgasm_small(
 #     character_id: int,
 #     change_data: game_type.CharacterStatusChange,
@@ -43,7 +43,7 @@ cache: game_type.Cache = cache_control.cache
 #         character_data.h_state.orgasm_count[0] += 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.Nothing)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.Nothing)
 def handle_nothing(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -57,7 +57,7 @@ def handle_nothing(
     _ = 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.Must_Show)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.Must_Show)
 def handle_must_show(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -71,7 +71,7 @@ def handle_must_show(
     _ = 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_NClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_NClimax_EXPERIENCE)
 def handle_add_1_nclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -98,7 +98,7 @@ def handle_add_1_nclimax_experience(
         character_data.h_state.orgasm_count[0][1] += 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_BClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_BClimax_EXPERIENCE)
 def handle_add_1_bclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -124,7 +124,7 @@ def handle_add_1_bclimax_experience(
         character_data.h_state.orgasm_count[1][0] += 1
         character_data.h_state.orgasm_count[1][1] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_CClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_CClimax_EXPERIENCE)
 def handle_add_1_cclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -150,7 +150,7 @@ def handle_add_1_cclimax_experience(
         character_data.h_state.orgasm_count[2][0] += 1
         character_data.h_state.orgasm_count[2][1] += 1
 
-# @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_PClimax_EXPERIENCE)
+# @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_PClimax_EXPERIENCE)
 # def handle_add_1_pclimax_experience(
 #     character_id: int,
 # #     change_data: game_type.CharacterStatusChange,
@@ -175,7 +175,7 @@ def handle_add_1_cclimax_experience(
 #     change_data.experience.setdefault(20, 0)
 #     change_data.experience[20] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_VClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_VClimax_EXPERIENCE)
 def handle_add_1_vclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -201,7 +201,7 @@ def handle_add_1_vclimax_experience(
         character_data.h_state.orgasm_count[4][0] += 1
         character_data.h_state.orgasm_count[4][1] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_AClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_AClimax_EXPERIENCE)
 def handle_add_1_aclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -227,7 +227,7 @@ def handle_add_1_aclimax_experience(
         character_data.h_state.orgasm_count[5][0] += 1
         character_data.h_state.orgasm_count[5][1] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_UClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_UClimax_EXPERIENCE)
 def handle_add_1_uclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -253,7 +253,7 @@ def handle_add_1_uclimax_experience(
         character_data.h_state.orgasm_count[6][0] += 1
         character_data.h_state.orgasm_count[6][1] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_WClimax_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_WClimax_EXPERIENCE)
 def handle_add_1_wclimax_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -283,7 +283,7 @@ def handle_add_1_wclimax_experience(
     8-9留空
 """
 
-# @settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Climax_EXPERIENCE)
+# @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_Climax_EXPERIENCE)
 # def handle_add_1_climax_experience(
 #     character_id: int,
 # #     change_data: game_type.CharacterStatusChange,
@@ -304,7 +304,7 @@ def handle_add_1_wclimax_experience(
 #     change_data.experience.setdefault(20, 0)
 #     change_data.experience[20] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Cumming_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_Cumming_EXPERIENCE)
 def handle_add_1_cumming_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -325,7 +325,7 @@ def handle_add_1_cumming_experience(
     character_data.h_state.orgasm_count[3][0] += 1
     character_data.h_state.orgasm_count[3][1] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Milking_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_Milking_EXPERIENCE)
 def handle_add_1_milking_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -344,7 +344,7 @@ def handle_add_1_milking_experience(
     change_data.experience.setdefault(22, 0)
     change_data.experience[22] += 1
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_1_Peeing_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_Peeing_EXPERIENCE)
 def handle_add_1_peeing_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -364,7 +364,7 @@ def handle_add_1_peeing_experience(
     change_data.experience[23] += 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_1_Cums_EXPERIENCE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_1_Cums_EXPERIENCE)
 def handle_target_add_1_cums_experience(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -386,7 +386,7 @@ def handle_target_add_1_cums_experience(
     target_change.experience[24] += 1
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_SMALL_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_SMALL_LUBRICATION)
 def handle_target_add_small_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -409,7 +409,7 @@ def handle_target_add_small_lubrication(
     target_change.status_data.setdefault(8, 0)
     target_change.status_data[8] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_MIDDLE_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_MIDDLE_LUBRICATION)
 def handle_target_add_middle_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -432,7 +432,7 @@ def handle_target_add_middle_lubrication(
     target_change.status_data.setdefault(8, 0)
     target_change.status_data[8] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.TARGET_ADD_LARGE_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.TARGET_ADD_LARGE_LUBRICATION)
 def handle_target_add_large_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -455,7 +455,7 @@ def handle_target_add_large_lubrication(
     target_change.status_data.setdefault(8, 0)
     target_change.status_data[8] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LUBRICATION)
 def handle_add_small_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -477,7 +477,7 @@ def handle_add_small_lubrication(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LUBRICATION)
 def handle_add_middle_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -499,7 +499,7 @@ def handle_add_middle_lubrication(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LUBRICATION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION)
 def handle_add_large_lubrication(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -521,7 +521,7 @@ def handle_add_large_lubrication(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.DOWN_SMALL_HIT_POINT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_HIT_POINT)
 def handle_down_small_hit_point(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -556,7 +556,7 @@ def handle_down_small_hit_point(
                 now_draw.draw()
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.DOWN_SMALL_MANA_POINT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_MANA_POINT)
 def handle_down_small_mana_point(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -593,7 +593,7 @@ def handle_down_small_mana_point(
                     now_draw.draw()
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_N_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
 def handle_add_small_n_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -619,7 +619,7 @@ def handle_add_small_n_feel(
     change_data.status_data[0] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_B_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_B_FEEL)
 def handle_add_small_b_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -645,7 +645,7 @@ def handle_add_small_b_feel(
     change_data.status_data[1] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_C_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_C_FEEL)
 def handle_add_small_c_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -671,7 +671,7 @@ def handle_add_small_c_feel(
     change_data.status_data[2] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_P_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_P_FEEL)
 def handle_add_small_p_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -694,7 +694,7 @@ def handle_add_small_p_feel(
     change_data.eja_point += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_V_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_V_FEEL)
 def handle_add_small_v_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -719,7 +719,7 @@ def handle_add_small_v_feel(
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_A_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_A_FEEL)
 def handle_add_small_a_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -744,7 +744,7 @@ def handle_add_small_a_feel(
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_U_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_U_FEEL)
 def handle_add_small_u_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -769,7 +769,7 @@ def handle_add_small_u_feel(
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_W_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_W_FEEL)
 def handle_add_small_w_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -795,7 +795,7 @@ def handle_add_small_w_feel(
     change_data.status_data[7] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LUBRICATION_PLUS)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LUBRICATION_PLUS)
 def handle_add_small_lubrication_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -820,7 +820,7 @@ def handle_add_small_lubrication_plus(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LEARN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LEARN)
 def handle_add_small_learn_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -845,7 +845,7 @@ def handle_add_small_learn_plus(
     change_data.status_data[9] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_RESPECT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_RESPECT)
 def handle_add_small_respect_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -870,7 +870,7 @@ def handle_add_small_respect_plus(
     change_data.status_data[10] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_FRIENDLY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_FRIENDLY)
 def handle_add_small_friendly(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -894,7 +894,7 @@ def handle_add_small_friendly(
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DESIRE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DESIRE)
 def handle_add_small_desire(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -919,7 +919,7 @@ def handle_add_small_desire(
     change_data.status_data[12] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_HAPPY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_HAPPY)
 def handle_add_small_happy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -944,7 +944,7 @@ def handle_add_small_happy(
     change_data.status_data[13] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_LEAD)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LEAD)
 def handle_add_small_lead(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -969,7 +969,7 @@ def handle_add_small_lead(
     change_data.status_data[14] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_SUBMIT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_SUBMIT)
 def handle_add_small_submit(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -994,7 +994,7 @@ def handle_add_small_submit(
     change_data.status_data[15] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_SHY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_SHY)
 def handle_add_small_shy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1019,7 +1019,7 @@ def handle_add_small_shy(
     change_data.status_data[16] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_PAIN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_PAIN)
 def handle_add_small_pain(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1044,7 +1044,7 @@ def handle_add_small_pain(
     change_data.status_data[17] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_TERROR)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_TERROR)
 def handle_add_small_terror(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1069,7 +1069,7 @@ def handle_add_small_terror(
     change_data.status_data[18] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DEPRESSION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DEPRESSION)
 def handle_add_small_depression(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1092,7 +1092,7 @@ def handle_add_small_depression(
     change_data.status_data[19] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_SMALL_DISGUST)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_DISGUST)
 def handle_add_small_disgust(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1117,7 +1117,7 @@ def handle_add_small_disgust(
     change_data.status_data[20] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_N_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_N_FEEL)
 def handle_add_middle_n_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1143,7 +1143,7 @@ def handle_add_middle_n_feel(
     change_data.status_data[0] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_B_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_B_FEEL)
 def handle_add_middle_b_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1169,7 +1169,7 @@ def handle_add_middle_b_feel(
     change_data.status_data[1] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_C_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_C_FEEL)
 def handle_add_middle_c_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1195,7 +1195,7 @@ def handle_add_middle_c_feel(
     change_data.status_data[2] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_P_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_P_FEEL)
 def handle_add_middle_p_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1221,7 +1221,7 @@ def handle_add_middle_p_feel(
     change_data.status_data[3] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_V_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_V_FEEL)
 def handle_add_middle_v_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1246,7 +1246,7 @@ def handle_add_middle_v_feel(
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_A_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_A_FEEL)
 def handle_add_middle_a_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1271,7 +1271,7 @@ def handle_add_middle_a_feel(
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_U_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_U_FEEL)
 def handle_add_middle_u_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1296,7 +1296,7 @@ def handle_add_middle_u_feel(
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_W_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_W_FEEL)
 def handle_add_middle_w_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1322,7 +1322,7 @@ def handle_add_middle_w_feel(
     change_data.status_data[7] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_LUBRICATION_PLUS)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LUBRICATION_PLUS)
 def handle_add_middle_lubrication_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1347,7 +1347,7 @@ def handle_add_middle_lubrication_plus(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_LEARN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LEARN)
 def handle_add_middle_learn_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1372,7 +1372,7 @@ def handle_add_middle_learn_plus(
     change_data.status_data[9] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_RESPECT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_RESPECT)
 def handle_add_middle_respect_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1397,7 +1397,7 @@ def handle_add_middle_respect_plus(
     change_data.status_data[10] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_FRIENDLY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_FRIENDLY)
 def handle_add_middle_friendly(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1421,7 +1421,7 @@ def handle_add_middle_friendly(
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_DESIRE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DESIRE)
 def handle_add_middle_desire(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1446,7 +1446,7 @@ def handle_add_middle_desire(
     change_data.status_data[12] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_HAPPY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_HAPPY)
 def handle_add_middle_happy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1471,7 +1471,7 @@ def handle_add_middle_happy(
     change_data.status_data[13] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_LEAD)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_LEAD)
 def handle_add_middle_lead(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1496,7 +1496,7 @@ def handle_add_middle_lead(
     change_data.status_data[14] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_SUBMIT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_SUBMIT)
 def handle_add_middle_submit(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1521,7 +1521,7 @@ def handle_add_middle_submit(
     change_data.status_data[15] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_SHY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_SHY)
 def handle_add_middle_shy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1546,7 +1546,7 @@ def handle_add_middle_shy(
     change_data.status_data[16] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_PAIN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_PAIN)
 def handle_add_middle_pain(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1571,7 +1571,7 @@ def handle_add_middle_pain(
     change_data.status_data[17] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_TERROR)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_TERROR)
 def handle_add_middle_terror(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1596,7 +1596,7 @@ def handle_add_middle_terror(
     change_data.status_data[18] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_DEPRESSION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DEPRESSION)
 def handle_add_middle_depression(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1619,7 +1619,7 @@ def handle_add_middle_depression(
     change_data.status_data[19] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_MIDDLE_DISGUST)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_DISGUST)
 def handle_add_middle_disgust(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1644,7 +1644,7 @@ def handle_add_middle_disgust(
     change_data.status_data[20] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_N_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_N_FEEL)
 def handle_add_large_n_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1670,7 +1670,7 @@ def handle_add_large_n_feel(
     change_data.status_data[0] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_B_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_B_FEEL)
 def handle_add_large_b_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1696,7 +1696,7 @@ def handle_add_large_b_feel(
     change_data.status_data[1] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_C_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_C_FEEL)
 def handle_add_large_c_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1722,7 +1722,7 @@ def handle_add_large_c_feel(
     change_data.status_data[2] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_P_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_P_FEEL)
 def handle_add_large_p_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1748,7 +1748,7 @@ def handle_add_large_p_feel(
     change_data.status_data[3] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_V_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_V_FEEL)
 def handle_add_large_v_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1773,7 +1773,7 @@ def handle_add_large_v_feel(
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_A_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_A_FEEL)
 def handle_add_large_a_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1798,7 +1798,7 @@ def handle_add_large_a_feel(
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_U_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_U_FEEL)
 def handle_add_large_u_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1823,7 +1823,7 @@ def handle_add_large_u_feel(
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_W_FEEL)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_W_FEEL)
 def handle_add_large_w_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1849,7 +1849,7 @@ def handle_add_large_w_feel(
     change_data.status_data[7] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
 def handle_add_large_lubrication_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1874,7 +1874,7 @@ def handle_add_large_lubrication_plus(
     change_data.status_data[8] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LEARN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LEARN)
 def handle_add_middle_learn_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1899,7 +1899,7 @@ def handle_add_middle_learn_plus(
     change_data.status_data[9] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_RESPECT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_RESPECT)
 def handle_add_large_respect_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1924,7 +1924,7 @@ def handle_add_large_respect_plus(
     change_data.status_data[10] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_FRIENDLY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_FRIENDLY)
 def handle_add_large_friendly(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1948,7 +1948,7 @@ def handle_add_large_friendly(
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_DESIRE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DESIRE)
 def handle_add_large_desire(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1973,7 +1973,7 @@ def handle_add_large_desire(
     change_data.status_data[12] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_HAPPY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_HAPPY)
 def handle_add_large_happy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -1998,7 +1998,7 @@ def handle_add_large_happy(
     change_data.status_data[13] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_LEAD)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LEAD)
 def handle_add_large_lead(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2023,7 +2023,7 @@ def handle_add_large_lead(
     change_data.status_data[14] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_SUBMIT)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SUBMIT)
 def handle_add_middle_submit(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2048,7 +2048,7 @@ def handle_add_middle_submit(
     change_data.status_data[15] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_SHY)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SHY)
 def handle_add_large_shy(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2073,7 +2073,7 @@ def handle_add_large_shy(
     change_data.status_data[16] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_PAIN)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN)
 def handle_add_large_pain(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2098,7 +2098,7 @@ def handle_add_large_pain(
     change_data.status_data[17] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_TERROR)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_TERROR)
 def handle_add_large_terror(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2123,7 +2123,7 @@ def handle_add_large_terror(
     change_data.status_data[18] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_DEPRESSION)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DEPRESSION)
 def handle_add_large_depression(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2146,7 +2146,7 @@ def handle_add_large_depression(
     change_data.status_data[19] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_DISGUST)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_DISGUST)
 def handle_add_large_disgust(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2170,7 +2170,7 @@ def handle_add_large_disgust(
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_PAIN_FIRST_SEX)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_SEX)
 def handle_add_large_pain_first_sex(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2205,7 +2205,7 @@ def handle_add_large_pain_first_sex(
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_LARGE_PAIN_FIRST_A_SEX)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_A_SEX)
 def handle_add_large_pain_first_a_sex(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2241,7 +2241,7 @@ def handle_add_large_pain_first_a_sex(
     change_data.status_data[17] += now_add_lust
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.ADD_URINATE)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_URINATE)
 def handle_add_urinate(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
@@ -2261,7 +2261,27 @@ def handle_add_urinate(
             character_data.urinate_point = 240
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant.SecondEffect.PENIS_IN_T_RESET)
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_TIRED)
+def handle_add_tired(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    维持疲劳和熟睡值（安眠药）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    if character_data.h_state.body_item[9][1]:
+        character_data.tired_point = 160
+        character_data.sleep_point = 100
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)
 def handle_penis_in_t_reset(
     character_id: int,
     change_data: game_type.CharacterStatusChange,

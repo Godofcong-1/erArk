@@ -749,7 +749,8 @@ def handle_wait_6_hour():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.T_NORMAL_24567,}
 )
 def handle_make_coffee():
     """处理泡咖啡指令"""
@@ -784,7 +785,8 @@ def handle_make_coffee_add():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.T_NORMAL_24567,}
 )
 def handle_ask_make_coffee():
     """处理让对方泡咖啡指令"""

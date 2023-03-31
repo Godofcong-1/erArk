@@ -170,7 +170,7 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     else:
         for i in range(len(h_state_data.body_item)):
             if i not in {8,9,10,11,12}:
-                h_state_data.body_item[i] = [body_item,False,None]
+                h_state_data.body_item[i] = [body_item_list[i],False,None]
 
     for body_part in game_config.config_body_part:
         h_state_data.orgasm_level[body_part] = 0

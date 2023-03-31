@@ -3,7 +3,7 @@ import time, random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_talent, handle_ability
+from Script.Design import attr_text, attr_calculation, handle_premise, handle_talent, game_time
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel
@@ -428,11 +428,9 @@ def change_character_persistent_state(character_id: int, now_time: datetime.date
     for i in range(len(now_character_data.h_state.body_item)):
         if now_character_data.h_state.body_item[i][1]:
             end_time = now_character_data.h_state.body_item[i][2]
-            if end_time != None:
-                add_time = int((now_time - end_time).seconds / 60)
-                if add_time >= 0:
-                    now_character_data.h_state.body_item[i][1] = False
-                    now_character_data.h_state.body_item[i][2] = None
+            if end_time != None and game_time.judge_date_big_or_small(now_time,end_time):
+                now_character_data.h_state.body_item[i][1] = False
+                now_character_data.h_state.body_item[i][2] = None
 
 
 # def change_character_social(character_id: int, change_data: game_type.CharacterStatusChange):
@@ -780,6 +778,6 @@ def item_effect(character_id: int):
 
     if character_id != 0:
 
-        for i in range(10):
+        for i in range(len(character_data.h_state.body_item)):
             if character_data.h_state.body_item[i][1]:
                 character_data.second_behavior[num + i] = 1
