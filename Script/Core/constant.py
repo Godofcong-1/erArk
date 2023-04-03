@@ -1142,6 +1142,12 @@ class SecondBehavior:
     """ 结算利尿剂 """
     SLEEPING_PILLS = 1109
     """ 结算安眠药 """
+    SLEEPING_CLOMID = 1110
+    """ 结算排卵促进药 """
+    SLEEPING_BIRTH_CONTROL_PILLS_BEFORE = 1111
+    """ 结算事前避孕药 """
+    SLEEPING_BIRTH_CONTROL_PILLS_AFTER = 1112
+    """ 结算事后避孕药 """
 
     PENIS_IN_HAIR = 1201
     """ 结算发交中 """
@@ -1508,6 +1514,10 @@ class Instruct:
     """ 安眠药 """
     CLOMID = 0
     """ 排卵促进药 """
+    BIRTH_CONTROL_PILLS_BEFORE = 0
+    """ 事前避孕药 """
+    BIRTH_CONTROL_PILLS_AFTER = 0
+    """ 事后避孕药 """
     PUT_CONDOM = 0
     """ 戴上避孕套 """
     SAFE_CANDLES = 0

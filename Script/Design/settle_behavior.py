@@ -518,7 +518,7 @@ def check_second_effect(
     # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
     # print("进入第二结算")
 
-    # 检测自己
+    # 玩家检测自己
     if character_id == 0:
 
         # 高潮结算
@@ -534,11 +534,9 @@ def check_second_effect(
                 for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                     constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
 
-    # 检测交互对象
-    # 如果是玩家的交互，则target_character_id != 0
-    # 如果是NPC的交互，则character_id != 0
-    # if target_character_id or character_id:
-    if target_character_id:
+
+    # NPC自己检测自己
+    if target_character_id and character_id == target_character_id:
         # print("debug character_id = ",character_id)
         # print("debug target_character_id = ",target_character_id)
         # 阴茎位置结算
@@ -772,7 +770,7 @@ def item_effect(character_id: int):
     """
 
     # print()
-    # print("进入道具结算")
+    # print(f"进入道具结算")
     character_data: game_type.Character = cache.character_data[character_id]
     num = 1100  # 通过num值来判断是二段行为记录的哪个位置
 

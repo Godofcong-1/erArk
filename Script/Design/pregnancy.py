@@ -109,6 +109,8 @@ def check_fertilization(character_id: int):
                 character_data.pregnancy.fertilization_time = cache.game_time
                 character_data.second_behavior[1311] = 1
             else:
+                if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
+                    draw_text += f"\n在避孕药的影响下——"
                 draw_text += f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
                 character_data.second_behavior[1312] = 1
 
@@ -118,6 +120,9 @@ def check_fertilization(character_id: int):
         now_draw.width = window_width
         now_draw.text = draw_text
         now_draw.draw()
+    else:
+        if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
+            draw_text += f"\n在避孕药的影响下——\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
 
 
 def check_pregnancy(character_id: int):

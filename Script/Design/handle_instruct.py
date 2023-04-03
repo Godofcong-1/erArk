@@ -1649,16 +1649,17 @@ def handle_recruit():
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    new_chara_id = cache.base_resouce.recruited_id.pop()
-    character_handle.get_new_character(new_chara_id)
-    character_data = cache.character_data[new_chara_id]
+    if len(cache.base_resouce.recruited_id):
+        new_chara_id = cache.base_resouce.recruited_id.pop()
+        character_handle.get_new_character(new_chara_id)
+        character_data = cache.character_data[new_chara_id]
 
-    # 输出对应信息
-    now_draw = draw.WaitDraw()
-    now_draw.width = width
-    now_draw.text = _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
-    now_draw.style = "nowmap"
-    now_draw.draw()
+        # 输出对应信息
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
+        now_draw.style = "nowmap"
+        now_draw.draw()
 
     update.game_update_flow(5)
 
@@ -3167,22 +3168,6 @@ def handle_safe_candles():
 
 
 @add_instruct(
-    constant.Instruct.BIRTH_CONTROL_PILLS,
-    constant.InstructType.SEX,
-    _("避孕药_未实装"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
-)
-def handle_birth_control_pills():
-    """处理避孕药指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-
-@add_instruct(
     constant.Instruct.BODY_LUBRICANT,
     constant.InstructType.SEX,
     _("润滑液"),
@@ -3301,8 +3286,45 @@ def handle_clomid():
     """处理排卵促进药指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.CLOMID
-    character_data.state = constant.CharacterStatus.STATUS_CLOMID
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+        character_data.behavior.behavior_id = constant.Behavior.CLOMID
+        character_data.state = constant.CharacterStatus.STATUS_CLOMID
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.BIRTH_CONTROL_PILLS_BEFORE,
+    constant.InstructType.SEX,
+    _("事前避孕药"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_BEFORE},
+)
+def handle_birth_control_pills_before():
+    """处理事前避孕药指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.BIRTH_CONTROL_PILLS_BEFORE
+    character_data.state = constant.CharacterStatus.STATUS_BIRTH_CONTROL_PILLS_BEFORE
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.BIRTH_CONTROL_PILLS_AFTER,
+    constant.InstructType.SEX,
+    _("事后避孕药"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_AFTER},
+)
+def handle_birth_control_pills_after():
+    """处理事后避孕药指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.BIRTH_CONTROL_PILLS_AFTER
+    character_data.state = constant.CharacterStatus.STATUS_BIRTH_CONTROL_PILLS_AFTER
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
