@@ -23,7 +23,7 @@ def own_charcter_move(target_scene: list):
                 now_target_position,
                 now_need_time,
             ) = character_move(0, target_scene)
-            break_list = ["Null","un_open","door_close"]
+            break_list = ["Null","wait_open","door_close"]
             if move_now in break_list :
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -35,7 +35,7 @@ def own_charcter_move(target_scene: list):
         else:
             break
     cache.character_data[0].target_character_id = 0
-    if move_now == "un_open":
+    if move_now in ["Null","wait_open","door_close"]:
         cache.now_panel_id = constant.Panel.SEE_MAP
     else:
         cache.now_panel_id = constant.Panel.IN_SCENE
@@ -54,7 +54,8 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     list -- 本次移动到的位置
     int -- 本次移动花费的时间
     """
-    now_position = cache.character_data[character_id].position
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_position = character_data.position
     # if not character_id:
     #     print(f"debug now_position = {now_position},target_scene = {target_scene}")
     if now_position == target_scene:
@@ -64,10 +65,10 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     target_scene_data = cache.scene_data[target_scene_str]
     # if not character_id:
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
-    if not map_handle.judge_scene_open(target_scene_str,character_id):
-        return "un_open", [], [], 0
-    if target_scene_data.close_flag == 1:
-        return "door_close", [], [], 0
+    # 判断目标场景是否开放，不开放则输出原因
+    close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+    if close_type != "open":
+        return close_type, [], [], 0
     if (
         now_position_str not in map_handle.scene_path_edge
         or target_scene_str not in map_handle.scene_path_edge[now_position_str]

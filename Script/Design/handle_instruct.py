@@ -133,7 +133,9 @@ def handle_see_attr():
     constant.Instruct.CHAT, constant.InstructType.DAILY, _("聊天"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.T_ACTION_NOT_SLEEP,
+     constant_promise.Premise.T_NORMAL_6,}
 )
 def handle_chat():
     """处理聊天指令"""
@@ -233,13 +235,6 @@ def instruct_filter():
 def debug_mode():
     """处理开启DEBUG模式指令"""
     cache.debug_mode = True
-    character_data = cache.character_data[0]
-    cache.base_resouce.money += 999999
-    cache.base_resouce.orundum += 999999
-    cache.base_resouce.Originite_Prime += 999999
-    cache.base_resouce.pink_certificate += 999999
-    for i in {11, 12, 13, 14, 15, 16, 21, 22, 23, 24}:
-        cache.base_resouce.materials_resouce[i] += 999999
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"),
@@ -343,6 +338,7 @@ def handle_read_book():
         constant_promise.Premise.TIRED_LE_84,
         constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE,
         constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER,
+        constant_promise.Premise.T_NORMAL_24567,
     })
 def handle_manage_library():
     """处理管理图书馆指令"""
@@ -816,7 +812,7 @@ def handle_make_food():
     _("邀请同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.NORMAL_267,
+     constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
@@ -853,6 +849,7 @@ def handle_followed():
     _("结束同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_IS_FOLLOW},
 )
 def handle_end_followed():
@@ -876,6 +873,7 @@ def handle_end_followed():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_ANGRY_WITH_PLAYER,
+     constant_promise.Premise.T_NORMAL_24567,
      constant_promise.Premise.TIRED_LE_74},
 )
 def handle_apologize():
@@ -909,6 +907,7 @@ def handle_apologize():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_ABD_OR_ANGRY_MOOD,
      constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,
+     constant_promise.Premise.T_NORMAL_24567,
      constant_promise.Premise.TIRED_LE_84, },
 )
 def handle_listen_complaint():

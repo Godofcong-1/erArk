@@ -1,6 +1,7 @@
 import datetime
 import random
 from typing import List
+from Script.Settle import default
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
 from Script.Core import cache_control, game_type, constant
@@ -86,7 +87,9 @@ def character_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
-    clothing.get_sleep_cloth(character_id)
+    if handle_premise.handle_in_dormitory(character_id):
+        clothing.get_sleep_cloth(character_id)
+        default.handle_door_close(character_id,add_time=1,change_data=game_type.CharacterStatusChange(),now_time=cache.game_time)
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP

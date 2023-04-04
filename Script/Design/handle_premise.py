@@ -2327,6 +2327,26 @@ def handle_normal_6(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.T_NORMAL_6)
+def handle_t_normal_6(character_id: int) -> int:
+    """
+    交互对象6正常的普通状态
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if(
+         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.NORMAL_7)
 def handle_normal_7(character_id: int) -> int:
     """
@@ -2436,6 +2456,46 @@ def handle_normal_2467(character_id: int) -> int:
     elif(
         handle_be_bagged_1(character_id)
         or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_2467)
+def handle_t_normal_2467(character_id: int) -> int:
+    """
+    交互对象2467正常（可能基础异常、AI跟随或意识模糊）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n4:服装异常：大致全裸、全裸
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if(
+         handle_parturient_1(target_chara_id)
+        or handle_postpartum_1(target_chara_id)
+        or handle_t_baby_1(target_chara_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(target_chara_id)
+        or handle_cloth_most_off(target_chara_id)
+    ):
+        return 0
+    elif(
+         (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(target_chara_id)
+        or handle_imprisonment_1(target_chara_id)
     ):
         return 0
     else:

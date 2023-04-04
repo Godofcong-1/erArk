@@ -689,10 +689,10 @@ class Scene:
         self.exposed: bool = 0
         """ 地点暴露 """
         self.have_furniture: int = 0
-        """ 有家具 """
+        """ 有家具(1基础家具,2办公机家具,3卧室级家具) """
         self.close_type: int = 0
-        """ 关门类型 """
-        self.close_flag: bool = 0
+        """ 关门类型(0无法关门,1正常关门,2小隔间关门) """
+        self.close_flag: int = 0
         """ 关门状态 """
         self.scene_tag: list = []
         """ 场景标签 """

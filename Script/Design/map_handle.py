@@ -1,6 +1,8 @@
 import os
 import json
 from Script.Core import cache_control, value_handle, game_type
+from Script.Config import game_config, normal_config
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -8,6 +10,8 @@ scene_path_edge_path = os.path.join("data", "ScenePath")
 """ 寻路路径配置文件路径 """
 scene_path_edge = {}
 """ 寻路路径 """
+width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
 
 
 def get_map_draw_for_map_path(map_path_str: str) -> str:
@@ -537,14 +541,12 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
     Return arguments:
     int -- 是否可以进入
     """
-    from Script.Config import game_config, normal_config
-    from Script.UI.Moudle import draw
-    width: int = normal_config.config_normal.text_width
-    """ 窗体宽度 """
 
     # print(f"debug target_scene_str = {target_scene_str}")
     now_scene_data = cache.scene_data[target_scene_str]
+    character_data = cache.character_data[character_id]
     # print(f"debug now_scene_data.name = {now_scene_data.scene_name}")
+
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
     for open_cid in game_config.config_facility_open:
         # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
@@ -580,8 +582,25 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
                 info_draw.width = width
                 info_draw.draw()
 
-            return 0
-    return 1
+            return "wait_open"
+
+    # 如果门锁上了的话
+    if now_scene_data.close_flag == 1:
+        # 即使关门，NPC也可以进去自己的宿舍
+        if character_data.dormitory == target_scene_str:
+            pass
+        else:
+            # 如果是玩家的话输出提示信息
+            if character_id == 0:
+                line = draw.LineDraw("-", width)
+                line.draw()
+                info_draw = draw.WaitDraw()
+                info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前门是锁着的，需要钥匙或其他方法进入\n"
+                info_draw.width = width
+                info_draw.draw()
+            return "door_close"
+
+    return "open"
 
 def judge_scene_name_open(full_scene_str : str) -> int :
     """
@@ -603,4 +622,9 @@ def judge_scene_name_open(full_scene_str : str) -> int :
                 return 1
             else:
                 return 0
+
+    # 关了门的房间进不去
+    if now_scene_data.close_flag == 1:
+        return 0
+
     return 1

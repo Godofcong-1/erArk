@@ -79,7 +79,7 @@ class SeeMapPanel:
                         )
                         full_scene_str = map_handle.get_map_system_path_str_for_list(scene_path)
                         # print(f"debug scene_path = {scene_path}，draw_text.text = {draw_text.text}")
-                        # 如果当前地点是开放的，则正常绘制，否则绘制灰色按钮
+                        # 如果当前地点可以进入则正常绘制，否则绘制灰色按钮
                         if map_handle.judge_scene_name_open(full_scene_str):
                             now_draw = draw.Button(
                                 draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
