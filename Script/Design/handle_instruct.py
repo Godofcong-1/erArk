@@ -1500,6 +1500,175 @@ def handle_play_arcade_game():
     update.game_update_flow(60)
 
 
+@add_instruct(
+    constant.Instruct.SWIMMING,
+    constant.InstructType.PLAY,
+    _("游泳"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_SWIMMING_POOL,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_swimming():
+    """处理游泳指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.SWIMMING
+    character_data.state = constant.CharacterStatus.STATUS_SWIMMING
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.TASTE_WINE,
+    constant.InstructType.PLAY,
+    _("品酒"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_BAR,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_taste_wine():
+    """处理品酒指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_WINE
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_WINE
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.TASTE_TEA,
+    constant.InstructType.PLAY,
+    _("品茶"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_TEAHOUSE,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_taste_tea():
+    """处理品茶指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_TEA
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_TEA
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.TASTE_COFFEE,
+    constant.InstructType.PLAY,
+    _("品咖啡"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_CAFÉ,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_taste_coffee():
+    """处理品咖啡指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_COFFEE
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_COFFEE
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.TASTE_DESSERT,
+    constant.InstructType.PLAY,
+    _("品尝点心"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_WALYRIA_CAKE_SHOP,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_taste_dessert():
+    """处理品尝点心指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_DESSERT
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_DESSERT
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.TASTE_FOOD,
+    constant.InstructType.PLAY,
+    _("品尝美食"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_RESTAURANT,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_taste_food():
+    """处理品尝美食指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_FOOD
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_FOOD
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.PLAY_HOUSE,
+    constant.InstructType.PLAY,
+    _("过家家"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_GOLDEN_GAME_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_house():
+    """处理过家家指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_HOUSE
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_HOUSE
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.STYLE_HAIR,
+    constant.InstructType.PLAY,
+    _("修整发型"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_HAIR_SALON,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_style_hair():
+    """处理修整发型指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.STYLE_HAIR
+    character_data.state = constant.CharacterStatus.STATUS_STYLE_HAIR
+    update.game_update_flow(60)
+
+@add_instruct(
+    constant.Instruct.FULL_BODY_STYLING,
+    constant.InstructType.PLAY,
+    _("全身造型服务"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_STYLING_STUDIO,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_full_body_styling():
+    """处理全身造型服务指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.FULL_BODY_STYLING
+    character_data.state = constant.CharacterStatus.STATUS_FULL_BODY_STYLING
+    update.game_update_flow(120)
+
 # 以下为工作#
 
 @add_instruct(

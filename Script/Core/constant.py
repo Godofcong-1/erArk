@@ -81,8 +81,24 @@ class CharacterStatus:
     """ 排演舞剧 """
     STATUS_PLAY_ARCADE_GAME = 160
     """ 玩街机游戏 """
-    STATUS_SMELL_UNDERWEAR = 162
-    """ 闻内衣 """
+    STATUS_SWIMMING = 161
+    """ 游泳 """
+    STATUS_TASTE_WINE = 162
+    """ 品酒 """
+    STATUS_TASTE_TEA = 163
+    """ 品茶 """
+    STATUS_TASTE_COFFEE = 164
+    """ 品咖啡 """
+    STATUS_TASTE_DESSERT = 165
+    """ 品尝点心 """
+    STATUS_TASTE_FOOD = 166
+    """ 品尝美食 """
+    STATUS_PLAY_HOUSE = 167
+    """ 过家家 """
+    STATUS_STYLE_HAIR = 168
+    """ 修整发型 """
+    STATUS_FULL_BODY_STYLING = 169
+    """ 全身造型服务 """
     STATUS_LISTEN_INFLATION = 171
     """ 听肚子里的动静 """
     STATUS_PLAY_WITH_CHILD = 172
@@ -145,6 +161,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
+    STATUS_SMELL_UNDERWEAR = 341
+    """ 闻内衣 """
     STATUS_BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
     STATUS_PUT_INTO_PRISON = 352
@@ -454,6 +472,24 @@ class Behavior:
     """ 排演舞剧 """
     PLAY_ARCADE_GAME = 160
     """ 玩街机游戏 """
+    SWIMMING = 161
+    """ 游泳 """
+    TASTE_WINE = 162
+    """ 品酒 """
+    TASTE_TEA = 163
+    """ 品茶 """
+    TASTE_COFFEE = 164
+    """ 品咖啡 """
+    TASTE_DESSERT = 165
+    """ 品尝点心 """
+    TASTE_FOOD = 166
+    """ 品尝美食 """
+    PLAY_HOUSE = 167
+    """ 过家家 """
+    STYLE_HAIR = 168
+    """ 修整发型 """
+    FULL_BODY_STYLING = 169
+    """ 全身造型服务 """
     LISTEN_INFLATION = 171
     """ 听肚子里的动静 """
     PLAY_WITH_CHILD = 172
@@ -1337,7 +1373,24 @@ class Instruct:
     """ 排演舞剧 """
     PLAY_ARCADE_GAME = 0
     """ 玩街机游戏 """
-
+    SWIMMING = 0
+    """ 游泳 """
+    TASTE_WINE = 0
+    """ 品酒 """
+    TASTE_TEA = 0
+    """ 品茶 """
+    TASTE_COFFEE = 0
+    """ 品咖啡 """
+    TASTE_DESSERT = 0
+    """ 品尝点心 """
+    TASTE_FOOD = 0
+    """ 品尝美食 """
+    PLAY_HOUSE = 0
+    """ 过家家 """
+    STYLE_HAIR = 0
+    """ 修整发型 """
+    FULL_BODY_STYLING = 0
+    """ 全身造型服务 """
 
     #工作#
     BUILDING = 0

@@ -1153,6 +1153,9 @@ def handle_not_in_fairy_banquet(character_id: int) -> int:
         return 0
     return 1
 
+    # 补全以下地点：前卫街机厅、游泳池、酒吧、理发店、造型工作室、瓦莱丽蛋糕店、七城风情餐厅(Seven_Cities_Restaurant)、黄澄澄游戏室(Golden_Game_Room)、山城茶馆(Teahouse)、人气快餐开封菜(KFC)、健康快餐店(Healthy_Diner)、龙门食坊(Lungmen_Eatery)、快捷连锁披萨店(Pizzeria)、Café(Café)、花草灯艺屋(Light_Store)
+
+
 @add_premise(constant_promise.Premise.IN_AVANT_GARDE_ARCADE)
 def handle_in_avant_garde_arcade(character_id: int) -> int:
     """
@@ -1187,6 +1190,533 @@ def handle_not_in_avant_garde_arcade(character_id: int) -> int:
         return 0
     return 1
 
+@add_premise(constant_promise.Premise.IN_SWIMMING_POOL)
+def handle_in_swimming_pool(character_id: int) -> int:
+    """
+    校验角色是否在游泳池中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Swimming_Pool" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_SWIMMING_POOL)
+def handle_not_in_swimming_pool(character_id: int) -> int:
+    """
+    校验角色是否不在游泳池中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Swimming_Pool" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_BAR)
+def handle_in_bar(character_id: int) -> int:
+    """
+    校验角色是否在酒吧中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Bar" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_BAR)
+def handle_not_in_bar(character_id: int) -> int:
+    """
+    校验角色是否不在酒吧中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Bar" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_HAIR_SALON)
+def handle_in_hair_salon(character_id: int) -> int:
+    """
+    校验角色是否在理发店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Hair_Salon" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_HAIR_SALON)
+def handle_not_in_hair_salon(character_id: int) -> int:
+    """
+    校验角色是否不在理发店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Hair_Salon" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_STYLING_STUDIO)
+def handle_in_styling_studio(character_id: int) -> int:
+    """
+    校验角色是否在造型工作室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Styling_Studio" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_STYLING_STUDIO)
+def handle_not_in_styling_studio(character_id: int) -> int:
+    """
+    校验角色是否不在造型工作室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Styling_Studio" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_WALYRIA_CAKE_SHOP)
+def handle_in_walyria_cake_shop(character_id: int) -> int:
+    """
+    校验角色是否在瓦莱丽蛋糕店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Walyria_Cake_Shop" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_WALYRIA_CAKE_SHOP)
+def handle_not_in_walyria_cake_shop(character_id: int) -> int:
+    """
+    校验角色是否不在瓦莱丽蛋糕店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Walyria_Cake_Shop" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_RESTAURANT)
+def handle_in_restaurant(character_id: int) -> int:
+    """
+    校验角色是否在餐馆（含所有正餐餐馆）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    for restaurant_name in {"Seven_Cities_Restaurant","KFC","Healthy_Diner","Lungmen_Eatery","Pizzeria"}:
+        if restaurant_name in now_scene_data.scene_tag:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_RESTAURANT)
+def handle_not_in_restaurant(character_id: int) -> int:
+    """
+    校验角色是否不在餐馆（含所有正餐餐馆）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    for restaurant_name in {"Seven_Cities_Restaurant","KFC","Healthy_Diner","Lungmen_Eatery","Pizzeria"}:
+        if restaurant_name in now_scene_data.scene_tag:
+            return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_SEVEN_CITIES_RESTAURANT)
+def handle_in_seven_cities_restaurant(character_id: int) -> int:
+    """
+    校验角色是否在七城风情餐厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Seven_Cities_Restaurant" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_SEVEN_CITIES_RESTAURANT)
+def handle_not_in_seven_cities_restaurant(character_id: int) -> int:
+    """
+    校验角色是否不在七城风情餐厅中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Seven_Cities_Restaurant" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_GOLDEN_GAME_ROOM)
+def handle_in_golden_game_room(character_id: int) -> int:
+    """
+    校验角色是否在黄澄澄游戏室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Golden_Game_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_GOLDEN_GAME_ROOM)
+def handle_not_in_golden_game_room(character_id: int) -> int:
+    """
+    校验角色是否不在黄澄澄游戏室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Golden_Game_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_TEAHOUSE)
+def handle_in_teashop(character_id: int) -> int:
+    """
+    校验角色是否在山城茶馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Teahouse" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_TEAHOUSE)
+def handle_not_in_teahouse(character_id: int) -> int:
+    """
+    校验角色是否不在山城茶馆中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Teahouse" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_KFC)
+def handle_in_kfc(character_id: int) -> int:
+    """
+    校验角色是否在人气快餐开封菜中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "KFC" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_KFC)
+def handle_not_in_kfc(character_id: int) -> int:
+    """
+    校验角色是否不在人气快餐开封菜中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "KFC" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_HEALTHY_DINER)
+def handle_in_healthy_diner(character_id: int) -> int:
+    """
+    校验角色是否在健康快餐店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Healthy_Diner" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_HEALTHY_DINER)
+def handle_not_in_healthy_diner(character_id: int) -> int:
+    """
+    校验角色是否不在健康快餐店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Healthy_Diner" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_LUNGMEN_EATERY)
+def handle_in_lungmen_eatery(character_id: int) -> int:
+    """
+    校验角色是否在龙门食坊中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Lungmen_Eatery" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_LUNGMEN_EATERY)
+def handle_not_in_lungmen_eatery(character_id: int) -> int:
+    """
+    校验角色是否不在龙门食坊中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Lungmen_Eatery" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_PIZZERIA)
+def handle_in_pizzeria(character_id: int) -> int:
+    """
+    校验角色是否在快捷连锁披萨店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Pizzeria" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_PIZZERIA)
+def handle_not_in_pizzeria(character_id: int) -> int:
+    """
+    校验角色是否不在快捷连锁披萨店中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Pizzeria" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_CAFÉ)
+def handle_in_café(character_id: int) -> int:
+    """
+    校验角色是否在哥伦比亚咖啡中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Café" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_CAFÉ)
+def handle_not_in_café(character_id: int) -> int:
+    """
+    校验角色是否不在哥伦比亚咖啡中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Café" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_LIGHT_STORE)
+def handle_in_light_store(character_id: int) -> int:
+    """
+    校验角色是否在花草灯艺屋中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Light_Store" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LIGHT_STORE)
+def handle_not_in_light_store(character_id: int) -> int:
+    """
+    校验角色是否不在花草灯艺屋中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Light_Store" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 @add_premise(constant_promise.Premise.IN_LIBRARY)
 def handle_in_library(character_id: int) -> int:
