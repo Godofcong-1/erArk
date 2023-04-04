@@ -3779,6 +3779,19 @@ def handle_eat_add_just(
         # 精液食物则加精液经验
         if pl_character_data.behavior.food_seasoning in {11,12}:
             default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        # 药物食物则获得对应药物效果
+        elif pl_character_data.behavior.food_seasoning == 102: # 事后避孕药
+            handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif pl_character_data.behavior.food_seasoning == 103: # 媚药
+            handle_target_add_huge_desire_and_submit(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif pl_character_data.behavior.food_seasoning == 105: # 一次性利尿剂
+            handle_target_add_urinate(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif pl_character_data.behavior.food_seasoning == 106: # 持续性利尿剂
+            handle_target_diuretics_on(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif pl_character_data.behavior.food_seasoning == 107: # 安眠药
+            handle_target_add_tired_tosleep(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif pl_character_data.behavior.food_seasoning == 108: # 排卵促进药
+            handle_target_add_pregnancy_chance(0,add_time=add_time,change_data=change_data,now_time=now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
