@@ -142,25 +142,6 @@ def character_move_to_rand_scene(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MODERN_MUSIC_ROOM)
-def character_move_to_modern_music_room(character_id: int):
-    """
-    移动至现代音乐室
-    Keyword arguments:
-    character_id -- 角色id
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    character_data.target_character_id = character_id
-    to_cafeteria = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Modern_Musicroom"])
-    )
-    _, _, move_path, move_time = character_move.character_move(character_id, to_cafeteria)
-    character_data.behavior.behavior_id = constant.Behavior.MOVE
-    character_data.behavior.move_target = move_path
-    character_data.behavior.duration = move_time
-    character_data.state = constant.CharacterStatus.STATUS_MOVE
-
-
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DR_OFFICE)
 def character_move_to_dr_office(character_id: int):
     """
@@ -535,6 +516,26 @@ def character_move_to_fairy_banquet(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BAR)
+def character_move_to_bar(character_id: int):
+    """
+    移动至酒吧
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_bar = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Bar"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_bar)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_AVANT_GARDE_ARCADE)
 def character_move_to_avant_garde_arcade(character_id: int):
     """
@@ -549,6 +550,246 @@ def character_move_to_avant_garde_arcade(character_id: int):
         random.choice(constant.place_data["Avant_Garde_Arcade"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_avant_garde_arcade)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_WALYRIA_CAKE_SHOP)
+def character_move_to_walyria_cake_shop(character_id: int):
+    """
+    移动至瓦莱丽蛋糕店
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_walyria_cake_shop = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Walyria_Cake_Shop"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_walyria_cake_shop)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_STYLING_STUDIO)
+def character_move_to_styling_studio(character_id: int):
+    """
+    移动至造型工作室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_styling_studio = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Styling_Studio"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_styling_studio)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HAIR_SALON)
+def character_move_to_hair_salon(character_id: int):
+    """
+    移动至理发店
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_hair_salon = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Hair_Salon"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_hair_salon)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TEAHOUSE)
+def character_move_to_teahouse(character_id: int):
+    """
+    移动至山城茶馆
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_teahouse = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Teahouse"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_teahouse)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CAFÉ)
+def character_move_to_café(character_id: int):
+    """
+    移动至哥伦比亚咖啡馆
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_café = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Café"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_café)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_LIGHT_STORE)
+def character_move_to_light_store(character_id: int):
+    """
+    移动至花草灯艺屋
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_light_store = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Light_Store"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_light_store)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PIZZERIA)
+def character_move_to_pizzeria(character_id: int):
+    """
+    移动至快捷连锁披萨店
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_pizzeria = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Pizzeria"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_pizzeria)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_SEVEN_CITIES_RESTAURANT)
+def character_move_to_seven_cities_restaurant(character_id: int):
+    """
+    移动至七城风情餐厅
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_seven_cities_restaurant = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Seven_Cities_Restaurant"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_seven_cities_restaurant)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KFC)
+def character_move_to_kfc(character_id: int):
+    """
+    移动至人气快餐开封菜
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_kfc = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["KFC"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_kfc)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HEALTHY_DINER)
+def character_move_to_healthy_diner(character_id: int):
+    """
+    移动至健康快餐店
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_healthy_diner = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["HEALTHY_DINER"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_healthy_diner)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_LUNGMEN_EATERY)
+def character_move_to_lungmen_eatery(character_id: int):
+    """
+    移动至龙门食坊
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_lungmen_eatery = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["LUNGMEN_EATERY"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_lungmen_eatery)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_SWIMMING_POOL)
+def character_move_to_swimming_pool(character_id: int):
+    """
+    移动至游泳池
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_swimming_pool = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["SWIMMING_POOL"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_swimming_pool)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
@@ -590,6 +831,36 @@ def character_move_to_rest_room(character_id: int):
         now_draw.text = character_data.name + "打算去休息"
         now_draw.draw()
         line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RESTAURANT)
+def character_move_to_restaurant(character_id: int):
+    """
+    移动至餐馆（随机某个正餐餐馆）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    # 检索当前角色所在的大场景里有没有餐馆，没有的话再随机选择其他区块
+    now_position = character_data.position[0]
+    find_flag = False
+    for place in constant.place_data["Restaurant"]:
+        if place.split("\\")[0] == now_position:
+            to_rest_room = map_handle.get_map_system_path_for_str(place)
+            find_flag = True
+            break
+    if not find_flag:
+        to_rest_room = map_handle.get_map_system_path_for_str(
+    random.choice(constant.place_data["Restaurant"])
+    )
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_rest_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
@@ -1048,6 +1319,132 @@ def character_play_arcade_game(character_id: int):
     character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.PLAY_ARCADE_GAME
     character_data.state = constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_SWIMMING)
+def character_swimming(character_id: int):
+    """
+    娱乐：游泳
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.SWIMMING
+    character_data.state = constant.CharacterStatus.STATUS_SWIMMING
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TASTE_WINE)
+def character_taste_wine(character_id: int):
+    """
+    娱乐：品酒
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_WINE
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_WINE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TASTE_TEA)
+def character_taste_tea(character_id: int):
+    """
+    娱乐：品茶
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_TEA
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_TEA
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TASTE_COFFEE)
+def character_taste_coffee(character_id: int):
+    """
+    娱乐：品咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_COFFEE
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_COFFEE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TASTE_DESSERT)
+def character_taste_dessert(character_id: int):
+    """
+    娱乐：品尝点心
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_DESSERT
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_DESSERT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TASTE_FOOD)
+def character_taste_food(character_id: int):
+    """
+    娱乐：品尝美食
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.TASTE_FOOD
+    character_data.state = constant.CharacterStatus.STATUS_TASTE_FOOD
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_PLAY_HOUSE)
+def character_play_house(character_id: int):
+    """
+    娱乐：过家家
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.PLAY_HOUSE
+    character_data.state = constant.CharacterStatus.STATUS_PLAY_HOUSE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_STYLE_HAIR)
+def character_style_hair(character_id: int):
+    """
+    娱乐：修整发型
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.STYLE_HAIR
+    character_data.state = constant.CharacterStatus.STATUS_STYLE_HAIR
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_FULL_BODY_STYLING)
+def character_full_body_styling(character_id: int):
+    """
+    娱乐：全身造型服务
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 120
+    character_data.behavior.behavior_id = constant.Behavior.FULL_BODY_STYLING
+    character_data.state = constant.CharacterStatus.STATUS_FULL_BODY_STYLING
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)

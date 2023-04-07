@@ -1378,9 +1378,8 @@ def handle_in_restaurant(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    for restaurant_name in {"Seven_Cities_Restaurant","KFC","Healthy_Diner","Lungmen_Eatery","Pizzeria"}:
-        if restaurant_name in now_scene_data.scene_tag:
-            return 1
+    if "Restaurant" in now_scene_data.scene_tag:
+        return 1
     return 0
 
 
@@ -1397,9 +1396,8 @@ def handle_not_in_restaurant(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    for restaurant_name in {"Seven_Cities_Restaurant","KFC","Healthy_Diner","Lungmen_Eatery","Pizzeria"}:
-        if restaurant_name in now_scene_data.scene_tag:
-            return 0
+    if "Restaurant" in now_scene_data.scene_tag:
+        return 0
     return 1
 
 
