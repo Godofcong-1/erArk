@@ -7253,6 +7253,122 @@ def handle_entertainment_is_play_arcade_game(character_id: int) -> int:
     return character_data.entertainment.entertainment_type == 111
 
 
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_TEA)
+def handle_entertainment_is_taste_tea(character_id: int) -> int:
+    """
+    自己的娱乐为品茶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 112
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_COFFEE)
+def handle_entertainment_is_taste_coffee(character_id: int) -> int:
+    """
+    自己的娱乐为品咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 113
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_DESSERT)
+def handle_entertainment_is_taste_dessert(character_id: int) -> int:
+    """
+    自己的娱乐为品尝点心
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 114
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_FOOD)
+def handle_entertainment_is_taste_food(character_id: int) -> int:
+    """
+    自己的娱乐为品尝美食
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 115
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_HOUSE)
+def handle_entertainment_is_play_house(character_id: int) -> int:
+    """
+    自己的娱乐为过家家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 116
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STYLE_HAIR)
+def handle_entertainment_is_style_hair(character_id: int) -> int:
+    """
+    自己的娱乐为修整发型
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 117
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_FULL_BODY_STYLING)
+def handle_entertainment_is_full_body_styling(character_id: int) -> int:
+    """
+    自己的娱乐为全身造型服务
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 118
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SWIMMING)
+def handle_entertainment_is_swimming(character_id: int) -> int:
+    """
+    自己的娱乐为游泳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 92
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_WINE)
+def handle_entertainment_is_taste_wine(character_id: int) -> int:
+    """
+    自己的娱乐为品酒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.entertainment.entertainment_type == 62
+
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)
 def handle_last_cmd_blowjob(character_id: int) -> int:
     """

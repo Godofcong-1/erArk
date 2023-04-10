@@ -111,5 +111,23 @@ ai的目标,,,
 434,412,normal_all|all_entertainment_time|entertainment_is_rehearse_dance|in_fairy_banquet,正常状态下，全娱乐时间，娱乐是排演舞剧，且当前在糖果仙子宴会厅，则排演舞剧
 435,584,normal_all|all_entertainment_time|entertainment_is_play_arcade_game|not_in_avant_garde_arcade,正常状态下，全娱乐时间，娱乐是玩街机游戏，当前不在前卫街机厅，则移动至前卫街机厅
 436,413,normal_all|all_entertainment_time|entertainment_is_play_arcade_game|in_avant_garde_arcade,正常状态下，全娱乐时间，娱乐是玩街机游戏，且当前在前卫街机厅，则玩街机游戏
+437,531,normal_all|all_entertainment_time|entertainment_is_taste_wine|not_in_bar,正常状态下，全娱乐时间，娱乐是品酒，当前不在酒吧，则移动至酒吧
+438,415,normal_all|all_entertainment_time|entertainment_is_taste_wine|in_bar,正常状态下，全娱乐时间，娱乐是品酒，且当前在酒吧，则品酒
+439,588,normal_all|all_entertainment_time|entertainment_is_taste_tea|not_in_teahouse,正常状态下，全娱乐时间，娱乐是品茶，当前不在山城茶馆，则移动至山城茶馆
+440,416,normal_all|all_entertainment_time|entertainment_is_taste_tea|in_teahouse,正常状态下，全娱乐时间，娱乐是品茶，且当前在山城茶馆，则品茶
+441,589,normal_all|all_entertainment_time|entertainment_is_taste_coffee|not_in_café,正常状态下，全娱乐时间，娱乐是品咖啡，当前不在哥伦比亚咖啡馆，则移动至哥伦比亚咖啡馆
+442,417,normal_all|all_entertainment_time|entertainment_is_taste_coffee|in_café,正常状态下，全娱乐时间，娱乐是品咖啡，且当前在哥伦比亚咖啡馆，则品咖啡
+443,585,normal_all|all_entertainment_time|entertainment_is_taste_dessert|not_in_walyria_cake_shop,正常状态下，全娱乐时间，娱乐是品尝点心，当前不在瓦莱丽蛋糕店，则移动至瓦里亚蛋糕店
+444,418,normal_all|all_entertainment_time|entertainment_is_taste_dessert|in_walyria_cake_shop,正常状态下，全娱乐时间，娱乐是品尝点心，且当前在瓦莱丽蛋糕店，则品尝点心
+445,516,normal_all|all_entertainment_time|entertainment_is_taste_food|not_in_restaurant,正常状态下，全娱乐时间，娱乐是品尝美食，当前不在餐厅，则移动至餐厅
+446,419,normal_all|all_entertainment_time|entertainment_is_taste_food|in_restaurant,正常状态下，全娱乐时间，娱乐是品尝美食，且当前在餐厅，则品尝美食
+447,563,normal_all|all_entertainment_time|entertainment_is_play_house|not_in_golden_game_room,正常状态下，全娱乐时间，娱乐是过家家，当前不在黄澄澄游戏室，则移动至黄澄澄游戏室
+448,420,normal_all|all_entertainment_time|entertainment_is_play_house|in_golden_game_room,正常状态下，全娱乐时间，娱乐是过家家，且当前在黄澄澄游戏室，则过家家
+449,587,normal_all|all_entertainment_time|entertainment_is_style_hair|not_in_hair_salon,正常状态下，全娱乐时间，娱乐是修整发型，当前不在理发店，则移动至理发店
+450,421,normal_all|all_entertainment_time|entertainment_is_style_hair|in_hair_salon,正常状态下，全娱乐时间，娱乐是修整发型，且当前在理发店，则修整发型
+451,586,normal_all|all_entertainment_time|entertainment_is_full_body_styling|not_in_styling_studio,正常状态下，全娱乐时间，娱乐是全身造型服务，当前不在造型工作室，则移动至造型工作室
+452,422,normal_all|all_entertainment_time|entertainment_is_full_body_styling|in_styling_studio,正常状态下，全娱乐时间，娱乐是全身造型服务，且当前在造型工作室，则全身造型服务
+453,611,normal_all|all_entertainment_time|entertainment_is_swimming|not_in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，当前不在游泳池，则移动至游泳池
+454,414,normal_all|all_entertainment_time|entertainment_is_swimming|in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，且当前在游泳池，则游泳
 
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍

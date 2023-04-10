@@ -376,6 +376,26 @@ def character_move_to_teacher_office(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_MOVE
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_GOLDEN_GAME_ROOM)
+def character_move_to_golden_game_room(character_id: int):
+    """
+    移动至黄澄澄游戏室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_teacher_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Golden_Game_Room"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_teacher_office)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLASSIC_MUSIC_ROOM)
 def character_move_to_classic_music_room(character_id: int):
     """
@@ -787,7 +807,7 @@ def character_move_to_swimming_pool(character_id: int):
     character_data.target_character_id = character_id
 
     to_swimming_pool = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["SWIMMING_POOL"])
+        random.choice(constant.place_data["Swimming_Pool"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_swimming_pool)
     character_data.behavior.behavior_id = constant.Behavior.MOVE

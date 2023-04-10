@@ -476,6 +476,7 @@ class Character_FirstNPC:
         self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
 
         while 1:
+            return_list = []
 
             # 显示当前助手
             line = draw.LineDraw("-", self.width)
@@ -483,6 +484,10 @@ class Character_FirstNPC:
             now_npc_draw = draw.NormalDraw()
             if cache.debug_mode:
                 self.npc_select_now = 999
+                text = "  [一键全选]"
+                name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.select_all)
+                name_draw.draw()
+                return_list.append(name_draw.return_text)
             else:
                 self.npc_select_now = 10 - len(cache.npc_id_got)
             now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
@@ -495,7 +500,6 @@ class Character_FirstNPC:
             self.handle_panel.text_list = id_list
             self.handle_panel.update()
             self.handle_panel.draw()
-            return_list = []
             return_list.extend(self.handle_panel.return_list)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
@@ -504,6 +508,13 @@ class Character_FirstNPC:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+
+    def select_all(self):
+        """一键全选"""
+        for i in range(len(cache.npc_tem_data)):
+            npc_id = i + 1
+            if npc_id not in cache.npc_id_got:
+                cache.npc_id_got.add(npc_id)
 
     def change_npc_work(self):
         """

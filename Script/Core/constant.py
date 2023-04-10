@@ -961,6 +961,8 @@ class StateMachine:
     """ 移动到教室 """
     MOVE_TO_TEACHER_OFFICE = 562
     """ 移动到教师办公室 """
+    MOVE_TO_GOLDEN_GAME_ROOM = 563
+    """ 移动到黄澄澄游戏室 """
     MOVE_TO_DR_OFFICE = 571
     """ 移动至博士办公室 """
     MOVE_TO_AVANT_GARDE_ARCADE = 584
