@@ -31,9 +31,9 @@ ai的目标,,,
 44,523,eat_food_flag_2|not_in_din,要进食状态下，且不在食堂里，则去食堂
 45,77,eat_food_flag_2|in_din,要进食状态下，且在食堂里，则吃饭
 
-51,71,normal_1267|shower_time|shower_flag_0,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，则进入要更衣状态
-52,601,shower_flag_1|not_in_bathzone_locker_room,要更衣状态下，当前不在大浴室的更衣室，则去大浴室的更衣室
-53,72,shower_flag_1|in_bathzone_locker_room,要更衣状态下，当前在大浴室的更衣室，则脱成全裸
+51,71,normal_1267|shower_time|shower_flag_0,1267正常（可能AI跟随、服装异常或意识模糊），淋浴时间，今天没洗过澡，则进入要脱衣服（洗澡）状态
+52,601,shower_flag_1|not_in_bathzone_locker_room,要脱衣服（洗澡）状态下，当前不在大浴室的更衣室，则去大浴室的更衣室
+53,72,shower_flag_1|in_bathzone_locker_room,要脱衣服（洗澡）状态下，当前在大浴室的更衣室，则脱成全裸
 54,515,shower_flag_2|not_in_bathroom,要洗澡状态下，当前不在淋浴间，则去淋浴间
 55,73,shower_flag_2|in_bathroom,要洗澡状态下，当前在淋浴间，则开始淋浴
 56,601,shower_flag_3|not_in_bathzone_locker_room,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
@@ -129,5 +129,13 @@ ai的目标,,,
 452,422,normal_all|all_entertainment_time|entertainment_is_full_body_styling|in_styling_studio,正常状态下，全娱乐时间，娱乐是全身造型服务，且当前在造型工作室，则全身造型服务
 453,611,normal_all|all_entertainment_time|entertainment_is_swimming|not_in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，当前不在游泳池，则移动至游泳池
 454,414,normal_all|all_entertainment_time|entertainment_is_swimming|in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，且当前在游泳池，则游泳
+
+461,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
+462,612,swim_flag_1|not_in_training_locker_room,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室
+463,83,swim_flag_1|in_training_locker_room,要换泳衣状态下，当前在训练场的更衣室，则换泳衣，并进入要游泳状态
+464,611,swim_flag_2|all_entertainment_time|not_in_swimming_pool,要游泳状态下，全娱乐时间，当前不在游泳池，则去游泳池
+465,414,swim_flag_2|all_entertainment_time|in_swimming_pool,要游泳状态下，全娱乐时间，当前在游泳池，则开始游泳
+466,612,swim_flag_2|not_all_entertainment_time|not_in_training_locker_room,要游泳状态，当前不是娱乐时间，当前不在训练场的更衣室，则去训练场的更衣室
+467,84,swim_flag_2|not_all_entertainment_time|in_training_locker_room,要游泳状态，当前不是娱乐时间，当前在训练场的更衣室，则换回衣服
 
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍

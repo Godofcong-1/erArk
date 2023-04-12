@@ -291,6 +291,26 @@ def handle_wear_cloth_off(
     clothing.get_cloth_off(character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_CLOTH_OFF_MOST)
+def handle_wear_cloth_off_most(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    脱掉大部分衣服（保留首饰等）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    clothing.get_cloth_wear_zero_except_need(character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SHOWER_CLOTH)
 def handle_get_shower_cloth(
     character_id: int,
@@ -309,6 +329,26 @@ def handle_get_shower_cloth(
     if not add_time:
         return
     clothing.get_shower_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SWIM_CLOTH)
+def handle_get_swim_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    清零其他衣服并换上泳衣
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    clothing.get_swim_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_CLOTH_RESET)
@@ -358,14 +398,15 @@ def handle_wear_to_locker(
             tem_list = character_data.cloth.cloth_wear[clothing_type].copy()
             for cloth_id in tem_list:
                 # print(f"debug cloth_id = {cloth_id}")
-                # 只要不是首饰，就转移到柜子里
-                if game_config.config_clothing_tem[cloth_id].tag != 6:
+                # 不转移首饰和必须穿着的衣服
+                if (
+                    game_config.config_clothing_tem[cloth_id].tag != 6 
+                    and cloth_id not in clothing.chara_special_wear_cloth(character_id)
+                ):
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
                     character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
     character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
-
-    clothing.chara_special_wear_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_TO_WEAR)
@@ -385,11 +426,24 @@ def handle_locker_to_wear(
     """
     if not add_time:
         return
+    # 从缓存中获取角色数据
     character_data = cache.character_data[character_id]
-    for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth.cloth_locker[clothing_type]):
-            for cloth_id in character_data.cloth.cloth_locker[clothing_type]:
-                character_data.cloth.cloth_wear[clothing_type].append(cloth_id)
 
+    # 遍历游戏配置中的所有服装类型
+    for clothing_type in game_config.config_clothing_type:
+        # 如果某个服装类型的衣柜不为空
+        if len(character_data.cloth.cloth_locker[clothing_type]):
+            # 复制该服装类型的衣柜列表
+            tem_list = character_data.cloth.cloth_locker[clothing_type].copy()
+            # 遍历该服装类型的衣柜列表
+            for cloth_id in tem_list:
+                # 将服装添加到穿着列表中
+                character_data.cloth.cloth_wear[clothing_type].append(cloth_id)
+                # 将服装从衣柜列表中移除
+                character_data.cloth.cloth_locker[clothing_type].remove(cloth_id)
+
+    # 将衣服脏污设置为衣柜脏污中的内容
+    character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
+    # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)
 

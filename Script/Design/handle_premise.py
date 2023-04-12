@@ -200,6 +200,28 @@ def handle_all_entertainment_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_ALL_ENTERTAINMENT_TIME)
+def handle_not_all_entertainment_time(character_id: int) -> int:
+    """
+    非全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 如果是非工作日，则为工作时间+下班
+    if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
+        if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 22:
+            return 0
+    # 如果是工作日，仅取18:00~22:00的下班时间
+    else:
+        if 18 <= character_data.behavior.start_time.hour < 22:
+            return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.WORKDAYD_ENTERTAINMENT_TIME)
 def handle_workday_entertainment_time(character_id: int) -> int:
     """
@@ -2149,6 +2171,42 @@ def handle_not_in_bathzone_locker_room(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_TRAINING_LOCKER_ROOM)
+def handle_in_training_locker_room(character_id: int) -> int:
+    """
+    校验角色是否在训练场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Locker_Room" in now_scene_data.scene_tag and "训练场" in now_scene_str:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_TRAINING_LOCKER_ROOM)
+def handle_not_in_training_locker_room(character_id: int) -> int:
+    """
+    校验角色是否不在训练场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Locker_Room" in now_scene_data.scene_tag and "训练场" in now_scene_str:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY)
 def handle_in_locker_room_or_dormitory(character_id: int) -> int:
     """
@@ -3613,7 +3671,7 @@ def handle_shower_flag_123(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SHOWER_FLAG_1)
 def handle_shower_flag_1(character_id: int) -> int:
     """
-    自身要更衣状态
+    自身要脱衣服（洗澡）状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3831,6 +3889,54 @@ def handlefind_t_food_weird_flag_1(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.sp_flag.find_food_weird == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SWIM_FLAG_0)
+def handle_swim_flag_0(character_id: int) -> int:
+    """
+    自身没有游泳状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.swim == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SWIM_FLAG_1)
+def handle_swim_flag_1(character_id: int) -> int:
+    """
+    自身要换泳衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.swim == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SWIM_FLAG_2)
+def handle_swim_flag_2(character_id: int) -> int:
+    """
+    自身要游泳状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.swim == 2:
         return 1
     else:
         return 0

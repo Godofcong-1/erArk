@@ -913,6 +913,36 @@ def character_move_to_bathzone_locker_room(character_id: int):
         line_feed.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_LOCKER_ROOM)
+def character_move_to_training_locker_room(character_id: int):
+    """
+    移动至训练场的更衣室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    # 直接检索训练场的更衣室
+    for place in constant.place_data["Locker_Room"]:
+        if place.split("\\")[0] == "训练场":
+            to_locker_room = map_handle.get_map_system_path_for_str(place)
+            break
+
+    _, _, move_path, move_time = character_move.character_move(character_id, to_locker_room)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去训练场的更衣室"
+        now_draw.draw()
+        line_feed.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATH_ROOM)
 def character_move_to_bath_room(character_id: int):
     """
@@ -1528,12 +1558,51 @@ def character_pee(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.START_SHOWER)
 def character_start_shower(character_id: int):
     """
-    进入要更衣状态
+    进入要脱衣服（洗澡）状态
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SIWM_1)
+def character_swim_1(character_id: int):
+    """
+    进入要换泳衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.swim = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SIWM_2)
+def character_swim_2(character_id: int):
+    """
+    脱掉衣服并换上泳衣并进入要游泳状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.READY_TO_SWIM
+    character_data.state = constant.CharacterStatus.STATUS_READY_TO_SWIM
+    character_data.behavior.duration = 10
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SIWM_3)
+def character_swim_3(character_id: int):
+    """
+    换回衣服
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.LOCKER_TO_WEAR
+    character_data.state = constant.CharacterStatus.STATUS_LOCKER_TO_WEAR
+    character_data.behavior.duration = 10
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
@@ -1551,6 +1620,25 @@ def character_wear_to_locker(character_id: int):
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.text = character_data.name + "脱成全裸了"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.LOCKER_TO_WEAR)
+def character_locker_to_wear(character_id: int):
+    """
+    当前衣柜里衣服转移到身上
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.LOCKER_TO_WEAR
+    character_data.state = constant.CharacterStatus.STATUS_LOCKER_TO_WEAR
+    character_data.behavior.duration = 10
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "穿上了衣服"
         now_draw.draw()
         line_feed.draw()
 

@@ -61,6 +61,8 @@ class CharacterStatus:
     """ 身上衣服脱到衣柜 """
     STATUS_LOCKER_TO_WEAR = 145
     """ 衣柜衣服穿回身上 """
+    STATUS_READY_TO_SWIM = 146
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
@@ -452,6 +454,8 @@ class Behavior:
     """ 身上衣服脱到衣柜 """
     LOCKER_TO_WEAR = 145
     """ 衣柜衣服穿回身上 """
+    READY_TO_SWIM = 146
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
@@ -817,7 +821,7 @@ class StateMachine:
     """ 解手 """
 
     START_SHOWER = 71
-    """ 进入要更衣状态 """
+    """ 进入要脱衣服（洗澡）状态 """
     WEAR_TO_LOCKER = 72
     """ 当前身上衣服转移到衣柜里 """
     TAKE_SHOWER = 73
@@ -836,6 +840,14 @@ class StateMachine:
     """ 进入要休息状态 """
     START_PEE = 80
     """ 进入要撒尿状态 """
+    LOCKER_TO_WEAR = 81
+    """ 衣柜里的衣服穿回身上 """
+    SIWM_1 = 82
+    """ 进入要换泳衣状态 """
+    SIWM_2 = 83
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    SIWM_3 = 84
+    """ 换回衣服 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -993,6 +1005,8 @@ class StateMachine:
     """ 移动至大浴场的更衣室 """
     MOVE_TO_SWIMMING_POOL = 611
     """ 移动至游泳池 """
+    MOVE_TO_TRAINING_LOCKER_ROOM = 612
+    """ 移动至训练场的更衣室 """
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """

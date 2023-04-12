@@ -325,7 +325,7 @@ class BehaviorEffect:
     T_BE_IMPRISONMENT = 452
     """ 属性_特殊flag 交互对象变成被监禁状态 """
     SHOWER_FLAG_TO_1 = 453
-    """ 属性_特殊flag 自身变成要更衣状态 """
+    """ 属性_特殊flag 自身变成要脱衣服（洗澡）状态 """
     SHOWER_FLAG_TO_2 = 454
     """ 属性_特殊flag 自身变成要洗澡状态 """
     SHOWER_FLAG_TO_3 = 455
@@ -350,6 +350,10 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身清零要撒尿状态 """
     PEE_FLAG_TO_1 = 465
     """ 属性_特殊flag 自身变成要撒尿状态 """
+    SWIM_FLAG_TO_1 = 466
+    """ 属性_特殊flag 自身变成要换泳衣状态 """
+    SWIM_FLAG_TO_2 = 467
+    """ 属性_特殊flag 自身变成要游泳状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -409,13 +413,17 @@ class BehaviorEffect:
     WEAR_CLOTH_OFF = 632
     """ 属性_服装 脱掉全部衣服 """
     GET_SHOWER_CLOTH = 633
-    """ 属性_服装 换上浴帽和浴巾 """
+    """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
     LOCKER_CLOTH_RESET = 641
     """ 属性_服装 衣柜里的衣服清零 """
     WEAR_TO_LOCKER = 642
     """ 属性_服装 身上首饰以外的衣服转移到柜子里 """
     LOCKER_TO_WEAR = 643
     """ 属性_服装 衣柜里的衣服转移到身上 """
+    GET_SWIM_CLOTH = 644
+    """ 属性_服装 清零其他衣服并换上泳衣 """
+    WEAR_CLOTH_OFF_MOST = 645
+    """ 属性_服装 脱掉大部分衣服（保留首饰等） """
 
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """

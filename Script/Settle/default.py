@@ -2890,7 +2890,7 @@ def handle_shower_flag_to_1(
         now_time: datetime.datetime,
 ):
     """
-    自身变成要更衣状态
+    自身变成要脱衣服（洗澡）状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
