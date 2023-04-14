@@ -197,6 +197,8 @@ class Entertainment:
     """ 娱乐行动id """
     palce: str
     """ 娱乐地点 """
+    need: str
+    """ 必要条件 """
     tag: int
     """ 标签 """
     describe: str

@@ -13,6 +13,7 @@ from Script.Design import (
     map_handle,
     attr_text,
     character,
+    character_behavior,
 )
 from Script.Config import game_config, normal_config, character_config
 
@@ -252,6 +253,14 @@ def init_character_position():
         character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
         # print("character_dormitory = ",character_dormitory)
         map_handle.character_move_scene(character_position, character_dormitory, character_id)
+
+
+def init_character_entertainment():
+    """初始化角色娱乐"""
+    id_list = cache.npc_id_got
+    id_list.add(0)
+    for character_id in id_list:
+        character_behavior.get_chara_entertainment(character_id)
 
 
 def init_character_facility_open():
