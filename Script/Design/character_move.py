@@ -67,6 +67,8 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
     # 判断目标场景是否开放，不开放则输出原因
     close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+    # if not character_id:
+    #     print(f"debug close_type = {close_type}")
     if close_type != "open":
         return close_type, [], [], 0
     if (

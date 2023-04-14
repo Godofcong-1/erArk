@@ -495,7 +495,7 @@ class SPECIAL_FLAG:
         self.find_food_weird: bool = 0
         """ 发现食物不对劲 """
         self.swim: int = 0
-        """ 游泳状态，int [0要换泳衣,1要游泳,2游完泳] """
+        """ 游泳状态，int [0无,1要换泳衣,2要游泳] """
 
 
 class CHARA_WORK:

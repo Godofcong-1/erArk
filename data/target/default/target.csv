@@ -127,14 +127,12 @@ ai的目标,,,
 450,421,normal_all|all_entertainment_time|entertainment_is_style_hair|in_hair_salon,正常状态下，全娱乐时间，娱乐是修整发型，且当前在理发店，则修整发型
 451,586,normal_all|all_entertainment_time|entertainment_is_full_body_styling|not_in_styling_studio,正常状态下，全娱乐时间，娱乐是全身造型服务，当前不在造型工作室，则移动至造型工作室
 452,422,normal_all|all_entertainment_time|entertainment_is_full_body_styling|in_styling_studio,正常状态下，全娱乐时间，娱乐是全身造型服务，且当前在造型工作室，则全身造型服务
-453,611,normal_all|all_entertainment_time|entertainment_is_swimming|not_in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，当前不在游泳池，则移动至游泳池
-454,414,normal_all|all_entertainment_time|entertainment_is_swimming|in_swimming_pool,正常状态下，全娱乐时间，娱乐是游泳，且当前在游泳池，则游泳
 
 461,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
-462,612,swim_flag_1|not_in_training_locker_room,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室
-463,83,swim_flag_1|in_training_locker_room,要换泳衣状态下，当前在训练场的更衣室，则换泳衣，并进入要游泳状态
-464,611,swim_flag_2|all_entertainment_time|not_in_swimming_pool,要游泳状态下，全娱乐时间，当前不在游泳池，则去游泳池
-465,414,swim_flag_2|all_entertainment_time|in_swimming_pool,要游泳状态下，全娱乐时间，当前在游泳池，则开始游泳
+462,612,swim_flag_1|all_entertainment_time|not_in_training_locker_room,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室
+463,83,swim_flag_1|all_entertainment_time|in_training_locker_room,要换泳衣状态下，当前在训练场的更衣室，则换泳衣，并进入要游泳状态
+464,611,normal_all|swim_flag_2|all_entertainment_time|not_in_swimming_pool,正常状态下，要游泳状态下，全娱乐时间，当前不在游泳池，则去游泳池
+465,414,normal_all|swim_flag_2|all_entertainment_time|in_swimming_pool,正常状态下，要游泳状态下，全娱乐时间，当前在游泳池，则开始游泳
 466,612,swim_flag_2|not_all_entertainment_time|not_in_training_locker_room,要游泳状态，当前不是娱乐时间，当前不在训练场的更衣室，则去训练场的更衣室
 467,84,swim_flag_2|not_all_entertainment_time|in_training_locker_room,要游泳状态，当前不是娱乐时间，当前在训练场的更衣室，则换回衣服
 

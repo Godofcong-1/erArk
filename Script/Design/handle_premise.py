@@ -219,7 +219,7 @@ def handle_not_all_entertainment_time(character_id: int) -> int:
     else:
         if 18 <= character_data.behavior.start_time.hour < 22:
             return 0
-    return 1
+    return 50
 
 
 @add_premise(constant_promise.Premise.WORKDAYD_ENTERTAINMENT_TIME)
@@ -2184,7 +2184,7 @@ def handle_in_training_locker_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Locker_Room" in now_scene_data.scene_tag and "训练场" in now_scene_str:
+    if "Locker_Room" in now_scene_data.scene_tag and "训练" in now_scene_str:
         return 1
     return 0
 
@@ -2202,7 +2202,7 @@ def handle_not_in_training_locker_room(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Locker_Room" in now_scene_data.scene_tag and "训练场" in now_scene_str:
+    if "Locker_Room" in now_scene_data.scene_tag and "训练" in now_scene_str:
         return 0
     return 1
 

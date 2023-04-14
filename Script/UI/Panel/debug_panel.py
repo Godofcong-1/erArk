@@ -974,6 +974,8 @@ class Debug_Panel:
                 info_text += f"[011]:要睡觉状态：{target_data.sp_flag.sleep}\n"
                 info_text += f"[012]:要休息状态：{target_data.sp_flag.rest}\n"
                 info_text += f"[013]:要撒尿状态：{target_data.sp_flag.pee}\n"
+                info_text += f"[014]:发现食物不对劲：{target_data.sp_flag.find_food_weird}\n"
+                info_text += f"[015]:游泳状态，int [0无,1要换泳衣,2要游泳]：{target_data.sp_flag.swim}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()
@@ -1017,6 +1019,10 @@ class Debug_Panel:
                         target_data.sp_flag.rest = value_index[1]
                     elif value_index[0] == 13:
                         target_data.sp_flag.pee = value_index[1]
+                    elif value_index[0] == 14:
+                        target_data.sp_flag.find_food_weird = value_index[1]
+                    elif value_index[0] == 15:
+                        target_data.sp_flag.swim = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

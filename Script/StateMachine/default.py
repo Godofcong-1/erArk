@@ -925,7 +925,7 @@ def character_move_to_training_locker_room(character_id: int):
 
     # 直接检索训练场的更衣室
     for place in constant.place_data["Locker_Room"]:
-        if place.split("\\")[0] == "训练场":
+        if place.split("\\")[0] == "训练":
             to_locker_room = map_handle.get_map_system_path_for_str(place)
             break
 

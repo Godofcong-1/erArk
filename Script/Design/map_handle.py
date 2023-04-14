@@ -554,7 +554,7 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
 
             # 如果该设施已开放，则正常通过
             if cache.base_resouce.facility_open[open_cid]:
-                return 1
+                return "open"
             # 是玩家的话输出提示信息
             elif character_id == 0:
                 # 获取设施的解锁条件数据
