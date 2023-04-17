@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, map_handle, attr_calculation, handle_premise
+from Script.Design import attr_text, map_handle, attr_calculation, handle_premise, game_time
 
 panel_info_data = {}
 
@@ -152,12 +152,19 @@ class SeeCharacterFirstPanel:
         image_draw = CharacterImage(character_id, width)
         Talent_draw = CharacterTalentText(character_id, width, 8, 0)
         Daily_draw = CharacterDailyText(character_id, width, 8, 0)
-        self.draw_list: List[draw.NormalDraw] = [
-            head_draw,
-            image_draw,
-            Talent_draw,
-            Daily_draw,
-        ]
+        if character_id == 0:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                image_draw,
+                Talent_draw,
+            ]
+        else:
+            self.draw_list: List[draw.NormalDraw] = [
+                head_draw,
+                image_draw,
+                Talent_draw,
+                Daily_draw,
+            ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
@@ -1727,17 +1734,23 @@ class CharacterDailyText:
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
         work_text = game_config.config_work_type[character_data.work.work_type].name
-        entertainment_text = game_config.config_entertainment[character_data.entertainment.entertainment_type].name
+        entertainment_text_list = []
+        for entertainment_type in character_data.entertainment.entertainment_type:
+            entertainment_name = game_config.config_entertainment[entertainment_type].name
+            entertainment_text_list.append(entertainment_name)
 
-        if character_id == 0:
-            work_text,entertainment_text = "无","无"
 
         type_data = "日程"
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
 
         now_draw = panel.LeftDrawTextListPanel()
-        text_list = f"当前工作：{work_text}     今日娱乐：{entertainment_text}"
+        text_list = f"当前工作：{work_text}     "
+        if game_time.judge_work_today(character_id) and character_data.work.work_type:
+            text_list += f" 今日上午：工作    今日下午：工作    今日晚上：{entertainment_text_list[2]}"
+        else:
+            text_list += f" 今日上午：{entertainment_text_list[0]}    今日下午：{entertainment_text_list[1]}    今日晚上：{entertainment_text_list[2]}"
+
         text_draw = draw.LeftDraw()
         text_draw.text = text_list
         text_draw.width = self.width

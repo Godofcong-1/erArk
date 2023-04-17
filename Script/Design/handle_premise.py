@@ -50,7 +50,7 @@ def handle_premise(premise: str, character_id: int) -> int:
 @add_premise(constant_promise.Premise.EAT_TIME)
 def handle_eat_time(character_id: int) -> int:
     """
-    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上18~20点）
+    校验当前时间是否处于饭点（早上7~8点、中午12~13点、晚上18~19点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -60,7 +60,7 @@ def handle_eat_time(character_id: int) -> int:
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     # print(f"debug start_time = {character_data.behavior.start_time}，now_time = {now_time}")
-    if character_data.behavior.start_time.hour in {7, 8, 12, 13, 18, 19, 20}:
+    if character_data.behavior.start_time.hour in {7, 8, 12, 13, 18, 19}:
         # print(f"debug 当前为饭点={character_data.behavior.start_time.hour}")
         return 1
     return 0
@@ -191,11 +191,11 @@ def handle_all_entertainment_time(character_id: int) -> int:
 
     # 如果是非工作日，则为工作时间+下班
     if not game_time.judge_work_today(0) or character_data.work.work_type == 0:
-        if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 22:
+        if 9 <= character_data.behavior.start_time.hour < 12 or 14 <= character_data.behavior.start_time.hour < 18 or 19 <= character_data.behavior.start_time.hour < 22:
             return 50
-    # 如果是工作日，仅取18:00~22:00的下班时间
+    # 如果是工作日，仅取19:00~22:00的晚上时间
     else:
-        if 18 <= character_data.behavior.start_time.hour < 22:
+        if 19 <= character_data.behavior.start_time.hour < 22:
             return 50
     return 0
 
@@ -222,10 +222,10 @@ def handle_not_all_entertainment_time(character_id: int) -> int:
     return 50
 
 
-@add_premise(constant_promise.Premise.WORKDAYD_ENTERTAINMENT_TIME)
-def handle_workday_entertainment_time(character_id: int) -> int:
+@add_premise(constant_promise.Premise.MORNING_ENTERTAINMENT_TIME)
+def handle_morning_entertainment_time(character_id: int) -> int:
     """
-    工作日娱乐时间（下午6:00~晚上9:59）
+    上午娱乐时间（早上9:00~中午12:00）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -234,10 +234,42 @@ def handle_workday_entertainment_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
-    # 首先需要是工作日
-    if game_time.judge_work_today(0):
-        if 18 <= character_data.behavior.start_time.hour < 22:
-            return 50
+    if 9 <= character_data.behavior.start_time.hour < 12:
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.AFTERNOON_ENTERTAINMENT_TIME)
+def handle_afternoon_entertainment_time(character_id: int) -> int:
+    """
+    下午娱乐时间（下午14:00~下午18:00）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if 14 <= character_data.behavior.start_time.hour < 18:
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.NIGHT_ENTERTAINMENT_TIME)
+def handle_evening_entertainment_time(character_id: int) -> int:
+    """
+    晚上娱乐时间（下午19:00~22:00）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if 19 <= character_data.behavior.start_time.hour < 22:
+        return 50
     return 0
 
 
@@ -7193,287 +7225,397 @@ def handle_work_is_student(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
 def handle_entertainment_is_read(character_id: int) -> int:
     """
-    自己的娱乐为读书
+    自己当前时段的娱乐为读书
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 101
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 101
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TRAINING)
 def handle_entertainment_is_training(character_id: int) -> int:
     """
-    自己的娱乐为训练
+    自己当前时段的娱乐为训练
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 91
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 91
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SING)
 def handle_entertainment_is_sing(character_id: int) -> int:
     """
-    自己的娱乐为唱歌
+    自己当前时段的娱乐为唱歌
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 51
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 51
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CLASSIC_INSTRUMENT)
 def handle_entertainment_is_play_classic_instrument(character_id: int) -> int:
     """
-    自己的娱乐为演奏传统乐器
+    自己当前时段的娱乐为演奏传统乐器
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 53
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 53
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_MODEN_INSTRUMENT)
 def handle_ENTERTAINMENT_IS_PLAY_MODEN_INSTRUMENT(character_id: int) -> int:
     """
-    自己的娱乐为演奏现代乐器
+    自己当前时段的娱乐为演奏现代乐器
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 54
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 54
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_WATCH_MOVIE)
 def handle_entertainment_is_watch_movie(character_id: int) -> int:
     """
-    自己的娱乐为看电影
+    自己当前时段的娱乐为看电影
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 55
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 55
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PHOTOGRAPHY)
 def handle_entertainment_is_photography(character_id: int) -> int:
     """
-    自己的娱乐为摄影
+    自己当前时段的娱乐为摄影
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 56
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 56
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_WATER)
 def handle_entertainment_is_play_water(character_id: int) -> int:
     """
-    自己的娱乐为玩水
+    自己当前时段的娱乐为玩水
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 57
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 57
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CHESS)
 def handle_entertainment_is_play_chess(character_id: int) -> int:
     """
-    自己的娱乐为下棋
+    自己当前时段的娱乐为下棋
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 58
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 58
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_MAHJONG)
 def handle_entertainment_is_play_mahjong(character_id: int) -> int:
     """
-    自己的娱乐为打麻将
+    自己当前时段的娱乐为打麻将
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 59
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 59
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_CARDS)
 def handle_entertainment_is_play_cards(character_id: int) -> int:
     """
-    自己的娱乐为打牌
+    自己当前时段的娱乐为打牌
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 60
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 60
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_REHEARSE_DANCE)
 def handle_entertainment_is_rehearse_dance(character_id: int) -> int:
     """
-    自己的娱乐为排演舞剧
+    自己当前时段的娱乐为排演舞剧
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 61
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 61
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_ARCADE_GAME)
 def handle_entertainment_is_play_arcade_game(character_id: int) -> int:
     """
-    自己的娱乐为玩街机游戏
+    自己当前时段的娱乐为玩街机游戏
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 111
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 111
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_TEA)
 def handle_entertainment_is_taste_tea(character_id: int) -> int:
     """
-    自己的娱乐为品茶
+    自己当前时段的娱乐为品茶
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 112
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 112
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_COFFEE)
 def handle_entertainment_is_taste_coffee(character_id: int) -> int:
     """
-    自己的娱乐为品咖啡
+    自己当前时段的娱乐为品咖啡
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 113
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 113
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_DESSERT)
 def handle_entertainment_is_taste_dessert(character_id: int) -> int:
     """
-    自己的娱乐为品尝点心
+    自己当前时段的娱乐为品尝点心
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 114
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 114
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_FOOD)
 def handle_entertainment_is_taste_food(character_id: int) -> int:
     """
-    自己的娱乐为品尝美食
+    自己当前时段的娱乐为品尝美食
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 115
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 115
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_PLAY_HOUSE)
 def handle_entertainment_is_play_house(character_id: int) -> int:
     """
-    自己的娱乐为过家家
+    自己当前时段的娱乐为过家家
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 151
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 151
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STYLE_HAIR)
 def handle_entertainment_is_style_hair(character_id: int) -> int:
     """
-    自己的娱乐为修整发型
+    自己当前时段的娱乐为修整发型
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 116
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 116
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_FULL_BODY_STYLING)
 def handle_entertainment_is_full_body_styling(character_id: int) -> int:
     """
-    自己的娱乐为全身造型服务
+    自己当前时段的娱乐为全身造型服务
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 117
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 117
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SWIMMING)
 def handle_entertainment_is_swimming(character_id: int) -> int:
     """
-    自己的娱乐为游泳
+    自己当前时段的娱乐为游泳
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 92
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 92
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_WINE)
 def handle_entertainment_is_taste_wine(character_id: int) -> int:
     """
-    自己的娱乐为品酒
+    自己当前时段的娱乐为品酒
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 62
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 62
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB)
 def handle_last_cmd_blowjob(character_id: int) -> int:

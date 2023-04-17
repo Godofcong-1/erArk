@@ -841,54 +841,60 @@ def get_chara_entertainment(character_id: int):
 
         # 如果当天有派对的话，则全员当天娱乐为该娱乐
         if hasattr(cache.base_resouce, 'party_day_of_week') and cache.base_resouce.party_day_of_week[week_day]:
-            character_data.entertainment.entertainment_type = cache.base_resouce.party_day_of_week[week_day]
+            for i in range(3):
+                character_data.entertainment.entertainment_type[i] = cache.base_resouce.party_day_of_week[week_day]
         
         # 否则随机当天的娱乐活动
         else:
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)
-            while 1:
-                # 开始随机
-                choice_entertainment_id = random.choice(entertainment_list)
-                # if choice_entertainment_id in {92, 151}:
-                #     print(f"debug {character_data.name}: {choice_entertainment_id}")
-                # 检查该娱乐活动是否需要特定的条件
-                if game_config.config_entertainment[choice_entertainment_id].need == "无":
-                    break
-                else:
-                    need_data_all = game_config.config_entertainment[choice_entertainment_id].need
-                    # 整理需要的条件
-                    if "&" not in need_data_all:
-                        need_data_list = [need_data_all]
-                    else:
-                        need_data_list = need_data_all.split('&')
-                    # 遍历检查条件
-                    judge = 1
-                    for need_text in need_data_list:
-                        need_type = need_text.split('|')[0][0]
-                        if len(need_text.split('|')[0]) >= 2:
-                            need_type_id = int(need_text.split('|')[0][1:])
-                        need_value = int(need_text.split('|')[1])
-                        # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
-                        if need_type == "A":
-                            if character_data.ability[need_type_id] < need_value:
-                                judge = 0
-                                break
-                        elif need_type == "T":
-                            if not character_data.talent[need_type_id]:
-                                judge = 0
-                                break
-                        elif need_type == "F":
-                            if not cache.base_resouce.facility_open[need_type_id]:
-                                judge = 0
-                                break
-                    # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
-                    # print(f"debug judge = {judge}")
-                    if judge:
+            # 循环获得上午、下午、晚上的三个娱乐活动
+            for i in range(3):
+
+                # 进入主循环
+                while 1:
+                    # 开始随机
+                    choice_entertainment_id = random.choice(entertainment_list)
+                    # if choice_entertainment_id in {92, 151}:
+                    #     print(f"debug {character_data.name}: {choice_entertainment_id}")
+                    # 检查该娱乐活动是否需要特定的条件
+                    if game_config.config_entertainment[choice_entertainment_id].need == "无":
                         break
                     else:
-                        entertainment_list.remove(choice_entertainment_id)
-                        continue
+                        need_data_all = game_config.config_entertainment[choice_entertainment_id].need
+                        # 整理需要的条件
+                        if "&" not in need_data_all:
+                            need_data_list = [need_data_all]
+                        else:
+                            need_data_list = need_data_all.split('&')
+                        # 遍历检查条件
+                        judge = 1
+                        for need_text in need_data_list:
+                            need_type = need_text.split('|')[0][0]
+                            if len(need_text.split('|')[0]) >= 2:
+                                need_type_id = int(need_text.split('|')[0][1:])
+                            need_value = int(need_text.split('|')[1])
+                            # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
+                            if need_type == "A":
+                                if character_data.ability[need_type_id] < need_value:
+                                    judge = 0
+                                    break
+                            elif need_type == "T":
+                                if not character_data.talent[need_type_id]:
+                                    judge = 0
+                                    break
+                            elif need_type == "F":
+                                if not cache.base_resouce.facility_open[need_type_id]:
+                                    judge = 0
+                                    break
+                        # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
+                        # print(f"debug judge = {judge}")
+                        if judge:
+                            break
+                        else:
+                            entertainment_list.remove(choice_entertainment_id)
+                            continue
 
-            # 跳出循环后，将该娱乐活动赋值给角色
-            character_data.entertainment.entertainment_type = choice_entertainment_id
+                # 跳出循环后，将该娱乐活动赋值给角色
+                character_data.entertainment.entertainment_type[i] = choice_entertainment_id
+                entertainment_list.remove(choice_entertainment_id) # 从列表中去掉该娱乐活动，防止重复

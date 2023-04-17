@@ -171,7 +171,7 @@ class Manage_Library_Panel:
 
         character_data = cache.character_data[chara_id]
         character_data.entertainment.book_return_possibility += 100
-        character_data.entertainment.entertainment_type = 101
+        character_data.entertainment.entertainment_type = [101] * len(character_data.entertainment.entertainment_type)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         now_draw.text = _(f"\n{character_data.name}将在空闲时间前往图书馆还书\n")

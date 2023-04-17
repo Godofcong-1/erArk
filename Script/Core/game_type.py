@@ -512,7 +512,7 @@ class CHARA_ENTERTAINMENT:
     """角色的娱乐信息结构体"""
 
     def __init__(self):
-        self.entertainment_type: int = 0
+        self.entertainment_type: list = [0,0,0]
         """ 角色娱乐活动的类型 """
         self.borrow_book_id_set: set = set()
         """ 借的书的id """

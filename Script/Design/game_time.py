@@ -477,6 +477,29 @@ def judge_work_today(character_id: int) -> bool:
     else:
         return 0
 
+
+def judge_entertainment_time(character_id: int) -> int:
+    """
+    校验当前娱乐时间段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 0为不在娱乐时间段，1为早上，2为下午，3为晚上
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    now_hour = now_time.hour
+    if 9 <= now_hour < 12:
+        return 1
+    elif 14 <= now_hour < 18:
+        return 2
+    elif 19 <= now_hour < 22:
+        return 3
+    return 0
+
+
 # def judge_attend_class_today(character_id: int) -> bool:
 #     """
 #     校验角色今日是否需要上课
