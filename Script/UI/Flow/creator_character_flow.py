@@ -341,13 +341,13 @@ class Character_Debug:
         now_draw.draw_list.append(line_feed_draw)
 
         if cache.debug_mode:
-            button_text = f"    【关闭debug模式】"
+            button_text = f"【关闭debug模式】"
         else:
-            button_text = f"    【开启debug模式】"
-        button_draw = draw.LeftButton(
+            button_text = f"【开启debug模式】"
+        button_draw = draw.CenterButton(
             _(button_text),
             _('debug'),
-            self.width / 10,
+            self.width / 5,
             cmd_func=self.change)
         self.return_list.append(button_draw.return_text)
 
@@ -711,7 +711,7 @@ class Character_Bonus:
             button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
             self.bonus_now -= 10
             draw_style = "nowmap"
-            bonus_use_text += f" - {talent_data_304.name}(10)"
+            bonus_use_text += f" - [{talent_data_304.name}(10)]"
         else:
             button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
             draw_style = "standard"
@@ -733,7 +733,7 @@ class Character_Bonus:
             button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
             self.bonus_now -= 10
             draw_style = "nowmap"
-            bonus_use_text += f" - {talent_data_307.name}(10)"
+            bonus_use_text += f" - [{talent_data_307.name}(10)]"
         else:
             button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
             draw_style = "standard"
@@ -754,7 +754,7 @@ class Character_Bonus:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
             draw_style = "nowmap"
-            bonus_use_text += f" - 启动资金(5)"
+            bonus_use_text += f" - [启动资金(5)]"
         else:
             button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
             draw_style = "standard"
@@ -776,7 +776,7 @@ class Character_Bonus:
             button_text = f"   ●助理干员(5)：选择[{target_data.name}]成为助理干员，初始拥有1000点好感和50%信赖度"
             self.bonus_now -= 5
             draw_style = "nowmap"
-            bonus_use_text += f" - 助理干员(5)"
+            bonus_use_text += f" - [助理干员(5)]"
         else:
             button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
             draw_style = "standard"
@@ -797,8 +797,8 @@ class Character_Bonus:
         info_draw.width = 1
         info_draw.text = f" \n 当前为第 {str(cache.game_round)} 周目\n"
         info_draw.text += f" 当前剩余奖励点数 ="
-        info_draw.text += f" {self.bonus_now} 【新玩家奖励(20)"
-        info_draw.text += f"{bonus_use_text}】\n"
+        info_draw.text += f" {self.bonus_now} = [新玩家奖励(20)]"
+        info_draw.text += f"{bonus_use_text}\n"
         now_draw.draw_list.append(info_draw)
         now_draw.width += len(info_draw.text)
 

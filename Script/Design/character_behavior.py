@@ -836,9 +836,13 @@ def get_chara_entertainment(character_id: int):
     week_day = cache.game_time.weekday()
     character_data: game_type.Character = cache.character_data[character_id]
     if character_id:
+        # 重置基础数据
+        character_data.sp_flag.swim = 0
+
         # 如果当天有派对的话，则全员当天娱乐为该娱乐
         if hasattr(cache.base_resouce, 'party_day_of_week') and cache.base_resouce.party_day_of_week[week_day]:
             character_data.entertainment.entertainment_type = cache.base_resouce.party_day_of_week[week_day]
+        
         # 否则随机当天的娱乐活动
         else:
             entertainment_list = [i for i in game_config.config_entertainment]

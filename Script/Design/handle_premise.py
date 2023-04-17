@@ -7421,7 +7421,7 @@ def handle_entertainment_is_play_house(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 116
+    return character_data.entertainment.entertainment_type == 151
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STYLE_HAIR)
@@ -7434,7 +7434,7 @@ def handle_entertainment_is_style_hair(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 117
+    return character_data.entertainment.entertainment_type == 116
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_FULL_BODY_STYLING)
@@ -7447,7 +7447,7 @@ def handle_entertainment_is_full_body_styling(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.entertainment.entertainment_type == 118
+    return character_data.entertainment.entertainment_type == 117
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SWIMMING)
