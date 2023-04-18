@@ -230,19 +230,27 @@ class Building_Panel:
                 resouce_draw.draw()
 
                 # 判定是否可以升级
-                level_up_flag = 0
+                level_up_flag = True
                 up_info_draw = draw.NormalDraw()
                 up_info_draw.text = "当前无法升级："
                 # 电量
                 if cache.base_resouce.power_max - cache.base_resouce.power_use - facility_data_next.power_use + facility_data_now.power_use >= 0:
-                    level_up_flag += 1
+                    pass
                 else:
                     up_info_draw.text += "\n  升级所需电量不足"
+                    level_up_flag = False
                 # 龙门币
-                if cache.base_resouce.money - facility_data_next.money_use >= 0:
-                    level_up_flag += 1
+                if cache.base_resouce.money >= facility_data_next.money_use:
+                    pass
                 else:
                     up_info_draw.text += "\n  升级所需龙门币不足"
+                    level_up_flag = False
+                # 控制中枢等级
+                if facility_cid <= 9 or facility_data_next.level <= cache.base_resouce.facility_level[0] + 1:
+                    pass
+                else:
+                    up_info_draw.text += "\n  升级需要更高的控制中枢等级"
+                    level_up_flag = False
                 # 建材
                 # if cache.base_resouce.materials_resouce[15] - facility_data_next.resouce_use >= 0:
                 #     level_up_flag += 1
@@ -250,7 +258,7 @@ class Building_Panel:
                 #     up_info_draw.text += "\n  升级所需碳素建材不足"
                 up_info_draw.width = self.width
 
-                if level_up_flag == 2:
+                if level_up_flag:
                     now_draw = draw.CenterButton(
                         f"【升级】",
                         f"\n【升级】",
@@ -285,10 +293,12 @@ class Building_Panel:
         """
         for all_cid in game_config.config_facility:
             facility_data = game_config.config_facility[all_cid]
+            facility_data_next = game_config.config_facility_effect[facility_cid+1]
             facility_data_now = game_config.config_facility_effect[facility_cid]
 
             # 寻找和当前设施名一样的
             if facility_data.name == facility_data_now.name:
+                cache.base_resouce.money -= facility_data_next.money_use
                 cache.base_resouce.facility_level[all_cid] += 1
                 basement.get_base_updata()
 
