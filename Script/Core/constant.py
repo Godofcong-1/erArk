@@ -1217,6 +1217,18 @@ class SecondBehavior:
     """ 结算处女 """
     FIRST_A_SEX = 1052
     """ 结算A处女 """
+    UNCONSCIOUS_MARK_1 = 1061
+    """ 结算无觉刻印1 """
+    UNCONSCIOUS_MARK_2 = 1062
+    """ 结算无觉刻印2 """
+    UNCONSCIOUS_MARK_3 = 1063
+    """ 结算无觉刻印3 """
+    UNCONSCIOUS_MARK_4 = 1064
+    """ 结算无觉刻印4 """
+    UNCONSCIOUS_MARK_5 = 1065
+    """ 结算无觉刻印5 """
+    UNCONSCIOUS_MARK_6 = 1066
+    """ 结算无觉刻印6 """
 
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
@@ -1537,6 +1549,8 @@ class Instruct:
     """ 检查衣柜 """
     DO_H = 0
     """ 邀请H """
+    UNCONSCIOUS_H = 0
+    """ 无意识奸 """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0

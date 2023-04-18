@@ -639,7 +639,7 @@ class CharacterInfoHead:
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == " <清醒>" else sleep_text
-        if status_text == "睡觉":
+        if status_text == "睡觉" or character_data.sp_flag.unconscious_h:
             tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
             sleep_text = f" <{sleep_name}>"
 
@@ -1113,6 +1113,12 @@ class CharacterabiText:
                 now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
                 new_draw = draw.LeftMergeDraw(width / 10)
+                # 技能类能力里在八个前补个换行
+                if ability_id == 48:
+                    new_draw_n = draw.NormalDraw()
+                    new_draw_n.text = "\n"
+                    new_draw_n.width = 1
+                    new_draw.draw_list.append(new_draw_n)
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(now_draw)
                 new_draw.draw_list.append(now_draw_1)

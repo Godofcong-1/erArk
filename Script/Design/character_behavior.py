@@ -300,7 +300,7 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
                 # H时
-                elif character_data.sp_flag.is_h:
+                elif character_data.sp_flag.is_h and not character_data.sp_flag.unconscious_h:
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
 
@@ -799,6 +799,10 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             else:
                 add_sleep = random.randint(int(past_time * -0.5),int(past_time * 0.6))
                 now_character_data.sleep_point += add_sleep
+            # 根据睡意程度获得无意识flag
+            level,tem = attr_calculation.get_sleep_level(now_character_data.sleep_point)
+            if level >= 2:
+                now_character_data.sp_flag.unconscious_h = True
             # 最高上限100
             now_character_data.sleep_point = min(now_character_data.sleep_point,100)
             # print(f"debug {now_character_data.name}疲劳值-{add_tired}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}")
@@ -826,6 +830,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
                 now_draw.width = window_width
                 now_draw.text = "\n理智值不足，开启的源石技艺已全部中断\n"
                 now_draw.draw()
+
 
 def get_chara_entertainment(character_id: int):
     """

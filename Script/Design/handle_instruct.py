@@ -1224,6 +1224,7 @@ def handle_collect():
     _("邀请H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_do_h():
@@ -1265,6 +1266,41 @@ def handle_do_h():
 
 
 @add_instruct(
+    constant.Instruct.UNCONSCIOUS_H,
+    constant.InstructType.OBSCENITY,
+    _("无意识奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_unconscious_h():
+    """处理无意识奸指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    now_draw = normal_panel.Close_Door_Panel(width)
+    # if now_draw.draw():
+    now_draw.draw()
+    target_data.sp_flag.is_h = 1
+    target_data.sp_flag.is_follow = 0
+    target_data.sp_flag.unconscious_h = 1
+    character_data.behavior.behavior_id = constant.Behavior.H
+    character_data.state = constant.CharacterStatus.STATUS_H
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n进入H模式+无意识奸模式\n")
+    now_draw.draw()
+
+    # 自动开启性爱面板并关闭其他面板
+    cache.instruct_type_filter[5] = 1
+    for i in {1, 2, 3, 4}:
+        cache.instruct_type_filter[i] = 0
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.END_H,
     constant.InstructType.SEX,
     _("H结束"),
@@ -1289,6 +1325,7 @@ def handle_end_h():
     # H结束时的其他处理
     if target_data.sp_flag.is_h == 1:
         target_data.sp_flag.is_h = 0
+        target_data.sp_flag.unconscious_h = 0
         # 如果是非监禁对象，则进入跟随，并原地待机十分钟
         if not target_data.sp_flag.imprisonment:
             target_data.sp_flag.is_follow = 1

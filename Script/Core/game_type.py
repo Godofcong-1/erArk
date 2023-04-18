@@ -466,6 +466,8 @@ class SPECIAL_FLAG:
     def __init__(self):
         self.is_h: bool = 0
         """ 在H模式中 """
+        self.unconscious_h: bool = 0
+        """ 在无意识H模式中 """
         self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0

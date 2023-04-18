@@ -15,6 +15,7 @@ def handle_talk(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     behavior_id = character_data.behavior.behavior_id
     now_talk_data = {}
     now_premise_data = {}
@@ -35,7 +36,6 @@ def handle_talk(character_id: int):
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
             if talk_config.adv_id != 0:
-                target_data: game_type.Character = cache.character_data[character_data.target_character_id]
                 # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
                 if character_data.adv != talk_config.adv_id:
                     if target_data.adv != talk_config.adv_id:
@@ -44,6 +44,10 @@ def handle_talk(character_id: int):
             if talk_id in game_config.config_talk_premise_data:
                 now_weight = 0
                 for premise in game_config.config_talk_premise_data[talk_id]:
+                    # 无意识模式判定
+                    if target_data.sp_flag.unconscious_h and ("is_unconscious_h" not in game_config.config_talk_premise_data[talk_id]):
+                        now_weight = 0
+                        break
                     if premise in now_premise_data:
                         if not now_premise_data[premise]:
                             now_weight = 0

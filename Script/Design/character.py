@@ -308,6 +308,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if target_data.sp_flag.imprisonment:
         judge += 400
         calculation_text += "+监禁中(+400)"
+
+    # 无意识模式修正
+    if target_data.sp_flag.unconscious_h:
+        judge += 1000
+        calculation_text += "+无意识(+1000)"
  
     # debug模式修正
     if cache.debug_mode == True:
