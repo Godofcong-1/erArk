@@ -447,49 +447,12 @@ def handle_take_shower():
 
 
 @add_instruct(
-    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84}
-)
-def handle_embrace():
-    """处理拥抱指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 3
-    character_data.behavior.behavior_id = constant.Behavior.EMBRACE
-    character_data.state = constant.CharacterStatus.STATUS_EMBRACE
-    update.game_update_flow(3)
-
-
-@add_instruct(
-    constant.Instruct.KISS,
-    constant.InstructType.OBSCENITY,
-    _("亲吻"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84}
-)
-def handle_kiss():
-    """处理亲吻指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "亲吻"):
-        character_data.behavior.behavior_id = constant.Behavior.KISS
-        character_data.state = constant.CharacterStatus.STATUS_KISS
-    else:
-        character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
-        character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
-    update.game_update_flow(5)
-
-
-@add_instruct(
     constant.Instruct.STROKE,
     constant.InstructType.DAILY,
     _("身体接触"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_stroke():
@@ -685,8 +648,6 @@ def handle_stroke():
 #     character_data.behavior.course_id = now_course
 #     update.game_update_flow(10)
 
-
-# 进入自加阶段#
 
 @add_instruct(
     constant.Instruct.WAIT,
@@ -1871,12 +1832,58 @@ def handle_confim_recruit():
 
 # 以下为猥亵#
 
+
+@add_instruct(
+    constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_embrace():
+    """处理拥抱指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+        character_data.behavior.behavior_id = constant.Behavior.EMBRACE
+        character_data.state = constant.CharacterStatus.STATUS_EMBRACE
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+    character_data.behavior.duration = 3
+    update.game_update_flow(3)
+
+
+@add_instruct(
+    constant.Instruct.KISS,
+    constant.InstructType.OBSCENITY,
+    _("亲吻"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_kiss():
+    """处理亲吻指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "亲吻"):
+        character_data.behavior.behavior_id = constant.Behavior.KISS
+        character_data.state = constant.CharacterStatus.STATUS_KISS
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
+    update.game_update_flow(5)
+
+
 @add_instruct(
     constant.Instruct.TOUCH_HEAD,
     constant.InstructType.OBSCENITY,
     _("摸头"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_head():
@@ -1899,6 +1906,7 @@ def handle_touch_head():
     _("摸胸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_breast():
@@ -1921,6 +1929,7 @@ def handle_touch_breast():
     _("摸屁股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_buttocks():
@@ -1943,6 +1952,7 @@ def handle_touch_buttocks():
     _("摸耳朵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84, },
 )
 def handle_touch_ears():
@@ -1965,6 +1975,7 @@ def handle_touch_ears():
     _("摸角"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_HORN,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -1988,6 +1999,7 @@ def handle_touch_horn():
     _("摸尾巴"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TAIL,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2011,6 +2023,7 @@ def handle_touch_tail():
     _("摸光环"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_RING,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2034,6 +2047,7 @@ def handle_touch_ring():
     _("摸光翼"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_WING,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2057,6 +2071,7 @@ def handle_touch_wing():
     _("摸触手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TENTACLE,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2080,6 +2095,7 @@ def handle_touch_tentacle():
     _("摸小车"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_CAR,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2103,6 +2119,7 @@ def handle_touch_car():
     _("牵手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_handle_in_handle():
@@ -2125,6 +2142,7 @@ def handle_handle_in_handle():
     _("膝枕"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.PLACE_FURNITURE_GE_1,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -2148,6 +2166,7 @@ def handle_lap_pillow():
     _("掀起裙子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SKIRT,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -2171,6 +2190,7 @@ def handle_raise_skirt():
     _("索要内裤"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_PAN,
      constant_promise.Premise.COLLECT_BONUS_103,
      constant_promise.Premise.TIRED_LE_84}
@@ -2195,6 +2215,7 @@ def handle_ask_for_pan():
     _("索要袜子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
      constant_promise.Premise.COLLECT_BONUS_203,
      constant_promise.Premise.TIRED_LE_84}
@@ -2219,6 +2240,7 @@ def handle_ask_for_socks():
     _("阴蒂爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_clitoris():
@@ -2241,6 +2263,7 @@ def handle_touch_clitoris():
     _("手指插入（V）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_vagina():
@@ -2263,6 +2286,7 @@ def handle_touch_vagina():
     _("手指插入（A）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_anus():

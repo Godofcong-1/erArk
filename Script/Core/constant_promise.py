@@ -489,8 +489,8 @@ class Premise:
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：醉酒，催眠
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，无存在感
+    \n5:意识模糊，或弱交互：醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     """
 
@@ -546,6 +546,8 @@ class Premise:
     """ 属性_基础 交互对象5异常或6异常 """
     UNNORMAL_567 = "unnormal_567"
     """ 属性_基础 自身5或6或7异常 """
+    T_NORMAL_256_OR_UNCONSCIOUS_FLAG = "t_normal_256_or_unconscious_flag"
+    """ 属性_基础 交互对象256正常或无意识 """
     T_UNNORMAL_567 = "t_unnormal_567"
     """ 属性_基础 交互对象5或6或7异常 """
     HP_LOW = "hp_low"
@@ -701,6 +703,22 @@ class Premise:
     """ 属性_特殊flag 自身要换泳衣状态 """
     SWIM_FLAG_2 = "swim_flag_2"
     """ 属性_特殊flag 自身要游泳状态 """
+    UNCONSCIOUS_FLAG_0 = "unconscious_flag_0"
+    """ 属性_特殊flag 自身没有无意识状态 """
+    UNCONSCIOUS_FLAG_1 = "unconscious_flag_1"
+    """ 属性_特殊flag 自身有无意识_睡眠状态 """
+    UNCONSCIOUS_FLAG_2 = "unconscious_flag_2"
+    """ 属性_特殊flag 自身有无意识_醉酒状态 """
+    UNCONSCIOUS_FLAG_3 = "unconscious_flag_3"
+    """ 属性_特殊flag 自身有无意识_时停状态 """
+    UNCONSCIOUS_FLAG_4 = "unconscious_flag_4"
+    """ 属性_特殊flag 自身有无意识_空气状态 """
+    UNCONSCIOUS_FLAG_5 = "unconscious_flag_5"
+    """ 属性_特殊flag 自身有无意识_平然状态 """
+    UNCONSCIOUS_FLAG_6 = "unconscious_flag_6"
+    """ 属性_特殊flag 自身有无意识_精神催眠状态 """
+    UNCONSCIOUS_FLAG_7 = "unconscious_flag_7"
+    """ 属性_特殊flag 自身有无意识_肉体催眠状态 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """

@@ -354,6 +354,22 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成要换泳衣状态 """
     SWIM_FLAG_TO_2 = 467
     """ 属性_特殊flag 自身变成要游泳状态 """
+    UNCONSCIOUS_FLAG_TO_0 = 481
+    """ 属性_特殊flag 自身清零无意识状态 """
+    UNCONSCIOUS_FLAG_TO_1 = 482
+    """ 属性_特殊flag 自身变成无意识_睡眠状态 """
+    UNCONSCIOUS_FLAG_TO_2 = 483
+    """ 属性_特殊flag 自身变成无意识_醉酒状态 """
+    UNCONSCIOUS_FLAG_TO_3 = 484
+    """ 属性_特殊flag 自身变成无意识_时停状态 """
+    UNCONSCIOUS_FLAG_TO_4 = 485
+    """ 属性_特殊flag 自身变成无意识_空气状态 """
+    UNCONSCIOUS_FLAG_TO_5 = 486
+    """ 属性_特殊flag 自身变成无意识_平然状态 """
+    UNCONSCIOUS_FLAG_TO_6 = 487
+    """ 属性_特殊flag 自身变成无意识_精神催眠状态 """
+    UNCONSCIOUS_FLAG_TO_7 = 488
+    """ 属性_特殊flag 自身变成无意识_肉体催眠状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

@@ -799,10 +799,6 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             else:
                 add_sleep = random.randint(int(past_time * -0.5),int(past_time * 0.6))
                 now_character_data.sleep_point += add_sleep
-            # 根据睡意程度获得无意识flag
-            level,tem = attr_calculation.get_sleep_level(now_character_data.sleep_point)
-            if level >= 2:
-                now_character_data.sp_flag.unconscious_h = True
             # 最高上限100
             now_character_data.sleep_point = min(now_character_data.sleep_point,100)
             # print(f"debug {now_character_data.name}疲劳值-{add_tired}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}")
