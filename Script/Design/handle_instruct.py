@@ -1227,12 +1227,61 @@ def handle_do_h():
 
 
 @add_instruct(
+    constant.Instruct.NAUGHTY_PRANK,
+    constant.InstructType.OBSCENITY,
+    _("恶作剧"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_naughty_prank():
+    """处理恶作剧指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    now_draw = normal_panel.Close_Door_Panel(width)
+    now_draw.draw()
+    target_data.sp_flag.unconscious_h = 1
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n进入恶作剧模式\n")
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.STOP_NAUGHTY_PRANK,
+    constant.InstructType.OBSCENITY,
+    _("停止恶作剧"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_stop_naughty_prank():
+    """处理停止恶作剧指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.unconscious_h = 0
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n退出恶作剧模式\n")
+    now_draw.draw()
+    from Script.Settle import default
+    import datetime
+    default.handle_door_close_reset(0,1,game_type.CharacterStatusChange,datetime.datetime)
+
+
+@add_instruct(
     constant.Instruct.UNCONSCIOUS_H,
     constant.InstructType.OBSCENITY,
     _("无意识奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_unconscious_h():
@@ -1245,12 +1294,11 @@ def handle_unconscious_h():
     now_draw.draw()
     target_data.sp_flag.is_h = 1
     target_data.sp_flag.is_follow = 0
-    target_data.sp_flag.unconscious_h = 1
     character_data.behavior.behavior_id = constant.Behavior.H
     character_data.state = constant.CharacterStatus.STATUS_H
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n进入H模式+无意识奸模式\n")
+    now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
 
     # 自动开启性爱面板并关闭其他面板

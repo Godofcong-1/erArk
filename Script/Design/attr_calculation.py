@@ -636,8 +636,8 @@ def get_sleep_level(value: int):
     Keyword arguments:
     value -- 熟睡值
     Return arguments:
-    int -- 睡眠等级
-    str -- 睡眠等级名
+    int -- 睡眠等级,0~3
+    str -- 睡眠等级名,随时醒来~完全深眠
     """
     for now_cid in game_config.config_sleep_level:
         now_data = game_config.config_sleep_level[now_cid]
@@ -649,7 +649,7 @@ def get_sleep_level(value: int):
 
 def get_favorability_level(value: int):
     """
-    按当前好感度返回当前睡眠等级的str
+    按当前好感度返回当前好感等级的str
     Keyword arguments:
     value -- 好感度
     Return arguments:
@@ -666,7 +666,7 @@ def get_favorability_level(value: int):
 
 def get_trust_level(value: int):
     """
-    按当前信赖度返回当前睡眠等级的str
+    按当前信赖度返回当前信赖等级的str
     Keyword arguments:
     value -- 信赖度
     Return arguments:

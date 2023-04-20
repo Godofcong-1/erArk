@@ -128,6 +128,8 @@ def handle_add_interaction_favoravility(
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return
+        if target_data.sp_flag.unconscious_h:
+            return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
         add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
@@ -158,6 +160,8 @@ def handle_down_interaction_favoravility(
             not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
+            return
+        if target_data.sp_flag.unconscious_h:
             return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
@@ -190,6 +194,8 @@ def handle_add_small_trust(
             not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
+            return
+        if target_data.sp_flag.unconscious_h:
             return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
@@ -228,6 +234,8 @@ def handle_down_small_trust(
             not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
+            return
+        if target_data.sp_flag.unconscious_h:
             return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
@@ -2156,6 +2164,7 @@ def handle_target_add_tired_tosleep(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.tired_point = 160
+    target_data.sleep_point = 100
     target_data.h_state.body_item[9][1] = True
     target_data.h_state.body_item[9][2] = now_time + datetime.timedelta(hours=8)
 

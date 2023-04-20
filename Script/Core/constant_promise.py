@@ -489,8 +489,8 @@ class Premise:
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：醉酒，平然
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     """
 
@@ -612,6 +612,10 @@ class Premise:
     """ 属性_基础 交互对象饥饿值≤79%，不需要吃饭 """
     TARGET_HUNGER_GE_80 = "t_hunger_ge_80"
     """ 属性_基础 交互对象饥饿值≥80%，需要吃饭 """
+    SLEEP_LEVEL_0 = "sleep_level_0"
+    """ 属性_基础 睡眠等级：随时醒来 """
+    SLEEP_LEVEL_1 = "sleep_level_1"
+    """ 属性_基础 睡眠等级：浅睡 """
     SLEEP_LEVEL_2 = "sleep_level_2"
     """ 属性_基础 睡眠等级：熟睡 """
     SLEEP_LEVEL_3 = "sleep_level_3"
@@ -719,6 +723,10 @@ class Premise:
     """ 属性_特殊flag 自身有无意识_精神催眠状态 """
     UNCONSCIOUS_FLAG_7 = "unconscious_flag_7"
     """ 属性_特殊flag 自身有无意识_肉体催眠状态 """
+    T_UNCONSCIOUS_FLAG_0 = "t_unconscious_flag_0"
+    """ 属性_特殊flag 对方没有无意识状态 """
+    T_UNCONSCIOUS_FLAG_1 = "t_unconscious_flag_1"
+    """ 属性_特殊flag 对方有无意识状态 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """

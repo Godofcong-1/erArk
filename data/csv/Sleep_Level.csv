@@ -1,5 +1,5 @@
 cid,name,sleep_point
-睡眠等级cid,等级名,熟睡值最大值
+睡眠等级cid,等级名,当前等级熟睡值上限
 int,str,int
 0,0,1
 睡眠等级,,

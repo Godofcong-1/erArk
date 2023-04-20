@@ -28,6 +28,7 @@ from Script.Design import (
     basement,
     handle_talent,
     handle_ability,
+    update,
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel
@@ -791,11 +792,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             add_tired = int(past_time / 3)
             now_character_data.tired_point -= add_tired
             now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
-            # 熟睡值不到60时只增加
-            if now_character_data.sleep_point < 60:
+            # 熟睡值在到熟睡之前快速增加
+            sleep_level,tem = attr_calculation.get_sleep_level(now_character_data.sleep_point)
+            if sleep_level <= 1:
                 add_sleep = int(past_time * 1.5)
                 now_character_data.sleep_point += add_sleep
-            # 熟睡值到60后上下波动，加的可能性比减的可能性大一点点
+            # 熟睡值到熟睡后上下波动，加的可能性比减的可能性大一点点
             else:
                 add_sleep = random.randint(int(past_time * -0.5),int(past_time * 0.6))
                 now_character_data.sleep_point += add_sleep
@@ -807,8 +809,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
             if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
                 judge_character_status(character_id, now_time, end_now = 2)
 
-        # 结算玩家源石技艺的理智值消耗
         if character_id == 0:
+            # 结算玩家源石技艺的理智值消耗
             # 激素系
             if now_character_data.pl_ability.hormone > 0:
                 down_sp = max(int(past_time / 6),1)
@@ -826,6 +828,37 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime):
                 now_draw.width = window_width
                 now_draw.text = "\n理智值不足，开启的源石技艺已全部中断\n"
                 now_draw.draw()
+            
+            # 结算对无意识对象的结算
+            if target_data.sp_flag.unconscious_h:
+                # 睡奸判定
+                if target_data.state == constant.CharacterStatus.STATUS_SLEEP and now_character_data.behavior.behavior_id >= 301:
+                    # 减少熟睡值
+                    down_sleep = int(past_time * 1.5)
+                    target_data.sleep_point -= down_sleep
+                    # 计算当前熟睡等级
+                    sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
+                    # print(f"debug {target_data.name}熟睡值={target_data.sleep_point}，熟睡等级{sleep_level}")
+                    # 熟睡等级小于等于1时判定是否吵醒
+                    if sleep_level <= 1:
+                        # 浅睡和随时醒来时递增苏醒概率
+                        weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
+                        if target_data.sleep_point <= game_config.config_sleep_level[0].sleep_point:
+                            weak_rate += game_config.config_sleep_level[0].sleep_point - target_data.sleep_point
+                        # 判定是否吵醒，吵醒则先结算当前行动然后进入重度性骚扰失败状态
+                        if weak_rate >= random.randint(1,100):
+                            target_data.tired_point = 0
+                            target_data.sleep_point = 0
+                            judge_character_status(target_data.target_character_id, now_time, end_now = 2)
+                            # 输出提示信息
+                            now_draw = draw.WaitDraw()
+                            now_draw.width = window_width
+                            now_draw.text = f"\n因为你的动作，{target_data.name}从梦中惊醒过来\n"
+                            now_draw.draw()
+                            now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                            now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                            now_character_data.behavior.duration = 10
+                            update.game_update_flow(10)
 
 
 def get_chara_entertainment(character_id: int):

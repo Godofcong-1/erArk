@@ -2743,7 +2743,8 @@ def handle_normal_all(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -2912,14 +2913,14 @@ def handle_normal_4(character_id: int) -> int:
 def handle_normal_5(character_id: int) -> int:
     """
     5正常的普通状态
-    \n5:意识模糊，或弱交互：醉酒，平然
+    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     if(
-        0
+        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
     ):
         return 0
     else:
@@ -2930,14 +2931,15 @@ def handle_normal_5(character_id: int) -> int:
 def handle_normal_6(character_id: int) -> int:
     """
     6正常的普通状态
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     if(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -2949,16 +2951,18 @@ def handle_normal_6(character_id: int) -> int:
 def handle_t_normal_6(character_id: int) -> int:
     """
     交互对象6正常的普通状态
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
     if(
-         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
-        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 0
     else:
@@ -3015,7 +3019,7 @@ def handle_normal_267(character_id: int) -> int:
     """
     267正常（可能基础异常、AI跟随、服装异常或意识模糊）
     \n2:妊娠限制：临盆、产后、婴儿
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3029,7 +3033,8 @@ def handle_normal_267(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3048,7 +3053,7 @@ def handle_normal_2467(character_id: int) -> int:
     2467正常（可能基础异常、AI跟随或意识模糊）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3067,7 +3072,8 @@ def handle_normal_2467(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3086,7 +3092,7 @@ def handle_t_normal_2467(character_id: int) -> int:
     交互对象2467正常（可能基础异常、AI跟随或意识模糊）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3107,7 +3113,8 @@ def handle_t_normal_2467(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
         or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 0
@@ -3127,7 +3134,7 @@ def handle_normal_23467(character_id: int) -> int:
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3151,7 +3158,8 @@ def handle_normal_23467(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3170,8 +3178,8 @@ def handle_normal_24567(character_id: int) -> int:
     24567正常（可能基础异常、AI跟随）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：醉酒，平然
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3179,6 +3187,10 @@ def handle_normal_24567(character_id: int) -> int:
     int -- 权重
     """
     if(
+        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    elif(
          handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
         or handle_t_baby_1(character_id)
@@ -3190,7 +3202,8 @@ def handle_normal_24567(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3209,8 +3222,8 @@ def handle_t_normal_24567(character_id: int) -> int:
     交互对象24567正常（可能基础异常、AI跟随）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：醉酒，平然
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3220,6 +3233,10 @@ def handle_t_normal_24567(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
     if(
+        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 0
+    elif(
          handle_parturient_1(target_chara_id)
         or handle_postpartum_1(target_chara_id)
         or handle_t_baby_1(target_chara_id)
@@ -3231,7 +3248,8 @@ def handle_t_normal_24567(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
         or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 0
@@ -3250,7 +3268,7 @@ def handle_normal_1267(character_id: int) -> int:
     1267正常（可能AI跟随、服装异常或意识模糊）
     \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
     \n2:妊娠限制：临盆、产后、婴儿
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3272,7 +3290,8 @@ def handle_normal_1267(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3293,7 +3312,7 @@ def handle_normal_123467(character_id: int) -> int:
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
-    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3325,7 +3344,8 @@ def handle_normal_123467(character_id: int) -> int:
     ):
         return 0
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 0
@@ -3368,6 +3388,7 @@ def handle_unnormal(character_id: int) -> int:
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
     \n包括5:睡眠（全程度），安眠药
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3398,7 +3419,8 @@ def handle_unnormal(character_id: int) -> int:
     ):
         return 1
     elif(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 1
@@ -3436,17 +3458,23 @@ def handle_unnormal_27(character_id: int) -> int:
 def handle_t_normal_5_6(character_id: int) -> int:
     """
     交互对象56正常
-    \n包括5:意识模糊，或弱交互：醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
     if(
-         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
-        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 0
+    elif(
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 0
     else:
@@ -3457,17 +3485,23 @@ def handle_t_normal_5_6(character_id: int) -> int:
 def handle_t_unnormal_5_6(character_id: int) -> int:
     """
     交互对象5异常或6异常
-    \n包括5:意识模糊，或弱交互：醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
     if(
-         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
-        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 1
+    elif(
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 1
     else:
@@ -3478,8 +3512,8 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
 def handle_unnormal_567(character_id: int) -> int:
     """
     自身5或6或7异常
-    \n包括5:意识模糊，或弱交互：醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3487,7 +3521,12 @@ def handle_unnormal_567(character_id: int) -> int:
     int -- 权重
     """
     if(
-         (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+    ):
+        return 1
+    elif(
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
     ):
         return 1
@@ -3504,8 +3543,8 @@ def handle_unnormal_567(character_id: int) -> int:
 def handle_t_unnormal_567(character_id: int) -> int:
     """
     交互对象5或6或7异常
-    \n包括5:意识模糊，或弱交互：醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
     character_id -- 角色id
@@ -3513,14 +3552,20 @@ def handle_t_unnormal_567(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
     if(
-         (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
-        or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
     ):
         return 1
     elif(
-        handle_be_bagged_1(character_data.target_character_id)
-        or handle_imprisonment_1(character_data.target_character_id)
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 1
+    elif(
+        handle_be_bagged_1(target_chara_id)
+        or handle_imprisonment_1(target_chara_id)
     ):
         return 1
     else:
@@ -4123,33 +4168,73 @@ def handle_unconscious_flag_7(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_0)
+def handle_t_unconscious_flag_0(character_id: int) -> int:
+    """
+    对方没有无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h:
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_1)
+def handle_t_unconscious_flag_1(character_id: int) -> int:
+    """
+    对方有无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG)
 def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     """
     交互对象256正常或无意识
     \n包括2:临盆、产后、婴儿
-    \n包括5:意识模糊，或弱交互：醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气
+    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.sp_flag.unconscious_h == 0:
+    target_data = cache.character_data[character_data.target_character_id]
+    target_chara_id = character_data.target_character_id
+    if target_data.sp_flag.unconscious_h == 0:
         if(
-            handle_parturient_1(character_data.target_character_id)
-            or handle_postpartum_1(character_data.target_character_id)
-            or handle_t_baby_1(character_data.target_character_id)
+            handle_parturient_1(target_chara_id)
+            or handle_postpartum_1(target_chara_id)
+            or handle_t_baby_1(target_chara_id)
         ):
             return 0
         if(
-            (handle_sleep_level_2(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
-            or (handle_sleep_level_3(character_data.target_character_id) and handle_action_sleep(character_data.target_character_id))
+            (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
         ):
             return 0
-    else:
-        return 1
+        if(
+            (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+            or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+            or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
+        ):
+            return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.HP_LOW)
@@ -10370,6 +10455,42 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
 
     value = target_data.hunger_point / 240
     if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_LEVEL_0)
+def handle_sleep_level_0(character_id: int) -> int:
+    """
+    睡眠等级：随时醒来
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_sleep_level(character_data.sleep_point)
+    if level == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_LEVEL_1)
+def handle_sleep_level_1(character_id: int) -> int:
+    """
+    睡眠等级：浅睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_sleep_level(character_data.sleep_point)
+    if level == 1:
         return 1
     else:
         return 0

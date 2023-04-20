@@ -1547,6 +1547,10 @@ class Instruct:
     """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
+    NAUGHTY_PRANK = 0
+    """ 恶作剧 """
+    STOP_NAUGHTY_PRANK = 0
+    """ 停止恶作剧 """
     DO_H = 0
     """ 邀请H """
     UNCONSCIOUS_H = 0

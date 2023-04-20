@@ -98,6 +98,7 @@ class Close_Door_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 if askfor_panel_return_list[yrn] == askfor_list[0]:
+                    now_scene_data.close_flag = now_scene_data.close_type
                     return 1
                 return 0
 

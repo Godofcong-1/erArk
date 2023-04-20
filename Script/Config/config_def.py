@@ -528,7 +528,7 @@ class Sleep_Level:
     name: str
     """ 等级名 """
     sleep_point: int
-    """ 熟睡值最大值 """
+    """ 当前等级熟睡值上限 """
 
 
 class SolarPeriod:
