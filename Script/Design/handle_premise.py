@@ -4185,8 +4185,8 @@ def handle_t_unconscious_flag_0(character_id: int) -> int:
         return 1
 
 
-@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_1)
-def handle_t_unconscious_flag_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG)
+def handle_t_unconscious_flag(character_id: int) -> int:
     """
     对方有无意识状态
     Keyword arguments:

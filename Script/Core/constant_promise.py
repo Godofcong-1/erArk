@@ -725,7 +725,7 @@ class Premise:
     """ 属性_特殊flag 自身有无意识_肉体催眠状态 """
     T_UNCONSCIOUS_FLAG_0 = "t_unconscious_flag_0"
     """ 属性_特殊flag 对方没有无意识状态 """
-    T_UNCONSCIOUS_FLAG_1 = "t_unconscious_flag_1"
+    T_UNCONSCIOUS_FLAG = "t_unconscious_flag"
     """ 属性_特殊flag 对方有无意识状态 """
 
     TARGET_GOOD_MOOD = "good_mood"

@@ -1257,7 +1257,7 @@ def handle_naughty_prank():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_1,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_stop_naughty_prank():
@@ -1281,7 +1281,7 @@ def handle_stop_naughty_prank():
     _("无意识奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_1,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_unconscious_h():
@@ -2359,6 +2359,7 @@ def handle_touch_anus():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_IMPRISONMENT_0,
      constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.PL_NOT_BAGGING_CHARA,
      constant_promise.Premise.TIRED_LE_74}
