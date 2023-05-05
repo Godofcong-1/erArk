@@ -3,12 +3,11 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,103,0,high_1,{Name}对{TargetName}触发了身体接触指令的地文
 1,103,0,sys_0,{Name}检查了{TargetName}的身体状况
 2,103,0,sys_0,{Name}检查了{TargetName}体表的源石结晶状态
 3,103,0,sys_0,{Name}以检查源石病症是否稳定为由，对{TargetName}进行了身体接触
 4,103,0,sys_0,{Name}图谋着与{TargetName}的身体接触
-5,103,0,sys_1&sys_4&high_5,{Name}对{TargetName}{PlayerNickName}触发了身体接触指令的地文
+5,103,0,sys_1&sys_4,{Name}对{TargetName}{PlayerNickName}触发了身体接触指令的地文
 6,103,0,sys_0,{TargetName}走路差点摔倒，正好跌进{Name}的怀里。
 7,103,0,sys_0,{Name}看见{TargetName}手上拿着重物，赶紧上前帮忙托起，两人的手靠在了一起。
 8,103,0,sys_0,{TargetName}在喝水时不小心呛到了，不停得咳嗽，{Name}过来拍了拍{TargetName}的背，帮她顺顺气。

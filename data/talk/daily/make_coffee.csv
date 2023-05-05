@@ -3,7 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,131,0,high_1,{Name}触发了泡咖啡指令的地文
 1,131,0,sys_0,{Name}为{TargetName}冲泡了速溶咖啡
 2,131,0,sys_0&place_11,{Name}为{TargetName}以及在场的干员们冲泡了速溶咖啡
 3,131,0,sys_1&sys_4&high_5,{Name}对{TargetName}{PlayerNickName}触发了泡咖啡指令的地文
