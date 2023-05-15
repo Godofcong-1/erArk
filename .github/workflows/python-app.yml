@@ -44,7 +44,7 @@ jobs:
           Rename-Item dist erArk
       - name: Pack Game Files
         run: |
-          Compress-Archive -Path erArk\* -DestinationPath erArk.zip -ForceRelativePath
+          Compress-Archive -Path erArk\* -DestinationPath erArk.zip
       - uses: actions/upload-artifact@master
         with:
           name: Windows
