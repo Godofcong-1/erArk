@@ -75,3 +75,13 @@ jobs:
           asset_path: ${{ github.workspace }}/erArk.zip
           asset_name: erArk_${{steps.version.outputs.value}}.zip
           asset_content_type: application/zip
+      - name: Upload Font Asset
+        id: upload-font-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/游戏字体包.zip
+          asset_name: 游戏字体包.zip
+          asset_content_type: application/zip

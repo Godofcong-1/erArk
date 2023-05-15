@@ -90,9 +90,9 @@ textbox = Text(
     bd=0,
     cursor="",
     #123分别是，\n的上行间距，自动换行行间距，\n的下行间距
-    spacing1 = 0,
-    spacing2 = 0,
-    spacing3 = 0
+    spacing1 = 1,
+    spacing2 = 1,
+    spacing3 = 1
 )
 textbox.grid(column=0, row=0, sticky=(N, W, E, S))
 
