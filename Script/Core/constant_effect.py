@@ -354,6 +354,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成要换泳衣状态 """
     SWIM_FLAG_TO_2 = 467
     """ 属性_特殊flag 自身变成要游泳状态 """
+    MAINTENANCE_FLAG_TO_0 = 468
+    """ 属性_特殊flag 自身清零要检修状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
     """ 属性_特殊flag 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482

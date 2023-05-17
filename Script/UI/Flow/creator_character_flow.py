@@ -523,6 +523,7 @@ class Character_FirstNPC:
         """
 
         handle_leisure_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_engineering_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_doctor_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_HR_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_library_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
@@ -544,7 +545,9 @@ class Character_FirstNPC:
             cache.npc_id_got.discard(0)
             for id in cache.npc_id_got:
                 if (
-                    id not in cache.base_resouce.doctor_id_set
+                    id not in cache.base_resouce.maintenance_engineer_set
+                    and id not in cache.base_resouce.blacksmith_set
+                    and id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
                     and id not in cache.base_resouce.library_manager_set
                     and id not in cache.base_resouce.teacher_set
@@ -555,6 +558,15 @@ class Character_FirstNPC:
             handle_leisure_panel.update()
             handle_leisure_panel.draw()
             return_list.extend(handle_leisure_panel.return_list)
+
+            # 工程部
+            info_text = f"\n  工程部："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_engineering_panel.text_list = list(cache.base_resouce.maintenance_engineer_set) + list(cache.base_resouce.blacksmith_set)
+            handle_engineering_panel.update()
+            handle_engineering_panel.draw()
+            return_list.extend(handle_engineering_panel.return_list)
 
             # 医疗部
             info_text = f"\n  医疗部："

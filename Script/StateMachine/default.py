@@ -767,7 +767,7 @@ def character_move_to_healthy_diner(character_id: int):
     character_data.target_character_id = character_id
 
     to_healthy_diner = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["HEALTHY_DINER"])
+        random.choice(constant.place_data["Healthy_Diner"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_healthy_diner)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -787,7 +787,7 @@ def character_move_to_lungmen_eatery(character_id: int):
     character_data.target_character_id = character_id
 
     to_lungmen_eatery = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["LUNGMEN_EATERY"])
+        random.choice(constant.place_data["Lungmen_Eatery"])
     )
     _, _, move_path, move_time = character_move.character_move(character_id, to_lungmen_eatery)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -814,6 +814,62 @@ def character_move_to_swimming_pool(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MAINTENANCE_DEPARTMENT)
+def character_move_to_maintenance_department(character_id: int):
+    """
+    移动至运维部
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_maintenance_department = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Maintenance_Department"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_maintenance_department)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去运维部"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BLACKSMITH_SHOP)
+def character_move_to_blacksmith_shop(character_id: int):
+    """
+    移动至铁匠铺
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_blacksmith_shop = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Blacksmith_Shop"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_blacksmith_shop)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去铁匠铺"
+        now_draw.draw()
+        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
@@ -881,6 +937,32 @@ def character_move_to_restaurant(character_id: int):
     character_data.behavior.move_target = move_path
     character_data.behavior.duration = move_time
     character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MAINTENANCE_PLACE)
+def character_move_to_maintenance_place(character_id: int):
+    """
+    移动至检修地点
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.base_resouce.maintenance_place)
+    _, _, move_path, move_time = character_move.character_move(character_id, to_maintenance_place_shop)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去检修地点"
+        now_draw.draw()
+        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
@@ -1911,6 +1993,48 @@ def character_work_library_2(character_id: int):
         character_data.behavior.book_id = book_id
         character_data.behavior.book_name = book_data.name
         character_data.behavior.duration = 30
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_MAINTENANCE_1)
+def character_work_maintenance_1(character_id: int):
+    """
+    工作：进入要检修状态，并随机指定一个检修地点
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.work_maintenance = 1
+    cache.base_resouce.maintenance_place = random.choice(constant.place_data["Room"])
+    # print(f"debug {character_data.name}工作：进入要检修状态，并随机指定一个检修地点 {cache.base_resouce.maintenance_place}")
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_MAINTENANCE_2)
+def character_work_maintenance_2(character_id: int):
+    """
+    角色工作：维护设施，并清零检修状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MAINTENANCE_FACILITIES
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_REPAIR_EQUIPMENT)
+def character_work_repair_equipment(character_id: int):
+    """
+    角色工作：修理装备
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.REPAIR_EQUIPMENT
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)

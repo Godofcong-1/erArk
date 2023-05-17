@@ -1966,6 +1966,95 @@ def handle_in_server_room(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_BLACKSMITH_SHOP)
+def handle_in_blacksmith_shop(character_id: int) -> int:
+    """
+    校验角色是否在铁匠铺中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Blacksmith_Shop" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_BLACKSMITH_SHOP)
+def handle_not_in_blacksmith_shop(character_id: int) -> int:
+    """
+    校验角色是否不在铁匠铺中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Blacksmith_Shop" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_MAINTENANCE_DEPARTMENT)
+def handle_in_maintenance_department(character_id: int) -> int:
+    """
+    校验角色是否在运维部中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Maintenance_Department" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_MAINTENANCE_DEPARTMENT)
+def handle_not_in_maintenance_department(character_id: int) -> int:
+    """
+    校验角色是否不在运维部中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Maintenance_Department" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_MAINTENANCE_PLACE)
+def handle_in_maintenance_place(character_id: int) -> int:
+    """
+    校验角色是否在运维地点(maintenance_place)中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    if now_scene_str == cache.base_resouce.maintenance_place:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG)
 def handle_in_dr_off_or_server_room_or_debug(character_id: int) -> int:
     """
@@ -2009,7 +2098,7 @@ def handle_in_clinic(character_id: int) -> int:
 @add_premise(constant_promise.Premise.IN_MEDICAL_ZONE)
 def handle_in_medical_zone(character_id: int) -> int:
     """
-    校验角色是否在医疗区中
+    校验角色是否在医疗部中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2018,7 +2107,7 @@ def handle_in_medical_zone(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    if "医疗区" in now_scene_str:
+    if "医疗部" in now_scene_str:
         return 1
     return 0
 
@@ -7391,6 +7480,32 @@ def handle_target_have_open(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[278]
+
+
+@add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
+def handle_work_is_maintenance_engineer(character_id: int) -> int:
+    """
+    自己的工作为检修工程师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 21
+
+
+@add_premise(constant_promise.Premise.WORK_IS_BLACKSMITH)
+def handle_work_is_blacksmith(character_id: int) -> int:
+    """
+    自己的工作为铁匠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 22
 
 
 @add_premise(constant_promise.Premise.WORK_IS_DOCTOR)

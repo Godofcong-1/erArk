@@ -498,6 +498,8 @@ class SPECIAL_FLAG:
         """ 发现食物不对劲 """
         self.swim: int = 0
         """ 游泳状态，int [0无,1要换泳衣,2要游泳] """
+        self.work_maintenance: bool = 0
+        """ 要检修状态 """
 
 
 class CHARA_WORK:
@@ -728,7 +730,15 @@ class Base_resouce:
         self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """
 
-        # 医疗区
+        # 工程部
+        self.maintenance_engineer_set: Set = set()
+        """ 检修工程师干员id合集 """
+        self.maintenance_place: str = ""
+        """ 当前待检修地点 """
+        self.blacksmith_set: Set = set()
+        """ 铁匠干员id合集 """
+
+        # 医疗部
         self.patient_now: int = 0
         """ 当前患者人数 """
         self.patient_cured: int = 0

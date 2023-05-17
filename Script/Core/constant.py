@@ -123,6 +123,10 @@ class CharacterStatus:
     """ 授课 """
     STATUS_ATTENT_CLASS = 214
     """ 上学 """
+    STATUS_MAINTENANCE_FACILITIES = 215
+    """ 维护设施 """
+    STATUS_REPAIR_EQUIPMENT = 216
+    """ 维修装备 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -520,6 +524,10 @@ class Behavior:
     """ 授课 """
     ATTENT_CLASS = 214
     """ 上学 """
+    MAINTENANCE_FACILITIES = 215
+    """ 维护设施 """
+    REPAIR_EQUIPMENT = 216
+    """ 维修装备 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -879,6 +887,12 @@ class StateMachine:
     """ 工作：三成去图书馆，七成原地等待30分钟 """
     WORK_LIBRARY_2 = 306
     """ 工作：三成去图书馆办公室，七成看书 """
+    WORK_MAINTENANCE_1 = 307
+    """ 工作：进入要检修状态，并随机指定一个检修地点 """
+    WORK_MAINTENANCE_2 = 308
+    """ 工作：维护设施，并清零检修状态 """
+    WORK_REPAIR_EQUIPMENT = 309
+    """ 工作：修理装备 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -943,6 +957,8 @@ class StateMachine:
     """ 移动至淋浴室 """
     MOVE_TO_RESTAURANT = 516
     """ 移动至餐馆（随机某个正餐餐馆） """
+    MOVE_TO_MAINTENANCE_PLACE = 517
+    """ 移动至检修地点 """
     MOVE_TO_FOODSHOP = 522
     """ 移动至食物商店（取餐区） """
     MOVE_TO_DINING_HALL = 523
@@ -1007,6 +1023,10 @@ class StateMachine:
     """ 移动至游泳池 """
     MOVE_TO_TRAINING_LOCKER_ROOM = 612
     """ 移动至训练场的更衣室 """
+    MOVE_TO_MAINTENANCE_DEPARTMENT = 621
+    """ 移动至运维部 """
+    MOVE_TO_BLACKSMITH_SHOP = 622
+    """ 移动至铁匠铺 """
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -1487,6 +1507,10 @@ class Instruct:
     """ 确认已招募的干员 """
     TEACH = 0
     """ 授课 """
+    MAINTENANCE_FACILITIES = 0
+    """ 维护设施 """
+    REPAIR_EQUIPMENT = 0
+    """ 维修装备 """
     MANAGE_LIBRARY = 0
     """ 管理图书馆 """
     SEE_COLLECTION = 0

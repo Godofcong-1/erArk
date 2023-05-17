@@ -145,6 +145,8 @@ def update_work_people():
     刷新各干员的职位和当前正在工作的干员
     """
 
+    cache.base_resouce.maintenance_engineer_set = set()
+    cache.base_resouce.blacksmith_set = set()
     cache.base_resouce.doctor_now = 0
     cache.base_resouce.doctor_id_set = set()
     cache.base_resouce.HR_now = 0
@@ -159,8 +161,16 @@ def update_work_people():
     for id in cache.npc_id_got:
         character_data = cache.character_data[id]
 
+        # 检修工程师统计
+        if character_data.work.work_type == 21:
+            cache.base_resouce.maintenance_engineer_set.add(id)
+            cache.base_resouce.work_people_now += 1
+        # 铁匠统计
+        elif character_data.work.work_type == 22:
+            cache.base_resouce.blacksmith_set.add(id)
+            cache.base_resouce.work_people_now += 1
         # 医生统计
-        if character_data.work.work_type == 61:
+        elif character_data.work.work_type == 61:
             cache.base_resouce.doctor_id_set.add(id)
             cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_clinic(id):

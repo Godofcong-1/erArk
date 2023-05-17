@@ -1878,6 +1878,42 @@ def handle_confim_recruit():
     update.game_update_flow(5)
 
 
+@add_instruct(
+    constant.Instruct.MAINTENANCE_FACILITIES,
+    constant.InstructType.WORK,
+    _("维护设施"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.PLACE_FURNITURE_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_maintenance_facilities():
+    """处理维护设施指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.MAINTENANCE_FACILITIES
+    character_data.state = constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.REPAIR_EQUIPMENT,
+    constant.InstructType.WORK,
+    _("维修装备"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_BLACKSMITH_SHOP,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_repair_equipment():
+    """处理维修装备指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.REPAIR_EQUIPMENT
+    character_data.state = constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT
+    update.game_update_flow(60)
+
+
 # 以下为猥亵#
 
 

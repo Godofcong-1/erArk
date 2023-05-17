@@ -6,6 +6,7 @@ int,str,str,str,int,str
 
 0,无,无,无,0,无
 
+021,检修工程师,运维部,Maintenance_Department,0,检修维护罗德岛的各种设施
 061,坐诊医生,医疗部,Clinic,0,接待并诊治病人，获得龙门币
 071,招募HR,文职部,HR_Office,0,招募干员，消耗龙门币，增加招募条
 101,图书馆管理员,图书馆,Library_Office,0,进行图书馆的管理操作

@@ -38,7 +38,7 @@ class Department_Panel:
         """绘制对象"""
 
         title_text = "部门运作情况"
-        department_type_list = [_("部门总概况"),_("医疗部"),_("文职部"),_("宿舍"),_("图书馆"),_("教育区")]
+        department_type_list = [_("部门总概况"),_("工程部"),_("医疗部"),_("文职部"),_("宿舍"),_("图书馆"),_("教育区")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -87,6 +87,7 @@ class Department_Panel:
                 all_info_text = "\n当前全部门总情况："
 
                 # 统计各部门岗位的工作干员数量
+                maintenance_engineer_all,blacksmith_all = len(cache.base_resouce.maintenance_engineer_set), len(cache.base_resouce.blacksmith_set)
                 patient_now,doctor_all = cache.base_resouce.patient_now,len(cache.base_resouce.doctor_id_set)
                 HR_all = len(cache.base_resouce.HR_id_set)
                 reader_now,library_manager_all = cache.base_resouce.reader_now, len(cache.base_resouce.library_manager_set)
@@ -94,10 +95,11 @@ class Department_Panel:
                 work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
 
                 all_info_text += f"\n  当前工作中干员/总干员：{work_people_now}/{people_max}"
-                all_info_text += f"\n  医疗部（医生/病人）：{doctor_all}/{patient_now}"
+                all_info_text += f"\n  工程部（检修工程师,铁匠）：{maintenance_engineer_all},{blacksmith_all}"
+                all_info_text += f"\n  医疗部（医生,病人）：{doctor_all},{patient_now}"
                 all_info_text += f"\n  文职部（HR）：{HR_all}"
-                all_info_text += f"\n  图书馆（管理员/读者）：{library_manager_all}/{reader_now}"
-                all_info_text += f"\n  教育区（老师/学生）：{teacher_all}/{student_all}\n"
+                all_info_text += f"\n  图书馆（管理员,读者）：{library_manager_all},{reader_now}"
+                all_info_text += f"\n  教育区（老师,学生）：{teacher_all},{student_all}\n"
 
                 # 收入
                 all_income = str(cache.base_resouce.all_income)
@@ -120,6 +122,35 @@ class Department_Panel:
                 now_draw.draw_list.append(button_draw)
                 now_draw.width += len(button_draw.text)
                 return_list.append(button_draw.return_text)
+
+            elif self.now_panel == "工程部":
+
+                engineering_info_draw = draw.NormalDraw()
+                engineering_info_text = "\n当前工程部部门情况："
+
+                engineering_info_text += f"\n  当前正在维护设施的检修工程师："
+                maintenance_engineer_name_str = ""
+                for npc_id in cache.base_resouce.maintenance_engineer_set:
+                    npc_name = cache.character_data[npc_id].name
+                    maintenance_engineer_name_str += f" {npc_name}"
+                if len(maintenance_engineer_name_str):
+                    engineering_info_text += maintenance_engineer_name_str
+                else:
+                    engineering_info_text += " 暂无"
+                engineering_info_text += f"\n  当前正在维修装备的铁匠："
+                blacksmith_name_str = ""
+                for npc_id in cache.base_resouce.blacksmith_set:
+                    npc_name = cache.character_data[npc_id].name
+                    blacksmith_name_str += f" {npc_name}"
+                if len(blacksmith_name_str):
+                    engineering_info_text += blacksmith_name_str
+                else:
+                    engineering_info_text += " 暂无"
+
+                engineering_info_draw.text = engineering_info_text
+                engineering_info_draw.width = self.width
+                now_draw.draw_list.append(engineering_info_draw)
+                now_draw.width += len(engineering_info_draw.text)
 
             elif self.now_panel == "医疗部":
 
@@ -297,6 +328,7 @@ class Department_Panel:
         """
 
         handle_leisure_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_engineering_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_doctor_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_HR_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_library_panel = panel.PageHandlePanel([], ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
@@ -318,7 +350,9 @@ class Department_Panel:
             cache.npc_id_got.discard(0)
             for id in cache.npc_id_got:
                 if (
-                    id not in cache.base_resouce.doctor_id_set
+                    id not in cache.base_resouce.maintenance_engineer_set
+                    and id not in cache.base_resouce.blacksmith_set
+                    and id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
                     and id not in cache.base_resouce.library_manager_set
                     and id not in cache.base_resouce.teacher_set
@@ -329,6 +363,15 @@ class Department_Panel:
             handle_leisure_panel.update()
             handle_leisure_panel.draw()
             return_list.extend(handle_leisure_panel.return_list)
+
+            # 工程部
+            info_text = f"\n  工程部："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_engineering_panel.text_list = list(cache.base_resouce.maintenance_engineer_set) + list(cache.base_resouce.blacksmith_set)
+            handle_engineering_panel.update()
+            handle_engineering_panel.draw()
+            return_list.extend(handle_engineering_panel.return_list)
 
             # 医疗部
             info_text = f"\n  医疗部："

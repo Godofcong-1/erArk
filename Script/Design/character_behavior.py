@@ -576,7 +576,7 @@ def judge_character_cant_move(character_id: int) -> int:
         # character_data.behavior.behavior_id = constant.Behavior.WAIT
         # character_data.state = constant.CharacterStatus.STATUS_WAIT
 
-        # 检测当前位置是否在医疗区的住院部，如果不在的话则移动至住院部
+        # 检测当前位置是否在医疗部的住院部，如果不在的话则移动至住院部
         now_position = character_data.position
         now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
         now_scene_data = cache.scene_data[now_scene_str]
