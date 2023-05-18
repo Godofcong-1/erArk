@@ -41,6 +41,7 @@ def creator_character_panel():
             character.init_attr(0)
             # game_start()
             cache.base_resouce = basement.get_base_zero()
+            character_handle.first_NPC_work()
             if confirm_character_attr_panel():
                 game_start()
                 break

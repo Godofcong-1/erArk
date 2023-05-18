@@ -14,6 +14,7 @@ from Script.Design import (
     attr_text,
     character,
     character_behavior,
+    basement
 )
 from Script.Config import game_config, normal_config, character_config
 
@@ -81,6 +82,21 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
         now_character.cloth.cloth_wear[type].append(cloth_id)
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)
+
+
+def first_NPC_work():
+    """
+    初始角色的工作安排
+    """
+    for character_id in cache.npc_id_got:
+        character_data = cache.character_data[character_id]
+        if character_data.name in {"可露希尔"}:
+            character_data.work.work_type = 21
+        elif character_data.name in {"凯尔希","华法琳"}:
+            character_data.work.work_type = 61
+        elif character_data.name in {"特蕾西娅"}:
+            character_data.work.work_type = 151
+    basement.update_work_people()
 
 
 def init_character_tem():
