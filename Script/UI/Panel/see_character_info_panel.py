@@ -1307,7 +1307,7 @@ class Characterabi_cmd_Text:
             yrn = flow_handle.askfor_all(self.return_list)
             py_cmd.clr_cmd()
             line_feed.draw()
-            if yrn == back_draw.return_text:
+            if yrn in self.return_list:
                 break
 
     def level_up(self):

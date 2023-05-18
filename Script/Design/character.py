@@ -205,6 +205,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
+
+    # 对玩家为目标的指令是必定成功的
+    if target_character_id == 0:
+        return 1
+
     for judge_id in game_config.config_instruct_judge_data:
         # 匹配到能力的id与能力等级对应的前提#
         if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:

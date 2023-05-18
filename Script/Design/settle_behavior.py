@@ -383,8 +383,8 @@ def change_character_value_add_as_time(character_id: int, add_time: int):
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
 
     # 仅计算在不睡觉时的正常行动结算疲劳值
+    add_tired = int(add_time / 6)
     if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
-        add_tired = int(add_time / 6)
         now_character_data.tired_point += add_tired
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
