@@ -1883,7 +1883,7 @@ def handle_confim_recruit():
     constant.InstructType.WORK,
     _("维护设施"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.PLACE_FURNITURE_1,
+     constant_promise.Premise.IN_ANY_MAINTENANCE_PLACE,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_maintenance_facilities():

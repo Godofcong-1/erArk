@@ -83,10 +83,10 @@ ai的目标,,,
 324,306,normal_all|work_is_library_manager|work_time|in_library,正常状态下，工作为图书馆管理员，在工作时间，如果在图书馆，则有30%几率去图书馆办公室，70%看书
 
 331,621,normal_all|work_is_maintenance_engineer|to_work_time|not_in_maintenance_department,正常状态下，工作为检修工程师，在到岗时间，如果不在运维部，则去运维部
-332,621,normal_all|work_is_maintenance_engineer|work_time|not_in_maintenance_department,正常状态下，工作为检修工程师，在工作时间，如果不在运维部，则去运维部
-333,307,normal_all|work_is_maintenance_engineer|work_time|in_maintenance_department,正常状态下，工作为检修工程师，在工作时间，如果在运维部，则进入要检修状态，并随机指定一个检修地点
-334,517,work_flag_1|not_in_maintenance_place,要检修状态下，当前不在检修地点，则去检修地点
-335,308,work_flag_1|in_maintenance_place,开始检修状态下，当前在检修地点，则检修，完毕后清理检修状态
+332,621,normal_all|work_is_maintenance_engineer|work_time|not_in_maintenance_department|work_maintenance_flag_0,正常状态下，工作为检修工程师，在工作时间，如果不在运维部，且没有要检修状态，则去运维部
+333,307,normal_all|work_is_maintenance_engineer|work_time|in_maintenance_department|work_maintenance_flag_0,正常状态下，工作为检修工程师，在工作时间，如果在运维部，且没有要检修状态，则进入要检修状态，并随机指定一个检修地点
+334,517,normal_all|work_is_maintenance_engineer|work_time|work_maintenance_flag_1|not_in_maintenance_place,正常状态下，工作为检修工程师，在工作时间，要检修状态下，当前不在自己对应的检修地点，则去检修地点
+335,308,normal_all|work_is_maintenance_engineer|work_time|work_maintenance_flag_1|in_maintenance_place,正常状态下，工作为检修工程师，在工作时间，要检修状态下，当前在自己对应的检修地点，则检修，完毕后重置检修状态
 
 336,622,normal_all|work_is_blacksmith|to_work_time|not_in_blacksmith_shop,正常状态下，工作为铁匠，在到岗时间，如果不在铁匠铺，则去铁匠铺
 337,622,normal_all|work_is_blacksmith|work_time|not_in_blacksmith_shop,正常状态下，工作为铁匠，在工作时间，如果不在铁匠铺，则去铁匠铺

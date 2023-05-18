@@ -949,7 +949,7 @@ def character_move_to_maintenance_place(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
 
-    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.base_resouce.maintenance_place)
+    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.base_resouce.maintenance_place[character_id])
     _, _, move_path, move_time = character_move.character_move(character_id, to_maintenance_place_shop)
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
@@ -2004,8 +2004,14 @@ def character_work_maintenance_1(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.work_maintenance = 1
-    cache.base_resouce.maintenance_place = random.choice(constant.place_data["Room"])
-    # print(f"debug {character_data.name}工作：进入要检修状态，并随机指定一个检修地点 {cache.base_resouce.maintenance_place}")
+
+    # 指定的地点需要是可进入的
+    while 1:
+        target_scene_str = random.choice(constant.place_data["Room"])
+        close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+        if close_type == "open":
+            break
+    cache.base_resouce.maintenance_place[character_id] = target_scene_str
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_MAINTENANCE_2)

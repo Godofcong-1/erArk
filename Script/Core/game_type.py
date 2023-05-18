@@ -733,8 +733,8 @@ class Base_resouce:
         # 工程部
         self.maintenance_engineer_set: Set = set()
         """ 检修工程师干员id合集 """
-        self.maintenance_place: str = ""
-        """ 当前待检修地点 """
+        self.maintenance_place: Dict[int, int] = {}
+        """ 当前每个角色的待检修地点 """
         self.blacksmith_set: Set = set()
         """ 铁匠干员id合集 """
 
