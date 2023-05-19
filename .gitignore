@@ -8,7 +8,7 @@ test.py
 */*/*/*/*.pyc
 */*/*/*/*/*.pyc
 # 游戏解包数据
-# data/data_from_game
+data/data_from_game
 
 # AI
 tools/AI
