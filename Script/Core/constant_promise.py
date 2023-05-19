@@ -1358,11 +1358,11 @@ class Premise:
     """ 属性_工作 自己的工作为教师 """
     WORK_IS_STUDENT = "work_is_student"
     """ 属性_工作 自己的工作为学生 """
+    WORK_IS_COMBAT_TRAINING = "work_is_combat_training"
+    """ 属性_工作 自己的工作为战斗训练 """
 
     ENTERTAINMENT_IS_READ = "entertainment_is_read"
     """ 属性_娱乐 自己当前时段的娱乐为读书 """
-    ENTERTAINMENT_IS_TRAINING = "entertainment_is_training"
-    """ 属性_娱乐 自己当前时段的娱乐为训练 """
     ENTERTAINMENT_IS_SING = "entertainment_is_sing"
     """ 属性_娱乐 自己当前时段的娱乐为唱歌 """
     ENTERTAINMENT_IS_PLAY_CLASSIC_INSTRUMENT = "entertainment_is_play_classic_instrument"

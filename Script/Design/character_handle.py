@@ -94,6 +94,8 @@ def first_NPC_work():
             character_data.work.work_type = 21
         elif character_data.name in {"凯尔希","华法琳"}:
             character_data.work.work_type = 61
+        elif character_data.name in {"杜宾"}:
+            character_data.work.work_type = 91
         elif character_data.name in {"特蕾西娅"}:
             character_data.work.work_type = 151
     basement.update_work_people()

@@ -731,10 +731,14 @@ class Base_resouce:
         """ 生活娱乐区设施数量上限 """
 
         # 工程部
+        self.maintenance_engineer_now: int = 0
+        """ 当前工作中的检修工程师数量 """
         self.maintenance_engineer_set: Set = set()
         """ 检修工程师干员id合集 """
         self.maintenance_place: Dict[int, int] = {}
         """ 当前每个角色的待检修地点 """
+        self.blacksmith_now: int = 0
+        """ 当前工作中的铁匠数量 """
         self.blacksmith_set: Set = set()
         """ 铁匠干员id合集 """
 
@@ -765,6 +769,12 @@ class Base_resouce:
         """ 当前工作中的HR数量 """
         self.HR_id_set: Set = set()
         """ HR干员id合集 """
+
+        # 训练场
+        self.combat_training_now: int = 0
+        """ 当前工作中的战斗训练数量 """
+        self.combat_training_set: Set = set()
+        """ 战斗训练干员id合集 """
 
         # 图书档案区
         self.library_manager_now: int = 0

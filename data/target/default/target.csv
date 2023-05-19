@@ -92,11 +92,12 @@ ai的目标,,,
 337,622,normal_all|work_is_blacksmith|work_time|not_in_blacksmith_shop,正常状态下，工作为铁匠，在工作时间，如果不在铁匠铺，则去铁匠铺
 338,309,normal_all|work_is_blacksmith|work_time|in_blacksmith_shop,正常状态下，工作为铁匠，在工作时间，如果在铁匠铺，则开始修理装备
 
+341,514,normal_all|to_work_time|work_is_combat_training|not_in_training_room,正常状态下，在到岗时间，娱乐是战斗训练，当前不在训练室，则移动至训练室
+342,514,normal_all|work_time|work_is_combat_training|not_in_training_room,正常状态下，在工作时间，娱乐是战斗训练，当前不在训练室，则移动至训练室
+343,402,normal_all|work_time|work_is_combat_training|in_training_room,正常状态下，在工作时间，娱乐是战斗训练，且当前在训练室，则进行战斗训练
+
 401,552,normal_all|all_entertainment_time|entertainment_is_read|not_in_library,正常状态下，全娱乐时间，娱乐是读书，不在图书馆，则去图书馆
 402,401,normal_all|all_entertainment_time|entertainment_is_read|in_library,正常状态下，全娱乐时间，娱乐是读书，在图书馆，则读书
-
-406,514,normal_all|all_entertainment_time|entertainment_is_training|not_in_training_room,正常状态下，全娱乐时间，娱乐是训练，当前不在训练室，则移动至训练室
-407,402,normal_all|all_entertainment_time|entertainment_is_training|in_training_room,正常状态下，全娱乐时间，娱乐是训练，且当前在训练室，则训练
 
 411,525,normal_all|all_entertainment_time|entertainment_is_sing|not_in_moden_music_room,正常状态下，全娱乐时间，娱乐是唱歌，当前不在现代音乐排练室，则移动至现代音乐排练室
 412,403,normal_all|all_entertainment_time|entertainment_is_sing|in_moden_music_room,正常状态下，全娱乐时间，娱乐是唱歌，且当前在现代音乐排练室，则唱歌

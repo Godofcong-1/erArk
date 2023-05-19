@@ -527,6 +527,7 @@ class Character_FirstNPC:
         handle_engineering_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_doctor_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_HR_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_training_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_library_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
         handle_education_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
 
@@ -550,6 +551,7 @@ class Character_FirstNPC:
                     and id not in cache.base_resouce.blacksmith_set
                     and id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
+                    and id not in cache.base_resouce.combat_training_set
                     and id not in cache.base_resouce.library_manager_set
                     and id not in cache.base_resouce.teacher_set
                     and id not in cache.base_resouce.student_set
@@ -565,42 +567,67 @@ class Character_FirstNPC:
             info_draw.text = info_text
             info_draw.draw()
             handle_engineering_panel.text_list = list(cache.base_resouce.maintenance_engineer_set) + list(cache.base_resouce.blacksmith_set)
+            n_flag = False if len(handle_engineering_panel.text_list) else True
             handle_engineering_panel.update()
             handle_engineering_panel.draw()
             return_list.extend(handle_engineering_panel.return_list)
 
             # 医疗部
-            info_text = f"\n  医疗部："
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  医疗部："
             info_draw.text = info_text
             info_draw.draw()
             handle_doctor_panel.text_list = list(cache.base_resouce.doctor_id_set)
+            n_flag = False if len(handle_doctor_panel.text_list) else True
             handle_doctor_panel.update()
             handle_doctor_panel.draw()
             return_list.extend(handle_doctor_panel.return_list)
 
             # 文职部
-            info_text = f"\n  文职部："
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  文职部："
             info_draw.text = info_text
             info_draw.draw()
             handle_HR_panel.text_list = list(cache.base_resouce.HR_id_set)
+            n_flag = False if len(handle_HR_panel.text_list) else True
             handle_HR_panel.update()
             handle_HR_panel.draw()
             return_list.extend(handle_HR_panel.return_list)
 
+            # 训练场
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  训练场："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_training_panel.text_list = list(cache.base_resouce.combat_training_set)
+            n_flag = False if len(handle_training_panel.text_list) else True
+            handle_training_panel.update()
+            handle_training_panel.draw()
+            return_list.extend(handle_training_panel.return_list)
+
             # 图书馆
-            info_text = f"\n  图书馆："
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  图书馆："
             info_draw.text = info_text
             info_draw.draw()
             handle_library_panel.text_list = list(cache.base_resouce.library_manager_set)
+            n_flag = False if len(handle_library_panel.text_list) else True
             handle_library_panel.update()
             handle_library_panel.draw()
             return_list.extend(handle_library_panel.return_list)
 
             # 教育区
-            info_text = f"\n  教育区："
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  教育区："
             info_draw.text = info_text
             info_draw.draw()
             handle_education_panel.text_list = list(cache.base_resouce.teacher_set) + list(cache.base_resouce.student_set)
+            n_flag = False if len(handle_education_panel.text_list) else True
             handle_education_panel.update()
             handle_education_panel.draw()
             return_list.extend(handle_education_panel.return_list)

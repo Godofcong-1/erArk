@@ -7667,6 +7667,19 @@ def handle_work_is_student(character_id: int) -> int:
     return character_data.work.work_type == 152
 
 
+@add_premise(constant_promise.Premise.WORK_IS_COMBAT_TRAINING)
+def handle_work_is_combat_training(character_id: int) -> int:
+    """
+    自己的工作为战斗训练
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 91
+
+
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
 def handle_entertainment_is_read(character_id: int) -> int:
     """
@@ -7683,24 +7696,6 @@ def handle_entertainment_is_read(character_id: int) -> int:
         i -= 1
 
     return character_data.entertainment.entertainment_type[i] == 101
-
-
-@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TRAINING)
-def handle_entertainment_is_training(character_id: int) -> int:
-    """
-    自己当前时段的娱乐为训练
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-
-    i = game_time.judge_entertainment_time(character_id)
-    if i:
-        i -= 1
-
-    return character_data.entertainment.entertainment_type[i] == 91
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SING)
@@ -8042,7 +8037,7 @@ def handle_entertainment_is_swimming(character_id: int) -> int:
     if i:
         i -= 1
 
-    return character_data.entertainment.entertainment_type[i] == 92
+    return character_data.entertainment.entertainment_type[i] == 91
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_TASTE_WINE)

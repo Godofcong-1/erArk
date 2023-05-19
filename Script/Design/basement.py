@@ -151,6 +151,7 @@ def update_work_people():
     cache.base_resouce.doctor_id_set = set()
     cache.base_resouce.HR_now = 0
     cache.base_resouce.HR_id_set = set()
+    cache.base_resouce.combat_training_set = set()
     cache.base_resouce.library_manager_now = 0
     cache.base_resouce.library_manager_set = set()
     cache.base_resouce.teacher_set = set()
@@ -165,10 +166,14 @@ def update_work_people():
         if character_data.work.work_type == 21:
             cache.base_resouce.maintenance_engineer_set.add(id)
             cache.base_resouce.work_people_now += 1
+            if handle_premise.handle_in_maintenance_place(id) or handle_premise.handle_in_maintenance_department(id):
+                cache.base_resouce.maintenance_engineer_now += 1
         # 铁匠统计
         elif character_data.work.work_type == 22:
             cache.base_resouce.blacksmith_set.add(id)
             cache.base_resouce.work_people_now += 1
+            if handle_premise.handle_in_blacksmith_shop(id):
+                cache.base_resouce.blacksmith_now += 1
         # 医生统计
         elif character_data.work.work_type == 61:
             cache.base_resouce.doctor_id_set.add(id)
@@ -181,6 +186,12 @@ def update_work_people():
             cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_hr_office(id):
                 cache.base_resouce.HR_now += 1
+        # 战斗训练统计
+        elif character_data.work.work_type == 91:
+            cache.base_resouce.combat_training_set.add(id)
+            cache.base_resouce.work_people_now += 1
+            if handle_premise.handle_in_training_room(id):
+                cache.base_resouce.combat_training_now += 1
         # 图书馆管理员统计
         elif character_data.work.work_type == 101:
             cache.base_resouce.library_manager_set.add(id)
