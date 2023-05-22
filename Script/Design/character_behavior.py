@@ -598,7 +598,11 @@ def judge_character_follow(character_id: int) -> int:
 
     # 锁定助理的跟随状态
     if character_data.assistant_state.always_follow in {1,2}:
-        character_data.sp_flag.is_follow = character_data.assistant_state.always_follow
+        # 排除太累了和太困了的情况
+        if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
+            pass
+        else:
+            character_data.sp_flag.is_follow = character_data.assistant_state.always_follow
 
     # 维持跟随的状态
     if character_data.sp_flag.is_follow == 2:

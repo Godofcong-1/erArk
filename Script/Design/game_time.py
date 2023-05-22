@@ -355,7 +355,7 @@ def get_sun_time(old_time: datetime.datetime) -> int:
         cache.__dict__["sun_phase"] = {}
     now_sun_time = (old_time.hour + 3) // 2
     now_sun_time += 12 if now_sun_time < 0 else 0
-    now_sun_time -= 12 if now_sun_time > 12 else 0
+    now_sun_time -= 12 if now_sun_time > 11 else 0
     return now_sun_time
 
 
