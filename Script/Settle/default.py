@@ -4121,12 +4121,13 @@ def handle_sing_add_adjust(
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
         # 好感度变化#
         add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        if good_flag:
+        # print(f"debug 唱歌，角色 = {character_data.name}，目标= {target_data.name}，add_favorability = {add_favorability}")
+        if good_flag or add_favorability < 0:
             add_favorability *= adjust
         else:
             add_favorability *= (adjust - 1)
 
-        # print(f"debug 唱歌，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
+        # print(f"debug 唱歌，adjust = {adjust}，add_favorability = {add_favorability}")
 
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -4219,7 +4220,7 @@ def handle_play_instrument_add_adjust(
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
         # 好感度变化#
         add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        if good_flag:
+        if good_flag or add_favorability < 0:
             add_favorability *= adjust
         else:
             add_favorability *= (adjust - 1)

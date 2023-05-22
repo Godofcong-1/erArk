@@ -275,6 +275,8 @@ class Down_Negative_Talent_Panel:
         name = character_data.name
 
         pl_character_data = cache.character_data[0]
+        if self.chara_id not in pl_character_data.pl_collection.npc_panties:
+            pl_character_data.pl_collection.npc_panties[self.chara_id] = []
         panties_data = pl_character_data.pl_collection.npc_panties[self.chara_id]
 
 
