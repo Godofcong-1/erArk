@@ -64,8 +64,8 @@ def game_start():
     cooking.init_restaurant_data()
     character_position = cache.character_data[0].position
     map_handle.character_move_scene(["0","0"], character_position, 0)
-    cache.school_longitude = random.uniform(120.9, 122.12)
-    cache.school_latitude = random.uniform(30.7, 31.53)
+    # cache.school_longitude = random.uniform(120.9, 122.12)
+    # cache.school_latitude = random.uniform(30.7, 31.53)
     basement.get_base_updata()
     character_handle.init_character_entertainment()
     # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")

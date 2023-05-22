@@ -1074,10 +1074,10 @@ class Cache:
         """
         self.npc_name_data: Set = set()
         """ 已有的npc姓名集合 """
-        self.school_longitude: float = 0
-        """ 学校经度 """
-        self.school_latitude: float = 0
-        """ 学校纬度 """
+        # self.school_longitude: float = 0
+        # """ 罗德岛经度 """
+        # self.school_latitude: float = 0
+        # """ 罗德岛纬度 """
         self.is_collection: bool = 0
         """ 启用收藏模式 """
         self.sun_phase: Dict[str, Dict[int, Dict[int, int]]] = {}
