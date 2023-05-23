@@ -47,6 +47,9 @@ def gain_ability(character_id: int):
         if ability_data.ability_type == 2:
             continue
         ability_level = character_data.ability[ability_cid]
+        # 最大8级
+        if ability_level >= 8:
+            continue
         need_list = game_config.config_ability_up_data[ability_cid][ability_level]
 
         # 遍历升级需求，判断是否符合升级要求
