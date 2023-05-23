@@ -5,7 +5,7 @@ Name,str,夜刀,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
 Race,int,1,0,鬼
-Nation,int,0,0,罗德岛
+Nation,int,4,0,行动组A4
 Birthplace,int,3,0,东
 Hp,int,1500,0,初始体力
 Mp,int,1200,0,初始气力
@@ -33,3 +33,4 @@ C|5024,int,1,0,灰色羊绒衫
 C|829,int,1,0,黑色百褶短裙
 C|1052,int,1,0,黑色连裤袜
 C|1133,int,1,0,黑色扣带中筒皮靴
+C|1253,int,1,0,罗德岛制式刀
