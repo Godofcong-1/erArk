@@ -54,7 +54,7 @@ class InScenePanel:
             self.width,
             1,
             0,
-            len(constant.handle_instruct_name_data),
+            999,
             null_button_text=character_data.target_character_id,
         )
         while 1:
