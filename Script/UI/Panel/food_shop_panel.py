@@ -172,6 +172,8 @@ class SeeFoodListByFoodNameDraw:
         yrn = flow_handle.askfor_all(return_list)
         # if yrn == back_draw.return_text:
         #     break
+        if self.cid not in cache.restaurant_data:
+            cache.restaurant_data[self.cid] = {}
         page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
 
 
@@ -225,7 +227,6 @@ class BuyFoodByFoodNameDraw:
 
     def buy_food(self):
         """玩家购买食物"""
-        update.game_update_flow(0)
         cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
         del cache.restaurant_data[self.cid][self.text]
         character_data: game_type.Character = cache.character_data[0]
