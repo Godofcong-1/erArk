@@ -2,7 +2,7 @@ from typing import Tuple
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update
+from Script.Design import map_handle, cooking, update, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -172,8 +172,7 @@ class SeeFoodListByFoodNameDraw:
         yrn = flow_handle.askfor_all(return_list)
         # if yrn == back_draw.return_text:
         #     break
-        if self.cid not in cache.restaurant_data:
-            cache.restaurant_data[self.cid] = {}
+        cache.restaurant_data.setdefault(self.cid, {})
         page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
 
 
@@ -215,8 +214,14 @@ class BuyFoodByFoodNameDraw:
             self.food_name = food_recipe.name
             food_money = food_recipe.money
             food_introduce = food_recipe.introduce
+        food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
         index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{self.food_name}(食堂自助免费拿取)：{food_introduce}"
+        button_text = f"{index_text}{self.food_name}"
+        button_text += f"({food_quality_str})"
+        if food_data.maker != "":
+            button_text += f"(by {food_data.maker})"
+        button_text += "(食堂自助免费拿取)"
+        button_text += f"：{food_introduce}"
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)
         self.now_draw = name_draw
         """ 绘制的对象 """

@@ -523,13 +523,14 @@ class Character_FirstNPC:
         调整干员的工作岗位
         """
 
-        handle_leisure_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_engineering_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_doctor_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_HR_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_training_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_library_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
-        handle_education_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 10, self.width, 1, 0, 0)
+        handle_leisure_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_chef_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_engineering_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_doctor_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_HR_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_training_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_library_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
+        handle_education_panel = panel.PageHandlePanel([], department_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0)
 
         while 1:
             line = draw.LineDraw("-", self.width)
@@ -549,6 +550,7 @@ class Character_FirstNPC:
                 if (
                     id not in cache.base_resouce.maintenance_engineer_set
                     and id not in cache.base_resouce.blacksmith_set
+                    and id not in cache.base_resouce.chef_set
                     and id not in cache.base_resouce.doctor_id_set
                     and id not in cache.base_resouce.HR_id_set
                     and id not in cache.base_resouce.combat_training_set
@@ -571,6 +573,18 @@ class Character_FirstNPC:
             handle_engineering_panel.update()
             handle_engineering_panel.draw()
             return_list.extend(handle_engineering_panel.return_list)
+
+            #生活娱乐区
+            info_text = ""
+            info_text += f"\n" if n_flag else ""
+            info_text += f"  生活娱乐区："
+            info_draw.text = info_text
+            info_draw.draw()
+            handle_chef_panel.text_list = list(cache.base_resouce.chef_set)
+            n_flag = False if len(handle_chef_panel.text_list) else True
+            handle_chef_panel.update()
+            handle_chef_panel.draw()
+            return_list.extend(handle_chef_panel.return_list)
 
             # 医疗部
             info_text = ""

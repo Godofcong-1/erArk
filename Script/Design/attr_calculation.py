@@ -647,6 +647,23 @@ def get_sleep_level(value: int):
             return now_cid,now_data.name
 
 
+def get_food_quality(value: int):
+    """
+    按当前食物质量返回当前质量等级的str
+    Keyword arguments:
+    value -- 食物质量值
+    Return arguments:
+    int -- 食物质量等级,0~4
+    str -- 食物质量名,粗劣~绝珍
+    """
+    for now_cid in game_config.config_food_quality:
+        now_data = game_config.config_food_quality[now_cid]
+        if value <= now_data.ability_level:
+            return now_cid,now_data.name
+        else:
+            continue
+
+
 def get_favorability_level(value: int):
     """
     按当前好感度返回当前好感等级的str

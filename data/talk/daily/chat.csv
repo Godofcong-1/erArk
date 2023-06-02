@@ -71,8 +71,8 @@ str,int,int,str,str
 1064,101,0,eat_time&in_din,{TargetName}看出来{Name}的味觉比较挑剔，于是介绍了几种健康又好吃的食物。
 1065,101,0,eat_time&in_din,{Name}分享了最近在某个新开的餐厅里尝到的菜肴，而{TargetName}则说起了去年听朋友推荐去过一个不错的餐馆。
 
-1071,101,0,in_kit,{Name}向{TargetName}请教如何选择食材以及如何烹饪保留食材营养的方法，得到了有益的建议。
-1072,101,0,in_kit,{Name}和{TargetName}交换了各自擅长料理的食谱和秘诀，有了新的创意与灵感。
+1071,101,0,in_kitchen,{Name}向{TargetName}请教如何选择食材以及如何烹饪保留食材营养的方法，得到了有益的建议。
+1072,101,0,in_kitchen,{Name}和{TargetName}交换了各自擅长料理的食谱和秘诀，有了新的创意与灵感。
 
 1091,101,0,in_library_zone,在图书馆的学习过程中，{Name}和{TargetName}讨论了学习方法上的差异，并结合各自的经验互相学习。
 1092,101,0,in_library_zone,{Name}向{TargetName}推荐了一个通过使用“番茄工作法”来提高效率和集中注意力的小技巧。

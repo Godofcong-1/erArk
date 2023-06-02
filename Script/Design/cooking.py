@@ -51,11 +51,11 @@ def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: 
 
 def create_food(
     food_id: str,
-    # food_quality: int,
     # food_weight: int,
     # food_feel={},
-    # food_maker="",
     food_recipe=-1,
+    food_quality=5,
+    food_maker="",
 ) -> Food:
     """
     创建食物对象
@@ -88,7 +88,8 @@ def create_food(
     #     food.eat = 1
     #     food.cook = 0
     #     food.seasoning = 0
-    # food.maker = food_maker
+    food.quality = food_quality
+    food.maker = food_maker
     food.recipe = food_recipe
     return food
 
@@ -206,7 +207,7 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
     #     now_weight += rand_weight
     # if not cook_judge:
     #     return create_food(65, now_quality, now_weight, [])
-    return create_food("", recipe_id)
+    return create_food("", recipe_id, cook_level, maker)
 
 
 def init_restaurant_data():

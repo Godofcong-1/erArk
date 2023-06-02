@@ -110,7 +110,7 @@ in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
 
-in_kit,IN_KITCHEN,地点_定位,在厨房
+in_kitchen,IN_KITCHEN,地点_定位,在厨房
 in_din,IN_DINING_HALL,地点_定位,在食堂
 not_in_din,NOT_IN_DINING_HALL,地点_定位,不在食堂
 in_food_shop,IN_FOOD_SHOP,地点_定位,在食物商店（取餐区）

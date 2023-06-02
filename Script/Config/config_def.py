@@ -301,6 +301,17 @@ class FontConfig:
     """ 备注 """
 
 
+class Food_Quality:
+    """ 质量等级 """
+
+    cid: int
+    """ 食物质量cid """
+    name: str
+    """ 质量名 """
+    ability_level: int
+    """ 料理技能上限 """
+
+
 class InstructJudge:
     """ 每个指令的实行值判定数据 """
 
@@ -660,6 +671,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 

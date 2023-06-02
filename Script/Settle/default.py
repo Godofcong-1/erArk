@@ -661,6 +661,37 @@ def handle_make_food(
             )
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD)
+def handle_npc_make_food(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    NPC随机制作一个食物，并补充到当前所在食物商店中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    while 1:
+        recipes_id = random.randint(0, len(cache.recipe_data) - 1)
+        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
+            break
+    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
+    food_list = {}
+    new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
+    cache.restaurant_data.setdefault(str(recipes_id), {})
+    cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
+    character_data.behavior.food_name = food_recipe.name
+
+
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)
 # def handle_add_social_favorability(
 #     character_id: int,

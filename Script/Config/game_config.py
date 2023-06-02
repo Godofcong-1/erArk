@@ -211,6 +211,8 @@ config_seasoning: Dict[int, config_def.Seasoning] = {}
 """ 调味数据 """
 config_prts: Dict[int, config_def.Prts] = {}
 """ 教程数据 """
+config_food_quality: Dict[int, config_def.Food_Quality] = {}
+""" 食物质量数据 """
 config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
 
@@ -895,6 +897,16 @@ def load_sleep_level():
         config_sleep_level[now_tem.cid] = now_tem
 
 
+def load_food_quality():
+    """载入食物质量数据"""
+    now_data = config_data["Food_Quality"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Food_Quality()
+        now_tem.__dict__ = tem_data
+        config_food_quality[now_tem.cid] = now_tem
+
+
 def load_favorability_level():
     """载入好感度等级数据"""
     now_data = config_data["Favorability_Level"]
@@ -1011,6 +1023,7 @@ def init():
     load_event()
     # load_event_target()
     load_sleep_level()
+    load_food_quality()
     load_favorability_level()
     load_trust_level()
     load_seasoning()

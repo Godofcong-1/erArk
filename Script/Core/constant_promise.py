@@ -213,8 +213,10 @@ class Premise:
     PLACE_LADIES_ONLY = "place_ladies_only"
     """ 地点_属性 该地点男士止步（女洗手间/更衣室/浴室等） """
 
-    IN_KITCHEN = "in_kit"
+    IN_KITCHEN = "in_kitchen"
     """ 地点_定位 在厨房 """
+    NOT_IN_KITCHEN = "not_in_kitchen"
+    """ 地点_定位 不在厨房 """
     IN_DINING_HALL = "in_din"
     """ 地点_定位 在食堂 """
     NOT_IN_DINING_HALL = "not_in_din"
@@ -1360,6 +1362,8 @@ class Premise:
     """ 属性_工作 自己的工作为学生 """
     WORK_IS_COMBAT_TRAINING = "work_is_combat_training"
     """ 属性_工作 自己的工作为战斗训练 """
+    WORK_IS_COOK = "work_is_cook"
+    """ 属性_工作 自己的工作为厨师 """
 
     ENTERTAINMENT_IS_READ = "entertainment_is_read"
     """ 属性_娱乐 自己当前时段的娱乐为读书 """

@@ -122,8 +122,8 @@ class Food:
         """ 食物名字 """
         self.uid: UUID = None
         """ 食物对象的唯一id """
-        # self.quality: int = 0
-        # """ 食物品质 """
+        self.quality: int = 0
+        """ 食物品质 """
         # self.weight: int = 0
         # """ 食物重量 """
         # self.feel: dict = {}
@@ -741,6 +741,12 @@ class Base_resouce:
         """ 当前工作中的铁匠数量 """
         self.blacksmith_set: Set = set()
         """ 铁匠干员id合集 """
+
+        # 生活娱乐区
+        self.chef_now: int = 0
+        """ 当前工作中的厨师数量 """
+        self.chef_set: Set = set()
+        """ 厨师干员id合集 """
 
         # 医疗部
         self.patient_now: int = 0

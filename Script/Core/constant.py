@@ -127,6 +127,8 @@ class CharacterStatus:
     """ 维护设施 """
     STATUS_REPAIR_EQUIPMENT = 216
     """ 维修装备 """
+    STATUS_NPC_COOK = 217
+    """ 干员做饭 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -528,6 +530,8 @@ class Behavior:
     """ 维护设施 """
     REPAIR_EQUIPMENT = 216
     """ 维修装备 """
+    NPC_COOK = 217
+    """ 干员做饭 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -893,6 +897,8 @@ class StateMachine:
     """ 工作：维护设施，并清零检修状态 """
     WORK_REPAIR_EQUIPMENT = 309
     """ 工作：修理装备 """
+    WORK_COOK = 310
+    """ 工作：做饭 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -959,6 +965,8 @@ class StateMachine:
     """ 移动至餐馆（随机某个正餐餐馆） """
     MOVE_TO_MAINTENANCE_PLACE = 517
     """ 移动至检修地点 """
+    MOVE_TO_KITCHEN = 521
+    """ 移动至厨房 """
     MOVE_TO_FOODSHOP = 522
     """ 移动至食物商店（取餐区） """
     MOVE_TO_DINING_HALL = 523

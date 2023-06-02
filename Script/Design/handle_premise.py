@@ -523,6 +523,24 @@ def handle_in_kitchen(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_IN_KITCHEN)
+def handle_not_in_kitchen(character_id: int) -> int:
+    """
+    校验角色是否不在厨房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Kitchen" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_DINING_HALL)
 def handle_in_dining_hall(character_id: int) -> int:
     """
@@ -7678,6 +7696,19 @@ def handle_work_is_combat_training(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 91
+
+
+@add_premise(constant_promise.Premise.WORK_IS_COOK)
+def handle_work_is_cook(character_id: int) -> int:
+    """
+    自己的工作为厨师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 51
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)

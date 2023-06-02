@@ -145,8 +145,12 @@ def update_work_people():
     刷新各干员的职位和当前正在工作的干员
     """
 
+    cache.base_resouce.maintenance_engineer_now = 0
     cache.base_resouce.maintenance_engineer_set = set()
+    cache.base_resouce.blacksmith_now = 0
     cache.base_resouce.blacksmith_set = set()
+    cache.base_resouce.chef_now = 0
+    cache.base_resouce.chef_set = set()
     cache.base_resouce.doctor_now = 0
     cache.base_resouce.doctor_id_set = set()
     cache.base_resouce.HR_now = 0
@@ -174,6 +178,12 @@ def update_work_people():
             cache.base_resouce.work_people_now += 1
             if handle_premise.handle_in_blacksmith_shop(id):
                 cache.base_resouce.blacksmith_now += 1
+        # 厨师统计
+        elif character_data.work.work_type == 51:
+            cache.base_resouce.chef_set.add(id)
+            cache.base_resouce.work_people_now += 1
+            if handle_premise.handle_in_kitchen(id):
+                cache.base_resouce.chef_now += 1
         # 医生统计
         elif character_data.work.work_type == 61:
             cache.base_resouce.doctor_id_set.add(id)

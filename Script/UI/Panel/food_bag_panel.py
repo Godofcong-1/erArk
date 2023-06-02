@@ -3,7 +3,7 @@ from types import FunctionType
 from uuid import UUID
 from Script.Core import get_text, game_type, cache_control, constant, flow_handle, text_handle
 from Script.UI.Moudle import panel, draw
-from Script.Design import cooking, update
+from Script.Design import cooking, update, attr_calculation
 from Script.Config import normal_config, game_config
 
 _: FunctionType = get_text._
@@ -182,14 +182,17 @@ class SeeFoodListByFoodNameDraw:
             food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
             food_name = food_recipe.name
             food_introduce = food_recipe.introduce
-        food_maker,food_seasoning = "",""
-        if food_data.maker != cache.character_data[0].name:
-            food_maker = f"({food_data.maker}亲手做的)"
+        food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
+        food_seasoning = ""
         # 如果不是正常，则标注味道
         if food_data.special_seasoning != 0:
             food_seasoning += f"({game_config.config_seasoning[food_data.special_seasoning].name})"
         
-        button_text = f"  {food_name}{food_seasoning}{food_maker}：{food_introduce}"
+        button_text = f"  {food_name}{food_seasoning}"
+        button_text += f"({food_quality_str})"
+        if food_data.maker != "":
+            button_text += f"(by {food_data.maker})"
+        button_text += f"：{food_introduce}"
 
         if (food_data.special_seasoning == 0 or
             (food_data.special_seasoning != 0 and cache.character_data[0].target_character_id != 0)):

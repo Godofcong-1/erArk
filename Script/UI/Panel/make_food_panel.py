@@ -265,6 +265,7 @@ class SeeFoodListByFoodNameDraw:
         cache.makefood_data[self.food_cid][self.food_uid].name = self.food_name
         cache.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
         cache.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
+        cache.makefood_data[self.food_cid][self.food_uid].quality = character_data.ability[43]
         # 药物调味则扣除药物
         if self.special_seasoning > 100:
             character_data.item[self.special_seasoning] -= 1

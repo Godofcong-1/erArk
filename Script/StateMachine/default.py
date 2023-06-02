@@ -203,6 +203,25 @@ def character_move_to_toilet(character_id: int):
         line_feed.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KITCHEN)
+def character_move_to_kitchen(character_id: int):
+    """
+    移动至厨房
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    to_kitchen = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Kitchen"])
+    )
+    _, _, move_path, move_time = character_move.character_move(character_id, to_kitchen)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOODSHOP)
 def character_move_to_foodshop(character_id: int):
     """
@@ -2041,6 +2060,21 @@ def character_work_repair_equipment(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.REPAIR_EQUIPMENT
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_COOK)
+def character_work_cook(character_id: int):
+    """
+    角色工作：做饭
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.NPC_COOK
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_NPC_COOK
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
