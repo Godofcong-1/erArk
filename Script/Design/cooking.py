@@ -69,6 +69,7 @@ def create_food(
     Return arguments:
     Food -- 食物对象
     """
+    recipe_data: game_type.Recipes = cache.recipe_data[food_recipe]
     food = Food()
     food.id = food_id
     food.uid = uuid.uuid4()
@@ -91,6 +92,7 @@ def create_food(
     food.quality = food_quality
     food.maker = food_maker
     food.recipe = food_recipe
+    food.name = recipe_data.name
     return food
 
 
