@@ -10519,6 +10519,24 @@ def handle_t_womb_semen(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.URINATE_LE_49)
+def handle_urinate_le_49(character_id: int) -> int:
+    """
+    尿意条≤49%，可以继续喝咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value <= 0.49:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.URINATE_LE_79)
 def handle_urinate_le_79(character_id: int) -> int:
     """
@@ -10551,6 +10569,25 @@ def handle_urinate_ge_80(character_id: int) -> int:
     value = character_data.urinate_point / 240
     if value > 0.79:
         return character_data.urinate_point * 4
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_URINATE_LE_49)
+def handle_target_urinate_le_49(character_id: int) -> int:
+    """
+    交互对象尿意条≤49%，可以继续喝咖啡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_data.urinate_point / 240
+    if value <= 0.49:
+        return 1
     else:
         return 0
 
