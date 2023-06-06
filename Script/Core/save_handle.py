@@ -75,8 +75,8 @@ def establish_save_linux(save_id: str):
         "1": cache,
         "0": save_verson,
     }
-    for data_id in data:
-        write_save_data(save_id, data_id, data[data_id])
+    for key, value in data.items():
+        write_save_data(save_id, key, value)
 
 
 def load_save_info_head(save_id: str) -> dict:
