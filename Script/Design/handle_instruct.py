@@ -346,15 +346,15 @@ def handle_manage_library():
 
 
 @add_instruct(
-    constant.Instruct.SEE_DEPARTMENT,
+    constant.Instruct.MANAGE_BASEMENT,
     constant.InstructType.WORK,
-    _("查看部门运作情况"),
+    _("管理罗德岛"),
     {
         constant_promise.Premise.IN_DR_OFFICE
     })
-def handle_see_department():
-    """处理查看部门运作情况指令"""
-    cache.now_panel_id = constant.Panel.DEPARTMENT
+def handle_manage_basement():
+    """处理管理罗德岛指令"""
+    cache.now_panel_id = constant.Panel.MANAGE_BASEMENT
 
 
 # @add_instruct(

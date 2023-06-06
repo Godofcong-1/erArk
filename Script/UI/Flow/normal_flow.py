@@ -12,10 +12,10 @@ from Script.UI.Panel import (
     make_food_panel,
     food_bag_panel,
     food_shop_panel,
+    manage_basement_panel,
     see_item_info_panel,
     see_map_panel,
     undress_panel,
-    department_panel,
     instruct_filter_panel,
     event_option_panel,
     check_locker_panel,
@@ -129,10 +129,10 @@ def undress_flow():
     now_panel.draw()
 
 
-@handle_panel.add_panel(constant.Panel.DEPARTMENT)
-def department_flow():
+@handle_panel.add_panel(constant.Panel.MANAGE_BASEMENT)
+def manage_basement_flow():
     """部门运作情况面板"""
-    now_panel = department_panel.Department_Panel(width)
+    now_panel = manage_basement_panel.Manage_Basement_Panel(width)
     now_panel.draw()
 
 

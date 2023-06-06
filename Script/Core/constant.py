@@ -1133,8 +1133,8 @@ class Panel:
     """ 脱衣服面板 """
     BUILDING = 15
     """ 基建面板 """
-    DEPARTMENT = 16
-    """ 部门运作情况面板 """
+    MANAGE_BASEMENT = 16
+    """ 管理罗德岛面板 """
     INSTRUCT_FILTER = 17
     """ 指令过滤面板 """
     EVENT_OPTION = 18
@@ -1525,8 +1525,8 @@ class Instruct:
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
-    SEE_DEPARTMENT = 0
-    """ 查看部门运作情况 """
+    MANAGE_BASEMENT = 0
+    """ 管理罗德岛 """
 
     #猥亵#
     MAKE_COFFEE_ADD = 0

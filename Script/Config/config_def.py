@@ -652,7 +652,7 @@ class WorkType:
     """ 工作名 """
     department: str
     """ 工作部门 """
-    palce: str
+    place: str
     """ 工作地点 """
     tag: int
     """ 标签 """

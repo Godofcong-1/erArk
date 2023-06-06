@@ -1120,7 +1120,7 @@ class ChangeWorkButtonList:
                 if cid:
                     work_cid = game_config.config_work_type[cid].cid
                     work_name = game_config.config_work_type[cid].name
-                    work_place = game_config.config_work_type[cid].department
+                    work_place = game_config.config_work_type[cid].place
                     work_describe = game_config.config_work_type[cid].describe
 
                     button_draw = draw.LeftButton(

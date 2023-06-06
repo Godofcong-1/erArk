@@ -126,9 +126,8 @@ def update_recruit():
                 now_draw.style = "nowmap"
                 now_draw.draw()
 
-
             # 之前做该栏位工作的HR，也把栏位数据清零
-            for id in cache.base_resouce.HR_id_set:
+            for id in cache.base_resouce.all_work_npc_set[71]:
                 character_data = cache.character_data[id]
                 if character_data.work.recruit_index == key:
                     character_data.work.recruit_index = -1

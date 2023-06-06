@@ -714,6 +714,8 @@ class Base_resouce:
         """ 基地当前所有设施的等级 """
         self.facility_open: Dict[int, bool] = {}
         """ 基地当前所有待开放设施的开放情况 """
+        self.all_work_npc_set: Dict[int, set] = {}
+        """ 所有工作的所属的干员id合集,工作id:干员id的集合 """
         self.power_use: int = 0
         """ 当前使用电力 """
         self.power_max: int = 0
@@ -731,22 +733,10 @@ class Base_resouce:
         """ 生活娱乐区设施数量上限 """
 
         # 工程部
-        self.maintenance_engineer_now: int = 0
-        """ 当前工作中的检修工程师数量 """
-        self.maintenance_engineer_set: Set = set()
-        """ 检修工程师干员id合集 """
         self.maintenance_place: Dict[int, int] = {}
         """ 当前每个角色的待检修地点 """
-        self.blacksmith_now: int = 0
-        """ 当前工作中的铁匠数量 """
-        self.blacksmith_set: Set = set()
-        """ 铁匠干员id合集 """
 
         # 生活娱乐区
-        self.chef_now: int = 0
-        """ 当前工作中的厨师数量 """
-        self.chef_set: Set = set()
-        """ 厨师干员id合集 """
 
         # 医疗部
         self.patient_now: int = 0
@@ -755,10 +745,6 @@ class Base_resouce:
         """ 当前已治疗患者人数 """
         self.patient_max: int = 0
         """ 患者人数上限 """
-        self.doctor_now: int = 0
-        """ 当前工作中的医生数量 """
-        self.doctor_id_set: Set = set()
-        """ 医生干员id合集 """
         self.cure_income: int = 0
         """ 今日总治疗收入 """
         self.patient_cured_all: int = 0
@@ -771,22 +757,10 @@ class Base_resouce:
         """ 当前招募进度 """
         self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
-        self.HR_now: int = 0
-        """ 当前工作中的HR数量 """
-        self.HR_id_set: Set = set()
-        """ HR干员id合集 """
 
         # 训练场
-        self.combat_training_now: int = 0
-        """ 当前工作中的战斗训练数量 """
-        self.combat_training_set: Set = set()
-        """ 战斗训练干员id合集 """
 
         # 图书档案区
-        self.library_manager_now: int = 0
-        """ 当前工作中的图书馆管理员数量 """
-        self.library_manager_set: Set = set()
-        """ 图书馆管理员干员id合集 """
         self.book_borrow_dict: Dict[int, int] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
         self.reader_now: int = 0
@@ -795,10 +769,6 @@ class Base_resouce:
         """ 推荐的阅读类别 """
 
         # 教育区
-        self.teacher_set: Set = set()
-        """ 教师干员id合集 """
-        self.student_set: Set = set()
-        """ 学生干员id合集 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """

@@ -261,7 +261,7 @@ def check_rearing_complete(character_id: int):
             draw_text += f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n"
             draw_text += f"\n{character_data.name}完成了育儿行动，开始回到正常的工作生活中来\n"
             draw_text += f"\n{child_character_data.name}能够初步独立了，在长大成人之前会一直在教育区上课学习\n"
-            if len(cache.base_resouce.teacher_set) == 0:
+            if len(cache.base_resouce.all_work_npc_set[151]) == 0:
                 draw_text += f"\n当前教育区没有进行授课工作的老师，请尽快安排一名干员负责教师工作\n"
             draw_text += f"\n{character_data.name}失去了[育儿]\n"
             draw_text += f"\n{character_data.name}失去了[泌乳]\n"
