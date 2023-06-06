@@ -12,7 +12,7 @@ def two_bit_array_to_dict(array: tuple) -> dict:
     Keyword arguments:
     array -- 要转换的二维数组
     """
-    return {x: y for x, y in array}
+    return dict(array)
 
 
 def get_rand_value_for_value_region(value_list: List[int]) -> int:
@@ -23,13 +23,14 @@ def get_rand_value_for_value_region(value_list: List[int]) -> int:
     Return arguments:
     int -- 获得的元素
     """
-    key_list = [math.ceil(i) for i in value_list]
-    now_data = dict(zip(itertools.accumulate(key_list), value_list))
-    weight_max = sum(key_list)
-    weight_region_list = list(now_data.keys())
-    now_weight = random.randint(0, weight_max - 1)
-    weight_region = get_next_value_for_list(now_weight, weight_region_list)
-    return now_data[weight_region]
+    return random.choices(value_list, weights=value_list)[0]
+    # key_list = [math.ceil(i) for i in value_list]
+    # now_data = dict(zip(itertools.accumulate(key_list), value_list))
+    # weight_max = sum(key_list)
+    # weight_region_list = list(now_data.keys())
+    # now_weight = random.randint(0, weight_max - 1)
+    # weight_region = get_next_value_for_list(now_weight, weight_region_list)
+    # return now_data[weight_region]
 
 
 def get_region_list(now_data: Dict[any, int]) -> dict:
@@ -57,12 +58,9 @@ def get_random_for_weight(data: Dict[any, int]) -> any:
     Keyword arguments:
     data -- 需要随机获取key的dict数据
     """
-    weight_max = sum(data.values())
-    weight_region_data = get_region_list(data)
-    weight_region_list = [int(i) for i in weight_region_data.keys()]
-    now_weight = random.randint(0, weight_max - 1)
-    weight_region = get_next_value_for_list(now_weight, weight_region_list)
-    return weight_region_data[weight_region]
+    keys = list(data.keys())
+    weights = list(data.values())
+    return random.choices(keys, weights=weights)[0]
 
 
 def get_next_value_for_list(now_int: int, int_list: List[int]) -> int:
@@ -101,7 +99,8 @@ def list_of_groups(init_list: list, children_list_len: int) -> List[List[any]]:
     list_of_groups = zip(*(iter(init_list),) * children_list_len)
     end_list = [list(i) for i in list_of_groups]
     count = len(init_list) % children_list_len
-    end_list.append(init_list[-count:]) if count != 0 else end_list
+    if count:
+        end_list.append(init_list[-count:])
     return end_list
 
 
@@ -116,7 +115,6 @@ def get_gauss_rand(min_value: int, max_value: int) -> int:
     """
     mu = (min_value + max_value) / 2
     single = mu - min_value
-    while 1:
-        value = random.gauss(mu, single)
-        if value >= min_value and value <= max_value:
-            return value
+    value = numpy.random.normal(mu, single)
+    value = numpy.clip(value, min_value, max_value)
+    return int(value)
