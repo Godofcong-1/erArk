@@ -29,7 +29,7 @@ class Manage_Basement_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("部门总概况")
+        self.now_panel = _("各部门工作概况")
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
@@ -38,7 +38,7 @@ class Manage_Basement_Panel:
         """绘制对象"""
 
         title_text = "管理罗德岛"
-        panel_list = [_("部门总概况")]
+        panel_list = [("各部门工作概况")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -73,8 +73,8 @@ class Manage_Basement_Panel:
             line.draw()
 
 
-            # 部门总概况
-            if self.now_panel == "部门总概况":
+            # 各部门工作概况
+            if self.now_panel == "各部门工作概况":
 
                 all_info_draw = draw.NormalDraw()
 
@@ -84,7 +84,8 @@ class Manage_Basement_Panel:
                 patient_now = cache.base_resouce.patient_now
                 work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
 
-                all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}\n\n"
+                all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
+                all_info_draw.text += f"\n ↓点击部门名查看对应部门详情\n\n"
                 all_info_draw.draw()
 
                 # 遍历全部门
@@ -176,7 +177,17 @@ class Manage_Basement_Panel:
                     else:
                         now_text += " 暂无"
 
-            if department == "医疗部":
+            if department == "工程部":
+                now_text += f"\n  当前待检修地点："
+                maintenance_flag = True
+                for chara_id in cache.base_resouce.maintenance_place:
+                    if len(cache.base_resouce.maintenance_place[chara_id]):
+                        now_text += f"{cache.base_resouce.maintenance_place[chara_id]}"
+                        maintenance_flag = False
+                if maintenance_flag:
+                    now_text += " 暂无"
+
+            elif department == "医疗部":
                 patient_cured,patient_now = str(cache.base_resouce.patient_cured),str(cache.base_resouce.patient_now)
                 now_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
                 cure_income = str(cache.base_resouce.cure_income)
@@ -277,10 +288,12 @@ class Manage_Basement_Panel:
             n_flag = True
             for department in self.department_text_list:
 
+                # 部门名
                 info_text = f"\n" if n_flag else ""
                 info_text += f"  {department}："
                 info_draw.text = info_text
                 info_draw.draw()
+                # 部门干员传给面板
                 for all_cid in game_config.config_work_type:
                     work_data = game_config.config_work_type[all_cid]
                     if work_data.department == department:

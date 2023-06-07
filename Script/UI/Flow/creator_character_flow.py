@@ -449,6 +449,8 @@ class Character_FirstNPC:
             self.npc_select_now = 9 - len(cache.npc_id_got)
         if self.npc_select_now:
             info_last_draw.text = f" 当前剩余可选干员数量 = {self.npc_select_now}"
+            if cache.debug_mode:
+                info_last_draw.text += f"  (debug模式下可选999个干员)"
         else:
             info_last_draw.text = f" 已选择全部初始干员"
 
@@ -780,6 +782,8 @@ class Character_Bonus:
         info_draw.text = f" \n 当前为第 {str(cache.game_round)} 周目\n"
         info_draw.text += f" 当前剩余奖励点数 ="
         info_draw.text += f" {self.bonus_now} = [新玩家奖励(20)]"
+        if cache.debug_mode:
+            info_draw.text += f" + [debug(999)]"
         info_draw.text += f"{bonus_use_text}\n"
         now_draw.draw_list.append(info_draw)
         now_draw.width += len(info_draw.text)

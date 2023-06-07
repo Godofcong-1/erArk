@@ -733,7 +733,7 @@ class Base_resouce:
         """ 生活娱乐区设施数量上限 """
 
         # 工程部
-        self.maintenance_place: Dict[int, int] = {}
+        self.maintenance_place: Dict[int, str] = {}
         """ 当前每个角色的待检修地点 """
 
         # 生活娱乐区
