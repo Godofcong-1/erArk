@@ -131,7 +131,7 @@ def undress_flow():
 
 @handle_panel.add_panel(constant.Panel.MANAGE_BASEMENT)
 def manage_basement_flow():
-    """部门运作情况面板"""
+    """管理罗德岛面板"""
     now_panel = manage_basement_panel.Manage_Basement_Panel(width)
     now_panel.draw()
 

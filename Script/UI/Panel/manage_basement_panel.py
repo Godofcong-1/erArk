@@ -72,7 +72,6 @@ class Manage_Basement_Panel:
             line = draw.LineDraw("+", self.width)
             line.draw()
 
-
             # 罗德岛资源总览
             if self.now_panel == "罗德岛资源总览":
 
@@ -80,6 +79,7 @@ class Manage_Basement_Panel:
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
+                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.base_resouce.warehouse_capacity}\n"
 
                 # 遍历全资源类型
                 for resouce in self.resouce_list:
