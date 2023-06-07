@@ -3646,7 +3646,7 @@ def handle_knowledge_add_pink_money(
     if character_data.target_character_id != 0:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.pink_certificate += now_add_lust
+    cache.base_resouce.materials_resouce[5] += now_add_lust
     now_draw = draw.NormalDraw()
     now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
     now_draw.width = width
@@ -3687,7 +3687,7 @@ def handle_cure_patient_add_just(
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
         now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.money += now_add_lust
+    cache.base_resouce.materials_resouce[1] += now_add_lust
     cache.base_resouce.cure_income += now_add_lust
     cache.base_resouce.all_income += now_add_lust
     cache.base_resouce.patient_now -= 1

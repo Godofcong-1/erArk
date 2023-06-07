@@ -29,7 +29,7 @@ class Manage_Basement_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("各部门工作概况")
+        self.now_panel = _("罗德岛资源总览")
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
@@ -38,7 +38,7 @@ class Manage_Basement_Panel:
         """绘制对象"""
 
         title_text = "管理罗德岛"
-        panel_list = [("各部门工作概况")]
+        panel_list = [("罗德岛资源总览"), ("各部门工作概况")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -73,12 +73,33 @@ class Manage_Basement_Panel:
             line.draw()
 
 
-            # 各部门工作概况
-            if self.now_panel == "各部门工作概况":
+            # 罗德岛资源总览
+            if self.now_panel == "罗德岛资源总览":
+
+                self.resouce_list = ["货币", "材料", "药剂"]
 
                 all_info_draw = draw.NormalDraw()
+                all_info_draw.text = ""
+
+                # 遍历全资源类型
+                for resouce in self.resouce_list:
+                    all_info_draw.text += f"\n {resouce}："
+                    # 遍历该类型的资源
+                    for material_id in cache.base_resouce.materials_resouce:
+                        material_data  = game_config.config_resouce[material_id]
+                        if material_data.type == resouce:
+                            all_info_draw.text += f"\n  {material_data.name}：{cache.base_resouce.materials_resouce[material_id]}"
+                    all_info_draw.text += "\n"
+
+                all_info_draw.width = self.width
+                all_info_draw.draw()
+
+            # 各部门工作概况
+            elif self.now_panel == "各部门工作概况":
 
                 self.department_text_list = ["工程部", "生活娱乐区", "医疗部", "文职部", "训练场", "图书馆", "教育区", "宿舍"]
+
+                all_info_draw = draw.NormalDraw()
 
                 # 统计各部门岗位的工作干员数量
                 patient_now = cache.base_resouce.patient_now

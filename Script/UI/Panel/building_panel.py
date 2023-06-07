@@ -73,7 +73,7 @@ class Building_Panel:
             resouce_text = "\n当前资源情况："
             power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
             resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
-            money = str(cache.base_resouce.money)
+            money = str(cache.base_resouce.materials_resouce[1])
             resouce_text += f"\n  当前龙门币数量    ：{money}\n"
             # 碳素建材的编号是15
             # building_materials = str(cache.base_resouce.materials_resouce[15])
@@ -219,7 +219,7 @@ class Building_Panel:
                 resouce_text = "\n当前资源情况："
                 power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
                 resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
-                money = str(cache.base_resouce.money)
+                money = str(cache.base_resouce.materials_resouce[1])
                 resouce_text += f"\n  当前龙门币数量    ：{money}\n"
                 # 碳素建材的编号是15
                 # building_materials = str(cache.base_resouce.materials_resouce[15])
@@ -240,7 +240,7 @@ class Building_Panel:
                     up_info_draw.text += "\n  升级所需电量不足"
                     level_up_flag = False
                 # 龙门币
-                if cache.base_resouce.money >= facility_data_next.money_use:
+                if cache.base_resouce.materials_resouce[1] >= facility_data_next.money_use:
                     pass
                 else:
                     up_info_draw.text += "\n  升级所需龙门币不足"
@@ -298,7 +298,7 @@ class Building_Panel:
 
             # 寻找和当前设施名一样的
             if facility_data.name == facility_data_now.name:
-                cache.base_resouce.money -= facility_data_next.money_use
+                cache.base_resouce.materials_resouce[1] -= facility_data_next.money_use
                 cache.base_resouce.facility_level[all_cid] += 1
                 basement.get_base_updata()
 

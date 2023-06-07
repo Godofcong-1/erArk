@@ -734,7 +734,7 @@ class Character_Bonus:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        if cache.base_resouce.money:
+        if cache.base_resouce.materials_resouce[1]:
             button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
             self.bonus_now -= 5
             draw_style = "nowmap"
@@ -822,14 +822,14 @@ class Character_Bonus:
 
     def get_money(self):
         """获得金钱"""
-        if cache.base_resouce.money:
-            cache.base_resouce.money = 0
-            cache.base_resouce.orundum = 0
-            cache.base_resouce.pink_certificate = 0
+        if cache.base_resouce.materials_resouce[1]:
+            cache.base_resouce.materials_resouce[1] = 0
+            cache.base_resouce.materials_resouce[3] = 0
+            cache.base_resouce.materials_resouce[5] = 0
         elif self.bonus_now >= 5:
-            cache.base_resouce.money = 50000
-            cache.base_resouce.orundum = 6000
-            cache.base_resouce.pink_certificate = 100
+            cache.base_resouce.materials_resouce[1] = 50000
+            cache.base_resouce.materials_resouce[3] = 6000
+            cache.base_resouce.materials_resouce[5] = 100
         else:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1
