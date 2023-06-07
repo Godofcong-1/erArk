@@ -1,5 +1,5 @@
 cid,talent_id,second_behavior_id,gain_type,gain_need,replace_talent_id
-编号id,素质id,二段行为结算id,获得类型(0随时自动，1手动，2指令绑定，3睡觉自动),获得需求,取代的旧素质id
+编号id,素质id,二段行为结算id,获得类型(0随时自动，1手动，2指令绑定，3睡觉自动),获得需求(F好感，X信任),取代的旧素质id
 int,int,int,int,str,int
 0,0,0,0,0,1
 素质的获得,,,,,

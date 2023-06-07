@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, map_handle, attr_calculation, handle_premise, game_time
+from Script.Design import attr_text, map_handle, attr_calculation, update, game_time, handle_talent
 
 panel_info_data = {}
 
@@ -1491,17 +1491,37 @@ class Character_talent_show_Text:
                 yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args = talent_id)
                 yes_draw.draw()
                 self.return_list.append(yes_draw.return_text)
+                line_feed.draw()
 
             else:
                 now_draw_failed = draw.NormalDraw()
                 now_draw_failed.text = "不满足条件，无法选择\n"
                 now_draw_failed.draw()
 
+        elif talent_id == 203:
+            line_feed.draw()
+            now_draw = draw.NormalDraw()
+            now_draw.text = "满足条件后需要准备【戒指】，然后进行【告白】，成功后即可获得\n"
+            now_draw.draw()
+
+        elif talent_id == 213:
+            line_feed.draw()
+            now_draw = draw.NormalDraw()
+            now_draw.text = "满足条件后需要准备【项圈】，然后进行【戴上项圈】，成功后即可获得\n"
+            now_draw.draw()
+
     def level_up(self, talent_id):
-        cache.character_data[self.character_id].talent[talent_id] = 1
         now_draw_succed = draw.WaitDraw()
-        now_draw_succed.text = "选择成功，将在博士入睡醒来后进入对应路线\n"
+        now_draw_succed.text = "选择成功\n"
         now_draw_succed.draw()
+        handle_talent.gain_talent(self.character_id, 1, talent_id)
+
+        # 等待1分钟以输出结果
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        character_data.behavior.duration = 1
+        update.game_update_flow(1)
 
 
 class CharacterImage:

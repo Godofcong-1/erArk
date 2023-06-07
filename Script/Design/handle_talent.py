@@ -33,7 +33,7 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-def gain_talent(character_id: int, now_gain_type: int):
+def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     """
     结算可以获得的素质\n
     Keyword arguments:
@@ -46,8 +46,13 @@ def gain_talent(character_id: int, now_gain_type: int):
         gain_talent_data = game_config.config_talent_gain[gain_talent_cid]
         gain_type = gain_talent_data.gain_type
         talent_id = gain_talent_data.talent_id
+
+        # 手动结算的话跳过判断直接获得对应素质
+        judge = 0
+        if now_gain_type == 1 and traget_talent_id == talent_id:
+            judge = 1
         # 需要为对应的结算时机，而且NPC没有该素质
-        if gain_type == now_gain_type and character_data.talent[talent_id] == 0:
+        elif gain_type != 1 and gain_type == now_gain_type and character_data.talent[talent_id] == 0:
 
             # 以&为分割判定是否有多个需求
             if "&" not in gain_talent_data.gain_need:
@@ -89,24 +94,24 @@ def gain_talent(character_id: int, now_gain_type: int):
                         judge = 0
                         break
 
-            # 如果符合获得条件，则获得该素质
-            if judge:
-                character_data.talent[talent_id] = 1
-                talent_name = game_config.config_talent[talent_id].name
+        # 如果符合获得条件，则获得该素质
+        if judge:
+            character_data.talent[talent_id] = 1
+            talent_name = game_config.config_talent[talent_id].name
 
-                # 触发对应的二段行为结算
-                if gain_talent_data.second_behavior_id:
-                    second_behavior_id = gain_talent_data.second_behavior_id
-                    character_data.second_behavior[second_behavior_id] = 1
+            # 触发对应的二段行为结算
+            if gain_talent_data.second_behavior_id:
+                second_behavior_id = gain_talent_data.second_behavior_id
+                character_data.second_behavior[second_behavior_id] = 1
 
-                # 判断是否需要进行替代旧素质
-                if gain_talent_data.replace_talent_id:
-                    old_talent_id = gain_talent_data.replace_talent_id
-                    character_data.talent[old_talent_id] = 0
+            # 判断是否需要进行替代旧素质
+            if gain_talent_data.replace_talent_id:
+                old_talent_id = gain_talent_data.replace_talent_id
+                character_data.talent[old_talent_id] = 0
 
-                now_draw_succed = draw.WaitDraw()
-                now_draw_succed.text = f"\n{character_data.name}获得了{talent_name}\n"
-                now_draw_succed.draw()
+            now_draw_succed = draw.WaitDraw()
+            now_draw_succed.text = f"\n{character_data.name}获得了{talent_name}\n"
+            now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
 def have_hormone_talent():

@@ -598,7 +598,7 @@ class TalentGain:
     gain_type: int
     """ 获得类型(0随时自动，1手动，2指令绑定，3睡觉自动) """
     gain_need: str
-    """ 获得需求 """
+    """ 获得需求(F好感，X信任) """
     replace_talent_id: int
     """ 取代的旧素质id """
 

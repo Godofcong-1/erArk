@@ -99,8 +99,8 @@ class Debug_Panel:
                 draw_text_list.append(f"[001]:已拥有的干员id列表：{cache.npc_id_got}")
                 draw_text_list.append(f"[002]:全干员id列表：{[i + 1 for i in range(len(cache.npc_tem_data))]}")
                 draw_text_list.append(f"[003]:龙门币：{cache.base_resouce.materials_resouce[1]}")
-                draw_text_list.append(f"[004]:合成玉：{cache.base_resouce.materials_resouce[3]}")
-                draw_text_list.append(f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[5]}")
+                draw_text_list.append(f"[004]:合成玉：{cache.base_resouce.materials_resouce[2]}")
+                draw_text_list.append(f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[4]}")
                 draw_text_list.append(f"[006]:基地当前所有待开放设施的开放情况")
                 draw_text_list.append(f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}")
                 draw_text_list.append(f"[008]:当前招募进度：{cache.base_resouce.recruit_now}")
@@ -390,23 +390,23 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.base_resouce.materials_resouce[1] = new_value
                 elif key_index == 4:
-                    info_text = f"[004]:合成玉：{cache.base_resouce.materials_resouce[3]}"
+                    info_text = f"[004]:合成玉：{cache.base_resouce.materials_resouce[2]}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.materials_resouce[3] = new_value
+                    cache.base_resouce.materials_resouce[2] = new_value
                 elif key_index == 5:
-                    info_text = f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[5]}"
+                    info_text = f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[4]}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.materials_resouce[5] = new_value
+                    cache.base_resouce.materials_resouce[4] = new_value
                 elif key_index == 6:
                     info_text = f"[006]:基地当前所有待开放设施的开放情况"
                     info_text += f"{cache.base_resouce.facility_open}"
@@ -567,6 +567,8 @@ class Debug_Panel:
                 draw_text_list.append(f"[014]:熟睡值 1m=10点，10min=100点(max)：{target_data.sleep_point}")
                 draw_text_list.append(f"[015]:愤怒槽：{target_data.angry_point}")
                 draw_text_list.append(f"[016]:射精槽：{target_data.eja_point}")
+                draw_text_list.append(f"[017]:对玩家的好感度：{target_data.favorability[0]}")
+                draw_text_list.append(f"[018]:信赖度：{target_data.trust}")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -612,6 +614,10 @@ class Debug_Panel:
                         target_data.angry_point = new_value
                     elif value_index == 16:
                         target_data.eja_point = new_value
+                    elif value_index == 17:
+                        target_data.favorability[0] = new_value
+                    elif value_index == 18:
+                        target_data.trust = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
