@@ -93,72 +93,45 @@ class Building_Panel:
             # 开始区块总览信息
             now_draw = panel.LeftDrawTextListPanel()
 
-            if self.now_panel == "区块总览":
-                now_draw.draw_list.append(line_feed)
-                now_draw.width += 1
+            now_draw.draw_list.append(line_feed)
+            now_draw.width += 1
 
-                for all_cid in game_config.config_facility:
-                    facility_data = game_config.config_facility[all_cid]
-                    if facility_data.type == -1:
+            # 遍历全设施
+            for all_cid in game_config.config_facility:
+                facility_data = game_config.config_facility[all_cid]
+                # 总览显示大区块，其他则显示在特殊房间中
+                if( (self.now_panel == "区块总览" and facility_data.type == -1)
+                    or (self.now_panel == "特殊房间" and facility_data.type != -1)):
 
-                        # 获取该区块的一系列信息
-                        facility_name = facility_data.name
-                        now_level = str(cache.base_resouce.facility_level[all_cid])
-                        facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
-                        facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
-                        facility_info = facility_data.info
+                    # 获取该区块的一系列信息
+                    facility_name = facility_data.name
+                    now_level = str(cache.base_resouce.facility_level[all_cid])
+                    facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
+                    facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
+                    facility_info = facility_data.info
 
-                        if all_cid == 1:
-                            facility_power_give = str(game_config.config_facility_effect[facility_cid].effect)
-                            info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (供电:{facility_power_give})"
-                        else:
-                            info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
-                        building_text = f"  {info_head}：{facility_info}"
-
-                        button_building_draw = draw.LeftButton(
-                            _(building_text),
-                            _(facility_name),
-                            self.width,
-                            cmd_func=self.level_up_info,
-                            args=(facility_cid,),
-                            )
-                        return_list.append(button_building_draw.return_text)
-                        now_draw.draw_list.append(button_building_draw)
-                        now_draw.width += len(button_building_draw.text)
-                        now_draw.draw_list.append(line_feed)
-                        now_draw.width += 1
-
-
-            elif self.now_panel == "特殊房间":
-                now_draw.draw_list.append(line_feed)
-                now_draw.width += 1
-
-                for all_cid in game_config.config_facility:
-                    facility_data = game_config.config_facility[all_cid]
-                    if facility_data.type != -1:
-
-
-                        facility_name = facility_data.name
-                        now_level = str(cache.base_resouce.facility_level[all_cid])
-                        facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
-                        facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
-                        facility_info = facility_data.info
-
+                    # 发电站单独显示供电
+                    if all_cid == 1:
+                        facility_power_give = str(game_config.config_facility_effect[facility_cid].effect)
+                        info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (供电:{facility_power_give})"
+                    else:
                         info_head = f"{facility_name.ljust(5,'　')} (lv{now_level}) (耗电:{facility_power_use})"
-                        building_text = f"  {info_head}：{facility_info}"
+                    building_text = f"  {info_head}：{facility_info}"
 
-                        button_building_draw = draw.LeftButton(
-                            _(building_text),
-                            _(facility_name),
-                            self.width,
-                            cmd_func=self.level_up_info,
-                            args=(facility_cid,),
-                            )
-                        return_list.append(button_building_draw.return_text)
-                        now_draw.draw_list.append(button_building_draw)
-                        now_draw.width += len(button_building_draw.text)
-                        now_draw.draw_list.append(line_feed)
-                        now_draw.width += 1
+                    # 绘制升级用的按钮
+                    button_building_draw = draw.LeftButton(
+                        _(building_text),
+                        _(facility_name),
+                        self.width,
+                        cmd_func=self.level_up_info,
+                        args=(facility_cid,),
+                        )
+                    return_list.append(button_building_draw.return_text)
+                    now_draw.draw_list.append(button_building_draw)
+                    now_draw.width += len(button_building_draw.text)
+                    now_draw.draw_list.append(line_feed)
+                    now_draw.width += 1
+
 
             self.draw_list: List[draw.NormalDraw] = []
             """ 绘制的文本列表 """
