@@ -824,12 +824,12 @@ class Character_Bonus:
         """获得金钱"""
         if cache.base_resouce.materials_resouce[1]:
             cache.base_resouce.materials_resouce[1] = 0
-            cache.base_resouce.materials_resouce[3] = 0
-            cache.base_resouce.materials_resouce[5] = 0
+            cache.base_resouce.materials_resouce[2] = 0
+            cache.base_resouce.materials_resouce[4] = 0
         elif self.bonus_now >= 5:
             cache.base_resouce.materials_resouce[1] = 50000
-            cache.base_resouce.materials_resouce[3] = 6000
-            cache.base_resouce.materials_resouce[5] = 100
+            cache.base_resouce.materials_resouce[2] = 6000
+            cache.base_resouce.materials_resouce[4] = 100
         else:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1
