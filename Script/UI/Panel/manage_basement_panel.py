@@ -19,6 +19,80 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+
+def change_npc_work_out(width):
+    """
+    调整干员的工作岗位
+    """
+
+    while 1:
+        # 遍历全部门
+        department_text_list = []
+        for all_cid in game_config.config_facility:
+            facility_data = game_config.config_facility[all_cid]
+            if facility_data.type == -1:
+                department_text_list.append(game_config.config_facility[all_cid].name)
+
+        # 遍历创建全部门的面板
+        handle_panel_list = []
+        for department_id in range(len(department_text_list)+1):
+            handle_panel_list.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 9, width, 1, 0, 0))
+
+        line = draw.LineDraw("-", width)
+        line.draw()
+
+        info_draw = draw.NormalDraw()
+        info_draw.width = width
+        return_list = []
+
+        # 空闲干员
+        info_text = f"\n  空闲干员："
+        info_draw.text = info_text
+        info_draw.draw()
+        leisure_list = []
+        cache.npc_id_got.discard(0)
+        for id in cache.npc_id_got:
+            if id in cache.base_resouce.all_work_npc_set[0]:
+                leisure_list.append(id)
+        handle_panel_list[0].text_list = leisure_list
+        handle_panel_list[0].update()
+        handle_panel_list[0].draw()
+        return_list.extend(handle_panel_list[0].return_list)
+        if not len(handle_panel_list[0].text_list):
+            line_feed.draw()
+
+        # 遍历全部门
+        department_count = 1
+        n_flag = True
+        for department in department_text_list:
+
+            # 部门名
+            info_text = f"\n" if n_flag else ""
+            info_text += f"  {department}："
+            info_draw.text = info_text
+            info_draw.draw()
+            # 部门干员传给面板
+            for all_cid in game_config.config_work_type:
+                work_data = game_config.config_work_type[all_cid]
+                if work_data.department == department:
+                    if len(cache.base_resouce.all_work_npc_set[all_cid]):
+                        handle_panel_list[department_count].text_list += list(cache.base_resouce.all_work_npc_set[all_cid])
+            n_flag = False if len(handle_panel_list[department_count].text_list) else True
+            handle_panel_list[department_count].update()
+            handle_panel_list[department_count].draw()
+            return_list.extend(handle_panel_list[department_count].return_list)
+            department_count += 1
+
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn == back_draw.return_text:
+            break
+
+
 class Manage_Basement_Panel:
     """
     用于显示基建界面面板对象
@@ -98,7 +172,12 @@ class Manage_Basement_Panel:
             # 各部门工作概况
             elif self.now_panel == "各部门工作概况":
 
-                self.department_text_list = ["工程部", "生活娱乐区", "医疗部", "文职部", "训练场", "图书馆", "教育区", "宿舍"]
+                # 遍历全部门
+                department_text_list = []
+                for all_cid in game_config.config_facility:
+                    facility_data = game_config.config_facility[all_cid]
+                    if facility_data.type == -1:
+                        department_text_list.append(game_config.config_facility[all_cid].name)
 
                 all_info_draw = draw.NormalDraw()
 
@@ -111,7 +190,7 @@ class Manage_Basement_Panel:
                 all_info_draw.draw()
 
                 # 遍历全部门
-                for department in self.department_text_list:
+                for department in department_text_list:
                     department_text = f"[{department}]"
 
                     # 输出部门按钮
@@ -149,7 +228,8 @@ class Manage_Basement_Panel:
                     f"[001]调整干员岗位",
                     f"\n1",
                     self.width ,
-                    cmd_func=self.change_npc_work,
+                    cmd_func=change_npc_work_out,
+                    args=self.width
                 )
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
@@ -272,71 +352,6 @@ class Manage_Basement_Panel:
 
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-
-    def change_npc_work(self):
-        """
-        调整干员的工作岗位
-        """
-
-        while 1:
-            # 遍历创建全部门的面板
-            handle_panel_list = []
-            for department_id in range(len(self.department_text_list)+1):
-                handle_panel_list.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0))
-
-            line = draw.LineDraw("-", self.width)
-            line.draw()
-
-            info_draw = draw.NormalDraw()
-            info_draw.width = self.width
-            return_list = []
-
-            # 空闲干员
-            info_text = f"\n  空闲干员："
-            info_draw.text = info_text
-            info_draw.draw()
-            leisure_list = []
-            cache.npc_id_got.discard(0)
-            for id in cache.npc_id_got:
-                if id in cache.base_resouce.all_work_npc_set[0]:
-                    leisure_list.append(id)
-            handle_panel_list[0].text_list = leisure_list
-            handle_panel_list[0].update()
-            handle_panel_list[0].draw()
-            return_list.extend(handle_panel_list[0].return_list)
-            if not len(handle_panel_list[0].text_list):
-                line_feed.draw()
-
-            # 遍历全部门
-            department_count = 1
-            n_flag = True
-            for department in self.department_text_list:
-
-                # 部门名
-                info_text = f"\n" if n_flag else ""
-                info_text += f"  {department}："
-                info_draw.text = info_text
-                info_draw.draw()
-                # 部门干员传给面板
-                for all_cid in game_config.config_work_type:
-                    work_data = game_config.config_work_type[all_cid]
-                    if work_data.department == department:
-                        if len(cache.base_resouce.all_work_npc_set[all_cid]):
-                            handle_panel_list[department_count].text_list += list(cache.base_resouce.all_work_npc_set[all_cid])
-                n_flag = False if len(handle_panel_list[department_count].text_list) else True
-                handle_panel_list[department_count].update()
-                handle_panel_list[department_count].draw()
-                return_list.extend(handle_panel_list[department_count].return_list)
-                department_count += 1
-
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:

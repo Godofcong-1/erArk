@@ -432,7 +432,8 @@ class Character_FirstNPC:
             _(button_text),
             _('指派干员工作'),
             self.width/8,
-            cmd_func=self.change_npc_work,
+            cmd_func=manage_basement_panel.change_npc_work_out,
+            args=self.width
             )
         self.return_list.append(button_select_draw.return_text)
         now_draw.draw_list.append(button_select_draw)
@@ -519,71 +520,6 @@ class Character_FirstNPC:
             npc_id = i + 1
             if npc_id not in cache.npc_id_got:
                 cache.npc_id_got.add(npc_id)
-
-    def change_npc_work(self):
-        """
-        调整干员的工作岗位
-        """
-
-        self.department_text_list = ["工程部", "生活娱乐区", "医疗部", "文职部", "训练场", "图书馆", "教育区", "宿舍"]
-
-        while 1:
-            # 遍历创建全部门的面板
-            handle_panel_list = []
-            for department_id in range(len(self.department_text_list)+1):
-                handle_panel_list.append(panel.PageHandlePanel([], manage_basement_panel.ChangeWorkButtonList, 999, 9, self.width, 1, 0, 0))
-
-            line = draw.LineDraw("-", self.width)
-            line.draw()
-
-            info_draw = draw.NormalDraw()
-            info_draw.width = self.width
-            return_list = []
-
-            # 空闲干员
-            info_text = f"\n  空闲干员："
-            info_draw.text = info_text
-            info_draw.draw()
-            leisure_list = []
-            cache.npc_id_got.discard(0)
-            for id in cache.npc_id_got:
-                if id in cache.base_resouce.all_work_npc_set[0]:
-                    leisure_list.append(id)
-            handle_panel_list[0].text_list = leisure_list
-            handle_panel_list[0].update()
-            handle_panel_list[0].draw()
-            return_list.extend(handle_panel_list[0].return_list)
-            if not len(handle_panel_list[0].text_list):
-                line_feed_draw.draw()
-
-            # 遍历全部门
-            department_count = 1
-            n_flag = True
-            for department in self.department_text_list:
-
-                info_text = f"\n" if n_flag else ""
-                info_text += f"  {department}："
-                info_draw.text = info_text
-                info_draw.draw()
-                for all_cid in game_config.config_work_type:
-                    work_data = game_config.config_work_type[all_cid]
-                    if work_data.department == department:
-                        if len(cache.base_resouce.all_work_npc_set[all_cid]):
-                            handle_panel_list[department_count].text_list += list(cache.base_resouce.all_work_npc_set[all_cid])
-                n_flag = False if len(handle_panel_list[department_count].text_list) else True
-                handle_panel_list[department_count].update()
-                handle_panel_list[department_count].draw()
-                return_list.extend(handle_panel_list[department_count].return_list)
-                department_count += 1
-
-            line_feed_draw.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
-            back_draw.draw()
-            line_feed_draw.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
 
 
 class SelectFirstNPCButton:
