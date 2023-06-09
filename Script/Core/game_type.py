@@ -768,6 +768,10 @@ class Base_resouce:
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
 
+        # 制造加工区
+        self.assembly_line: Dict[int, list] = {}
+        """ 流水线情况 流水线id:[生产类型id,干员id集合] """
+
         # 教育区
 
         self.research_zone_max: int = 0

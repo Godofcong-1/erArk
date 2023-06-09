@@ -411,6 +411,17 @@ class Organ:
     """ 名字 """
 
 
+class ProductFormula:
+    """ 产品配方 """
+
+    cid: int
+    """ 编号id """
+    product_id: int
+    """ 产品的资源id """
+    formula: str
+    """ 配方(序号为资源序号) """
+
+
 class Profession:
     """ 职业类型名称 """
 
@@ -483,6 +494,8 @@ class Resouce:
     """ 资源名字 """
     type: str
     """ 资源类型 """
+    price: int
+    """ 资源价格 """
     info: str
     """ 介绍信息 """
 

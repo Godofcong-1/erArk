@@ -984,6 +984,56 @@ def character_move_to_maintenance_place(character_id: int):
         line_feed.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PRODUCTION_WORKSHOP)
+def character_move_to_production_workshop(character_id: int):
+    """
+    移动至生产车间
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+    # 如果已经属于某个车间，则直接选择该车间
+    need_allocated_flag = True
+    for assembly_line_id in cache.base_resouce.assembly_line:
+        if character_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+            target_scene_name = f"assembly_line_{(str(assembly_line_id))}"
+            target_scene_str = random.choice(constant.place_data[target_scene_name])
+            need_allocated_flag = False
+
+    # 如果没有被分配到某个生产车间，则优先去没有人的，如果没有，则随机选择一个
+    if need_allocated_flag:
+        empty_flag = False
+        for target_scene_str in constant.place_data["Production_Workshop"]:
+            close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+            if list(cache.scene_data[target_scene_str].character_list) == [] and close_type == "open":
+                empty_flag = True
+                break
+        if not empty_flag:
+            while 1:
+                target_scene_str = random.choice(constant.place_data["Production_Workshop"])
+                close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+                if close_type == "open":
+                    break
+        assembly_line_id = int(target_scene_str[-1]) - 1
+        cache.base_resouce.assembly_line[assembly_line_id][1].add(character_id)
+
+    to_production_workshop = map_handle.get_map_system_path_for_str(target_scene_str)
+    _, _, move_path, move_time = character_move.character_move(character_id, to_production_workshop)
+    character_data.behavior.behavior_id = constant.Behavior.MOVE
+    character_data.behavior.move_target = move_path
+    character_data.behavior.duration = move_time
+    character_data.state = constant.CharacterStatus.STATUS_MOVE
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去生产车间"
+        now_draw.draw()
+        line_feed.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
 def character_move_to_bathzone_locker_room(character_id: int):
     """
@@ -2075,6 +2125,19 @@ def character_work_cook(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.NPC_COOK
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_NPC_COOK
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)
+def character_work_produce(character_id: int):
+    """
+    角色工作：制造产品
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)

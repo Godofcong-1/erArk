@@ -103,7 +103,7 @@ def get_base_updata():
         # 初始化战斗时干员数量上限
         elif facility_name == "指挥室":
             cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化人数上限
+        # 初始化招募条
         elif facility_name == "文职部":
             if level >= 5 and 2 not in cache.base_resouce.recruit_now:
                 cache.base_resouce.recruit_now[2] = 0
@@ -111,6 +111,18 @@ def get_base_updata():
                 cache.base_resouce.recruit_now[1] = 0
             if 0 not in cache.base_resouce.recruit_now:
                 cache.base_resouce.recruit_now[0] = 0
+        # 初始化流水线
+        elif facility_name == "制造加工区":
+            if level >= 5 and 4 not in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[4] = [0,set()]
+            if level >= 4 and 3 not in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[3] = [0,set()]
+            if level >= 3 and 2 not in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[2] = [0,set()]
+            if level >= 2 and 1 not in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[1] = [0,set()]
+            if 0 not in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[0] = [0,set()]
 
 
 def update_base_resouce_newday():
@@ -180,6 +192,7 @@ def update_facility_people():
         # 图书馆读者统计
         if handle_premise.handle_in_library(id):
             cache.base_resouce.reader_now += 1
+
 
 def check_random_borrow_book(character_id):
     """

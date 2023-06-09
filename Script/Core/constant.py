@@ -899,6 +899,8 @@ class StateMachine:
     """ 工作：修理装备 """
     WORK_COOK = 310
     """ 工作：做饭 """
+    WORK_PRODUCE = 311
+    """ 工作：制造产品 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -965,6 +967,8 @@ class StateMachine:
     """ 移动至餐馆（随机某个正餐餐馆） """
     MOVE_TO_MAINTENANCE_PLACE = 517
     """ 移动至检修地点 """
+    MOVE_TO_PRODUCTION_WORKSHOP = 518
+    """ 移动至生产车间 """
     MOVE_TO_KITCHEN = 521
     """ 移动至厨房 """
     MOVE_TO_FOODSHOP = 522
@@ -1493,18 +1497,12 @@ class Instruct:
     """ 全身造型服务 """
 
     #工作#
-    BUILDING = 0
-    """ 基建系统 """
-    PRTS = 0
-    """ 普瑞赛斯 """
     OFFICIAL_WORK = 0
     """ 处理公务 """
     BATTLE_COMMAND = 0
     """ 指挥作战 """
     LISTEN_MISSION = 0
     """ 听取委托 """
-    APPOINTED_ASSISTANT = 0
-    """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
     CURE_PATIENT = 0
@@ -1519,8 +1517,16 @@ class Instruct:
     """ 维护设施 """
     REPAIR_EQUIPMENT = 0
     """ 维修装备 """
+    APPOINTED_ASSISTANT = 0
+    """ 指派助理 """
+    BUILDING = 0
+    """ 基建系统 """
+    PRTS = 0
+    """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0
     """ 管理图书馆 """
+    MANAGE_ASSEMBLY_LINE = 0
+    """ 管理流水线 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

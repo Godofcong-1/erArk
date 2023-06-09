@@ -346,6 +346,21 @@ def handle_manage_library():
 
 
 @add_instruct(
+    constant.Instruct.MANAGE_ASSEMBLY_LINE,
+    constant.InstructType.WORK,
+    _("管理流水线"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.IN_PRODUCTION_WORKSHOP,
+    })
+def handle_manage_library():
+    """处理管理流水线指令"""
+    now_draw = normal_panel.Produce_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.MANAGE_BASEMENT,
     constant.InstructType.WORK,
     _("管理罗德岛"),

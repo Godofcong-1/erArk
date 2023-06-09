@@ -100,6 +100,10 @@ ai的目标,,,
 352,521,normal_all|work_is_cook|work_time|not_in_kitchen,正常状态下，工作是厨师，在工作时间，如果不在厨房，则去厨房
 353,310,normal_all|work_is_cook|work_time|in_kitchen,正常状态下，工作是厨师，在工作时间，如果在厨房，则开始做饭
 
+361,518,normal_all|work_is_production_worker|to_work_time|not_in_production_workshop,正常状态下，工作是生产工人，在到岗时间，如果不在生产车间，则去生产车间
+362,518,normal_all|work_is_production_worker|work_time|not_in_production_workshop,正常状态下，工作是生产工人，在工作时间，如果不在生产车间，则去生产车间
+363,311,normal_all|work_is_production_worker|work_time|in_production_workshop,正常状态下，工作是生产工人，在工作时间，如果在生产车间，则开始制造产品
+
 401,552,normal_all|all_entertainment_time|entertainment_is_read|not_in_library,正常状态下，全娱乐时间，娱乐是读书，不在图书馆，则去图书馆
 402,401,normal_all|all_entertainment_time|entertainment_is_read|in_library,正常状态下，全娱乐时间，娱乐是读书，在图书馆，则读书
 

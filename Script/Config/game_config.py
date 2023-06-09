@@ -215,6 +215,8 @@ config_food_quality: Dict[int, config_def.Food_Quality] = {}
 """ 食物质量数据 """
 config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
+config_productformula: Dict[int, config_def.ProductFormula] = {}
+""" 产品配方数据 条目cid:条目内容 """
 
 
 
@@ -937,6 +939,16 @@ def load_seasoning():
         config_seasoning[now_tem.cid] = now_tem
 
 
+def load_product_formula():
+    """载入产品配方"""
+    now_data = config_data["ProductFormula"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.ProductFormula()
+        now_tem.__dict__ = tem_data
+        config_productformula[now_tem.cid] = now_tem
+
+
 def load_prts():
     """载入教程数据"""
     now_data = config_data["Prts"]
@@ -1027,4 +1039,5 @@ def init():
     load_favorability_level()
     load_trust_level()
     load_seasoning()
+    load_product_formula()
     load_prts()

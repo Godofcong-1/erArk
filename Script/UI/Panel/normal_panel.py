@@ -5,7 +5,7 @@ from uuid import UUID
 from typing import Tuple, List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import see_clothing_info_panel, see_item_info_panel
+from Script.UI.Panel import manage_basement_panel
 from Script.Core import (
     cache_control,
     get_text,
@@ -18,7 +18,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character
+from Script.Design import update, map_handle, character, attr_calculation
 
 panel_info_data = {}
 
@@ -309,3 +309,217 @@ class Take_Care_Baby_Panel:
         character_data.behavior.duration = 30
         update.game_update_flow(30)
 
+
+class Produce_Panel:
+    """
+    用于生产产品的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.now_panel = _("产品生产")
+        """ 当前绘制的页面 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = "产品生产"
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            all_info_draw = draw.NormalDraw()
+            now_text = ""
+            now_text += f" 当前lv{cache.base_resouce.facility_level[3]}仓库容量（单资源存放上限）：{cache.base_resouce.warehouse_capacity}\n"
+
+            # 遍历全资源类型
+            self.resouce_list = ["货币", "材料", "药剂"]
+            for resouce in self.resouce_list:
+                now_text += f"\n {resouce}："
+                # 遍历该类型的资源
+                for material_id in cache.base_resouce.materials_resouce:
+                    material_data  = game_config.config_resouce[material_id]
+                    if material_data.type == resouce:
+                        now_text += f"  {material_data.name}：{cache.base_resouce.materials_resouce[material_id]}"
+                now_text += "\n"
+
+            all_info_draw.text = now_text
+            all_info_draw.width = self.width
+            all_info_draw.draw()
+
+            for assembly_line_id in cache.base_resouce.assembly_line:
+                now_text = f"\n {assembly_line_id+1}号流水线："
+
+                # 生产产品
+                formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+                formula_data = game_config.config_productformula[formula_id]
+                product_id = formula_data.product_id
+                product_data = game_config.config_resouce[product_id]
+                now_text += f"\n    当前生产：{product_data.name}(1/h)      "
+                all_info_draw.text = now_text
+                all_info_draw.draw()
+                button_text = " [生产调整] "
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text),
+                    len(button_text) * 2,
+                    cmd_func=self.select_assembly_line_produce,
+                    args=assembly_line_id,
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+
+                # 生产效率
+                now_level = cache.base_resouce.facility_level[12]
+                facility_cid = game_config.config_facility_effect_data["制造加工区"][int(now_level)]
+                all_effect = 0
+                facility_effect = game_config.config_facility_effect[facility_cid].effect
+                all_effect += facility_effect
+                now_text = f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)"
+                # 遍历输出干员的能力效率加成
+                for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                    character_data: game_type.Character = cache.character_data[chara_id]
+                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
+                    all_effect += character_effect
+                    now_text += f" + {character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)"
+                now_text += f" = {all_effect}%      "
+                all_info_draw.text = now_text
+                all_info_draw.draw()
+                button_text = " [工人增减] "
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text),
+                    len(button_text) * 2,
+                    cmd_func=manage_basement_panel.change_npc_work_out,
+                    args=self.width
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                button_text = " [工位调整] "
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text),
+                    len(button_text) * 2,
+                    cmd_func=self.select_assembly_line_produce,
+                    args=assembly_line_id,
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+
+                # 生产消耗
+                now_text = f"\n    当前生产消耗："
+                formula_text = formula_data.formula
+                # 以&为分割判定是否有多个需求
+                if "&" not in formula_text:
+                    need_list = []
+                    need_list.append(formula_text)
+                else:
+                    need_list = formula_text.split('&')
+                for need_text in need_list:
+                    need_type = int(need_text.split('|')[0])
+                    need_value = int(need_text.split('|')[1])
+                    now_text += f"  {game_config.config_resouce[need_type].name}:{need_value}/h"
+
+                all_info_draw.text = now_text
+                all_info_draw.draw()
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def select_assembly_line_produce(self, assembly_line_id):
+        """选择流水线生产的产品"""
+        while 1:
+
+                line = draw.LineDraw("-", window_width)
+                line.draw()
+                line_feed.draw()
+                info_draw = draw.NormalDraw()
+                info_draw.width = window_width
+                return_list = []
+
+                info_text = f"{assembly_line_id+1}号流水线当前生产的产品为："
+
+                formula_now_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+                formula_now_data = game_config.config_productformula[formula_now_id]
+                product_now_id = formula_now_data.product_id
+                product_now_data = game_config.config_resouce[product_now_id]
+
+                info_text += f"{product_now_data.name}"
+                info_text += "\n当前可以生成的产品有：\n"
+                info_draw.text = info_text
+                info_draw.draw()
+
+                # 遍历配方列表，获取每个配方的信息
+                for cid in game_config.config_productformula.keys():
+                    formula_data = game_config.config_productformula[cid]
+                    formula_cid = game_config.config_productformula[cid].cid
+                    product_id = formula_data.product_id
+                    product_data = game_config.config_resouce[product_id]
+                    product_name = product_data.name
+                    product_describe = product_data.info
+
+                    # 判断当前配方是否可以生产，未解锁则跳过
+                    flag_open = True
+                    # for open_cid in game_config.config_facility_open:
+                    #     if game_config.config_facility_open[open_cid].name == work_place:
+                    #         if not cache.base_resouce.facility_open[open_cid]:
+                    #             flag_open = False
+                    #         break
+
+                    if flag_open:
+
+                        # 输出配方信息
+                        button_draw = draw.LeftButton(
+                            f"[{str(formula_cid).rjust(3,'0')}]{product_name}：{product_describe}",
+                            f"\n{formula_cid}",
+                            window_width ,
+                            cmd_func=self.change_assembly_line_produce,
+                            args=(assembly_line_id ,formula_cid)
+                        )
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+
+                        formula_text = formula_data.formula
+                        now_text = f"\n     生产消耗："
+                        # 以&为分割判定是否有多个需求
+                        if "&" not in formula_text:
+                            need_list = []
+                            need_list.append(formula_text)
+                        else:
+                            need_list = formula_text.split('&')
+                        for need_text in need_list:
+                            need_type = int(need_text.split('|')[0])
+                            need_value = int(need_text.split('|')[1])
+                            now_text += f"  {game_config.config_resouce[need_type].name}：{need_value}/h"
+
+                        info_draw.text = now_text
+                        info_draw.draw()
+                        line_feed.draw()
+
+                line_feed.draw()
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+                back_draw.draw()
+                line_feed.draw()
+                return_list.append(back_draw.return_text)
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn in return_list:
+                    break
+
+    def change_assembly_line_produce(self, assembly_line_id, formula_cid):
+        """更改流水线生产的产品"""
+        cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
