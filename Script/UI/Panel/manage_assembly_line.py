@@ -77,7 +77,7 @@ class Manage_Assembly_Line_Panel:
                 button_text = " [生产调整] "
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(button_text),
+                    _(f"{button_text}_{assembly_line_id}"),
                     len(button_text) * 2,
                     cmd_func=self.select_assembly_line_produce,
                     args=assembly_line_id,

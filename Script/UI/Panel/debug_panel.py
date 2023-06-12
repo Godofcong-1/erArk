@@ -142,7 +142,9 @@ class Debug_Panel:
                 draw_text_list.append(f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}")
                 draw_text_list.append(f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}")
                 draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
-                draw_text_list.append(f"[008]:全源石技艺一键全开")
+                draw_text_list.append(f"[008]:全源石技艺全开")
+                draw_text_list.append(f"[009]:资源全99999")
+                draw_text_list.append(f"[010]:设施全满级")
 
 
                 for i in range(len(draw_text_list)):
@@ -522,6 +524,13 @@ class Debug_Panel:
                 elif key_index == 8:
                     for talent_id in {304,305,306,307,308,309,310,311,312}:
                         cache.character_data[0].talent[talent_id] = 1
+                elif key_index == 9:
+                    for material_id in cache.base_resouce.materials_resouce:
+                        cache.base_resouce.materials_resouce[material_id] = 99999
+                elif key_index == 10:
+                    for all_cid in cache.base_resouce.facility_level:
+                        cache.base_resouce.facility_level[all_cid] = 5
+                        basement.get_base_updata()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
