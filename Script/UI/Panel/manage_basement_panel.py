@@ -419,7 +419,7 @@ class ChangeWorkButtonList:
             info_text = f"{target_data.name}的当前工作为："
             work_data = game_config.config_work_type[target_data.work.work_type]
             info_text += f"{work_data.name}({work_data.department})"
-            info_text += "\n可指派的新工作有：\n"
+            info_text += "\n可指派的工作有：\n"
             info_draw.text = info_text
             info_draw.draw()
 
