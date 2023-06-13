@@ -2435,6 +2435,60 @@ def handle_in_h_shop(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_IN_H_SHOP)
+def handle_not_in_h_shop(character_id: int) -> int:
+    """
+    校验角色是否不在成人用品商店
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "H_Shop" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_RESOURCE_EXCHANGE)
+def handle_in_resource_exchange(character_id: int) -> int:
+    """
+    校验角色是否在资源交易所
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Resource_Exchange" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_RESOURCE_EXCHANGE)
+def handle_not_in_resource_exchange(character_id: int) -> int:
+    """
+    校验角色是否不在资源交易所
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Resource_Exchange" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_PRODUCTION_WORKSHOP)
 def handle_in_production_workshop(character_id: int) -> int:
     """

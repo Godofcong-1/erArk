@@ -1,0 +1,8 @@
+{
+  "SceneName":"资源交易所",
+  "InOutDoor":"In",
+  "Exposed":"1",
+  "Have_Furniture":"2",
+  "Close_Type":"1",
+  "SceneTag":"Resource_Exchange"
+}
