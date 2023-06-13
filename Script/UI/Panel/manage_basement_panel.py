@@ -5,7 +5,7 @@ from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
 from Script.Design import basement
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import building_panel
+from Script.UI.Panel import building_panel, manage_assembly_line, manage_library
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -113,7 +113,8 @@ class Manage_Basement_Panel:
         """绘制对象"""
 
         title_text = "管理罗德岛"
-        panel_list = [("罗德岛资源总览"), ("各部门工作概况"), ("基建概况")]
+        panel_list = [("罗德岛资源总览"), ("各部门工作概况")]
+        department_son_panel_button_dict = {"工程部":"[基建系统]", "制造加工区":"[生产系统]", "图书馆":"[图书馆管理系统]"}
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -207,6 +208,19 @@ class Manage_Basement_Panel:
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
 
+                    # 如果该部门有子系统的话，绘制子系统按钮
+                    if department in department_son_panel_button_dict:
+                        button_text = department_son_panel_button_dict[department]
+                        button_draw = draw.CenterButton(
+                            button_text,
+                            button_text,
+                            len(button_text) * 2,
+                            cmd_func=self.jump_to_son_panel,
+                            args=(button_text)
+                        )
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+
                     # 输出部门工作人员数量
                     all_info_draw.text = "："
                     for all_cid in game_config.config_work_type:
@@ -234,13 +248,6 @@ class Manage_Basement_Panel:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
-            # 各部门工作概况
-            elif self.now_panel == "基建概况":
-                now_panel = building_panel.Building_Panel(self.width)
-                now_panel.draw()
-                self.now_panel = "罗德岛资源总览"
-                continue
-
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -259,6 +266,20 @@ class Manage_Basement_Panel:
 
         self.now_panel = now_panel
 
+    def jump_to_son_panel(self, son_panel: str):
+        """
+        跳转子面板
+        Keyword arguments:
+        panel -- 要切换的面板类型
+        """
+
+        if "基建系统" in son_panel:
+            now_panel = building_panel.Building_Panel(self.width)
+        elif "生产系统" in son_panel:
+            now_panel = manage_assembly_line.Manage_Assembly_Line_Panel(self.width)
+        elif "图书馆管理系统" in son_panel:
+            now_panel = manage_library.Manage_Library_Panel(self.width)
+        now_panel.draw()
 
     def show_department(self, department: str):
         """

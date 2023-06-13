@@ -156,6 +156,7 @@ class Manage_Library_Panel:
                 now_draw.text = _(f"\n  目前无人借书，不需要催还\n")
                 now_draw.draw()
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -210,6 +211,7 @@ class Manage_Library_Panel:
             self.handle_panel.draw()
             return_list = []
             return_list.extend(self.handle_panel.return_list)
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed.draw()
@@ -255,6 +257,7 @@ class Manage_Library_Panel:
                 return_list.append(button_draw.return_text)
 
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
