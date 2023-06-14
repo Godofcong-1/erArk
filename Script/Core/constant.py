@@ -1527,6 +1527,8 @@ class Instruct:
     """ 管理图书馆 """
     MANAGE_ASSEMBLY_LINE = 0
     """ 管理流水线 """
+    RESOURCE_EXCHANGE = 0
+    """ 资源交易 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

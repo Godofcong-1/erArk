@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle
-from Script.UI.Panel import normal_panel, see_character_info_panel, see_save_info_panel, manage_assembly_line
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -356,7 +356,22 @@ def handle_manage_library():
     })
 def handle_manage_library():
     """处理管理流水线指令"""
-    now_draw = manage_assembly_line.Manage_Assembly_Line_Panel(width)
+    now_draw = manage_assembly_line_panel.Manage_Assembly_Line_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.RESOURCE_EXCHANGE,
+    constant.InstructType.WORK,
+    _("资源交易"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.IN_RESOURCE_EXCHANGE,
+    })
+def handle_manage_library():
+    """处理资源交易指令"""
+    now_draw = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
     now_draw.draw()
 
 
