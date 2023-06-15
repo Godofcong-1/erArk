@@ -158,20 +158,27 @@ class Manage_Assembly_Line_Panel:
 
                 line = draw.LineDraw("-", window_width)
                 line.draw()
-                line_feed.draw()
                 info_draw = draw.NormalDraw()
                 info_draw.width = window_width
                 return_list = []
-
-                info_text = f"{assembly_line_id+1}号流水线当前生产的产品为："
 
                 formula_now_id = cache.base_resouce.assembly_line[assembly_line_id][0]
                 formula_now_data = game_config.config_productformula[formula_now_id]
                 product_now_id = formula_now_data.product_id
                 product_now_data = game_config.config_resouce[product_now_id]
 
-                info_text += f"{product_now_data.name}"
-                info_text += "\n当前可以生成的产品有：\n"
+                info_text = f" ○流水线的生产变动会在第二天0时开始生效\n\n"
+                info_text += f" {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
+
+                # 判断是否绘制变更信息
+                if cache.base_resouce.assembly_line[assembly_line_id][3] != cache.base_resouce.assembly_line[assembly_line_id][0]:
+                    new_formula_now_id = cache.base_resouce.assembly_line[assembly_line_id][3]
+                    new_formula_now_data = game_config.config_productformula[new_formula_now_id]
+                    new_product_now_id = new_formula_now_data.product_id
+                    new_product_now_data = game_config.config_resouce[new_product_now_id]
+                    info_text += f"\n 将在第二天开始变成       ：{new_product_now_data.name}"
+
+                info_text += "\n\n 当前可以生成的产品有：\n"
                 info_draw.text = info_text
                 info_draw.draw()
 
@@ -228,12 +235,12 @@ class Manage_Assembly_Line_Panel:
                 line_feed.draw()
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
+                if yrn == back_draw.return_text:
                     break
 
     def change_assembly_line_produce(self, assembly_line_id, formula_cid):
         """更改流水线生产的产品"""
-        cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
+        cache.base_resouce.assembly_line[assembly_line_id][3] = formula_cid
 
     def select_npc_position(self, assembly_line_id):
         """选择干员的工位"""

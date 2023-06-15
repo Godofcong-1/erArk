@@ -114,15 +114,15 @@ def get_base_updata():
         # 初始化流水线
         elif facility_name == "制造加工区":
             if 0 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[0] = [0,set()]
+                cache.base_resouce.assembly_line[0] = [0,set(),0,0]
             if level >= 2 and 1 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[1] = [0,set()]
+                cache.base_resouce.assembly_line[1] = [0,set(),0,0]
             if level >= 3 and 2 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[2] = [0,set()]
+                cache.base_resouce.assembly_line[2] = [0,set(),0,0]
             if level >= 4 and 3 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[3] = [0,set()]
+                cache.base_resouce.assembly_line[3] = [0,set(),0,0]
             if level >= 5 and 4 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[4] = [0,set()]
+                cache.base_resouce.assembly_line[4] = [0,set(),0,0]
 
 
 def update_base_resouce_newday():
@@ -134,9 +134,15 @@ def update_base_resouce_newday():
     无
     """
 
-    # 输出收入合计
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
+
+    # 生产线更换产品刷新
+    for assembly_line_id in cache.base_resouce.assembly_line:
+        if cache.base_resouce.assembly_line[assembly_line_id][3] != cache.base_resouce.assembly_line[assembly_line_id][0]:
+            cache.base_resouce.assembly_line[assembly_line_id][0] = cache.base_resouce.assembly_line[assembly_line_id][3]
+
+    # 输出收入合计
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
     now_draw.draw()
 

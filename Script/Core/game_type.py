@@ -769,8 +769,8 @@ class Base_resouce:
         """ 推荐的阅读类别 """
 
         # 制造加工区
-        self.assembly_line: Dict[int, list] = {}
-        """ 流水线情况 流水线id:[生产类型id,干员id集合] """
+        self.assembly_line: Dict[int, list, int ,int] = {}
+        """ 流水线情况 流水线id:[0生产类型id, 1干员id集合, 2额外产量(100=1单位), 3明日要变成的新生产类型] """
 
         # 教育区
 
