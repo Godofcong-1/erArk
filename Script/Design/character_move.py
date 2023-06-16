@@ -23,7 +23,7 @@ def own_charcter_move(target_scene: list):
                 now_target_position,
                 now_need_time,
             ) = character_move(0, target_scene)
-            break_list = ["Null","wait_open","door_close"]
+            break_list = ["null","wait_open","door_close"]
             if move_now in break_list :
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -43,16 +43,16 @@ def own_charcter_move(target_scene: list):
 
 def character_move(character_id: int, target_scene: list) -> (str, list, list, int):
     """
-    通用角色移动控制
-    Keyword arguments:
-    character_id -- 角色id
-    target_scene -- 寻路目标场景(在地图系统下的绝对坐标)
-    Return arguments:
-    str:null -- 未找到路径
-    str:end -- 当前位置已是路径终点
-    list -- 路径
-    list -- 本次移动到的位置
-    int -- 本次移动花费的时间
+    通用角色移动控制 \n
+    Keyword arguments: \n
+    character_id -- 角色id \n
+    target_scene -- 寻路目标场景(在地图系统下的 绝对坐标) \n
+    Return arguments: \n
+    str:null -- 未找到路径 \n
+    str:end -- 当前位置已是路径终点 \n
+    list -- 路径 \n
+    list -- 本次移动到的位置 \n
+    int -- 本次移动花费的时间 \n
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_position = character_data.position
