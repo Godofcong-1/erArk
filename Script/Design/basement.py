@@ -4,7 +4,7 @@ from Script.Core import (
     game_type,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise
+from Script.Design import handle_premise, attr_calculation
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -67,6 +67,7 @@ def get_base_updata():
         # 累加全设施的用电量
         facility_name = game_config.config_facility[all_cid].name
         facility_cid = game_config.config_facility_effect_data[facility_name][level]
+        facility_effect = game_config.config_facility_effect[facility_cid].effect
         cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
 
         # 如果满足设施开放的前提条件，则开放该设施
@@ -111,18 +112,26 @@ def get_base_updata():
                 cache.base_resouce.recruit_now[1] = 0
             if level >= 5 and 2 not in cache.base_resouce.recruit_now:
                 cache.base_resouce.recruit_now[2] = 0
-        # 初始化流水线
         elif facility_name == "制造加工区":
+            # 初始化流水线
             if 0 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[0] = [0,set(),0,0]
+                cache.base_resouce.assembly_line[0] = [0,set(),0,0,0]
             if level >= 2 and 1 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[1] = [0,set(),0,0]
+                cache.base_resouce.assembly_line[1] = [0,set(),0,0,0]
             if level >= 3 and 2 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[2] = [0,set(),0,0]
+                cache.base_resouce.assembly_line[2] = [0,set(),0,0,0]
             if level >= 4 and 3 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[3] = [0,set(),0,0]
+                cache.base_resouce.assembly_line[3] = [0,set(),0,0,0]
             if level >= 5 and 4 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[4] = [0,set(),0,0]
+                cache.base_resouce.assembly_line[4] = [0,set(),0,0,0]
+            # 计算当前总效率
+            for assembly_line_id in cache.base_resouce.assembly_line:
+                cache.base_resouce.assembly_line[assembly_line_id][2] = facility_effect
+                # 遍历输出干员的能力效率加成
+                for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                    character_data: game_type.Character = cache.character_data[chara_id]
+                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
+                    cache.base_resouce.assembly_line[assembly_line_id][2] += character_effect
 
 
 def update_base_resouce_newday():
@@ -137,10 +146,7 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
-    # 生产线更换产品刷新
-    for assembly_line_id in cache.base_resouce.assembly_line:
-        if cache.base_resouce.assembly_line[assembly_line_id][3] != cache.base_resouce.assembly_line[assembly_line_id][0]:
-            cache.base_resouce.assembly_line[assembly_line_id][0] = cache.base_resouce.assembly_line[assembly_line_id][3]
+    settle_assembly_line()
 
     # 输出收入合计
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
@@ -250,3 +256,44 @@ def check_return_book(character_id):
                 character_data.entertainment.borrow_book_id_set.discard(book_id)
                 # print(f"debug {character_data.name}还了书{book_id}")
                 return 1
+
+
+def settle_assembly_line():
+    """
+    结算流水线的生产
+    """
+
+    # 遍历流水线
+    for assembly_line_id in cache.base_resouce.assembly_line:
+        now_product_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+        if now_product_id != 0:
+            formula_now = game_config.config_productformula_data[now_product_id]
+            # 最大生产时间
+            max_time = 24 - cache.base_resouce.assembly_line[assembly_line_id][4]
+            # 生产效率
+            produce_effect = cache.base_resouce.assembly_line[assembly_line_id][2]
+            # 计算最大生产数
+            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num = produce_num_max
+
+            # 遍历全部原料，判断是否足够
+            for need_type in formula_now:
+                # 当前种类的原料最大生产数
+                now_type_max_produce_num = cache.base_resouce.materials_resouce[need_type] // formula_now[need_type]
+                # 不超过总最大生产数
+                produce_num = min(produce_num,now_type_max_produce_num)
+
+            # 结算实际生产
+            if produce_num > 0:
+                now_text = f"\n 流水线{assembly_line_id}:"
+                now_text += f"上次结算是{cache.base_resouce.assembly_line[assembly_line_id][4]}时，到现在已过{24 - cache.base_resouce.assembly_line[assembly_line_id][4]}小时。"
+                if produce_num < produce_num_max:
+                    now_text += f"由于原料不足，最大可以生产{produce_num}个，"
+                now_text += f"实际生产了{produce_num}个{game_config.config_resouce[now_product_id].name}\n"
+                # 结算实际消耗的原料
+                for need_type in formula_now:
+                    cache.base_resouce.materials_resouce[need_type] -= produce_num * formula_now[need_type]
+                # 结算实际生产的产品
+                cache.base_resouce.materials_resouce[now_product_id] += produce_num
+            # 重置收菜时间
+            cache.base_resouce.assembly_line[assembly_line_id][4] = 0

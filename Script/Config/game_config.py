@@ -217,6 +217,8 @@ config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
 config_productformula: Dict[int, config_def.ProductFormula] = {}
 """ 产品配方数据 条目cid:条目内容 """
+config_productformula_data: Dict[int, Dict[int, int]] = {}
+""" 产品配方具体数据 条目cid:[原料id:原料数量] """
 
 
 
@@ -947,6 +949,19 @@ def load_product_formula():
         now_tem = config_def.ProductFormula()
         now_tem.__dict__ = tem_data
         config_productformula[now_tem.cid] = now_tem
+
+        formula_text = now_tem.formula
+        # 以&为分割判定是否有多个需求
+        if "&" not in formula_text:
+            need_list = []
+            need_list.append(formula_text)
+        else:
+            need_list = formula_text.split('&')
+        for need_text in need_list:
+            need_type = int(need_text.split('|')[0])
+            need_value = int(need_text.split('|')[1])
+            config_productformula_data.setdefault(now_tem.cid, {})
+            config_productformula_data[now_tem.cid][need_type] = need_value
 
 
 def load_prts():

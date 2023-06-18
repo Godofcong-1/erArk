@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, basement
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import manage_basement_panel
@@ -65,13 +65,34 @@ class Manage_Assembly_Line_Panel:
 
             for assembly_line_id in cache.base_resouce.assembly_line:
                 now_text = f"\n {assembly_line_id+1}号流水线："
+                all_info_draw.text = now_text
+                all_info_draw.draw()
 
-                # 生产产品
+                # 基础数据
                 formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
                 formula_data = game_config.config_productformula[formula_id]
                 product_id = formula_data.product_id
                 product_data = game_config.config_resouce[product_id]
-                now_text += f"\n    当前生产：{product_data.name}(1/h)      "
+
+                # 显示结算
+                if formula_id != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
+                    line_feed.draw()
+                    button_text = " [生产结算] "
+                    button_draw = draw.CenterButton(
+                        _(button_text),
+                        _(f"{button_text}_{assembly_line_id}"),
+                        len(button_text) * 2,
+                        cmd_func=basement.settle_assembly_line,
+                        )
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                else:
+                    now_text = f"\n    已结算"
+                    all_info_draw.text = now_text
+                    all_info_draw.draw()
+
+                # 生产产品
+                now_text = f"\n    当前生产：{product_data.name}(1/h)      "
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 button_text = " [生产调整] "
@@ -167,16 +188,8 @@ class Manage_Assembly_Line_Panel:
                 product_now_id = formula_now_data.product_id
                 product_now_data = game_config.config_resouce[product_now_id]
 
-                info_text = f" ○流水线的生产变动会在第二天0时开始生效\n\n"
+                info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
                 info_text += f" {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
-
-                # 判断是否绘制变更信息
-                if cache.base_resouce.assembly_line[assembly_line_id][3] != cache.base_resouce.assembly_line[assembly_line_id][0]:
-                    new_formula_now_id = cache.base_resouce.assembly_line[assembly_line_id][3]
-                    new_formula_now_data = game_config.config_productformula[new_formula_now_id]
-                    new_product_now_id = new_formula_now_data.product_id
-                    new_product_now_data = game_config.config_resouce[new_product_now_id]
-                    info_text += f"\n 将在第二天开始变成       ：{new_product_now_data.name}"
 
                 info_text += "\n\n 当前可以生成的产品有：\n"
                 info_draw.text = info_text
@@ -240,7 +253,10 @@ class Manage_Assembly_Line_Panel:
 
     def change_assembly_line_produce(self, assembly_line_id, formula_cid):
         """更改流水线生产的产品"""
-        cache.base_resouce.assembly_line[assembly_line_id][3] = formula_cid
+        if cache.base_resouce.assembly_line[assembly_line_id][0] != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
+            pass
+        else:
+            cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
 
     def select_npc_position(self, assembly_line_id):
         """选择干员的工位"""
