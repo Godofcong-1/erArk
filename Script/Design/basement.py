@@ -126,7 +126,7 @@ def get_base_updata():
                 cache.base_resouce.assembly_line[4] = [0,set(),0,0,0]
             # 计算当前总效率
             for assembly_line_id in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[assembly_line_id][2] = facility_effect
+                cache.base_resouce.assembly_line[assembly_line_id][2] = 100 + facility_effect
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
@@ -265,35 +265,48 @@ def settle_assembly_line():
 
     # 遍历流水线
     for assembly_line_id in cache.base_resouce.assembly_line:
-        now_product_id = cache.base_resouce.assembly_line[assembly_line_id][0]
-        if now_product_id != 0:
-            formula_now = game_config.config_productformula_data[now_product_id]
+        now_formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+        if now_formula_id != 0:
+            formula_data_now = game_config.config_productformula_data[now_formula_id]
+            formula_now = game_config.config_productformula[now_formula_id]
+            product_id = formula_now.product_id
             # 最大生产时间
-            max_time = 24 - cache.base_resouce.assembly_line[assembly_line_id][4]
+            if cache.game_time.hour == 0:
+                max_time = 24 - cache.base_resouce.assembly_line[assembly_line_id][4]
+            else:
+                max_time = cache.game_time.hour - cache.base_resouce.assembly_line[assembly_line_id][4]
             # 生产效率
             produce_effect = cache.base_resouce.assembly_line[assembly_line_id][2]
             # 计算最大生产数
             produce_num_max = int(max_time * produce_effect / 100)
             produce_num = produce_num_max
+            # print(f"debug 流水线{assembly_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
             # 遍历全部原料，判断是否足够
-            for need_type in formula_now:
+            for need_type in formula_data_now:
                 # 当前种类的原料最大生产数
-                now_type_max_produce_num = cache.base_resouce.materials_resouce[need_type] // formula_now[need_type]
+                now_type_max_produce_num = cache.base_resouce.materials_resouce[need_type] // formula_data_now[need_type]
                 # 不超过总最大生产数
                 produce_num = min(produce_num,now_type_max_produce_num)
+            # print(f"debug 流水线{assembly_line_id}，实际生产数为{produce_num}")
 
             # 结算实际生产
             if produce_num > 0:
-                now_text = f"\n 流水线{assembly_line_id}:"
-                now_text += f"上次结算是{cache.base_resouce.assembly_line[assembly_line_id][4]}时，到现在已过{24 - cache.base_resouce.assembly_line[assembly_line_id][4]}小时。"
-                if produce_num < produce_num_max:
-                    now_text += f"由于原料不足，最大可以生产{produce_num}个，"
-                now_text += f"实际生产了{produce_num}个{game_config.config_resouce[now_product_id].name}\n"
                 # 结算实际消耗的原料
-                for need_type in formula_now:
-                    cache.base_resouce.materials_resouce[need_type] -= produce_num * formula_now[need_type]
+                for need_type in formula_data_now:
+                    cache.base_resouce.materials_resouce[need_type] -= produce_num * formula_data_now[need_type]
                 # 结算实际生产的产品
-                cache.base_resouce.materials_resouce[now_product_id] += produce_num
-            # 重置收菜时间
-            cache.base_resouce.assembly_line[assembly_line_id][4] = 0
+                cache.base_resouce.materials_resouce[product_id] += produce_num
+
+                now_text = f"\n 流水线{assembly_line_id}:"
+                now_text += f"上次结算是{cache.base_resouce.assembly_line[assembly_line_id][4]}时，到现在已过{max_time}小时，"
+                if produce_num < produce_num_max:
+                    now_text += f"由于原料不足，最大可以生产{produce_num}个，实际"
+                now_text += f"共生产了{produce_num}个{game_config.config_resouce[product_id].name}\n\n"
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = now_text
+                now_draw.draw()
+
+        # 重置收菜时间
+        cache.base_resouce.assembly_line[assembly_line_id][4] = cache.game_time.hour

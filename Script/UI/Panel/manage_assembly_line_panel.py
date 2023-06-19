@@ -39,6 +39,7 @@ class Manage_Assembly_Line_Panel:
 
         title_text = "产品生产"
         title_draw = draw.TitleLineDraw(title_text, self.width)
+        basement.settle_assembly_line()
 
         while 1:
             return_list = []
@@ -75,21 +76,22 @@ class Manage_Assembly_Line_Panel:
                 product_data = game_config.config_resouce[product_id]
 
                 # 显示结算
-                if formula_id != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
-                    line_feed.draw()
-                    button_text = " [生产结算] "
-                    button_draw = draw.CenterButton(
-                        _(button_text),
-                        _(f"{button_text}_{assembly_line_id}"),
-                        len(button_text) * 2,
-                        cmd_func=basement.settle_assembly_line,
-                        )
-                    return_list.append(button_draw.return_text)
-                    button_draw.draw()
-                else:
-                    now_text = f"\n    已结算"
-                    all_info_draw.text = now_text
-                    all_info_draw.draw()
+                # 改成自动结算了
+                # if formula_id != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
+                #     line_feed.draw()
+                #     button_text = " [生产结算] "
+                #     button_draw = draw.CenterButton(
+                #         _(button_text),
+                #         _(f"{button_text}_{assembly_line_id}"),
+                #         len(button_text) * 2,
+                #         cmd_func=basement.settle_assembly_line,
+                #         )
+                #     return_list.append(button_draw.return_text)
+                #     button_draw.draw()
+                # else:
+                #     now_text = f"\n    已结算"
+                #     all_info_draw.text = now_text
+                #     all_info_draw.draw()
 
                 # 生产产品
                 now_text = f"\n    当前生产：{product_data.name}(1/h)      "
@@ -188,7 +190,8 @@ class Manage_Assembly_Line_Panel:
                 product_now_id = formula_now_data.product_id
                 product_now_data = game_config.config_resouce[product_now_id]
 
-                info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
+                info_text = f""
+                # info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
                 info_text += f" {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
 
                 info_text += "\n\n 当前可以生成的产品有：\n"
@@ -248,15 +251,8 @@ class Manage_Assembly_Line_Panel:
                 line_feed.draw()
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn == back_draw.return_text:
+                if yrn in return_list:
                     break
-
-    def change_assembly_line_produce(self, assembly_line_id, formula_cid):
-        """更改流水线生产的产品"""
-        if cache.base_resouce.assembly_line[assembly_line_id][0] != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
-            pass
-        else:
-            cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
 
     def select_npc_position(self, assembly_line_id):
         """选择干员的工位"""
@@ -361,10 +357,19 @@ class Manage_Assembly_Line_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+            # 确定的话就进行id的转移结算
             elif yrn == yes_draw.return_text:
                 cache.base_resouce.assembly_line[old_position][1].discard(self.now_chara_id)
                 cache.base_resouce.assembly_line[self.target_position][1].add(self.now_chara_id)
+                basement.get_base_updata()
                 break
+
+    def change_assembly_line_produce(self, assembly_line_id, formula_cid):
+        """更改流水线生产的产品"""
+        if cache.base_resouce.assembly_line[assembly_line_id][0] != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
+            pass
+        else:
+            cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
 
     def settle_npc_id(self, chara_id):
         """结算干员的id变更"""
