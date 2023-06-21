@@ -146,7 +146,7 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
-    settle_assembly_line()
+    settle_assembly_line(newdayflag=True)
 
     # 输出收入合计
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
@@ -258,10 +258,11 @@ def check_return_book(character_id):
                 return 1
 
 
-def settle_assembly_line():
+def settle_assembly_line(newdayflag = False):
     """
     结算流水线的生产
     """
+    
 
     # 遍历流水线
     for assembly_line_id in cache.base_resouce.assembly_line:
@@ -271,8 +272,8 @@ def settle_assembly_line():
             formula_now = game_config.config_productformula[now_formula_id]
             product_id = formula_now.product_id
             # 最大生产时间
-            if cache.game_time.hour == 0:
-                max_time = 24 - cache.base_resouce.assembly_line[assembly_line_id][4]
+            if newdayflag:
+                max_time = 24 + cache.game_time.hour - cache.base_resouce.assembly_line[assembly_line_id][4]
             else:
                 max_time = cache.game_time.hour - cache.base_resouce.assembly_line[assembly_line_id][4]
             # 生产效率
@@ -302,7 +303,12 @@ def settle_assembly_line():
                 now_text += f"上次结算是{cache.base_resouce.assembly_line[assembly_line_id][4]}时，到现在已过{max_time}小时，"
                 if produce_num < produce_num_max:
                     now_text += f"由于原料不足，最大可以生产{produce_num}个，实际"
-                now_text += f"共生产了{produce_num}个{game_config.config_resouce[product_id].name}\n\n"
+                now_text += f"共生产了{produce_num}个{game_config.config_resouce[product_id].name}"
+                # 不会超过仓库容量
+                if cache.base_resouce.materials_resouce[product_id] > cache.base_resouce.warehouse_capacity:
+                    cache.base_resouce.materials_resouce[product_id] = cache.base_resouce.warehouse_capacity
+                    now_text += f"，由于仓库容量不足，{game_config.config_resouce[product_id].name}已达上限数量{cache.base_resouce.warehouse_capacity}"
+                now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
                 now_draw.text = now_text
