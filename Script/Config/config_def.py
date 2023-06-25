@@ -274,6 +274,19 @@ class Favorability_Level:
     """ 实行值加成 """
 
 
+class First_Bouns:
+    """ 初期奖励奖励 """
+
+    cid: int
+    """ 奖励id """
+    name: str
+    """ 奖励名 """
+    consume: int
+    """ 需要消耗的初期点数 """
+    introduce: str
+    """ 奖励介绍 """
+
+
 class FontConfig:
     """ 字体样式配置数据(富文本用) """
 

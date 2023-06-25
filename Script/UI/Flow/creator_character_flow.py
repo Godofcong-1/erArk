@@ -14,7 +14,7 @@ from Script.Design import (
     basement,
 )
 from Script.UI.Moudle import panel, draw
-from Script.UI.Panel import manage_basement_panel, see_character_info_panel,assistant_panel
+from Script.UI.Panel import manage_basement_panel, see_character_info_panel, assistant_panel, normal_panel
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
@@ -41,6 +41,7 @@ def creator_character_panel():
             character.init_attr(0)
             # game_start()
             cache.base_resouce = basement.get_base_zero()
+            first_bonus_updata()
             character_handle.first_NPC_work()
             if confirm_character_attr_panel():
                 game_start()
@@ -48,6 +49,10 @@ def creator_character_panel():
         cache.character_data[0] = game_type.Character()
     cache.now_panel_id = constant.Panel.IN_SCENE
 
+def first_bonus_updata():
+    """刷新初始奖励"""
+    for cid in game_config.config_first_bonus:
+        cache.first_bonus[cid] = False
 
 def game_start():
     """初始化游戏数据"""
@@ -601,8 +606,6 @@ class Character_Bonus:
         """ 当前最大可绘制宽度 """
         self.return_list: List[str] = []
         """ 监听的按钮列表 """
-        self.talent_id = 0
-        """ 当前需要改变的素质 """
 
         character_data: game_type.Character = cache.character_data[0]
         bonus_all = 0
@@ -626,92 +629,44 @@ class Character_Bonus:
 
         bonus_use_text = ""
 
-        talent_data_304 = game_config.config_talent[304]
-        if character_data.talent[304]:
-            button_text = f"   ●{talent_data_304.name}(10)：{talent_data_304.info}"
-            self.bonus_now -= 10
-            draw_style = "nowmap"
-            bonus_use_text += f" - [{talent_data_304.name}(10)]"
-        else:
-            button_text = f"   ○{talent_data_304.name}(10)：{talent_data_304.info}"
-            draw_style = "standard"
-        button_304_draw = draw.LeftButton(
-            _(button_text),
-            _(talent_data_304.name),
-            self.width,
-            normal_style = draw_style,
-            cmd_func=self.get_talent,
-            args=304)
-        self.return_list.append(button_304_draw.return_text)
-        now_draw.draw_list.append(button_304_draw)
-        now_draw.width += len(button_304_draw.text)
-        now_draw.draw_list.append(line_feed_draw)
-        now_draw.width += 1
-
-        talent_data_307 = game_config.config_talent[307]
-        if character_data.talent[307]:
-            button_text = f"   ●{talent_data_307.name}(10)：{talent_data_307.info}"
-            self.bonus_now -= 10
-            draw_style = "nowmap"
-            bonus_use_text += f" - [{talent_data_307.name}(10)]"
-        else:
-            button_text = f"   ○{talent_data_307.name}(10)：{talent_data_307.info}"
-            draw_style = "standard"
-        button_307_draw = draw.LeftButton(
-            _(button_text),
-            _(talent_data_307.name),
-            self.width,
-            normal_style = draw_style,
-            cmd_func=self.get_talent,
-            args=307)
-        self.return_list.append(button_307_draw.return_text)
-        now_draw.draw_list.append(button_307_draw)
-        now_draw.width += len(button_307_draw.text)
-        now_draw.draw_list.append(line_feed_draw)
-        now_draw.width += 1
-
-        if cache.base_resouce.materials_resouce[1]:
-            button_text = f"   ●启动资金(5)：初始获得50000龙门币、6000合成玉和100粉色凭证"
-            self.bonus_now -= 5
-            draw_style = "nowmap"
-            bonus_use_text += f" - [启动资金(5)]"
-        else:
-            button_text = f"   ○启动资金(5)：初始获得50000龙门币和6000合成玉和100粉色凭证"
-            draw_style = "standard"
-        button_money_draw = draw.LeftButton(
-            _(button_text),
-            _('启动资金'),
-            self.width,
-            normal_style = draw_style,
-            cmd_func=self.get_money,
-            )
-        self.return_list.append(button_money_draw.return_text)
-        now_draw.draw_list.append(button_money_draw)
-        now_draw.width += len(button_money_draw.text)
-        now_draw.draw_list.append(line_feed_draw)
-        now_draw.width += 1
-
-        if character_data.assistant_character_id:
-            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            button_text = f"   ●助理干员(5)：选择[{target_data.name}]成为助理干员，初始拥有1000点好感和50%信赖度"
-            self.bonus_now -= 5
-            draw_style = "nowmap"
-            bonus_use_text += f" - [助理干员(5)]"
-        else:
-            button_text = f"   ○助理干员(5)：选择一名干员成为助理干员，初始拥有1000点好感和50%信赖度"
-            draw_style = "standard"
-        button_assistant_draw = draw.LeftButton(
-            _(button_text),
-            _('助理干员'),
-            self.width,
-            normal_style = draw_style,
-            cmd_func=self.get_assistant,
-            )
-        self.return_list.append(button_assistant_draw.return_text)
-        now_draw.draw_list.append(button_assistant_draw)
-        now_draw.width += len(button_assistant_draw.text)
-        now_draw.draw_list.append(line_feed_draw)
-        now_draw.width += 1
+        # 遍历可选奖励
+        for cid in game_config.config_first_bonus:
+            button_text = ""
+            first_bonus_date = game_config.config_first_bonus[cid]
+            # 判断是否已经选择，并输出对应前缀和预填消耗文本
+            if cache.first_bonus[cid]:
+                self.bonus_now -= first_bonus_date.consume
+                button_text += f"   ●"
+                draw_style = "nowmap"
+                bonus_use_text += f" - [{first_bonus_date.name}({first_bonus_date.consume})])"
+            else:
+                button_text += f"   ○"
+                draw_style = "standard"
+            # 文本1
+            button_text += f"{first_bonus_date.name}({first_bonus_date.consume})："
+            # 文本2(部分奖励有特殊文本)
+            if cache.first_bonus[cid]:
+                if cid == 21:
+                    ability_name = game_config.config_ability[cache.first_bonus[cid]].name
+                    button_text += f"(已选{ability_name})"
+                elif cid == 22:
+                    target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+                    button_text += f"(已选{target_data.name})"
+            # 文本3
+            button_text += f"{first_bonus_date.introduce}"
+            # 绘制按钮
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _(first_bonus_date.name),
+                self.width,
+                normal_style = draw_style,
+                cmd_func=self.get_first_bonus,
+                args=cid)
+            self.return_list.append(button_draw.return_text)
+            now_draw.draw_list.append(button_draw)
+            now_draw.width += len(button_text)
+            now_draw.draw_list.append(line_feed_draw)
+            now_draw.width += 1
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
@@ -738,96 +693,91 @@ class Character_Bonus:
             else:
                 label.draw()
 
-    def get_talent(self,talent_id:int):
-        """获得素质"""
-        character_data: game_type.Character = cache.character_data[0]
-        if character_data.talent[talent_id]:
-            character_data.talent[talent_id] = 0
-        elif self.bonus_now >= 10:
-            character_data.talent[talent_id] = 1
-            # 获得对应素质则同步至对应收集解锁页面
-            if talent_id == 304:
-                character_data.pl_collection.collection_bonus[1] = True
-            elif talent_id == 307:
-                character_data.pl_collection.collection_bonus[101] = True
-        else:
-            info_last_draw = draw.WaitDraw()
-            info_last_draw.width = 1
-            info_last_draw.text = f"\n 当前剩余奖励不足\n"
-            info_last_draw.draw()
 
-    def get_money(self):
-        """获得金钱"""
-        if cache.base_resouce.materials_resouce[1]:
-            cache.base_resouce.materials_resouce[1] = 0
-            cache.base_resouce.materials_resouce[2] = 0
-            cache.base_resouce.materials_resouce[4] = 0
-        elif self.bonus_now >= 5:
-            cache.base_resouce.materials_resouce[1] = 50000
-            cache.base_resouce.materials_resouce[2] = 6000
-            cache.base_resouce.materials_resouce[4] = 100
-        else:
-            info_last_draw = draw.WaitDraw()
-            info_last_draw.width = 1
-            info_last_draw.text = f"\n 当前剩余奖励不足\n"
-            info_last_draw.draw()
+    def get_first_bonus(self,first_bonus_id:int):
+        """获得初期奖励"""
+        pl_character_data: game_type.Character = cache.character_data[0]
+        fail_flag = False
 
-    def get_assistant(self):
-        """获得助理干员"""
-        character_data: game_type.Character = cache.character_data[0]
+        # 获得素质
+        if first_bonus_id <= 10:
+            if first_bonus_id == 1:
+                talent_id = 304
+            elif first_bonus_id == 2:
+                talent_id = 307
 
-        # 旧助理的好感信赖清零
-        if character_data.assistant_character_id:
-            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            target_data.favorability[0] = 0
-            target_data.trust = 0
-            character_data.assistant_character_id = 0
-        
-        # 这里直接沿用的助理页面的代码
-        elif self.bonus_now >= 5:
+            if pl_character_data.talent[talent_id]:
+                pl_character_data.talent[talent_id] = 0
+                cache.first_bonus[first_bonus_id] = False
+            elif self.bonus_now >= 10:
+                pl_character_data.talent[talent_id] = 1
+                cache.first_bonus[first_bonus_id] = True
+                # 获得对应素质则同步至对应收集解锁页面
+                if talent_id == 304:
+                    pl_character_data.pl_collection.collection_bonus[1] = True
+                elif talent_id == 307:
+                    pl_character_data.pl_collection.collection_bonus[101] = True
+            else:
+                fail_flag = True
 
-            self.handle_panel = panel.PageHandlePanel([], assistant_panel.SeeNPCButtonList, 999, 8, self.width, 1, 1, 0)
+        # 获得金钱
+        elif first_bonus_id == 11:
+            if cache.base_resouce.materials_resouce[1]:
+                cache.base_resouce.materials_resouce[1] = 0
+                cache.base_resouce.materials_resouce[2] = 0
+                cache.base_resouce.materials_resouce[4] = 0
+                cache.first_bonus[first_bonus_id] = False
+            elif self.bonus_now >= 5:
+                cache.base_resouce.materials_resouce[1] = 50000
+                cache.base_resouce.materials_resouce[2] = 6000
+                cache.base_resouce.materials_resouce[4] = 100
+                cache.first_bonus[first_bonus_id] = True
+            else:
+                fail_flag = True
 
-            while 1:
+        # 自选部分
+        elif first_bonus_id >= 21:
 
-                # 显示当前助手
-                character_data: game_type.Character = cache.character_data[0]
-                target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-                line = draw.LineDraw("-", self.width)
-                line.draw()
-                line_feed_draw.draw()
-                now_npc_draw = draw.NormalDraw()
-                if character_data.assistant_character_id != 0:
-                    now_npc_text = f"当前助理为 {target_data.name} ，如果要更换，请在下面选择新的助理："
+            # 领域专家
+            if first_bonus_id == 21:
+                if cache.first_bonus[first_bonus_id]:
+                    pl_character_data.ability[cache.first_bonus[first_bonus_id]] = 0
+                    cache.first_bonus[first_bonus_id] = False
+                elif self.bonus_now >= 5:
+                    now_panel = normal_panel.Chose_First_bonus_ability_Panel(self.width)
+                    now_panel.draw()
+                    if cache.first_bonus[first_bonus_id]:
+                        pl_character_data.ability[cache.first_bonus[first_bonus_id]] = 5
                 else:
-                    now_npc_text = f"当前无助理，请选择新的助理："
-                now_npc_draw.text = now_npc_text
-                now_npc_draw.draw()
-                line_feed_draw.draw()
-                line_feed_draw.draw()
+                    fail_flag = True
 
-                # 遍历所有NPC
-                id_list = [i for i in cache.npc_id_got]
-                # print("debug id_list = ",id_list)
-                self.handle_panel.text_list = id_list
-                self.handle_panel.update()
-                self.handle_panel.draw()
-                return_list = []
-                return_list.extend(self.handle_panel.return_list)
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
-                back_draw.draw()
-                line_feed_draw.draw()
-                return_list.append(back_draw.return_text)
-                yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
-                    break
+            # 助理干员
+            elif first_bonus_id == 22:
 
-            # 在这里处理好感和信赖的增加
-            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            target_data.favorability[0] = 1000
-            target_data.trust = 50
+                # 旧助理的好感信赖清零
+                if pl_character_data.assistant_character_id:
+                    target_data: game_type.Character = cache.character_data[pl_character_data.assistant_character_id]
+                    target_data.favorability[0] = 0
+                    target_data.trust = 0
+                    pl_character_data.assistant_character_id = 0
+                    cache.first_bonus[first_bonus_id] = False
+                
+                # 这里直接沿用的助理页面的代码
+                elif self.bonus_now >= 5:
+                    assistant_panel.chose_assistant()
 
-        else:
+                    # 在这里处理好感和信赖的增加
+                    if pl_character_data.assistant_character_id:
+                        target_data: game_type.Character = cache.character_data[pl_character_data.assistant_character_id]
+                        target_data.favorability[0] = 1000
+                        target_data.trust = 50
+                        cache.first_bonus[first_bonus_id] = pl_character_data.assistant_character_id
+
+                else:
+                    fail_flag = True
+
+        # 点数不足信息绘制
+        if fail_flag:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1
             info_last_draw.text = f"\n 当前剩余奖励不足\n"

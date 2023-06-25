@@ -300,3 +300,64 @@ class Take_Care_Baby_Panel:
         character_data.behavior.duration = 30
         update.game_update_flow(30)
 
+
+class Chose_First_bonus_ability_Panel:
+    """
+    用于初始奖励中的能力选择的面板
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.chose_ability_id = 0
+        """ 选择的能力ID """
+
+    def draw(self):
+        """绘制对象"""
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            now_npc_draw = draw.NormalDraw()
+            if self.chose_ability_id != 0:
+                ability_name = game_config.config_ability[self.chose_ability_id].name
+                now_npc_text = f"当前选择的能力为{ability_name}，请选择新的能力："
+            else:
+                now_npc_text = f"当前没有选择能力，请选择："
+            now_npc_draw.text = now_npc_text
+            now_npc_draw.draw()
+            line_feed.draw()
+
+            # 遍历所有可以提升的能力
+            for cid in game_config.config_ability:
+                if 40 <= cid <= 49:
+                    ability_data = game_config.config_ability[cid]
+                    button_text = f"[{cid}]{ability_data.name}"
+                    button_draw = draw.LeftButton(
+                    _(button_text),
+                    _(button_text),
+                    int(len(button_text)*2),
+                    cmd_func=self.chose_this_ability,
+                    args=cid,
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def chose_this_ability(self, ability_id):
+        """选项1"""
+        self.chose_ability_id = ability_id
+        cache.first_bonus[21] = ability_id
+

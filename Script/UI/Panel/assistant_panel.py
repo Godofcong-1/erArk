@@ -17,6 +17,43 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def chose_assistant():
+    """选择助理"""
+
+    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 10, window_width, 1, 1, 0)
+
+    while 1:
+
+        # 显示当前助手
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        now_npc_draw = draw.NormalDraw()
+        if character_data.assistant_character_id != 0:
+            now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
+        else:
+            now_npc_text = f"当前无助理，请选择新的助理："
+        now_npc_draw.text = now_npc_text
+        now_npc_draw.draw()
+        line_feed.draw()
+
+        # 遍历所有NPC
+        id_list = [i for i in cache.npc_id_got]
+        # print("debug id_list = ",id_list)
+        handle_panel.text_list = id_list
+        handle_panel.update()
+        handle_panel.draw()
+        return_list = []
+        return_list.extend(handle_panel.return_list)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn in return_list:
+            break
+
 
 class Assistant_Panel:
     """
@@ -233,40 +270,7 @@ class SeeAssistantButtonList:
 
         # 0号指令,选择助理
         if self.button_id == 0:
-
-            self.handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 10, self.width, 1, 1, 0)
-
-            while 1:
-
-                # 显示当前助手
-                character_data: game_type.Character = cache.character_data[0]
-                target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-                line = draw.LineDraw("-", self.width)
-                line.draw()
-                now_npc_draw = draw.NormalDraw()
-                if character_data.assistant_character_id != 0:
-                    now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
-                else:
-                    now_npc_text = f"当前无助理，请选择新的助理："
-                now_npc_draw.text = now_npc_text
-                now_npc_draw.draw()
-                line_feed.draw()
-
-                # 遍历所有NPC
-                id_list = [i for i in cache.npc_id_got]
-                # print("debug id_list = ",id_list)
-                self.handle_panel.text_list = id_list
-                self.handle_panel.update()
-                self.handle_panel.draw()
-                return_list = []
-                return_list.extend(self.handle_panel.return_list)
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-                back_draw.draw()
-                line_feed.draw()
-                return_list.append(back_draw.return_text)
-                yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
-                    break
+            chose_assistant()
 
         # 1号指令,助理常时跟随
         elif self.button_id == 1:

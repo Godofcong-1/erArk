@@ -219,6 +219,8 @@ config_productformula: Dict[int, config_def.ProductFormula] = {}
 """ 产品配方数据 条目cid:条目内容 """
 config_productformula_data: Dict[int, Dict[int, int]] = {}
 """ 产品配方具体数据 条目cid:[原料id:原料数量] """
+config_first_bonus: Dict[int, config_def.First_Bouns] = {}
+""" 初始奖励数据 奖励id:奖励内容 """
 
 
 
@@ -941,6 +943,16 @@ def load_seasoning():
         config_seasoning[now_tem.cid] = now_tem
 
 
+def load_first_bonus():
+    """载入初始奖励数据"""
+    now_data = config_data["First_Bouns"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.First_Bouns()
+        now_tem.__dict__ = tem_data
+        config_first_bonus[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1056,3 +1068,4 @@ def init():
     load_seasoning()
     load_product_formula()
     load_prts()
+    load_first_bonus()

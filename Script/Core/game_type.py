@@ -1072,6 +1072,8 @@ class Cache:
         """ 当前周目数 """
         self.base_resouce: Base_resouce = Base_resouce
         """ 基地的资源情况 """
+        self.first_bonus: Dict[int, int] = {}
+        """ 初期奖励 """
 
 
 class TargetChange:
