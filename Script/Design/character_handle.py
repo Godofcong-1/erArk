@@ -249,6 +249,7 @@ def init_character_dormitory():
         # 普通干员每两个人住一个房间
         if character_data.dormitory == "无":
             n = npc_count // 2
+            # print(f"debug n :{n}, len(dormitory) :{len(dormitory)}")
             now_room = list(dormitory.keys())[n]
             # print(f"debug now_room = {now_room}")
             character_data.dormitory = now_room
