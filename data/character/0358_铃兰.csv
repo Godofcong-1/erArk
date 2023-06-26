@@ -1,6 +1,6 @@
 key,type,value,get_text,info
 键,类型,值,多语言化处理,备注
-AdvNpc,int,385,0,干员编号
+AdvNpc,int,358,0,干员编号
 Name,str,铃兰,1,姓名
 Sex,int,1,0,女
 Profession,int,7,0,辅助
@@ -32,8 +32,11 @@ T|353,int,1,0,酒量差
 T|83,int,1,0,B敏感
 T|90,int,1,0,V敏感
 T|150,int,1,0,源石病感染者
+T|162,int,1,0,体表源石结晶
 T|222,int,1,0,性无知
 T|224,int,1,0,难以越过的底线
+A|41,int,2,0,指挥技能level:2
+A|42,int,2,0,战斗技能level:2
 C|001,int,1,0,水色发箍型耳麦
 C|203,int,1,0,水色发箍型耳麦
 C|511,int,1,0,无袖高领连衣裙

@@ -376,7 +376,9 @@ class Manage_Basement_Panel:
                         # 换区或者单独宿舍则换行
                         if dormitory_name[0] != pre_dormitory_name[0]:
                             now_text += "\n"
-                            dormitory_count = 1
+                            dormitory_count = 0
+                            if dormitory_name[0] not in {"梅","莱"}:
+                                now_text += "\n"
                         # 每5个宿舍换行
                         elif dormitory_count % 5 == 0:
                             now_text += "\n"
