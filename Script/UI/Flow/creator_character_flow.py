@@ -486,6 +486,39 @@ class Character_FirstNPC:
         self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
         self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         self.name_filter_flag = False
+        self.chest_filter_flag, self.chest_filter_id_dict = 0, {"绝壁": [], "贫乳": [], "普乳": [], "巨乳": [], "爆乳": []}
+        chest_filter_list = ["无","绝壁", "贫乳", "普乳", "巨乳", "爆乳"]
+        self.age_filter_flag, self.age_filter_id_dict = 0, {"幼女": [], "萝莉": [], "少女": [], "大姐姐": [], "熟女": [], "人妻": []}
+        age_filter_list = ["无","幼女", "萝莉", "少女", "大姐姐", "熟女", "人妻"]
+
+        for NPC_id in self.id_list:
+            target_data: game_type.Character = cache.character_data[NPC_id]
+
+            # 胸部过滤
+            if target_data.talent[121]:
+                self.chest_filter_id_dict["绝壁"].append(NPC_id)
+            elif target_data.talent[122]:
+                self.chest_filter_id_dict["贫乳"].append(NPC_id)
+            elif target_data.talent[123]:
+                self.chest_filter_id_dict["普乳"].append(NPC_id)
+            elif target_data.talent[124]:
+                self.chest_filter_id_dict["巨乳"].append(NPC_id)
+            elif target_data.talent[125]:
+                self.chest_filter_id_dict["爆乳"].append(NPC_id)
+
+            # 年龄过滤
+            if target_data.talent[102]:
+                self.age_filter_id_dict["幼女"].append(NPC_id)
+            elif target_data.talent[103]:
+                self.age_filter_id_dict["萝莉"].append(NPC_id)
+            elif target_data.talent[104]:
+                self.age_filter_id_dict["少女"].append(NPC_id)
+            elif target_data.talent[105]:
+                self.age_filter_id_dict["大姐姐"].append(NPC_id)
+            elif target_data.talent[106]:
+                self.age_filter_id_dict["熟女"].append(NPC_id)
+            elif target_data.talent[107]:
+                self.age_filter_id_dict["人妻"].append(NPC_id)
 
         while 1:
             return_list = []
@@ -524,6 +557,22 @@ class Character_FirstNPC:
                 button_draw = draw.CenterButton(button_text, "请输入要筛选的名字：", len(button_text)*2, cmd_func=self.name_filter)
             button_draw.draw()
             return_list.append(button_draw.return_text)
+            if self.chest_filter_flag:
+                button_text = f" [胸围筛选中-{chest_filter_list[self.chest_filter_flag]}] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.chest_filter)
+            else:
+                button_text = " [胸围筛选] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.chest_filter)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            if self.age_filter_flag:
+                button_text = f" [外表年龄筛选中-{age_filter_list[self.age_filter_flag]}] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.age_filter)
+            else:
+                button_text = " [外表年龄筛选] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.age_filter)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
             button_text = " [重置选择] "
             button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.reset_select)
             button_draw.draw()
@@ -532,7 +581,6 @@ class Character_FirstNPC:
             line_feed_draw.draw()
 
             # 遍历所有NPC
-            # print("debug id_list = ",id_list)
             self.handle_panel.text_list = self.id_list
             self.handle_panel.update()
             self.handle_panel.draw()
@@ -580,6 +628,42 @@ class Character_FirstNPC:
         else:
             self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         self.name_filter_flag = not self.name_filter_flag
+
+    def chest_filter(self):
+        """胸围筛选"""
+        self.chest_filter_flag = (self.chest_filter_flag + 1) % 6
+        if self.chest_filter_flag == 0:
+            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        elif self.chest_filter_flag == 1:
+            self.id_list = self.chest_filter_id_dict["绝壁"]
+        elif self.chest_filter_flag == 2:
+            self.id_list = self.chest_filter_id_dict["贫乳"]
+        elif self.chest_filter_flag == 3:
+            self.id_list = self.chest_filter_id_dict["普乳"]
+        elif self.chest_filter_flag == 4:
+            self.id_list = self.chest_filter_id_dict["巨乳"]
+        elif self.chest_filter_flag == 5:
+            self.id_list = self.chest_filter_id_dict["爆乳"]
+        self.age_filter_flag = 0
+    
+    def age_filter(self):
+        """外表年龄筛选"""
+        self.age_filter_flag = (self.age_filter_flag + 1) % 7
+        if self.age_filter_flag == 0:
+            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        elif self.age_filter_flag == 1:
+            self.id_list = self.age_filter_id_dict["幼女"]
+        elif self.age_filter_flag == 2:
+            self.id_list = self.age_filter_id_dict["萝莉"]
+        elif self.age_filter_flag == 3:
+            self.id_list = self.age_filter_id_dict["少女"]
+        elif self.age_filter_flag == 4:
+            self.id_list = self.age_filter_id_dict["大姐姐"]
+        elif self.age_filter_flag == 5:
+            self.id_list = self.age_filter_id_dict["熟女"]
+        elif self.age_filter_flag == 6:
+            self.id_list = self.age_filter_id_dict["人妻"]
+        self.chest_filter_flag = 0
 
     def reset_select(self):
         """重置选择"""
