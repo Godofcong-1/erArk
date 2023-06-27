@@ -408,12 +408,12 @@ class Character_FirstNPC:
         info_draw.text += f"\n   基础:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+            if npc_character_data.name in constant.first_NPC_name_set:
                 info_draw.text += f" ●{npc_character_data.name}"
         info_draw.text += f"\n   自选:"
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
-            if npc_character_data.name not in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+            if npc_character_data.name not in constant.first_NPC_name_set:
                 info_draw.text += f" ●{npc_character_data.name}"
 
         now_draw.draw_list.append(info_draw)
@@ -484,6 +484,8 @@ class Character_FirstNPC:
         """选择初期干员"""
 
         self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
+        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.name_filter_flag = False
 
         while 1:
             return_list = []
@@ -494,23 +496,48 @@ class Character_FirstNPC:
             now_npc_draw = draw.NormalDraw()
             if cache.debug_mode:
                 self.npc_select_now = 999
-                text = "  [一键全选]"
-                name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.select_all)
-                name_draw.draw()
-                return_list.append(name_draw.return_text)
             else:
                 self.npc_select_now = 9 - len(cache.npc_id_got)
-            now_npc_draw.text = f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
+            now_npc_draw.text = f"\n 当前已选干员："
+            for character_id in cache.npc_id_got:
+                npc_character_data = cache.character_data[character_id]
+                if npc_character_data.name not in constant.first_NPC_name_set:
+                    now_npc_draw.text += f" ●{npc_character_data.name}"
+            now_npc_draw.text += f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n"
             now_npc_draw.draw()
+
+            # 绘制各按钮
+            if cache.debug_mode:
+                button_text = " [一键全选] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.select_all)
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+            button_text = " [随机选择] "
+            button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.random_select)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            if self.name_filter_flag:
+                button_text = " [姓名筛选中] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.name_filter)
+            else:
+                button_text = " [姓名筛选] "
+                button_draw = draw.CenterButton(button_text, "请输入要筛选的名字：", len(button_text)*2, cmd_func=self.name_filter)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            button_text = " [重置选择] "
+            button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.reset_select)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            line_feed_draw.draw()
             line_feed_draw.draw()
 
             # 遍历所有NPC
-            id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
             # print("debug id_list = ",id_list)
-            self.handle_panel.text_list = id_list
+            self.handle_panel.text_list = self.id_list
             self.handle_panel.update()
             self.handle_panel.draw()
             return_list.extend(self.handle_panel.return_list)
+            line_feed_draw.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed_draw.draw()
@@ -525,6 +552,42 @@ class Character_FirstNPC:
             npc_id = i + 1
             if npc_id not in cache.npc_id_got:
                 cache.npc_id_got.add(npc_id)
+
+    def random_select(self):
+        """随机选择"""
+        self.reset_select()
+        # 获取当前未选择的NPC
+        not_got_npc = [i+1 for i in range(len(cache.npc_tem_data)) if i+1 not in cache.npc_id_got]
+        # 随机选择三个，然后加到列表中
+        random_npc = random.sample(not_got_npc, 3)
+        for npc_id in random_npc:
+            cache.npc_id_got.add(npc_id)
+
+    def name_filter(self):
+        """姓名筛选"""
+        # 进入筛选模式
+        if not self.name_filter_flag:
+            # 获取用户输入的文字
+            user_input = flow_handle.askfor_str(_("请输入要筛选的名字："))
+            # 遍历所有 NPC 的姓名，找到包含用户输入的文字的 NPC
+            npc_name_filter_id = []
+            for character_id in cache.character_data:
+                npc_character_data = cache.character_data[character_id]
+                if npc_character_data.name not in constant.first_NPC_name_set and user_input in npc_character_data.name:
+                    npc_name_filter_id.append(character_id)
+            self.id_list = npc_name_filter_id
+        # 退出筛选模式
+        else:
+            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.name_filter_flag = not self.name_filter_flag
+
+    def reset_select(self):
+        """重置选择"""
+        # 获取当前已选择的NPC
+        now_select_npc_ld_list = [character_id for character_id in cache.npc_id_got if cache.character_data[character_id].name not in constant.first_NPC_name_set]
+        # 从列表中移除
+        for character_id in now_select_npc_ld_list:
+            cache.npc_id_got.remove(character_id)
 
 
 class SelectFirstNPCButton:
@@ -560,7 +623,7 @@ class SelectFirstNPCButton:
         button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
         name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
-            if target_data.name in {"阿米娅","凯尔希","可露希尔","特蕾西娅","华法琳","温蒂","杜宾"}:
+            if target_data.name in constant.first_NPC_name_set:
                 button_text += f" (基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
