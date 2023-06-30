@@ -1886,17 +1886,21 @@ def handle_recruit():
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    if len(cache.base_resouce.recruited_id):
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.style = "nowmap"
+    now_draw.text = ""
+
+    if len(cache.npc_id_got) >= cache.base_resouce.people_max:
+        now_draw.text += _(f"\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
+
+    elif len(cache.base_resouce.recruited_id):
         new_chara_id = cache.base_resouce.recruited_id.pop()
         character_handle.get_new_character(new_chara_id)
         character_data = cache.character_data[new_chara_id]
+        now_draw.text += _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
 
-        # 输出对应信息
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
-        now_draw.text = _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
-        now_draw.style = "nowmap"
-        now_draw.draw()
+    now_draw.draw()
 
     update.game_update_flow(5)
 
