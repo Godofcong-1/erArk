@@ -89,7 +89,7 @@ class Close_Door_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 if askfor_panel_return_list[yrn] == askfor_list[0]:
-                    now_scene_data.close_flag = now_scene_data.close_type
+                    cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
                     return 1
                 return 0
 
@@ -361,3 +361,113 @@ class Chose_First_bonus_ability_Panel:
         self.chose_ability_id = ability_id
         cache.first_bonus[21] = ability_id
 
+
+class Sleep_Panel:
+    """
+    用于选择睡眠时间的面板
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.close_door_flag = True
+        """ 关门情况 """
+
+    def draw(self):
+        """绘制对象"""
+        pl_character_data: game_type.Character = cache.character_data[0]
+
+        # 计算回复时间
+        hp_recover_time = int((pl_character_data.hit_point_max - pl_character_data.hit_point) / 100 / 60)
+        mp_recover_time = int((pl_character_data.mana_point_max - pl_character_data.mana_point) / 150 / 60)
+        need_time = max(hp_recover_time, mp_recover_time)
+        need_time = max(need_time, 1)
+        self.sleep_time = need_time
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            now_draw = draw.NormalDraw()
+
+            # 计算地点数据
+            now_position = pl_character_data.position
+            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+            now_scene_data = cache.scene_data[now_scene_str]
+
+            # 地点关门判定的三个分支
+            if now_scene_data.close_type == 0:
+                info_text = "\n 当前地点无法关门，"
+            elif now_scene_data.close_type == 1:
+                info_text = "\n 当前地点可以关门，关上之后其他人就进不来了，"
+            else:
+                info_text = "\n 当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，"
+            info_text += "当前：   "
+            now_draw.text = info_text
+            now_draw.draw()
+
+            # 绘制关门按钮
+            button_text = " [关门] " if self.close_door_flag else " [不关门] "
+            button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.close_door_switch)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
+            now_draw_text = f"\n\n 预计完全回复最少需要{need_time}小时，当前睡眠时间为：{self.sleep_time}小时     "
+            now_draw.text = now_draw_text
+            now_draw.draw()
+
+            button_text = " [修改睡眠时间] "
+            button_draw = draw.CenterButton(button_text, "请输入睡眠时间(最小1小时，最大8小时)：", len(button_text)*2, cmd_func=self.input_sleep_time)
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
+            line_feed.draw()
+            line_feed.draw()
+            line_feed.draw()
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width/2)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width/2)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == yes_draw.return_text:
+                # 关门
+                if self.close_door_flag:
+                    cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
+                # 睡眠
+                sleep_time = self.sleep_time * 60
+                pl_character_data.behavior.duration = sleep_time
+                pl_character_data.behavior.behavior_id = constant.Behavior.SLEEP
+                pl_character_data.state = constant.CharacterStatus.STATUS_SLEEP
+                cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+                update.game_update_flow(sleep_time)
+                break
+            elif yrn == back_draw.return_text:
+                break
+
+    def input_sleep_time(self):
+        """输入睡眠时间"""
+        while 1:
+            user_input = flow_handle.askfor_str(_("请输入睡眠时间(最小1小时，最大8小时)："))
+            try:
+                user_input = int(user_input)
+            except:
+                continue
+            if user_input <= 0:
+                continue
+            elif user_input > 0:
+                if user_input > 8:
+                    user_input = 8
+                self.sleep_time = user_input
+                break
+
+    def close_door_switch(self):
+        """关门开关"""
+        self.close_door_flag = not self.close_door_flag

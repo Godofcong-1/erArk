@@ -412,17 +412,8 @@ def handle_manage_basement():
 def handle_sleep():
     """处理睡觉指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    # 进行关门判定
-    now_draw = normal_panel.Close_Door_Panel(width)
-    if now_draw.draw():
-        from Script.Settle import default
-        default.handle_door_close(0,1,_,_)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 480
-    character_data.behavior.behavior_id = constant.Behavior.SLEEP
-    character_data.state = constant.CharacterStatus.STATUS_SLEEP
-    cache.wframe_mouse.w_frame_skip_wait_mouse = 1
-    update.game_update_flow(480)
+    now_draw = normal_panel.Sleep_Panel(width)
+    now_draw.draw()
 
 
 @add_instruct(
