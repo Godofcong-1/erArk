@@ -533,13 +533,13 @@ def identical_map_move(
         now_target_position = get_scene_path_for_map_scene_id(now_map, now_target_scene_id)
     return move_end, move_path, now_target_position, now_need_time
 
-def judge_scene_open(target_scene_str : str, character_id : int) -> int :
+def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
     """
     判断目标地点是否可以进入
     Keyword arguments:
     target_scene_str -- 目标场景位置（例：A\B\C）
     Return arguments:
-    int -- 是否可以进入
+    str -- open:可以进入,wait_open:未解锁,door_lock:门上锁,private:私密场所
     """
 
     # print(f"debug target_scene_str = {target_scene_str}")
@@ -584,9 +584,9 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
 
             return "wait_open"
 
-    # 如果门锁上了的话
+    # 锁门判断
     if now_scene_data.close_flag == 1:
-        # 即使关门，NPC也可以进去自己的宿舍
+        # 即使关门，也可以进去自己的宿舍
         if character_data.dormitory == target_scene_str:
             pass
         else:
@@ -598,7 +598,18 @@ def judge_scene_open(target_scene_str : str, character_id : int) -> int :
                 info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前门是锁着的，需要钥匙或其他方法进入\n"
                 info_draw.width = width
                 info_draw.draw()
-            return "door_close"
+            return "door_lock"
+
+    # 私密场所判断，仅限干员
+    if character_id:
+        # 男厕所和博士房间
+        private_tag_list = ["Toilet_Male","Dr_room"]
+        for tag in private_tag_list:
+            if tag in now_scene_data.scene_tag:
+                return "private"
+        # 非自己的宿舍
+        if "Dormitory" in now_scene_data.scene_tag and character_data.dormitory != target_scene_str:
+            return "private"
 
     return "open"
 

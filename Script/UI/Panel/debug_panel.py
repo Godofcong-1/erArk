@@ -966,7 +966,7 @@ class Debug_Panel:
 
             # 特殊flag数据
             elif key_index == 20:
-                info_text = f"1~7异常状态："
+                info_text = f"1~7异常状态：，正常为1"
                 info_text += f"    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）：{handle_premise.handle_normal_1(self.target_character_id)}"
                 info_text += f"    \n2:妊娠限制：临盆、产后、婴儿：{handle_premise.handle_normal_2(self.target_character_id)}"
                 info_text += f"    \n3:AI行动受限：助理、跟随模式下：{handle_premise.handle_normal_3(self.target_character_id)}"

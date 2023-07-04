@@ -106,6 +106,17 @@ def get_juel_zero(juel_dict) -> dict:
     return juel_list
 
 
+def get_chara_setting_zero(chara_setting_dict) -> dict:
+    """
+    重置角色初始设置
+    """
+    chara_setting_list = chara_setting_dict
+    for chara_setting in game_config.config_chara_setting:
+        if chara_setting not in chara_setting_dict:
+            chara_setting_list[chara_setting] = 0
+    return chara_setting_list
+
+
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
     将二段行为全项归零，暂时为前200项

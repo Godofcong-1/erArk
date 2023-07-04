@@ -1006,14 +1006,14 @@ def character_move_to_production_workshop(character_id: int):
     if need_allocated_flag:
         empty_flag = False
         for target_scene_str in constant.place_data["Production_Workshop"]:
-            close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+            close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
             if list(cache.scene_data[target_scene_str].character_list) == [] and close_type == "open":
                 empty_flag = True
                 break
         if not empty_flag:
             while 1:
                 target_scene_str = random.choice(constant.place_data["Production_Workshop"])
-                close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+                close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
                 if close_type == "open":
                     break
         assembly_line_id = int(target_scene_str[-1]) - 1
@@ -1173,10 +1173,38 @@ def character_move_to_player(character_id: int):
     character_data.target_character_id = character_id
     to_dr = cache.character_data[0].position
     _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
-    character_data.behavior.behavior_id = constant.Behavior.MOVE
-    character_data.behavior.move_target = move_path
-    character_data.behavior.duration = move_time
-    character_data.state = constant.CharacterStatus.STATUS_MOVE
+    move_flag = True # flase的话就是等待
+    # 进行私密跟随判断
+    target_scene_str = map_handle.get_map_system_path_str_for_list(move_path)
+    access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
+    if access_type == "private":
+        # 超时后取消跟随
+        if character_data.chara_setting[0] == 0:
+            if character_data.action_info.follow_wait_time >= 30:
+                character_data.sp_flag.is_follow = 0
+            move_flag = False
+        # 超时后仍继续等待
+        elif character_data.chara_setting[0] == 1:
+            move_flag = False
+        # 超时后直接闯入
+        elif character_data.chara_setting[0] == 2:
+            if character_data.action_info.follow_wait_time < 30:
+                move_flag = False
+        # 一直跟随，无视私密地点
+        elif character_data.chara_setting[0] == 3:
+            pass
+    # 最后决定是移动还是继续等待
+    if move_flag:
+        character_data.action_info.follow_wait_time = 0
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
+    else:
+        character_data.action_info.follow_wait_time += 5
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.behavior.duration = 5
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
     # if character_data.sp_flag.is_follow:
     #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.sp_flag.is_follow}")
 
@@ -2077,7 +2105,7 @@ def character_work_maintenance_1(character_id: int):
     # 指定的地点需要是可进入的
     while 1:
         target_scene_str = random.choice(constant.place_data["Room"])
-        close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+        close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
         if close_type == "open":
             break
     cache.base_resouce.maintenance_place[character_id] = target_scene_str

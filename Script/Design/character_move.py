@@ -23,7 +23,7 @@ def own_charcter_move(target_scene: list):
                 now_target_position,
                 now_need_time,
             ) = character_move(0, target_scene)
-            break_list = ["null","wait_open","door_close"]
+            break_list = ["null","wait_open","door_lock"]
             if move_now in break_list :
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
@@ -35,7 +35,7 @@ def own_charcter_move(target_scene: list):
         else:
             break
     cache.character_data[0].target_character_id = 0
-    if move_now in ["Null","wait_open","door_close"]:
+    if move_now in ["Null","wait_open","door_lock"]:
         cache.now_panel_id = constant.Panel.SEE_MAP
     else:
         cache.now_panel_id = constant.Panel.IN_SCENE
@@ -65,16 +65,16 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     target_scene_data = cache.scene_data[target_scene_str]
     # if not character_id:
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
-    # 判断目标场景是否开放，不开放则输出原因
-    close_type = map_handle.judge_scene_open(target_scene_str,character_id)
+    # 判断目标场景是否可进入，不可则输出原因
+    access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
     # if not character_id:
     #     print(f"debug close_type = {close_type}")
-    if close_type != "open":
-        return close_type, [], [], 0
+    if access_type not in ["open","private"]:
+        return access_type, [], [], 0
     if (
         now_position_str not in map_handle.scene_path_edge
         or target_scene_str not in map_handle.scene_path_edge[now_position_str]
     ):
         return "null", [], [], 0
     now_path_data = map_handle.scene_path_edge[now_position_str][target_scene_str]
-    return "", [], now_path_data[0], now_path_data[1]
+    return access_type, [], now_path_data[0], now_path_data[1]

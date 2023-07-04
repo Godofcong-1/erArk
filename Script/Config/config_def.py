@@ -121,6 +121,21 @@ class CharacterStateType:
     """ 类型名 """
 
 
+class CharaSetting:
+    """ 角色设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    require: str
+    """ 选项需求(F好感，X信任) """
+    option: str
+    """ 各个选项 """
+
+
 class ClothingTem:
     """ 服装模板 """
 

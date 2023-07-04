@@ -53,46 +53,24 @@ class SeeCharacterInfoPanel:
         """ 要绘制的角色id """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
-        main_first_draw = SeeCharacterFirstPanel(character_id, width)
-        main_second_draw = SeeCharacterSecondPanel(character_id, width)
+        base_attributes_draw = See_Character_Base_Attributes_Panel(character_id, width)
+        detailed_attributes_draw = See_Character_Detailed_Attributes_Panel(character_id, width)
         main_third_draw = SeeCharacterThirdPanel(character_id, width)
-        # see_daily_draw = SeeCharacterDailyPanel(character_id, width)
-        # main_attr_draw = SeeCharacterMainAttrPanel(character_id, width)
-        # see_status_draw = SeeCharacterStatusPanel(character_id, width, 5, 0)
-        # see_clothing_draw = see_clothing_info_panel.SeeCharacterPutOnClothingListPanel(character_id, width)
-        # see_item_draw = see_item_info_panel.SeeCharacterItemBagPanel(character_id, width)
-        # see_knowledge_draw = SeeCharacterKnowledgePanel(character_id, width)
-        # see_language_draw = SeeCharacterLanguagePanel(character_id, width)
-        # see_nature_draw = SeeCharacterNaturePanel(character_id, width)
-        # see_social_draw = SeeCharacterSocialContact(character_id, width)
+        setting_draw = See_Character_Setting_Panel(character_id, width)
         if character_id == 0:
             self.draw_data = {
-                _("基础属性"): main_first_draw,
-                _("能力、经验与宝珠"): main_second_draw,
+                _("基础属性"): base_attributes_draw,
+                _("能力、经验与宝珠"): detailed_attributes_draw,
                 _("玩家能力"): main_third_draw,
-                # _("属性（原）"): main_attr_draw,
-                # _("状态"): see_status_draw,
-                # _("服装"): see_clothing_draw,
-                # _("道具"): see_item_draw,
-                # _("技能"): see_knowledge_draw,
-                # _("语言"): see_language_draw,
-                # _("性格"): see_nature_draw,
-                # _("社交"): see_social_draw,
+                _("角色设定"): setting_draw,
             }
         else:
             self.draw_data = {
-                _("基础属性"): main_first_draw,
-                _("能力、经验与宝珠"): main_second_draw,
+                _("基础属性"): base_attributes_draw,
+                _("能力、经验与宝珠"): detailed_attributes_draw,
                 # _("日程与喜好"): see_daily_draw,
                 _("肉体情况"): main_third_draw,
-                # _("属性（原）"): main_attr_draw,
-                # _("状态"): see_status_draw,
-                # _("服装"): see_clothing_draw,
-                # _("道具"): see_item_draw,
-                # _("技能"): see_knowledge_draw,
-                # _("语言"): see_language_draw,
-                # _("性格"): see_nature_draw,
-                # _("社交"): see_social_draw,
+                _("角色设定"): setting_draw,
             }
         """ 按钮文本对应属性面板 """
         self.handle_panel = panel.CenterDrawButtonListPanel()
@@ -138,7 +116,7 @@ class SeeCharacterInfoPanel:
         self.return_list.extend(self.handle_panel.return_list)
 
 
-class SeeCharacterFirstPanel:
+class See_Character_Base_Attributes_Panel:
     """
     显示角色属性面板第一页对象
     Keyword arguments:
@@ -175,7 +153,7 @@ class SeeCharacterFirstPanel:
             label.draw()
 
 
-class SeeCharacterSecondPanel:
+class See_Character_Detailed_Attributes_Panel:
     """
     显示角色属性面板第二页对象
     Keyword arguments:
@@ -238,9 +216,9 @@ class SeeCharacterThirdPanel:
             label.draw()
 
 
-class SeeCharacterDailyPanel:
+class See_Character_Setting_Panel:
     """
-    显示角色属性面板中的日程与喜好面板
+    显示角色属性面板中的角色设置面板
     Keyword arguments:
     character_id -- 角色id
     width -- 绘制宽度
@@ -249,11 +227,10 @@ class SeeCharacterDailyPanel:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         head_draw = CharacterInfoHead(character_id, width)
-        daily_draw = CharacterInfoHead(character_id, width)
-        preference_draw = CharacterInfoHead(character_id, width)
+        setting_draw = CharacterSetting(character_id, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             head_draw,
-            daily_draw,
+            setting_draw,
         ]
         """ 绘制的面板列表 """
         self.return_list: List[str] = []
@@ -263,6 +240,7 @@ class SeeCharacterDailyPanel:
         """绘制面板"""
         for label in self.draw_list:
             label.draw()
+            self.return_list.extend(label.return_list)
 
 
 class SeeCharacterMainAttrPanel:
@@ -626,6 +604,8 @@ class CharacterInfoHead:
         """ 要绘制的角色id """
         self.width: int = width
         """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
         self.draw_title: bool = True
         """ 是否绘制面板标题 """
         character_data: game_type.Character = cache.character_data[character_id]
@@ -2147,6 +2127,97 @@ class PlayerAbilityText:
                 line_feed.draw()
             else:
                 label.draw()
+
+ 
+class CharacterSetting:
+    """
+    显示角色设置面板对象
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 绘制宽度
+    column -- 每行状态最大个数
+    type_number -- 显示的状态类型
+    """
+
+    def __init__(self, character_id: int, width: int, column: int, center_status: bool = True):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 要绘制的角色id """
+        self.width = width
+        """ 面板最大宽度 """
+        self.column = column
+        """ 每行状态最大个数 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+        self.center_status: bool = center_status
+        """ 居中绘制状态文本 """
+
+    def draw(self):
+        """绘制面板"""
+        character_data = cache.character_data[self.character_id]
+        type_data = "角色设置"
+        type_line = draw.LittleTitleLineDraw(type_data, self.width, ":")
+        type_line.draw()
+        now_draw = draw.NormalDraw()
+        # NPC的设置
+        if self.character_id != 0:
+
+            # 输出提示信息
+            info_text = " \n ○点击选项标题显示选项详细介绍，点击选项本身改变当前选择\n"
+            now_draw.text = info_text
+            now_draw.width = self.width
+            now_draw.draw()
+
+            # 遍历全部设置
+            for cid in game_config.config_chara_setting:
+                line_feed.draw()
+                chara_setting_data = game_config.config_chara_setting[cid]
+                # 选项名
+                button_text = f" [{chara_setting_data.name}]： "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.draw_info, args=(cid))
+                button_draw.draw()
+                self.return_list.append(button_draw.return_text)
+
+                now_setting_flag = character_data.chara_setting[cid] # 当前设置的值
+                option_len = len(game_config.config_chara_setting_option[cid]) # 选项的长度
+
+                # 当前选择的选项的名字
+                button_text = f" {game_config.config_chara_setting_option[cid][now_setting_flag]} "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_setting, args=(cid, option_len))
+                button_draw.draw()
+                self.return_list.append(button_draw.return_text)
+            line_feed.draw()
+
+        # 玩家的设置
+        else:
+            info_text = " \n 暂无设置\n"
+            now_draw.text = info_text
+            now_draw.width = self.width
+            now_draw.draw()
+        # yrn = flow_handle.askfor_all(return_list)
+
+    def draw_info(self, cid):
+        """绘制选项介绍信息"""
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        now_draw = draw.WaitDraw()
+        chara_setting_data = game_config.config_chara_setting[cid]
+        info_text = f"\n {chara_setting_data.info}\n"
+        now_draw.text = info_text
+        now_draw.width = self.width
+        now_draw.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+
+    def change_setting(self, cid, option_len):
+        """修改设置"""
+        character_data = cache.character_data[self.character_id]
+        if character_data.chara_setting[cid] < option_len - 1:
+            character_data.chara_setting[cid] += 1
+        else:
+            character_data.chara_setting[cid] = 0
 
 
 # class SeeCharacterSocialContact:

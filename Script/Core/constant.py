@@ -1394,6 +1394,33 @@ class InstructType:
 
 class Instruct:
     """指令id"""
+
+    #系统#
+    MOVE = 0
+    """ 移动 """
+    SEE_ATTR = 0
+    """ 查看属性 """
+    ITEM = 0
+    """ 道具 """
+    ORIGINIUM_ARTS = 0
+    """ 源石技艺 """
+    SAVE = 0
+    """ 读写存档 """
+    ABL_UP = 0
+    """ 属性升级 """
+    OWNER_ABL_UP = 0
+    """ 自身属性升级 """
+    SEE_DIRTY = 0
+    """ 查看污浊情况 """
+    INSTRUCT_FILTER = 0
+    """ 指令过滤 """
+    DEBUG_MODE_ON = 0
+    """ 开启debug模式 """
+    DEBUG_MODE_OFF = 0
+    """ 关闭debug模式 """
+    DEBUG_ADJUST = 0
+    """ debug数值调整 """
+
     #日常#
     WAIT = 0
     """ 等待五分钟 """
@@ -1809,31 +1836,6 @@ class Instruct:
     """ 给对方口交 """
     UNDRESS = 0
     """ 脱衣服 """
-    #系统#
-    MOVE = 0
-    """ 移动 """
-    SEE_ATTR = 0
-    """ 查看属性 """
-    ITEM = 0
-    """ 道具 """
-    ORIGINIUM_ARTS = 0
-    """ 源石技艺 """
-    SAVE = 0
-    """ 读写存档 """
-    ABL_UP = 0
-    """ 属性升级 """
-    OWNER_ABL_UP = 0
-    """ 自身属性升级 """
-    SEE_DIRTY = 0
-    """ 查看污浊情况 """
-    INSTRUCT_FILTER = 0
-    """ 指令过滤 """
-    DEBUG_MODE_ON = 0
-    """ 开启debug模式 """
-    DEBUG_MODE_OFF = 0
-    """ 关闭debug模式 """
-    DEBUG_ADJUST = 0
-    """ debug数值调整 """
 
 
 i = 0

@@ -221,6 +221,12 @@ config_productformula_data: Dict[int, Dict[int, int]] = {}
 """ 产品配方具体数据 条目cid:[原料id:原料数量] """
 config_first_bonus: Dict[int, config_def.First_Bouns] = {}
 """ 初始奖励数据 奖励id:奖励内容 """
+config_chara_setting: Dict[int, config_def.CharaSetting] = {}
+""" 角色设置数据 设置id:详细内容 """
+config_chara_setting_option: Dict[int, Dict[int, str]] = {}
+""" 角色设置数据的选项数据 设置id:选项序号:选项内容 """
+config_chara_setting_require: Dict[int, Dict[str, int]] = {}
+""" 角色设置数据的选项需求数据 设置id:需求类型:需求量 """
 
 
 
@@ -976,6 +982,38 @@ def load_product_formula():
             config_productformula_data[now_tem.cid][need_type] = need_value
 
 
+def load_chara_setting():
+    """载入角色设置"""
+    now_data = config_data["CharaSetting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.CharaSetting()
+        now_tem.__dict__ = tem_data
+        config_chara_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_chara_setting_option[now_tem.cid] = []
+            config_chara_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_chara_setting_option[now_tem.cid] = option_text.split('|')
+
+
+        require_text = now_tem.require
+        # 以&为分割判定是否有多个需求
+        if "&" not in require_text:
+            need_list = []
+            need_list.append(require_text)
+        else:
+            need_list = require_text.split('&')
+        for need_text in need_list:
+            need_type = need_text.split('|')[0]
+            need_value = int(need_text.split('|')[1])
+            config_chara_setting_require.setdefault(now_tem.cid, {})
+            config_chara_setting_require[now_tem.cid][need_type] = need_value
+
+
 def load_prts():
     """载入教程数据"""
     now_data = config_data["Prts"]
@@ -1069,3 +1107,4 @@ def init():
     load_product_formula()
     load_prts()
     load_first_bonus()
+    load_chara_setting()

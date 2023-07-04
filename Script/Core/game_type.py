@@ -458,6 +458,8 @@ class ACTION_INFO:
         """ 指定角色上次扣除好感时间 """
         self.h_interrupt: int = 0
         """ 角色H被打断 """
+        self.follow_wait_time: int = 0
+        """ 无法进入私密场所的等待时间 """
 
 
 class SPECIAL_FLAG:
@@ -952,6 +954,8 @@ class Character:
         """ 角色素质 """
         self.token_text: str = ""
         """ 角色信物文本 """
+        self.chara_setting: Dict[int, int] = {}
+        """ 角色的个人设置 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
