@@ -378,8 +378,6 @@ class ASSISTANT_STATE:
     """助理状态结构体"""
 
     def __init__(self):
-        self.always_follow: int = 0
-        """ 跟随服务，int[0否,1智能跟随，在非工作时间(饭点/上厕所等)会暂离,2强制跟随,3在博士办公室待机]"""
         self.always_help_work: bool = False
         """ 辅佐服务，仅由助理辅助工作系指令"""
         self.work_until_sleep: bool = False

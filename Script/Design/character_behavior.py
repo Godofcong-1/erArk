@@ -308,9 +308,6 @@ def judge_character_tired_sleep(character_id : int):
                 # character_data.sp_flag.is_h = False
                 # character_data.sp_flag.is_follow = 0
 
-                # 新：暂时注释，保持跟随状态（旧：助手取消助手栏里的跟随）
-                # if character_id == pl_character_data.assistant_character_id:
-                #     character_data.assistant_state.always_follow = 0
     # 玩家疲劳计算
     else:
         target_data = cache.character_data[character_data.target_character_id]
@@ -594,14 +591,6 @@ def judge_character_follow(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
-
-    # 锁定助理的跟随状态
-    if character_data.assistant_state.always_follow in {1,2}:
-        # 排除太累了和太困了的情况
-        if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
-            pass
-        else:
-            character_data.sp_flag.is_follow = character_data.assistant_state.always_follow
 
     # 维持跟随的状态
     if character_data.sp_flag.is_follow == 2:

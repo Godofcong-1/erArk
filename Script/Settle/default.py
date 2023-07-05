@@ -3919,7 +3919,6 @@ def handle_bagging_and_moving_add_just(
         character_data.assistant_character_id = 0
     # 对方数据结算
     target_data.sp_flag.be_bagged = 1
-    target_data.assistant_state.always_follow = 0
     target_data.sp_flag.is_follow = 0
     cache.npc_id_got.remove(character_data.target_character_id)
     # 地图数据结算

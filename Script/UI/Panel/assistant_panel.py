@@ -166,14 +166,14 @@ class SeeAssistantButtonList:
 
             # 1号指令,助理常时跟随
             elif self.button_id == 1:
-                if target_data.assistant_state.always_follow == 0:
+                if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
-                elif target_data.assistant_state.always_follow == 1:
-                    button_text += f"    智能跟随（在生理需求时，如吃饭/上厕所/需要休息等，会暂离，完成后再回来）"
-                elif target_data.assistant_state.always_follow == 2:
+                elif target_data.sp_flag.is_follow == 1:
+                    button_text += f"    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）"
+                elif target_data.sp_flag.is_follow == 2:
                     button_text += f"    强制跟随（测试用，会影响一部分游戏机能）"
-                elif target_data.assistant_state.always_follow == 3:
-                    button_text += f"    在博士办公室一趟（抵达后会如果博士不在，则等待半小时）"
+                elif target_data.sp_flag.is_follow == 3:
+                    button_text += f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
 
             # 2号指令,仅由助理辅助工作系指令
             elif self.button_id == 2:
@@ -274,12 +274,10 @@ class SeeAssistantButtonList:
 
         # 1号指令,助理常时跟随
         elif self.button_id == 1:
-            if target_data.assistant_state.always_follow == 3:
-                target_data.assistant_state.always_follow = 0
+            if target_data.sp_flag.is_follow == 3:
+                target_data.sp_flag.is_follow = 0
             else:
-                target_data.assistant_state.always_follow += 1
-            # 同时结算跟随状态
-            target_data.sp_flag.is_follow = target_data.assistant_state.always_follow
+                target_data.sp_flag.is_follow += 1
 
         # 2号指令,仅由助理辅助工作系指令
         elif self.button_id == 2:
@@ -387,7 +385,7 @@ class SeeNPCButtonList:
 
         # 去掉旧助理的跟随状态
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-        old_assistant_data.assistant_state.always_follow = 0
+        old_assistant_data.sp_flag.is_follow = 0
 
         # 判断旧助理是否是玩家自己
         pl_flag = False
@@ -407,7 +405,7 @@ class SeeNPCButtonList:
         else:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            new_assistant_data.assistant_state.always_follow = 1
+            new_assistant_data.sp_flag.is_follow = 1
             info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
         if not pl_flag:
             info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，跟随状态也一并取消\n\n"
