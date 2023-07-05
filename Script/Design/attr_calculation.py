@@ -708,3 +708,61 @@ def get_trust_level(value: int):
         else:
             return now_cid,now_data.judge_add
 
+
+def judge_require(judge_text_list, character_id):
+    """
+    判断角色是否满足文本列表里的全部需求\n
+    Keyword arguments:\n
+    judge_text_list -- 需要判断的文本列表\n
+    character_id -- 角色id\n
+    Return arguments:\n
+    judge -- 是否满足需求\n
+    reason -- 不满足需求的原因\n
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    judge = 1
+    reason = "需要:"
+
+    for judge_text in judge_text_list:
+        judge_type = judge_text.split('|')[0][0]
+        if len(judge_text.split('|')[0]) >= 2:
+            judge_type_id = int(judge_text.split('|')[0][1:])
+        judge_value = int(judge_text.split('|')[1])
+        if judge_type == "A":
+            if character_data.ability[judge_type_id] < judge_value:
+                judge = 0
+                reason += f"{game_config.config_ability[judge_type_id].name}>={judge_value}  "
+                break
+        elif judge_type == "T":
+            if not character_data.talent[judge_value]:
+                judge = 0
+                reason += f"{game_config.config_talent[judge_value].name}  "
+                break
+        elif judge_type == "J":
+            if character_data.juel[judge_type_id] < judge_value:
+                judge = 0
+                reason += f"{game_config.config_juel[judge_type_id].name}>={judge_value}  "
+                break
+        elif judge_type == "E":
+            if character_data.experience[judge_type_id] < judge_value:
+                judge = 0
+                reason += f"{game_config.config_experience[judge_type_id].name}>={judge_value}  "
+                break
+        elif judge_type == "F":
+            if character_data.favorability[0] < judge_value:
+                judge = 0
+                reason += f"好感度>={judge_value}  "
+                break
+        elif judge_type == "X":
+            if character_data.trust < judge_value:
+                judge = 0
+                reason += f"信赖度>={judge_value}  "
+                break
+        elif judge_type == "O":
+            if not cache.base_resouce.facility_open[judge_type_id]:
+                judge = 0
+                reason += f"解锁{game_config.config_facility_open[judge_type_id].name}  "
+                break
+
+    return judge, reason

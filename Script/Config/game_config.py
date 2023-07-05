@@ -225,8 +225,6 @@ config_chara_setting: Dict[int, config_def.CharaSetting] = {}
 """ 角色设置数据 设置id:详细内容 """
 config_chara_setting_option: Dict[int, Dict[int, str]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
-config_chara_setting_require: Dict[int, Dict[str, int]] = {}
-""" 角色设置数据的选项需求数据 设置id:需求类型:需求量 """
 
 
 
@@ -998,20 +996,6 @@ def load_chara_setting():
             config_chara_setting_option[now_tem.cid].append(option_text)
         else:
             config_chara_setting_option[now_tem.cid] = option_text.split('|')
-
-
-        require_text = now_tem.require
-        # 以&为分割判定是否有多个需求
-        if "&" not in require_text:
-            need_list = []
-            need_list.append(require_text)
-        else:
-            need_list = require_text.split('&')
-        for need_text in need_list:
-            need_type = need_text.split('|')[0]
-            need_value = int(need_text.split('|')[1])
-            config_chara_setting_require.setdefault(now_tem.cid, {})
-            config_chara_setting_require[now_tem.cid][need_type] = need_value
 
 
 def load_prts():

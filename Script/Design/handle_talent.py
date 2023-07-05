@@ -60,39 +60,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
                 need_list.append(gain_talent_data.gain_need)
             else:
                 need_list = gain_talent_data.gain_need.split('&')
-
-            # 遍历升级需求，判断是否符合升级要求
-            judge = 1
-            for need_text in need_list:
-                need_type = need_text.split('|')[0][0]
-                if len(need_text.split('|')[0]) >= 2:
-                    need_type_id = int(need_text.split('|')[0][1:])
-                need_value = int(need_text.split('|')[1])
-                # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
-                if need_type == "A":
-                    if character_data.ability[need_type_id] < need_value:
-                        judge = 0
-                        break
-                elif need_type == "T":
-                    if not character_data.talent[need_value]:
-                        judge = 0
-                        break
-                elif need_type == "J":
-                    if character_data.juel[need_type_id] < need_value:
-                        judge = 0
-                        break
-                elif need_type == "E":
-                    if character_data.experience[need_type_id] < need_value:
-                        judge = 0
-                        break
-                elif need_type == "F":
-                    if character_data.favorability[0] < need_value:
-                        judge = 0
-                        break
-                elif need_type == "X":
-                    if character_data.trust < need_value:
-                        judge = 0
-                        break
+            judge, reason = attr_calculation.judge_require(need_list, character_id)
 
         # 如果符合获得条件，则获得该素质
         if judge:

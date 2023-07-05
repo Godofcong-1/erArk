@@ -2185,9 +2185,26 @@ class CharacterSetting:
 
                 # 当前选择的选项的名字
                 button_text = f" {game_config.config_chara_setting_option[cid][now_setting_flag]} "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_setting, args=(cid, option_len))
-                button_draw.draw()
-                self.return_list.append(button_draw.return_text)
+
+                # 判断是否符合条件
+                require_text = game_config.config_chara_setting[cid].require
+                # 整理需要的条件
+                if "&" not in require_text:
+                    require_text_list = [require_text]
+                else:
+                    require_text_list = require_text.split('&')
+                judge, reason = attr_calculation.judge_require(require_text_list,self.character_id)
+
+                if judge:
+                    button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_setting, args=(cid, option_len))
+                    button_draw.draw()
+                    self.return_list.append(button_draw.return_text)
+                else:
+                    info_text = f" {button_text}(  更改{reason})"
+                    now_draw.text = info_text
+                    now_draw.width = self.width
+                    now_draw.draw()
+
             line_feed.draw()
 
         # 玩家的设置

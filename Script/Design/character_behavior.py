@@ -904,28 +904,8 @@ def get_chara_entertainment(character_id: int):
                             need_data_list = [need_data_all]
                         else:
                             need_data_list = need_data_all.split('&')
-                        # 遍历检查条件
-                        judge = 1
-                        for need_text in need_data_list:
-                            need_type = need_text.split('|')[0][0]
-                            if len(need_text.split('|')[0]) >= 2:
-                                need_type_id = int(need_text.split('|')[0][1:])
-                            need_value = int(need_text.split('|')[1])
-                            # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
-                            if need_type == "A":
-                                if character_data.ability[need_type_id] < need_value:
-                                    judge = 0
-                                    break
-                            elif need_type == "T":
-                                if not character_data.talent[need_type_id]:
-                                    judge = 0
-                                    break
-                            elif need_type == "F":
-                                if not cache.base_resouce.facility_open[need_type_id]:
-                                    judge = 0
-                                    break
+                        judge, reason = attr_calculation.judge_require(need_data_list, character_id)
                         # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
-                        # print(f"debug judge = {judge}")
                         if judge:
                             break
                         else:
