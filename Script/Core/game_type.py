@@ -378,8 +378,8 @@ class ASSISTANT_STATE:
     """助理状态结构体"""
 
     def __init__(self):
-        self.always_help_work: bool = False
-        """ 辅佐服务，仅由助理辅助工作系指令"""
+        self.help_work: bool = False
+        """ 辅佐服务，在非跟随时在博士办公室里处理公务"""
         self.work_until_sleep: bool = False
         """ 加班服务，博士睡觉后自动加班到自己睡觉"""
         self.offer_food: int = 0

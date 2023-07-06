@@ -3494,6 +3494,59 @@ def handle_t_normal_24567(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_124567)
+def handle_normal_124567(character_id: int) -> int:
+    """
+    124567正常（可能基础异常、AI跟随）
+    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n2:妊娠限制：临盆、产后、婴儿
+    \n4:服装异常：大致全裸、全裸
+    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    \n7:监禁：装袋搬走、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
+        or handle_pee_flag_1(character_id)
+        or handle_eat_food_flag_ge_1(character_id)
+        or handle_shower_flag_123(character_id)
+    ):
+        return 0
+    if(
+        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    elif(
+         handle_parturient_1(character_id)
+        or handle_postpartum_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    elif(
+        handle_cloth_off(character_id)
+        or handle_cloth_most_off(character_id)
+    ):
+        return 0
+    elif(
+         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
+        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+    ):
+        return 0
+    elif(
+        handle_be_bagged_1(character_id)
+        or handle_imprisonment_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.NORMAL_1267)
 def handle_normal_1267(character_id: int) -> int:
     """
@@ -6830,6 +6883,29 @@ def handle_scene_someone_is_h(character_id: int) -> int:
                         break
                     if i == 18:
                         return 999
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_ASSISTANT)
+def handle_place_have_assistant(character_id: int) -> int:
+    """
+    该地点有助理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id and chara_id == pl_character_data.assistant_character_id:
+                return 1
     return 0
 
 
@@ -11459,6 +11535,36 @@ def handle_target_not_assistant(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_1)
+def handle_assistant_help_work_1(character_id: int) -> int:
+    """
+    助理的辅佐服务开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_state.help_work:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_0)
+def handle_assistant_help_work_0(character_id: int) -> int:
+    """
+    助理的辅佐服务关闭中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_state.help_work:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IS_FOLLOW)
 def handle_is_follow(character_id: int) -> int:
     """
@@ -11469,7 +11575,9 @@ def handle_is_follow(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.sp_flag.is_follow
+    if character_data.sp_flag.is_follow:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.NOT_FOLLOW)
@@ -11482,7 +11590,10 @@ def handle_not_follow(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return not character_data.sp_flag.is_follow
+    if character_data.sp_flag.is_follow:
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.IS_FOLLOW_1)

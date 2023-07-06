@@ -2163,9 +2163,24 @@ def character_work_produce(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    
     character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.PRODUCE
+    character_data.state = constant.CharacterStatus.STATUS_PRODUCE
     character_data.behavior.duration = 30
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_OFFICIAL_WORK)
+def character_work_official_work(character_id: int):
+    """
+    工作：处理公务
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
+    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)

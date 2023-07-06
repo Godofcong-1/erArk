@@ -46,6 +46,7 @@ def chose_assistant():
         handle_panel.draw()
         return_list = []
         return_list.extend(handle_panel.return_list)
+        line_feed.draw()
         back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
         back_draw.draw()
         line_feed.draw()
@@ -66,14 +67,14 @@ class Assistant_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.now_panel = _("指派助理")
+        self.now_panel = _("助理相关调整")
         """ 当前绘制的食物类型 """
         self.handle_panel: panel.PageHandlePanel = None
         """ 当前名字列表控制面板 """
 
     def draw(self):
         """绘制对象"""
-        title_draw = draw.TitleLineDraw("指派助理", self.width)
+        title_draw = draw.TitleLineDraw("助理相关调整", self.width)
         character_data: game_type.Character = cache.character_data[0]
 
         self.handle_panel = panel.PageHandlePanel([], SeeAssistantButtonList, 10, 1, self.width, 1, 1, 0)
@@ -81,7 +82,7 @@ class Assistant_Panel:
         while 1:
             py_cmd.clr_cmd()
             if character_data.assistant_character_id != 0:
-                button_text_list = ["选择助理","跟随服务","辅佐服务(未实装)","加班服务(未实装)","送饭服务(未实装)","早安服务(未实装)","晚安服务(未实装)","同居服务(未实装)","助攻服务(未实装)","性处理服务(未实装)"]
+                button_text_list = ["选择助理","跟随服务","辅佐服务","加班服务(未实装)","送饭服务(未实装)","早安服务(未实装)","晚安服务(未实装)","同居服务(未实装)","助攻服务(未实装)","性处理服务(未实装)"]
             else:
                 button_text_list = ["选择助理"]
 
@@ -164,7 +165,7 @@ class SeeAssistantButtonList:
                     assistant_name = target_data.name
                     button_text += f"    当前助理：{assistant_name}"
 
-            # 1号指令,助理常时跟随
+            # 1号指令,跟随服务
             elif self.button_id == 1:
                 if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
@@ -175,10 +176,10 @@ class SeeAssistantButtonList:
                 elif target_data.sp_flag.is_follow == 3:
                     button_text += f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
 
-            # 2号指令,仅由助理辅助工作系指令
+            # 2号指令,辅佐服务
             elif self.button_id == 2:
-                if target_data.assistant_state.always_help_work:
-                    button_text += f"    是，仅由助理辅助工作系指令"
+                if target_data.assistant_state.help_work:
+                    button_text += f"    是，在非跟随状态下，会自己在博士办公室里处理公务"
                 else:
                     button_text += f"    否"
 
@@ -281,7 +282,7 @@ class SeeAssistantButtonList:
 
         # 2号指令,仅由助理辅助工作系指令
         elif self.button_id == 2:
-            target_data.assistant_state.always_help_work = not target_data.assistant_state.always_help_work
+            target_data.assistant_state.help_work = not target_data.assistant_state.help_work
 
         # 3号指令,博士睡觉后自动加班到自己睡觉
         elif self.button_id == 3:

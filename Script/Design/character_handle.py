@@ -360,17 +360,18 @@ def add_favorability(
     #             target_change.favorability += now_add_favorability
     # else:
 
-    # 对自己操作
+    # NPC对玩家
     if (character_id != 0) and (character_data.target_character_id == 0):
         character_data.favorability[target_id] += now_add_favorability
         # print(f"debug change_data = {change_data}")
         if change_data is not None:
             change_data.favorability += now_add_favorability
 
-    # 对交互对象操作
-    target_data.favorability[character_id] += now_add_favorability
-    if target_change is not None:
-        target_change.favorability += now_add_favorability
+    # 对NPC
+    if character_data.target_character_id != 0:
+        target_data.favorability[character_id] += now_add_favorability
+        if target_change is not None:
+            target_change.favorability += now_add_favorability
     # target_data.social_contact_last_cut_down_time[character_id] = now_time
     # if target_change is not None:
     #     add_favorability(target_id, character_id, old_add_favorability, None, None, now_time)

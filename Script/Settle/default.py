@@ -191,7 +191,7 @@ def handle_add_small_trust(
     character_data: game_type.Character = cache.character_data[character_id]
     # 首先需要有交互对象，然后要么是玩家发起指令，要么是NPC对玩家发起指令
     if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
+            character_id != 0 or character_data.target_character_id != 0):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if target_data.dead:
             return

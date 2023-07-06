@@ -1773,12 +1773,12 @@ def handle_battle_command():
 
 
 @add_instruct(
-    constant.Instruct.APPOINTED_ASSISTANT, constant.InstructType.WORK, _("指派助理"),
+    constant.Instruct.ASSISTANT_ADJUSTMENTS, constant.InstructType.WORK, _("助理相关调整"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE, }
 )
-def handle_appointed_assistant():
-    """处理指派助理指令"""
+def handle_ASSISTANT_ADJUSTMENTS():
+    """处理助理相关调整指令"""
     cache.now_panel_id = constant.Panel.ASSISTANT
 
 @add_instruct(

@@ -107,8 +107,8 @@ class CharacterStatus:
     """ 一起玩耍 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
-    STATUS_APPOINTED_ASSISTANT = 204
-    """ 指派助理 """
+    STATUS_ASSISTANT_ADJUSTMENTS = 204
+    """ 助理相关调整 """
     STATUS_TRAINING = 205
     """ 战斗训练 """
     STATUS_EXERCISE = 206
@@ -129,6 +129,8 @@ class CharacterStatus:
     """ 维修装备 """
     STATUS_NPC_COOK = 217
     """ 干员做饭 """
+    STATUS_PRODUCE = 218
+    """ 制造产品 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -510,8 +512,8 @@ class Behavior:
     """ 指挥作战 """
     LISTEN_MISSION = 203
     """ 听取委托 """
-    APPOINTED_ASSISTANT = 204
-    """ 指派助理 """
+    ASSISTANT_ADJUSTMENTS = 204
+    """ 助理相关调整 """
     TRAINING = 205
     """ 战斗训练 """
     EXERCISE = 206
@@ -532,6 +534,8 @@ class Behavior:
     """ 维修装备 """
     NPC_COOK = 217
     """ 干员做饭 """
+    PRODUCE = 218
+    """ 制造产品 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -901,6 +905,8 @@ class StateMachine:
     """ 工作：做饭 """
     WORK_PRODUCE = 311
     """ 工作：制造产品 """
+    WORK_OFFICIAL_WORK = 312
+    """ 工作：处理公务 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1544,8 +1550,8 @@ class Instruct:
     """ 维护设施 """
     REPAIR_EQUIPMENT = 0
     """ 维修装备 """
-    APPOINTED_ASSISTANT = 0
-    """ 指派助理 """
+    ASSISTANT_ADJUSTMENTS = 0
+    """ 助理相关调整 """
     BUILDING = 0
     """ 基建系统 """
     PRTS = 0
