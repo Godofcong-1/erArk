@@ -106,15 +106,24 @@ def get_juel_zero(juel_dict) -> dict:
     return juel_list
 
 
-def get_chara_setting_zero(chara_setting_dict) -> dict:
+def get_chara_setting_zero() -> dict:
     """
     重置角色初始设置
     """
-    chara_setting_list = chara_setting_dict
+    chara_setting_list = {}
     for chara_setting in game_config.config_chara_setting:
-        if chara_setting not in chara_setting_dict:
-            chara_setting_list[chara_setting] = 0
+        chara_setting_list[chara_setting] = 0
     return chara_setting_list
+
+
+def get_assistant_services_zero() -> dict:
+    """
+    重置角色助理服务
+    """
+    assistant_services = {}
+    for cid in game_config.config_assistant_services:
+        assistant_services[cid] = 0
+    return assistant_services
 
 
 def get_second_behavior_zero(second_behavior_dict) -> dict:
@@ -185,14 +194,6 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
         h_state_data.orgasm_count[body_part] = [0,0]
 
     return h_state_data
-
-def get_assistant_state_zero() -> dict:
-    """
-    直接将助理状态结构体归0
-    """
-    assistant_state_data = game_type.ASSISTANT_STATE()
-
-    return assistant_state_data
 
 
 def get_first_record_zero() -> dict:
@@ -713,7 +714,7 @@ def judge_require(judge_text_list, character_id):
     """
     判断角色是否满足文本列表里的全部需求\n
     Keyword arguments:\n
-    judge_text_list -- 需要判断的文本列表\n
+    judge_text_list -- 需要判断的文本列表(A能力,T素质,J宝珠,E经验,F好感度,X信赖,O设施解锁)\n
     character_id -- 角色id\n
     Return arguments:\n
     judge -- 是否满足需求\n

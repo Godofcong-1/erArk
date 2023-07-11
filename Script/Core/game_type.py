@@ -374,28 +374,6 @@ class BODY_H_STATE:
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
 
 
-class ASSISTANT_STATE:
-    """助理状态结构体"""
-
-    def __init__(self):
-        self.help_work: bool = False
-        """ 辅佐服务，在非跟随时在博士办公室里处理公务"""
-        self.work_until_sleep: bool = False
-        """ 加班服务，博士睡觉后自动加班到自己睡觉"""
-        self.offer_food: int = 0
-        """ 送饭服务，int[0否,1帮忙买午饭,2帮忙买三餐,3亲手做午饭,4亲手做三餐]"""
-        self.good_morning: int = 0
-        """ 早安服务，int[0否,1早安叫起床,2叫起床+早安吻,3叫起床+早安咬]"""
-        self.good_evening: int = 0
-        """ 晚安服务，int[0否,1晚安催睡觉,2催睡觉+晚安吻,3催睡觉+早安咬]"""
-        self.live_together: bool = False
-        """ 同居服务"""
-        self.help_chase: bool = False
-        """ 助攻服务"""
-        self.help_sex: int = 0
-        """ 性处理服务，int[0否,1被动接受(非本番),2被动接受(含本番),3主动请求(非本番),4主动请求(含本番)]"""
-
-
 class FIRST_RECORD:
     """初次状态记录结构体"""
 
@@ -954,6 +932,8 @@ class Character:
         """ 角色信物文本 """
         self.chara_setting: Dict[int, int] = {}
         """ 角色的个人设置 """
+        self.assistant_services: Dict[int, int] = {}
+        """ 角色作为助理的情况 """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()
@@ -962,8 +942,6 @@ class Character:
         """ 角色本次H的情况 """
         self.assistant_character_id: int = 0
         """ 助理角色id """
-        self.assistant_state: ASSISTANT_STATE = ASSISTANT_STATE()
-        """ 角色作为助理的情况 """
         self.pl_ability: PLAYER_ABILITY = PLAYER_ABILITY()
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()

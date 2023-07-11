@@ -20,7 +20,7 @@ window_width: int = normal_config.config_normal.text_width
 def chose_assistant():
     """选择助理"""
 
-    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 10, window_width, 1, 1, 0)
+    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 8, window_width, 1, 1, 0)
 
     while 1:
 
@@ -37,8 +37,10 @@ def chose_assistant():
         now_npc_draw.text = now_npc_text
         now_npc_draw.draw()
         line_feed.draw()
+        line_feed.draw()
 
         # 遍历所有NPC
+        cache.npc_id_got.discard(0)
         id_list = [i for i in cache.npc_id_got]
         # print("debug id_list = ",id_list)
         handle_panel.text_list = id_list
@@ -69,104 +71,37 @@ class Assistant_Panel:
         """ 绘制的最大宽度 """
         self.now_panel = _("助理相关调整")
         """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = None
-        """ 当前名字列表控制面板 """
 
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw("助理相关调整", self.width)
-        character_data: game_type.Character = cache.character_data[0]
-
-        self.handle_panel = panel.PageHandlePanel([], SeeAssistantButtonList, 10, 1, self.width, 1, 1, 0)
 
         while 1:
-            py_cmd.clr_cmd()
-            if character_data.assistant_character_id != 0:
-                button_text_list = ["选择助理","跟随服务","辅佐服务","加班服务(未实装)","送饭服务(未实装)","早安服务(未实装)","晚安服务(未实装)","同居服务(未实装)","助攻服务(未实装)","性处理服务(未实装)"]
-            else:
-                button_text_list = ["选择助理"]
+            character_data: game_type.Character = cache.character_data[0]
+            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
-            self.handle_panel.text_list = button_text_list
-            self.handle_panel.update()
             title_draw.draw()
+            line_feed.draw()
+            py_cmd.clr_cmd()
             return_list = []
 
+            button_text = f"[001]助理服务"
+            if character_data.assistant_character_id == 0:
+                button_text += f"    当前无助理"
+            else:
+                assistant_name = target_data.name
+                button_text += f"    当前助理：{assistant_name}"
+
+            button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(0,1))
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
             line_feed.draw()
-            self.handle_panel.draw()
-            return_list.extend(self.handle_panel.return_list)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                cache.now_panel_id = constant.Panel.IN_SCENE
-                break
 
-class SeeAssistantButtonList:
-    """
-    点击后可调整各助理选项的按钮对象
-    Keyword arguments:
-    text -- 选项名字
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
+            if character_data.assistant_character_id != 0:
 
-    def __init__(
-        self, text: str, width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
+                # 跟随服务
+                button_text = f"[002]跟随服务"
 
-        self.button_name_text: str = text
-        """ 指令名字绘制文本 """
-        self.draw_text: str = ""
-        """ 绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-
-        character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-
-        # 按钮绘制
-        name_draw = draw.NormalDraw()
-
-        index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{self.button_name_text}"
-
-        # 无助理时0号指令可以选择助理，其他指令不绘制
-        if button_id == 0 or character_data.assistant_character_id != 0:
-            '''
-            选择助理 当前助理：阿米娅
-            助理常时跟随 否/是
-            仅由助理辅助工作系指令 否/是
-            博士睡觉后自动加班到自己睡觉 否/是
-            送饭服务 否/买午饭/买三餐/手制午饭/手制三餐
-            早安服务 否/早安叫起床/早安吻/早安咬
-            晚安服务 否/晚安叫起床/晚安吻/晚安咬
-            同居服务 否/是
-            助攻服务 否/是
-            性处理服务 否/被动接受(非本番)/被动接受(含本番)/主动请求(非本番)/主动请求(含本番)
-            '''
-            # button_text_list = ["选择助理","助理常时跟随","仅由助理辅助工作系指令","博士睡觉后自动加班到自己睡觉","送饭服务","早安服务","晚安服务","同居服务","助攻服务","性处理服务"]
-
-            # 0号指令,选择助理
-            if self.button_id == 0:
-                if character_data.assistant_character_id == 0:
-                    button_text += f"    当前无助理"
-                else:
-                    assistant_name = target_data.name
-                    button_text += f"    当前助理：{assistant_name}"
-
-            # 1号指令,跟随服务
-            elif self.button_id == 1:
                 if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
                 elif target_data.sp_flag.is_follow == 1:
@@ -176,163 +111,61 @@ class SeeAssistantButtonList:
                 elif target_data.sp_flag.is_follow == 3:
                     button_text += f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
 
-            # 2号指令,辅佐服务
-            elif self.button_id == 2:
-                if target_data.assistant_state.help_work:
-                    button_text += f"    是，在非跟随状态下，会自己在博士办公室里处理公务"
-                else:
-                    button_text += f"    否"
+                button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(2,4))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
 
-            # 3号指令,博士睡觉后自动加班到自己睡觉
-            elif self.button_id == 3:
-                if target_data.assistant_state.work_until_sleep:
-                    button_text += f"    是，博士睡觉后会自动加班到自己睡觉"
-                else:
-                    button_text += f"    否"
+                # 开始遍历全部助理服务
+                for cid in game_config.config_assistant_services:
+                    # 获取助理服务数据
+                    service_data = game_config.config_assistant_services[cid]
+                    service_option_data = game_config.config_assistant_services_option[cid]
+                    service_option_text_all = service_option_data[0]
+                    service_option_text_now = service_option_text_all[target_data.assistant_services[cid]]
+                    service_option_len = len(service_option_text_all)
 
-            # 4号指令,送饭服务
-            elif self.button_id == 4:
-                if target_data.assistant_state.offer_food == 0:
-                    button_text += f"    否"
-                elif target_data.assistant_state.offer_food == 1:
-                    button_text += f"    帮忙买午饭"
-                elif target_data.assistant_state.offer_food == 2:
-                    button_text += f"    帮忙买三餐"
-                elif target_data.assistant_state.offer_food == 3:
-                    button_text += f"    亲手做午饭"
-                elif target_data.assistant_state.offer_food == 4:
-                    button_text += f"    亲手做三餐"
-                button_text += f"(强制跟随状态下无效)"
+                    # 绘制输出文本
+                    button_text = f"[{str(cid).rjust(3,'0')}]{service_data.name}"
+                    button_text += f"    {service_option_text_now}"
+                    button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(cid,service_option_len))
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                    line_feed.draw()
 
-            # 5号指令,早安服务
-            elif self.button_id == 5:
-                if target_data.assistant_state.good_morning == 0:
-                    button_text += f"    否"
-                elif target_data.assistant_state.good_morning == 1:
-                    button_text += f"    早安叫起床"
-                elif target_data.assistant_state.good_morning == 2:
-                    button_text += f"    叫起床+早安吻"
-                elif target_data.assistant_state.good_morning == 3:
-                    button_text += f"    叫起床+早安咬"
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
 
-            # 6号指令,晚安服务
-            elif self.button_id == 6:
-                if target_data.assistant_state.good_evening == 0:
-                    button_text += f"    否"
-                elif target_data.assistant_state.good_evening == 1:
-                    button_text += f"    晚安催睡觉"
-                elif target_data.assistant_state.good_evening == 2:
-                    button_text += f"    催睡觉+晚安吻"
-                elif target_data.assistant_state.good_evening == 3:
-                    button_text += f"    催睡觉+早安咬"
 
-            # 7号指令,同居服务
-            elif self.button_id == 7:
-                if target_data.assistant_state.live_together:
-                    button_text += f"    是"
-                else:
-                    button_text += f"    否"
-
-            # 8号指令,助攻服务
-            elif self.button_id == 8:
-                if target_data.assistant_state.help_chase:
-                    button_text += f"    是，会在攻略他人时提供加值"
-                else:
-                    button_text += f"    否"
-
-            # 9号指令,性处理服务
-            elif self.button_id == 9:
-                if target_data.assistant_state.help_sex == 0:
-                    button_text += f"  否"
-                elif target_data.assistant_state.help_sex == 1:
-                    button_text += f"  被动接受(非本番)"
-                elif target_data.assistant_state.help_sex == 2:
-                    button_text += f"  被动接受(含本番)"
-                elif target_data.assistant_state.help_sex == 3:
-                    button_text += f"  主动请求(非本番)"
-                elif target_data.assistant_state.help_sex == 4:
-                    button_text += f"  主动请求(含本番)"
-
-            name_draw = draw.LeftButton(
-                button_text, self.button_return, self.width, cmd_func=self.chose_button
-            )
-            self.button_return = text
-            self.now_draw = name_draw
-            self.draw_text = button_text
-
-        """ 绘制的对象 """
-        self.now_draw = name_draw
-
-    def chose_button(self):
+    def chose_button(self, service_cid:int, service_option_len:int):
         """玩家点击了选项"""
         update.game_update_flow(0)
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
         # 0号指令,选择助理
-        if self.button_id == 0:
+        if service_cid == 0:
             chose_assistant()
 
         # 1号指令,助理常时跟随
-        elif self.button_id == 1:
+        elif service_cid == 1:
             if target_data.sp_flag.is_follow == 3:
                 target_data.sp_flag.is_follow = 0
             else:
                 target_data.sp_flag.is_follow += 1
-
-        # 2号指令,仅由助理辅助工作系指令
-        elif self.button_id == 2:
-            target_data.assistant_state.help_work = not target_data.assistant_state.help_work
-
-        # 3号指令,博士睡觉后自动加班到自己睡觉
-        elif self.button_id == 3:
-            target_data.assistant_state.work_until_sleep = not target_data.assistant_state.work_until_sleep
-
-        # 4号指令,送饭服务
-        elif self.button_id == 4:
-            if target_data.assistant_state.offer_food == 4:
-                target_data.assistant_state.offer_food = 0
+        # 其他服务
+        else:
+            if target_data.assistant_services[service_cid] == service_option_len - 1:
+                target_data.assistant_services[service_cid] = 0
             else:
-                target_data.assistant_state.offer_food += 1
-
-        # 5号指令,早安服务
-        elif self.button_id == 5:
-            if target_data.assistant_state.good_morning == 3:
-                target_data.assistant_state.good_morning = 0
-            else:
-                target_data.assistant_state.good_morning += 1
-
-        # 6号指令,晚安服务
-        elif self.button_id == 6:
-            if target_data.assistant_state.good_evening == 3:
-                target_data.assistant_state.good_evening = 0
-            else:
-                target_data.assistant_state.good_evening += 1
-
-        # 7号指令,同居服务
-        elif self.button_id == 7:
-            target_data.assistant_state.live_together = not target_data.assistant_state.live_together
-
-        # 8号指令,助攻服务
-        elif self.button_id == 8:
-            target_data.assistant_state.help_chase = not target_data.assistant_state.help_chase
-
-        # 9号指令,性处理服务
-        elif self.button_id == 9:
-            if target_data.assistant_state.help_sex == 4:
-                target_data.assistant_state.help_sex = 0
-            else:
-                target_data.assistant_state.help_sex += 1
-
-    def button_0(self,ass_id: int):
-        """选项1"""
-        character_data: game_type.Character = cache.character_data[0]
-        character_data.assistant_character_id = ass_id
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
+                target_data.assistant_services[service_cid] += 1
 
 
 class SeeNPCButtonList:

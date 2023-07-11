@@ -31,6 +31,19 @@ class AbilityUp:
     """ 升级需求 """
 
 
+class AssistantServices:
+    """ 助理服务 """
+
+    cid: int
+    """ 服务id """
+    name: str
+    """ 服务名 """
+    require: str
+    """ 服务需求(用#分隔每个选项的需求)(F好感，X信任) """
+    option: str
+    """ 各个选项 """
+
+
 class BarConfig:
     """ 比例条名字对应的状态图片和绘制宽度 """
 

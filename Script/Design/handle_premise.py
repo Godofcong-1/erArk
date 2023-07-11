@@ -11545,7 +11545,7 @@ def handle_assistant_help_work_1(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_state.help_work:
+    if character_data.assistant_services[2]:
         return 1
     return 0
 
@@ -11560,7 +11560,7 @@ def handle_assistant_help_work_0(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_state.help_work:
+    if character_data.assistant_services[2]:
         return 0
     return 1
 

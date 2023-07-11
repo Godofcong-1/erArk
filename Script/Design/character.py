@@ -46,7 +46,6 @@ def init_attr(character_id: int):
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)
     character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
-    character_data.assistant_state = attr_calculation.get_assistant_state_zero()
     character_data.first_record = attr_calculation.get_first_record_zero()
     character_data.action_info = attr_calculation.get_action_info_state_zero()
     character_data.event = attr_calculation.get_event_zero()
@@ -54,7 +53,8 @@ def init_attr(character_id: int):
     character_data.entertainment = attr_calculation.get_entertainment_zero()
     character_data.pregnancy = attr_calculation.get_pregnancy_zero()
     character_data.sp_flag = game_type.SPECIAL_FLAG()
-    character_data.chara_setting = attr_calculation.get_chara_setting_zero(character_data.chara_setting)
+    character_data.chara_setting = attr_calculation.get_chara_setting_zero()
+    character_data.assistant_services = attr_calculation.get_assistant_services_zero()
     # character_data.relationship = attr_calculation.get_relationship_zero(character_data.relationship)
 
     # 主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零

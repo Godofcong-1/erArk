@@ -225,6 +225,10 @@ config_chara_setting: Dict[int, config_def.CharaSetting] = {}
 """ 角色设置数据 设置id:详细内容 """
 config_chara_setting_option: Dict[int, Dict[int, str]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
+config_assistant_services: Dict[int, config_def.AssistantServices] = {}
+""" 助理服务数据 服务id:详细内容 """
+config_assistant_services_option: Dict[int, Dict[int, str]] = {}
+""" 角色设置数据的选项数据 设置id:选项序号:选项内容 """
 
 
 
@@ -998,6 +1002,30 @@ def load_chara_setting():
             config_chara_setting_option[now_tem.cid] = option_text.split('|')
 
 
+def load_assistant_services():
+    """载入助理服务"""
+    now_data = config_data["AssistantServices"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.AssistantServices()
+        now_tem.__dict__ = tem_data
+        config_assistant_services[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        require_text = now_tem.require
+        config_assistant_services_option[now_tem.cid] = {}
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_assistant_services_option[now_tem.cid][0] = [option_text]
+        else:
+            config_assistant_services_option[now_tem.cid][0] = option_text.split('|')
+        # 以|为分割判定是否有多个需求
+        if "|" not in require_text:
+            config_assistant_services_option[now_tem.cid][1] = [require_text]
+        else:
+            config_assistant_services_option[now_tem.cid][1] = require_text.split('|')
+
+
 def load_prts():
     """载入教程数据"""
     now_data = config_data["Prts"]
@@ -1092,3 +1120,4 @@ def init():
     load_prts()
     load_first_bonus()
     load_chara_setting()
+    load_assistant_services()
