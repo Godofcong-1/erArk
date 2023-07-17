@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import handle_premise, cooking, update
+from Script.Design import handle_premise, attr_calculation, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -165,7 +165,23 @@ class Assistant_Panel:
             if target_data.assistant_services[service_cid] == service_option_len - 1:
                 target_data.assistant_services[service_cid] = 0
             else:
-                target_data.assistant_services[service_cid] += 1
+                # 判断是否符合解锁条件
+                service_option_data = game_config.config_assistant_services_option[service_cid]
+                service_option_text_all = service_option_data[0]
+                service_option_text_next = service_option_text_all[target_data.assistant_services[service_cid]+1]
+                service_require_text_all = service_option_data[1]
+                service_require_text_next = service_require_text_all[target_data.assistant_services[service_cid]+1]
+                judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id)
+
+                if judge:
+                    target_data.assistant_services[service_cid] += 1
+                # 不符合解锁条件时输出提示信息并归零
+                else:
+                    info_draw = draw.WaitDraw()
+                    info_text = f"\n  ○更改失败，[{service_option_text_next}]{reason}\n"
+                    info_draw.text = info_text
+                    info_draw.draw()
+                    target_data.assistant_services[service_cid] = 0
 
 
 class SeeNPCButtonList:

@@ -1019,11 +1019,11 @@ def load_assistant_services():
             config_assistant_services_option[now_tem.cid][0] = [option_text]
         else:
             config_assistant_services_option[now_tem.cid][0] = option_text.split('|')
-        # 以|为分割判定是否有多个需求
-        if "|" not in require_text:
+        # 以#为分割判定是否有多个需求
+        if "#" not in require_text:
             config_assistant_services_option[now_tem.cid][1] = [require_text]
         else:
-            config_assistant_services_option[now_tem.cid][1] = require_text.split('|')
+            config_assistant_services_option[now_tem.cid][1] = require_text.split('#')
 
 
 def load_prts():
