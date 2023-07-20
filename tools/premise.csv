@@ -94,6 +94,7 @@ place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
 place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
+place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
 
 teacher_teaching_in_classroom,TEACHER_TEACHING_IN_CLASSROOM,地点_工作,当前有教师在教室里讲课
 student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,教室里有没在上课的学生
@@ -111,6 +112,7 @@ place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含�
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
 
 in_kitchen,IN_KITCHEN,地点_定位,在厨房
+not_in_kitchen,NOT_IN_KITCHEN,地点_定位,不在厨房
 in_din,IN_DINING_HALL,地点_定位,在食堂
 not_in_din,NOT_IN_DINING_HALL,地点_定位,不在食堂
 in_food_shop,IN_FOOD_SHOP,地点_定位,在食物商店（取餐区）
@@ -214,6 +216,11 @@ not_in_lungmen_eatery,NOT_IN_LUNGMEN_EATERY,地点_定位,不在龙门食坊
 in_pizzeria,IN_PIZZERIA,地点_定位,在快捷连锁披萨店
 not_in_pizzeria,NOT_IN_PIZZERIA,地点_定位,不在快捷连锁披萨店
 in_h_shop,IN_H_SHOP,地点_定位,在成人用品商店
+not_in_h_shop,NOT_IN_H_SHOP,地点_定位,不在成人用品商店
+in_resource_exchange,IN_RESOURCE_EXCHANGE,地点_定位,在资源交易所
+not_in_resource_exchange,NOT_IN_RESOURCE_EXCHANGE,地点_定位,不在资源交易所
+in_production_workshop,IN_PRODUCTION_WORKSHOP,地点_定位,在生产车间
+not_in_production_workshop,NOT_IN_PRODUCTION_WORKSHOP,地点_定位,不在生产车间
 in_class_room,IN_CLASS_ROOM,地点_定位,在教室
 not_in_class_room,NOT_IN_CLASS_ROOM,地点_定位,不在教室
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
@@ -272,6 +279,7 @@ t_normal_2467,T_NORMAL_2467,属性_基础,交互对象2467正常（可能基础�
 normal_23467,NORMAL_23467,属性_基础,23467正常（可能基础异常或意识模糊）
 normal_24567,NORMAL_24567,属性_基础,24567正常（可能基础异常、AI跟随）
 t_normal_24567,T_NORMAL_24567,属性_基础,交互对象24567正常（可能基础异常、AI跟随）
+normal_124567,NORMAL_124567,属性_基础,124567正常（可能AI跟随）
 normal_1267,NORMAL_1267,属性_基础,1267正常（可能AI跟随、服装异常或意识模糊）
 normal_123467,NORMAL_123467,属性_基础,123467正常（可能意识模糊）
 normal_1_2_4,NORMAL_1_2_4,属性_基础,124正常的普通状态
@@ -306,8 +314,10 @@ t_tired_ge_75,TARGET_TIRED_GE_75,属性_基础,交互对象疲劳条≥75%，部
 t_tired_le_84,TARGET_TIRED_LE_84,属性_基础,交互对象疲劳条≤84%，自由活动的极限
 t_tired_ge_85,TARGET_TIRED_GE_85,属性_基础,交互对象疲劳条≥85%，必须回去睡觉
 t_tired_100,TARGET_TIRED_100,属性_基础,交互对象疲劳条100%，当场爆睡
+urinate_le_49,URINATE_LE_49,属性_基础,尿意条≤49%，可以继续喝咖啡
 urinate_le_79,URINATE_LE_79,属性_基础,尿意条≤79%，不需要排尿
 urinate_ge_80,URINATE_GE_80,属性_基础,尿意条≥80%，需要排尿
+t_urinate_le_49,TARGET_URINATE_LE_49,属性_基础,交互对象尿意条≤49%，可以继续喝咖啡
 t_urinate_le_79,TARGET_URINATE_LE_79,属性_基础,交互对象尿意条≤79%，不需要排尿
 t_urinate_ge_80,TARGET_URINATE_GE_80,属性_基础,交互对象尿意条≥80%，需要排尿
 hunger_le_79,HUNGER_LE_79,属性_基础,饥饿值≤79%，不需要吃饭
@@ -322,18 +332,26 @@ sleep_level_3,SLEEP_LEVEL_3,属性_基础,睡眠等级：完全深眠
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）
 
-is_assistant,IS_ASSISTANT,属性_助理与跟随,自己是当前的助理干员
-not_assistant,NOT_ASSISTANT,属性_助理与跟随,自己不是当前的助理干员
-t_is_assistant,TARGET_IS_ASSISTANT,属性_助理与跟随,交互对象是当前的助理干员
-t_not_assistant,TARGET_NOT_ASSISTANT,属性_助理与跟随,交互对象不是当前的助理干员
-is_follow,IS_FOLLOW,属性_助理与跟随,当前正跟随玩家
-not_follow,NOT_FOLLOW,属性_助理与跟随,当前没跟随玩家
-is_follow_1,IS_FOLLOW_1,属性_助理与跟随,当前正智能跟随玩家
-not_follow_1,NOT_FOLLOW_1,属性_助理与跟随,当前没智能跟随玩家
-is_follow_3,IS_FOLLOW_3,属性_助理与跟随,当前正前往博士办公室
-t_is_follow,TARGET_IS_FOLLOW,属性_助理与跟随,交互对象当前正跟随玩家
-t_not_follow,TARGET_NOT_FOLLOW,属性_助理与跟随,交互对象当前没跟随玩家
+is_assistant,IS_ASSISTANT,属性_助理,自己是当前的助理干员
+not_assistant,NOT_ASSISTANT,属性_助理,自己不是当前的助理干员
+t_is_assistant,TARGET_IS_ASSISTANT,属性_助理,交互对象是当前的助理干员
+t_not_assistant,TARGET_NOT_ASSISTANT,属性_助理,交互对象不是当前的助理干员
+assistant_help_work_0,ASSISTANT_HELP_WORK_0,属性_助理,自己的助理属性中的辅佐服务未开启
+assistant_help_work_1,ASSISTANT_HELP_WORK_1,属性_助理,自己的助理属性中的辅佐服务开启中
+assistant_send_food_0,ASSISTANT_SEND_FOOD_0,属性_助理,自己的助理属性中的送饭服务未开启
+assistant_send_food_1,ASSISTANT_SEND_FOOD_1,属性_助理,自己的助理属性中的送饭服务为帮忙买午饭
+assistant_send_food_2,ASSISTANT_SEND_FOOD_2,属性_助理,自己的助理属性中的送饭服务为亲手做午饭
+assistant_send_food_3,ASSISTANT_SEND_FOOD_3,属性_助理,自己的助理属性中的送饭服务为亲手做三餐
+assistant_send_food_of_ai_disable,ASSISTANT_SEND_FOOD_OF_AI_DISABLE,属性_助理,自己的助理属性中的送饭服务不影响AI吃饭的情况（包括未开启，开启午饭但当前非午饭）
+assistant_send_food_1_able,ASSISTANT_SEND_FOOD_1_ABLE,属性_助理,自己的助理属性满足帮忙买午饭（设定为1，flag为0，且当前为午饭）
 
+is_follow,IS_FOLLOW,属性_特殊flag,当前正跟随玩家
+not_follow,NOT_FOLLOW,属性_特殊flag,当前没跟随玩家
+is_follow_1,IS_FOLLOW_1,属性_特殊flag,当前正智能跟随玩家
+not_follow_1,NOT_FOLLOW_1,属性_特殊flag,当前没智能跟随玩家
+is_follow_3,IS_FOLLOW_3,属性_特殊flag,当前正前往博士办公室
+t_is_follow,TARGET_IS_FOLLOW,属性_特殊flag,交互对象当前正跟随玩家
+t_not_follow,TARGET_NOT_FOLLOW,属性_特殊flag,交互对象当前没跟随玩家
 hp_1,HP_1,属性_特殊flag,自身疲劳（体力=1）
 be_bagged_0,BE_BAGGED_0,属性_特殊flag,自身没有被装袋搬走
 be_bagged_1,BE_BAGGED_1,属性_特殊flag,自身被装袋搬走
@@ -375,6 +393,10 @@ unconscious_flag_6,UNCONSCIOUS_FLAG_6,属性_特殊flag,自身有无意识_精�
 unconscious_flag_7,UNCONSCIOUS_FLAG_7,属性_特殊flag,自身有无意识_肉体催眠状态
 t_unconscious_flag_0,T_UNCONSCIOUS_FLAG_0,属性_特殊flag,对方没有无意识状态
 t_unconscious_flag,T_UNCONSCIOUS_FLAG,属性_特殊flag,对方有无意识状态
+help_buy_food_flag_0,HELP_BUY_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙买午饭状态
+help_buy_food_flag_1,HELP_BUY_FOOD_FLAG_1,属性_特殊flag,自身要买饭状态
+help_buy_food_flag_2,HELP_BUY_FOOD_FLAG_2,属性_特殊flag,自身要买第二份饭状态
+help_buy_food_flag_3,HELP_BUY_FOOD_FLAG_3,属性_特殊flag,自身要送饭状态
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
@@ -687,6 +709,8 @@ t_work_is_library_manager,T_WORK_IS_LIBRARY_MANAGER,属性_工作,交互对象�
 work_is_teacher,WORK_IS_TEACHER,属性_工作,自己的工作为教师
 work_is_student,WORK_IS_STUDENT,属性_工作,自己的工作为学生
 work_is_combat_training,WORK_IS_COMBAT_TRAINING,属性_工作,自己的工作为战斗训练
+work_is_cook,WORK_IS_COOK,属性_工作,自己的工作为厨师
+work_is_production_worker,WORK_IS_PRODUCTION_WORKER,属性_工作,自己的工作为生产工人
 
 entertainment_is_read,ENTERTAINMENT_IS_READ,属性_娱乐,自己当前时段的娱乐为读书
 entertainment_is_sing,ENTERTAINMENT_IS_SING,属性_娱乐,自己当前时段的娱乐为唱歌
@@ -862,7 +886,7 @@ pl_action_food_sement_hidden,PL_ACTION_FOOD_SEMEN_HIDDEN,行动,食物调味_巧
 pl_action_food_sement_direct,PL_ACTION_FOOD_SEMEN_DIRECT,行动,食物调味_直接加精液
 pl_action_food_medicine,PL_ACTION_FOOD_MEDICINE,行动,食物调味_加药
 
-flag_baby_exist,FLAG_BABY_EXIST,特殊flag,当前有婴儿存在
+flag_baby_exist,FLAG_BABY_EXIST,生育,当前有婴儿存在
 
 to_do,TO_DO,未分类,未实装
 

@@ -4519,6 +4519,70 @@ def handle_t_unconscious_flag(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.HELP_BUY_FOOD_FLAG_0)
+def handle_help_buy_food_flag_0(character_id: int) -> int:
+    """
+    自身没有帮忙买午饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.help_buy_food == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.HELP_BUY_FOOD_FLAG_1)
+def handle_help_buy_food_flag_1(character_id: int) -> int:
+    """
+    自身要买饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.help_buy_food == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.HELP_BUY_FOOD_FLAG_2)
+def handle_help_buy_food_flag_2(character_id: int) -> int:
+    """
+    自身要买第二份饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.help_buy_food == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.HELP_BUY_FOOD_FLAG_3)
+def handle_help_buy_food_flag_3(character_id: int) -> int:
+    """
+    自身要送饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.help_buy_food == 3:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG)
 def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     """
@@ -11538,7 +11602,7 @@ def handle_target_not_assistant(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_1)
 def handle_assistant_help_work_1(character_id: int) -> int:
     """
-    助理的辅佐服务开启中
+    自己的助理属性中的辅佐服务开启中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11553,7 +11617,7 @@ def handle_assistant_help_work_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_0)
 def handle_assistant_help_work_0(character_id: int) -> int:
     """
-    助理的辅佐服务关闭中
+    自己的助理属性中的辅佐服务关闭中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11563,6 +11627,98 @@ def handle_assistant_help_work_0(character_id: int) -> int:
     if character_data.assistant_services[2]:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_0)
+def handle_assistant_send_food_0(character_id: int) -> int:
+    """
+    自己的助理属性中的送饭服务未开启
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[4]:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_1)
+def handle_assistant_send_food_1(character_id: int) -> int:
+    """
+    自己的助理属性中的送饭服务为帮忙买午饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[4] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_2)
+def handle_assistant_send_food_2(character_id: int) -> int:
+    """
+    自己的助理属性中的送饭服务为亲手做午饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[4] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_3)
+def handle_assistant_send_food_3(character_id: int) -> int:
+    """
+    自己的助理属性中的送饭服务为亲手做三餐
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[4] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_OF_AI_DISABLE)
+def handle_assistant_send_food_of_ai_disable(character_id: int) -> int:
+    """
+    自己的助理属性中的送饭服务不影响AI吃饭的情况（包括未开启，开启午饭但当前非午饭）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if not character_data.assistant_services[4]:
+        return 1
+    if character_data.assistant_services[4] in {1,2} and character_data.behavior.start_time.hour in {7, 8, 18, 19}:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_SEND_FOOD_1_ABLE)
+def handle_assistant_send_food_1_able(character_id: int) -> int:
+    """
+    自己的助理属性满足帮忙买午饭（设定为1，flag为0，且当前为午饭）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[4] == 1 and character_data.sp_flag.help_buy_food == 0 and character_data.behavior.start_time.hour in {12, 13}:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.IS_FOLLOW)

@@ -65,65 +65,8 @@ def handle_talk(character_id: int):
             if now_weight:
                 now_talk_data.setdefault(now_weight, set())
                 now_talk_data[now_weight].add(talk_id)
-    now_talk = ""
-    if len(now_talk_data):
-        talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
-        now_talk_id = random.choice(list(now_talk_data[talk_weight]))
-        now_talk = game_config.config_talk[now_talk_id].context
-    if now_talk != "":
-        now_talk_text: str = now_talk
-        scene_path = character_data.position
-        scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
-        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        scene_name = scene_data.scene_name
-        player_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    handle_talk_draw(character_id, now_talk_data)
 
-        # 衣服的代称代码，来自于NPC当前穿的衣服，或行动传入的变量
-        # print(f"debug target_data.cloth = {target_data.cloth}")
-        if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
-            TagetBraId = target_data.cloth.cloth_wear[6][0]
-            TBraName = game_config.config_clothing_tem[TagetBraId].name
-        else:
-            TBraName = ""
-        if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
-            TagetSkiId = target_data.cloth.cloth_wear[8][0]
-            TSkiName = game_config.config_clothing_tem[TagetSkiId].name
-        else:
-            TSkiName = ""
-        if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
-            TagetPanId = target_data.cloth.cloth_wear[9][0]
-            TPanName = game_config.config_clothing_tem[TagetPanId].name
-        elif character_id == 0 and player_data.behavior.pan_name != "":
-            TPanName = player_data.behavior.pan_name
-        else:
-            TPanName = ""
-        if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
-            TagetSocId = target_data.cloth.cloth_wear[10][0]
-            TSocName = game_config.config_clothing_tem[TagetSocId].name
-        elif character_id == 0 and player_data.behavior.socks_name != "":
-            TSocName = player_data.behavior.socks_name
-        else:
-            TSocName = ""
-
-        now_talk_text = now_talk_text.format(
-            NickName=character_data.nick_name,
-            FoodName=character_data.behavior.food_name,
-            MakeFoodTime=character_data.behavior.make_food_time,
-            Name=character_data.name,
-            SceneName=scene_name,
-            book_name = character_data.behavior.book_name,
-            PlayerNickName=player_data.nick_name,
-            TargetName=target_data.name,
-            TagetBraName=TBraName,
-            TagetSkiName=TSkiName,
-            TagetPanName=TPanName,
-            TagetSocName=TSocName,
-        )
-        now_draw = draw.LineFeedWaitDraw()
-        now_draw.text = now_talk_text
-        now_draw.width = normal_config.config_normal.text_width
-        now_draw.draw()
 
     # 第二段行为结算的口上
 
@@ -201,33 +144,18 @@ def handle_talk_draw(character_id: int, now_talk_data: dict):
     character_id -- 角色id
     now_talk_data -- 口上数据
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     now_talk = ""
     if len(now_talk_data):
         talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         now_talk = game_config.config_talk[now_talk_id].context
     if now_talk != "":
-        now_talk_text: str = now_talk
-        scene_path = character_data.position
-        scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
-        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        scene_name = scene_data.scene_name
-        player_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        now_talk_text = now_talk_text.format(
-            NickName=character_data.nick_name,
-            FoodName=character_data.behavior.food_name,
-            MakeFoodTime=character_data.behavior.make_food_time,
-            Name=character_data.name,
-            SceneName=scene_name,
-            PlayerNickName=player_data.nick_name,
-            TargetName=target_data.name,
-        )
+        now_talk_text = code_text_to_draw_text(now_talk, character_id)
         now_draw = draw.LineFeedWaitDraw()
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         now_draw.draw()
+
 
 def must_show_talk_check(character_id: int):
     """
@@ -245,3 +173,106 @@ def must_show_talk_check(character_id: int):
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
                 handle_talk_draw(character_id, now_talk_data)
+
+
+def code_text_to_draw_text(now_talk:str , character_id: int):
+    """
+    将文本中的代码转化为对应的文本 \n
+    Keyword arguments: \n
+    now_talk -- 输入的原文本 \n
+    character_id -- 角色id \n
+    now_talk_text -- 转化后的文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    player_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 输入的原文本
+    now_talk_text: str = now_talk
+
+    # 地点
+    scene_path = character_data.position
+    scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    scene_name = scene_data.scene_name
+
+    # 移动前地点
+    src_scene_name,src_random_chara_name = "",""
+    if len(player_data.behavior.move_src):
+        src_scene_path_str = map_handle.get_map_system_path_str_for_list(player_data.behavior.move_src)
+        src_scene_data: game_type.Scene = cache.scene_data[src_scene_path_str]
+        src_scene_name = src_scene_data.scene_name
+        for chara_id in src_scene_data.character_list:
+            if chara_id:
+                src_random_chara_name = cache.character_data[chara_id].name
+                break
+
+    # 移动后地点
+    target_scene_name,tar_random_chara_name = "",""
+    if len(character_data.behavior.move_target):
+        target_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.behavior.move_target)
+        target_scene_data: game_type.Scene = cache.scene_data[target_scene_path_str]
+        target_scene_name = target_scene_data.scene_name
+        for chara_id in target_scene_data.character_list:
+            if chara_id:
+                tar_random_chara_name = cache.character_data[chara_id].name
+                break
+
+    # 地点角色
+    random_chara_name = ""
+    for chara_id in scene_data.character_list:
+        if chara_id:
+            random_chara_name = cache.character_data[chara_id].name
+            break
+
+    # 服装，来自于NPC当前穿的衣服，或行动传入的变量
+    if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
+        TagetBraId = target_data.cloth.cloth_wear[6][0]
+        TBraName = game_config.config_clothing_tem[TagetBraId].name
+    else:
+        TBraName = ""
+    if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
+        TagetSkiId = target_data.cloth.cloth_wear[8][0]
+        TSkiName = game_config.config_clothing_tem[TagetSkiId].name
+    else:
+        TSkiName = ""
+    if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
+        TagetPanId = target_data.cloth.cloth_wear[9][0]
+        TPanName = game_config.config_clothing_tem[TagetPanId].name
+    elif character_id == 0 and player_data.behavior.pan_name != "":
+        TPanName = player_data.behavior.pan_name
+    else:
+        TPanName = ""
+    if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
+        TagetSocId = target_data.cloth.cloth_wear[10][0]
+        TSocName = game_config.config_clothing_tem[TagetSocId].name
+    elif character_id == 0 and player_data.behavior.socks_name != "":
+        TSocName = player_data.behavior.socks_name
+    else:
+        TSocName = ""
+
+    # 最后总结转化
+    now_talk_text = now_talk_text.format(
+        Name=character_data.name,
+        NickName=character_data.nick_name,
+        PlayerNickName=player_data.nick_name,
+        TargetName=target_data.name,
+
+        FoodName=character_data.behavior.food_name,
+        MakeFoodTime=character_data.behavior.make_food_time,
+        book_name = character_data.behavior.book_name,
+
+        SceneName=scene_name,
+        SceneOneCharaName=random_chara_name,
+        TargetSceneName=target_scene_name,
+        TargetOneCharaName=tar_random_chara_name,
+        SrcSceneName=src_scene_name,
+        SrcOneCharaName=src_random_chara_name,
+
+        TagetBraName=TBraName,
+        TagetSkiName=TSkiName,
+        TagetPanName=TPanName,
+        TagetSocName=TSocName,
+    )
+
+    return now_talk_text

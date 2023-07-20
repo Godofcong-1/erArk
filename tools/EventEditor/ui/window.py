@@ -7,7 +7,7 @@ class Window(QMainWindow):
     def __init__(self):
         """初始化编辑器主窗体"""
         super(Window, self).__init__()
-        self.setWindowTitle("Dieloli事件编辑器")
+        self.setWindowTitle("ErArk事件编辑器")
         self.showFullScreen()
         self.main_layout: QHBoxLayout = QHBoxLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()

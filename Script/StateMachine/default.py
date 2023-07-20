@@ -1784,6 +1784,17 @@ def character_swim_3(character_id: int):
     character_data.behavior.duration = 10
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.HELP_BUY_FOOD_1)
+def character_help_buy_food(character_id: int):
+    """
+    进入要买饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.help_buy_food = 1
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """
@@ -1900,6 +1911,17 @@ def character_buy_rand_food_at_foodshop(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
     character_data.behavior.duration = 5
     character_data.behavior.food_name = food_name
+
+    # 特殊flag进行对应更改
+    # 帮忙买饭
+    if character_data.sp_flag.help_buy_food == 1:
+        character_data.sp_flag.help_buy_food = 2
+    # 帮忙买第二次饭
+    elif character_data.sp_flag.help_buy_food == 2:
+        character_data.sp_flag.help_buy_food = 3
+    # AI正常吃饭
+    elif character_data.sp_flag.eat_food == 1:
+        character_data.sp_flag.eat_food = 2
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.EAT_BAG_RAND_FOOD)
