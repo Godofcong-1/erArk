@@ -3,9 +3,6 @@ from PySide6.QtWidgets import QListWidget, QMenu, QWidgetAction, QListWidgetItem
 from PySide6.QtCore import Qt, QModelIndex
 from PySide6.QtGui import QFont, QCursor
 from ui.list_item import ListItem
-from ui.premise_menu import PremiseMenu
-from ui.settle_menu import SettleMenu
-from ui.effect_menu import EffectMenu
 import cache_control
 import game_type
 
@@ -75,22 +72,6 @@ class DataList(QListWidget):
             delete_action.setText("删除事件")
             delete_action.triggered.connect(self.delete_event)
             menu.addAction(delete_action)
-            premise_action: QWidgetAction = QWidgetAction(self)
-            premise_action.setText("设置前提")
-            premise_action.triggered.connect(self.setting_premise)
-            menu.addAction(premise_action)
-            clean_premise_action: QWidgetAction = QWidgetAction(self)
-            clean_premise_action.setText("清除前提")
-            clean_premise_action.triggered.connect(self.clean_premise)
-            menu.addAction(clean_premise_action)
-            effect_action: QWidgetAction = QWidgetAction(self)
-            effect_action.setText("设置结算")
-            effect_action.triggered.connect(self.setting_effect)
-            menu.addAction(effect_action)
-            clean_effect_action: QWidgetAction = QWidgetAction(self)
-            clean_effect_action.setText("清除结算")
-            clean_effect_action.triggered.connect(self.clean_effect)
-            menu.addAction(clean_effect_action)
         menu.exec(position)
 
     def create_event(self):
@@ -140,51 +121,6 @@ class DataList(QListWidget):
         event.text = old_event.text + "(复制)"
         cache_control.now_event_data[event.uid] = event
         self.insertItem(event_index + 1, new_item)
-        self.close_edit()
-
-    def setting_premise(self):
-        """设置事件前提"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_id = item.uid
-        menu = PremiseMenu()
-        menu.exec()
-
-    def clean_premise(self):
-        """清除事件前提"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_data[item.uid].premise = {}
-        self.close_edit()
-
-    def setting_settle(self):
-        """设置事件结算器"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_id = item.uid
-        menu = SettleMenu()
-        menu.exec()
-
-    def clean_settle(self):
-        """清除事件结算器"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_data[item.uid].settle = {}
-        self.close_edit()
-
-    def setting_effect(self):
-        """设置事件结算"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_id = item.uid
-        menu = EffectMenu()
-        menu.exec()
-
-    def clean_effect(self):
-        """清除事件结算"""
-        event_index = self.currentRow()
-        item = self.item(event_index)
-        cache_control.now_event_data[item.uid].effect = {}
         self.close_edit()
 
     def update(self):

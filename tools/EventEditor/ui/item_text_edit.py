@@ -13,12 +13,15 @@ class ItemTextEdit(QWidget):
         self.font.setPointSize(12)
         self.setFont(self.font)
         label_layout = QVBoxLayout()
+        # 加入标题
         label = QLabel()
         label.setText("文本编辑")
         label_layout.addWidget(label)
+        # 加入保存按钮
         save_button = QPushButton("保存")
         save_button.clicked.connect(self.save)
         label_layout.addWidget(save_button)
+        # 加入文本编辑框
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
         label_layout.addWidget(self.label_text)
