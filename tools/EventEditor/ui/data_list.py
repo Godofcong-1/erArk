@@ -17,12 +17,12 @@ class DataList(QListWidget):
         """初始化表单主体"""
         super(DataList, self).__init__()
         self.font = QFont()
-        self.font.setPointSize(14)
+        self.font.setPointSize(12)
         self.setFont(self.font)
         self.close_flag = 1
         self.edited_item = self.currentItem()
         self.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.doubleClicked.connect(self.item_double_clicked)
+        # self.doubleClicked.connect(self.item_double_clicked)
         self.currentItemChanged.connect(self.close_edit)
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.right_button_menu)
@@ -83,14 +83,6 @@ class DataList(QListWidget):
             clean_premise_action.setText("清除前提")
             clean_premise_action.triggered.connect(self.clean_premise)
             menu.addAction(clean_premise_action)
-            # settle_action: QWidgetAction = QWidgetAction(self)
-            # settle_action.setText("设置结算器")
-            # settle_action.triggered.connect(self.setting_settle)
-            # menu.addAction(settle_action)
-            # clean_settle_action: QWidgetAction = QWidgetAction(self)
-            # clean_settle_action.setText("清除结算器")
-            # clean_settle_action.triggered.connect(self.clean_settle)
-            # menu.addAction(clean_settle_action)
             effect_action: QWidgetAction = QWidgetAction(self)
             effect_action.setText("设置结算")
             effect_action.triggered.connect(self.setting_effect)
@@ -205,10 +197,10 @@ class DataList(QListWidget):
         type_text_list = ["指令正常", "跳过指令", "事件后置"]
         for uid in cache_control.now_event_data:
             now_event: game_type.Event = cache_control.now_event_data[uid]
-            if now_event.status_id != cache_control.now_status:
-                continue
-            if type_text_list[now_event.type] != cache_control.now_type:
-                continue
+            # if now_event.status_id != cache_control.now_status:
+            #     continue
+            # if type_text_list[now_event.type] != cache_control.now_type:
+            #     continue
             item = ListItem(now_event.text)
             item.uid = uid
             self.addItem(item)

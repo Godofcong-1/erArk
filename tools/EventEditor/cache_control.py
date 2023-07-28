@@ -27,10 +27,10 @@ settle_type_data: Dict[str, Dict[set, Set]] = {}
 """ 结算器类型数据 """
 item_premise_list = None
 """ 事件前提列表 """
-item_settle_list = None
-""" 事件结算器列表 """
 item_effect_list = None
 """ 事件结算列表 """
+item_text_edit = None
+""" 事件文本编辑框 """
 effect_data: dict = {}
 """ 结算数据 """
 effect_type_data: Dict[str, Set] = {}

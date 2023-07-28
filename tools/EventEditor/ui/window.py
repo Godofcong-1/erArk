@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QMainWindow, QWidget
+from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QMainWindow, QWidget, QGridLayout, QLabel
 
 
 class Window(QMainWindow):
@@ -9,17 +9,19 @@ class Window(QMainWindow):
         super(Window, self).__init__()
         self.setWindowTitle("ErArk事件编辑器")
         self.showFullScreen()
-        self.main_layout: QHBoxLayout = QHBoxLayout()
+        self.main_layout: QGridLayout = QGridLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()
 
-    def add_main_widget(self, widget: QWidget, stretch: int):
+    def add_grid_layout(self, label1: QWidget, label2: QWidget, label3: QWidget, label4: QWidget):
         """
-        添加小部件到布局中
+        进行部件的布局，1：0列0行，占2行1列；2：0列1行；3：0列2行；4：1列1行，占1行2列
         Keyword arguments:
         widget -- 小部件
-        stretch -- 空间占比
         """
-        self.main_layout.addWidget(widget, stretch)
+        self.main_layout.addWidget(label1, 0, 0, 2, 1)
+        self.main_layout.addWidget(label2, 0, 1)
+        self.main_layout.addWidget(label3, 0, 2)
+        self.main_layout.addWidget(label4, 1, 1, 1, 2)
 
     def add_tool_widget(self, widget: QWidget):
         """
