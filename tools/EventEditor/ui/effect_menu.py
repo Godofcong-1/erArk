@@ -27,7 +27,7 @@ class EffectMenu(QDialog):
         super(EffectMenu, self).__init__()
         self.setWindowTitle(cache_control.now_event_data[cache_control.now_event_id].text)
         self.font = QFont()
-        self.font.setPointSize(12)
+        self.font.setPointSize(11)
         self.layout: QHBoxLayout = QHBoxLayout()
         self.resize(1000,1000)
         all_type_list = sorted(list(cache_control.effect_type_data.keys()))

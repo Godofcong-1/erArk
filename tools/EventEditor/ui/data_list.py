@@ -1,5 +1,5 @@
 import uuid
-from PySide6.QtWidgets import QListWidget, QMenu, QWidgetAction, QListWidgetItem, QAbstractItemView, QVBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout
+from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QVBoxLayout, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu
 from PySide6.QtCore import Qt, QModelIndex
 from PySide6.QtGui import QFont, QCursor
 from ui.list_item import ListItem
@@ -14,14 +14,15 @@ class DataList(QWidget):
         """初始化表单主体"""
         super(DataList, self).__init__()
         self.layout = QGridLayout(self)
-        self.text_edit_introduce = QWidget()
+        self.top_layout = QHBoxLayout()
         self.text_edit = QTextEdit("0")
-        self.menu_introduce_1 = QWidget()
-        self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
-        self.menu_introduce_2 = QWidget()
+        self.menu_bar: QMenuBar = None
+        self.status_menu: QMenu = None
+        self.type_menu: QMenu = None
         self.list_widget = QListWidget()
         self.font = QFont()
-        self.font.setPointSize(12)
+        self.font.setPointSize(11)
+        self.setFont(self.font)
         self.list_widget.setFont(self.font)
         self.close_flag = 1
         self.edited_item = self.list_widget.currentItem()
@@ -31,31 +32,31 @@ class DataList(QWidget):
         self.list_widget.customContextMenuRequested.connect(self.right_button_menu)
         self.update_clear = 0
 
+        # 初始化菜单
+        self.menu_bar = QMenuBar(self)
+        self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
+        self.type_menu : QMenu = QMenu(cache_control.now_type, self)
+        self.menu_bar.addMenu(self.status_menu)
+        self.menu_bar.addMenu(self.type_menu)
+        self.status_menu.setFont(self.font)
+        self.type_menu.setFont(self.font)
+
         # 说明文本
         label1_text = QLabel("角色id")
-        label1_layout = QVBoxLayout()
-        label1_layout.addWidget(label1_text)
-        self.text_edit_introduce.setLayout(label1_layout)
-        label2_text = QLabel("触发指令")
-        label2_layout = QVBoxLayout()
-        label2_layout.addWidget(label2_text)
-        self.menu_introduce_1.setLayout(label2_layout)
-        label3_text = QLabel("触发类型")
-        label3_layout = QVBoxLayout()
-        label3_layout.addWidget(label3_text)
-        self.menu_introduce_2.setLayout(label3_layout)
+        label2_text = QLabel("触发指令与状态")
+
+        # 上方布局
+        self.top_layout.addWidget(label1_text)
+        self.top_layout.addWidget(self.text_edit)
+        self.top_layout.addWidget(label2_text)
+        self.top_layout.addWidget(self.menu_bar)
 
         # 设置编辑框的高度和宽度
-        self.text_edit.setFixedHeight(26)
+        self.text_edit.setFixedHeight(32)
         self.text_edit.setFixedWidth(40)
 
-        # 加入布局
-        self.layout.addWidget(self.text_edit_introduce, 0, 0)
-        self.layout.addWidget(self.text_edit, 0, 1)
-        self.layout.addWidget(self.menu_introduce_1, 0, 2)
-        self.layout.addWidget(self.status_menu, 0, 3)
-        self.layout.addWidget(self.menu_introduce_2, 0, 4)
-        self.layout.addWidget(self.status_menu, 0, 5)
+        # 总布局
+        self.layout.addLayout(self.top_layout, 0, 0)
         self.layout.addWidget(self.list_widget, 1, 0, 1, 6)
 
     def item_double_clicked(self, model_index: QModelIndex):

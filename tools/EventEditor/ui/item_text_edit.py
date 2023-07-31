@@ -10,7 +10,7 @@ class ItemTextEdit(QWidget):
         """初始化文本编辑框主体"""
         super(ItemTextEdit, self).__init__()
         self.font = QFont()
-        self.font.setPointSize(12)
+        self.font.setPointSize(11)
         self.setFont(self.font)
         label_layout = QVBoxLayout()
         # 加入标题

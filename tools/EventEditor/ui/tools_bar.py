@@ -10,7 +10,7 @@ class ToolsBar(QMenuBar):
         """初始化顶部筛选栏"""
         super(ToolsBar, self).__init__()
         self.font = QFont()
-        self.font.setPointSize(12)
+        self.font.setPointSize(11)
         self.npc_menu: QMenu = QMenu("0", self)
         self.npc_menu.setFixedWidth(50)
         self.addMenu(self.npc_menu)

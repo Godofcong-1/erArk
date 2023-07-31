@@ -109,26 +109,25 @@ def change_status_menu(action: QWidgetAction):
     """
     data_list.close_edit()
     cid = action.data()
-    tools_bar.status_menu.setTitle(cache_control.status_data[cid])
+    data_list.status_menu.setTitle(cache_control.status_data[cid])
     cache_control.now_status = cid
-    tools_bar.status_menu.clear()
+    data_list.status_menu.clear()
     action_list = []
-    status_group = QActionGroup(tools_bar.status_menu)
+    status_group = QActionGroup(data_list.status_menu)
     for cid in cache_control.status_data:
         if cid == cache_control.now_status:
             continue
         if cid == "0":
             continue
-        now_action: QWidgetAction = QWidgetAction(tools_bar)
+        now_action: QWidgetAction = QWidgetAction(data_list)
         now_action.setText(cache_control.status_data[cid])
         now_action.setActionGroup(status_group)
         now_action.setData(cid)
         action_list.append(now_action)
     status_group.triggered.connect(change_status_menu)
-    tools_bar.status_menu.addActions(action_list)
-    data_list.list_widget.update()
+    data_list.status_menu.addActions(action_list)
+    data_list.update()
     item_premise_list.item_list.clear()
-    # item_settle_list.item_list.clear()
     item_effect_list.item_list.clear()
 
 
@@ -140,24 +139,24 @@ def change_type_menu(action: QWidgetAction):
     """
     data_list.close_edit()
     type = action.data()
-    tools_bar.type_menu.setTitle(type)
+    data_list.type_menu.setTitle(type)
     # cache_control.start_status = start # 这一句姑且先保留
     cache_control.now_type = type
-    tools_bar.type_menu.clear()
+    data_list.type_menu.clear()
     action_list = []
-    type_group = QActionGroup(tools_bar.type_menu)
+    type_group = QActionGroup(data_list.type_menu)
     type_list = {"指令正常", "跳过指令", "事件后置"}
     for v in type_list:
         if v == cache_control.now_type:
             continue
-        now_action: QWidgetAction = QWidgetAction(tools_bar)
+        now_action: QWidgetAction = QWidgetAction(data_list)
         now_action.setText(v)
         now_action.setActionGroup(type_group)
         now_action.setData(v)
         action_list.append(now_action)
     type_group.triggered.connect(change_type_menu)
-    tools_bar.type_menu.addActions(action_list)
-    data_list.list_widget.update()
+    data_list.type_menu.addActions(action_list)
+    data_list.update()
     item_premise_list.item_list.clear()
     # item_settle_list.item_list.clear()
     item_effect_list.item_list.clear()
@@ -197,32 +196,32 @@ def update_all_item_for_move(model_index: int):
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 data_list.list_widget.currentRowChanged.connect(update_all_item_for_move)
 action_list = []
-status_group = QActionGroup(tools_bar.status_menu)
+status_group = QActionGroup(data_list.status_menu)
 for cid in cache_control.status_data:
     if cid is cache_control.now_status:
         continue
     if cid == "0":
         continue
-    now_action: QWidgetAction = QWidgetAction(tools_bar)
+    now_action: QWidgetAction = QWidgetAction(data_list)
     now_action.setText(cache_control.status_data[cid])
     now_action.setActionGroup(status_group)
     now_action.setData(cid)
     action_list.append(now_action)
 status_group.triggered.connect(change_status_menu)
-tools_bar.status_menu.addActions(action_list)
+data_list.status_menu.addActions(action_list)
 type_list = {"指令正常", "跳过指令", "事件后置"}
 action_list = []
-type_group = QActionGroup(tools_bar.type_menu)
+type_group = QActionGroup(data_list.type_menu)
 for v in type_list:
     if v == cache_control.now_type:
         continue
-    now_action: QWidgetAction = QWidgetAction(tools_bar)
+    now_action: QWidgetAction = QWidgetAction(data_list)
     now_action.setText(v)
     now_action.setActionGroup(type_group)
     now_action.setData(v)
     action_list.append(now_action)
 type_group.triggered.connect(change_type_menu)
-tools_bar.type_menu.addActions(action_list)
+data_list.type_menu.addActions(action_list)
 menu_bar.select_event_file_action.triggered.connect(load_event_data)
 menu_bar.new_event_file_action.triggered.connect(create_event_data)
 menu_bar.save_event_action.triggered.connect(save_event_data)
