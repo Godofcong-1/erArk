@@ -126,9 +126,7 @@ def change_status_menu(action: QWidgetAction):
         action_list.append(now_action)
     status_group.triggered.connect(change_status_menu)
     data_list.status_menu.addActions(action_list)
-    data_list.update()
-    item_premise_list.item_list.clear()
-    item_effect_list.item_list.clear()
+    cache_control.now_event_data[cache_control.now_event_id].status_id = cache_control.now_status
 
 
 def change_type_menu(action: QWidgetAction):
@@ -156,10 +154,7 @@ def change_type_menu(action: QWidgetAction):
         action_list.append(now_action)
     type_group.triggered.connect(change_type_menu)
     data_list.type_menu.addActions(action_list)
-    data_list.update()
-    item_premise_list.item_list.clear()
-    # item_settle_list.item_list.clear()
-    item_effect_list.item_list.clear()
+    cache_control.now_event_data[cache_control.now_event_id].type = cache_control.now_type
 
 
 def update_premise_and_settle_list(model_index: QModelIndex):

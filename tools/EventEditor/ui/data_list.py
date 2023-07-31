@@ -173,3 +173,7 @@ class DataList(QWidget):
             item.uid = uid
             self.list_widget.addItem(item)
         self.close_edit()
+        if cache_control.now_event_id:
+            now_cid = cache_control.now_event_data[cache_control.now_event_id].status_id
+            status_text = cache_control.status_data[now_cid]
+            self.status_menu.setTitle(status_text)
