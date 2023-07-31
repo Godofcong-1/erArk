@@ -14,7 +14,7 @@ class Window(QMainWindow):
 
     def add_grid_layout(self, label1: QWidget, label2: QWidget, label3: QWidget, label4: QWidget):
         """
-        进行部件的布局，1：0列0行，占2行1列；2：0列1行；3：0列2行；4：1列1行，占1行2列
+        进行部件的布局，1：0行0列，占2行1列；2：0行1列；3：0行2列；4：1行1列，占1行2列
         Keyword arguments:
         widget -- 小部件
         """

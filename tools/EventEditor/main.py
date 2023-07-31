@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
 
-
-
 import sys
 import json
 import os
@@ -128,7 +126,7 @@ def change_status_menu(action: QWidgetAction):
         action_list.append(now_action)
     status_group.triggered.connect(change_status_menu)
     tools_bar.status_menu.addActions(action_list)
-    data_list.update()
+    data_list.list_widget.update()
     item_premise_list.item_list.clear()
     # item_settle_list.item_list.clear()
     item_effect_list.item_list.clear()
@@ -159,7 +157,7 @@ def change_type_menu(action: QWidgetAction):
         action_list.append(now_action)
     type_group.triggered.connect(change_type_menu)
     tools_bar.type_menu.addActions(action_list)
-    data_list.update()
+    data_list.list_widget.update()
     item_premise_list.item_list.clear()
     # item_settle_list.item_list.clear()
     item_effect_list.item_list.clear()
@@ -172,7 +170,7 @@ def update_premise_and_settle_list(model_index: QModelIndex):
     model_index -- 事件序号
     """
     data_list.close_edit()
-    item = data_list.item(model_index.row())
+    item = data_list.list_widget.item(model_index.row())
     if item is not None:
         cache_control.now_event_id = item.uid
         item_premise_list.update()
@@ -187,7 +185,7 @@ def update_all_item_for_move(model_index: int):
     model_index -- 事件序号
     """
     data_list.close_edit()
-    item = data_list.item(model_index)
+    item = data_list.list_widget.item(model_index)
     if item is not None:
         cache_control.now_event_id = item.uid
         item_premise_list.update()
@@ -196,8 +194,8 @@ def update_all_item_for_move(model_index: int):
         data_list.update()
 
 
-data_list.clicked.connect(update_premise_and_settle_list)
-data_list.currentRowChanged.connect(update_all_item_for_move)
+data_list.list_widget.clicked.connect(update_premise_and_settle_list)
+data_list.list_widget.currentRowChanged.connect(update_all_item_for_move)
 action_list = []
 status_group = QActionGroup(tools_bar.status_menu)
 for cid in cache_control.status_data:
