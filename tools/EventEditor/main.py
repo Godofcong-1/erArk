@@ -87,7 +87,6 @@ def create_event_data():
 
 def save_event_data():
     """保存事件文件"""
-    data_list.close_edit()
     if len(cache_control.now_file_path):
         with open(cache_control.now_file_path, "w", encoding="utf-8") as event_data_file:
             now_data = {}
@@ -107,7 +106,6 @@ def change_status_menu(action: QWidgetAction):
     Keyword arguments:
     action -- 触发的菜单
     """
-    data_list.close_edit()
     cid = action.data()
     data_list.status_menu.setTitle(cache_control.status_data[cid])
     cache_control.now_status = cid
@@ -135,7 +133,6 @@ def change_type_menu(action: QWidgetAction):
     Keyword arguments:
     action -- 触发的菜单
     """
-    data_list.close_edit()
     type = action.data()
     data_list.type_menu.setTitle(type)
     # cache_control.start_status = start # 这一句姑且先保留
@@ -143,7 +140,7 @@ def change_type_menu(action: QWidgetAction):
     data_list.type_menu.clear()
     action_list = []
     type_group = QActionGroup(data_list.type_menu)
-    type_list = {"指令正常", "跳过指令", "事件后置"}
+    type_list = ["指令正常", "跳过指令", "事件后置"]
     for v in type_list:
         if v == cache_control.now_type:
             continue
@@ -154,7 +151,10 @@ def change_type_menu(action: QWidgetAction):
         action_list.append(now_action)
     type_group.triggered.connect(change_type_menu)
     data_list.type_menu.addActions(action_list)
-    cache_control.now_event_data[cache_control.now_event_id].type = cache_control.now_type
+    for i in range(len(type_list)):
+        if type_list[i] == cache_control.now_type:
+            cache_control.now_event_data[cache_control.now_event_id].type = i
+            break
 
 
 def update_premise_and_settle_list(model_index: QModelIndex):
@@ -163,23 +163,7 @@ def update_premise_and_settle_list(model_index: QModelIndex):
     Keyword arguments:
     model_index -- 事件序号
     """
-    data_list.close_edit()
     item = data_list.list_widget.item(model_index.row())
-    if item is not None:
-        cache_control.now_event_id = item.uid
-        item_premise_list.update()
-        item_effect_list.update()
-        item_text_edit.update()
-
-
-def update_all_item_for_move(model_index: int):
-    """
-    移动选项时更新各子部件
-    Keyword arguments:
-    model_index -- 事件序号
-    """
-    data_list.close_edit()
-    item = data_list.list_widget.item(model_index)
     if item is not None:
         cache_control.now_event_id = item.uid
         item_premise_list.update()
@@ -189,7 +173,6 @@ def update_all_item_for_move(model_index: int):
 
 
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
-data_list.list_widget.currentRowChanged.connect(update_all_item_for_move)
 action_list = []
 status_group = QActionGroup(data_list.status_menu)
 for cid in cache_control.status_data:

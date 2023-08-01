@@ -27,7 +27,6 @@ class DataList(QWidget):
         self.close_flag = 1
         self.edited_item = self.list_widget.currentItem()
         self.list_widget.setSelectionMode(QAbstractItemView.SingleSelection)
-        self.list_widget.currentItemChanged.connect(self.close_edit)
         self.list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.list_widget.customContextMenuRequested.connect(self.right_button_menu)
         self.update_clear = 0
@@ -59,25 +58,6 @@ class DataList(QWidget):
         self.layout.addLayout(self.top_layout, 0, 0)
         self.layout.addWidget(self.list_widget, 1, 0, 1, 6)
 
-    def item_double_clicked(self, model_index: QModelIndex):
-        """
-        双击事件
-        Keyword arguments:
-        model_index -- 事件序号
-        """
-        self.close_edit()
-        item = self.item(model_index.row())
-        self.edited_item = item
-        self.list_widget.openPersistentEditor(item)
-        self.list_widget.editItem(item)
-
-    def close_edit(self):
-        """关闭编辑"""
-        item: QListWidgetItem = self.edited_item
-        if isinstance(item,QListWidgetItem) and item and self.list_widget.isPersistentEditorOpen(item):
-            uid = item.uid
-            cache_control.now_event_data[uid].text = item.text()
-            self.list_widget.closePersistentEditor(item)
 
     def right_button_menu(self, old_position):
         """
@@ -88,7 +68,6 @@ class DataList(QWidget):
         menu = QMenu()
         if not len(cache_control.now_file_path):
             return
-        self.close_edit()
         create_action: QWidgetAction = QWidgetAction(self)
         create_action.setText("新增事件")
         create_action.triggered.connect(self.create_event)
@@ -124,7 +103,6 @@ class DataList(QWidget):
         event.text = item.text()
         cache_control.now_event_data[event.uid] = event
         self.list_widget.addItem(item)
-        self.close_edit()
 
     def delete_event(self):
         """删除事件"""
@@ -133,7 +111,6 @@ class DataList(QWidget):
         if not self.update_clear:
             del cache_control.now_event_data[item.uid]
         self.list_widget.takeItem(event_index)
-        self.close_edit()
 
     def copy_event(self):
         """复制事件"""
@@ -153,13 +130,11 @@ class DataList(QWidget):
         event.text = old_event.text + "(复制)"
         cache_control.now_event_data[event.uid] = event
         self.list_widget.insertItem(event_index + 1, new_item)
-        self.close_edit()
 
     def update(self):
         """根据选项刷新当前绘制的列表"""
         self.update_clear = 1
         self.edited_item = None
-        self.close_edit()
         self.list_widget.clear()
         self.update_clear = 0
         type_text_list = ["指令正常", "跳过指令", "事件后置"]
@@ -172,8 +147,10 @@ class DataList(QWidget):
             item = ListItem(now_event.text)
             item.uid = uid
             self.list_widget.addItem(item)
-        self.close_edit()
         if cache_control.now_event_id:
             now_cid = cache_control.now_event_data[cache_control.now_event_id].status_id
             status_text = cache_control.status_data[now_cid]
+            type_id = cache_control.now_event_data[cache_control.now_event_id].type
+            type_text = type_text_list[type_id]
             self.status_menu.setTitle(status_text)
+            self.type_menu.setTitle(type_text)
