@@ -11,7 +11,17 @@ class Window(QMainWindow):
         self.main_layout: QGridLayout = QGridLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()
 
-    def add_grid_layout(self, label1: QWidget, label2: QWidget, label3: QWidget, label4: QWidget):
+    def add_grid_talk_layout(self, label1: QWidget, label2: QWidget, label3: QWidget):
+        """
+        进行部件的布局，1：0行0列，占2行1列；2：0行1列，占1行2列；3：1行1列，占1行2列
+        Keyword arguments:
+        widget -- 小部件
+        """
+        self.main_layout.addWidget(label1, 0, 0, 2, 1)
+        self.main_layout.addWidget(label2, 0, 1, 1, 1)
+        self.main_layout.addWidget(label3, 1, 1, 1, 1)
+
+    def add_grid_event_layout(self, label1: QWidget, label2: QWidget, label3: QWidget, label4: QWidget):
         """
         进行部件的布局，1：0行0列，占2行1列；2：0行1列；3：0行2列；4：1行1列，占1行2列
         Keyword arguments:

@@ -138,7 +138,10 @@ class DataList(QWidget):
     def update_adv_id(self):
         """根据文本编辑框更新当前的角色id"""
         cache_control.now_adv_id = self.text_edit.toPlainText()
-        cache_control.now_event_data[cache_control.now_event_id].adv_id = cache_control.now_adv_id
+        if cache_control.now_edit_type_flag == 1:
+            cache_control.now_event_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
+        elif cache_control.now_edit_type_flag == 0:
+            cache_control.now_talk_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
 
     def update(self):
         """根据选项刷新当前绘制的列表"""
@@ -146,22 +149,39 @@ class DataList(QWidget):
         self.edited_item = None
         self.list_widget.clear()
         self.update_clear = 0
-        type_text_list = ["指令正常", "跳过指令", "事件后置"]
-        for uid in cache_control.now_event_data:
-            now_event: game_type.Event = cache_control.now_event_data[uid]
-            # if now_event.status_id != cache_control.now_status:
-            #     continue
-            # if type_text_list[now_event.type] != cache_control.now_type:
-            #     continue
-            item = ListItem(now_event.text)
-            item.uid = uid
-            self.list_widget.addItem(item)
-        if cache_control.now_event_id:
-            now_cid = cache_control.now_event_data[cache_control.now_event_id].status_id
-            status_text = cache_control.status_data[now_cid]
-            type_id = cache_control.now_event_data[cache_control.now_event_id].type
-            type_text = type_text_list[type_id]
-            chara_id = cache_control.now_event_data[cache_control.now_event_id].adv_id
-            self.status_menu.setTitle(status_text)
-            self.type_menu.setTitle(type_text)
-            self.text_edit.setText(chara_id)
+
+        if cache_control.now_edit_type_flag == 0:
+            for uid in cache_control.now_talk_data:
+                now_talk: game_type.Talk = cache_control.now_talk_data[uid]
+                item = ListItem(now_talk.text)
+                item.uid = uid
+                self.list_widget.addItem(item)
+            if cache_control.now_select_id:
+                now_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
+                status_text = cache_control.status_data[now_cid]
+                chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
+                self.status_menu.setTitle(status_text)
+                self.text_edit.setText(chara_id)
+
+        elif cache_control.now_edit_type_flag == 1:
+            type_text_list = ["指令正常", "跳过指令", "事件后置"]
+            for uid in cache_control.now_event_data:
+                now_event: game_type.Event = cache_control.now_event_data[uid]
+                # if now_event.status_id != cache_control.now_status:
+                #     continue
+                # if type_text_list[now_event.type] != cache_control.now_type:
+                #     continue
+                item = ListItem(now_event.text)
+                item.uid = uid
+                self.list_widget.addItem(item)
+            if cache_control.now_select_id:
+                now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
+                print(f"debug now_cid:{now_cid}")
+                status_text = cache_control.status_data[now_cid]
+                print(f"debug status_text:{status_text}")
+                type_id = cache_control.now_event_data[cache_control.now_select_id].type
+                type_text = type_text_list[type_id]
+                chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
+                self.status_menu.setTitle(status_text)
+                self.type_menu.setTitle(type_text)
+                self.text_edit.setText(chara_id)

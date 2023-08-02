@@ -3,6 +3,13 @@ import game_type
 
 now_file_path: str = ""
 """ 当前事件数据文件路径 """
+now_edit_type_flag = 1
+""" 当前编辑器编辑类型，0为口上，1为事件 """
+
+now_talk_data: Dict[str, game_type.Talk] = {}
+""" 当前口上数据 """
+
+
 now_event_name: str = ""
 """ 当前事件名称 """
 now_event_data: Dict[str, game_type.Event] = {}
@@ -21,8 +28,8 @@ start_status: str = "开始"
 """ 当前事件开始类型 """
 now_adv_id: int = 0
 """ 当前事件角色id """
-now_event_id: str = ""
-""" 当前事件id """
+now_select_id: str = ""
+""" 当前选择的项目id """
 settle_data: Dict[str, str] = {}
 """ 结算器数据 """
 settle_type_data: Dict[str, Dict[set, Set]] = {}

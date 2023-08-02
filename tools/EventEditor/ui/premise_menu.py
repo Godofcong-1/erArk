@@ -25,7 +25,7 @@ class PremiseMenu(QDialog):
     def __init__(self):
         """初始化事件前提复选框"""
         super(PremiseMenu, self).__init__()
-        self.setWindowTitle(cache_control.now_event_data[cache_control.now_event_id].text)
+        self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
         self.layout: QHBoxLayout = QHBoxLayout()
@@ -54,7 +54,7 @@ class PremiseMenu(QDialog):
                     premise_node.cid = premise
                     premise_node.setText(0, cache_control.premise_data[premise])
                     premise_node.setToolTip(0,premise_node.text(0))
-                    if premise in cache_control.now_event_data[cache_control.now_event_id].premise:
+                    if premise in cache_control.now_event_data[cache_control.now_select_id].premise:
                         premise_node.setCheckState(0, Qt.Checked)
                     else:
                         premise_node.setCheckState(0, Qt.Unchecked)
@@ -77,9 +77,9 @@ class PremiseMenu(QDialog):
             return
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)
-            if item.cid in cache_control.now_event_data[cache_control.now_event_id].premise:
-                del cache_control.now_event_data[cache_control.now_event_id].premise[item.cid]
+            if item.cid in cache_control.now_event_data[cache_control.now_select_id].premise:
+                del cache_control.now_event_data[cache_control.now_select_id].premise[item.cid]
         else:
             item.setCheckState(0, Qt.Checked)
-            cache_control.now_event_data[cache_control.now_event_id].premise[item.cid] = 1
+            cache_control.now_event_data[cache_control.now_select_id].premise[item.cid] = 1
         cache_control.item_premise_list.update()

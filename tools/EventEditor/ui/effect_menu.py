@@ -25,7 +25,7 @@ class EffectMenu(QDialog):
     def __init__(self):
         """初始化事件效果复选框"""
         super(EffectMenu, self).__init__()
-        self.setWindowTitle(cache_control.now_event_data[cache_control.now_event_id].text)
+        self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
         self.layout: QHBoxLayout = QHBoxLayout()
@@ -56,7 +56,7 @@ class EffectMenu(QDialog):
                     effect_node.cid = effect
                     effect_node.setText(0, cache_control.effect_data[effect])
                     effect_node.setToolTip(0,effect_node.text(0))
-                    if effect in cache_control.now_event_data[cache_control.now_event_id].effect:
+                    if effect in cache_control.now_event_data[cache_control.now_select_id].effect:
                         effect_node.setCheckState(0, Qt.Checked)
                     else:
                         effect_node.setCheckState(0, Qt.Unchecked)
@@ -79,9 +79,9 @@ class EffectMenu(QDialog):
             return
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)
-            if item.cid in cache_control.now_event_data[cache_control.now_event_id].effect:
-                del cache_control.now_event_data[cache_control.now_event_id].effect[item.cid]
+            if item.cid in cache_control.now_event_data[cache_control.now_select_id].effect:
+                del cache_control.now_event_data[cache_control.now_select_id].effect[item.cid]
         else:
             item.setCheckState(0, Qt.Checked)
-            cache_control.now_event_data[cache_control.now_event_id].effect[item.cid] = 1
+            cache_control.now_event_data[cache_control.now_select_id].effect[item.cid] = 1
         cache_control.item_effect_list.update()

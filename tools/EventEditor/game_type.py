@@ -1,3 +1,19 @@
+class Talk:
+    """口上对象"""
+
+    def __init__(self):
+        """初始化事件对象"""
+        self.cid: str = ""
+        """ 口上id """
+        self.adv_id: str = ""
+        """ 口上限定的剧情npcid """
+        self.status_id: str = ""
+        """ 触发口上的行为状态id """
+        self.text: str = ""
+        """ 口上文本 """
+        self.premise: str = ""
+        """ 口上的前提集合 """
+
 class Event:
     """事件对象"""
 

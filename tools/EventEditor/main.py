@@ -4,6 +4,7 @@
 import sys
 import json
 import os
+import csv
 
 import PySide6
 dirname = os.path.dirname(PySide6.__file__) 
@@ -69,7 +70,10 @@ def load_event_data():
             for effect in delete_effect_list:
                 del now_event.effect[effect]
             cache_control.now_event_data[k] = now_event
+        cache_control.now_edit_type_flag = 1
         data_list.update()
+        main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
+        main_window.completed_layout()
 
 
 def create_event_data():
@@ -83,6 +87,7 @@ def create_event_data():
         if not file_path.endswith(".json"):
             file_path += ".json"
             cache_control.now_file_path = file_path
+        cache_control.now_edit_type_flag = 1
 
 
 def save_event_data():
@@ -93,6 +98,100 @@ def save_event_data():
             for k in cache_control.now_event_data:
                 now_data[k] = cache_control.now_event_data[k].__dict__
             json.dump(now_data, event_data_file, ensure_ascii=0)
+
+
+def load_talk_data():
+    """载入口上文件"""
+    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
+    file_path = csv_file[0]
+    if file_path:
+        cache_control.now_file_path = file_path
+
+        # 读取文件路径中的数据
+        with open(file_path, encoding="utf-8") as now_file:
+            now_type_data = {}
+            now_data = []
+            i = 0
+            now_read = csv.DictReader(now_file)
+
+            for row in now_read:
+                if not i:
+                    i += 1
+                    continue
+                elif i == 1:
+                    for k in row:
+                        now_type_data[k] = row[k]
+                    i += 1
+                    continue
+                elif i in {2,3}:
+                    i += 1
+                    continue
+                for k in now_type_data:
+                    now_type = now_type_data[k]
+                    # print(f"debug row = {row}")
+                    if not len(row[k]):
+                        del row[k]
+                        continue
+                    if now_type == "int":
+                        row[k] = int(row[k])
+                    elif now_type == "str":
+                        row[k] = str(row[k])
+                    elif now_type == "bool":
+                        row[k] = int(row[k])
+                    elif now_type == "float":
+                        row[k] = float(row[k])
+                now_data.append(row)
+
+        # 将读取的数据存入cache_control
+        for idnex, value in enumerate(now_data):
+            now_talk: game_type.Talk = game_type.Talk()
+            now_talk.__dict__ = value
+
+            # 类型名转化
+            now_talk.text = now_talk.context
+            now_talk.status_id = str(now_talk.behavior_id)
+            now_talk.adv_id = str(now_talk.adv_id)
+
+            # 前提转化
+            delete_premise_list = []
+            premise_list = now_talk.premise.split('&')
+            now_talk.premise = {}
+            for premise in premise_list:
+                now_talk.premise[premise] = 1
+            for premise in now_talk.premise:
+                if premise not in cache_control.premise_data:
+                    delete_premise_list.append(premise)
+            for premise in delete_premise_list:
+                del now_talk.premise[premise]
+            cache_control.now_talk_data[idnex] = now_talk
+        cache_control.now_edit_type_flag = 0
+        data_list.update()
+
+        main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
+        main_window.completed_layout()
+
+def create_talk_data():
+    """新建口上文件"""
+    dialog:QFileDialog = QFileDialog(menu_bar)
+    dialog.setFileMode(QFileDialog.AnyFile)
+    dialog.setNameFilter("Json (*.json)")
+    if dialog.exec():
+        file_names = dialog.selectedFiles()
+        file_path: str = file_names[0]
+        if not file_path.endswith(".json"):
+            file_path += ".json"
+            cache_control.now_file_path = file_path
+        cache_control.now_edit_type_flag = 0
+
+
+def save_talk_data():
+    """保存口上文件"""
+    if len(cache_control.now_file_path):
+        with open(cache_control.now_file_path, "w", encoding="utf-8") as talk_data_file:
+            now_data = {}
+            for k in cache_control.now_talk_data:
+                now_data[k] = cache_control.now_talk_data[k].__dict__
+            json.dump(now_data, talk_data_file, ensure_ascii=0)
 
 
 def exit_editor():
@@ -124,7 +223,7 @@ def change_status_menu(action: QWidgetAction):
         action_list.append(now_action)
     status_group.triggered.connect(change_status_menu)
     data_list.status_menu.addActions(action_list)
-    cache_control.now_event_data[cache_control.now_event_id].status_id = cache_control.now_status
+    cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
 
 
 def change_type_menu(action: QWidgetAction):
@@ -153,7 +252,7 @@ def change_type_menu(action: QWidgetAction):
     data_list.type_menu.addActions(action_list)
     for i in range(len(type_list)):
         if type_list[i] == cache_control.now_type:
-            cache_control.now_event_data[cache_control.now_event_id].type = i
+            cache_control.now_event_data[cache_control.now_select_id].type = i
             break
 
 
@@ -165,7 +264,7 @@ def update_premise_and_settle_list(model_index: QModelIndex):
     """
     item = data_list.list_widget.item(model_index.row())
     if item is not None:
-        cache_control.now_event_id = item.uid
+        cache_control.now_select_id = item.uid
         item_premise_list.update()
         item_effect_list.update()
         item_text_edit.update()
@@ -187,29 +286,37 @@ for cid in cache_control.status_data:
     action_list.append(now_action)
 status_group.triggered.connect(change_status_menu)
 data_list.status_menu.addActions(action_list)
-type_list = {"指令正常", "跳过指令", "事件后置"}
-action_list = []
-type_group = QActionGroup(data_list.type_menu)
-for v in type_list:
-    if v == cache_control.now_type:
-        continue
-    now_action: QWidgetAction = QWidgetAction(data_list)
-    now_action.setText(v)
-    now_action.setActionGroup(type_group)
-    now_action.setData(v)
-    action_list.append(now_action)
-type_group.triggered.connect(change_type_menu)
-data_list.type_menu.addActions(action_list)
+
+# 仅在事件编辑模式下更新指令类型菜单
+if cache_control.now_edit_type_flag == 1:
+    type_list = {"指令正常", "跳过指令", "事件后置"}
+    action_list = []
+    type_group = QActionGroup(data_list.type_menu)
+    for v in type_list:
+        if v == cache_control.now_type:
+            continue
+        now_action: QWidgetAction = QWidgetAction(data_list)
+        now_action.setText(v)
+        now_action.setActionGroup(type_group)
+        now_action.setData(v)
+        action_list.append(now_action)
+    type_group.triggered.connect(change_type_menu)
+    data_list.type_menu.addActions(action_list)
+
 menu_bar.select_event_file_action.triggered.connect(load_event_data)
 menu_bar.new_event_file_action.triggered.connect(create_event_data)
 menu_bar.save_event_action.triggered.connect(save_event_data)
+menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
-main_window.add_grid_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
+# if cache_control.now_edit_type_flag == 1:
+#     main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
+# else :
+#     main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
 main_window.completed_layout()
-QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
-QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
-QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,save_event_data)
+# QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
+# QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
+# QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,save_event_data)
 QShortcut(QKeySequence(main_window.tr("Ctrl+Q")),main_window,exit_editor)
 main_window.show()
 app.exec()

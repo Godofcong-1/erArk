@@ -41,10 +41,16 @@ class ItemPremiseList(QWidget):
     def update(self):
         """更新前提列表"""
         self.item_list.clear()
-        for premise in cache_control.now_event_data[cache_control.now_event_id].premise:
-            item = QListWidgetItem(cache_control.premise_data[premise])
-            item.setToolTip(item.text())
-            self.item_list.addItem(item)
+        if cache_control.now_edit_type_flag == 0:
+            for premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                item = QListWidgetItem(cache_control.premise_data[premise])
+                item.setToolTip(item.text())
+                self.item_list.addItem(item)
+        else:
+            for premise in cache_control.now_event_data[cache_control.now_select_id].premise:
+                item = QListWidgetItem(cache_control.premise_data[premise])
+                item.setToolTip(item.text())
+                self.item_list.addItem(item)
 
     def change(self):
         """展开前提菜单"""
@@ -53,5 +59,5 @@ class ItemPremiseList(QWidget):
 
     def reset(self):
         """清零前提列表"""
-        cache_control.now_event_data[cache_control.now_event_id].premise = {}
+        cache_control.now_event_data[cache_control.now_select_id].premise = {}
         self.item_list.clear()

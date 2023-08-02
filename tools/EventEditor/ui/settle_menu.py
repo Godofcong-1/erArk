@@ -25,7 +25,7 @@ class SettleMenu(QDialog):
     def __init__(self):
         """初始化事件结算器复选框"""
         super(SettleMenu, self).__init__()
-        self.setWindowTitle(cache_control.now_event_data[cache_control.now_event_id].text)
+        self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
         self.resize(1000,1000)
@@ -59,7 +59,7 @@ class SettleMenu(QDialog):
                         settle_node.settle_id = settle
                         settle_node.setText(0,cache_control.settle_data[settle])
                         settle_node.setToolTip(0,cache_control.settle_data[settle])
-                        if settle in cache_control.now_event_data[cache_control.now_event_id].settle:
+                        if settle in cache_control.now_event_data[cache_control.now_select_id].settle:
                             settle_node.setCheckState(0, Qt.Checked)
                         else:
                             settle_node.setCheckState(0, Qt.Unchecked)
@@ -82,9 +82,9 @@ class SettleMenu(QDialog):
             return
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)
-            if item.settle_id in cache_control.now_event_data[cache_control.now_event_id].settle:
-                del cache_control.now_event_data[cache_control.now_event_id].settle[item.settle_id]
+            if item.settle_id in cache_control.now_event_data[cache_control.now_select_id].settle:
+                del cache_control.now_event_data[cache_control.now_select_id].settle[item.settle_id]
         else:
             item.setCheckState(0, Qt.Checked)
-            cache_control.now_event_data[cache_control.now_event_id].settle[item.settle_id] = 1
+            cache_control.now_event_data[cache_control.now_select_id].settle[item.settle_id] = 1
         cache_control.item_settle_list.update()

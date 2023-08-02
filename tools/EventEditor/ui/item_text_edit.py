@@ -29,10 +29,16 @@ class ItemTextEdit(QWidget):
 
     def update(self):
         """更新文本内容"""
-        self.now_text = cache_control.now_event_data[cache_control.now_event_id].text
+        if cache_control.now_edit_type_flag == 1:
+            self.now_text = cache_control.now_event_data[cache_control.now_select_id].text
+        else:
+            self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
         self.label_text.setText(self.now_text)
     
     def save(self):
         """保存文本内容"""
-        cache_control.now_event_data[cache_control.now_event_id].text = self.label_text.toPlainText()
+        if cache_control.now_edit_type_flag == 1:
+            cache_control.now_event_data[cache_control.now_select_id].text = self.label_text.toPlainText()
+        else:
+            cache_control.now_talk_data[cache_control.now_select_id].text = self.label_text.toPlainText()
         

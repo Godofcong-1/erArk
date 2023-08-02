@@ -41,10 +41,11 @@ class ItemEffectList(QWidget):
     def update(self):
         """更新结算列表"""
         self.item_list.clear()
-        for effect in cache_control.now_event_data[cache_control.now_event_id].effect:
-            item = QListWidgetItem(cache_control.effect_data[effect])
-            item.setToolTip(item.text())
-            self.item_list.addItem(item)
+        if cache_control.now_edit_type_flag == 1:
+            for effect in cache_control.now_event_data[cache_control.now_select_id].effect:
+                item = QListWidgetItem(cache_control.effect_data[effect])
+                item.setToolTip(item.text())
+                self.item_list.addItem(item)
 
     def change(self):
         """展开结算菜单"""
@@ -53,5 +54,5 @@ class ItemEffectList(QWidget):
 
     def reset(self):
         """清零结算列表"""
-        cache_control.now_event_data[cache_control.now_event_id].effect = {}
+        cache_control.now_event_data[cache_control.now_select_id].effect = {}
         self.item_list.clear()
