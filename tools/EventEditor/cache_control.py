@@ -19,8 +19,10 @@ now_type: str = "指令正常"
 """ 当前事件类型 """
 start_status: str = "开始"
 """ 当前事件开始类型 """
+now_adv_id: int = 0
+""" 当前事件角色id """
 now_event_id: str = ""
-""" 编辑前提时传入的事件id """
+""" 当前事件id """
 settle_data: Dict[str, str] = {}
 """ 结算器数据 """
 settle_type_data: Dict[str, Dict[set, Set]] = {}

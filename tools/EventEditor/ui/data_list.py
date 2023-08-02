@@ -31,6 +31,9 @@ class DataList(QWidget):
         self.list_widget.customContextMenuRequested.connect(self.right_button_menu)
         self.update_clear = 0
 
+        # 连接 self.text_edit 的 textChanged 信号到 update_adv_id 方法
+        self.text_edit.textChanged.connect(self.update_adv_id)
+
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
         self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
@@ -94,6 +97,7 @@ class DataList(QWidget):
         event = game_type.Event()
         event.uid = item.uid
         event.status_id = cache_control.now_status
+        event.adv_id = cache_control.now_adv_id
         if cache_control.now_type == "指令正常":
             event.type = 1
         elif cache_control.now_type == "跳过指令":
@@ -131,6 +135,11 @@ class DataList(QWidget):
         cache_control.now_event_data[event.uid] = event
         self.list_widget.insertItem(event_index + 1, new_item)
 
+    def update_adv_id(self):
+        """根据文本编辑框更新当前的角色id"""
+        cache_control.now_adv_id = self.text_edit.toPlainText()
+        cache_control.now_event_data[cache_control.now_event_id].adv_id = cache_control.now_adv_id
+
     def update(self):
         """根据选项刷新当前绘制的列表"""
         self.update_clear = 1
@@ -152,5 +161,7 @@ class DataList(QWidget):
             status_text = cache_control.status_data[now_cid]
             type_id = cache_control.now_event_data[cache_control.now_event_id].type
             type_text = type_text_list[type_id]
+            chara_id = cache_control.now_event_data[cache_control.now_event_id].adv_id
             self.status_menu.setTitle(status_text)
             self.type_menu.setTitle(type_text)
+            self.text_edit.setText(chara_id)
