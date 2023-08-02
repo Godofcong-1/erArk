@@ -7,7 +7,9 @@ class MenuBar(QMenuBar):
     def __init__(self):
         """初始化顶部菜单栏"""
         super(MenuBar, self).__init__()
-        file_menu = QMenu("事件", self)
+
+        # 事件菜单
+        event_menu = QMenu("事件", self)
         self.new_event_file_action = QWidgetAction(self)
         self.new_event_file_action.setText("新建事件文件    Ctrl+N")
         self.select_event_file_action = QWidgetAction(self)
@@ -17,12 +19,12 @@ class MenuBar(QMenuBar):
         self.font = QFont()
         self.font.setPointSize(11)
         self.setFont(self.font)
-        file_menu.addActions(
+        event_menu.addActions(
             [
                 self.new_event_file_action,
                 self.select_event_file_action,
                 self.save_event_action,
             ]
         )
-        file_menu.setFont(self.font)
-        self.addMenu(file_menu)
+        event_menu.setFont(self.font)
+        self.addMenu(event_menu)

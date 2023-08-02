@@ -8,7 +8,6 @@ class Window(QMainWindow):
         """初始化编辑器主窗体"""
         super(Window, self).__init__()
         self.setWindowTitle("ErArk事件编辑器")
-        self.showFullScreen()
         self.main_layout: QGridLayout = QGridLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()
 
@@ -43,3 +42,4 @@ class Window(QMainWindow):
         layout.addWidget(main_widget)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+        self.showMaximized()
