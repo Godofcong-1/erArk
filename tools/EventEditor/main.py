@@ -172,15 +172,15 @@ def load_talk_data():
 
 def create_talk_data():
     """新建口上文件"""
-    dialog:QFileDialog = QFileDialog(menu_bar)
+    dialog: QFileDialog = QFileDialog(menu_bar)
     dialog.setFileMode(QFileDialog.AnyFile)
-    dialog.setNameFilter("Json (*.json)")
+    dialog.setNameFilter("CSV (*.csv)")
     if dialog.exec():
         file_names = dialog.selectedFiles()
         file_path: str = file_names[0]
-        if not file_path.endswith(".json"):
-            file_path += ".json"
-            cache_control.now_file_path = file_path
+        if not file_path.endswith(".csv"):
+            file_path += ".csv"
+        cache_control.now_file_path = file_path
         cache_control.now_edit_type_flag = 0
 
 
@@ -307,6 +307,8 @@ menu_bar.select_event_file_action.triggered.connect(load_event_data)
 menu_bar.new_event_file_action.triggered.connect(create_event_data)
 menu_bar.save_event_action.triggered.connect(save_event_data)
 menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
+menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
+# menu_bar.save_talk_action.triggered.connect(save_talk_data)
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
 # if cache_control.now_edit_type_flag == 1:
