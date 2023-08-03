@@ -71,23 +71,39 @@ class DataList(QWidget):
         menu = QMenu()
         if not len(cache_control.now_file_path):
             return
-        create_action: QWidgetAction = QWidgetAction(self)
-        create_action.setText("新增事件")
-        create_action.triggered.connect(self.create_event)
-        menu.addAction(create_action)
         menu.setFont(self.font)
         position = QCursor.pos()
         font = QFont()
         font.setPointSize(13)
-        if self.list_widget.itemAt(old_position):
-            copy_action: QWidgetAction = QWidgetAction(self)
-            copy_action.setText("复制事件")
-            copy_action.triggered.connect(self.copy_event)
-            menu.addAction(copy_action)
-            delete_action: QWidgetAction = QWidgetAction(self)
-            delete_action.setText("删除事件")
-            delete_action.triggered.connect(self.delete_event)
-            menu.addAction(delete_action)
+
+        if cache_control.now_edit_type_flag == 1:
+            create_action: QWidgetAction = QWidgetAction(self)
+            create_action.setText("新增事件")
+            create_action.triggered.connect(self.create_event)
+            menu.addAction(create_action)
+            if self.list_widget.itemAt(old_position):
+                copy_action: QWidgetAction = QWidgetAction(self)
+                copy_action.setText("复制事件")
+                copy_action.triggered.connect(self.copy_event)
+                menu.addAction(copy_action)
+                delete_action: QWidgetAction = QWidgetAction(self)
+                delete_action.setText("删除事件")
+                delete_action.triggered.connect(self.delete_event)
+                menu.addAction(delete_action)
+        else:
+            create_action: QWidgetAction = QWidgetAction(self)
+            create_action.setText("新增口上")
+            create_action.triggered.connect(self.create_talk)
+            menu.addAction(create_action)
+            if self.list_widget.itemAt(old_position):
+                copy_action: QWidgetAction = QWidgetAction(self)
+                copy_action.setText("复制口上")
+                copy_action.triggered.connect(self.copy_talk)
+                menu.addAction(copy_action)
+                delete_action: QWidgetAction = QWidgetAction(self)
+                delete_action.setText("删除口上")
+                delete_action.triggered.connect(self.delete_talk)
+                menu.addAction(delete_action)
         menu.exec(position)
 
     def create_event(self):
@@ -135,6 +151,48 @@ class DataList(QWidget):
         cache_control.now_event_data[event.uid] = event
         self.list_widget.insertItem(event_index + 1, new_item)
 
+    def create_talk(self):
+        """新增口上"""
+        item = ListItem("空口上")
+        item.uid = 1
+        while str(item.uid) in cache_control.now_talk_data:
+            item.uid += 1
+        talk = game_type.Talk()
+        talk.cid = item.uid
+        talk.status_id = cache_control.now_status
+        talk.adv_id = str(cache_control.now_adv_id)
+        talk.text = item.text()
+        cache_control.now_talk_data[talk.cid] = talk
+        self.list_widget.addItem(item)
+
+    def delete_talk(self):
+        """删除口上"""
+        talk_index = self.list_widget.currentRow()
+        item = self.list_widget.item(talk_index)
+        if not self.update_clear:
+            del cache_control.now_talk_data[item.uid]
+        self.list_widget.takeItem(talk_index)
+
+    def copy_talk(self):
+        """复制口上"""
+        talk_index = self.list_widget.currentRow()
+        old_item = self.list_widget.item(talk_index)
+        old_talk = cache_control.now_talk_data[old_item.uid]
+        new_item = ListItem(old_item.text() + "(复制)")
+
+        new_item.uid = int(old_talk.cid) + 1
+        while str(new_item.uid) in cache_control.now_talk_data:
+            new_item.uid += 1
+
+        talk = game_type.Talk()
+        talk.cid = new_item.uid
+        talk.status_id = old_talk.status_id
+        talk.adv_id = old_talk.adv_id
+        talk.premise = old_talk.premise
+        talk.text = old_talk.text + "(复制)"
+        cache_control.now_talk_data[talk.cid] = talk
+        self.list_widget.insertItem(talk_index + 1, new_item)
+
     def update_adv_id(self):
         """根据文本编辑框更新当前的角色id"""
         cache_control.now_adv_id = self.text_edit.toPlainText()
@@ -161,7 +219,6 @@ class DataList(QWidget):
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 self.status_menu.setTitle(status_text)
                 self.text_edit.setText(chara_id)
-                print(f"debug cache_control.now_select_id:{cache_control.now_select_id}, status_cid = {status_cid}, status_text = {status_text}")
 
         elif cache_control.now_edit_type_flag == 1:
             type_text_list = ["指令正常", "跳过指令", "事件后置"]
@@ -176,9 +233,7 @@ class DataList(QWidget):
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
-                print(f"debug now_cid:{now_cid}")
                 status_text = cache_control.status_data[now_cid]
-                print(f"debug status_text:{status_text}")
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
