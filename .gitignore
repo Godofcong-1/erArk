@@ -7,6 +7,12 @@ test.py
 */*/*/*.pyc
 */*/*/*/*.pyc
 */*/*/*/*/*.pyc
+
+# 打包相关文件
+build
+dist
+*.spec
+
 # 游戏解包数据
 data/data_from_game
 

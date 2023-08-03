@@ -2,9 +2,9 @@ import os
 import csv
 import cache_control
 
-premise_path = "tools\Premise.csv"
-status_path = "tools\Status.csv"
-effect_path = "tools\Effect.csv"
+premise_path = "Premise.csv"
+status_path = "Status.csv"
+effect_path = "Effect.csv"
 
 
 def load_config():
