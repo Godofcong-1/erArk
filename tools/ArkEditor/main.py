@@ -106,69 +106,76 @@ def load_talk_data():
     file_path = csv_file[0]
     if file_path:
         cache_control.now_file_path = file_path
+        load_talk_data_to_cache()
 
-        # 读取文件路径中的数据
-        with open(file_path, encoding="utf-8") as now_file:
-            now_type_data = {}
-            now_data = []
-            i = 0
-            now_read = csv.DictReader(now_file)
 
-            for row in now_read:
-                if not i:
-                    i += 1
+def load_talk_data_to_cache():
+    """将口上数据传输到缓存中"""
+
+    file_path = cache_control.now_file_path
+
+    # 读取文件路径中的数据
+    with open(file_path, encoding="utf-8") as now_file:
+        now_type_data = {}
+        now_data = []
+        i = 0
+        now_read = csv.DictReader(now_file)
+
+        for row in now_read:
+            if not i:
+                i += 1
+                continue
+            elif i == 1:
+                for k in row:
+                    now_type_data[k] = row[k]
+                i += 1
+                continue
+            elif i in {2,3}:
+                i += 1
+                continue
+            for k in now_type_data:
+                now_type = now_type_data[k]
+                # print(f"debug row = {row}")
+                if not len(row[k]):
+                    del row[k]
                     continue
-                elif i == 1:
-                    for k in row:
-                        now_type_data[k] = row[k]
-                    i += 1
-                    continue
-                elif i in {2,3}:
-                    i += 1
-                    continue
-                for k in now_type_data:
-                    now_type = now_type_data[k]
-                    # print(f"debug row = {row}")
-                    if not len(row[k]):
-                        del row[k]
-                        continue
-                    if now_type == "int":
-                        row[k] = int(row[k])
-                    elif now_type == "str":
-                        row[k] = str(row[k])
-                    elif now_type == "bool":
-                        row[k] = int(row[k])
-                    elif now_type == "float":
-                        row[k] = float(row[k])
-                now_data.append(row)
+                if now_type == "int":
+                    row[k] = int(row[k])
+                elif now_type == "str":
+                    row[k] = str(row[k])
+                elif now_type == "bool":
+                    row[k] = int(row[k])
+                elif now_type == "float":
+                    row[k] = float(row[k])
+            now_data.append(row)
 
-        # 将读取的数据存入cache_control
-        for idnex, value in enumerate(now_data):
-            now_talk: game_type.Talk = game_type.Talk()
-            now_talk.__dict__ = value
+    # 将读取的数据存入cache_control
+    for idnex, value in enumerate(now_data):
+        now_talk: game_type.Talk = game_type.Talk()
+        now_talk.__dict__ = value
 
-            # 类型名转化
-            now_talk.text = now_talk.context
-            now_talk.status_id = str(now_talk.behavior_id)
-            now_talk.adv_id = str(now_talk.adv_id)
+        # 类型名转化
+        now_talk.text = now_talk.context
+        now_talk.status_id = str(now_talk.behavior_id)
+        now_talk.adv_id = str(now_talk.adv_id)
 
-            # 前提转化
-            delete_premise_list = []
-            premise_list = now_talk.premise.split('&')
-            now_talk.premise = {}
-            for premise in premise_list:
-                now_talk.premise[premise] = 1
-            for premise in now_talk.premise:
-                if premise not in cache_control.premise_data:
-                    delete_premise_list.append(premise)
-            for premise in delete_premise_list:
-                del now_talk.premise[premise]
-            cache_control.now_talk_data[now_talk.cid] = now_talk
-        cache_control.now_edit_type_flag = 0
-        data_list.update()
+        # 前提转化
+        delete_premise_list = []
+        premise_list = now_talk.premise.split('&')
+        now_talk.premise = {}
+        for premise in premise_list:
+            now_talk.premise[premise] = 1
+        for premise in now_talk.premise:
+            if premise not in cache_control.premise_data:
+                delete_premise_list.append(premise)
+        for premise in delete_premise_list:
+            del now_talk.premise[premise]
+        cache_control.now_talk_data[now_talk.cid] = now_talk
+    cache_control.now_edit_type_flag = 0
+    data_list.update()
 
-        main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
-        main_window.completed_layout()
+    main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
+    main_window.completed_layout()
 
 def create_talk_data():
     """新建口上文件"""
@@ -182,6 +189,8 @@ def create_talk_data():
             file_path += ".csv"
         cache_control.now_file_path = file_path
         cache_control.now_edit_type_flag = 0
+        save_talk_data()
+        load_talk_data_to_cache()
 
 
 def save_talk_data():

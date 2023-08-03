@@ -25,7 +25,10 @@ class PremiseMenu(QDialog):
     def __init__(self):
         """初始化事件前提复选框"""
         super(PremiseMenu, self).__init__()
-        self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
+        if cache_control.now_edit_type_flag == 1:
+            self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
+        else:
+            self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
         self.layout: QHBoxLayout = QHBoxLayout()
@@ -54,10 +57,16 @@ class PremiseMenu(QDialog):
                     premise_node.cid = premise
                     premise_node.setText(0, cache_control.premise_data[premise])
                     premise_node.setToolTip(0,premise_node.text(0))
-                    if premise in cache_control.now_event_data[cache_control.now_select_id].premise:
-                        premise_node.setCheckState(0, Qt.Checked)
+                    if cache_control.now_edit_type_flag == 1:
+                        if premise in cache_control.now_event_data[cache_control.now_select_id].premise:
+                            premise_node.setCheckState(0, Qt.Checked)
+                        else:
+                            premise_node.setCheckState(0, Qt.Unchecked)
                     else:
-                        premise_node.setCheckState(0, Qt.Unchecked)
+                        if premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                            premise_node.setCheckState(0, Qt.Checked)
+                        else:
+                            premise_node.setCheckState(0, Qt.Unchecked)
                 root_list.append(now_root)
             tree.addTopLevelItems(root_list)
             tree.itemClicked.connect(self.click_item)

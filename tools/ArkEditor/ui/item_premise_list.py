@@ -59,5 +59,8 @@ class ItemPremiseList(QWidget):
 
     def reset(self):
         """清零前提列表"""
-        cache_control.now_event_data[cache_control.now_select_id].premise = {}
+        if cache_control.now_edit_type_flag == 1:
+            cache_control.now_event_data[cache_control.now_select_id].premise = {}
+        else:
+            cache_control.now_talk_data[cache_control.now_select_id].premise = {}
         self.item_list.clear()

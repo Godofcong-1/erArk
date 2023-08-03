@@ -7,7 +7,7 @@ class Window(QMainWindow):
     def __init__(self):
         """初始化编辑器主窗体"""
         super(Window, self).__init__()
-        self.setWindowTitle("ErArk事件编辑器")
+        self.setWindowTitle("ErArk口上事件编辑器")
         self.main_layout: QGridLayout = QGridLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()
 
