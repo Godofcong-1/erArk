@@ -260,7 +260,7 @@ def code_text_to_draw_text(now_talk:str , character_id: int):
 
         FoodName=character_data.behavior.food_name,
         MakeFoodTime=character_data.behavior.make_food_time,
-        book_name = character_data.behavior.book_name,
+        BookName = character_data.behavior.book_name,
 
         SceneName=scene_name,
         SceneOneCharaName=random_chara_name,
