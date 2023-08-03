@@ -163,7 +163,7 @@ def load_talk_data():
                     delete_premise_list.append(premise)
             for premise in delete_premise_list:
                 del now_talk.premise[premise]
-            cache_control.now_talk_data[idnex] = now_talk
+            cache_control.now_talk_data[now_talk.cid] = now_talk
         cache_control.now_edit_type_flag = 0
         data_list.update()
 
@@ -187,11 +187,27 @@ def create_talk_data():
 def save_talk_data():
     """保存口上文件"""
     if len(cache_control.now_file_path):
-        with open(cache_control.now_file_path, "w", encoding="utf-8") as talk_data_file:
-            now_data = {}
-            for k in cache_control.now_talk_data:
-                now_data[k] = cache_control.now_talk_data[k].__dict__
-            json.dump(now_data, talk_data_file, ensure_ascii=0)
+        # 通用开头
+        out_data = ""
+        out_data += "cid,behavior_id,adv_id,premise,context\n"
+        out_data += "口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n"
+        out_data += "str,int,int,str,str\n"
+        out_data += "0,0,0,0,1\n"
+        out_data += "口上配置数据,,,,\n"
+
+        # 遍历数据
+        for k in cache_control.now_talk_data:
+            now_talk: game_type.Talk = cache_control.now_talk_data[k]
+            out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
+            for premise in now_talk.premise:
+                out_data += f"{premise}&"
+            out_data = out_data[:-1]
+            out_data += f",{now_talk.text}\n"
+
+        # 写入文件
+        with open(cache_control.now_file_path, "w",encoding="utf-8") as f:
+            f.write(out_data)
+            f.close()
 
 
 def exit_editor():
@@ -223,7 +239,10 @@ def change_status_menu(action: QWidgetAction):
         action_list.append(now_action)
     status_group.triggered.connect(change_status_menu)
     data_list.status_menu.addActions(action_list)
-    cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
+    if cache_control.now_edit_type_flag == 1:
+        cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
+    else:
+        cache_control.now_talk_data[cache_control.now_select_id].status_id = cache_control.now_status
 
 
 def change_type_menu(action: QWidgetAction):
@@ -308,7 +327,7 @@ menu_bar.new_event_file_action.triggered.connect(create_event_data)
 menu_bar.save_event_action.triggered.connect(save_event_data)
 menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
 menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
-# menu_bar.save_talk_action.triggered.connect(save_talk_data)
+menu_bar.save_talk_action.triggered.connect(save_talk_data)
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
 # if cache_control.now_edit_type_flag == 1:

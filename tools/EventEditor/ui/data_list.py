@@ -145,23 +145,23 @@ class DataList(QWidget):
 
     def update(self):
         """根据选项刷新当前绘制的列表"""
-        self.update_clear = 1
         self.edited_item = None
         self.list_widget.clear()
         self.update_clear = 0
 
         if cache_control.now_edit_type_flag == 0:
-            for uid in cache_control.now_talk_data:
-                now_talk: game_type.Talk = cache_control.now_talk_data[uid]
+            for cid in cache_control.now_talk_data:
+                now_talk: game_type.Talk = cache_control.now_talk_data[cid]
                 item = ListItem(now_talk.text)
-                item.uid = uid
+                item.uid = cid
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
-                now_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
-                status_text = cache_control.status_data[now_cid]
+                status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
+                status_text = cache_control.status_data[status_cid]
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 self.status_menu.setTitle(status_text)
                 self.text_edit.setText(chara_id)
+                print(f"debug cache_control.now_select_id:{cache_control.now_select_id}, status_cid = {status_cid}, status_text = {status_text}")
 
         elif cache_control.now_edit_type_flag == 1:
             type_text_list = ["指令正常", "跳过指令", "事件后置"]

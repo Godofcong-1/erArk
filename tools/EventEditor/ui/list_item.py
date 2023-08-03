@@ -8,4 +8,4 @@ class ListItem(QListWidgetItem):
         """初始化表单对象"""
         super(ListItem, self).__init__(any)
         self.uid = ""
-        """ 事件id """
+        """ id """
