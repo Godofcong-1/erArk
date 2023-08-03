@@ -11,7 +11,7 @@ class Talk:
         """ 触发口上的行为状态id """
         self.text: str = ""
         """ 口上文本 """
-        self.premise: str = ""
+        self.premise: dict = {}
         """ 口上的前提集合 """
 
 class Event:

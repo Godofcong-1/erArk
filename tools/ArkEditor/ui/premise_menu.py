@@ -86,9 +86,16 @@ class PremiseMenu(QDialog):
             return
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)
-            if item.cid in cache_control.now_event_data[cache_control.now_select_id].premise:
-                del cache_control.now_event_data[cache_control.now_select_id].premise[item.cid]
+            if cache_control.now_edit_type_flag == 1:
+                if item.cid in cache_control.now_event_data[cache_control.now_select_id].premise:
+                    del cache_control.now_event_data[cache_control.now_select_id].premise[item.cid]
+            else:
+                if item.cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                    del cache_control.now_talk_data[cache_control.now_select_id].premise[item.cid]
         else:
             item.setCheckState(0, Qt.Checked)
-            cache_control.now_event_data[cache_control.now_select_id].premise[item.cid] = 1
+            if cache_control.now_edit_type_flag == 1:
+                cache_control.now_event_data[cache_control.now_select_id].premise[item.cid] = 1
+            else:
+                cache_control.now_talk_data[cache_control.now_select_id].premise[item.cid] = 1
         cache_control.item_premise_list.update()
