@@ -162,6 +162,7 @@ class DataList(QWidget):
         talk.status_id = cache_control.now_status
         talk.adv_id = str(cache_control.now_adv_id)
         talk.text = item.text()
+        talk.premise["high_1"] = 1
         cache_control.now_talk_data[talk.cid] = talk
         self.list_widget.addItem(item)
 

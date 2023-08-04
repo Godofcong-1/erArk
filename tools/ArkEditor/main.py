@@ -11,10 +11,10 @@ dirname = os.path.dirname(PySide6.__file__)
 plugin_path = os.path.join(dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction
+from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction, QMenu
 from PySide6.QtGui import QActionGroup, QKeySequence, QShortcut
 from PySide6.QtCore import QModelIndex
-from PySide6.QtGui import Qt
+from PySide6.QtGui import QFont
 from ui.window import Window
 from ui.menu_bar import MenuBar
 from ui.data_list import DataList
@@ -269,8 +269,6 @@ def change_type_menu(action: QWidgetAction):
     type_group = QActionGroup(data_list.type_menu)
     type_list = ["指令正常", "跳过指令", "事件后置"]
     for v in type_list:
-        if v == cache_control.now_type:
-            continue
         now_action: QWidgetAction = QWidgetAction(data_list)
         now_action.setText(v)
         now_action.setActionGroup(type_group)
@@ -300,20 +298,35 @@ def update_premise_and_settle_list(model_index: QModelIndex):
 
 
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
-action_list = []
 status_group = QActionGroup(data_list.status_menu)
-for cid in cache_control.status_data:
-    if cid is cache_control.now_status:
-        continue
-    if cid == "0":
-        continue
-    now_action: QWidgetAction = QWidgetAction(data_list)
-    now_action.setText(cache_control.status_data[cid])
-    now_action.setActionGroup(status_group)
-    now_action.setData(cid)
-    action_list.append(now_action)
+font = QFont()
+font.setPointSize(11)
+for status_type in cache_control.status_type_data:
+    status_menu = QMenu(status_type, data_list.status_menu)
+    for cid in cache_control.status_type_data[status_type]:
+        if cid is cache_control.now_status:
+            continue
+        if cid == "0":
+            continue
+        now_action: QWidgetAction = QWidgetAction(data_list)
+        now_action.setText(cache_control.status_data[cid])
+        now_action.setActionGroup(status_group)
+        now_action.setData(cid)
+        status_menu.addAction(now_action)
+        status_menu.setFont(font)
+    data_list.status_menu.addMenu(status_menu)
 status_group.triggered.connect(change_status_menu)
-data_list.status_menu.addActions(action_list)
+
+# for status_type, status_list in cache_control.status_type_data.items():
+#     status_menu = QMenu(status_type, data_list.status_menu)
+#     for cid in status_list:
+#         now_action: QWidgetAction = QWidgetAction(data_list)
+#         now_action.setText(cache_control.status_data[cid])
+#         now_action.setData(cid)
+#         status_menu.addAction(now_action)
+#     data_list.status_menu.addMenu(status_menu)
+
+
 
 # 仅在事件编辑模式下更新指令类型菜单
 if cache_control.now_edit_type_flag == 1:
@@ -339,10 +352,6 @@ menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
 menu_bar.save_talk_action.triggered.connect(save_talk_data)
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
-# if cache_control.now_edit_type_flag == 1:
-#     main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
-# else :
-#     main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
 main_window.completed_layout()
 # QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
 # QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)

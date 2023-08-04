@@ -1,4 +1,4 @@
-from typing import Dict, Set
+from typing import Dict, Set, List
 import game_type
 
 now_file_path: str = ""
@@ -20,6 +20,8 @@ premise_type_data: Dict[str, Set] = {}
 """ 前提类型数据 """
 status_data: dict = {}
 """ 当前状态数据 """
+status_type_data: Dict[str, List] = {}
+""" 状态类型数据 """
 now_status: str = "1"
 """ 当前事件状态 """
 now_type: str = "指令正常"
@@ -30,10 +32,6 @@ now_adv_id: int = 0
 """ 当前事件角色id """
 now_select_id: str = ""
 """ 当前选择的项目id """
-settle_data: Dict[str, str] = {}
-""" 结算器数据 """
-settle_type_data: Dict[str, Dict[set, Set]] = {}
-""" 结算器类型数据 """
 item_premise_list = None
 """ 事件前提列表 """
 item_effect_list = None
