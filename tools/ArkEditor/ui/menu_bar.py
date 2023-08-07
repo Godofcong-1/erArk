@@ -8,11 +8,6 @@ class MenuBar(QMenuBar):
         """初始化顶部菜单栏"""
         super(MenuBar, self).__init__()
 
-        # 添加按钮
-        self.new_button_action = QAction("说明", self)
-        self.new_button_action.triggered.connect(self.show_dialog)
-        self.addAction(self.new_button_action)
-
         # 口上菜单
         talk_menu = QMenu("口上", self)
         self.new_talk_file_action = QWidgetAction(self)
@@ -54,6 +49,11 @@ class MenuBar(QMenuBar):
         )
         event_menu.setFont(self.font)
         self.addMenu(event_menu)
+
+        # 添加按钮
+        self.new_button_action = QAction("说明", self)
+        self.new_button_action.triggered.connect(self.show_dialog)
+        self.addAction(self.new_button_action)
 
     def show_dialog(self):
         """显示只读文本框的对话框"""
