@@ -24,10 +24,10 @@ jobs:
       - name: Run PyInstaller
         run: |
           pyinstaller -F game.py
-      - name: Buildi Game Config
+      - name: Build Game Config
         run: |
           python buildconfig.py
-      - name: Buildi Game Cache
+      - name: Build Game Cache
         run: |
           python init_data.py
       - name: Copy Game Files
@@ -50,7 +50,8 @@ jobs:
           pyinstaller -F tools/ArkEditor/main.py
       - name: Copy ArkEditor Files
         run: |
-          Copy-Item dist/main.exe dist_ArkEditor/
+          New-Item -ItemType Directory -Force dist_ArkEditor
+          Copy-Item dist/main.exe dist_ArkEditor/ -Force
           Copy-Item tools/Premise.csv dist_ArkEditor/
           Copy-Item tools/Status.csv dist_ArkEditor/
           Copy-Item tools/Effect.csv dist_ArkEditor/
