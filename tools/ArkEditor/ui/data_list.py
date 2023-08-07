@@ -221,7 +221,8 @@ class DataList(QWidget):
         if cache_control.now_edit_type_flag == 0:
             for cid in cache_control.now_talk_data:
                 now_talk: game_type.Talk = cache_control.now_talk_data[cid]
-                item = ListItem(now_talk.text)
+                item_text = f"{now_talk.cid} | " + now_talk.text
+                item = ListItem(item_text)
                 item.uid = cid
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
