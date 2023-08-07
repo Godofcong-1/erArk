@@ -76,7 +76,7 @@ jobs:
         with:
           tag_name: Past.${{steps.version.outputs.value}}
           release_name: Past ${{steps.version.outputs.value}}
-          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。\n想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
+          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
           draft: false
           prerelease: false
       - name: Upload Release Asset
