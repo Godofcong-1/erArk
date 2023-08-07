@@ -1,5 +1,5 @@
 import uuid
-from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QVBoxLayout, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu
+from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu
 from PySide6.QtCore import Qt, QModelIndex
 from PySide6.QtGui import QFont, QCursor
 from ui.list_item import ListItem
@@ -19,6 +19,8 @@ class DataList(QWidget):
         self.menu_bar: QMenuBar = None
         self.status_menu: QMenu = None
         self.type_menu: QMenu = None
+        self.button = QPushButton("新增条目")
+        self.button.clicked.connect(self.buton_add)
         self.list_widget = QListWidget()
         self.font = QFont()
         self.font.setPointSize(11)
@@ -59,7 +61,8 @@ class DataList(QWidget):
 
         # 总布局
         self.layout.addLayout(self.top_layout, 0, 0)
-        self.layout.addWidget(self.list_widget, 1, 0, 1, 6)
+        self.layout.addWidget(self.button, 1, 0)
+        self.layout.addWidget(self.list_widget, 2, 0, 1, 6)
 
 
     def right_button_menu(self, old_position):
@@ -105,6 +108,13 @@ class DataList(QWidget):
                 delete_action.triggered.connect(self.delete_talk)
                 menu.addAction(delete_action)
         menu.exec(position)
+
+    def buton_add(self):
+        """新增条目"""
+        if cache_control.now_edit_type_flag == 1:
+            self.create_event()
+        else:
+            self.create_talk()
 
     def create_event(self):
         """新增事件"""
