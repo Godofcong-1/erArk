@@ -45,6 +45,19 @@ jobs:
       - name: Pack Game Files
         run: |
           Compress-Archive -Path erArk\* -DestinationPath erArk.zip
+      - name: Run PyInstaller_ArkEditor
+        run: |
+          pyinstaller -F tools/ArkEditor/main.py
+      - name: Copy ArkEditor Files
+        run: |
+          Rename-Item dist/main.exe dist/erArkEditor.exe
+          Copy-Item dist/erArkEditor.exe dist_ArkEditor/
+          Copy-Item tools/Premise.csv dist_ArkEditor/
+          Copy-Item tools/Status.csv dist_ArkEditor/
+          Copy-Item tools/Effect.csv dist_ArkEditor/
+      - name: Pack ArkEditor Files
+        run: |
+          Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
       - uses: actions/upload-artifact@master
         with:
           name: Windows
@@ -63,7 +76,7 @@ jobs:
         with:
           tag_name: Past.${{steps.version.outputs.value}}
           release_name: Past ${{steps.version.outputs.value}}
-          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)
+          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。\n想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -86,3 +99,14 @@ jobs:
           asset_path: ${{ github.workspace }}/游戏字体包.zip
           asset_name: font.zip
           asset_content_type: application/zip
+      - name: Upload ArkEditor Asset
+        id: upload-ArkEditor-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/erArkEditor.zip
+          asset_name: erArkEditor.zip
+          asset_content_type: application/zip
+  
