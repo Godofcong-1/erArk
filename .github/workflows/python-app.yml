@@ -50,8 +50,7 @@ jobs:
           pyinstaller -F tools/ArkEditor/main.py
       - name: Copy ArkEditor Files
         run: |
-          Rename-Item dist/main.exe dist/erArkEditor.exe
-          Copy-Item dist/erArkEditor.exe dist_ArkEditor/
+          Copy-Item dist/main.exe dist_ArkEditor/
           Copy-Item tools/Premise.csv dist_ArkEditor/
           Copy-Item tools/Status.csv dist_ArkEditor/
           Copy-Item tools/Effect.csv dist_ArkEditor/
