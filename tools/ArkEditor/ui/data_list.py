@@ -155,7 +155,7 @@ class DataList(QWidget):
         """新增口上"""
         item = ListItem("空口上")
         item.uid = 1
-        while str(item.uid) in cache_control.now_talk_data:
+        while item.uid in cache_control.now_talk_data:
             item.uid += 1
         talk = game_type.Talk()
         talk.cid = item.uid

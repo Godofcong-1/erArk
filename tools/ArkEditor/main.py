@@ -234,18 +234,23 @@ def change_status_menu(action: QWidgetAction):
     data_list.status_menu.setTitle(cache_control.status_data[cid])
     cache_control.now_status = cid
     data_list.status_menu.clear()
-    action_list = []
     status_group = QActionGroup(data_list.status_menu)
-    for cid in cache_control.status_data:
-        if cid == cache_control.now_status:
-            continue
-        if cid == "0":
-            continue
-        now_action: QWidgetAction = QWidgetAction(data_list)
-        now_action.setText(cache_control.status_data[cid])
-        now_action.setActionGroup(status_group)
-        now_action.setData(cid)
-        action_list.append(now_action)
+    font = QFont()
+    font.setPointSize(11)
+    for status_type in cache_control.status_type_data:
+        status_menu = QMenu(status_type, data_list.status_menu)
+        for cid in cache_control.status_type_data[status_type]:
+            if cid is cache_control.now_status:
+                continue
+            if cid == "0":
+                continue
+            now_action: QWidgetAction = QWidgetAction(data_list)
+            now_action.setText(cache_control.status_data[cid])
+            now_action.setActionGroup(status_group)
+            now_action.setData(cid)
+            status_menu.addAction(now_action)
+            status_menu.setFont(font)
+        data_list.status_menu.addMenu(status_menu)
     status_group.triggered.connect(change_status_menu)
     data_list.status_menu.addActions(action_list)
     if cache_control.now_edit_type_flag == 1:
