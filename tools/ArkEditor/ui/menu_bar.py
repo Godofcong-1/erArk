@@ -72,7 +72,7 @@ class MenuBar(QMenuBar):
         font_metrics = QFontMetrics(text_edit.font())
         text_edit.setFixedWidth(1000)
         line_count = text.count('\n') + 1
-        text_edit.setFixedHeight(font_metrics.lineSpacing() * line_count * 2)
+        text_edit.setFixedHeight(font_metrics.lineSpacing() * line_count * 1.5)
 
         layout = QVBoxLayout(dialog)
         layout.addWidget(text_edit)

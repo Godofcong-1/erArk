@@ -355,6 +355,7 @@ menu_bar.save_event_action.triggered.connect(save_event_data)
 menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
 menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
 menu_bar.save_talk_action.triggered.connect(save_talk_data)
+item_text_edit.save_button.clicked.connect(data_list.update) # 将文本编辑器的保存键上连接口上事件列表的更新
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
 main_window.completed_layout()

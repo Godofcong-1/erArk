@@ -19,9 +19,9 @@ class ItemTextEdit(QWidget):
         label.setText("文本编辑")
         label_layout.addWidget(label)
         # 加入保存按钮
-        save_button = QPushButton("保存")
-        save_button.clicked.connect(self.save)
-        label_layout.addWidget(save_button)
+        self.save_button = QPushButton("保存")
+        self.save_button.clicked.connect(self.save)
+        label_layout.addWidget(self.save_button)
         # 加入文本编辑框
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
