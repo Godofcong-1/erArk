@@ -1,7 +1,7 @@
 import uuid
 from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu
-from PySide6.QtCore import Qt, QModelIndex
-from PySide6.QtGui import QFont, QCursor
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont, QCursor, QColor
 from ui.list_item import ListItem
 import cache_control
 import game_type
@@ -224,6 +224,8 @@ class DataList(QWidget):
                 item_text = f"{now_talk.cid} | " + now_talk.text
                 item = ListItem(item_text)
                 item.uid = cid
+                if item.uid == cache_control.now_select_id:
+                    item.setBackground(QColor("light blue"))
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
@@ -242,6 +244,8 @@ class DataList(QWidget):
                 #     continue
                 item = ListItem(now_event.text)
                 item.uid = uid
+                if item.uid == cache_control.now_select_id:
+                    item.setBackground(QColor("light blue"))
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
