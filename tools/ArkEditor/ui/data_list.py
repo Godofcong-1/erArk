@@ -224,8 +224,6 @@ class DataList(QWidget):
                 item_text = f"{now_talk.cid} | " + now_talk.text
                 item = ListItem(item_text)
                 item.uid = cid
-                if item.uid == cache_control.now_select_id:
-                    item.setBackground(QColor("light blue"))
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
@@ -233,6 +231,16 @@ class DataList(QWidget):
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 self.status_menu.setTitle(status_text)
                 self.text_edit.setText(chara_id)
+
+                # 遍历 list_widget 中的所有 item
+                for i in range(self.list_widget.count()):
+                    item = self.list_widget.item(i)
+                    # 如果 item 的 uid 等于 now_select_id，则将其滚动到可见区域的中心位置
+                    if item.uid == cache_control.now_select_id:
+                        self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+                        # 设置 item 的背景色为淡蓝色
+                        item.setBackground(QColor("light blue"))
+                        break
 
         elif cache_control.now_edit_type_flag == 1:
             type_text_list = ["指令正常", "跳过指令", "事件后置"]
@@ -244,8 +252,6 @@ class DataList(QWidget):
                 #     continue
                 item = ListItem(now_event.text)
                 item.uid = uid
-                if item.uid == cache_control.now_select_id:
-                    item.setBackground(QColor("light blue"))
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
@@ -256,3 +262,14 @@ class DataList(QWidget):
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
                 self.text_edit.setText(chara_id)
+
+                # 遍历 list_widget 中的所有 item
+                for i in range(self.list_widget.count()):
+                    item = self.list_widget.item(i)
+                    # 如果 item 的 uid 等于 now_select_id，则将其滚动到可见区域的中心位置
+                    if item.uid == cache_control.now_select_id:
+                        self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+                        # 设置 item 的背景色为淡蓝色
+                        item.setBackground(QColor("light blue"))
+                        break
+
