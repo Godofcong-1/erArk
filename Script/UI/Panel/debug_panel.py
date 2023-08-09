@@ -991,6 +991,8 @@ class Debug_Panel:
                 info_text += f"[013]:要撒尿状态：{target_data.sp_flag.pee}\n"
                 info_text += f"[014]:发现食物不对劲：{target_data.sp_flag.find_food_weird}\n"
                 info_text += f"[015]:游泳状态，int [0无,1要换泳衣,2要游泳]：{target_data.sp_flag.swim}\n"
+                info_text += f"[016]:要检修状态：{target_data.sp_flag.work_maintenance}\n"
+                info_text += f"[017]:帮忙买午饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭]：{target_data.sp_flag.help_buy_food}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()

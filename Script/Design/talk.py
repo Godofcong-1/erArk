@@ -255,6 +255,7 @@ def code_text_to_draw_text(now_talk:str , character_id: int):
     now_talk_text = now_talk_text.format(
         Name=character_data.name,
         NickName=character_data.nick_name,
+        PlayerName=player_data.name,
         PlayerNickName=player_data.nick_name,
         TargetName=target_data.name,
 

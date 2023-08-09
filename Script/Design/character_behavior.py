@@ -188,10 +188,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}")
         # 空闲状态下执行可用行动#
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
-            if character_id:
-                character_target_judge(character_id, now_time)
-            else:
-                cache.over_behavior_character.add(0)
+            character_target_judge(character_id, now_time)
         # 非空闲活动下结算当前状态#
         else:
             status_judge = judge_character_status(character_id, now_time)
@@ -214,10 +211,10 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
 
     # 如果玩家在对该NPC交互，则等待flag=1
     safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
-    if PC_character_data.target_character_id == character_id:
-        # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
-        if character_data.state not in safe_instruct:
-            character_data.sp_flag.wait_flag = 1
+    # if PC_character_data.target_character_id == character_id:
+    #     # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
+    #     if character_data.state not in safe_instruct:
+    #         character_data.sp_flag.wait_flag = 1
 
     target, _, judge = search_target(
         character_id,
@@ -226,6 +223,8 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         premise_data,
         target_weight_data,
     )
+    # if character_data.name == "阿米娅":
+    #     print(f"debug 阿米娅的target = {target},judge = {judge}")
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
@@ -358,8 +357,8 @@ def judge_character_status(character_id: int, now_time: datetime.datetime, end_n
     if end_now:
         time_judge = end_now
     if time_judge:
-        # 查询当前玩家是否触发了事件
-        start_event_draw = None if character_id else event.handle_event(character_id)
+        # 查询当前是否触发了事件
+        start_event_draw = event.handle_event(character_id)
         event_type_now = 1
         if start_event_draw != None:
             event_id = start_event_draw.event_id
@@ -584,7 +583,7 @@ def judge_character_cant_move(character_id: int) -> int:
 
 def judge_character_follow(character_id: int) -> int:
     """
-    维持跟随状态
+    维持强制跟随状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
