@@ -56,6 +56,7 @@ jobs:
           Copy-Item tools/ArkEditor/Status.csv dist_ArkEditor/
           Copy-Item tools/ArkEditor/Effect.csv dist_ArkEditor/
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
+          Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
       - name: Pack ArkEditor Files
         run: |
           Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
