@@ -238,13 +238,13 @@ def count_day_for_datetime(
 
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:
     """
-    比较当前时间是否大于或等于旧时间
-    Keyword arguments:
-    time_a -- 当前时间
-    time_b -- 旧时间
-    Return arguments:
-    0 -- 小于
-    1 -- 大于
+    比较a时间是否大于或等于b时间\n
+    Keyword arguments:\n
+    time_a -- 当前时间\n
+    time_b -- 旧时间\n
+    Return arguments:\n
+    0 -- 小于\n
+    1 -- 大于\n
     2 -- 等于
     """
     if time_a == time_b:

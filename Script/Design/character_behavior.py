@@ -175,31 +175,36 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(0)
             # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
+            # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
-            status_judge = judge_character_status(character_id, now_time)
-            if status_judge:
-                cache.over_behavior_character.add(character_id)
+            judge_character_status(character_id, now_time)
+            time_judge = judge_character_status_time_over(character_id, now_time)
+            if time_judge:
+                cache.over_behavior_character.add(0)
+        #         print(f"debug time_judge")
+        # print(f"debug 玩家结算完毕")
         # 最后结算疲劳
         judge_character_tired_sleep(character_id)
 
     # 再处理NPC部分
     if character_id:
-        # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}")
-        # 空闲状态下执行可用行动#
+        # if character_data.name == "阿米娅":
+            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
-            character_target_judge(character_id, now_time)
-        # 非空闲活动下结算当前状态#
-        else:
-            status_judge = judge_character_status(character_id, now_time)
-            if status_judge:
-                cache.over_behavior_character.add(character_id)
-        # print(f"debug 后：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}")
+            find_character_target(character_id, now_time)
+            judge_character_status(character_id, now_time)
+        time_judge = judge_character_status_time_over(character_id, now_time)
+        if time_judge:
+            cache.over_behavior_character.add(character_id)
+        # if character_data.name == "阿米娅":
+        #     print(f"debug 后：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
 
 
-def character_target_judge(character_id: int, now_time: datetime.datetime):
+def find_character_target(character_id: int, now_time: datetime.datetime):
     """
-    查询角色可用目标活动并执行
+    查询角色可用目标活动并赋给角色
     Keyword arguments:
     character_id -- 角色id
     """
@@ -209,7 +214,7 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
     premise_data = {}
     target_weight_data = {}
 
-    # 如果玩家在对该NPC交互，则等待flag=1
+    # 如果玩家在对该NPC交互，则等待flag=1，此操作暂时不进行
     safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
     # if PC_character_data.target_character_id == character_id:
     #     # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
@@ -233,17 +238,6 @@ def character_target_judge(character_id: int, now_time: datetime.datetime):
         #     character_data.sp_flag.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
-        # event_draw = event.handle_event(character_id, 1)
-        # if (not character_id) or (PC_character_data.target_character_id == character_id):
-        #     if event_draw is not None:
-        #         event_draw.draw()
-        #         # 进行开始结算的数值结算
-        #         end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-        #         if character_data.target_character_id != character_id:
-        #             end_time = now_time
-        #         now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
-        #         if now_panel != None:
-        #             now_panel.draw()
     else:
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)
         if now_judge:
@@ -338,88 +332,111 @@ def judge_character_status(character_id: int, now_time: datetime.datetime, end_n
         if character_data.target_character_id != character_data.sp_flag.bagging_chara_id:
             end_time = now_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
-    time_judge = game_time.judge_date_big_or_small(now_time, end_time)
+
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
     if not add_time:
         character_data.behavior = game_type.Behavior()
         character_data.behavior.start_time = end_time
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         return 1
-    # last_hunger_time = start_time
-    # if character_data.last_hunger_time is not None:
-    #     last_hunger_time = character_data.last_hunger_time
-    # hunger_time = int((now_time - last_hunger_time).seconds / 60)
-    # character_data.status.setdefault(27, 0)
-    # character_data.status.setdefault(28, 0)
-    # character_data.status[27] += hunger_time * 0.02
-    # character_data.status[28] += hunger_time * 0.02
-    # character_data.last_hunger_time = now_time
+
+    # 查询当前是否触发了事件
+    start_event_draw = event.handle_event(character_id)
+    event_type_now = 1
+    if start_event_draw != None:
+        event_id = start_event_draw.event_id
+        character_data.event.event_id = event_id
+        event_type_now = start_event_draw.event_type
+
+    # if not character_id:
+    #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+    now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+    # if not character_id:
+    #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+    # 如果是二类
+    end_event_draw = event.handle_event(character_id)
+    if end_event_draw != None:
+        end_event_id = end_event_draw.event_id
+        end_event_type = end_event_draw.event_type
+        event_config = game_config.config_event[end_event_id]
+        if end_event_type == 2:
+
+            # 如果是父事件的话，则先输出文本
+            if "10001" in event_config.effect:
+                end_event_draw.draw()
+
+            character_data.event.event_id = end_event_id
+            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
+
+    # if not character_id:
+    #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+
+    # 如果触发了子事件的话则把文本替换为子事件文本
+    if character_data.event.son_event_id != "":
+        son_event_id = character_data.event.son_event_id
+        event_config = game_config.config_event[son_event_id]
+        start_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
+
+    # 如果有事件则显示事件，否则显示口上
+    if start_event_draw != None:
+        start_event_draw.draw()
+    elif end_event_draw != None:
+        end_event_draw.draw()
+    else:
+        talk.handle_talk(character_id)
+    if now_panel != None:
+        now_panel.draw()
+        #进行一次暂停以便玩家看输出信息
+        if character_id == 0:
+            wait_draw = draw.LineFeedWaitDraw()
+            wait_draw.text = "\n"
+            wait_draw.width = normal_config.config_normal.text_width
+            wait_draw.draw()
+
+    return 1
+
+def judge_character_status_time_over(character_id: int, now_time: datetime.datetime, end_now = 0) -> int:
+    """
+    结算角色状态是否已达足够时间
+    Keyword arguments:
+    character_id -- 角色id
+    end_now -- 是否要强制结算
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    start_time = character_data.behavior.start_time
+    end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+    if (
+        character_data.target_character_id != character_id
+        and character_data.target_character_id not in scene_data.character_list
+    ):
+        # 例外：玩家在搬运该角色
+        if character_data.target_character_id != character_data.sp_flag.bagging_chara_id:
+            end_time = now_time
+    # print(f"debug {character_data.name}的end_time = {end_time}")
+    time_judge = game_time.judge_date_big_or_small(now_time, end_time)
+    add_time = (end_time.timestamp() - start_time.timestamp()) / 60
+    if not add_time:
+        character_data.behavior = game_type.Behavior()
+        character_data.behavior.start_time = end_time
+        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        return 0
     if end_now:
         time_judge = end_now
     if time_judge:
-        # 查询当前是否触发了事件
-        start_event_draw = event.handle_event(character_id)
-        event_type_now = 1
-        if start_event_draw != None:
-            event_id = start_event_draw.event_id
-            character_data.event.event_id = event_id
-            event_type_now = start_event_draw.event_type
-
-        # if not character_id:
-        #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
-        now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
-        # if not character_id:
-        #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
-
-        # 如果是二类
-        end_event_draw = event.handle_event(character_id)
-        if end_event_draw != None:
-            end_event_id = end_event_draw.event_id
-            end_event_type = end_event_draw.event_type
-            event_config = game_config.config_event[end_event_id]
-            if end_event_type == 2:
-
-                # 如果是父事件的话，则先输出文本
-                if "10001" in event_config.effect:
-                    end_event_draw.draw()
-
-                character_data.event.event_id = end_event_id
-                now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
-
-        # if not character_id:
-        #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
-
-        # 如果触发了子事件的话则把文本替换为子事件文本
-        if character_data.event.son_event_id != "":
-            son_event_id = character_data.event.son_event_id
-            event_config = game_config.config_event[son_event_id]
-            start_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
-
-        # 如果有事件则显示事件，否则显示口上
-        if start_event_draw != None:
-            start_event_draw.draw()
-        elif end_event_draw != None:
-            end_event_draw.draw()
-        else:
-            talk.handle_talk(character_id)
-        if now_panel != None:
-            now_panel.draw()
-            #进行一次暂停以便玩家看输出信息
-            if character_id == 0:
-                wait_draw = draw.LineFeedWaitDraw()
-                wait_draw.text = "\n"
-                wait_draw.width = normal_config.config_normal.text_width
-                wait_draw.draw()
         character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.event.event_id = ""
         character_data.event.son_event_id = ""
-    if time_judge == 1:
-        character_data.behavior.start_time = end_time
-        return 0
-    elif time_judge == 2:
-        character.init_character_behavior_start_time(character_id, now_time)
-        return 0
+        if time_judge == 1:
+            character_data.behavior.start_time = end_time
+            return 0
+        elif time_judge == 2:
+            character.init_character_behavior_start_time(character_id, now_time)
     return 1
 
 
