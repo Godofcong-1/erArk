@@ -570,8 +570,8 @@ class Behavior:
         """ 移动行为目标坐标 """
         self.move_src: List[str] = []
         """ 移动行为的出发坐标 """
-        self.eat_food: Food = None
-        """ 进食行为消耗的食物对象 """
+        self.target_food: Food = None
+        """ 行为的食物对象 """
         self.food_name: str = ""
         """ 前提结算用:进食行为消耗的食物名字 """
         self.food_quality: int = 0

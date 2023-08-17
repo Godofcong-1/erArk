@@ -599,15 +599,15 @@ def handle_move_to_target_scene(
         )
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD)
-def handle_eat_food(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_FOOD)
+def handle_delete_food(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    食用指定食物
+    删除当前行动中的对象食物
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -619,8 +619,8 @@ def handle_eat_food(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.eat_food is not None:
-        food: game_type.Food = character_data.behavior.eat_food
+    if character_data.behavior.target_food is not None:
+        food: game_type.Food = character_data.behavior.target_food
         if food.uid in character_data.food_bag:
             del character_data.food_bag[food.uid]
 
@@ -633,7 +633,7 @@ def handle_make_food(
         now_time: datetime.datetime,
 ):
     """
-    制作指定食物
+    结算因为制作食物而加好感
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -645,8 +645,8 @@ def handle_make_food(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.eat_food is not None:
-        food: game_type.Food = character_data.behavior.eat_food
+    if character_data.behavior.target_food is not None:
+        food: game_type.Food = character_data.behavior.target_food
         food_name = ""
         make_food_time = 0
         food_name = cache.recipe_data[food.recipe].name
@@ -690,6 +690,31 @@ def handle_npc_make_food(
     cache.restaurant_data.setdefault(str(recipes_id), {})
     cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
     character_data.behavior.food_name = food_recipe.name
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_ALL_FOOD)
+def handle_delete_all_food(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    删除背包内所有食物
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    for food_id in character_data.food_bag:
+        food: game_type.Food = character_data.food_bag[food_id]
+        del character_data.food_bag[food.uid]
 
 
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)
@@ -1188,6 +1213,27 @@ def handle_option_fater(
     event_option_panel.line_feed.draw()
     now_draw = event_option_panel.Event_option_Panel(width)
     now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_TO_PLAYER)
+def handle_target_to_player(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象设为对玩家交互
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
@@ -4047,7 +4093,7 @@ def handle_eat_add_just(
         eat_food_chara_id_list.append(character_data.target_character_id)
 
     # 吃掉该食物
-    handle_eat_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
+    handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
     # 对要吃食物的人进行结算
     for chara_id in eat_food_chara_id_list:
         target_data: game_type.Character = cache.character_data[chara_id]

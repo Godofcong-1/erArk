@@ -46,6 +46,7 @@ class ItemTextEdit(QWidget):
             {"text": "插入玩家昵称", "slot": lambda: self.insert_text('{PlayerNickName}')},
             {"text": "插入当前行为中食物名字", "slot": lambda: self.insert_text('{FoodName}')},
             {"text": "插入食物制作时间", "slot": lambda: self.insert_text('{MakeFoodTime}')},
+            {"text": "插入当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
             {"text": "插入当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
             {"text": "插入当前场景名字", "slot": lambda: self.insert_text('{SceneName}')},
             {"text": "插入当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},

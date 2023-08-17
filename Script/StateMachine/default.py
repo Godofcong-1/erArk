@@ -1940,7 +1940,7 @@ def character_eat_rand_food(character_id: int):
         # if 27 in now_food.feel and now_food.eat:
         now_food_list.append(food_id)
     choice_food_id = random.choice(now_food_list)
-    character_data.behavior.eat_food = character_data.food_bag[choice_food_id]
+    character_data.behavior.target_food = character_data.food_bag[choice_food_id]
     character_data.state = constant.CharacterStatus.STATUS_EAT
 
     # 记录食物名字

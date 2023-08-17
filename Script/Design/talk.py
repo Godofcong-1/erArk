@@ -190,6 +190,16 @@ def code_text_to_draw_text(now_talk:str , character_id: int):
     # 输入的原文本
     now_talk_text: str = now_talk
 
+    # 包中食物
+    all_food_name = ""
+    all_food_count = 0
+    for food_id in character_data.food_bag:
+        food_data = character_data.food_bag[food_id]
+        all_food_name += food_data.name + "、"
+        if all_food_count > 1:
+            all_food_name = all_food_name[:-1]
+        all_food_count += 1
+
     # 地点
     scene_path = character_data.position
     scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
@@ -261,6 +271,7 @@ def code_text_to_draw_text(now_talk:str , character_id: int):
 
         FoodName=character_data.behavior.food_name,
         MakeFoodTime=character_data.behavior.make_food_time,
+        AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,
 
         SceneName=scene_name,
