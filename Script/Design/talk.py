@@ -175,7 +175,7 @@ def must_show_talk_check(character_id: int):
                 handle_talk_draw(character_id, now_talk_data)
 
 
-def code_text_to_draw_text(now_talk:str , character_id: int):
+def code_text_to_draw_text(now_talk:str, character_id: int):
     """
     将文本中的代码转化为对应的文本 \n
     Keyword arguments: \n
@@ -196,9 +196,9 @@ def code_text_to_draw_text(now_talk:str , character_id: int):
     for food_id in character_data.food_bag:
         food_data = character_data.food_bag[food_id]
         all_food_name += food_data.name + "、"
-        if all_food_count > 1:
-            all_food_name = all_food_name[:-1]
         all_food_count += 1
+    if all_food_count > 1:
+        all_food_name = all_food_name[:-1]
 
     # 地点
     scene_path = character_data.position
