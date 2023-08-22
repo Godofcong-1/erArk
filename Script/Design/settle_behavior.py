@@ -84,6 +84,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     # 当NPC对玩家交互时，互相替换双方的输出内容
     if character_id != 0 and now_character_data.target_character_id == 0:
         change_flag = True
+        status_data.target_change.setdefault(0, game_type.TargetChange())
         target_change: game_type.TargetChange = status_data.target_change[0]
         target_change.target_change[character_id] = status_data
 
