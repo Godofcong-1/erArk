@@ -1,5 +1,6 @@
-from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
+from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QMenu
 from PySide6.QtGui import QFont
+from PySide6.QtCore import Qt
 import cache_control
 from ui.effect_menu import EffectMenu
 
@@ -34,6 +35,8 @@ class ItemEffectList(QWidget):
         self.item_list = QListWidget()
         self.item_list.setWordWrap(True)
         self.item_list.adjustSize()
+        self.item_list.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.item_list.customContextMenuRequested.connect(self.show_context_menu)
         list_layout.addWidget(self.item_list)
         main_layout.addLayout(list_layout)
         self.setLayout(main_layout)
@@ -56,3 +59,19 @@ class ItemEffectList(QWidget):
         """清零结算列表"""
         cache_control.now_event_data[cache_control.now_select_id].effect = {}
         self.item_list.clear()
+
+    def show_context_menu(self, pos):
+        """删除该结算"""
+        item = self.item_list.itemAt(pos)
+        if item is not None:
+            menu = QMenu(self)
+            delete_action = menu.addAction("删除")
+            action = menu.exec_(self.item_list.mapToGlobal(pos))
+            if action == delete_action:
+                self.item_list.takeItem(self.item_list.row(item))
+                for effect in cache_control.effect_data:
+                    if cache_control.effect_data[effect] == item.text():
+                        effect_cid = effect
+                        break
+                if effect_cid in cache_control.now_event_data[cache_control.now_select_id].effect:
+                    del cache_control.now_event_data[cache_control.now_select_id].effect[effect_cid]
