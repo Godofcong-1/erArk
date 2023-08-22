@@ -13,8 +13,6 @@ class Premise:
     """ 系统状态 当前为无意识奸模式 """
     NOT_UNCONSCIOUS_H = "not_unconscious_h"
     """ 系统状态 当前不是无意识奸模式 """
-    # OPTION_FATER = "option_fater"
-    # """ 系统状态 选项的父事件 """
     OPTION_SON = "option_son"
     """ 系统状态 选项的子事件 """
 

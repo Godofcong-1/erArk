@@ -712,7 +712,7 @@ def handle_delete_all_food(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    for food_id in character_data.food_bag:
+    for food_id in character_data.food_bag.copy():
         food: game_type.Food = character_data.food_bag[food_id]
         del character_data.food_bag[food.uid]
 
@@ -1211,7 +1211,7 @@ def handle_option_fater(
     if not add_time:
         return
     event_option_panel.line_feed.draw()
-    now_draw = event_option_panel.Event_option_Panel(width)
+    now_draw = event_option_panel.Event_option_Panel(character_id, width)
     now_draw.draw()
 
 

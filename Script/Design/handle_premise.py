@@ -4127,6 +4127,8 @@ def handle_eat_food_flag_ge_1(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.eat_food >= 1:
         return 1
+    elif character_data.sp_flag.help_buy_food >= 1:
+        return 1
     else:
         return 0
 

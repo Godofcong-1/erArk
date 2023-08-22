@@ -146,7 +146,7 @@ def instruct_filter_flow():
 @handle_panel.add_panel(constant.Panel.EVENT_OPTION)
 def event_option_flow():
     """事件选项面板"""
-    now_panel = event_option_panel.Event_option_Panel(width)
+    now_panel = event_option_panel.Event_option_Panel(0, width)
     now_panel.draw()
 
 

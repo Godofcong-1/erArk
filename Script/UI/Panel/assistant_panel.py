@@ -175,6 +175,9 @@ class Assistant_Panel:
 
                 if judge:
                     target_data.assistant_services[service_cid] += 1
+                # debug模式下不判断解锁条件
+                elif cache.debug_mode:
+                    target_data.assistant_services[service_cid] += 1
                 # 不符合解锁条件时输出提示信息并归零
                 else:
                     info_draw = draw.WaitDraw()

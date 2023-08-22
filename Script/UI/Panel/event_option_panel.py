@@ -25,8 +25,10 @@ class Event_option_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
+        self.character_id = character_id
+        """ 绘制的角色id """
         self.width: int = width
         """ 绘制的最大宽度 """
         self.handle_panel: panel.PageHandlePanel = None
@@ -35,7 +37,7 @@ class Event_option_Panel:
     def draw(self):
         """绘制对象"""
         line_feed.draw()
-        character_data: game_type.Character = cache.character_data[0]
+        character_data: game_type.Character = cache.character_data[self.character_id]
         behavior_id = character_data.behavior.behavior_id
         father_event_id = character_data.event.event_id
 

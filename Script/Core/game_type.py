@@ -479,7 +479,7 @@ class SPECIAL_FLAG:
         self.work_maintenance: bool = 0
         """ 要检修状态 """
         self.help_buy_food: int = 0
-        """ 帮忙买午饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭] """
+        """ 帮忙买饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭] """
 
 
 class CHARA_WORK:

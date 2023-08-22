@@ -190,7 +190,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             find_character_target(character_id, now_time)
