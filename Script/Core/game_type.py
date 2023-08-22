@@ -579,7 +579,7 @@ class Behavior:
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
         self.food_seasoning: int = 0
-        """ 前提结算用:做饭/进食指令用调味类型 """
+        """ 前提结算用:食物调味类型 0正常，其他见Seasoning.csv """
         self.pan_name: str = ""
         """ 前提结算用:内裤名字 """
         self.socks_name: str = ""
