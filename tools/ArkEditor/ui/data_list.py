@@ -124,12 +124,10 @@ class DataList(QWidget):
         event.uid = item.uid
         event.status_id = cache_control.now_status
         event.adv_id = cache_control.now_adv_id
-        if cache_control.now_type == "指令正常":
-            event.type = 1
-        elif cache_control.now_type == "跳过指令":
+        if cache_control.now_type == "跳过指令":
             event.type = 0
-        elif cache_control.now_type == "事件后置":
-            event.type = 2
+        elif cache_control.now_type == "指令前置":
+            event.type = 1
         event.text = item.text()
         cache_control.now_event_data[event.uid] = event
         self.list_widget.addItem(item)
@@ -243,7 +241,7 @@ class DataList(QWidget):
                         break
 
         elif cache_control.now_edit_type_flag == 1:
-            type_text_list = ["指令正常", "跳过指令", "事件后置"]
+            type_text_list = ["跳过指令", "指令前置"]
             for uid in cache_control.now_event_data:
                 now_event: game_type.Event = cache_control.now_event_data[uid]
                 # if now_event.status_id != cache_control.now_status:

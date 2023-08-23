@@ -24,7 +24,7 @@ status_type_data: Dict[str, List] = {}
 """ 状态类型数据 """
 now_status: str = "1"
 """ 当前事件状态 """
-now_type: str = "指令正常"
+now_type: str = "跳过指令"
 """ 当前事件类型 """
 start_status: str = "开始"
 """ 当前事件开始类型 """
