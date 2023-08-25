@@ -27,6 +27,15 @@ def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel
         for event_id in game_config.config_event_status_data[behavior_id]:
             now_weight = 1
             event_config = game_config.config_event[event_id]
+            # 如果是角色专有事件，则判断角色id是否符合
+            if event_config.adv_id not in {"","0"}:
+                # print(f"debug event_config.adv_id:{event_config.adv_id}")
+                # 事件由玩家触发，但交互对象不是该id，则跳过
+                if "sys_0" in event_config.premise and int(event_config.adv_id) != character_data.target_character_id:
+                    continue
+                # 事件由NPC触发，但自己不是该id，则跳过
+                elif "sys_1" in event_config.premise and int(event_config.adv_id) != character_id:
+                    continue
             if len(event_config.premise):
                 now_weight = 0 
                 for premise in event_config.premise:
@@ -51,4 +60,5 @@ def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel
         event_weight = value_handle.get_rand_value_for_value_region(list(now_event_data.keys()))
         now_event_id = random.choice(list(now_event_data[event_weight]))
     if now_event_id != "":
+        # print(f"debug now_event_id:{now_event_id}")
         return draw_event_text_panel.DrawEventTextPanel(now_event_id,character_id, event_config.type)

@@ -1,9 +1,8 @@
 import datetime
-import time, random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_talent, game_time
+from Script.Design import attr_text, attr_calculation, handle_premise
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel
@@ -16,13 +15,13 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = 2):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instruct_flag = 1):
     """
     处理结算角色行为
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
-    event_flag -- 事件结算变量，0不指令，1先指令后事件，2不事件
+    event_flag -- 事件结算变量，0只事件不指令，1只指令不事件
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
@@ -30,15 +29,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
 
-    # 结算角色随时间增加的一些数值（疲劳值/尿意值/饥饿值）
-    change_character_value_add_as_time(character_id, add_time)
-    # 结算角色的持续状态
-    change_character_persistent_state(character_id, now_time, add_time)
-    # 自动获得对应素质和能力
-    handle_talent.gain_talent(character_id,now_gain_type = 0)
-
     behavior_id = now_character_data.behavior.behavior_id
-    if event_flag:  # 在事件的开始结算中不结算以下内容
+    if instruct_flag:
         # 进行一段结算
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
@@ -48,26 +40,27 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         # 结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
 
-    event_id = now_character_data.event.event_id
-    if event_id != "":
-        # 进行事件结算
-        # print(f"debug handle_settle_behavior event_id = {event_id}")
-        event_data: game_type.Event = game_config.config_event[event_id]
-        for effect in event_data.effect:
-            constant.settle_behavior_effect_data[int(effect)](
-                character_id, add_time, status_data, now_time
-            )
+    if not instruct_flag:
+        event_id = now_character_data.event.event_id
+        if event_id != "":
+            # 进行事件结算
+            # print(f"debug handle_settle_behavior event_id = {event_id}")
+            event_data: game_type.Event = game_config.config_event[event_id]
+            for effect in event_data.effect:
+                constant.settle_behavior_effect_data[int(effect)](
+                    character_id, add_time, status_data, now_time
+                )
 
-    # 子事件
-    son_event_id = now_character_data.event.son_event_id
-    if son_event_id != "":
-        # 进行事件结算
-        # print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
-        event_data: game_type.Event = game_config.config_event[son_event_id]
-        for effect in event_data.effect:
-            constant.settle_behavior_effect_data[int(effect)](
-                character_id, add_time, status_data, now_time
-            )
+        # 子事件
+        son_event_id = now_character_data.event.son_event_id
+        if son_event_id != "":
+            # 进行事件结算
+            # print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
+            event_data: game_type.Event = game_config.config_event[son_event_id]
+            for effect in event_data.effect:
+                constant.settle_behavior_effect_data[int(effect)](
+                    character_id, add_time, status_data, now_time
+                )
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
@@ -371,67 +364,6 @@ def change_character_talkcount_for_time(character_id: int, now_time: datetime.da
         target_data.action_info.talk_count = 0
     # print("target_data.action_info.talk_count :",target_data.action_info.talk_count)
 
-
-def change_character_value_add_as_time(character_id: int, add_time: int):
-    """
-    结算角色随时间增加的一些数值（疲劳值/尿意值）
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 距离上次结算过去的时间
-    """
-    now_character_data: game_type.Character = cache.character_data[character_id]
-    player_character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
-
-    # 仅计算在不睡觉时的正常行动结算疲劳值
-    add_tired = int(add_time / 6)
-    if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
-        now_character_data.tired_point += add_tired
-        now_character_data.tired_point = min(now_character_data.tired_point,160)
-
-    # 结算尿意值
-    add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
-    now_character_data.urinate_point += add_urinate
-    now_character_data.urinate_point = min(now_character_data.urinate_point,240)
-
-    # 结算饥饿值
-    add_hunger = random.randint(int(add_time * 0.8), int(add_time * 1.2))
-    now_character_data.hunger_point += add_hunger
-    now_character_data.hunger_point = min(now_character_data.hunger_point,240)
-
-    # 给无法自由行动的交互对象结算
-    if character_id == 0 and player_character_data.target_character_id:
-        target_character_data: game_type.Character = cache.character_data[player_character_data.target_character_id]
-        if target_character_data.sp_flag.is_follow or target_character_data.sp_flag.is_h:
-            if game_config.config_status[target_character_data.state].name not in {"睡觉","休息"}:
-                target_character_data.tired_point += add_tired
-                target_character_data.tired_point = min(target_character_data.tired_point,160)
-            target_character_data.urinate_point += add_urinate
-            target_character_data.urinate_point = min(target_character_data.urinate_point,240)
-            target_character_data.hunger_point += add_hunger
-            target_character_data.hunger_point = min(target_character_data.hunger_point,240)
-
-    # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
-
-
-def change_character_persistent_state(character_id: int, now_time: datetime.datetime, add_time: int):
-    """
-    结算角色的持续状态
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 距离上次结算过去的时间
-    """
-    now_character_data: game_type.Character = cache.character_data[character_id]
-    player_character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
-
-    # 结算H状态的持续时间
-    for i in range(len(now_character_data.h_state.body_item)):
-        if now_character_data.h_state.body_item[i][1]:
-            end_time = now_character_data.h_state.body_item[i][2]
-            if end_time != None and game_time.judge_date_big_or_small(now_time,end_time):
-                now_character_data.h_state.body_item[i][1] = False
-                now_character_data.h_state.body_item[i][2] = None
 
 
 # def change_character_social(character_id: int, change_data: game_type.CharacterStatusChange):
