@@ -166,23 +166,6 @@ class ClothingTem:
     """ 描述 """
 
 
-class ClothingTem_back:
-    """ 服装模板 """
-
-    cid: int
-    """ 模板id """
-    name: str
-    """ 服装名字 """
-    clothing_type: int
-    """ 服装类型 """
-    sex: int
-    """ 服装性别限制 """
-    tag: int
-    """ 服装用途标签 """
-    describe: str
-    """ 描述 """
-
-
 class ClothingType:
     """ 衣服种类配置 """
 
