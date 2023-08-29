@@ -94,13 +94,21 @@ def character_move_scene(old_scene_path: list, new_scene_path: list, character_i
     """
     old_scene_path_str = get_map_system_path_str_for_list(old_scene_path)
     new_scene_path_str = get_map_system_path_str_for_list(new_scene_path)
+    character_data = cache.character_data[character_id]
+    # 从旧场景移除角色
     if character_id in cache.scene_data[old_scene_path_str].character_list:
         cache.scene_data[old_scene_path_str].character_list.remove(character_id)
+    # 在新场景添加角色
     if character_id not in cache.scene_data[new_scene_path_str].character_list:
-        cache.character_data[character_id].position = new_scene_path
+        character_data.position = new_scene_path
         cache.scene_data[new_scene_path_str].character_list.add(character_id)
-    cache.character_data[character_id].behavior.move_src = old_scene_path
-    cache.character_data[character_id].behavior.move_target = new_scene_path
+    # 刷新移动起止位置
+    character_data.behavior.move_src = old_scene_path
+    character_data.behavior.move_target = new_scene_path
+    # 清零最终目的地
+    if new_scene_path == character_data.behavior.move_final_target:
+        character_data.behavior.move_final_target = []
+        # print(f"debug {character_data.name} 清零最终目的地")
 
 
 def get_map_system_path_str_for_list(now_list: list) -> str:

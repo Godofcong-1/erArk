@@ -456,6 +456,8 @@ class Premise:
     """ 地点_移动 角色离开宿舍 """
     MOVE_TO_LADIES_ONLY = "move_to_ladies_only"
     """ 地点_移动 角色抵达男士止步的地点 """
+    MOVE_NOT_FINISH = "move_not_finish"
+    """ 地点_移动 角色移动未完成(权重为10) """
 
     HAVE_MOVED = "ai_moved"
     """ 时间_角色 NPC距离上次移动已经至少经过了1小时 """
@@ -688,7 +690,7 @@ class Premise:
     NOT_FOLLOW = "not_follow"
     """ 属性_特殊flag 当前没跟随玩家 """
     IS_FOLLOW_1 = "is_follow_1"
-    """ 属性_特殊flag 当前正智能跟随玩家 """
+    """ 属性_特殊flag 当前正智能跟随玩家(权重20) """
     NOT_FOLLOW_1 = "not_follow_1"
     """ 属性_特殊flag 当前没智能跟随玩家 """
     IS_FOLLOW_3 = "is_follow_3"

@@ -78,3 +78,42 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
         return "null", [], [], 0
     now_path_data = map_handle.scene_path_edge[now_position_str][target_scene_str]
     return access_type, [], now_path_data[0], now_path_data[1]
+
+
+def judge_character_move_to_private(character_id: int, move_path: []) -> int:
+    """
+    结算角色是否移动到私密房间\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    move_path -- 移动路径\n
+    Return arguments:\n
+    move_flag -- true的话就是移动\n
+    wait_flag -- true的话就是等待\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    move_flag = True # true的话就是移动
+    wait_flag = False # true的话就是等待
+    # 进行私密跟随判断
+    target_scene_str = map_handle.get_map_system_path_str_for_list(move_path)
+    access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
+    if access_type == "private":
+        # 超时后取消跟随
+        if character_data.chara_setting[0] == 0:
+            if character_data.action_info.follow_wait_time >= 30:
+                character_data.sp_flag.is_follow = 0
+            else:
+                wait_flag = True
+            move_flag = False
+        # 超时后仍继续等待
+        elif character_data.chara_setting[0] == 1:
+            move_flag = False
+            wait_flag = True
+        # 超时后直接闯入
+        elif character_data.chara_setting[0] == 2:
+            if character_data.action_info.follow_wait_time < 30:
+                move_flag = False
+                wait_flag = True
+        # 一直跟随，无视私密地点
+        elif character_data.chara_setting[0] == 3:
+            pass
+    return move_flag, wait_flag

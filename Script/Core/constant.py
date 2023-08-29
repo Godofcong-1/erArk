@@ -961,6 +961,8 @@ class StateMachine:
     """ 移动至所属宿舍 """
     MOVE_TO_PLAYER = 503
     """ 移动至玩家位置 """
+    CONTINUE_MOVE = 504
+    """ 继续移动 """
     MOVE_TO_TOILET = 511
     """ 去洗手间 """
     MOVE_TO_REST_ROOM = 512

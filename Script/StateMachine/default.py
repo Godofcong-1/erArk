@@ -1175,38 +1175,64 @@ def character_move_to_player(character_id: int):
     _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
     move_flag = True # flase的话就是等待
     # 进行私密跟随判断
-    target_scene_str = map_handle.get_map_system_path_str_for_list(move_path)
-    access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
-    if access_type == "private":
-        # 超时后取消跟随
-        if character_data.chara_setting[0] == 0:
-            if character_data.action_info.follow_wait_time >= 30:
-                character_data.sp_flag.is_follow = 0
-            move_flag = False
-        # 超时后仍继续等待
-        elif character_data.chara_setting[0] == 1:
-            move_flag = False
-        # 超时后直接闯入
-        elif character_data.chara_setting[0] == 2:
-            if character_data.action_info.follow_wait_time < 30:
-                move_flag = False
-        # 一直跟随，无视私密地点
-        elif character_data.chara_setting[0] == 3:
-            pass
+    move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
     # 最后决定是移动还是继续等待
     if move_flag:
         character_data.action_info.follow_wait_time = 0
         character_data.behavior.behavior_id = constant.Behavior.MOVE
         character_data.behavior.move_target = move_path
+        character_data.behavior.move_final_target = to_dr
         character_data.behavior.duration = move_time
         character_data.state = constant.CharacterStatus.STATUS_MOVE
+        # print(f"debug {character_data.name} 移动至玩家位置,move_final_target = {character_data.behavior.move_final_target}")
     else:
-        character_data.action_info.follow_wait_time += 5
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.behavior.duration = 5
-        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        character_data.action_info.follow_wait_time += 5
     # if character_data.sp_flag.is_follow:
-    #     print(f"debug {character_id}号角色向玩家移动，当前跟随={character_data.sp_flag.is_follow}")
+    #     print(f"debug {character_data.name}向玩家移动，当前跟随={character_data.sp_flag.is_follow}")
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.CONTINUE_MOVE)
+def character_continue_move(character_id: int):
+    """
+    继续移动
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"\n\ndebug 判断 {character_data.name} 继续移动")
+    # 仅在有最终目标的情况下进行判断
+    if character_data.behavior.move_final_target != []:
+
+        # 如果还没有抵达最终目标地点
+        if character_data.position != character_data.behavior.move_final_target:
+            # print(f"debug {character_data.name} 还没有抵达最终目标地点")
+
+            # 基础数据计算
+            to_dr = cache.character_data[0].position
+            _, _, move_path, move_time = character_move.character_move(character_id, character_data.behavior.move_final_target)
+            move_flag = True # true的话就是移动
+            wait_flag = False # true的话就是等待
+
+            # 如果是向玩家移动的话
+            if character_data.behavior.move_final_target == to_dr:
+                # 进行私密跟随判断
+                move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
+                # print(f"debug {character_data.name} 向玩家移动，move_flag = {move_flag}, wait_flag = {wait_flag}")
+
+            if move_flag:
+                character_data.state = constant.CharacterStatus.STATUS_MOVE
+                character_data.behavior.behavior_id = constant.Behavior.MOVE
+                character_data.behavior.move_target = move_path
+                character_data.behavior.duration = move_time
+                character_data.action_info.follow_wait_time = 0
+            elif wait_flag:
+                character_data.state = constant.CharacterStatus.STATUS_WAIT
+                character_data.behavior.behavior_id = constant.Behavior.WAIT
+                character_data.behavior.duration = 5
+                character_data.action_info.follow_wait_time += 5
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)

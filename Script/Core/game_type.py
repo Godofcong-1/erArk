@@ -567,9 +567,11 @@ class Behavior:
         self.behavior_id: int = 0
         """ 行为id """
         self.move_target: List[str] = []
-        """ 移动行为目标坐标 """
+        """ 移动行为的目标坐标 """
         self.move_src: List[str] = []
         """ 移动行为的出发坐标 """
+        self.move_final_target: List[str] = []
+        """ 移动行为的最终目标坐标 """
         self.target_food: Food = None
         """ 行为的食物对象 """
         self.food_name: str = ""

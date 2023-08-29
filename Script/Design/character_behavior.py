@@ -197,7 +197,6 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
             find_character_target(character_id, now_time)
-            # 判断事件是否触发
             # 结算状态与事件
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
@@ -223,6 +222,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     character_data: game_type.Character = cache.character_data[character_id]
     PC_character_data: game_type.Character = cache.character_data[0]
     start_time = character_data.behavior.start_time
+    target_list = list(game_config.config_target.keys())
     premise_data = {}
     target_weight_data = {}
 
@@ -233,15 +233,17 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     #     if character_data.state not in safe_instruct:
     #         character_data.sp_flag.wait_flag = 1
 
-    target, _, judge = search_target(
+    target, weight, judge = search_target(
         character_id,
-        list(game_config.config_target.keys()),
+        target_list,
         set(),
         premise_data,
         target_weight_data,
     )
     # if character_data.name == "阿米娅":
-    #     print(f"debug 阿米娅的target = {target},judge = {judge}")
+    #     print(f"\ndebug 阿米娅的target = {target},weight = {weight},now_time = {now_time}")
+    #     if 5 <= int(target) <= 30:
+    #         print(f"debug position = {character_data.position},move_final_target = {character_data.behavior.move_final_target}")
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
@@ -416,7 +418,7 @@ def judge_character_status(character_id: int) -> int:
 
 def judge_character_status_time_over(character_id: int, now_time: datetime.datetime, end_now = 0) -> int:
     """
-    结算角色状态是否已达足够时间
+    结算角色状态是否本次行动已经结束
     Keyword arguments:
     character_id -- 角色id
     end_now -- 是否要强制结算
@@ -446,7 +448,13 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     if end_now:
         time_judge = end_now
     if time_judge:
-        character_data.behavior = game_type.Behavior()
+        # 移动状态下则不完全重置行动数据，保留最终目标数据
+        if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+            tem_move_final_target = character_data.behavior.move_final_target
+            character_data.behavior = game_type.Behavior()
+            character_data.behavior.move_final_target = tem_move_final_target
+        else:
+            character_data.behavior = game_type.Behavior()
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.event.event_id = ""
         character_data.event.son_event_id = ""
@@ -466,17 +474,17 @@ def search_target(
     target_weight_data: Dict[int, int],
 ) -> (int, int, bool):
     """
-    查找可用目标
-    Keyword arguments:
-    character_id -- 角色id
-    target_list -- 检索的目标列表
-    null_target -- 被排除的目标
-    premise_data -- 已算出的前提权重
-    target_weight_data -- 已算出权重的目标列表
-    Return arguments:
-    int -- 目标id
-    int -- 目标权重
-    bool -- 前提是否能够被满足
+    查找可用目标\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    target_list -- 检索的目标列表\n
+    null_target -- 被排除的目标\n
+    premise_data -- 已算出的前提权重\n
+    target_weight_data -- 已算出权重的目标列表\n
+    Return arguments:\n
+    int -- 目标id\n
+    int -- 目标权重\n
+    bool -- 前提是否能够被满足\n
     """
     target_data = {}
     for target in target_list:
@@ -540,7 +548,11 @@ def search_target(
             target_data[now_weight].add(random.choice(list(now_target_data[now_value_weight])))
     if len(target_data):
         value_weight = value_handle.get_rand_value_for_value_region(list(target_data.keys()))
-        return random.choice(list(target_data[value_weight])), value_weight, 1
+        final_target = random.choice(list(target_data[value_weight]))
+        # if final_target == "511":
+        #     print(f"debug target_data = {target_data}")
+        #     print(f"debug value_weight = {value_weight}")
+        return final_target, value_weight, 1
     return "", 0, 0
 
 def settle_character_juel(character_id: int) -> int:

@@ -908,6 +908,21 @@ def handle_move_to_ladies_only(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.MOVE_NOT_FINISH)
+def handle_move_not_finish(character_id: int) -> int:
+    """
+    角色移动未完成(权重为10)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.behavior.move_final_target != []:
+        return 10
+    return 0
+
+
 @add_premise(constant_promise.Premise.NOT_IN_TOILET)
 def handle_not_in_toilet(character_id: int) -> int:
     """
@@ -11757,7 +11772,7 @@ def handle_not_follow(character_id: int) -> int:
 @add_premise(constant_promise.Premise.IS_FOLLOW_1)
 def handle_is_follow_1(character_id: int) -> int:
     """
-    校验是否正智能跟随玩家
+    校验是否正智能跟随玩家(权重20)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11765,7 +11780,7 @@ def handle_is_follow_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.is_follow == 1:
-        return 100
+        return 20
     return 0
 
 
