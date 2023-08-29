@@ -62,7 +62,7 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
         return "end", [], [], 0
     now_position_str = map_handle.get_map_system_path_str_for_list(now_position)
     target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
-    target_scene_data = cache.scene_data[target_scene_str]
+    # target_scene_data = cache.scene_data[target_scene_str]
     # if not character_id:
     #     print(f"debug now_position_str = {now_position_str},target_scene_str = {target_scene_str}")
     # 判断目标场景是否可进入，不可则输出原因
