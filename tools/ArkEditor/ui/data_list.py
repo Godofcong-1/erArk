@@ -151,6 +151,7 @@ class DataList(QWidget):
         event.uid = new_item.uid
         event.status_id = old_event.status_id
         event.type = old_event.type
+        event.adv_id = old_event.adv_id
         for premise in old_event.premise:
             event.premise[premise] = old_event.premise[premise]
         for effect in old_event.effect:
