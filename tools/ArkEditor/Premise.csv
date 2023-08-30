@@ -6,7 +6,6 @@ is_h,IS_H,系统状态,当前为H模式
 not_h,NOT_H,系统状态,当前不是H模式
 is_unconscious_h,IS_UNCONSCIOUS_H,系统状态,当前为无意识奸模式
 not_unconscious_h,NOT_UNCONSCIOUS_H,系统状态,当前不是无意识奸模式
-option_fater,# OPTION_FATER,系统状态,选项的父事件
 option_son,OPTION_SON,系统状态,选项的子事件
 
 sys_0,IS_PLAYER,指令_触发与交互,玩家触发的该指令
@@ -79,15 +78,10 @@ last_cmd_paizuri_type,LAST_CMD_PAIZURI_TYPE,指令_前指令,前一指令为乳�
 
 place_0,IN_PLAYER_SCENE,地点_角色,与玩家处于相同地点
 place_1,NOT_IN_PLAYER_SCENE,地点_角色,与玩家不处于相同地点
-place_1,# IN_PLAYER_ZONE,地点_角色,与玩家处于相同大区域
 place_2,PLAYER_COME_SCENE,地点_角色,玩家来到该角色所在的地点
-place_3,# PLAYER_COME_ZONE,地点_角色,玩家来到该角色所在的区域
 place_4,PLAYER_LEAVE_SCENE,地点_角色,玩家离开该角色所在的地点
-place_5,# PLAYER_LEAVE_ZONE,地点_角色,玩家离开该角色所在的区域
 place_6,TATGET_COME_SCENE,地点_角色,该角色来到玩家所在的地点
-place_7,# TATGET_COME_ZONE,地点_角色,该角色来到玩家所在的区域
 place_8,TATGET_LEAVE_SCENE,地点_角色,该角色离开玩家所在的地点
-place_9,# TATGET_LEAVE_ZONE,地点_角色,该角色离开玩家所在的区域
 place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有玩家和该角色
 place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之外的人
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
@@ -233,6 +227,7 @@ move_to_locker_room,MOVE_TO_LOCKER_ROOM,地点_移动,角色抵达更衣室
 move_to_dormitory,MOVE_TO_DORMITORY,地点_移动,角色抵达宿舍
 move_from_dormitory,MOVE_FROM_DORMITORY,地点_移动,角色离开宿舍
 move_to_ladies_only,MOVE_TO_LADIES_ONLY,地点_移动,角色抵达男士止步的地点
+move_not_finish,MOVE_NOT_FINISH,地点_移动,角色移动未完成(权重为10)
 
 ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
 ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）
@@ -247,6 +242,7 @@ time_morning,TIME_MORNING,时间_当前,时间:清晨（4点~8点）
 time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
 time_aftermoon,TIME_AFTERMOON,时间_当前,时间:下午（15点~18点）
 eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上18~19点）
+launch_time,LAUNCH_TIME,时间_当前,午饭饭点（中午12~13点）
 shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 not_shower_time,NOT_SHOWER_TIME,时间_当前,非淋浴时间（淋浴时间是晚上8点到晚上12点）
 sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
@@ -344,10 +340,11 @@ assistant_send_food_2,ASSISTANT_SEND_FOOD_2,属性_助理,自己的助理属性�
 assistant_send_food_3,ASSISTANT_SEND_FOOD_3,属性_助理,自己的助理属性中的送饭服务为亲手做三餐
 assistant_send_food_of_ai_disable,ASSISTANT_SEND_FOOD_OF_AI_DISABLE,属性_助理,自己的助理属性中的送饭服务不影响AI吃饭的情况（包括未开启，开启午饭但当前非午饭）
 assistant_send_food_1_able,ASSISTANT_SEND_FOOD_1_ABLE,属性_助理,自己的助理属性满足帮忙买午饭（设定为1，flag为0，且当前为午饭）
+assistant_send_food_2_able,ASSISTANT_SEND_FOOD_2_ABLE,属性_助理,自己的助理属性满足帮忙做饭（含午饭与三餐）
 
 is_follow,IS_FOLLOW,属性_特殊flag,当前正跟随玩家
 not_follow,NOT_FOLLOW,属性_特殊flag,当前没跟随玩家
-is_follow_1,IS_FOLLOW_1,属性_特殊flag,当前正智能跟随玩家
+is_follow_1,IS_FOLLOW_1,属性_特殊flag,当前正智能跟随玩家(权重20)
 not_follow_1,NOT_FOLLOW_1,属性_特殊flag,当前没智能跟随玩家
 is_follow_3,IS_FOLLOW_3,属性_特殊flag,当前正前往博士办公室
 t_is_follow,TARGET_IS_FOLLOW,属性_特殊flag,交互对象当前正跟随玩家
@@ -396,7 +393,10 @@ t_unconscious_flag,T_UNCONSCIOUS_FLAG,属性_特殊flag,对方有无意识状态
 help_buy_food_flag_0,HELP_BUY_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙买午饭状态
 help_buy_food_flag_1,HELP_BUY_FOOD_FLAG_1,属性_特殊flag,自身要买饭状态
 help_buy_food_flag_2,HELP_BUY_FOOD_FLAG_2,属性_特殊flag,自身要买第二份饭状态
-help_buy_food_flag_3,HELP_BUY_FOOD_FLAG_3,属性_特殊flag,自身要送饭状态
+help_buy_food_flag_3,HELP_BUY_FOOD_FLAG_3,属性_特殊flag,自身买饭后要送饭状态
+help_make_food_flag_0,HELP_MAKE_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙做饭状态
+help_make_food_flag_1,HELP_MAKE_FOOD_FLAG_1,属性_特殊flag,自身要做饭状态
+help_make_food_flag_2,HELP_MAKE_FOOD_FLAG_2,属性_特殊flag,自身做饭后要送饭状态
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通

@@ -153,23 +153,23 @@ class Premise:
     NOT_IN_PLAYER_SCENE = "place_1"
     """ 地点_角色 与玩家不处于相同地点 """
     # IN_PLAYER_ZONE = "place_1"
-    """ 地点_角色 与玩家处于相同大区域 """
+    #""" 地点_角色 与玩家处于相同大区域 """
     PLAYER_COME_SCENE = "place_2"
     """ 地点_角色 玩家来到该角色所在的地点 """
     # PLAYER_COME_ZONE = "place_3"
-    """ 地点_角色 玩家来到该角色所在的区域 """
+    #""" 地点_角色 玩家来到该角色所在的区域 """
     PLAYER_LEAVE_SCENE = "place_4"
     """ 地点_角色 玩家离开该角色所在的地点 """
     # PLAYER_LEAVE_ZONE = "place_5"
-    """ 地点_角色 玩家离开该角色所在的区域 """
+    #""" 地点_角色 玩家离开该角色所在的区域 """
     TATGET_COME_SCENE = "place_6"
     """ 地点_角色 该角色来到玩家所在的地点 """
     # TATGET_COME_ZONE = "place_7"
-    """ 地点_角色 该角色来到玩家所在的区域 """
+    #""" 地点_角色 该角色来到玩家所在的区域 """
     TATGET_LEAVE_SCENE = "place_8"
     """ 地点_角色 该角色离开玩家所在的地点 """
     # TATGET_LEAVE_ZONE = "place_9"
-    """ 地点_角色 该角色离开玩家所在的区域 """
+    #""" 地点_角色 该角色离开玩家所在的区域 """
     SCENE_ONLY_TWO = "place_10"
     """ 地点_角色 该地点仅有玩家和该角色 """
     SCENE_OVER_TWO = "place_11"
@@ -484,6 +484,8 @@ class Premise:
     """ 时间_当前 时间:下午（15点~18点） """
     EAT_TIME = "eat_time"
     """ 时间_当前 饭点（早上7~8点、中午12~13点、晚上18~19点） """
+    LAUNCH_TIME = "launch_time"
+    """ 时间_当前 午饭饭点（中午12~13点） """
     SHOWER_TIME = "shower_time"
     """ 时间_当前 淋浴时间（晚上8点到晚上12点） """
     NOT_SHOWER_TIME = "not_shower_time"
@@ -511,16 +513,16 @@ class Premise:
     TIME_WEEKEND = "time_weekend"
     """ 时间_当前 今天为周末（周六或周日） """
 
-    """
-    异常状态类型：
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
-    \n2:妊娠限制：临盆、产后、婴儿
-    \n3:AI行动受限：助理、跟随模式下
-    \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
-    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
-    """
+    #"""
+    #异常状态类型：\n
+    #1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）\n
+    #2:妊娠限制：临盆、产后、婴儿\n
+    #3:AI行动受限：助理、跟随模式下\n
+    #4:服装异常：大致全裸、全裸\n
+    #5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然\n
+    #6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气\n
+    #7:监禁：装袋搬走、监禁\n
+    #"""
 
     NORMAL_ALL = "normal_all"
     """ 属性_基础 没有任何异常的普通状态 """
@@ -684,6 +686,8 @@ class Premise:
     """ 属性_助理 自己的助理属性中的送饭服务不影响AI吃饭的情况（包括未开启，开启午饭但当前非午饭） """
     ASSISTANT_SEND_FOOD_1_ABLE = "assistant_send_food_1_able"
     """ 属性_助理 自己的助理属性满足帮忙买午饭（设定为1，flag为0，且当前为午饭） """
+    ASSISTANT_SEND_FOOD_2_ABLE = "assistant_send_food_2_able"
+    """ 属性_助理 自己的助理属性满足帮忙做饭（含午饭与三餐） """
 
     IS_FOLLOW = "is_follow"
     """ 属性_特殊flag 当前正跟随玩家 """
@@ -788,7 +792,13 @@ class Premise:
     HELP_BUY_FOOD_FLAG_2 = "help_buy_food_flag_2"
     """ 属性_特殊flag 自身要买第二份饭状态 """
     HELP_BUY_FOOD_FLAG_3 = "help_buy_food_flag_3"
-    """ 属性_特殊flag 自身要送饭状态 """
+    """ 属性_特殊flag 自身买饭后要送饭状态 """
+    HELP_MAKE_FOOD_FLAG_0 = "help_make_food_flag_0"
+    """ 属性_特殊flag 自身没有帮忙做饭状态 """
+    HELP_MAKE_FOOD_FLAG_1 = "help_make_food_flag_1"
+    """ 属性_特殊flag 自身要做饭状态 """
+    HELP_MAKE_FOOD_FLAG_2 = "help_make_food_flag_2"
+    """ 属性_特殊flag 自身做饭后要送饭状态 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """

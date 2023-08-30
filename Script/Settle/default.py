@@ -661,8 +661,8 @@ def handle_make_food(
             )
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD)
-def handle_npc_make_food(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_SHOP)
+def handle_npc_make_food_to_shop(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -689,6 +689,36 @@ def handle_npc_make_food(
     new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
     cache.restaurant_data.setdefault(str(recipes_id), {})
     cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
+    character_data.behavior.food_name = food_recipe.name
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_BAG)
+def handle_npc_make_food_to_bag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    NPC随机制作一个食物，并补充到自己背包中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    while 1:
+        recipes_id = random.randint(0, len(cache.recipe_data) - 1)
+        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
+            break
+    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
+    food_list = {}
+    new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
+    character_data.food_bag[new_food.uid] = new_food
     character_data.behavior.food_name = food_recipe.name
 
 
@@ -3491,6 +3521,27 @@ def handle_help_buy_food_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_buy_food = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
+def handle_help_make_food_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零做午饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.help_make_food = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TALK_ADD_ADJUST)

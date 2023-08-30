@@ -380,6 +380,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成无意识_肉体催眠状态 """
     HELP_BUY_FOOD_FLAG_TO_0 = 489
     """ 属性_特殊flag 自身清零要帮忙买午饭状态 """
+    HELP_MAKE_FOOD_FLAG_TO_0 = 4890
+    """ 属性_特殊flag 自身清零做午饭状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -544,10 +546,13 @@ class BehaviorEffect:
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992
     """ 道具_增减 结算因为制作食物而加好感 """
-    NPC_MAKE_FOOD = 993
+    NPC_MAKE_FOOD_TO_SHOP = 993
     """ 道具_增减 NPC随机制作一个食物，并补充到当前所在食物商店中 """
     DELETE_ALL_FOOD = 994
     """ 道具_增减 删除背包内所有食物 """
+    # TODO 写完这个995
+    NPC_MAKE_FOOD_TO_BAG = 995
+    """ 道具_增减 NPC随机制作一个食物，并补充到自己背包中 """
 
     TARGET_ADD_HUGE_LUBRICATION = 1001
     """ 道具_使用效果 交互对象增加大量润滑（润滑液） """

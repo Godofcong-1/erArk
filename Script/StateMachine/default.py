@@ -1534,6 +1534,31 @@ def character_help_buy_food(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_buy_food = 1
 
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去买饭"
+        now_draw.draw()
+        line_feed.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.HELP_MAKE_FOOD_1)
+def character_help_make_food(character_id: int):
+    """
+    进入要做饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.help_make_food = 1
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = character_data.name + "打算去做饭"
+        now_draw.draw()
+        line_feed.draw()
+
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
@@ -1904,9 +1929,28 @@ def character_work_cook(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     
     character_data.target_character_id = character_id
-    character_data.behavior.behavior_id = constant.Behavior.NPC_COOK
+    character_data.behavior.behavior_id = constant.Behavior.NPC_WORK_COOK
     character_data.behavior.duration = 30
-    character_data.state = constant.CharacterStatus.STATUS_NPC_COOK
+    character_data.state = constant.CharacterStatus.STATUS_NPC_WORK_COOK
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ASSISTANT_MAKE_FOOD)
+def character_work_cook(character_id: int):
+    """
+    角色助理：做饭
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.NPC_ASSISTANT_COOK
+    character_data.behavior.duration = 30
+    character_data.behavior.make_food_time = character_data.behavior.duration
+    character_data.state = constant.CharacterStatus.STATUS_NPC_ASSISTANT_COOK
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.help_make_food == 1:
+        character_data.sp_flag.help_make_food = 2
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)

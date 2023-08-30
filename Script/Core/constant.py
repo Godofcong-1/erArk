@@ -127,10 +127,12 @@ class CharacterStatus:
     """ 维护设施 """
     STATUS_REPAIR_EQUIPMENT = 216
     """ 维修装备 """
-    STATUS_NPC_COOK = 217
-    """ 干员做饭 """
+    STATUS_NPC_WORK_COOK = 217
+    """ 干员工作做饭 """
     STATUS_PRODUCE = 218
     """ 制造产品 """
+    STATUS_NPC_ASSISTANT_COOK = 219
+    """ 干员助理做饭 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -532,10 +534,12 @@ class Behavior:
     """ 维护设施 """
     REPAIR_EQUIPMENT = 216
     """ 维修装备 """
-    NPC_COOK = 217
-    """ 干员做饭 """
+    NPC_WORK_COOK = 217
+    """ 干员工作做饭 """
     PRODUCE = 218
     """ 制造产品 """
+    NPC_ASSISTANT_COOK = 219
+    """ 干员助理做饭 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -866,6 +870,10 @@ class StateMachine:
     """ 换回衣服 """
     HELP_BUY_FOOD_1 = 85
     """ 进入要买饭状态 """
+    HELP_MAKE_FOOD_1 = 86
+    """ 进入要做饭状态 """
+    ASSISTANT_MAKE_FOOD = 87
+    """ 助理：做饭 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """

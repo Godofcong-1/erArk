@@ -193,6 +193,7 @@ cid,effect_name,effect_type,effect
 487,UNCONSCIOUS_FLAG_TO_6,属性_特殊flag,自身变成无意识_精神催眠状态
 488,UNCONSCIOUS_FLAG_TO_7,属性_特殊flag,自身变成无意识_肉体催眠状态
 489,HELP_BUY_FOOD_FLAG_TO_0,属性_特殊flag,自身清零要帮忙买午饭状态
+4890,HELP_MAKE_FOOD_FLAG_TO_0,属性_特殊flag,自身清零做午饭状态
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整
@@ -277,8 +278,9 @@ cid,effect_name,effect_type,effect
 949,USE_CONTRACEPTIVE_AFTER,道具_增减,使用了一个事后避孕药
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
-993,NPC_MAKE_FOOD,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
+993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
 994,DELETE_ALL_FOOD,道具_增减,删除背包内所有食物
+995,NPC_MAKE_FOOD_TO_BAG,道具_增减,NPC随机制作一个食物，并补充到自己背包中
 
 1001,TARGET_ADD_HUGE_LUBRICATION,道具_使用效果,交互对象增加大量润滑（润滑液）
 1002,TARGET_ADD_HUGE_DESIRE_AND_SUBMIT,道具_使用效果,交互对象增加大量欲情和屈服（媚药）

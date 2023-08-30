@@ -5,8 +5,8 @@ from Script.Config import game_config
 '''
 
 
-# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件,6前提文件转在线表格
-mode = 1
+# 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件,6前提文件转在线表格,7行为文件转status
+mode = 2
 command_str = "lactation_1"
 capital_command = command_str.upper()
 dataname = "泌乳"
@@ -137,10 +137,10 @@ def constand_promise_2_csv():
     with open("Script\\Core\\constant_promise.py", "r",encoding="utf-8") as f:
         a=f.readlines()
         f.close()
-    out_str = "\n"
+    out_str = "cid,premise_name,premise_type,premise\n"
 
     for line in a:
-        if len(line) >= 3 and line[-2] == "\"":
+        if len(line) >= 3 and line[-2] == "\"" and "#" not in line:
             if line[-3] == "\"":
                 promise_text = line.split("\"")[-4].strip()
                 if promise_text != "前提id":
@@ -157,7 +157,7 @@ def constand_promise_2_csv():
             out_str += "\n"
 
     # 开始保存
-    with open("tools\\premise.csv", "a",encoding="utf-8") as f:
+    with open("tools\\ArkEditor\\premise.csv", "w",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入csv文件末尾")
@@ -193,7 +193,7 @@ def constand_effect_2_csv():
     with open("Script\\Core\\constant_effect.py", "r",encoding="utf-8") as f:
         a=f.readlines()
         f.close()
-    out_str = "\n"
+    out_str = "cid,effect_name,effect_type,effect\n"
 
     for line in a:
         if len(line) >= 3 and "#" not in line:
@@ -202,17 +202,18 @@ def constand_effect_2_csv():
                 if len(effect_text) == 2:
                     # print(f"debug effect_text = {effect_text}")
                     out_str += f"{effect_text[0]},{effect_text[1]}\n"
-            else:
+                else:
+                    out_str += f"二段结算,{str(effect_text)[2:-2]}\n"
+            elif "=" in line:
                 effect_name = line.split("\"")[-1].strip().split(" ")[0]
                 effect_cid = line.split("\"")[-1].strip().split(" ")[-1]
-                if out_str != "BehaviorEffect:":
-                    out_str += f"{effect_cid},{effect_name},"
-                    # print(f"debug {effect_cid},{effect_name},")
+                out_str += f"{effect_cid},{effect_name},"
+                # print(f"debug {effect_cid},{effect_name},")
         elif len(line) == 1:
             out_str += "\n"
 
     # 开始保存
-    with open("tools\\Effect.csv", "a",encoding="utf-8") as f:
+    with open("tools\\ArkEditor\\Effect.csv", "w",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入csv文件末尾")
