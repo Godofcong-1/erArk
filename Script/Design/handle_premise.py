@@ -312,6 +312,25 @@ def handle_time_weekend(character_id: int) -> int:
     return not game_time.judge_work_today(0)
 
 
+@add_premise(constant_promise.Premise.PL_AWAKE_30_MIN_BEFORE)
+def handle_pl_awake_30_min_before(character_id: int) -> int:
+    """
+    玩家醒来时间的前半小时以内（权重20）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    pl_character_data = cache.character_data[0]
+
+    judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
+    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and game_time.judge_date_big_or_small(judge_wake_up_time, pl_character_data.action_info.wake_time):
+        return 20
+    return 0
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
@@ -4660,6 +4679,102 @@ def handle_help_make_food_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.help_make_food == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_0)
+def handle_morning_salutation_flag_0(character_id: int) -> int:
+    """
+    自身没有早安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.morning_salutation == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_1)
+def handle_morning_salutation_flag_1(character_id: int) -> int:
+    """
+    自身要早安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.morning_salutation == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_2)
+def handle_morning_salutation_flag_2(character_id: int) -> int:
+    """
+    自身已早安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.morning_salutation == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.NIGHT_SALUTATION_FLAG_0)
+def handle_night_salutation_flag_0(character_id: int) -> int:
+    """
+    自身没有晚安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.night_salutation == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.NIGHT_SALUTATION_FLAG_1)
+def handle_night_salutation_flag_1(character_id: int) -> int:
+    """
+    自身要晚安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.night_salutation == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.NIGHT_SALUTATION_FLAG_2)
+def handle_night_salutation_flag_2(character_id: int) -> int:
+    """
+    自身已晚安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.night_salutation == 2:
         return 1
     else:
         return 0
@@ -11816,6 +11931,156 @@ def handle_assistant_send_food_2_able(character_id: int) -> int:
     if character_data.assistant_services[4] == 2 and character_data.sp_flag.help_make_food == 0 and character_data.behavior.start_time.hour in {12, 13}:
         return 1
     elif character_data.assistant_services[4] == 3 and character_data.sp_flag.help_make_food == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_0)
+def handle_assistant_morning_salutation_0(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务未开启
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5]:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_ON)
+def handle_assistant_morning_salutation_on(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_1)
+def handle_assistant_morning_salutation_1(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务为-早上叫起床
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_2)
+def handle_assistant_morning_salutation_2(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务为-早安吻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_MORIING_SALUTATION_3)
+def handle_assistant_morning_salutation_3(character_id: int) -> int:
+    """
+    自己的助理属性中的早安问候服务为-早安咬
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[5] == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_0)
+def handle_assistant_night_salutation_0(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务未开启
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6]:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_ON)
+def handle_assistant_night_salutation_on(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_1)
+def handle_assistant_night_salutation_1(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务为-晚上催睡觉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_2)
+def handle_assistant_night_salutation_2(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务为-晚安吻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_3)
+def handle_assistant_night_salutation_3(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务为-晚安咬
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6] == 3:
         return 1
     return 0
 

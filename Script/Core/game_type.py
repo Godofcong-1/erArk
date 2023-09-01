@@ -430,6 +430,8 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.sleep_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次睡觉时间 """
+        self.wake_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色醒来时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}
         """ 指定角色上次扣除好感时间 """
         self.h_interrupt: int = 0
@@ -482,6 +484,10 @@ class SPECIAL_FLAG:
         """ 帮忙买饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭] """
         self.help_make_food: int = 0
         """ 帮忙做饭状态，int [0无,1要做饭,2要送饭] """
+        self.morning_salutation: int = 0
+        """ 早安问候状态，int [0无,1要问候,2已问候] """
+        self.night_salutation: int = 0
+        """ 晚安问候状态，int [0无,1要问候,2已问候] """
 
 
 class CHARA_WORK:

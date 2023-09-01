@@ -133,6 +133,12 @@ class CharacterStatus:
     """ 制造产品 """
     STATUS_NPC_ASSISTANT_COOK = 219
     """ 干员助理做饭 """
+    STATUS_MORNING_SALUTATION_1 = 221
+    """ 早安问候：叫起床 """
+    STATUS_MORNING_SALUTATION_2 = 222
+    """ 早安问候：早安吻 """
+    STATUS_MORNING_SALUTATION_3 = 223
+    """ 早安问候：早安咬 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -540,6 +546,12 @@ class Behavior:
     """ 制造产品 """
     NPC_ASSISTANT_COOK = 219
     """ 干员助理做饭 """
+    MORNING_SALUTATION_1 = 221
+    """ 早安问候：叫起床 """
+    MORNING_SALUTATION_2 = 222
+    """ 早安问候：早安吻 """
+    MORNING_SALUTATION_3 = 223
+    """ 早安问候：早安咬 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -874,6 +886,15 @@ class StateMachine:
     """ 进入要做饭状态 """
     ASSISTANT_MAKE_FOOD = 87
     """ 助理：做饭 """
+    MORNING_SALUTATION_FLAG_1 = 88
+    """ 进入要早安问候状态 """
+    # TODO 写完三种问候
+    MORNING_SALUTATION_1 = 89
+    """ 早安问候：叫起床 """
+    MORNING_SALUTATION_2 = 90
+    """ 早安问候：早安吻 """
+    MORNING_SALUTATION_3 = 91
+    """ 早安问候：早安咬 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """

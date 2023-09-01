@@ -426,6 +426,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data = cache.character_data[0]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     start_time = character_data.behavior.start_time
@@ -445,6 +446,14 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior.start_time = end_time
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         return 0
+    # 助理的特殊判断
+    if character_id and character_id == pl_character_data.assistant_character_id:
+        # 早安服务
+        if character_data.assistant_services[5]:
+            judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
+            if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
+                time_judge = 3
+                new_start_time = judge_wake_up_time
     if end_now:
         time_judge = end_now
     if time_judge:
@@ -458,11 +467,18 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.event.event_id = ""
         character_data.event.son_event_id = ""
+        # 当前时间大于行动结束时间
         if time_judge == 1:
             character_data.behavior.start_time = end_time
             return 0
+        # 当前时间等于行动结束时间
         elif time_judge == 2:
             character.init_character_behavior_start_time(character_id, now_time)
+            return 1
+        # 特殊情况下提前终止
+        elif time_judge == 3:
+            character_data.behavior.start_time = new_start_time
+            return 0
     return 1
 
 
@@ -716,7 +732,8 @@ def update_sleep():
         if character_id == 0:
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
-            character_data.action_info.sleep_time = cache.game_time
+            character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
+            character_data.action_info.wake_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=cache.game_time) # 记录醒来时间
         else:
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
@@ -736,6 +753,9 @@ def update_sleep():
             handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+            # 清零助理服务的flag
+            character_data.sp_flag.morning_salutation = 0
+            character_data.sp_flag.night_salutation = 0
 
     # 非角色部分
     update_save()

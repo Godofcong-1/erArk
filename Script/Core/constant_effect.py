@@ -380,7 +380,7 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成无意识_肉体催眠状态 """
     HELP_BUY_FOOD_FLAG_TO_0 = 489
     """ 属性_特殊flag 自身清零要帮忙买午饭状态 """
-    HELP_MAKE_FOOD_FLAG_TO_0 = 4890
+    HELP_MAKE_FOOD_FLAG_TO_0 = 490
     """ 属性_特殊flag 自身清零做午饭状态 """
 
     TALK_ADD_ADJUST = 501
@@ -550,7 +550,6 @@ class BehaviorEffect:
     """ 道具_增减 NPC随机制作一个食物，并补充到当前所在食物商店中 """
     DELETE_ALL_FOOD = 994
     """ 道具_增减 删除背包内所有食物 """
-    # TODO 写完这个995
     NPC_MAKE_FOOD_TO_BAG = 995
     """ 道具_增减 NPC随机制作一个食物，并补充到自己背包中 """
 

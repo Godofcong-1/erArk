@@ -1560,6 +1560,17 @@ def character_help_make_food(character_id: int):
         line_feed.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_FLAG_1)
+def character_morning_salutation_flag_1(character_id: int):
+    """
+    进入要早安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.morning_salutation = 1
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """
@@ -1951,6 +1962,60 @@ def character_work_cook(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.help_make_food == 1:
         character_data.sp_flag.help_make_food = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_1)
+def character_morning_salutation_1(character_id: int):
+    """
+    早安问候：叫起床
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_1
+    character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_1
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.morning_salutation == 1:
+        character_data.sp_flag.morning_salutation = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_2)
+def character_morning_salutation_2(character_id: int):
+    """
+    早安问候：早安吻
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_2
+    character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_2
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.morning_salutation == 1:
+        character_data.sp_flag.morning_salutation = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_3)
+def character_morning_salutation_2(character_id: int):
+    """
+    早安问候：早安咬
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_3
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_3
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.morning_salutation == 1:
+        character_data.sp_flag.morning_salutation = 2
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)

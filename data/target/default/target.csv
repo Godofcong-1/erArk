@@ -171,4 +171,10 @@ ai的目标,,,
 523,87,help_make_food_flag_1|in_kitchen,要做饭状态下，且在厨房，则做饭
 524,503,help_make_food_flag_2|place_1,要送饭状态下，且不在玩家位置，则移动到玩家位置
 
+531,88,normal_1267|morning_salutation_flag_0|assistant_morning_salutation_on|pl_awake_30_min_before,1267正常（可能AI跟随、服装异常或意识模糊），自身没有早安问候状态，自己的助理属性中的早安问候服务开启中，玩家醒来时间的前半小时以内，则进入要早安问候状态
+532,503,place_1|morning_salutation_flag_1,不在玩家位置，自身要早安问候状态，则移动到玩家位置
+533,503,place_0|morning_salutation_flag_1|assistant_morning_salutation_1|,在玩家位置，自身要早安问候状态，自己的助理属性中的早安问候服务为早上叫起床，则叫起床
+534,503,place_0|morning_salutation_flag_1|assistant_morning_salutation_2,在玩家位置，自身要早安问候状态，自己的助理属性中的早安问候服务为早安吻，则早安吻
+535,503,place_0|morning_salutation_flag_1|assistant_morning_salutation_3,在玩家位置，自身要早安问候状态，自己的助理属性中的早安问候服务为早安咬，则早安咬
+
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
