@@ -41,23 +41,22 @@ class InScenePanel:
 
     def draw(self):
         """绘制对象"""
-        character_data: game_type.Character = cache.character_data[0]
-        # print("character_data :",character_data)
         title_draw = draw.TitleLineDraw(_("场景"), self.width)
-        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        character_handle_panel = panel.PageHandlePanel(
-            [],
-            see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
-            20,
-            10,
-            self.width,
-            1,
-            0,
-            999,
-            null_button_text=character_data.target_character_id,
-        )
         while 1:
+            character_data: game_type.Character = cache.character_data[0]
+            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+            character_handle_panel = panel.PageHandlePanel(
+                [],
+                see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
+                20,
+                10,
+                self.width,
+                1,
+                0,
+                999,
+                null_button_text=character_data.target_character_id,
+            )
             # 绘制的开始时间
             start_draw = time.time()
 
