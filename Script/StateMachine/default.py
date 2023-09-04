@@ -190,9 +190,8 @@ def character_move_to_toilet(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去洗手间"
+        now_draw.text = f"{character_data.name}打算去洗手间\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KITCHEN)
@@ -224,9 +223,8 @@ def character_move_to_foodshop(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去吃饭"
+        now_draw.text = f"{character_data.name}打算去吃饭\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DINING_HALL)
@@ -629,9 +627,8 @@ def character_move_to_maintenance_department(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去运维部"
+        now_draw.text = f"{character_data.name}打算去运维部\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BLACKSMITH_SHOP)
@@ -650,9 +647,8 @@ def character_move_to_blacksmith_shop(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去铁匠铺"
+        now_draw.text = f"{character_data.name}打算去铁匠铺\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
@@ -681,9 +677,8 @@ def character_move_to_rest_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去休息"
+        now_draw.text = f"{character_data.name}打算去休息\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RESTAURANT)
@@ -725,9 +720,8 @@ def character_move_to_maintenance_place(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去检修地点"
+        now_draw.text = f"{character_data.name}打算去检修地点\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PRODUCTION_WORKSHOP)
@@ -770,9 +764,8 @@ def character_move_to_production_workshop(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去生产车间"
+        now_draw.text = f"{character_data.name}打算去生产车间\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
@@ -795,9 +788,8 @@ def character_move_to_bathzone_locker_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去大浴场的更衣室"
+        now_draw.text = f"{character_data.name}打算去大浴场的更衣室\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_LOCKER_ROOM)
@@ -820,9 +812,8 @@ def character_move_to_training_locker_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去训练场的更衣室"
+        now_draw.text = f"{character_data.name}打算去训练场的更衣室\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATH_ROOM)
@@ -852,9 +843,8 @@ def character_move_to_bath_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去淋浴"
+        now_draw.text = f"{character_data.name}打算去淋浴\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_ROOM)
@@ -879,7 +869,7 @@ def character_move_to_training_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去进行战斗训练\n"
+        now_draw.text = f"{character_data.name}打算去进行战斗训练\n"
         now_draw.draw()
 
 
@@ -1537,9 +1527,8 @@ def character_help_buy_food(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去买饭"
+        now_draw.text = f"{character_data.name}打算去买饭\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.HELP_MAKE_FOOD_1)
@@ -1555,9 +1544,8 @@ def character_help_make_food(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "打算去做饭"
+        now_draw.text = f"{character_data.name}打算去做饭\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_FLAG_1)
@@ -1585,9 +1573,8 @@ def character_wear_to_locker(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "脱成全裸了"
+        now_draw.text = f"{character_data.name}脱成全裸了\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.LOCKER_TO_WEAR)
@@ -1604,9 +1591,8 @@ def character_locker_to_wear(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "穿上了衣服"
+        now_draw.text = f"{character_data.name}穿上了衣服\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.TAKE_SHOWER)
@@ -1637,9 +1623,8 @@ def character_get_shower_cloth(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = character_data.name + "换上了浴帽和浴巾"
+        now_draw.text = f"{character_data.name}换上了浴帽和浴巾\n"
         now_draw.draw()
-        line_feed.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.START_EAT_FOOD)

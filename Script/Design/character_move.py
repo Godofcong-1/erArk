@@ -1,8 +1,14 @@
 from Script.Core import cache_control, constant, game_type
 from Script.Design import map_handle, update
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 
 
 def own_charcter_move(target_scene: list):
@@ -116,4 +122,10 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
         # 一直跟随，无视私密地点
         elif character_data.chara_setting[0] == 3:
             pass
+
+        # 等待时输出提示信息
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"因为不方便进来，所以{character_data.name}正在外面等待\n"
+        now_draw.draw()
+
     return move_flag, wait_flag
