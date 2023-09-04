@@ -223,6 +223,8 @@ def get_action_info_state_zero() -> dict:
     action_info_data.last_move_time = cache.game_time
     action_info_data.last_training_time = game_time.get_sub_date(day=-1)
     action_info_data.last_shower_time = game_time.get_sub_date(day=-1)
+    action_info_data.wake_time = cache.game_time
+    action_info_data.sleep_time = cache.game_time
 
     return action_info_data
 
