@@ -212,7 +212,7 @@ def handle_owner_abl_up():
 
 @add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.WORK, _("查找与召集干员"),
               {
-                  constant_promise.Premise.IN_DR_OFFICE_OR_DEBUG,
+                  constant_promise.Premise.NOT_H,
               })
 def handle_find_and_call_npc():
     """处理查找与召集干员指令"""
