@@ -4900,6 +4900,26 @@ def handle_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.HP_OR_MP_LOW)
+def handle_hp_or_mp_low(character_id: int) -> int:
+    """
+    自身体力或气力有一项低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    hp_value = character_data.hit_point / character_data.hit_point_max
+    mp_value = character_data.mana_point / character_data.mana_point_max
+    if hp_value < 0.3:
+        return 1
+    elif mp_value < 0.3:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_HP_LOW)
 def handle_target_hp_low(character_id: int) -> int:
     """

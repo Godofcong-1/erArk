@@ -594,6 +594,8 @@ class Premise:
     """ 属性_基础 自身气力低于30% """
     MP_HIGH = "mp_high"
     """ 属性_基础 自身气力高于70% """
+    HP_OR_MP_LOW = "hp_or_mp_low"
+    """ 属性_基础 自身体力或气力有一项低于30% """
     TARGET_HP_LOW = "t_hp_low"
     """ 属性_基础 交互对象体力低于30% """
     TARGET_HP_HIGH = "t_hp_high"
