@@ -107,6 +107,9 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
         if character_data.chara_setting[0] == 0:
             if character_data.action_info.follow_wait_time >= 30:
                 character_data.sp_flag.is_follow = 0
+                now_draw = draw.NormalDraw()
+                now_draw.text = f"因为等待时间过长，所以{character_data.name}不再继续跟随\n"
+                now_draw.draw()
             else:
                 wait_flag = True
             move_flag = False
@@ -119,13 +122,18 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
             if character_data.action_info.follow_wait_time < 30:
                 move_flag = False
                 wait_flag = True
+            else:
+                now_draw = draw.NormalDraw()
+                now_draw.text = f"{character_data.name}等不下去了，决定直接进来\n"
+                now_draw.draw()
         # 一直跟随，无视私密地点
         elif character_data.chara_setting[0] == 3:
             pass
 
         # 等待时输出提示信息
-        now_draw = draw.NormalDraw()
-        now_draw.text = f"因为不方便进来，所以{character_data.name}正在外面等待\n"
-        now_draw.draw()
+        if wait_flag:
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"因为不方便进来，所以{character_data.name}正在外面等待\n"
+            now_draw.draw()
 
     return move_flag, wait_flag
