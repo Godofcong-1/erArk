@@ -202,7 +202,7 @@ class Ejaculation_NameDraw:
             name_draw = draw.LeftDraw()
             name_draw.text = button_text
             name_draw.width = self.width
-            name_draw.style = "un_open_mapbutton"
+            name_draw.style = "deep_gray"
         self.draw_text = button_text
         self.now_draw = name_draw
         """ 绘制的对象 """

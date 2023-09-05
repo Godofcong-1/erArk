@@ -99,7 +99,7 @@ class HandleFilterButtonList:
         instruct_name = constant.handle_instruct_name_data[self.index]
         button_text = f"[{self.index}]{instruct_name}"
 
-        text_style = "standard" if cache.instruct_index_filter[self.index] else "un_open_mapbutton"
+        text_style = "standard" if cache.instruct_index_filter[self.index] else "deep_gray"
 
         name_draw = draw.LeftButton(
             button_text, self.button_return, self.width, normal_style = text_style, cmd_func=self.chose_button

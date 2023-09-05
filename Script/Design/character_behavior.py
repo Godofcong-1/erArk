@@ -123,7 +123,7 @@ def update_recruit():
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
                 now_draw.text = _(f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
-                now_draw.style = "nowmap"
+                now_draw.style = "gold_enrod"
                 now_draw.draw()
 
             # 之前做该栏位工作的HR，也把栏位数据清零

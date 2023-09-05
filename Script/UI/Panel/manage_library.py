@@ -324,7 +324,7 @@ class SelectRecommendBookButton:
         name_draw = draw.LeftDraw()
         if self.book_type_id in cache.base_resouce.recommend_book_type_set:
             button_text += f" (已推荐)"
-            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
 

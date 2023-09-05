@@ -1886,7 +1886,7 @@ def handle_confim_recruit():
     character.init_character_behavior_start_time(0, cache.game_time)
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.style = "nowmap"
+    now_draw.style = "gold_enrod"
     now_draw.text = ""
 
     if len(cache.npc_id_got) >= cache.base_resouce.people_max:

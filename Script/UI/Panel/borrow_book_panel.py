@@ -104,7 +104,7 @@ class Borrow_Book_Panel:
                             book_can_borrow_count += 1
                         elif cache.base_resouce.book_borrow_dict[book_cid] == 0:
                             book_text += f"  (已被博士借走)"
-                            book_style = "nowmap"
+                            book_style = "gold_enrod"
                         else:
                             borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
                             borrow_npc_name = cache.character_data[borrow_npc_id].name

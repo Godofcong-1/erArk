@@ -59,9 +59,10 @@ class SeeMapPanel:
             title_draw.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
-            character_scene_id = map_handle.get_map_scene_id_for_scene_path(
+            character_scene_name = map_handle.get_map_scene_id_for_scene_path(
                 self.now_map, character_data.position
             )
+            # print(f"debug self.now_map = {self.now_map}, map_path_str = {map_path_str}，map_name = {map_name}, character_data.position = {character_data.position}, character_scene_id = {character_scene_name}")
             return_list = []
             index = 0
             for now_draw_line in now_draw_list.draw_text:
@@ -73,39 +74,56 @@ class SeeMapPanel:
                 # print("fix_width:",fix_width)
                 fix_draw.draw()
                 for draw_text in now_draw_line.draw_list:
-                    if "is_button" in draw_text.__dict__ and draw_text.is_button and draw_text.text != character_scene_id:
+                    # print(f"debug draw_text.text = {draw_text.text}")
+
+                    # 首先需要是地点按钮
+                    if "is_button" in draw_text.__dict__ and draw_text.is_button:
+
+                        # 获取地点路径
                         scene_path = map_handle.get_scene_path_for_map_scene_id(
                             self.now_map, draw_text.text
                         )
                         full_scene_str = map_handle.get_map_system_path_str_for_list(scene_path)
-                        # print(f"debug scene_path = {scene_path}，draw_text.text = {draw_text.text}")
-                        # 如果当前地点可以进入则正常绘制，否则绘制灰色按钮
-                        if map_handle.judge_scene_name_open(full_scene_str):
-                            now_draw = draw.Button(
-                                draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
-                            )
+                        # print(f"debug scene_path = {scene_path}，draw_text.text = {draw_text.text}, full_scene_str = {full_scene_str}")
+
+                        # 如果不是玩家所在的地点，则绘制按钮
+                        if draw_text.text != character_scene_name:
+                            # 如果当前地点可以进入则正常绘制
+                            if map_handle.judge_scene_name_open(full_scene_str):
+                                now_draw = draw.Button(
+                                    draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
+                                )
+                                # 如果是有NPC在那么显示为绿色
+                                if len(cache.scene_data[full_scene_str].character_list):
+                                    now_draw.normal_style = "green"
+                            # 如果当前地点不可进入则绘制灰色按钮
+                            else:
+                                now_draw = draw.Button(
+                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_now, args=(scene_path,)
+                                )
+                            now_draw.width = self.width
+                            now_draw.draw()
+                            return_list.append(now_draw.return_text)
+
                         else:
-                            now_draw = draw.Button(
-                                draw_text.text, draw_text.text,normal_style="un_open_mapbutton", cmd_func=self.move_now, args=(scene_path,)
-                            )
-                        now_draw.width = self.width
-                        now_draw.draw()
-                        return_list.append(now_draw.return_text)
+                            # 如果是玩家所在的地点，则高亮显示文本
+                            now_draw = draw.NormalDraw()
+                            now_draw.style = "gold_enrod"
+                            now_draw.text = draw_text.text
+                            now_draw.width = self.width
+                            now_draw.draw()
+                    # 如果不是地点按钮，则正常绘制文本
                     else:
-                        # 如果是玩家所在的地点，则高亮显示
                         now_draw = draw.NormalDraw()
-                        if draw_text.text == character_scene_id:
-                            now_draw.style = "nowmap"
-                        else:
-                            now_draw.style = draw_text.style
+                        now_draw.style = draw_text.style
                         now_draw.text = draw_text.text
                         now_draw.width = self.width
                         now_draw.draw()
                 line_feed.draw()
             path_edge = map_data.path_edge
-            scene_path = path_edge[character_scene_id].copy()
-            if character_scene_id in scene_path:
-                del scene_path[character_scene_id]
+            scene_path = path_edge[character_scene_name].copy()
+            if character_scene_name in scene_path:
+                del scene_path[character_scene_name]
 
             # 当前位置相邻地点
             # scene_path_list = list(scene_path.keys())

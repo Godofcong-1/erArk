@@ -551,7 +551,7 @@ class Character_FirstNPC:
             return_list.append(button_draw.return_text)
             if self.name_filter_flag:
                 button_text = " [姓名筛选中] "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.name_filter)
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.name_filter)
             else:
                 button_text = " [姓名筛选] "
                 button_draw = draw.CenterButton(button_text, "请输入要筛选的名字：", len(button_text)*2, cmd_func=self.name_filter)
@@ -559,7 +559,7 @@ class Character_FirstNPC:
             return_list.append(button_draw.return_text)
             if self.chest_filter_flag:
                 button_text = f" [胸围筛选中-{chest_filter_list[self.chest_filter_flag]}] "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.chest_filter)
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.chest_filter)
             else:
                 button_text = " [胸围筛选] "
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.chest_filter)
@@ -567,7 +567,7 @@ class Character_FirstNPC:
             return_list.append(button_draw.return_text)
             if self.age_filter_flag:
                 button_text = f" [外表年龄筛选中-{age_filter_list[self.age_filter_flag]}] "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="nowmap", cmd_func=self.age_filter)
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.age_filter)
             else:
                 button_text = " [外表年龄筛选] "
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.age_filter)
@@ -711,10 +711,10 @@ class SelectFirstNPCButton:
                 button_text += f" (基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
-                name_draw.style = "nowmap"
+                name_draw.style = "gold_enrod"
             else:
                 button_text += f" (自选)"
-                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
 
@@ -784,7 +784,7 @@ class Character_Bonus:
             if cache.first_bonus[cid]:
                 self.bonus_now -= first_bonus_date.consume
                 button_text += f"   ●"
-                draw_style = "nowmap"
+                draw_style = "gold_enrod"
                 bonus_use_text += f" - [{first_bonus_date.name}({first_bonus_date.consume})])"
             else:
                 button_text += f"   ○"
