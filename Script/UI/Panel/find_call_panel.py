@@ -45,13 +45,11 @@ class Find_call_Panel:
             info_draw = draw.NormalDraw()
             follow_count = cache.character_data[0].pl_ability.follow_count
             if not cache.debug_mode:
-                info_draw.text = "●当前最大同时跟随角色数量：" + str(follow_count) + "\n\n"
+                info_draw.text = f"●当前最大同时跟随角色数量：{str(follow_count)}\n\n"
             else:
                 info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)\n\n"
             info_draw.width = self.width
-            # 暂不输出跟随角色信息，等加了该功能后再输出
-            # info_draw.draw()
-            line_feed.draw()
+            info_draw.draw()
             if cache.debug_mode:
                 text = "  [一键全召集]"
                 name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.call_all)
@@ -133,7 +131,11 @@ class FindDraw:
             now_draw_text += "前往博士办公室中"
         else:
             status_text = game_config.config_status[character_data.state].name
-            now_draw_text += f"正在：{status_text}"
+            # 如果是在移动，则输出目的地
+            if status_text == "移动":
+                now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
+            else:
+                now_draw_text += f"正在：{status_text}"
 
         name_draw = draw.LeftButton(
             now_draw_text, self.button_return, self.width, cmd_func=self.see_call_list
