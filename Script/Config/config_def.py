@@ -697,7 +697,6 @@ class WorkType:
     """ 描述 """
 
 
-
 class Talk:
     """ 口上配置数据 """
 

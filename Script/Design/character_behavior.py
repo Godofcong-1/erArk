@@ -261,29 +261,6 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             cache.character_data[character_id].behavior.start_time = next_time
 
 
-# def judge_character_dead(character_id: int):
-#     """
-#     校验角色状态并处死角色
-#     Keyword arguments:
-#     character_id -- 角色id
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     if character_data.dead:
-#         if character_id not in cache.over_behavior_character:
-#             cache.over_behavior_character.add(character_id)
-#         return
-#     character_data.status.setdefault(27, 0)
-#     character_data.status.setdefault(28, 0)
-#     if (
-#         character_data.status[27] >= 100
-#         or character_data.status[28] >= 100
-#         or character_data.hit_point <= 0
-#     ):
-#         character_data.dead = 1
-#         character_data.state = 13
-#         if character_id not in cache.over_behavior_character:
-#             cache.over_behavior_character.add(character_id)
-
 def judge_character_tired_sleep(character_id : int):
     """
     校验角色是否疲劳或困倦
@@ -448,12 +425,13 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         return 0
     # 助理的特殊判断
     if character_id and character_id == pl_character_data.assistant_character_id:
-        # 早安服务
-        if character_data.assistant_services[5]:
-            judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-            if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
-                time_judge = 3
-                new_start_time = judge_wake_up_time
+        if not time_judge and character_data.state not in {constant.CharacterStatus.STATUS_MOVE, constant.CharacterStatus.STATUS_ARDER}:
+            # 早安服务
+            if character_data.assistant_services[5]:
+                judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
+                if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
+                    time_judge = 3
+                    new_start_time = judge_wake_up_time
     if end_now:
         time_judge = end_now
     if time_judge:

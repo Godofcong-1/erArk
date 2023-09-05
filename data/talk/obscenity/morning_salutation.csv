@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,221,0,high_1,{Name}触发了早安问候：叫起床的地文
+1,222,0,high_1,{Name}触发了早安问候：早安吻的地文
+2,223,0,high_1,{Name}触发了早安问候：早安咬的地文
