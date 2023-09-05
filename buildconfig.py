@@ -98,12 +98,23 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
 def build_config_def(class_name: str, value_type: dict, docstring: dict, class_text: str):
     global config_def_str
     if class_name not in class_data:
+        # 给talk补上一个头部空行
+        if class_name == "Talk":
+            config_def_str += "\n\n"
         config_def_str += "class " + class_name + ":"
         config_def_str += '\n    """ ' + class_text + ' """\n'
         for k in value_type:
             config_def_str += "\n    " + k + ": " + value_type[k] + "\n"
             config_def_str += "    " + '""" ' + docstring[k] + ' """'
         class_data.add(class_name)
+    # 去掉因为talk的csv文件而多出的尾部空行
+    else:
+        count_flag = 0
+        for i in range(3):
+            if config_def_str[-i] == "\n":
+                count_flag += 1
+        if count_flag >= 2:
+            config_def_str = config_def_str[:-2]
 
 
 def build_config_po(message: str, message_class: str, message_type: str, message_id: str):
