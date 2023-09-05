@@ -553,6 +553,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
     # print(f"debug target_scene_str = {target_scene_str}")
     now_scene_data = cache.scene_data[target_scene_str]
     character_data = cache.character_data[character_id]
+    pl_character_data = cache.character_data[0]
     # print(f"debug now_scene_data.name = {now_scene_data.scene_name}")
 
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
@@ -610,13 +611,18 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
 
     # 私密场所判断，仅限干员
     if character_id:
-        # 男厕所和博士房间
-        private_tag_list = ["Toilet_Male","Dr_room"]
-        for tag in private_tag_list:
-            if tag in now_scene_data.scene_tag:
+        # 博士房间
+        if "Dr_room" in now_scene_data.scene_tag:
+            # 助理可以进
+            if character_id == pl_character_data.assistant_character_id:
+                return "open"
+            else:
                 return "private"
+        # 男厕所
+        elif "Toilet_Male" in now_scene_data.scene_tag:
+            return "private"
         # 非自己的宿舍
-        if "Dormitory" in now_scene_data.scene_tag and character_data.dormitory != target_scene_str:
+        elif "Dormitory" in now_scene_data.scene_tag and character_data.dormitory != target_scene_str:
             return "private"
 
     return "open"
