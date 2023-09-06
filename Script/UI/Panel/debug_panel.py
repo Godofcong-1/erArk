@@ -993,6 +993,9 @@ class Debug_Panel:
                 info_text += f"[015]:游泳状态，int [0无,1要换泳衣,2要游泳]：{target_data.sp_flag.swim}\n"
                 info_text += f"[016]:要检修状态：{target_data.sp_flag.work_maintenance}\n"
                 info_text += f"[017]:帮忙买午饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭]：{target_data.sp_flag.help_buy_food}\n"
+                info_text += f"[018]:帮忙做饭状态，int [0无,1要做饭,2要送饭]：{target_data.sp_flag.help_make_food}\n"
+                info_text += f"[019]:早安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.morning_salutation}\n"
+                info_text += f"[020]:晚安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.night_salutation}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()
@@ -1040,6 +1043,16 @@ class Debug_Panel:
                         target_data.sp_flag.find_food_weird = value_index[1]
                     elif value_index[0] == 15:
                         target_data.sp_flag.swim = value_index[1]
+                    elif value_index[0] == 16:
+                        target_data.sp_flag.work_maintenance = value_index[1]
+                    elif value_index[0] == 17:
+                        target_data.sp_flag.help_buy_food = value_index[1]
+                    elif value_index[0] == 18:
+                        target_data.sp_flag.help_make_food = value_index[1]
+                    elif value_index[0] == 19:
+                        target_data.sp_flag.morning_salutation = value_index[1]
+                    elif value_index[0] == 20:
+                        target_data.sp_flag.night_salutation = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

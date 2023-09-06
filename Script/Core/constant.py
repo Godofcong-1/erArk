@@ -888,7 +888,6 @@ class StateMachine:
     """ 助理：做饭 """
     MORNING_SALUTATION_FLAG_1 = 88
     """ 进入要早安问候状态 """
-    # TODO 写完三种问候
     MORNING_SALUTATION_1 = 89
     """ 早安问候：叫起床 """
     MORNING_SALUTATION_2 = 90

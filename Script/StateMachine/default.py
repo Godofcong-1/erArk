@@ -883,8 +883,10 @@ def character_move_to_player(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     to_dr = cache.character_data[0].position
-    _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+    move_type, _, move_path, move_time = character_move.character_move(character_id, to_dr)
     move_flag = True # flase的话就是等待
+    # if move_path == []:
+    #     print(f"debug {character_data.name} 无法移动至玩家位置，move_type = {move_type},当前位置 = {character_data.position},move_path = {move_path}")
     # 进行私密跟随判断
     move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
     # 最后决定是移动还是继续等待
@@ -1958,7 +1960,7 @@ def character_morning_salutation_1(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     
-    character_data.target_character_id = character_id
+    character_data.target_character_id = 0
     character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_1
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_1
@@ -1976,7 +1978,7 @@ def character_morning_salutation_2(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     
-    character_data.target_character_id = character_id
+    character_data.target_character_id = 0
     character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_2
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_2
@@ -1994,7 +1996,7 @@ def character_morning_salutation_2(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     
-    character_data.target_character_id = character_id
+    character_data.target_character_id = 0
     character_data.behavior.behavior_id = constant.Behavior.MORNING_SALUTATION_3
     character_data.behavior.duration = 10
     character_data.state = constant.CharacterStatus.STATUS_MORNING_SALUTATION_3

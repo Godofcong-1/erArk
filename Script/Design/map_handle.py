@@ -598,6 +598,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
         # 即使关门，也可以进去自己的宿舍
         if character_data.dormitory == target_scene_str:
             pass
+        # 助理可以进锁门了的玩家房间
+        elif character_id and character_id == pl_character_data.assistant_character_id:
+            pass
         else:
             # 如果是玩家的话输出提示信息
             if character_id == 0:
@@ -615,7 +618,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
         if "Dr_room" in now_scene_data.scene_tag:
             # 助理可以进
             if character_id == pl_character_data.assistant_character_id:
-                return "open"
+                pass
             else:
                 return "private"
         # 男厕所

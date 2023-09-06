@@ -326,8 +326,11 @@ def handle_pl_awake_30_min_before(character_id: int) -> int:
     pl_character_data = cache.character_data[0]
 
     judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and game_time.judge_date_big_or_small(judge_wake_up_time, pl_character_data.action_info.wake_time):
-        return 20
+    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
+        print(f"debug 玩家的醒来前提判定，当前已过醒来时间前半小时，当前时间为{now_time}，醒来时间为{pl_character_data.action_info.wake_time}")
+        if not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
+            print(f"debug 玩家的醒来前提判定，当前已过醒来时间")
+            return 20
     return 0
 
 

@@ -81,9 +81,13 @@ class Assistant_Panel:
             target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
             title_draw.draw()
-            line_feed.draw()
             py_cmd.clr_cmd()
             return_list = []
+
+            info_draw = draw.NormalDraw()
+            info_draw.text = f"\n●助理会自动获得打开玩家房门的权限，因此在执行早安等服务时可以自由进出玩家房间\n\n"
+            info_draw.draw()
+
 
             button_text = f"[001]助理服务"
             if character_data.assistant_character_id == 0:

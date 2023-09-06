@@ -51,7 +51,7 @@ def init_character_behavior():
     角色行为树总控制
     """
     cache.over_behavior_character = set()
-    sleep_flag,new_day_flag = True,True
+    new_day_flag = True
     while 1:
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
@@ -65,11 +65,6 @@ def init_character_behavior():
         # 后结算玩家部分
         while 0 not in cache.over_behavior_character:
             character_behavior(0, cache.game_time)
-        # 睡觉刷新
-        PL_data: game_type.Character = cache.character_data[0]
-        if PL_data.behavior.behavior_id == constant.Behavior.SLEEP and sleep_flag:
-            sleep_flag = False
-            update_sleep()
         # 新一天刷新
         if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
             new_day_flag = False
@@ -179,6 +174,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
             character_aotu_change_value(character_id)
+            # 睡觉刷新
+            if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
+                update_sleep()
             # 结算角色的状态是否会持续
             change_character_persistent_state(character_id)
             time_judge = judge_character_status_time_over(character_id, now_time)
@@ -425,11 +423,13 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         return 0
     # 助理的特殊判断
     if character_id and character_id == pl_character_data.assistant_character_id:
-        if not time_judge and character_data.state not in {constant.CharacterStatus.STATUS_MOVE, constant.CharacterStatus.STATUS_ARDER}:
+        if not time_judge:
             # 早安服务
-            if character_data.assistant_services[5]:
+            if character_data.assistant_services[5] and character_data.sp_flag.morning_salutation == 0:
                 judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-                if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
+                # 当前时间在醒来之前半小时内
+                if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(end_time, pl_character_data.action_info.wake_time):
+                    print(f"debug {character_data.name}刷新早安服务判断，state = {character_data.state}")
                     time_judge = 3
                     new_start_time = judge_wake_up_time
     if end_now:
@@ -712,6 +712,7 @@ def update_sleep():
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
             character_data.action_info.wake_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=cache.game_time) # 记录醒来时间
+            print(f"debug 玩家睡觉，睡觉时间 = {character_data.action_info.sleep_time},醒来时间 = {character_data.action_info.wake_time}")
         else:
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
