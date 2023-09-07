@@ -27,7 +27,8 @@ if __name__ == "__main__":
     """ 翻译api """
 
     game_config.init()
-    name_config.init_name_data()
+    # 载入姓名配置，暂时去掉
+    # name_config.init_name_data()
     character_config.init_character_tem_data()
 
 
