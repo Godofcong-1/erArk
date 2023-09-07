@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character
+from Script.Design import update, map_handle, character, game_time
 
 panel_info_data = {}
 
@@ -446,6 +446,10 @@ class Sleep_Panel:
                 pl_character_data.behavior.duration = sleep_time
                 pl_character_data.behavior.behavior_id = constant.Behavior.SLEEP
                 pl_character_data.state = constant.CharacterStatus.STATUS_SLEEP
+
+                pl_character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
+                pl_character_data.action_info.wake_time = game_time.get_sub_date(minute=sleep_time, old_date=cache.game_time) # 记录醒来时间
+                # print(f"debug 玩家睡觉，睡觉时间 = {pl_character_data.action_info.sleep_time},醒来时间 = {pl_character_data.action_info.wake_time}")
                 cache.wframe_mouse.w_frame_skip_wait_mouse = 1
                 update.game_update_flow(sleep_time)
                 break

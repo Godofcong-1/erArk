@@ -326,11 +326,9 @@ def handle_pl_awake_30_min_before(character_id: int) -> int:
     pl_character_data = cache.character_data[0]
 
     judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time):
-        print(f"debug 玩家的醒来前提判定，当前已过醒来时间前半小时，当前时间为{now_time}，醒来时间为{pl_character_data.action_info.wake_time}")
-        if not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
-            print(f"debug 玩家的醒来前提判定，当前已过醒来时间")
-            return 20
+    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
+        # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前已过醒来时间")
+        return 20
     return 0
 
 
@@ -4706,7 +4704,7 @@ def handle_morning_salutation_flag_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_1)
 def handle_morning_salutation_flag_1(character_id: int) -> int:
     """
-    自身要早安问候状态
+    自身要早安问候状态（权重100）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4714,7 +4712,7 @@ def handle_morning_salutation_flag_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.morning_salutation == 1:
-        return 1
+        return 100
     else:
         return 0
 
@@ -4754,7 +4752,7 @@ def handle_night_salutation_flag_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NIGHT_SALUTATION_FLAG_1)
 def handle_night_salutation_flag_1(character_id: int) -> int:
     """
-    自身要晚安问候状态
+    自身要晚安问候状态（权重100）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4762,7 +4760,7 @@ def handle_night_salutation_flag_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.night_salutation == 1:
-        return 1
+        return 100
     else:
         return 0
 

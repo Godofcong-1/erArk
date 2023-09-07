@@ -543,8 +543,10 @@ def search_target(
     if len(target_data):
         value_weight = value_handle.get_rand_value_for_value_region(list(target_data.keys()))
         final_target = random.choice(list(target_data[value_weight]))
-        # if final_target == "511":
-        #     print(f"debug target_data = {target_data}")
+        # if character_id == 1:
+        #     print(f"debug target_data = {target_data} , final_target = {final_target} , value_weight = {value_weight}")
+        #     if final_target == "531":
+        #         print(f"debug value_weight = {value_weight}")
         #     print(f"debug value_weight = {value_weight}")
         return final_target, value_weight, 1
     return "", 0, 0
@@ -710,9 +712,6 @@ def update_sleep():
         if character_id == 0:
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
-            character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
-            character_data.action_info.wake_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=cache.game_time) # 记录醒来时间
-            print(f"debug 玩家睡觉，睡觉时间 = {character_data.action_info.sleep_time},醒来时间 = {character_data.action_info.wake_time}")
         else:
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
@@ -732,9 +731,6 @@ def update_sleep():
             handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
-            # 清零助理服务的flag
-            character_data.sp_flag.morning_salutation = 0
-            character_data.sp_flag.night_salutation = 0
 
     # 非角色部分
     update_save()
@@ -762,6 +758,9 @@ def update_new_day():
             get_chara_entertainment(character_id)
             # 刷新生理周期
             pregnancy.update_reproduction_period(character_id)
+            # 清零助理服务的flag
+            character_data.sp_flag.morning_salutation = 0
+            character_data.sp_flag.night_salutation = 0
 
     # 非角色部分
     basement.update_base_resouce_newday()
