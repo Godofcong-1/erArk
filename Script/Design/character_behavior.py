@@ -53,18 +53,18 @@ def init_character_behavior():
     cache.over_behavior_character = set()
     new_day_flag = True
     while 1:
+        # 先结算玩家部分
+        while 0 not in cache.over_behavior_character:
+            character_behavior(0, cache.game_time)
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
-        # 先结算其他NPC部分
-        while len(cache.over_behavior_character) < len(id_list):
+        # 后结算其他NPC部分
+        while len(cache.over_behavior_character) <= len(id_list):
             for character_id in id_list:
                 if character_id in cache.over_behavior_character:
                     continue
                 character_behavior(character_id, cache.game_time)
                 # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
-        # 后结算玩家部分
-        while 0 not in cache.over_behavior_character:
-            character_behavior(0, cache.game_time)
         # 新一天刷新
         if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
             new_day_flag = False

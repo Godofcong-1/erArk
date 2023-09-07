@@ -118,7 +118,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # print(f"debug now_judge")
         now_text_list = []
         now_draw = draw.NormalDraw()
-        if now_character_data.cid == 0:
+        if character_id == 0:
             now_draw.text = "\n" + now_character_data.name + now_character_data.nick_name + ": "
         else:
             now_draw.text = "\n" + now_character_data.name + ": "
