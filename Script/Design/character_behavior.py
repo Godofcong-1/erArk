@@ -202,7 +202,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             # 结算角色的状态是否会持续
             change_character_persistent_state(character_id)
         time_judge = judge_character_status_time_over(character_id, now_time)
-        if time_judge:
+        if time_judge or character_data.state == constant.CharacterStatus.STATUS_WAIT:
             cache.over_behavior_character.add(character_id)
         # if character_data.name == "阿米娅":
         #     print(f"debug 后：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
