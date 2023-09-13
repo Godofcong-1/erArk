@@ -777,19 +777,24 @@ def character_move_to_bathzone_locker_room(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    to_locker_room = []
+
     # 直接检索大浴场的更衣室
     for place in constant.place_data["Locker_Room"]:
         if place.split("\\")[0] == "大浴场":
             to_locker_room = map_handle.get_map_system_path_for_str(place)
             break
 
-    general_movement_module(character_id, to_locker_room)
+    # 以防没有找到更衣室
+    if to_locker_room != []:
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
-        now_draw = draw.NormalDraw()
-        now_draw.text = f"{character_data.name}打算去大浴场的更衣室\n"
-        now_draw.draw()
+        general_movement_module(character_id, to_locker_room)
+
+        # 如果和玩家位于同一地点，则输出提示信息
+        if character_data.position == cache.character_data[0].position:
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"{character_data.name}打算去大浴场的更衣室\n"
+            now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_LOCKER_ROOM)
@@ -801,19 +806,24 @@ def character_move_to_training_locker_room(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    to_locker_room = []
+
     # 直接检索训练场的更衣室
     for place in constant.place_data["Locker_Room"]:
         if place.split("\\")[0] == "训练":
             to_locker_room = map_handle.get_map_system_path_for_str(place)
             break
 
-    general_movement_module(character_id, to_locker_room)
+    # 以防没有找到更衣室
+    if to_locker_room == []:
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
-        now_draw = draw.NormalDraw()
-        now_draw.text = f"{character_data.name}打算去训练场的更衣室\n"
-        now_draw.draw()
+        general_movement_module(character_id, to_locker_room)
+
+        # 如果和玩家位于同一地点，则输出提示信息
+        if character_data.position == cache.character_data[0].position:
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"{character_data.name}打算去训练场的更衣室\n"
+            now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATH_ROOM)
