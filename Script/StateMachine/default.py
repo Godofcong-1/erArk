@@ -1066,12 +1066,8 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.target_character_id = character_id
-    _, _, move_path, move_time = character_move.character_move(
-        character_id,
-        map_handle.get_map_system_path_for_str(character_data.dormitory),
-    )
-    general_movement_module(character_id, move_path)
+    to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
+    general_movement_module(character_id, to_target)
 
     # 输出提示信息，并结算把柄
     now_draw = draw.NormalDraw()
