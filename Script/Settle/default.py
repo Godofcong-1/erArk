@@ -3839,7 +3839,7 @@ def handle_recruit_add_just(
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 获得加成 #
-    now_add_lust = adjust * random.uniform(0.5, 1.5)
+    now_add_lust = adjust * 5 * random.uniform(0.5, 1.5)
     if cache.debug_mode:
         now_add_lust += 100
 
@@ -3853,6 +3853,13 @@ def handle_recruit_add_just(
         character_data.work.recruit_index = key
     else:
         select_index = character_data.work.recruit_index
+
+    # 如果是玩家在招募的话，显示招募进度的增加情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.base_resouce.recruit_now[0] + now_add_lust,1)}%\n")
+        now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
     cache.base_resouce.recruit_now[select_index] += now_add_lust
