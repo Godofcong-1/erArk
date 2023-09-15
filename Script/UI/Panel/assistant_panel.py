@@ -159,7 +159,7 @@ class Assistant_Panel:
             chose_assistant()
 
         # 1号指令,助理常时跟随
-        elif service_cid == 1:
+        elif service_cid == 2:
             if target_data.sp_flag.is_follow == 3:
                 target_data.sp_flag.is_follow = 0
             else:
