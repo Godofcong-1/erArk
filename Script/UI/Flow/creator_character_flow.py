@@ -10,7 +10,6 @@ from Script.Design import (
     character_handle,
     cooking,
     map_handle,
-    attr_calculation,
     basement,
 )
 from Script.UI.Moudle import panel, draw

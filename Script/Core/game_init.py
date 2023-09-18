@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
 import os
 import traceback
-from Script.Core import flow_handle, io_init, key_listion_event
+from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type
 from Script.Config import normal_config
+
+cache: game_type.Cache = cache_control.cache
 
 # 字符串定义###########################################################
 NO_EVENT_FUNC = "no_event_func"
@@ -49,6 +51,10 @@ def init(main_flow: object):
     try:
         run_main_flow()
     except Exception:
+        # 向error_log写入回溯用信息
+        with open(error_path, "a", encoding="utf-8") as e:
+            e.write(f"版本信息：{normal_config.config_normal.verson}\n")
+            e.write(f"输入指令：{cache.input_cache}\n")
         traceback.print_exc(file=open(error_path, "a"))
         os._exit(0)
 
