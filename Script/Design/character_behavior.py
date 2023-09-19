@@ -322,8 +322,8 @@ def judge_character_status(character_id: int) -> int:
             end_time = end_time
     # print(f"debug {character_data.name}的end_time = {end_time}")
 
-    # 跳过指令类型的事件触发
-    # print(f"debug 跳过指令类型的事件触发")
+    # 跳过指令和指令后置类型的事件触发
+    # print(f"debug 跳过指令和指令后置类型的事件触发")
     start_event_draw = event.handle_event(character_id)
     event_type_now = 1
     if start_event_draw != None:
@@ -341,14 +341,14 @@ def judge_character_status(character_id: int) -> int:
     # if not character_id:
     #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
-    # 指令前置类型的事件触发
-    # print(f"debug 指令前置类型的事件触发")
     end_event_draw = event.handle_event(character_id)
     if end_event_draw != None and start_event_draw == None:
         end_event_id = end_event_draw.event_id
         end_event_type = end_event_draw.event_type
         event_config = game_config.config_event[end_event_id]
+        # 指令前置类型的事件触发
         if end_event_type == 1:
+            # print(f"debug 指令前置类型的事件触发")
 
             # 先绘制指令文本
             talk.handle_talk(character_id)
@@ -379,6 +379,9 @@ def judge_character_status(character_id: int) -> int:
     elif end_event_draw != None:
         end_event_draw.draw()
     else:
+        talk.handle_talk(character_id)
+    # 指令后置类型的事件，在最后输出指令的口上
+    if event_type_now == 2:
         talk.handle_talk(character_id)
     if now_panel != None:
         now_panel.draw()

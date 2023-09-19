@@ -298,7 +298,7 @@ def change_type_menu(action: QWidgetAction):
     data_list.type_menu.clear()
     action_list = []
     type_group = QActionGroup(data_list.type_menu)
-    type_list = ["跳过指令", "指令前置"]
+    type_list = ["跳过指令", "指令前置", "指令后置"]
     for v in type_list:
         now_action: QWidgetAction = QWidgetAction(data_list)
         now_action.setText(v)
@@ -361,7 +361,7 @@ status_group.triggered.connect(change_status_menu)
 
 # 仅在事件编辑模式下更新指令类型菜单
 if cache_control.now_edit_type_flag == 1:
-    type_list = {"跳过指令", "指令前置"}
+    type_list = {"跳过指令", "指令前置", "指令后置"}
     action_list = []
     type_group = QActionGroup(data_list.type_menu)
     for v in type_list:
