@@ -26,6 +26,7 @@ def change_npc_work_out(width):
     """
 
     while 1:
+        basement.update_work_people()
         # 遍历全部门
         department_names = []
         for work_type_id in game_config.config_facility:
@@ -46,7 +47,7 @@ def change_npc_work_out(width):
         return_list = []
 
         # 空闲干员
-        info_text = f"\n  空闲干员："
+        info_text = f"\n  空闲干员：\n"
         info_draw.text = info_text
         info_draw.draw()
         idle_npc_list = []
