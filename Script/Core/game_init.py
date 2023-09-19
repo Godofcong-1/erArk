@@ -53,7 +53,7 @@ def init(main_flow: object):
     except Exception:
         # 向error_log写入回溯用信息
         with open(error_path, "a", encoding="utf-8") as e:
-            e.write(f"版本信息：{normal_config.config_normal.verson}\n")
+            e.write(f"\n版本信息：{normal_config.config_normal.verson}\n")
             e.write(f"输入指令：{cache.input_cache}\n")
         traceback.print_exc(file=open(error_path, "a"))
         os._exit(0)

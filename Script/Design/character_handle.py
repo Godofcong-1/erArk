@@ -46,6 +46,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # print("生成阶段，character_id :",character_id)
     # print("character_id=",character_id)
     now_character = game_type.Character()
+    pl_character_data = cache.character_data[0]
     now_character.cid = character_id
     now_character.name = character_tem.Name
     # 检测基础干员并加入已有干员列表
@@ -74,12 +75,19 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.token_text = character_tem.Token
     # if character_tem.Chest:
     #     now_character.chest_tem = character_tem.Chest
+    # 生成衣服
     now_character.cloth = attr_calculation.get_cloth_zero()
     now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
     for cloth_id in character_tem.Cloth:
         type = game_config.config_clothing_tem[cloth_id].clothing_type
         # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
         now_character.cloth.cloth_wear[type].append(cloth_id)
+    # 生成藏品
+    pl_character_data.pl_collection.token_list[character_id] = False
+    pl_character_data.pl_collection.first_panties[character_id] = ""
+    pl_character_data.pl_collection.npc_panties[character_id] = []
+    pl_character_data.pl_collection.npc_socks[character_id] = []
+    # 最后集成
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)
 
@@ -297,12 +305,16 @@ def get_new_character(character_id: int):
     """获得新角色"""
     cache.npc_id_got.add(character_id)
     character_data = cache.character_data[character_id]
+    pl_character_data = cache.character_data[0]
     init_character_dormitory()
 
     # 初始化新角色位置
     character_position = character_data.position
-    pl_postion = cache.character_data[0].position
+    pl_postion = pl_character_data.position
     map_handle.character_move_scene(character_position, pl_postion, character_id)
+
+    # 初始化新角色娱乐
+    character_behavior.get_chara_entertainment(character_id)
 
     # 新角色原地等待30分钟
     character_data.behavior.behavior_id = constant.Behavior.WAIT
