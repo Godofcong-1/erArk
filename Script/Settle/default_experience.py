@@ -2913,6 +2913,188 @@ def handle_add_1_cure_experience(
     change_data.experience[88] += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Cumming_EXPERIENCE)
+def handle_add_1_cumming_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1射精经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(21, 0)
+    character_data.experience[21] += 1
+    change_data.experience.setdefault(21, 0)
+    change_data.experience[21] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Milking_EXPERIENCE)
+def handle_add_1_milking_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1喷乳经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(22, 0)
+    character_data.experience[22] += 1
+    change_data.experience.setdefault(22, 0)
+    change_data.experience[22] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Peeing_EXPERIENCE)
+def handle_add_1_peeing_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1放尿经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(23, 0)
+    character_data.experience[23] += 1
+    change_data.experience.setdefault(23, 0)
+    change_data.experience[23] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Cums_EXPERIENCE)
+def handle_add_1_cums_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1精液经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(24, 0)
+    character_data.experience[24] += 1
+    change_data.experience.setdefault(24, 0)
+    change_data.experience[24] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_CumsDrink_EXPERIENCE)
+def handle_add_1_cumsdrink_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1饮精经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(25, 0)
+    character_data.experience[25] += 1
+    change_data.experience.setdefault(25, 0)
+    change_data.experience[25] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Creampie_EXPERIENCE)
+def handle_add_1_creampie_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1膣射经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(26, 0)
+    character_data.experience[26] += 1
+    change_data.experience.setdefault(26, 0)
+    change_data.experience[26] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_AnalCums_EXPERIENCE)
+def handle_add_1_analcums_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1肛射经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(27, 0)
+    character_data.experience[27] += 1
+    change_data.experience.setdefault(27, 0)
+    change_data.experience[27] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.Both_ADD_1_Learn_EXPERIENCE)
 def handle_both_add_1_learn_experience(
         character_id: int,

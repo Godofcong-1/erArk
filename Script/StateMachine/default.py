@@ -1567,6 +1567,17 @@ def character_morning_salutation_flag_1(character_id: int):
     character_data.sp_flag.morning_salutation = 1
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_FLAG_1)
+def character_night_salutation_flag_1(character_id: int):
+    """
+    进入要晚安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.night_salutation = 1
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """
@@ -2009,6 +2020,60 @@ def character_morning_salutation_2(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.morning_salutation == 1:
         character_data.sp_flag.morning_salutation = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_1)
+def character_night_salutation_1(character_id: int):
+    """
+    晚安问候：催睡觉
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_1
+    character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_1
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.night_salutation == 1:
+        character_data.sp_flag.night_salutation = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_2)
+def character_night_salutation_2(character_id: int):
+    """
+    晚安问候：晚安吻
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_2
+    character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_2
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.night_salutation == 1:
+        character_data.sp_flag.night_salutation = 2
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_3)
+def character_night_salutation_3(character_id: int):
+    """
+    晚安问候：晚安咬
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_3
+    character_data.behavior.duration = 10
+    character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_3
+    # 特殊flag进行对应更改
+    if character_data.sp_flag.night_salutation == 1:
+        character_data.sp_flag.night_salutation = 2
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)

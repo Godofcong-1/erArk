@@ -12061,19 +12061,19 @@ def handle_assistant_night_salutation_on(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_1)
-def handle_assistant_night_salutation_1(character_id: int) -> int:
-    """
-    自己的助理属性中的晚安问候服务为-晚上催睡觉
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[6] == 1:
-        return 1
-    return 0
+# @add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_1)
+# def handle_assistant_night_salutation_1(character_id: int) -> int:
+#     """
+#     自己的助理属性中的晚安问候服务为-晚上催睡觉
+#     Keyword arguments:
+#     character_id -- 角色id
+#     Return arguments:
+#     int -- 权重
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     if character_data.assistant_services[6] == 1:
+#         return 1
+#     return 0
 
 
 @add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_2)
@@ -12086,7 +12086,7 @@ def handle_assistant_night_salutation_2(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[6] == 2:
+    if character_data.assistant_services[6] == 1:
         return 1
     return 0
 
@@ -12101,7 +12101,7 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[6] == 3:
+    if character_data.assistant_services[6] == 2:
         return 1
     return 0
 
@@ -14609,7 +14609,7 @@ def handle_pl_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -14624,7 +14624,7 @@ def handle_pl_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
@@ -14639,7 +14639,7 @@ def handle_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -14654,7 +14654,7 @@ def handle_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
@@ -14670,7 +14670,7 @@ def handle_t_action_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -14686,7 +14686,7 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 

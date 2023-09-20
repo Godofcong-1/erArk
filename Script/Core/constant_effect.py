@@ -318,6 +318,20 @@ class BehaviorEffect:
     """ 属性_经验 增加1指挥经验 """
     ADD_1_Cure_EXPERIENCE = 322
     """ 属性_经验 增加1医疗经验 """
+    ADD_1_Cumming_EXPERIENCE = 331
+    """ 属性_经验 增加1射精经验 """
+    ADD_1_Milking_EXPERIENCE = 332
+    """ 属性_经验 增加1喷乳经验 """
+    ADD_1_Peeing_EXPERIENCE = 333
+    """ 属性_经验 增加1放尿经验 """
+    ADD_1_Cums_EXPERIENCE = 334
+    """ 属性_经验 增加1精液经验 """
+    ADD_1_CumsDrink_EXPERIENCE = 335
+    """ 属性_经验 增加1饮精经验 """
+    ADD_1_Creampie_EXPERIENCE = 336
+    """ 属性_经验 增加1膣射经验 """
+    ADD_1_AnalCums_EXPERIENCE = 337
+    """ 属性_经验 增加1肛射经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 属性_经验 双方增加1学识经验 """
 

@@ -857,6 +857,8 @@ class Character:
         """ 熟睡值 1m=10点，10min=100点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
+        self.last_state: List = [0]
+        """ 角色当前状态 """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
         # """
         # 角色拥有的服装数据

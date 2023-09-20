@@ -256,6 +256,7 @@ afternoon_entertainment_time,AFTERNOON_ENTERTAINMENT_TIME,时间_当前,下午�
 night_entertainment_time,NIGHT_ENTERTAINMENT_TIME,时间_当前,晚上娱乐时间（晚上19:00~晚上22:00）
 time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
+pl_awake_30_min_before,PL_AWAKE_30_MIN_BEFORE,时间_当前,玩家醒来时间的前半小时以内（权重20）
 
 
 normal_all,NORMAL_ALL,属性_基础,没有任何异常的普通状态
@@ -292,6 +293,7 @@ hp_high,HP_HIGH,属性_基础,自身体力高于70%
 mp_0,MP_0,属性_基础,自身气力为0
 mp_low,MP_LOW,属性_基础,自身气力低于30%
 mp_high,MP_HIGH,属性_基础,自身气力高于70%
+hp_or_mp_low,HP_OR_MP_LOW,属性_基础,自身体力或气力有一项低于30%
 t_hp_low,TARGET_HP_LOW,属性_基础,交互对象体力低于30%
 t_hp_high,TARGET_HP_HIGH,属性_基础,交互对象体力高于70%
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
@@ -341,6 +343,16 @@ assistant_send_food_3,ASSISTANT_SEND_FOOD_3,属性_助理,自己的助理属性�
 assistant_send_food_of_ai_disable,ASSISTANT_SEND_FOOD_OF_AI_DISABLE,属性_助理,自己的助理属性中的送饭服务不影响AI吃饭的情况（包括未开启，开启午饭但当前非午饭）
 assistant_send_food_1_able,ASSISTANT_SEND_FOOD_1_ABLE,属性_助理,自己的助理属性满足帮忙买午饭（设定为1，flag为0，且当前为午饭）
 assistant_send_food_2_able,ASSISTANT_SEND_FOOD_2_ABLE,属性_助理,自己的助理属性满足帮忙做饭（含午饭与三餐）
+assistant_morning_salutation_0,ASSISTANT_MORIING_SALUTATION_0,属性_助理,自己的助理属性中的早安问候服务未开启
+assistant_morning_salutation_on,ASSISTANT_MORIING_SALUTATION_ON,属性_助理,自己的助理属性中的早安问候服务开启中
+assistant_morning_salutation_1,ASSISTANT_MORIING_SALUTATION_1,属性_助理,自己的助理属性中的早安问候服务为-早上叫起床
+assistant_morning_salutation_2,ASSISTANT_MORIING_SALUTATION_2,属性_助理,自己的助理属性中的早安问候服务为-早安吻
+assistant_morning_salutation_3,ASSISTANT_MORIING_SALUTATION_3,属性_助理,自己的助理属性中的早安问候服务为-早安咬
+assistant_night_salutation_0,ASSISTANT_NIGHT_SALUTATION_0,属性_助理,自己的助理属性中的晚安问候服务未开启
+assistant_night_salutation_on,ASSISTANT_NIGHT_SALUTATION_ON,属性_助理,自己的助理属性中的晚安问候服务开启中
+assistant_night_salutation_1,ASSISTANT_NIGHT_SALUTATION_1,属性_助理,自己的助理属性中的晚安问候服务为-晚上催睡觉
+assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
+assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
 
 is_follow,IS_FOLLOW,属性_特殊flag,当前正跟随玩家
 not_follow,NOT_FOLLOW,属性_特殊flag,当前没跟随玩家
@@ -397,6 +409,12 @@ help_buy_food_flag_3,HELP_BUY_FOOD_FLAG_3,属性_特殊flag,自身买饭后要�
 help_make_food_flag_0,HELP_MAKE_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙做饭状态
 help_make_food_flag_1,HELP_MAKE_FOOD_FLAG_1,属性_特殊flag,自身要做饭状态
 help_make_food_flag_2,HELP_MAKE_FOOD_FLAG_2,属性_特殊flag,自身做饭后要送饭状态
+morning_salutation_flag_0,MORIING_SALUTATION_FLAG_0,属性_特殊flag,自身没有早安问候状态
+morning_salutation_flag_1,MORIING_SALUTATION_FLAG_1,属性_特殊flag,自身要早安问候状态（权重100）
+morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,属性_特殊flag,自身已早安问候状态
+night_salutation_flag_0,NIGHT_SALUTATION_FLAG_0,属性_特殊flag,自身没有晚安问候状态
+night_salutation_flag_1,NIGHT_SALUTATION_FLAG_1,属性_特殊flag,自身要晚安问候状态（权重100）
+night_salutation_flag_2,NIGHT_SALUTATION_FLAG_2,属性_特殊flag,自身已晚安问候状态
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通

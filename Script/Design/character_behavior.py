@@ -438,6 +438,10 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     if end_now:
         time_judge = end_now
     if time_judge:
+        # 记录并刷新旧状态列表
+        character_data.last_state.append(character_data.state)
+        if len(character_data.last_state) > 5:
+            character_data.last_state.pop(0)
         # 移动状态下则不完全重置行动数据，保留最终目标数据
         if character_data.state == constant.CharacterStatus.STATUS_MOVE:
             tem_move_final_target = character_data.behavior.move_final_target

@@ -139,6 +139,12 @@ class CharacterStatus:
     """ 早安问候：早安吻 """
     STATUS_MORNING_SALUTATION_3 = 223
     """ 早安问候：早安咬 """
+    STATUS_NIGHT_SALUTATION_1 = 224
+    """ 晚安问候：催睡觉 """
+    STATUS_NIGHT_SALUTATION_2 = 225
+    """ 晚安问候：晚安吻 """
+    STATUS_NIGHT_SALUTATION_3 = 226
+    """ 晚安问候：晚安咬 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -552,6 +558,12 @@ class Behavior:
     """ 早安问候：早安吻 """
     MORNING_SALUTATION_3 = 223
     """ 早安问候：早安咬 """
+    NIGHT_SALUTATION_1 = 224
+    """ 晚安问候：催睡觉 """
+    NIGHT_SALUTATION_2 = 225
+    """ 晚安问候：晚安吻 """
+    NIGHT_SALUTATION_3 = 226
+    """ 晚安问候：晚安咬 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -894,6 +906,14 @@ class StateMachine:
     """ 早安问候：早安吻 """
     MORNING_SALUTATION_3 = 91
     """ 早安问候：早安咬 """
+    NIGHT_SALUTATION_FLAG_1 = 92
+    """ 进入要晚安问候状态 """
+    NIGHT_SALUTATION_1 = 93
+    """ 晚安问候：催睡觉 """
+    NIGHT_SALUTATION_2 = 94
+    """ 晚安问候：晚安吻 """
+    NIGHT_SALUTATION_3 = 95
+    """ 晚安问候：晚安咬 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
