@@ -194,7 +194,7 @@ class Assistant_Panel:
                 if target_data.assistant_services[service_cid] == 1:
                     target_data.pre_dormitory = target_data.dormitory
                     target_data.dormitory = "中枢\博士房间"
-                else:
+                elif target_data.dormitory == "中枢\博士房间":
                     target_data.dormitory = target_data.pre_dormitory
 
 
