@@ -45,9 +45,9 @@ class Find_call_Panel:
             info_draw = draw.NormalDraw()
             follow_count = cache.character_data[0].pl_ability.follow_count
             if not cache.debug_mode:
-                info_draw.text = f"●当前最大同时跟随角色数量：{str(follow_count)}\n\n"
+                info_draw.text = f"●当前最大同时跟随角色数量：{str(follow_count)}，跟随中的角色会带*\n\n"
             else:
-                info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)\n\n"
+                info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)，跟随中的角色会带*\n\n"
             info_draw.width = self.width
             info_draw.draw()
             if cache.debug_mode:
@@ -120,22 +120,22 @@ class FindDraw:
         if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
             scene_position_str = scene_position_str[:-2] + "入口"
         # scene_name = cache.scene_data[scene_position_str].scene_name
-        now_draw_text = f"[{id}]{name}:{scene_position_str}   "
-
+        # 输出干员名字
+        now_draw_text = f"[{id}]{name}"
         # 输出跟随信息
         if character_data.sp_flag.is_follow == 1:
-            now_draw_text += "智能跟随中"
-        elif character_data.sp_flag.is_follow == 2:
-            now_draw_text += "强制跟随中"
-        elif character_data.sp_flag.is_follow == 3:
-            now_draw_text += "前往博士办公室中"
+            now_draw_text += "*"
+        # 输出地点信息
+        now_draw_text += f":{scene_position_str}   "
+
+        status_text = game_config.config_status[character_data.state].name
+        # 如果是在移动，则输出目的地
+        # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
+        if status_text == "移动" and len(character_data.behavior.move_final_target):
+            now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
+        # 否则输出状态
         else:
-            status_text = game_config.config_status[character_data.state].name
-            # 如果是在移动，则输出目的地
-            if status_text == "移动":
-                now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
-            else:
-                now_draw_text += f"正在：{status_text}"
+            now_draw_text += f"正在：{status_text}"
 
         name_draw = draw.LeftButton(
             now_draw_text, self.button_return, self.width, cmd_func=self.see_call_list

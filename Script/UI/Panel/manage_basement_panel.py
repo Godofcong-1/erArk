@@ -188,7 +188,7 @@ class Manage_Basement_Panel:
                 work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
 
                 all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
-                all_info_draw.text += f"\n ↓点击部门名查看对应部门详情\n\n"
+                all_info_draw.text += f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有工作位的部门是未没有实装的空白部门\n\n"
                 all_info_draw.draw()
 
                 # 遍历全部门
