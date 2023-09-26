@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import handle_premise, attr_calculation, update
+from Script.Design import handle_premise, attr_calculation, update, character_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -154,11 +154,10 @@ class Assistant_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
-        # 0号指令,选择助理
+        # 选择助理
         if service_cid == 0:
             chose_assistant()
-
-        # 1号指令,助理常时跟随
+        # 跟随服务
         elif service_cid == 2:
             if target_data.sp_flag.is_follow == 3:
                 target_data.sp_flag.is_follow = 0
@@ -189,6 +188,14 @@ class Assistant_Panel:
                     info_draw.text = info_text
                     info_draw.draw()
                     target_data.assistant_services[service_cid] = 0
+
+            # 同居服务
+            if service_cid == 7:
+                if target_data.assistant_services[service_cid] == 1:
+                    target_data.pre_dormitory = target_data.dormitory
+                    target_data.dormitory = "中枢\博士房间"
+                else:
+                    target_data.dormitory = target_data.pre_dormitory
 
 
 class SeeNPCButtonList:

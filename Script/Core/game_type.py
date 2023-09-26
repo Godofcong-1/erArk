@@ -898,6 +898,8 @@ class Character:
         """ 角色所属办公室坐标 """
         self.dormitory: str = ""
         """ 角色宿舍坐标 """
+        self.pre_dormitory: str = ""
+        """ 角色前宿舍坐标 """
         self.birthday: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色生日数据 """
         # self.chest_tem: int = 0
