@@ -150,7 +150,6 @@ class Assistant_Panel:
 
     def chose_button(self, service_cid:int, service_option_len:int):
         """玩家点击了选项"""
-        update.game_update_flow(0)
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
@@ -159,7 +158,7 @@ class Assistant_Panel:
             chose_assistant()
         # 跟随服务
         elif service_cid == 2:
-            if target_data.sp_flag.is_follow == 3:
+            if target_data.sp_flag.is_follow == 1:
                 target_data.sp_flag.is_follow = 0
             else:
                 target_data.sp_flag.is_follow += 1
@@ -189,13 +188,47 @@ class Assistant_Panel:
                     info_draw.draw()
                     target_data.assistant_services[service_cid] = 0
 
-            # 同居服务
+            # 结算附带的属性变化
+            self.settlement_of_associated_attribute(service_cid, service_option_len)
+
+
+    def settlement_of_associated_attribute(self, service_cid:int, service_option_len:int):
+        """结算附带的属性变化"""
+        character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+
+        # 计算二段结算的开头、结尾、当前索引
+        start_index_dict = {3:1406, 4:1408, 5:1412, 6:1416, 7:1419, 8:1421}
+        start_index = start_index_dict[service_cid]
+        end_index = start_index + service_option_len
+        now_index = start_index + target_data.assistant_services[service_cid]
+        # print(f"debug start_index = {start_index}, end_index = {end_index}, now_index = {now_index}")
+
+        # 去掉选助理的1号选项
+        if service_cid >= 2:
+
+            # 清除和赋予二段结算
+            # 跟随服务单独计算
+            if service_cid == 2:
+                for i in {1403,1404,1405}:
+                    target_data.second_behavior[i] = 0
+                now_index = target_data.sp_flag.is_follow + 1403
+                target_data.second_behavior[now_index] = 1
+            else:
+                # 先清零同类下的其他二段结算
+                for i in range(start_index, end_index):
+                    target_data.second_behavior[i] = 0
+                # 再设置当前二段结算
+                target_data.second_behavior[now_index] = 1
+
+            # 同居服务的宿舍改变
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
                     target_data.pre_dormitory = target_data.dormitory
                     target_data.dormitory = "中枢\博士房间"
                 elif target_data.dormitory == "中枢\博士房间":
                     target_data.dormitory = target_data.pre_dormitory
+                # print(f"debug target_data.dormitory = {target_data.dormitory}")
 
 
 class SeeNPCButtonList:
@@ -270,8 +303,10 @@ class SeeNPCButtonList:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             new_assistant_data.sp_flag.is_follow = 1
+            new_assistant_data.second_behavior[1401] = 1
             info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
         if not pl_flag:
+            old_assistant_data.second_behavior[1402] = 1
             info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，跟随状态也一并取消\n\n"
         info_draw.text = info_text
         info_draw.width = self.width

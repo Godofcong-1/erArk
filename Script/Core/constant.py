@@ -1423,6 +1423,51 @@ class SecondBehavior:
     DAY_HELLO = 1332
     """ 每日打招呼 """
 
+    CHOSEN_AS_ASSISTANT = 1401
+    """ 被选为助理 """
+    NOT_AS_ASSISTANT = 1402
+    """ 不再为助理 """
+    AI_FOLLOW_OFF = 1403
+    """ 关闭智能跟随 """
+    AI_FOLLOW_ON = 1404
+    """ 开启智能跟随 """
+    COME_TO_OFFICE = 1405
+    """ 要求前往办公室 """
+    SUPPORT_SERVICE_ON = 1406
+    """ 关闭辅佐服务 """
+    SUPPORT_SERVICE_OFF = 1407
+    """ 开启辅佐服务 """
+    SEND_FOOD_SERVICE_OFF = 1408
+    """ 关闭送饭服务 """
+    BUY_LUNGCH = 1409
+    """ 开启帮忙买午饭服务 """
+    MAKE_LUNGCH = 1410
+    """ 开启亲手做午饭服务 """
+    MAKE_THREE_MEALS = 1411
+    """ 开启亲手做三餐服务 """
+    MORNING_SERVICE_OFF = 1412
+    """ 关闭早安服务 """
+    MORNING_SALUTATION = 1413
+    """ 开启早上叫起床服务 """
+    MORNING_KISS = 1414
+    """ 开启早安吻服务 """
+    MORNING_BLOWJOB = 1415
+    """ 开启早安咬服务 """
+    NIGHT_SERVICE_OFF = 1416
+    """ 关闭晚安服务 """
+    NIGHT_KISS = 1417
+    """ 开启晚安吻服务 """
+    NIGHT_BLOWJOB = 1418
+    """ 开启晚安咬服务 """
+    COHABITATION_ON = 1419
+    """ 关闭同居服务 """
+    COHABITATION_OFF = 1420
+    """ 开启同居服务 """
+    LOVE_SUPPORT_ON = 1421
+    """ 关闭助攻服务 """
+    LOVE_SUPPORT_OFF = 1422
+    """ 开启助攻服务 """
+
 
 #旧结算存档#
     # ADD_SOCIAL_FAVORABILITY = 7
