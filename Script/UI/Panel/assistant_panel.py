@@ -85,7 +85,7 @@ class Assistant_Panel:
             return_list = []
 
             info_draw = draw.NormalDraw()
-            info_draw.text = f"\n●助理会自动获得打开玩家房门的权限，因此在执行早安等服务时可以自由进出玩家房间\n\n"
+            info_draw.text = f"\n●助理会自动获得打开玩家房门的权限，因此在执行问候、同居等服务时可以自由进出玩家房间\n\n"
             info_draw.draw()
 
 

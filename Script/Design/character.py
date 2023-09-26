@@ -304,6 +304,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge += judge_other_people
         calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
+    # 助理助攻修正
+    if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
+        assistant_character_data = cache.character_data[character_data.assistant_character_id]
+        if assistant_character_data.assistant_services[8]:
+            judge += 50
+            calculation_text += "+助理助攻(+50)"
+
     # 今天H被打断了修正
     judge_h_interrupt = character_data.action_info.h_interrupt * 10
     judge -= judge_h_interrupt
