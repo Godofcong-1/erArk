@@ -902,7 +902,7 @@ def character_move_to_player(character_id: int):
     # 最后决定是移动还是继续等待
     if move_flag:
         character_data.action_info.follow_wait_time = 0
-        general_movement_module(character_id, move_path)
+        general_movement_module(character_id, to_dr)
         # print(f"debug {character_data.name} 移动至玩家位置,move_final_target = {character_data.behavior.move_final_target}")
     else:
         character_data.state = constant.CharacterStatus.STATUS_WAIT
