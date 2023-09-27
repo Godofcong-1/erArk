@@ -2755,6 +2755,150 @@ def handle_not_in_bathroom(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_FOOT_BATH)
+def handle_in_foot_bath(character_id: int) -> int:
+    """
+    校验角色是否在足浴区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Foot_Bath" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_FOOT_BATH)
+def handle_not_in_foot_bath(character_id: int) -> int:
+    """
+    校验角色是否不在足浴区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Foot_Bath" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_SAUNA)
+def handle_in_sauna(character_id: int) -> int:
+    """
+    校验角色是否在桑拿房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Sauna" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_SAUNA)
+def handle_not_in_sauna(character_id: int) -> int:
+    """
+    校验角色是否不在桑拿房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Sauna" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_SPA_ROOM)
+def handle_in_spa_room(character_id: int) -> int:
+    """
+    校验角色是否在水疗房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Spa_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_SPA_ROOM)
+def handle_not_in_spa_room(character_id: int) -> int:
+    """
+    校验角色是否不在水疗房中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Spa_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_ONSEN)
+def handle_in_onsen(character_id: int) -> int:
+    """
+    校验角色是否在温泉中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Onsen" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_ONSEN)
+def handle_not_in_onsen(character_id: int) -> int:
+    """
+    校验角色是否不在温泉中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Onsen" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
@@ -4374,6 +4518,54 @@ def handle_swim_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.swim == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.BATHHOUSE_ENTERTAINMENT_FLAG_0)
+def handle_bathhouse_entertainment_flag_0(character_id: int) -> int:
+    """
+    自身没有大浴场娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.bathhouse_entertainment == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.BATHHOUSE_ENTERTAINMENT_FLAG_1)
+def handle_bathhouse_entertainment_flag_1(character_id: int) -> int:
+    """
+    自身大浴场娱乐_要更衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.bathhouse_entertainment == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.BATHHOUSE_ENTERTAINMENT_FLAG_2)
+def handle_bathhouse_entertainment_flag_2(character_id: int) -> int:
+    """
+    自身大浴场娱乐_要娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.bathhouse_entertainment == 2:
         return 1
     else:
         return 0
@@ -8512,6 +8704,122 @@ def handle_entertainment_is_full_body_styling(character_id: int) -> int:
         i -= 1
 
     return character_data.entertainment.entertainment_type[i] == 117
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_BATHHOUSE_TYPE)
+def handle_entertainment_is_bathhouse_type(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为大浴场类的娱乐
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    for cid in {171,172,173,174,175,176}:
+        if character_data.entertainment.entertainment_type[i] == cid:
+            return 1
+
+    return 0
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_BATHHOUSE_SHOWER_CLOTH_TYPE)
+def handle_entertainment_is_bathhouse_shower_cloth_type(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为大浴场类_需要换浴衣的娱乐
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    for cid in {172,173,174}:
+        if character_data.entertainment.entertainment_type[i] == cid:
+            return 1
+
+    return 0
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SOAK_FEET)
+def handle_entertainment_is_soak_feet(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为泡脚
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 171
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_STEAM_SAUNA)
+def handle_entertainment_is_steam_sauna(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为蒸桑拿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 172
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_HYDROTHERAPY_TREATMENT)
+def handle_entertainment_is_hydrotherapy_treatment(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为水疗护理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 173
+
+
+@add_premise(constant_promise.Premise.ENTERTAINMENT_IS_ONSEN_BATH)
+def handle_entertainment_is_onsen_bath(character_id: int) -> int:
+    """
+    自己当前时段的娱乐为泡温泉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    i = game_time.judge_entertainment_time(character_id)
+    if i:
+        i -= 1
+
+    return character_data.entertainment.entertainment_type[i] == 174
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_SWIMMING)

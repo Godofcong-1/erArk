@@ -319,7 +319,7 @@ def handle_get_shower_cloth(
     now_time: datetime.datetime,
 ):
     """
-    换上浴帽和浴巾
+    清零其他衣服并换上浴帽和浴巾
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -446,4 +446,39 @@ def handle_locker_to_wear(
     character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FOOT_CLOTH_TO_LOCKER)
+def handle_foot_cloth_to_locker(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    袜子和鞋子转移到衣柜里
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data = cache.character_data[character_id]
+
+    for clothing_type in {10,11}:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            tem_list = character_data.cloth.cloth_wear[clothing_type].copy()
+            for cloth_id in tem_list:
+                # print(f"debug cloth_id = {cloth_id}")
+                # 不转移首饰和必须穿着的衣服
+                if (
+                    game_config.config_clothing_tem[cloth_id].tag != 6 
+                    and cloth_id not in clothing.chara_special_wear_cloth(character_id)
+                ):
+                    # print(f"debug move_cloth_id = {cloth_id}")
+                    character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
+                    character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
+    character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
 

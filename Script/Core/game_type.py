@@ -478,6 +478,8 @@ class SPECIAL_FLAG:
         """ 发现食物不对劲 """
         self.swim: int = 0
         """ 游泳状态，int [0无,1要换泳衣,2要游泳] """
+        self.bathhouse_entertainment: int = 0
+        """ 大浴场娱乐状态，int [0无,1要更衣,2要娱乐] """
         self.work_maintenance: bool = 0
         """ 要检修状态 """
         self.help_buy_food: int = 0

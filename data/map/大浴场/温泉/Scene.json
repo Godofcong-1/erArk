@@ -1,8 +1,8 @@
 {
-  "SceneName":"温泉",
+  "SceneName":"恒温热泵温泉",
   "InOutDoor":"In",
   "Exposed":"1",
   "Have_Furniture":"0",
   "Close_Type":"0",
-  "SceneTag":"Room|Ladies_Only"
+  "SceneTag":"Room|Ladies_Only|Onsen"
 }

@@ -1720,6 +1720,7 @@ def handle_style_hair():
     character_data.state = constant.CharacterStatus.STATUS_STYLE_HAIR
     update.game_update_flow(60)
 
+
 @add_instruct(
     constant.Instruct.FULL_BODY_STYLING,
     constant.InstructType.PLAY,
@@ -1737,6 +1738,83 @@ def handle_full_body_styling():
     character_data.behavior.behavior_id = constant.Behavior.FULL_BODY_STYLING
     character_data.state = constant.CharacterStatus.STATUS_FULL_BODY_STYLING
     update.game_update_flow(120)
+
+
+@add_instruct(
+    constant.Instruct.SOAK_FEET,
+    constant.InstructType.PLAY,
+    _("泡脚"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_FOOT_BATH,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_soak_feet():
+    """处理泡脚指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.SOAK_FEET
+    character_data.state = constant.CharacterStatus.STATUS_SOAK_FEET
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.STEAM_SAUNA,
+    constant.InstructType.PLAY,
+    _("蒸桑拿"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_SAUNA,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_steam_sauna():
+    """处理蒸桑拿指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.STEAM_SAUNA
+    character_data.state = constant.CharacterStatus.STATUS_STEAM_SAUNA
+    update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.HYDROTHERAPY_TREATMENT,
+    constant.InstructType.PLAY,
+    _("水疗护理"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_SPA_ROOM,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_hydrotherapy_treatment():
+    """处理水疗护理指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.HYDROTHERAPY_TREATMENT
+    character_data.state = constant.CharacterStatus.STATUS_HYDROTHERAPY_TREATMENT
+    update.game_update_flow(60)
+
+
+@add_instruct(
+    constant.Instruct.ONSEN_BATH,
+    constant.InstructType.PLAY,
+    _("泡温泉"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_ONSEN,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_onsen_bath():
+    """处理泡温泉指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.ONSEN_BATH
+    character_data.state = constant.CharacterStatus.STATUS_ONSEN_BATH
+    update.game_update_flow(60)
+
 
 # 以下为工作#
 

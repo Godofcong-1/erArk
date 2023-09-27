@@ -3523,6 +3523,69 @@ def handle_help_buy_food_flag_to_0(
     character_data.sp_flag.help_buy_food = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_0)
+def handle_bathhouse_entertainment_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零大浴场娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_1)
+def handle_bathhouse_entertainment_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成大浴场娱乐_要更衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_2)
+def handle_bathhouse_entertainment_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成大浴场娱乐_要娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 2
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
 def handle_help_make_food_flag_to_0(
         character_id: int,

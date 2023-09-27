@@ -63,6 +63,10 @@ class CharacterStatus:
     """ 衣柜衣服穿回身上 """
     STATUS_READY_TO_SWIM = 146
     """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    STATUS_FOOT_CLOTH_TO_LOCKER =147
+    """ 袜子和鞋子转移到衣柜里 """
+    STATUS_WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
+    """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
@@ -105,6 +109,14 @@ class CharacterStatus:
     """ 听肚子里的动静 """
     STATUS_PLAY_WITH_CHILD = 172
     """ 一起玩耍 """
+    STATUS_SOAK_FEET = 181
+    """ 泡脚 """
+    STATUS_STEAM_SAUNA = 182
+    """ 蒸桑拿 """
+    STATUS_HYDROTHERAPY_TREATMENT = 183
+    """ 水疗护理 """
+    STATUS_ONSEN_BATH = 184
+    """ 泡温泉 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_ASSISTANT_ADJUSTMENTS = 204
@@ -478,6 +490,10 @@ class Behavior:
     """ 衣柜衣服穿回身上 """
     READY_TO_SWIM = 146
     """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    FOOT_CLOTH_TO_LOCKER =147
+    """ 袜子和鞋子转移到衣柜里 """
+    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
+    """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
@@ -520,6 +536,14 @@ class Behavior:
     """ 听肚子里的动静 """
     PLAY_WITH_CHILD = 172
     """ 一起玩耍 """
+    SOAK_FEET = 181
+    """ 泡脚 """
+    STEAM_SAUNA = 182
+    """ 蒸桑拿 """
+    HYDROTHERAPY_TREATMENT = 183
+    """ 水疗护理 """
+    ONSEN_BATH = 184
+    """ 泡温泉 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -870,8 +894,8 @@ class StateMachine:
     """ 当前身上衣服转移到衣柜里 """
     TAKE_SHOWER = 73
     """ 淋浴 """
-    GET_SHOWER_CLOTH = 74
-    """ 换上浴帽和浴巾 """
+    GET_SHOWER_CLOTH_AND_CLEAN_LOCKER = 74
+    """ 换上浴帽和浴巾并清空衣柜 """
     START_EAT_FOOD = 75
     """ 进入要取餐状态 """
     BUY_RAND_FOOD_AT_FOODSHOP = 76
@@ -892,28 +916,12 @@ class StateMachine:
     """ 脱掉衣服并换上泳衣并进入要游泳状态 """
     SIWM_3 = 84
     """ 换回衣服 """
-    HELP_BUY_FOOD_1 = 85
-    """ 进入要买饭状态 """
-    HELP_MAKE_FOOD_1 = 86
-    """ 进入要做饭状态 """
-    ASSISTANT_MAKE_FOOD = 87
-    """ 助理：做饭 """
-    MORNING_SALUTATION_FLAG_1 = 88
-    """ 进入要早安问候状态 """
-    MORNING_SALUTATION_1 = 89
-    """ 早安问候：叫起床 """
-    MORNING_SALUTATION_2 = 90
-    """ 早安问候：早安吻 """
-    MORNING_SALUTATION_3 = 91
-    """ 早安问候：早安咬 """
-    NIGHT_SALUTATION_FLAG_1 = 92
-    """ 进入要晚安问候状态 """
-    NIGHT_SALUTATION_1 = 93
-    """ 晚安问候：催睡觉 """
-    NIGHT_SALUTATION_2 = 94
-    """ 晚安问候：晚安吻 """
-    NIGHT_SALUTATION_3 = 95
-    """ 晚安问候：晚安咬 """
+    START_BATHHOUSE_ENTERTAINMENT = 85
+    """ 进入要去大浴场娱乐_要更衣状态 """
+    FOOT_CLOTH_TO_LOCKER = 86
+    """ 袜子和鞋子转移到衣柜里 """
+    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 87
+    """ 当前身上衣服转移到衣柜里，并换上浴帽和浴巾 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -1002,6 +1010,14 @@ class StateMachine:
     """ 娱乐：修整发型 """
     ENTERTAIN_FULL_BODY_STYLING = 422
     """ 娱乐：全身造型服务 """
+    ENTERTAIN_SOAK_FEET = 423
+    """ 娱乐：泡脚 """
+    ENTERTAIN_STEAM_SAUNA = 424
+    """ 娱乐：蒸桑拿 """
+    ENTERTAIN_HYDROTHERAPY_TREATMENT = 425
+    """ 娱乐：水疗护理 """
+    ENTERTAIN_ONSEN_BATH = 426
+    """ 娱乐：泡温泉 """
 
     MOVE_TO_RAND_SCENE = 501
     """ 移动至随机场景 """
@@ -1097,6 +1113,30 @@ class StateMachine:
     """ 移动至运维部 """
     MOVE_TO_BLACKSMITH_SHOP = 622
     """ 移动至铁匠铺 """
+
+    HELP_BUY_FOOD_1 = 701
+    """ 进入要买饭状态 """
+    HELP_MAKE_FOOD_1 = 702
+    """ 进入要做饭状态 """
+    ASSISTANT_MAKE_FOOD = 703
+    """ 助理：做饭 """
+    MORNING_SALUTATION_FLAG_1 = 704
+    """ 进入要早安问候状态 """
+    MORNING_SALUTATION_1 = 705
+    """ 早安问候：叫起床 """
+    MORNING_SALUTATION_2 = 706
+    """ 早安问候：早安吻 """
+    MORNING_SALUTATION_3 = 707
+    """ 早安问候：早安咬 """
+    NIGHT_SALUTATION_FLAG_1 = 708
+    """ 进入要晚安问候状态 """
+    NIGHT_SALUTATION_1 = 709
+    """ 晚安问候：催睡觉 """
+    NIGHT_SALUTATION_2 = 710
+    """ 晚安问候：晚安吻 """
+    NIGHT_SALUTATION_3 = 711
+    """ 晚安问候：晚安咬 """
+
 
     # MOVE_TO_CLASS = 0
     # """ 移动到所属教室 """
@@ -1625,6 +1665,14 @@ class Instruct:
     """ 修整发型 """
     FULL_BODY_STYLING = 0
     """ 全身造型服务 """
+    SOAK_FEET = 0
+    """ 泡脚 """
+    STEAM_SAUNA = 0
+    """ 蒸桑拿 """
+    HYDROTHERAPY_TREATMENT = 0
+    """ 水疗护理 """
+    ONSEN_BATH = 0
+    """ 泡温泉 """
 
     #工作#
     OFFICIAL_WORK = 0

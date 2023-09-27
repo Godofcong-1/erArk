@@ -396,6 +396,12 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身清零要帮忙买午饭状态 """
     HELP_MAKE_FOOD_FLAG_TO_0 = 490
     """ 属性_特殊flag 自身清零做午饭状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_0 = 491
+    """ 属性_特殊flag 自身清零大浴场娱乐状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_1 = 492
+    """ 属性_特殊flag 自身变成大浴场娱乐_要更衣状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_2 = 493
+    """ 属性_特殊flag 自身变成大浴场娱乐_要娱乐状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -466,6 +472,8 @@ class BehaviorEffect:
     """ 属性_服装 清零其他衣服并换上泳衣 """
     WEAR_CLOTH_OFF_MOST = 645
     """ 属性_服装 脱掉大部分衣服（保留首饰等） """
+    FOOT_CLOTH_TO_LOCKER = 646
+    """ 属性_服装 袜子和鞋子转移到衣柜里 """
 
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """

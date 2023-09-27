@@ -112,7 +112,7 @@ def get_cloth_off(character_id: int):
 
 def get_shower_cloth(character_id: int):
     """
-    换上浴帽和浴巾
+    清零其他衣服并换上浴帽和浴巾
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

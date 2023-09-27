@@ -1414,6 +1414,62 @@ def character_full_body_styling(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_FULL_BODY_STYLING
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_SOAK_FEET)
+def character_soak_feet(character_id: int):
+    """
+    娱乐：泡脚
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.SOAK_FEET
+    character_data.state = constant.CharacterStatus.STATUS_SOAK_FEET
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_STEAM_SAUNA)
+def character_steam_sauna(character_id: int):
+    """
+    娱乐：蒸桑拿
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.STEAM_SAUNA
+    character_data.state = constant.CharacterStatus.STATUS_STEAM_SAUNA
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_HYDROTHERAPY_TREATMENT)
+def character_hydrotherapy_treatment(character_id: int):
+    """
+    娱乐：水疗护理
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.HYDROTHERAPY_TREATMENT
+    character_data.state = constant.CharacterStatus.STATUS_HYDROTHERAPY_TREATMENT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_ONSEN_BATH)
+def character_onsen_bath(character_id: int):
+    """
+    娱乐：泡温泉
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.ONSEN_BATH
+    character_data.state = constant.CharacterStatus.STATUS_ONSEN_BATH
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING_RAND_CHARACTER)
 def character_singing_to_rand_character(character_id: int):
     """
@@ -1519,6 +1575,45 @@ def character_swim_3(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.LOCKER_TO_WEAR
     character_data.state = constant.CharacterStatus.STATUS_LOCKER_TO_WEAR
+    character_data.behavior.duration = 10
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.START_BATHHOUSE_ENTERTAINMENT)
+def character_start_bathhouse_entertainment(character_id: int):
+    """
+    进入要去大浴场娱乐_要更衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.FOOT_CLOTH_TO_LOCKER)
+def character_foot_cloth_to_locker(character_id: int):
+    """
+    袜子和鞋子转移到衣柜里
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.FOOT_CLOTH_TO_LOCKER
+    character_data.state = constant.CharacterStatus.STATUS_FOOT_CLOTH_TO_LOCKER
+    character_data.behavior.duration = 5
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH)
+def character_wear_to_locker_and_get_shower_cloth(character_id: int):
+    """
+    当前身上衣服转移到衣柜里，并换上浴帽和浴巾
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH
+    character_data.state = constant.CharacterStatus.STATUS_WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH
     character_data.behavior.duration = 10
 
 
@@ -1628,10 +1723,10 @@ def character_take_shower(character_id: int):
     character_data.behavior.duration = 30
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.GET_SHOWER_CLOTH)
-def character_get_shower_cloth(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_SHOWER_CLOTH_AND_CLEAN_LOCKER)
+def character_get_shower_cloth_and_clean_locker(character_id: int):
     """
-    角色换上浴帽和浴巾
+    角色换上浴帽和浴巾并清空衣柜
     Keyword arguments:
     character_id -- 角色id
     """
