@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 import os
 import traceback
-from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type
+from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd
 from Script.Config import normal_config
+from Script.UI.Moudle import panel
 
 cache: game_type.Cache = cache_control.cache
 
@@ -48,15 +49,40 @@ def init(main_flow: object):
             if flow_handle.exit_flag:
                 break
 
-    try:
-        run_main_flow()
-    except Exception:
-        # 向error_log写入回溯用信息
-        with open(error_path, "a", encoding="utf-8") as e:
-            e.write(f"\n版本信息：{normal_config.config_normal.verson}\n")
-            e.write(f"输入指令：{cache.input_cache}\n")
-        traceback.print_exc(file=open(error_path, "a"))
-        os._exit(0)
+    while True:
+
+        try:
+            run_main_flow()
+        except Exception:
+            # 向error_log写入回溯用信息
+            with open(error_path, "a", encoding="utf-8") as e:
+                e.write(f"\n版本信息：{normal_config.config_normal.verson}\n")
+                e.write(f"最近输入指令：{cache.input_cache}\n")
+            traceback.print_exc(file=open(error_path, "a"))
+            # 向游戏内写入错误信息
+            error_text = "\n"
+            error_text += f"版本信息：{normal_config.config_normal.verson}\n"
+            error_text += f"最近输入指令：{cache.input_cache}\n"
+            error_text += traceback.format_exc()
+            error_text += "\n\n游戏发生错误，已将上述错误信息写入error.log\n\n"
+            # 输出选择面板
+            ask_list = []
+            askfor_panel = panel.OneMessageAndSingleColumnButton()
+            askfor_list = [("回到标题画面"), ("退出游戏")]
+            askfor_panel.set(askfor_list, (error_text), 0)
+            askfor_panel.draw()
+            askfor_panel_return_list = askfor_panel.get_return_list()
+            ask_list.extend(askfor_panel_return_list.keys())
+            yrn = flow_handle.askfor_all(ask_list)
+            py_cmd.clr_cmd()
+            # 回到标题画面
+            if yrn == "0":
+                io_init.clear_screen()
+                io_init.clear_order()
+                flow_handle.cmd_clear()
+                cache.now_panel_id = constant.Panel.TITLE
+            else:
+                os._exit(0)
 
 
 def run(main_func: object):
