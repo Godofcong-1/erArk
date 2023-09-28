@@ -611,6 +611,59 @@ def character_move_to_swimming_pool(character_id: int):
     )
     general_movement_module(character_id, to_swimming_pool)
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOOT_BATH)
+def character_move_to_foot_bath(character_id: int):
+    """
+    移动至足浴区
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_foot_bath = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Foot_Bath"])
+    )
+    general_movement_module(character_id, to_foot_bath)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_SAUNA)
+def character_move_to_sauna(character_id: int):
+    """
+    移动至桑拿房
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_sauna = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Sauna"])
+    )
+    general_movement_module(character_id, to_sauna)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_SPA_ROOM)
+def character_move_to_spa_room(character_id: int):
+    """
+    移动至水疗房
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_spa_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Spa_Room"])
+    )
+    general_movement_module(character_id, to_spa_room)
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_ONSEN)
+def character_move_to_onsen(character_id: int):
+    """
+    移动至温泉
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_onsen = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Onsen"])
+    )
+    general_movement_module(character_id, to_onsen)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_MAINTENANCE_DEPARTMENT)
 def character_move_to_maintenance_department(character_id: int):
     """

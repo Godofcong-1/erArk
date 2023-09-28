@@ -1105,6 +1105,14 @@ class StateMachine:
     """ 移动至龙门食坊 """
     MOVE_TO_BATHZONE_LOCKER_ROOM = 601
     """ 移动至大浴场的更衣室 """
+    MOVE_TO_FOOT_BATH = 602
+    """ 移动至足浴区 """
+    MOVE_TO_SAUNA = 603
+    """ 移动至桑拿房 """
+    MOVE_TO_SPA_ROOM = 604
+    """ 移动至水疗房 """
+    MOVE_TO_ONSEN = 605
+    """ 移动至温泉 """
     MOVE_TO_SWIMMING_POOL = 611
     """ 移动至游泳池 """
     MOVE_TO_TRAINING_LOCKER_ROOM = 612
