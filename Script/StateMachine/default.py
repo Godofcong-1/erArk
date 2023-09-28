@@ -1617,20 +1617,6 @@ def character_swim_2(character_id: int):
     character_data.behavior.duration = 10
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.SIWM_3)
-def character_swim_3(character_id: int):
-    """
-    换回衣服
-    Keyword arguments:
-    character_id -- 角色id
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    character_data.target_character_id = character_id
-    character_data.behavior.behavior_id = constant.Behavior.LOCKER_TO_WEAR
-    character_data.state = constant.CharacterStatus.STATUS_LOCKER_TO_WEAR
-    character_data.behavior.duration = 10
-
-
 @handle_state_machine.add_state_machine(constant.StateMachine.START_BATHHOUSE_ENTERTAINMENT)
 def character_start_bathhouse_entertainment(character_id: int):
     """
@@ -1667,6 +1653,20 @@ def character_wear_to_locker_and_get_shower_cloth(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH
     character_data.state = constant.CharacterStatus.STATUS_WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH
+    character_data.behavior.duration = 10
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.CLEAN_WEAR_AND_LOCKER_TO_WEAR)
+def character_clean_wear_and_locker_to_wear(character_id: int):
+    """
+    清空身上的衣服然后穿回衣柜的衣服
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.CLEAN_WEAR_AND_LOCKER_TO_WEAR
+    character_data.state = constant.CharacterStatus.STATUS_CLEAN_WEAR_AND_LOCKER_TO_WEAR
     character_data.behavior.duration = 10
 
 

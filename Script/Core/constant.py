@@ -67,6 +67,8 @@ class CharacterStatus:
     """ 袜子和鞋子转移到衣柜里 """
     STATUS_WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
     """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
+    STATUS_CLEAN_WEAR_AND_LOCKER_TO_WEAR = 149
+    """ 清空身上的衣服然后穿回衣柜的衣服 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
@@ -494,6 +496,8 @@ class Behavior:
     """ 袜子和鞋子转移到衣柜里 """
     WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
     """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
+    CLEAN_WEAR_AND_LOCKER_TO_WEAR = 149
+    """ 清空身上的衣服然后穿回衣柜的衣服 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
@@ -914,14 +918,14 @@ class StateMachine:
     """ 进入要换泳衣状态 """
     SIWM_2 = 83
     """ 脱掉衣服并换上泳衣并进入要游泳状态 """
-    SIWM_3 = 84
-    """ 换回衣服 """
     START_BATHHOUSE_ENTERTAINMENT = 85
     """ 进入要去大浴场娱乐_要更衣状态 """
     FOOT_CLOTH_TO_LOCKER = 86
     """ 袜子和鞋子转移到衣柜里 """
     WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 87
     """ 当前身上衣服转移到衣柜里，并换上浴帽和浴巾 """
+    CLEAN_WEAR_AND_LOCKER_TO_WEAR = 88
+    """ 清空身上的衣服然后穿回衣柜的衣服 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
