@@ -913,7 +913,7 @@ class StateMachine:
     START_PEE = 80
     """ 进入要撒尿状态 """
     LOCKER_TO_WEAR = 81
-    """ 衣柜里的衣服穿回身上 """
+    """ 衣柜里的衣服穿回身上，如果有浴场flag则置0 """
     SIWM_1 = 82
     """ 进入要换泳衣状态 """
     SIWM_2 = 83
@@ -925,7 +925,7 @@ class StateMachine:
     WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 87
     """ 当前身上衣服转移到衣柜里，并换上浴帽和浴巾 """
     CLEAN_WEAR_AND_LOCKER_TO_WEAR = 88
-    """ 清空身上的衣服然后穿回衣柜的衣服 """
+    """ 清空身上的衣服然后穿回衣柜的衣服，如果有浴场或游泳娱乐flag则置0 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """

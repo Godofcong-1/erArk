@@ -1659,7 +1659,7 @@ def character_wear_to_locker_and_get_shower_cloth(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.CLEAN_WEAR_AND_LOCKER_TO_WEAR)
 def character_clean_wear_and_locker_to_wear(character_id: int):
     """
-    清空身上的衣服然后穿回衣柜的衣服
+    清空身上的衣服然后穿回衣柜的衣服，如果有浴场或游泳娱乐flag则置0
     Keyword arguments:
     character_id -- 角色id
     """
@@ -1668,6 +1668,12 @@ def character_clean_wear_and_locker_to_wear(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.CLEAN_WEAR_AND_LOCKER_TO_WEAR
     character_data.state = constant.CharacterStatus.STATUS_CLEAN_WEAR_AND_LOCKER_TO_WEAR
     character_data.behavior.duration = 10
+
+    # 如果有浴场或游泳娱乐flag则置0
+    if character_data.sp_flag.bathhouse_entertainment:
+        character_data.sp_flag.bathhouse_entertainment = 0
+    if character_data.sp_flag.swim:
+        character_data.sp_flag.swim = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.HELP_BUY_FOOD_1)
@@ -1747,7 +1753,7 @@ def character_wear_to_locker(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.LOCKER_TO_WEAR)
 def character_locker_to_wear(character_id: int):
     """
-    当前衣柜里衣服转移到身上
+    当前衣柜里衣服转移到身上，如果有浴场flag则置0
     Keyword arguments:
     character_id -- 角色id
     """
@@ -1760,6 +1766,9 @@ def character_locker_to_wear(character_id: int):
         now_draw = draw.NormalDraw()
         now_draw.text = f"{character_data.name}穿上了衣服\n"
         now_draw.draw()
+    # 如果有浴场或游泳娱乐flag则置0
+    if character_data.sp_flag.bathhouse_entertainment:
+        character_data.sp_flag.bathhouse_entertainment = 0
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.TAKE_SHOWER)

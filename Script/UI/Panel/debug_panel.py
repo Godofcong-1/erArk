@@ -863,14 +863,14 @@ class Debug_Panel:
 
                 if change_draw_flag:
                     value_index_panel = panel.AskForOneMessage()
-                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开。列表的内容元素0为删除1为增加"), 100)
+                    value_index_panel.set(_("输入改变的项目，中间用英文小写逗号隔开。娱乐活动输入三个int；借还书则先输入0为删除1为增加，然后再输入书籍编号；可能性直接输入对应数字"), 100)
                     value_index = value_index_panel.draw()
                     if "," in value_index: # 转成全int的list
                         value_index = list(map(int, value_index.split(",")))
                     else:
                         value_index = int(value_index)
                     if value_index[0] == 0:
-                        target_data.entertainment.entertainment_type = value_index[1]
+                        target_data.entertainment.entertainment_type = [value_index[1], value_index[2], value_index[3]]
                     elif value_index[0] == 1:
                         if value_index[1] == 1:
                             target_data.entertainment.borrow_book_id_set.add(value_index[2])
@@ -1033,6 +1033,7 @@ class Debug_Panel:
                 info_text += f"[018]:帮忙做饭状态，int [0无,1要做饭,2要送饭]：{target_data.sp_flag.help_make_food}\n"
                 info_text += f"[019]:早安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.morning_salutation}\n"
                 info_text += f"[020]:晚安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.night_salutation}\n"
+                info_text += f"[021]:大浴场娱乐状态，int [0无,1要更衣,2要娱乐]：{target_data.sp_flag.bathhouse_entertainment}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()
@@ -1090,6 +1091,8 @@ class Debug_Panel:
                         target_data.sp_flag.morning_salutation = value_index[1]
                     elif value_index[0] == 20:
                         target_data.sp_flag.night_salutation = value_index[1]
+                    elif value_index[0] == 21:
+                        target_data.sp_flag.bathhouse_entertainment = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
