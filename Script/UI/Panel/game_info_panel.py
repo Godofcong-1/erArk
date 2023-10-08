@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.UI.Moudle import draw
-from Script.Design import game_time, character
+from Script.Design import game_time, handle_premise
 from Script.Core import get_text, cache_control, game_type
 from Script.Config import game_config
 
@@ -50,13 +50,19 @@ class GameTimeInfoPanel:
             solar_period_draw.style = "solarperiod"
             now_draw.draw_list.append(solar_period_draw)
             now_width += len(solar_period_draw)
+        # 时段
         sun_time = game_time.get_sun_time(cache.game_time)
         sun_time_config = game_config.config_sun_time[sun_time]
         sun_time_draw = draw.NormalDraw()
-        sun_time_draw.text = f"{sun_time_config.name} "
+        sun_time_draw.text = f"{sun_time_config.name}"
+        judge = handle_premise.handle_eat_time(0) # 饭点判断
+        if judge:
+            sun_time_draw.text += _("(饭点)")
+        sun_time_draw.text += " "
         sun_time_draw.width = self.width - now_width
         now_draw.draw_list.append(sun_time_draw)
         now_width += len(sun_time_draw)
+        # 月相
         if sun_time <= 2 or sun_time >= 10:
             moon_phase = game_time.get_moon_phase(cache.game_time)
             moon_phase_config = game_config.config_moon[moon_phase]
@@ -67,23 +73,15 @@ class GameTimeInfoPanel:
             now_draw.draw_list.append(moon_phase_draw)
             now_width += len(moon_phase_draw)
         now_judge = game_time.judge_work_today(0)
-        attend_class = _("(休息)")
+        work_ro_rest = _("休息")
         if now_judge:
-            attend_class = _("(工作日)")
-        attend_class += " "
-        attend_class_draw = draw.NormalDraw()
-        attend_class_draw.text = attend_class
-        attend_class_draw.width = self.width - now_width
-        now_draw.draw_list.append(attend_class_draw)
-        now_width += len(attend_class_draw)
-        # if character.judge_character_in_class_time(0):
-        #     now_attend_class = _("上课时间")
-        #     now_attend_class += " "
-        #     now_attend_class_draw = draw.NormalDraw()
-        #     now_attend_class_draw.text = now_attend_class
-        #     attend_class_draw.width = self.width - now_width
-        #     now_width += len(now_attend_class_draw)
-        #     now_draw.draw_list.append(now_attend_class_draw)
+            work_ro_rest = _("工作日")
+        work_ro_rest += " "
+        work_ro_rest_draw = draw.NormalDraw()
+        work_ro_rest_draw.text = work_ro_rest
+        work_ro_rest_draw.width = self.width - now_width
+        now_draw.draw_list.append(work_ro_rest_draw)
+        now_width += len(work_ro_rest_draw)
         self.width = now_width
         now_draw.width = self.width
         self.now_draw: draw.NormalDraw = now_draw

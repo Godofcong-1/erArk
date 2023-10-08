@@ -79,13 +79,16 @@ class InScenePanel:
                 character_data.target_character_id = 0
             if not character_data.target_character_id and len(character_list):
                 character_data.target_character_id = character_list[0]
+            # 游戏时间
             game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
             game_time_draw.now_draw.width = len(game_time_draw)
+            # 当前位置
             position_text = attr_text.get_scene_path_text(character_data.position)
             now_position_text = _("当前位置:") + position_text
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
             now_position_draw.width = self.width - len(game_time_draw)
+            # 当前位置的角色一览
             meet_draw = draw.NormalDraw()
             meet_draw.text = _("当前位置的角色一览:")
             meet_draw.width = self.width
@@ -94,6 +97,8 @@ class InScenePanel:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
             character_handle_panel.null_button_text = character_data.target_character_id
+
+            # 开始绘制主界面标题栏
             line_feed.draw()
             title_draw.draw()
             game_time_draw.draw()
