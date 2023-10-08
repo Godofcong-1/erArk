@@ -1671,6 +1671,8 @@ def handle_taste_dessert():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_RESTAURANT,
+        constant_promise.Premise.EAT_TIME,
+        constant_promise.Premise.HUNGER_GE_80,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_taste_food():
