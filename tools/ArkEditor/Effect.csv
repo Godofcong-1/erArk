@@ -161,6 +161,13 @@ cid,effect_name,effect_type,effect
 320,ADD_1_Insert_EXPERIENCE,属性_经验,增加1插入经验
 321,ADD_1_Command_EXPERIENCE,属性_经验,增加1指挥经验
 322,ADD_1_Cure_EXPERIENCE,属性_经验,增加1医疗经验
+331,ADD_1_Cumming_EXPERIENCE,属性_经验,增加1射精经验
+332,ADD_1_Milking_EXPERIENCE,属性_经验,增加1喷乳经验
+333,ADD_1_Peeing_EXPERIENCE,属性_经验,增加1放尿经验
+334,ADD_1_Cums_EXPERIENCE,属性_经验,增加1精液经验
+335,ADD_1_CumsDrink_EXPERIENCE,属性_经验,增加1饮精经验
+336,ADD_1_Creampie_EXPERIENCE,属性_经验,增加1膣射经验
+337,ADD_1_AnalCums_EXPERIENCE,属性_经验,增加1肛射经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
@@ -193,7 +200,10 @@ cid,effect_name,effect_type,effect
 487,UNCONSCIOUS_FLAG_TO_6,属性_特殊flag,自身变成无意识_精神催眠状态
 488,UNCONSCIOUS_FLAG_TO_7,属性_特殊flag,自身变成无意识_肉体催眠状态
 489,HELP_BUY_FOOD_FLAG_TO_0,属性_特殊flag,自身清零要帮忙买午饭状态
-4890,HELP_MAKE_FOOD_FLAG_TO_0,属性_特殊flag,自身清零做午饭状态
+490,HELP_MAKE_FOOD_FLAG_TO_0,属性_特殊flag,自身清零做午饭状态
+491,BATHHOUSE_ENTERTAINMENT_FLAG_TO_0,属性_特殊flag,自身清零大浴场娱乐状态
+492,BATHHOUSE_ENTERTAINMENT_FLAG_TO_1,属性_特殊flag,自身变成大浴场娱乐_要更衣状态
+493,BATHHOUSE_ENTERTAINMENT_FLAG_TO_2,属性_特殊flag,自身变成大浴场娱乐_要娱乐状态
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整
@@ -229,6 +239,7 @@ cid,effect_name,effect_type,effect
 643,LOCKER_TO_WEAR,属性_服装,衣柜里的衣服转移到身上
 644,GET_SWIM_CLOTH,属性_服装,清零其他衣服并换上泳衣
 645,WEAR_CLOTH_OFF_MOST,属性_服装,脱掉大部分衣服（保留首饰等）
+646,FOOT_CLOTH_TO_LOCKER,属性_服装,袜子和鞋子转移到衣柜里
 
 701,RECORD_TRAINING_TIME,系统量_时间,角色记录并刷新训练时间
 702,RECORD_SHOWER_TIME,系统量_时间,角色记录并刷新淋浴时间
