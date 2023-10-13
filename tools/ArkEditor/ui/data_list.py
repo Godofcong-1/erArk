@@ -166,10 +166,10 @@ class DataList(QWidget):
         """新增口上"""
         item = ListItem("空口上")
         item.uid = 1
-        while item.uid in cache_control.now_talk_data:
+        while str(item.uid) in cache_control.now_talk_data:
             item.uid += 1
         talk = game_type.Talk()
-        talk.cid = item.uid
+        talk.cid = str(item.uid)
         talk.status_id = cache_control.now_status
         talk.adv_id = str(cache_control.now_adv_id)
         talk.text = item.text()
@@ -197,10 +197,12 @@ class DataList(QWidget):
             new_item.uid += 1
 
         talk = game_type.Talk()
-        talk.cid = new_item.uid
+        talk.cid = str(new_item.uid)
         talk.status_id = old_talk.status_id
         talk.adv_id = old_talk.adv_id
-        talk.premise = old_talk.premise
+        for premise_id in old_talk.premise:
+            talk.premise[premise_id] = old_talk.premise[premise_id]
+        # talk.premise = old_talk.premise # 因为是引用类型，所以这样赋值会导致原始数据被修改
         talk.text = old_talk.text + "(复制)"
         cache_control.now_talk_data[talk.cid] = talk
         self.list_widget.insertItem(talk_index + 1, new_item)

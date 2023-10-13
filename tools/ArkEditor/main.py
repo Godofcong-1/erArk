@@ -322,6 +322,8 @@ def update_premise_and_settle_list(model_index: QModelIndex):
     item = data_list.list_widget.item(model_index.row())
     if item is not None:
         cache_control.now_select_id = item.uid
+        if cache_control.now_edit_type_flag == 0:
+            cache_control.now_select_id = str(cache_control.now_select_id)
         item_premise_list.update()
         item_effect_list.update()
         item_text_edit.update()
