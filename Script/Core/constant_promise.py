@@ -189,6 +189,8 @@ class Premise:
     """ 地点_工作 当前有教师在教室里讲课 """
     STUDENT_NOT_STUDY_IN_CLASSROOM = "student_not_study_in_classroom"
     """ 地点_工作 教室里有没在上课的学生 """
+    SCENE_SOMEONE_NOT_MASSAGE_THERAPIST = "place_someone_not_massage_therapist"
+    """ 地点_角色 该地点有非按摩师的其他角色 """
 
     PLACE_EXPOSED = "place_exposed"
     """ 地点_属性 当前地点暴露 """

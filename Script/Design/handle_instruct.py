@@ -488,6 +488,26 @@ def handle_stroke():
     update.game_update_flow(10)
 
 
+@add_instruct(
+    constant.Instruct.MASSAGE,
+    constant.InstructType.DAILY,
+    _("按摩"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TECHNIQUE_GE_3,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_massage():
+    """处理按摩指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.MASSAGE
+    character_data.state = constant.CharacterStatus.STATUS_MASSAGE
+    update.game_update_flow(30)
+
+
 # @add_instruct(
 #     constant.Instruct.COLLECTION_CHARACTER,
 #     constant.InstructType.SYSTEM,

@@ -103,6 +103,9 @@ ai的目标,,,
 362,518,normal_all|work_is_production_worker|work_time|not_in_production_workshop,正常状态下，工作是生产工人，在工作时间，如果不在生产车间，则去生产车间
 363,311,normal_all|work_is_production_worker|work_time|in_production_workshop,正常状态下，工作是生产工人，在工作时间，如果在生产车间，则开始制造产品
 
+371,606,normal_all|work_is_massage_therapist|to_work_time|not_in_bathzone_rest_room,正常状态下，工作是按摩师，在到岗时间，如果不在大浴场的休息室，则去大浴场的休息室
+362,606,normal_all|work_is_massage_therapist|work_time|not_in_bathzone_rest_room,正常状态下，工作是按摩师，在工作时间，如果不在大浴场的休息室，则去大浴场的休息室
+363,313,normal_all|work_is_massage_therapist|work_time|in_bathzone_rest_room|place_someone_not_massage_therapist,正常状态下，工作是按摩师，在工作时间，在大浴场的休息室，如果该地点有非按摩师的其他角色，则开始对其按摩
 
 401,552,normal_all|all_entertainment_time|entertainment_is_read|not_in_library,正常状态下，全娱乐时间，娱乐是读书，不在图书馆，则去图书馆
 402,401,normal_all|all_entertainment_time|entertainment_is_read|in_library,正常状态下，全娱乐时间，娱乐是读书，在图书馆，则读书

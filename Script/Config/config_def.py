@@ -693,6 +693,8 @@ class WorkType:
     """ 工作地点 """
     tag: int
     """ 标签 """
+    need: str
+    """ 必要条件 """
     describe: str
     """ 描述 """
 
@@ -710,6 +712,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:

@@ -19,6 +19,8 @@ class CharacterStatus:
     """ 谈话次数过多的状态 """
     STATUS_STROKE = 103
     """ 身体接触 """
+    STATUS_MASSAGE = 104
+    """ 按摩 """
     STATUS_REST = 110
     """ 休息状态 """
     STATUS_SLEEP = 111
@@ -448,6 +450,8 @@ class Behavior:
     """ 谈话次数过多而失败 """
     STROKE = 103
     """ 身体接触 """
+    MASSAGE = 104
+    """ 按摩 """
     REST = 110
     """ 休息 """
     SLEEP = 111
@@ -969,6 +973,8 @@ class StateMachine:
     """ 工作：制造产品 """
     WORK_OFFICIAL_WORK = 312
     """ 工作：处理公务 """
+    WORK_MASSAGE = 313
+    """ 工作：按摩（自动寻找对象） """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1117,6 +1123,8 @@ class StateMachine:
     """ 移动至水疗房 """
     MOVE_TO_ONSEN = 605
     """ 移动至温泉 """
+    MOVE_TO_BATHZONE_REST_ROOM = 606
+    """ 移动至大浴场的休息室 """
     MOVE_TO_SWIMMING_POOL = 611
     """ 移动至游泳池 """
     MOVE_TO_TRAINING_LOCKER_ROOM = 612
@@ -1587,6 +1595,8 @@ class Instruct:
     """ 聊天 """
     STROKE = 0
     """ 身体接触 """
+    MASSAGE = 0
+    """ 按摩 """
     MAKE_COFFEE = 0
     """ 泡咖啡 """
     ASK_MAKE_COFFEE = 0

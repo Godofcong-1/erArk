@@ -7466,6 +7466,30 @@ def handle_student_not_study_in_classroom(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_MASSAGE_THERAPIST)
+def handle_scene_someone_not_massage_therapist(character_id: int) -> int:
+    """
+    该地点有非按摩师的其他角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id != character_id:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                if other_character_data.work.work_type != 171:
+                    return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
 def handle_player_come_scene(character_id: int) -> int:
     """

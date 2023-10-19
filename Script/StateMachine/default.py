@@ -850,6 +850,27 @@ def character_move_to_bathzone_locker_room(character_id: int):
             now_draw.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_REST_ROOM)
+def character_move_to_bathzone_rest_room(character_id: int):
+    """
+    移动至大浴场的休息室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+
+    to_rest_room = []
+
+    # 直接检索大浴场的休息室
+    for place in constant.place_data["Rest_Room"]:
+        if place.split("\\")[0] == "大浴场":
+            to_rest_room = map_handle.get_map_system_path_for_str(place)
+            break
+
+    # 以防没有找到休息室
+    if to_rest_room != []:
+        general_movement_module(character_id, to_rest_room)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_LOCKER_ROOM)
 def character_move_to_training_locker_room(character_id: int):
     """
@@ -2259,6 +2280,33 @@ def character_work_official_work(character_id: int):
     character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
     character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_MASSAGE)
+def character_work_massage(character_id: int):
+    """
+    工作：按摩（自动寻找对象）
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.behavior.duration = 30
+    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
+    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id != character_id:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                if other_character_data.work.work_type != 171:
+                    character_data.target_character_id = chara_id
+                    break
+
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
