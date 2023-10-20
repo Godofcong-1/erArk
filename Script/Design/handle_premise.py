@@ -43,8 +43,79 @@ def handle_premise(premise: str, character_id: int) -> int:
     """
     if premise in constant.handle_premise_data:
         return constant.handle_premise_data[premise](character_id)
+    elif "CVP" in premise:
+        premise_all_value_list = premise.split("_")[1:]
+        return handle_comprehensive_value_premise(character_id, premise_all_value_list)
     else:
         return 0
+
+
+def handle_comprehensive_value_premise(character_id: int, premise_all_value_list: list) -> int:
+    """
+    综合型基础数值前提
+    Keyword arguments:
+    character_id -- 角色id
+    premise_all_value_list -- 前提的各项数值
+    Return arguments:
+    int -- 前提权重加成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
+    if premise_all_value_list[0] == "A1":
+        final_character_data = character_data
+    elif premise_all_value_list[0] == "A2":
+        # 如果没有交互对象，则返回0
+        if character_data.target_character_id == character_data.target_character_id:
+            return 0
+        final_character_data = cache.character_data[character_data.target_character_id]
+    elif premise_all_value_list[0][:1] == "A3":
+        final_character_id = int(premise_all_value_list[0][3:])
+        # 如果还没拥有该角色，则返回0
+        if final_character_id not in cache.npc_id_got:
+            return 0
+        final_character_data = cache.character_data[final_character_id]
+
+    # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+    if len(premise_all_value_list[1]) > 1:
+        type_son_id = int(premise_all_value_list[1][2:])
+    if premise_all_value_list[1][0] == "A":
+        final_value = final_character_data.ability[type_son_id]
+    elif premise_all_value_list[1][0] == "T":
+        final_value = final_character_data.talent[type_son_id]
+    elif premise_all_value_list[1][0] == "J":
+        final_value = final_character_data.juel[type_son_id]
+    elif premise_all_value_list[1][0] == "E":
+        final_value = final_character_data.experience[type_son_id]
+    elif premise_all_value_list[1][0] == "S":
+        final_value = final_character_data.state[type_son_id]
+    elif premise_all_value_list[1][0] == "F":
+        final_value = final_character_data.favorability[0]
+    elif premise_all_value_list[1][0] == "X":
+        final_value = final_character_data.trust
+
+    # 进行方式C和数值D的判别
+    judge_value = int(premise_all_value_list[3])
+    if premise_all_value_list[2] == "G":
+        if final_value > judge_value:
+            return 1
+    elif premise_all_value_list[2] == "L":
+        if final_value < judge_value:
+            return 1
+    elif premise_all_value_list[2] == "E":
+        if final_value == judge_value:
+            return 1
+    elif premise_all_value_list[2] == "GE":
+        if final_value >= judge_value:
+            return 1
+    elif premise_all_value_list[2] == "LE":
+        if final_value <= judge_value:
+            return 1
+    elif premise_all_value_list[2] == "NE":
+        if final_value != judge_value:
+            return 1
+
+    return 0
 
 
 @add_premise(constant_promise.Premise.EAT_TIME)

@@ -42,3 +42,13 @@ effect_data: dict = {}
 """ 结算数据 """
 effect_type_data: Dict[str, Set] = {}
 """ 结算类型数据 """
+ability_data: dict = {}
+""" 能力数据 """
+state_data: dict = {}
+""" 当日子状态数据 """
+experience_data: dict = {}
+""" 经验数据 """
+juel_data: dict = {}
+""" 宝珠数据 """
+talent_data: dict = {}
+""" 素质数据 """

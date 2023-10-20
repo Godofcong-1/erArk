@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 import cache_control
-from ui.premise_menu import PremiseMenu
+from ui.premise_menu import PremiseMenu, CVPMenu
 
 
 class ItemPremiseList(QWidget):
@@ -22,6 +22,9 @@ class ItemPremiseList(QWidget):
         title_layout.addWidget(label)
         # 按钮布局
         button_layout = QHBoxLayout()
+        CVP_button = QPushButton("综合型基础数值前提")
+        CVP_button.clicked.connect(self.CVP)
+        button_layout.addWidget(CVP_button)
         change_button = QPushButton("修改")
         change_button.clicked.connect(self.change)
         button_layout.addWidget(change_button)
@@ -55,18 +58,26 @@ class ItemPremiseList(QWidget):
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
 
+    def CVP(self):
+        """展开CVP菜单"""
+        if cache_control.now_select_id != "":
+            menu = CVPMenu()
+            menu.exec()
+
     def change(self):
         """展开前提菜单"""
-        menu = PremiseMenu()
-        menu.exec()
+        if cache_control.now_select_id != "":
+            menu = PremiseMenu()
+            menu.exec()
 
     def reset(self):
         """清零前提列表"""
-        if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].premise = {}
-        else:
-            cache_control.now_talk_data[cache_control.now_select_id].premise = {}
-        self.item_list.clear()
+        if cache_control.now_select_id != "":
+            if cache_control.now_edit_type_flag == 1:
+                cache_control.now_event_data[cache_control.now_select_id].premise = {}
+            else:
+                cache_control.now_talk_data[cache_control.now_select_id].premise = {}
+            self.item_list.clear()
 
     def show_context_menu(self, pos):
         """删除该前提"""
