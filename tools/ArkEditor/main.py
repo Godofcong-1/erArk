@@ -26,6 +26,7 @@ import load_csv
 import json_handle
 import game_type
 import cache_control
+import function
 
 load_csv.load_config()
 app = QApplication(sys.argv)
@@ -192,7 +193,10 @@ def load_talk_data_to_cache():
         for premise in premise_list:
             now_talk.premise[premise] = 1
         for premise in now_talk.premise:
-            if premise not in cache_control.premise_data:
+            if "CVP"in premise:
+                cvp_str = function.read_CVP(premise)
+                cache_control.premise_data[premise] = cvp_str
+            elif premise not in cache_control.premise_data:
                 delete_premise_list.append(premise)
         for premise in delete_premise_list:
             del now_talk.premise[premise]

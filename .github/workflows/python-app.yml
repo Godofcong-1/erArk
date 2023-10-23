@@ -55,6 +55,11 @@ jobs:
           Copy-Item tools/ArkEditor/Premise.csv dist_ArkEditor/
           Copy-Item tools/ArkEditor/Status.csv dist_ArkEditor/
           Copy-Item tools/ArkEditor/Effect.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/Ability.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/CharacterState.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/Experience.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/Juel.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/Talent.csv dist_ArkEditor/
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
       - name: Pack ArkEditor Files
