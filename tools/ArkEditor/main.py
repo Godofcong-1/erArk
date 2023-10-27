@@ -60,7 +60,10 @@ def load_event_data():
             now_event.__dict__ = now_data[k]
             delete_premise_list = []
             for premise in now_event.premise:
-                if premise not in cache_control.premise_data:
+                if "CVP"in premise:
+                    cvp_str = function.read_CVP(premise)
+                    cache_control.premise_data[premise] = cvp_str
+                elif premise not in cache_control.premise_data:
                     delete_premise_list.append(premise)
             for premise in delete_premise_list:
                 del now_event.premise[premise]
@@ -104,27 +107,7 @@ def save_data():
 
         # 保存口上
         else:
-            # 通用开头
-            out_data = ""
-            out_data += "cid,behavior_id,adv_id,premise,context\n"
-            out_data += "口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n"
-            out_data += "str,int,int,str,str\n"
-            out_data += "0,0,0,0,1\n"
-            out_data += "口上配置数据,,,,\n"
-
-            # 遍历数据
-            for k in cache_control.now_talk_data:
-                now_talk: game_type.Talk = cache_control.now_talk_data[k]
-                out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
-                for premise in now_talk.premise:
-                    out_data += f"{premise}&"
-                out_data = out_data[:-1]
-                out_data += f",{now_talk.text}\n"
-
-            # 写入文件
-            with open(cache_control.now_file_path, "w",encoding="utf-8") as f:
-                f.write(out_data)
-                f.close()
+            save_talk_data()
 
 
 def load_talk_data():

@@ -72,6 +72,7 @@ def init_attr(character_id: int):
         character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.favorability = {0:0}
 
     # 一系列初始化函数
     init_character_behavior_start_time(character_id,cache.game_time)

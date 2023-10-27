@@ -60,13 +60,14 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     int -- 前提权重加成
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"debug character_id = {character_id}, premise_all_value_list = {premise_all_value_list}")
 
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
     if premise_all_value_list[0] == "A1":
         final_character_data = character_data
     elif premise_all_value_list[0] == "A2":
         # 如果没有交互对象，则返回0
-        if character_data.target_character_id == character_data.target_character_id:
+        if character_data.target_character_id == character_id:
             return 0
         final_character_data = cache.character_data[character_data.target_character_id]
     elif premise_all_value_list[0][:1] == "A3":
@@ -96,8 +97,10 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
     # 进行方式C和数值D的判别
     judge_value = int(premise_all_value_list[3])
+    # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
     if premise_all_value_list[2] == "G":
         if final_value > judge_value:
+            # print(f"debug 成功进入G判定，返回值为1")
             return 1
     elif premise_all_value_list[2] == "L":
         if final_value < judge_value:
