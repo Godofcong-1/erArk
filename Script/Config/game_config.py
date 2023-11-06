@@ -121,6 +121,10 @@ config_birthplace: Dict[int, config_def.Birthplace] = {}
 """ 出生地配置 """
 config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
+config_city: Dict[int, config_def.City] = {}
+""" 城市配置 """
+config_city_of_country: Dict[int, Set] = {}
+""" 大地点所属的城市配置 """
 config_talent_type: Dict[int, config_def.TalentType] = {}
 """ 素质种类配置 """
 config_talent_type_data: Dict[int, Set] = {}
@@ -390,6 +394,18 @@ def load_nation():
         now_tem = config_def.Nation()
         now_tem.__dict__ = tem_data
         config_nation[now_tem.cid] = now_tem
+
+
+def load_city():
+    """载入城市数据"""
+    now_data = config_data["City"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.City()
+        now_tem.__dict__ = tem_data
+        config_city[now_tem.cid] = now_tem
+        config_city_of_country.setdefault(now_tem.country_id, set())
+        config_city_of_country[now_tem.country_id].add(now_tem.cid)
 
 
 def load_talent_type():
@@ -1094,6 +1110,7 @@ def init():
     load_race()
     load_birthplace()
     load_nation()
+    load_city()
     load_recipes()
     load_season()
     load_sex_tem()

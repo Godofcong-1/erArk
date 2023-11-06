@@ -1021,7 +1021,7 @@ class Cache:
         self.pre_game_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 前一循环时的游戏时间 """
         self.now_panel_id: int = 0
-        """ 当前游面板id """
+        """ 当前游戏面板id """
         self.old_character_id: int = 0
         """ 离开场景面板前在场景中查看的角色id """
         self.npc_image_index: int = 0
@@ -1052,10 +1052,6 @@ class Cache:
         """
         self.npc_name_data: Set = set()
         """ 已有的npc姓名集合 """
-        # self.school_longitude: float = 0
-        # """ 罗德岛经度 """
-        # self.school_latitude: float = 0
-        # """ 罗德岛纬度 """
         self.is_collection: bool = 0
         """ 启用收藏模式 """
         self.sun_phase: Dict[str, Dict[int, Dict[int, int]]] = {}

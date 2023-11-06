@@ -77,6 +77,8 @@ class Birthplace:
     """ 出生地id """
     name: str
     """ 出生地名 """
+    inmap: int
+    """ 是否出现在大地图中 """
 
 
 class BodyPart:
@@ -147,6 +149,17 @@ class CharaSetting:
     """ 选项需求(F好感，X信任) """
     option: str
     """ 各个选项 """
+
+
+class City:
+    """ 势力列表 """
+
+    cid: int
+    """ 城市id """
+    name: str
+    """ 城市名 """
+    country_id: int
+    """ 所属国家id """
 
 
 class ClothingTem:
