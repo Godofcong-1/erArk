@@ -298,7 +298,7 @@ def init_character_facility_open():
             if character_id == 0:
                 continue
             if game_config.config_facility_open[open_cid].NPC_id == cache.character_data[character_id].adv:
-                cache.base_resouce.facility_open[open_cid] = True
+                cache.rhodes_island.facility_open[open_cid] = True
                 break
 
 def get_new_character(character_id: int):
@@ -324,7 +324,7 @@ def get_new_character(character_id: int):
     # 如果满足设施开放的前提条件，则开放该设施
     for open_cid in game_config.config_facility_open:
         if game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
-            cache.base_resouce.facility_open[open_cid] = True
+            cache.rhodes_island.facility_open[open_cid] = True
 
 
 def add_favorability(
@@ -390,4 +390,4 @@ def add_favorability(
 
     # 记录好感度增加
     if character_id == 0 or character_data.target_character_id == 0:
-        cache.base_resouce.total_favorability_increased += now_add_favorability
+        cache.rhodes_island.total_favorability_increased += now_add_favorability

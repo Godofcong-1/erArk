@@ -71,9 +71,9 @@ class Building_Panel:
 
             resouce_draw = draw.NormalDraw()
             resouce_text = "\n当前资源情况："
-            power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
+            power_use,power_max = str(cache.rhodes_island.power_use),str(cache.rhodes_island.power_max)
             resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
-            money = str(cache.base_resouce.materials_resouce[1])
+            money = str(cache.rhodes_island.materials_resouce[1])
             resouce_text += f"\n  当前龙门币数量    ：{money}\n"
             # 碳素建材的编号是15
             # building_materials = str(cache.base_resouce.materials_resouce[15])
@@ -105,7 +105,7 @@ class Building_Panel:
 
                     # 获取该区块的一系列信息
                     facility_name = facility_data.name
-                    now_level = str(cache.base_resouce.facility_level[all_cid])
+                    now_level = str(cache.rhodes_island.facility_level[all_cid])
                     facility_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
                     facility_power_use = str(game_config.config_facility_effect[facility_cid].power_use)
                     facility_info = facility_data.info
@@ -190,9 +190,9 @@ class Building_Panel:
                 # 最后展示资源情况
                 resouce_draw = draw.NormalDraw()
                 resouce_text = "\n当前资源情况："
-                power_use,power_max = str(cache.base_resouce.power_use),str(cache.base_resouce.power_max)
+                power_use,power_max = str(cache.rhodes_island.power_use),str(cache.rhodes_island.power_max)
                 resouce_text += f"\n  当前使用电力/当前总供电：{power_use}/{power_max}"
-                money = str(cache.base_resouce.materials_resouce[1])
+                money = str(cache.rhodes_island.materials_resouce[1])
                 resouce_text += f"\n  当前龙门币数量    ：{money}\n"
                 # 碳素建材的编号是15
                 # building_materials = str(cache.base_resouce.materials_resouce[15])
@@ -207,19 +207,19 @@ class Building_Panel:
                 up_info_draw = draw.NormalDraw()
                 up_info_draw.text = "当前无法升级："
                 # 电量
-                if cache.base_resouce.power_max - cache.base_resouce.power_use - facility_data_next.power_use + facility_data_now.power_use >= 0:
+                if cache.rhodes_island.power_max - cache.rhodes_island.power_use - facility_data_next.power_use + facility_data_now.power_use >= 0:
                     pass
                 else:
                     up_info_draw.text += "\n  升级所需电量不足"
                     level_up_flag = False
                 # 龙门币
-                if cache.base_resouce.materials_resouce[1] >= facility_data_next.money_use:
+                if cache.rhodes_island.materials_resouce[1] >= facility_data_next.money_use:
                     pass
                 else:
                     up_info_draw.text += "\n  升级所需龙门币不足"
                     level_up_flag = False
                 # 控制中枢等级
-                if facility_cid <= 9 or facility_data_next.level <= cache.base_resouce.facility_level[0] + 1:
+                if facility_cid <= 9 or facility_data_next.level <= cache.rhodes_island.facility_level[0] + 1:
                     pass
                 else:
                     up_info_draw.text += "\n  升级需要更高的控制中枢等级"
@@ -271,15 +271,15 @@ class Building_Panel:
 
             # 寻找和当前设施名一样的
             if facility_data.name == facility_data_now.name:
-                cache.base_resouce.materials_resouce[1] -= facility_data_next.money_use
-                cache.base_resouce.facility_level[all_cid] += 1
+                cache.rhodes_island.materials_resouce[1] -= facility_data_next.money_use
+                cache.rhodes_island.facility_level[all_cid] += 1
                 basement.get_base_updata()
 
                 # 输出提示信息
                 line = draw.LineDraw("-", self.width)
                 line.draw()
                 info_draw = draw.WaitDraw()
-                info_draw.text = f"\n{facility_data_now.name}提升到{str(cache.base_resouce.facility_level[all_cid])}级了！\n"
+                info_draw.text = f"\n{facility_data_now.name}提升到{str(cache.rhodes_island.facility_level[all_cid])}级了！\n"
                 info_draw.width = self.width
                 info_draw.draw()
                 break

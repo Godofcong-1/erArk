@@ -767,7 +767,7 @@ def character_move_to_maintenance_place(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.base_resouce.maintenance_place[character_id])
+    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.rhodes_island.maintenance_place[character_id])
     general_movement_module(character_id, to_maintenance_place_shop)
 
     # 如果和玩家位于同一地点，则输出提示信息
@@ -788,8 +788,8 @@ def character_move_to_production_workshop(character_id: int):
 
     # 如果已经属于某个车间，则直接选择该车间
     need_allocated_flag = True
-    for assembly_line_id in cache.base_resouce.assembly_line:
-        if character_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+    for assembly_line_id in cache.rhodes_island.assembly_line:
+        if character_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
             target_scene_name = f"assembly_line_{(str(assembly_line_id))}"
             target_scene_str = random.choice(constant.place_data[target_scene_name])
             need_allocated_flag = False
@@ -809,7 +809,7 @@ def character_move_to_production_workshop(character_id: int):
                 if close_type == "open":
                     break
         assembly_line_id = int(target_scene_str[-1]) - 1
-        cache.base_resouce.assembly_line[assembly_line_id][1].add(character_id)
+        cache.rhodes_island.assembly_line[assembly_line_id][1].add(character_id)
 
     to_production_workshop = map_handle.get_map_system_path_for_str(target_scene_str)
     general_movement_module(character_id, to_production_workshop)
@@ -2080,7 +2080,7 @@ def character_work_maintenance_1(character_id: int):
         close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
         if close_type == "open":
             break
-    cache.base_resouce.maintenance_place[character_id] = target_scene_str
+    cache.rhodes_island.maintenance_place[character_id] = target_scene_str
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_MAINTENANCE_2)

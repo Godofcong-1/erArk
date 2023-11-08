@@ -73,7 +73,7 @@ class HItemShopPanel:
             title_draw.draw()
 
             # 绘制粉色凭证
-            money_text = f"当前持有粉色凭证：{str(cache.base_resouce.materials_resouce[4])}"
+            money_text = f"当前持有粉色凭证：{str(cache.rhodes_island.materials_resouce[4])}"
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
@@ -186,9 +186,9 @@ class BuyItemByItemNameDraw:
         line = draw.LineDraw("-", window_width)
         line.draw()
         item_config = game_config.config_item[self.text]
-        if cache.base_resouce.materials_resouce[4] >= item_config.price:
+        if cache.rhodes_island.materials_resouce[4] >= item_config.price:
             self.character_data.item[self.text] += 1
-            cache.base_resouce.materials_resouce[4] -= item_config.price
+            cache.rhodes_island.materials_resouce[4] -= item_config.price
             now_text = _("{nickname}购买了{item_name}").format(
                 nickname=self.character_data.nick_name, item_name=item_config.name
             )

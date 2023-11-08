@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -378,10 +378,25 @@ def handle_manage_library():
 
 
 @add_instruct(
+    constant.Instruct.NAVIGATION,
+    constant.InstructType.WORK,
+    _("导航"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_COMMAND_ROOM,
+    })
+def handle_navigation():
+    """处理导航指令"""
+    now_draw = navigation_panel.Navigation_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.MANAGE_BASEMENT,
     constant.InstructType.WORK,
     _("管理罗德岛"),
     {
+        constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_DR_OFFICE
     })
 def handle_manage_basement():
@@ -1991,11 +2006,11 @@ def handle_confim_recruit():
     now_draw.style = "gold_enrod"
     now_draw.text = ""
 
-    if len(cache.npc_id_got) >= cache.base_resouce.people_max:
+    if len(cache.npc_id_got) >= cache.rhodes_island.people_max:
         now_draw.text += _(f"\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
 
-    elif len(cache.base_resouce.recruited_id):
-        new_chara_id = cache.base_resouce.recruited_id.pop()
+    elif len(cache.rhodes_island.recruited_id):
+        new_chara_id = cache.rhodes_island.recruited_id.pop()
         character_handle.get_new_character(new_chara_id)
         character_data = cache.character_data[new_chara_id]
         now_draw.text += _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")

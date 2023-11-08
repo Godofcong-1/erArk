@@ -75,7 +75,7 @@ class SeeCharacterItemBagPanel:
         while 1:
             title_draw.draw()
             # 绘制粉红凭证
-            money_text = f"当前持有粉红凭证：{str(cache.base_resouce.materials_resouce[4])} + "
+            money_text = f"当前持有粉红凭证：{str(cache.rhodes_island.materials_resouce[4])} + "
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width

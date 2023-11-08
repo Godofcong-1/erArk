@@ -98,13 +98,13 @@ class Debug_Panel:
                 draw_text_list.append(f"[000]:游戏时间：{cache.game_time}")
                 draw_text_list.append(f"[001]:已拥有的干员id列表：{cache.npc_id_got}")
                 draw_text_list.append(f"[002]:全干员id列表：{[i + 1 for i in range(len(cache.npc_tem_data))]}")
-                draw_text_list.append(f"[003]:龙门币：{cache.base_resouce.materials_resouce[1]}")
-                draw_text_list.append(f"[004]:合成玉：{cache.base_resouce.materials_resouce[2]}")
-                draw_text_list.append(f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[4]}")
+                draw_text_list.append(f"[003]:龙门币：{cache.rhodes_island.materials_resouce[1]}")
+                draw_text_list.append(f"[004]:合成玉：{cache.rhodes_island.materials_resouce[2]}")
+                draw_text_list.append(f"[005]:粉红凭证：{cache.rhodes_island.materials_resouce[4]}")
                 draw_text_list.append(f"[006]:基地当前所有待开放设施的开放情况")
-                draw_text_list.append(f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}")
-                draw_text_list.append(f"[008]:当前招募进度：{cache.base_resouce.recruit_now}")
-                draw_text_list.append(f"[009]:已招募待确认的干员id：{cache.base_resouce.recruited_id}")
+                draw_text_list.append(f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.rhodes_island.party_day_of_week}")
+                draw_text_list.append(f"[008]:当前招募进度：{cache.rhodes_island.recruit_now}")
+                draw_text_list.append(f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}")
 
                 for i in range(len(draw_text_list)):
 
@@ -383,35 +383,35 @@ class Debug_Panel:
                     elif value_index[1] == 1:
                         character_handle.get_new_character(value_index[0])
                 elif key_index == 3:
-                    info_text = f"[003]:龙门币：{cache.base_resouce.materials_resouce[1]}"
+                    info_text = f"[003]:龙门币：{cache.rhodes_island.materials_resouce[1]}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.materials_resouce[1] = new_value
+                    cache.rhodes_island.materials_resouce[1] = new_value
                 elif key_index == 4:
-                    info_text = f"[004]:合成玉：{cache.base_resouce.materials_resouce[2]}"
+                    info_text = f"[004]:合成玉：{cache.rhodes_island.materials_resouce[2]}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.materials_resouce[2] = new_value
+                    cache.rhodes_island.materials_resouce[2] = new_value
                 elif key_index == 5:
-                    info_text = f"[005]:粉红凭证：{cache.base_resouce.materials_resouce[4]}"
+                    info_text = f"[005]:粉红凭证：{cache.rhodes_island.materials_resouce[4]}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.materials_resouce[4] = new_value
+                    cache.rhodes_island.materials_resouce[4] = new_value
                 elif key_index == 6:
                     info_text = f"[006]:基地当前所有待开放设施的开放情况"
-                    info_text += f"{cache.base_resouce.facility_open}"
+                    info_text += f"{cache.rhodes_island.facility_open}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
@@ -420,32 +420,32 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     # cache.base_resouce.materials_resouce[1] = new_value
                 elif key_index == 7:
-                    info_text = f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.base_resouce.party_day_of_week}"
+                    info_text = f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.rhodes_island.party_day_of_week}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.party_day_of_week = new_value
+                    cache.rhodes_island.party_day_of_week = new_value
                 elif key_index == 8:
-                    info_text = f"[008]:当前招募进度：{cache.base_resouce.recruit_now}"
+                    info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_now}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.recruit_now = new_value
+                    cache.rhodes_island.recruit_now = new_value
                 elif key_index == 9:
-                    info_text = f"[009]:已招募待确认的干员id：{cache.base_resouce.recruited_id}"
+                    info_text = f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.base_resouce.recruited_id = new_value
+                    cache.rhodes_island.recruited_id = new_value
 
             elif self.now_panel == "玩家属性":
 
@@ -525,11 +525,11 @@ class Debug_Panel:
                     for talent_id in {304,305,306,307,308,309,310,311,312}:
                         cache.character_data[0].talent[talent_id] = 1
                 elif key_index == 9:
-                    for material_id in cache.base_resouce.materials_resouce:
-                        cache.base_resouce.materials_resouce[material_id] = 99999
+                    for material_id in cache.rhodes_island.materials_resouce:
+                        cache.rhodes_island.materials_resouce[material_id] = 99999
                 elif key_index == 10:
-                    for all_cid in cache.base_resouce.facility_level:
-                        cache.base_resouce.facility_level[all_cid] = 5
+                    for all_cid in cache.rhodes_island.facility_level:
+                        cache.rhodes_island.facility_level[all_cid] = 5
                         basement.get_base_updata()
 
             line_feed.draw()

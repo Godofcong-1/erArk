@@ -130,10 +130,10 @@ class Manage_Library_Panel:
                 book_type_data = game_config.config_book_type[book_type_cid]
                 for book_cid in game_config.config_book_type_data[book_type_cid]:
                     book_data = game_config.config_book[book_cid]
-                    if cache.base_resouce.book_borrow_dict[book_cid] > 0 :
+                    if cache.rhodes_island.book_borrow_dict[book_cid] > 0 :
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
-                        borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
+                        borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                         borrow_npc_name = cache.character_data[borrow_npc_id].name
                         book_text += f"  (被{borrow_npc_name}借走)"
 
@@ -199,7 +199,7 @@ class Manage_Library_Panel:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw = draw.NormalDraw()
-            can_recommend_count = 3 - len(cache.base_resouce.recommend_book_type_set)
+            can_recommend_count = 3 - len(cache.rhodes_island.recommend_book_type_set)
             info_draw.text = f"\n 当前剩余可选推荐 {can_recommend_count}\n"
             info_draw.draw()
             line_feed.draw()
@@ -240,7 +240,7 @@ class Manage_Library_Panel:
             for i in range(7):
                 week_date_data = game_config.config_week_day[i]
                 button_text = f"  [{i}]:{week_date_data.name}"
-                party_entertain_id = cache.base_resouce.party_day_of_week[i]
+                party_entertain_id = cache.rhodes_island.party_day_of_week[i]
                 if party_entertain_id:
                     button_text += f" ({game_config.config_entertainment[party_entertain_id].name})"
 
@@ -270,10 +270,10 @@ class Manage_Library_Panel:
     def choice_read_party(self,week_day):
         """选择读书会之日"""
 
-        party_entertain_id = cache.base_resouce.party_day_of_week[week_day]
+        party_entertain_id = cache.rhodes_island.party_day_of_week[week_day]
 
         if party_entertain_id == 101:
-            cache.base_resouce.party_day_of_week[week_day] = 0
+            cache.rhodes_island.party_day_of_week[week_day] = 0
         elif party_entertain_id:
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -282,12 +282,12 @@ class Manage_Library_Panel:
         else:
             # 先取消掉其他日子可能有的读书会
             for i in range(7):
-                party_entertain_all_id = cache.base_resouce.party_day_of_week[i]
+                party_entertain_all_id = cache.rhodes_island.party_day_of_week[i]
                 if party_entertain_all_id == 101:
-                    cache.base_resouce.party_day_of_week[i] = 0
+                    cache.rhodes_island.party_day_of_week[i] = 0
 
             # 再把指定日子变成读书会
-            cache.base_resouce.party_day_of_week[week_day] = 101
+            cache.rhodes_island.party_day_of_week[week_day] = 101
 
 
 class SelectRecommendBookButton:
@@ -322,7 +322,7 @@ class SelectRecommendBookButton:
         type_data = game_config.config_book_type[self.book_type_id]
         button_text = f"[{str(type_data.cid).rjust(2,'0')}]：{type_data.father_type_name}-{type_data.son_type_name}"
         name_draw = draw.LeftDraw()
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
+        if self.book_type_id in cache.rhodes_island.recommend_book_type_set:
             button_text += f" (已推荐)"
             name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
@@ -333,10 +333,10 @@ class SelectRecommendBookButton:
 
     def button_0(self):
         """选项1"""
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
-            cache.base_resouce.recommend_book_type_set.remove(self.book_type_id)
-        elif 3 - len(cache.base_resouce.recommend_book_type_set):
-            cache.base_resouce.recommend_book_type_set.add(self.book_type_id)
+        if self.book_type_id in cache.rhodes_island.recommend_book_type_set:
+            cache.rhodes_island.recommend_book_type_set.remove(self.book_type_id)
+        elif 3 - len(cache.rhodes_island.recommend_book_type_set):
+            cache.rhodes_island.recommend_book_type_set.add(self.book_type_id)
 
     def draw(self):
         """绘制对象"""

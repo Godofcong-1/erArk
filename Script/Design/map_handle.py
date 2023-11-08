@@ -449,8 +449,14 @@ def init_scene_edge_path_data():
     scene_path_edge = {}
     for now_position_str in cache.scene_data:
         scene_path_edge[now_position_str] = {}
+        # 忽略大地图
+        if "泰拉" in now_position_str:
+            continue
         for target_scene_str in cache.scene_data:
             if target_scene_str == now_position_str:
+                continue
+            # 忽略大地图
+            if "泰拉" in target_scene_str:
                 continue
             now_position = get_map_system_path_for_str(now_position_str)
             target_scene = get_map_system_path_for_str(target_scene_str)
@@ -562,7 +568,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
         if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
 
             # 如果该设施已开放，则正常通过
-            if cache.base_resouce.facility_open[open_cid]:
+            if cache.rhodes_island.facility_open[open_cid]:
                 return "open"
             # 是玩家的话输出提示信息
             elif character_id == 0:
@@ -646,7 +652,7 @@ def judge_scene_name_open(full_scene_str : str) -> int :
     for open_cid in game_config.config_facility_open:
         # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
         if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
-            if cache.base_resouce.facility_open[open_cid]:
+            if cache.rhodes_island.facility_open[open_cid]:
                 return 1
             else:
                 return 0

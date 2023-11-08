@@ -39,7 +39,7 @@ def creator_character_panel():
         if input_name_panel():
             character.init_attr(0)
             # game_start()
-            cache.base_resouce = basement.get_base_zero()
+            cache.rhodes_island = basement.get_base_zero()
             first_bonus_updata()
             character_handle.first_NPC_work()
             if confirm_character_attr_panel():
@@ -459,7 +459,7 @@ class Character_FirstNPC:
         else:
             info_last_draw.text = f" 已选择全部初始干员"
 
-        work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
+        work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
         info_last_draw.text += f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
 
         now_draw.draw_list.append(info_last_draw)
@@ -868,15 +868,15 @@ class Character_Bonus:
 
         # 获得金钱
         elif first_bonus_id == 11:
-            if cache.base_resouce.materials_resouce[1]:
-                cache.base_resouce.materials_resouce[1] = 0
-                cache.base_resouce.materials_resouce[2] = 0
-                cache.base_resouce.materials_resouce[4] = 0
+            if cache.rhodes_island.materials_resouce[1]:
+                cache.rhodes_island.materials_resouce[1] = 0
+                cache.rhodes_island.materials_resouce[2] = 0
+                cache.rhodes_island.materials_resouce[4] = 0
                 cache.first_bonus[first_bonus_id] = False
             elif self.bonus_now >= 5:
-                cache.base_resouce.materials_resouce[1] = 50000
-                cache.base_resouce.materials_resouce[2] = 6000
-                cache.base_resouce.materials_resouce[4] = 100
+                cache.rhodes_island.materials_resouce[1] = 50000
+                cache.rhodes_island.materials_resouce[2] = 6000
+                cache.rhodes_island.materials_resouce[4] = 100
                 cache.first_bonus[first_bonus_id] = True
             else:
                 fail_flag = True

@@ -20,7 +20,7 @@ def get_base_zero() -> dict:
     基地情况结构体，设为空
     """
 
-    base_data = game_type.Base_resouce()
+    base_data = game_type.Rhodes_Island()
 
     # 遍历全设施清单
     for all_cid in game_config.config_facility:
@@ -50,6 +50,9 @@ def get_base_zero() -> dict:
     for all_cid in game_config.config_work_type:
         base_data.all_work_npc_set[all_cid] = set()
 
+    # 位置设为炎国
+    base_data.current_location = [17, 1701]
+
     return base_data
 
 def get_base_updata():
@@ -57,81 +60,81 @@ def get_base_updata():
     遍历基地情况结构体，根据设施等级更新全部数值
     """
 
-    cache.base_resouce.power_use = 0
+    cache.rhodes_island.power_use = 0
 
     # 遍历全设施清单
     for all_cid in game_config.config_facility:
         # 全设施等级设为对应值
-        level = cache.base_resouce.facility_level[all_cid]
+        level = cache.rhodes_island.facility_level[all_cid]
 
         # 累加全设施的用电量
         facility_name = game_config.config_facility[all_cid].name
         facility_cid = game_config.config_facility_effect_data[facility_name][level]
         facility_effect = game_config.config_facility_effect[facility_cid].effect
-        cache.base_resouce.power_use += game_config.config_facility_effect[facility_cid].power_use
+        cache.rhodes_island.power_use += game_config.config_facility_effect[facility_cid].power_use
 
         # 如果满足设施开放的前提条件，则开放该设施
         for open_cid in game_config.config_facility_open:
             if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
                 # print(f"debug zone_cid = {game_config.config_facility_open[open_cid].zone_cid}")
                 # print(f"debug facility_cid = {facility_cid}")
-                cache.base_resouce.facility_open[open_cid] = True
+                cache.rhodes_island.facility_open[open_cid] = True
 
     # print(f"debug power_use = {base_data.power_use}")
 
         # 初始化供电量
         if facility_name == "动力区":
-            cache.base_resouce.power_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.power_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化仓库容量
         elif facility_name == "仓储区":
-            cache.base_resouce.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
         # 初始化干员人数上限
         elif facility_name == "宿舍区":
-            cache.base_resouce.people_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.people_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化生活娱乐区设施数量上限
         elif facility_name == "生活娱乐区":
-            cache.base_resouce.life_zone_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.life_zone_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化患者人数上限，并刷新当天患者人数
         elif facility_name == "医疗部":
-            cache.base_resouce.patient_max = game_config.config_facility_effect[facility_cid].effect
-            cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
+            cache.rhodes_island.patient_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.patient_now = random.randint(1,cache.rhodes_island.patient_max)
         # 初始化科研区设施数量上限
         elif facility_name == "科研部":
-            cache.base_resouce.research_zone_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.research_zone_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化商店数量上限
         elif facility_name == "贸易区":
-            cache.base_resouce.shop_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.shop_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化战斗时干员数量上限
         elif facility_name == "指挥室":
-            cache.base_resouce.soldier_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.soldier_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化招募条
         elif facility_name == "文职部":
-            if 0 not in cache.base_resouce.recruit_now:
-                cache.base_resouce.recruit_now[0] = 0
-            if level >= 3 and 1 not in cache.base_resouce.recruit_now:
-                cache.base_resouce.recruit_now[1] = 0
-            if level >= 5 and 2 not in cache.base_resouce.recruit_now:
-                cache.base_resouce.recruit_now[2] = 0
+            if 0 not in cache.rhodes_island.recruit_now:
+                cache.rhodes_island.recruit_now[0] = 0
+            if level >= 3 and 1 not in cache.rhodes_island.recruit_now:
+                cache.rhodes_island.recruit_now[1] = 0
+            if level >= 5 and 2 not in cache.rhodes_island.recruit_now:
+                cache.rhodes_island.recruit_now[2] = 0
         elif facility_name == "制造加工区":
             # 初始化流水线
-            if 0 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[0] = [0,set(),0,0,0]
-            if level >= 2 and 1 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[1] = [0,set(),0,0,0]
-            if level >= 3 and 2 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[2] = [0,set(),0,0,0]
-            if level >= 4 and 3 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[3] = [0,set(),0,0,0]
-            if level >= 5 and 4 not in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[4] = [0,set(),0,0,0]
+            if 0 not in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[0] = [0,set(),0,0,0]
+            if level >= 2 and 1 not in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[1] = [0,set(),0,0,0]
+            if level >= 3 and 2 not in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[2] = [0,set(),0,0,0]
+            if level >= 4 and 3 not in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[3] = [0,set(),0,0,0]
+            if level >= 5 and 4 not in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[4] = [0,set(),0,0,0]
             # 计算当前总效率
-            for assembly_line_id in cache.base_resouce.assembly_line:
-                cache.base_resouce.assembly_line[assembly_line_id][2] = 100 + facility_effect
+            for assembly_line_id in cache.rhodes_island.assembly_line:
+                cache.rhodes_island.assembly_line[assembly_line_id][2] = 100 + facility_effect
                 # 遍历输出干员的能力效率加成
-                for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    cache.base_resouce.assembly_line[assembly_line_id][2] += character_effect
+                    cache.rhodes_island.assembly_line[assembly_line_id][2] += character_effect
 
 
 def update_base_resouce_newday():
@@ -149,23 +152,23 @@ def update_base_resouce_newday():
     settle_assembly_line(newdayflag=True)
 
     # 输出收入合计
-    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.base_resouce.cure_income} = {cache.base_resouce.all_income}\n"
+    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.rhodes_island.cure_income} = {cache.rhodes_island.all_income}\n"
     now_draw.draw()
 
     # 刷新新病人数量，已治愈病人数量和治疗收入归零
-    cache.base_resouce.patient_now = random.randint(1,cache.base_resouce.patient_max)
-    cache.base_resouce.patient_cured = 0
-    cache.base_resouce.cure_income = 0
-    cache.base_resouce.all_income = 0
+    cache.rhodes_island.patient_now = random.randint(1,cache.rhodes_island.patient_max)
+    cache.rhodes_island.patient_cured = 0
+    cache.rhodes_island.cure_income = 0
+    cache.rhodes_island.all_income = 0
 
     # 输出好感度合计与粉红凭证增加
-    pink_certificate_add = int(cache.base_resouce.total_favorability_increased / 100)
+    pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = f"\n今日全角色总好感度上升为： {int(cache.base_resouce.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
+    now_draw.text = f"\n今日全角色总好感度上升为： {int(cache.rhodes_island.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
     now_draw.draw()
     # 清零计数
-    cache.base_resouce.total_favorability_increased = 0
+    cache.rhodes_island.total_favorability_increased = 0
 
 
 def update_work_people():
@@ -174,9 +177,9 @@ def update_work_people():
     """
 
     # 初始化各职位的干员集合
-    cache.base_resouce.work_people_now = 0
+    cache.rhodes_island.work_people_now = 0
     for all_cid in game_config.config_work_type:
-        cache.base_resouce.all_work_npc_set[all_cid] = set()
+        cache.rhodes_island.all_work_npc_set[all_cid] = set()
 
     # 遍历所有干员，将有职位的干员加入对应职位集合
     cache.npc_id_got.discard(0)
@@ -185,10 +188,10 @@ def update_work_people():
 
         # 如果干员有职位，将干员加入对应职位集合
         if character_data.work.work_type:
-            cache.base_resouce.all_work_npc_set[character_data.work.work_type].add(id)
-            cache.base_resouce.work_people_now += 1
+            cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(id)
+            cache.rhodes_island.work_people_now += 1
         else:
-            cache.base_resouce.all_work_npc_set[0].add(id)
+            cache.rhodes_island.all_work_npc_set[0].add(id)
         # print(f"debug cache.base_resouce.all_work_npc_set = {cache.base_resouce.all_work_npc_set}")
 
 
@@ -197,13 +200,13 @@ def update_facility_people():
     更新当前基地各设施使用人数
     """
 
-    cache.base_resouce.reader_now = 0
+    cache.rhodes_island.reader_now = 0
 
     cache.npc_id_got.discard(0)
     for id in cache.npc_id_got:
         # 图书馆读者统计
         if handle_premise.handle_in_library(id):
-            cache.base_resouce.reader_now += 1
+            cache.rhodes_island.reader_now += 1
 
 
 def check_random_borrow_book(character_id):
@@ -219,19 +222,19 @@ def check_random_borrow_book(character_id):
     else:
         # 遍历获得所有没借的书id
         recommend_book_id_set,book_id_set = [],[]
-        for book_id in cache.base_resouce.book_borrow_dict:
+        for book_id in cache.rhodes_island.book_borrow_dict:
             # 未被借出则加入book_id_set
-            if cache.base_resouce.book_borrow_dict[book_id] == -1:
+            if cache.rhodes_island.book_borrow_dict[book_id] == -1:
                 book_id_set.append(book_id)
                 # 如果类型在推荐列表里，则加入recommend_book_id_set
-                if game_config.config_book[book_id].type in cache.base_resouce.recommend_book_type_set:
+                if game_config.config_book[book_id].type in cache.rhodes_island.recommend_book_type_set:
                     recommend_book_id_set.append(book_id)
         # 如果推荐列表有书，则有一半的概率在推荐列表里借书，否则在全列表里借书
         if len(recommend_book_id_set) and random.randint(0,1) == 1:
             borrow_book_id = random.choice(recommend_book_id_set)
         else:
             borrow_book_id = random.choice(book_id_set)
-        cache.base_resouce.book_borrow_dict[borrow_book_id] = character_id
+        cache.rhodes_island.book_borrow_dict[borrow_book_id] = character_id
         character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
         # print(f"debug {character_data.name}借了书{borrow_book_id}")
         return 0
@@ -252,7 +255,7 @@ def check_return_book(character_id):
         # print(f"debug return_d100 = {return_d100},book_return_possibility = {character_data.entertainment.book_return_possibility}")
         if return_d100 < character_data.entertainment.book_return_possibility:
             for book_id in character_data.entertainment.borrow_book_id_set:
-                cache.base_resouce.book_borrow_dict[book_id] = -1
+                cache.rhodes_island.book_borrow_dict[book_id] = -1
                 character_data.entertainment.borrow_book_id_set.discard(book_id)
                 # print(f"debug {character_data.name}还了书{book_id}")
                 return 1
@@ -265,19 +268,19 @@ def settle_assembly_line(newdayflag = False):
     
 
     # 遍历流水线
-    for assembly_line_id in cache.base_resouce.assembly_line:
-        now_formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+    for assembly_line_id in cache.rhodes_island.assembly_line:
+        now_formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
         if now_formula_id != 0:
             formula_data_now = game_config.config_productformula_data[now_formula_id]
             formula_now = game_config.config_productformula[now_formula_id]
             product_id = formula_now.product_id
             # 最大生产时间
             if newdayflag:
-                max_time = 24 + cache.game_time.hour - cache.base_resouce.assembly_line[assembly_line_id][4]
+                max_time = 24 + cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
             else:
-                max_time = cache.game_time.hour - cache.base_resouce.assembly_line[assembly_line_id][4]
+                max_time = cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
             # 生产效率
-            produce_effect = cache.base_resouce.assembly_line[assembly_line_id][2]
+            produce_effect = cache.rhodes_island.assembly_line[assembly_line_id][2]
             # 计算最大生产数
             produce_num_max = int(max_time * produce_effect / 100)
             produce_num = produce_num_max
@@ -286,7 +289,7 @@ def settle_assembly_line(newdayflag = False):
             # 遍历全部原料，判断是否足够
             for need_type in formula_data_now:
                 # 当前种类的原料最大生产数
-                now_type_max_produce_num = cache.base_resouce.materials_resouce[need_type] // formula_data_now[need_type]
+                now_type_max_produce_num = cache.rhodes_island.materials_resouce[need_type] // formula_data_now[need_type]
                 # 不超过总最大生产数
                 produce_num = min(produce_num,now_type_max_produce_num)
             # print(f"debug 流水线{assembly_line_id}，实际生产数为{produce_num}")
@@ -295,19 +298,19 @@ def settle_assembly_line(newdayflag = False):
             if produce_num > 0:
                 # 结算实际消耗的原料
                 for need_type in formula_data_now:
-                    cache.base_resouce.materials_resouce[need_type] -= produce_num * formula_data_now[need_type]
+                    cache.rhodes_island.materials_resouce[need_type] -= produce_num * formula_data_now[need_type]
                 # 结算实际生产的产品
-                cache.base_resouce.materials_resouce[product_id] += produce_num
+                cache.rhodes_island.materials_resouce[product_id] += produce_num
 
                 now_text = f"\n 流水线{assembly_line_id}:"
-                now_text += f"上次结算是{cache.base_resouce.assembly_line[assembly_line_id][4]}时，到现在已过{max_time}小时，"
+                now_text += f"上次结算是{cache.rhodes_island.assembly_line[assembly_line_id][4]}时，到现在已过{max_time}小时，"
                 if produce_num < produce_num_max:
                     now_text += f"由于原料不足，最大可以生产{produce_num}个，实际"
                 now_text += f"共生产了{produce_num}个{game_config.config_resouce[product_id].name}"
                 # 不会超过仓库容量
-                if cache.base_resouce.materials_resouce[product_id] > cache.base_resouce.warehouse_capacity:
-                    cache.base_resouce.materials_resouce[product_id] = cache.base_resouce.warehouse_capacity
-                    now_text += f"，由于仓库容量不足，{game_config.config_resouce[product_id].name}已达上限数量{cache.base_resouce.warehouse_capacity}"
+                if cache.rhodes_island.materials_resouce[product_id] > cache.rhodes_island.warehouse_capacity:
+                    cache.rhodes_island.materials_resouce[product_id] = cache.rhodes_island.warehouse_capacity
+                    now_text += f"，由于仓库容量不足，{game_config.config_resouce[product_id].name}已达上限数量{cache.rhodes_island.warehouse_capacity}"
                 now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
@@ -315,4 +318,4 @@ def settle_assembly_line(newdayflag = False):
                 now_draw.draw()
 
         # 重置收菜时间
-        cache.base_resouce.assembly_line[assembly_line_id][4] = cache.game_time.hour
+        cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour

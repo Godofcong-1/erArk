@@ -764,7 +764,7 @@ def judge_require(judge_text_list, character_id):
                 reason += f"信赖度>={judge_value}  "
                 break
         elif judge_type == "O":
-            if not cache.base_resouce.facility_open[judge_type_id]:
+            if not cache.rhodes_island.facility_open[judge_type_id]:
                 judge = 0
                 reason += f"解锁{game_config.config_facility_open[judge_type_id].name}  "
                 break

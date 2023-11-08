@@ -53,7 +53,7 @@ def change_npc_work_out(width):
         idle_npc_list = []
         cache.npc_id_got.discard(0)
         for id in cache.npc_id_got:
-            if id in cache.base_resouce.all_work_npc_set[0]:
+            if id in cache.rhodes_island.all_work_npc_set[0]:
                 idle_npc_list.append(id)
         department_panels[0].text_list = idle_npc_list
         department_panels[0].update()
@@ -76,8 +76,8 @@ def change_npc_work_out(width):
             for work_type_id in game_config.config_work_type:
                 work_type_data = game_config.config_work_type[work_type_id]
                 if work_type_data.department == department:
-                    if len(cache.base_resouce.all_work_npc_set[work_type_id]):
-                        department_panels[department_count].text_list += list(cache.base_resouce.all_work_npc_set[work_type_id])
+                    if len(cache.rhodes_island.all_work_npc_set[work_type_id]):
+                        department_panels[department_count].text_list += list(cache.rhodes_island.all_work_npc_set[work_type_id])
             n_flag = False if len(department_panels[department_count].text_list) else True
             department_panels[department_count].update()
             department_panels[department_count].draw()
@@ -156,16 +156,16 @@ class Manage_Basement_Panel:
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
-                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.base_resouce.warehouse_capacity}\n"
+                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
 
                 # 遍历全资源类型
                 for resouce in self.resouce_list:
                     all_info_draw.text += f"\n {resouce}："
                     # 遍历该类型的资源
-                    for material_id in cache.base_resouce.materials_resouce:
+                    for material_id in cache.rhodes_island.materials_resouce:
                         material_data  = game_config.config_resouce[material_id]
                         if material_data.type == resouce:
-                            all_info_draw.text += f"\n  {material_data.name}：{cache.base_resouce.materials_resouce[material_id]}"
+                            all_info_draw.text += f"\n  {material_data.name}：{cache.rhodes_island.materials_resouce[material_id]}"
                     all_info_draw.text += "\n"
 
                 all_info_draw.width = self.width
@@ -184,8 +184,8 @@ class Manage_Basement_Panel:
                 all_info_draw = draw.NormalDraw()
 
                 # 统计各部门岗位的工作干员数量
-                patient_now = cache.base_resouce.patient_now
-                work_people_now,people_max = cache.base_resouce.work_people_now,len(cache.npc_id_got)
+                patient_now = cache.rhodes_island.patient_now
+                work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
                 all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
                 all_info_draw.text += f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有工作位的部门是未没有实装的空白部门\n\n"
@@ -227,14 +227,14 @@ class Manage_Basement_Panel:
                     for all_cid in game_config.config_work_type:
                         work_data = game_config.config_work_type[all_cid]
                         if work_data.department == department:
-                            all_info_draw.text += f"  {work_data.name} — {len(cache.base_resouce.all_work_npc_set[all_cid])}"
+                            all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
                     if department == "医疗部":
                         all_info_draw.text += f"  病人 — {patient_now}"
                     all_info_draw.draw()
                     line_feed.draw()
 
                 # 收入
-                all_income = str(cache.base_resouce.all_income)
+                all_income = str(cache.rhodes_island.all_income)
                 all_info_draw.text = f"\n  截至目前为止，今日各部门龙门币总收入为：{all_income}\n\n"
                 all_info_draw.width = self.width
                 all_info_draw.draw()
@@ -303,8 +303,8 @@ class Manage_Basement_Panel:
                 work_data = game_config.config_work_type[all_cid]
                 if work_data.department == department:
                     now_text+= f"\n  当前正在工作的{work_data.name}："
-                    if len(cache.base_resouce.all_work_npc_set[all_cid]):
-                        for npc_id in cache.base_resouce.all_work_npc_set[all_cid]:
+                    if len(cache.rhodes_island.all_work_npc_set[all_cid]):
+                        for npc_id in cache.rhodes_island.all_work_npc_set[all_cid]:
                             npc_name = cache.character_data[npc_id].name
                             now_text += f" {npc_name}"
                     else:
@@ -313,35 +313,35 @@ class Manage_Basement_Panel:
             if department == "工程部":
                 now_text += f"\n  当前待检修地点："
                 maintenance_flag = True
-                for chara_id in cache.base_resouce.maintenance_place:
-                    if len(cache.base_resouce.maintenance_place[chara_id]):
-                        now_text += f"{cache.base_resouce.maintenance_place[chara_id]}"
+                for chara_id in cache.rhodes_island.maintenance_place:
+                    if len(cache.rhodes_island.maintenance_place[chara_id]):
+                        now_text += f"{cache.rhodes_island.maintenance_place[chara_id]}"
                         maintenance_flag = False
                 if maintenance_flag:
                     now_text += " 暂无"
 
             elif department == "医疗部":
-                patient_cured,patient_now = str(cache.base_resouce.patient_cured),str(cache.base_resouce.patient_now)
+                patient_cured,patient_now = str(cache.rhodes_island.patient_cured),str(cache.rhodes_island.patient_now)
                 now_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
-                cure_income = str(cache.base_resouce.cure_income)
+                cure_income = str(cache.rhodes_island.cure_income)
                 now_text += f"\n  截至目前为止，今日医疗部门龙门币总收入为：{cure_income}\n"
 
             elif department == "文职部":
-                if len(cache.base_resouce.recruited_id):
-                    now_text += f"\n  当前已招募未确认干员人数为：{len(cache.base_resouce.recruited_id)}人，请前往博士办公室确认"
+                if len(cache.rhodes_island.recruited_id):
+                    now_text += f"\n  当前已招募未确认干员人数为：{len(cache.rhodes_island.recruited_id)}人，请前往博士办公室确认"
                 else:
                     now_text += f"\n  当前没有已招募干员，请等待招募完成"
                 for i in {0,1,2}:
-                    if i in cache.base_resouce.recruit_now:
-                        now_text += f"\n  {i+1}号招募位进度：{round(cache.base_resouce.recruit_now[0],1)}%/100%"
+                    if i in cache.rhodes_island.recruit_now:
+                        now_text += f"\n  {i+1}号招募位进度：{round(cache.rhodes_island.recruit_now[0],1)}%/100%"
 
             elif department == "图书馆":
-                reader_count = cache.base_resouce.reader_now
+                reader_count = cache.rhodes_island.reader_now
                 now_text += f"\n  当前读者人数：{reader_count} 人"
 
             elif department == "宿舍区":
                 npc_count = str(len(cache.npc_id_got))
-                now_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.base_resouce.people_max}"
+                now_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.rhodes_island.people_max}"
                 now_text += f"\n  具体居住情况：\n"
                 live_npc_id_set = cache.npc_id_got.copy()
                 Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
@@ -477,7 +477,7 @@ class ChangeWorkButtonList:
                 flag_open = True
                 for open_cid in game_config.config_facility_open:
                     if game_config.config_facility_open[open_cid].name == work_place:
-                        if not cache.base_resouce.facility_open[open_cid]:
+                        if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
                         break
 

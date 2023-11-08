@@ -99,11 +99,11 @@ def update_recruit():
     """刷新招募栏位"""
 
     # 遍历全招募栏
-    for key in cache.base_resouce.recruit_now:
+    for key in cache.rhodes_island.recruit_now:
 
         # 如果超过100则进行结算
-        if cache.base_resouce.recruit_now[key] >= 100:
-            cache.base_resouce.recruit_now[key] = 0
+        if cache.rhodes_island.recruit_now[key] >= 100:
+            cache.rhodes_island.recruit_now[key] = 0
 
             # 开始随机获得招募npc的id
             wait_id_set = []
@@ -113,7 +113,7 @@ def update_recruit():
                     wait_id_set.append(id)
             if len(wait_id_set):
                 choice_id = random.choice(wait_id_set)
-                cache.base_resouce.recruited_id.add(choice_id)
+                cache.rhodes_island.recruited_id.add(choice_id)
 
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
@@ -122,7 +122,7 @@ def update_recruit():
                 now_draw.draw()
 
             # 之前做该栏位工作的HR，也把栏位数据清零
-            for id in cache.base_resouce.all_work_npc_set[71]:
+            for id in cache.rhodes_island.all_work_npc_set[71]:
                 character_data = cache.character_data[id]
                 if character_data.work.recruit_index == key:
                     character_data.work.recruit_index = -1
@@ -944,9 +944,9 @@ def get_chara_entertainment(character_id: int):
         character_data.sp_flag.swim = 0
 
         # 如果当天有派对的话，则全员当天娱乐为该娱乐
-        if hasattr(cache.base_resouce, 'party_day_of_week') and cache.base_resouce.party_day_of_week[week_day]:
+        if hasattr(cache.rhodes_island, 'party_day_of_week') and cache.rhodes_island.party_day_of_week[week_day]:
             for i in range(3):
-                character_data.entertainment.entertainment_type[i] = cache.base_resouce.party_day_of_week[week_day]
+                character_data.entertainment.entertainment_type[i] = cache.rhodes_island.party_day_of_week[week_day]
         
         # 否则随机当天的娱乐活动
         else:

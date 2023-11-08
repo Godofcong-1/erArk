@@ -51,12 +51,12 @@ class Resource_Exchange_Line_Panel:
             # 绘制交易信息
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            money = cache.base_resouce.materials_resouce[1]
+            money = cache.rhodes_island.materials_resouce[1]
             now_text += f"\n  当前龙门币数量    ：{money}"
 
             resouce_data  = game_config.config_resouce[self.now_select_resouce_id]
-            now_resouce_stock = cache.base_resouce.materials_resouce[self.now_select_resouce_id]
-            warehouse_capacity = cache.base_resouce.warehouse_capacity
+            now_resouce_stock = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
+            warehouse_capacity = cache.rhodes_island.warehouse_capacity
             now_text += f"\n\n  要交易的资源为    ：{resouce_data.name}({now_resouce_stock}/{warehouse_capacity})    "
             all_info_draw.text = now_text
             all_info_draw.width = self.width
@@ -147,11 +147,11 @@ class Resource_Exchange_Line_Panel:
                 break
             elif yrn == yes_draw.return_text:
                 if self.buy_or_sell_flag:
-                    cache.base_resouce.materials_resouce[self.now_select_resouce_id] += self.quantity_of_resouce
-                    cache.base_resouce.materials_resouce[1] -= price * self.quantity_of_resouce
+                    cache.rhodes_island.materials_resouce[self.now_select_resouce_id] += self.quantity_of_resouce
+                    cache.rhodes_island.materials_resouce[1] -= price * self.quantity_of_resouce
                 else:
-                    cache.base_resouce.materials_resouce[self.now_select_resouce_id] -= self.quantity_of_resouce
-                    cache.base_resouce.materials_resouce[1] += price * self.quantity_of_resouce
+                    cache.rhodes_island.materials_resouce[self.now_select_resouce_id] -= self.quantity_of_resouce
+                    cache.rhodes_island.materials_resouce[1] += price * self.quantity_of_resouce
                 break
 
 
@@ -192,7 +192,7 @@ class Resource_Exchange_Line_Panel:
                             button_draw.draw()
                             return_list.append(button_draw.return_text)
 
-                            now_text = f"\n      当前存量：{cache.base_resouce.materials_resouce[resouce_id]}/{cache.base_resouce.warehouse_capacity}"
+                            now_text = f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}"
                             # 判断是否可以买入卖出
                             if resouce_id != 12 and resouce_type != "药剂":
                                 now_text += f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位"
@@ -224,8 +224,8 @@ class Resource_Exchange_Line_Panel:
         add_num = int(button_text[2:-2])
         self.quantity_of_resouce += add_num
         # 保证卖出的不超过仓库容量
-        if not self.buy_or_sell_flag and self.quantity_of_resouce > cache.base_resouce.materials_resouce[self.now_select_resouce_id]:
-            self.quantity_of_resouce = cache.base_resouce.materials_resouce[self.now_select_resouce_id]
+        if not self.buy_or_sell_flag and self.quantity_of_resouce > cache.rhodes_island.materials_resouce[self.now_select_resouce_id]:
+            self.quantity_of_resouce = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
         # 保证不为负数
         if self.quantity_of_resouce < 0:
             self.quantity_of_resouce = 0

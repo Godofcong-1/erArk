@@ -1273,6 +1273,9 @@ class Panel:
     """ 源石技艺面板 """
     PRTS = 24
     """ 普瑞赛斯面板 """
+    NAVIGATION = 25
+    """ 导航面板 """
+
 
 class SecondBehavior:
     """二段结算行为函数"""
@@ -1729,6 +1732,8 @@ class Instruct:
     """ 管理流水线 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
+    NAVIGATION = 0
+    """ 导航 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
     FIND_AND_CALL_NPC = 0

@@ -69,8 +69,8 @@ class Borrow_Book_Panel:
 
             # 当前借书数量限制信息
             borrow_count = 0
-            for book_id in cache.base_resouce.book_borrow_dict:
-                if cache.base_resouce.book_borrow_dict[book_id] == 0:
+            for book_id in cache.rhodes_island.book_borrow_dict:
+                if cache.rhodes_island.book_borrow_dict[book_id] == 0:
                     borrow_count += 1
             borrow_limit_draw = draw.NormalDraw()
             borrow_limit_text = f"\n已借书量/最大借书量：{borrow_count}/3\n"
@@ -98,15 +98,15 @@ class Borrow_Book_Panel:
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
                         button_flag = True
-                        if cache.base_resouce.book_borrow_dict[book_cid] == -1:
+                        if cache.rhodes_island.book_borrow_dict[book_cid] == -1:
                             book_text += "  (可借阅)"
                             book_style = "standard"
                             book_can_borrow_count += 1
-                        elif cache.base_resouce.book_borrow_dict[book_cid] == 0:
+                        elif cache.rhodes_island.book_borrow_dict[book_cid] == 0:
                             book_text += f"  (已被博士借走)"
                             book_style = "gold_enrod"
                         else:
-                            borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
+                            borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                             borrow_npc_name = cache.character_data[borrow_npc_id].name
                             book_text += f"  (已被{borrow_npc_name}借走)"
                             book_style = "nullcmd"
@@ -183,12 +183,12 @@ class Borrow_Book_Panel:
         borrow_count = len(character_data.entertainment.borrow_book_id_set)
 
         # 如果已借该书，则还书
-        if cache.base_resouce.book_borrow_dict[book_cid] == 0:
-            cache.base_resouce.book_borrow_dict[book_cid] = -1
+        if cache.rhodes_island.book_borrow_dict[book_cid] == 0:
+            cache.rhodes_island.book_borrow_dict[book_cid] = -1
             character_data.entertainment.borrow_book_id_set.discard(book_cid)
         # 未借该书，且借书数量不到上限，则借书
         elif borrow_count < 3:
-            cache.base_resouce.book_borrow_dict[book_cid] = 0
+            cache.rhodes_island.book_borrow_dict[book_cid] = 0
             character_data.entertainment.borrow_book_id_set.add(book_cid)
         # 未借该书，且借书数量已达上限，则输出错误信息
         else:

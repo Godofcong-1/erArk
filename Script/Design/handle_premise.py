@@ -2192,7 +2192,7 @@ def handle_in_maintenance_place(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    if character_id in cache.base_resouce.maintenance_place and now_scene_str == cache.base_resouce.maintenance_place[character_id]:
+    if character_id in cache.rhodes_island.maintenance_place and now_scene_str == cache.rhodes_island.maintenance_place[character_id]:
         return 1
     return 0
 
@@ -2209,7 +2209,7 @@ def handle_not_in_maintenance_place(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    if character_id in cache.base_resouce.maintenance_place and now_scene_str == cache.base_resouce.maintenance_place[character_id]:
+    if character_id in cache.rhodes_island.maintenance_place and now_scene_str == cache.rhodes_island.maintenance_place[character_id]:
         return 0
     return 1
 
@@ -2226,8 +2226,8 @@ def handle_in_any_maintenance_place(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    for chara_id in cache.base_resouce.maintenance_place:
-        if now_scene_str == cache.base_resouce.maintenance_place[chara_id]:
+    for chara_id in cache.rhodes_island.maintenance_place:
+        if now_scene_str == cache.rhodes_island.maintenance_place[chara_id]:
             return 1
     return 0
 
@@ -7168,7 +7168,7 @@ def handle_patient_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.base_resouce.patient_now:
+    if cache.rhodes_island.patient_now:
         return 1
     return 0
 
@@ -7182,7 +7182,7 @@ def handle_new_npc_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if len(cache.base_resouce.recruited_id):
+    if len(cache.rhodes_island.recruited_id):
         return 1
     return 0
 

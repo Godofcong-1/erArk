@@ -3830,7 +3830,7 @@ def handle_knowledge_add_pink_money(
     if character_data.target_character_id != 0:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.materials_resouce[4] += now_add_lust
+    cache.rhodes_island.materials_resouce[4] += now_add_lust
     now_draw = draw.NormalDraw()
     now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
     now_draw.width = width
@@ -3871,11 +3871,11 @@ def handle_cure_patient_add_just(
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
         now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.materials_resouce[1] += now_add_lust
-    cache.base_resouce.cure_income += now_add_lust
-    cache.base_resouce.all_income += now_add_lust
-    cache.base_resouce.patient_now -= 1
-    cache.base_resouce.patient_cured += 1
+    cache.rhodes_island.materials_resouce[1] += now_add_lust
+    cache.rhodes_island.cure_income += now_add_lust
+    cache.rhodes_island.all_income += now_add_lust
+    cache.rhodes_island.patient_now -= 1
+    cache.rhodes_island.patient_cured += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)
@@ -3912,8 +3912,8 @@ def handle_recruit_add_just(
     # 如果角色没有确定招募栏位，则选一个当前空的指派过去
     if character_data.work.recruit_index == -1:
         select_index = 0
-        for key in cache.base_resouce.recruit_now.keys():
-            if cache.base_resouce.recruit_now[key] == 0:
+        for key in cache.rhodes_island.recruit_now.keys():
+            if cache.rhodes_island.recruit_now[key] == 0:
                 select_index = key
                 break
         character_data.work.recruit_index = key
@@ -3924,11 +3924,11 @@ def handle_recruit_add_just(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.base_resouce.recruit_now[0] + now_add_lust,1)}%\n")
+        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_now[0] + now_add_lust,1)}%\n")
         now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
-    cache.base_resouce.recruit_now[select_index] += now_add_lust
+    cache.rhodes_island.recruit_now[select_index] += now_add_lust
     character_behavior.update_recruit()
 
 

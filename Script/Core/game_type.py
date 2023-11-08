@@ -698,8 +698,8 @@ class Scene:
         """ 场景内角色列表 """
 
 
-class Base_resouce:
-    """基地资源"""
+class Rhodes_Island:
+    """罗德岛相关属性"""
 
     def __init__(self):
         self.facility_level: Dict[int, int] = {}
@@ -720,6 +720,9 @@ class Base_resouce:
         """ 今日全部门总收入 """
         self.party_day_of_week: Dict[int, int] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
+
+        self.current_location: List[int] = []
+        """ 基地当前所在位置，[0国家id,1城市id] """
 
         self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """
@@ -1064,8 +1067,8 @@ class Cache:
         """ 是否开启debug模式 """
         self.game_round: int = 1
         """ 当前周目数 """
-        self.base_resouce: Base_resouce = Base_resouce
-        """ 基地的资源情况 """
+        self.rhodes_island: Rhodes_Island = Rhodes_Island
+        """ 罗德岛相关属性 """
         self.first_bonus: Dict[int, int] = {}
         """ 初期奖励 """
 

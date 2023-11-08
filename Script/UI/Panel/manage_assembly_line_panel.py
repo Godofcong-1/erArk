@@ -47,30 +47,30 @@ class Manage_Assembly_Line_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            now_text += f" 当前lv{cache.base_resouce.facility_level[3]}仓库容量（单资源存放上限）：{cache.base_resouce.warehouse_capacity}\n"
+            now_text += f" 当前lv{cache.rhodes_island.facility_level[3]}仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
 
             # 遍历全资源类型
             self.resouce_list = ["货币", "材料", "药剂"]
             for resouce in self.resouce_list:
                 now_text += f"\n {resouce}："
                 # 遍历该类型的资源
-                for material_id in cache.base_resouce.materials_resouce:
+                for material_id in cache.rhodes_island.materials_resouce:
                     material_data  = game_config.config_resouce[material_id]
                     if material_data.type == resouce:
-                        now_text += f"  {material_data.name}：{cache.base_resouce.materials_resouce[material_id]}"
+                        now_text += f"  {material_data.name}：{cache.rhodes_island.materials_resouce[material_id]}"
                 now_text += "\n"
 
             all_info_draw.text = now_text
             all_info_draw.width = self.width
             all_info_draw.draw()
 
-            for assembly_line_id in cache.base_resouce.assembly_line:
+            for assembly_line_id in cache.rhodes_island.assembly_line:
                 now_text = f"\n {assembly_line_id+1}号流水线："
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
                 # 基础数据
-                formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+                formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
                 formula_data = game_config.config_productformula[formula_id]
                 product_id = formula_data.product_id
                 product_data = game_config.config_resouce[product_id]
@@ -109,14 +109,14 @@ class Manage_Assembly_Line_Panel:
                 button_draw.draw()
 
                 # 生产效率
-                now_level = cache.base_resouce.facility_level[12]
+                now_level = cache.rhodes_island.facility_level[12]
                 facility_cid = game_config.config_facility_effect_data["制造加工区"][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 all_effect += facility_effect
                 now_text = f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)"
                 # 遍历输出干员的能力效率加成
-                for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
                     all_effect += character_effect
@@ -185,7 +185,7 @@ class Manage_Assembly_Line_Panel:
                 info_draw.width = window_width
                 return_list = []
 
-                formula_now_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+                formula_now_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
                 formula_now_data = game_config.config_productformula[formula_now_id]
                 product_now_id = formula_now_data.product_id
                 product_now_data = game_config.config_resouce[product_now_id]
@@ -269,8 +269,8 @@ class Manage_Assembly_Line_Panel:
             if self.now_chara_id != -1:
                 now_character_data: game_type.Character = cache.character_data[self.now_chara_id]
                 now_select_npc_name = now_character_data.name
-                for assembly_line_id in cache.base_resouce.assembly_line:
-                    if self.now_chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                for assembly_line_id in cache.rhodes_island.assembly_line:
+                    if self.now_chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                         old_position = assembly_line_id
                         break
             else:
@@ -312,11 +312,11 @@ class Manage_Assembly_Line_Panel:
 
             line_feed.draw()
 
-            for assembly_line_id in cache.base_resouce.assembly_line:
+            for assembly_line_id in cache.rhodes_island.assembly_line:
                 now_text = f"\n {assembly_line_id+1}号流水线："
 
                 # 生产产品
-                formula_id = cache.base_resouce.assembly_line[assembly_line_id][0]
+                formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
                 formula_data = game_config.config_productformula[formula_id]
                 product_id = formula_data.product_id
                 product_data = game_config.config_resouce[product_id]
@@ -338,7 +338,7 @@ class Manage_Assembly_Line_Panel:
                 # 生产效率
                 now_text = f"\n    当前工人："
                 # 遍历输出干员的能力效率加成
-                for chara_id in cache.base_resouce.assembly_line[assembly_line_id][1]:
+                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
                     now_text += f" + {character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)"
@@ -359,17 +359,17 @@ class Manage_Assembly_Line_Panel:
                 break
             # 确定的话就进行id的转移结算
             elif yrn == yes_draw.return_text:
-                cache.base_resouce.assembly_line[old_position][1].discard(self.now_chara_id)
-                cache.base_resouce.assembly_line[self.target_position][1].add(self.now_chara_id)
+                cache.rhodes_island.assembly_line[old_position][1].discard(self.now_chara_id)
+                cache.rhodes_island.assembly_line[self.target_position][1].add(self.now_chara_id)
                 basement.get_base_updata()
                 break
 
     def change_assembly_line_produce(self, assembly_line_id, formula_cid):
         """更改流水线生产的产品"""
-        if cache.base_resouce.assembly_line[assembly_line_id][0] != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
+        if cache.rhodes_island.assembly_line[assembly_line_id][0] != 0 and cache.rhodes_island.assembly_line[assembly_line_id][4] != cache.game_time.hour:
             pass
         else:
-            cache.base_resouce.assembly_line[assembly_line_id][0] = formula_cid
+            cache.rhodes_island.assembly_line[assembly_line_id][0] = formula_cid
 
     def settle_npc_id(self, chara_id):
         """结算干员的id变更"""
