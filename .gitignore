@@ -1,5 +1,7 @@
 # 测试文件
 test.py
+test_2.py
+example/口上测试.csv
 
 # 缓存文件
 */*.pyc
@@ -19,5 +21,9 @@ data/data_from_game
 # AI
 tools/AI
 
-# 没实装的图像
-test_2.py
+# 地图数据
+data/MapData
+data/PlaceData
+data/SceneData
+data/ScenePath
+
