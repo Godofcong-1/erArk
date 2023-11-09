@@ -30,27 +30,64 @@ class Base_function_class:
     用于导航的基础功能类
     """
 
-    def move_now(self, scene_path: List[str], sp_flag: int = 0):
+    def move_judge(self, scene_path: List, sp_flag: int = 0):
         """
-        控制基地移动至指定场景
+        判断基地是否移动至指定场景
         Keyword arguments:
-        scene_path -- 目标场景路径
+        scene_path -- 目标场景路径，
         sp_flag -- 0为正常，1为无法抵达非临近地点
         """
         if sp_flag == 0:
-            py_cmd.clr_cmd()
-            line_feed.draw()
-            cache.wframe_mouse.w_frame_skip_wait_mouse = 1
-            for birthplace_id in game_config.config_birthplace:
-                birthplace_data = game_config.config_birthplace[birthplace_id]
-                if birthplace_data.name == scene_path[-1]:
-                    cache.rhodes_island.current_location[0] = birthplace_id
-                    break
+            # 当前燃料
+            now_fuel = cache.rhodes_island.materials_resouce[15]
+            need_fuel = 1000 * scene_path[1]
+            if now_fuel <= need_fuel:
+                now_draw = draw.WaitDraw()
+                now_draw.text = _(f"\n\n移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，燃料不足，无法移动\n")
+                now_draw.width = window_width
+                now_draw.draw()
+            else:
+                while 1:
+                    ask_list = []
+                    askfor_panel = panel.OneMessageAndSingleColumnButton()
+                    askfor_list = [_("是"), _("否")]
+                    askfor_panel.set(askfor_list, _(f"\n移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，确定要移动吗\n"), 0)
+                    askfor_panel.draw()
+                    askfor_panel_return_list = askfor_panel.get_return_list()
+                    ask_list.extend(askfor_panel_return_list.keys())
+                    yrn = flow_handle.askfor_all(ask_list)
+                    py_cmd.clr_cmd()
+                    if yrn == "0":
+                        self.move_to_scene(scene_path[0])
+                        break
+                    elif yrn == "1":
+                        break
+                    else:
+                        now_draw = draw.WaitDraw()
+                        now_draw.text = _("\n输入错误，请重新输入\n")
+                        now_draw.width = window_width
+                        now_draw.draw()
         elif sp_flag == 1:
             now_draw = draw.WaitDraw()
             now_draw.text = _("\n无法直接抵达非临近地点\n")
             now_draw.width = window_width
             now_draw.draw()
+
+
+    def move_to_scene(self, scene_name: str):
+        """
+        移动至指定场景
+        Keyword arguments:
+        scene_name -- 目标国家名字
+        """
+        py_cmd.clr_cmd()
+        line_feed.draw()
+        cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+        for birthplace_id in game_config.config_birthplace:
+            birthplace_data = game_config.config_birthplace[birthplace_id]
+            if birthplace_data.name == scene_name:
+                cache.rhodes_island.current_location[0] = birthplace_id
+                break
 
 
 class Navigation_Panel(Base_function_class):
@@ -89,11 +126,10 @@ class Navigation_Panel(Base_function_class):
             base_scene_name = now_country_name
             # 临近地点
             path_edge = map_data.path_edge
-            scene_path = path_edge[base_scene_name].copy()
-            if base_scene_name in scene_path:
-                del scene_path[base_scene_name]
-            near_scene_path_list = list(scene_path.keys())
-            # print(f"debug self.now_map = {self.now_map}, map_path_str = {map_path_str}，map_name = {map_name}, character_data.position = {character_data.position}, character_scene_id = {character_scene_name}")
+            near_scene_path = path_edge[base_scene_name].copy()
+            if base_scene_name in near_scene_path:
+                del near_scene_path[base_scene_name]
+            near_scene_path_name_list = list(near_scene_path.keys())
             return_list = []
             index = 0
             for now_draw_line in now_draw_list.draw_text:
@@ -109,17 +145,19 @@ class Navigation_Panel(Base_function_class):
                     # 首先需要是地点按钮
                     if "is_button" in draw_text.__dict__ and draw_text.is_button:
 
-                        # 获取地点路径
-                        scene_path = map_handle.get_scene_path_for_map_scene_id(
-                            self.now_map, draw_text.text
-                        )
 
                         # 如果不是基地所在的地点，则绘制按钮
                         if draw_text.text != base_scene_name:
+                            # 初始化目标地点路径
+                            target_scene = [draw_text.text, 1]
                             # 临近地点正常绘制
-                            if draw_text.text in near_scene_path_list:
+                            if draw_text.text in near_scene_path_name_list:
+
+                                # 获取目标地点路径，包括地点名和抵达该地点的距离
+                                target_scene = [draw_text.text, near_scene_path[draw_text.text]]
+                                # 绘制按钮
                                 now_draw = draw.Button(
-                                    draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
+                                    draw_text.text, draw_text.text, cmd_func=self.move_judge, args=(target_scene,)
                                 )
                                 # TODO 如果是有特殊事件在那么显示为绿色
                                 # if len(cache.scene_data[full_scene_str].character_list):
@@ -127,7 +165,7 @@ class Navigation_Panel(Base_function_class):
                             # 非临近地点则绘制灰色按钮
                             else:
                                 now_draw = draw.Button(
-                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_now, args=(scene_path,1)
+                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_judge, args=(target_scene,1)
                                 )
                             now_draw.width = self.width
                             now_draw.draw()
@@ -286,23 +324,23 @@ class MapSceneNameDraw(Base_function_class):
         scene_path = path_edge[base_scene_name].copy()
         if base_scene_name in scene_path:
             del scene_path[base_scene_name]
-        near_scene_path_list = list(scene_path.keys())
+        near_scene_path_name_list = list(scene_path.keys())
 
-        if len(near_scene_path_list):
+        if len(near_scene_path_name_list):
             draw_list = []
-            for scene_id in near_scene_path_list:
+            for scene_name in near_scene_path_name_list:
                 # print(f"debug scene_id = {scene_id}")
-                load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene_id)
+                load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene_name)
                 now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
 
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
-                if scene_id == base_scene_name:
+                if scene_name == base_scene_name:
                     continue
                 else:
                     now_id_text = f"→{load_scene_data.scene_name}"
 
                 now_draw = draw.LeftButton(
-                    now_id_text, now_id_text, self.width, cmd_func=self.move_now, args=(now_scene_path,)
+                    now_id_text, now_id_text, self.width, cmd_func=self.move_judge, args=(now_scene_path,)
                 )
                 self.return_list.append(now_draw.return_text)
                 draw_list.append(now_draw)
@@ -317,4 +355,4 @@ class MapSceneNameDraw(Base_function_class):
                     now_draw.width = now_width
                     now_draw.draw()
                 line_feed.draw()
-        self.end_index = len(near_scene_path_list) - 1
+        self.end_index = len(near_scene_path_name_list) - 1
