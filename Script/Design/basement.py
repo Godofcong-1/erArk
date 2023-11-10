@@ -4,7 +4,7 @@ from Script.Core import (
     game_type,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, attr_calculation
+from Script.Design import handle_premise, attr_calculation, character_handle, game_time
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -149,7 +149,9 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 结算流水线
     settle_assembly_line(newdayflag=True)
+    # 结算访客抵达和离开
 
     # 输出收入合计
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.rhodes_island.cure_income} = {cache.rhodes_island.all_income}\n"
@@ -167,7 +169,7 @@ def update_base_resouce_newday():
     now_draw.width = window_width
     now_draw.text = f"\n今日全角色总好感度上升为： {int(cache.rhodes_island.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
     now_draw.draw()
-    # 清零计数
+    # 清零好感度合计计数
     cache.rhodes_island.total_favorability_increased = 0
 
 
@@ -319,3 +321,45 @@ def settle_assembly_line(newdayflag = False):
 
         # 重置收菜时间
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
+
+def calculate_visitor_arrivals_and_departures():
+    """
+    结算访客抵达和离开
+    """
+    # 因罗德岛移动而产生的访客
+    if cache.rhodes_island.base_move_visitor_flag:
+        # 将flag重置为False
+        cache.rhodes_island.base_move_visitor_flag = False
+        # 未招募的干员id
+        not_recruit_npc_id_list = [id for id in range(1, len(cache.npc_tem_data) + 1) if id not in cache.npc_id_got]
+        # 根据当前基地的位置筛选出同国度且没有招募的干员
+        now_country_id = cache.rhodes_island.current_location[0]
+        now_country_npc_id_list = []
+        # 开始筛选
+        for npc_id in not_recruit_npc_id_list:
+            if cache.character_data[npc_id].relationship.birthplace == now_country_id and not cache.character_data[npc_id].recruit:
+                now_country_npc_id_list.append(npc_id)
+        # 随机抽取一名访客
+        visitor_id = random.choice(now_country_npc_id_list)
+        # 处理获得新访客
+        character_handle.get_new_character(visitor_id, True)
+
+    # 访客离开
+    # 遍历全部访客
+    for visitor_id in cache.rhodes_island.visitor_stay_time_dict:
+        # 判断是否已经超过停留时间
+        if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.visitor_stay_time_dict[visitor_id]):
+            # # 计算访客离开概率
+            # visitor_leave_possibility = 1
+            # # 访客离开概率使用实行值
+            # if cache.character_data[visitor_id].favorability < 0:
+            #     visitor_leave_possibility += abs(cache.character_data[visitor_id].favorability) / 100
+            # # 访客离开概率与访客的好感度相关
+            # if random.uniform(0, 1) < visitor_leave_possibility:
+            #     # 访客离开
+            #     cache.rhodes_island.visitor.discard(visitor_id)
+            # 访客离开文本
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = f"\n {cache.character_data[visitor_id].name}离开了罗德岛\n"
+            now_draw.draw()

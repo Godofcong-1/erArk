@@ -14,7 +14,8 @@ from Script.Design import (
     attr_text,
     character,
     character_behavior,
-    basement
+    basement,
+    game_time
 )
 from Script.Config import game_config, normal_config, character_config
 
@@ -270,6 +271,48 @@ def init_character_dormitory():
                     # print(f"debug n :{n}")
 
 
+def new_character_get_dormitory(character_id: int):
+    """
+    给新角色分配宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data = cache.character_data[character_id]
+    # 分为访客和普通干员
+    if character_id in cache.rhodes_island.visitor_stay_time_dict:
+        guest_room = {
+            key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
+        }
+        guest_room = {
+            x: 0 for j in [k[1] for k in sorted(guest_room.items(), key=lambda x: x[0])] for x in j
+        }
+        npc_count = 0
+        for now_character_id in cache.npc_id_got:
+            now_character_data = cache.character_data[now_character_id]
+            # 客房每个人住一间
+            if "客房" in now_character_data.dormitory:
+                npc_count += 1
+        n = npc_count
+        now_room = list(guest_room.keys())[n]
+        character_data.dormitory = now_room
+    else:
+        dormitory = {
+            key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
+        }
+        dormitory = {
+            x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
+        }
+        npc_count = 0
+        for now_character_id in cache.npc_id_got:
+            now_character_data = cache.character_data[now_character_id]
+            # 普通干员每两个人住一个房间
+            if "宿舍" in now_character_data.dormitory:
+                npc_count += 1
+        n = npc_count // 2
+        now_room = list(dormitory.keys())[n]
+        character_data.dormitory = now_room
+
+
 def init_character_position():
     """初始化角色位置"""
     id_list = cache.npc_id_got
@@ -301,12 +344,30 @@ def init_character_facility_open():
                 cache.rhodes_island.facility_open[open_cid] = True
                 break
 
-def get_new_character(character_id: int):
-    """获得新角色"""
+
+def get_new_character(character_id: int, visitor_flag: bool = False):
+    """
+    获得新角色
+    Keyword arguments:
+    character_id -- 角色id
+    visitor_flag -- 是否为访客
+    """
     cache.npc_id_got.add(character_id)
     character_data = cache.character_data[character_id]
     pl_character_data = cache.character_data[0]
-    init_character_dormitory()
+
+    if visitor_flag:
+        # 停留时间设为七天
+        end_time = game_time.get_sub_date(day = 7,old_date = cache.game_time.date)
+        cache.rhodes_island.visitor_stay_time_dict[character_id] = end_time
+    else:
+        # 如果满足设施开放的前提条件，则开放该设施
+        for open_cid in game_config.config_facility_open:
+            if game_config.config_facility_open[open_cid].NPC_id and game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
+                cache.rhodes_island.facility_open[open_cid] = True
+
+    # 分配角色宿舍
+    new_character_get_dormitory(character_id)
 
     # 初始化新角色位置
     character_position = character_data.position
@@ -320,11 +381,6 @@ def get_new_character(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-
-    # 如果满足设施开放的前提条件，则开放该设施
-    for open_cid in game_config.config_facility_open:
-        if game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
-            cache.rhodes_island.facility_open[open_cid] = True
 
 
 def add_favorability(

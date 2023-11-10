@@ -490,6 +490,8 @@ class SPECIAL_FLAG:
         """ 早安问候状态，int [0无,1要问候,2已问候] """
         self.night_salutation: int = 0
         """ 晚安问候状态，int [0无,1要问候,2已问候] """
+        self.vistor: int = 0
+        """ 访客状态，int [0无,1访问中,2访问过] """
 
 
 class CHARA_WORK:
@@ -766,6 +768,16 @@ class Rhodes_Island:
         # 制造加工区
         self.assembly_line: Dict[int, list, int ,int] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+
+        # 访客区
+        self.visitor_now: int = 0
+        """ 当前访客人数 """
+        self.visitor_max: int = 0
+        """ 访客人数上限 """
+        self.base_move_visitor_flag: bool = False
+        """ 因为基地移动而吸引访客 """
+        self.visitor_stay_time_dict: Dict[int, datetime.datetime] = {}
+        """ 访客停留时间 访客id:停留截止时间 """
 
         # 教育区
 

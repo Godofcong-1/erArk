@@ -197,7 +197,7 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
 
 def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str) -> int:
     """
-    按角色当前状态、素质和能力计算最终该指令是否成功
+    根据角色和目标角色的各属性来计算总实行值
     Keyword arguments:
     character_id -- 角色id
     target_character_id -- 目标角色id
@@ -212,13 +212,19 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if target_character_id == 0:
         return 1
 
-    for judge_id in game_config.config_instruct_judge_data:
-        # 匹配到能力的id与能力等级对应的前提#
-        if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:
-            judge_data = game_config.config_instruct_judge_data[judge_id]
-            judge_data_type = judge_data.need_type
-            judge_data_value = judge_data.value
-            break
+    # 无需判定的情况集合
+    no_instuct_name_set = {"访客离开判断"}
+    no_instuct_judge = 1 if instruct_name in no_instuct_name_set else 0
+
+    # 正常判定的情况
+    if not no_instuct_judge:
+        for judge_id in game_config.config_instruct_judge_data:
+            # 匹配到能力的id与能力等级对应的前提#
+            if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:
+                judge_data = game_config.config_instruct_judge_data[judge_id]
+                judge_data_type = judge_data.need_type
+                judge_data_value = judge_data.value
+                break
 
     if judge_data_type == "D":
         calculation_text = "需要基础实行值至少为" + str(judge_data_value) + "\n"
@@ -291,57 +297,65 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if judge_information:
             calculation_text += f"+{talent_name}({str(judge_information)})"
 
-    # 当前场景有人修正
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data = cache.scene_data[scene_path_str]
-    if len(scene_data.character_list) > 2:
-        if judge_data_type == "S":
-            judge_other_people = 100
-        else:
-            judge_other_people = 30
-        # 露出修正
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-        judge_other_people = int(judge_other_people * (adjust - 1.5))
-        judge += judge_other_people
-        calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
+    # 正常判定的情况
+    if not no_instuct_judge:
 
-    # 助理助攻修正
-    if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
-        assistant_character_data = cache.character_data[character_data.assistant_character_id]
-        if assistant_character_data.assistant_services[8]:
-            judge += 50
-            calculation_text += "+助理助攻(+50)"
+        # 当前场景有人修正
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        scene_data = cache.scene_data[scene_path_str]
+        if len(scene_data.character_list) > 2:
+            if judge_data_type == "S":
+                judge_other_people = 100
+            else:
+                judge_other_people = 30
+            # 露出修正
+            adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
+            judge_other_people = int(judge_other_people * (adjust - 1.5))
+            judge += judge_other_people
+            calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
-    # 今天H被打断了修正
-    judge_h_interrupt = character_data.action_info.h_interrupt * 10
-    judge -= judge_h_interrupt
-    if judge_h_interrupt:
-        calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
+        # 助理助攻修正
+        if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
+            assistant_character_data = cache.character_data[character_data.assistant_character_id]
+            if assistant_character_data.assistant_services[8]:
+                judge += 50
+                calculation_text += "+助理助攻(+50)"
 
-    # 监禁模式修正
-    if target_data.sp_flag.imprisonment:
-        judge += 400
-        calculation_text += "+监禁中(+400)"
+        # 今天H被打断了修正
+        judge_h_interrupt = character_data.action_info.h_interrupt * 10
+        judge -= judge_h_interrupt
+        if judge_h_interrupt:
+            calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
 
-    # 无意识模式修正
-    if target_data.sp_flag.unconscious_h:
-        judge += 1000
-        calculation_text += "+无意识(+1000)"
+        # 监禁模式修正
+        if target_data.sp_flag.imprisonment:
+            judge += 400
+            calculation_text += "+监禁中(+400)"
+
+        # 无意识模式修正
+        if target_data.sp_flag.unconscious_h:
+            judge += 1000
+            calculation_text += "+无意识(+1000)"
  
     # debug模式修正
     if cache.debug_mode == True:
         judge += 99999
         calculation_text += "+debug模式(+99999)"
 
-    calculation_text += " = " + str(judge) + "\n"
-    now_draw = draw.WaitDraw()
-    now_draw.width = 1
-    now_draw.text = calculation_text
-    now_draw.draw()
-    if judge >= judge_data_value:
-        return 1
+    # 正常直接判定，并输出文本
+    if not no_instuct_judge:
+        calculation_text += " = " + str(judge) + "\n"
+        now_draw = draw.WaitDraw()
+        now_draw.width = 1
+        now_draw.text = calculation_text
+        now_draw.draw()
+        if judge >= judge_data_value:
+            return 1
+        else:
+            return 0
+    # 无需判定的指令直接返回计算好的实行值
     else:
-        return 0
+        return judge
 
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
