@@ -1,5 +1,5 @@
 from uuid import UUID
-from typing import List, Dict, Set
+from typing import List, Dict, Set, Tuple
 import datetime
 
 
@@ -704,11 +704,11 @@ class Rhodes_Island:
     """罗德岛相关属性"""
 
     def __init__(self):
-        self.facility_level: Dict[int, int] = {}
+        self.facility_level: Dict[int, Tuple[int]] = {}
         """ 基地当前所有设施的等级 """
-        self.facility_open: Dict[int, bool] = {}
+        self.facility_open: Dict[int, Tuple[bool]] = {}
         """ 基地当前所有待开放设施的开放情况 """
-        self.all_work_npc_set: Dict[int, set] = {}
+        self.all_work_npc_set: Dict[int, Tuple[set]] = {}
         """ 所有工作的所属的干员id合集,工作id:干员id的集合 """
         self.power_use: int = 0
         """ 当前使用电力 """
@@ -720,7 +720,7 @@ class Rhodes_Island:
         """ 干员人数上限 """
         self.all_income: int = 0
         """ 今日全部门总收入 """
-        self.party_day_of_week: Dict[int, int] = {}
+        self.party_day_of_week: Dict[int, Tuple[int]] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
 
         self.current_location: List[int] = []
@@ -730,8 +730,8 @@ class Rhodes_Island:
         """ 生活娱乐区设施数量上限 """
 
         # 工程部
-        self.maintenance_place: Dict[int, str] = {}
-        """ 当前每个角色的待检修地点 """
+        self.maintenance_place: Dict[int, Tuple[str]] = {}
+        """ 当前每个角色的待检修地点，角色id:地点 """
 
         # 生活娱乐区
 
@@ -750,7 +750,7 @@ class Rhodes_Island:
         """ 至今为止的治疗总收入 """
 
         # 文职区
-        self.recruit_now: Dict[int, float] = {}
+        self.recruit_now: Dict[int, Tuple[float]] = {}
         """ 当前招募进度 """
         self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
@@ -758,7 +758,7 @@ class Rhodes_Island:
         # 训练场
 
         # 图书档案区
-        self.book_borrow_dict: Dict[int, int] = {}
+        self.book_borrow_dict: Dict[int, Tuple[int]] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
         self.reader_now: int = 0
         """ 当前图书馆中的读者数量 """
@@ -766,8 +766,8 @@ class Rhodes_Island:
         """ 推荐的阅读类别 """
 
         # 制造加工区
-        self.assembly_line: Dict[int, list, int ,int] = {}
-        """ 流水线情况 流水线id:[0生产类型id, 1干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        self.assembly_line: Dict[int, Tuple[int, list, int ,int]] = {}
+        """ 流水线情况 流水线id:[0生产类型id, 1干员id列表, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区
         self.visitor_now: int = 0
@@ -776,8 +776,8 @@ class Rhodes_Island:
         """ 访客人数上限 """
         self.base_move_visitor_flag: bool = False
         """ 因为基地移动而吸引访客 """
-        self.visitor_stay_time_dict: Dict[int, datetime.datetime] = {}
-        """ 访客停留时间 访客id:停留截止时间 """
+        self.visitor_info: Dict[int, Tuple[datetime.datetime]] = {}
+        """ 访客统计数据 访客id:[0停留开始时间] """
 
         # 教育区
 
@@ -802,7 +802,7 @@ class Rhodes_Island:
 
         self.warehouse_capacity: int = 0
         """ 仓库容量 """
-        self.materials_resouce: Dict[int, int] = {}
+        self.materials_resouce: Dict[int, Tuple[int]] = {}
         """ 素材资源 """
 
 

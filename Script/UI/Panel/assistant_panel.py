@@ -39,9 +39,10 @@ def chose_assistant():
         line_feed.draw()
         line_feed.draw()
 
-        # 遍历所有NPC
+        # 去掉玩家
         cache.npc_id_got.discard(0)
-        id_list = [i for i in cache.npc_id_got]
+        # 去掉访客
+        id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
         # print("debug id_list = ",id_list)
         handle_panel.text_list = id_list
         handle_panel.update()

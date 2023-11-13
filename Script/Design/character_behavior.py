@@ -66,6 +66,7 @@ def init_character_behavior():
                 character_behavior(character_id, cache.game_time)
                 # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         # 新一天刷新
+        # print(f"debug new_day_flag = {new_day_flag}， cache.game_time.day = {cache.game_time.day}， cache.pre_game_time.day = {cache.pre_game_time.day}")
         if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
             new_day_flag = False
             update_new_day()

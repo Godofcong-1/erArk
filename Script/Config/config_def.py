@@ -357,7 +357,7 @@ class InstructJudge:
     instruct_name: str
     """ 对应的指令名字 """
     need_type: str
-    """ 需求类型（D为日常，S为性爱） """
+    """ 需求类型（D为日常，S为性爱，V为访客） """
     value: int
     """ 需求值 """
 

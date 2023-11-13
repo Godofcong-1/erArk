@@ -286,8 +286,11 @@ class Manage_Assembly_Line_Panel:
             all_info_draw.text = now_text
             all_info_draw.draw()
             flag_not_empty = False
+            # 去掉玩家
             cache.npc_id_got.discard(0)
-            for chara_id in cache.npc_id_got:
+            # 去掉访客
+            id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
+            for chara_id in id_list:
                 character_data: game_type.Character = cache.character_data[chara_id]
                 # 找到职业是生产工人的
                 if character_data.work.work_type == 121:

@@ -51,8 +51,11 @@ def change_npc_work_out(width):
         info_draw.text = info_text
         info_draw.draw()
         idle_npc_list = []
+        # 去掉玩家
         cache.npc_id_got.discard(0)
-        for id in cache.npc_id_got:
+        # 去掉访客
+        id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
+        for id in id_list:
             if id in cache.rhodes_island.all_work_npc_set[0]:
                 idle_npc_list.append(id)
         department_panels[0].text_list = idle_npc_list

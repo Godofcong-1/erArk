@@ -2017,6 +2017,9 @@ def handle_confim_recruit():
 
     now_draw.draw()
 
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = 5
     update.game_update_flow(5)
 
 

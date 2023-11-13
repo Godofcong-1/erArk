@@ -279,7 +279,7 @@ def new_character_get_dormitory(character_id: int):
     """
     character_data = cache.character_data[character_id]
     # 分为访客和普通干员
-    if character_id in cache.rhodes_island.visitor_stay_time_dict:
+    if character_id in cache.rhodes_island.visitor_info:
         guest_room = {
             key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
         }
@@ -357,9 +357,15 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     pl_character_data = cache.character_data[0]
 
     if visitor_flag:
-        # 停留时间设为七天
-        end_time = game_time.get_sub_date(day = 7,old_date = cache.game_time.date)
-        cache.rhodes_island.visitor_stay_time_dict[character_id] = end_time
+        # 根据访客区的等级，赋予对应的停留时间
+        now_level = cache.rhodes_island.facility_level[13]
+        facility_cid = game_config.config_facility_effect_data["访客区"][int(now_level)]
+        facility_effect = game_config.config_facility_effect[facility_cid].effect
+        stay_days = facility_effect
+        end_time = game_time.get_sub_date(day = stay_days,old_date = cache.game_time)
+        cache.rhodes_island.visitor_info[character_id] = end_time
+        # 赋予访客flag
+        character_data.sp_flag.vistor = 1
     else:
         # 如果满足设施开放的前提条件，则开放该设施
         for open_cid in game_config.config_facility_open:
@@ -381,6 +387,52 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+def visitor_to_operator(character_id: int):
+    """
+    访客留下成为干员
+    Keyword arguments:
+    character_id -- 角色id
+    """
+
+    character_data = cache.character_data[character_id]
+
+    # flag置为已访问
+    character_data.sp_flag.vistor = 2
+
+    # 从访客列表中移除
+    del cache.rhodes_island.visitor_info[character_id]
+
+    # 如果满足设施开放的前提条件，则开放该设施
+    for open_cid in game_config.config_facility_open:
+        if game_config.config_facility_open[open_cid].NPC_id and game_config.config_facility_open[open_cid].NPC_id == character_data.adv:
+            cache.rhodes_island.facility_open[open_cid] = True
+
+    # 重新分配角色宿舍
+    new_character_get_dormitory(character_id)
+
+
+def visitor_leave(character_id: int):
+    """
+    访客离开
+    Keyword arguments:
+    character_id -- 角色id
+    """
+
+    character_data = cache.character_data[character_id]
+
+    # flag置为已访问
+    character_data.sp_flag.vistor = 2
+
+    # 从访客列表中移除
+    del cache.rhodes_island.visitor_info[character_id]
+
+    # 从已有干员列表中移除
+    cache.npc_id_got.discard(character_id)
+
+    # 位置初始化
+    character_data.position = ["0", "0"]
 
 
 def add_favorability(

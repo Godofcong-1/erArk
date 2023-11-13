@@ -134,22 +134,8 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     """
     new_date = get_sub_date(minute, hour, day, month, year)
 
-    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
-    month_change_flag = False
-    if new_date.month in {1,2}:
-        new_date = new_date.replace(month = 3)
-        month_change_flag = True
-    elif new_date.month in {4,5}:
-        new_date = new_date.replace(month = 6)
-        month_change_flag = True
-    elif new_date.month in {7,8}:
-        new_date = new_date.replace(month = 9)
-        month_change_flag = True
-    elif new_date.month in {10,11}:
-        new_date = new_date.replace(month = 12)
-        month_change_flag = True
     # 切月时对全角色的行为开始时间进行重置
-    if month_change_flag:
+    if new_date.month > cache.game_time.month:
         new_date = new_date.replace(day = 1)
         for character_id in cache.npc_id_got:
             character.init_character_behavior_start_time(character_id, new_date)
@@ -180,6 +166,15 @@ def get_sub_date(
     new_date = old_date + relativedelta.relativedelta(
         years=year, months=month, days=day, hours=hour, minutes=minute
     )
+    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
+    if new_date.month in {1,2}:
+        new_date = new_date.replace(month = 3)
+    elif new_date.month in {4,5}:
+        new_date = new_date.replace(month = 6)
+    elif new_date.month in {7,8}:
+        new_date = new_date.replace(month = 9)
+    elif new_date.month in {10,11}:
+        new_date = new_date.replace(month = 12)
     return new_date
 
 
