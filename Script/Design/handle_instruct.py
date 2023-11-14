@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -191,7 +191,7 @@ def handle_save():
 def handle_abl_up():
     """处理属性上升"""
     see_character_info_panel.line_feed.draw()
-    now_draw = see_character_info_panel.Character_abi_up_main_Handle(
+    now_draw = ability_up_panel.Character_abi_up_main_Handle(
         cache.character_data[0].target_character_id, width
     )
     now_draw.draw()
@@ -204,7 +204,7 @@ def handle_abl_up():
 def handle_owner_abl_up():
     """处理自身属性上升"""
     see_character_info_panel.line_feed.draw()
-    now_draw = see_character_info_panel.Character_abi_up_main_Handle(
+    now_draw = ability_up_panel.Character_abi_up_main_Handle(
         0, width
     )
     now_draw.draw()
@@ -1088,7 +1088,7 @@ def handle_confession():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "告白"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "告白")[0]:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，对方获得戒指
@@ -1126,7 +1126,7 @@ def handle_give_necklace():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "戴上项圈"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "戴上项圈")[0]:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
@@ -1252,7 +1252,7 @@ def handle_do_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     h_flag = False
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式")[0]:
         now_draw = normal_panel.Close_Door_Panel(width)
         # if now_draw.draw():
         now_draw.draw()
@@ -2073,7 +2073,7 @@ def handle_embrace():
     """处理拥抱指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.EMBRACE
         character_data.state = constant.CharacterStatus.STATUS_EMBRACE
     else:
@@ -2097,7 +2097,7 @@ def handle_kiss():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "亲吻"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "亲吻")[0]:
         character_data.behavior.behavior_id = constant.Behavior.KISS
         character_data.state = constant.CharacterStatus.STATUS_KISS
     else:
@@ -2120,7 +2120,7 @@ def handle_touch_head():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_HEAD
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_HEAD
     else:
@@ -2143,7 +2143,7 @@ def handle_touch_breast():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_BREAST
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_BREAST
     else:
@@ -2166,7 +2166,7 @@ def handle_touch_buttocks():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_BUTTOCKS
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
     else:
@@ -2189,7 +2189,7 @@ def handle_touch_ears():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_EARS
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_EARS
     else:
@@ -2213,7 +2213,7 @@ def handle_touch_horn():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_HORN
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_HORN
     else:
@@ -2237,7 +2237,7 @@ def handle_touch_tail():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_TAIL
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_TAIL
     else:
@@ -2261,7 +2261,7 @@ def handle_touch_ring():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_RING
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_RING
     else:
@@ -2285,7 +2285,7 @@ def handle_touch_wing():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_WING
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_WING
     else:
@@ -2309,7 +2309,7 @@ def handle_touch_tentacle():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_TENTACLE
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_TENTACLE
     else:
@@ -2333,7 +2333,7 @@ def handle_touch_car():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_CAR
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_CAR
     else:
@@ -2356,7 +2356,7 @@ def handle_handle_in_handle():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 10
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.HAND_IN_HAND
         character_data.state = constant.CharacterStatus.STATUS_HAND_IN_HAND
     else:
@@ -2380,7 +2380,7 @@ def handle_lap_pillow():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 30
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.LAP_PILLOW
         character_data.state = constant.CharacterStatus.STATUS_LAP_PILLOW
     else:
@@ -2404,7 +2404,7 @@ def handle_raise_skirt():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.RAISE_SKIRT
         character_data.state = constant.CharacterStatus.STATUS_RAISE_SKIRT
     else:
@@ -2429,7 +2429,7 @@ def handle_ask_for_pan():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_PAN
         character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_PAN
     else:
@@ -2454,7 +2454,7 @@ def handle_ask_for_socks():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.ASK_FOR_SOCKS
         character_data.state = constant.CharacterStatus.STATUS_ASK_FOR_SOCKS
     else:
@@ -2476,7 +2476,7 @@ def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_CLITORIS
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_CLITORIS
     else:
@@ -2499,7 +2499,7 @@ def handle_touch_vagina():
     """处理手指插入（V）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_VAGINA
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_VAGINA
     else:
@@ -2522,7 +2522,7 @@ def handle_touch_anus():
     """处理手指插入（A）指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
         character_data.behavior.behavior_id = constant.Behavior.TOUCH_ANUS
         character_data.state = constant.CharacterStatus.STATUS_TOUCH_ANUS
     else:
@@ -3745,7 +3745,7 @@ def handle_clomid():
     """处理排卵促进药指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.CLOMID
         character_data.state = constant.CharacterStatus.STATUS_CLOMID
     character_data.behavior.duration = 10
@@ -3801,7 +3801,7 @@ def handle_normal_sex():
     """处理正常位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
     character_data.behavior.duration = 10
@@ -3821,7 +3821,7 @@ def handle_back_sex():
     """处理背后位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_SEX
     character_data.behavior.duration = 10
@@ -3841,7 +3841,7 @@ def handle_riding_sex():
     """处理骑乘位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.RIDING_SEX
         character_data.state = constant.CharacterStatus.STATUS_RIDING_SEX
     character_data.behavior.duration = 10
@@ -3861,7 +3861,7 @@ def handle_face_seat_sex():
     """处理对面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_SEX
     character_data.behavior.duration = 10
@@ -3881,7 +3881,7 @@ def handle_back_seat_sex():
     """处理背面座位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_SEX
     character_data.behavior.duration = 10
@@ -3900,7 +3900,7 @@ def handle_face_stand_sex():
     """处理对面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_SEX
     character_data.behavior.duration = 10
@@ -3919,7 +3919,7 @@ def handle_back_stand_sex():
     """处理背面立位指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_SEX
     character_data.behavior.duration = 10
@@ -3940,7 +3940,7 @@ def handle_stimulate_g_point():
     """处理刺激G点指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.STIMULATE_G_POINT
         character_data.state = constant.CharacterStatus.STATUS_STIMULATE_G_POINT
     character_data.behavior.duration = 10
@@ -3961,7 +3961,7 @@ def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.WOMB_OS_CARESS
         character_data.state = constant.CharacterStatus.STATUS_WOMB_OS_CARESS
     character_data.behavior.duration = 10
@@ -3982,7 +3982,7 @@ def handle_womb_insertion():
     """处理插入子宫指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.WOMB_INSERTION
         character_data.state = constant.CharacterStatus.STATUS_WOMB_INSERTION
     character_data.behavior.duration = 10
@@ -4002,7 +4002,7 @@ def handle_normal_anal_sex():
     """处理正常位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.NORMAL_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_NORMAL_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4022,7 +4022,7 @@ def handle_back_anal_sex():
     """处理后背位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4042,7 +4042,7 @@ def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.RIDING_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_RIDING_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4062,7 +4062,7 @@ def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4082,7 +4082,7 @@ def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4101,7 +4101,7 @@ def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4120,7 +4120,7 @@ def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_ANAL_SEX
     character_data.behavior.duration = 10
@@ -4141,7 +4141,7 @@ def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.STIMULATE_SIGMOID_COLON
         character_data.state = constant.CharacterStatus.STATUS_STIMULATE_SIGMOID_COLON
     character_data.behavior.duration = 10
@@ -4162,7 +4162,7 @@ def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交"):
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "A性交")[0]:
         character_data.behavior.behavior_id = constant.Behavior.STIMULATE_VAGINA
         character_data.state = constant.CharacterStatus.STATUS_STIMULATE_VAGINA
     character_data.behavior.duration = 10
@@ -4230,7 +4230,7 @@ def handle_pissing_play():
 def handle_urethral_insertion():
     """处理尿道插入指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    # if character.calculation_instuct_judege(0,character_data.target_character_id,"U性交"):
+    # if character.calculation_instuct_judege(0,character_data.target_character_id,"U性交")[0]:
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)

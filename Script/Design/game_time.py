@@ -64,9 +64,32 @@ def get_date_text(game_time_data: datetime.datetime = None) -> str:
     )
 
 
+def get_date_until_day(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取到日为止的时间信息描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
+    return _("时间:{year}年{month}月{day}日").format(
+        year=game_time_data.year,
+        month=month_text,
+        day=game_time_data.day,
+    )
+
+
 def get_year_text(game_time_data: datetime.datetime = None) -> str:
     """
-    获取时间信息描述文本
+    获取年份描述文本
     Keyword arguments:
     game_timeData -- 时间数据，若为None，则获取当前游戏时间
     """
@@ -79,7 +102,7 @@ def get_year_text(game_time_data: datetime.datetime = None) -> str:
 
 def get_month_text(game_time_data: datetime.datetime = None) -> str:
     """
-    获取时间信息描述文本
+    获取月份描述文本
     Keyword arguments:
     game_timeData -- 时间数据，若为None，则获取当前游戏时间
     """
@@ -100,7 +123,7 @@ def get_month_text(game_time_data: datetime.datetime = None) -> str:
 
 def get_day_and_time_text(game_time_data: datetime.datetime = None) -> str:
     """
-    获取时间信息描述文本
+    获取日和时间描述文本
     Keyword arguments:
     game_timeData -- 时间数据，若为None，则获取当前游戏时间
     """

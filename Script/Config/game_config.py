@@ -233,7 +233,8 @@ config_assistant_services: Dict[int, config_def.AssistantServices] = {}
 """ 助理服务数据 服务id:详细内容 """
 config_assistant_services_option: Dict[int, Dict[int, str]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
-
+config_visitor_stay_attitude: Dict[int, config_def.Visitor_Stay_Attitude] = {}
+""" 访客停留态度 """
 
 
 def load_data_json():
@@ -977,6 +978,16 @@ def load_first_bonus():
         config_first_bonus[now_tem.cid] = now_tem
 
 
+def load_visitor_stay_attitude():
+    """载入访客停留态度数据"""
+    now_data = config_data["Visitor_Stay_Attitude"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Visitor_Stay_Attitude()
+        now_tem.__dict__ = tem_data
+        config_visitor_stay_attitude[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1138,3 +1149,4 @@ def init():
     load_first_bonus()
     load_chara_setting()
     load_assistant_services()
+    load_visitor_stay_attitude()

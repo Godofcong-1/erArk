@@ -3208,7 +3208,7 @@ def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
             return 1
     return 0
 
@@ -3224,7 +3224,7 @@ def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
             return 1
     return 0
 
@@ -3240,7 +3240,7 @@ def handle_instruct_judge_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式"):
+        if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式")[0]:
             return 1
     return 0
 

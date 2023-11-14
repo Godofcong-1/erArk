@@ -359,6 +359,7 @@ def calculate_visitor_arrivals_and_departures():
     """
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
+    now_draw.style = "gold_enrod"
 
     # 因罗德岛移动而产生的访客
     if cache.rhodes_island.base_move_visitor_flag:
@@ -367,7 +368,7 @@ def calculate_visitor_arrivals_and_departures():
         # 判断是否有空闲客房
         if not check_facility_open():
             # 输出提示信息
-            now_draw.text = f"\n 由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n"
+            now_draw.text = f"\n ●由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n"
             now_draw.draw()
         else:
             # 未招募的干员id
@@ -384,25 +385,37 @@ def calculate_visitor_arrivals_and_departures():
             # 处理获得新访客
             character_handle.get_new_character(visitor_id, True)
             # 输出提示信息
-            now_draw.text = f"\n {cache.character_data[visitor_id].name}作为临时访客抵达了罗德岛\n"
+            now_draw.text = f"\n ○{cache.character_data[visitor_id].name}作为临时访客抵达了罗德岛\n"
             now_draw.draw()
 
     # 访客离开
     # 遍历全部访客
-    for visitor_id in cache.rhodes_island.visitor_info:
+    now_visitor_id_list = list(cache.rhodes_island.visitor_info.keys())
+    for visitor_id in now_visitor_id_list:
         character_data: game_type.Character = cache.character_data[visitor_id]
         # 判断是否已经超过停留时间
         if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.visitor_info[visitor_id]):
-            now_draw.text = f"\n 访客{character_data.name}预定的停留期限到了。"
-            if character.calculation_instuct_judege(0, visitor_id, "访客留下"):
+            # 计算访客留下概率
+            _, _, stay_posibility = character.calculation_instuct_judege(0, visitor_id, "访客留下")
+            # 遍历所有留下态度
+            for attitude_id in game_config.config_visitor_stay_attitude:
+                attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
+                if stay_posibility >= attitude_data.rate:
+                    continue
+                # 获得留下态度对应的文本
+                stay_text = attitude_data.name
+                break
+            now_draw.text = f"\n 访客{character_data.name}预定的停留期限到了，她当前的留下意愿为：【{stay_text}】"
+            # 随机计算访客是否留下
+            if random.random() < stay_posibility:
                 # 访客留下
                 character_handle.visitor_to_operator(visitor_id)
                 # 输出提示信息
-                now_draw.text += f"\n {character_data.name}决定放弃离开，留在罗德岛成为一名正式干员\n"
+                now_draw.text += f"\n ○{character_data.name}决定放弃离开，留在罗德岛成为一名正式干员\n"
                 now_draw.draw()
             else:
                 # 访客离开
                 character_handle.visitor_leave(visitor_id)
                 # 输出提示信息
-                now_draw.text = f"\n {character_data.name}打包好行李，离开了罗德岛\n"
+                now_draw.text += f"\n ●{character_data.name}打包好行李，离开了罗德岛\n"
                 now_draw.draw()

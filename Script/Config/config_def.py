@@ -684,6 +684,17 @@ class Trust_Level:
     """ 实行值加成 """
 
 
+class Visitor_Stay_Attitude:
+    """ 访客停留态度 """
+
+    cid: int
+    """ 态度id """
+    name: str
+    """ 态度名 """
+    rate: float
+    """ 态度几率 """
+
+
 class WeekDay:
     """ 星期描述配置 """
 

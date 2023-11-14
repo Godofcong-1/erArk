@@ -195,22 +195,24 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     return favorability
 
 
-def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str) -> int:
+def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str):
     """
-    根据角色和目标角色的各属性来计算总实行值
-    Keyword arguments:
-    character_id -- 角色id
-    target_character_id -- 目标角色id
-    instruct_name -- 指令名字
-    Return arguments:
-    int -- 最终的好感值
+    根据角色和目标角色的各属性来计算总实行值\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    target_character_id -- 目标角色id\n
+    instruct_name -- 指令名字\n
+    Return arguments:\n
+    bool -- 是否成功\n
+    int -- 实行值\n
+    float -- 实行值与目标值的比值\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
 
     # 对玩家为目标的指令是必定成功的
     if target_character_id == 0:
-        return 1
+        return [True, 1, 1.0]
 
     for judge_id in game_config.config_instruct_judge_data:
         # 匹配到能力的id与能力等级对应的前提#
@@ -220,10 +222,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge_data_value = judge_data.value
             break
 
+    calculation_text = ""
     if judge_data_type == "D":
-        calculation_text = "需要基础实行值至少为" + str(judge_data_value) + "\n"
+        calculation_text += "需要基础实行值至少为" + str(judge_data_value) + "\n"
     elif judge_data_type == "S":
-        calculation_text = "需要性爱实行值至少为" + str(judge_data_value) + "\n"
+        calculation_text += "需要性爱实行值至少为" + str(judge_data_value) + "\n"
     calculation_text += "当前值为："
 
     judge = 0
@@ -344,7 +347,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         now_draw.text = calculation_text
         now_draw.draw()
     # 返回判定结果
-    return judge >= judge_data_value
+    return [judge >= judge_data_value, judge, judge / judge_data_value]
 
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
