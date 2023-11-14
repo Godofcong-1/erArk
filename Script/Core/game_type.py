@@ -778,6 +778,8 @@ class Rhodes_Island:
         """ 因为基地移动而吸引访客 """
         self.visitor_info: Dict[int, Tuple[datetime.datetime]] = {}
         """ 访客统计数据 访客id:[0停留开始时间] """
+        self.last_visitor_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 上次访客到来时间 """
 
         # 教育区
 

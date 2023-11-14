@@ -41,15 +41,16 @@ class GameTimeInfoPanel:
         day_draw.text = f"{game_time.get_day_and_time_text()} {game_time.get_week_day_text()} "
         now_draw.draw_list.append(day_draw)
         now_width += len(day_draw)
-        judge, solar_period = game_time.judge_datetime_solar_period(cache.game_time)
-        if judge:
-            solar_period_config = game_config.config_solar_period[solar_period]
-            solar_period_draw = draw.NormalDraw()
-            solar_period_draw.text = f"{solar_period_config.name} "
-            solar_period_draw.width = self.width - now_width
-            solar_period_draw.style = "solarperiod"
-            now_draw.draw_list.append(solar_period_draw)
-            now_width += len(solar_period_draw)
+        # TODO 注释掉节气部分，之后需要在这里换成节日
+        # judge, solar_period = game_time.judge_datetime_solar_period(cache.game_time)
+        # if judge:
+        #     solar_period_config = game_config.config_solar_period[solar_period]
+        #     solar_period_draw = draw.NormalDraw()
+        #     solar_period_draw.text = f"{solar_period_config.name} "
+        #     solar_period_draw.width = self.width - now_width
+        #     solar_period_draw.style = "solarperiod"
+        #     now_draw.draw_list.append(solar_period_draw)
+        #     now_width += len(solar_period_draw)
         # 时段
         sun_time = game_time.get_sun_time(cache.game_time)
         sun_time_config = game_config.config_sun_time[sun_time]

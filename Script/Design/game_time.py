@@ -251,7 +251,7 @@ def count_day_for_datetime(
     Return arguments:
     int -- 经过天数
     """
-    return (start_date - end_date).days
+    return (end_date - start_date).days
 
 
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:

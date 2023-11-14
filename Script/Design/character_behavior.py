@@ -422,7 +422,8 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
     if not add_time:
         character_data.behavior = game_type.Behavior()
-        character_data.behavior.start_time = end_time
+        character_data.behavior.start_time = now_time
+        character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         return 0
     # 助理的特殊判断
