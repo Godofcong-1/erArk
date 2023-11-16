@@ -750,8 +750,8 @@ class Rhodes_Island:
         """ 至今为止的治疗总收入 """
 
         # 文职区
-        self.recruit_now: Dict[int, Tuple[float]] = {}
-        """ 当前招募进度 """
+        self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}
+        """ 当前招募进度 招募线id:[0招募进度, 1招募类型id, 2负责该线的干员id集合, 3招募效率百分比(如2.5)] """
         self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
 
@@ -766,8 +766,8 @@ class Rhodes_Island:
         """ 推荐的阅读类别 """
 
         # 制造加工区
-        self.assembly_line: Dict[int, Tuple[int, list, int ,int]] = {}
-        """ 流水线情况 流水线id:[0生产类型id, 1干员id列表, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        self.assembly_line: Dict[int, Tuple[int, set, int ,int]] = {}
+        """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区
         self.visitor_now: int = 0

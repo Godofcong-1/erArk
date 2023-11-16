@@ -235,6 +235,8 @@ config_assistant_services_option: Dict[int, Dict[int, str]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
 config_visitor_stay_attitude: Dict[int, config_def.Visitor_Stay_Attitude] = {}
 """ 访客停留态度 """
+config_recruitment_strategy: Dict[int, config_def.Recruitment_Strategy] = {}
+""" 招募策略 """
 
 
 def load_data_json():
@@ -988,6 +990,16 @@ def load_visitor_stay_attitude():
         config_visitor_stay_attitude[now_tem.cid] = now_tem
 
 
+def load_recruitment_strategy():
+    """载入招募策略数据"""
+    now_data = config_data["Recruitment_Strategy"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Recruitment_Strategy()
+        now_tem.__dict__ = tem_data
+        config_recruitment_strategy[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1150,3 +1162,4 @@ def init():
     load_chara_setting()
     load_assistant_services()
     load_visitor_stay_attitude()
+    load_recruitment_strategy()

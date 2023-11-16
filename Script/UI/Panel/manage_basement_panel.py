@@ -5,7 +5,7 @@ from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
 from Script.Design import basement
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel
+from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -118,7 +118,7 @@ class Manage_Basement_Panel:
 
         title_text = "管理罗德岛"
         panel_list = [("罗德岛资源总览"), ("各部门工作概况")]
-        department_son_panel_button_dict = {"工程部":"[基建系统]", "制造加工区":"[生产系统]", "图书馆":"[图书馆管理系统]", "贸易区":"[资源交易系统]"}
+        department_son_panel_button_dict = {"工程部":"[基建系统]", "制造加工区":"[生产系统]", "图书馆":"[图书馆管理系统]", "贸易区":"[资源交易系统]", "文职部":"[招募系统]"}
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -286,6 +286,8 @@ class Manage_Basement_Panel:
             now_panel = manage_library.Manage_Library_Panel(self.width)
         elif "资源交易系统" in son_panel:
             now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
+        elif "招募系统" in son_panel:
+            now_panel =recruit_panel.Recruit_Panel(self.width)
         now_panel.draw()
 
     def show_department(self, department: str):
@@ -334,9 +336,9 @@ class Manage_Basement_Panel:
                     now_text += f"\n  当前已招募未确认干员人数为：{len(cache.rhodes_island.recruited_id)}人，请前往博士办公室确认"
                 else:
                     now_text += f"\n  当前没有已招募干员，请等待招募完成"
-                for i in {0,1,2}:
-                    if i in cache.rhodes_island.recruit_now:
-                        now_text += f"\n  {i+1}号招募位进度：{round(cache.rhodes_island.recruit_now[0],1)}%/100%"
+                for i in {0,1,2,3}:
+                    if i in cache.rhodes_island.recruit_line:
+                        now_text += f"\n  {i+1}号招募位进度：{round(cache.rhodes_island.recruit_line[i][0],1)}%/100%"
 
             elif department == "图书馆":
                 reader_count = cache.rhodes_island.reader_now

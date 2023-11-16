@@ -511,6 +511,17 @@ class Recipes:
     """ 说明介绍 """
 
 
+class Recruitment_Strategy:
+    """ 招聘策略配置 """
+
+    cid: int
+    """ 招聘策略id """
+    name: str
+    """ 招聘策略名 """
+    introduce: str
+    """ 招聘策略介绍 """
+
+
 class Reproduction_period:
     """ 生理期周期 """
 

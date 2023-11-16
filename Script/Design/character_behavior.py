@@ -100,11 +100,11 @@ def update_recruit():
     """刷新招募栏位"""
 
     # 遍历全招募栏
-    for key in cache.rhodes_island.recruit_now:
+    for recruit_line_id in cache.rhodes_island.recruit_line:
 
         # 如果超过100则进行结算
-        if cache.rhodes_island.recruit_now[key] >= 100:
-            cache.rhodes_island.recruit_now[key] = 0
+        if cache.rhodes_island.recruit_line[recruit_line_id][0] >= 100:
+            cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
 
             # 开始随机获得招募npc的id
             wait_id_set = []
@@ -125,7 +125,7 @@ def update_recruit():
             # 之前做该栏位工作的HR，也把栏位数据清零
             for id in cache.rhodes_island.all_work_npc_set[71]:
                 character_data = cache.character_data[id]
-                if character_data.work.recruit_index == key:
+                if character_data.work.recruit_index == recruit_line_id:
                     character_data.work.recruit_index = -1
 
 

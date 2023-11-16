@@ -3906,29 +3906,30 @@ def handle_recruit_add_just(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 获得加成 #
     now_add_lust = adjust * 5 * random.uniform(0.5, 1.5)
+    # debug下直接拉满
     if cache.debug_mode:
         now_add_lust += 100
 
-    # 如果角色没有确定招募栏位，则选一个当前空的指派过去
-    if character_data.work.recruit_index == -1:
-        select_index = 0
-        for key in cache.rhodes_island.recruit_now.keys():
-            if cache.rhodes_island.recruit_now[key] == 0:
-                select_index = key
-                break
-        character_data.work.recruit_index = key
-    else:
-        select_index = character_data.work.recruit_index
+    select_index = -1
+    # 如果角色已经确定招募栏位，则直接使用
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+        if character_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
+            select_index = recruit_line_id
+            break
+    # 如果角色没有确定招募栏位或是玩家来招募，则随机一个指派过去
+    if select_index == -1 or character_id == 0:
+        line_id_list = list(cache.rhodes_island.recruit_line.keys())
+        select_index = random.choice(line_id_list)
 
-    # 如果是玩家在招募的话，显示招募进度的增加情况
+    # 如果是玩家在招募或玩家与招募者在同一位置的话，显示招募进度的增加情况
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_now[0] + now_add_lust,1)}%\n")
+        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[0] + now_add_lust,1)}%\n")
         now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
-    cache.rhodes_island.recruit_now[select_index] += now_add_lust
+    cache.rhodes_island.recruit_line[select_index] += now_add_lust
     character_behavior.update_recruit()
 
 

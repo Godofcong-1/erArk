@@ -1275,6 +1275,8 @@ class Panel:
     """ 普瑞赛斯面板 """
     NAVIGATION = 25
     """ 导航面板 """
+    RECRUITMENT = 26
+    """ 招募面板 """
 
 
 class SecondBehavior:
@@ -1724,6 +1726,8 @@ class Instruct:
     """ 助理相关调整 """
     BUILDING = 0
     """ 基建系统 """
+    RECRUITMENT = 0
+    """ 招募情况 """
     PRTS = 0
     """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0

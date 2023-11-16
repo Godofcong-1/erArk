@@ -56,6 +56,10 @@ def get_base_zero() -> dict:
     # 访客来访时间初始化
     base_data.last_visitor_time = cache.game_time
 
+    # 初始化流水线
+    base_data.recruit_line[0] = [0,0,set(),0]
+    base_data.assembly_line[0] = [0,set(),0,0,0]
+
     return base_data
 
 def get_base_updata():
@@ -112,12 +116,24 @@ def get_base_updata():
             cache.rhodes_island.soldier_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化招募条
         elif facility_name == "文职部":
-            if 0 not in cache.rhodes_island.recruit_now:
-                cache.rhodes_island.recruit_now[0] = 0
-            if level >= 3 and 1 not in cache.rhodes_island.recruit_now:
-                cache.rhodes_island.recruit_now[1] = 0
-            if level >= 5 and 2 not in cache.rhodes_island.recruit_now:
-                cache.rhodes_island.recruit_now[2] = 0
+            if 0 not in cache.rhodes_island.recruit_line:
+                cache.rhodes_island.recruit_line[0] = [0,0,set(),0]
+            if level >= 3 and 1 not in cache.rhodes_island.recruit_line:
+                cache.rhodes_island.recruit_line[1] = [0,0,set(),0]
+            if level >= 4 and 2 not in cache.rhodes_island.recruit_line:
+                cache.rhodes_island.recruit_line[2] = [0,0,set(),0]
+            if level >= 5 and 3 not in cache.rhodes_island.recruit_line:
+                cache.rhodes_island.recruit_line[3] = [0,0,set(),0]
+            # 计算当前总效率
+            for recruit_line_id in cache.rhodes_island.recruit_line:
+                # 遍历输出干员的能力效率加成
+                all_effect = 0
+                for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
+                    character_data: game_type.Character = cache.character_data[chara_id]
+                    character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
+                    all_effect += character_effect
+                all_effect *= 1 + (facility_effect / 100)
+                cache.rhodes_island.recruit_line[recruit_line_id][3] = all_effect
         elif facility_name == "制造加工区":
             # 初始化流水线
             if 0 not in cache.rhodes_island.assembly_line:
@@ -189,15 +205,42 @@ def update_work_people():
 
     # 遍历所有干员，将有职位的干员加入对应职位集合
     cache.npc_id_got.discard(0)
-    for id in cache.npc_id_got:
-        character_data = cache.character_data[id]
+    for chara_id in cache.npc_id_got:
+        character_data = cache.character_data[chara_id]
 
         # 如果干员有职位，将干员加入对应职位集合
         if character_data.work.work_type:
-            cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(id)
+            cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
+
+            # 招聘HR如果没有安排到招聘线，则随机分配
+            if character_data.work.work_type == 71:
+                select_index = -1
+                for recruit_line_id in cache.rhodes_island.recruit_line:
+                    # 已分配则跳过
+                    if chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
+                        select_index = recruit_line_id
+                        break
+                # 未分配则分配
+                if select_index == -1:
+                    line_id_list = list(cache.rhodes_island.recruit_line.keys())
+                    select_index = random.choice(line_id_list)
+                    cache.rhodes_island.recruit_line[select_index][2].add(chara_id)
+
+            # 工人如果没有被分配到流水线，则随机分配
+            if character_data.work.work_type == 121:
+                select_index = -1
+                for assembly_line_id in cache.rhodes_island.assembly_line:
+                    if chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
+                        select_index = assembly_line_id
+                        break
+                if select_index == -1:
+                    line_id_list = list(cache.rhodes_island.assembly_line.keys())
+                    select_index = random.choice(line_id_list)
+                    cache.rhodes_island.assembly_line[select_index][1].add(chara_id)
+
         else:
-            cache.rhodes_island.all_work_npc_set[0].add(id)
+            cache.rhodes_island.all_work_npc_set[0].add(chara_id)
         # print(f"debug cache.base_resouce.all_work_npc_set = {cache.base_resouce.all_work_npc_set}")
 
 
@@ -395,19 +438,19 @@ def calculate_visitor_arrivals_and_departures():
                 # 获得留下态度对应的文本
                 stay_text = attitude_data.name
                 break
-            now_draw.text = f"\n 访客{character_data.name}预定的停留期限到了，她当前的留下意愿为：【{stay_text}】"
+            now_draw.text = f"\n 访客【{character_data.name}】预定的停留期限到了，她当前的留下意愿为：【{stay_text}】"
             # 随机计算访客是否留下
             if random.random() < stay_posibility:
                 # 访客留下
                 character_handle.visitor_to_operator(visitor_id)
                 # 输出提示信息
-                now_draw.text += f"\n ○{character_data.name}决定放弃离开，留在罗德岛成为一名正式干员\n"
+                now_draw.text += f"\n ○【{character_data.name}】决定放弃离开，留在罗德岛成为一名正式干员\n"
                 now_draw.draw()
             else:
                 # 访客离开
                 character_handle.visitor_leave(visitor_id)
                 # 输出提示信息
-                now_draw.text += f"\n ●{character_data.name}打包好行李，离开了罗德岛\n"
+                now_draw.text += f"\n ●【{character_data.name}】打包好行李，离开了罗德岛\n"
                 now_draw.draw()
 
 
@@ -439,5 +482,5 @@ def calculate_random_visitor_arrivals():
         # 处理获得新访客
         character_handle.get_new_character(visitor_id, True)
         # 输出提示信息
-        now_draw.text = f"\n ○{cache.character_data[visitor_id].name}作为临时访客抵达了罗德岛\n"
+        now_draw.text = f"\n ○【{cache.character_data[visitor_id].name}】作为临时访客抵达了罗德岛\n"
         now_draw.draw()

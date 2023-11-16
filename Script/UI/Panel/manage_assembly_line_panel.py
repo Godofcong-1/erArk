@@ -161,7 +161,6 @@ class Manage_Assembly_Line_Panel:
                 _(button_text),
                 self.width,
                 cmd_func=self.select_npc_position,
-                args=assembly_line_id,
                 )
             return_list.append(button_draw.return_text)
             button_draw.draw()
@@ -254,7 +253,7 @@ class Manage_Assembly_Line_Panel:
                 if yrn in return_list:
                     break
 
-    def select_npc_position(self, assembly_line_id):
+    def select_npc_position(self):
         """选择干员的工位"""
 
         self.now_chara_id = -1

@@ -103,7 +103,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[005]:粉红凭证：{cache.rhodes_island.materials_resouce[4]}")
                 draw_text_list.append(f"[006]:基地当前所有待开放设施的开放情况")
                 draw_text_list.append(f"[007]:一周内的派对计划，周一0~周日6:娱乐id：{cache.rhodes_island.party_day_of_week}")
-                draw_text_list.append(f"[008]:当前招募进度：{cache.rhodes_island.recruit_now}")
+                draw_text_list.append(f"[008]:当前招募进度：{cache.rhodes_island.recruit_line}")
                 draw_text_list.append(f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}")
 
                 for i in range(len(draw_text_list)):
@@ -429,14 +429,14 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.rhodes_island.party_day_of_week = new_value
                 elif key_index == 8:
-                    info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_now}"
+                    info_text = f"[008]:当前招募进度：{cache.rhodes_island.recruit_line}"
                     info_draw.text = info_text
                     info_draw.draw()
                     line_feed.draw()
                     change_value_panel = panel.AskForOneMessage()
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
-                    cache.rhodes_island.recruit_now = new_value
+                    cache.rhodes_island.recruit_line = new_value
                 elif key_index == 9:
                     info_text = f"[009]:已招募待确认的干员id：{cache.rhodes_island.recruited_id}"
                     info_draw.text = info_text

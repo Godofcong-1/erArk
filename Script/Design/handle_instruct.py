@@ -1898,6 +1898,7 @@ def handle_ASSISTANT_ADJUSTMENTS():
     """处理助理相关调整指令"""
     cache.now_panel_id = constant.Panel.ASSISTANT
 
+
 @add_instruct(
     constant.Instruct.BUILDING, constant.InstructType.WORK, _("基建系统"),
     {constant_promise.Premise.NOT_H,
@@ -1906,6 +1907,17 @@ def handle_ASSISTANT_ADJUSTMENTS():
 def handle_building():
     """处理基建系统指令"""
     cache.now_panel_id = constant.Panel.BUILDING
+
+
+@add_instruct(
+    constant.Instruct.RECRUITMENT, constant.InstructType.WORK, _("招募情况"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_HR_OFFICE, }
+)
+def handle_recruiment():
+    """处理招募情况指令"""
+    cache.now_panel_id = constant.Panel.RECRUITMENT
+
 
 @add_instruct(
     constant.Instruct.PRTS, constant.InstructType.WORK, _("普瑞赛斯"),
