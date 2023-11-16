@@ -3925,11 +3925,11 @@ def handle_recruit_add_just(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[0] + now_add_lust,1)}%\n")
+        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1)}%\n")
         now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
-    cache.rhodes_island.recruit_line[select_index] += now_add_lust
+    cache.rhodes_island.recruit_line[select_index][0] += now_add_lust
     character_behavior.update_recruit()
 
 
