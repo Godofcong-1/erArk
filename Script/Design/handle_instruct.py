@@ -1920,6 +1920,17 @@ def handle_recruiment():
 
 
 @add_instruct(
+    constant.Instruct.INVITE_VISITOR, constant.InstructType.WORK, _("邀请访客"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
+     constant_promise.Premise.VISITOR_ZONE_GE_2, }
+)
+def handle_invite_visitor():
+    """处理邀请访客指令"""
+    cache.now_panel_id = constant.Panel.VISITOR
+
+
+@add_instruct(
     constant.Instruct.PRTS, constant.InstructType.WORK, _("普瑞赛斯"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG, }

@@ -470,6 +470,21 @@ def handle_target_no_player(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.VISITOR_ZONE_GE_2)
+def handle_visitor_zone_ge_2(character_id: int) -> int:
+    """
+    访客区等级大于等于2级
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_level = cache.rhodes_island.facility_level[13]
+    if now_level >= 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PLACE_EXPOSED)
 def handle_place_exposed(character_id: int) -> int:
     """

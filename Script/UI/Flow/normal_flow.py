@@ -25,6 +25,7 @@ from Script.UI.Panel import (
     originium_arts,
     prts_panel,
     recruit_panel,
+    visitor_panel,
 )
 from Script.Config import normal_config
 
@@ -193,4 +194,10 @@ def prts_flow():
 def recruit_flow():
     """公开招募面板"""
     now_panel = recruit_panel.Recruit_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.VISITOR)
+def visitor_flow():
+    """访客面板"""
+    now_panel = visitor_panel.Invite_Visitor_Panel(width)
     now_panel.draw()

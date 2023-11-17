@@ -1277,6 +1277,8 @@ class Panel:
     """ 导航面板 """
     RECRUITMENT = 26
     """ 招募面板 """
+    VISITOR = 27
+    """ 访客面板 """
 
 
 class SecondBehavior:
@@ -1728,6 +1730,8 @@ class Instruct:
     """ 基建系统 """
     RECRUITMENT = 0
     """ 招募情况 """
+    INVITE_VISITOR = 0
+    """ 邀请访客 """
     PRTS = 0
     """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0
