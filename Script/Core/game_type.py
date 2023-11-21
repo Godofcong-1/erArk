@@ -770,8 +770,6 @@ class Rhodes_Island:
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区
-        self.visitor_now: int = 0
-        """ 当前访客人数 """
         self.visitor_max: int = 0
         """ 访客人数上限 """
         self.base_move_visitor_flag: bool = False
@@ -780,6 +778,8 @@ class Rhodes_Island:
         """ 访客统计数据 访客id:[0停留开始时间] """
         self.last_visitor_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 上次访客到来时间 """
+        self.invite_visitor: List[int, float, float] = {}
+        """ 当前邀请进度 [0目标角色id, 1招募进度, 2招募效率百分比(如2.5)] """
 
         # 教育区
 

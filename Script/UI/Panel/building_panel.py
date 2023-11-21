@@ -145,6 +145,7 @@ class Building_Panel:
                 else:
                     label.draw()
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -250,6 +251,7 @@ class Building_Panel:
                 info_draw.width = self.width
                 info_draw.draw()
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)

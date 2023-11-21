@@ -491,12 +491,14 @@ def io_clear_cmd(*cmd_numbers: list):
     if cmd_numbers:
         for num in cmd_numbers:
             if num in cmd_tag_map:
-                index_first = textbox.tag_ranges(cmd_tag_map[num])[0]
-                index_last = textbox.tag_ranges(cmd_tag_map[num])[1]
-                for tag_name in textbox.tag_names(index_first):
-                    textbox.tag_remove(tag_name, index_first, index_last)
-                textbox.tag_add("standard", index_first, index_last)
-                textbox.tag_delete(cmd_tag_map[num])
+                tag_ranges = textbox.tag_ranges(cmd_tag_map[num])
+                if len(tag_ranges):
+                    index_first = tag_ranges[0]
+                    index_last = tag_ranges[1]
+                    for tag_name in textbox.tag_names(index_first):
+                        textbox.tag_remove(tag_name, index_first, index_last)
+                    textbox.tag_add("standard", index_first, index_last)
+                    textbox.tag_delete(cmd_tag_map[num])
                 del cmd_tag_map[num]
     else:
         for num in cmd_tag_map.keys():

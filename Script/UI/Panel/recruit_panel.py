@@ -52,7 +52,7 @@ class Recruit_Panel:
                 now_text += f" 当前已招募待确认的干员有："
                 for chara_id in cache.rhodes_island.recruited_id:
                     character_data: game_type.Character = cache.character_data[chara_id]
-                    now_text += f" [{chara_id}]{character_data.name}"
+                    now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
                 now_text += f"\n"
 
             all_info_draw.text = now_text
@@ -168,7 +168,7 @@ class Recruit_Panel:
 
                         # 输出策略信息
                         button_draw = draw.LeftButton(
-                            f"[{str(cid).rjust(3,'0')}]{recruitment_strategy_data.name}：{recruitment_strategy_data.introduce}",
+                            f"[{str(cid).rjust(2,'0')}]{recruitment_strategy_data.name}：{recruitment_strategy_data.introduce}",
                             f"\n{cid}",
                             window_width ,
                             cmd_func=self.change_recruit_line_produce,

@@ -59,6 +59,7 @@ def get_base_zero() -> dict:
     # 初始化流水线
     base_data.recruit_line[0] = [0,0,set(),0]
     base_data.assembly_line[0] = [0,set(),0,0,0]
+    base_data.invite_visitor = [0,0,0]
 
     return base_data
 
@@ -154,6 +155,20 @@ def get_base_updata():
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
                     cache.rhodes_island.assembly_line[assembly_line_id][2] += character_effect
+        elif facility_name == "访客区":
+            # 刷新最大访客数量
+            # 遍历全部客房
+            room_count = 0
+            for room_id in cache.rhodes_island.facility_open:
+                # 跳过非客房
+                if room_id <= 1200 or room_id >= 1300:
+                    continue
+                # 跳过未开放的客房
+                if not cache.rhodes_island.facility_open[room_id]:
+                    continue
+                room_count += 1
+            cache.rhodes_island.visitor_max = room_count
+
 
 
 def update_base_resouce_newday():
@@ -372,7 +387,7 @@ def settle_assembly_line(newdayflag = False):
 
 def check_facility_open():
     """
-    判断是否有空闲客房
+    判断是否有空闲客房，暂时没有用
     """
     # 遍历全部客房
     for room_id in cache.rhodes_island.facility_open:
@@ -456,14 +471,14 @@ def calculate_visitor_arrivals_and_departures():
 
 def calculate_random_visitor_arrivals():
     """
-    结算随机访客抵达和离开
+    结算随机访客抵达
     """
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.style = "gold_enrod"
 
     # 判断是否有空闲客房
-    if not check_facility_open():
+    if len(cache.rhodes_island.visitor_info) >= cache.rhodes_island.visitor_max:
         # 输出提示信息
         now_draw.text = f"\n ●由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n"
         now_draw.draw()

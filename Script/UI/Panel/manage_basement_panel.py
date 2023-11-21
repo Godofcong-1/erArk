@@ -1,11 +1,9 @@
-from turtle import position
 from typing import Dict, List
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import basement
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel
+from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -118,7 +116,14 @@ class Manage_Basement_Panel:
 
         title_text = "管理罗德岛"
         panel_list = [("罗德岛资源总览"), ("各部门工作概况")]
-        department_son_panel_button_dict = {"工程部":"[基建系统]", "制造加工区":"[生产系统]", "图书馆":"[图书馆管理系统]", "贸易区":"[资源交易系统]", "文职部":"[招募系统]"}
+        department_son_panel_button_dict = {
+            "工程部":"[基建系统]",
+            "制造加工区":"[生产系统]",
+            "图书馆":"[图书馆管理系统]",
+            "贸易区":"[资源交易系统]",
+            "文职部":"[招募系统]",
+            "访客区":"[邀请访客系统]",
+            }
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -287,7 +292,9 @@ class Manage_Basement_Panel:
         elif "资源交易系统" in son_panel:
             now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
         elif "招募系统" in son_panel:
-            now_panel =recruit_panel.Recruit_Panel(self.width)
+                now_panel =recruit_panel.Recruit_Panel(self.width)
+        elif "邀请访客系统" in son_panel:
+            now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
         now_panel.draw()
 
     def show_department(self, department: str):
