@@ -385,6 +385,70 @@ def settle_assembly_line(newdayflag = False):
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
 
 
+def update_recruit():
+    """刷新招募栏位"""
+
+    # 遍历全招募栏
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+
+        # 如果超过100则进行结算
+        if cache.rhodes_island.recruit_line[recruit_line_id][0] >= 100:
+            cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
+
+            # 招募策略
+            recruitment_strategy = cache.rhodes_island.recruit_line[recruit_line_id][1]
+
+            # 绘制信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
+            now_draw.style = "gold_enrod"
+
+            # 开始获得招募npc的id
+            wait_id_set = []
+            for i in range(len(cache.npc_tem_data)):
+                chara_id = i + 1
+                # 本地招募
+                if recruitment_strategy == 0:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出未招募且出生地是当前所在地的角色
+                    if chara_id in cache.npc_id_got or character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                        continue
+                    else:
+                            wait_id_set.append(chara_id)
+                # 全泰拉招募
+                # TODO 当前其他招聘策略均由全泰拉招聘代替，需要实装
+                elif recruitment_strategy == 1 or recruitment_strategy in {2,3,4}:
+                    # 筛选出未招募的角色
+                    if chara_id not in cache.npc_id_got:
+                        wait_id_set.append(chara_id)
+            if len(wait_id_set):
+                choice_id = random.choice(wait_id_set)
+                cache.rhodes_island.recruited_id.add(choice_id)
+
+                now_draw.text = f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n"
+                now_draw.draw()
+            else:
+                now_draw.text = f"\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n"
+                now_draw.draw()
+                cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
+
+
+def update_invite_visitor():
+    """刷新邀请访客栏位"""
+
+    # 未选择邀请目标则跳过
+    if cache.rhodes_island.invite_visitor[0] == 0:
+        return
+
+    # 如果超过100则进行结算
+    if cache.rhodes_island.invite_visitor[1] >= 100:
+
+        # 成功邀请时
+        if calculate_visitor_arrivals(visitor_id = cache.rhodes_island.invite_visitor[0]):
+            cache.rhodes_island.invite_visitor[0] = 0
+            cache.rhodes_island.invite_visitor[1] = 0
+
+
 def check_facility_open():
     """
     判断是否有空闲客房，暂时没有用
@@ -426,7 +490,7 @@ def calculate_visitor_arrivals_and_departures():
     if cache.rhodes_island.base_move_visitor_flag:
         # 将flag重置为False
         cache.rhodes_island.base_move_visitor_flag = False
-        calculate_random_visitor_arrivals()
+        calculate_visitor_arrivals()
 
     # 根据时间而产生的访客
     add_day = game_time.count_day_for_datetime(cache.rhodes_island.last_visitor_time, cache.game_time)
@@ -434,7 +498,7 @@ def calculate_visitor_arrivals_and_departures():
     if random.randint(1, 100) <= visitor_come_possibility:
         # 刷新访客来访时间
         cache.rhodes_island.last_visitor_time = cache.game_time
-        calculate_random_visitor_arrivals()
+        calculate_visitor_arrivals()
 
     # 访客离开
     # 遍历全部访客
@@ -469,9 +533,12 @@ def calculate_visitor_arrivals_and_departures():
                 now_draw.draw()
 
 
-def calculate_random_visitor_arrivals():
+def calculate_visitor_arrivals(visitor_id = 0):
     """
-    结算随机访客抵达
+    结算访客抵达
+    visitor_id = 0 时，随机抽取一名访客
+    return 0 时，没有访客抵达
+    return 1 时，有访客抵达
     """
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -482,20 +549,27 @@ def calculate_random_visitor_arrivals():
         # 输出提示信息
         now_draw.text = f"\n ●由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n"
         now_draw.draw()
+        return 0
     else:
-        # 未招募的干员id
-        not_recruit_npc_id_list = [id for id in range(1, len(cache.npc_tem_data) + 1) if id not in cache.npc_id_got]
-        # 根据当前基地的位置筛选出同国度且没有招募的干员
-        now_country_id = cache.rhodes_island.current_location[0]
-        now_country_npc_id_list = []
-        # 开始筛选
-        for npc_id in not_recruit_npc_id_list:
-            if cache.character_data[npc_id].relationship.birthplace == now_country_id:
-                now_country_npc_id_list.append(npc_id)
         # 随机抽取一名访客
-        visitor_id = random.choice(now_country_npc_id_list)
+        if visitor_id == 0:
+            # 未招募的干员id
+            not_recruit_npc_id_list = [id for id in range(1, len(cache.npc_tem_data) + 1) if id not in cache.npc_id_got]
+            # 根据当前基地的位置筛选出同国度且没有招募的干员
+            now_country_id = cache.rhodes_island.current_location[0]
+            now_country_npc_id_list = []
+            # 开始筛选
+            for npc_id in not_recruit_npc_id_list:
+                if cache.character_data[npc_id].relationship.birthplace == now_country_id:
+                    now_country_npc_id_list.append(npc_id)
+            # 随机抽取一名访客
+            if len(now_country_npc_id_list):
+                visitor_id = random.choice(now_country_npc_id_list)
+            else:
+                return 0
         # 处理获得新访客
         character_handle.get_new_character(visitor_id, True)
         # 输出提示信息
         now_draw.text = f"\n ○【{cache.character_data[visitor_id].name}】作为临时访客抵达了罗德岛\n"
         now_draw.draw()
+        return 1

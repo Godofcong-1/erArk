@@ -1920,6 +1920,17 @@ def handle_recruiment():
 
 
 @add_instruct(
+    constant.Instruct.VISITOR_SYSTEM, constant.InstructType.WORK, _("访客系统"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
+     constant_promise.Premise.VISITOR_ZONE_GE_2, }
+)
+def handle_visitor_system():
+    """处理访客系统指令"""
+    cache.now_panel_id = constant.Panel.VISITOR
+
+
+@add_instruct(
     constant.Instruct.INVITE_VISITOR, constant.InstructType.WORK, _("邀请访客"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
@@ -1927,7 +1938,12 @@ def handle_recruiment():
 )
 def handle_invite_visitor():
     """处理邀请访客指令"""
-    cache.now_panel_id = constant.Panel.VISITOR
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.INVITE_VISITOR
+    character_data.state = constant.CharacterStatus.STATUS_INVITE_VISITOR
+    update.game_update_flow(60)
 
 
 @add_instruct(
@@ -1970,10 +1986,10 @@ def handle_exercise():
     """处理锻炼身体指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
-    character_data.behavior.duration = 120
+    character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.EXERCISE
     character_data.state = constant.CharacterStatus.STATUS_EXERCISE
-    update.game_update_flow(120)
+    update.game_update_flow(60)
 
 
 @add_instruct(

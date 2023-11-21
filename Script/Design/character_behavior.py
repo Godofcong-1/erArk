@@ -96,53 +96,6 @@ def update_cafeteria():
     if food_count <= max_people * 3 and handle_premise.handle_eat_time(0):
         cooking.init_restaurant_data()
 
-def update_recruit():
-    """刷新招募栏位"""
-
-    # 遍历全招募栏
-    for recruit_line_id in cache.rhodes_island.recruit_line:
-
-        # 如果超过100则进行结算
-        if cache.rhodes_island.recruit_line[recruit_line_id][0] >= 100:
-            cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
-
-            # 招募策略
-            recruitment_strategy = cache.rhodes_island.recruit_line[recruit_line_id][1]
-
-            # 绘制信息
-            now_draw = draw.WaitDraw()
-            now_draw.width = width
-            now_draw.style = "gold_enrod"
-
-            # 开始获得招募npc的id
-            wait_id_set = []
-            for i in range(len(cache.npc_tem_data)):
-                chara_id = i + 1
-                # 本地招募
-                if recruitment_strategy == 0:
-                    character_data = cache.character_data[chara_id]
-                    # 筛选出未招募且出生地是当前所在地的角色
-                    if chara_id in cache.npc_id_got or character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
-                        continue
-                    else:
-                            wait_id_set.append(chara_id)
-                # 全泰拉招募
-                # TODO 当前其他招聘策略均由全泰拉招聘代替，需要实装
-                elif recruitment_strategy == 1 or recruitment_strategy in {2,3,4}:
-                    # 筛选出未招募的角色
-                    if chara_id not in cache.npc_id_got:
-                        wait_id_set.append(chara_id)
-            if len(wait_id_set):
-                choice_id = random.choice(wait_id_set)
-                cache.rhodes_island.recruited_id.add(choice_id)
-
-                now_draw.text = _(f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
-                now_draw.draw()
-            else:
-                now_draw.text = _(f"\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
-                now_draw.draw()
-                cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
-
 
 def character_behavior(character_id: int, now_time: datetime.datetime):
     """

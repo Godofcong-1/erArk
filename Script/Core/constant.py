@@ -133,6 +133,8 @@ class CharacterStatus:
     """ 诊疗病人 """
     STATUS_RECRUIT = 208
     """ 招募干员 """
+    STATUS_INVITE_VISITOR = 209
+    """ 邀请访客 """
     STATUS_READ_BOOK = 210
     """ 读书 """
     STATUS_TEACH = 213
@@ -568,6 +570,8 @@ class Behavior:
     """ 诊疗病人 """
     RECRUIT = 208
     """ 招募干员 """
+    INVITE_VISITOR = 209
+    """ 邀请访客 """
     READ_BOOK = 210
     """ 读书 """
     TEACH = 213
@@ -1718,6 +1722,8 @@ class Instruct:
     """ 招募干员 """
     CONFIM_RECRUIT = 0
     """ 确认已招募的干员 """
+    RECRUITMENT = 0
+    """ 招募情况 """
     TEACH = 0
     """ 授课 """
     MAINTENANCE_FACILITIES = 0
@@ -1728,8 +1734,8 @@ class Instruct:
     """ 助理相关调整 """
     BUILDING = 0
     """ 基建系统 """
-    RECRUITMENT = 0
-    """ 招募情况 """
+    VISITOR_SYSTEM = 0
+    """ 访客系统 """
     INVITE_VISITOR = 0
     """ 邀请访客 """
     PRTS = 0

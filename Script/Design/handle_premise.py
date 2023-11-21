@@ -485,6 +485,20 @@ def handle_visitor_zone_ge_2(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.VISITOR_ZONE_HAVE_TARGET)
+def handle_visitor_zone_have_target(character_id: int) -> int:
+    """
+    访客区当前有已选择好的邀请目标
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.invite_visitor[0] != 0:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PLACE_EXPOSED)
 def handle_place_exposed(character_id: int) -> int:
     """

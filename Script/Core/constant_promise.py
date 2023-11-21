@@ -192,9 +192,6 @@ class Premise:
     SCENE_SOMEONE_NOT_MASSAGE_THERAPIST = "place_someone_not_massage_therapist"
     """ 地点_工作 该地点有非按摩师的其他角色 """
 
-    VISITOR_ZONE_GE_2 = "visitor_zone_ge_2"
-    """ 地点_设施 访客区等级大于等于2级 """
-
     PLACE_EXPOSED = "place_exposed"
     """ 地点_属性 当前地点暴露 """
     PLACE_COVERT = "place_covert"
@@ -487,6 +484,11 @@ class Premise:
     """ 地点_移动 角色抵达男士止步的地点 """
     MOVE_NOT_FINISH = "move_not_finish"
     """ 地点_移动 角色移动未完成(权重为10) """
+
+    VISITOR_ZONE_GE_2 = "visitor_zone_ge_2"
+    """ 设施 访客区等级大于等于2级 """
+    VISITOR_ZONE_HAVE_TARGET = "visitor_zone_have_target"
+    """ 设施 访客区当前有已选择好的邀请目标 """
 
     HAVE_MOVED = "ai_moved"
     """ 时间_角色 NPC距离上次移动已经至少经过了1小时 """

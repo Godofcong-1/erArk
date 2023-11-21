@@ -3925,12 +3925,67 @@ def handle_recruit_add_just(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1)}%\n")
+        now_draw.text = _(f"\n在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1)}%\n")
         now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
     cache.rhodes_island.recruit_line[select_index][0] += now_add_lust
-    character_behavior.update_recruit()
+    basement.update_recruit()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.INVITE_VISITOR_ADD_ADJUST)
+def handle_invite_visitor_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （邀请访客用）根据发起者(如果有的话再加上交互对象)的话术技能增加邀请槽
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+
+    # 如果没有选择目标则直接返回
+    if cache.rhodes_island.invite_visitor[0] == 0:
+        # 玩家使用时显示提示
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            now_draw.text = _(f"\n请先使用邀请系统选择邀请的对象，再进行邀请\n")
+            now_draw.draw()
+        return
+
+    # 获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 获得加成 #
+    now_add_lust = adjust * 5 * random.uniform(0.5, 1.5)
+    # debug下直接拉满
+    if cache.debug_mode:
+        now_add_lust += 100
+
+    # 如果是玩家在邀请或玩家与邀请者在同一位置的话，显示进度的增加情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _(f"\n在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1)}%\n")
+        now_draw.draw()
+
+    # 增加对应槽的邀请值，并进行结算
+    cache.rhodes_island.invite_visitor[1] += now_add_lust
+    basement.update_invite_visitor()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
