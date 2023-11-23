@@ -704,6 +704,26 @@ def character_move_to_blacksmith_shop(character_id: int):
         now_draw.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DIPLOMATIC_OFFICE)
+def character_move_to_diplomatic_office(character_id: int):
+    """
+    移动至外交官办公室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_diplomatic_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Diplomatic_Office"])
+    )
+    general_movement_module(character_id, to_diplomatic_office)
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"{character_data.name}打算去外交官办公室\n"
+        now_draw.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -2307,6 +2327,19 @@ def character_work_massage(character_id: int):
                     character_data.target_character_id = chara_id
                     break
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_INVITE_VISITOR)
+def character_work_invite_visitor(character_id: int):
+    """
+    工作：邀请访客
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.INVITE_VISITOR
+    character_data.state = constant.CharacterStatus.STATUS_INVITE_VISITOR
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)

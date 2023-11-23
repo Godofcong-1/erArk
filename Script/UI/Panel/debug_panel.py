@@ -144,7 +144,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
                 draw_text_list.append(f"[008]:全源石技艺全开")
                 draw_text_list.append(f"[009]:资源全99999")
-                draw_text_list.append(f"[010]:设施全满级")
+                draw_text_list.append(f"[010]:设施全满级、全开放")
 
 
                 for i in range(len(draw_text_list)):
@@ -530,6 +530,8 @@ class Debug_Panel:
                 elif key_index == 10:
                     for all_cid in cache.rhodes_island.facility_level:
                         cache.rhodes_island.facility_level[all_cid] = 5
+                        for cid in cache.rhodes_island.facility_open:
+                            cache.rhodes_island.facility_open[cid] = 1
                         basement.get_base_updata()
 
             line_feed.draw()

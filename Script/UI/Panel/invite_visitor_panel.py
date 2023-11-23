@@ -251,7 +251,7 @@ class Invite_Visitor_Panel:
             return_list.append(back_draw.return_text)
             line_feed.draw()
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list:
                 break
 
     def change_invite_target(self, chara_id: int):

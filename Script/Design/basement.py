@@ -228,7 +228,7 @@ def update_work_people():
             cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
 
-            # 招聘HR如果没有安排到招聘线，则随机分配
+            # 招聘专员如果没有安排到招聘线，则随机分配
             if character_data.work.work_type == 71:
                 select_index = -1
                 for recruit_line_id in cache.rhodes_island.recruit_line:

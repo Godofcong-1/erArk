@@ -1,7 +1,7 @@
 from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import basement
+from Script.Design import basement, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel
 from Script.Config import game_config, normal_config
@@ -196,7 +196,7 @@ class Manage_Basement_Panel:
                 work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
                 all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
-                all_info_draw.text += f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有工作位的部门是未没有实装的空白部门\n\n"
+                all_info_draw.text += f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n"
                 all_info_draw.draw()
 
                 # 遍历全部门
@@ -485,17 +485,34 @@ class ChangeWorkButtonList:
                 work_place = game_config.config_work_type[cid].place
                 work_describe = game_config.config_work_type[cid].describe
 
-                # 判断当前工作的地点是否开放，未开放则跳过
+                # 判断是否开放，未开放则跳过
                 flag_open = True
-                for open_cid in game_config.config_facility_open:
-                    if game_config.config_facility_open[open_cid].name == work_place:
-                        if not cache.rhodes_island.facility_open[open_cid]:
-                            flag_open = False
-                        break
+                # 必要条件判断
+                if game_config.config_work_type[cid].need != "无":
+                    need_data_all = game_config.config_work_type[cid].need
+                    # 整理需要的条件
+                    if "&" not in need_data_all:
+                        need_data_list = [need_data_all]
+                    else:
+                        need_data_list = need_data_all.split('&')
+                    judge, reason = attr_calculation.judge_require(need_data_list, self.NPC_id)
+                    if not judge:
+                        flag_open = False
+                # 当前工作的地点名字判断
+                # （应该已经被上面的必要条件判断所取代了，姑且还是保留一下）
+                if flag_open:
+                    for open_cid in game_config.config_facility_open:
+                        if game_config.config_facility_open[open_cid].name == work_place:
+                            if not cache.rhodes_island.facility_open[open_cid]:
+                                flag_open = False
+                            break
 
                 if flag_open:
+                    work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
+                    # 将work_text_before统一对齐为18个全角字符
+                    work_text = f"{work_text_before.ljust(18,'　')}：{work_describe}"
                     button_draw = draw.LeftButton(
-                        f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})：{work_describe}",
+                        work_text,
                         f"\n{work_cid}",
                         window_width ,
                         cmd_func=self.select_new_work,

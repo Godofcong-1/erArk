@@ -8485,19 +8485,6 @@ def handle_t_work_is_library_manager(character_id: int) -> int:
     return target_data.work.work_type == 101
 
 
-@add_premise(constant_promise.Premise.WORK_IS_HR)
-def handle_work_is_hr(character_id: int) -> int:
-    """
-    自己的工作为人事
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.work.work_type == 71
-
-
 @add_premise(constant_promise.Premise.WORK_IS_TEACHER)
 def handle_work_is_teacher(character_id: int) -> int:
     """
@@ -8576,8 +8563,8 @@ def handle_work_is_massage_therapist(character_id: int) -> int:
     return character_data.work.work_type == 171
 
 
-@add_premise(constant_promise.Premise.WORK_IS_DIPLOMATIC)
-def handle_work_is_diplomatic(character_id: int) -> int:
+@add_premise(constant_promise.Premise.WORK_IS_DIPLOMAT)
+def handle_work_is_diplomat(character_id: int) -> int:
     """
     自己的工作为外交官
     Keyword arguments:

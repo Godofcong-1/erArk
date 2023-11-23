@@ -979,6 +979,8 @@ class StateMachine:
     """ 工作：处理公务 """
     WORK_MASSAGE = 313
     """ 工作：按摩（自动寻找对象） """
+    WORK_INVITE_VISITOR = 314
+    """ 工作：邀请访客 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1137,6 +1139,8 @@ class StateMachine:
     """ 移动至运维部 """
     MOVE_TO_BLACKSMITH_SHOP = 622
     """ 移动至铁匠铺 """
+    MOVE_TO_DIPLOMATIC_OFFICE = 631
+    """ 移动至外交官办公室 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """

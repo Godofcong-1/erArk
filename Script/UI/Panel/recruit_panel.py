@@ -216,7 +216,7 @@ class Recruit_Panel:
             all_info_draw.draw()
 
             # 遍历全干员
-            now_text = f"\n可选HR有：\n"
+            now_text = f"\n可选招募专员有：\n"
             all_info_draw.text = now_text
             all_info_draw.draw()
             flag_not_empty = False
@@ -226,7 +226,7 @@ class Recruit_Panel:
             id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
             for chara_id in id_list:
                 character_data: game_type.Character = cache.character_data[chara_id]
-                # 找到职业是HR的
+                # 找到职业是招募专员的
                 if character_data.work.work_type == 71:
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
                     button_text = f" [{character_data.name}(话术lv{character_data.ability[40]}:{round(character_effect, 1)}%)] "
@@ -241,9 +241,9 @@ class Recruit_Panel:
                     return_list.append(button_draw.return_text)
                     flag_not_empty = True
 
-            # 如果没有工作是招募HR的干员则输出提示
+            # 如果没有工作是招募专员的干员则输出提示
             if not flag_not_empty:
-                now_text = f" 暂无工作是招募HR的干员"
+                now_text = f" 暂无工作是招募专员的干员"
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -273,7 +273,7 @@ class Recruit_Panel:
                 return_list.append(button_draw.return_text)
 
                 # 生产效率
-                now_text = f"\n    当前招募HR："
+                now_text = f"\n    当前招募专员："
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
                     character_data: game_type.Character = cache.character_data[chara_id]
