@@ -92,6 +92,7 @@ place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
 
 teacher_teaching_in_classroom,TEACHER_TEACHING_IN_CLASSROOM,地点_工作,当前有教师在教室里讲课
 student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,教室里有没在上课的学生
+place_someone_not_massage_therapist,SCENE_SOMEONE_NOT_MASSAGE_THERAPIST,地点_工作,该地点有非按摩师的其他角色
 
 place_exposed,PLACE_EXPOSED,地点_属性,当前地点暴露
 place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
@@ -225,6 +226,8 @@ in_resource_exchange,IN_RESOURCE_EXCHANGE,地点_定位,在资源交易所
 not_in_resource_exchange,NOT_IN_RESOURCE_EXCHANGE,地点_定位,不在资源交易所
 in_production_workshop,IN_PRODUCTION_WORKSHOP,地点_定位,在生产车间
 not_in_production_workshop,NOT_IN_PRODUCTION_WORKSHOP,地点_定位,不在生产车间
+in_diplomatic_office,IN_DIPLOMATIC_OFFICE,地点_定位,在外交办公室
+not_in_diplomatic_office,NOT_IN_DIPLOMATIC_OFFICE,地点_定位,不在外交办公室
 in_class_room,IN_CLASS_ROOM,地点_定位,在教室
 not_in_class_room,NOT_IN_CLASS_ROOM,地点_定位,不在教室
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
@@ -238,6 +241,9 @@ move_to_dormitory,MOVE_TO_DORMITORY,地点_移动,角色抵达宿舍
 move_from_dormitory,MOVE_FROM_DORMITORY,地点_移动,角色离开宿舍
 move_to_ladies_only,MOVE_TO_LADIES_ONLY,地点_移动,角色抵达男士止步的地点
 move_not_finish,MOVE_NOT_FINISH,地点_移动,角色移动未完成(权重为10)
+
+visitor_zone_ge_2,VISITOR_ZONE_GE_2,设施,访客区等级大于等于2级
+visitor_zone_have_target,VISITOR_ZONE_HAVE_TARGET,设施,访客区当前有已选择好的邀请目标
 
 ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
 ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）
@@ -733,15 +739,16 @@ open_1,TARGET_HAVE_OPEN,属性_素质,交互对象开放
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,属性_工作,自己的工作为检修工程师
 work_is_blacksmith,WORK_IS_BLACKSMITH,属性_工作,自己的工作为铁匠
 work_is_doctor,WORK_IS_DOCTOR,属性_工作,自己的工作为医生
-work_is_hr,WORK_IS_HR,属性_工作,自己的工作为人事
+work_is_hr,WORK_IS_HR,属性_工作,自己的工作为招募专员
 work_is_library_manager,WORK_IS_LIBRARY_MANAGER,属性_工作,自己的工作为图书馆管理员
 t_work_is_library_manager,T_WORK_IS_LIBRARY_MANAGER,属性_工作,交互对象的工作为图书馆管理员
 work_is_teacher,WORK_IS_TEACHER,属性_工作,自己的工作为教师
 work_is_student,WORK_IS_STUDENT,属性_工作,自己的工作为学生
-work_is_combat_training,WORK_IS_COMBAT_TRAINING,属性_工作,自己的工作为战斗训练
+work_is_combat_training,WORK_IS_COMBAT_TRAINING,属性_工作,自己的工作为训练学员
 work_is_cook,WORK_IS_COOK,属性_工作,自己的工作为厨师
 work_is_production_worker,WORK_IS_PRODUCTION_WORKER,属性_工作,自己的工作为生产工人
 work_is_massage_therapist,WORK_IS_MASSAGE_THERAPIST,属性_工作,自己的工作为按摩师
+work_is_diplomat,WORK_IS_DIPLOMAT,属性_工作,自己的工作为外交官
 
 entertainment_is_read,ENTERTAINMENT_IS_READ,属性_娱乐,自己当前时段的娱乐为读书
 entertainment_is_sing,ENTERTAINMENT_IS_SING,属性_娱乐,自己当前时段的娱乐为唱歌
