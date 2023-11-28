@@ -40,7 +40,7 @@ def creator_character_panel():
             character.init_attr(0)
             # game_start()
             cache.rhodes_island = basement.get_base_zero()
-            first_bonus_updata()
+            first_bonus_and_setting_updata()
             character_handle.first_NPC_work()
             if confirm_character_attr_panel():
                 game_start()
@@ -48,30 +48,25 @@ def creator_character_panel():
         cache.character_data[0] = game_type.Character()
     cache.now_panel_id = constant.Panel.IN_SCENE
 
-def first_bonus_updata():
-    """刷新初始奖励"""
+def first_bonus_and_setting_updata():
+    """刷新初始奖励和设定"""
     for cid in game_config.config_first_bonus:
         cache.first_bonus[cid] = False
+    for cid in game_config.config_world_setting:
+        cache.world_setting[cid] = 0
 
 def game_start():
     """初始化游戏数据"""
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
     character_handle.init_character_facility_open()
-    # course.init_phase_course_hour()
-    # interest.init_character_interest()
-    # course.init_character_knowledge()
-    # course.init_class_teacher()
-    # course.init_class_time_table()
-    # course.init_teacher_table()
+    character_handle.handle_character_setting()
     cooking.init_recipes()
     cooking.init_restaurant_data()
     character_position = cache.character_data[0].position
     map_handle.character_move_scene(["0","0"], character_position, 0)
-    # cache.school_longitude = random.uniform(120.9, 122.12)
-    # cache.school_latitude = random.uniform(30.7, 31.53)
     basement.get_base_updata()
-    character_handle.init_character_entertainment()
+    character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面
     # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")
 
 def confirm_game_info_panel():
@@ -178,6 +173,7 @@ class Character_creat_Handle:
         debug_draw = Character_Debug(self.width)
         firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
+        world_setting_draw = World_Setting(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         # tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
@@ -187,6 +183,7 @@ class Character_creat_Handle:
             debug_draw,
             firstNpc_draw,
             bonus_draw,
+            world_setting_draw,
             # abi_draw,
             # tal_draw,
         ]
@@ -761,8 +758,8 @@ class Character_Bonus:
         line = draw.LineDraw("↘", 1)
         now_draw.draw_list.append(line)
 
-        if cache.game_round == 1:
-            bonus_all += 20
+        # 提供的点数
+        bonus_all += cache.game_round * 20
         if cache.debug_mode:
             bonus_all += 999
         self.bonus_now = bonus_all
@@ -778,18 +775,18 @@ class Character_Bonus:
         # 遍历可选奖励
         for cid in game_config.config_first_bonus:
             button_text = ""
-            first_bonus_date = game_config.config_first_bonus[cid]
+            first_bonus_data = game_config.config_first_bonus[cid]
             # 判断是否已经选择，并输出对应前缀和预填消耗文本
             if cache.first_bonus[cid]:
-                self.bonus_now -= first_bonus_date.consume
+                self.bonus_now -= first_bonus_data.consume
                 button_text += f"   ●"
                 draw_style = "gold_enrod"
-                bonus_use_text += f" - [{first_bonus_date.name}({first_bonus_date.consume})])"
+                bonus_use_text += f" - [{first_bonus_data.name}({first_bonus_data.consume})])"
             else:
                 button_text += f"   ○"
                 draw_style = "standard"
             # 文本1
-            button_text += f"{first_bonus_date.name}({first_bonus_date.consume})："
+            button_text += f"{first_bonus_data.name}({first_bonus_data.consume})："
             # 文本2(部分奖励有特殊文本)
             if cache.first_bonus[cid]:
                 if cid == 21:
@@ -799,11 +796,11 @@ class Character_Bonus:
                     target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
                     button_text += f"(已选{target_data.name})"
             # 文本3
-            button_text += f"{first_bonus_date.introduce}"
+            button_text += f"{first_bonus_data.introduce}"
             # 绘制按钮
             button_draw = draw.LeftButton(
                 _(button_text),
-                _(first_bonus_date.name),
+                _(first_bonus_data.name),
                 self.width,
                 normal_style = draw_style,
                 cmd_func=self.get_first_bonus,
@@ -818,7 +815,7 @@ class Character_Bonus:
         info_draw.width = 1
         info_draw.text = f" \n 当前为第 {str(cache.game_round)} 周目\n"
         info_draw.text += f" 当前剩余奖励点数 ="
-        info_draw.text += f" {self.bonus_now} = [新玩家奖励(20)]"
+        info_draw.text += f" {self.bonus_now} = [周目数 * 20]"
         if cache.debug_mode:
             info_draw.text += f" + [debug(999)]"
         info_draw.text += f"{bonus_use_text}\n"
@@ -929,3 +926,78 @@ class Character_Bonus:
             info_last_draw.text = f"\n 当前剩余奖励不足\n"
             info_last_draw.draw()
 
+
+class World_Setting:
+    """
+    世界设定面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
+
+        setting_info_draw = draw.LeftDraw()
+        setting_info_draw.width = 1
+        draw_text = f" 当前世界设定为：\n"
+        draw_text += f"   ●基础世界设定：美好的黄油IF世界线，无具体时间线和剧情线，凡是有立绘的角色（包括敌我双方、路人、已便当的）均可招募上岛\n"
+        draw_text += f"   ●基础角色设定：NPC为纯女性角色（伪娘、扶她均不存在，女性小车存在），且全员处女\n"
+        setting_info_draw.text = draw_text
+        now_draw.draw_list.append(setting_info_draw)
+        now_draw.width += len(setting_info_draw.text)
+
+        # 遍历可选设定
+        for cid in game_config.config_world_setting:
+            button_text = ""
+            world_setting_data = game_config.config_world_setting[cid]
+            # 判断是否已经选择，并输出对应前缀和预填消耗文本
+            if cache.world_setting[cid]:
+                button_text += f"   ●"
+                draw_style = "gold_enrod"
+            else:
+                button_text += f"   ○"
+                draw_style = "standard"
+            # 文本
+            button_text += f"{world_setting_data.name}：{world_setting_data.introduce}"
+            # 绘制按钮
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _(world_setting_data.name),
+                self.width,
+                normal_style = draw_style,
+                cmd_func=self.select_setting,
+                args=cid)
+            self.return_list.append(button_draw.return_text)
+            now_draw.draw_list.append(button_draw)
+            now_draw.width += len(button_text)
+            now_draw.draw_list.append(line_feed_draw)
+            now_draw.width += 1
+
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed_draw.draw()
+            else:
+                label.draw()
+
+    def select_setting(self,setting_cid : int):
+        """选择该设定"""
+        cache.world_setting[setting_cid] = not cache.world_setting[setting_cid]

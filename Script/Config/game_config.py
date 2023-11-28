@@ -237,6 +237,8 @@ config_visitor_stay_attitude: Dict[int, config_def.Visitor_Stay_Attitude] = {}
 """ 访客停留态度 """
 config_recruitment_strategy: Dict[int, config_def.Recruitment_Strategy] = {}
 """ 招募策略 """
+config_world_setting: Dict[int, config_def.World_Setting] = {}
+""" 世界设定 """
 
 
 def load_data_json():
@@ -1000,6 +1002,16 @@ def load_recruitment_strategy():
         config_recruitment_strategy[now_tem.cid] = now_tem
 
 
+def load_world_setting():
+    """载入世界设定数据"""
+    now_data = config_data["World_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.World_Setting()
+        now_tem.__dict__ = tem_data
+        config_world_setting[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1163,3 +1175,4 @@ def init():
     load_assistant_services()
     load_visitor_stay_attitude()
     load_recruitment_strategy()
+    load_world_setting()

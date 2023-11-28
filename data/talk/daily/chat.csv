@@ -120,8 +120,8 @@ str,int,int,str,str
 1518,101,0,in_medical_zone,{Name}和{TargetName}分享了各自身边发生的关于健康的趣事，缓解了疲惫的氛围。
 1519,101,0,in_medical_zone,{TargetName}表达了自己对于未来源石病医学科技发展的期望和看法，和{Name}一同畅想了一下未来源石病医药行业的形态。
 
-1601,101,0,in_dorm&sys_0,{Name}和{TargetName}在宿舍里聊天时，{Name}向{TargetName}推荐了一些自己喜欢的音乐，两人一起欣赏了一段时间。
-1602,101,0,in_dorm&sys_0,{Name}和{TargetName}在宿舍里聊天时，{Name}向{TargetName}推荐了一些自己喜欢的电影，两人一起欣赏了一段时间。
+1601,101,0,in_dor&sys_0,{Name}和{TargetName}在宿舍里聊天时，{Name}向{TargetName}推荐了一些自己喜欢的音乐，两人一起欣赏了一段时间。
+1602,101,0,in_dor&sys_0,{Name}和{TargetName}在宿舍里聊天时，{Name}向{TargetName}推荐了一些自己喜欢的电影，两人一起欣赏了一段时间。
 
 2101,101,0,high_1,{TargetName}向{Name}分享了自己的一些健身经验，而{Name}则表示非常感兴趣并打算尝试。
 2102,101,0,high_1,聊天中，{Name}和{TargetName}讨论了最近的电影，发现两人都非常喜欢同一部电影。

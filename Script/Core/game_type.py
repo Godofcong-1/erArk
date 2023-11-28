@@ -1085,6 +1085,8 @@ class Cache:
         """ 罗德岛相关属性 """
         self.first_bonus: Dict[int, int] = {}
         """ 初期奖励 """
+        self.world_setting: Dict[int, int] = {}
+        """ 世界设定 """
 
 
 class TargetChange:

@@ -299,7 +299,7 @@ class Favorability_Level:
 
 
 class First_Bouns:
-    """ 初期奖励奖励 """
+    """ 初期奖励 """
 
     cid: int
     """ 奖励id """
@@ -732,6 +732,17 @@ class WorkType:
     """ 必要条件 """
     describe: str
     """ 描述 """
+
+
+class World_Setting:
+    """ 世界设定 """
+
+    cid: int
+    """ 设定id """
+    name: str
+    """ 设定名 """
+    introduce: str
+    """ 设定介绍 """
 
 
 class Talk:

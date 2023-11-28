@@ -499,3 +499,24 @@ def add_favorability(
     # 记录好感度增加
     if character_id == 0 or character_data.target_character_id == 0:
         cache.rhodes_island.total_favorability_increased += now_add_favorability
+
+
+def handle_character_setting():
+    """
+    处理角色的初始世界设置
+    """
+    # 遍历所有角色
+    for character_id in cache.character_data:
+        character_data = cache.character_data[character_id]
+        # 萝莉化
+        if cache.world_setting[1]:
+            for talent_id in {104,105,106,107}:
+                if character_data.talent[talent_id]:
+                    character_data.talent[talent_id] = 0
+                    character_data.talent[103] = 1
+        # 淫乱化
+        if cache.world_setting[2]:
+            character_data.talent[40] = 1
+        # 泌乳化
+        if cache.world_setting[3]:
+            character_data.talent[27] = 1
