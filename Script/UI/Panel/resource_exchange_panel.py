@@ -41,7 +41,7 @@ class Resource_Exchange_Line_Panel:
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         self.now_select_resouce_id = 11
-        self.buy_or_sell_flag = True
+        self.buy_or_sell_flag = True # True为买入，False为卖出
         self.quantity_of_resouce = 0
 
         while 1:
@@ -61,6 +61,12 @@ class Resource_Exchange_Line_Panel:
             all_info_draw.text = now_text
             all_info_draw.width = self.width
             all_info_draw.draw()
+
+            # 检测该商品是否可以购买
+            if resouce_data.type in {"药剂", "乳制品"}:
+                cant_buy_flag = True
+            else:
+                cant_buy_flag = False
 
             button_text = " [更改交易资源] "
             button_draw = draw.CenterButton(
@@ -116,8 +122,10 @@ class Resource_Exchange_Line_Panel:
             return_list.append(button_draw.return_text)
             button_draw.draw()
 
-            all_info_draw.text = f" {price}龙门币/1单位 "
-            all_info_draw.draw()
+            # 无法买入的，不显示价格
+            if (self.buy_or_sell_flag and not cant_buy_flag) or not self.buy_or_sell_flag:
+                all_info_draw.text = f" {price}龙门币/1单位 "
+                all_info_draw.draw()
             line_feed.draw()
 
             # 输出总价
@@ -125,6 +133,9 @@ class Resource_Exchange_Line_Panel:
                 all_info_draw.text = f"\n  ○预计共花费{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
                 if price * self.quantity_of_resouce > money:
                     all_info_draw.text += "  ●龙门币不足，无法购买\n"
+                # 如果是不可购买的则显示提示
+                if cant_buy_flag:
+                    all_info_draw.text = "\n  ●该资源无法购买，只能卖出\n"
             else:
                 all_info_draw.text = f"\n  ○预计共获得{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
                 if self.quantity_of_resouce > now_resouce_stock:
@@ -132,7 +143,15 @@ class Resource_Exchange_Line_Panel:
             all_info_draw.draw()
 
             line_feed.draw()
-            if (self.buy_or_sell_flag and price * self.quantity_of_resouce > money) or (not self.buy_or_sell_flag and self.quantity_of_resouce > now_resouce_stock):
+            # 以下情况不绘制确定按钮
+            # 买入，且钱不足
+            # 买入，但是该资源不可买入
+            # 卖出，且资源不足
+            if (
+                (self.buy_or_sell_flag and price * self.quantity_of_resouce > money) or 
+                (self.buy_or_sell_flag and cant_buy_flag) or
+                (not self.buy_or_sell_flag and self.quantity_of_resouce > now_resouce_stock)
+                ):
                 pass
             else:
                 yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width/2)
@@ -174,7 +193,7 @@ class Resource_Exchange_Line_Panel:
                 info_draw.draw()
 
                 # 遍历全资源类型
-                resouce_list = ["材料", "药剂"]
+                resouce_list = ["材料", "药剂", "乳制品"]
                 for resouce_type in resouce_list:
                     info_draw.text = f"\n {resouce_type}：\n"
                     info_draw.draw()
@@ -194,7 +213,7 @@ class Resource_Exchange_Line_Panel:
 
                             now_text = f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}"
                             # 判断是否可以买入卖出
-                            if resouce_id != 12 and resouce_type != "药剂":
+                            if resouce_type not in {"药剂", "乳制品"}:
                                 now_text += f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位"
                             now_text += f"   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n"
                             info_draw.text = now_text
@@ -231,14 +250,9 @@ class Resource_Exchange_Line_Panel:
             self.quantity_of_resouce = 0
 
     def reset_quantity(self,):
-        """结算交易数量变更"""
+        """重置资源交易数量"""
         self.quantity_of_resouce = 0
 
     def settle_buy_or_sell(self):
-        """结算流水线的id变更"""
-        resouce_data  = game_config.config_resouce[self.now_select_resouce_id]
-        # 不可买入的锁死为卖出
-        if self.now_select_resouce_id == 12 or resouce_data.type == "药剂":
-            self.buy_or_sell_flag = False
-        else:
-            self.buy_or_sell_flag = not self.buy_or_sell_flag
+        """切换买入和卖出"""
+        self.buy_or_sell_flag = not self.buy_or_sell_flag

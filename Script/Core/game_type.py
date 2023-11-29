@@ -308,6 +308,10 @@ class PREGNANCY:
         """ 角色开始受精的时间 """
         self.born_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色出生的时间 """
+        self.milk: int = 0
+        """ 角色当前乳汁量，单位毫升，每2分钟增加1毫升 """
+        self.milk_max: int = 200
+        """ 角色最大乳汁量，单位毫升 """
 
 
 class RELATIONSHIP:

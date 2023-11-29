@@ -160,7 +160,7 @@ class Manage_Basement_Panel:
             # 罗德岛资源总览
             if self.now_panel == "罗德岛资源总览":
 
-                self.resouce_list = ["货币", "材料", "药剂"]
+                self.resouce_list = ["货币", "材料", "药剂", "乳制品"]
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""

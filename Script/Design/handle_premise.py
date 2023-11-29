@@ -11775,6 +11775,154 @@ def handle_target_hunger_ge_80(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.MILK_LE_29)
+def handle_milk_le_29(character_id: int) -> int:
+    """
+    奶量≤29%，无法挤奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.pregnancy.milk / character_data.pregnancy.milk_max
+    if value <= 0.29:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MILK_GE_30)
+def handle_milk_ge_30(character_id: int) -> int:
+    """
+    奶量≥30%，可以挤奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.pregnancy.milk / character_data.pregnancy.milk_max
+    if value > 0.29:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MILK_LE_79)
+def handle_milk_le_79(character_id: int) -> int:
+    """
+    奶量≤79%，未涨奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.pregnancy.milk / character_data.pregnancy.milk_max
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MILK_GE_80)
+def handle_milk_ge_80(character_id: int) -> int:
+    """
+    奶量≥80%，涨奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.pregnancy.milk / character_data.pregnancy.milk_max
+    if value > 0.80:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_MILK_LE_29)
+def handle_target_milk_le_29(character_id: int) -> int:
+    """
+    交互对象奶量≤29%，无法挤奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_character_data.pregnancy.milk / target_character_data.pregnancy.milk_max
+    if value <= 0.29:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_MILK_GE_30)
+def handle_target_milk_ge_30(character_id: int) -> int:
+    """
+    交互对象奶量≥30%，可以挤奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_character_data.pregnancy.milk / target_character_data.pregnancy.milk_max
+    if value > 0.29:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_MILK_LE_79)
+def handle_target_milk_le_79(character_id: int) -> int:
+    """
+    交互对象奶量≤79%，未涨奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_character_data.pregnancy.milk / target_character_data.pregnancy.milk_max
+    if value <= 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_MILK_GE_80)
+def handle_target_milk_ge_80(character_id: int) -> int:
+    """
+    交互对象奶量≥80%，涨奶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    value = target_character_data.pregnancy.milk / target_character_data.pregnancy.milk_max
+    if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.SLEEP_LEVEL_0)
 def handle_sleep_level_0(character_id: int) -> int:
     """

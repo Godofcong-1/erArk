@@ -284,6 +284,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_hardlove:
         calculation_text += "+难以越过的底线(-" + str(judge_hardlove) + ")"
 
+    # 淫乱相关属性修正#
+    # 仅能用在性爱指令上
+    if judge_data_type == "S":
+        if character_data.talent[40]:
+            judge += 30
+            calculation_text += "+淫乱(+30)"
+
     # 激素系能力修正#
     if character_data.pl_ability.hormone > 0:
         judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
