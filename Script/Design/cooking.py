@@ -220,18 +220,13 @@ def init_restaurant_data():
     while 1:
         recipes_id = random.randint(0, len(cache.recipe_data) - 1)
         food_list = {}
-        # recipes = cache.recipe_data[recipes_id]
-        # food_judge = True
-        # for food_id in recipes.base:
-        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-        #         food_judge = False
-        #         break
-        #     food_id_list = list(cache.restaurant_data[food_id].keys())
-        #     now_food_id = food_id_list[0]
-        #     now_food = cache.restaurant_data[food_id][now_food_id]
-        #     food_list[now_food.id] = now_food
-        # if not food_judge:
-        #     continue
+        recipes = cache.recipe_data[recipes_id]
+        # 难度上无法制作的菜谱直接跳过
+        if recipes.difficulty == 999:
+            continue
+        # 无法制作的种类的菜谱直接跳过
+        if recipes.type in {4,8,9}:
+            continue
         # for food_id in recipes.ingredients:
         #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
         #         food_judge = False
