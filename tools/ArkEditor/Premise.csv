@@ -342,6 +342,14 @@ sleep_level_0,SLEEP_LEVEL_0,属性_基础,睡眠等级：随时醒来
 sleep_level_1,SLEEP_LEVEL_1,属性_基础,睡眠等级：浅睡
 sleep_level_2,SLEEP_LEVEL_2,属性_基础,睡眠等级：熟睡
 sleep_level_3,SLEEP_LEVEL_3,属性_基础,睡眠等级：完全深眠
+milk_le_29,MILK_LE_29,属性_基础,奶量≤29%，无法挤奶
+milk_ge_30,MILK_GE_30,属性_基础,奶量≥30%，可以挤奶
+milk_le_79,MILK_LE_79,属性_基础,奶量≤79%，未涨奶
+milk_ge_80,MILK_GE_80,属性_基础,奶量≥80%，涨奶
+t_milk_le_29,TARGET_MILK_LE_29,属性_基础,交互对象奶量≤29%，无法挤奶
+t_milk_ge_30,TARGET_MILK_GE_30,属性_基础,交互对象奶量≥30%，可以挤奶
+t_milk_le_79,TARGET_MILK_LE_79,属性_基础,交互对象奶量≤79%，未涨奶
+t_milk_ge_80,TARGET_MILK_GE_80,属性_基础,交互对象奶量≥80%，涨奶
 
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）

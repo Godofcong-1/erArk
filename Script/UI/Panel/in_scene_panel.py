@@ -393,13 +393,14 @@ class SeeInstructPanel:
             if now_type == constant.InstructType.SYSTEM:
                 continue
             now_config = game_config.config_instruct_type[now_type]
+            # 已选择的指令类型变成橙黄色
             if cache.instruct_type_filter[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
                     self.width / (len(cache.instruct_type_filter) - 1),
                     " ",
-                    "onbutton",
+                    "gold_enrod",
                     "standard",
                     cmd_func=self.change_filter,
                     args=(now_type,),
