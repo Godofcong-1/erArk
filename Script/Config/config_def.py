@@ -457,6 +457,8 @@ class ProductFormula:
     """ 产品的资源id """
     formula: str
     """ 配方(序号为资源序号) """
+    difficulty: int
+    """ 难易度 """
 
 
 class Profession:

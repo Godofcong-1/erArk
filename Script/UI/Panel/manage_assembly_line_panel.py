@@ -47,10 +47,10 @@ class Manage_Assembly_Line_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            now_text += f" 当前lv{cache.rhodes_island.facility_level[3]}仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
+            now_text += f" 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
 
             # 遍历全资源类型
-            self.resouce_list = ["货币", "材料", "药剂"]
+            self.resouce_list = ["材料", "药剂", "乳制品"]
             for resouce in self.resouce_list:
                 now_text += f"\n {resouce}："
                 # 遍历该类型的资源
@@ -188,12 +188,13 @@ class Manage_Assembly_Line_Panel:
                 formula_now_data = game_config.config_productformula[formula_now_id]
                 product_now_id = formula_now_data.product_id
                 product_now_data = game_config.config_resouce[product_now_id]
+                now_level = cache.rhodes_island.facility_level[12]
 
                 info_text = f""
                 # info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
                 info_text += f" {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
 
-                info_text += "\n\n 当前可以生成的产品有：\n"
+                info_text += "\n\n 当前可以生成的产品有：\n\n"
                 info_draw.text = info_text
                 info_draw.draw()
 
@@ -205,9 +206,12 @@ class Manage_Assembly_Line_Panel:
                     product_data = game_config.config_resouce[product_id]
                     product_name = product_data.name
                     product_describe = product_data.info
+                    product_difficulty = formula_data.difficulty
 
                     # 判断当前配方是否可以生产，未解锁则跳过
                     flag_open = True
+                    if product_difficulty > now_level:
+                        flag_open = False
                     # for open_cid in game_config.config_facility_open:
                     #     if game_config.config_facility_open[open_cid].name == work_place:
                     #         if not cache.base_resouce.facility_open[open_cid]:
