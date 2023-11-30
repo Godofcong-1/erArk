@@ -203,6 +203,8 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
+    STATUS_MILK = 336
+    """ 挤奶 """
     STATUS_SMELL_UNDERWEAR = 341
     """ 闻内衣 """
     STATUS_BAGGING_AND_MOVING = 351
@@ -640,6 +642,8 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 333
     """ 手指插入（A） """
+    MILK = 336
+    """ 挤奶 """
     SMELL_UNDERWEAR = 341
     """ 闻内衣 """
     BAGGING_AND_MOVING = 351
@@ -934,6 +938,10 @@ class StateMachine:
     """ 当前身上衣服转移到衣柜里，并换上浴帽和浴巾 """
     CLEAN_WEAR_AND_LOCKER_TO_WEAR = 88
     """ 清空身上的衣服然后穿回衣柜的衣服，如果有浴场或游泳娱乐flag则置0 """
+    START_MILK = 89
+    """ 进入要挤奶状态 """
+    MAKE_MILK = 90
+    """ 挤奶 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -1802,6 +1810,8 @@ class Instruct:
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    MILK = 0
+    """ 挤奶 """
     BAGGING_AND_MOVING = 0
     """ 装袋搬走 """
     PUT_INTO_PRISON = 0

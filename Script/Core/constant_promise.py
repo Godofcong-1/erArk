@@ -548,7 +548,7 @@ class Premise:
 
     #"""
     #异常状态类型：\n
-    #1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）\n
+    #1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶\n
     #2:妊娠限制：临盆、产后、婴儿\n
     #3:AI行动受限：助理、跟随模式下\n
     #4:服装异常：大致全裸、全裸\n
@@ -818,6 +818,8 @@ class Premise:
     """ 属性_特殊flag 自身要休息状态 """
     PEE_FLAG_1 = "pee_flag_1"
     """ 属性_特殊flag 自身要撒尿状态 """
+    MILK_FLAG_1 = "milk_flag_1"
+    """ 属性_特殊flag 自身要挤奶状态 """
     FIND_FOOD_WEIRD_FLAG_0 = "find_food_weird_flag_0"
     """ 属性_特殊flag 自身没有发现食物有问题 """
     FIND_FOOD_WEIRD_FLAG_1 = "find_food_weird_flag_1"

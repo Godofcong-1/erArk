@@ -52,6 +52,10 @@ ai的目标,,,
 74,44,unnormal_27|be_bagged_0|sleep_time,27异常（妊娠限制或监禁），没有在被装袋搬走，hp1，则睡觉
 75,50,unnormal_27|be_bagged_0|urinate_ge_80,27异常（妊娠限制或监禁），没有在被装袋搬走，尿意值到80%，则解手
 
+81,89,normal_1267|milk_ge_80,1267正常（可能AI跟随、服装异常或意识模糊），乳汁值到80%，则进入要挤奶状态
+82,512,milk_flag_1|not_in_restroom,要挤奶状态，且不在休息室，则去休息室
+83,90,milk_flag_1|in_restroom,要挤奶状态，且在休息室，则挤奶
+
 100,100,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
 101,101,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触
 102,102,place_0|pl_action_not_sleep,和玩家在一个房间里，玩家没有在睡觉，则有可能随机给玩家泡咖啡

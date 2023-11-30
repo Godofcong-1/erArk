@@ -2572,6 +2572,30 @@ def handle_touch_anus():
 
 
 @add_instruct(
+    constant.Instruct.MILK,
+    constant.InstructType.OBSCENITY,
+    _("挤奶"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TARGET_MILK_GE_30,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_milk():
+    """处理挤奶指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
+        character_data.behavior.behavior_id = constant.Behavior.MILK
+        character_data.state = constant.CharacterStatus.STATUS_MILK
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    character_data.behavior.duration = 30
+    update.game_update_flow(30)
+
+
+@add_instruct(
     constant.Instruct.BAGGING_AND_MOVING,
     constant.InstructType.OBSCENITY,
     _("装袋搬走"),

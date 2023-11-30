@@ -468,16 +468,18 @@ class SPECIAL_FLAG:
         """ 玩家正在装袋搬走的角色的id """
         self.imprisonment: bool = 0
         """ 被监禁状态 """
-        self.shower: int = 0
-        """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
-        self.eat_food: int = 0
-        """ 吃饭状态，int [0无,1要取餐,2要吃饭] """
         self.sleep: bool = 0
         """ 要睡觉状态 """
         self.rest: bool = 0
         """ 要休息状态 """
         self.pee: bool = 0
         """ 要撒尿状态 """
+        self.milk: bool = 0
+        """ 要挤奶状态 """
+        self.shower: int = 0
+        """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
+        self.eat_food: int = 0
+        """ 吃饭状态，int [0无,1要取餐,2要吃饭] """
         self.find_food_weird: bool = 0
         """ 发现食物不对劲 """
         self.swim: int = 0
@@ -738,6 +740,8 @@ class Rhodes_Island:
         """ 当前每个角色的待检修地点，角色id:地点 """
 
         # 生活娱乐区
+        self.milk_in_fridge: Dict[int, Tuple[int]] = {}
+        """ 冰箱里每个干员的当日母乳存量，干员id:母乳ml存量 """
 
         # 医疗部
         self.patient_now: int = 0

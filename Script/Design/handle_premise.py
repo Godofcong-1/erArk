@@ -3325,6 +3325,7 @@ def handle_normal_all(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     elif(
@@ -3362,7 +3363,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -3376,6 +3377,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     elif(
@@ -3434,7 +3436,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
 def handle_normal_1(character_id: int) -> int:
     """
     1正常的普通状态
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3446,6 +3448,7 @@ def handle_normal_1(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     else:
@@ -3867,7 +3870,7 @@ def handle_t_normal_24567(character_id: int) -> int:
 def handle_normal_124567(character_id: int) -> int:
     """
     124567正常（可能基础异常、AI跟随）
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
@@ -3884,6 +3887,7 @@ def handle_normal_124567(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     if(
@@ -3920,7 +3924,7 @@ def handle_normal_124567(character_id: int) -> int:
 def handle_normal_1267(character_id: int) -> int:
     """
     1267正常（可能AI跟随、服装异常或意识模糊）
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n2:妊娠限制：临盆、产后、婴儿
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
@@ -3935,6 +3939,7 @@ def handle_normal_1267(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     elif(
@@ -3962,7 +3967,7 @@ def handle_normal_1267(character_id: int) -> int:
 def handle_normal_123467(character_id: int) -> int:
     """
     123467正常（可能意识模糊）
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
@@ -3974,11 +3979,12 @@ def handle_normal_123467(character_id: int) -> int:
     int -- 权重
     """
     if(
-        handle_sleep_flag_1(character_id)
-        or handle_rest_flag_1(character_id)
+        handle_rest_flag_1(character_id)
+        or handle_sleep_flag_1(character_id)
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 0
     elif(
@@ -4037,7 +4043,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
@@ -4054,6 +4060,7 @@ def handle_unnormal(character_id: int) -> int:
         or handle_pee_flag_1(character_id)
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
+        or handle_milk_flag_1(character_id)
     ):
         return 1
     elif(
@@ -4579,6 +4586,22 @@ def handle_pee_flag_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.pee == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MILK_FLAG_1)
+def handle_milk_flag_1(character_id: int) -> int:
+    """
+    自身要挤奶状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.milk == 1:
         return 400
     else:
         return 0

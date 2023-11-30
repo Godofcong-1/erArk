@@ -1773,6 +1773,31 @@ def character_night_salutation_flag_1(character_id: int):
     character_data.sp_flag.night_salutation = 1
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.START_MILK)
+def character_start_milk(character_id: int):
+    """
+    进入要挤奶状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.milk = 1
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MAKE_MILK)
+def character_make_milk(character_id: int):
+    """
+    角色挤奶
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MILK
+    character_data.state = constant.CharacterStatus.STATUS_MILK
+    character_data.behavior.duration = 30
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """
