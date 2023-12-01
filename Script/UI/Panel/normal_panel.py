@@ -419,7 +419,16 @@ class Sleep_Panel:
             now_draw.text = now_draw_text
             now_draw.draw()
 
-            button_text = " [修改睡眠时间] "
+            now_draw_text = f"\n 睡眠时间选择："
+            now_draw.text = now_draw_text
+            now_draw.draw()
+            for i in [1,4,8]:
+                button_text = f" [{i}小时] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.fast_choice_sleep_time, args=i)
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+            button_text = " [自定义睡眠时间] "
             button_draw = draw.CenterButton(button_text, "请输入睡眠时间(最小1小时，最大8小时)：", len(button_text)*2, cmd_func=self.input_sleep_time)
             button_draw.draw()
             return_list.append(button_draw.return_text)
@@ -471,6 +480,10 @@ class Sleep_Panel:
                     user_input = 8
                 self.sleep_time = user_input
                 break
+
+    def fast_choice_sleep_time(self, sleep_time):
+        """快速选择睡眠时间"""
+        self.sleep_time = sleep_time
 
     def close_door_switch(self):
         """关门开关"""
