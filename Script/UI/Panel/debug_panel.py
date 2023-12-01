@@ -580,6 +580,8 @@ class Debug_Panel:
                 draw_text_list.append(f"[016]:射精槽：{target_data.eja_point}")
                 draw_text_list.append(f"[017]:对玩家的好感度：{target_data.favorability[0]}")
                 draw_text_list.append(f"[018]:信赖度：{target_data.trust}")
+                draw_text_list.append(f"[019]:乳汁量：{target_data.pregnancy.milk}")
+                draw_text_list.append(f"[020]:乳汁上限：{target_data.pregnancy.milk_max}")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -629,6 +631,10 @@ class Debug_Panel:
                         target_data.favorability[0] = new_value
                     elif value_index == 18:
                         target_data.trust = new_value
+                    elif value_index == 19:
+                        target_data.pregnancy.milk = new_value
+                    elif value_index == 20:
+                        target_data.pregnancy.milk_max = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
@@ -1036,6 +1042,7 @@ class Debug_Panel:
                 info_text += f"[019]:早安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.morning_salutation}\n"
                 info_text += f"[020]:晚安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.night_salutation}\n"
                 info_text += f"[021]:大浴场娱乐状态，int [0无,1要更衣,2要娱乐]：{target_data.sp_flag.bathhouse_entertainment}\n"
+                info_text += f"[022]:要挤奶状态：{target_data.sp_flag.milk}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()
@@ -1095,6 +1102,8 @@ class Debug_Panel:
                         target_data.sp_flag.night_salutation = value_index[1]
                     elif value_index[0] == 21:
                         target_data.sp_flag.bathhouse_entertainment = value_index[1]
+                    elif value_index[0] == 22:
+                        target_data.sp_flag.milk = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

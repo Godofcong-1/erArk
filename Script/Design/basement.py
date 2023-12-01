@@ -183,10 +183,12 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 结算母乳转化
+    settle_milk()
     # 结算流水线
     settle_assembly_line(newdayflag=True)
     # 结算访客抵达和离开
-    calculate_visitor_arrivals_and_departures()
+    settle_visitor_arrivals_and_departures()
 
     # 输出收入合计
     now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.rhodes_island.cure_income} = {cache.rhodes_island.all_income}\n"
@@ -444,7 +446,7 @@ def update_invite_visitor():
     if cache.rhodes_island.invite_visitor[1] >= 100:
 
         # 成功邀请时
-        if calculate_visitor_arrivals(visitor_id = cache.rhodes_island.invite_visitor[0]):
+        if settle_visitor_arrivals(visitor_id = cache.rhodes_island.invite_visitor[0]):
             cache.rhodes_island.invite_visitor[0] = 0
             cache.rhodes_island.invite_visitor[1] = 0
 
@@ -478,7 +480,7 @@ def check_facility_open():
     return False
 
 
-def calculate_visitor_arrivals_and_departures():
+def settle_visitor_arrivals_and_departures():
     """
     结算访客抵达和离开
     """
@@ -490,7 +492,7 @@ def calculate_visitor_arrivals_and_departures():
     if cache.rhodes_island.base_move_visitor_flag:
         # 将flag重置为False
         cache.rhodes_island.base_move_visitor_flag = False
-        calculate_visitor_arrivals()
+        settle_visitor_arrivals()
 
     # 根据时间而产生的访客
     add_day = game_time.count_day_for_datetime(cache.rhodes_island.last_visitor_time, cache.game_time)
@@ -498,7 +500,7 @@ def calculate_visitor_arrivals_and_departures():
     if random.randint(1, 100) <= visitor_come_possibility:
         # 刷新访客来访时间
         cache.rhodes_island.last_visitor_time = cache.game_time
-        calculate_visitor_arrivals()
+        settle_visitor_arrivals()
 
     # 访客离开
     # 遍历全部访客
@@ -533,7 +535,7 @@ def calculate_visitor_arrivals_and_departures():
                 now_draw.draw()
 
 
-def calculate_visitor_arrivals(visitor_id = 0):
+def settle_visitor_arrivals(visitor_id = 0):
     """
     结算访客抵达
     visitor_id = 0 时，随机抽取一名访客
@@ -573,3 +575,41 @@ def calculate_visitor_arrivals(visitor_id = 0):
         now_draw.text = f"\n ○【{cache.character_data[visitor_id].name}】作为临时访客抵达了罗德岛\n"
         now_draw.draw()
         return 1
+
+
+def settle_milk():
+    """
+    结算母乳转化
+    """
+
+    all_milk = 0
+
+    # 结算冰箱中的母乳
+    for character_id in cache.rhodes_island.milk_in_fridge:
+        now_milk = cache.rhodes_island.milk_in_fridge[character_id]
+        cache.rhodes_island.materials_resouce[31] += now_milk
+        all_milk += now_milk
+        # print(f"debug {cache.character_data[character_id].name}的母乳（{now_milk}ml）已转化为罗德岛的母乳")
+    cache.rhodes_island.milk_in_fridge = {}
+
+    # 结算所有角色携带的母乳
+    chara_id_list = list(cache.character_data.keys())
+    chara_id_list.append(0)
+    for character_id in chara_id_list:
+        character_data: game_type.Character = cache.character_data[character_id]
+
+        # 遍历角色背包
+        for food_id in character_data.food_bag.copy():
+            food: game_type.Food = character_data.food_bag[food_id]
+            # 如果是母乳，则转化，并删掉原物品
+            if food.ml > 0:
+                cache.rhodes_island.materials_resouce[31] += food.ml
+                all_milk += food.ml
+                # print(f"debug {character_data.name}携带的母乳（{food.ml}ml）已转化为罗德岛的母乳")
+                del character_data.food_bag[food.uid]
+
+    # 输出提示信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = f"\n今日共有{all_milk}ml母乳未使用，已全部转化为【鲜母乳】\n"
+    now_draw.draw()

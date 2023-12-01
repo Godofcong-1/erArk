@@ -144,6 +144,8 @@ class Food:
         # """ 可作为调料 """
         # self.fruit: bool = False
         # """ 是否是水果 """
+        self.ml: int = 0
+        """ 毫升数 """
 
 
 class Recipes:
@@ -309,7 +311,7 @@ class PREGNANCY:
         self.born_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色出生的时间 """
         self.milk: int = 0
-        """ 角色当前乳汁量，单位毫升，每2分钟增加1毫升 """
+        """ 角色当前乳汁量，单位毫升，每3分钟增加2毫升（平均4小时达到80%涨奶） """
         self.milk_max: int = 200
         """ 角色最大乳汁量，单位毫升 """
 

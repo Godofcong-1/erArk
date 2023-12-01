@@ -1,6 +1,7 @@
 from Script.Core import constant
 from Script.Design import handle_panel
 from Script.UI.Panel import (
+    normal_panel,
     h_item_shop_panel,
     in_scene_panel,
     assistant_panel,
@@ -200,4 +201,10 @@ def recruit_flow():
 def visitor_flow():
     """访客面板"""
     now_panel = invite_visitor_panel.Invite_Visitor_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.FRIDGE)
+def fridge_flow():
+    """冰箱面板"""
+    now_panel = normal_panel.Fridge_Panel(width)
     now_panel.draw()

@@ -831,7 +831,7 @@ def character_aotu_change_value(character_id: int):
 
     # 结算乳汁量，仅结算有泌乳素质的
     if now_character_data.talent[27]:
-        milk_change = int(add_time / 2)
+        milk_change = int(add_time * 2 / 3)
         add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
         now_character_data.pregnancy.milk += add_milk
         now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)

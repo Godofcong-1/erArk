@@ -11863,9 +11863,13 @@ def handle_milk_ge_80(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
 
+    if character_data.pregnancy.milk == 0:
+        return 0
+
     value = character_data.pregnancy.milk / character_data.pregnancy.milk_max
+
     if value > 0.80:
-        return 1
+        return character_data.pregnancy.milk
     else:
         return 0
 

@@ -684,7 +684,8 @@ def handle_npc_make_food_to_shop(
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     while 1:
-        recipes_id = random.randint(0, len(cache.recipe_data) - 1)
+        recipes_id_list = list(cache.recipe_data.keys())
+        recipes_id = random.choice(recipes_id_list)
         if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
             break
     food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
@@ -715,7 +716,8 @@ def handle_npc_make_food_to_bag(
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     while 1:
-        recipes_id = random.randint(0, len(cache.recipe_data) - 1)
+        recipes_id_list = list(cache.recipe_data.keys())
+        recipes_id = random.choice(recipes_id_list)
         if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
             break
     food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]

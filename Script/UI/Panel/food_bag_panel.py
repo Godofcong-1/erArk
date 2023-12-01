@@ -183,13 +183,21 @@ class SeeFoodListByFoodNameDraw:
             food_name = food_recipe.name
             food_introduce = food_recipe.introduce
         food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
+        food_quality_str = f"({food_quality_str})"
+        # 如果是母乳，则不显示质量，而是显示母乳的ml
+        if food_data.ml > 0:
+            food_quality_str = ""
+            milk_ml = f"({food_data.ml}ml)"
+        else:
+            milk_ml = ""
+        # 如果不是正常调味，则标注味道
         food_seasoning = ""
-        # 如果不是正常，则标注味道
         if food_data.special_seasoning != 0:
             food_seasoning += f"({game_config.config_seasoning[food_data.special_seasoning].name})"
         
         button_text = f"  {food_name}{food_seasoning}"
-        button_text += f"({food_quality_str})"
+        button_text += f"{food_quality_str}"
+        button_text += f"{milk_ml}"
         if food_data.maker != "":
             button_text += f"(by {food_data.maker})"
         button_text += f"：{food_introduce}"

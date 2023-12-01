@@ -26,7 +26,7 @@ def init_recipes():
             recipe_data.introduce,
             recipe_data.type,
         )
-        cache.recipe_data[len(cache.recipe_data)] = recipe
+        cache.recipe_data[recipe_id] = recipe
 
 
 def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str, type: int) -> Recipes:
@@ -218,7 +218,8 @@ def init_restaurant_data():
     max_people = len(cache.npc_id_got)
     cook_index = 0
     while 1:
-        recipes_id = random.randint(0, len(cache.recipe_data) - 1)
+        recipes_id_list = list(cache.recipe_data.keys())
+        recipes_id = random.choice(recipes_id_list)
         food_list = {}
         recipes = cache.recipe_data[recipes_id]
         # 难度上无法制作的菜谱直接跳过

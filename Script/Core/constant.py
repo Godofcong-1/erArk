@@ -1295,6 +1295,8 @@ class Panel:
     """ 招募面板 """
     VISITOR = 27
     """ 访客面板 """
+    FRIDGE = 28
+    """ 冰箱面板 """
 
 
 class SecondBehavior:
@@ -1762,6 +1764,8 @@ class Instruct:
     """ 导航 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
+    SEE_FRIDGE = 0
+    """ 查看冰箱 """
     FIND_AND_CALL_NPC = 0
     """ 查找与召集干员 """
     MANAGE_BASEMENT = 0

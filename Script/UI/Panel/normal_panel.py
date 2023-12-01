@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character, game_time
+from Script.Design import update, map_handle, character, game_time, cooking
 
 panel_info_data = {}
 
@@ -230,6 +230,7 @@ class Take_Care_Baby_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def choice_take_care(self, chara_id):
@@ -387,7 +388,11 @@ class Sleep_Panel:
         need_time = max(need_time, 1)
         self.sleep_time = need_time
 
+        title_text = "睡眠"
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
         while 1:
+            title_draw.draw()
             return_list = []
             line = draw.LineDraw("-", window_width)
             line.draw()
@@ -461,8 +466,10 @@ class Sleep_Panel:
                 # print(f"debug 玩家睡觉，睡觉时间 = {pl_character_data.action_info.sleep_time},醒来时间 = {pl_character_data.action_info.wake_time}")
                 cache.wframe_mouse.w_frame_skip_wait_mouse = 1
                 update.game_update_flow(sleep_time)
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def input_sleep_time(self):
@@ -488,3 +495,117 @@ class Sleep_Panel:
     def close_door_switch(self):
         """关门开关"""
         self.close_door_flag = not self.close_door_flag
+
+
+class Fridge_Panel:
+    """
+    用于查看冰箱的面板
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.close_door_flag = True
+        """ 关门情况 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = "冰箱"
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+            now_draw = draw.NormalDraw()
+            draw_text = "\n 【母乳】\n"
+            draw_text += "  ○母乳可以被博士带走饮用或制作其他乳制品，有效期截止当天24点，到期后背包和冰箱里未使用的母乳会全部转化为资源【鲜母乳】\n"
+            draw_text += "  当前冰箱内各干员母乳情况：\n"
+            now_draw.text = draw_text
+            now_draw.draw()
+
+            if len(cache.rhodes_island.milk_in_fridge) == 0:
+                draw_text = "\n    当前冰箱里没有母乳\n"
+                now_draw.text = draw_text
+                now_draw.draw()
+
+            # 获得冰箱内的乳制品
+            for character_id in cache.rhodes_island.milk_in_fridge:
+                character_data = cache.character_data[character_id]
+                character_name = character_data.name
+                character_milk = cache.rhodes_island.milk_in_fridge[character_id]
+                draw_text = f"  [{str(character_data.adv).rjust(4,'0')}]{character_name}：{character_milk}ml"
+                draw_text = draw_text.ljust(20, "　")
+                now_draw.text = draw_text
+                now_draw.draw()
+                # 拿走按钮
+                button_text = f"  [带走]  "
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text + f"_{character_id}"),
+                    len(button_text)*2,
+                    cmd_func=self.take_milk,
+                    args=character_id,
+                    )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                # 转化按钮
+                button_text = f"  [转化]  "
+                button_draw = draw.CenterButton(
+                    _(button_text),
+                    _(button_text + f"_{character_id}"),
+                    len(button_text)*2,
+                    cmd_func=self.turn_milk,
+                    args=character_id,
+                    )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回\n"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def take_milk(self, character_id: int):
+        """拿走母乳并放进玩家背包"""
+        pl_character_data: game_type.Character = cache.character_data[0]
+        character_data = cache.character_data[character_id]
+
+        # 创建食物对象，并放进玩家的背包里
+        new_food = cooking.create_food("", 1001, 5, character_data.name)
+        new_food.ml = cache.rhodes_island.milk_in_fridge[character_id]
+        pl_character_data.food_bag[new_food.uid] = new_food
+
+        # 删除冰箱里的母乳
+        del cache.rhodes_island.milk_in_fridge[character_id]
+
+        now_draw = draw.WaitDraw()
+        draw_text = f"\n  你将{character_data.name}的母乳（{new_food.ml}ml）放进了背包\n"
+        now_draw.text = draw_text
+        now_draw.draw()
+
+    def turn_milk(self, character_id: int):
+        """转化母乳为资源【鲜母乳】"""
+        character_data = cache.character_data[character_id]
+
+        # 转化母乳为鲜母乳
+        cache.rhodes_island.materials_resouce[31] += cache.rhodes_island.milk_in_fridge[character_id]
+
+        now_draw = draw.WaitDraw()
+        draw_text = f"\n  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n"
+        now_draw.text = draw_text
+        now_draw.draw()
+
+        # 删除冰箱里的母乳
+        del cache.rhodes_island.milk_in_fridge[character_id]

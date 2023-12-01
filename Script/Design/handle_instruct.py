@@ -266,6 +266,18 @@ def handle_see_collection():
 
 
 @add_instruct(
+    constant.Instruct.SEE_FRIDGE,
+    constant.InstructType.WORK,
+    _("查看冰箱"),
+    {
+        constant_promise.Premise.IN_KITCHEN
+    })
+def handle_see_fridge():
+    """处理查看冰箱指令"""
+    cache.now_panel_id = constant.Panel.FRIDGE
+
+
+@add_instruct(
     constant.Instruct.TEACH,
     constant.InstructType.WORK,
     _("授课"),
