@@ -1,9 +1,8 @@
-from typing import Set, Tuple
 from types import FunctionType
 from uuid import UUID
-from Script.Core import get_text, game_type, cache_control, constant, flow_handle, text_handle
+from Script.Core import get_text, game_type, cache_control, constant, flow_handle
 from Script.UI.Moudle import panel, draw
-from Script.Design import cooking, update, attr_calculation
+from Script.Design import cooking, update, attr_calculation, handle_premise
 from Script.Config import normal_config, game_config
 
 _: FunctionType = get_text._
@@ -92,8 +91,13 @@ class FoodBagPanel:
             now_draw.draw()
             line_feed.draw()
 
+            character_data: game_type.Character = cache.character_data[0]
+            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
             now_draw = draw.NormalDraw()
             now_draw.text = f"○正常调味食物\n"
+            if handle_premise.handle_hunger_ge_80(0):
+                now_draw.text += _("  你已经吃饱了，无法再吃东西了。\n\n")
             now_draw.width = 1
             now_draw.draw()
             self.handle_panel_normal.draw()
@@ -101,12 +105,17 @@ class FoodBagPanel:
 
             now_draw = draw.NormalDraw()
             now_draw.text = f"○特殊调味食物\n"
+            if character_data.target_character_id == 0:
+                now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
+            elif handle_premise.handle_hunger_ge_80(character_data.target_character_id):
+                now_draw.text += _(f"  {target_character_data.name}已经吃饱了，无法再吃东西了。\n\n")
             now_draw.width = 1
             now_draw.draw()
             self.handle_panel_special.draw()
 
             return_list.extend(self.handle_panel_normal.return_list)
             return_list.extend(self.handle_panel_special.return_list)
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -202,8 +211,23 @@ class SeeFoodListByFoodNameDraw:
             button_text += f"(by {food_data.maker})"
         button_text += f"：{food_introduce}"
 
-        if (food_data.special_seasoning == 0 or
-            (food_data.special_seasoning != 0 and cache.character_data[0].target_character_id != 0)):
+        # 判断是否需要绘制按钮
+        draw_button_flag = True
+        character_data: game_type.Character = cache.character_data[0]
+        # 正常调味的情况下
+        if food_data.special_seasoning == 0:
+            # 自己已经吃饱了则不显示按钮
+            if handle_premise.handle_hunger_ge_80(0):
+                draw_button_flag = False
+        else:
+            # 特殊调味的情况下，如果没有目标则不显示按钮
+            if character_data.target_character_id == 0:
+                draw_button_flag = False
+            # 如果目标已经吃饱了则不显示按钮
+            if handle_premise.handle_hunger_ge_80(character_data.target_character_id):
+                draw_button_flag = False
+
+        if draw_button_flag:
             name_draw = draw.LeftButton(
                 button_text, str(self.text)[:3], self.width, cmd_func=self.eat_food
             )
