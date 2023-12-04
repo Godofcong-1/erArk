@@ -837,6 +837,15 @@ def character_aotu_change_value(character_id: int):
         now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
 
     if character_id == 0:
+
+        # 非H模式下结算玩家的射精值减少
+        if not cache.character_data[0].sp_flag.is_h:
+            # 上次射精时间距离现在超过一小时则射精值减少
+            last_time = cache.character_data[0].action_info.last_eaj_add_time
+            if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
+                cache.character_data[0].eja_point -= add_time * 10
+                cache.character_data[0].eja_point = max(cache.character_data[0].eja_point,0)
+
         # 结算玩家源石技艺的理智值消耗
         # 激素系
         if now_character_data.pl_ability.hormone > 0:

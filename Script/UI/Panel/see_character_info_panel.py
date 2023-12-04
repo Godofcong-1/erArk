@@ -694,7 +694,7 @@ class CharacterInfoHead:
                 "EjaPointbar",
                 int(character_data.eja_point_max),
                 int(character_data.eja_point),
-                _("射精"),
+                _("射精欲"),
             )
         # status_text = game_config.config_status[character_data.state].name
         # status_draw = draw.CenterDraw()

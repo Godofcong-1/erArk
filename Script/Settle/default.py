@@ -1475,6 +1475,7 @@ def handle_target_add_small_p_feel(
     # target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     # target_change.eja_point.setdefault(3, 0)
     # target_change.eja_point += now_add_lust
+    target_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
@@ -2778,6 +2779,7 @@ def handle_add_small_p_feel(
     now_add_lust = add_time + now_lust_multiple + character_data.eja_point * 0.4
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
+    character_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_ADD_SMALL_LEARN)
@@ -4802,6 +4804,7 @@ def handle_tech_add_p_adjust(
         # target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         # target_change.status_data.setdefault(3, 0)
         # target_change.status_data[3] += now_add_lust
+        target_data.action_info.last_eaj_add_time = now_time
         # 欲情变化#
         target_data.status_data.setdefault(12, 0)
         now_lust = target_data.status_data[12]
@@ -5064,6 +5067,7 @@ def handle_tech_add_pl_p_adjust(
         now_add_lust *= adjust
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)

@@ -444,6 +444,8 @@ class ACTION_INFO:
         """ 角色H被打断 """
         self.follow_wait_time: int = 0
         """ 无法进入私密场所的等待时间 """
+        self.last_eaj_add_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 上次增加射精值的时间 """
 
 
 class SPECIAL_FLAG:

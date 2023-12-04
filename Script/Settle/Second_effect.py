@@ -692,6 +692,7 @@ def handle_add_small_p_feel(
     # now_add_lust *= adjust
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
+    character_data.action_info.last_eaj_add_time = cache.game_time
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_V_FEEL)
