@@ -703,16 +703,13 @@ class CharacterInfoHead:
         None_draw = draw.CenterDraw()
         None_draw.width = 1
         None_draw.text = (" ")
+        self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
+            (message_draw, hp_draw, None_draw, mp_draw),
+        ]
         if character_id == 0:
-            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw, None_draw, mp_draw, sp_draw, ep_draw),
-                # (status_draw),
-            ]
-        else:
-            self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-                (message_draw, hp_draw, None_draw, mp_draw),
-                # (status_draw),
-            ]
+            self.draw_list[0] = self.draw_list[0] + (sp_draw,)
+            if character_data.eja_point:
+                self.draw_list[0] = self.draw_list[0] + (ep_draw,)
         """ 要绘制的面板列表 """
 
     def draw(self):
