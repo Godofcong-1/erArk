@@ -689,6 +689,7 @@ def update_sleep():
         if character_id == 0:
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
+            character_data.semen_point = character_data.semen_point_max # 恢复精液量
         else:
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
@@ -774,7 +775,6 @@ def character_aotu_change_value(character_id: int):
     character_id -- 角色id
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
-    player_character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
     add_time = now_character_data.behavior.duration
 
@@ -839,12 +839,15 @@ def character_aotu_change_value(character_id: int):
     if character_id == 0:
 
         # 非H模式下结算玩家的射精值减少
-        if not cache.character_data[0].sp_flag.is_h:
+        if not now_character_data.sp_flag.is_h:
             # 上次射精时间距离现在超过一小时则射精值减少
-            last_time = cache.character_data[0].action_info.last_eaj_add_time
+            last_time = now_character_data.action_info.last_eaj_add_time
             if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
-                cache.character_data[0].eja_point -= add_time * 10
-                cache.character_data[0].eja_point = max(cache.character_data[0].eja_point,0)
+                now_character_data.eja_point -= add_time * 10
+                now_character_data.eja_point = max(now_character_data.eja_point,0)
+
+        # 玩家缓慢恢复精液量
+        now_character_data.semen_point += int(add_time / 6)
 
         # 结算玩家源石技艺的理智值消耗
         # 激素系

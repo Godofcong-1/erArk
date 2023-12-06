@@ -813,6 +813,8 @@ class Rhodes_Island:
 
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
+        self.total_semen_count: int = 0
+        """ 每日总射精量 """
 
         self.warehouse_capacity: int = 0
         """ 仓库容量 """
@@ -876,6 +878,10 @@ class Character:
         """ 角色最大射精槽 """
         self.eja_point: int = 0
         """ 角色当前射精槽 """
+        self.semen_point_max: int = 0
+        """ 角色最大精液槽 """
+        self.semen_point: int = 0
+        """ 角色当前精液槽 """
         self.angry_point: int = 0
         """ 角色当前愤怒槽 """
         self.tired_point: int = 0
@@ -889,7 +895,7 @@ class Character:
         self.state: int = 0
         """ 角色当前状态 """
         self.last_state: List = [0]
-        """ 角色当前状态 """
+        """ 角色之前的状态 """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
         # """
         # 角色拥有的服装数据

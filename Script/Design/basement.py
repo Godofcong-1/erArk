@@ -183,6 +183,8 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 结算精液转化
+    settle_semen()
     # 结算母乳转化
     settle_milk()
     # 结算流水线
@@ -609,7 +611,25 @@ def settle_milk():
                 del character_data.food_bag[food.uid]
 
     # 输出提示信息
-    now_draw = draw.WaitDraw()
-    now_draw.width = window_width
-    now_draw.text = f"\n今日共有{all_milk}ml母乳未使用，已全部转化为【鲜母乳】\n"
-    now_draw.draw()
+    if all_milk > 0:
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = f"\n今日共有{all_milk}ml母乳未使用，已全部转化为【鲜母乳】\n"
+        now_draw.draw()
+
+
+def settle_semen():
+    """
+    结算精液转化
+    """
+
+    today_semen = cache.rhodes_island.total_semen_count
+    cache.rhodes_island.materials_resouce[12] += today_semen
+    cache.rhodes_island.total_semen_count = 0
+
+    # 输出提示信息
+    if today_semen:
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = f"\n今日共射出{today_semen}ml精液，已全部转化为【矿石病药材】\n"
+        now_draw.draw()

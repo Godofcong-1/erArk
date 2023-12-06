@@ -19,6 +19,44 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def common_ejaculation():
+    """
+    通用射精结算
+    return
+    semen_text 射精文本
+    semen_count 射精量
+    """
+    character_data: game_type.Character = cache.character_data[0]
+
+    # 乘以一个随机数补正
+    random_weight = random.uniform(0.5, 1.5)
+
+    # 如果已经没有精液了，则不射精
+    if character_data.semen_point <= 1:
+        return "",0
+    else:
+        # 基础射精值，小中多射精区分
+        if character_data.h_state.orgasm_level[3] % 3 == 0:
+            semen_count = int(5 * random_weight)
+            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 1:
+            semen_count = int(20 * random_weight)
+            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 2:
+            semen_count = int(40 * random_weight)
+            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+
+        # 更新射精计数
+        character_data.h_state.orgasm_level[3] += 1
+
+        # 更新精液值
+        if semen_count > character_data.semen_point:
+            semen_count = character_data.semen_point
+        character_data.semen_point -= semen_count
+        cache.rhodes_island.total_semen_count += semen_count
+
+        return semen_text,semen_count
+
 
 class Ejaculation_Panel:
     """
@@ -269,22 +307,8 @@ class Ejaculation_NameDraw:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
         cache.shoot_position = self.index
-        # 乘以一个随机数补正
-        random_weight = random.uniform(0.5, 1.5)
 
-        # 基础射精值，小中多射精区分
-        if character_data.h_state.orgasm_level[3] % 3 == 0:
-            semen_count = int(5 * random_weight)
-            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(20 * random_weight)
-            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(100 * random_weight)
-            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
-        character_data.h_state.orgasm_level[3] += 1
-
-        # print("debug semen_count = ",semen_count)
+        semen_text, semen_count = common_ejaculation()
 
         if self.panel_type == 1:
 

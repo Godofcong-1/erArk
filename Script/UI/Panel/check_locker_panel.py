@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, text_ha
 from Script.Design import map_handle, attr_calculation, update, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+import ejaculation_panel
 import random
 
 cache: game_type.Cache = cache_control.cache
@@ -370,29 +371,10 @@ class Ejaculation_NameDraw:
     def shoot_here(self):
         py_cmd.clr_cmd()
 
-        character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[self.npc_id]
-
         cache.shoot_position = self.index
-        # 乘以一个随机数补正
-        random_weight = random.uniform(0.5, 1.5)
 
-        # 基础射精值，小中多射精区分
-        if character_data.h_state.orgasm_level[3] % 3 == 0:
-            semen_count = int(5 * random_weight)
-            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(20 * random_weight)
-            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(100 * random_weight)
-            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
-        character_data.h_state.orgasm_level[3] += 1
-
-        # print("debug semen_count = ",semen_count)
-
-        # 记录射精部位
-        # target_data.h_state.shoot_position_cloth = self.index
+        semen_text, semen_count = ejaculation_panel.common_ejaculation()
 
         # 更新污浊类里的服装部位精液参数
         target_data.dirty.cloth_locker_semen[self.index][1] += semen_count

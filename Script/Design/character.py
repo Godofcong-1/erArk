@@ -66,6 +66,8 @@ def init_attr(character_id: int):
         character_data.eja_point_max = 1000
         character_data.sanity_point = 100
         character_data.sanity_point_max = 100
+        character_data.semen_point = 100
+        character_data.semen_point_max = 100
         character_data.pl_collection.token_list = attr_calculation.get_token_zero(
             character_data.pl_collection.token_list)
         character_data.tired_point = 0
