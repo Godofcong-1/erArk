@@ -33,7 +33,7 @@ def common_ejaculation():
 
     # 如果已经没有精液了，则不射精
     if character_data.semen_point <= 1:
-        return "",0
+        return "只流出了些许前列腺液，已经射不出精液了",0
     else:
         # 基础射精值，小中多射精区分
         if character_data.h_state.orgasm_level[3] % 3 == 0:

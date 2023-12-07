@@ -43,6 +43,11 @@ class InScenePanel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("场景"), self.width)
         while 1:
+            if cache.now_panel_id != constant.Panel.IN_SCENE:
+                break
+            line_feed.draw()
+            title_draw.draw()
+
             character_data: game_type.Character = cache.character_data[0]
             scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -82,28 +87,24 @@ class InScenePanel:
             # 游戏时间
             game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
             game_time_draw.now_draw.width = len(game_time_draw)
+            game_time_draw.draw()
             # 当前位置
             position_text = attr_text.get_scene_path_text(character_data.position)
             now_position_text = _("当前位置:") + position_text
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
-            now_position_draw.width = self.width - len(game_time_draw)
+            now_position_draw.draw()
+            line_feed.draw()
+
             # 当前位置的角色一览
             meet_draw = draw.NormalDraw()
-            meet_draw.text = _("当前位置的角色一览:")
-            meet_draw.width = self.width
+            meet_draw.text = _("当前位置的角色一览:    ")
+            # meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
-            if cache.now_panel_id != constant.Panel.IN_SCENE:
-                break
             character_handle_panel.null_button_text = character_data.target_character_id
 
             # 开始绘制主界面标题栏
-            line_feed.draw()
-            title_draw.draw()
-            game_time_draw.draw()
-            now_position_draw.draw()
-            line_feed.draw()
             ask_list = []
             if len(character_list) and character_data.target_character_id not in character_list:
                 character_data.target_character_id = character_list[0]
@@ -111,7 +112,6 @@ class InScenePanel:
                 character_data.target_character_id = 0
             if len(character_list):
                 meet_draw.draw()
-                line_feed.draw()
                 character_handle_panel.update()
                 character_handle_panel.draw()
                 ask_list.extend(character_handle_panel.return_list)

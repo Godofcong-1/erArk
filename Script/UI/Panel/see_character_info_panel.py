@@ -634,6 +634,18 @@ class CharacterInfoHead:
         start_time = character_data.behavior.start_time
         hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
 
+        # 射精欲不为零时进行提示
+        eja_text = ""
+        if character_id == 0 and character_data.eja_point > 0:
+            if character_data.eja_point <= 300:
+                eja_text = " <射精欲:低>"
+            elif character_data.eja_point <= 600:
+                eja_text = " <射精欲:中>"
+            elif character_data.eja_point <= 900:
+                eja_text = " <射精欲:高>"
+            else:
+                eja_text = " <射精欲:极>"
+
         if character_id:
             message = _(
                 "{character_name}（好感度：{favorability}，信赖度：{trust}% {angry}）{sleep}{urinate}{hunger}").format(
@@ -647,14 +659,14 @@ class CharacterInfoHead:
             )
         else:
             message = _(
-                "{character_name}{character_nick_name}{sleep}{urinate}"
-            ).format(
+                "{character_name}{character_nick_name}{sleep}{urinate}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
                 sleep=sleep_text,
                 urinate=urinate_text,
+                eja=eja_text,
             )
         message_draw = draw.CenterDraw()
         message_draw.width = width / 3.5
@@ -687,14 +699,14 @@ class CharacterInfoHead:
                 int(character_data.sanity_point),
                 _("理智"),
             )
-            ep_draw = draw.InfoBarDraw()
-            ep_draw.width = width / 6
-            ep_draw.scale = 0.8
-            ep_draw.set(
-                "EjaPointbar",
-                int(character_data.eja_point_max),
-                int(character_data.eja_point),
-                _("射精欲"),
+            semenpoint_draw = draw.InfoBarDraw()
+            semenpoint_draw.width = width / 6
+            semenpoint_draw.scale = 0.8
+            semenpoint_draw.set(
+                "SemenPointBar",
+                int(character_data.semen_point_max),
+                int(character_data.semen_point),
+                _("精液"),
             )
         # status_text = game_config.config_status[character_data.state].name
         # status_draw = draw.CenterDraw()
@@ -708,8 +720,7 @@ class CharacterInfoHead:
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)
-            if character_data.eja_point:
-                self.draw_list[0] = self.draw_list[0] + (ep_draw,)
+            self.draw_list[0] = self.draw_list[0] + (semenpoint_draw,)
         """ 要绘制的面板列表 """
 
     def draw(self):

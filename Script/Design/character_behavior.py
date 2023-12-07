@@ -848,6 +848,7 @@ def character_aotu_change_value(character_id: int):
 
         # 玩家缓慢恢复精液量
         now_character_data.semen_point += int(add_time / 6)
+        now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
         # 激素系

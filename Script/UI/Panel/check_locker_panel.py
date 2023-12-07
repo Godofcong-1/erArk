@@ -4,8 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, text_ha
 from Script.Design import map_handle, attr_calculation, update, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-import ejaculation_panel
-import random
+from Script.UI.Panel import ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
