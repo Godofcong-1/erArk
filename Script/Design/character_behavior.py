@@ -44,6 +44,10 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
 
 
 def init_character_behavior():
@@ -675,7 +679,7 @@ def update_sleep():
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n博士入睡，开始结算各种数据\n\n"
+    now_draw.text = "\n博士入睡，开始结算各种数据\n"
     now_draw.draw()
     id_list = cache.npc_id_got.copy()
     id_list.add(0)
@@ -687,9 +691,11 @@ def update_sleep():
         settle_character_juel(character_id)
         # 玩家结算
         if character_id == 0:
+            sanity_point_grow() # 玩家理智成长
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.semen_point = character_data.semen_point_max # 恢复精液量
+            line_feed.draw()
         else:
             # 清零并随机重置生气程度
             character_data.angry_point = random.randrange(1,35)
@@ -855,13 +861,16 @@ def character_aotu_change_value(character_id: int):
         if now_character_data.pl_ability.hormone > 0:
             down_sp = max(int(add_time / 6),1)
             now_character_data.sanity_point -= down_sp
+            now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 视觉系
         if now_character_data.pl_ability.visual:
             down_sp = max(int(add_time / 6),1)
             now_character_data.sanity_point -= down_sp
+            now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 理智值不足则归零并中断所有开启中的源石技艺
         if now_character_data.sanity_point < 0:
             now_character_data.sanity_point = 0
+            now_character_data.pl_ability.visual = False
             now_character_data.pl_ability.hormone *= -1
             # 输出提示信息
             now_draw = draw.WaitDraw()
@@ -972,3 +981,25 @@ def get_chara_entertainment(character_id: int):
                 # 跳出循环后，将该娱乐活动赋值给角色
                 character_data.entertainment.entertainment_type[i] = choice_entertainment_id
                 entertainment_list.remove(choice_entertainment_id) # 从列表中去掉该娱乐活动，防止重复
+
+
+def sanity_point_grow():
+    """
+    玩家理智值的自然成长\n
+    Keyword arguments:
+    无
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    today_cost = character_data.pl_ability.today_sanity_point_cost
+    character_data.pl_ability.today_sanity_point_cost = 0
+    # 消耗超过90时进行成长
+    if today_cost >= 50 and character_data.sanity_point_max < 9999:
+        # 成长值为消耗值的1/50，四舍五入取整
+        grow_value = round(today_cost / 50)
+        character_data.sanity_point_max += grow_value
+        character_data.sanity_point_max = min(character_data.sanity_point_max,9999)
+        # 绘制说明信息
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = f"\n在刻苦的锻炼下，博士理智最大值成长了{grow_value}点\n"
+        now_draw.draw()

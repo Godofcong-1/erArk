@@ -560,6 +560,8 @@ class PLAYER_ABILITY:
         """ 视觉系能力 """
         self.tactile: bool = False
         """ 触觉系能力 """
+        self.today_sanity_point_cost: int = 0
+        """ 今日已消耗的理智值 """
 
 
 # class Height:
