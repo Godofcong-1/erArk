@@ -82,6 +82,16 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
+def have_hypnosis_talent():
+    """
+    验证是否有催眠系素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    for talent_id in [331,332,333,334]:
+        if pl_character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
 def have_hormone_talent():
     """
     验证是否有激素系素质\n

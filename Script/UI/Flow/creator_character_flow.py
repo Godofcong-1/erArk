@@ -848,6 +848,8 @@ class Character_Bonus:
                 talent_id = 304
             elif first_bonus_id == 2:
                 talent_id = 307
+            elif first_bonus_id == 3:
+                talent_id = 331
 
             if pl_character_data.talent[talent_id]:
                 pl_character_data.talent[talent_id] = 0

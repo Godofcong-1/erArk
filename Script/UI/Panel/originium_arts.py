@@ -47,6 +47,8 @@ class Originium_Arts_Panel:
             title_draw.draw()
             # line = draw.LineDraw("-", window_width)
             # line.draw()
+            pl_character_data: game_type.Character = cache.character_data[0]
+            target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
             cinfo_draw = draw.NormalDraw()
             info_text = f"\n要使用哪一个源石技艺呢？\n"
             cinfo_draw.text = info_text
@@ -80,14 +82,16 @@ class Originium_Arts_Panel:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            if 0:
-                button3_text = f"[003]催眠(未实装)"
+            if handle_talent.have_hypnosis_talent():
+                button3_text = f"[003]催眠"
+                if target_data.talent[71]:
+                    button3_text += f"，当前催眠对象：{target_data.name}"
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
                     window_width,
-                    cmd_func=self.to_do,
-                    args=(),
+                    cmd_func=self.ability_switch,
+                    args=(3),
                     )
                 line_feed.draw()
                 button3_draw.draw()
@@ -183,8 +187,27 @@ class Originium_Arts_Panel:
     def ability_switch(self,ability_type):
         """能力开关"""
 
+        # 催眠系
+        if ability_type == 3:
+            now_draw = draw.WaitDraw()
+            target_chara_id = self.pl_character_data.target_character_id
+            if target_chara_id:
+                target_character_data = cache.character_data[target_chara_id]
+                if target_character_data.talent[71]:
+                    now_draw.text = _(f"\n解除了{target_character_data.name}的【催眠中】状态\n")
+                    target_character_data.talent[71] = 0
+                else:
+                    now_draw.text = _(f"\n{target_character_data.name}进入了【催眠中】状态，在理智消耗完毕前，不会反抗你的")
+                    target_character_data.talent[71] = 1
+                    if self.pl_character_data.talent[332]:
+                        now_draw.text += f"一切性行为\n"
+                    else:
+                        now_draw.text += f"性骚扰指令，但会反抗H指令\n"
+            else:
+                now_draw.text = _(f"\n房间里没有可催眠的目标\n")
+            now_draw.draw()
         # 激素系
-        if ability_type == 5:
+        elif ability_type == 5:
             self.pl_character_data.pl_ability.hormone *= -1
             # 第一次开始则进行初始化
             if self.pl_character_data.pl_ability.hormone == 0:

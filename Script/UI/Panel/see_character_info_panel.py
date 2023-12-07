@@ -646,9 +646,12 @@ class CharacterInfoHead:
             else:
                 eja_text = " <射精欲:极>"
 
+        # 催眠状态时进行提示
+        hypnosis_text = " <催眠>" if character_data.talent[71] else ""
+
         if character_id:
             message = _(
-                "{character_name}（好感度：{favorability}，信赖度：{trust}% {angry}）{sleep}{urinate}{hunger}").format(
+                "{character_name}（好感度：{favorability}，信赖度：{trust}% {angry}）{sleep}{urinate}{hunger}{hypnosis}").format(
                 character_name=character_data.name,
                 favorability=int(character_data.favorability[0]),
                 trust=round(character_data.trust, 1),
@@ -656,6 +659,7 @@ class CharacterInfoHead:
                 sleep=sleep_text,
                 urinate=urinate_text,
                 hunger=hunger_text,
+                hypnosis=hypnosis_text,
             )
         else:
             message = _(
