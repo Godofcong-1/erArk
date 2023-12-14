@@ -857,27 +857,29 @@ def character_aotu_change_value(character_id: int):
         now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
-        # 激素系
-        if now_character_data.pl_ability.hormone > 0:
-            down_sp = max(int(add_time / 6),1)
-            now_character_data.sanity_point -= down_sp
-            now_character_data.pl_ability.today_sanity_point_cost += down_sp
+        # 激素系，改为不消耗理智
+        # if now_character_data.pl_ability.hormone:
+        #     down_sp = max(int(add_time / 6),1)
+        #     now_character_data.sanity_point -= down_sp
+        #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 视觉系
         if now_character_data.pl_ability.visual:
-            down_sp = max(int(add_time / 6),1)
+            down_sp = max(int(add_time / 12),1)
+            # 倍率计算
+            multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
+            down_sp *= max(multiple, 1)
             now_character_data.sanity_point -= down_sp
             now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 理智值不足则归零并中断所有开启中的源石技艺
         if now_character_data.sanity_point < 0:
             now_character_data.sanity_point = 0
             now_character_data.pl_ability.visual = False
-            now_character_data.pl_ability.hormone *= -1
             # 输出提示信息
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
             now_draw.text = "\n理智值不足，开启的源石技艺已全部中断\n"
             now_draw.draw()
-        
+
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:
             # 睡奸判定

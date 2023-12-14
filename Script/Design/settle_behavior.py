@@ -25,7 +25,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
-    status_data = game_type.CharacterStatusChange()
+    change_data = game_type.CharacterStatusChange()
     start_time = now_character_data.behavior.start_time
     add_time = int((now_time - start_time).seconds / 60)
 
@@ -34,9 +34,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # 进行一段结算
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
-                constant.settle_behavior_effect_data[effect_id](character_id, add_time, status_data, now_time)
+                constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
         # 进行二段结算
-        check_second_effect(character_id, status_data)
+        check_second_effect(character_id, change_data)
+        # 进行无意识结算
+        check_unconscious_effect(character_id, add_time, change_data, now_time)
         # 结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
 
@@ -48,7 +50,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             event_data: game_type.Event = game_config.config_event[event_id]
             for effect in event_data.effect:
                 constant.settle_behavior_effect_data[int(effect)](
-                    character_id, add_time, status_data, now_time
+                    character_id, add_time, change_data, now_time
                 )
 
         # 子事件
@@ -59,7 +61,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             event_data: game_type.Event = game_config.config_event[son_event_id]
             for effect in event_data.effect:
                 constant.settle_behavior_effect_data[int(effect)](
-                    character_id, add_time, status_data, now_time
+                    character_id, add_time, change_data, now_time
                 )
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
@@ -69,44 +71,44 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     # 注释掉了社交关系#
     # change_character_social(character_id, status_data)
     now_judge = False
-    change_flag = False
+    exchange_flag = False # 玩家和NPC输出互换的flag
     PC_information_flag = 0  # 0初始，1PC输出，2不输出
     # NPC触发且不和玩家在同一地图时则跳过
     if character_id != 0 and now_character_data.position != player_character_data.position:
         return
     # 当NPC对玩家交互时，互相替换双方的输出内容
     if character_id != 0 and now_character_data.target_character_id == 0:
-        change_flag = True
-        status_data.target_change.setdefault(0, game_type.TargetChange())
-        target_change: game_type.TargetChange = status_data.target_change[0]
-        target_change.target_change[character_id] = status_data
+        exchange_flag = True
+        change_data.target_change.setdefault(0, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[0]
+        target_change.target_change[character_id] = change_data
 
         # 开始互换
         # print(f"debug 前target_change.hit_point = {target_change.hit_point}")
-        status_data, target_change = target_change, status_data
+        change_data, target_change = target_change, change_data
         now_character_data, target_data = player_character_data, now_character_data
         character_id = 0
         # print(f"debug 后target_change.hit_point = {target_change.hit_point}")
-    elif character_id:
+    # elif character_id:
+    #     return
+    if change_data is None:
         return
-    if status_data is None:
-        return
-    if status_data.mana_point:
+    if change_data.mana_point:
         now_judge = True
         PC_information_flag = 1
-    if status_data.hit_point:
+    if change_data.hit_point:
         now_judge = True
         PC_information_flag = 1
-    if status_data.eja_point:
+    if change_data.eja_point:
         now_judge = True
         PC_information_flag = 1
-    if len(status_data.status_data):
+    if len(change_data.status_data):
         now_judge = True
-    if len(status_data.experience):
+    if len(change_data.experience):
         now_judge = True
         PC_information_flag = 1
-    if len(status_data.target_change) and not character_id:
-        for target_character_id in status_data.target_change:
+    if len(change_data.target_change) and not character_id:
+        for target_character_id in change_data.target_change:
             # print(f"debug target_now_judge,character_id = {character_id},target_character_id = {target_character_id}")
             if character_id == target_character_id:
                 continue
@@ -128,36 +130,36 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             now_text_list.append(now_draw.text)
 
         # 体力/气力/射精的结算输出
-        if status_data.hit_point and round(status_data.hit_point, 2) != 0:
+        if change_data.hit_point and round(change_data.hit_point, 2) != 0:
             now_text_list.append(
-                _("\n  体力") + text_handle.number_to_symbol_string(int(status_data.hit_point))
+                _("\n  体力") + text_handle.number_to_symbol_string(int(change_data.hit_point))
             )
-        if status_data.mana_point and round(status_data.mana_point, 2) != 0:
+        if change_data.mana_point and round(change_data.mana_point, 2) != 0:
             now_text_list.append(
-                _("\n  气力") + text_handle.number_to_symbol_string(int(status_data.mana_point))
+                _("\n  气力") + text_handle.number_to_symbol_string(int(change_data.mana_point))
             )
-        if status_data.eja_point and round(status_data.eja_point, 2) != 0:
+        if change_data.eja_point and round(change_data.eja_point, 2) != 0:
             now_text_list.append(
-                _("\n  射精") + text_handle.number_to_symbol_string(int(status_data.eja_point))
+                _("\n  射精") + text_handle.number_to_symbol_string(int(change_data.eja_point))
             )
 
         # 状态的结算输出
-        if len(status_data.status_data) and not change_flag:
+        if len(change_data.status_data) and not exchange_flag:
             now_text_list.extend(
                 [
-                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(status_data.status_data[i]))}"
-                    for i in status_data.status_data
+                    f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(change_data.status_data[i]))}"
+                    for i in change_data.status_data
                 ]
             )
 
         # 经验的结算输出
-        if len(status_data.experience):
+        if len(change_data.experience):
             now_text_list.extend(
                 [
                     _("\n  ")
                     + game_config.config_experience[i].name
-                    + text_handle.number_to_symbol_string(status_data.experience[i])
-                    for i in status_data.experience
+                    + text_handle.number_to_symbol_string(change_data.experience[i])
+                    for i in change_data.experience
                 ]
             )
 
@@ -175,15 +177,15 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             now_text_list.extend("\n")
 
         # 交互对象的结算输出
-        if len(status_data.target_change):
-            for target_character_id in status_data.target_change:
+        if len(change_data.target_change):
+            for target_character_id in change_data.target_change:
                 # print(f"debug target_now_judge,character_id = {character_id},target_character_id = {target_character_id}")
                 if character_id and target_character_id:
                     continue
                 # 当NPC对玩家交互时，直接使用互相替换完的双方数据
                 judge = 0
-                if not change_flag:
-                    target_change: game_type.TargetChange = status_data.target_change[target_character_id]
+                if not exchange_flag:
+                    target_change: game_type.TargetChange = change_data.target_change[target_character_id]
                     target_data: game_type.Character = cache.character_data[target_character_id]
                 else:
                     judge = 1
@@ -243,7 +245,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                             judge = 1
                 if judge and (now_text != name):
                     now_text_list.append(now_text)
-        if not change_flag:
+        if not exchange_flag:
             now_text_time = "\n\n " + str(add_time) + "分钟过去了\n"
         else:
             now_text_time = "\n\n 该行动将持续" + str(add_time) + "分钟\n"
@@ -500,6 +502,49 @@ def check_second_effect(
                     constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
 
 
+def check_unconscious_effect(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    处理无意识结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 行动已经过时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    target_character_data: game_type.Character = cache.character_data[target_character_id]
+    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_character_id]
+    # target_change: game_type.TargetChange = status_data.target_change[target_character_id]
+    # print()
+    # print("进入无意识结算")
+
+    # 玩家对交互目标进行结算
+    if character_id == 0 and target_character_id != 0:
+        # 目标处于无意识状态
+        if target_character_data.sp_flag.unconscious_h:
+            # 经验结算
+            for experience_id in target_change.experience:
+                # 普通部位
+                if experience_id in range(0, 8):
+                    # 根据经验序号转化为对应的结算序号
+                    effect_id = experience_id + 270
+                    constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
+                # 绝顶经验
+                elif experience_id in range(10, 18):
+                    constant.settle_behavior_effect_data[278](character_id, add_time, change_data, now_time)
+                # 性交经验
+                elif experience_id in range(51, 55):
+                    constant.settle_behavior_effect_data[279](character_id, add_time, change_data, now_time)
+
+
 def insert_position_effect(character_id: int):
     """
     处理第二结算中的阴茎位置结算
@@ -662,7 +707,7 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         if character_data.ability[31] <= 2:
             character_data.ability[31] = 3
 
-    # 时姦刻印未实装
+    # 无觉刻印未实装
 
     # 恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
     terror_count = 0

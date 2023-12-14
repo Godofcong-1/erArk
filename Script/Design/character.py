@@ -294,9 +294,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             calculation_text += "+淫乱(+30)"
 
     # 激素系能力修正#
-    if character_data.pl_ability.hormone > 0:
-        judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
-            306] * 50
+    if character_data.pl_ability.hormone:
+        judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[306] * 50
         judge += judge_information
         talent_id = handle_talent.have_hormone_talent()
         talent_name = game_config.config_talent[talent_id].name
@@ -344,7 +343,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             calculation_text += "+无意识(+1000)"
 
     # 催眠系能力的最后补正，仅在性爱判定、且实行值不足时生效
-    if target_data.talent[71] and judge_data_type == "S" and judge < judge_data_value:
+    if target_data.sp_flag.unconscious_h == 5 and judge_data_type == "S" and judge < judge_data_value:
         # 性骚扰级别通用，性行为级别需要至少2级催眠
         if "骚扰" in instruct_name or "亲吻" in instruct_name or character_data.talent[332]:
             # 实行值不够的差值为
@@ -365,7 +364,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
             else:
                 calculation_text += f"+催眠(+0,理智不足,催眠解除)"
-                target_data.talent[71] = 0
+                target_data.sp_flag.unconscious_h = 0
 
     # debug模式修正
     if cache.debug_mode == True:

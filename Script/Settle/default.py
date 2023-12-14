@@ -1129,6 +1129,100 @@ def handle_first_a_sex(
             target_data.second_behavior[1052] = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
+def handle_penetrating_vision_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启透视（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.visual = True
+    character_data.sanity_point = max(character_data.sanity_point - 5, 0)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_OFF)
+def handle_penetrating_vision_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭透视
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.visual = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HORMONE_ON)
+def handle_hormone_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+     开启信息素（含理智消耗）
+     Keyword arguments:
+     character_id -- 角色id
+     add_time -- 结算时间
+     change_data -- 状态变更信息记录对象
+     now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.hormone = True
+    character_data.sanity_point = max(character_data.sanity_point - 5, 0)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HORMONE_OFF)
+def handle_hormone_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+     关闭信息素
+     Keyword arguments:
+     character_id -- 角色id
+     add_time -- 结算时间
+     change_data -- 状态变更信息记录对象
+     now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.hormone = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
         character_id: int,
@@ -3475,7 +3569,7 @@ def handle_unconscious_flag_to_6(
         now_time: datetime.datetime,
 ):
     """
-    自身变成无意识_精神催眠状态
+    自身变成无意识_心控状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3496,7 +3590,7 @@ def handle_unconscious_flag_to_7(
         now_time: datetime.datetime,
 ):
     """
-    自身变成无意识_肉体催眠状态
+    自身变成无意识_体控状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

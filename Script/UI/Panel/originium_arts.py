@@ -84,13 +84,14 @@ class Originium_Arts_Panel:
 
             if handle_talent.have_hypnosis_talent():
                 button3_text = f"[003]催眠"
-                if target_data.talent[71]:
-                    button3_text += f"，当前催眠对象：{target_data.name}"
+                now_type_id = self.pl_character_data.pl_ability.hypnosis_type
+                now_type_name = game_config.config_hypnosis_type[now_type_id].name
+                button3_text += f"，当前默认催眠类型：{now_type_name}"
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
                     window_width,
-                    cmd_func=self.ability_switch,
+                    cmd_func=self.arts_show,
                     args=(3),
                     )
                 line_feed.draw()
@@ -112,17 +113,22 @@ class Originium_Arts_Panel:
 
             if handle_talent.have_hormone_talent():
                 button5_text = f"[005]激素系能力"
-                hormone_id = self.pl_character_data.pl_ability.hormone
-                if hormone_id > 0:
-                    talent_name = game_config.config_talent[hormone_id].name
-                    button5_text += f"(开启中-{talent_name})(10理智/h)"
-                else:
-                    button5_text += f"(未开启)"
+                # 输出当前开启的视觉系能力
+                talent_id_list = [304,305,309]
+                count = 0
+                for talent_id in talent_id_list:
+                    if not self.pl_character_data.talent[talent_id]:
+                        continue
+                    talent_name = game_config.config_talent[talent_id].name
+                    if talent_id != 304:
+                        button5_text += "+"
+                    button5_text += f"{talent_name}"
+                    count += 1
                 button5_draw = draw.LeftButton(
                     _(button5_text),
                     _("5"),
                     window_width,
-                    cmd_func=self.ability_switch,
+                    cmd_func=self.arts_show,
                     args=(5),
                     )
                 line_feed.draw()
@@ -130,23 +136,25 @@ class Originium_Arts_Panel:
                 return_list.append(button5_draw.return_text)
 
             if handle_talent.have_visual_talent():
-                button6_text = f"[006]视觉系能力"
-                if self.pl_character_data.pl_ability.visual:
-                    button6_text += f"(开启中-"
-                    for talent_id in {307,308,309}:
-                        if self.pl_character_data.talent[talent_id]:
-                            talent_name = game_config.config_talent[talent_id].name[:2]
-                            if talent_id != 307:
-                                button6_text += "+"
-                            button6_text += f"{talent_name}"
-                    button6_text += f"透视)(10理智/h)"
-                else:
-                    button6_text += f"(未开启)"
+                button6_text = f"[006]视觉系能力："
+                # 输出当前开启的视觉系能力
+                talent_id_list = [307,308,309]
+                count = 0
+                for talent_id in talent_id_list:
+                    if not self.pl_character_data.talent[talent_id]:
+                        continue
+                    talent_name = game_config.config_talent[talent_id].name
+                    if talent_id != 307:
+                        button6_text += "+"
+                    button6_text += f"{talent_name}"
+                    count += 1
+                # 输出理智消耗
+                button6_text += f"({count*5}理智/h)"
                 button6_draw = draw.LeftButton(
                     _(button6_text),
                     _("6"),
                     window_width,
-                    cmd_func=self.ability_switch,
+                    cmd_func=self.arts_show,
                     args=(6),
                     )
                 line_feed.draw()
@@ -184,40 +192,89 @@ class Originium_Arts_Panel:
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
 
-    def ability_switch(self,ability_type):
+    def ability_switch(self, hypnosis_type_cid):
         """能力开关"""
 
-        # 催眠系
-        if ability_type == 3:
-            now_draw = draw.WaitDraw()
-            target_chara_id = self.pl_character_data.target_character_id
-            if target_chara_id:
-                target_character_data = cache.character_data[target_chara_id]
-                if target_character_data.talent[71]:
-                    now_draw.text = _(f"\n解除了{target_character_data.name}的【催眠中】状态\n")
-                    target_character_data.talent[71] = 0
-                else:
-                    now_draw.text = _(f"\n{target_character_data.name}进入了【催眠中】状态，在理智消耗完毕前，不会反抗你的")
-                    target_character_data.talent[71] = 1
-                    if self.pl_character_data.talent[332]:
-                        now_draw.text += f"一切性行为\n"
+        self.pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
+
+    def arts_show(self, ability_type):
+        """源石技艺展示"""
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+        while 1:
+            return_list = []
+            info_draw = draw.NormalDraw()
+            info_text = ""
+            # 催眠系
+            if ability_type == 3:
+                info_text = f"\n催眠系能力（在进行催眠时消耗理智）：\n"
+                # 催眠能力
+                info_draw.text = _(info_text)
+                info_draw.draw()
+                talent_id_list = [331,332,333,334]
+                for talent_id in talent_id_list:
+                    talent_name = game_config.config_talent[talent_id].name
+                    talent_info = game_config.config_talent[talent_id].info
+                    draw_text = f"  {talent_name}：{talent_info}\n"
+                    now_draw = draw.NormalDraw()
+                    if not self.pl_character_data.talent[talent_id]:
+                        draw_text = f"  {talent_name}(未解锁)：{talent_info}\n"
+                    now_draw.text = _(draw_text)
+                    now_draw.draw()
+                # 催眠类型
+                info_text = f"\n  催眠类型：\n"
+                info_draw.text = _(info_text)
+                info_draw.draw()
+                for cid in game_config.config_hypnosis_type:
+                    hypnosis_type_data = game_config.config_hypnosis_type[cid]
+                    # 已解锁则绘制按钮
+                    if self.pl_character_data.talent[hypnosis_type_data.talent_id]:
+                        draw_text = f"  [{hypnosis_type_data.name}]：{hypnosis_type_data.introduce}"
+                        button_draw = draw.LeftButton(
+                            _(draw_text),
+                            _(hypnosis_type_data.name),
+                            window_width,
+                            cmd_func=self.ability_switch,
+                            args=(cid,),
+                        )
+                        return_list.append(button_draw.return_text)
+                        button_draw.draw()
+                        line_feed.draw()
+                    # 未解锁则绘制灰色文本
                     else:
-                        now_draw.text += f"性骚扰指令，但会反抗H指令\n"
+                        now_draw = draw.NormalDraw()
+                        draw_text = f"  [{hypnosis_type_data.name}(未解锁)]：{hypnosis_type_data.introduce}\n"
+                        now_draw.text = _(draw_text)
+                        now_draw.draw()
             else:
-                now_draw.text = _(f"\n房间里没有可催眠的目标\n")
-            now_draw.draw()
-        # 激素系
-        elif ability_type == 5:
-            self.pl_character_data.pl_ability.hormone *= -1
-            # 第一次开始则进行初始化
-            if self.pl_character_data.pl_ability.hormone == 0:
-                self.pl_character_data.pl_ability.hormone = handle_talent.have_hormone_talent()
-        # 视觉系
-        elif ability_type == 6:
-            self.pl_character_data.pl_ability.visual = not self.pl_character_data.pl_ability.visual
-        # 触觉系
-        elif ability_type == 7:
-            self.pl_character_data.pl_ability.tactile = not self.pl_character_data.pl_ability.tactile
+                # 激素系
+                if ability_type == 5:
+                    talent_id_list = [304,305,306]
+                    info_text = f"\n激素系能力（不消耗理智）：\n"
+                # 视觉系
+                elif ability_type == 6:
+                    talent_id_list = [307,308,309]
+                    info_text = f"\n视觉系能力（每级消耗5理智/h）：\n"
+                info_draw.text = _(info_text)
+                info_draw.draw()
+                # 遍历输出该能力的全素质
+                for talent_id in talent_id_list:
+                    talent_name = game_config.config_talent[talent_id].name
+                    talent_info = game_config.config_talent[talent_id].info
+                    draw_text = f"  {talent_name}：{talent_info}\n"
+                    now_draw = draw.NormalDraw()
+                    if not self.pl_character_data.talent[talent_id]:
+                        draw_text = f"  {talent_name}(未解锁)：{talent_info}\n"
+                    now_draw.text = _(draw_text)
+                    now_draw.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
 
 
 class Down_Negative_Talent_Panel:

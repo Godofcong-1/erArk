@@ -4900,7 +4900,7 @@ def handle_unconscious_flag_5(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_6)
 def handle_unconscious_flag_6(character_id: int) -> int:
     """
-    自身有无意识_精神催眠状态
+    自身有无意识_心控状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4916,7 +4916,7 @@ def handle_unconscious_flag_6(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_7)
 def handle_unconscious_flag_7(character_id: int) -> int:
     """
-    自身有无意识_肉体催眠状态
+    自身有无意识_体控状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -8427,6 +8427,303 @@ def handle_target_have_open(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[278]
+
+
+@add_premise(constant_promise.Premise.PRIMARY_HYPNOSIS)
+def handle_primary_hypnosis(character_id: int) -> int:
+    """
+    拥有初级催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[331]
+
+
+@add_premise(constant_promise.Premise.INTERMEDIATE_HYPNOSIS)
+def handle_intermediate_hypnosis(character_id: int) -> int:
+    """
+    拥有中级催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[332]
+
+
+@add_premise(constant_promise.Premise.ADVANCED_HYPNOSIS)
+def handle_advanced_hypnosis(character_id: int) -> int:
+    """
+    拥有高级催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[333]
+
+
+@add_premise(constant_promise.Premise.SPECIAL_HYPNOSIS)
+def handle_special_hypnosis(character_id: int) -> int:
+    """
+    拥有特级催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[334]
+
+
+@add_premise(constant_promise.Premise.TARGET_HAS_BEEN_HYPNOSIS)
+def handle_target_has_been_hypnosis(character_id: int) -> int:
+    """
+    交互对象已经被催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    for cid in {71,72,73}:
+        if target_data.talent[cid]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_HAS_NOT_BEEN_HYPNOSIS)
+def handle_target_has_not_been_hypnosis(character_id: int) -> int:
+    """
+    交互对象没有被催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    for cid in {71,72,73}:
+        if target_data.talent[cid]:
+            return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_HAS_BEEN_PRIMARY_HYPNOSIS)
+def handle_target_has_been_primary_hypnosis(character_id: int) -> int:
+    """
+    交互对象已经被浅层催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[71]
+
+
+@add_premise(constant_promise.Premise.TARGET_HAS_BEEN_DEEP_HYPNOSIS)
+def handle_target_has_been_deep_hypnosis(character_id: int) -> int:
+    """
+    交互对象已经被深层催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[72]
+
+
+@add_premise(constant_promise.Premise.TARGET_HAS_BEEN_COMPLETE_HYPNOSIS)
+def handle_target_has_been_complete_hypnosis(character_id: int) -> int:
+    """
+    交互对象已经被完全催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[73]
+
+
+@add_premise(constant_promise.Premise.PRIMARY_PENETRATING_VISION)
+def handle_primary_penetrating_vision(character_id: int) -> int:
+    """
+    拥有初级透视
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[307]
+
+
+@add_premise(constant_promise.Premise.INTERMEDIATE_PENETRATING_VISION)
+def handle_intermediate_penetrating_vision(character_id: int) -> int:
+    """
+    拥有中级透视
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[308]
+
+
+@add_premise(constant_promise.Premise.ADVANCED_PENETRATING_VISION)
+def handle_advanced_penetrating_vision(character_id: int) -> int:
+    """
+    拥有高级透视
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[309]
+
+
+@add_premise(constant_promise.Premise.PENETRATING_VISION_ON)
+def handle_penetrating_vision_on(character_id: int) -> int:
+    """
+    透视开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.pl_ability.visual
+
+
+@add_premise(constant_promise.Premise.PENETRATING_VISION_OFF)
+def handle_penetrating_vision_off(character_id: int) -> int:
+    """
+    透视关闭中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.pl_ability.visual
+
+
+@add_premise(constant_promise.Premise.PRIMARY_HORMONE)
+def handle_primary_hormone(character_id: int) -> int:
+    """
+    拥有初级信息素
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[304]
+
+
+@add_premise(constant_promise.Premise.INTERMEDIATE_HORMONE)
+def handle_intermediate_hormone(character_id: int) -> int:
+    """
+    拥有中级信息素
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[305]
+
+
+@add_premise(constant_promise.Premise.ADVANCED_HORMONE)
+def handle_advanced_hormone(character_id: int) -> int:
+    """
+    拥有高级信息素
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[306]
+
+
+@add_premise(constant_promise.Premise.HORMONE_ON)
+def handle_hormone_on(character_id: int) -> int:
+    """
+    信息素开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.pl_ability.hormone
+
+
+@add_premise(constant_promise.Premise.HORMONE_OFF)
+def handle_hormone_off(character_id: int) -> int:
+    """
+    信息素关闭中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.pl_ability.hormone
+
+
+@add_premise(constant_promise.Premise.PRIMARY_TELEKINESIS)
+def handle_primary_telekinesis(character_id: int) -> int:
+    """
+    拥有初级隔空肢体
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[310]
+
+
+@add_premise(constant_promise.Premise.INTERMEDIATE_TELEKINESIS)
+def handle_intermediate_telekinesis(character_id: int) -> int:
+    """
+    拥有中级隔空肢体
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[311]
+
+
+@add_premise(constant_promise.Premise.ADVANCED_TELEKINESIS)
+def handle_advanced_telekinesis(character_id: int) -> int:
+    """
+    拥有高级隔空肢体
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[312]
 
 
 @add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
@@ -11945,6 +12242,108 @@ def handle_target_milk_ge_80(character_id: int) -> int:
 
     value = target_character_data.pregnancy.milk / target_character_data.pregnancy.milk_max
     if value > 0.79:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_0)
+def handle_sanity_point_0(character_id: int) -> int:
+    """
+    理智值为0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_G_0)
+def handle_sanity_point_g_0(character_id: int) -> int:
+    """
+    理智值不为0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point > 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_L_5)
+def handle_sanity_point_l_5(character_id: int) -> int:
+    """
+    理智值<5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point < 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_GE_5)
+def handle_sanity_point_ge_5(character_id: int) -> int:
+    """
+    理智值≥5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point >= 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_L_10)
+def handle_sanity_point_l_10(character_id: int) -> int:
+    """
+    理智值<10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point < 10:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_GE_10)
+def handle_sanity_point_ge_10(character_id: int) -> int:
+    """
+    理智值≥10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point >= 10:
         return 1
     else:
         return 0

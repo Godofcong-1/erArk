@@ -239,6 +239,8 @@ config_recruitment_strategy: Dict[int, config_def.Recruitment_Strategy] = {}
 """ 招募策略 """
 config_world_setting: Dict[int, config_def.World_Setting] = {}
 """ 世界设定 """
+config_hypnosis_type: Dict[int, config_def.Hypnosis_Type] = {}
+""" 催眠类型 """
 
 
 def load_data_json():
@@ -1012,6 +1014,16 @@ def load_world_setting():
         config_world_setting[now_tem.cid] = now_tem
 
 
+def load_hypnosis_type():
+    """载入催眠类型"""
+    now_data = config_data["Hypnosis_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Type()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_type[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1176,3 +1188,4 @@ def init():
     load_visitor_stay_attitude()
     load_recruitment_strategy()
     load_world_setting()
+    load_hypnosis_type()

@@ -349,6 +349,19 @@ class Food_Quality:
     """ 料理技能上限 """
 
 
+class Hypnosis_Type:
+    """ 催眠类型 """
+
+    cid: int
+    """ 催眠类型id """
+    name: str
+    """ 名称 """
+    talent_id: int
+    """ 需要的素质id """
+    introduce: str
+    """ 介绍 """
+
+
 class InstructJudge:
     """ 每个指令的实行值判定数据 """
 

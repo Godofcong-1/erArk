@@ -436,6 +436,15 @@ class CharacterStatus:
     STATUS_GIVE_TOY = 806
     """ 给玩具 """
 
+    STATUS_PENETRATING_VISION_ON = 901
+    """ 开启透视 """
+    STATUS_PENETRATING_VISION_OFF = 902
+    """ 关闭透视 """
+    STATUS_HORMONE_ON = 903
+    """ 开启信息素 """
+    STATUS_HORMONE_OFF = 904
+    """ 关闭信息素 """
+
 
 class Behavior:
     """行为id"""
@@ -877,6 +886,15 @@ class Behavior:
     """ 教说话 """
     GIVE_TOY = 806
     """ 给玩具 """
+
+    PENETRATING_VISION_ON = 901
+    """ 开启透视 """
+    PENETRATING_VISION_OFF = 902
+    """ 关闭透视 """
+    HORMONE_ON = 903
+    """ 开启信息素 """
+    HORMONE_OFF = 904
+    """ 关闭信息素 """
 
 
 class StateMachine:
@@ -1574,9 +1592,11 @@ class InstructType:
     """ 娱乐 """
     WORK = 3
     """ 工作 """
-    OBSCENITY = 4
+    ARTS = 4
+    """ 技艺 """
+    OBSCENITY = 5
     """ 猥亵 """
-    SEX = 5
+    SEX = 6
     """ 性爱 """
 
 
@@ -1771,6 +1791,22 @@ class Instruct:
     MANAGE_BASEMENT = 0
     """ 管理罗德岛 """
 
+    #源石技艺#
+    HYPNOSIS_ONE = 0
+    """ 单人催眠 """
+    HYPNOSIS_ALL = 0
+    """ 集体催眠 """
+    HYPNOSIS_CANCEL = 0
+    """ 解除催眠 """
+    PENETRATING_VISION_ON = 0
+    """ 开启透视 """
+    PENETRATING_VISION_OFF = 0
+    """ 关闭透视 """
+    HORMONE_ON = 0
+    """ 开启信息素 """
+    HORMONE_OFF = 0
+    """ 关闭信息素 """
+
     #猥亵#
     MAKE_COFFEE_ADD = 0
     """ 泡咖啡（加料） """
@@ -1824,10 +1860,10 @@ class Instruct:
     """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
-    NAUGHTY_PRANK = 0
-    """ 恶作剧 """
-    STOP_NAUGHTY_PRANK = 0
-    """ 停止恶作剧 """
+    SLEEP_OBSCENITY = 0
+    """ 睡眠猥亵 """
+    STOP_SLEEP_OBSCENITY = 0
+    """ 停止睡眠猥亵 """
     DO_H = 0
     """ 邀请H """
     UNCONSCIOUS_H = 0

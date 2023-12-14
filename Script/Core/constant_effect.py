@@ -254,6 +254,8 @@ class BehaviorEffect:
     """ 属性_经验 交互对象增加1无意识W经验 """
     TARGET_ADD_1_UnconsciouslyClimax_EXPERIENCE = 278
     """ 属性_经验 交互对象增加1无意识绝顶经验 """
+    TARGET_ADD_1_UnconsciouslySex_EXPERIENCE = 279
+    """ 属性_经验 交互对象增加1无意识性交经验 """
     TARGET_ADD_1_Chat_EXPERIENCE = 280
     """ 属性_经验 交互对象增加1对话经验 """
     TARGET_ADD_1_Combat_EXPERIENCE = 281
@@ -389,9 +391,9 @@ class BehaviorEffect:
     UNCONSCIOUS_FLAG_TO_5 = 486
     """ 属性_特殊flag 自身变成无意识_平然状态 """
     UNCONSCIOUS_FLAG_TO_6 = 487
-    """ 属性_特殊flag 自身变成无意识_精神催眠状态 """
+    """ 属性_特殊flag 自身变成无意识_心控状态 """
     UNCONSCIOUS_FLAG_TO_7 = 488
-    """ 属性_特殊flag 自身变成无意识_肉体催眠状态 """
+    """ 属性_特殊flag 自身变成无意识_体控状态 """
     HELP_BUY_FOOD_FLAG_TO_0 = 489
     """ 属性_特殊flag 自身清零要帮忙买午饭状态 """
     HELP_MAKE_FOOD_FLAG_TO_0 = 490
@@ -612,6 +614,14 @@ class BehaviorEffect:
     FIRST_A_SEX = 1104
     """ 初次 记录A处女 """
 
+    PENETRATING_VISION_ON = 1201
+    """ 源石技艺 开启透视（含理智消耗） """
+    PENETRATING_VISION_OFF = 1202
+    """ 源石技艺 关闭透视 """
+    HORMONE_ON = 1203
+    """ 源石技艺 开启信息素（含理智消耗） """
+    HORMONE_OFF = 1204
+    """ 源石技艺 关闭信息素 """
 
 class SecondEffect:
     """二段结算效果函数"""

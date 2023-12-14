@@ -647,7 +647,7 @@ class CharacterInfoHead:
                 eja_text = " <射精欲:极>"
 
         # 催眠状态时进行提示
-        hypnosis_text = " <催眠>" if character_data.talent[71] else ""
+        hypnosis_text = " <催眠>" if character_data.sp_flag.unconscious_h == 5 else ""
 
         if character_id:
             message = _(

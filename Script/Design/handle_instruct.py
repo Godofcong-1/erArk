@@ -416,20 +416,47 @@ def handle_manage_basement():
     cache.now_panel_id = constant.Panel.MANAGE_BASEMENT
 
 
-# @add_instruct(
-#     constant.Instruct.PLAY_PIANO,
-#     constant.InstructType.PLAY,
-#     _("弹钢琴"),
-#     {constant_promise.Premise.IN_MUSIC_ROOM},
-# )
-# def handle_play_piano():
-#     """处理弹钢琴指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
-#     character_data = cache.character_data[0]
-#     character_data.behavior.duration = 30
-#     character_data.behavior.behavior_id = constant.Behavior.PLAY_PIANO
-#     character_data.state = constant.CharacterStatus.STATUS_PLAY_PIANO
-#     update.game_update_flow(30)
+# 以下为源石技艺#
+
+@add_instruct(
+    constant.Instruct.PENETRATING_VISION_ON,
+    constant.InstructType.ARTS,
+    _("开启透视"),
+    {constant_promise.Premise.PRIMARY_PENETRATING_VISION,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.PENETRATING_VISION_OFF,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_penetrating_vision_on():
+    """处理开启透视"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.pl_ability.visual = True
+    character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_ON
+    character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_ON
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.PENETRATING_VISION_OFF,
+    constant.InstructType.ARTS,
+    _("关闭透视"),
+    {constant_promise.Premise.PRIMARY_PENETRATING_VISION,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.PENETRATING_VISION_ON,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_penetrating_vision_off():
+    """处理关闭透视"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.pl_ability.visual = False
+    character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_OFF
+    character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_OFF
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
 
 @add_instruct(
@@ -1297,17 +1324,17 @@ def handle_do_h():
 
 
 @add_instruct(
-    constant.Instruct.NAUGHTY_PRANK,
+    constant.Instruct.SLEEP_OBSCENITY,
     constant.InstructType.OBSCENITY,
-    _("恶作剧"),
+    _("睡眠猥亵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.TIRED_LE_74}
 )
-def handle_naughty_prank():
-    """处理恶作剧指令"""
+def handle_sleep_obscenity():
+    """处理睡眠猥亵指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
@@ -1316,29 +1343,29 @@ def handle_naughty_prank():
     target_data.sp_flag.unconscious_h = 1
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n进入恶作剧模式\n")
+    now_draw.text = _("\n进入睡眠猥亵模式\n")
     now_draw.draw()
 
 
 @add_instruct(
-    constant.Instruct.STOP_NAUGHTY_PRANK,
+    constant.Instruct.STOP_SLEEP_OBSCENITY,
     constant.InstructType.OBSCENITY,
-    _("停止恶作剧"),
+    _("停止睡眠猥亵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_1,
      constant_promise.Premise.TIRED_LE_74}
 )
-def handle_stop_naughty_prank():
-    """处理停止恶作剧指令"""
+def handle_stop_sleep_obscenity():
+    """处理停止睡眠猥亵指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.unconscious_h = 0
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n退出恶作剧模式\n")
+    now_draw.text = _("\n退出睡眠猥亵模式\n")
     now_draw.draw()
     from Script.Settle import default
     import datetime

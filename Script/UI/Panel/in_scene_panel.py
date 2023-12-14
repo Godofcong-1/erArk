@@ -369,6 +369,7 @@ class SeeInstructPanel:
             cache.instruct_type_filter[1] = 1
             cache.instruct_type_filter[2] = 1
             cache.instruct_type_filter[3] = 1
+            cache.instruct_type_filter[4] = 1
 
         # 初始化命令过滤
         if cache.instruct_index_filter == {}:
@@ -419,8 +420,8 @@ class SeeInstructPanel:
 
         # 如果交互对象是临盆、产后或婴儿的话，不显示性骚扰和H类指令
         if not handle_premise.handle_t_normal_2(0):
-            cache.instruct_type_filter[4] = 0
             cache.instruct_type_filter[5] = 0
+            cache.instruct_type_filter[6] = 0
 
         line_feed.draw()
         line = draw.LineDraw("~..", self.width)

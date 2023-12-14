@@ -455,7 +455,7 @@ class SPECIAL_FLAG:
         self.is_h: bool = 0
         """ 在H模式中 """
         self.unconscious_h: int = 0
-        """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4空气,5平然,6精神催眠,7肉体催眠] """
+        """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4空气,5平然,6心控,7体控] """
         self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0
@@ -554,14 +554,16 @@ class PLAYER_ABILITY:
         """ 最大同时跟随人数 """
         self.jj_size: int = 1
         """ 阴茎大小，0短小,1普通,2粗大,3巨根 """
-        self.hormone: int = 0
-        """ 激素系能力 """
+        self.hormone: bool = False
+        """ 激素系能力开关 """
         self.visual: bool = False
-        """ 视觉系能力 """
+        """ 视觉系能力开关 """
         self.tactile: bool = False
-        """ 触觉系能力 """
+        """ 触觉系能力开关 """
         self.today_sanity_point_cost: int = 0
         """ 今日已消耗的理智值 """
+        self.hypnosis_type: int = 0
+        """ 催眠类型 """
 
 
 # class Height:

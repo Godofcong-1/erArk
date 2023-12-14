@@ -197,8 +197,8 @@ cid,effect_name,effect_type,effect
 484,UNCONSCIOUS_FLAG_TO_3,属性_特殊flag,自身变成无意识_时停状态
 485,UNCONSCIOUS_FLAG_TO_4,属性_特殊flag,自身变成无意识_空气状态
 486,UNCONSCIOUS_FLAG_TO_5,属性_特殊flag,自身变成无意识_平然状态
-487,UNCONSCIOUS_FLAG_TO_6,属性_特殊flag,自身变成无意识_精神催眠状态
-488,UNCONSCIOUS_FLAG_TO_7,属性_特殊flag,自身变成无意识_肉体催眠状态
+487,UNCONSCIOUS_FLAG_TO_6,属性_特殊flag,自身变成无意识_心控状态
+488,UNCONSCIOUS_FLAG_TO_7,属性_特殊flag,自身变成无意识_体控状态
 489,HELP_BUY_FOOD_FLAG_TO_0,属性_特殊flag,自身清零要帮忙买午饭状态
 490,HELP_MAKE_FOOD_FLAG_TO_0,属性_特殊flag,自身清零做午饭状态
 491,BATHHOUSE_ENTERTAINMENT_FLAG_TO_0,属性_特殊flag,自身清零大浴场娱乐状态
