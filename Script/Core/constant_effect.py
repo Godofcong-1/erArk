@@ -619,7 +619,7 @@ class BehaviorEffect:
     PENETRATING_VISION_OFF = 1202
     """ 源石技艺 关闭透视 """
     HORMONE_ON = 1203
-    """ 源石技艺 开启信息素（含理智消耗） """
+    """ 源石技艺 开启信息素 """
     HORMONE_OFF = 1204
     """ 源石技艺 关闭信息素 """
 

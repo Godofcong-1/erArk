@@ -222,7 +222,7 @@ class Originium_Arts_Panel:
                     now_draw.text = _(draw_text)
                     now_draw.draw()
                 # 催眠类型
-                info_text = f"\n  催眠类型：\n"
+                info_text = f"\n催眠类型：\n"
                 info_draw.text = _(info_text)
                 info_draw.draw()
                 for cid in game_config.config_hypnosis_type:

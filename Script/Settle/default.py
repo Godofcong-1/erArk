@@ -1184,7 +1184,7 @@ def handle_hormone_on(
         now_time: datetime.datetime,
 ):
     """
-     开启信息素（含理智消耗）
+     开启信息素
      Keyword arguments:
      character_id -- 角色id
      add_time -- 结算时间
@@ -1197,7 +1197,6 @@ def handle_hormone_on(
     if character_data.dead:
         return
     character_data.pl_ability.hormone = True
-    character_data.sanity_point = max(character_data.sanity_point - 5, 0)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HORMONE_OFF)
