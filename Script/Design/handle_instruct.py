@@ -460,6 +460,46 @@ def handle_penetrating_vision_off():
 
 
 @add_instruct(
+    constant.Instruct.HORMONE_ON,
+    constant.InstructType.ARTS,
+    _("开启信息素"),
+    {constant_promise.Premise.PRIMARY_HORMONE,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HORMONE_OFF,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hormone_on():
+    """处理开启信息素"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.pl_ability.visual = True
+    character_data.behavior.behavior_id = constant.Behavior.HORMONE_ON
+    character_data.state = constant.CharacterStatus.STATUS_HORMONE_ON
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.HORMONE_OFF,
+    constant.InstructType.ARTS,
+    _("关闭信息素"),
+    {constant_promise.Premise.PRIMARY_HORMONE,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HORMONE_ON,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hormone_off():
+    """处理关闭信息素"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.pl_ability.visual = True
+    character_data.behavior.behavior_id = constant.Behavior.HORMONE_OFF
+    character_data.state = constant.CharacterStatus.STATUS_HORMONE_OFF
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant_promise.Premise.IN_DORMITORY,
      constant_promise.Premise.NOT_H,
