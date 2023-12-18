@@ -432,7 +432,6 @@ def handle_penetrating_vision_on():
     """处理开启透视"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.pl_ability.visual = True
     character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_ON
     character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_ON
     character_data.behavior.duration = 5
@@ -452,7 +451,6 @@ def handle_penetrating_vision_off():
     """处理关闭透视"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.pl_ability.visual = False
     character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_OFF
     character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_OFF
     character_data.behavior.duration = 5
@@ -472,7 +470,6 @@ def handle_hormone_on():
     """处理开启信息素"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.pl_ability.visual = True
     character_data.behavior.behavior_id = constant.Behavior.HORMONE_ON
     character_data.state = constant.CharacterStatus.STATUS_HORMONE_ON
     character_data.behavior.duration = 5
@@ -492,7 +489,6 @@ def handle_hormone_off():
     """处理关闭信息素"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.pl_ability.visual = True
     character_data.behavior.behavior_id = constant.Behavior.HORMONE_OFF
     character_data.state = constant.CharacterStatus.STATUS_HORMONE_OFF
     character_data.behavior.duration = 5
