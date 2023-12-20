@@ -86,7 +86,7 @@ class Originium_Arts_Panel:
                 button3_text = f"[003]催眠"
                 now_type_id = self.pl_character_data.pl_ability.hypnosis_type
                 now_type_name = game_config.config_hypnosis_type[now_type_id].name
-                button3_text += f"，当前默认催眠类型：{now_type_name}"
+                button3_text += f"（当前默认催眠类型：{now_type_name}）"
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
@@ -112,7 +112,7 @@ class Originium_Arts_Panel:
                 return_list.append(button4_draw.return_text)
 
             if handle_talent.have_hormone_talent():
-                button5_text = f"[005]激素系能力"
+                button5_text = f"[005]激素系能力："
                 # 输出当前开启的视觉系能力
                 talent_id_list = [304,305,309]
                 count = 0
@@ -184,7 +184,7 @@ class Originium_Arts_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def to_do(self):
+    def to_do(self, n):
         """n暂未实装"""
 
         now_draw = draw.WaitDraw()
@@ -211,14 +211,15 @@ class Originium_Arts_Panel:
                 # 催眠能力
                 info_draw.text = _(info_text)
                 info_draw.draw()
-                talent_id_list = [331,332,333,334]
-                for talent_id in talent_id_list:
+                talent_and_degree_dict = {331:50,332:100,333:100,334:200}
+                for talent_id in talent_and_degree_dict:
                     talent_name = game_config.config_talent[talent_id].name
                     talent_info = game_config.config_talent[talent_id].info
-                    draw_text = f"  {talent_name}：{talent_info}\n"
+                    draw_text = f"  {talent_name}(最高催眠深度{talent_and_degree_dict[talent_id]}%)：{talent_info}\n"
                     now_draw = draw.NormalDraw()
                     if not self.pl_character_data.talent[talent_id]:
                         draw_text = f"  {talent_name}(未解锁)：{talent_info}\n"
+                        now_draw.style = "deep_gray"
                     now_draw.text = _(draw_text)
                     now_draw.draw()
                 # 催眠类型
@@ -227,9 +228,11 @@ class Originium_Arts_Panel:
                 info_draw.draw()
                 for cid in game_config.config_hypnosis_type:
                     hypnosis_type_data = game_config.config_hypnosis_type[cid]
+                    draw_text = f"  [{hypnosis_type_data.name}]"
+                    draw_text += f"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠深度达到{hypnosis_type_data.hypnosis_degree}%)"
+                    draw_text += f"：{hypnosis_type_data.introduce}"
                     # 已解锁则绘制按钮
                     if self.pl_character_data.talent[hypnosis_type_data.talent_id]:
-                        draw_text = f"  [{hypnosis_type_data.name}]：{hypnosis_type_data.introduce}"
                         button_draw = draw.LeftButton(
                             _(draw_text),
                             _(hypnosis_type_data.name),
@@ -243,8 +246,9 @@ class Originium_Arts_Panel:
                     # 未解锁则绘制灰色文本
                     else:
                         now_draw = draw.NormalDraw()
-                        draw_text = f"  [{hypnosis_type_data.name}(未解锁)]：{hypnosis_type_data.introduce}\n"
+                        draw_text += f"\n"
                         now_draw.text = _(draw_text)
+                        now_draw.style = "deep_gray"
                         now_draw.draw()
             else:
                 # 激素系
@@ -265,6 +269,7 @@ class Originium_Arts_Panel:
                     now_draw = draw.NormalDraw()
                     if not self.pl_character_data.talent[talent_id]:
                         draw_text = f"  {talent_name}(未解锁)：{talent_info}\n"
+                        now_draw.style = "deep_gray"
                     now_draw.text = _(draw_text)
                     now_draw.draw()
             line_feed.draw()
