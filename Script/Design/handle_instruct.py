@@ -419,6 +419,51 @@ def handle_manage_basement():
 # 以下为源石技艺#
 
 @add_instruct(
+    constant.Instruct.HYPNOSIS_ONE,
+    constant.InstructType.ARTS,
+    _("单人催眠"),
+    {constant_promise.Premise.PRIMARY_HYPNOSIS,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_one():
+    """处理单人催眠"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ONE
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ONE
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_CANCEL,
+    constant.InstructType.ARTS,
+    _("解除催眠"),
+    {constant_promise.Premise.PRIMARY_HYPNOSIS,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.TARGET_IN_HYPNOSIS,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_cancel():
+    """处理解除催眠"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_CANCEL
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_CANCEL
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.PENETRATING_VISION_ON,
     constant.InstructType.ARTS,
     _("开启透视"),

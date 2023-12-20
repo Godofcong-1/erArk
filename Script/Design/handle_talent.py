@@ -82,6 +82,10 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
+    # 特殊素质获得
+    # if now_gain_type == 0:
+    #     npc_gain_hypnosis_talent(character_id)
+
 def have_hypnosis_talent():
     """
     验证是否有催眠系素质\n
@@ -121,3 +125,41 @@ def have_tactile_talent():
         if pl_character_data.talent[talent_id]:
             return talent_id
     return 0
+
+def npc_gain_hypnosis_talent(character_id: int):
+    """
+    干员获得被催眠素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    character_data = cache.character_data[character_id]
+    if character_data.hypnosis.hypnosis_degree < 1:
+        return
+
+    # 初始化催眠字典
+    hypnosis_dict = {}
+    hypnosis_dict[71] = [50, 331, 1501]
+    hypnosis_dict[72] = [100, 332, 1502]
+    hypnosis_dict[73] = [200, 334, 1503]
+    for talent_id in hypnosis_dict:
+        # 如果已经有该素质则跳过
+        if character_data.talent[talent_id]:
+            continue
+        # 如果玩家没有对应的前置素质则跳过
+        if not pl_character_data.talent[hypnosis_dict[talent_id][1]]:
+            continue
+
+        if character_data.hypnosis.hypnosis_degree >= hypnosis_dict[talent_id][0]:
+            character_data.talent[talent_id] = 1
+            talent_name = game_config.config_talent[talent_id].name
+            # 触发对应的二段行为结算
+            character_data.second_behavior[hypnosis_dict[talent_id][2]] = 1
+            # 替换旧素质
+            if talent_id > 71:
+                old_talent_id = talent_id - 1
+                character_data.talent[old_talent_id] = 0
+            # 绘制获得素质提示
+            now_draw_succed = draw.WaitDraw()
+            now_draw_succed.text = f"\n○{character_data.name}的催眠深度达到{hypnosis_dict[talent_id][0]:}%，获得了[{talent_name}]\n"
+            now_draw_succed.draw()
+            break
+

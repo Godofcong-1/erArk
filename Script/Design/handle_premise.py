@@ -8557,6 +8557,68 @@ def handle_target_has_been_complete_hypnosis(character_id: int) -> int:
     return target_data.talent[73]
 
 
+@add_premise(constant_promise.Premise.IN_HYPNOSIS)
+def handle_in_hypnosis(character_id: int) -> int:
+    """
+    自己正在被催眠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.unconscious_h in [4,5,6,7]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_HYPNOSIS)
+def handle_not_in_hypnosis(character_id: int) -> int:
+    """
+    自己没有正在被催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.unconscious_h in [4,5,6,7]:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_IN_HYPNOSIS)
+def handle_target_in_hypnosis(character_id: int) -> int:
+    """
+    交互对象正在被催眠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h in [4,5,6,7]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS)
+def handle_target_not_in_hypnosis(character_id: int) -> int:
+    """
+    交互对象没有正在被催眠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h in [4,5,6,7]:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.PRIMARY_PENETRATING_VISION)
 def handle_primary_penetrating_vision(character_id: int) -> int:
     """

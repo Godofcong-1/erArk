@@ -358,6 +358,8 @@ class Hypnosis_Type:
     """ 名称 """
     talent_id: int
     """ 需要的素质id """
+    hypnosis_degree: int
+    """ 需要的催眠程度 """
     introduce: str
     """ 介绍 """
 
@@ -773,6 +775,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:

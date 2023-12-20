@@ -8,8 +8,6 @@ from Script.Design import (
     attr_calculation,
     game_time,
     cooking,
-    update,
-    handle_premise,
     handle_instruct,
     character_behavior,
     basement,
@@ -17,7 +15,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel
+from Script.UI.Panel import event_option_panel, originium_arts
 from Script.Settle import default_experience
 
 import random
@@ -1151,6 +1149,7 @@ def handle_penetrating_vision_on(
         return
     character_data.pl_ability.visual = True
     character_data.sanity_point = max(character_data.sanity_point - 5, 0)
+    change_data.sanity_point -= 5
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_OFF)
@@ -1184,12 +1183,12 @@ def handle_hormone_on(
         now_time: datetime.datetime,
 ):
     """
-     开启信息素
-     Keyword arguments:
-     character_id -- 角色id
-     add_time -- 结算时间
-     change_data -- 状态变更信息记录对象
-     now_time -- 结算的时间
+    开启信息素
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
      """
     if not add_time:
         return
@@ -1207,12 +1206,12 @@ def handle_hormone_off(
         now_time: datetime.datetime,
 ):
     """
-     关闭信息素
-     Keyword arguments:
-     character_id -- 角色id
-     add_time -- 结算时间
-     change_data -- 状态变更信息记录对象
-     now_time -- 结算的时间
+    关闭信息素
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
      """
     if not add_time:
         return
@@ -1220,6 +1219,71 @@ def handle_hormone_off(
     if character_data.dead:
         return
     character_data.pl_ability.hormone = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ONE)
+def handle_hypnosis_one(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    单人催眠（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
+    if character_data.dead:
+        return
+    # 结算理智消耗
+    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
+    change_data.sanity_point -= 20
+    # 结算催眠度增加
+    hypnosis_degree_addition = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
+    hypnosis_degree_grow = 10 * hypnosis_degree_addition
+    # debug下催眠增加到999
+    if cache.debug_mode:
+        hypnosis_degree_grow = 999
+    new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
+    # 赋予到角色数据
+    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+    target_change.hypnosis_degree += hypnosis_degree_grow
+    # 判断催眠完成
+    originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_CANCEL)
+def handle_hypnosis_cancel(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    解除催眠
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    if target_character_data.sp_flag.unconscious_h >= 4:
+        target_character_data.sp_flag.unconscious_h = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)

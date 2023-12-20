@@ -444,6 +444,12 @@ class CharacterStatus:
     """ 开启信息素 """
     STATUS_HORMONE_OFF = 904
     """ 关闭信息素 """
+    STATUS_HYPNOSIS_ONE = 911
+    """ 单人催眠 """
+    STATUS_HYPNOSIS_ALL = 912
+    """ 集体催眠 """
+    STATUS_HYPNOSIS_CANCEL = 913
+    """ 解除催眠 """
 
 
 class Behavior:
@@ -895,6 +901,12 @@ class Behavior:
     """ 开启信息素 """
     HORMONE_OFF = 904
     """ 关闭信息素 """
+    HYPNOSIS_ONE = 911
+    """ 单人催眠 """
+    HYPNOSIS_ALL = 912
+    """ 集体催眠 """
+    HYPNOSIS_CANCEL = 913
+    """ 解除催眠 """
 
 
 class StateMachine:
@@ -1570,6 +1582,14 @@ class SecondBehavior:
     """ 关闭助攻服务 """
     LOVE_SUPPORT_OFF = 1422
     """ 开启助攻服务 """
+
+
+    HAS_BEEN_PRIMARY_HYPNOSIS = 1501
+    """ 获得被浅层催眠素质 """
+    HAS_BEEN_DEEP_HYPNOSIS = 1502
+    """ 获得被深层催眠素质 """
+    HAS_BEEN_COMPLETE_HYPNOSIS = 1503
+    """ 获得被完全催眠素质 """
 
 
 #旧结算存档#

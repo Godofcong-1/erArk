@@ -335,6 +335,16 @@ class RELATIONSHIP:
         """ 势力 """
 
 
+class HYPNOSIS:
+    """催眠数据结构体"""
+
+    def __init__(self):
+
+        self.hypnosis_degree: int = 0
+        """ 催眠程度 """
+
+
+
 class CLOTH:
 
     # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
@@ -455,7 +465,7 @@ class SPECIAL_FLAG:
         self.is_h: bool = 0
         """ 在H模式中 """
         self.unconscious_h: int = 0
-        """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4空气,5平然,6心控,7体控] """
+        """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0
@@ -987,6 +997,8 @@ class Character:
         """ 角色素质 """
         self.token_text: str = ""
         """ 角色信物文本 """
+        self.assistant_character_id: int = 0
+        """ 助理角色id """
         self.chara_setting: Dict[int, int] = {}
         """ 角色的个人设置 """
         self.assistant_services: Dict[int, int] = {}
@@ -997,8 +1009,6 @@ class Character:
         """ 角色身上污浊的情况 """
         self.h_state: BODY_H_STATE = BODY_H_STATE()
         """ 角色本次H的情况 """
-        self.assistant_character_id: int = 0
-        """ 助理角色id """
         self.pl_ability: PLAYER_ABILITY = PLAYER_ABILITY()
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
@@ -1015,6 +1025,8 @@ class Character:
         """ 角色的怀孕情况 """
         self.relationship: RELATIONSHIP = RELATIONSHIP()
         """ 角色的社会关系 """
+        self.hypnosis: HYPNOSIS = HYPNOSIS()
+        """ 角色的催眠情况 """
 
 
 class Cache:
@@ -1133,6 +1145,10 @@ class TargetChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.sanity_point: int = 0
+        """ 理智变化 """
+        self.hypnosis_degree: int = 0
+        """ 催眠程度变化 """
 
 
 class CharacterStatusChange:
@@ -1163,6 +1179,10 @@ class CharacterStatusChange:
         """ 能力变化 """
         self.experience: Dict[int, int] = {}
         """ 经验变化 """
+        self.sanity_point: int = 0
+        """ 理智变化 """
+        self.hypnosis_degree: int = 0
+        """ 催眠程度变化 """
 
 
 class Event:

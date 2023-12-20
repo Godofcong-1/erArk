@@ -713,6 +713,59 @@ def get_trust_level(value: int):
             return now_cid,now_data.judge_add
 
 
+def hypnosis_degree_calculation(target_character_id: int) -> int:
+    """
+    计算催眠的增长程度
+    Keyword arguments:
+    target_character_id -- 角色id
+    Return arguments:
+    int -- 催眠增长系数
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[target_character_id]
+
+    if target_character_id == 0:
+        return 0
+
+    # 如果已经达到当前玩家的能力上限，则不再增加
+    hypnosis_degree_limit = hypnosis_degree_limit_calculation()
+    if target_character_data.hypnosis.hypnosis_degree >= hypnosis_degree_limit:
+        return 0
+
+    # 根据玩家的催眠能力，计算催眠增长系数
+    hypnosis_degree_addition = 1
+    if pl_character_data.talent[334]:
+        hypnosis_degree_addition = 4
+    elif pl_character_data.talent[333]:
+        hypnosis_degree_addition = 2
+
+    # 根据无觉刻印的等级，计算催眠增长系数
+    hypnosis_degree_addition += get_ability_adjust(target_character_data.ability[19])
+
+    return hypnosis_degree_addition
+
+
+def hypnosis_degree_limit_calculation() -> int:
+    """
+    计算催眠的上限
+    Keyword arguments:
+    target_character_id -- 角色id
+    Return arguments:
+    int -- 催眠上限
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+
+    # 如果已经达到当前玩家的能力上限，则不再增加
+    hypnosis_degree_limit = 0
+    for cid in game_config.config_hypnosis_type:
+        hypnosis_type_data = game_config.config_hypnosis_type[cid]
+        if pl_character_data.talent[hypnosis_type_data.talent_id]:
+            hypnosis_degree_limit = max(hypnosis_degree_limit, hypnosis_type_data.hypnosis_degree)
+
+    return hypnosis_degree_limit
+
+
 def judge_require(judge_text_list, character_id):
     """
     判断角色是否满足文本列表里的全部需求\n

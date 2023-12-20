@@ -618,7 +618,7 @@ class CharacterInfoHead:
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == " <清醒>" else sleep_text
-        if status_text == "睡觉" or character_data.sp_flag.unconscious_h:
+        if status_text == "睡觉" or character_data.sp_flag.unconscious_h == 1:
             tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
             sleep_text = f" <{sleep_name}>"
 
@@ -647,7 +647,16 @@ class CharacterInfoHead:
                 eja_text = " <射精欲:极>"
 
         # 催眠状态时进行提示
-        hypnosis_text = " <催眠>" if character_data.sp_flag.unconscious_h == 5 else ""
+        hypnosis_text = ""
+        if character_data.sp_flag.unconscious_h >= 4:
+            if character_data.sp_flag.unconscious_h == 4:
+                hypnosis_text = " <催眠:平然>"
+            elif character_data.sp_flag.unconscious_h == 5:
+                hypnosis_text = " <催眠:空气>"
+            elif character_data.sp_flag.unconscious_h == 6:
+                hypnosis_text = " <催眠:体控>"
+            elif character_data.sp_flag.unconscious_h == 7:
+                hypnosis_text = " <催眠:心控>"
 
         if character_id:
             message = _(

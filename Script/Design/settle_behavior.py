@@ -129,7 +129,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         if PC_information_flag == 1:
             now_text_list.append(now_draw.text)
 
-        # 体力/气力/射精的结算输出
+        # 体力/气力/射精/理智的结算输出
         if change_data.hit_point and round(change_data.hit_point, 2) != 0:
             now_text_list.append(
                 _("\n  体力") + text_handle.number_to_symbol_string(int(change_data.hit_point))
@@ -141,6 +141,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         if change_data.eja_point and round(change_data.eja_point, 2) != 0:
             now_text_list.append(
                 _("\n  射精") + text_handle.number_to_symbol_string(int(change_data.eja_point))
+            )
+        if change_data.sanity_point and round(change_data.sanity_point, 2) != 0:
+            now_text_list.append(
+                _("\n  理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point))
             )
 
         # 状态的结算输出
@@ -192,7 +196,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                 name = f"\n{target_data.name}:"
                 now_text = name
 
-                # 体力/气力/好感/信赖的结算输出
+                # 体力/气力/好感/信赖/催眠度的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
                     now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(target_change.hit_point))
                     judge = 1
@@ -210,6 +214,9 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                         character_name=now_character_data.name,
                         character_nick_name=now_character_data.nick_name
                     ) + text_handle.number_to_symbol_string(float(target_change.trust)) + "%"
+                    judge = 1
+                if target_change.hypnosis_degree:
+                    now_text += _("\n  催眠度") + text_handle.number_to_symbol_string(int(target_change.hypnosis_degree))
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
@@ -531,7 +538,7 @@ def check_unconscious_effect(
         # 目标处于无意识状态
         if target_character_data.sp_flag.unconscious_h:
             # 经验结算
-            for experience_id in target_change.experience:
+            for experience_id in target_change.experience.copy():
                 # 普通部位
                 if experience_id in range(0, 8):
                     # 根据经验序号转化为对应的结算序号

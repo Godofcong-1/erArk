@@ -622,6 +622,12 @@ class BehaviorEffect:
     """ 源石技艺 开启信息素 """
     HORMONE_OFF = 1204
     """ 源石技艺 关闭信息素 """
+    HYPNOSIS_ONE = 1211
+    """ 源石技艺 单人催眠（含理智消耗） """
+    HYPNOSIS_ALL = 1212
+    """ 源石技艺 集体催眠 """
+    HYPNOSIS_CANCEL = 1213
+    """ 源石技艺 解除催眠 """
 
 class SecondEffect:
     """二段结算效果函数"""
