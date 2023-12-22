@@ -690,6 +690,19 @@ class TalentType:
     """ 类型名 """
 
 
+class Talent_Of_Arts:
+    """ 源石技艺素质 """
+
+    cid: int
+    """ 序号 """
+    talent_id: int
+    """ 素质id """
+    need_id: int
+    """ 前置需求素质id """
+    level: int
+    """ 能力等级 """
+
+
 class Tip:
     """ 提示信息 """
 

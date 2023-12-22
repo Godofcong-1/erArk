@@ -135,7 +135,7 @@ def npc_gain_hypnosis_talent(character_id: int):
     if character_data.hypnosis.hypnosis_degree < 1:
         return
 
-    # 初始化催眠字典
+    # 初始化催眠字典，分别是催眠深度，前置素质，对应的二段行为
     hypnosis_dict = {}
     hypnosis_dict[71] = [50, 331, 1501]
     hypnosis_dict[72] = [100, 332, 1502]

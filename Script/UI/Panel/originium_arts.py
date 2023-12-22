@@ -266,12 +266,25 @@ class Originium_Arts_Panel:
                     _(button7_text),
                     _("7"),
                     window_width,
-                    cmd_func=self.ability_switch,
+                    cmd_func=self.change_hypnosis_type,
                     args=(7),
                     )
                 line_feed.draw()
                 button7_draw.draw()
                 return_list.append(button7_draw.return_text)
+
+            if 1:
+                button11_text = f"[011]能力获得与升级"
+                button11_draw = draw.LeftButton(
+                    _(button11_text),
+                    _("11"),
+                    window_width,
+                    cmd_func=self.gain_and_upgrade_ability,
+                    args=(),
+                    )
+                line_feed.draw()
+                button11_draw.draw()
+                return_list.append(button11_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -290,11 +303,6 @@ class Originium_Arts_Panel:
         now_draw.width = window_width
         now_draw.text = _(f"\n暂未实装\n")
         now_draw.draw()
-
-    def ability_switch(self, hypnosis_type_cid):
-        """能力开关"""
-
-        self.pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
 
     def arts_show(self, ability_type):
         """源石技艺展示"""
@@ -336,7 +344,7 @@ class Originium_Arts_Panel:
                             _(draw_text),
                             _(hypnosis_type_data.name),
                             window_width,
-                            cmd_func=self.ability_switch,
+                            cmd_func=self.change_hypnosis_type,
                             args=(cid,),
                         )
                         return_list.append(button_draw.return_text)
@@ -379,6 +387,83 @@ class Originium_Arts_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 break
+
+    def gain_and_upgrade_ability(self):
+        """能力获得与升级"""
+        while 1:
+            return_list = []
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            info_draw = draw.NormalDraw()
+            info_text = ""
+            info_text += f"\n当前至纯源石：{cache.rhodes_island.materials_resouce[3]}\n"
+            info_text += f"\n当前可以获得/升级的能力有：\n\n"
+            info_draw.text = _(info_text)
+            info_draw.draw()
+            # 遍历输出该能力的全素质
+            for cid in game_config.config_talent_of_arts:
+                talent_of_arts_data = game_config.config_talent_of_arts[cid]
+                # 检查是否已经获得
+                if self.pl_character_data.talent[talent_of_arts_data.talent_id]:
+                    continue
+                # 检查是否有前置素质
+                if talent_of_arts_data.need_id:
+                    if not self.pl_character_data.talent[talent_of_arts_data.need_id]:
+                        continue
+                talent_id = talent_of_arts_data.talent_id
+                talent_name = game_config.config_talent[talent_id].name
+                talent_info = game_config.config_talent[talent_id].info
+                # 花费为10的cost次方
+                money_cost = 10 ** talent_of_arts_data.level
+                if cache.rhodes_island.materials_resouce[3] < money_cost:
+                    now_draw = draw.NormalDraw()
+                    draw_text = f"  {talent_name}({money_cost}至纯源石-当前源石不足)：{talent_info}\n"
+                    now_draw.text = _(draw_text)
+                    now_draw.style = "deep_gray"
+                    now_draw.draw()
+                else:
+                    draw_text = f"  {talent_name}({money_cost}至纯源石)：{talent_info}"
+                    now_draw = draw.LeftButton(
+                        _(draw_text),
+                        _(str(cid)),
+                        window_width,
+                        cmd_func=self.gain_and_upgrade_ability_which,
+                        args=(cid,),
+                        )
+                    return_list.append(now_draw.return_text)
+                    now_draw.draw()
+                    line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def change_hypnosis_type(self, hypnosis_type_cid):
+        """改变当前的催眠类型"""
+        self.pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
+
+    def gain_and_upgrade_ability_which(self, cid):
+        """获得或升级能力"""
+        talent_of_arts_data = game_config.config_talent_of_arts[cid]
+        talent_id = talent_of_arts_data.talent_id
+        talent_name = game_config.config_talent[talent_id].name
+        # 花费为10的cost次方
+        money_cost = 10 ** talent_of_arts_data.level
+        # 花费大于当前拥有的至纯源石则返回
+        if cache.rhodes_island.materials_resouce[3] < money_cost:
+            return
+        # 花费至纯源石
+        cache.rhodes_island.materials_resouce[3] -= money_cost
+        # 升级或获得能力
+        self.pl_character_data.talent[talent_id] = 1
+        info_text = f"\n习得了{talent_name}\n"
+        info_draw = draw.WaitDraw()
+        info_draw.text = _(info_text)
+        info_draw.draw()
 
 
 class Down_Negative_Talent_Panel:
