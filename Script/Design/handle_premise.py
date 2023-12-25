@@ -3525,6 +3525,7 @@ def handle_normal_5(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+        or handle_unconscious_flag_5(character_id)
     ):
         return 0
     else:
@@ -3792,6 +3793,7 @@ def handle_normal_24567(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+        or handle_unconscious_flag_5(character_id)
     ):
         return 0
     elif(
@@ -3838,6 +3840,7 @@ def handle_t_normal_24567(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+        or handle_unconscious_flag_5(target_chara_id)
     ):
         return 0
     elif(
@@ -3892,6 +3895,7 @@ def handle_normal_124567(character_id: int) -> int:
         return 0
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+        or handle_unconscious_flag_5(character_id)
     ):
         return 0
     elif(
@@ -4130,6 +4134,7 @@ def handle_t_normal_5_6(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+        or handle_unconscious_flag_5(target_chara_id)
     ):
         return 0
     elif(
@@ -4157,6 +4162,7 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+        or handle_unconscious_flag_5(target_chara_id)
     ):
         return 1
     elif(
@@ -4183,6 +4189,7 @@ def handle_unnormal_567(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
+        or handle_unconscious_flag_5(character_id)
     ):
         return 1
     elif(
@@ -4216,6 +4223,7 @@ def handle_t_unnormal_567(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+        or handle_unconscious_flag_5(target_chara_id)
     ):
         return 1
     elif(
@@ -5195,6 +5203,7 @@ def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
             return 0
         if(
             (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
+            or handle_unconscious_flag_5(target_chara_id)
         ):
             return 0
         if(
