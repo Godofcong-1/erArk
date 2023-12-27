@@ -207,6 +207,10 @@ class CharacterStatus:
     """ 挤奶 """
     STATUS_SMELL_UNDERWEAR = 341
     """ 闻内衣 """
+    STATUS_STEAL_PAN = 342
+    """ 偷走内裤 """
+    STATUS_STEAL_SOCKS = 343
+    """ 偷走袜子 """
     STATUS_BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
     STATUS_PUT_INTO_PRISON = 352
@@ -661,6 +665,10 @@ class Behavior:
     """ 挤奶 """
     SMELL_UNDERWEAR = 341
     """ 闻内衣 """
+    STEAL_PAN = 342
+    """ 偷走内裤 """
+    STEAL_SOCKS = 343
+    """ 偷走袜子 """
     BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
     PUT_INTO_PRISON = 352
@@ -1864,6 +1872,10 @@ class Instruct:
     """ 索要内裤 """
     ASK_FOR_SOCKS = 0
     """ 索要袜子 """
+    STEAL_PAN = 0
+    """ 偷走内裤 """
+    STEAL_SOCKS = 0
+    """ 偷走袜子 """
     TOUCH_CLITORIS = 0
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 0

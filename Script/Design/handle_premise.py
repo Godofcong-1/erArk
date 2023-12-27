@@ -3525,7 +3525,7 @@ def handle_normal_5(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_5(character_id)
+        or handle_unconscious_flag_4(character_id)
     ):
         return 0
     else:
@@ -3793,7 +3793,7 @@ def handle_normal_24567(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_5(character_id)
+        or handle_unconscious_flag_4(character_id)
     ):
         return 0
     elif(
@@ -3840,7 +3840,7 @@ def handle_t_normal_24567(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_5(target_chara_id)
+        or handle_unconscious_flag_4(target_chara_id)
     ):
         return 0
     elif(
@@ -3895,7 +3895,7 @@ def handle_normal_124567(character_id: int) -> int:
         return 0
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_5(character_id)
+        or handle_unconscious_flag_4(character_id)
     ):
         return 0
     elif(
@@ -4134,7 +4134,7 @@ def handle_t_normal_5_6(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_5(target_chara_id)
+        or handle_unconscious_flag_4(target_chara_id)
     ):
         return 0
     elif(
@@ -4162,7 +4162,7 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_5(target_chara_id)
+        or handle_unconscious_flag_4(target_chara_id)
     ):
         return 1
     elif(
@@ -4189,7 +4189,7 @@ def handle_unnormal_567(character_id: int) -> int:
     """
     if(
         (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_5(character_id)
+        or handle_unconscious_flag_4(character_id)
     ):
         return 1
     elif(
@@ -4223,7 +4223,7 @@ def handle_t_unnormal_567(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if(
         (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_5(target_chara_id)
+        or handle_unconscious_flag_4(target_chara_id)
     ):
         return 1
     elif(
@@ -4876,7 +4876,7 @@ def handle_unconscious_flag_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_4)
 def handle_unconscious_flag_4(character_id: int) -> int:
     """
-    自身有无意识_空气状态
+    自身有无意识_平然状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4892,7 +4892,7 @@ def handle_unconscious_flag_4(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_5)
 def handle_unconscious_flag_5(character_id: int) -> int:
     """
-    自身有无意识_平然状态
+    自身有无意识_空气状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4908,7 +4908,7 @@ def handle_unconscious_flag_5(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_6)
 def handle_unconscious_flag_6(character_id: int) -> int:
     """
-    自身有无意识_心控状态
+    自身有无意识_体控状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4924,7 +4924,7 @@ def handle_unconscious_flag_6(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_7)
 def handle_unconscious_flag_7(character_id: int) -> int:
     """
-    自身有无意识_体控状态
+    自身有无意识_心控状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -5203,7 +5203,7 @@ def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
             return 0
         if(
             (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-            or handle_unconscious_flag_5(target_chara_id)
+            or handle_unconscious_flag_4(target_chara_id)
         ):
             return 0
         if(
@@ -12995,6 +12995,22 @@ def handle_not_h(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     return not target_data.sp_flag.is_h
+
+
+@add_premise(constant_promise.Premise.IS_UNCONSCIOUS_H)
+def  handle_is_unconscious_h(character_id: int) -> int:
+    """
+    当前为无意识奸模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h or character_data.sp_flag.unconscious_h:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.OPTION_SON)

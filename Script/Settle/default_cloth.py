@@ -184,15 +184,15 @@ def handle_reset_cloth(
                 character_data.cloth.cloth_wear[type].append(cloth_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASK_FOR_PAN)
-def handle_ask_for_pan(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_PAN)
+def handle_get_t_pan(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    索要内裤
+    获得交互对象的内裤
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -211,15 +211,15 @@ def handle_ask_for_pan(
     target_data.cloth.cloth_wear[9] = []
     target_data.cloth.cloth_see[9] = True
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASK_FOR_SOCKS)
-def handle_ask_for_sock(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_SOCKS)
+def handle_get_t_sock(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    索要袜子
+    获得交互对象的袜子
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

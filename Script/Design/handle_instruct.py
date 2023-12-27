@@ -2623,6 +2623,46 @@ def handle_ask_for_socks():
 
 
 @add_instruct(
+    constant.Instruct.STEAL_PAN,
+    constant.InstructType.OBSCENITY,
+    _("偷走内裤"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.TARGET_WEAR_PAN,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_steal_pan():
+    """处理偷走内裤指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.STEAL_PAN
+    character_data.state = constant.CharacterStatus.STATUS_STEAL_PAN
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.STEAL_SOCKS,
+    constant.InstructType.OBSCENITY,
+    _("偷走袜子"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_UNNORMAL_5_6,
+     constant_promise.Premise.TARGET_WEAR_SOCKS,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_steal_socks():
+    """处理偷走袜子指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data = cache.character_data[0]
+    character_data.behavior.duration = 5
+    character_data.behavior.behavior_id = constant.Behavior.STEAL_SOCKS
+    character_data.state = constant.CharacterStatus.STATUS_STEAL_SOCKS
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.TOUCH_CLITORIS,
     constant.InstructType.OBSCENITY,
     _("阴蒂爱抚"),

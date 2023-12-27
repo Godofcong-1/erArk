@@ -461,9 +461,9 @@ class BehaviorEffect:
     """ 属性_服装 内衣可视清零 """
     RESTE_CLOTH = 607
     """ 属性_服装 衣服重置为初始状态 """
-    ASK_FOR_PAN = 621
+    GET_T_PAN = 621
     """ 属性_服装 获得交互对象的内裤 """
-    ASK_FOR_SOCKS = 622
+    GET_T_SOCKS = 622
     """ 属性_服装 获得交互对象的袜子 """
     T_CLOTH_BACK = 631
     """ 属性_服装 交互对象穿回H时脱掉的衣服 """
