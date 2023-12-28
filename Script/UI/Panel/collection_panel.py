@@ -82,17 +82,28 @@ class Collection_Panel:
             # 遍历全部收集奖励
             for cid in game_config.config_collection_bonus_data:
 
+                # 判断是否已经解锁前段奖励
+                un_lock_flag = not (cid in [1,101,201] or character_data.pl_collection.collection_bonus[cid - 1])
+
                 now_bonus = game_config.config_collection_bonus_data[cid]
+                bonus_text = ""
                 draw_flag = False
-                if now_bonus.type == "信物" and self.now_panel == "信物":
-                    bonus_text = f"累积获得{now_bonus.count}个信物后，{now_bonus.info}"
-                    draw_flag = True
-                elif now_bonus.type == "内裤" and self.now_panel == "内裤":
-                    bonus_text = f"累积获得{now_bonus.count}条内裤后，{now_bonus.info}"
-                    draw_flag = True
-                elif now_bonus.type == "袜子" and self.now_panel == "袜子":
-                    bonus_text = f"累积获得{now_bonus.count}双袜子后，{now_bonus.info}"
-                    draw_flag = True
+
+                # 创建一个映射字典
+                bonus_type_text = {
+                    "信物": "个信物后，",
+                    "内裤": "条内裤后，",
+                    "袜子": "双袜子后，"
+                }
+
+                # 使用循环替代多个if语句
+                for bonus_type, text in bonus_type_text.items():
+                    if now_bonus.type == bonus_type and self.now_panel == bonus_type:
+                        bonus_text = f"累积获得{str(now_bonus.count).rjust(3,' ')}{text}"
+                        draw_flag = True
+                        break
+
+                bonus_text += " ？？？" if un_lock_flag else f"{now_bonus.info}"
 
                 # 仅绘制当前面板，且根据是否已解锁来判断是绘制文本还是按钮
                 if draw_flag:
@@ -228,16 +239,18 @@ class Collection_Panel:
         if bonus_flag:
             if bonus_id == 1:
                 cache.rhodes_island.materials_resouce[3] += 1
-            if bonus_id == 2:
+            elif bonus_id == 2:
                 cache.rhodes_island.materials_resouce[3] += 1
-            if bonus_id == 3:
+            elif bonus_id == 3:
                 cache.rhodes_island.materials_resouce[3] += 1
-            if bonus_id == 4:
+            elif bonus_id == 4:
                 cache.rhodes_island.materials_resouce[3] += 1
-            if bonus_id == 5:
+            elif bonus_id == 5:
                 cache.rhodes_island.materials_resouce[3] += 10
-            if bonus_id == 6:
+            elif bonus_id == 6:
                 cache.rhodes_island.materials_resouce[3] += 100
+            elif bonus_id == 7:
+                cache.rhodes_island.materials_resouce[3] += 9999
             elif bonus_id == 101:
                 cache.rhodes_island.materials_resouce[3] += 1
             elif bonus_id == 201:

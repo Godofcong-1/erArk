@@ -414,7 +414,7 @@ class Originium_Arts_Panel:
                 talent_name = game_config.config_talent[talent_id].name
                 talent_info = game_config.config_talent[talent_id].info
                 # 花费为10的cost次方
-                money_cost = 10 ** talent_of_arts_data.level
+                money_cost = 10 ** (talent_of_arts_data.level - 1)
                 if cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
                     draw_text = f"  {talent_name}({money_cost}至纯源石-当前源石不足)：{talent_info}\n"
@@ -428,7 +428,7 @@ class Originium_Arts_Panel:
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 else:
-                    draw_text = f"  {talent_name}({money_cost}至纯源石)：{talent_info}"
+                    draw_text = f"  {talent_name}( {money_cost} 至纯源石)：{talent_info}"
                     now_draw = draw.LeftButton(
                         _(draw_text),
                         _(str(cid)),
@@ -458,7 +458,7 @@ class Originium_Arts_Panel:
         talent_id = talent_of_arts_data.talent_id
         talent_name = game_config.config_talent[talent_id].name
         # 花费为10的cost次方
-        money_cost = 10 ** talent_of_arts_data.level
+        money_cost = 10 ** (talent_of_arts_data.level - 1)
         # 花费大于当前拥有的至纯源石则返回
         if cache.rhodes_island.materials_resouce[3] < money_cost:
             return
