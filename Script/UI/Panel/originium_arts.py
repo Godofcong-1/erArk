@@ -297,7 +297,7 @@ class Originium_Arts_Panel:
                 break
 
     def to_do(self, n):
-        """n暂未实装"""
+        """暂未实装"""
 
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
@@ -418,6 +418,12 @@ class Originium_Arts_Panel:
                 if cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
                     draw_text = f"  {talent_name}({money_cost}至纯源石-当前源石不足)：{talent_info}\n"
+                    now_draw.text = _(draw_text)
+                    now_draw.style = "deep_gray"
+                    now_draw.draw()
+                elif talent_of_arts_data.todo:
+                    now_draw = draw.NormalDraw()
+                    draw_text = f"  {talent_name}(未实装)：{talent_info}\n"
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()

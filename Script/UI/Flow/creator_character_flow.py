@@ -857,11 +857,6 @@ class Character_Bonus:
             elif self.bonus_now >= 10:
                 pl_character_data.talent[talent_id] = 1
                 cache.first_bonus[first_bonus_id] = True
-                # 获得对应素质则同步至对应收集解锁页面
-                if talent_id == 304:
-                    pl_character_data.pl_collection.collection_bonus[1] = True
-                elif talent_id == 307:
-                    pl_character_data.pl_collection.collection_bonus[101] = True
             else:
                 fail_flag = True
 

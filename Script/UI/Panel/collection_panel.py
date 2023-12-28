@@ -215,25 +215,33 @@ class Collection_Panel:
             if self.token_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
-        if bonus_data.type == "内裤":
+        elif bonus_data.type == "内裤":
             if self.pan_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
-        if bonus_data.type == "袜子":
+        elif bonus_data.type == "袜子":
             if self.sock_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
 
-        # 获得素质类型的当场触发
+        # 获得至纯源石
         if bonus_flag:
             if bonus_id == 1:
-                character_data.talent[304] = 1
+                cache.rhodes_island.materials_resouce[3] += 1
             if bonus_id == 2:
-                character_data.talent[305] = 1
+                cache.rhodes_island.materials_resouce[3] += 1
             if bonus_id == 3:
-                character_data.talent[306] = 1
+                cache.rhodes_island.materials_resouce[3] += 1
+            if bonus_id == 4:
+                cache.rhodes_island.materials_resouce[3] += 1
+            if bonus_id == 5:
+                cache.rhodes_island.materials_resouce[3] += 10
+            if bonus_id == 6:
+                cache.rhodes_island.materials_resouce[3] += 100
             elif bonus_id == 101:
-                character_data.talent[307] = 1
+                cache.rhodes_island.materials_resouce[3] += 1
+            elif bonus_id == 201:
+                cache.rhodes_island.materials_resouce[3] += 1
 
         # 输出提示信息
         info_draw = draw.NormalDraw()
@@ -243,7 +251,6 @@ class Collection_Panel:
             info_draw.text = "\n  未满足条件，解锁失败\n"
         info_draw.width = self.width
         info_draw.draw()
-
 
 
 class collection_Draw:

@@ -701,6 +701,8 @@ class Talent_Of_Arts:
     """ 前置需求素质id """
     level: int
     """ 能力等级 """
+    todo: int
+    """ 未实装 """
 
 
 class Tip:

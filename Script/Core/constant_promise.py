@@ -1907,10 +1907,10 @@ class Premise:
 
     HAVE_COLLECTION = "have_collection"
     """ 收集 持有藏品 """
-    COLLECT_BONUS_103 = "c_bonus_103"
-    """ 收集 收藏奖励_103_解锁索要内裤 """
-    COLLECT_BONUS_203 = "c_bonus_203"
-    """ 收集 收藏奖励_203_解锁索要袜子 """
+    COLLECT_BONUS_102 = "c_bonus_103"
+    """ 收集 收藏奖励_102_解锁索要内裤 """
+    COLLECT_BONUS_202 = "c_bonus_203"
+    """ 收集 收藏奖励_202_解锁索要袜子 """
 
     PATIENT_WAIT = "patient_wait"
     """ 经营 有患者正等待就诊 """

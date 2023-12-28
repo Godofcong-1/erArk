@@ -5774,23 +5774,23 @@ def handle_target_not_angry_with_player(character_id: int) -> int:
         return 1
 
 
-@add_premise(constant_promise.Premise.COLLECT_BONUS_103)
-def handle_collect_bonus_103(character_id: int) -> int:
+@add_premise(constant_promise.Premise.COLLECT_BONUS_102)
+def handle_collect_bonus_102(character_id: int) -> int:
     """
-    校验收藏奖励_103_解锁索要内裤
+    校验收藏奖励_102_解锁索要内裤
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.pl_collection.collection_bonus[103]:
+    if character_data.pl_collection.collection_bonus[102]:
         return 1
     return 0
 
 
-@add_premise(constant_promise.Premise.COLLECT_BONUS_203)
-def handle_collect_bonus_203(character_id: int) -> int:
+@add_premise(constant_promise.Premise.COLLECT_BONUS_202)
+def handle_collect_bonus_202(character_id: int) -> int:
     """
     校验收藏奖励_203_解锁索要袜子
     Keyword arguments:
@@ -5799,7 +5799,7 @@ def handle_collect_bonus_203(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.pl_collection.collection_bonus[203]:
+    if character_data.pl_collection.collection_bonus[202]:
         return 1
     return 0
 

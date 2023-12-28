@@ -2580,7 +2580,7 @@ def handle_raise_skirt():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_PAN,
-     constant_promise.Premise.COLLECT_BONUS_103,
+     constant_promise.Premise.COLLECT_BONUS_102,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_ask_for_pan():
@@ -2605,7 +2605,7 @@ def handle_ask_for_pan():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
-     constant_promise.Premise.COLLECT_BONUS_203,
+     constant_promise.Premise.COLLECT_BONUS_202,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_ask_for_socks():
