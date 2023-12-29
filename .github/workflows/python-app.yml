@@ -81,8 +81,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: Past.${{steps.version.outputs.value}}
-          release_name: Past ${{steps.version.outputs.value}}
+          tag_name: ${{steps.version.outputs.value}}
+          release_name: ${{steps.version.outputs.value}}
           body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
           draft: false
           prerelease: false

@@ -42,6 +42,8 @@ def close_window():
 
 # 显示主框架
 game_name = normal_config.config_normal.game_name
+game_version = normal_config.config_normal.verson
+title_text = game_name + " " + game_version + " -α测"
 root = Tk()
 # normal_config.config_normal.window_width = root.maxsize()[0]
 #读取屏幕长宽
@@ -59,7 +61,7 @@ normal_config.config_normal.order_font_size = now_font_size - 2
 #读取dpi
 dpi = root.winfo_fpixels("1i")
 root.tk.call("tk", "scaling", 1.0)
-root.title(game_name)
+root.title(title_text)
 width = normal_config.config_normal.window_width
 #根窗口左上角x坐标-当前窗口左上角x坐标
 frm_width = root.winfo_rootx() - root.winfo_x()

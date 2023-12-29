@@ -233,8 +233,8 @@ cid,effect_name,effect_type,effect
 605,TARGET_PAN_SEE,属性_服装,交互对象内裤可视
 606,CLOTH_SEE_ZERO,属性_服装,内衣可视清零
 607,RESTE_CLOTH,属性_服装,衣服重置为初始状态
-621,ASK_FOR_PAN,属性_服装,获得交互对象的内裤
-622,ASK_FOR_SOCKS,属性_服装,获得交互对象的袜子
+621,GET_T_PAN,属性_服装,获得交互对象的内裤
+622,GET_T_SOCKS,属性_服装,获得交互对象的袜子
 631,T_CLOTH_BACK,属性_服装,交互对象穿回H时脱掉的衣服
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
@@ -317,3 +317,6 @@ cid,effect_name,effect_type,effect
 1202,PENETRATING_VISION_OFF,源石技艺,关闭透视
 1203,HORMONE_ON,源石技艺,开启信息素
 1204,HORMONE_OFF,源石技艺,关闭信息素
+1211,HYPNOSIS_ONE,源石技艺,单人催眠（含理智消耗）
+1212,HYPNOSIS_ALL,源石技艺,集体催眠
+1213,HYPNOSIS_CANCEL,源石技艺,解除催眠
