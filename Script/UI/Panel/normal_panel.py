@@ -349,6 +349,7 @@ class Chose_First_bonus_ability_Panel:
                     return_list.append(button_draw.return_text)
 
             line_feed.draw()
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()

@@ -73,7 +73,7 @@ def confirm_game_info_panel():
     """确认游戏说明面板"""
     now_line = draw.LineDraw("-", width)
     now_line.draw()
-    info_text = f"\n\n  免责声明：1.本游戏仅为开发者本人自娱自乐及代码练习所用，开发它是因为我个人趣味低下，思想低俗所至致，无任何经济收益和利益驱动。游戏仅为个人自用，不对外公开。\n\n\n            2.本游戏含有大量的R18色情内容，内容中可能会出现的有：调教、轻度SM、非合意性行为、近亲相奸等，不会出现的有：NTR、重度SM、血腥、暴力、R18G等。\n\n\n            3.本游戏在设计理念和游戏内容上缝合了大量era与其他各类作品，如有雷同都是正常的。\n\n\n            4.本游戏仅适合开发者本人游玩，不适合普通人游玩，特别是严厉禁止未成年人游玩，非开发者以外的任何人游玩该游戏出现的任何意外都和开发者本人无关。\n\n\n            5.本游戏禁止任何人在任何渠道对游戏本体或选取部分内容进行传播、交流、展示，公开和私底下都不行，禁止任何人用该游戏通过任何方式进行盈利。\n\n\n            6.基于以上叠了这么多层buff，建议有大胆想法的人请现在关掉窗口并立刻删除该游戏。\n\n\n            7.总之只要不删就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
+    info_text = f"\n\n  免责声明：1.本游戏仅为开发者自娱自乐及代码练习所用，开发它是因为开发者趣味低下，思想低俗所至致，无任何经济收益和利益驱动。\n\n\n            2.本游戏含有大量的R18色情内容，内容中可能会出现的有：多P、调教、轻度SM、非合意性行为、近亲相奸等，不会出现的有：NTR、重度SM、血腥、R18G等。\n\n\n            3.本游戏在设计理念和游戏内容上缝合了大量era与其他各类作品，仅适合era系列玩家或文字黄油爱好者进行游玩，不适合普通玩家游玩，特别是严格禁止未成年人游玩。\n\n\n            4.本游戏所使用的素材资源包括开发者自制、互联网收集与协力者提供，开发者与协力者来自于不同的国家和民族，彼此之间也不存在经济关系。\n\n\n            5.本游戏不进行公开发布，也禁止任何人在任何渠道对本游戏进行公开发布，更禁止任何人通过任何方式使用本游戏进行盈利。\n\n\n            6.基于以上叠了这么多层buff，建议有大胆想法的人请现在关掉窗口并立刻删除该游戏。\n\n\n            7.总之只要不删就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
     askfor_list = [_("我读完并理解了以上7条，我对自己负责，我不删，我要玩")]
     askfor_panel = panel.OneMessageAndSingleColumnButton()
     askfor_panel.set(askfor_list, info_text, 0)
@@ -178,7 +178,7 @@ class Character_creat_Handle:
         # tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
             info_draw,
-            sex_draw,
+            # sex_draw,
             jj_draw,
             debug_draw,
             firstNpc_draw,
@@ -228,7 +228,7 @@ class Character_Sex:
         now_draw.draw_list.append(sex_draw)
         now_draw.width += len(sex_draw.text)
 
-        button_text = f"    【改变性别】"
+        button_text = f"    [改变性别]"
         sex_button_draw = draw.LeftButton(
             _(button_text),
             _('改变性别'),
@@ -288,7 +288,7 @@ class Character_JJ:
         now_draw.draw_list.append(jj_draw)
         now_draw.width += len(jj_draw.text)
 
-        button_text = f"    【改变大小】"
+        button_text = f"    [改变大小]"
         jj_button_draw = draw.LeftButton(
             _(button_text),
             _('改变大小'),
@@ -340,21 +340,23 @@ class Character_Debug:
         """ 监听的按钮列表 """
 
         now_draw = panel.LeftDrawTextListPanel()
-        now_draw.draw_list.append(line_feed_draw)
 
-        if cache.debug_mode:
-            button_text = f"【关闭debug模式】"
-        else:
-            button_text = f"【开启debug模式】"
-        button_draw = draw.CenterButton(
-            _(button_text),
-            _('debug'),
-            self.width / 5,
-            cmd_func=self.change)
-        self.return_list.append(button_draw.return_text)
+        # debug按钮
+        if normal_config.config_normal.debug:
+            now_draw.draw_list.append(line_feed_draw)
+            if cache.debug_mode:
+                button_text = f"【关闭debug模式】"
+            else:
+                button_text = f"【开启debug模式】"
+            button_draw = draw.CenterButton(
+                _(button_text),
+                _('debug'),
+                self.width / 5,
+                cmd_func=self.change)
+            self.return_list.append(button_draw.return_text)
 
-        now_draw.draw_list.append(button_draw)
-        now_draw.width += len(button_draw.text)
+            now_draw.draw_list.append(button_draw)
+            now_draw.width += len(button_draw.text)
 
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
@@ -417,7 +419,7 @@ class Character_FirstNPC:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        button_text = f"【选择初期干员】"
+        button_text = f"[选择初期干员]"
         button_select_draw = draw.CenterButton(
             _(button_text),
             _('选择初期干员'),
@@ -428,7 +430,7 @@ class Character_FirstNPC:
         now_draw.draw_list.append(button_select_draw)
         now_draw.width += len(button_select_draw.text)
 
-        button_text = f"【指派干员工作】"
+        button_text = f"[指派干员工作]"
         button_select_draw = draw.CenterButton(
             _(button_text),
             _('指派干员工作'),
@@ -457,7 +459,7 @@ class Character_FirstNPC:
             info_last_draw.text = f" 已选择全部初始干员"
 
         work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
-        info_last_draw.text += f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
+        info_last_draw.text += f"， 当前工作中干员/总干员：{work_people_now}/{people_max}"
 
         now_draw.draw_list.append(info_last_draw)
         now_draw.width += len(info_last_draw.text)

@@ -6,7 +6,7 @@ from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type
 from Script.Design import map_handle, game_time, attr_calculation, character
-from Script.Config import game_config
+from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -7370,8 +7370,22 @@ def handle_target_is_player(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.DEBUG_MODE_SETTING_ON)
+def handle_debug_mode_setting_on(character_id: int) -> int:
+    """
+    设置里可以开启debug模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if normal_config.config_normal.debug:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.DEBUG_MODE_ON)
-def handle_idebug_mode_on(character_id: int) -> int:
+def handle_debug_mode_on(character_id: int) -> int:
     """
     校验当前是否已经是debug模式
     Keyword arguments:
@@ -7385,7 +7399,7 @@ def handle_idebug_mode_on(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.DEBUG_MODE_OFF)
-def handle_idebug_mode_off(character_id: int) -> int:
+def handle_debug_mode_off(character_id: int) -> int:
     """
     校验当前不是debug模式
     Keyword arguments:

@@ -183,6 +183,8 @@ class NormalConfig:
     """ 作者名 """
     verson_time: str
     """ 版本时间 """
+    debug: bool
+    """ 是否开启debug模式 """
     background: str
     """ 背景色 """
     language: str

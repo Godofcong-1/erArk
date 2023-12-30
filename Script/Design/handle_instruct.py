@@ -233,14 +233,17 @@ def instruct_filter():
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"),
-              {constant_promise.Premise.DEBUG_MODE_OFF})
+              {constant_promise.Premise.DEBUG_MODE_SETTING_ON,
+               constant_promise.Premise.DEBUG_MODE_OFF})
 def debug_mode():
     """处理开启DEBUG模式指令"""
     cache.debug_mode = True
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF, constant.InstructType.SYSTEM, _("关闭DEBUG模式"),
-              {constant_promise.Premise.DEBUG_MODE_ON})
+              {constant_promise.Premise.DEBUG_MODE_SETTING_ON,
+               constant_promise.Premise.DEBUG_MODE_ON
+               })
 def debug_mode_off():
     """处理关闭DEBUG模式指令"""
     cache.debug_mode = False

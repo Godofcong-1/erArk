@@ -1,6 +1,8 @@
 class Premise:
     """前提id"""
 
+    DEBUG_MODE_SETTING_ON = "debug_mode_setting_on"
+    """ 系统状态 设置里可以开启debug模式 """
     DEBUG_MODE_ON = "debug_mode_on"
     """ 系统状态 现在是debug模式 """
     DEBUG_MODE_OFF = "debug_mode_off"
