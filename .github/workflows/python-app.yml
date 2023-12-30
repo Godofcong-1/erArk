@@ -39,7 +39,6 @@ jobs:
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
           Copy-Item package.json dist/
-          Copy-Item 特别说明.txt dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
       - name: Pack Game Files
