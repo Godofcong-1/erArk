@@ -4376,7 +4376,8 @@ def handle_bagging_and_moving_add_just(
     cache.npc_id_got.remove(character_data.target_character_id)
     # 地图数据结算
     old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
-    cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
+    if character_data.target_character_id in cache.scene_data[old_scene_path_str].character_list:
+        cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
     target_data.position = ["0", "0"]
 
 
@@ -4423,7 +4424,8 @@ def handle_put_into_prison_add_just(
     target_data.behavior.move_target = character_data.position
     # 地图数据结算
     old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    cache.scene_data[old_scene_path_str].character_list.add(target_id)
+    if target_id not in cache.scene_data[old_scene_path_str].character_list:
+        cache.scene_data[old_scene_path_str].character_list.add(target_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)

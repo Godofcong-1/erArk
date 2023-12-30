@@ -102,6 +102,9 @@ def character_move_scene(old_scene_path: list, new_scene_path: list, character_i
     if character_id not in cache.scene_data[new_scene_path_str].character_list:
         character_data.position = new_scene_path
         cache.scene_data[new_scene_path_str].character_list.add(character_id)
+    # 如果角色已经在新场景角色列表中，但位置还没有移动到新场景，则移动位置
+    elif character_data.position != new_scene_path:
+        character_data.position = new_scene_path
     # 刷新移动起止位置
     character_data.behavior.move_src = old_scene_path
     character_data.behavior.move_target = new_scene_path
