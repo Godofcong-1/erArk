@@ -1,6 +1,6 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import attr_calculation, basement
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
@@ -135,6 +135,7 @@ class Recruit_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def select_recruitment_strategy(self, recruit_line_id):
@@ -284,9 +285,11 @@ class Recruit_Panel:
                 line_feed.draw()
 
             line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
-            yes_draw.draw()
-            return_list.append(yes_draw.return_text)
+            # 如果有选择的干员则输出确定按钮
+            if self.now_chara_id != -1:
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
             back_draw.draw()
             line_feed.draw()
