@@ -266,7 +266,7 @@ class Originium_Arts_Panel:
                     _(button7_text),
                     _("7"),
                     window_width,
-                    cmd_func=self.change_hypnosis_type,
+                    cmd_func=self.to_do,
                     args=(7),
                     )
                 line_feed.draw()
