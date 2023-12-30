@@ -123,6 +123,9 @@ class Assistant_Panel:
 
                 # 开始遍历全部助理服务
                 for cid in game_config.config_assistant_services:
+                    # 跳过未实装的服务
+                    if cid == 9:
+                        continue
                     # 获取助理服务数据
                     service_data = game_config.config_assistant_services[cid]
                     service_option_data = game_config.config_assistant_services_option[cid]
