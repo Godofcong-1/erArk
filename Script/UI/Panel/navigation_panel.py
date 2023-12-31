@@ -37,6 +37,7 @@ class Base_function_class:
         scene_path -- 目标场景路径，
         sp_flag -- 0为正常，1为无法抵达非临近地点
         """
+        # print(f"debug scene_path = {scene_path}")
         if sp_flag == 0:
             # 当前燃料
             now_fuel = cache.rhodes_island.materials_resouce[15]
@@ -333,6 +334,7 @@ class MapSceneNameDraw(Base_function_class):
                 # print(f"debug scene_id = {scene_id}")
                 load_scene_data = map_handle.get_scene_data_for_map(map_path_str, scene_name)
                 now_scene_path = map_handle.get_map_system_path_for_str(load_scene_data.scene_path)
+                target_scene = [scene_name, scene_path[scene_name]]
 
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
                 if scene_name == base_scene_name:
@@ -341,7 +343,7 @@ class MapSceneNameDraw(Base_function_class):
                     now_id_text = f"→{load_scene_data.scene_name}"
 
                 now_draw = draw.LeftButton(
-                    now_id_text, now_id_text, self.width, cmd_func=self.move_judge, args=(now_scene_path,)
+                    now_id_text, now_id_text, self.width, cmd_func=self.move_judge, args=(target_scene,)
                 )
                 self.return_list.append(now_draw.return_text)
                 draw_list.append(now_draw)
