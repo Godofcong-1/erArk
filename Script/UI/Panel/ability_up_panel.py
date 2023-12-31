@@ -136,6 +136,9 @@ class Characterabi_cmd_Text:
         judge = 1
         # 绘制标题#
         while 1:
+            # 如果已经到最高级就不绘制了#
+            if self.ability_level == 8:
+                break
 
             # 读取该能力在对应等级下的升级需求
             need_list = game_config.config_ability_up_data[self.ability_id][self.ability_level]
@@ -169,8 +172,17 @@ class Characterabi_cmd_Text:
                 now_draw.text = button_text
                 now_draw.draw()
 
+            # debug模式下无需判断
+            if cache.debug_mode:
+                judge = 1
+
             # 判断是否可以升级
-            if judge:
+            if self.ability_level == 8:
+                now_draw = draw.NormalDraw()
+                now_draw.text = "已达到最高级\n"
+                now_draw.draw()
+                break
+            elif judge:
                 now_draw_succed = draw.NormalDraw()
                 now_draw_succed.text = "满足条件，要升级吗？\n"
                 now_draw_succed.draw()
