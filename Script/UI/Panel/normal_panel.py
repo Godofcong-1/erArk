@@ -157,6 +157,7 @@ class Read_Book_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def read(self, book_id):

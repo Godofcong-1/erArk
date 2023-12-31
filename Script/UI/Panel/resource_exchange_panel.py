@@ -1,6 +1,6 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import attr_calculation
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
@@ -163,6 +163,7 @@ class Resource_Exchange_Line_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn == yes_draw.return_text:
                 if self.buy_or_sell_flag:
