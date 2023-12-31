@@ -330,7 +330,7 @@ class Manage_Assembly_Line_Panel:
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
-                button_text = f" [选择该流水线] "
+                button_text = f" [将选择工人调整至该流水线] "
                 button_draw = draw.CenterButton(
                 _(button_text),
                 _(f"{button_text}_{assembly_line_id}"),
@@ -354,8 +354,9 @@ class Manage_Assembly_Line_Panel:
 
             line_feed.draw()
             yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
-            yes_draw.draw()
-            return_list.append(yes_draw.return_text)
+            if self.now_chara_id != -1:
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
             back_draw.draw()
             line_feed.draw()
