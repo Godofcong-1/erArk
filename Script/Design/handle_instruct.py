@@ -2121,6 +2121,7 @@ def handle_exercise():
     _("诊疗病人"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
+     constant_promise.Premise.PATIENT_WAIT,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_cure_patient():

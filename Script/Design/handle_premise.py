@@ -7265,7 +7265,7 @@ def handle_patient_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.rhodes_island.patient_now:
+    if cache.rhodes_island.patient_now > 0:
         return 1
     return 0
 

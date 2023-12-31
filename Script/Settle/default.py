@@ -4058,6 +4058,13 @@ def handle_cure_patient_add_just(
     cache.rhodes_island.patient_now -= 1
     cache.rhodes_island.patient_cured += 1
 
+    # 如果是玩家在诊疗或玩家与诊疗者在同一位置的话，显示诊疗情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _(f"\n在{character_data.name}的努力下，医治了一名病人，支付了{now_add_lust}龙门币的医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n")
+        now_draw.draw()
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)
 def handle_recruit_add_just(
