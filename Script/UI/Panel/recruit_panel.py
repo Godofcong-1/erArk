@@ -262,7 +262,7 @@ class Recruit_Panel:
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
-                button_text = f" [选择该招募] "
+                button_text = f" [将选择专员调整至该招募] "
                 button_draw = draw.CenterButton(
                 _(button_text),
                 _(f"{button_text}_{recruit_line_id}"),
@@ -285,9 +285,9 @@ class Recruit_Panel:
                 line_feed.draw()
 
             line_feed.draw()
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
             # 如果有选择的干员则输出确定按钮
             if self.now_chara_id != -1:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
