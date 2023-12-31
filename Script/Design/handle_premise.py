@@ -15893,7 +15893,7 @@ def handle_pl_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -15908,7 +15908,7 @@ def handle_pl_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
@@ -15923,7 +15923,7 @@ def handle_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -15938,7 +15938,7 @@ def handle_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
@@ -15954,7 +15954,7 @@ def handle_t_action_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -15970,7 +15970,7 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.last_state[-1] == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
