@@ -443,7 +443,8 @@ def handle_locker_to_wear(
                 character_data.cloth.cloth_locker[clothing_type].remove(cloth_id)
 
     # 将衣服脏污设置为衣柜脏污中的内容
-    character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
+    if character_data.dirty.cloth_locker_semen:
+        character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)
 
