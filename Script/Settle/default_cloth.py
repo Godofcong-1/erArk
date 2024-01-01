@@ -203,13 +203,19 @@ def handle_get_t_pan(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_collection.npc_panties_tem[character_data.target_character_id] = []
+    character_data.pl_collection.npc_panties_tem.setdefault(character_data.target_character_id, [])
     character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(target_data.cloth.cloth_wear[9][0])
     TagetPanId = target_data.cloth.cloth_wear[9][0]
     TPanName = game_config.config_clothing_tem[TagetPanId].name
     character_data.behavior.pan_name = TPanName
     target_data.cloth.cloth_wear[9] = []
     target_data.cloth.cloth_see[9] = True
+    # 绘制信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = _(f"\n获得了{target_data.name}的{TPanName}，可在藏品馆里纳入收藏\n")
+    now_draw.draw()
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_SOCKS)
 def handle_get_t_sock(
@@ -230,12 +236,17 @@ def handle_get_t_sock(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_collection.npc_socks_tem[character_data.target_character_id] = []
+    character_data.pl_collection.npc_socks_tem.setdefault(character_data.target_character_id, [])
     character_data.pl_collection.npc_socks_tem[character_data.target_character_id].append(target_data.cloth.cloth_wear[10][0])
     TagetSocId = target_data.cloth.cloth_wear[10][0]
     TSocName = game_config.config_clothing_tem[TagetSocId].name
     character_data.behavior.socks_name = TSocName
     target_data.cloth.cloth_wear[10] = []
+    # 绘制信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = _(f"\n获得了{target_data.name}的{TSocName}，可在藏品馆里纳入收藏\n")
+    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_CLOTH_BACK)

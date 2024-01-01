@@ -246,7 +246,7 @@ class FindDraw:
 
         pan_id = self.character_data.cloth.cloth_locker[9][-1]
         pan_name = game_config.config_clothing_tem[pan_id].name
-        self.pl_data.pl_collection.npc_panties_tem[self.pl_data.target_character_id] = []
+        self.pl_data.pl_collection.npc_panties_tem.setdefault(self.pl_data.target_character_id, [])
         self.pl_data.pl_collection.npc_panties_tem[self.pl_data.target_character_id].append(pan_id)
         self.character_data.cloth.cloth_locker[9] = []
         now_draw = draw.WaitDraw()
@@ -259,7 +259,7 @@ class FindDraw:
 
         socks_id = self.character_data.cloth.cloth_locker[10][-1]
         socks_name = game_config.config_clothing_tem[socks_id].name
-        self.pl_data.pl_collection.npc_socks_tem[self.pl_data.target_character_id] = []
+        self.pl_data.pl_collection.npc_socks_tem.setdefault(self.pl_data.target_character_id, [])
         self.pl_data.pl_collection.npc_socks_tem[self.pl_data.target_character_id].append(socks_id)
         self.character_data.cloth.cloth_locker[10] = []
         now_draw = draw.WaitDraw()
