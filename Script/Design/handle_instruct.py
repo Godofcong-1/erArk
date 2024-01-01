@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise
 from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1548,6 +1548,25 @@ def handle_singing():
     """处理唱歌指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
+    # 如果音乐等级过低，且周围有其他角色，则进行需要确认再唱歌
+    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
+        while 1:
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
+            now_draw.text = _("\n当前音乐能力小于等于2，可能会让对方感觉不适，确认要继续吗\n\n")
+            now_draw.draw()
+            return_list = []
+            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), width / 3)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), width / 3,)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return
+            elif yrn == yes_draw.return_text:
+                break
     character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.SINGING
     character_data.state = constant.CharacterStatus.STATUS_SINGING
@@ -1567,6 +1586,25 @@ def handle_play_instrument():
     """处理演奏乐器指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    # 如果音乐等级过低，且周围有其他角色，则进行需要确认再演奏
+    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
+        while 1:
+            now_draw = draw.WaitDraw()
+            now_draw.width = width
+            now_draw.text = _("\n当前音乐能力小于等于2，可能会让对方感觉不适，确认要继续吗\n\n")
+            now_draw.draw()
+            return_list = []
+            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), width / 3)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), width / 3,)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return
+            elif yrn == yes_draw.return_text:
+                break
     character_data.behavior.duration = 10
     character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
