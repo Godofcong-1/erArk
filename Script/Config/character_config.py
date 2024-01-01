@@ -1,4 +1,4 @@
-import os
+import os, glob
 from typing import List
 from Script.Core import json_handle,game_type,get_text
 
@@ -13,6 +13,7 @@ def init_character_tem_data():
     """ 初始化预设角色数据 """
     global character_config_data
     character_config_data = json_handle.load_json(character_config_file)
+    directory = 'data/talk/chara'
     for character_name in character_config_data:
         now_tem = game_type.NpcTem()
         now_data = character_config_data[character_name]
@@ -36,4 +37,21 @@ def init_character_tem_data():
                 now_tem.Cloth.append(now_k)
             else:
                 now_tem.__dict__[k] = v
+        # 截取_之后的文本
+        find_name = character_name.split("_")[1]
+        talk_sizes = find_files_and_get_size(directory, find_name)
+        # 如果存在对话文件，将对话文件大小赋值给角色模板
+        if len(talk_sizes):
+            # 仅需要值，不需要键，除以1024是为了将文件大小转换为kb，进1保留到个位
+            now_tem.Talk_Size = int((sum(talk_sizes.values()) / 1024) + 1)
         character_tem_list.append(now_tem)
+
+def find_files_and_get_size(directory, character):
+    # 构造文件路径
+    path = os.path.join(directory, '*')
+    # 查找文件名包含特定字符的文件
+    files = glob.glob(path)
+    target_files = [file for file in files if character in os.path.basename(file)]
+    # 获取文件大小
+    file_sizes = {file: os.path.getsize(file) for file in target_files}
+    return file_sizes

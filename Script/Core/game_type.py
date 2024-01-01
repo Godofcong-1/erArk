@@ -86,6 +86,8 @@ class NpcTem:
         """ 宿舍预设 """
         self.Token: str = ""
         """ 信物预设 """
+        self.Talk_Size: int = 0
+        """ 口上大小 """
 
 
 # class Measurements:
@@ -921,6 +923,8 @@ class Character:
         """ 角色当前状态 """
         self.last_state: List = [0]
         """ 角色之前的状态 """
+        self.talk_size: int = 0
+        """ 角色口上大小，单位kb """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
         # """
         # 角色拥有的服装数据

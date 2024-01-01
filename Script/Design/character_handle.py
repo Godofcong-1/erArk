@@ -88,6 +88,8 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     pl_character_data.pl_collection.first_panties[character_id] = ""
     pl_character_data.pl_collection.npc_panties[character_id] = []
     pl_character_data.pl_collection.npc_socks[character_id] = []
+    # 赋予口上大小
+    now_character.talk_size = character_tem.Talk_Size
     # 最后集成
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)

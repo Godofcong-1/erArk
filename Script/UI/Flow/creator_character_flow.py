@@ -529,7 +529,9 @@ class Character_FirstNPC:
                 self.npc_select_now = 999
             else:
                 self.npc_select_now = 9 - len(cache.npc_id_got)
-            now_npc_draw.text = f"\n 当前已选干员："
+            now_npc_draw.text = ""
+            now_npc_draw.text += f" 有口上的角色会注明文本文件的大小，欢迎使用附带的编辑器erArkEditor，无需写代码仅写文本即可创作口上\n"
+            now_npc_draw.text += f"\n 当前已选干员："
             for character_id in cache.npc_id_got:
                 npc_character_data = cache.character_data[character_id]
                 if npc_character_data.name not in constant.first_NPC_name_set:
@@ -703,15 +705,18 @@ class SelectFirstNPCButton:
 
         target_data: game_type.Character = cache.character_data[NPC_id]
         button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
+        # 如果有口上的话，输出大小
+        if target_data.talk_size:
+            button_text += f"({target_data.talk_size}kb)"
         name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
             if target_data.name in constant.first_NPC_name_set:
-                button_text += f" (基础)"
+                button_text += f"(基础)"
                 name_draw.text = button_text
                 name_draw.width = self.width
                 name_draw.style = "gold_enrod"
             else:
-                button_text += f" (自选)"
+                button_text += f"(自选)"
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
