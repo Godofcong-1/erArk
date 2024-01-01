@@ -27,3 +27,8 @@ data/PlaceData
 data/SceneData
 data/ScenePath
 
+# 存档
+save
+
+# 错误log
+error.log
