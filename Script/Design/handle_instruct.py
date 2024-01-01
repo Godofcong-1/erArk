@@ -257,6 +257,17 @@ def debug_adjust():
 
 
 @add_instruct(
+    constant.Instruct.SYSTEM_SETTING,
+    constant.InstructType.SYSTEM,
+    _("系统设置"),
+    {
+    })
+def handle_system_setting():
+    """系统设置"""
+    cache.now_panel_id = constant.Panel.SYSTEM_SETTING
+
+
+@add_instruct(
     constant.Instruct.SEE_COLLECTION,
     constant.InstructType.WORK,
     _("查看收藏品"),

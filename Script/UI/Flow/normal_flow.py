@@ -27,6 +27,7 @@ from Script.UI.Panel import (
     prts_panel,
     recruit_panel,
     invite_visitor_panel,
+    system_setting,
 )
 from Script.Config import normal_config
 
@@ -207,4 +208,10 @@ def visitor_flow():
 def fridge_flow():
     """冰箱面板"""
     now_panel = normal_panel.Fridge_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.SYSTEM_SETTING)
+def system_setting_flow():
+    """系统设置面板"""
+    now_panel = system_setting.System_Setting_Panel(width)
     now_panel.draw()

@@ -556,6 +556,8 @@ class PLAYER_COLLECTION:
         """ 获得的角色袜子 """
         self.npc_socks_tem: Dict[int, list] = {}
         """ 临时获得的角色袜子 """
+        self.eqip_token: List = [0, [0]]
+        """ 装备的信物 """
 
 
 class PLAYER_ABILITY:
@@ -863,6 +865,13 @@ class Rhodes_Island:
         """ 感染抑制剂浓缩液数量 """
 '''
 
+class System_Setting:
+    """系统设置"""
+
+    def __init__(self):
+        self.line_before_main_update: int = 3
+        """ 主界面刷新前的行数 """
+
 
 class Character:
     """角色数据结构体"""
@@ -1123,6 +1132,8 @@ class Cache:
         """ 初期奖励 """
         self.world_setting: Dict[int, int] = {}
         """ 世界设定 """
+        self.system_setting: System_Setting = System_Setting()
+        """ 系统设定 """
 
 
 class TargetChange:

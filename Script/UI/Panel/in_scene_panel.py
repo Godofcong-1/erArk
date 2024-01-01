@@ -45,7 +45,8 @@ class InScenePanel:
         while 1:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
-            line_feed.draw()
+            for i in range(cache.system_setting.line_before_main_update):
+                line_feed.draw()
             title_draw.draw()
 
             character_data: game_type.Character = cache.character_data[0]

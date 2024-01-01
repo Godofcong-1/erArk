@@ -1335,6 +1335,8 @@ class Panel:
     """ 访客面板 """
     FRIDGE = 28
     """ 冰箱面板 """
+    SYSTEM_SETTING = 29
+    """ 系统设置面板 """
 
 
 class SecondBehavior:
@@ -1656,6 +1658,8 @@ class Instruct:
     """ 关闭debug模式 """
     DEBUG_ADJUST = 0
     """ debug数值调整 """
+    SYSTEM_SETTING = 0
+    """ 系统设置 """
 
     #日常#
     WAIT = 0
