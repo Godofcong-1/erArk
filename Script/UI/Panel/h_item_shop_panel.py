@@ -186,7 +186,7 @@ class BuyItemByItemNameDraw:
         line = draw.LineDraw("-", window_width)
         line.draw()
         item_config = game_config.config_item[self.text]
-        if cache.rhodes_island.materials_resouce[4] >= item_config.price:
+        if cache.rhodes_island.materials_resouce[4] >= item_config.price or cache.debug_mode:
             self.character_data.item[self.text] += 1
             cache.rhodes_island.materials_resouce[4] -= item_config.price
             now_text = _("{nickname}购买了{item_name}").format(
