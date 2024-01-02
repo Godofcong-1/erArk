@@ -197,6 +197,11 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     premise_data = {}
     target_weight_data = {}
 
+    # 如果该NPC在H模式，则不赋予新活动，且直接加入结束列表
+    if character_data.sp_flag.is_h:
+        cache.over_behavior_character.add(character_id)
+        return
+
     # 如果玩家在对该NPC交互，则等待flag=1，此操作暂时不进行
     safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
     # if PC_character_data.target_character_id == character_id:
@@ -641,10 +646,13 @@ def judge_character_h(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.sp_flag.is_h:
-        character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
-        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.behavior.start_time = pl_character_data.behavior.start_time
+        character_data.behavior.duration = pl_character_data.behavior.duration
+        character_data.target_character_id = character_id
     return 1
 
 
