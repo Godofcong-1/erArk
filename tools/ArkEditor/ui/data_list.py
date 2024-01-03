@@ -19,8 +19,15 @@ class DataList(QWidget):
         self.menu_bar: QMenuBar = None
         self.status_menu: QMenu = None
         self.type_menu: QMenu = None
-        self.button = QPushButton("新增条目")
-        self.button.clicked.connect(self.buton_add)
+        self.new_text_button = QPushButton("新增条目")
+        self.new_text_button.clicked.connect(self.buton_add)
+        self.copy_text_button = QPushButton("复制条目")
+        self.copy_text_button.clicked.connect(self.copy_text)
+        self.search_edit = QTextEdit()
+        self.search_edit.setFixedHeight(32)
+        # self.search_edit.setFixedWidth(400)
+        self.search_edit.setPlaceholderText("搜索")
+        self.search_edit.textChanged.connect(self.search)
         self.list_widget = QListWidget()
         self.font = QFont()
         self.font.setPointSize(11)
@@ -61,9 +68,15 @@ class DataList(QWidget):
 
         # 总布局
         self.layout.addLayout(self.top_layout, 0, 0)
-        self.layout.addWidget(self.button, 1, 0)
+        self.layout.addWidget(self.new_text_button, 1, 0)
+        self.layout.addWidget(self.copy_text_button, 1, 1)
+        self.layout.addWidget(self.search_edit, 1, 2)
         self.layout.addWidget(self.list_widget, 2, 0, 1, 6)
 
+        # 设置拉伸因子，保证新建条目、复制条目、搜索框的宽度相等
+        self.layout.setColumnStretch(0, 1)
+        self.layout.setColumnStretch(1, 1)
+        self.layout.setColumnStretch(2, 1)
 
     def right_button_menu(self, old_position):
         """
@@ -115,6 +128,38 @@ class DataList(QWidget):
             self.create_event()
         else:
             self.create_talk()
+
+    def copy_text(self):
+        """复制条目"""
+        old_item = self.list_widget.currentItem()
+        if old_item is None:
+            return
+        if cache_control.now_edit_type_flag == 1:
+            self.copy_event()
+        else:
+            self.copy_talk()
+
+    def search(self):
+        """搜索"""
+        search_text = self.search_edit.toPlainText()
+        if not search_text:
+            self.update()
+            return
+        self.list_widget.clear()
+        if cache_control.now_edit_type_flag == 1:
+            for uid in cache_control.now_event_data:
+                now_event: game_type.Event = cache_control.now_event_data[uid]
+                if search_text in now_event.text:
+                    item = ListItem(now_event.text)
+                    item.uid = uid
+                    self.list_widget.addItem(item)
+        else:
+            for cid in cache_control.now_talk_data:
+                now_talk: game_type.Talk = cache_control.now_talk_data[cid]
+                if search_text in now_talk.text:
+                    item = ListItem(now_talk.text)
+                    item.uid = cid
+                    self.list_widget.addItem(item)
 
     def create_event(self):
         """新增事件"""
@@ -243,6 +288,8 @@ class DataList(QWidget):
                         self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
                         # 设置 item 的背景色为淡蓝色
                         item.setBackground(QColor("light blue"))
+                        # 将其设定为当前行
+                        self.list_widget.setCurrentItem(item)
                         break
 
         elif cache_control.now_edit_type_flag == 1:
@@ -274,5 +321,6 @@ class DataList(QWidget):
                         self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
                         # 设置 item 的背景色为淡蓝色
                         item.setBackground(QColor("light blue"))
+                        # 将其设定为当前行
+                        self.list_widget.setCurrentItem(item)
                         break
-
