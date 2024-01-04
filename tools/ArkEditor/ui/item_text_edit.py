@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QTextEdit, QWidget, QVBoxLayout, QLabel, QPushButton, QMenu
+from PySide6.QtWidgets import QTextEdit, QWidget, QVBoxLayout, QLabel, QPushButton, QMenu, QHBoxLayout
 from PySide6.QtGui import QFont, QAction
 from PySide6.QtCore import Qt
 import cache_control
@@ -21,7 +21,26 @@ class ItemTextEdit(QWidget):
         # 加入保存按钮
         self.save_button = QPushButton("保存")
         self.save_button.clicked.connect(self.save)
-        label_layout.addWidget(self.save_button)
+        # 加入文本触发者名字按钮
+        self.insert_name_button = QPushButton("插入文本触发者名字")
+        self.insert_name_button.clicked.connect(lambda: self.insert_text('{Name}'))
+        # 加入文本触发者的交互对象名字按钮
+        self.insert_target_name_button = QPushButton("插入文本触发者的交互对象名字")
+        self.insert_target_name_button.clicked.connect(lambda: self.insert_text('{TargetName}'))
+        # 加入玩家名字按钮
+        self.insert_player_name_button = QPushButton("插入玩家名字")
+        self.insert_player_name_button.clicked.connect(lambda: self.insert_text('{PlayerName}'))
+        # 加入一行文本提示
+        label = QLabel()
+        label.setText("右键菜单可插入更多文本")
+        # 上述三个按钮的布局变成横向
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.save_button)
+        button_layout.addWidget(self.insert_name_button)
+        button_layout.addWidget(self.insert_target_name_button)
+        button_layout.addWidget(self.insert_player_name_button)
+        button_layout.addWidget(label)
+        label_layout.addLayout(button_layout)
         # 加入文本编辑框
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
@@ -40,8 +59,8 @@ class ItemTextEdit(QWidget):
     def create_right_click_menu(self):
         """创建右键菜单"""
         menu_items = [
-            {"text": "插入事件触发者名字", "slot": lambda: self.insert_text('{Name}')},
-            {"text": "插入事件触发者的交互对象名字", "slot": lambda: self.insert_text('{TargetName}')},
+            {"text": "插入文本触发者名字", "slot": lambda: self.insert_text('{Name}')},
+            {"text": "插入文本触发者的交互对象名字", "slot": lambda: self.insert_text('{TargetName}')},
             {"text": "插入玩家名字", "slot": lambda: self.insert_text('{PlayerName}')},
             {"text": "插入玩家昵称", "slot": lambda: self.insert_text('{PlayerNickName}')},
             {"text": "插入当前行为中食物名字", "slot": lambda: self.insert_text('{FoodName}')},
@@ -79,13 +98,18 @@ class ItemTextEdit(QWidget):
         else:
             self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
         self.label_text.setText(self.now_text)
-    
+
     def save(self):
         """保存文本内容"""
+        now_text = self.label_text.toPlainText()
+        # 检测里面的","，换成"，"，防止csv文件解析出错
+        now_text = now_text.replace(",", "，")
+        # 检测换行符，换成"\n"，防止csv文件解析出错
+        now_text = now_text.replace("\n", "\\n")
         if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].text = self.label_text.toPlainText()
+            cache_control.now_event_data[cache_control.now_select_id].text = now_text
         else:
-            cache_control.now_talk_data[cache_control.now_select_id].text = self.label_text.toPlainText()
+            cache_control.now_talk_data[cache_control.now_select_id].text = now_text
 
     def show_right_click_menu(self, pos):
         """显示右键菜单"""
