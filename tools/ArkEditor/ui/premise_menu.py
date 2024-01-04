@@ -187,7 +187,10 @@ class CVPMenu(QDialog):
             cvp_a_value = "A3|" + self.cvp_a2.toPlainText()
             cvp_a = "角色id为" + self.cvp_a2.toPlainText()
         cvp_b1 = self.cvp_b1.currentText()
-        cvp_b2 = self.cvp_b2.currentText().split("|")[1]
+        if len(self.cvp_b2.currentText().split("|")) == 2:
+            cvp_b2 = self.cvp_b2.currentText().split("|")[1]
+        else:
+            cvp_b2 = ""
         if cvp_b1 == "待选择":
             cvp_b_value = ""
         elif cvp_b1 == "好感":
