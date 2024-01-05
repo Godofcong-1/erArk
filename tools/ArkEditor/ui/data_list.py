@@ -1,5 +1,5 @@
 import uuid
-from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu
+from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QCursor, QColor
 from ui.list_item import ListItem
@@ -26,8 +26,11 @@ class DataList(QWidget):
         self.search_edit = QTextEdit()
         self.search_edit.setFixedHeight(32)
         # self.search_edit.setFixedWidth(400)
-        self.search_edit.setPlaceholderText("搜索")
+        self.search_edit.setPlaceholderText("内容搜索过滤")
         self.search_edit.textChanged.connect(self.search)
+        self.select_now_instruct_check_box = QCheckBox("只显示当前指令")
+        self.select_now_instruct_check_box.stateChanged.connect(self.select_now_instruct)
+        self.select_now_instruct_flag = 0
         self.list_widget = QListWidget()
         self.font = QFont()
         self.font.setPointSize(11)
@@ -71,6 +74,7 @@ class DataList(QWidget):
         self.layout.addWidget(self.new_text_button, 1, 0)
         self.layout.addWidget(self.copy_text_button, 1, 1)
         self.layout.addWidget(self.search_edit, 1, 2)
+        self.layout.addWidget(self.select_now_instruct_check_box, 1, 3)
         self.layout.addWidget(self.list_widget, 2, 0, 1, 6)
 
         # 设置拉伸因子，保证新建条目、复制条目、搜索框的宽度相等
@@ -160,6 +164,14 @@ class DataList(QWidget):
                     item = ListItem(now_talk.text)
                     item.uid = cid
                     self.list_widget.addItem(item)
+
+    def select_now_instruct(self):
+        """只显示当前指令"""
+        if self.select_now_instruct_check_box.isChecked():
+            self.select_now_instruct_flag = 1
+        else:
+            self.select_now_instruct_flag = 0
+        self.update()
 
     def create_event(self):
         """新增事件"""
@@ -272,6 +284,10 @@ class DataList(QWidget):
                 item_text = f"{now_talk.cid} | " + now_talk.text
                 item = ListItem(item_text)
                 item.uid = cid
+                # 仅显示当前指令
+                if self.select_now_instruct_flag:
+                    if now_talk.status_id != cache_control.now_status:
+                        continue
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
@@ -300,6 +316,9 @@ class DataList(QWidget):
                 #     continue
                 # if type_text_list[now_event.type] != cache_control.now_type:
                 #     continue
+                if self.select_now_instruct_flag:
+                    if now_event.status_id != cache_control.now_status:
+                        continue
                 item = ListItem(now_event.text)
                 item.uid = uid
                 self.list_widget.addItem(item)

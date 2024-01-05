@@ -266,10 +266,11 @@ def change_status_menu(action: QWidgetAction):
         data_list.status_menu.addMenu(status_menu)
     status_group.triggered.connect(change_status_menu)
     data_list.status_menu.addActions(action_list)
-    if cache_control.now_edit_type_flag == 1:
-        cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
-    else:
-        cache_control.now_talk_data[cache_control.now_select_id].status_id = cache_control.now_status
+    if cache_control.now_select_id != '':
+        if cache_control.now_edit_type_flag == 1:
+            cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
+        else:
+            cache_control.now_talk_data[cache_control.now_select_id].status_id = cache_control.now_status
 
 
 def change_type_menu(action: QWidgetAction):
