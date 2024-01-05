@@ -196,6 +196,63 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     favorability *= fix
     return favorability
 
+def calculation_trust(character_id: int, target_character_id: int, add_time: int) -> int:
+    """
+    按角色当前状态、素质和能力计算最终增加的信赖度
+    Keyword arguments:
+    character_id -- 角色id
+    target_character_id -- 目标角色id
+    add_time -- 指令的时间
+    Return arguments:
+    int -- 最终的信赖度
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[target_character_id]
+    fix = 1.0
+
+    # 能力相关计算#
+    # 亲密、快乐刻印、屈服刻印每级+0.2倍#
+    for i in {13, 14, 32}:
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix += ability_level * 0.2
+    # 苦痛刻印、恐怖刻印每级-0.3倍#
+    for i in {15, 17}:
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix -= ability_level * 0.3
+    # 反发刻印每级-1.0倍#
+    for i in {18}:
+        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        fix -= ability_level * 1.0
+
+    # 素质相关计算#
+    # 爱情与隶属系加成0.5~2.0#
+    if target_data.talent[201] or target_data.talent[211]:
+        fix += 0.5
+    if target_data.talent[202] or target_data.talent[212]:
+        fix += 1.0
+    if target_data.talent[203] or target_data.talent[213]:
+        fix += 1.5
+    if target_data.talent[204] or target_data.talent[214]:
+        fix += 2.0
+    # 受精、妊娠、育儿均+0.5#
+    if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
+        fix += 0.5
+    # 感情缺乏-0.2#
+    if target_data.talent[223]:
+        fix -= 0.2
+    # 讨厌男性-0.2#
+    if target_data.talent[227]:
+        fix -= 0.2
+    # 博士信息素每级+0.5#
+    if character_data.talent[306]:
+        fix += 1.5
+    elif character_data.talent[305]:
+        fix += 1.0
+    elif character_data.talent[304]:
+        fix += 0.5
+    trust_add = add_time / 60 * fix
+    return trust_add
+
 
 def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str):
     """

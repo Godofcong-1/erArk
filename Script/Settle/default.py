@@ -200,9 +200,9 @@ def handle_add_small_trust(
             return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = 1
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-        now_lust_multiple *= adjust
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+        if now_lust_multiple < 0:
+            now_lust_multiple = 0
         target_data.trust += now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -240,9 +240,9 @@ def handle_down_small_trust(
             return
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = -1
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-        now_lust_multiple *= adjust
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+        if now_lust_multiple > 0:
+            now_lust_multiple *= -1
         target_data.trust += now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -3894,8 +3894,7 @@ def handle_coffee_add_adjust(
             character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
         # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
         now_lust_multiple *= adjust
         target_data.trust += now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -3955,8 +3954,7 @@ def handle_target_coffee_add_adjust(
             character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
         # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
         now_lust_multiple *= adjust
         target_data.trust += now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -4344,7 +4342,8 @@ def handle_teach_add_just(
                         )
 
                         # 加信赖
-                        now_lust_multiple = attr_calculation.get_ability_adjust(other_character_data.ability[32])
+                        now_lust_multiple = character.calculation_trust(character_id, other_character_data.cid, add_time)
+                        now_lust_multiple *= attr_calculation.get_ability_adjust(other_character_data.ability[32])
                         other_character_data.trust += now_lust_multiple
                         change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
                         target_change.trust += now_lust_multiple
@@ -4628,8 +4627,7 @@ def handle_sing_add_adjust(
             character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
         # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
         if good_flag:
             now_lust_multiple *= adjust
         else:
@@ -4726,8 +4724,8 @@ def handle_play_instrument_add_adjust(
             character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
         # 信赖变化#
-        now_lust_multiple = 2
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
+        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+        now_lust_multiple *= 2
         if good_flag:
             now_lust_multiple *= adjust
         else:
