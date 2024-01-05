@@ -1037,7 +1037,8 @@ def handle_first_sex(
             pan_id = target_data.cloth.cloth_wear[9][-1]
         elif len(target_data.cloth.cloth_off[9]):
             pan_id = target_data.cloth.cloth_off[9][-1]
-        elif len(character_data.pl_collection.npc_panties_tem[character_data.target_character_id]):
+        # BUG 这一块疑似有BUG，但是未能确定来源，所以先多加个限制条件
+        elif character_data.pl_collection.npc_panties_tem.get(character_data.target_character_id):
             pan_id = character_data.pl_collection.npc_panties_tem[character_data.target_character_id][-1]
         else:
             no_pan_flag = True
