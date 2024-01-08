@@ -190,6 +190,8 @@ class DataList(QWidget):
         event.text = item.text()
         cache_control.now_event_data[event.uid] = event
         self.list_widget.addItem(item)
+        cache_control.now_select_id = event.uid
+        self.update()
 
     def delete_event(self):
         """删除事件"""
@@ -218,6 +220,8 @@ class DataList(QWidget):
         event.text = old_event.text + "(复制)"
         cache_control.now_event_data[event.uid] = event
         self.list_widget.insertItem(event_index + 1, new_item)
+        cache_control.now_select_id = event.uid
+        self.update()
 
     def create_talk(self):
         """新增口上"""
@@ -233,6 +237,8 @@ class DataList(QWidget):
         talk.premise["high_1"] = 1
         cache_control.now_talk_data[talk.cid] = talk
         self.list_widget.addItem(item)
+        cache_control.now_select_id = talk.cid
+        self.update()
 
     def delete_talk(self):
         """删除口上"""
@@ -263,6 +269,8 @@ class DataList(QWidget):
         talk.text = old_talk.text + "(复制)"
         cache_control.now_talk_data[talk.cid] = talk
         self.list_widget.insertItem(talk_index + 1, new_item)
+        cache_control.now_select_id = talk.cid
+        self.update()
 
     def update_adv_id(self):
         """根据文本编辑框更新当前的角色id"""
@@ -293,6 +301,7 @@ class DataList(QWidget):
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
                 status_text = cache_control.status_data[status_cid]
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
+                cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.text_edit.setText(chara_id)
 
@@ -328,6 +337,7 @@ class DataList(QWidget):
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
+                cache_control.now_status = now_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
                 self.text_edit.setText(chara_id)
