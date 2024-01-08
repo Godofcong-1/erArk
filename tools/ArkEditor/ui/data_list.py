@@ -19,11 +19,13 @@ class DataList(QWidget):
         self.menu_bar: QMenuBar = None
         self.status_menu: QMenu = None
         self.type_menu: QMenu = None
-        # 新增条目、复制条目
+        # 新增条目、复制条目、删除条目
         self.new_text_button = QPushButton("新增条目")
         self.new_text_button.clicked.connect(self.buton_add)
         self.copy_text_button = QPushButton("复制条目")
         self.copy_text_button.clicked.connect(self.copy_text)
+        self.delete_text_button = QPushButton("删除条目")
+        self.delete_text_button.clicked.connect(self.delete_text)
         # 只显示当前指令
         self.select_now_instruct_check_box = QCheckBox("只显示当前指令")
         self.select_now_instruct_check_box.stateChanged.connect(self.select_now_instruct)
@@ -81,7 +83,8 @@ class DataList(QWidget):
         self.layout.addLayout(self.top_layout, 0, 0)
         self.layout.addWidget(self.new_text_button, 1, 0)
         self.layout.addWidget(self.copy_text_button, 1, 1)
-        self.layout.addWidget(self.select_now_instruct_check_box, 1, 2)
+        self.layout.addWidget(self.delete_text_button, 1, 2)
+        self.layout.addWidget(self.select_now_instruct_check_box, 1, 3)
         self.layout.addWidget(self.search_edit, 2, 0)
         self.layout.addWidget(self.search_button, 2, 1)
         self.layout.addWidget(self.search_reset_button, 2, 2)
@@ -152,6 +155,13 @@ class DataList(QWidget):
             self.copy_event()
         else:
             self.copy_talk()
+
+    def delete_text(self):
+        """删除条目"""
+        if cache_control.now_edit_type_flag == 1:
+            self.delete_event()
+        else:
+            self.delete_talk()
 
     def search(self):
         """搜索"""

@@ -25,14 +25,17 @@ class ItemPremiseList(QWidget):
         CVP_button = QPushButton("综合型基础数值前提")
         CVP_button.clicked.connect(self.CVP)
         button_layout.addWidget(CVP_button)
-        change_button = QPushButton("修改")
+        change_button = QPushButton("整体修改")
         change_button.clicked.connect(self.change)
         button_layout.addWidget(change_button)
-        reset_button = QPushButton("清零")
+        reset_button = QPushButton("整体清零")
         reset_button.clicked.connect(self.reset)
         button_layout.addWidget(reset_button)
         title_layout.addLayout(button_layout)
         main_layout.addLayout(title_layout)
+        # 文字说明
+        info_label = QLabel()
+        info_label.setText("右键删除该前提，双击替换该前提")
         # 前提列表布局
         list_layout = QHBoxLayout()
         self.item_list = QListWidget()
@@ -40,7 +43,9 @@ class ItemPremiseList(QWidget):
         self.item_list.adjustSize()
         self.item_list.setContextMenuPolicy(Qt.CustomContextMenu)
         self.item_list.customContextMenuRequested.connect(self.show_context_menu)
+        self.item_list.itemDoubleClicked.connect(self.change_this_item)
         list_layout.addWidget(self.item_list)
+        main_layout.addWidget(info_label)
         main_layout.addLayout(list_layout)
         self.setLayout(main_layout)
 
@@ -69,6 +74,23 @@ class ItemPremiseList(QWidget):
         if cache_control.now_select_id != "":
             menu = PremiseMenu()
             menu.exec()
+
+    def change_this_item(self, item):
+        """删除该前提并展开前提菜单"""
+        # 先遍历找到cid
+        for premise in cache_control.premise_data:
+            if cache_control.premise_data[premise] == item.text():
+                premise_cid = premise
+                break
+        # 根据cid删除前提
+        if cache_control.now_edit_type_flag == 1:
+            if premise_cid in cache_control.now_event_data[cache_control.now_select_id].premise:
+                del cache_control.now_event_data[cache_control.now_select_id].premise[premise_cid]
+        else:
+            if premise_cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                del cache_control.now_talk_data[cache_control.now_select_id].premise[premise_cid]
+        # 展开前提菜单
+        self.change()
 
     def reset(self):
         """清零前提列表"""

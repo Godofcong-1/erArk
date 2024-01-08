@@ -22,14 +22,17 @@ class ItemEffectList(QWidget):
         title_layout.addWidget(label)
         # 按钮布局
         button_layout = QHBoxLayout()
-        change_button = QPushButton("修改")
+        change_button = QPushButton("整体修改")
         change_button.clicked.connect(self.change)
         button_layout.addWidget(change_button)
-        reset_button = QPushButton("清零")
+        reset_button = QPushButton("整体清零")
         reset_button.clicked.connect(self.reset)
         button_layout.addWidget(reset_button)
         title_layout.addLayout(button_layout)
         main_layout.addLayout(title_layout)
+        # 文字说明
+        info_label = QLabel()
+        info_label.setText("右键删除该结算，双击替换该结算")
         # 结算列表布局
         list_layout = QHBoxLayout()
         self.item_list = QListWidget()
@@ -37,7 +40,9 @@ class ItemEffectList(QWidget):
         self.item_list.adjustSize()
         self.item_list.setContextMenuPolicy(Qt.CustomContextMenu)
         self.item_list.customContextMenuRequested.connect(self.show_context_menu)
+        self.item_list.itemDoubleClicked.connect(self.change_this_item)
         list_layout.addWidget(self.item_list)
+        main_layout.addWidget(info_label)
         main_layout.addLayout(list_layout)
         self.setLayout(main_layout)
 
@@ -52,6 +57,18 @@ class ItemEffectList(QWidget):
 
     def change(self):
         """展开结算菜单"""
+        menu = EffectMenu()
+        menu.exec()
+
+    def change_this_item(self, item):
+        """删除该结算并展开结算菜单"""
+        self.item_list.takeItem(self.item_list.row(item))
+        for effect in cache_control.effect_data:
+            if cache_control.effect_data[effect] == item.text():
+                effect_cid = effect
+                break
+        if effect_cid in cache_control.now_event_data[cache_control.now_select_id].effect:
+            del cache_control.now_event_data[cache_control.now_select_id].effect[effect_cid]
         menu = EffectMenu()
         menu.exec()
 
