@@ -287,6 +287,8 @@ class DataList(QWidget):
         self.update_clear = 0
 
         if cache_control.now_edit_type_flag == 0:
+            # self.menu_bar 中去掉 self.type_menu
+            self.menu_bar.removeAction(self.type_menu.menuAction())
             for cid in cache_control.now_talk_data:
                 now_talk: game_type.Talk = cache_control.now_talk_data[cid]
                 item_text = f"{now_talk.cid} | " + now_talk.text
