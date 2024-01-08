@@ -4,6 +4,9 @@ from PySide6.QtWidgets import (
     QTreeWidget,
     QTreeWidgetItem,
     QAbstractItemView,
+    QVBoxLayout,
+    QTextEdit,
+    QPushButton,
 )
 from PySide6.QtGui import QFont, Qt
 import cache_control
@@ -28,8 +31,25 @@ class EffectMenu(QDialog):
         self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
-        self.layout: QHBoxLayout = QHBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
         self.resize(1000,1000)
+        # 增加一个搜索框，确定键，重置键，三个合在一起，放在最上面作为一个横向的搜索栏
+        self.search_text = QTextEdit()
+        self.search_text.setFont(self.font)
+        self.search_text.setFixedHeight(32)
+        self.search_text.setFixedWidth(200)
+        self.search_button = QPushButton("搜索")
+        self.search_button.clicked.connect(self.search)
+        self.reset_button = QPushButton("重置")
+        self.reset_button.clicked.connect(self.reset)
+        # 放在tree的上面，作为一个横向的搜索栏
+        self.search_layout = QHBoxLayout()
+        self.search_layout.addWidget(self.search_text)
+        self.search_layout.addWidget(self.search_button)
+        self.search_layout.addWidget(self.reset_button)
+        self.layout.addLayout(self.search_layout)
+        # 创建一个新的 QHBoxLayout，用于左右排列两个 tree
+        self.tree_layout = QHBoxLayout()
         all_type_list = sorted(list(cache_control.effect_type_data.keys()))
         range_index = int(len(all_type_list) / 2) + 1
         range_a = all_type_list[:range_index]
@@ -65,7 +85,8 @@ class EffectMenu(QDialog):
             tree.itemClicked.connect(self.click_item)
             tree.setFont(self.font)
             self.tree_list.append(tree)
-            self.layout.addWidget(tree)
+            self.tree_layout.addWidget(tree)  # 将 tree 添加到 QHBoxLayout 中
+        self.layout.addLayout(self.tree_layout)
         self.setLayout(self.layout)
 
     def click_item(self, item: TreeItem, column: int):
@@ -85,3 +106,28 @@ class EffectMenu(QDialog):
             item.setCheckState(0, Qt.Checked)
             cache_control.now_event_data[cache_control.now_select_id].effect[item.cid] = 1
         cache_control.item_effect_list.update()
+
+    def search(self):
+        """搜索结算器"""
+        search_text = self.search_text.toPlainText()
+        if not len(search_text):
+            return
+        for tree in self.tree_list:
+            for i in range(tree.topLevelItemCount()):
+                root = tree.topLevelItem(i)
+                for child_index in range(root.childCount()):
+                    child = root.child(child_index)
+                    if search_text in child.text(0):
+                        child.setHidden(False)
+                    else:
+                        child.setHidden(True)
+
+    def reset(self):
+        """清零前提列表"""
+        self.search_text.setText("")
+        for tree in self.tree_list:
+            for root_index in range(tree.topLevelItemCount()):
+                root = tree.topLevelItem(root_index)
+                for child_index in range(root.childCount()):
+                    child = root.child(child_index)
+                    child.setHidden(False)
