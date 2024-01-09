@@ -156,11 +156,22 @@ def handle_talk_draw(character_id: int, now_talk_data: dict):
         talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         now_talk = game_config.config_talk[now_talk_id].context
+        unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
     if now_talk != "":
         now_talk_text = code_text_to_draw_text(now_talk, character_id)
         now_draw = draw.LineFeedWaitDraw()
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
+        if unusual_talk_flag:
+            # 口上文本的，角色文本颜色
+            character_data: game_type.Character = cache.character_data[character_id]
+            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            text_color = character_data.text_color
+            tar_text_color = target_character_data.text_color
+            if text_color:
+                now_draw.style = character_data.name
+            elif tar_text_color:
+                now_draw.style = target_character_data.name
         now_draw.draw()
 
 

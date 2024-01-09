@@ -1,6 +1,4 @@
 import random
-import math
-import numpy
 import datetime
 from Script.Core import (
     cache_control,
@@ -17,7 +15,7 @@ from Script.Design import (
     basement,
     game_time
 )
-from Script.Config import game_config, normal_config, character_config
+from Script.Config import game_config, config_def, character_config
 
 
 cache: game_type.Cache = cache_control.cache
@@ -88,6 +86,16 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     pl_character_data.pl_collection.first_panties[character_id] = ""
     pl_character_data.pl_collection.npc_panties[character_id] = []
     pl_character_data.pl_collection.npc_socks[character_id] = []
+    # 文本颜色
+    if character_tem.TextColor:
+        now_character.text_color = character_tem.TextColor
+        # 用同Script\Config\game_config.py\load_font_data的方式赋予到config_font
+        tem_data = {'cid':1000 + character_id,'name':now_character.name,'foreground':now_character.text_color, 'info': now_character.name + '的文本颜色'}
+        # print(f"debug tem_data = {tem_data}")
+        now_font = config_def.FontConfig()
+        now_font.__dict__ = tem_data
+        game_config.config_font[now_font.cid] = now_font
+        game_config.config_font_data[now_font.name] = now_font.cid
     # 赋予口上大小
     now_character.talk_size = character_tem.Talk_Size
     # 最后集成

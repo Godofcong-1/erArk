@@ -2,7 +2,7 @@ import random
 from functools import wraps
 from typing import List
 from types import FunctionType
-from Script.Core import get_text, constant, game_type, cache_control, flow_handle, py_cmd
+from Script.Core import get_text, constant, game_type, cache_control, flow_handle, py_cmd, io_init
 
 from Script.Design import (
     handle_panel,
@@ -42,6 +42,7 @@ def creator_character_panel():
             cache.rhodes_island = basement.get_base_zero()
             first_bonus_and_setting_updata()
             character_handle.first_NPC_work()
+            io_init.init_style() # 刷新NPC的文本字体颜色
             if confirm_character_attr_panel():
                 game_start()
                 break
@@ -719,7 +720,11 @@ class SelectFirstNPCButton:
                 button_text += f"(自选)"
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
-            name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+            # 如果有口上颜色的话，输出颜色
+            if target_data.text_color:
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style=target_data.name, cmd_func=self.button_0)
+            else:
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
 
         # 按钮绘制
         # self.button_return = NPC_id

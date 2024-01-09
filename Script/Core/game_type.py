@@ -88,6 +88,8 @@ class NpcTem:
         """ 信物预设 """
         self.Talk_Size: int = 0
         """ 口上大小 """
+        self.TextColor: str = ""
+        """ 文本颜色 """
 
 
 # class Measurements:
@@ -925,6 +927,8 @@ class Character:
         """ 角色之前的状态 """
         self.talk_size: int = 0
         """ 角色口上大小，单位kb """
+        self.text_color: str = ""
+        """ 角色对话文本颜色 """
         # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
         # """
         # 角色拥有的服装数据
