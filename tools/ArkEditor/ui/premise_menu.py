@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QTextEdit,
     QVBoxLayout,
+    QMenu
 )
 from PySide6.QtGui import QFont, Qt
 import cache_control
@@ -21,7 +22,6 @@ class TreeItem(QTreeWidgetItem):
         super(TreeItem, self).__init__(any)
         self.cid = ""
         """ 对象配表id """
-
 
 class PremiseMenu(QDialog):
     """前提选择对象"""
@@ -67,7 +67,42 @@ class PremiseMenu(QDialog):
             index += 1
             tree.setSelectionMode(QAbstractItemView.SingleSelection)
             tree.setSelectionBehavior(QAbstractItemView.SelectRows)
+            tree.setWordWrap(True)  # 设置 wordWrap 属性为 True
+            tree.adjustSize()
+            # 设置列的宽度为一个固定的值
+            tree.setColumnWidth(0, 2000)
+
             root_list = []
+            # 在index==2的时候，单独增加一个自定义前提群的type
+            if index == 2:
+                now_root = QTreeWidgetItem(tree)
+                now_root.setText(0, "自定义前提群")
+                premise_group_list = list(cache_control.premise_group_data.keys())
+                premise_group_list.sort()
+                for premise_group in premise_group_list:
+                    premise_group_node = TreeItem(now_root)
+                    premise_group_node.cid = premise_group
+                    # 根据前提群的cid，获取前提群的所有前提cid，然后把名字拼接成一个字符串
+                    now_premise_group_list = cache_control.premise_group_data[premise_group]
+                    now_premise_group_all_name = ""
+                    for premise_cid in now_premise_group_list:
+                        now_premise_group_all_name += cache_control.premise_data[premise_cid]
+                        if premise_cid != now_premise_group_list[-1]:
+                            now_premise_group_all_name += "&"
+                    premise_group_node.setText(0, now_premise_group_all_name)
+                    premise_group_node.setToolTip(0,premise_group_node.text(0))
+                    if cache_control.now_edit_type_flag == 1:
+                        if premise_group in cache_control.now_event_data[cache_control.now_select_id].premise:
+                            premise_group_node.setCheckState(0, Qt.Checked)
+                        else:
+                            premise_group_node.setCheckState(0, Qt.Unchecked)
+                    else:
+                        if premise_group in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                            premise_group_node.setCheckState(0, Qt.Checked)
+                        else:
+                            premise_group_node.setCheckState(0, Qt.Unchecked)
+                root_list.append(now_root)
+            # 正常的前提type
             for now_type in type_list:
                 now_root = QTreeWidgetItem(tree)
                 now_root.setText(0, now_type)
@@ -97,6 +132,34 @@ class PremiseMenu(QDialog):
         self.layout.addLayout(self.tree_layout)
         self.setLayout(self.layout)
 
+    def update_premise(self, item, data):
+        """
+        删除前提
+        Keyword arguments:
+        item -- 删除的对象
+        data -- 当前事件数据
+        """
+        if item.cid in cache_control.premise_group_data:
+            for premise_cid in cache_control.premise_group_data[item.cid]:
+                if premise_cid in data.premise:
+                    del data.premise[premise_cid]
+        else:
+            if item.cid in data.premise:
+                del data.premise[item.cid]
+
+    def add_premise(self, item, data):
+        """
+        添加前提
+        Keyword arguments:
+        item -- 添加的对象
+        data -- 当前事件数据
+        """
+        if item.cid in cache_control.premise_group_data:
+            for premise_cid in cache_control.premise_group_data[item.cid]:
+                data.premise[premise_cid] = 1
+        else:
+            data.premise[item.cid] = 1
+
     def click_item(self, item: TreeItem, column: int):
         """
         点击选项时勾选选框并更新事件前提
@@ -106,20 +169,19 @@ class PremiseMenu(QDialog):
         """
         if "cid" not in item.__dict__:
             return
+
+        if cache_control.now_edit_type_flag == 1:
+            data = cache_control.now_event_data[cache_control.now_select_id]
+        else:
+            data = cache_control.now_talk_data[cache_control.now_select_id]
+
         if item.checkState(column) == Qt.Checked:
             item.setCheckState(0, Qt.Unchecked)
-            if cache_control.now_edit_type_flag == 1:
-                if item.cid in cache_control.now_event_data[cache_control.now_select_id].premise:
-                    del cache_control.now_event_data[cache_control.now_select_id].premise[item.cid]
-            else:
-                if item.cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
-                    del cache_control.now_talk_data[cache_control.now_select_id].premise[item.cid]
+            self.update_premise(item, data)
         else:
             item.setCheckState(0, Qt.Checked)
-            if cache_control.now_edit_type_flag == 1:
-                cache_control.now_event_data[cache_control.now_select_id].premise[item.cid] = 1
-            else:
-                cache_control.now_talk_data[cache_control.now_select_id].premise[item.cid] = 1
+            self.add_premise(item, data)
+
         cache_control.item_premise_list.update()
 
     def search(self):
@@ -146,6 +208,36 @@ class PremiseMenu(QDialog):
                 for child_index in range(root.childCount()):
                     child = root.child(child_index)
                     child.setHidden(False)
+
+
+    # def contextMenuEvent(self, event):
+    #     """右键菜单"""
+    #     menu = QMenu(self)
+    #     delete_action = menu.addAction("删除")
+    #     # 获取鼠标右键点击的项
+    #     item = event.pos()
+    #     # 将获取到的项传递给 delete_group 方法
+    #     delete_action.triggered.connect(lambda: self.delete_group(item))
+    #     menu.exec_(event.globalPos())
+
+    def delete_group(self, item):
+        """删除前提组"""
+        # 找到前提群cid
+        premise_group_cid = ""
+        print(f"debug premise_group_cid: {premise_group_cid}")
+        # 根据cid在cache_control.premise_group_data中删掉该前提群
+        if premise_group_cid in cache_control.premise_group_data:
+            del cache_control.premise_group_data[premise_group_cid]
+        # 在文件中删除该前提群
+        # with open(cache_control.now_file_path, "r", encoding="utf-8") as now_file:
+        #     now_read = now_file.readlines()
+        # with open(cache_control.now_file_path, "w", encoding="utf-8") as now_file:
+        #     for line in now_read:
+        #         if premise_group_cid in line:
+        #             continue
+        #         now_file.write(line)
+        # 更新前提列表
+        self.update()
 
 
 class CVPMenu(QDialog):

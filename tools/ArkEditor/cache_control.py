@@ -18,6 +18,8 @@ premise_data: dict = {}
 """ 前提数据 """
 premise_type_data: Dict[str, Set] = {}
 """ 前提类型数据 """
+premise_group_data: Dict[str, List] = {}
+""" 前提组数据 """
 status_data: dict = {}
 """ 当前状态数据 """
 status_type_data: Dict[str, List] = {}

@@ -31,6 +31,9 @@ class ItemPremiseList(QWidget):
         reset_button = QPushButton("整体清零")
         reset_button.clicked.connect(self.reset)
         button_layout.addWidget(reset_button)
+        add_group_button = QPushButton("将当前的所有前提设为新前提组")
+        add_group_button.clicked.connect(self.add_group)
+        button_layout.addWidget(add_group_button)
         title_layout.addLayout(button_layout)
         main_layout.addLayout(title_layout)
         # 文字说明
@@ -122,3 +125,27 @@ class ItemPremiseList(QWidget):
                 else:
                     if premise_cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
                         del cache_control.now_talk_data[cache_control.now_select_id].premise[premise_cid]
+
+    def add_group(self):
+        """将当前的所有前提设为新前提组"""
+        # 获得新的前提组cid
+        new_cid_int = 1
+        new_cid = f"g_{new_cid_int}"
+        while new_cid in cache_control.premise_group_data:
+            new_cid_int += 1
+            new_cid = f"g_{new_cid_int}"
+        # 获得当前所有前提
+        premise_list = []
+        if cache_control.now_edit_type_flag == 1:
+            premise_list = list(cache_control.now_event_data[cache_control.now_select_id].premise.keys())
+        else:
+            premise_list = list(cache_control.now_talk_data[cache_control.now_select_id].premise.keys())
+        premise_list.sort()
+        # 添加前提组
+        cache_control.premise_group_data[new_cid] = premise_list
+        # 保存前提组到文件
+        with open("PremiseGroup.csv", "a", encoding="utf-8") as now_file:
+            now_file.write(f"{new_cid},{'&'.join(premise_list)}\n")
+        # 更新前提列表
+        self.update()
+

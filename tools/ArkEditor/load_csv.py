@@ -3,6 +3,7 @@ import csv
 import cache_control
 
 premise_path = "Premise.csv"
+premise_group_path = "PremiseGroup.csv"
 status_path = "Status.csv"
 effect_path = "Effect.csv"
 ability_path = "Ability.csv"
@@ -20,6 +21,13 @@ def load_config():
             cache_control.premise_data[i["cid"]] = i["premise"]
             cache_control.premise_type_data.setdefault(i["premise_type"], set())
             cache_control.premise_type_data[i["premise_type"]].add(i["cid"])
+    with open(premise_group_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        for i in now_read:
+            if "&" in i["premise_cid"]:
+                promise_list = i["premise_cid"].split("&")
+                if len(promise_list) > 1:
+                    cache_control.premise_group_data[i["cid"]] = promise_list
     with open(status_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         for i in now_read:
