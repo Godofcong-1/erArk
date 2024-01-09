@@ -213,7 +213,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                     now_text += _("\n  对{character_name}{character_nick_name}信赖").format(
                         character_name=now_character_data.name,
                         character_nick_name=now_character_data.nick_name
-                    ) + text_handle.number_to_symbol_string(float(target_change.trust)) + "%"
+                    ) + text_handle.number_to_symbol_string(float(format(target_change.trust, '.1f'))) + "%"
                     judge = 1
                 if target_change.hypnosis_degree:
                     now_text += _("\n  催眠度") + text_handle.number_to_symbol_string(int(target_change.hypnosis_degree))
