@@ -4000,7 +4000,7 @@ def handle_official_work_add_adjust(
         return
     if target_data.dead:
         return
-    now_draw_text = "\n  "
+    now_draw_text = ""
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
     # 如果有交互对象，则算上对方的学识加成
@@ -4009,8 +4009,8 @@ def handle_official_work_add_adjust(
         adjust += adjust_target
         now_draw_text += _(f"在{target_data.name}的帮助下，")
     # 处理工作
-    finish_work = int(add_time * adjust * 100)
-    cache.rhodes_island.office_work = max(cache.rhodes_island.office_work - finish_work, 0)
+    finish_work = int(add_time * adjust * 5)
+    cache.rhodes_island.office_work = int(max(cache.rhodes_island.office_work - finish_work, 0))
     # 输出处理结果
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
@@ -4018,7 +4018,7 @@ def handle_official_work_add_adjust(
         if cache.rhodes_island.office_work > 0:
             now_draw_text += _(f"还有{cache.rhodes_island.office_work}需要处理\n")
         else:
-            now_draw_text += _(f"已经全部处理完毕\n")
+            now_draw_text += _(f"已经全部处理完毕\n\n")
         now_draw.text = now_draw_text
         now_draw.width = width
         now_draw.draw()

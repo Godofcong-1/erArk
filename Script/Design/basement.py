@@ -62,7 +62,7 @@ def get_base_zero() -> dict:
     base_data.invite_visitor = [0,0,0]
 
     # 初始化公务工作
-    base_data.office_work += 2000
+    base_data.office_work += 200
     base_data.effectiveness = 100
 
     return base_data
@@ -347,6 +347,8 @@ def settle_assembly_line(newdayflag = False):
                 max_time = cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
             # 生产效率
             produce_effect = cache.rhodes_island.assembly_line[assembly_line_id][2]
+            # 公务的总效率
+            produce_effect *= cache.rhodes_island.effectiveness / 100
             # 计算最大生产数
             produce_num_max = int(max_time * produce_effect / 100)
             produce_num = produce_num_max
@@ -643,10 +645,10 @@ def settle_office_work():
     # 遍历全设施，获取等级的和
     for facility_cid in cache.rhodes_island.facility_level:
         all_facility_level += cache.rhodes_island.facility_level[facility_cid]
-    # 总工作量为设施等级和*100
-    all_work = all_facility_level * 100
+    # 总工作量为设施等级和*10
+    all_work = all_facility_level * 10
     # 根据当前剩余工作量和总工作量的比例，计算效率
-    effectiveness_change = (all_work / 2) - now_work / all_work * 100
+    effectiveness_change = ((all_work / 2) - now_work) / all_work * 100
     if effectiveness_change > 0:
         effectiveness_change *= 2
     cache.rhodes_island.effectiveness = 100 + effectiveness_change
@@ -663,7 +665,7 @@ def settle_office_work():
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = f"\n今日剩余待处理公务量为{now_work}，因此今日罗德岛总效率为{cache.rhodes_island.effectiveness}%\n"
+    now_draw.text = f"\n今日剩余待处理公务量为{now_work}，因此今日罗德岛的各设施的总效率为{cache.rhodes_island.effectiveness}%\n"
     now_draw.draw()
 
 
@@ -673,9 +675,9 @@ def settle_income():
     """
 
     # 计算医疗部收入
-    today_cure_income = cache.rhodes_island.cure_income
+    today_cure_income = int(cache.rhodes_island.cure_income)
     # 计算总收入
-    today_all_income = today_cure_income* cache.rhodes_island.effectiveness / 100
+    today_all_income = int(today_cure_income * cache.rhodes_island.effectiveness / 100)
     # 转化为龙门币
     cache.rhodes_island.materials_resouce[1] += today_all_income
 
@@ -688,5 +690,5 @@ def settle_income():
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income} * {cache.rhodes_island.effectiveness}% = {today_all_income}，已全部转化为【龙门币】\n"
+    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income} = {today_all_income}，已全部转化为龙门币\n"
     now_draw.draw()
