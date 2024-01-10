@@ -61,6 +61,10 @@ def get_base_zero() -> dict:
     base_data.assembly_line[0] = [0,set(),0,0,0]
     base_data.invite_visitor = [0,0,0]
 
+    # 初始化公务工作
+    base_data.office_work += 2000
+    base_data.effectiveness = 100
+
     return base_data
 
 def get_base_updata():
@@ -183,6 +187,8 @@ def update_base_resouce_newday():
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
 
+    # 结算公务工作
+    settle_office_work()
     # 结算精液转化
     settle_semen()
     # 结算母乳转化
@@ -191,16 +197,8 @@ def update_base_resouce_newday():
     settle_assembly_line(newdayflag=True)
     # 结算访客抵达和离开
     settle_visitor_arrivals_and_departures()
-
-    # 输出收入合计
-    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{cache.rhodes_island.cure_income} = {cache.rhodes_island.all_income}\n"
-    now_draw.draw()
-
-    # 刷新新病人数量，已治愈病人数量和治疗收入归零
-    cache.rhodes_island.patient_now = random.randint(cache.rhodes_island.patient_max / 2,cache.rhodes_island.patient_max)
-    cache.rhodes_island.patient_cured = 0
-    cache.rhodes_island.cure_income = 0
-    cache.rhodes_island.all_income = 0
+    # 结算收入
+    settle_income()
 
     # 输出好感度合计与粉红凭证增加
     pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
@@ -633,3 +631,62 @@ def settle_semen():
         now_draw.width = window_width
         now_draw.text = f"\n今日共射出{today_semen}ml精液，已全部转化为【矿石病药材】\n"
         now_draw.draw()
+
+
+def settle_office_work():
+    """
+    结算公务
+    """
+
+    now_work = cache.rhodes_island.office_work
+    all_facility_level = 0
+    # 遍历全设施，获取等级的和
+    for facility_cid in cache.rhodes_island.facility_level:
+        all_facility_level += cache.rhodes_island.facility_level[facility_cid]
+    # 总工作量为设施等级和*100
+    all_work = all_facility_level * 100
+    # 根据当前剩余工作量和总工作量的比例，计算效率
+    effectiveness_change = (all_work / 2) - now_work / all_work * 100
+    if effectiveness_change > 0:
+        effectiveness_change *= 2
+    cache.rhodes_island.effectiveness = 100 + effectiveness_change
+    # 效率不会小于50，也不会大于200
+    cache.rhodes_island.effectiveness = min(cache.rhodes_island.effectiveness,200)
+    cache.rhodes_island.effectiveness = max(cache.rhodes_island.effectiveness,50)
+    # 取0.3~0.7的随机数，作为新增的工作量
+    add_work = random.randint(30,70) / 100 * all_work
+    # 把新增的工作量加入当前剩余工作量
+    cache.rhodes_island.office_work += add_work
+    # 工作量不会小于0，也不会大于总工作量
+    cache.rhodes_island.office_work = min(cache.rhodes_island.office_work,all_work)
+    cache.rhodes_island.office_work = max(cache.rhodes_island.office_work,0)
+    # 输出提示信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = f"\n今日剩余待处理公务量为{now_work}，因此今日罗德岛总效率为{cache.rhodes_island.effectiveness}%\n"
+    now_draw.draw()
+
+
+def settle_income():
+    """
+    结算收入
+    """
+
+    # 计算医疗部收入
+    today_cure_income = cache.rhodes_island.cure_income
+    # 计算总收入
+    today_all_income = today_cure_income* cache.rhodes_island.effectiveness / 100
+    # 转化为龙门币
+    cache.rhodes_island.materials_resouce[1] += today_all_income
+
+    # 刷新新病人数量，已治愈病人数量和治疗收入归零
+    cache.rhodes_island.patient_now = random.randint(cache.rhodes_island.patient_max / 2,cache.rhodes_island.patient_max)
+    cache.rhodes_island.patient_cured = 0
+    cache.rhodes_island.cure_income = 0
+    cache.rhodes_island.all_income = 0
+
+    # 输出提示信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income} * {cache.rhodes_island.effectiveness}% = {today_all_income}，已全部转化为【龙门币】\n"
+    now_draw.draw()

@@ -2033,6 +2033,7 @@ def handle_onsen_bath():
     _("处理公务"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
+     constant_promise.Premise.HAVE_OFFICE_WORK_NEED_TO_DO,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_official_work():

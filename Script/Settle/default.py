@@ -3976,15 +3976,15 @@ def handle_target_coffee_add_adjust(
         target_change.status_data[11] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
-def handle_knowledge_add_pink_money(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_WORK_ADD_ADJUST)
+def handle_official_work_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    根据自己（再加上交互对象的）学识获得少量粉色凭证
+    （处理公务用）根据自己（如果有的话再加上交互对象）的学识处理当前的剩余工作量
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4000,21 +4000,28 @@ def handle_knowledge_add_pink_money(
         return
     if target_data.dead:
         return
+    now_draw_text = "\n  "
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
-    # 获得粉色凭证 #
-    now_add_lust = add_time * adjust
-    now_add_lust = int(now_add_lust)
-
     # 如果有交互对象，则算上对方的学识加成
     if character_data.target_character_id != 0:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
-        now_add_lust += int(add_time * adjust_target)
-    cache.rhodes_island.materials_resouce[4] += now_add_lust
-    now_draw = draw.NormalDraw()
-    now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
-    now_draw.width = width
-    now_draw.draw()
+        adjust += adjust_target
+        now_draw_text += _(f"在{target_data.name}的帮助下，")
+    # 处理工作
+    finish_work = int(add_time * adjust * 100)
+    cache.rhodes_island.office_work = max(cache.rhodes_island.office_work - finish_work, 0)
+    # 输出处理结果
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw_text += f"共处理了{finish_work}公务，"
+        if cache.rhodes_island.office_work > 0:
+            now_draw_text += _(f"还有{cache.rhodes_island.office_work}需要处理\n")
+        else:
+            now_draw_text += _(f"已经全部处理完毕\n")
+        now_draw.text = now_draw_text
+        now_draw.width = width
+        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
@@ -4051,9 +4058,7 @@ def handle_cure_patient_add_just(
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
         now_add_lust += int(add_time * adjust_target)
-    cache.rhodes_island.materials_resouce[1] += now_add_lust
     cache.rhodes_island.cure_income += now_add_lust
-    cache.rhodes_island.all_income += now_add_lust
     cache.rhodes_island.patient_now -= 1
     cache.rhodes_island.patient_cured += 1
 

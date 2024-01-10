@@ -742,10 +742,6 @@ class Rhodes_Island:
         """ 基地当前所有待开放设施的开放情况 """
         self.all_work_npc_set: Dict[int, Tuple[set]] = {}
         """ 所有工作的所属的干员id合集,工作id:干员id的集合 """
-        self.power_use: int = 0
-        """ 当前使用电力 """
-        self.power_max: int = 0
-        """ 总可用电力 """
         self.work_people_now: int = 0
         """ 当前工作干员人数 """
         self.people_max: int = 0
@@ -755,17 +751,27 @@ class Rhodes_Island:
         self.party_day_of_week: Dict[int, Tuple[int]] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
 
+        # 控制中枢
         self.current_location: List[int] = []
         """ 基地当前所在位置，[0国家id,1城市id] """
+        self.office_work: int = 0
+        """ 需要处理的公务 """
+        self.effectiveness: int = 0
+        """ 基地效率 """
 
-        self.life_zone_max: int = 0
-        """ 生活娱乐区设施数量上限 """
+        # 动力区
+        self.power_use: int = 0
+        """ 当前使用电力 """
+        self.power_max: int = 0
+        """ 总可用电力 """
 
         # 工程部
         self.maintenance_place: Dict[int, Tuple[str]] = {}
         """ 当前每个角色的待检修地点，角色id:地点 """
 
         # 生活娱乐区
+        self.life_zone_max: int = 0
+        """ 生活娱乐区设施数量上限 """
         self.milk_in_fridge: Dict[int, Tuple[int]] = {}
         """ 冰箱里每个干员的当日母乳存量，干员id:母乳ml存量 """
 

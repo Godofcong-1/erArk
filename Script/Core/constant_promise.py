@@ -1918,6 +1918,8 @@ class Premise:
     """ 经营 有患者正等待就诊 """
     NEW_NPC_WAIT = "new_npc_wait"
     """ 经营 有已招募待确认的干员 """
+    HAVE_OFFICE_WORK_NEED_TO_DO = "have_office_work_need_to_do"
+    """ 经营 有需要处理的公务 """
 
     PL_ACTION_SLEEP = "pl_action_sleep"
     """ 行动 玩家正在睡觉 """

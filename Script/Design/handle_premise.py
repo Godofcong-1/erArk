@@ -7284,6 +7284,20 @@ def handle_new_npc_wait(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.HAVE_OFFICE_WORK_NEED_TO_DO)
+def handle_have_office_work_need_to_do(character_id: int) -> int:
+    """
+    有需要处理的公务
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.office_work > 0:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FLAG_BABY_EXIST)
 def handle_flag_baby_exist(character_id: int) -> int:
     """
