@@ -72,6 +72,23 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
     return decorator
 
 
+def instruct_filter_H_change(on_off_flag: bool):
+    """
+    指令类型过滤器进出H变更
+    Keyword arguments:
+    on_off_flag -- true:进入H false:退出H
+    """
+    if on_off_flag:
+        cache.instruct_type_filter_cache = cache.instruct_type_filter.copy()
+        # 自动开启性爱面板并关闭其他面板
+        cache.instruct_type_filter[6] = 1
+        for i in {1, 2, 3, 4, 5}:
+            cache.instruct_type_filter[i] = 0
+
+    else:
+        cache.instruct_type_filter = cache.instruct_type_filter_cache.copy()
+
+
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),
               {constant_promise.Premise.NOT_H,
                constant_promise.Premise.HP_OR_MP_LOW,
@@ -451,8 +468,32 @@ def handle_hypnosis_one():
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ONE
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ONE
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_ALL,
+    constant.InstructType.ARTS,
+    _("集体催眠"),
+    {constant_promise.Premise.ADVANCED_HYPNOSIS,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.SCENE_OVER_TWO,
+     constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_all():
+    """处理集体催眠"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ALL
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ALL
+    character_data.behavior.duration = 30
+    update.game_update_flow(30)
 
 
 @add_instruct(
@@ -1400,10 +1441,7 @@ def handle_do_h():
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
 
-        # 自动开启性爱面板并关闭其他面板
-        cache.instruct_type_filter[5] = 1
-        for i in {1, 2, 3, 4}:
-            cache.instruct_type_filter[i] = 0
+        instruct_filter_H_change(True)
 
     else:
         character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
@@ -1493,10 +1531,7 @@ def handle_unconscious_h():
     now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
 
-    # 自动开启性爱面板并关闭其他面板
-    cache.instruct_type_filter[5] = 1
-    for i in {1, 2, 3, 4}:
-        cache.instruct_type_filter[i] = 0
+    instruct_filter_H_change(True)
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1518,10 +1553,7 @@ def handle_end_h():
         character_data.behavior.behavior_id = constant.Behavior.END_H
         character_data.state = constant.CharacterStatus.STATUS_END_H
 
-    # 自动关闭性爱面板并开启其他面板
-    cache.instruct_type_filter[5] = 0
-    for i in {1, 2, 3, 4}:
-        cache.instruct_type_filter[i] = 1
+    instruct_filter_H_change(False)
 
     # H结束时的其他处理
     if target_data.sp_flag.is_h == 1:
@@ -2052,6 +2084,7 @@ def handle_official_work():
     _("指挥作战（未实装）"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_COMMAND_ROOM,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_battle_command():
