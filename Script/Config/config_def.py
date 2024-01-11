@@ -349,6 +349,21 @@ class Food_Quality:
     """ 料理技能上限 """
 
 
+class Hypnosis_Talent_Of_Npc:
+    """ 干员获得被催眠素质 """
+
+    cid: int
+    """ cid """
+    hypnosis_talent_id: int
+    """ 该素质id """
+    hypnosis_degree: int
+    """ 催眠深度 """
+    need_talent_id: int
+    """ 前置素质id """
+    second_behavior_id: int
+    """ 二段行为id """
+
+
 class Hypnosis_Type:
     """ 催眠类型 """
 

@@ -241,6 +241,8 @@ config_world_setting: Dict[int, config_def.World_Setting] = {}
 """ 世界设定 """
 config_hypnosis_type: Dict[int, config_def.Hypnosis_Type] = {}
 """ 催眠类型 """
+config_hypnosis_talent_of_npc: Dict[int, config_def.Hypnosis_Talent_Of_Npc] = {}
+""" 干员获得被催眠素质 """
 config_talent_of_arts: Dict[int, config_def.Talent_Of_Arts] = {}
 """ 源石技艺素质 """
 
@@ -1025,6 +1027,16 @@ def load_hypnosis_type():
         config_hypnosis_type[now_tem.cid] = now_tem
 
 
+def load_hypnosis_talent_of_npc():
+    """载入催眠npc素质"""
+    now_data = config_data["Hypnosis_Talent_Of_Npc"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Talent_Of_Npc()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_talent_of_npc[now_tem.cid] = now_tem
+
+
 def load_talent_of_arts():
     """载入源石技艺素质"""
     now_data = config_data["Talent_Of_Arts"]
@@ -1200,4 +1212,5 @@ def init():
     load_recruitment_strategy()
     load_world_setting()
     load_hypnosis_type()
+    load_hypnosis_talent_of_npc()
     load_talent_of_arts()

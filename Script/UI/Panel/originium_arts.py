@@ -314,7 +314,8 @@ class Originium_Arts_Panel:
             info_text = ""
             # 催眠系
             if ability_type == 3:
-                info_text = f"\n催眠系能力（在进行催眠时消耗理智）：\n"
+                info_text += f"\n○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n"
+                info_text += f"\n催眠系能力：\n"
                 # 催眠能力
                 info_draw.text = _(info_text)
                 info_draw.draw()
