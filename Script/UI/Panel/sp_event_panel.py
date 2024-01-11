@@ -126,8 +126,8 @@ class Born_Panel:
             draw_text += f"\n{mom_character_data.name}从[临盆]转变为[产后]\n"
             mom_character_data.talent[26] = 0
             draw_text += f"\n{mom_character_data.name}失去了[孕肚]\n"
-            mom_character_data.experience[55] += 10
-            mom_character_data.experience[58] += 10
+            mom_character_data.experience[65] += 10
+            mom_character_data.experience[68] += 10
             mom_character_data.experience[86] += 1
             draw_text += f"\n{mom_character_data.name}的Ｖ扩张经验+10，Ｗ扩张经验+10，妊娠经验+1\n"
             if mom_character_data.ability[9] < 5:

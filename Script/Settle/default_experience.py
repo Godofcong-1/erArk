@@ -1172,12 +1172,12 @@ def handle_target_add_1_masterbate_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(46, 0)
-    target_data.experience[46] += 1
+    target_data.experience.setdefault(54, 0)
+    target_data.experience[54] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(46, 0)
-    target_change.experience[46] += 1
+    target_change.experience.setdefault(54, 0)
+    target_change.experience[54] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_bdsmMasterbate_EXPERIENCE)
@@ -1203,12 +1203,12 @@ def handle_target_add_1_bdsmmasterbate_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(47, 0)
-    target_data.experience[47] += 1
+    target_data.experience.setdefault(55, 0)
+    target_data.experience[55] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(47, 0)
-    target_change.experience[47] += 1
+    target_change.experience.setdefault(55, 0)
+    target_change.experience[55] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Toys_EXPERIENCE)
@@ -1234,12 +1234,12 @@ def handle_target_add_1_toys_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(48, 0)
-    target_data.experience[48] += 1
+    target_data.experience.setdefault(51, 0)
+    target_data.experience[51] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(48, 0)
-    target_change.experience[48] += 1
+    target_change.experience.setdefault(51, 0)
+    target_change.experience[51] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Tiedup_EXPERIENCE)
@@ -1265,12 +1265,12 @@ def handle_target_add_1_tiedup_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(49, 0)
-    target_data.experience[49] += 1
+    target_data.experience.setdefault(52, 0)
+    target_data.experience[52] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(49, 0)
-    target_change.experience[49] += 1
+    target_change.experience.setdefault(52, 0)
+    target_change.experience[52] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Insert_EXPERIENCE)
@@ -1296,12 +1296,12 @@ def handle_target_add_1_insert_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(50, 0)
-    target_data.experience[50] += 1
+    target_data.experience.setdefault(60, 0)
+    target_data.experience[60] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(50, 0)
-    target_change.experience[50] += 1
+    target_change.experience.setdefault(60, 0)
+    target_change.experience[60] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexV_EXPERIENCE)
@@ -1327,12 +1327,12 @@ def handle_target_add_1_sexv_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(51, 0)
-    target_data.experience[51] += 1
+    target_data.experience.setdefault(61, 0)
+    target_data.experience[61] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(51, 0)
-    target_change.experience[51] += 1
+    target_change.experience.setdefault(61, 0)
+    target_change.experience[61] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexA_EXPERIENCE)
@@ -1358,12 +1358,12 @@ def handle_target_add_1_sexa_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(52, 0)
-    target_data.experience[52] += 1
+    target_data.experience.setdefault(62, 0)
+    target_data.experience[62] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(52, 0)
-    target_change.experience[52] += 1
+    target_change.experience.setdefault(62, 0)
+    target_change.experience[62] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexU_EXPERIENCE)
@@ -1389,12 +1389,12 @@ def handle_target_add_1_sexu_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(53, 0)
-    target_data.experience[53] += 1
+    target_data.experience.setdefault(63, 0)
+    target_data.experience[63] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(53, 0)
-    target_change.experience[53] += 1
+    target_change.experience.setdefault(63, 0)
+    target_change.experience[63] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexW_EXPERIENCE)
@@ -1420,12 +1420,12 @@ def handle_target_add_1_sexw_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(54, 0)
-    target_data.experience[54] += 1
+    target_data.experience.setdefault(64, 0)
+    target_data.experience[64] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(54, 0)
-    target_change.experience[54] += 1
+    target_change.experience.setdefault(64, 0)
+    target_change.experience[64] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandV_EXPERIENCE)
@@ -1451,12 +1451,12 @@ def handle_target_add_1_expandv_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(55, 0)
-    target_data.experience[55] += 1
+    target_data.experience.setdefault(65, 0)
+    target_data.experience[65] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(55, 0)
-    target_change.experience[55] += 1
+    target_change.experience.setdefault(65, 0)
+    target_change.experience[65] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandA_EXPERIENCE)
@@ -1482,12 +1482,12 @@ def handle_target_add_1_expanda_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(56, 0)
-    target_data.experience[56] += 1
+    target_data.experience.setdefault(66, 0)
+    target_data.experience[66] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(56, 0)
-    target_change.experience[56] += 1
+    target_change.experience.setdefault(66, 0)
+    target_change.experience[66] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandU_EXPERIENCE)
@@ -1513,12 +1513,12 @@ def handle_target_add_1_expandu_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(57, 0)
-    target_data.experience[57] += 1
+    target_data.experience.setdefault(67, 0)
+    target_data.experience[67] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(57, 0)
-    target_change.experience[57] += 1
+    target_change.experience.setdefault(67, 0)
+    target_change.experience[67] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandW_EXPERIENCE)
@@ -1544,12 +1544,12 @@ def handle_target_add_1_expandw_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(58, 0)
-    target_data.experience[58] += 1
+    target_data.experience.setdefault(68, 0)
+    target_data.experience[68] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(58, 0)
-    target_change.experience[58] += 1
+    target_change.experience.setdefault(68, 0)
+    target_change.experience[68] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_TWRape_EXPERIENCE)
@@ -1575,12 +1575,12 @@ def handle_target_add_1_twrape_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(59, 0)
-    target_data.experience[59] += 1
+    target_data.experience.setdefault(124, 0)
+    target_data.experience[124] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(59, 0)
-    target_change.experience[59] += 1
+    target_change.experience.setdefault(124, 0)
+    target_change.experience[124] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_SlumberRape_EXPERIENCE)
@@ -1606,12 +1606,12 @@ def handle_target_add_1_slumberrape_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(60, 0)
-    target_data.experience[60] += 1
+    target_data.experience.setdefault(120, 0)
+    target_data.experience[120] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(60, 0)
-    target_change.experience[60] += 1
+    target_change.experience.setdefault(120, 0)
+    target_change.experience[120] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Abnormal_EXPERIENCE)
@@ -1637,12 +1637,12 @@ def handle_target_add_1_abnormal_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(61, 0)
-    target_data.experience[61] += 1
+    target_data.experience.setdefault(50, 0)
+    target_data.experience[50] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(61, 0)
-    target_change.experience[61] += 1
+    target_change.experience.setdefault(50, 0)
+    target_change.experience[50] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Axillajob_EXPERIENCE)
@@ -1668,12 +1668,12 @@ def handle_target_add_1_axillajob_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(62, 0)
-    target_data.experience[62] += 1
+    target_data.experience.setdefault(46, 0)
+    target_data.experience[46] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(62, 0)
-    target_change.experience[62] += 1
+    target_change.experience.setdefault(46, 0)
+    target_change.experience[46] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Enema_EXPERIENCE)
@@ -1699,12 +1699,12 @@ def handle_target_add_1_enema_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(63, 0)
-    target_data.experience[63] += 1
+    target_data.experience.setdefault(53, 0)
+    target_data.experience[53] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(63, 0)
-    target_change.experience[63] += 1
+    target_change.experience.setdefault(53, 0)
+    target_change.experience[53] += 1
 
 
 """
@@ -2882,9 +2882,9 @@ def handle_add_1_insert_experience(
     if character_data.dead:
         return
     character_data.experience.setdefault(50, 0)
-    character_data.experience[50] += 1
+    character_data.experience[60] += 1
     change_data.experience.setdefault(50, 0)
-    change_data.experience[50] += 1
+    change_data.experience[60] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Command_EXPERIENCE)
