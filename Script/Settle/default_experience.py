@@ -2881,9 +2881,9 @@ def handle_add_1_insert_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(50, 0)
+    character_data.experience.setdefault(60, 0)
     character_data.experience[60] += 1
-    change_data.experience.setdefault(50, 0)
+    change_data.experience.setdefault(60, 0)
     change_data.experience[60] += 1
 
 
