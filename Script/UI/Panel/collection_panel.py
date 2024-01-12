@@ -108,7 +108,7 @@ class Collection_Panel:
                 # 仅绘制当前面板，且根据是否已解锁来判断是绘制文本还是按钮
                 if draw_flag:
                     line_feed.draw()
-                    if character_data.pl_collection.collection_bonus[cid]:
+                    if character_data.pl_collection.collection_bonus[cid] or un_lock_flag:
                         bonus_draw = draw.NormalDraw()
                         bonus_draw.text = "  ●" + bonus_text
                         # bonus_draw.style = "onbutton"
