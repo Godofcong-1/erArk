@@ -1660,6 +1660,10 @@ class Instruct:
     """ debug数值调整 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
+    COLLECTION_NOW_PLACE = 0
+    """ 收藏该地点 """
+    CANCEL_COLLECTION_NOW_PLACE = 0
+    """ 取消收藏地点 """
 
     #日常#
     WAIT = 0

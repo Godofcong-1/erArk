@@ -2894,6 +2894,38 @@ def handle_place_ladies_only(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PALCE_IN_COLLECTION_LIST)
+def handle_place_in_collection_list(character_id: int) -> int:
+    """
+    当前地点在收藏列表中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    if now_position in cache.collect_position_list:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLACE_NOT_IN_COLLECTION_LIST)
+def handle_place_not_in_collection_list(character_id: int) -> int:
+    """
+    当前地点不在收藏列表中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    if now_position in cache.collect_position_list:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_BATHROOM)
 def handle_in_bathroom(character_id: int) -> int:
     """

@@ -216,6 +216,10 @@ class Premise:
     """ 地点_属性 地点的门是开着的（不含内隔间关门） """
     PLACE_LADIES_ONLY = "place_ladies_only"
     """ 地点_属性 该地点男士止步（女洗手间/更衣室/浴室等） """
+    PALCE_IN_COLLECTION_LIST = "place_in_collection_list"
+    """ 地点_属性 当前地点在收藏列表中 """
+    PLACE_NOT_IN_COLLECTION_LIST = "place_not_in_collection_list"
+    """ 地点_属性 当前地点不在收藏列表中 """
 
     IN_KITCHEN = "in_kitchen"
     """ 地点_定位 在厨房 """

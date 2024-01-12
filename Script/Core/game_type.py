@@ -1072,6 +1072,8 @@ class Cache:
         """ 玩家指令输入记录（最大20）"""
         self.now_init_map_id: str = ""
         """ 寻路算法用,当前节点所属的地图的id """
+        self.collect_position_list: List = []
+        """ 收藏地点合集 """
         self.input_position: int = 0
         """ 回溯输入记录用定位 """
         self.instruct_type_filter: Dict[int, bool] = {}
