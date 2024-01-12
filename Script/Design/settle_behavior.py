@@ -452,61 +452,62 @@ def check_second_effect(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_character_id = character_data.target_character_id
-    target_character_data: game_type.Character = cache.character_data[target_character_id]
-    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_character_id]
-    # target_change: game_type.TargetChange = status_data.target_change[target_character_id]    # print()
     # print("进入第二结算")
 
     # 玩家检测自己
     if character_id == 0:
-
         # 高潮结算
         orgasm_effect(character_id)
-
         # 道具结算
         item_effect(character_id)
-
-        # 遍历二段行为id，进行结算
-        for behavior_id, behavior_data in character_data.second_behavior.items():
-            if behavior_data != 0:
-                # 遍历该二段行为的所有结算效果，挨个触发
-                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+        # 进行结算
+        second_behavior_effect(character_id, change_data)
 
 
     # NPC自己检测自己
-    if target_character_id and character_id == target_character_id:
-        # print("debug character_id = ",character_id)
-        # print("debug target_character_id = ",target_character_id)
+    if character_id != 0:
+        # 初见和每日招呼结算
+        judge_character_first_meet(character_id)
         # 阴茎位置结算
-        insert_position_effect(target_character_id)
+        insert_position_effect(character_id)
         # 高潮结算
-        orgasm_effect(target_character_id)
+        orgasm_effect(character_id)
         # 道具结算
-        item_effect(target_character_id)
+        item_effect(character_id)
         # 素质结算
 
-        # 遍历二段行为id，进行结算
-        for behavior_id, behavior_data in target_character_data.second_behavior.items():
-            if behavior_data != 0:
-                # 遍历该二段行为的所有结算效果，挨个触发
-                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                    # print("effect_id :",effect_id)
-                    constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+        # 进行结算
+        second_behavior_effect(character_id, change_data)
 
         # 刻印结算
-        mark_effect(target_character_id, target_change)
+        mark_effect(character_id, change_data)
         mark_list = [i for i in range(1030, 1048)]
         # 单独遍历结算刻印
-        for behavior_id, behavior_data in target_character_data.second_behavior.items():
-            if behavior_data != 0 and behavior_id in mark_list:
-                # 遍历该二段行为的所有结算效果，挨个触发
-                for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
-                    # print("effect_id :",effect_id)
-                    constant.settle_second_behavior_effect_data[effect_id](target_character_id, target_change)
+        second_behavior_effect(character_id, change_data, mark_list)
+
+
+def second_behavior_effect(
+        character_id: int,
+        change_data: game_type.CharacterStatusChange,
+        second_behavior_list: list = None,
+        ):
+    """
+    触发二段行为效果
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 遍历二段行为id，进行结算
+    for behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0:
+            if second_behavior_list and behavior_id not in second_behavior_list:
+                continue
+            # 遍历该二段行为的所有结算效果，挨个触发
+            for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
+                constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+            # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
 
 
 def check_unconscious_effect(
@@ -552,6 +553,27 @@ def check_unconscious_effect(
                     constant.settle_behavior_effect_data[279](character_id, add_time, change_data, now_time)
 
 
+def judge_character_first_meet(character_id: int) -> int:
+    """
+    判断初见和每日招呼\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+
+    # 优先输出初见，次要输出每日招呼
+    if character_data.first_record.first_meet and character_data.position == pl_character_data.position:
+        character_data.second_behavior[1331] = 1
+        character_data.first_record.first_meet = 0
+        character_data.first_record.day_first_meet = 0
+    elif character_data.first_record.day_first_meet and character_data.position == pl_character_data.position:
+        character_data.first_record.day_first_meet = 0
+        character_data.second_behavior[1332] = 1
+
+
 def insert_position_effect(character_id: int):
     """
     处理第二结算中的阴茎位置结算
@@ -573,8 +595,8 @@ def orgasm_effect(character_id: int):
     """
 
     # print()
-    # print("进入高潮结算")
     character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"进入{character_data.name}的高潮结算")
 
     # 检测射精
     if character_id == 0:
@@ -600,7 +622,7 @@ def orgasm_effect(character_id: int):
             # 跳过射精槽
             if orgasm == 3:
                 continue
-            if now_data != pre_data:
+            if now_data > pre_data:
                 # 判定触发哪些绝顶
                 num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
                 # now_draw = draw.WaitDraw()
@@ -693,58 +715,60 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
 
     # 苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
     pain_count = 0
-    change_data.status_data.setdefault(17, 0)
-    pain_count += change_data.status_data[17]
-    if pain_count >= 2000 and character_data.ability[15] <= 0:
-        character_data.ability[15] = 1
-        character_data.second_behavior[1036] = 1
-        # 至少提升为顺从1
-        if character_data.ability[31] <= 0:
-            character_data.ability[31] = 1
-    if pain_count >= 4000 and character_data.ability[15] <= 1:
-        character_data.ability[15] = 2
-        character_data.second_behavior[1037] = 1
-        # 至少提升为顺从2
-        if character_data.ability[31] <= 1:
-            character_data.ability[31] = 2
-    if pain_count >= 8000 and character_data.ability[15] <= 2:
-        character_data.ability[15] = 3
-        character_data.second_behavior[1038] = 1
-        # 至少提升为顺从3
-        if character_data.ability[31] <= 2:
-            character_data.ability[31] = 3
+    if 17 in change_data.status_data:
+        pain_count += change_data.status_data[17]
+        if pain_count >= 2000 and character_data.ability[15] <= 0:
+            character_data.ability[15] = 1
+            character_data.second_behavior[1036] = 1
+            # 至少提升为顺从1
+            if character_data.ability[31] <= 0:
+                character_data.ability[31] = 1
+        if pain_count >= 4000 and character_data.ability[15] <= 1:
+            character_data.ability[15] = 2
+            character_data.second_behavior[1037] = 1
+            # 至少提升为顺从2
+            if character_data.ability[31] <= 1:
+                character_data.ability[31] = 2
+        if pain_count >= 8000 and character_data.ability[15] <= 2:
+            character_data.ability[15] = 3
+            character_data.second_behavior[1038] = 1
+            # 至少提升为顺从3
+            if character_data.ability[31] <= 2:
+                character_data.ability[31] = 3
 
     # 无觉刻印未实装
 
     # 恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
     terror_count = 0
-    terror_count += character_data.status_data[18]
-    terror_count += character_data.status_data[17] / 5
-    if terror_count >= 2000 and character_data.ability[17] <= 0:
-        character_data.ability[17] = 1
-        character_data.second_behavior[1042] = 1
-    if terror_count >= 4000 and character_data.ability[17] <= 1:
-        character_data.ability[17] = 2
-        character_data.second_behavior[1043] = 1
-    if terror_count >= 8000 and character_data.ability[17] <= 2:
-        character_data.ability[17] = 3
-        character_data.second_behavior[1044] = 1
+    if 18 in change_data.status_data:
+        terror_count += character_data.status_data[18]
+        terror_count += character_data.status_data[17] / 5
+        if terror_count >= 2000 and character_data.ability[17] <= 0:
+            character_data.ability[17] = 1
+            character_data.second_behavior[1042] = 1
+        if terror_count >= 4000 and character_data.ability[17] <= 1:
+            character_data.ability[17] = 2
+            character_data.second_behavior[1043] = 1
+        if terror_count >= 8000 and character_data.ability[17] <= 2:
+            character_data.ability[17] = 3
+            character_data.second_behavior[1044] = 1
 
     # 反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
     hate_count = 0
-    hate_count += character_data.status_data[20]
-    hate_count += character_data.status_data[18] / 5
-    hate_count += character_data.status_data[19] / 5
-    hate_count += character_data.status_data[17] / 10
-    if hate_count >= 1000 and character_data.ability[18] <= 0:
-        character_data.ability[18] = 1
-        character_data.second_behavior[1045] = 1
-    if hate_count >= 2000 and character_data.ability[18] <= 1:
-        character_data.ability[18] = 2
-        character_data.second_behavior[1046] = 1
-    if hate_count >= 4000 and character_data.ability[18] <= 2:
-        character_data.ability[18] = 3
-        character_data.second_behavior[1047] = 1
+    if 20 in change_data.status_data:
+        hate_count += character_data.status_data[20]
+        hate_count += character_data.status_data[18] / 5
+        hate_count += character_data.status_data[19] / 5
+        hate_count += character_data.status_data[17] / 10
+        if hate_count >= 1000 and character_data.ability[18] <= 0:
+            character_data.ability[18] = 1
+            character_data.second_behavior[1045] = 1
+        if hate_count >= 2000 and character_data.ability[18] <= 1:
+            character_data.ability[18] = 2
+            character_data.second_behavior[1046] = 1
+        if hate_count >= 4000 and character_data.ability[18] <= 2:
+            character_data.ability[18] = 3
+            character_data.second_behavior[1047] = 1
 
 
 def item_effect(character_id: int):

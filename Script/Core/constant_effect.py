@@ -340,7 +340,7 @@ class BehaviorEffect:
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
     BOTH_H_STATE_RESET = 404
-    """ 属性_结构体 双方H状态结构体归零 """
+    """ 属性_结构体 双方H状态结构体归零，且同步高潮程度记录 """
 
     T_BE_BAGGED = 451
     """ 属性_特殊flag 交互对象变成被装袋搬走状态 """

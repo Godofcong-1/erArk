@@ -116,7 +116,6 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
 
     # 处理特殊模式
     if character_id != 0:
-        judge_character_first_meet(character_id) # 初见和每日招呼
         judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
         judge_character_cant_move(character_id) # 无法自由移动的角色
         judge_character_follow(character_id) # 跟随模式
@@ -654,26 +653,6 @@ def judge_character_h(character_id: int) -> int:
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
     return 1
-
-
-def judge_character_first_meet(character_id: int) -> int:
-    """
-    判断初见和每日招呼\n
-    Keyword arguments:
-    character_id -- 角色id\n
-    Return arguments:
-    bool -- 本次update时间切片内活动是否已完成
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-
-    # 优先输出初见，次要输出每日招呼
-    if character_data.first_record.first_meet:
-        character_data.second_behavior[1331] = 1
-        character_data.first_record.first_meet = 0
-        character_data.first_record.day_first_meet = 0
-    elif character_data.first_record.day_first_meet:
-        character_data.first_record.day_first_meet = 0
-        character_data.second_behavior[1332] = 1
 
 
 def update_sleep():

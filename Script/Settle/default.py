@@ -3104,7 +3104,7 @@ def handle_both_h_state_reset(
         now_time: datetime.datetime,
 ):
     """
-    双方H状态结构体归零
+    双方H状态结构体归零，且同步高潮程度记录
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3117,6 +3117,9 @@ def handle_both_h_state_reset(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
     target_data.h_state = attr_calculation.get_h_state_zero(target_data.h_state)
+    for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
+        target_data.h_state.orgasm_level[orgasm] = now_data
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)
