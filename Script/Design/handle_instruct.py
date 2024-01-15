@@ -290,7 +290,6 @@ def handle_system_setting():
     _("收藏该地点"),
     {
         constant_promise.Premise.PLACE_NOT_IN_COLLECTION_LIST,
-        constant_promise.Premise.TO_DO,
     })
 def handle_collection_now_place():
     """收藏该地点"""
@@ -304,7 +303,6 @@ def handle_collection_now_place():
     _("取消收藏地点"),
     {
         constant_promise.Premise.PALCE_IN_COLLECTION_LIST,
-        constant_promise.Premise.TO_DO,
     })
 def handle_cancel_collection_now_place():
     """取消收藏地点"""

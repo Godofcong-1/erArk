@@ -1602,15 +1602,6 @@ class SecondBehavior:
     """ 获得被完全催眠素质 """
 
 
-#旧结算存档#
-    # ADD_SOCIAL_FAVORABILITY = 7
-    # """ 增加社交关系好感 """
-    # ADD_INTIMACY_FAVORABILITY = 8
-    # """ 增加亲密行为好感(关系不足2则增加反感) """
-    # ADD_INTIMATE_FAVORABILITY = 9
-    # """ 增加私密行为好感(关系不足3则增加反感) """
-
-
 class InstructType:
     """指令类型"""
 
@@ -1658,12 +1649,12 @@ class Instruct:
     """ 关闭debug模式 """
     DEBUG_ADJUST = 0
     """ debug数值调整 """
-    SYSTEM_SETTING = 0
-    """ 系统设置 """
     COLLECTION_NOW_PLACE = 0
     """ 收藏该地点 """
     CANCEL_COLLECTION_NOW_PLACE = 0
     """ 取消收藏地点 """
+    SYSTEM_SETTING = 0
+    """ 系统设置 """
 
     #日常#
     WAIT = 0

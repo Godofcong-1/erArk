@@ -43,9 +43,9 @@ class SeeMapPanel:
         """绘制对象"""
         move_menu_panel_data = {
             0: MapSceneNameDraw(self.now_map, self.width),
+            1: CollectionSceneNamePanel(self.now_map, self.width),
             # 1: UsefulSceneNamePanel(self.now_map, self.width),
             # 2: entertainmentSceneNamePanel(self.now_map, self.width),
-            3: CollectionSceneNamePanel(self.now_map, self.width),
         }
         move_menu_panel = MoveMenuPanel(self.width)
         while 1:
@@ -345,17 +345,27 @@ class MapSceneNameDraw:
 
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
                 # 如果编号=0的话为出口，单独标注，其他的不标注序号
-                if scene_id == character_scene_id:
-                    continue
-                elif scene_id == '0':
+                if scene_id == '0':
                     now_id_text = f"→0:{load_scene_data.scene_name}"
                 else:
                     now_id_text = f"→{load_scene_data.scene_name}"
+                # 如果是当前位置则标注当前
+                if scene_id == character_scene_id:
+                    text_flag = True
+                else:
+                    text_flag = False
 
-                now_draw = draw.LeftButton(
-                    now_id_text, now_id_text, self.width, cmd_func=self.move_now, args=(now_scene_path,)
-                )
-                self.return_list.append(now_draw.return_text)
+                # 绘制
+                if text_flag:
+                    now_draw = draw.LeftDraw()
+                    now_draw.text = now_id_text
+                    now_draw.width = self.width
+                    now_draw.style = "gold_enrod"
+                else:
+                    now_draw = draw.LeftButton(
+                        now_id_text, now_id_text, self.width, cmd_func=self.move_now, args=(now_scene_path,)
+                    )
+                    self.return_list.append(now_draw.return_text)
                 draw_list.append(now_draw)
             draw_group = value_handle.list_of_groups(draw_list, 8)
             now_width_index = 0
@@ -630,16 +640,17 @@ class CollectionSceneNamePanel:
         """ 当前查看的地图坐标 """
         self.return_list: List[str] = []
         """ 当前面板的按钮返回 """
-        character_data: game_type.Character = cache.character_data[0]
-        self.handle_panel = panel.PageHandlePanel(
-            list(character_data.collection_character),
-            SocialSceneNameDraw,
-            10,
-            2,
-            self.width,
-            1,
-        )
-        self.end_index = self.handle_panel.end_index
+        self.end_index: int = 0
+        """ 结束按钮id """
+        # self.handle_panel = panel.PageHandlePanel(
+        #     list(character_data.collection_character),
+        #     SocialSceneNameDraw,
+        #     10,
+        #     2,
+        #     self.width,
+        #     1,
+        # )
+        # self.end_index = self.handle_panel.end_index
         """ 结束按钮id """
 
     def update(self, now_map: List[str], start_index: int):
@@ -650,11 +661,66 @@ class CollectionSceneNamePanel:
         start_index -- 起始按钮id
         """
         self.now_map = now_map
-        self.handle_panel.button_start_id = start_index
-        self.handle_panel.update()
-        self.end_index = self.handle_panel.end_index
+        # self.handle_panel.button_start_id = start_index
+        # self.handle_panel.update()
+        # self.end_index = self.handle_panel.end_index
 
     def draw(self):
         """绘制面板"""
-        self.handle_panel.draw()
-        self.return_list = self.handle_panel.return_list
+        # self.handle_panel.draw()
+        # self.return_list = self.handle_panel.return_list
+        self.return_list = []
+        draw_list = []
+        pl_character_data: game_type.Character = cache.character_data[0]
+
+        scene_id_list = cache.collect_position_list
+        if len(scene_id_list):
+            self.end_index = len(scene_id_list) - 1
+            for collect_position in scene_id_list:
+                # 标记当前位置
+                text_flag = False
+                if collect_position == pl_character_data.position:
+                    text_flag = True
+                # 获取收藏所在场景
+                # collect_scene_path = map_handle.get_map_for_path(collect_position)
+                # collect_scene_id = map_handle.get_map_scene_id_for_scene_path(collect_scene_path, collect_position)
+                # collect_scene_data = map_handle.get_scene_data_for_map(map_handle.get_map_system_path_str_for_list(collect_scene_path), collect_scene_id)
+                scene_position_str = map_handle.get_map_system_path_str_for_list(collect_position)
+                # 绘制
+                draw_text = f"→{scene_position_str}"
+                if text_flag:
+                    collect_scene_name_draw = draw.LeftDraw()
+                    collect_scene_name_draw.text = draw_text
+                    collect_scene_name_draw.width = self.width
+                    collect_scene_name_draw.style = "gold_enrod"
+                else:
+                    collect_scene_name_draw = draw.LeftButton(
+                        draw_text, draw_text, self.width, cmd_func=self.move_now, args=(collect_position,)
+                    )
+                    self.return_list.append(collect_scene_name_draw.return_text)
+                draw_list.append(collect_scene_name_draw)
+
+            # 将绘制对象分组为每行最多4个
+            draw_group = value_handle.list_of_groups(draw_list, 4)
+            now_width_index = 0
+            for now_draw_list in draw_group:
+                if len(now_draw_list) > now_width_index:
+                    now_width_index = len(now_draw_list)
+            now_width = self.width / now_width_index
+            for now_draw_list in draw_group:
+                for now_draw in now_draw_list:
+                    now_draw.width = now_width
+                    now_draw.draw()
+                line_feed.draw()
+
+    def move_now(self, scene_path: List[str]):
+        """
+        控制角色移动至指定场景
+        Keyword arguments:
+        scene_path -- 目标场景路径
+        """
+        py_cmd.clr_cmd()
+        line_feed.draw()
+        cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+        character_move.own_charcter_move(scene_path)
+
