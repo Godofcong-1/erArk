@@ -174,7 +174,6 @@ def get_base_updata():
             cache.rhodes_island.visitor_max = room_count
 
 
-
 def update_base_resouce_newday():
     """
     刷新基地资源数据\n
@@ -202,6 +201,7 @@ def update_base_resouce_newday():
 
     # 输出好感度合计与粉红凭证增加
     pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
+    cache.rhodes_island.materials_resouce[4] += pink_certificate_add
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.text = f"\n今日全角色总好感度上升为： {int(cache.rhodes_island.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
