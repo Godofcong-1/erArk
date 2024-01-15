@@ -8,7 +8,8 @@ from PySide6.QtWidgets import (
     QComboBox,
     QTextEdit,
     QVBoxLayout,
-    QMenu
+    QMenu,
+    QLabel
 )
 from PySide6.QtGui import QFont, Qt
 import cache_control
@@ -252,21 +253,27 @@ class CVPMenu(QDialog):
             self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
-        self.layout: QHBoxLayout = QHBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
+        self.ABCD_button_layout = QHBoxLayout()
         self.resize(1000,50)
+
+        # 一段说明文字，用来介绍各个功能，位置在最上面的第一行
+        self.cvp_text = QLabel("用于实现数值方面的综合型万用前提")
+        self.cvp_text.setFont(self.font)
+        self.layout.addWidget(self.cvp_text)
 
         # A数值为对象，仅在"角色id为"时出现a2文本框
         self.cvp_a = QComboBox()
         self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
         self.cvp_a.setCurrentIndex(0)
         self.cvp_a.setFont(self.font)
-        self.layout.addWidget(self.cvp_a)
+        self.ABCD_button_layout.addWidget(self.cvp_a)
         self.cvp_a2 = QTextEdit("0")
         self.cvp_a2.setFont(self.font)
         self.cvp_a2.setFixedHeight(32)
         self.cvp_a2.setFixedWidth(50)
         self.cvp_a2.setVisible(False)
-        self.layout.addWidget(self.cvp_a2)
+        self.ABCD_button_layout.addWidget(self.cvp_a2)
         self.cvp_a.currentIndexChanged.connect(self.change_a2)
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
@@ -274,38 +281,42 @@ class CVPMenu(QDialog):
         self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
-        self.layout.addWidget(self.cvp_b1)
+        self.ABCD_button_layout.addWidget(self.cvp_b1)
 
-        # b2根据b1会出现不同的选项
+        # b2根据b1会出现不同的选项和说明
         self.cvp_b2 = QComboBox()
         self.cvp_b2.addItems([""])
         self.cvp_b2.setCurrentIndex(0)
         self.cvp_b2.setFont(self.font)
         self.cvp_b2.setVisible(False)
         self.cvp_b1.currentIndexChanged.connect(self.change_b2)
-        self.layout.addWidget(self.cvp_b2)
+        self.ABCD_button_layout.addWidget(self.cvp_b2)
 
         # C数值为判定方式
         self.cvp_c = QComboBox()
         self.cvp_c.addItems(["大于", "小于", "等于", "大于等于", "小于等于", "不等于"])
         self.cvp_c.setCurrentIndex(0)
         self.cvp_c.setFont(self.font)
-        self.layout.addWidget(self.cvp_c)
+        self.ABCD_button_layout.addWidget(self.cvp_c)
 
         # D数值为判定值
         self.cvp_d = QTextEdit("0")
         self.cvp_d.setFont(self.font)
         self.cvp_d.setFixedHeight(32)
         self.cvp_d.setFixedWidth(50)
-        self.layout.addWidget(self.cvp_d)
+        self.ABCD_button_layout.addWidget(self.cvp_d)
+
+        self.layout.addLayout(self.ABCD_button_layout)
 
         # 添加确定按钮与取消按钮
         self.button_layout = QHBoxLayout()
         self.ok_button = QPushButton("确定")
         self.ok_button.clicked.connect(self.ok)
+        self.ok_button.setFont(self.font)
         self.button_layout.addWidget(self.ok_button)
         self.cancel_button = QPushButton("取消")
         self.cancel_button.clicked.connect(self.cancel)
+        self.cancel_button.setFont(self.font)
         self.button_layout.addWidget(self.cancel_button)
         self.layout.addLayout(self.button_layout)
 
@@ -343,6 +354,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "E|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "状态":
             cvp_b_value = "S|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "攻略程度":
+            cvp_b_value = "G|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -393,31 +406,41 @@ class CVPMenu(QDialog):
             self.cvp_b2.setVisible(False)
         elif index == 1:
             self.cvp_b2.setVisible(False)
+            self.cvp_text.setText("好感度的-1~8级分别为：负数，100，500，100，2500，5000，10000，50000，100000")
         elif index == 2:
             self.cvp_b2.setVisible(False)
+            self.cvp_text.setText("信赖度的-1~8级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%")
         elif index == 3:
             self.cvp_b2.clear()
             for ability_id, ability_name in cache_control.ability_data.items():
                 self.cvp_b2.addItem(f"{ability_id}|{ability_name}")
             self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("能力最高为8级")
         elif index == 4:
             self.cvp_b2.clear()
             for talent_id, talent_name in cache_control.talent_data.items():
                 self.cvp_b2.addItem(f"{talent_id}|{talent_name}")
             self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("1为有该素质，0为无该素质")
         elif index == 5:
             self.cvp_b2.clear()
             for juel_id, juel_name in cache_control.juel_data.items():
                 self.cvp_b2.addItem(f"{juel_id}|{juel_name}")
             self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("宝珠是用来升级能力或获得素质的")
         elif index == 6:
             self.cvp_b2.clear()
             for experience_id, experience_name in cache_control.experience_data.items():
                 self.cvp_b2.addItem(f"{experience_id}|{experience_name}")
             self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("每次指令都会获得1对应经验")
         elif index == 7:
             self.cvp_b2.clear()
             for state_id, state_name in cache_control.state_data.items():
                 self.cvp_b2.addItem(f"{state_id}|{state_name}")
             self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999")
+        elif index == 8:
+            self.cvp_b2.setVisible(False)
+            self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会过0，如，当选择爱情系的≤2时，只会到0的未攻略，而不会到负数的隶属系，其他情况同理")
         self.cvp_b = self.cvp_b2
