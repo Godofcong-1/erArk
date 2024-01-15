@@ -165,7 +165,10 @@ def load_talk_data_to_cache():
         now_talk.__dict__ = value
 
         # 类型名转化
-        now_talk.text = now_talk.context
+        if 'context' in value:
+            now_talk.text = now_talk.context
+        else:
+            now_talk.text = ""
         now_talk.status_id = str(now_talk.behavior_id)
         now_talk.adv_id = str(now_talk.adv_id)
 
