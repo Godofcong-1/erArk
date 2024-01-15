@@ -407,11 +407,11 @@ def get_status_level(value: int) -> int:
         level = 6
     elif value < 150000:
         level = 7
-    elif value < 250000:
+    elif value < 500000:
         level = 8
-    elif value < 400000:
+    elif value < 999999:
         level = 9
-    elif value >= 400000:
+    elif value >= 999999:
         level = 10
     return level
 
