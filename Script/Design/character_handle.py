@@ -330,9 +330,11 @@ def init_character_position():
     for character_id in id_list:
         character_position = cache.character_data[character_id].position
         character_dormitory = cache.character_data[character_id].dormitory
-        character_dormitory = map_handle.get_map_system_path_for_str(character_dormitory)
+        character_dormitory_str = map_handle.get_map_system_path_for_str(character_dormitory)
         # print("character_dormitory = ",character_dormitory)
-        map_handle.character_move_scene(character_position, character_dormitory, character_id)
+        map_handle.character_move_scene(character_position, character_dormitory_str, character_id)
+    character_position = cache.character_data[0].position
+    map_handle.character_move_scene(["0","0"], character_position, 0)
 
 
 def init_character_entertainment():
