@@ -83,16 +83,16 @@ def load_event_data():
 
 def create_event_data():
     """新建事件文件"""
-    dialog:QFileDialog = QFileDialog(menu_bar)
-    dialog.setFileMode(QFileDialog.AnyFile)
-    dialog.setNameFilter("Json (*.json)")
-    if dialog.exec():
-        file_names = dialog.selectedFiles()
-        file_path: str = file_names[0]
-        if not file_path.endswith(".json"):
-            file_path += ".json"
-            cache_control.now_file_path = file_path
-        cache_control.now_edit_type_flag = 1
+    cache_control.now_edit_type_flag = 1
+    # 选择路径，创建一个json文件
+    now_file = QFileDialog.getSaveFileName(menu_bar, "选择文件", ".", "*.json")
+    file_path = now_file[0]
+    if not file_path.endswith(".json"):
+        file_path += ".json"
+    cache_control.now_file_path = file_path
+    # 自动打开文件
+    save_data()
+    load_event_data()
 
 
 def save_data():
