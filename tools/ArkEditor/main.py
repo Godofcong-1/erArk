@@ -51,6 +51,7 @@ cache_control.item_text_edit = item_text_edit
 def load_event_data():
     """载入事件文件"""
     now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.json")
+    cache_control.now_event_data = {}
     file_path = now_file[0]
     if file_path:
         cache_control.now_file_path = file_path
@@ -123,6 +124,7 @@ def load_talk_data_to_cache():
     """将口上数据传输到缓存中"""
 
     file_path = cache_control.now_file_path
+    cache_control.now_talk_data = {}
 
     # 读取文件路径中的数据
     with open(file_path, encoding="utf-8") as now_file:
