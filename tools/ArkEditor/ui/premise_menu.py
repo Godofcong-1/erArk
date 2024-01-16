@@ -278,7 +278,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -442,5 +442,5 @@ class CVPMenu(QDialog):
             self.cvp_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999")
         elif index == 8:
             self.cvp_b2.setVisible(False)
-            self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会过0，如，当选择爱情系的≤2时，只会到0的未攻略，而不会到负数的隶属系，其他情况同理")
+            self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会到0，如，当选择爱情系的≤2时，只会到1的思慕，而不会到0或者负数的隶属系，其他情况同理")
         self.cvp_b = self.cvp_b2

@@ -77,7 +77,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             return 0
         final_character_data = cache.character_data[final_character_id]
 
-    # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+    # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖,G攻略程度
     if len(premise_all_value_list[1]) > 1:
         type_son_id = int(premise_all_value_list[1][2:])
     if premise_all_value_list[1][0] == "A":
@@ -98,6 +98,36 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     # 进行方式C和数值D的判别
     judge_value = int(premise_all_value_list[3])
     # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
+
+    # 攻略程度进行单独计算
+    if premise_all_value_list[1][0] == "G":
+        if judge_value > 0:
+            all_talent_list = [201,202,203,204]
+            talent_id_index = 200 + judge_value
+        else:
+            all_talent_list = [211,212,213,214]
+            talent_id_index = 210 - judge_value
+        # 攻略程度的运算符判定
+        if premise_all_value_list[2] == "G":
+           # 获取all_talent_list中所有比talent_id_index大的作为一个新列表
+            new_talent_list = [i for i in all_talent_list if i > talent_id_index]
+        elif premise_all_value_list[2] == "L":
+            new_talent_list = [i for i in all_talent_list if i < talent_id_index]
+        elif premise_all_value_list[2] == "E":
+            new_talent_list = [i for i in all_talent_list if i == talent_id_index]
+        elif premise_all_value_list[2] == "GE":
+            new_talent_list = [i for i in all_talent_list if i >= talent_id_index]
+        elif premise_all_value_list[2] == "LE":
+            new_talent_list = [i for i in all_talent_list if i <= talent_id_index]
+        elif premise_all_value_list[2] == "NE":
+            new_talent_list = [i for i in all_talent_list if i != talent_id_index]
+        # 最后判定
+        for talent_id in new_talent_list:
+            if talent_id in final_character_data.talent:
+                return 1
+        return 0
+
+    # 正常的运算符判定
     if premise_all_value_list[2] == "G":
         if final_value > judge_value:
             # print(f"debug 成功进入G判定，返回值为1")
