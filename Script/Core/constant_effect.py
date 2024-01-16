@@ -334,6 +334,10 @@ class BehaviorEffect:
     """ 属性_经验 增加1膣射经验 """
     ADD_1_AnalCums_EXPERIENCE = 337
     """ 属性_经验 增加1肛射经验 """
+    ADD_1_Hypnosis_EXPERIENCE = 338
+    """ 属性_经验 增加1催眠经验 """
+    TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE = 339
+    """ 属性_经验 交互对象增加1被催眠经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 属性_经验 双方增加1学识经验 """
 
@@ -406,6 +410,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成大浴场娱乐_要娱乐状态 """
     MILK_FLAG_TO_0 = 494
     """ 属性_特殊flag 自身清零要挤奶状态 """
+    HYPNOSIS_FLAG_TO_0 = 495
+    """ 属性_特殊flag 自身清零催眠系的flag状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

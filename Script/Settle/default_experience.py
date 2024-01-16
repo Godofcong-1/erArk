@@ -3121,6 +3121,62 @@ def handle_add_1_analcums_experience(
     change_data.experience[27] += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Hypnosis_EXPERIENCE)
+def handle_add_1_hypnosis_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1催眠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(122, 0)
+    character_data.experience[122] += 1
+    change_data.experience.setdefault(122, 0)
+    change_data.experience[122] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE)
+def handle_target_add_1_been_hypnosis_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象增加1被催眠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    if character_data.target_character_id != character_id:
+        target_data.experience.setdefault(123, 0)
+        target_data.experience[123] += 1
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.experience.setdefault(123, 0)
+        target_change.experience[123] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.Both_ADD_1_Learn_EXPERIENCE)
 def handle_both_add_1_learn_experience(
         character_id: int,
@@ -3150,7 +3206,7 @@ def handle_both_add_1_learn_experience(
     change_data.experience[82] += 1
 
     # 如果有交互对象的话，对方增加1学识经验
-    if character_data.target_character_id != 0:
+    if character_data.target_character_id != character_id:
         target_data.experience.setdefault(82, 0)
         target_data.experience[82] += 1
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
