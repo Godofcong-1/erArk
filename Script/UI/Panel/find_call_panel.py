@@ -163,10 +163,10 @@ class FindDraw:
         elif character_data.sp_flag.is_follow == 0:
             if cache.debug_mode:
                 character_data.sp_flag.is_follow = 1
-                now_draw.text = character_data.name + "进入跟随模式\n"
+                now_draw.text = character_data.name + "收到了博士的信息，询问了博士的位置之后开始移动\n"
             else:
                 character_data.sp_flag.is_follow = 3
-                now_draw.text = character_data.name + "正在前往博士办公室\n"
+                now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
 
             # 去掉其他NPC的跟随
             # if not cache.debug_mode:
@@ -178,7 +178,7 @@ class FindDraw:
             #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
         elif character_data.sp_flag.is_follow == 1 and cache.debug_mode:
             character_data.sp_flag.is_follow = 3
-            now_draw.text = character_data.name + "正在前往博士办公室\n"
+            now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
 
         else:
             character_data.sp_flag.is_follow = 0

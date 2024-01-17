@@ -278,12 +278,12 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "攻略程度"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
 
-        # b2根据b1会出现不同的选项和说明
+        # b2根据b1会出现不同的选项
         self.cvp_b2 = QComboBox()
         self.cvp_b2.addItems([""])
         self.cvp_b2.setCurrentIndex(0)
@@ -443,4 +443,7 @@ class CVPMenu(QDialog):
         elif index == 8:
             self.cvp_b2.setVisible(False)
             self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会到0，如，当选择爱情系的≤2时，只会到1的思慕，而不会到0或者负数的隶属系，其他情况同理")
+        elif index == 9:
+            self.cvp_b2.setVisible(False)
+            self.cvp_text.setText("时间也是一天24小时，如果要定起止时间的话，可以搭配使用【时间大于等于A】和【时间小于等于B】的两个前提来实现")
         self.cvp_b = self.cvp_b2
