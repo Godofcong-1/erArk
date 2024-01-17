@@ -278,7 +278,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "攻略程度"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -355,7 +355,9 @@ class CVPMenu(QDialog):
         elif cvp_b1 == "状态":
             cvp_b_value = "S|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "攻略程度":
-            cvp_b_value = "G|" + self.cvp_b2.currentText().split("|")[0]
+            cvp_b_value = "G"
+        elif cvp_b1 == "时间":
+            cvp_b_value = "Time"
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
