@@ -1,5 +1,6 @@
 cid,premise_name,premise_type,premise
 
+debug_mode_setting_on,DEBUG_MODE_SETTING_ON,系统状态,设置里可以开启debug模式
 debug_mode_on,DEBUG_MODE_ON,系统状态,现在是debug模式
 debug_mode_off,DEBUG_MODE_OFF,系统状态,现在不是debug模式
 is_h,IS_H,系统状态,当前为H模式
@@ -105,6 +106,8 @@ place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
+place_in_collection_list,PALCE_IN_COLLECTION_LIST,地点_属性,当前地点在收藏列表中
+place_not_in_collection_list,PLACE_NOT_IN_COLLECTION_LIST,地点_属性,当前地点不在收藏列表中
 
 in_kitchen,IN_KITCHEN,地点_定位,在厨房
 not_in_kitchen,NOT_IN_KITCHEN,地点_定位,不在厨房
@@ -947,6 +950,8 @@ have_diuretics_once,HAVE_DIURETICS_ONCE,道具_持有,已持有一次性利尿�
 have_diuretics_persistent,HAVE_DIURETICS_PERSISTENT,道具_持有,已持有持续性利尿剂
 have_sleeping_pills,HAVE_SLEEPING_PILLS,道具_持有,已持有安眠药
 have_clomid,HAVE_CLOMID,道具_持有,已持有排卵促进药
+have_ring,HAVE_RING,道具_持有,已持有戒指
+have_collar,HAVE_COLLAR,道具_持有,已持有项圈
 
 target_now_nipple_clamp,TARGET_NOW_NIPPLE_CLAMP,道具_使用,交互对象正在乳头夹
 target_not_nipple_clamp,TARGET_NOT_NIPPLE_CLAMP,道具_使用,交互对象没有在乳头夹
@@ -965,6 +970,7 @@ c_bonus_203,COLLECT_BONUS_202,收集,收藏奖励_202_解锁索要袜子
 
 patient_wait,PATIENT_WAIT,经营,有患者正等待就诊
 new_npc_wait,NEW_NPC_WAIT,经营,有已招募待确认的干员
+have_office_work_need_to_do,HAVE_OFFICE_WORK_NEED_TO_DO,经营,有需要处理的公务
 
 pl_action_sleep,PL_ACTION_SLEEP,行动,玩家正在睡觉
 pl_action_not_sleep,PL_ACTION_NOT_SLEEP,行动,玩家没有在睡觉

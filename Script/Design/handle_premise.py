@@ -11913,6 +11913,36 @@ def handle_have_clomid(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.HAVE_RING)
+def handle_have_ring(character_id: int) -> int:
+    """
+    已持有戒指
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[201]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.HAVE_COLLAR)
+def handle_have_collar(character_id: int) -> int:
+    """
+    已持有项圈
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[202]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.A_SHIT)
 def handle_a_shit(character_id: int) -> int:
     """

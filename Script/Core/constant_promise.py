@@ -1889,6 +1889,10 @@ class Premise:
     """ 道具_持有 已持有安眠药 """
     HAVE_CLOMID = "have_clomid"
     """ 道具_持有 已持有排卵促进药 """
+    HAVE_RING = "have_ring"
+    """ 道具_持有 已持有戒指 """
+    HAVE_COLLAR = "have_collar"
+    """ 道具_持有 已持有项圈 """
 
     TARGET_NOW_NIPPLE_CLAMP = "target_now_nipple_clamp"
     """ 道具_使用 交互对象正在乳头夹 """
