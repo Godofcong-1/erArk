@@ -364,6 +364,25 @@ class Hypnosis_Talent_Of_Npc:
     """ 二段行为id """
 
 
+class Hypnosis_Talent_Of_Pl:
+    """ 玩家升级催眠素质 """
+
+    cid: int
+    """ cid """
+    hypnosis_talent_id: int
+    """ 该素质id """
+    need_talent_id: int
+    """ 前置素质id """
+    pl_experience: int
+    """ 需要的玩家催眠经验 """
+    max_hypnosis_degree: int
+    """ 最高单角色催眠程度 """
+    npc_hypnosis_degree: int
+    """ 升级需要的NPC总催眠程度 """
+    todo: int
+    """ 未实装 """
+
+
 class Hypnosis_Type:
     """ 催眠类型 """
 

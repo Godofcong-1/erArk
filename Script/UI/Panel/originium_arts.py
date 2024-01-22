@@ -319,11 +319,13 @@ class Originium_Arts_Panel:
                 # 催眠能力
                 info_draw.text = _(info_text)
                 info_draw.draw()
-                talent_and_degree_dict = {331:50,332:100,333:100,334:200}
-                for talent_id in talent_and_degree_dict:
+                for cid in game_config.config_hypnosis_talent_of_pl:
+                    hypnosis_data = game_config.config_hypnosis_talent_of_pl[cid]
+                    talent_id = hypnosis_data.hypnosis_talent_id
+                    max_degree = hypnosis_data.max_hypnosis_degree
                     talent_name = game_config.config_talent[talent_id].name
                     talent_info = game_config.config_talent[talent_id].info
-                    draw_text = f"  {talent_name}(最高催眠深度{talent_and_degree_dict[talent_id]}%)：{talent_info}\n"
+                    draw_text = f"  {talent_name}(最高催眠深度{max_degree}%)：{talent_info}\n"
                     now_draw = draw.NormalDraw()
                     if not self.pl_character_data.talent[talent_id]:
                         draw_text = f"  {talent_name}(未解锁)：{talent_info}\n"
@@ -397,7 +399,7 @@ class Originium_Arts_Panel:
             line_draw.draw()
             info_draw = draw.NormalDraw()
             info_text = ""
-            info_text += f"\n当前至纯源石：{cache.rhodes_island.materials_resouce[3]}\n"
+            info_text += f"\n能力可以直接消耗至纯源石或满足特定条件解锁，当前至纯源石：{cache.rhodes_island.materials_resouce[3]}\n"
             info_text += f"\n当前可以获得/升级的能力有：\n\n"
             info_draw.text = _(info_text)
             info_draw.draw()
@@ -414,7 +416,7 @@ class Originium_Arts_Panel:
                 talent_id = talent_of_arts_data.talent_id
                 talent_name = game_config.config_talent[talent_id].name
                 talent_info = game_config.config_talent[talent_id].info
-                # 花费为10的cost次方
+                # 通用的源石获得方式，花费为10的cost次方
                 money_cost = 10 ** (talent_of_arts_data.level - 1)
                 if cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
@@ -440,6 +442,35 @@ class Originium_Arts_Panel:
                     return_list.append(now_draw.return_text)
                     now_draw.draw()
                     line_feed.draw()
+                # 每个技能树单独的获得方式
+                # 催眠系
+                if talent_id in game_config.config_hypnosis_talent_of_pl:
+                    up_data = game_config.config_hypnosis_talent_of_pl[talent_id]
+                    need_exp = up_data.pl_experience
+                    now_exp = self.pl_character_data.experience[122]
+                    need_degree = up_data.npc_hypnosis_degree
+                    now_degree = 0
+                    # 计算全获得干员的催眠深度
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        now_degree += character_data.hypnosis.hypnosis_degree
+                    # 绘制
+                    draw_text = f"  {talent_name}：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）\n"
+                    if now_exp >= need_exp and now_degree >= need_degree:
+                        now_draw = draw.LeftButton(
+                            _(draw_text),
+                            _(str(cid) + "1"),
+                            window_width,
+                            cmd_func=self.gain_and_upgrade_ability_which,
+                            args=(cid,True),
+                            )
+                        return_list.append(now_draw.return_text)
+                        now_draw.draw()
+                    else:
+                        now_draw = draw.NormalDraw()
+                        now_draw.text = _(draw_text)
+                        now_draw.style = "deep_gray"
+                        now_draw.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -453,7 +484,7 @@ class Originium_Arts_Panel:
         """改变当前的催眠类型"""
         self.pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
 
-    def gain_and_upgrade_ability_which(self, cid):
+    def gain_and_upgrade_ability_which(self, cid, no_cost_flag = False):
         """获得或升级能力"""
         talent_of_arts_data = game_config.config_talent_of_arts[cid]
         talent_id = talent_of_arts_data.talent_id
@@ -464,7 +495,8 @@ class Originium_Arts_Panel:
         if cache.rhodes_island.materials_resouce[3] < money_cost:
             return
         # 花费至纯源石
-        cache.rhodes_island.materials_resouce[3] -= money_cost
+        if not no_cost_flag:
+            cache.rhodes_island.materials_resouce[3] -= money_cost
         # 升级或获得能力
         self.pl_character_data.talent[talent_id] = 1
         info_text = f"\n习得了{talent_name}\n"

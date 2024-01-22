@@ -399,10 +399,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge += 1000
             calculation_text += "+睡眠(+1000)"
 
-    # 催眠系能力的最后补正，仅在性爱判定、且实行值不足时生效
-    if target_data.sp_flag.unconscious_h == 4 and judge_data_type == "S" and judge < judge_data_value:
-        # 性骚扰级别通用，性行为级别需要至少2级催眠
-        if "骚扰" in instruct_name or "亲吻" in instruct_name or character_data.talent[332]:
+    # 催眠系能力的最后补正，仅在平然/空气催眠、性爱判定、且实行值不足时生效
+    if target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
+        # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
+        if (
+            (("骚扰" in instruct_name or "亲吻" in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
+            (character_data.talent[332] and target_data.hypnosis.hypnosis_degree >= 100)
+        ):
             # 实行值不够的差值为
             unenough = judge_data_value - judge
             # 催眠基础补正为100，再不足的部分用理智折算为实行值

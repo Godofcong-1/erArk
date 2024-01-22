@@ -754,14 +754,13 @@ def hypnosis_degree_limit_calculation() -> int:
     int -- 催眠上限
     """
     pl_character_data: game_type.Character = cache.character_data[0]
-    target_character_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
 
     # 如果已经达到当前玩家的能力上限，则不再增加
     hypnosis_degree_limit = 0
-    for cid in game_config.config_hypnosis_type:
-        hypnosis_type_data = game_config.config_hypnosis_type[cid]
-        if pl_character_data.talent[hypnosis_type_data.talent_id]:
-            hypnosis_degree_limit = max(hypnosis_degree_limit, hypnosis_type_data.hypnosis_degree)
+    for cid in game_config.config_hypnosis_talent_of_pl:
+        hypnosis_data = game_config.config_hypnosis_talent_of_pl[cid]
+        if pl_character_data.talent[hypnosis_data.hypnosis_talent_id]:
+            hypnosis_degree_limit = max(hypnosis_degree_limit, hypnosis_data.max_hypnosis_degree)
 
     return hypnosis_degree_limit
 
