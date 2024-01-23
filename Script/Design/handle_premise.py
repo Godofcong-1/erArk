@@ -12782,6 +12782,102 @@ def handle_favorability_ge_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_HAT)
+def handle_t_not_wear_hat(character_id: int) -> int:
+    """
+    交互对象没有穿着帽子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[0]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_GLASS)
+def handle_t_not_wear_glass(character_id: int) -> int:
+    """
+    交互对象没有戴着眼镜
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[1]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_EAR)
+def handle_t_not_wear_in_ear(character_id: int) -> int:
+    """
+    交互对象耳部没有穿着服饰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[2]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_NECK)
+def handle_t_not_wear_in_neck(character_id: int) -> int:
+    """
+    交互对象脖子没有穿着服饰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[3]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_MOUSE)
+def handle_t_not_wear_in_mouse(character_id: int) -> int:
+    """
+    交互对象嘴巴没有穿着服饰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[4]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_UP)
+def handle_t_not_wear_in_up(character_id: int) -> int:
+    """
+    交互对象没有穿着上衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[5]):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.WEAR_BRA)
 def handle_wear_bra(character_id: int) -> int:
     """
@@ -12858,6 +12954,22 @@ def handle_t_not_wear_gloves(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if len(target_data.cloth.cloth_wear[7]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_UP)
+def handle_t_not_wear_in_up(character_id: int) -> int:
+    """
+    交互对象没有穿着下衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[8]):
         return 0
     return 1
 
@@ -12993,6 +13105,70 @@ def handle_t_wear_socks(character_id: int) -> int:
     if len(target_data.cloth.cloth_wear[10]):
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_SOCKS)
+def handle_t_not_wear_socks(character_id: int) -> int:
+    """
+    交互对象没有穿着袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[10]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_SHOES)
+def handle_t_not_wear_shoes(character_id: int) -> int:
+    """
+    交互对象没有穿着鞋子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[11]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_TAKE_WEAPON)
+def handle_t_not_take_weapon(character_id: int) -> int:
+    """
+    交互对象没有拿着武器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[12]):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_TAKE_EXTRAS)
+def handle_t_not_take_extras(character_id: int) -> int:
+    """
+    交互对象没有拿着附属物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if len(target_data.cloth.cloth_wear[13]):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.CLOTH_OFF)

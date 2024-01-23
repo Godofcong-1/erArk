@@ -387,6 +387,11 @@ assistant_night_salutation_on,ASSISTANT_NIGHT_SALUTATION_ON,属性_助理,自己
 assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
 assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
 
+jj_0,JJ_0,属性_身体部位,自身阴茎大小为短小
+jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通
+jj_2,JJ_2,属性_身体部位,自身阴茎大小为粗大
+jj_3,JJ_3,属性_身体部位,自身阴茎大小为巨根
+
 is_follow,IS_FOLLOW,属性_特殊flag,当前正跟随玩家
 not_follow,NOT_FOLLOW,属性_特殊flag,当前没跟随玩家
 is_follow_1,IS_FOLLOW_1,属性_特殊flag,当前正智能跟随玩家(权重20)
@@ -832,11 +837,18 @@ entertainment_is_steam_sauna,ENTERTAINMENT_IS_STEAM_SAUNA,属性_娱乐,自己�
 entertainment_is_hydrotherapy_treatment,ENTERTAINMENT_IS_HYDROTHERAPY_TREATMENT,属性_娱乐,自己当前时段的娱乐为水疗护理
 entertainment_is_onsen_bath,ENTERTAINMENT_IS_ONSEN_BATH,属性_娱乐,自己当前时段的娱乐为泡温泉
 
+t_not_wear_hat,TARGET_NOT_WEAR_HAT,属性_服装,交互对象没有穿着帽子
+t_not_wear_glass,TARGET_NOT_WEAR_GLASS,属性_服装,交互对象没有戴着眼镜
+t_not_wear_in_ear,TARGET_NOT_WEAR_IN_EAR,属性_服装,交互对象耳部没有穿着服饰
+t_not_wear_in_neck,TARGET_NOT_WEAR_IN_NECK,属性_服装,交互对象脖子没有穿着服饰
+t_not_wear_in_mouse,TARGET_NOT_WEAR_IN_MOUSE,属性_服装,交互对象嘴巴没有穿着服饰
+t_not_wear_in_up,TARGET_NOT_WEAR_IN_UP,属性_服装,交互对象没有穿着上衣
 wear_bra,WEAR_BRA,属性_服装,穿着胸衣
 t_wear_bra,TARGET_WEAR_BRA,属性_服装,交互对象穿着胸衣
 t_not_wear_bra,TARGET_NOT_WEAR_BRA,属性_服装,交互对象没有穿着胸衣
 t_wear_gloves,TARGET_WEAR_GLOVES,属性_服装,交互对象戴着手套
 t_not_wear_gloves,TARGET_NOT_WEAR_GLOVES,属性_服装,交互对象没有戴着手套
+t_not_wear_in_down,TARGET_NOT_WEAR_IN_DOWN,属性_服装,交互对象没有穿着下衣
 wear_skirt,WEAR_SKIRT,属性_服装,穿着裙子
 t_wear_skirt,TARGET_WEAR_SKIRT,属性_服装,交互对象穿着裙子
 t_wear_trousers,TARGET_WEAR_TROUSERS,属性_服装,交互对象穿着裤子
@@ -845,6 +857,10 @@ t_wear_pan,TARGET_WEAR_PAN,属性_服装,交互对象穿着内裤
 t_not_wear_pan,TARGET_NOT_WEAR_PAN,属性_服装,交互对象没有穿着内裤
 wear_socks,WEAR_SOCKS,属性_服装,穿着袜子
 t_wear_socks,TARGET_WEAR_SOCKS,属性_服装,交互对象穿着袜子
+t_not_wear_socks,TARGET_NOT_WEAR_SOCKS,属性_服装,交互对象没有穿着袜子
+t_not_wear_shoes,TARGET_NOT_WEAR_SHOES,属性_服装,交互对象没有穿着鞋子
+t_not_take_weapon,TARGET_NOT_TAKE_WEAPON,属性_服装,交互对象没有拿着武器
+t_not_take_extras,TARGET_NOT_TAKE_EXTRAS,属性_服装,交互对象没有拿着附属物
 cloth_off,CLOTH_OFF,属性_服装,当前全裸
 not_cloth_off,NOT_CLOTH_OFF,属性_服装,当前不是全裸
 cloth_most_off,CLOTH_MOST_OFF,属性_服装,当前大致全裸（没穿上下外衣内衣）
@@ -853,13 +869,21 @@ shower_cloth,SHOWER_CLOTH,属性_服装,围着浴巾
 not_shower_cloth,NOT_SHOWER_CLOTH,属性_服装,没有围着浴巾
 
 a_shit,A_SHIT,污浊_身体,肠内脏污
+t_a_shit,T_A_SHIT,污浊_身体,交互对象肠内脏污
 enema,ENEMA,污浊_身体,正在灌肠中（含全种类灌肠）
+t_enema,T_ENEMA,污浊_身体,交互对象正在灌肠中（含全种类灌肠）
 not_enema,NOT_ENEMA,污浊_身体,非灌肠中（含全种类灌肠）
+t_not_enema,T_NOT_ENEMA,污浊_身体,交互对象非灌肠中（含全种类灌肠）
 enema_end,ENEMA_END,污浊_身体,已灌肠（含全种类灌肠）
+t_enema_end,T_ENEMA_END,污浊_身体,交互对象已灌肠（含全种类灌肠）
 normal_enema,NORMAL_ENEMA,污浊_身体,普通灌肠中
+t_normal_enema,T_NORMAL_ENEMA,污浊_身体,交互对象普通灌肠中
 semen_enema,SEMEN_ENEMA,污浊_身体,精液灌肠中
+t_semen_enema,T_SEMEN_ENEMA,污浊_身体,交互对象精液灌肠中
 normal_enema_end,NORMAL_ENEMA_END,污浊_身体,已普通灌肠
+t_normal_enema_end,T_NORMAL_ENEMA_END,污浊_身体,交互对象已普通灌肠
 semen_enema_end,SEMEN_ENEMA_END,污浊_身体,已精液灌肠
+t_semen_enema_end,T_SEMEN_ENEMA_END,污浊_身体,交互对象已精液灌肠
 t_hair_semen,T_HAIR_SEMEN,污浊_身体,交互对象当前头发有精液
 t_womb_semen,T_WOMB_SEMEN,污浊_身体,交互对象当前子宫有精液
 
