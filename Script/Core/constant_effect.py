@@ -579,6 +579,10 @@ class BehaviorEffect:
     """ 道具_增减 使用了一个事前避孕药 """
     USE_CONTRACEPTIVE_AFTER = 949
     """ 道具_增减 使用了一个事后避孕药 """
+    USE_RING = 950
+    """ 道具_增减 使用了一个戒指 """
+    USE_COLLAR = 951
+    """ 道具_增减 使用了一个项圈 """
     DELETE_FOOD = 991
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992

@@ -169,10 +169,12 @@ cid,effect_name,effect_type,effect
 335,ADD_1_CumsDrink_EXPERIENCE,属性_经验,增加1饮精经验
 336,ADD_1_Creampie_EXPERIENCE,属性_经验,增加1膣射经验
 337,ADD_1_AnalCums_EXPERIENCE,属性_经验,增加1肛射经验
+338,ADD_1_Hypnosis_EXPERIENCE,属性_经验,增加1催眠经验
+339,TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,交互对象增加1被催眠经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
-404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零
+404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，且同步高潮程度记录
 
 451,T_BE_BAGGED,属性_特殊flag,交互对象变成被装袋搬走状态
 452,T_BE_IMPRISONMENT,属性_特殊flag,交互对象变成被监禁状态
@@ -206,13 +208,14 @@ cid,effect_name,effect_type,effect
 492,BATHHOUSE_ENTERTAINMENT_FLAG_TO_1,属性_特殊flag,自身变成大浴场娱乐_要更衣状态
 493,BATHHOUSE_ENTERTAINMENT_FLAG_TO_2,属性_特殊flag,自身变成大浴场娱乐_要娱乐状态
 494,MILK_FLAG_TO_0,属性_特殊flag,自身清零要挤奶状态
+495,HYPNOSIS_FLAG_TO_0,属性_特殊flag,自身清零催眠系的flag状态
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整
 503,TARGET_COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整
 504,SING_ADD_ADJUST,指令_专用结算,（唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整
 505,PLAY_INSTRUMENT_ADD_ADJUST,指令_专用结算,（演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整
-506,KONWLEDGE_ADD_PINK_MONEY,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识获得少量粉色凭证
+506,OFFICIAL_WORK_ADD_ADJUST,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识处理当前的剩余工作量
 507,CURE_PATIENT_ADD_ADJUST,指令_专用结算,（诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
 508,ADD_HPMP_MAX,指令_专用结算,（锻炼身体用）增加体力气力上限
 509,SLEEP_ADD_ADJUST,指令_专用结算,（睡觉用）清零熟睡值（暂弃用）
@@ -291,6 +294,8 @@ cid,effect_name,effect_type,effect
 947,USE_OVULATION_PROMOTING_DRUGS,道具_增减,使用了一个排卵促进药
 948,USE_CONTRACEPTIVE_BEFORE,道具_增减,使用了一个事前避孕药
 949,USE_CONTRACEPTIVE_AFTER,道具_增减,使用了一个事后避孕药
+950,USE_RING,道具_增减,使用了一个戒指
+951,USE_COLLAR,道具_增减,使用了一个项圈
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
 993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中

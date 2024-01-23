@@ -1282,6 +1282,7 @@ def handle_ask_date():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_LOVE_2,
+     constant_promise.Premise.HAVE_RING,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_confession():
@@ -1320,6 +1321,7 @@ def handle_confession():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_OBEY_2,
+     constant_promise.Premise.HAVE_COLLAR,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_give_necklace():
