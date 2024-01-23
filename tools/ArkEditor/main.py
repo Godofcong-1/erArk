@@ -226,9 +226,14 @@ def save_talk_data():
         for k in cache_control.now_talk_data:
             now_talk: game_type.Talk = cache_control.now_talk_data[k]
             out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
-            for premise in now_talk.premise:
-                out_data += f"{premise}&"
-            out_data = out_data[:-1]
+            # 如果前提为空，就写入空白前提
+            if len(now_talk.premise) == 0:
+                out_data += "high_1"
+            # 如果前提不为空，就正常写入，并在最后去掉多余的&
+            else:
+                for premise in now_talk.premise:
+                    out_data += f"{premise}&"
+                out_data = out_data[:-1]
             out_data += f",{now_talk.text}\n"
 
         # 写入文件
