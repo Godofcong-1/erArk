@@ -11916,7 +11916,22 @@ def handle_have_clomid(character_id: int) -> int:
 @add_premise(constant_promise.Premise.A_SHIT)
 def handle_a_shit(character_id: int) -> int:
     """
-    校验角色是否肠内脏污
+    自身肠内脏污
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1, 3]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_A_SHIT)
+def handle_t_a_shit(character_id: int) -> int:
+    """
+    交互对象肠内脏污
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11932,7 +11947,22 @@ def handle_a_shit(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ENEMA)
 def handle_enema(character_id: int) -> int:
     """
-    校验角色是否正在灌肠中（含全种类灌肠）
+    自身正在灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1, 3]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_ENEMA)
+def handle_t_enema(character_id: int) -> int:
+    """
+    交互对象正在灌肠中（含全种类灌肠）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11948,7 +11978,23 @@ def handle_enema(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_ENEMA)
 def handle_not_enema(character_id: int) -> int:
     """
-    校验角色是否非灌肠中（含全种类灌肠）
+    自身非灌肠中（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.a_clean not in [1, 3]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_NOT_ENEMA)
+def handle_t_not_enema(character_id: int) -> int:
+    """
+    交互对象非灌肠中（含全种类灌肠）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11964,7 +12010,22 @@ def handle_not_enema(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ENEMA_END)
 def handle_enema_end(character_id: int) -> int:
     """
-    校验角色是否已灌肠（含全种类灌肠）
+    自身已灌肠（含全种类灌肠）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [2, 4]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_ENEMA_END)
+def handle_t_enema_end(character_id: int) -> int:
+    """
+    交互对象已灌肠（含全种类灌肠）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11980,7 +12041,22 @@ def handle_enema_end(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_ENEMA)
 def handle_normal_enema(character_id: int) -> int:
     """
-    校验角色是否普通灌肠中
+    自身普通灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_ENEMA)
+def handle_t_normal_enema(character_id: int) -> int:
+    """
+    交互对象普通灌肠中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11996,7 +12072,22 @@ def handle_normal_enema(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SEMEN_ENEMA)
 def handle_semen_enema(character_id: int) -> int:
     """
-    校验角色是否精液灌肠中
+    自身精液灌肠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [3]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_SEMEN_ENEMA)
+def handle_t_semen_enema(character_id: int) -> int:
+    """
+    交互对象精液灌肠中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -12012,7 +12103,22 @@ def handle_semen_enema(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_ENEMA_END)
 def handle_normal_enema_end(character_id: int) -> int:
     """
-    校验角色是否已普通灌肠
+    自身已普通灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [2]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_ENEMA_END)
+def handle_t_normal_enema_end(character_id: int) -> int:
+    """
+    交互对象已普通灌肠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -12028,7 +12134,22 @@ def handle_normal_enema_end(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SEMEN_ENEMA_END)
 def handle_semen_enema_end(character_id: int) -> int:
     """
-    校验角色是否已精液灌肠
+    自身已精液灌肠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.a_clean in [4]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_SEMEN_ENEMA_END)
+def handle_t_semen_enema_end(character_id: int) -> int:
+    """
+    交互对象已精液灌肠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -13465,6 +13586,66 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.assistant_services[6] == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.JJ_0)
+def handle_jj_0(character_id: int) -> int:
+    """
+    自身阴茎大小为短小
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.pl_ability.jj_size == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.JJ_1)
+def handle_jj_1(character_id: int) -> int:
+    """
+    自身阴茎大小为普通
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.pl_ability.jj_size == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.JJ_2)
+def handle_jj_2(character_id: int) -> int:
+    """
+    自身阴茎大小为粗大
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.pl_ability.jj_size == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.JJ_3)
+def handle_jj_3(character_id: int) -> int:
+    """
+    自身阴茎大小为巨根
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.pl_ability.jj_size == 3:
         return 1
     return 0
 

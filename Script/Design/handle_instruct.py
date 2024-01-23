@@ -3728,7 +3728,7 @@ def handle_vibrator_insertion_anal_off():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
-     constant_promise.Premise.NOT_ENEMA,
+     constant_promise.Premise.T_NOT_ENEMA,
      constant_promise.Premise.HAVE_ENEMAS},
 )
 def handle_clyster():
@@ -3748,7 +3748,7 @@ def handle_clyster():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
-     constant_promise.Premise.ENEMA,
+     constant_promise.Premise.T_ENEMA,
      },
 )
 def handle_clyster_end():
