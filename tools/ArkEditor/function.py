@@ -28,23 +28,23 @@ def read_CVP(cvp_value_str: str):
         cvp_str = cvp_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
     # 然后处理B属性部分
     if "A" in cvp_str:
-        b2_value = cvp_str.split("A|")[1].split("_")[0]
+        b2_value = cvp_str_list[2].split("A|")[1]
         b2_name = cache_control.ability_data[b2_value]
         cvp_str = cvp_str.replace(f"A|{b2_value}", f"能力{b2_name}")
     elif "T" in cvp_str:
-        b2_value = cvp_str.split("T|")[1].split("_")[0]
+        b2_value = cvp_str_list[2].split("T|")[1]
         b2_name = cache_control.talent_data[b2_value]
         cvp_str = cvp_str.replace(f"T|{b2_value}", f"素质{b2_name}")
     elif "J" in cvp_str:
-        b2_value = cvp_str.split("J|")[1].split("_")[0]
+        b2_value = cvp_str_list[2].split("J|")[1]
         b2_name = cache_control.juel_data[b2_value]
         cvp_str = cvp_str.replace(f"J|{b2_value}", f"宝珠{b2_name}")
     elif "E" in cvp_str:
-        b2_value = cvp_str.split("E|")[1].split("_")[0]
+        b2_value = cvp_str_list[2].split("E|")[1]
         b2_name = cache_control.experience_data[b2_value]
         cvp_str = cvp_str.replace(f"E|{b2_value}", f"经验{b2_name}")
     elif "S" in cvp_str:
-        b2_value = cvp_str.split("S|")[1].split("_")[0]
+        b2_value = cvp_str_list[2].split("S|")[1]
         b2_name = cache_control.state_data[b2_value]
         cvp_str = cvp_str.replace(f"S|{b2_value}", f"状态{b2_name}")
     # 最后去掉所有的下划线
