@@ -356,8 +356,8 @@ class CLOTH:
     # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
     # 靴子低筒不过小腿肚，中筒过小腿肚，高筒过膝盖
     def __init__(self):
-        self.clothing_tem: int = 0
-        """ 角色生成服装模板 """
+        self.clothing_tem: Dict[int, List] = {}
+        """ 角色个人服装模板 编号:[名字,部位]"""
         self.cloth_wear: Dict[int, List] = {}
         """ 角色穿着的服装 部位:衣服id"""
         self.cloth_off: Dict[int, List] = {}
