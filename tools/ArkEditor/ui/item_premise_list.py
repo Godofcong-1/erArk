@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout
 from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 import cache_control
+import function
 from ui.premise_menu import PremiseMenu, CVPMenu
 
 
@@ -57,11 +58,17 @@ class ItemPremiseList(QWidget):
         self.item_list.clear()
         if cache_control.now_edit_type_flag == 0:
             for premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                if "CVP" in premise and premise not in cache_control.premise_data:
+                    cvp_str = function.read_CVP(premise)
+                    cache_control.premise_data[premise] = cvp_str
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
         else:
             for premise in cache_control.now_event_data[cache_control.now_select_id].premise:
+                if "CVP" in premise and premise not in cache_control.premise_data:
+                    cvp_str = function.read_CVP(premise)
+                    cache_control.premise_data[premise] = cvp_str
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)

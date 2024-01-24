@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QFont, Qt
 import cache_control
+import function
 
 
 class TreeItem(QTreeWidgetItem):
@@ -87,7 +88,10 @@ class PremiseMenu(QDialog):
                     now_premise_group_list = cache_control.premise_group_data[premise_group]
                     now_premise_group_all_name = ""
                     for premise_cid in now_premise_group_list:
-                        now_premise_group_all_name += cache_control.premise_data[premise_cid]
+                        if "CVP" in premise_cid:
+                            now_premise_group_all_name += function.read_CVP(premise_cid)
+                        else:
+                            now_premise_group_all_name += cache_control.premise_data[premise_cid]
                         if premise_cid != now_premise_group_list[-1]:
                             now_premise_group_all_name += "&"
                     premise_group_node.setText(0, now_premise_group_all_name)
