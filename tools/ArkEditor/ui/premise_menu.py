@@ -412,10 +412,10 @@ class CVPMenu(QDialog):
             self.cvp_b2.setVisible(False)
         elif index == 1:
             self.cvp_b2.setVisible(False)
-            self.cvp_text.setText("好感度的-1~8级分别为：负数，100，500，100，2500，5000，10000，50000，100000")
+            self.cvp_text.setText("好感度的-1级和1~8级分别为：负数，100，500，1000，2500，5000，10000，50000，100000，此处使用的为好感的具体数值，不是等级")
         elif index == 2:
             self.cvp_b2.setVisible(False)
-            self.cvp_text.setText("信赖度的-1~8级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%")
+            self.cvp_text.setText("信赖度的-1级和18级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%，此处使用的为信赖度的具体数值，不是等级")
         elif index == 3:
             self.cvp_b2.clear()
             for ability_id, ability_name in cache_control.ability_data.items():
@@ -445,11 +445,11 @@ class CVPMenu(QDialog):
             for state_id, state_name in cache_control.state_data.items():
                 self.cvp_b2.addItem(f"{state_id}|{state_name}")
             self.cvp_b2.setCurrentIndex(0)
-            self.cvp_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999")
+            self.cvp_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999，此处使用的为状态值的具体数值，不是等级")
         elif index == 8:
             self.cvp_b2.setVisible(False)
             self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会到0，如，当选择爱情系的≤2时，只会到1的思慕，而不会到0或者负数的隶属系，其他情况同理")
         elif index == 9:
             self.cvp_b2.setVisible(False)
-            self.cvp_text.setText("时间也是一天24小时，如果要定起止时间的话，可以搭配使用【时间大于等于A】和【时间小于等于B】的两个前提来实现")
+            self.cvp_text.setText("时间为一天24小时制，如果要定起止时间的话，可以搭配使用【时间大于等于A】和【时间小于等于B】的两个前提来实现")
         self.cvp_b = self.cvp_b2
