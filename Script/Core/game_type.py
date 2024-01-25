@@ -356,8 +356,8 @@ class CLOTH:
     # 鞋子比靴子低，前面的是帮，低帮在脚踝下，中帮脚踝一半，高帮盖过脚踝
     # 靴子低筒不过小腿肚，中筒过小腿肚，高筒过膝盖
     def __init__(self):
-        self.clothing_tem: Dict[int, List] = {}
-        """ 角色个人服装模板 编号:[名字,部位]"""
+        self.clothing_tem: List = []
+        """ 角色个人服装模板 编号"""
         self.cloth_wear: Dict[int, List] = {}
         """ 角色穿着的服装 部位:衣服id"""
         self.cloth_off: Dict[int, List] = {}
@@ -1152,7 +1152,8 @@ class Cache:
         """ 世界设定 """
         self.system_setting: System_Setting = System_Setting()
         """ 系统设定 """
-
+        self.init_character_cloth_count = 10001
+        """ 生成角色服装id """
 
 class TargetChange:
     """交互对象角色变化结构体"""

@@ -77,10 +77,42 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # 生成衣服
     now_character.cloth = attr_calculation.get_cloth_zero()
     now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-    for cloth_id in character_tem.Cloth:
-        type = game_config.config_clothing_tem[cloth_id].clothing_type
-        # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-        now_character.cloth.cloth_wear[type].append(cloth_id)
+    # 旧的id型服装读取
+    # for cloth_id in character_tem.Cloth:
+    #     type = game_config.config_clothing_tem[cloth_id].clothing_type
+    #     # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+    #     now_character.cloth.cloth_wear[type].append(cloth_id)
+    # 新的str型服装读取
+    if not len(character_tem.Cloth):
+        now_character.cloth.clothing_tem.append(5999)
+        now_character.cloth.clothing_tem.append(8999)
+        now_character.cloth.cloth_wear[5].append(5999)
+        now_character.cloth.cloth_wear[8].append(8999)
+    for cloth_list in character_tem.Cloth:
+        # print(f"debug cloth_list = {cloth_list}")
+        # 新增服装数据到config_clothing_tem
+        name, type = cloth_list[0], cloth_list[1]
+        # tag的修正
+        if "必带" in name:
+            tag = 6
+            name = name.split(" ",1)[0]
+        else:
+            tag = 0
+        # 裤子和裙子的tag修正
+        if type == 8:
+            if "裤" in name:
+                tag = 4
+            elif "裙" in name:
+                tag = 5
+        cloth_data = {'cid':cache.init_character_cloth_count, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
+        # print(f"debug cloth_data = {cloth_data}")
+        now_cloth = config_def.ClothingTem()
+        now_cloth.__dict__ = cloth_data
+        game_config.config_clothing_tem[now_cloth.cid] = now_cloth
+
+        now_character.cloth.clothing_tem.append(cache.init_character_cloth_count)
+        now_character.cloth.cloth_wear[type].append(cache.init_character_cloth_count)
+        cache.init_character_cloth_count += 1
     # 生成藏品
     pl_character_data.pl_collection.token_list[character_id] = False
     pl_character_data.pl_collection.first_panties[character_id] = ""

@@ -33,13 +33,25 @@ def init_character_tem_data():
                 now_k = int(k.lstrip("T|"))
                 now_tem.Talent[now_k] = 1
             # 旧的服装数据读取，读取的是编号，然后在服装csv中查找对应的服装数据
+            # elif k.startswith("C|"):
+            #     now_k = int(k.lstrip("C|"))
+            #     now_tem.Cloth.append(now_k)
+            # 新的服装数据读取，读取的是str，直接获得服装数据
             elif k.startswith("C|"):
                 now_k = int(k.lstrip("C|"))
-                now_tem.Cloth.append(now_k)
-            # 新的服装数据读取，读取的是str，直接获得服装数据
-                if k.startswith("C|"):
-                    # print(f"debug : {k} {v}")
-                    pass
+                # 针对默认服装
+                if now_k in [5999, 8999]:
+                    continue
+                # print(f"debug : {k} {v}")
+                # 针对还没有修改完毕类型的服装的特别转换
+                if len(k) >= 5:
+                    now_data_len = len(k) - 4
+                    now_k = int(k[2: 2 + now_data_len])
+                    if now_k > 13:
+                        now_k  = int(now_k / 10)
+                    # print(f"debug : now_k = {now_k}")
+                cloth_list = [v, now_k]
+                now_tem.Cloth.append(cloth_list)
             else:
                 now_tem.__dict__[k] = v
         # 截取_之后的文本
