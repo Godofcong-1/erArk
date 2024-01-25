@@ -887,11 +887,34 @@ t_semen_enema_end,T_SEMEN_ENEMA_END,污浊_身体,交互对象已精液灌肠
 t_hair_semen,T_HAIR_SEMEN,污浊_身体,交互对象当前头发有精液
 t_womb_semen,T_WOMB_SEMEN,污浊_身体,交互对象当前子宫有精液
 
+hat_semen,HAT_SEMEN,污浊_服装,自身当前帽子有精液
+t_hat_semen,T_HAT_SEMEN,污浊_服装,交互对象当前帽子有精液
+glass_semen,GLASS_SEMEN,污浊_服装,自身当前眼镜有精液
+t_glass_semen,T_GLASS_SEMEN,污浊_服装,交互对象当前眼镜有精液
+in_ear_semen,IN_EAR_SEMEN,污浊_服装,自身当前耳饰有精液
+t_in_ear_semen,T_IN_EAR_SEMEN,污浊_服装,交互对象当前耳饰有精液
+in_neck_semen,IN_NECK_SEMEN,污浊_服装,自身当前脖饰有精液
+t_in_neck_semen,T_IN_NECK_SEMEN,污浊_服装,交互对象当前脖饰有精液
+in_mouse_semen,IN_MOUSE_SEMEN,污浊_服装,自身当前口饰有精液
+t_in_mouse_semen,T_IN_MOUSE_SEMEN,污浊_服装,交互对象当前口饰有精液
+up_cloth_semen,UP_CLOTH_SEMEN,污浊_服装,自身当前上衣有精液
 t_up_cloth_semen,T_UP_CLOTH_SEMEN,污浊_服装,交互对象当前上衣有精液
+bra_semen,BRA_SEMEN,污浊_服装,自身当前胸衣有精液
+t_bra_semen,T_BRA_SEMEN,污浊_服装,交互对象当前胸衣有精液
+glove_semen,GLOVE_SEMEN,污浊_服装,自身当前手套有精液
 t_glove_semen,T_GLOVE_SEMEN,污浊_服装,交互对象当前手套有精液
+down_cloth_semen,DOWN_CLOTH_SEMEN,污浊_服装,自身当前下衣有精液
 t_botton_cloth_semen,T_BOTTOM_CLOTH_SEMEN,污浊_服装,交互对象当前下衣有精液
+pan_semen,PAN_SEMEN,污浊_服装,自身当前内裤有精液
 t_pan_semen,T_PAN_SEMEN,污浊_服装,交互对象当前内裤有精液
+socks_semen,SOCKS_SEMEN,污浊_服装,自身当前袜子有精液
 t_socks_semen,T_SOCKS_SEMEN,污浊_服装,交互对象当前袜子有精液
+shoes_semen,SHOES_SEMEN,污浊_服装,自身当前鞋子有精液
+t_shoes_semen,T_SHOES_SEMEN,污浊_服装,交互对象当前鞋子有精液
+weapon_semen,WEAPON_SEMEN,污浊_服装,自身当前武器有精液
+t_weapon_semen,T_WEAPON_SEMEN,污浊_服装,交互对象当前武器有精液
+extras_semen,EXTRAS_SEMEN,污浊_服装,自身当前附属物有精液
+t_extras_semen,T_EXTRAS_SEMEN,污浊_服装,交互对象当前附属物有精液
 
 penis_in_t_hair,PENIS_IN_T_HAIR,H_射精与绝顶,当前阴茎位置为交互对象_发交中
 penis_in_t_face,PENIS_IN_T_FACE,H_射精与绝顶,当前阴茎位置为交互对象_阴茎蹭脸中

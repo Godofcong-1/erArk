@@ -13264,6 +13264,175 @@ def handle_not_shower_cloth(character_id: int) -> int:
         return 0
     return 1
 
+@add_premise(constant_promise.Premise.HAT_SEMEN)
+def handle_hat_semen(character_id: int) -> int:
+    """
+    自身当前帽子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[0][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_HAT_SEMEN)
+def handle_t_hat_semen(character_id: int) -> int:
+    """
+    交互对象当前帽子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[0][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.GLASS_SEMEN)
+def handle_glass_semen(character_id: int) -> int:
+    """
+    自身当前眼镜有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[1][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_GLASS_SEMEN)
+def handle_t_glass_semen(character_id: int) -> int:
+    """
+    交互对象当前眼镜有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[1][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_EAR_SEMEN)
+def handle_in_ear_semen(character_id: int) -> int:
+    """
+    自身当前耳饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[2][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_IN_EAR_SEMEN)
+def handle_t_in_ear_semen(character_id: int) -> int:
+    """
+    交互对象当前耳饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[2][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_NECK_SEMEN)
+def handle_in_neck_semen(character_id: int) -> int:
+    """
+    自身当前脖饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[3][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_IN_NECK_SEMEN)
+def handle_t_in_neck_semen(character_id: int) -> int:
+    """
+    交互对象当前脖饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[3][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_MOUSE_SEMEN)
+def handle_in_mouse_semen(character_id: int) -> int:
+    """
+    自身当前口饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[4][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_IN_MOUSE_SEMEN)
+def handle_t_in_mouse_semen(character_id: int) -> int:
+    """
+    交互对象当前口饰有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[4][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.UP_CLOTH_SEMEN)
+def handle_up_cloth_semen(character_id: int) -> int:
+    """
+    自身当前上衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[5][1]:
+        return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.T_UP_CLOTH_SEMEN)
 def handle_t_up_cloth_semen(character_id: int) -> int:
@@ -13277,6 +13446,52 @@ def handle_t_up_cloth_semen(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dirty.cloth_semen[5][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.BRA_SEMEN)
+def handle_bra_semen(character_id: int) -> int:
+    """
+    自身当前胸衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[6][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_BRA_SEMEN)
+def handle_t_bra_semen(character_id: int) -> int:
+    """
+    交互对象当前胸衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[6][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.GLOVE_SEMEN)
+def handle_glove_semen(character_id: int) -> int:
+    """
+    自身当前手套有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[7][1]:
         return 1
     return 0
 
@@ -13297,6 +13512,21 @@ def handle_t_glove_semen(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.DOWN_CLOTH_SEMEN)
+def handle_down_cloth_semen(character_id: int) -> int:
+    """
+    自身当前下衣有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[8][1]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_BOTTOM_CLOTH_SEMEN)
 def handle_t_botton_cloth_semen(character_id: int) -> int:
     """
@@ -13309,6 +13539,21 @@ def handle_t_botton_cloth_semen(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dirty.cloth_semen[8][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PAN_SEMEN)
+def handle_pan_semen(character_id: int) -> int:
+    """
+    自身当前内裤有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[9][1]:
         return 1
     return 0
 
@@ -13329,6 +13574,21 @@ def handle_t_pan_semen(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SOCKS_SEMEN)
+def handle_socks_semen(character_id: int) -> int:
+    """
+    自身当前袜子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[10][1]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_SOCKS_SEMEN)
 def handle_t_socks_semen(character_id: int) -> int:
     """
@@ -13341,6 +13601,99 @@ def handle_t_socks_semen(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dirty.cloth_semen[10][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOES_SEMEN)
+def handle_shoes_semen(character_id: int) -> int:
+    """
+    自身当前鞋子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[11][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_SHOES_SEMEN)
+def handle_t_shoes_semen(character_id: int) -> int:
+    """
+    交互对象当前鞋子有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[11][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.WEAPON_SEMEN)
+def handle_weapon_semen(character_id: int) -> int:
+    """
+    自身当前武器有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[12][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_WEAPON_SEMEN)
+def handle_t_weapon_semen(character_id: int) -> int:
+    """
+    交互对象当前武器有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[12][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.EXTRAS_SEMEN)
+def handle_extras_semen(character_id: int) -> int:
+    """
+    自身当前附属物有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.dirty.cloth_semen[13][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_EXTRAS_SEMEN)
+def handle_t_extras_semen(character_id: int) -> int:
+    """
+    交互对象当前附属物有精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dirty.cloth_semen[13][1]:
         return 1
     return 0
 
