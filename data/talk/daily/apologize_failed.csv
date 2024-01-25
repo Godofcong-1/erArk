@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,117,0,high_1,{Name}触发了道歉指令的地文
+0,117,0,high_1,{Name}双手合十希望得到原谅
 1,117,0,sys_0,{Name}表达了对{TargetName}的歉意
-2,117,0,sys_0,{Name}向{TargetName}道歉了
+2,117,0,sys_0,{Name}向{TargetName}的道歉得到了原谅，不过下一次恐怕不会这么轻松了。

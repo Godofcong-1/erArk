@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,911,0,high_1,{Name}触发了对{TargetName}进行单人催眠指令的地文
+0,911,0,high_1,{Name}对{TargetName}晃了晃手指，一股无形的源石力量渐渐深入{TargetName}的心灵之中
