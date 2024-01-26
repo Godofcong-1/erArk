@@ -38,8 +38,8 @@ class ItemPremiseList(QWidget):
         title_layout.addLayout(button_layout)
         main_layout.addLayout(title_layout)
         # 文字说明
-        info_label = QLabel()
-        info_label.setText("右键删除该前提，双击替换该前提")
+        self.info_label = QLabel()
+        self.info_label.setText("右键删除该前提，双击替换该前提")
         # 前提列表布局
         list_layout = QHBoxLayout()
         self.item_list = QListWidget()
@@ -49,18 +49,24 @@ class ItemPremiseList(QWidget):
         self.item_list.customContextMenuRequested.connect(self.show_context_menu)
         self.item_list.itemDoubleClicked.connect(self.change_this_item)
         list_layout.addWidget(self.item_list)
-        main_layout.addWidget(info_label)
+        main_layout.addWidget(self.info_label)
         main_layout.addLayout(list_layout)
         self.setLayout(main_layout)
 
     def update(self):
         """更新前提列表"""
         self.item_list.clear()
+        add_now_talk_weight, final_weight = 0, 1
         if cache_control.now_edit_type_flag == 0:
             for premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
+                # 如果是CVP前提，读取CVP前提的内容
                 if "CVP" in premise and premise not in cache_control.premise_data:
                     cvp_str = function.read_CVP(premise)
                     cache_control.premise_data[premise] = cvp_str
+                # 计算权重并更新到info_label的文本中
+                if premise[:5] == "high_":
+                    add_weignt = int(premise[5:])
+                    add_now_talk_weight += add_weignt
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
@@ -69,9 +75,23 @@ class ItemPremiseList(QWidget):
                 if "CVP" in premise and premise not in cache_control.premise_data:
                     cvp_str = function.read_CVP(premise)
                     cache_control.premise_data[premise] = cvp_str
+                if premise[:5] == "high_":
+                    add_weignt = int(premise[5:])
+                    add_now_talk_weight += add_weignt
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
+        draw_text = f"右键删除该前提，双击替换该前提，当前该文本的出现权重=1"
+        if add_now_talk_weight:
+            draw_text += f" + {add_now_talk_weight}"
+            final_weight += add_now_talk_weight
+        # 是NPC的专属口上时，权重翻三倍
+        if cache_control.now_adv_id:
+            draw_text += f"，角色口上再乘3"
+            final_weight = final_weight * 3
+        if final_weight != 1:
+            draw_text += f"，最终权重：{final_weight}"
+        self.info_label.setText(draw_text)
 
     def CVP(self):
         """展开CVP菜单"""
