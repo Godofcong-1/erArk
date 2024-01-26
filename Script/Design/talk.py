@@ -65,11 +65,18 @@ def handle_talk(character_id: int):
                             now_add_weight = constant.handle_premise_data[premise](character_id)
                             now_premise_data[premise] = now_add_weight
                         if now_add_weight:
-                            now_weight += now_add_weight
+                            # 如果premise的前5个字符是"high_"，则将权重加上对应值，否则权重为1
+                            if premise[:5] == "high_":
+                                now_weight += now_add_weight
+                            else:
+                                now_weight = max(now_weight, 1)
                         else:
                             now_weight = 0
                             break
             if now_weight:
+                # 如果该句文本是角色口上，则权重乘以三
+                if talk_config.adv_id != 0:
+                    now_weight *= 3
                 now_talk_data.setdefault(now_weight, set())
                 now_talk_data[now_weight].add(talk_id)
     handle_talk_draw(character_id, now_talk_data)
