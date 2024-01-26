@@ -70,7 +70,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if character_data.target_character_id == character_id:
             return 0
         final_character_data = cache.character_data[character_data.target_character_id]
-    elif premise_all_value_list[0][:1] == "A3":
+    elif premise_all_value_list[0][:2] == "A3":
         final_character_id = int(premise_all_value_list[0][3:])
         # 如果还没拥有该角色，则返回0
         if final_character_id not in cache.npc_id_got:
@@ -92,7 +92,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     elif premise_all_value_list[1][0] == "E":
         final_value = final_character_data.experience[type_son_id]
     elif premise_all_value_list[1][0] == "S":
-        final_value = final_character_data.state[type_son_id]
+        final_value = final_character_data.status_data[type_son_id]
     elif premise_all_value_list[1][0] == "F":
         final_value = final_character_data.favorability[0]
     elif premise_all_value_list[1][0] == "X":
