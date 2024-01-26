@@ -77,42 +77,11 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # 生成衣服
     now_character.cloth = attr_calculation.get_cloth_zero()
     now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-    # 旧的id型服装读取
-    # for cloth_id in character_tem.Cloth:
-    #     type = game_config.config_clothing_tem[cloth_id].clothing_type
-    #     # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-    #     now_character.cloth.cloth_wear[type].append(cloth_id)
-    # 新的str型服装读取
-    if not len(character_tem.Cloth):
-        now_character.cloth.clothing_tem.append(5999)
-        now_character.cloth.clothing_tem.append(8999)
-        now_character.cloth.cloth_wear[5].append(5999)
-        now_character.cloth.cloth_wear[8].append(8999)
-    for cloth_list in character_tem.Cloth:
-        # print(f"debug cloth_list = {cloth_list}")
-        # 新增服装数据到config_clothing_tem
-        name, type = cloth_list[0], cloth_list[1]
-        # tag的修正
-        if "必带" in name:
-            tag = 6
-            name = name.split(" ",1)[0]
-        else:
-            tag = 0
-        # 裤子和裙子的tag修正
-        if type == 8:
-            if "裤" in name:
-                tag = 4
-            else:
-                tag = 5
-        cloth_data = {'cid':cache.init_character_cloth_count, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
-        # print(f"debug cloth_data = {cloth_data}")
-        now_cloth = config_def.ClothingTem()
-        now_cloth.__dict__ = cloth_data
-        game_config.config_clothing_tem[now_cloth.cid] = now_cloth
-
-        now_character.cloth.clothing_tem.append(cache.init_character_cloth_count)
-        now_character.cloth.cloth_wear[type].append(cache.init_character_cloth_count)
-        cache.init_character_cloth_count += 1
+    for cloth_id in character_tem.Cloth:
+        type = game_config.config_clothing_tem[cloth_id].clothing_type
+        # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+        now_character.cloth.clothing_tem.append(cloth_id)
+        now_character.cloth.cloth_wear[type].append(cloth_id)
     # 生成藏品
     pl_character_data.pl_collection.token_list[character_id] = False
     pl_character_data.pl_collection.first_panties[character_id] = ""
@@ -121,13 +90,6 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # 文本颜色
     if character_tem.TextColor:
         now_character.text_color = character_tem.TextColor
-        # 用同Script\Config\game_config.py\load_font_data的方式赋予到config_font
-        tem_data = {'cid':1000 + character_id,'name':now_character.name,'foreground':now_character.text_color, 'info': now_character.name + '的文本颜色'}
-        # print(f"debug tem_data = {tem_data}")
-        now_font = config_def.FontConfig()
-        now_font.__dict__ = tem_data
-        game_config.config_font[now_font.cid] = now_font
-        game_config.config_font_data[now_font.name] = now_font.cid
     # 赋予口上大小
     now_character.talk_size = character_tem.Talk_Size
     # 最后集成
