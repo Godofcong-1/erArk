@@ -102,7 +102,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
         if type == 8:
             if "裤" in name:
                 tag = 4
-            elif "裙" in name:
+            else:
                 tag = 5
         cloth_data = {'cid':cache.init_character_cloth_count, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
         # print(f"debug cloth_data = {cloth_data}")

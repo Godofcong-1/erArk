@@ -42,14 +42,7 @@ def init_character_tem_data():
                 # 针对默认服装
                 if now_k in [5999, 8999]:
                     continue
-                # print(f"debug : {k} {v}")
-                # 针对还没有修改完毕类型的服装的特别转换
-                if len(k) >= 5:
-                    now_data_len = len(k) - 4
-                    now_k = int(k[2: 2 + now_data_len])
-                    if now_k > 13:
-                        now_k  = int(now_k / 10)
-                    # print(f"debug : now_k = {now_k}")
+                # print(f"debug : k={k}, now_k ={now_k}, v={v}")
                 cloth_list = [v, now_k]
                 now_tem.Cloth.append(cloth_list)
             else:
