@@ -1262,6 +1262,59 @@ def handle_hypnosis_one(
     originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ALL)
+def handle_hypnosis_all(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    集体催眠（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 获取当前场景的全角色名单
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    scene_character_list = scene_data.character_list.copy()
+    # 去掉里的自己
+    if character_id in scene_character_list:
+        scene_character_list.remove(character_id)
+    # 结算理智消耗
+    sanity_point_cost = 10 + 10 * len(scene_character_list)
+    character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
+    change_data.sanity_point -= sanity_point_cost
+    # 遍历角色列表
+    for target_id in scene_character_list:
+        target_character_data = cache.character_data[target_id]
+        change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
+        if target_character_data.dead:
+            continue
+        # 结算催眠度增加
+        hypnosis_degree_addition = attr_calculation.hypnosis_degree_calculation(target_id)
+        hypnosis_degree_grow = 10 * hypnosis_degree_addition
+        # debug下催眠增加到999
+        if cache.debug_mode:
+            hypnosis_degree_grow = 999
+        new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
+        # 赋予到角色数据
+        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+        target_change.hypnosis_degree += hypnosis_degree_grow
+        # 判断催眠完成
+        originium_arts.evaluate_hypnosis_completion(target_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_CANCEL)
 def handle_hypnosis_cancel(
         character_id: int,

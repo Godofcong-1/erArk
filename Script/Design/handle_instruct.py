@@ -504,7 +504,6 @@ def handle_hypnosis_one():
     _("集体催眠"),
     {constant_promise.Premise.ADVANCED_HYPNOSIS,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS,
@@ -515,6 +514,8 @@ def handle_hypnosis_one():
 def handle_hypnosis_all():
     """处理集体催眠"""
     character.init_character_behavior_start_time(0, cache.game_time)
+    now_draw = normal_panel.Close_Door_Panel(width)
+    now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ALL
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ALL
