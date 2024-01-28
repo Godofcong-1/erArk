@@ -2,15 +2,15 @@ import os
 import csv
 import cache_control
 
-premise_path = "Premise.csv"
-premise_group_path = "PremiseGroup.csv"
-status_path = "Status.csv"
-effect_path = "Effect.csv"
-ability_path = "Ability.csv"
-state_path = "CharacterState.csv"
-experience_path = "Experience.csv"
-juel_path = "Juel.csv"
-talent_path = "Talent.csv"
+premise_path = "csv/Premise.csv"
+premise_group_path = "csv/PremiseGroup.csv"
+status_path = "csv/Status.csv"
+effect_path = "csv/Effect.csv"
+ability_path = "csv/Ability.csv"
+state_path = "csv/CharacterState.csv"
+experience_path = "csv/Experience.csv"
+juel_path = "csv/Juel.csv"
+talent_path = "csv/Talent.csv"
 
 
 def load_config():
