@@ -19,6 +19,7 @@ from ui.window import Window
 from ui.menu_bar import MenuBar
 from ui.data_list import DataList
 from ui.tools_bar import ToolsBar
+# from ui.chara_list import CharaList
 from ui.item_premise_list import ItemPremiseList
 from ui.item_effect_list import ItemEffectList
 from ui.item_text_edit import ItemTextEdit
@@ -34,6 +35,7 @@ main_window: Window = Window()
 menu_bar: MenuBar = MenuBar()
 tools_bar: ToolsBar = ToolsBar()
 data_list: DataList = DataList()
+# chara_list: CharaList = CharaList()
 item_premise_list: ItemPremiseList = ItemPremiseList()
 cache_control.item_premise_list = item_premise_list
 item_effect_list: ItemEffectList = ItemEffectList()
@@ -93,6 +95,76 @@ def create_event_data():
     # 自动打开文件
     save_data()
     load_event_data()
+
+
+def create_chara_data():
+    """新建属性文件"""
+    dialog: QFileDialog = QFileDialog(menu_bar)
+    dialog.setFileMode(QFileDialog.AnyFile)
+    dialog.setNameFilter("CSV (*.csv)")
+    if dialog.exec():
+        file_names = dialog.selectedFiles()
+        file_path: str = file_names[0]
+        if not file_path.endswith(".csv"):
+            file_path += ".csv"
+        cache_control.now_file_path = file_path
+        cache_control.now_edit_type_flag = 2
+        save_talk_data()
+        load_chara_data_to_cache()
+
+def load_chara_data():
+    """载入属性文件"""
+    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
+    file_path = csv_file[0]
+    if file_path:
+        cache_control.now_file_path = file_path
+        load_chara_data_to_cache()
+
+def load_chara_data_to_cache():
+    """将属性数据传输到缓存中"""
+    file_path = cache_control.now_file_path
+    cache_control.now_talk_data = {}
+
+    # 读取文件路径中的数据
+    with open(file_path, encoding="utf-8") as now_file:
+        now_chara_data: game_type.Chara_Data = game_type.Chara_Data()
+        now_read = csv.DictReader(now_file)
+
+        for row in now_read:
+            print(f"debug 最开始row = {row}")
+            if row["key"] in ["key", "键"] or "说明行" in row["key"]:
+                continue
+            now_key = row["key"]
+            now_type = row["type"]
+            print(f"debug now_key = {now_key}, now_type = {now_type}")
+            # 基础数值变换
+            if now_type == 'int':
+                now_value = int(row["value"])
+            elif now_type == 'str':
+                now_value = str(row["value"])
+            elif now_type == 'bool':
+                now_value = int(row["value"])
+            # 复杂数值变换
+            if now_key.startswith("A|"):
+                sub_key = int(now_key.lstrip("A|"))
+                now_chara_data.Ability[sub_key] = now_value
+            elif now_key.startswith("E|"):
+                sub_key = int(now_key.lstrip("E|"))
+                now_chara_data.Experience[sub_key] = now_value
+            elif now_key.startswith("T|"):
+                sub_key = int(now_key.lstrip("T|"))
+                now_chara_data.Talent[sub_key] = now_value
+            elif now_key.startswith("C|"):
+                sub_key = int(now_key.lstrip("C|"))
+                now_chara_data.Cloth.setdefault(sub_key,[])
+                now_chara_data.Cloth[sub_key].append(now_value)
+            else:
+                now_chara_data.now_key = now_value
+    cache_control.now_chara_data = now_chara_data
+    cache_control.now_edit_type_flag = 2
+
+    # main_window.add_grid_talk_layout(chara_list)
+    # main_window.completed_layout()
 
 
 def save_data():
@@ -381,6 +453,8 @@ menu_bar.save_event_action.triggered.connect(save_data)
 menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
 menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
 menu_bar.save_talk_action.triggered.connect(save_talk_data)
+menu_bar.select_chara_file_action.triggered.connect(load_chara_data)
+menu_bar.new_chara_file_action.triggered.connect(create_chara_data)
 
 # 将文本编辑器的保存键绑定到口上事件列表的更新与文件的更新
 item_text_edit.save_button.clicked.connect(data_list.update)

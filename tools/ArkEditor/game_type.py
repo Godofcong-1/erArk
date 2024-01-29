@@ -37,3 +37,43 @@ class Event:
         """ 事件的结算器集合 """
         self.effect: dict = {}
         """ 事件的结算集合 """
+
+class Chara_Data:
+    """角色属性对象"""
+
+    def __init__(self):
+        """初始化事件对象"""
+        self.AdvNpc: int = 0
+        """ 干员编号 """
+        self.Name: str = ""
+        """ 干员名称 """
+        self.Sex: int = 0
+        """ 性别 """
+        self.Profession: int = 0
+        """ 职业 """
+        self.Race: int = 0
+        """ 种族 """
+        self.Nation: int = 0
+        """ 势力 """
+        self.Birthplace: int = 0
+        """ 出身地 """
+        self.Hp: int = 0
+        """ 初始体力 """
+        self.Mp: int = 0
+        """ 初始气力 """
+        self.Dormitory: str = ""
+        """ 初始宿舍 """
+        self.Token: str = ""
+        """ 信物 """
+        self.Introduce_1: str = ""
+        """ 人物介绍_1 """
+        self.TextColor: str = ""
+        """ 字体颜色 """
+        self.Ability: dict= {}
+        """ 能力 """
+        self.Experience: dict = {}
+        """ 经验 """
+        self.Talent: dict = {}
+        """ 素质 """
+        self.Cloth: dict = {}
+        """ 服装 """

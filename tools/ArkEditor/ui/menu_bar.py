@@ -57,13 +57,13 @@ class MenuBar(QMenuBar):
         self.addMenu(event_menu)
 
         # 角色菜单
-        chara_menu = QMenu("角色csv", self)
+        chara_menu = QMenu("角色属性", self)
         self.new_chara_file_action = QWidgetAction(self)
-        self.new_chara_file_action.setText("新建角色csv文件")
+        self.new_chara_file_action.setText("新建角色属性文件")
         self.select_chara_file_action = QWidgetAction(self)
-        self.select_chara_file_action.setText("读取角色csv文件")
+        self.select_chara_file_action.setText("读取角色属性文件")
         self.save_chara_action = QWidgetAction(self)
-        self.save_chara_action.setText("保存角色csv        Ctrl+S")
+        self.save_chara_action.setText("保存角色属性        Ctrl+S")
         self.font = QFont()
         self.font.setPointSize(11)
         self.setFont(self.font)
