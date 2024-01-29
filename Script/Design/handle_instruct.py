@@ -91,7 +91,7 @@ def instruct_filter_H_change(on_off_flag: bool):
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),
               {constant_promise.Premise.NOT_H,
-               constant_promise.Premise.HP_OR_MP_LOW,
+               constant_promise.Premise.HP_OR_MP_GE_80,
                constant_promise.Premise.PLACE_FURNITURE_GE_1,
                constant_promise.Premise.TIRED_LE_84}
               )

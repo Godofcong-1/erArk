@@ -4970,6 +4970,22 @@ def handle_unconscious_flag_5(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.NOT_UNCONSCIOUS_FLAG_5)
+def handle_not_unconscious_flag_5(character_id: int) -> int:
+    """
+    自身没有无意识_空气状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.unconscious_h == 5:
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_6)
 def handle_unconscious_flag_6(character_id: int) -> int:
     """
@@ -5380,6 +5396,26 @@ def handle_hp_or_mp_low(character_id: int) -> int:
     if hp_value < 0.3:
         return 1
     elif mp_value < 0.3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.HP_OR_MP_GE_80)
+def handle_hp_or_mp_ge_80(character_id: int) -> int:
+    """
+    自身体力或气力有一项低于80%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    hp_value = character_data.hit_point / character_data.hit_point_max
+    mp_value = character_data.mana_point / character_data.mana_point_max
+    if hp_value < 0.8:
+        return 1
+    elif mp_value < 0.8:
         return 1
     else:
         return 0
