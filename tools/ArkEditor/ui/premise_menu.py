@@ -33,7 +33,7 @@ class PremiseMenu(QDialog):
         super(PremiseMenu, self).__init__()
         if cache_control.now_edit_type_flag == 1:
             self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
@@ -101,7 +101,7 @@ class PremiseMenu(QDialog):
                             premise_group_node.setCheckState(0, Qt.Checked)
                         else:
                             premise_group_node.setCheckState(0, Qt.Unchecked)
-                    else:
+                    elif cache_control.now_edit_type_flag == 0:
                         if premise_group in cache_control.now_talk_data[cache_control.now_select_id].premise:
                             premise_group_node.setCheckState(0, Qt.Checked)
                         else:
@@ -123,7 +123,7 @@ class PremiseMenu(QDialog):
                             premise_node.setCheckState(0, Qt.Checked)
                         else:
                             premise_node.setCheckState(0, Qt.Unchecked)
-                    else:
+                    elif cache_control.now_edit_type_flag == 0:
                         if premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
                             premise_node.setCheckState(0, Qt.Checked)
                         else:
@@ -177,7 +177,7 @@ class PremiseMenu(QDialog):
 
         if cache_control.now_edit_type_flag == 1:
             data = cache_control.now_event_data[cache_control.now_select_id]
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             data = cache_control.now_talk_data[cache_control.now_select_id]
 
         if item.checkState(column) == Qt.Checked:
@@ -253,7 +253,7 @@ class CVPMenu(QDialog):
         super(CVPMenu, self).__init__()
         if cache_control.now_edit_type_flag == 1:
             self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
         self.font = QFont()
         self.font.setPointSize(11)
@@ -389,7 +389,7 @@ class CVPMenu(QDialog):
         # 更新前提列表
         if cache_control.now_edit_type_flag == 1:
             cache_control.now_event_data[cache_control.now_select_id].premise[cvp_value_str] = 1
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].premise[cvp_value_str] = 1
         cache_control.item_premise_list.update()
         self.close()

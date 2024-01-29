@@ -132,7 +132,7 @@ class DataList(QWidget):
                 delete_action.setText("删除事件")
                 delete_action.triggered.connect(self.delete_event)
                 menu.addAction(delete_action)
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             create_action: QWidgetAction = QWidgetAction(self)
             create_action.setText("新增口上")
             create_action.triggered.connect(self.create_talk)
@@ -152,7 +152,7 @@ class DataList(QWidget):
         """新增条目"""
         if cache_control.now_edit_type_flag == 1:
             self.create_event()
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.create_talk()
 
     def copy_text(self):
@@ -162,14 +162,14 @@ class DataList(QWidget):
             return
         if cache_control.now_edit_type_flag == 1:
             self.copy_event()
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.copy_talk()
 
     def delete_text(self):
         """删除条目"""
         if cache_control.now_edit_type_flag == 1:
             self.delete_event()
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.delete_talk()
 
     def search(self):

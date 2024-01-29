@@ -279,7 +279,7 @@ def change_status_menu(action: QWidgetAction):
     if cache_control.now_select_id != '':
         if cache_control.now_edit_type_flag == 1:
             cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].status_id = cache_control.now_status
 
 

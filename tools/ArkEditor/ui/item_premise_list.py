@@ -70,7 +70,7 @@ class ItemPremiseList(QWidget):
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
-        else:
+        elif cache_control.now_edit_type_flag == 1:
             for premise in cache_control.now_event_data[cache_control.now_select_id].premise:
                 if "CVP" in premise and premise not in cache_control.premise_data:
                     cvp_str = function.read_CVP(premise)
@@ -116,7 +116,7 @@ class ItemPremiseList(QWidget):
         if cache_control.now_edit_type_flag == 1:
             if premise_cid in cache_control.now_event_data[cache_control.now_select_id].premise:
                 del cache_control.now_event_data[cache_control.now_select_id].premise[premise_cid]
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             if premise_cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
                 del cache_control.now_talk_data[cache_control.now_select_id].premise[premise_cid]
         # 展开前提菜单
@@ -127,7 +127,7 @@ class ItemPremiseList(QWidget):
         if cache_control.now_select_id != "":
             if cache_control.now_edit_type_flag == 1:
                 cache_control.now_event_data[cache_control.now_select_id].premise = {}
-            else:
+            elif cache_control.now_edit_type_flag == 0:
                 cache_control.now_talk_data[cache_control.now_select_id].premise = {}
             self.item_list.clear()
 
@@ -149,7 +149,7 @@ class ItemPremiseList(QWidget):
                 if cache_control.now_edit_type_flag == 1:
                     if premise_cid in cache_control.now_event_data[cache_control.now_select_id].premise:
                         del cache_control.now_event_data[cache_control.now_select_id].premise[premise_cid]
-                else:
+                elif cache_control.now_edit_type_flag == 0:
                     if premise_cid in cache_control.now_talk_data[cache_control.now_select_id].premise:
                         del cache_control.now_talk_data[cache_control.now_select_id].premise[premise_cid]
 
@@ -165,7 +165,7 @@ class ItemPremiseList(QWidget):
         premise_list = []
         if cache_control.now_edit_type_flag == 1:
             premise_list = list(cache_control.now_event_data[cache_control.now_select_id].premise.keys())
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             premise_list = list(cache_control.now_talk_data[cache_control.now_select_id].premise.keys())
         premise_list.sort()
         # 添加前提组

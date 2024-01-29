@@ -4,7 +4,7 @@ import game_type
 now_file_path: str = ""
 """ 当前事件数据文件路径 """
 now_edit_type_flag = 1
-""" 当前编辑器编辑类型，0为口上，1为事件 """
+""" 当前编辑器编辑类型，0为口上，1为事件，2为属性 """
 
 now_talk_data: Dict[str, game_type.Talk] = {}
 """ 当前口上数据 """

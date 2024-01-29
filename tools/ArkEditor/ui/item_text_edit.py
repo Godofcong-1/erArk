@@ -95,7 +95,7 @@ class ItemTextEdit(QWidget):
         """更新文本内容"""
         if cache_control.now_edit_type_flag == 1:
             self.now_text = cache_control.now_event_data[cache_control.now_select_id].text
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
         self.label_text.setText(self.now_text)
 
@@ -108,7 +108,7 @@ class ItemTextEdit(QWidget):
         now_text = now_text.replace("\n", "\\n")
         if cache_control.now_edit_type_flag == 1:
             cache_control.now_event_data[cache_control.now_select_id].text = now_text
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].text = now_text
 
     def show_right_click_menu(self, pos):
