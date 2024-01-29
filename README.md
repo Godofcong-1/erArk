@@ -8,12 +8,12 @@ era-明日方舟（目前）
 R18游戏，艹干员，纯爱向，无牛无G。\
 游戏基本内容以TW为主，顺便缝合了AM/YM/SQC/MGT等各Era，如有雷同，不是巧合。\
 单人开发，抽空写点，有生之年系列\
-(new!)预定2024.1.1出α测
+(new!)游戏基础框架初步完成，2024.1.1开始α测
 
 非开发者的普通玩家
 ----
-不需要下载代码配环境再编译什么的，右边Releases有编译好的exe，点击即玩。\
-(new!)新增了口上+事件的编辑器erArkEditor，也附在Releases里了，不需要写代码可以直接使用编辑器生成口上和事件
+右边Releases有编译好的exe，点击即玩。\
+口上+事件的编辑器erArkEditor，也附在Releases里了，不需要写代码可以直接使用编辑器生成口上和事件
 
 初次启动
 ----
@@ -25,7 +25,7 @@ R18游戏，艹干员，纯爱向，无牛无G。\
 
 BUG反馈
 ----
-当遇到游戏闪退，可检查 error.log 文件，并将 error.log 文件中内容贴至 issues 中进行反馈，为了方便复现，请提供版本号、bug前大致在做什么
+当遇到游戏BUG，可检查 error.log 文件，并将 error.log 文件中内容贴至 issues 中进行反馈，为了方便复现，请提供版本号、bug前大致在做什么，如果是复杂的BUG最好能够提供存档
 
 更新日志
 ----
@@ -33,11 +33,8 @@ BUG反馈
 
 著作权信息
 ----
-项目本身基于Python独立进行开发，用到的原素材归官方所有，自制的口上/事件/图片等素材归对应作者 \
-
-此项目的原始版本来自于任悠云开发的https://github.com/pokemonchw/dieloli \
-基于 [cc by nc sa](http://creativecommons.org/licenses/by-nc-sa/2.0/) 协议，开发者允许任何人基于此项目做除商业行为外的任何事，同时允许任何人对本项目进行除协议外的任何改动，仅需注明原作者，以及以相同方式进行传播(指同样使用cc by-nc-sa协议) \
-禁止任何人将其用作商业用途
+项目本身基于Python独立进行开发，遵循 [cc by nc sa](http://creativecommons.org/licenses/by-nc-sa/2.0/) 协议 \
+禁止任何人将其用作商业用途，详细版权声明见游戏内 \
 
 Repo说明
 ----
@@ -73,10 +70,10 @@ python3.9+
 
 字体
 ----
-本游戏界面设计依赖 Sarasa Mono SC 字体，若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
-字体文件已附，有需要的自行安装\
+本游戏界面设计依赖 Sarasa Mono SC 字体，字体文件已附在Releases中 \
+若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
 顺便贴一下字体的git链接[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
-可通过修改 config.ini 中的 font 项自行更改字体
+如果不喜欢，可通过修改 config.ini 中的 font 项自行更改字体，同样不能保证能否达到设计效果 \
 
 本地化
 ----
