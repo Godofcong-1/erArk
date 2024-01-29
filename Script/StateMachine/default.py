@@ -1060,6 +1060,8 @@ def character_chat_rand_character(character_id: int):
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
+    if 0 in character_set:
+        character_set.remove(0)
     character_list = list(character_set)
     if len(character_list):
         target_id = random.choice(character_list)
@@ -1082,6 +1084,8 @@ def character_stroke_rand_character(character_id: int):
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     character_set = scene_data.character_list.copy()
     character_set.remove(character_id)
+    if 0 in character_set:
+        character_set.remove(0)
     character_list = list(character_set)
     if len(character_list):
         target_id = random.choice(character_list)
@@ -1578,6 +1582,8 @@ def character_singing_to_rand_character(character_id: int):
         ].character_list
     )
     character_list.remove(character_id)
+    if 0 in character_list:
+        character_list.remove(0)
     if len(character_list):
         target_id = random.choice(character_list)
         character_data.behavior.behavior_id = constant.Behavior.SINGING
@@ -1600,6 +1606,8 @@ def character_play_instrument_to_rand_character(character_id: int):
         ].character_list
     )
     character_list.remove(character_id)
+    if 0 in character_list:
+        character_list.remove(0)
     if len(character_list):
         target_id = random.choice(character_list)
         character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
