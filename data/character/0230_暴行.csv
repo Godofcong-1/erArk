@@ -4,7 +4,7 @@ AdvNpc,int,230,0,干员编号：230
 Name,str,暴行,1,姓名：暴行
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
-Race,int,1,0,种族：卡特斯/奇美拉
+Race,int,17,0,种族：卡特斯
 Nation,int,111,1,势力：雷姆必拓
 Birthplace,int,9,1,出生地：雷姆必拓
 Hp,int,2500,0,初始体力：2500

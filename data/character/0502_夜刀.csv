@@ -4,7 +4,7 @@ AdvNpc,int,502,0,干员编号
 Name,str,夜刀,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
-Race,int,1,0,鬼
+Race,int,15,0,鬼
 Nation,int,4,0,行动组A4
 Birthplace,int,3,0,东
 Hp,int,1500,0,初始体力

@@ -483,10 +483,18 @@ class Character_FirstNPC:
         self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
         self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         self.name_filter_flag = False
-        self.chest_filter_flag, self.chest_filter_id_dict = 0, {"绝壁": [], "贫乳": [], "普乳": [], "巨乳": [], "爆乳": []}
         chest_filter_list = ["无","绝壁", "贫乳", "普乳", "巨乳", "爆乳"]
-        self.age_filter_flag, self.age_filter_id_dict = 0, {"幼女": [], "萝莉": [], "少女": [], "大姐姐": [], "熟女": [], "人妻": []}
+        self.chest_filter_flag, self.chest_filter_id_dict = 0, {"绝壁": [], "贫乳": [], "普乳": [], "巨乳": [], "爆乳": []}
         age_filter_list = ["无","幼女", "萝莉", "少女", "大姐姐", "熟女", "人妻"]
+        self.age_filter_flag, self.age_filter_id_dict = 0, {"幼女": [], "萝莉": [], "少女": [], "大姐姐": [], "熟女": [], "人妻": []}
+        self.race_filter_flag, self.race_filter_id_dict = 0, {}
+        race_filter_list = []
+        for cid in game_config.config_race:
+            if cid == 0:
+                continue
+            race_name = game_config.config_race[cid].name
+            race_filter_list.append(race_name)
+            self.race_filter_id_dict[race_name] = []
 
         for NPC_id in self.id_list:
             target_data: game_type.Character = cache.character_data[NPC_id]
@@ -516,6 +524,11 @@ class Character_FirstNPC:
                 self.age_filter_id_dict["熟女"].append(NPC_id)
             elif target_data.talent[107]:
                 self.age_filter_id_dict["人妻"].append(NPC_id)
+
+            # 种族过滤
+            race_cid = target_data.race
+            race_name = game_config.config_race[race_cid].name
+            self.race_filter_id_dict[race_name].append(NPC_id)
 
         while 1:
             return_list = []
@@ -570,6 +583,12 @@ class Character_FirstNPC:
             else:
                 button_text = " [外表年龄筛选] "
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.age_filter)
+            if self.race_filter_flag:
+                button_text = f" [种族筛选中-{race_filter_list[self.race_filter_flag - 1]}] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.race_filter)
+            else:
+                button_text = " [种族筛选] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.race_filter)
             button_draw.draw()
             return_list.append(button_draw.return_text)
             button_text = " [重置选择] "
@@ -663,6 +682,16 @@ class Character_FirstNPC:
         elif self.age_filter_flag == 6:
             self.id_list = self.age_filter_id_dict["人妻"]
         self.chest_filter_flag = 0
+
+    def race_filter(self):
+        """种族筛选"""
+        self.race_filter_flag = (self.race_filter_flag + 1) % 41
+        if self.race_filter_flag == 0:
+            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        else:
+            now_cid = self.race_filter_flag
+            race_name = game_config.config_race[now_cid].name
+            self.id_list = self.race_filter_id_dict[race_name]
 
     def reset_select(self):
         """重置选择"""

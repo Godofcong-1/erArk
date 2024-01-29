@@ -4,7 +4,7 @@ AdvNpc,int,281,0,干员编号：281
 Name,str,泡普卡,1,姓名：泡普卡
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
-Race,int,1,0,种族：卡特斯/奇美拉
+Race,int,17,0,种族：卡特斯
 Nation,int,7,1,势力：行动预备组A6
 Birthplace,int,9,1,出生地：雷姆必拓
 Hp,int,2500,0,初始体力：2500
