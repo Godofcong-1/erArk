@@ -15,8 +15,11 @@ class DataList(QWidget):
         super(DataList, self).__init__()
         self.layout = QGridLayout(self)
         self.top_layout = QHBoxLayout()
-        self.text_edit = QTextEdit("0")
+        self.chara_id_text_edit = QTextEdit("0")
         self.menu_bar: QMenuBar = None
+        self.text_id_text_edit = QTextEdit("0")
+        self.text_id_change_button = QPushButton("修改序号")
+        self.text_id_change_button.clicked.connect(self.update_text_id)
         self.status_menu: QMenu = None
         self.type_menu: QMenu = None
         # 新增条目、复制条目、删除条目
@@ -54,7 +57,7 @@ class DataList(QWidget):
         self.update_clear = 0
 
         # 连接 self.text_edit 的 textChanged 信号到 update_adv_id 方法
-        self.text_edit.textChanged.connect(self.update_adv_id)
+        self.chara_id_text_edit.textChanged.connect(self.update_adv_id)
 
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
@@ -68,16 +71,22 @@ class DataList(QWidget):
         # 说明文本
         label1_text = QLabel("角色id")
         label2_text = QLabel("触发指令与状态")
+        label3_text = QLabel("条目序号")
 
         # 上方布局
         self.top_layout.addWidget(label1_text)
-        self.top_layout.addWidget(self.text_edit)
+        self.top_layout.addWidget(self.chara_id_text_edit)
         self.top_layout.addWidget(label2_text)
         self.top_layout.addWidget(self.menu_bar)
+        self.top_layout.addWidget(label3_text)
+        self.top_layout.addWidget(self.text_id_text_edit)
+        self.top_layout.addWidget(self.text_id_change_button)
 
         # 设置编辑框的高度和宽度
-        self.text_edit.setFixedHeight(32)
-        self.text_edit.setFixedWidth(40)
+        self.chara_id_text_edit.setFixedHeight(32)
+        self.chara_id_text_edit.setFixedWidth(40)
+        self.text_id_text_edit.setFixedHeight(32)
+        self.text_id_text_edit.setFixedWidth(100)
 
         # 总布局
         self.layout.addLayout(self.top_layout, 0, 0)
@@ -287,11 +296,32 @@ class DataList(QWidget):
 
     def update_adv_id(self):
         """根据文本编辑框更新当前的角色id"""
-        cache_control.now_adv_id = self.text_edit.toPlainText()
+        cache_control.now_adv_id = self.chara_id_text_edit.toPlainText()
         if cache_control.now_edit_type_flag == 1:
             cache_control.now_event_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
         elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
+
+    def update_text_id(self):
+        """根据文本编辑框更新当前的条目序号"""
+        now_text_id = self.text_id_text_edit.toPlainText()
+        # 如果不是int，弹出提示
+        if not now_text_id.isdigit():
+            self.text_id_text_edit.setText("请输入正整数")
+            return
+        if cache_control.now_edit_type_flag == 0:
+            # 检查是否有已经有该条目序号，有的话弹出提示
+            if now_text_id in cache_control.now_talk_data:
+                self.text_id_text_edit.setText(f"已有{now_text_id}号")
+                return
+            cache_control.now_talk_data[now_text_id] = cache_control.now_talk_data[cache_control.now_select_id]
+            cache_control.now_talk_data[now_text_id].cid = now_text_id
+            del cache_control.now_talk_data[cache_control.now_select_id]
+            cache_control.now_select_id = now_text_id
+        elif cache_control.now_edit_type_flag == 1:
+            self.text_id_text_edit.setText("事件没有序号")
+            return
+        self.update()
 
     def update(self):
         """根据选项刷新当前绘制的列表"""
@@ -300,6 +330,8 @@ class DataList(QWidget):
         self.update_clear = 0
 
         if cache_control.now_edit_type_flag == 0:
+            # 按cid排序整个cache_control.now_talk_data
+            cache_control.now_talk_data = dict(sorted(cache_control.now_talk_data.items(), key=lambda x: int(x[0])))
             # self.menu_bar 中去掉 self.type_menu
             self.menu_bar.removeAction(self.type_menu.menuAction())
             for cid in cache_control.now_talk_data:
@@ -322,7 +354,9 @@ class DataList(QWidget):
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
-                self.text_edit.setText(chara_id)
+                self.chara_id_text_edit.setText(chara_id)
+                self.text_id_text_edit.setText(cache_control.now_select_id)
+                # self.text_id_text_edit.setText(cache_control.now_talk_data[cache_control.now_select_id].cid)
 
                 # 遍历 list_widget 中的所有 item
                 for i in range(self.list_widget.count()):
@@ -362,7 +396,7 @@ class DataList(QWidget):
                 cache_control.now_status = now_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
-                self.text_edit.setText(chara_id)
+                self.chara_id_text_edit.setText(chara_id)
 
                 # 遍历 list_widget 中的所有 item
                 for i in range(self.list_widget.count()):
