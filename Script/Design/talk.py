@@ -45,7 +45,7 @@ def handle_talk(character_id: int):
                 now_weight = 0
                 for premise in game_config.config_talk_premise_data[talk_id]:
                     # 无意识模式判定
-                    if target_data.sp_flag.unconscious_h and ("is_unconscious_h" not in game_config.config_talk_premise_data[talk_id]):
+                    if target_data.sp_flag.unconscious_h and ("unconscious" not in game_config.config_talk_premise_data[talk_id]):
                         now_weight = 0
                         break
                     if premise in now_premise_data:

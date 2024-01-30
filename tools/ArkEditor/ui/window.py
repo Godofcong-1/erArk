@@ -32,6 +32,14 @@ class Window(QMainWindow):
         self.main_layout.addWidget(label3, 0, 2)
         self.main_layout.addWidget(label4, 1, 1, 1, 2)
 
+    def add_grid_chara_data_layout(self, label1: QWidget):
+        """
+        进行部件的布局，1：0行0列，占2行1列；2：0行1列；3：0行2列；4：1行1列，占1行2列
+        Keyword arguments:
+        widget -- 小部件
+        """
+        self.main_layout.addWidget(label1)
+
     def add_tool_widget(self, widget: QWidget):
         """
         添加工具部件

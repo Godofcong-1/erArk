@@ -56,3 +56,11 @@ juel_data: dict = {}
 """ 宝珠数据 """
 talent_data: dict = {}
 """ 素质数据 """
+birthplace_data: dict = {}
+""" 出身地数据 """
+nation_data: dict = {}
+""" 势力数据 """
+profession_data: dict = {}
+""" 职业数据 """
+race_data: dict = {}
+""" 种族数据 """

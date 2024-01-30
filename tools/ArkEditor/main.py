@@ -19,7 +19,7 @@ from ui.window import Window
 from ui.menu_bar import MenuBar
 from ui.data_list import DataList
 from ui.tools_bar import ToolsBar
-# from ui.chara_list import CharaList
+from ui.chara_list import CharaList
 from ui.item_premise_list import ItemPremiseList
 from ui.item_effect_list import ItemEffectList
 from ui.item_text_edit import ItemTextEdit
@@ -35,7 +35,7 @@ main_window: Window = Window()
 menu_bar: MenuBar = MenuBar()
 tools_bar: ToolsBar = ToolsBar()
 data_list: DataList = DataList()
-# chara_list: CharaList = CharaList()
+chara_list: CharaList = CharaList()
 item_premise_list: ItemPremiseList = ItemPremiseList()
 cache_control.item_premise_list = item_premise_list
 item_effect_list: ItemEffectList = ItemEffectList()
@@ -131,12 +131,13 @@ def load_chara_data_to_cache():
         now_read = csv.DictReader(now_file)
 
         for row in now_read:
-            print(f"debug 最开始row = {row}")
+            # print(f"debug 最开始row = {row}")
             if row["key"] in ["key", "键"] or "说明行" in row["key"]:
                 continue
             now_key = row["key"]
+            sub_key = 0
             now_type = row["type"]
-            print(f"debug now_key = {now_key}, now_type = {now_type}")
+            # print(f"debug now_key = {now_key}, now_type = {now_type}")
             # 基础数值变换
             if now_type == 'int':
                 now_value = int(row["value"])
@@ -144,6 +145,33 @@ def load_chara_data_to_cache():
                 now_value = str(row["value"])
             elif now_type == 'bool':
                 now_value = int(row["value"])
+            # 基础属性赋予
+            if now_key == "AdvNpc":
+                now_chara_data.AdvNpc = now_value
+            elif now_key == "Name":
+                now_chara_data.Name = now_value
+            elif now_key == "Sex":
+                now_chara_data.Sex = now_value
+            elif now_key == "Profession":
+                now_chara_data.Profession = now_value
+            elif now_key == "Race":
+                now_chara_data.Race = now_value
+            elif now_key == "Nation":
+                now_chara_data.Nation = now_value
+            elif now_key == "Birthplace":
+                now_chara_data.Birthplace = now_value
+            elif now_key == "Hp":
+                now_chara_data.Hp = now_value
+            elif now_key == "Mp":
+                now_chara_data.Mp = now_value
+            elif now_key == "Dormitory":
+                now_chara_data.Dormitory = now_value
+            elif now_key == "Token":
+                now_chara_data.Token = now_value
+            elif now_key == "Introduce_1":
+                now_chara_data.Introduce_1 = now_value
+            elif now_key == "TextColor":
+                now_chara_data.TextColor = now_value
             # 复杂数值变换
             if now_key.startswith("A|"):
                 sub_key = int(now_key.lstrip("A|"))
@@ -158,13 +186,13 @@ def load_chara_data_to_cache():
                 sub_key = int(now_key.lstrip("C|"))
                 now_chara_data.Cloth.setdefault(sub_key,[])
                 now_chara_data.Cloth[sub_key].append(now_value)
-            else:
-                now_chara_data.now_key = now_value
+            # print(f"debug now_key = {now_key}, sub_key = {sub_key}, now_value = {now_value}")
     cache_control.now_chara_data = now_chara_data
     cache_control.now_edit_type_flag = 2
+    chara_list.update()
 
-    # main_window.add_grid_talk_layout(chara_list)
-    # main_window.completed_layout()
+    main_window.add_grid_chara_data_layout(chara_list)
+    main_window.completed_layout()
 
 
 def save_data():
