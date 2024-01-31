@@ -1593,7 +1593,6 @@ class SecondBehavior:
     LOVE_SUPPORT_OFF = 1422
     """ 开启助攻服务 """
 
-
     HAS_BEEN_PRIMARY_HYPNOSIS = 1501
     """ 获得被浅层催眠素质 """
     HAS_BEEN_DEEP_HYPNOSIS = 1502
