@@ -3199,7 +3199,7 @@ def handle_both_h_state_reset(
         now_time: datetime.datetime,
 ):
     """
-    双方H状态结构体归零，且同步高潮程度记录
+    双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3215,6 +3215,13 @@ def handle_both_h_state_reset(
     for orgasm in range(8):
         now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
         target_data.h_state.orgasm_level[orgasm] = now_data
+    # 清零H相关二段状态
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0 and second_behavior_id not in range(1100,1113):
+            character_data.second_behavior[second_behavior_id] = 0
+    for second_behavior_id, behavior_data in target_data.second_behavior.items():
+        if behavior_data != 0 and second_behavior_id not in range(1100,1113):
+            target_data.second_behavior[second_behavior_id] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)

@@ -582,7 +582,8 @@ def insert_position_effect(character_id: int):
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0):
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0) and character_data.position == pl_character_data.position:
         position_index = 1201 + character_data.h_state.insert_position
         character_data.second_behavior[position_index] = 1
 

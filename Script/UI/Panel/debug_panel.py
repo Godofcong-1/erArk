@@ -253,7 +253,7 @@ class Debug_Panel:
             draw_text_list.append(f"[001]:道具")
             draw_text_list.append(f"[002]:衣服")
             draw_text_list.append(f"[003]:当前行为状态")
-            draw_text_list.append(f"[004]:当前二段行为状态")
+            draw_text_list.append(f"[004]:当前二段行为状态（已实装）")
             draw_text_list.append(f"[005]:当前事件状态")
             draw_text_list.append(f"[006]:状态")
             draw_text_list.append(f"[007]:能力（已实装）")
@@ -262,7 +262,7 @@ class Debug_Panel:
             draw_text_list.append(f"[010]:素质（已实装）")
             draw_text_list.append(f"[011]:初次状态记录")
             draw_text_list.append(f"[012]:污浊（已实装）")
-            draw_text_list.append(f"[013]:本次H")
+            draw_text_list.append(f"[013]:本次H（已实装）")
             draw_text_list.append(f"[014]:助理情况（已实装）")
             draw_text_list.append(f"[015]:行动记录")
             draw_text_list.append(f"[016]:工作")
@@ -640,6 +640,39 @@ class Debug_Panel:
                     change_draw_flag = False
                     continue
 
+            # 二段状态数据
+            elif key_index == 4:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in target_data.second_behavior:
+                    info_text += f"{cid}:{target_data.second_behavior[cid]} "
+                draw_text_list.append(f"[000]:二段行为列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.second_behavior[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
             # 能力数据
             elif key_index == 7:
                 draw_text_list = []
@@ -822,6 +855,56 @@ class Debug_Panel:
                     change_draw_flag = False
                     continue
 
+            # 本次H数据
+            elif key_index == 13:
+                draw_text_list = []
+                draw_text_list.append(f"[000]:身体道具情况:编号int:[道具名str,当前有无bool,状态的结束时间datetime.datetime]：\n{target_data.h_state.body_item}")
+                draw_text_list.append(f"\n[001]:绳子捆绑情况:编号int：{target_data.h_state.bondage}")
+                draw_text_list.append(f"\n[002]:阴茎插入位置，int，-1为未插入，其他同身体部位：{target_data.h_state.insert_position}")
+                draw_text_list.append(f"\n[003]:身体上的射精位置，int，-1为未射精，其他同身体部位：{target_data.h_state.shoot_position_body}")
+                draw_text_list.append(f"\n[004]:衣服上的射精位置，int，-1为未射精，其他同衣服部位：{target_data.h_state.shoot_position_cloth}")
+                draw_text_list.append(f"\n[005]:高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶：\n{target_data.h_state.orgasm_level}")
+                draw_text_list.append(f"\n[006]:衣服上的射精位置，int，-1为未射精，其他同衣服部位：\n{target_data.h_state.orgasm_count}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    # 根据第几项更改对应值
+                    if value_index[0] == 0:
+                        target_data.h_state.body_item[value_index[1]][value_index[2]] = new_value
+                    elif value_index[0] == 1:
+                        target_data.h_state.bondage = new_value
+                    elif value_index[0] == 2:
+                        target_data.h_state.insert_position = new_value
+                    elif value_index[0] == 3:
+                        target_data.h_state.shoot_position_body = new_value
+                    elif value_index[0] == 4:
+                        target_data.h_state.shoot_position_cloth = new_value
+                    elif value_index[0] == 5:
+                        target_data.h_state.orgasm_level[value_index[1]] = new_value
+                    elif value_index[0] == 6:
+                        target_data.h_state.orgasm_count[value_index[1]] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
 
             # 助理数据
             elif key_index == 14:
