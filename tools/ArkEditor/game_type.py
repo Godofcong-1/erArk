@@ -49,9 +49,9 @@ class Chara_Data:
         """ 干员名称 """
         self.Sex: int = 0
         """ 性别 """
-        self.Profession: int = 0
+        self.Profession: int = 1
         """ 职业 """
-        self.Race: int = 0
+        self.Race: int = 1
         """ 种族 """
         self.Nation: int = 0
         """ 势力 """

@@ -62,8 +62,6 @@ class MenuBar(QMenuBar):
         self.new_chara_file_action.setText("新建角色属性文件")
         self.select_chara_file_action = QWidgetAction(self)
         self.select_chara_file_action.setText("读取角色属性文件")
-        self.save_chara_action = QWidgetAction(self)
-        self.save_chara_action.setText("保存角色属性        Ctrl+S")
         self.font = QFont()
         self.font.setPointSize(11)
         self.setFont(self.font)
@@ -71,7 +69,6 @@ class MenuBar(QMenuBar):
             [
                 self.new_chara_file_action,
                 self.select_chara_file_action,
-                self.save_chara_action,
             ]
         )
         chara_menu.setFont(self.font)
