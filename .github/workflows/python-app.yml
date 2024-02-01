@@ -61,6 +61,10 @@ jobs:
           Copy-Item tools/ArkEditor/csv/Experience.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Juel.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Race.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Profession.csv dist_ArkEditor/csv/
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
