@@ -50,16 +50,17 @@ jobs:
       - name: Copy ArkEditor Files
         run: |
           New-Item -ItemType Directory -Force dist_ArkEditor
+          New-Item -ItemType Directory -Force dist_ArkEditor/csv
           Copy-Item dist/main.exe dist_ArkEditor/ -Force
-          Copy-Item tools/ArkEditor/csv/Premise.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Ability.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/CharacterState.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Experience.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Juel.csv dist_ArkEditor/
-          Copy-Item tools/ArkEditor/csv/Talent.csv dist_ArkEditor/
+          Copy-Item tools/ArkEditor/csv/Premise.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Ability.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/CharacterState.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Experience.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Juel.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Talent.csv dist_ArkEditor/csv/
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
