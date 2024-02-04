@@ -2877,9 +2877,10 @@ def handle_milk():
     _("装袋搬走"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HAVE_BAG,
      constant_promise.Premise.T_IMPRISONMENT_0,
-     constant_promise.Premise.T_UNNORMAL_5_6,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
+     constant_promise.Premise.T_UNNORMAL_6,
+    #  constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.PL_NOT_BAGGING_CHARA,
      constant_promise.Premise.TIRED_LE_74}

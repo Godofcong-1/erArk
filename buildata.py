@@ -157,7 +157,7 @@ def constand_promise_2_csv():
             out_str += "\n"
 
     # 开始保存
-    with open("tools\\ArkEditor\\premise.csv", "w",encoding="utf-8") as f:
+    with open("tools\\ArkEditor\\csv\\premise.csv", "w",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入csv文件末尾")
@@ -165,7 +165,7 @@ def constand_promise_2_csv():
     return out_str
 
 def csv_2_constand():
-    with open("tools\\premise.csv", "r",encoding="utf-8") as f:
+    with open("tools\\csv\\premise.csv", "r",encoding="utf-8") as f:
         a=f.readlines()
         # print(a)
         f.close()
@@ -213,7 +213,7 @@ def constand_effect_2_csv():
             out_str += "\n"
 
     # 开始保存
-    with open("tools\\ArkEditor\\Effect.csv", "w",encoding="utf-8") as f:
+    with open("tools\\ArkEditor\\csv\\Effect.csv", "w",encoding="utf-8") as f:
         f.write(out_str)
         f.close()
     print(f"已写入csv文件末尾")
@@ -221,7 +221,7 @@ def constand_effect_2_csv():
     return out_str
 
 def csv_2_constand_effect():
-    with open("tools\\Effect.csv", "r",encoding="utf-8") as f:
+    with open("tools\\csv\\Effect.csv", "r",encoding="utf-8") as f:
         a=f.readlines()
         # print(a)
         f.close()

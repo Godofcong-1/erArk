@@ -171,10 +171,11 @@ cid,effect_name,effect_type,effect
 337,ADD_1_AnalCums_EXPERIENCE,属性_经验,增加1肛射经验
 338,ADD_1_Hypnosis_EXPERIENCE,属性_经验,增加1催眠经验
 339,TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,交互对象增加1被催眠经验
+340,PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,场景内所有其他角色均增加1被催眠经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
-404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，且同步高潮程度记录
+404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
 
 451,T_BE_BAGGED,属性_特殊flag,交互对象变成被装袋搬走状态
 452,T_BE_IMPRISONMENT,属性_特殊flag,交互对象变成被监禁状态
@@ -296,6 +297,7 @@ cid,effect_name,effect_type,effect
 949,USE_CONTRACEPTIVE_AFTER,道具_增减,使用了一个事后避孕药
 950,USE_RING,道具_增减,使用了一个戒指
 951,USE_COLLAR,道具_增减,使用了一个项圈
+952,USE_BAG,道具_增减,使用了一个干员携袋
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
 993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
@@ -323,5 +325,5 @@ cid,effect_name,effect_type,effect
 1203,HORMONE_ON,源石技艺,开启信息素
 1204,HORMONE_OFF,源石技艺,关闭信息素
 1211,HYPNOSIS_ONE,源石技艺,单人催眠（含理智消耗）
-1212,HYPNOSIS_ALL,源石技艺,集体催眠
+1212,HYPNOSIS_ALL,源石技艺,集体催眠（含理智消耗）
 1213,HYPNOSIS_CANCEL,源石技艺,解除催眠

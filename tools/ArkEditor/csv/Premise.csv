@@ -304,6 +304,7 @@ unnormal,UNNORMAL,属性_异常状态,有特殊需求的异常状态
 unnormal_27,UNNORMAL_27,属性_异常状态,27异常（妊娠限制或监禁）
 t_normal_5_6,T_NORMAL_5_6,属性_异常状态,交互对象56正常
 t_unnormal_5_6,T_UNNORMAL_5_6,属性_异常状态,交互对象5异常或6异常
+t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
 unnormal_567,UNNORMAL_567,属性_异常状态,自身5或6或7异常
 t_normal_256_or_unconscious_flag,T_NORMAL_256_OR_UNCONSCIOUS_FLAG,属性_异常状态,交互对象256正常或无意识
 t_unnormal_567,T_UNNORMAL_567,属性_异常状态,交互对象5或6或7异常
@@ -314,6 +315,7 @@ mp_0,MP_0,属性_基础,自身气力为0
 mp_low,MP_LOW,属性_基础,自身气力低于30%
 mp_high,MP_HIGH,属性_基础,自身气力高于70%
 hp_or_mp_low,HP_OR_MP_LOW,属性_基础,自身体力或气力有一项低于30%
+hp_or_mp_ge_80,HP_OR_MP_GE_80,属性_基础,自身体力或气力有一项低于80%
 t_hp_low,TARGET_HP_LOW,属性_基础,交互对象体力低于30%
 t_hp_high,TARGET_HP_HIGH,属性_基础,交互对象体力高于70%
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
@@ -440,6 +442,7 @@ unconscious_flag_2,UNCONSCIOUS_FLAG_2,属性_特殊flag,自身有无意识_醉�
 unconscious_flag_3,UNCONSCIOUS_FLAG_3,属性_特殊flag,自身有无意识_时停状态
 unconscious_flag_4,UNCONSCIOUS_FLAG_4,属性_特殊flag,自身有无意识_平然状态
 unconscious_flag_5,UNCONSCIOUS_FLAG_5,属性_特殊flag,自身有无意识_空气状态
+not_unconscious_flag_5,NOT_UNCONSCIOUS_FLAG_5,属性_特殊flag,自身没有无意识_空气状态
 unconscious_flag_6,UNCONSCIOUS_FLAG_6,属性_特殊flag,自身有无意识_体控状态
 unconscious_flag_7,UNCONSCIOUS_FLAG_7,属性_特殊flag,自身有无意识_心控状态
 t_unconscious_flag_0,T_UNCONSCIOUS_FLAG_0,属性_特殊flag,对方没有无意识状态
@@ -984,7 +987,6 @@ have_anal_beads,HAVE_ANAL_BEADS,道具_持有,已持有拉珠
 have_anal_plug,HAVE_ANAL_PLUG,道具_持有,已持有肛塞
 have_whip,HAVE_WHIP,道具_持有,已持有鞭子
 have_needle,HAVE_NEEDLE,道具_持有,已持有针
-have_collar,HAVE_COLLAR,道具_持有,已持有项圈
 have_condom,HAVE_CONDOM,道具_持有,已持有避孕套
 have_safe_candles,HAVE_SAFE_CANDLES,道具_持有,已持有低温蜡烛
 have_cotton_stick,HAVE_COTTON_STICK,道具_持有,已持有无菌棉签
@@ -999,6 +1001,7 @@ have_sleeping_pills,HAVE_SLEEPING_PILLS,道具_持有,已持有安眠药
 have_clomid,HAVE_CLOMID,道具_持有,已持有排卵促进药
 have_ring,HAVE_RING,道具_持有,已持有戒指
 have_collar,HAVE_COLLAR,道具_持有,已持有项圈
+have_bag,HAVE_BAG,道具_持有,已持有干员携袋
 
 target_now_nipple_clamp,TARGET_NOW_NIPPLE_CLAMP,道具_使用,交互对象正在乳头夹
 target_not_nipple_clamp,TARGET_NOT_NIPPLE_CLAMP,道具_使用,交互对象没有在乳头夹

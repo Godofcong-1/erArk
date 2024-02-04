@@ -585,6 +585,8 @@ class BehaviorEffect:
     """ 道具_增减 使用了一个戒指 """
     USE_COLLAR = 951
     """ 道具_增减 使用了一个项圈 """
+    USE_BAG = 952
+    """ 道具_增减 使用了一个干员携袋 """
     DELETE_FOOD = 991
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992

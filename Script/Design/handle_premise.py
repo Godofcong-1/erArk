@@ -4240,6 +4240,28 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_UNNORMAL_6)
+def handle_t_unnormal_6(character_id: int) -> int:
+    """
+    交互对象6异常
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if(
+         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
+        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
+    ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.UNNORMAL_567)
 def handle_unnormal_567(character_id: int) -> int:
     """
@@ -11754,21 +11776,6 @@ def handle_have_needle(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.HAVE_COLLAR)
-def handle_have_collar(character_id: int) -> int:
-    """
-    校验角色是否已持有项圈
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    if character_data.item[138]:
-        return 1
-    return 0
-
-
 @add_premise(constant_promise.Premise.HAVE_CONDOM)
 def handle_have_condom(character_id: int) -> int:
     """
@@ -11975,6 +11982,21 @@ def handle_have_collar(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if character_data.item[202]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.HAVE_BAG)
+def handle_have_bag(character_id: int) -> int:
+    """
+    已持有干员携袋
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[151]:
         return 1
     return 0
 
