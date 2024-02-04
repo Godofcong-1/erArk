@@ -662,6 +662,11 @@ class CharacterInfoHead:
             elif character_data.sp_flag.unconscious_h == 7:
                 hypnosis_text = " <催眠:心控>"
 
+        # 携袋状态进行提示
+        bag_text = ""
+        if character_data.sp_flag.bagging_chara_id:
+            bag_text = f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>"
+
         if character_id:
             message = _(
                 "{character_name}（好感度：{favorability}，信赖度：{trust}% {angry}）{sleep}{urinate}{hunger}{hypnosis}").format(
@@ -684,6 +689,7 @@ class CharacterInfoHead:
                 sleep=sleep_text,
                 urinate=urinate_text,
                 eja=eja_text,
+                bag=bag_text,
             )
         message_draw = draw.CenterDraw()
         message_draw.width = width / 3.5
