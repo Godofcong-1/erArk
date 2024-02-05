@@ -1,5 +1,5 @@
 import uuid
-from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox, QSizePolicy, QComboBox
+from PySide6.QtWidgets import QVBoxLayout, QMenuBar, QWidgetAction, QListWidgetItem, QSplitter, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox, QSizePolicy, QComboBox
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QPalette, QColor
 from ui.list_item import ListItem
@@ -21,13 +21,18 @@ class CharaList(QWidget):
         self.font.setPointSize(11)
         self.setFont(self.font)
 
-        self.top_layouts = [QHBoxLayout() for _ in range(18)]
-        for layout in self.top_layouts:
+        self.first_layouts = [QHBoxLayout() for _ in range(14)]
+        for layout in self.first_layouts:
+            layout.setAlignment(Qt.AlignLeft)  # 设置布局对齐方式为左对齐
+        self.second_layouts = [QHBoxLayout() for _ in range(4)]
+        for layout in self.second_layouts:
             layout.setAlignment(Qt.AlignLeft)  # 设置布局对齐方式为左对齐
 
         # 说明文本
-        labels_text = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "额外说明", "能力", "经验", "素质", "服装"]
-        labels = [self.create_label(text) for text in labels_text]
+        labels_text_1 = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "额外说明"]
+        labels_1 = [self.create_label(text) for text in labels_text_1]
+        labels_text_2 = ["能力", "经验", "素质", "服装"]
+        labels_2 = [self.create_label(text) for text in labels_text_2]
 
 
         # 新增介绍文本
@@ -49,37 +54,46 @@ class CharaList(QWidget):
         self.nation_combo_box = self.create_qcombo_box([cache_control.nation_data[i] for i in cache_control.nation_data])
         self.birthplace_combo_box = self.create_qcombo_box([cache_control.birthplace_data[i] for i in cache_control.birthplace_data])
 
+        self.ability_widget = MenuWidget()
+
         # 上方布局
-        for i, label in enumerate(labels):
-            self.top_layouts[i].addWidget(label)
+        for i, label in enumerate(labels_1):
+            self.first_layouts[i].addWidget(label)
             if i == 0:
-                self.top_layouts[i].addWidget(self.chara_id_text_edit)
+                self.first_layouts[i].addWidget(self.chara_id_text_edit)
             elif i == 1:
-                self.top_layouts[i].addWidget(self.chara_name_text_edit)
+                self.first_layouts[i].addWidget(self.chara_name_text_edit)
             elif i == 2:
-                self.top_layouts[i].addWidget(self.chara_sex_combo_box)
+                self.first_layouts[i].addWidget(self.chara_sex_combo_box)
             elif i == 3:
-                self.top_layouts[i].addWidget(self.profession_combo_box)
+                self.first_layouts[i].addWidget(self.profession_combo_box)
             elif i == 4:
-                self.top_layouts[i].addWidget(self.race_combo_box)
+                self.first_layouts[i].addWidget(self.race_combo_box)
             elif i == 5:
-                self.top_layouts[i].addWidget(self.nation_combo_box)
+                self.first_layouts[i].addWidget(self.nation_combo_box)
             elif i == 6:
-                self.top_layouts[i].addWidget(self.birthplace_combo_box)
+                self.first_layouts[i].addWidget(self.birthplace_combo_box)
             elif i == 7:
-                self.top_layouts[i].addWidget(self.chara_hp_text_edit)
+                self.first_layouts[i].addWidget(self.chara_hp_text_edit)
             elif i == 8:
-                self.top_layouts[i].addWidget(self.chara_mp_text_edit)
+                self.first_layouts[i].addWidget(self.chara_mp_text_edit)
             elif i == 9:
-                self.top_layouts[i].addWidget(self.chara_dormitory_text_edit)
+                self.first_layouts[i].addWidget(self.chara_dormitory_text_edit)
             elif i == 10:
-                self.top_layouts[i].addWidget(self.chara_token_text_edit)
+                self.first_layouts[i].addWidget(self.chara_token_text_edit)
             elif i == 11:
-                self.top_layouts[i].addWidget(self.chara_introduce_text_edit)
+                self.first_layouts[i].addWidget(self.chara_introduce_text_edit)
             elif i == 12:
-                self.top_layouts[i].addWidget(self.chara_textcolor_text_edit)
+                self.first_layouts[i].addWidget(self.chara_textcolor_text_edit)
             elif i == 13:
-                self.top_layouts[i].addWidget(intro_labels[0])
+                self.first_layouts[i].addWidget(intro_labels[0])
+            elif i == 14:
+                self.first_layouts[i].addWidget(self.ability_widget)
+
+        for i, label in enumerate(labels_2):
+            self.second_layouts[i].addWidget(label)
+            # if i == 0:
+            #     self.first_layouts[i].addWidget(self.ability_widget)
 
         # 创建确定按钮和重置按钮
         self.apply_button = QPushButton("应用并保存")
@@ -90,8 +104,10 @@ class CharaList(QWidget):
         self.reset_button.clicked.connect(self.reset_values)
 
         # 总布局
-        for i, layout in enumerate(self.top_layouts):
+        for i, layout in enumerate(self.first_layouts):
             self.layout.addLayout(layout, i, 0)
+        for i, layout in enumerate(self.second_layouts):
+            self.layout.addLayout(layout, i, 1)
 
         # 将按钮添加到布局中
         self.layout.addWidget(self.apply_button, 18, 0)
@@ -243,3 +259,47 @@ class CharaList(QWidget):
         now_birthplace = cache_control.now_chara_data.Birthplace
         self.birthplace_combo_box.setCurrentIndex(now_birthplace)
         self.apply_changes()
+
+
+
+class MenuWidget(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.layout = QHBoxLayout(self)
+
+        self.addButton = QPushButton("添加", self)
+        self.addButton.clicked.connect(self.addItems)
+        self.layout.addWidget(self.addButton)
+
+        self.removeButton = QPushButton("删除", self)
+        self.removeButton.clicked.connect(self.removeItems)
+        self.layout.addWidget(self.removeButton)
+
+        self.items = []
+
+    def addItems(self):
+        comboBox = QComboBox(self)
+        textEdit = QTextEdit(self)
+
+        # 赋予下拉框初始值
+        initial_text_list = [cache_control.ability_data[i] for i in cache_control.ability_data]
+        for initial_text in initial_text_list:
+            comboBox.addItem(initial_text)
+
+        # 设定文本编辑框的大小
+        textEdit.setFixedHeight(30)
+        textEdit.setFixedWidth(200)
+
+
+        self.layout.addWidget(comboBox)
+        self.layout.addWidget(textEdit)
+
+        self.items.append((comboBox, textEdit))
+
+    def removeItems(self):
+        if self.items:
+            comboBox, textEdit = self.items.pop()
+
+            comboBox.deleteLater()
+            textEdit.deleteLater()
