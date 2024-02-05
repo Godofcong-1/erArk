@@ -1,7 +1,7 @@
 import uuid
 from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox, QSizePolicy, QComboBox
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QCursor, QColor
+from PySide6.QtGui import QFont, QPalette, QColor
 from ui.list_item import ListItem
 import cache_control
 import game_type
@@ -21,18 +21,18 @@ class CharaList(QWidget):
         self.font.setPointSize(11)
         self.setFont(self.font)
 
-        self.top_layouts = [QHBoxLayout() for _ in range(17)]
+        self.top_layouts = [QHBoxLayout() for _ in range(18)]
         for layout in self.top_layouts:
             layout.setAlignment(Qt.AlignLeft)  # 设置布局对齐方式为左对齐
 
         # 说明文本
-        labels_text = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "能力", "经验", "素质", "服装"]
+        labels_text = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "额外说明", "能力", "经验", "素质", "服装"]
         labels = [self.create_label(text) for text in labels_text]
 
 
         # 新增介绍文本
-        intro_labels_text = ["编号介绍", "姓名介绍", "当前版本暂不支持其他性别的干员", "职业介绍", "种族介绍", "势力介绍", "出身地介绍", "初始HP介绍", "初始MP介绍", "初始宿舍介绍", "信物介绍", "人物介绍介绍", "字体颜色介绍", "能力介绍", "经验介绍", "素质介绍", "服装介绍"]
-        intro_labels = [self.create_label(text, 500) for text in intro_labels_text]
+        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000；MP（气力）基础1000，可上下浮动最多1000"]
+        intro_labels = [self.create_label(text, 1000) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")
         self.chara_name_text_edit = self.create_text_edit("0")
@@ -78,10 +78,11 @@ class CharaList(QWidget):
                 self.top_layouts[i].addWidget(self.chara_introduce_text_edit)
             elif i == 12:
                 self.top_layouts[i].addWidget(self.chara_textcolor_text_edit)
-            self.top_layouts[i].addWidget(intro_labels[i])
+            elif i == 13:
+                self.top_layouts[i].addWidget(intro_labels[0])
 
         # 创建确定按钮和重置按钮
-        self.apply_button = QPushButton("保存")
+        self.apply_button = QPushButton("应用并保存")
         self.reset_button = QPushButton("重置")
 
         # 连接按钮的点击信号到相应的槽函数
@@ -205,6 +206,14 @@ class CharaList(QWidget):
         now_chara_textcolor = self.chara_textcolor_text_edit.toPlainText()
         cache_control.now_chara_data.TextColor = now_chara_textcolor
 
+        # 设置字体颜色
+        palette = self.chara_textcolor_text_edit.palette()
+        palette.setColor(QPalette.Text, QColor(now_chara_textcolor))
+        # 设置背景颜色
+        palette.setColor(QPalette.Base, "#000")
+
+        self.chara_textcolor_text_edit.setPalette(palette)
+
     def update(self):
         """更新"""
         now_AdvNpc = cache_control.now_chara_data.AdvNpc
@@ -233,3 +242,4 @@ class CharaList(QWidget):
         self.nation_combo_box.setCurrentIndex(now_nation)
         now_birthplace = cache_control.now_chara_data.Birthplace
         self.birthplace_combo_box.setCurrentIndex(now_birthplace)
+        self.apply_changes()
