@@ -34,9 +34,8 @@ class CharaList(QWidget):
         labels_text_2 = ["能力", "经验", "素质", "服装"]
         labels_2 = [self.create_label(text) for text in labels_text_2]
 
-
         # 新增介绍文本
-        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请专门联系作者"]
+        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请专门联系作者\n字体颜色为16进制颜色代码，如#ffffff为白色"]
         intro_labels = [self.create_label(text, 1000) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")
@@ -44,8 +43,8 @@ class CharaList(QWidget):
         self.chara_hp_text_edit = self.create_text_edit("0")
         self.chara_mp_text_edit = self.create_text_edit("0")
         self.chara_dormitory_text_edit = self.create_text_edit("0")
-        self.chara_token_text_edit = self.create_text_edit("0")
-        self.chara_introduce_text_edit = self.create_text_edit("0")
+        self.chara_token_text_edit = self.create_text_edit("0",height = 100)
+        self.chara_introduce_text_edit = self.create_text_edit("0",height = 250)
         self.chara_textcolor_text_edit = self.create_text_edit("0")
 
         self.chara_sex_combo_box = self.create_qcombo_box(["女"])
@@ -120,11 +119,11 @@ class CharaList(QWidget):
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)  # 设置大小策略
         return label
 
-    def create_text_edit(self, initial_text):
+    def create_text_edit(self, initial_text, width = 200, height = 30):
         """创建一个文本编辑框"""
         text_edit = QTextEdit(initial_text)
-        text_edit.setFixedHeight(30)
-        text_edit.setFixedWidth(200)
+        text_edit.setFixedHeight(height)
+        text_edit.setFixedWidth(width)
         return text_edit
 
     def create_qcombo_box(self, initial_text_list):
