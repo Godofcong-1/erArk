@@ -75,7 +75,7 @@ class MenuBar(QMenuBar):
             ]
         )
         chara_menu.setFont(self.font)
-        # self.addMenu(chara_menu)
+        self.addMenu(chara_menu)
 
 
     def show_talk_introduce(self):

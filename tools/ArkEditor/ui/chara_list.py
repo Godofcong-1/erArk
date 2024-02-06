@@ -106,8 +106,8 @@ class CharaList(QWidget):
         # 总布局
         for i, layout in enumerate(self.first_layouts):
             self.layout.addLayout(layout, i, 0)
-        for i, layout in enumerate(self.second_layouts):
-            self.layout.addLayout(layout, i, 1)
+        # for i, layout in enumerate(self.second_layouts):
+        #     self.layout.addLayout(layout, i, 1)
 
         # 将按钮添加到布局中
         self.layout.addWidget(self.apply_button, 18, 0)
@@ -152,6 +152,44 @@ class CharaList(QWidget):
         self.update_chara_token()
         self.update_chara_introduce()
         self.update_chara_textcolor()
+        self.save_csv()
+
+    def save_csv(self):
+        """保存csv文件"""
+        # 如果是使用的模板，那就新建一个文件
+        if cache_control.now_file_path == "999_模板人物属性文件.csv":
+            chara_id =  cache_control.now_chara_data.AdvNpc
+            chara_name = cache_control.now_chara_data.Name
+            cache_control.now_file_path = f"{chara_id}_{chara_name}.csv"
+
+        if len(cache_control.now_file_path):
+            # 通用开头
+            out_data = ""
+            out_data += "key,type,value,get_text,info\n"
+            out_data += "键,类型,值,多语言化处理(前面的类型里int则为0,str则为1),备注\n"
+
+            out_data += f"AdvNpc,int,{cache_control.now_chara_data.AdvNpc},0,角色编号\n"
+            out_data += f"Name,str,{cache_control.now_chara_data.Name},1,角色姓名\n"
+            out_data += f"Sex,int,{cache_control.now_chara_data.Sex},0,角色性别\n"
+            out_data += f"Profession,int,{cache_control.now_chara_data.Profession},0,角色职业为{cache_control.profession_data[str(cache_control.now_chara_data.Profession)]}\n"
+            out_data += f"Race,int,{cache_control.now_chara_data.Race},0,角色种族为{cache_control.race_data[str(cache_control.now_chara_data.Race)]}\n"
+            out_data += f"Nation,int,{cache_control.now_chara_data.Nation},0,角色势力为{cache_control.nation_data[str(cache_control.now_chara_data.Nation)]}\n"
+            out_data += f"Birthplace,int,{cache_control.now_chara_data.Birthplace},0,角色出身地为{cache_control.birthplace_data[str(cache_control.now_chara_data.Birthplace)]}\n"
+            out_data += f"Hp,int,{cache_control.now_chara_data.Hp},0,角色初始体力\n"
+            out_data += f"Mp,int,{cache_control.now_chara_data.Mp},0,角色初始气力\n"
+            out_data += f"Dormitory,str,{cache_control.now_chara_data.Dormitory},1,角色初始宿舍\n"
+            out_data += f"Token,str,{cache_control.now_chara_data.Token},1,角色信物\n"
+            out_data += f"Introduce_1,str,{cache_control.now_chara_data.Introduce_1},1,角色介绍\n"
+            if len(cache_control.now_chara_data.TextColor) == 7 and cache_control.now_chara_data.TextColor[0] == "#":
+                out_data += f"TextColor,str,{cache_control.now_chara_data.TextColor},1,角色字体颜色\n"
+
+            # 写入文件
+            with open(cache_control.now_file_path, "w", encoding="utf-8") as f:
+                f.write(out_data)
+            print(f"debug 保存了文件{cache_control.now_file_path}")
+        else:
+            print(f"debug 未保存文件")
+
 
     def reset_values(self):
         """重置值"""
@@ -258,8 +296,7 @@ class CharaList(QWidget):
         self.nation_combo_box.setCurrentIndex(now_nation)
         now_birthplace = cache_control.now_chara_data.Birthplace
         self.birthplace_combo_box.setCurrentIndex(now_birthplace)
-        self.apply_changes()
-
+        self.update_chara_textcolor()
 
 
 class MenuWidget(QWidget):
