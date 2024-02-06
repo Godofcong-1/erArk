@@ -99,23 +99,16 @@ def create_event_data():
 
 def create_chara_data():
     """新建属性文件"""
-    dialog: QFileDialog = QFileDialog(menu_bar)
-    dialog.setFileMode(QFileDialog.AnyFile)
-    dialog.setNameFilter("CSV (*.csv)")
-    if dialog.exec():
-        file_names = dialog.selectedFiles()
-        file_path: str = file_names[0]
-        if not file_path.endswith(".csv"):
-            file_path += ".csv"
-        cache_control.now_file_path = file_path
-        cache_control.now_edit_type_flag = 2
-        save_talk_data()
-        load_chara_data_to_cache()
+    cache_control.now_file_path = "999_模板人物属性文件.csv"
+    load_chara_data_to_cache()
 
-def load_chara_data():
+def load_chara_data(path = ""):
     """载入属性文件"""
-    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
-    file_path = csv_file[0]
+    if path != "":
+        csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
+        file_path = csv_file[0]
+    else:
+        file_path = path
     if file_path:
         cache_control.now_file_path = file_path
         load_chara_data_to_cache()
@@ -207,7 +200,7 @@ def save_data():
                 json.dump(now_data, event_data_file, ensure_ascii=0)
 
         # 保存口上
-        else:
+        elif cache_control.now_edit_type_flag == 0:
             save_talk_data()
 
 

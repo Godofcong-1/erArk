@@ -36,7 +36,7 @@ class CharaList(QWidget):
 
 
         # 新增介绍文本
-        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000；MP（气力）基础1000，可上下浮动最多1000"]
+        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请专门联系作者"]
         intro_labels = [self.create_label(text, 1000) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")

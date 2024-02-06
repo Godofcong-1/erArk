@@ -62,6 +62,8 @@ class MenuBar(QMenuBar):
         self.new_chara_file_action.setText("新建角色属性文件")
         self.select_chara_file_action = QWidgetAction(self)
         self.select_chara_file_action.setText("读取角色属性文件")
+        self.chara_introduce_action = QAction("角色说明", self)
+        self.chara_introduce_action.triggered.connect(self.show_chara_introduce)
         self.font = QFont()
         self.font.setPointSize(11)
         self.setFont(self.font)
@@ -69,6 +71,7 @@ class MenuBar(QMenuBar):
             [
                 self.new_chara_file_action,
                 self.select_chara_file_action,
+                self.chara_introduce_action,
             ]
         )
         chara_menu.setFont(self.font)
@@ -80,9 +83,10 @@ class MenuBar(QMenuBar):
         dialog = QDialog(self)
         text_edit = QTextEdit(dialog)
         text_edit.setFont(self.font)
-        text = "本编辑器可用于编辑游戏 erArk 的口上文件。\n\n"
+        text = "本编辑器可用于编辑游戏 erArk 的口上文件（即角色对话文件）。\n"
+        text += "游戏的角色对话文件存放路径为：游戏根目录/data/talk/chara/\n\n"
         text += "流程简述：\n"
-        text += "  ①创建/读取对应的文件。\n  ②在左侧的条目栏中新建/选择一个条目。\n  ③在左上选择触发的指令，在右上编辑前提，在右下编辑条目的文本。\n  ④保存\n\n"
+        text += "  ①创建/读取对应的文件。\n  ②在左侧的条目栏中新建/选择一个条目。\n  ③在左上选指令，在右上选前提，在右下写文本。\n  ④保存\n\n"
         text += "\nUI介绍：\n"
         text += "  ①左边，口上的条目列表。这里处理每条口上的序号、由什么指令触发、是否限定某角色触发。\n"
         text += "  ②右上，前提选择栏。这里处理口上的触发逻辑，使用【前提】的形式来实现代码的处理，同一口上的所有前提按逻辑“和”来运算。\n"
@@ -112,8 +116,9 @@ class MenuBar(QMenuBar):
         dialog = QDialog(self)
         text_edit = QTextEdit(dialog)
         text_edit.setFont(self.font)
-        text = "本编辑器可用于编辑游戏 erArk 的事件文件。\n\n"
-        text += "请先阅读并理解口上的部分后，再来看本部分\n"
+        text = "本编辑器可用于编辑游戏 erArk 的事件文件。\n"
+        text += "游戏的事件文件存放路径为：游戏根目录/data/event/\n\n"
+        text += "事件的本质就是带结算的口上，请先阅读并理解口上的部分后，再来看本部分\n"
         text += "事件的触发方式：\n"
         text += "  事件的触发优先于指令的触发，由事件决定是否要触发指令下的口上输出与数值结算。\n"
         text += "  ①跳过指令，适用于大部分情况。比如写一个玩家和NPC吃饭的事件，那么玩家点击吃饭后，应当只发生事件的吃饭，只出现事件的文本和数值结算，不应再出现指令原本的口上文本和结算。所以在这种事件类型里，应当把指令本身的相关处理全部跳过。\n"
@@ -127,6 +132,30 @@ class MenuBar(QMenuBar):
         text_edit.setText(text)
         text_edit.setReadOnly(True)
         text_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # 设置大小策略
+        font_metrics = QFontMetrics(text_edit.font())
+        text_edit.setFixedWidth(1000)
+        line_count = text.count('\n') + 1
+        text_edit.setFixedHeight(font_metrics.lineSpacing() * line_count * 1.5)
+
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(text_edit)
+        dialog.exec_()
+
+    def show_chara_introduce(self):
+        """显示只读文本框的对话框"""
+        dialog = QDialog(self)
+        text_edit = QTextEdit(dialog)
+        text_edit.setFont(self.font)
+        text = "本编辑器可用于编辑游戏 erArk 的角色属性文件。\n"
+        text += "游戏的角色属性文件存放路径为：游戏根目录/data/character/\n\n"
+        text += "角色属性文件的结构：\n"
+        text += "  角色属性文件是一个csv文件，里面包含了该角色的初始属性。\n"
+        text += "  文件的结构是一个字典，字典的键是各属性，字典的值是各属性的值。\n\n"
+        text += "  选择【新建角色属性文件】时，会自动读取编辑器目录下的模板人物属性文件，编辑完毕并保存时会在该目录下生成一个新的角色文件。\n"
+        text += "  选择【读取角色属性文件】时，需要手动指定路径，保存时会覆盖原文件。\n"
+        text_edit.setText(text)
+        text_edit.setReadOnly(True)
+        text_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         font_metrics = QFontMetrics(text_edit.font())
         text_edit.setFixedWidth(1000)
         line_count = text.count('\n') + 1
