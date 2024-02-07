@@ -1,10 +1,6 @@
-import uuid
-from PySide6.QtWidgets import QVBoxLayout, QMenuBar, QWidgetAction, QListWidgetItem, QSplitter, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox, QSizePolicy, QComboBox
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QVBoxLayout, QSplitter, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QSizePolicy, QComboBox
 from PySide6.QtGui import QFont, QPalette, QColor
-from ui.list_item import ListItem
 import cache_control
-import game_type
 
 
 class CharaList(QWidget):
@@ -41,7 +37,7 @@ class CharaList(QWidget):
         # 新增介绍文本
         intro_labels_text = []
         intro_labels_text.append("HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请联系作者\n字体颜色为16进制颜色代码，如#ffffff为白色")
-        intro_labels_text.append("能力最高为8级，每1经验对应1次相应指令，1为有该素质")
+        intro_labels_text.append("能力最高为8级，除极端人设外，一般初始能力最高不超过3级\n每1经验对应1次相应指令，除极端人设外，一般初始经验最高不超过200\n默认都有的基础素质是处女、A处女和无接吻经验，必选的素质有年龄素质，以及胸部、屁股、腿、脚四个部位的素质\n单个部位的服装可以有多个")
         intro_labels = [self.create_label(text, 700) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")
@@ -268,8 +264,8 @@ class CharaList(QWidget):
 
     def update_nation(self):
         """根据文本编辑框更新当前的角色势力"""
-        now_nation = self.nation_combo_box.currentIndex()
-        cache_control.now_chara_data.Nation = now_nation
+        key = int(list(cache_control.nation_data.keys())[list(cache_control.nation_data.values()).index(self.nation_combo_box.currentText())])
+        cache_control.now_chara_data.Nation = key
 
     def update_birthplace(self):
         """根据文本编辑框更新当前的角色出身地"""
@@ -347,11 +343,17 @@ class CharaList(QWidget):
         now_clothing_dict = {}
         for item in self.clothing_widget.items:
             key = int(list(cache_control.clothing_data.keys())[list(cache_control.clothing_data.values()).index(item[1].currentText())])
-            value = item[2].toPlainText()
-            if key in now_clothing_dict:
-                now_clothing_dict[key].append(value)
+            if len(item) == 3:
+                value = item[2].toPlainText()
+                if key in now_clothing_dict:
+                    now_clothing_dict[key].append(value)
+                else:
+                    now_clothing_dict[key] = [value]
             else:
-                now_clothing_dict[key] = [value]
+                value = []
+                for sub_item in item[2:]:
+                    value.append(sub_item.toPlainText())
+                now_clothing_dict[key] = value
         cache_control.now_chara_data.Cloth = now_clothing_dict
         # print(f"debug 更新了角色服装，cache_control.now_chara_data.Cloth = {cache_control.now_chara_data.Cloth}")
 
@@ -380,7 +382,10 @@ class CharaList(QWidget):
         now_race = cache_control.now_chara_data.Race
         self.race_combo_box.setCurrentIndex(now_race)
         now_nation = cache_control.now_chara_data.Nation
-        self.nation_combo_box.setCurrentIndex(now_nation)
+        for i in range(self.nation_combo_box.count()):
+            if self.nation_combo_box.itemText(i) == cache_control.nation_data[str(now_nation)]:
+                self.nation_combo_box.setCurrentIndex(i)
+                break
         now_birthplace = cache_control.now_chara_data.Birthplace
         self.birthplace_combo_box.setCurrentIndex(now_birthplace)
         now_ability_dict = cache_control.now_chara_data.Ability
@@ -421,10 +426,42 @@ class CharaList(QWidget):
                 self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][0])
             # 多个物品时每个单独显示
             else:
+                count = 1
                 for i in range(len(now_clothing_dict[key])):
-                    self.clothing_widget.addItems()
-                    self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
-                    self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][i])
+                    # 检查是否已经存在具有相同值的comboBox
+                    existing_item = None
+                    for item in self.clothing_widget.items:
+                        if item[1].currentText() == cache_control.clothing_data[str(key)]:
+                            count += 1
+                            existing_item = list(item)
+                            break
+                    if existing_item:
+                        # 在相同的水平布局中添加一个新的textEdit
+                        textEdit = QTextEdit(self.clothing_widget)
+                        textEdit.setFixedHeight(30)
+                        existing_item[0].addWidget(textEdit)
+                        existing_item.append(textEdit)
+
+                        # 计算新的宽度
+                        new_width = 600 // count
+
+                        # 设置所有textEdit的宽度
+                        for sub_item in existing_item:
+                            if isinstance(sub_item, QTextEdit):
+                                sub_item.setFixedWidth(new_width)
+
+                        # 设置新textEdit的文本
+                        textEdit.setText(now_clothing_dict[key][i])
+
+                        # 找到existing_item在self.clothing_widget.items中的索引，然后用existing_item替换掉它
+                        index = self.clothing_widget.items.index(item)
+                        self.clothing_widget.items[index] = existing_item
+
+                    else:
+                        self.clothing_widget.addItems()
+                        self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
+                        self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][i])
+
         self.update_chara_textcolor()
 
 
@@ -449,15 +486,13 @@ class MenuWidget(QWidget):
         self.items = []
         self.items_per_layout = 0  # 新增属性来跟踪每个水平布局中的项目数量
 
-        self.items = []
-
     def addItems(self):
         comboBox = QComboBox(self)
         textEdit = QTextEdit(self)
 
         # 赋予下拉框初始值
         have_text_flag = True
-        long_text_flag = False
+        cloth_flag = False
         if self.type_flag == 0:
             initial_text_list = [cache_control.ability_data[i] for i in cache_control.ability_data]
         elif self.type_flag == 1:
@@ -467,7 +502,7 @@ class MenuWidget(QWidget):
             have_text_flag = False
         elif self.type_flag == 3:
             initial_text_list = [cache_control.clothing_data[i] for i in cache_control.clothing_data]
-            long_text_flag = True
+            cloth_flag = True
             self.items_per_layout = 0  # 重置项目数量
 
         for initial_text in initial_text_list:
@@ -476,13 +511,13 @@ class MenuWidget(QWidget):
         # 设定文本编辑框的大小
         textEdit.setFixedHeight(30)
         textEdit.setFixedWidth(50)
-        if long_text_flag:
+        if cloth_flag:
             textEdit.setFixedWidth(600)
         # 文本框的值默认为1
         textEdit.setText("1")
 
         # 创建一个新的水平布局，并将新项目添加到这个新的水平布局中
-        if 0 < self.items_per_layout < 3:  # 如果当前水平布局中的项目数量小于3
+        if self.items_per_layout % 4 != 0:  # 如果当前水平布局中的项目数量小于3
             layout = self.items[-1][0] if self.items else QHBoxLayout()  # 使用最后一个水平布局
         else:  # 否则创建一个新的水平布局
             layout = QHBoxLayout()
