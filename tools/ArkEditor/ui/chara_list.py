@@ -108,8 +108,8 @@ class CharaList(QWidget):
                 self.second_layouts[i].addWidget(self.exprience_widget)
             elif i == 2:
                 self.second_layouts[i].addWidget(self.talent_widget)
-            # elif i == 3:
-            #     self.second_layouts[i].addWidget(self.clothing_widget)
+            elif i == 3:
+                self.second_layouts[i].addWidget(self.clothing_widget)
             elif i == 4:
                 self.second_layouts[i].addWidget(intro_labels[1])
 
@@ -184,6 +184,7 @@ class CharaList(QWidget):
         self.update_chara_ability()
         self.update_chara_experience()
         self.update_chara_talent()
+        self.update_chara_clothing()
         self.save_csv()
 
     def save_csv(self):
@@ -223,6 +224,10 @@ class CharaList(QWidget):
             if len(cache_control.now_chara_data.Talent):
                 for key in cache_control.now_chara_data.Talent:
                     out_data += f"T|{key},int,{cache_control.now_chara_data.Talent[key]},0,角色有{cache_control.talent_data[str(key)]}素质\n"
+            if len(cache_control.now_chara_data.Cloth):
+                for key in cache_control.now_chara_data.Cloth:
+                    for i in range(len(cache_control.now_chara_data.Cloth[key])):
+                        out_data += f"C|{key},str,{cache_control.now_chara_data.Cloth[key][i]},1,角色{cache_control.clothing_data[str(key)]}为{cache_control.now_chara_data.Cloth[key][i]}\n"
 
             # 写入文件
             with open(cache_control.now_file_path, "w", encoding="utf-8") as f:
@@ -337,6 +342,19 @@ class CharaList(QWidget):
             now_talent_dict[key] = value
         cache_control.now_chara_data.Talent = now_talent_dict
 
+    def update_chara_clothing(self):
+        """根据文本编辑框更新当前的角色服装"""
+        now_clothing_dict = {}
+        for item in self.clothing_widget.items:
+            key = int(list(cache_control.clothing_data.keys())[list(cache_control.clothing_data.values()).index(item[1].currentText())])
+            value = item[2].toPlainText()
+            if key in now_clothing_dict:
+                now_clothing_dict[key].append(value)
+            else:
+                now_clothing_dict[key] = [value]
+        cache_control.now_chara_data.Cloth = now_clothing_dict
+        # print(f"debug 更新了角色服装，cache_control.now_chara_data.Cloth = {cache_control.now_chara_data.Cloth}")
+
     def update(self):
         """更新"""
         now_AdvNpc = cache_control.now_chara_data.AdvNpc
@@ -396,9 +414,17 @@ class CharaList(QWidget):
         now_clothing_dict = cache_control.now_chara_data.Cloth
         self.clothing_widget.items = []
         for key in now_clothing_dict:
-            self.clothing_widget.addItems()
-            self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
-            self.clothing_widget.items[-1][2].setText(str(now_clothing_dict[key]))
+            # 只有单个物品时直接显示
+            if len(now_clothing_dict[key]) == 1:
+                self.clothing_widget.addItems()
+                self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
+                self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][0])
+            # 多个物品时每个单独显示
+            else:
+                for i in range(len(now_clothing_dict[key])):
+                    self.clothing_widget.addItems()
+                    self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
+                    self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][i])
         self.update_chara_textcolor()
 
 
@@ -420,6 +446,8 @@ class MenuWidget(QWidget):
         self.buttonLayout.addWidget(self.removeButton)
 
         self.type_flag = type_flag
+        self.items = []
+        self.items_per_layout = 0  # 新增属性来跟踪每个水平布局中的项目数量
 
         self.items = []
 
@@ -429,6 +457,7 @@ class MenuWidget(QWidget):
 
         # 赋予下拉框初始值
         have_text_flag = True
+        long_text_flag = False
         if self.type_flag == 0:
             initial_text_list = [cache_control.ability_data[i] for i in cache_control.ability_data]
         elif self.type_flag == 1:
@@ -438,25 +467,33 @@ class MenuWidget(QWidget):
             have_text_flag = False
         elif self.type_flag == 3:
             initial_text_list = [cache_control.clothing_data[i] for i in cache_control.clothing_data]
+            long_text_flag = True
+            self.items_per_layout = 0  # 重置项目数量
 
         for initial_text in initial_text_list:
             comboBox.addItem(initial_text)
 
         # 设定文本编辑框的大小
         textEdit.setFixedHeight(30)
-        textEdit.setFixedWidth(200)
+        textEdit.setFixedWidth(50)
+        if long_text_flag:
+            textEdit.setFixedWidth(600)
         # 文本框的值默认为1
         textEdit.setText("1")
 
         # 创建一个新的水平布局，并将新项目添加到这个新的水平布局中
-        layout = QHBoxLayout()
+        if 0 < self.items_per_layout < 3:  # 如果当前水平布局中的项目数量小于3
+            layout = self.items[-1][0] if self.items else QHBoxLayout()  # 使用最后一个水平布局
+        else:  # 否则创建一个新的水平布局
+            layout = QHBoxLayout()
+            self.mainLayout.addLayout(layout)
+            self.items_per_layout = 0  # 重置项目数量
+
         layout.addWidget(comboBox)
-        # if have_text_flag:
-        #     layout.addWidget(textEdit)
         layout.addWidget(textEdit)
-        self.mainLayout.addLayout(layout)
 
         self.items.append((layout, comboBox, textEdit))
+        self.items_per_layout += 1  # 增加项目数量
 
     def removeItems(self):
         if self.items:
@@ -467,3 +504,4 @@ class MenuWidget(QWidget):
 
             comboBox.deleteLater()
             textEdit.deleteLater()
+            self.items_per_layout -= 1  # 减少项目数量

@@ -181,6 +181,7 @@ def load_chara_data_to_cache():
                 now_chara_data.Cloth[sub_key].append(now_value)
             # print(f"debug now_key = {now_key}, sub_key = {sub_key}, now_value = {now_value}")
     cache_control.now_chara_data = now_chara_data
+    print(f"debug Cloth = {cache_control.now_chara_data.Cloth}")
     cache_control.now_edit_type_flag = 2
     chara_list.update()
 
