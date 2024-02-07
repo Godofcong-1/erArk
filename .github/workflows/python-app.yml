@@ -56,11 +56,12 @@ jobs:
           Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
-          Copy-Item tools/ArkEditor/csv/Ability.csv dist_ArkEditor/csv/
-          Copy-Item tools/ArkEditor/csv/CharacterState.csv dist_ArkEditor/csv/
-          Copy-Item tools/ArkEditor/csv/Experience.csv dist_ArkEditor/csv/
-          Copy-Item tools/ArkEditor/csv/Juel.csv dist_ArkEditor/csv/
-          Copy-Item tools/ArkEditor/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Ability.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/CharacterState.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Juel.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Race.csv dist_ArkEditor/csv/

@@ -13,8 +13,16 @@ class CharaList(QWidget):
     def __init__(self):
         """初始化表单主体"""
         super(CharaList, self).__init__()
-        self.layout = QGridLayout(self)
-        self.layout.setAlignment(Qt.AlignTop)  # 设置布局对齐方式为顶部对齐
+        self.layout = QVBoxLayout(self)
+
+        # 分割窗口
+        self.splitter = QSplitter(self)
+
+        # 左右两列
+        self.leftColumn = QWidget(self)
+        self.rightColumn = QWidget(self)
+        self.leftLayout = QVBoxLayout(self.leftColumn)
+        self.rightLayout = QVBoxLayout(self.rightColumn)
 
         # 条目列表
         self.font = QFont()
@@ -22,21 +30,19 @@ class CharaList(QWidget):
         self.setFont(self.font)
 
         self.first_layouts = [QHBoxLayout() for _ in range(14)]
-        for layout in self.first_layouts:
-            layout.setAlignment(Qt.AlignLeft)  # 设置布局对齐方式为左对齐
-        self.second_layouts = [QHBoxLayout() for _ in range(4)]
-        for layout in self.second_layouts:
-            layout.setAlignment(Qt.AlignLeft)  # 设置布局对齐方式为左对齐
+        self.second_layouts = [QHBoxLayout() for _ in range(5)]
 
         # 说明文本
-        labels_text_1 = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "额外说明"]
+        labels_text_1 = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "说明"]
         labels_1 = [self.create_label(text) for text in labels_text_1]
-        labels_text_2 = ["能力", "经验", "素质", "服装"]
+        labels_text_2 = ["能力", "经验", "素质", "服装", "说明"]
         labels_2 = [self.create_label(text) for text in labels_text_2]
 
         # 新增介绍文本
-        intro_labels_text = ["HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请专门联系作者\n字体颜色为16进制颜色代码，如#ffffff为白色"]
-        intro_labels = [self.create_label(text, 1000) for text in intro_labels_text]
+        intro_labels_text = []
+        intro_labels_text.append("HP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请联系作者\n字体颜色为16进制颜色代码，如#ffffff为白色")
+        intro_labels_text.append("能力最高为8级，每1经验对应1次相应指令，1为有该素质")
+        intro_labels = [self.create_label(text, 700) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")
         self.chara_name_text_edit = self.create_text_edit("0")
@@ -53,7 +59,14 @@ class CharaList(QWidget):
         self.nation_combo_box = self.create_qcombo_box([cache_control.nation_data[i] for i in cache_control.nation_data])
         self.birthplace_combo_box = self.create_qcombo_box([cache_control.birthplace_data[i] for i in cache_control.birthplace_data])
 
-        self.ability_widget = MenuWidget()
+        self.ability_widget = MenuWidget(type_flag = 0)
+        self.exprience_widget = MenuWidget(type_flag = 1)
+        self.talent_widget = MenuWidget(type_flag = 2)
+        self.clothing_widget = MenuWidget(type_flag = 3)
+        # self.ability_widget.addItems()
+        # self.exprience_widget.addItems()
+        # self.talent_widget.addItems()
+        # self.clothing_widget.addItems()
 
         # 上方布局
         for i, label in enumerate(labels_1):
@@ -86,13 +99,19 @@ class CharaList(QWidget):
                 self.first_layouts[i].addWidget(self.chara_textcolor_text_edit)
             elif i == 13:
                 self.first_layouts[i].addWidget(intro_labels[0])
-            elif i == 14:
-                self.first_layouts[i].addWidget(self.ability_widget)
 
         for i, label in enumerate(labels_2):
             self.second_layouts[i].addWidget(label)
-            # if i == 0:
-            #     self.first_layouts[i].addWidget(self.ability_widget)
+            if i == 0:
+                self.second_layouts[i].addWidget(self.ability_widget)
+            elif i == 1:
+                self.second_layouts[i].addWidget(self.exprience_widget)
+            elif i == 2:
+                self.second_layouts[i].addWidget(self.talent_widget)
+            # elif i == 3:
+            #     self.second_layouts[i].addWidget(self.clothing_widget)
+            elif i == 4:
+                self.second_layouts[i].addWidget(intro_labels[1])
 
         # 创建确定按钮和重置按钮
         self.apply_button = QPushButton("应用并保存")
@@ -103,14 +122,25 @@ class CharaList(QWidget):
         self.reset_button.clicked.connect(self.reset_values)
 
         # 总布局
-        for i, layout in enumerate(self.first_layouts):
-            self.layout.addLayout(layout, i, 0)
-        # for i, layout in enumerate(self.second_layouts):
-        #     self.layout.addLayout(layout, i, 1)
+        for layout in self.first_layouts:
+            self.leftLayout.addLayout(layout)
+        for layout in self.second_layouts:
+            self.rightLayout.addLayout(layout)
+
+        self.splitter.addWidget(self.leftColumn)
+        self.splitter.addWidget(self.rightColumn)
+        self.layout.addWidget(self.splitter)
 
         # 将按钮添加到布局中
-        self.layout.addWidget(self.apply_button, 18, 0)
-        self.layout.addWidget(self.reset_button, 19, 0)
+        self.layout.addWidget(self.apply_button)
+        self.layout.addWidget(self.reset_button)
+
+
+    def resizeEvent(self, event):
+        super(CharaList, self).resizeEvent(event)
+
+        width = self.width() / 2
+        self.splitter.setSizes([width, width])
 
     def create_label(self, text, width = 100):
         """创建一个带有固定宽度和大小策略的标签"""
@@ -119,7 +149,7 @@ class CharaList(QWidget):
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)  # 设置大小策略
         return label
 
-    def create_text_edit(self, initial_text, width = 200, height = 30):
+    def create_text_edit(self, initial_text, width = 400, height = 30):
         """创建一个文本编辑框"""
         text_edit = QTextEdit(initial_text)
         text_edit.setFixedHeight(height)
@@ -130,7 +160,7 @@ class CharaList(QWidget):
         """创建一个下拉框"""
         combo_box = QComboBox()
         # combo_box.setFixedHeight(30)
-        # combo_box.setFixedWidth(200)
+        combo_box.setFixedWidth(400)
         # combo_box.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Fixed)
         for initial_text in initial_text_list:
             combo_box.addItem(initial_text)
@@ -151,6 +181,9 @@ class CharaList(QWidget):
         self.update_chara_token()
         self.update_chara_introduce()
         self.update_chara_textcolor()
+        self.update_chara_ability()
+        self.update_chara_experience()
+        self.update_chara_talent()
         self.save_csv()
 
     def save_csv(self):
@@ -180,7 +213,16 @@ class CharaList(QWidget):
             out_data += f"Token,str,{cache_control.now_chara_data.Token},1,角色信物\n"
             out_data += f"Introduce_1,str,{cache_control.now_chara_data.Introduce_1},1,角色介绍\n"
             if len(cache_control.now_chara_data.TextColor) == 7 and cache_control.now_chara_data.TextColor[0] == "#":
-                out_data += f"TextColor,str,{cache_control.now_chara_data.TextColor},1,角色字体颜色\n"
+                out_data += f"TextColor,str,{cache_control.now_chara_data.TextColor},1,角色字体颜色为{cache_control.now_chara_data.TextColor}\n"
+            if len(cache_control.now_chara_data.Ability):
+                for key in cache_control.now_chara_data.Ability:
+                    out_data += f"A|{key},int,{cache_control.now_chara_data.Ability[key]},0,角色{cache_control.ability_data[str(key)]}为{cache_control.now_chara_data.Ability[key]}\n"
+            if len(cache_control.now_chara_data.Experience):
+                for key in cache_control.now_chara_data.Experience:
+                    out_data += f"E|{key},int,{cache_control.now_chara_data.Experience[key]},0,角色{cache_control.experience_data[str(key)]}为{cache_control.now_chara_data.Experience[key]}\n"
+            if len(cache_control.now_chara_data.Talent):
+                for key in cache_control.now_chara_data.Talent:
+                    out_data += f"T|{key},int,{cache_control.now_chara_data.Talent[key]},0,角色有{cache_control.talent_data[str(key)]}素质\n"
 
             # 写入文件
             with open(cache_control.now_file_path, "w", encoding="utf-8") as f:
@@ -267,6 +309,34 @@ class CharaList(QWidget):
 
         self.chara_textcolor_text_edit.setPalette(palette)
 
+    def update_chara_ability(self):
+        """根据文本编辑框更新当前的角色能力"""
+        now_ability_dict = {}
+        for item in self.ability_widget.items:
+            key = int(list(cache_control.ability_data.keys())[list(cache_control.ability_data.values()).index(item[1].currentText())])
+            value = int(item[2].toPlainText())
+            now_ability_dict[key] = value
+        cache_control.now_chara_data.Ability = now_ability_dict
+        # print(f"debug 更新了角色能力，cache_control.now_chara_data.Ability = {cache_control.now_chara_data.Ability}")
+
+    def update_chara_experience(self):
+        """根据文本编辑框更新当前的角色经验"""
+        now_experience_dict = {}
+        for item in self.exprience_widget.items:
+            key = int(list(cache_control.experience_data.keys())[list(cache_control.experience_data.values()).index(item[1].currentText())])
+            value = int(item[2].toPlainText())
+            now_experience_dict[key] = value
+        cache_control.now_chara_data.Experience = now_experience_dict
+
+    def update_chara_talent(self):
+        """根据文本编辑框更新当前的角色素质"""
+        now_talent_dict = {}
+        for item in self.talent_widget.items:
+            key = int(list(cache_control.talent_data.keys())[list(cache_control.talent_data.values()).index(item[1].currentText())])
+            value = int(item[2].toPlainText())
+            now_talent_dict[key] = value
+        cache_control.now_chara_data.Talent = now_talent_dict
+
     def update(self):
         """更新"""
         now_AdvNpc = cache_control.now_chara_data.AdvNpc
@@ -295,22 +365,61 @@ class CharaList(QWidget):
         self.nation_combo_box.setCurrentIndex(now_nation)
         now_birthplace = cache_control.now_chara_data.Birthplace
         self.birthplace_combo_box.setCurrentIndex(now_birthplace)
+        now_ability_dict = cache_control.now_chara_data.Ability
+        # print(f"debug 更新了角色能力，cache_control.now_chara_data.Ability = {cache_control.now_chara_data.Ability}")
+        self.ability_widget.items = []
+        for key in now_ability_dict:
+            self.ability_widget.addItems()
+            for i in range(self.ability_widget.items[-1][1].count()):
+                if self.ability_widget.items[-1][1].itemText(i) == cache_control.ability_data[str(key)]:
+                    self.ability_widget.items[-1][1].setCurrentIndex(i)
+                    break
+            self.ability_widget.items[-1][2].setText(str(now_ability_dict[key]))
+        now_experience_dict = cache_control.now_chara_data.Experience
+        self.exprience_widget.items = []
+        for key in now_experience_dict:
+            self.exprience_widget.addItems()
+            for i in range(self.exprience_widget.items[-1][1].count()):
+                if self.exprience_widget.items[-1][1].itemText(i) == cache_control.experience_data[str(key)]:
+                    self.exprience_widget.items[-1][1].setCurrentIndex(i)
+                    break
+            self.exprience_widget.items[-1][2].setText(str(now_experience_dict[key]))
+        now_talent_dict = cache_control.now_chara_data.Talent
+        self.talent_widget.items = []
+        for key in now_talent_dict:
+            self.talent_widget.addItems()
+            for i in range(self.talent_widget.items[-1][1].count()):
+                if self.talent_widget.items[-1][1].itemText(i) == cache_control.talent_data[str(key)]:
+                    self.talent_widget.items[-1][1].setCurrentIndex(i)
+                    break
+            self.talent_widget.items[-1][2].setText(str(now_talent_dict[key]))
+        now_clothing_dict = cache_control.now_chara_data.Cloth
+        self.clothing_widget.items = []
+        for key in now_clothing_dict:
+            self.clothing_widget.addItems()
+            self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
+            self.clothing_widget.items[-1][2].setText(str(now_clothing_dict[key]))
         self.update_chara_textcolor()
 
 
 class MenuWidget(QWidget):
-    def __init__(self):
+    def __init__(self, type_flag = 0):
         super().__init__()
 
-        self.layout = QHBoxLayout(self)
+        self.mainLayout = QVBoxLayout(self)
+
+        self.buttonLayout = QHBoxLayout()
+        self.mainLayout.addLayout(self.buttonLayout)
 
         self.addButton = QPushButton("添加", self)
         self.addButton.clicked.connect(self.addItems)
-        self.layout.addWidget(self.addButton)
+        self.buttonLayout.addWidget(self.addButton)
 
         self.removeButton = QPushButton("删除", self)
         self.removeButton.clicked.connect(self.removeItems)
-        self.layout.addWidget(self.removeButton)
+        self.buttonLayout.addWidget(self.removeButton)
+
+        self.type_flag = type_flag
 
         self.items = []
 
@@ -319,23 +428,42 @@ class MenuWidget(QWidget):
         textEdit = QTextEdit(self)
 
         # 赋予下拉框初始值
-        initial_text_list = [cache_control.ability_data[i] for i in cache_control.ability_data]
+        have_text_flag = True
+        if self.type_flag == 0:
+            initial_text_list = [cache_control.ability_data[i] for i in cache_control.ability_data]
+        elif self.type_flag == 1:
+            initial_text_list = [cache_control.experience_data[i] for i in cache_control.experience_data]
+        elif self.type_flag == 2:
+            initial_text_list = [cache_control.talent_data[i] for i in cache_control.talent_data]
+            have_text_flag = False
+        elif self.type_flag == 3:
+            initial_text_list = [cache_control.clothing_data[i] for i in cache_control.clothing_data]
+
         for initial_text in initial_text_list:
             comboBox.addItem(initial_text)
 
         # 设定文本编辑框的大小
         textEdit.setFixedHeight(30)
         textEdit.setFixedWidth(200)
+        # 文本框的值默认为1
+        textEdit.setText("1")
 
+        # 创建一个新的水平布局，并将新项目添加到这个新的水平布局中
+        layout = QHBoxLayout()
+        layout.addWidget(comboBox)
+        # if have_text_flag:
+        #     layout.addWidget(textEdit)
+        layout.addWidget(textEdit)
+        self.mainLayout.addLayout(layout)
 
-        self.layout.addWidget(comboBox)
-        self.layout.addWidget(textEdit)
-
-        self.items.append((comboBox, textEdit))
+        self.items.append((layout, comboBox, textEdit))
 
     def removeItems(self):
         if self.items:
-            comboBox, textEdit = self.items.pop()
+            layout, comboBox, textEdit = self.items.pop()
+
+            # 从主布局中移除子布局
+            self.mainLayout.removeItem(layout)
 
             comboBox.deleteLater()
             textEdit.deleteLater()

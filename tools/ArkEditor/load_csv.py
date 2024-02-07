@@ -15,6 +15,7 @@ birthplace_path = "csv/Birthplace.csv"
 nation_path = "csv/Nation.csv"
 profession_path = "csv/Profession.csv"
 race_path = "csv/Race.csv"
+clothing_path = "csv/ClothingType.csv"
 
 
 def load_config():
@@ -99,6 +100,7 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.talent_data[i["cid"]] = i["name"]
+    # print(f"debug cache_control.talent_data = {cache_control.talent_data}")
     with open(birthplace_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         read_flag = False
@@ -143,3 +145,14 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.race_data[i["cid"]] = i["name"]
+    with open(clothing_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "衣服种类配置":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.clothing_data[i["cid"]] = i["name"]

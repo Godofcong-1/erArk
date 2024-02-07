@@ -64,3 +64,5 @@ profession_data: dict = {}
 """ 职业数据 """
 race_data: dict = {}
 """ 种族数据 """
+clothing_data: dict = {}
+""" 服装数据 """
