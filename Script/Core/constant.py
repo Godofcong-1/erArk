@@ -413,8 +413,8 @@ class CharacterStatus:
     """ 玩弄s状结肠 """
     STATUS_STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
-    STATUS_MILKING_MACHINE = 601
-    """ 搾乳机 """
+    STATUS_MILKING_MACHINE_ON = 601
+    """ 装上搾乳机 """
     STATUS_URINE_COLLECTOR = 602
     """ 采尿器 """
     STATUS_BONDAGE = 603
@@ -425,6 +425,8 @@ class CharacterStatus:
     """ 鞭子 """
     STATUS_NEEDLE = 606
     """ 针 """
+    STATUS_MILKING_MACHINE_OFF = 631
+    """ 取下搾乳机 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
     STATUS_HOLD_CHILD = 801
@@ -872,8 +874,8 @@ class Behavior:
     STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
 
-    MILKING_MACHINE = 601
-    """ 搾乳机 """
+    MILKING_MACHINE_ON = 601
+    """ 装上搾乳机 """
     URINE_COLLECTOR = 602
     """ 采尿器 """
     BONDAGE = 603
@@ -884,6 +886,9 @@ class Behavior:
     """ 鞭子 """
     NEEDLE = 606
     """ 针 """
+
+    MILKING_MACHINE_OFF = 631
+    """ 取下搾乳机 """
 
     UNDRESS = 701
     """ 脱衣服 """
@@ -2038,8 +2043,10 @@ class Instruct:
     """ 拔出肛门振动棒 """
     ANAL_BEADS_OFF = 0
     """ 拔出肛门拉珠 """
-    MILKING_MACHINE = 0
-    """ 搾乳机 """
+    MILKING_MACHINE_ON = 0
+    """ 装上搾乳机 """
+    MILKING_MACHINE_OFF = 0
+    """ 取下搾乳机 """
     URINE_COLLECTOR = 0
     """ 采尿器 """
     BONDAGE = 0

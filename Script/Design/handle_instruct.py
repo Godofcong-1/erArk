@@ -3823,19 +3823,42 @@ def handle_anal_beads_off():
 
 
 @add_instruct(
-    constant.Instruct.MILKING_MACHINE,
+    constant.Instruct.MILKING_MACHINE_ON,
     constant.InstructType.SEX,
-    _("搾乳机"),
+    _("装上搾乳机"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_LACTATION_1,
+     constant_promise.Premise.TARGET_MILK_GE_30,
+     constant_promise.Premise.TARGET_NOT_MILKING_MACHINE,
      constant_promise.Premise.HAVE_MILKING_MACHINE},
 )
-def handle_milking_machine():
-    """处理搾乳机指令"""
+def handle_milking_machine_on():
+    """处理装上搾乳机指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.MILKING_MACHINE
-    character_data.state = constant.CharacterStatus.STATUS_MILKING_MACHINE
+    character_data.behavior.behavior_id = constant.Behavior.MILKING_MACHINE_ON
+    character_data.state = constant.CharacterStatus.STATUS_MILKING_MACHINE_ON
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.MILKING_MACHINE_OFF,
+    constant.InstructType.SEX,
+    _("取下搾乳机"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_LACTATION_1,
+     constant_promise.Premise.TARGET_NOW_MILKING_MACHINE,
+     constant_promise.Premise.HAVE_MILKING_MACHINE},
+)
+def handle_milking_machine_off():
+    """处理取下搾乳机指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.MILKING_MACHINE_OFF
+    character_data.state = constant.CharacterStatus.STATUS_MILKING_MACHINE_OFF
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 

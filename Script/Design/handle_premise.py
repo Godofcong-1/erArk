@@ -11579,6 +11579,38 @@ def handle_target_not_vibrator_insertion(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.TARGET_NOW_MILKING_MACHINE)
+def handle_target_now_milking_machine(character_id: int) -> int:
+    """
+    交互对象正在搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[4][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_MILKING_MACHINE)
+def handle_target_not_milking_machine(character_id: int) -> int:
+    """
+    交互对象没有在搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[4][1]:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)
 def handle_have_milking_machine(character_id: int) -> int:
     """

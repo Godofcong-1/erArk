@@ -2283,6 +2283,49 @@ def handle_add_tired(
         character_data.sleep_point = 100
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MILK)
+def handle_add_milk(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加乳汁（挤奶）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    if character_data.h_state.body_item[4][1]:
+
+        now_milk = min(character_data.pregnancy.milk, 50)
+        cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
+        cache.rhodes_island.milk_in_fridge[character_id] += now_milk
+        character_data.pregnancy.milk -= now_milk
+
+        # 绘制信息
+        if now_milk:
+            now_draw = draw.NormalDraw()
+            now_text = f"\n{character_data.name}榨出了{now_milk}ml的乳汁。\n"
+            now_draw.text = now_text
+            now_draw.width = window_width
+            now_draw.draw()
+
+    # 没有乳汁时停止榨乳
+    if character_data.pregnancy.milk <= 0:
+        character_data.pregnancy.milk = 0
+        character_data.h_state.body_item[4][1] = 0
+        character_data.second_behavior[1104] = 0
+        # 绘制信息
+        now_draw = draw.NormalDraw()
+        now_text = f"{character_data.name}已经没有乳汁了，所以取下了搾乳机。\n"
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)
 def handle_penis_in_t_reset(
     character_id: int,

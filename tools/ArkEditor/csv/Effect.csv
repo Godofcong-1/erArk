@@ -286,6 +286,8 @@ cid,effect_name,effect_type,effect
 918,TARGET_CLIT_CLAMP_OFF,道具_增减,交互对象取下阴蒂夹
 919,TARGET_ANAL_BEADS_ON,道具_增减,交互对象塞入肛门拉珠
 920,TARGET_ANAL_BEADS_OFF,道具_增减,交互对象拔出肛门拉珠
+921,TARGET_MILKING_MACHINE_ON,道具_增减,交互对象戴上搾乳机
+922,TARGET_MILKING_MACHINE_OFF,道具_增减,交互对象取下搾乳机
 941,USE_BODY_LUBRICANT,道具_增减,使用了一个润滑液
 942,USE_PHILTER,道具_增减,使用了一个媚药
 943,USE_ENEMAS,道具_增减,使用了一个灌肠液

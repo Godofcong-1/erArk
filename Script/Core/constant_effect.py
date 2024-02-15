@@ -563,6 +563,10 @@ class BehaviorEffect:
     """ 道具_增减 交互对象塞入肛门拉珠 """
     TARGET_ANAL_BEADS_OFF = 920
     """ 道具_增减 交互对象拔出肛门拉珠 """
+    TARGET_MILKING_MACHINE_ON = 921
+    """ 道具_增减 交互对象戴上搾乳机 """
+    TARGET_MILKING_MACHINE_OFF = 922
+    """ 道具_增减 交互对象取下搾乳机 """
     USE_BODY_LUBRICANT = 941
     """ 道具_增减 使用了一个润滑液 """
     USE_PHILTER = 942
@@ -835,6 +839,8 @@ class SecondEffect:
     """ 增加尿意（持续性利尿剂） """
     ADD_TIRED = 403
     """ 维持疲劳和熟睡值（安眠药） """
+    ADD_MILK = 404
+    """ 增加乳汁（挤奶） """
 
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_归零 """
