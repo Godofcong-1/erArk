@@ -3869,6 +3869,7 @@ def handle_milking_machine_off():
     _("采尿器"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_URINE_COLLECTOR},
 )
 def handle_urine_collector():
@@ -3887,6 +3888,7 @@ def handle_urine_collector():
     _("绳子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_BONDAGE},
 )
 def handle_bondage():
@@ -3905,6 +3907,7 @@ def handle_bondage():
     _("眼罩"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_PATCH},
 )
 def handle_patch():
@@ -3923,6 +3926,7 @@ def handle_patch():
     _("鞭子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_WHIP},
 )
 def handle_whip():
@@ -3941,6 +3945,7 @@ def handle_whip():
     _("针"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_NEEDLE},
 )
 def handle_neddle():
@@ -3977,6 +3982,7 @@ def handle_put_condom():
     _("滴蜡"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_SAFE_CANDLES},
 )
 def handle_safe_candles():
