@@ -86,7 +86,7 @@ class ItemPremiseList(QWidget):
             draw_text += f" + {add_now_talk_weight}"
             final_weight += add_now_talk_weight
         # 是NPC的专属口上时，权重翻三倍
-        if cache_control.now_adv_id:
+        if cache_control.now_adv_id != 0 and cache_control.now_adv_id != "0":
             draw_text += f"，角色口上再乘3"
             final_weight = final_weight * 3
         if final_weight != 1:
