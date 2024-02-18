@@ -489,6 +489,7 @@ def add_favorability(
     # NPC对玩家
     if (character_id != 0) and (character_data.target_character_id == 0):
         character_data.favorability[target_id] += now_add_favorability
+        character_data.favorability[target_id] = min(100000, character_data.favorability[target_id])
         # print(f"debug change_data = {change_data}")
         if change_data is not None:
             change_data.favorability += now_add_favorability
@@ -496,6 +497,7 @@ def add_favorability(
     # 对NPC
     if character_data.target_character_id != 0:
         target_data.favorability[character_id] += now_add_favorability
+        target_data.favorability[character_id] = min(100000, target_data.favorability[character_id])
         if target_change is not None:
             target_change.favorability += now_add_favorability
     # target_data.social_contact_last_cut_down_time[character_id] = now_time

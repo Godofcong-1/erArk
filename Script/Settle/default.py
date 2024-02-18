@@ -204,6 +204,7 @@ def handle_add_small_trust(
         if now_lust_multiple < 0:
             now_lust_multiple = 0
         target_data.trust += now_lust_multiple
+        target_data.trust = min(300, target_data.trust)
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.trust += now_lust_multiple

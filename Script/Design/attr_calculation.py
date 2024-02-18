@@ -692,8 +692,11 @@ def get_favorability_level(value: int):
         now_data = game_config.config_favorability_level[now_cid]
         if value > now_data.Favorability_point:
             continue
-        else:
-            return now_cid,now_data.judge_add
+        return now_cid,now_data.judge_add
+    # 到达极限值时输出config_favorability_level的最后一个作为返回值
+    max_cid = list(game_config.config_favorability_level.keys())[-1]
+    max_data = game_config.config_favorability_level[max_cid]
+    return max_cid,max_data.judge_add
 
 
 def get_trust_level(value: int):
@@ -709,8 +712,11 @@ def get_trust_level(value: int):
         now_data = game_config.config_trust_level[now_cid]
         if value > now_data.Trust_point:
             continue
-        else:
-            return now_cid,now_data.judge_add
+        return now_cid,now_data.judge_add
+    # 到达极限值时输出config_trust_level的最后一个作为返回值
+    max_cid = list(game_config.config_trust_level.keys())[-1]
+    max_data = game_config.config_trust_level[max_cid]
+    return max_cid,max_data.judge_add
 
 
 def hypnosis_degree_calculation(target_character_id: int) -> int:
