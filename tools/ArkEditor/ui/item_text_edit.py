@@ -67,6 +67,7 @@ class ItemTextEdit(QWidget):
             {"text": "插入食物制作时间", "slot": lambda: self.insert_text('{MakeFoodTime}')},
             {"text": "插入当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
             {"text": "插入当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
+            {"text": "插入当前行为榨出母乳的毫升数", "slot": lambda: self.insert_text('{MilkMl}')},
             {"text": "插入当前场景名字", "slot": lambda: self.insert_text('{SceneName}')},
             {"text": "插入当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},
             {"text": "插入移动目标场景名字", "slot": lambda: self.insert_text('{TargetSceneName}')},
@@ -97,6 +98,8 @@ class ItemTextEdit(QWidget):
             self.now_text = cache_control.now_event_data[cache_control.now_select_id].text
         elif cache_control.now_edit_type_flag == 0:
             self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
+        # 将换行符"\n"换成真正的换行
+        self.now_text = self.now_text.replace("\\n", "\n")
         self.label_text.setText(self.now_text)
 
     def save(self):

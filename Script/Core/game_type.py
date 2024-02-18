@@ -634,6 +634,8 @@ class Behavior:
         """ 前提结算用:书籍id """
         self.book_name: str = ""
         """ 前提结算用:书籍名字 """
+        self.milk_ml: int = 0
+        """ 前提结算用:榨出母乳的毫升数 """
 
 
 class Chara_Event:

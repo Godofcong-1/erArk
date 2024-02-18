@@ -301,6 +301,7 @@ def code_text_to_draw_text(now_talk:str, character_id: int):
         MakeFoodTime=character_data.behavior.make_food_time,
         AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,
+        MilkMl = character_data.behavior.milk_ml,
 
         SceneName=scene_name,
         SceneOneCharaName=random_chara_name,

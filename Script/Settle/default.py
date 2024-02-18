@@ -4392,6 +4392,7 @@ def handle_milk_add_adjust(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     now_milk = target_data.pregnancy.milk
+    character_data.behavior.milk_ml += now_milk
     cache.rhodes_island.milk_in_fridge.setdefault(character_data.target_character_id, 0)
     cache.rhodes_island.milk_in_fridge[character_data.target_character_id] += now_milk
     target_data.pregnancy.milk = 0

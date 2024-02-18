@@ -2300,10 +2300,12 @@ def handle_add_milk(
 
     if character_data.h_state.body_item[4][1]:
 
-        now_milk = min(character_data.pregnancy.milk, 50)
+        now_milk = 5 * character_data.behavior.duration
+        now_milk = min(character_data.pregnancy.milk, now_milk)
         cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
         cache.rhodes_island.milk_in_fridge[character_id] += now_milk
         character_data.pregnancy.milk -= now_milk
+        character_data.behavior.milk_ml += now_milk
 
         # 绘制信息
         if now_milk:
