@@ -883,6 +883,10 @@ class System_Setting:
     def __init__(self):
         self.line_before_main_update: int = 3
         """ 主界面刷新前的行数 """
+        self.pl_ability_auto_lvup: bool = False
+        """ 是否自动升级玩家的能力 """
+        self.npc_ability_auto_lvup: bool = True
+        """ 是否自动升级NPC的能力 """
 
 
 class Character:

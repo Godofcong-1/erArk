@@ -67,7 +67,7 @@ class Characterabi_show_Text:
             for ability_id in type_set:
                 # 去掉与性别不符的感度与扩张
                 if self.character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 34, 39}:
+                    if ability_id in {2, 4, 7, 9, 12, 73, 74}:
                         continue
                 elif self.character_data.sex == 1:
                     if ability_id == 3:

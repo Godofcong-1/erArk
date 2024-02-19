@@ -682,6 +682,9 @@ def update_sleep():
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.semen_point = character_data.semen_point_max # 恢复精液量
+            # 检查是否有可以升级的能力
+            if cache.system_setting.pl_ability_auto_lvup:
+                handle_ability.gain_ability(character_id)
             line_feed.draw()
         else:
             # 清零并随机重置生气程度
@@ -699,7 +702,8 @@ def update_sleep():
             # 检查是否有可以获得的素质
             handle_talent.gain_talent(character_id,now_gain_type = 3)
             # 检查是否有可以升级的能力
-            handle_ability.gain_ability(character_id)
+            if cache.system_setting.npc_ability_auto_lvup:
+                handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
 

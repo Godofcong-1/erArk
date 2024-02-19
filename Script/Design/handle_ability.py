@@ -50,6 +50,14 @@ def gain_ability(character_id: int):
         # 最大8级
         if ability_level >= 8:
             continue
+        # 去掉与性别不符的感度与扩张
+        if character_data.sex == 0:
+            if ability_cid in {2, 4, 7, 9, 12, 73, 74}:
+                continue
+        elif character_data.sex == 1:
+            if ability_cid == 3:
+                continue
+
         need_list = game_config.config_ability_up_data[ability_cid][ability_level]
 
         # 遍历升级需求，判断是否符合升级要求
