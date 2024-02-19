@@ -567,9 +567,26 @@ def settle_character_juel(character_id: int) -> int:
         #只要状态值不为0就结算为对应珠
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
-            character_data.juel[status_id] += add_juel
+            if status_id in [17, 18, 19]:
+                character_data.juel[20] += add_juel // 2
+            else:
+                character_data.juel[status_id] += add_juel
             # juel_text = game_config.config_juel[status_id].name
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
+    # 当反感珠大于0时，计算和其他珠的抵消
+    if character_data.juel[20] > 0:
+        draw_text = f"\n当前共{character_data.juel[20]}反发珠，抵消了："
+        for i in [15, 10, 11, 12, 13]:
+            # 1好意抵消2反发
+            if character_data.juel[i] > 0:
+                juel_down = min(character_data.juel[20], character_data.juel[i] * 2)
+                character_data.juel[20] -= juel_down
+                character_data.juel[i] -= juel_down // 2
+                draw_text += f" {juel_down//2}个{game_config.config_juel[i].name} "
+        draw_text += f"，剩余{character_data.juel[20]}个反发珠\n"
+        now_draw = draw.NormalDraw()
+        now_draw.text = draw_text
+        # now_draw.draw()
     return 1
 
 
