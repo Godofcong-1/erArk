@@ -118,6 +118,22 @@ class InScenePanel:
                 ask_list.extend(character_handle_panel.return_list)
                 line_draw = draw.LineDraw("-.-", self.width)
                 line_draw.draw()
+
+                # 收起与展开按钮
+                return_text = self.draw_show_and_hide_button(0, "收起状态栏", "展开状态栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(1, "收起服装栏", "展开服装栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(2, "收起H状态栏", "展开H状态栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(3, "收起污浊栏", "展开污浊栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(4, "收起图片栏", "展开图片栏")
+                ask_list.append(return_text)
+                line_feed.draw()
+                line_draw = draw.LineDraw(".--", self.width)
+                line_draw.draw()
+
             now_draw_character_list = []
             now_draw_character_list = character_list
             # （已废弃）有bug的人物绘制列表
@@ -202,7 +218,7 @@ class InScenePanel:
             #         label.draw()
             # ↓以下为状态栏的内容↓#
             character_status_draw_list = []
-            if character_data.target_character_id:
+            if character_data.target_character_id and cache.scene_panel_show[0]:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
                     character_data.cid, self.width / 2, 9, 0, 0
                 )
@@ -259,7 +275,7 @@ class InScenePanel:
                     label.draw()
 
             # ↓以下为服装栏的内容↓#
-            if character_data.target_character_id:
+            if cache.scene_panel_show[1] and character_data.target_character_id:
                 character_cloth_draw = see_character_info_panel.SeeCharacterClothPanel(
                     character_data.cid, self.width, 20, 0, 0
                 )
@@ -267,7 +283,7 @@ class InScenePanel:
 
             # ↓以下为H状态栏的内容↓#
             character_H_status_draw_list = []
-            if character_data.target_character_id:
+            if character_data.target_character_id and cache.scene_panel_show[2]:
 
                 character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
                     character_data.cid, self.width, 9, 0, 0
@@ -315,24 +331,25 @@ class InScenePanel:
                             label.draw()
 """
             # 以下为图片面板#
-            line_draw = draw.LineDraw("-.-", self.width)
-            line_draw.draw()
-            # fix_draw = draw.CharaDraw()
-            # fix_draw.width = 10
-            # fix_draw.set(1)
-            # fix_draw.draw()
-            # line_feed.draw()
-            character_image_list_draw = CharacterImageListDraw(self.width, now_draw_character_list)
-            character_image_list_draw.draw()
-            ask_list.extend(character_image_list_draw.return_list)
-            """
-            character_image_list=character_list
-            character_image_list.reverse()
-            for image_cid in character_image_list:
-                image_character_data = cache.character_data[image_cid]
-                flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
-            """
-            line_feed.draw()
+            if len(character_list) and cache.scene_panel_show[4]:
+                line_draw = draw.LineDraw("-.-", self.width)
+                line_draw.draw()
+                # fix_draw = draw.CharaDraw()
+                # fix_draw.width = 10
+                # fix_draw.set(1)
+                # fix_draw.draw()
+                # line_feed.draw()
+                character_image_list_draw = CharacterImageListDraw(self.width, now_draw_character_list)
+                character_image_list_draw.draw()
+                ask_list.extend(character_image_list_draw.return_list)
+                """
+                character_image_list=character_list
+                character_image_list.reverse()
+                for image_cid in character_image_list:
+                    image_character_data = cache.character_data[image_cid]
+                    flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
+                """
+                line_feed.draw()
             # 以下为指令面板#
             mid_draw = time.time()
             logging.debug(f'————————')
@@ -348,6 +365,35 @@ class InScenePanel:
             py_cmd.clr_cmd()
             end_draw = time.time()
             logging.debug(f'指令部分绘制总时间为{end_draw - mid_draw}')
+
+    def draw_show_and_hide_button(self, index, hide_text, show_text):
+        """绘制显示与隐藏按钮"""
+        if cache.scene_panel_show[index]:
+            now_button = draw.CenterButton(
+                f" [{hide_text}] ",
+                hide_text,
+                (len(hide_text) + 4) * 2,
+                cmd_func=self.show_and_hide_panel,
+                args=(index,),
+            )
+        else:
+            now_button = draw.CenterButton(
+                f" [{show_text}] ",
+                show_text,
+                (len(show_text) + 4) * 2,
+                cmd_func=self.show_and_hide_panel,
+                args=(index,),
+            )
+        now_button.draw()
+        return now_button.return_text
+
+    def show_and_hide_panel(self, index):
+        """显示与隐藏面板栏"""
+        if cache.scene_panel_show[index]:
+            cache.scene_panel_show[index] = False
+        else:
+            cache.scene_panel_show[index] = True
+
 
 
 class SeeInstructPanel:
