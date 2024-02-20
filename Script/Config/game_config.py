@@ -62,6 +62,8 @@ config_reproduction_period: Dict[int, config_def.Reproduction_period] = {}
 """ 生理周期数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
+config_body_part_volume: Dict[int, list] = {}
+""" 身体部位容积数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
 config_facility: Dict[int, config_def.Facility] = {}
@@ -620,6 +622,9 @@ def load_body_part():
         now_type = config_def.BodyPart()
         now_type.__dict__ = tem_data
         config_body_part[now_type.cid] = now_type
+        volume_list = now_type.volume_table.split("-")
+        volume_list = [int(volume) for volume in volume_list]
+        config_body_part_volume[now_type.cid] = volume_list
 
 
 def load_collection_bonus_data():

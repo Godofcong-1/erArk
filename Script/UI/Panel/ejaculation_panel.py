@@ -323,8 +323,7 @@ class Ejaculation_NameDraw:
                 self.index = 7
             target_data.dirty.body_semen[self.index][1] += semen_count
             target_data.dirty.body_semen[self.index][3] += semen_count
-            target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(
-                target_data.dirty.body_semen[self.index][1])
+            target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[self.index][1], self.index, 0)
 
         elif self.panel_type == 2:
 
@@ -335,7 +334,7 @@ class Ejaculation_NameDraw:
             target_data.dirty.cloth_semen[self.index][1] += semen_count
             target_data.dirty.cloth_semen[self.index][3] += semen_count
             target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(
-                target_data.dirty.cloth_semen[self.index][1])
+                target_data.dirty.cloth_semen[self.index][1], self.index, 1)
 
             now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 

@@ -378,7 +378,7 @@ class Ejaculation_NameDraw:
         # 更新污浊类里的服装部位精液参数
         target_data.dirty.cloth_locker_semen[self.index][1] += semen_count
         target_data.dirty.cloth_locker_semen[self.index][3] += semen_count
-        target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1])
+        target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1], self.index, 1)
 
         now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
 

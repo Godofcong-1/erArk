@@ -88,6 +88,8 @@ class BodyPart:
     """ 配表id """
     name: str
     """ 部位名字 """
+    volume_table: str
+    """ 容积表 """
 
 
 class Book:

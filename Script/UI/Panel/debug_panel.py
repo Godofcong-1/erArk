@@ -97,7 +97,7 @@ class Debug_Panel:
                 draw_text_list = []
                 draw_text_list.append(f"[000]:游戏时间：{cache.game_time}")
                 draw_text_list.append(f"[001]:已拥有的干员id列表：{cache.npc_id_got}")
-                draw_text_list.append(f"[002]:全干员id列表：{[i + 1 for i in range(len(cache.npc_tem_data))]}")
+                draw_text_list.append(f"[002]:全干员id列表（太长了无法显示）")
                 draw_text_list.append(f"[003]:龙门币：{cache.rhodes_island.materials_resouce[1]}")
                 draw_text_list.append(f"[004]:合成玉：{cache.rhodes_island.materials_resouce[2]}")
                 draw_text_list.append(f"[005]:粉红凭证：{cache.rhodes_island.materials_resouce[4]}")

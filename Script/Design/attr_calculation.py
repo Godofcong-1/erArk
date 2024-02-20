@@ -605,26 +605,44 @@ def get_angry_text(value: int) -> str:
         return "愤怒"
 
 
-def get_semen_now_level(value: int) -> int:
+def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
     """
-    按当前部位精液量返回精液覆盖等级
-    Keyword arguments:
-    value -- 精液量
-    Return arguments:
-    level -- 精液覆盖等级
+    按当前部位精液量返回精液覆盖等级\n
+    Keyword arguments:\n
+    value -- 精液量\n
+    part_cid -- 部位编号\n
+    part_type -- 部位类型，0:身体,1:衣物\n
+    Return arguments:\n
+    level -- 精液覆盖等级\n
     """
+    # 如果没有精液，则返回0
     if value <= 0:
         return 0
-    elif 0 < value and value <= 10:
-        return 1
-    elif 10 < value and value <= 50:
-        return 2
-    elif 50 < value and value <=200:
-        return 3
-    elif 200 < value and value <=1000:
-        return 4
-    elif value > 1000:
-        return 5
+    # 如果是身体部位
+    if part_type == 0:
+        voluem_data_list = game_config.config_body_part_volume[part_cid]
+        for i in range(len(voluem_data_list)):
+            if value <= voluem_data_list[i]:
+                now_level = i + 1
+                break
+            # 如果超过最大值，则返回最大值
+            if i == len(voluem_data_list) - 1:
+                now_level = i + 1
+    else:
+        if value <= 0:
+            return 0
+        elif 0 < value and value <= 10:
+            return 1
+        elif 10 < value and value <= 50:
+            return 2
+        elif 50 < value and value <=200:
+            return 3
+        elif 200 < value and value <=1000:
+            return 4
+        elif value > 1000:
+            return 5
+    # print(f"debug value = {value},now_level = {now_level}")
+    return now_level
 
 
 def get_tired_level(value: int) -> int:
