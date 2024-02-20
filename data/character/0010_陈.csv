@@ -5,8 +5,8 @@ Name,str,陈,1,姓名：陈
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
 Race,int,3,0,种族：龙
-Nation,str,14,1,势力：龙门近卫局
-Birthplace,str,17,1,出生地：炎
+Nation,int,14,1,势力：龙门近卫局
+Birthplace,int,17,1,出生地：炎
 Hp,int,2500,0,初始体力：2500
 Mp,int,2500,0,初始气力：2500
 Dormitory,str,无,1,无：无

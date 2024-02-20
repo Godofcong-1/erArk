@@ -419,6 +419,9 @@ class CharaList(QWidget):
         now_clothing_dict = cache_control.now_chara_data.Cloth
         self.clothing_widget.items = []
         for key in now_clothing_dict:
+            # 跳过默认服装
+            if key in [5999,8999]:
+                continue
             # 只有单个物品时直接显示
             if len(now_clothing_dict[key]) == 1:
                 self.clothing_widget.addItems()

@@ -5,8 +5,8 @@ Name,str,蛇屠箱,1,姓名：蛇屠箱
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,23,0,种族：匹特拉姆
-Nation,str,41,1,势力：哥伦比亚
-Birthplace,str,999,1,出生地：未知
+Nation,int,41,1,势力：哥伦比亚
+Birthplace,int,999,1,出生地：未知
 Hp,int,1500,0,初始体力：1500
 Mp,int,2500,0,初始气力：2500
 Dormitory,str,无,1,无：无
