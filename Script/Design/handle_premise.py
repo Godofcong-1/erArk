@@ -5074,6 +5074,125 @@ def handle_t_unconscious_flag(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_1)
+def handle_t_unconscious_flag_1(character_id: int) -> int:
+    """
+    对方有无意识_睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_2)
+def handle_t_unconscious_flag_2(character_id: int) -> int:
+    """
+    对方有无意识_醉酒状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_3)
+def handle_t_unconscious_flag_3(character_id: int) -> int:
+    """
+    对方有无意识_时停状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_4)
+def handle_t_unconscious_flag_4(character_id: int) -> int:
+    """
+    对方有无意识_空气状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 4:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_5)
+def handle_t_unconscious_flag_5(character_id: int) -> int:
+    """
+    对方有无意识_平然状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_6)
+def handle_t_unconscious_flag_6(character_id: int) -> int:
+    """
+    对方有无意识_心控状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 6:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_7)
+def handle_t_unconscious_flag_7(character_id: int) -> int:
+    """
+    对方有无意识_体控状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.unconscious_h == 7:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HELP_BUY_FOOD_FLAG_0)
 def handle_help_buy_food_flag_0(character_id: int) -> int:
     """
