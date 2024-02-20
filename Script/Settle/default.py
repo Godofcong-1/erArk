@@ -4548,7 +4548,7 @@ def handle_teach_add_just(
                         target_change.trust += now_lust_multiple
 
                     # 手动结算该状态
-                    character_behavior.judge_character_status(chara_id,cache.game_time)
+                    character_behavior.judge_character_status(chara_id)
                     # other_character_data.state = constant.CharacterStatus.STATUS_ARDER
 
 
