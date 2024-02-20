@@ -127,7 +127,26 @@ def input_load_save(save_id: str):
     Keyword arguments:
     save_id -- 存档id
     """
-    cache.__dict__ = load_save(save_id).__dict__
+    # 创建一个新的类实例，这个实例会包含所有的默认键值
+    new_cache = game_type.Cache()
+
+    # 从存档中加载字典
+    loaded_dict = load_save(save_id).__dict__
+
+    # 递归地更新 loaded_dict
+    update_dict_with_default(loaded_dict, new_cache.__dict__)
+
+    # 使用 update() 方法来更新 cache 的字典
+    cache.__dict__.update(loaded_dict)
+
+
+def update_dict_with_default(loaded_dict, default_dict):
+    for key, value in default_dict.items():
+        if key not in loaded_dict:
+            print("存档修复: key", key, "not found in loaded_dict")
+            loaded_dict[key] = value
+        elif isinstance(value, game_type.Cache):
+            update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
 
 
 def remove_save(save_id: str):
