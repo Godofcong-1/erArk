@@ -663,6 +663,18 @@ def judge_character_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
+
+    # 如果不在同一位置，则结束H状态
+    if character_data.sp_flag.is_h and character_data.position != pl_character_data.position:
+        character_data.sp_flag.is_h = False
+        character_data.sp_flag.unconscious_h = 0
+        character_data.behavior.behavior_id = constant.Behavior.END_H
+        character_data.state = constant.CharacterStatus.STATUS_END_H
+        character_data.behavior.start_time = pl_character_data.behavior.start_time
+        character_data.behavior.duration = pl_character_data.behavior.duration
+        character_data.target_character_id = character_id
+
+    # 维持H状态，行动锁死为等待不动
     if character_data.sp_flag.is_h:
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_ARDER
