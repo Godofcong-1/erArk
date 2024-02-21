@@ -269,8 +269,8 @@ class CharaList(QWidget):
 
     def update_birthplace(self):
         """根据文本编辑框更新当前的角色出身地"""
-        now_birthplace = self.birthplace_combo_box.currentIndex()
-        cache_control.now_chara_data.Birthplace = now_birthplace
+        key = int(list(cache_control.birthplace_data.keys())[list(cache_control.birthplace_data.values()).index(self.birthplace_combo_box.currentText())])
+        cache_control.now_chara_data.Birthplace = key
 
     def update_chara_hp(self):
         """根据文本编辑框更新当前的角色初始体力"""
@@ -387,7 +387,10 @@ class CharaList(QWidget):
                 self.nation_combo_box.setCurrentIndex(i)
                 break
         now_birthplace = cache_control.now_chara_data.Birthplace
-        self.birthplace_combo_box.setCurrentIndex(now_birthplace)
+        for i in range(self.birthplace_combo_box.count()):
+            if self.birthplace_combo_box.itemText(i) == cache_control.birthplace_data[str(now_birthplace)]:
+                self.birthplace_combo_box.setCurrentIndex(i)
+                break
         now_ability_dict = cache_control.now_chara_data.Ability
         # print(f"debug 更新了角色能力，cache_control.now_chara_data.Ability = {cache_control.now_chara_data.Ability}")
         self.ability_widget.items = []
