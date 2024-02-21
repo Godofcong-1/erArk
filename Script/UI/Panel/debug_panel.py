@@ -3,7 +3,7 @@ from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,character_handle, handle_premise
+from Script.Design import basement,character_handle, handle_premise, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -820,6 +820,10 @@ class Debug_Panel:
                 draw_text_list.append(f"\n[001]:服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_semen}")
                 draw_text_list.append(f"\n[002]:衣柜里的服装精液情况，编号int:[部位名str,当前精液量int,当前精液等级int,总精液量int]：\n{target_data.dirty.cloth_locker_semen}")
                 draw_text_list.append(f"\n[003]:A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠]：{target_data.dirty.a_clean}")
+                draw_text_list.append(f"[004]:身体部位:当前精液量int，输入4,0,5即可把0号部位的精液量改为5")
+                draw_text_list.append(f"[005]:身体部位:当前精液等级int，输入5,0,1即可把0号部位的精液等级改为1")
+                draw_text_list.append(f"[006]:服装部位:当前精液量int，输入6,1,5即可把1号服装的精液量改为5")
+                draw_text_list.append(f"[007]:服装部位:当前精液等级int，输入7,1,1即可把1号服装的精液等级改为1")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -850,6 +854,16 @@ class Debug_Panel:
                         target_data.dirty.cloth_locker_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 3:
                         target_data.dirty.a_clean = new_value
+                    elif value_index[0] == 4:
+                        target_data.dirty.body_semen[value_index[1]][1] = new_value
+                        target_data.dirty.body_semen[value_index[1]][2] = attr_calculation.get_semen_now_level(new_value, value_index[1], 0)
+                    elif value_index[0] == 5:
+                        target_data.dirty.body_semen[value_index[1]][2] = new_value
+                    elif value_index[0] == 6:
+                        target_data.dirty.cloth_semen[value_index[1]][1] = new_value
+                        target_data.dirty.cloth_semen[value_index[1]][2] = attr_calculation.get_semen_now_level(new_value, value_index[1], 1)
+                    elif value_index[0] == 7:
+                        target_data.dirty.cloth_semen[value_index[1]][2] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False

@@ -2,7 +2,7 @@ from os import name
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel
 from Script.Core import (
     get_text,
     cache_control,
@@ -330,6 +330,14 @@ class InScenePanel:
                         else:
                             label.draw()
 """
+
+            # ↓以下为污浊栏的内容↓#
+            if cache.scene_panel_show[3] and character_data.target_character_id:
+                character_cloth_draw = dirty_panel.SeeCharacterDirtyPanel(
+                    character_data.cid, self.width, 9, 0, 0
+                )
+                character_cloth_draw.draw()
+
             # 以下为图片面板#
             if len(character_list) and cache.scene_panel_show[4]:
                 line_draw = draw.LineDraw("-.-", self.width)

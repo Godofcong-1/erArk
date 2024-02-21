@@ -620,7 +620,10 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
         return 0
     # 如果是身体部位
     if part_type == 0:
-        voluem_data_list = game_config.config_body_part_volume[part_cid]
+        if part_cid == 20:
+            voluem_data_list = [300, 1000, 3000, 6000, 9000, 12000]
+        else:
+            voluem_data_list = game_config.config_body_part_volume[part_cid]
         for i in range(len(voluem_data_list)):
             if value <= voluem_data_list[i]:
                 now_level = i + 1

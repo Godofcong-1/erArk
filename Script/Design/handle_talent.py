@@ -83,8 +83,8 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
     # 特殊素质获得
-    # if now_gain_type == 0:
-    #     npc_gain_hypnosis_talent(character_id)
+    if now_gain_type == 0:
+        npc_gain_and_lost_cumflation(character_id)
 
 def have_hypnosis_talent():
     """
@@ -159,3 +159,29 @@ def npc_gain_hypnosis_talent(character_id: int):
             now_draw_succed.draw()
             break
 
+def npc_gain_and_lost_cumflation(character_id: int):
+    """
+    干员获得和失去精液膨腹素质\n
+    """
+    pl_character_data = cache.character_data[0]
+    character_data = cache.character_data[character_id]
+
+    # 计算腹部精液总量
+    abdomen_all_semen = 0
+    for i in [5,7,8,15]:
+        abdomen_all_semen += character_data.dirty.body_semen[i][1]
+
+    # 判断是否获得或失去精液膨腹
+    now_draw_text = ""
+    if abdomen_all_semen >= 6000 and not character_data.talent[32]:
+        character_data.talent[32] = 1
+        now_draw_text += f"\n○{character_data.name}获得了[精液膨腹]\n"
+    elif abdomen_all_semen < 6000 and character_data.talent[32]:
+        character_data.talent[32] = 0
+        now_draw_text += f"\n○{character_data.name}失去了[精液膨腹]\n"
+
+    # 绘制获得素质提示
+    if now_draw_text != "" and character_data.position == pl_character_data.position:
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = now_draw_text
+        now_draw_succed.draw()

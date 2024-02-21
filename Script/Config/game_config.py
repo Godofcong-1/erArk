@@ -9,10 +9,14 @@ data_path = os.path.join("data", "data.json")
 """ 原始json数据文件路径 """
 character_path = os.path.join("data", "Character.json")
 """ 原始角色数据文件路径 """
+ui_text_path = os.path.join("data", "ui_text.json")
+""" 原始ui文本数据文件路径 """
 config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
+ui_text_data = {}
+""" 原始ui文本数据 """
 config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
@@ -251,10 +255,11 @@ config_talent_of_arts: Dict[int, config_def.Talent_Of_Arts] = {}
 """ 源石技艺素质 """
 
 def load_data_json():
-    """载入data.json与character.json内配置数据"""
-    global config_data,character_data
+    """载入data.json、character.json与ui_text.json内配置数据"""
+    global config_data,character_data,ui_text_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
+    ui_text_data = json_handle.load_json(ui_text_path)
 
 
 def translate_data(data: dict):

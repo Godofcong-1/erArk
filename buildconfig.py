@@ -16,6 +16,8 @@ msgData = set()
 class_data = set()
 character_dir = os.path.join("data","character")
 character_data = {}
+ui_text_dir = os.path.join("data", "ui_text")
+ui_text_data = {}
 
 
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
@@ -181,6 +183,25 @@ def build_character_config(file_path:str,file_name:str):
                     config_po += 'msgstr ""\n\n'
         character_data[file_id] = now_data
 
+def build_ui_text(file_path:str,file_name:str):
+    global config_po
+    with open(file_path,encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        file_id = file_name.split(".")[0]
+        now_data = {}
+        i = 0
+        for row in now_read:
+            i += 1
+            if i <= 4:
+                continue
+            # print(f"debug row = {row}")
+            now_data[row["cid"]] = row["context"]
+            if row["context"] not in msgData:
+                config_po += f"#: ui_text:{file_id}\n"
+                config_po += "msgid" + " " + '"' + row["context"] + '"' + "\n"
+                config_po += 'msgstr ""\n\n'
+        ui_text_data[file_id] = now_data
+
 # print("进入buildconfig.py了")
 file_list = os.listdir(config_dir)
 index = 0
@@ -215,6 +236,10 @@ for i in character_file_list:
     now_path = os.path.join(character_dir,i)
     build_character_config(now_path,i)
 
+ui_text_file_list = os.listdir(ui_text_dir)
+for i in ui_text_file_list:
+    now_path = os.path.join(ui_text_dir,i)
+    build_ui_text(now_path,i)
 
 event_file_list = os.listdir(event_dir)
 event_list = []
@@ -254,6 +279,10 @@ with open(config_path, "w", encoding="utf-8") as config_file:
 config_data_path = os.path.join("data", "data.json")
 with open(config_data_path, "w", encoding="utf-8") as config_data_file:
     json.dump(config_data, config_data_file, ensure_ascii=0)
+
+ui_text_data_path = os.path.join("data", "ui_text.json")
+with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
+    json.dump(ui_text_data, ui_text_data_file, ensure_ascii=0)
 
 # package_path = os.path.join("package.json")
 # with open(package_path, "w", encoding="utf-8") as package_file:
