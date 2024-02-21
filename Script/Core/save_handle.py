@@ -134,8 +134,19 @@ def input_load_save(save_id: str):
     # 从存档中加载字典
     loaded_dict = load_save(save_id).__dict__
 
+    draw_text = f"\n开始检测存档的数据结构是否需要跨版本更新\n\n"
+    now_draw = draw.LeftDraw()
+    now_draw.text = draw_text
+    now_draw.draw()
+
     # 递归地更新 loaded_dict
     update_dict_with_default(loaded_dict, new_cache.__dict__)
+
+    draw_text = f"\n检测完毕\n"
+    now_draw = draw.LeftDraw()
+    now_draw.text = draw_text
+    now_draw.draw()
+
 
     # 使用 update() 方法来更新 cache 的字典
     cache.__dict__.update(loaded_dict)
@@ -150,14 +161,17 @@ def update_dict_with_default(loaded_dict, default_dict):
     """
     for key, value in default_dict.items():
         # print("存档修复: key", key, "value", value)
+        # 跳过Python的内置方法
+        if key.startswith('__') and key.endswith('__'):
+            continue
+        # 如果 key 不在 loaded_dict 中，将其添加到 loaded_dict 中
         if key not in loaded_dict:
             loaded_dict[key] = value
             # 只有在不是私有属性时才会输出
-            if "__" not in key:
-                draw_text = f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
-                now_draw = draw.LeftDraw()
-                now_draw.text = draw_text
-                now_draw.draw()
+            draw_text = f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
+            now_draw = draw.LeftDraw()
+            now_draw.text = draw_text
+            now_draw.draw()
         elif isinstance(value, game_type.Cache):
             update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
         elif hasattr(value, '__dict__'):  # 检查 value 是否是一个类的实例
