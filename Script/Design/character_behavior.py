@@ -33,7 +33,6 @@ from Script.Design import (
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel
 from Script.Config import game_config, normal_config
-import time
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -119,7 +118,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
         judge_character_cant_move(character_id) # 无法自由移动的角色
         judge_character_follow(character_id) # 跟随模式
-        judge_character_h(character_id) # H模式
+        judge_character_h_and_obscenity(character_id) # H与猥亵
 
     # 处理公共资源
     update_cafeteria() # 刷新食堂的饭
@@ -451,7 +450,7 @@ def search_target(
     null_target: set,
     premise_data: Dict[int, int],
     target_weight_data: Dict[int, int],
-) -> (int, int, bool):
+):
     """
     查找可用目标\n
     Keyword arguments:\n
@@ -653,9 +652,9 @@ def judge_character_follow(character_id: int) -> int:
     return 1
 
 
-def judge_character_h(character_id: int) -> int:
+def judge_character_h_and_obscenity(character_id: int) -> int:
     """
-    维持H状态\n
+    维持H状态与猥亵\n
     Keyword arguments:
     character_id -- 角色id\n
     Return arguments:
@@ -673,6 +672,10 @@ def judge_character_h(character_id: int) -> int:
         character_data.behavior.start_time = pl_character_data.behavior.start_time
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
+
+    # 如果不在同一位置，则结束睡眠猥亵状态
+    if character_data.sp_flag.unconscious_h == 1 and character_data.position != pl_character_data.position:
+        character_data.sp_flag.unconscious_h = 0
 
     # 维持H状态，行动锁死为等待不动
     if character_data.sp_flag.is_h:
