@@ -13,6 +13,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config
+from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -141,11 +142,25 @@ def input_load_save(save_id: str):
 
 
 def update_dict_with_default(loaded_dict, default_dict):
+    """
+    递归地更新字典
+    Keyword arguments:
+    loaded_dict -- 要更新的字典
+    default_dict -- 默认字典
+    """
     for key, value in default_dict.items():
+        # print("存档修复: key", key, "value", value)
         if key not in loaded_dict:
-            print("存档修复: key", key, "not found in loaded_dict")
             loaded_dict[key] = value
+            # 只有在不是私有属性时才会输出
+            if "__" not in key:
+                draw_text = f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
+                now_draw = draw.LeftDraw()
+                now_draw.text = draw_text
+                now_draw.draw()
         elif isinstance(value, game_type.Cache):
+            update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
+        elif hasattr(value, '__dict__'):  # 检查 value 是否是一个类的实例
             update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
 
 
