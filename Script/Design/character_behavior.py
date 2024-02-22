@@ -915,7 +915,7 @@ def character_aotu_change_value(character_id: int):
                 # print(f"debug {target_data.name}熟睡值={target_data.sleep_point}，熟睡等级{sleep_level}")
                 # 熟睡等级小于等于1时判定是否吵醒
                 if sleep_level <= 1:
-                    # 浅睡和随时醒来时递增苏醒概率
+                    # 浅睡和半梦半醒时递增苏醒概率
                     weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
                     if target_data.sleep_point <= game_config.config_sleep_level[0].sleep_point:
                         weak_rate += game_config.config_sleep_level[0].sleep_point - target_data.sleep_point

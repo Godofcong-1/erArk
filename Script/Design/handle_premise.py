@@ -3582,7 +3582,7 @@ def handle_normal_4(character_id: int) -> int:
 def handle_normal_5(character_id: int) -> int:
     """
     5正常的普通状态
-    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3848,7 +3848,7 @@ def handle_normal_24567(character_id: int) -> int:
     24567正常（可能基础异常、AI跟随）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -3893,7 +3893,7 @@ def handle_t_normal_24567(character_id: int) -> int:
     交互对象24567正常（可能基础异常、AI跟随）
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -3941,7 +3941,7 @@ def handle_normal_124567(character_id: int) -> int:
     \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
-    \n5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -4188,7 +4188,7 @@ def handle_unnormal_27(character_id: int) -> int:
 def handle_t_normal_5_6(character_id: int) -> int:
     """
     交互对象56正常
-    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
@@ -4216,7 +4216,7 @@ def handle_t_normal_5_6(character_id: int) -> int:
 def handle_t_unnormal_5_6(character_id: int) -> int:
     """
     交互对象5异常或6异常
-    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
@@ -4266,7 +4266,7 @@ def handle_t_unnormal_6(character_id: int) -> int:
 def handle_unnormal_567(character_id: int) -> int:
     """
     自身5或6或7异常
-    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -4298,7 +4298,7 @@ def handle_unnormal_567(character_id: int) -> int:
 def handle_t_unnormal_567(character_id: int) -> int:
     """
     交互对象5或6或7异常
-    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
     Keyword arguments:
@@ -5406,7 +5406,7 @@ def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     """
     交互对象256正常或无意识
     \n包括2:临盆、产后、婴儿
-    \n包括5:意识模糊，或弱交互：睡眠（随时醒来），醉酒，平然
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
     character_id -- 角色id
@@ -12876,7 +12876,7 @@ def handle_sanity_point_ge_10(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SLEEP_LEVEL_0)
 def handle_sleep_level_0(character_id: int) -> int:
     """
-    睡眠等级：随时醒来
+    睡眠等级：半梦半醒
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

@@ -669,7 +669,7 @@ def get_sleep_level(value: int):
     value -- 熟睡值
     Return arguments:
     int -- 睡眠等级,0~3
-    str -- 睡眠等级名,随时醒来~完全深眠
+    str -- 睡眠等级名,半梦半醒~完全深眠
     """
     for now_cid in game_config.config_sleep_level:
         now_data = game_config.config_sleep_level[now_cid]

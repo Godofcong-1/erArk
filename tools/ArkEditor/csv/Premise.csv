@@ -344,7 +344,7 @@ hunger_le_79,HUNGER_LE_79,属性_基础,饥饿值≤79%，不需要吃饭
 hunger_ge_80,HUNGER_GE_80,属性_基础,饥饿值≥80%，需要吃饭
 t_hunger_le_79,TARGET_HUNGER_LE_79,属性_基础,交互对象饥饿值≤79%，不需要吃饭
 t_hunger_ge_80,TARGET_HUNGER_GE_80,属性_基础,交互对象饥饿值≥80%，需要吃饭
-sleep_level_0,SLEEP_LEVEL_0,属性_基础,睡眠等级：随时醒来
+sleep_level_0,SLEEP_LEVEL_0,属性_基础,睡眠等级：半梦半醒
 sleep_level_1,SLEEP_LEVEL_1,属性_基础,睡眠等级：浅睡
 sleep_level_2,SLEEP_LEVEL_2,属性_基础,睡眠等级：熟睡
 sleep_level_3,SLEEP_LEVEL_3,属性_基础,睡眠等级：完全深眠

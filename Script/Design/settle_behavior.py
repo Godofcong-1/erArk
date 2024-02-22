@@ -564,14 +564,16 @@ def judge_character_first_meet(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
-    # 优先输出初见，次要输出每日招呼
-    if character_data.first_record.first_meet and character_data.position == pl_character_data.position:
-        character_data.second_behavior[1331] = 1
-        character_data.first_record.first_meet = 0
-        character_data.first_record.day_first_meet = 0
-    elif character_data.first_record.day_first_meet and character_data.position == pl_character_data.position:
-        character_data.first_record.day_first_meet = 0
-        character_data.second_behavior[1332] = 1
+    # 需要目标不在完全意识不清醒状态下
+    if handle_premise.handle_normal_6(character_id):
+        # 优先输出初见，次要输出每日招呼
+        if character_data.first_record.first_meet and character_data.position == pl_character_data.position:
+            character_data.second_behavior[1331] = 1
+            character_data.first_record.first_meet = 0
+            character_data.first_record.day_first_meet = 0
+        elif character_data.first_record.day_first_meet and character_data.position == pl_character_data.position:
+            character_data.first_record.day_first_meet = 0
+            character_data.second_behavior[1332] = 1
 
 
 def insert_position_effect(character_id: int):
