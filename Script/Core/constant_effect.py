@@ -384,6 +384,14 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成要游泳状态 """
     MAINTENANCE_FLAG_TO_0 = 468
     """ 属性_特殊flag 自身清零要检修状态 """
+    H_FLAG_TO_0 = 475
+    """ 属性_特殊flag 自身清零H状态 """
+    H_FLAG_TO_1 = 476
+    """ 属性_特殊flag 自身变成H状态 """
+    T_H_FLAG_TO_0 = 477
+    """ 属性_特殊flag 交互对象清零H状态 """
+    T_H_FLAG_TO_1 = 478
+    """ 属性_特殊flag 交互对象变成H状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
     """ 属性_特殊flag 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482
