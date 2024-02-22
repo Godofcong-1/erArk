@@ -194,7 +194,7 @@ def handle_add_small_trust(
     if character_data.target_character_id != character_id and (
             character_id != 0 or character_data.target_character_id != 0):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         if target_data.sp_flag.unconscious_h:
             return
@@ -235,7 +235,7 @@ def handle_down_small_trust(
     if character_data.target_character_id != character_id and (
             not character_id or not character_data.target_character_id):
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         if target_data.sp_flag.unconscious_h:
             return
@@ -2721,7 +2721,7 @@ def handle_target_add_small_repect(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(10, 0)
     now_lust = target_data.status_data[10]
@@ -2755,7 +2755,7 @@ def handle_target_add_small_friendly(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(11, 0)
     now_lust = target_data.status_data[11]
@@ -2789,7 +2789,7 @@ def handle_target_add_small_desire(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
@@ -2823,7 +2823,7 @@ def handle_target_add_small_happy(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(13, 0)
     now_lust = target_data.status_data[13]
@@ -2857,7 +2857,7 @@ def handle_target_add_small_lead(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(14, 0)
     now_lust = target_data.status_data[14]
@@ -2891,7 +2891,7 @@ def handle_target_add_small_submit(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(15, 0)
     now_lust = target_data.status_data[15]
@@ -2925,7 +2925,7 @@ def handle_target_add_small_shy(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(16, 0)
     now_lust = target_data.status_data[16]
@@ -2959,7 +2959,7 @@ def handle_target_add_small_pain(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(17, 0)
     now_lust = target_data.status_data[17]
@@ -2993,7 +2993,7 @@ def handle_target_add_small_terror(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(18, 0)
     now_lust = target_data.status_data[18]
@@ -3027,7 +3027,7 @@ def handle_target_add_small_depression(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(19, 0)
     now_lust = target_data.status_data[19]
@@ -3059,7 +3059,7 @@ def handle_target_add_small_disgust(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
     target_data.status_data.setdefault(20, 0)
     now_lust = target_data.status_data[20]
@@ -3670,6 +3670,92 @@ def handle_maintenance_flag_to_0(
     character_data.sp_flag.work_maintenance = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_0)
+def handle_h_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.is_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_1)
+def handle_h_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.is_h = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_0)
+def handle_t_h_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character = cache.character_data[character_data.target_character_id]
+    target_character.sp_flag.is_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_1)
+def handle_t_h_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character = cache.character_data[character_data.target_character_id]
+    target_character.sp_flag.is_h = 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_0)
 def handle_unconscious_flag_to_0(
         character_id: int,
@@ -4008,7 +4094,7 @@ def handle_talk_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(40, 0)
@@ -4072,7 +4158,7 @@ def handle_coffee_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(43, 0)
@@ -4132,7 +4218,7 @@ def handle_target_coffee_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         target_data.ability.setdefault(43, 0)
@@ -4196,7 +4282,7 @@ def handle_official_work_add_adjust(
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
     # 如果有交互对象，则算上对方的学识加成
-    if character_data.target_character_id != 0:
+    if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
         now_draw_text += _(f"在{target_data.name}的帮助下，")
@@ -4801,7 +4887,7 @@ def handle_sing_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(44, 0)
@@ -4899,7 +4985,7 @@ def handle_play_instrument_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(44, 0)
