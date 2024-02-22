@@ -259,9 +259,10 @@ class SeeCharacterDirtyPanel:
             if target_character_data.dirty.body_semen[i][1]:
                 now_part_show_flag = True
                 semen_level = target_character_data.dirty.body_semen[i][2]
-                dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
-                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-                now_part_text += f"{dirty_text_context}"
+                if semen_level >= 1:
+                    dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
+                    dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                    now_part_text += f"{dirty_text_context}"
 
             # 小穴
             if i == 6:
