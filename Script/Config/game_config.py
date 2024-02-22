@@ -56,6 +56,8 @@ config_clothing_tem: Dict[int, config_def.ClothingTem] = {}
 """ 服装模板配置数据 """
 config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
+config_clothing_type_volume: Dict[int, list] = {}
+""" 衣服种类容积配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
 config_work_type: Dict[int, config_def.WorkType] = {}
@@ -577,6 +579,9 @@ def load_clothing_type():
         now_type = config_def.ClothingType()
         now_type.__dict__ = tem_data
         config_clothing_type[now_type.cid] = now_type
+        volume_list = now_type.volume_table.split("-")
+        volume_list = [int(volume) for volume in volume_list]
+        config_clothing_type_volume[now_type.cid] = volume_list
 
 
 def load_clothing_use_type():

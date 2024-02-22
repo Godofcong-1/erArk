@@ -13026,7 +13026,7 @@ def handle_t_not_wear_glass(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_EAR)
 def handle_t_not_wear_in_ear(character_id: int) -> int:
     """
-    交互对象耳部没有穿着服饰
+    交互对象没有戴耳饰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -13042,7 +13042,7 @@ def handle_t_not_wear_in_ear(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_NECK)
 def handle_t_not_wear_in_neck(character_id: int) -> int:
     """
-    交互对象脖子没有穿着服饰
+    交互对象没有戴脖饰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -13058,7 +13058,7 @@ def handle_t_not_wear_in_neck(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_MOUSE)
 def handle_t_not_wear_in_mouse(character_id: int) -> int:
     """
-    交互对象嘴巴没有穿着服饰
+    交互对象没有戴口饰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

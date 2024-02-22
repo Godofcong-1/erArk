@@ -80,7 +80,7 @@ def get_stature_text(character_id: int) -> str:
 def get_scene_path_text(scene_path: List[str]) -> str:
     """
     从场景路径获取场景地址描述文本
-    例:主教学楼-1F-101室
+    例:控制中枢-博士办公室
     Keyword arguments:
     scene_path -- 场景路径
     Return arguments:
@@ -100,7 +100,7 @@ def get_scene_path_text(scene_path: List[str]) -> str:
 def get_map_path_text(map_path: List[str]) -> str:
     """
     从地图路径获取地图地址描述文本
-    例:主教学楼-1F
+    例:控制中枢
     Keyword arguments:
     map_path -- 地图路径
     Return arguments:

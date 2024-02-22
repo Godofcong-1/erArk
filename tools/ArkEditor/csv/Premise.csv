@@ -842,9 +842,9 @@ entertainment_is_onsen_bath,ENTERTAINMENT_IS_ONSEN_BATH,属性_娱乐,自己当�
 
 t_not_wear_hat,TARGET_NOT_WEAR_HAT,属性_服装,交互对象没有穿着帽子
 t_not_wear_glass,TARGET_NOT_WEAR_GLASS,属性_服装,交互对象没有戴着眼镜
-t_not_wear_in_ear,TARGET_NOT_WEAR_IN_EAR,属性_服装,交互对象耳部没有穿着服饰
-t_not_wear_in_neck,TARGET_NOT_WEAR_IN_NECK,属性_服装,交互对象脖子没有穿着服饰
-t_not_wear_in_mouse,TARGET_NOT_WEAR_IN_MOUSE,属性_服装,交互对象嘴巴没有穿着服饰
+t_not_wear_in_ear,TARGET_NOT_WEAR_IN_EAR,属性_服装,交互对象没有戴耳饰
+t_not_wear_in_neck,TARGET_NOT_WEAR_IN_NECK,属性_服装,交互对象没有戴脖饰
+t_not_wear_in_mouse,TARGET_NOT_WEAR_IN_MOUSE,属性_服装,交互对象没有戴口饰
 t_not_wear_in_up,TARGET_NOT_WEAR_IN_UP,属性_服装,交互对象没有穿着上衣
 wear_bra,WEAR_BRA,属性_服装,穿着胸衣
 t_wear_bra,TARGET_WEAR_BRA,属性_服装,交互对象穿着胸衣

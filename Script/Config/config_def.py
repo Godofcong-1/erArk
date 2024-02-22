@@ -188,6 +188,8 @@ class ClothingType:
     """ 类型id """
     name: str
     """ 类型名字 """
+    volume_table: str
+    """ 容积表 """
 
 
 class ClothingUseType:

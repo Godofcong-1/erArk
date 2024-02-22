@@ -632,18 +632,14 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
             if i == len(voluem_data_list) - 1:
                 now_level = i + 1
     else:
-        if value <= 0:
-            return 0
-        elif 0 < value and value <= 10:
-            return 1
-        elif 10 < value and value <= 50:
-            return 2
-        elif 50 < value and value <=200:
-            return 3
-        elif 200 < value and value <=1000:
-            return 4
-        elif value > 1000:
-            return 5
+        voluem_data_list = game_config.config_clothing_type_volume[part_cid]
+        for i in range(len(voluem_data_list)):
+            if value <= voluem_data_list[i]:
+                now_level = i + 1
+                break
+            # 如果超过最大值，则返回最大值
+            if i == len(voluem_data_list) - 1:
+                now_level = i + 1
     # print(f"debug value = {value},now_level = {now_level}")
     return now_level
 
