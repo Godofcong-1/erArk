@@ -78,46 +78,53 @@ class Ejaculation_Panel:
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        title_name = "射精部位选择"
-        title_draw = draw.TitleLineDraw(title_name, self.width)
 
-        while 1:
-            return_list = []
-            title_draw.draw()
+        # 如果没有选择射精部位，则直接在当前阴茎位置射精
+        if not cache.system_setting.choose_shoot_where:
+            now_position = target_data.h_state.insert_position
+            self.shoot_here(now_position, 0)
+        # 手动选择射精部位
+        else:
+            title_name = "射精部位选择"
+            title_draw = draw.TitleLineDraw(title_name, self.width)
 
-            # 绘制身体部位按钮
-            for body_part_cid in game_config.config_body_part:
-                part_name = game_config.config_body_part[body_part_cid].name
-                draw_text = f"[{body_part_cid} {part_name}]"
-                # print("debug draw_text = ",draw_text)
-                show_flag = self.part_can_choose(body_part_cid)
-                if show_flag:
-                    name_draw = draw.CenterButton(
-                        draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
-                    )
-                    name_draw.draw()
-                    return_list.append(name_draw.return_text)
+            while 1:
+                return_list = []
+                title_draw.draw()
 
-            line_feed.draw()
+                # 绘制身体部位按钮
+                for body_part_cid in game_config.config_body_part:
+                    part_name = game_config.config_body_part[body_part_cid].name
+                    draw_text = f"[{body_part_cid} {part_name}]"
+                    # print("debug draw_text = ",draw_text)
+                    show_flag = self.part_can_choose(body_part_cid)
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
 
-            # 绘制服装部位按钮
-            for clothing_type in game_config.config_clothing_type:
-                cloth_name = game_config.config_clothing_type[clothing_type].name
-                draw_text = f"[{clothing_type} {cloth_name}]"
-                show_flag = len(target_data.cloth.cloth_wear[clothing_type])
-                if show_flag:
-                    name_draw = draw.CenterButton(
-                        draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
-                    )
-                    name_draw.draw()
-                    return_list.append(name_draw.return_text)
+                line_feed.draw()
 
-            yrn = flow_handle.askfor_all(return_list)
+                # 绘制服装部位按钮
+                for clothing_type in game_config.config_clothing_type:
+                    cloth_name = game_config.config_clothing_type[clothing_type].name
+                    draw_text = f"[{clothing_type} {cloth_name}]"
+                    show_flag = len(target_data.cloth.cloth_wear[clothing_type])
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
 
-            # 在非页面切换时退出面板
-            if yrn not in ['身体', '服装']:
-                cache.now_panel_id = constant.Panel.IN_SCENE
-                break
+                yrn = flow_handle.askfor_all(return_list)
+
+                # 在非页面切换时退出面板
+                if yrn not in ['身体', '服装']:
+                    cache.now_panel_id = constant.Panel.IN_SCENE
+                    break
 
     def part_can_choose(self, body_part_cid: int):
         """判断该部位是否可以绘制"""
@@ -183,9 +190,6 @@ class Ejaculation_Panel:
             target_data.h_state.shoot_position_body = part_cid
 
             # 更新污浊类里的身体部位精液参数
-            if part_cid == 6:
-                target_data.dirty.body_semen[part_cid][1] += 1
-                part_cid = 7
             target_data.dirty.body_semen[part_cid][1] += semen_count
             target_data.dirty.body_semen[part_cid][3] += semen_count
             target_data.dirty.body_semen[part_cid][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[part_cid][1], part_cid, 0)

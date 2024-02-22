@@ -91,6 +91,22 @@ class System_Setting_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
+            button_text = f"[004]每次射精时手动选择射在哪里："
+            if cache.system_setting.choose_shoot_where:
+                draw_text = _("[是]")
+            else:
+                draw_text = _("[否，自动射在当前阴茎所在的位置]")
+            button_text += f"{draw_text}"
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _("4"),
+                window_width,
+                cmd_func=self.change_choose_shoot_where,
+                )
+            line_feed.draw()
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -141,3 +157,7 @@ class System_Setting_Panel:
     def change_npc_ability_auto_lvup(self):
         """改变自动升级干员的能力"""
         cache.system_setting.npc_ability_auto_lvup = not cache.system_setting.npc_ability_auto_lvup
+
+    def change_choose_shoot_where(self):
+        """改变每次射精时手动选择射在哪里"""
+        cache.system_setting.choose_shoot_where = not cache.system_setting.choose_shoot_where
