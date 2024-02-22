@@ -254,7 +254,8 @@ class Ejaculation_NameDraw:
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
+        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
         clothing = {}
 
         for clothing_type in game_config.config_clothing_type:
@@ -271,6 +272,8 @@ class Ejaculation_NameDraw:
             elif body_part == 8 and not handle_premise.handle_last_cmd_a_sex(0):
                 return False
             elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
+                return False
+            elif body_part == 15:
                 return False
             # 没有长对应器官，则无法射在对应部位
             elif body_part == 12 and not target_data.talent[113]:
