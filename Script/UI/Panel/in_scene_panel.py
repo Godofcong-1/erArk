@@ -124,9 +124,9 @@ class InScenePanel:
                 ask_list.append(return_text)
                 return_text = self.draw_show_and_hide_button(1, "收起服装栏", "展开服装栏")
                 ask_list.append(return_text)
-                return_text = self.draw_show_and_hide_button(2, "收起H状态栏", "展开H状态栏")
+                return_text = self.draw_show_and_hide_button(2, "收起身体栏", "展开身体栏")
                 ask_list.append(return_text)
-                return_text = self.draw_show_and_hide_button(3, "收起污浊栏", "展开污浊栏")
+                return_text = self.draw_show_and_hide_button(3, "收起H状态栏", "展开H状态栏")
                 ask_list.append(return_text)
                 return_text = self.draw_show_and_hide_button(4, "收起图片栏", "展开图片栏")
                 ask_list.append(return_text)
@@ -281,9 +281,16 @@ class InScenePanel:
                 )
                 character_cloth_draw.draw()
 
+            # ↓以下为身体栏的内容↓#
+            if cache.scene_panel_show[2] and character_data.target_character_id:
+                character_cloth_draw = dirty_panel.SeeCharacterBodyPanel(
+                    character_data.cid, self.width, 9, 0, 0
+                )
+                character_cloth_draw.draw()
+
             # ↓以下为H状态栏的内容↓#
             character_H_status_draw_list = []
-            if character_data.target_character_id and cache.scene_panel_show[2]:
+            if character_data.target_character_id and cache.scene_panel_show[3]:
 
                 character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
                     character_data.cid, self.width, 9, 0, 0
@@ -330,13 +337,6 @@ class InScenePanel:
                         else:
                             label.draw()
 """
-
-            # ↓以下为污浊栏的内容↓#
-            if cache.scene_panel_show[3] and character_data.target_character_id:
-                character_cloth_draw = dirty_panel.SeeCharacterDirtyPanel(
-                    character_data.cid, self.width, 9, 0, 0
-                )
-                character_cloth_draw.draw()
 
             # 以下为图片面板#
             if len(character_list) and cache.scene_panel_show[4]:

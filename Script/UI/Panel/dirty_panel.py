@@ -202,10 +202,9 @@ class Dirty_Draw:
         self.now_draw.draw()
 
 
-
-class SeeCharacterDirtyPanel:
+class SeeCharacterBodyPanel:
     """
-    显示角色污浊面板对象
+    显示角色身体面板对象
     Keyword arguments:
     character_id -- 角色id
     width -- 绘制宽度
@@ -234,12 +233,12 @@ class SeeCharacterDirtyPanel:
         # print("game_config.config_character_state_type :",game_config.config_character_state_type)
         # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
 
-        type_line = draw.LittleTitleLineDraw("污浊", width, ":")
+        type_line = draw.LittleTitleLineDraw("身体", width, ":")
         # print("type_data.name :",type_data.name)
         now_draw = panel.LeftDrawTextListPanel()
         text_draw = draw.NormalDraw()
 
-        # 全部位污浊文本
+        # 全部位文本
         all_part_text = ""
         # 腹部整体精液量统计
         abdomen_all_semen = 0
@@ -256,13 +255,12 @@ class SeeCharacterDirtyPanel:
                 target_character_data.dirty.body_semen.append([part_name,0,0,0])
 
             # 污浊判定
-            if target_character_data.dirty.body_semen[i][1]:
+            if target_character_data.dirty.body_semen[i][2]:
                 now_part_show_flag = True
                 semen_level = target_character_data.dirty.body_semen[i][2]
-                if semen_level >= 1:
-                    dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
-                    dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-                    now_part_text += f"{dirty_text_context}"
+                dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
+                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                now_part_text += f"{dirty_text_context}"
 
             # 小穴
             if i == 6:
@@ -294,6 +292,24 @@ class SeeCharacterDirtyPanel:
             # 如果当前部位有污浊，则加入到总文本中
             if now_part_show_flag:
                 all_part_text += now_part_text
+
+        # 如果有生理透视，则显示当前生理周期与受精概率
+        if character_data.pl_ability.visual and character_data.talent[309]:
+            # 生理周期文本
+            reproduction_periods = {
+                0: "安全期",
+                1: "普通期",
+                2: "危险期",
+                3: "排卵期"
+            }
+            reproduction_period = target_character_data.pregnancy.reproduction_period
+            now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+            reproduction_text = reproduction_periods.get(now_reproduction_period_type, "未知期")
+            # 受精概率文本
+            fertilization_text = f"受精概率{target_character_data.pregnancy.fertilization_rate}%"
+            # 组合文本
+            now_part_text = f" 当前为{reproduction_text},{fertilization_text}"
+            all_part_text += now_part_text
 
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
