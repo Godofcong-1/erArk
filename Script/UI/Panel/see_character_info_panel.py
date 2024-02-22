@@ -671,11 +671,17 @@ class CharacterInfoHead:
             bag_text = f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>"
 
         if character_id:
+            favorability_lv,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+            favorability_lv_letter = attr_calculation.judge_grade(favorability_lv)
+            trust_lv,tem = attr_calculation.get_trust_level(character_data.trust)
+            trust_lv_letter = attr_calculation.judge_grade(trust_lv)
             message = _(
-                "{character_name}（好感度：{favorability}，信赖度：{trust}% {angry}）{sleep}{urinate}{hunger}{hypnosis}").format(
+                "{character_name} 好感度:{favorability}({f_lv})，信赖度:{trust}%({t_lv}) {angry} {sleep}{urinate}{hunger}{hypnosis}").format(
                 character_name=character_data.name,
                 favorability=int(character_data.favorability[0]),
+                f_lv=favorability_lv_letter,
                 trust=round(character_data.trust, 1),
+                t_lv=trust_lv_letter,
                 angry=angry_text,
                 sleep=sleep_text,
                 urinate=urinate_text,
