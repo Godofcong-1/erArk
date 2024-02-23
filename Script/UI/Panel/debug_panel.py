@@ -846,14 +846,14 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
 
                     # 根据第几项更改对应值
-                    if value_index[0] == 0:
+                    if value_index == 3:
+                        target_data.dirty.a_clean = new_value
+                    elif value_index[0] == 0:
                         target_data.dirty.body_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 1:
                         target_data.dirty.cloth_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 2:
                         target_data.dirty.cloth_locker_semen[value_index[1]][value_index[2]] = new_value
-                    elif value_index[0] == 3:
-                        target_data.dirty.a_clean = new_value
                     elif value_index[0] == 4:
                         target_data.dirty.body_semen[value_index[1]][1] = new_value
                         target_data.dirty.body_semen[value_index[1]][2] = attr_calculation.get_semen_now_level(new_value, value_index[1], 0)
@@ -901,16 +901,16 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
 
                     # 根据第几项更改对应值
-                    if value_index[0] == 0:
-                        target_data.h_state.body_item[value_index[1]][value_index[2]] = new_value
-                    elif value_index[0] == 1:
+                    if value_index == 1:
                         target_data.h_state.bondage = new_value
-                    elif value_index[0] == 2:
+                    elif value_index == 2:
                         target_data.h_state.insert_position = new_value
-                    elif value_index[0] == 3:
+                    elif value_index == 3:
                         target_data.h_state.shoot_position_body = new_value
-                    elif value_index[0] == 4:
+                    elif value_index == 4:
                         target_data.h_state.shoot_position_cloth = new_value
+                    elif value_index[0] == 0:
+                        target_data.h_state.body_item[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 5:
                         target_data.h_state.orgasm_level[value_index[1]] = new_value
                     elif value_index[0] == 6:

@@ -1117,7 +1117,7 @@ class Cache:
         self.text_wait: int = 0
         """ 绘制文本输出等待时间 """
         self.scene_panel_show: List = [True, True, True, True, True]
-        """ 场景面板中的子面板显示情况,0状态,1服装,2身体,3H状态,4图片 """
+        """ 场景面板中的子面板显示情况,0状态,1服装,2身体,3暂无,4图片 """
         self.map_data: Dict[str, Map] = {}
         """ 游戏地图数据 地图路径:地图数据 """
         self.scene_data: Dict[str, Scene] = {}

@@ -239,7 +239,7 @@ class SeeCharacterBodyPanel:
         text_draw = draw.NormalDraw()
 
         # 全部位文本
-        all_part_text = ""
+        all_part_text_list = []
         # 腹部整体精液量统计
         abdomen_all_semen = 0
 
@@ -247,83 +247,103 @@ class SeeCharacterBodyPanel:
         for i in range(len(game_config.config_body_part)):
             body_part_data = game_config.config_body_part[i]
             part_name = body_part_data.name
-            now_part_text = f" {part_name}"
-            now_part_show_flag = False
 
             # 检查脏污数据中是否包含该部位，如果没有则补上
             if len(target_character_data.dirty.body_semen) <= i:
                 target_character_data.dirty.body_semen.append([part_name,0,0,0])
 
-            # 污浊判定
-            if target_character_data.dirty.body_semen[i][2]:
-                now_part_show_flag = True
-                semen_level = target_character_data.dirty.body_semen[i][2]
-                dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
-                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-                now_part_text += f"{dirty_text_context}"
-
-            # 小穴
-            if i == 6:
-                # 润滑判定
-                if target_character_data.status_data[8]:
-                    if now_part_show_flag:
-                        now_part_text += ","
-                    else:
-                        now_part_show_flag = True
-                    level = attr_calculation.get_status_level(target_character_data.status_data[8])
-                    if level <= 2:
-                        now_part_text += "有些许爱液"
-                    elif level <= 4:
-                        now_part_text += "充分湿润着爱液"
-                    elif level <= 6:
-                        now_part_text += "爱液泛滥的一塌糊涂"
-                    else:
-                        now_part_text += "爱液像泉水一样涌出"
-
-            # 腹部整体的精液量累积
+            # 最开始先计算腹部整体的精液量累积
             if i in [5,7,8,15]:
                 abdomen_all_semen += target_character_data.dirty.body_semen[i][1]
 
-            # 腔内透视判定
+            # 然后腔内透视判定
             if i in {6,7,8,9,15}:
                 if not (character_data.pl_ability.visual and character_data.talent[308]):
-                    now_part_show_flag = False
+                    continue
 
-            # 如果当前部位有污浊，则加入到总文本中
-            if now_part_show_flag:
-                all_part_text += now_part_text
+            # 爱液文本
+            if i == 6 and target_character_data.status_data[8]:
+                level = attr_calculation.get_status_level(target_character_data.status_data[8])
+                if level <= 2:
+                    now_part_text = game_config.ui_text_data['dirty'][f"爱液1"]
+                elif level <= 4:
+                    now_part_text = game_config.ui_text_data['dirty'][f"爱液2"]
+                elif level <= 6:
+                    now_part_text = game_config.ui_text_data['dirty'][f"爱液3"]
+                else:
+                    now_part_text = game_config.ui_text_data['dirty'][f"爱液4"]
+                all_part_text_list.append(now_part_text)
 
-        # 如果有生理透视，则显示当前生理周期与受精概率
-        if character_data.pl_ability.visual and character_data.talent[309]:
-            # 生理周期文本
-            reproduction_periods = {
-                0: "安全期",
-                1: "普通期",
-                2: "危险期",
-                3: "排卵期"
-            }
-            reproduction_period = target_character_data.pregnancy.reproduction_period
-            now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
-            reproduction_text = reproduction_periods.get(now_reproduction_period_type, "未知期")
-            # 受精概率文本
-            fertilization_text = f"受精概率{target_character_data.pregnancy.fertilization_rate}%"
-            # 组合文本
-            now_part_text = f" 当前为{reproduction_text},{fertilization_text}"
-            all_part_text += now_part_text
+            # 污浊判定
+            if target_character_data.dirty.body_semen[i][2]:
+                semen_level = target_character_data.dirty.body_semen[i][2]
+                dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
+                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                now_part_text = f" {part_name}{dirty_text_context}"
+                all_part_text_list.append(now_part_text)
 
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
-            now_part_show_flag = True
             now_level = attr_calculation.get_semen_now_level(abdomen_all_semen, 20, 0)
             dirty_text_cid = f"腹部整体精液污浊{str(now_level)}"
             dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
             now_part_text = f" {dirty_text_context}"
-            all_part_text += now_part_text
+            all_part_text_list.append(now_part_text)
 
-        # 如果没有H状态，则不显示该栏
-        if all_part_text != "":
+        # 如果有生理透视，则显示当前生理周期与受精概率
+        if character_data.pl_ability.visual and character_data.talent[309]:
+            # 生理周期文本
+            reproduction_period = target_character_data.pregnancy.reproduction_period
+            now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+            period_cid = f"生理期{now_reproduction_period_type}"
+            reproduction_text = game_config.ui_text_data['h_state'][period_cid]
+            # 受精概率文本
+            fertilization_text = f"受精概率{target_character_data.pregnancy.fertilization_rate}%"
+            # 组合文本
+            now_text = f" 当前为{reproduction_text},{fertilization_text}"
+            all_part_text_list.append(now_text)
+
+        # 阴茎位置文本
+        if target_character_data.h_state.insert_position != -1:
+            now_position_index = target_character_data.h_state.insert_position
+            position_text_cid = f"阴茎位置{str(now_position_index)}"
+            position_text = game_config.ui_text_data['h_state'][position_text_cid]
+            all_part_text_list.append(f" {position_text}")
+
+        # 绳子捆绑文本
+        if target_character_data.h_state.bondage:
+            bondage_text = game_config.ui_text_data['item'][f'绳子捆绑{str(target_character_data.h_state.bondage)}']
+            all_part_text_list.append(f" {bondage_text}")
+
+        # H道具文本
+        now_text = ""
+        body_item_set = target_character_data.h_state.body_item
+        for i in range(len(body_item_set)):
+            # print("status_type :",status_type)
+            if body_item_set[i][1]:
+                status_text = body_item_set[i][0]
+                now_text += f" <{status_text}>"
+        if now_text != "":
+            all_part_text_list.append(now_text)
+
+        # 灌肠文本
+        if target_character_data.dirty.a_clean:
+            enemas_text = game_config.ui_text_data['dirty'][f"灌肠{str(target_character_data.dirty.a_clean)}"]
+            all_part_text_list.append(f" <{enemas_text}>")
+
+        # 如果文本不为空，则加入到绘制列表中
+        if len(all_part_text_list):
             self.draw_list.append(type_line)
-            all_part_text += "\n"
+            # 遍历总文本列表，最多每行有6个信息
+            all_part_text = ""
+            for i in range(len(all_part_text_list)):
+                now_text = all_part_text_list[i]
+                all_part_text += now_text
+                if i % 6 == 0 and i != 0:
+                    all_part_text += "\n"
+                # 如果文本的最后不是换行符，则加入换行符
+                if i == len(all_part_text_list) - 1 and all_part_text[-1] != "\n":
+                    all_part_text += "\n"
         text_draw.text = all_part_text
         now_draw.draw_list.append(text_draw)
         now_draw.width += len(text_draw.text)
