@@ -59,7 +59,7 @@ class Base_function_class:
                     yrn = flow_handle.askfor_all(ask_list)
                     py_cmd.clr_cmd()
                     if yrn == "0":
-                        self.move_to_scene(scene_path[0])
+                        self.move_to_scene(scene_path[0], need_fuel)
                         break
                     elif yrn == "1":
                         break
@@ -75,7 +75,7 @@ class Base_function_class:
             now_draw.draw()
 
 
-    def move_to_scene(self, scene_name: str):
+    def move_to_scene(self, scene_name: str, need_fuel: int):
         """
         移动至指定场景
         Keyword arguments:
@@ -89,6 +89,7 @@ class Base_function_class:
             if birthplace_data.name == scene_name:
                 cache.rhodes_island.current_location[0] = birthplace_id
                 cache.rhodes_island.base_move_visitor_flag = 1
+                cache.rhodes_island.materials_resouce[15] -= need_fuel
                 break
 
 
