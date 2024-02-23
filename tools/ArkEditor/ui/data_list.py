@@ -3,8 +3,9 @@ from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetI
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QCursor, QColor
 from ui.list_item import ListItem
-import cache_control, main
+import cache_control
 import game_type
+import function
 
 
 class DataList(QWidget):
@@ -154,7 +155,7 @@ class DataList(QWidget):
             self.create_event()
         elif cache_control.now_edit_type_flag == 0:
             self.create_talk()
-        main.save_data()
+        function.save_data()
 
     def copy_text(self):
         """复制条目"""
@@ -165,7 +166,7 @@ class DataList(QWidget):
             self.copy_event()
         elif cache_control.now_edit_type_flag == 0:
             self.copy_talk()
-        main.save_data()
+        function.save_data()
 
     def delete_text(self):
         """删除条目"""

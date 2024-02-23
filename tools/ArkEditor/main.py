@@ -2,7 +2,6 @@
 # -*- coding: UTF-8 -*-
 
 import sys
-import json
 import os
 import csv
 
@@ -93,7 +92,7 @@ def create_event_data():
         file_path += ".json"
     cache_control.now_file_path = file_path
     # 自动打开文件
-    save_data()
+    function.save_data()
     load_event_data()
 
 
@@ -187,22 +186,6 @@ def load_chara_data_to_cache():
 
     main_window.add_grid_chara_data_layout(chara_list)
     main_window.completed_layout()
-
-
-def save_data():
-    """保存文件"""
-    if len(cache_control.now_file_path):
-        # 保存事件
-        if cache_control.now_edit_type_flag == 1:
-            with open(cache_control.now_file_path, "w", encoding="utf-8") as event_data_file:
-                now_data = {}
-                for k in cache_control.now_event_data:
-                    now_data[k] = cache_control.now_event_data[k].__dict__
-                json.dump(now_data, event_data_file, ensure_ascii=0)
-
-        # 保存口上
-        elif cache_control.now_edit_type_flag == 0:
-            save_talk_data()
 
 
 def load_talk_data():
@@ -301,39 +284,8 @@ def create_talk_data():
             file_path += ".csv"
         cache_control.now_file_path = file_path
         cache_control.now_edit_type_flag = 0
-        save_talk_data()
+        function.save_talk_data()
         load_talk_data_to_cache()
-
-
-def save_talk_data():
-    """保存口上文件"""
-    if len(cache_control.now_file_path):
-        # 通用开头
-        out_data = ""
-        out_data += "cid,behavior_id,adv_id,premise,context\n"
-        out_data += "口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n"
-        out_data += "str,int,int,str,str\n"
-        out_data += "0,0,0,0,1\n"
-        out_data += "口上配置数据,,,,\n"
-
-        # 遍历数据
-        for k in cache_control.now_talk_data:
-            now_talk: game_type.Talk = cache_control.now_talk_data[k]
-            out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
-            # 如果前提为空，就写入空白前提
-            if len(now_talk.premise) == 0:
-                out_data += "high_1"
-            # 如果前提不为空，就正常写入，并在最后去掉多余的&
-            else:
-                for premise in now_talk.premise:
-                    out_data += f"{premise}&"
-                out_data = out_data[:-1]
-            out_data += f",{now_talk.text}\n"
-
-        # 写入文件
-        with open(cache_control.now_file_path, "w",encoding="utf-8") as f:
-            f.write(out_data)
-            f.close()
 
 
 def exit_editor():
@@ -471,23 +423,23 @@ if cache_control.now_edit_type_flag == 1:
 
 menu_bar.select_event_file_action.triggered.connect(load_event_data)
 menu_bar.new_event_file_action.triggered.connect(create_event_data)
-menu_bar.save_event_action.triggered.connect(save_data)
+menu_bar.save_event_action.triggered.connect(function.save_data)
 menu_bar.select_talk_file_action.triggered.connect(load_talk_data)
 menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
-menu_bar.save_talk_action.triggered.connect(save_talk_data)
+menu_bar.save_talk_action.triggered.connect(function.save_talk_data)
 menu_bar.select_chara_file_action.triggered.connect(load_chara_data)
 menu_bar.new_chara_file_action.triggered.connect(create_chara_data)
 
 # 将文本编辑器的保存键绑定到口上事件列表的更新与文件的更新
 item_text_edit.save_button.clicked.connect(data_list.update)
-item_text_edit.save_button.clicked.connect(save_data)
+item_text_edit.save_button.clicked.connect(function.save_data)
 
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
 main_window.completed_layout()
 # QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
 # QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
-QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,save_data)
+QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,function.save_data)
 QShortcut(QKeySequence(main_window.tr("Ctrl+Q")),main_window,exit_editor)
 main_window.show()
 app.exec()

@@ -1,4 +1,5 @@
-import cache_control
+import cache_control, game_type
+import json
 
 def read_CVP(cvp_value_str: str):
     """读取CVP字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
@@ -50,3 +51,51 @@ def read_CVP(cvp_value_str: str):
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str
+
+
+def save_data():
+    """保存文件"""
+    if len(cache_control.now_file_path):
+        # 保存事件
+        if cache_control.now_edit_type_flag == 1:
+            with open(cache_control.now_file_path, "w", encoding="utf-8") as event_data_file:
+                now_data = {}
+                for k in cache_control.now_event_data:
+                    now_data[k] = cache_control.now_event_data[k].__dict__
+                json.dump(now_data, event_data_file, ensure_ascii=0)
+
+        # 保存口上
+        elif cache_control.now_edit_type_flag == 0:
+            save_talk_data()
+
+
+
+def save_talk_data():
+    """保存口上文件"""
+    if len(cache_control.now_file_path):
+        # 通用开头
+        out_data = ""
+        out_data += "cid,behavior_id,adv_id,premise,context\n"
+        out_data += "口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n"
+        out_data += "str,int,int,str,str\n"
+        out_data += "0,0,0,0,1\n"
+        out_data += "口上配置数据,,,,\n"
+
+        # 遍历数据
+        for k in cache_control.now_talk_data:
+            now_talk: game_type.Talk = cache_control.now_talk_data[k]
+            out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
+            # 如果前提为空，就写入空白前提
+            if len(now_talk.premise) == 0:
+                out_data += "high_1"
+            # 如果前提不为空，就正常写入，并在最后去掉多余的&
+            else:
+                for premise in now_talk.premise:
+                    out_data += f"{premise}&"
+                out_data = out_data[:-1]
+            out_data += f",{now_talk.text}\n"
+
+        # 写入文件
+        with open(cache_control.now_file_path, "w",encoding="utf-8") as f:
+            f.write(out_data)
+            f.close()
