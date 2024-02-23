@@ -690,5 +690,5 @@ def settle_income():
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income} = {today_all_income}，已全部转化为龙门币\n"
+    now_draw.text = f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income}，乘以效率后最终收入为{today_all_income}，已全部转化为龙门币\n"
     now_draw.draw()

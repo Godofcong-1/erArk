@@ -3283,10 +3283,10 @@ def handle_both_h_state_reset(
         target_data.h_state.orgasm_level[orgasm] = now_data
     # 清零H相关二段状态
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0 and second_behavior_id not in range(1100,1113):
+        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
             character_data.second_behavior[second_behavior_id] = 0
     for second_behavior_id, behavior_data in target_data.second_behavior.items():
-        if behavior_data != 0 and second_behavior_id not in range(1100,1113):
+        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
             target_data.second_behavior[second_behavior_id] = 0
 
 
@@ -5960,7 +5960,7 @@ def handle_penis_in_t_reset(
         now_time: datetime.datetime,
 ):
     """
-    当前阴茎位置为交互对象_归零
+    当前阴茎位置为交互对象_双方归零
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -5972,6 +5972,7 @@ def handle_penis_in_t_reset(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = -1
+    character_data.h_state.insert_position = -1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAIR)

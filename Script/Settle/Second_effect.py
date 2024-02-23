@@ -2334,7 +2334,7 @@ def handle_penis_in_t_reset(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    当前阴茎位置为交互对象_归零
+    当前阴茎位置为交互对象_双方归零
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -2345,4 +2345,5 @@ def handle_penis_in_t_reset(
 
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = -1
+    character_data.h_state.insert_position = -1
 

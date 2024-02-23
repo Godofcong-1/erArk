@@ -257,7 +257,7 @@ cid,effect_name,effect_type,effect
 753,DOOR_CLOSE_RESET,系统量_地点,当前场景取消关门状态
 761,MOVE_TO_PRE_SCENE,系统量_地点,角色移动至前一场景
 
-801,PENIS_IN_T_RESET,H_阴茎位置,当前阴茎位置为交互对象_归零
+801,PENIS_IN_T_RESET,H_阴茎位置,当前阴茎位置为交互对象_双方归零
 802,PENIS_IN_T_HAIR,H_阴茎位置,当前阴茎位置为交互对象_发交中
 803,PENIS_IN_T_FACE,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭脸中
 804,PENIS_IN_T_MOUSE,H_阴茎位置,当前阴茎位置为交互对象_口交中
