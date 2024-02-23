@@ -332,10 +332,10 @@ class SeeCharacterBodyPanel:
             all_part_text_list.append(f" <{enemas_text}>")
 
         # 如果文本不为空，则加入到绘制列表中
+        all_part_text = ""
         if len(all_part_text_list):
             self.draw_list.append(type_line)
             # 遍历总文本列表，最多每行有6个信息
-            all_part_text = ""
             for i in range(len(all_part_text_list)):
                 now_text = all_part_text_list[i]
                 all_part_text += now_text
