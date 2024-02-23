@@ -144,6 +144,8 @@ in_board_games_room,IN_BOARD_GAMES_ROOM,地点_定位,在棋牌室中
 not_in_board_games_room,NOT_IN_BOARD_GAMES_ROOM,地点_定位,不在棋牌室中
 in_fairy_banquet,IN_FAIRY_BANQUET,地点_定位,在糖果仙子宴会厅中
 not_in_fairy_banquet,NOT_IN_FAIRY_BANQUET,地点_定位,不在糖果仙子宴会厅中
+in_broadcast_center,IN_BROADCAST_CENTER,地点_定位,在直播间中
+not_in_broadcast_center,NOT_IN_BROADCAST_CENTER,地点_定位,不在直播间中
 in_library_zone,IN_LIBRARY_ZONE,地点_定位,在图书馆区中
 in_library,IN_LIBRARY,地点_定位,在图书馆中
 not_in_library,NOT_IN_LIBRARY,地点_定位,不在图书馆中

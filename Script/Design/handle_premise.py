@@ -1411,7 +1411,41 @@ def handle_not_in_fairy_banquet(character_id: int) -> int:
         return 0
     return 1
 
-    # 补全以下地点：前卫街机厅、游泳池、酒吧、理发店、造型工作室、瓦莱丽蛋糕店、七城风情餐厅(Seven_Cities_Restaurant)、黄澄澄游戏室(Golden_Game_Room)、山城茶馆(Teahouse)、人气快餐开封菜(KFC)、健康快餐店(Healthy_Diner)、龙门食坊(Lungmen_Eatery)、快捷连锁披萨店(Pizzeria)、Café(Café)、花草灯艺屋(Light_Store)
+
+@add_premise(constant_promise.Premise.IN_BROADCAST_CENTER)
+def handle_in_broadcast_center(character_id: int) -> int:
+    """
+    校验角色是否在直播间中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Broadcast_Center" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_BROADCAST_CENTER)
+def handle_not_in_broadcast_center(character_id: int) -> int:
+    """
+    校验角色是否不在直播间中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Broadcast_Center" in now_scene_data.scene_tag:
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.IN_AVANT_GARDE_ARCADE)
