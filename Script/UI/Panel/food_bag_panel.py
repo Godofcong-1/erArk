@@ -194,9 +194,9 @@ class SeeFoodListByFoodNameDraw:
         food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
         food_quality_str = f"({food_quality_str})"
         # 如果是母乳，则不显示质量，而是显示母乳的ml
-        if food_data.ml > 0:
+        if food_data.milk_ml > 0:
             food_quality_str = ""
-            milk_ml = f"({food_data.ml}ml)"
+            milk_ml = f"({food_data.milk_ml}ml)"
         else:
             milk_ml = ""
         # 如果不是正常调味，则标注味道

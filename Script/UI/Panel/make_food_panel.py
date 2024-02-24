@@ -5,6 +5,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, text_ha
 from Script.Design import map_handle, cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -271,6 +272,10 @@ class SeeFoodListByFoodNameDraw:
             character_data.item[self.special_seasoning] -= 1
         # 放到玩家背包里
         character_data.food_bag[self.food_uid] = cache.makefood_data[self.food_cid][self.food_uid]
+        # 精液调味则将精液量加到食物数据里
+        if self.special_seasoning in {11,12} :
+            semen_text, semen_count = ejaculation_panel.common_ejaculation()
+            cache.makefood_data[self.food_cid][self.food_uid].special_seasoning_amount = semen_count
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time

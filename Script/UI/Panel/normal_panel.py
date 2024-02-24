@@ -586,14 +586,14 @@ class Fridge_Panel:
 
         # 创建食物对象，并放进玩家的背包里
         new_food = cooking.create_food("", 1001, 5, character_data.name)
-        new_food.ml = cache.rhodes_island.milk_in_fridge[character_id]
+        new_food.milk_ml = cache.rhodes_island.milk_in_fridge[character_id]
         pl_character_data.food_bag[new_food.uid] = new_food
 
         # 删除冰箱里的母乳
         del cache.rhodes_island.milk_in_fridge[character_id]
 
         now_draw = draw.WaitDraw()
-        draw_text = f"\n  你将{character_data.name}的母乳（{new_food.ml}ml）放进了背包\n"
+        draw_text = f"\n  你将{character_data.name}的母乳（{new_food.milk_ml}ml）放进了背包\n"
         now_draw.text = draw_text
         now_draw.draw()
 

@@ -604,9 +604,9 @@ def settle_milk():
         for food_id in character_data.food_bag.copy():
             food: game_type.Food = character_data.food_bag[food_id]
             # 如果是母乳，则转化，并删掉原物品
-            if food.ml > 0:
-                cache.rhodes_island.materials_resouce[31] += food.ml
-                all_milk += food.ml
+            if food.milk_ml > 0:
+                cache.rhodes_island.materials_resouce[31] += food.milk_ml
+                all_milk += food.milk_ml
                 # print(f"debug {character_data.name}携带的母乳（{food.ml}ml）已转化为罗德岛的母乳")
                 del character_data.food_bag[food.uid]
 

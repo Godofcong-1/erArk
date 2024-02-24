@@ -4793,9 +4793,20 @@ def handle_eat_add_just(
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
-        # 精液食物则加精液经验
+        # 精液食物则将精液加到口腔污浊，并加精液经验
         if character_data.behavior.food_seasoning in {11,12}:
+            # 加精液经验
             default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            default_experience.handle_target_add_1_cums_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            # 获取精液量
+            now_food = character_data.behavior.target_food
+            semen_ml = now_food.special_seasoning_amount
+            # 加精液到口腔
+            cache.shoot_position = 2    # 口腔
+            target_data.h_state.shoot_position_body = 2
+            target_data.dirty.body_semen[2][1] += semen_ml
+            target_data.dirty.body_semen[2][3] += semen_ml
+            target_data.dirty.body_semen[2][2] = attr_calculation.get_semen_now_level(semen_ml, 2, 0)
         # 药物食物则获得对应药物效果
         elif character_data.behavior.food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)

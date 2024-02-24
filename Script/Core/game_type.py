@@ -138,6 +138,8 @@ class Food:
         """ 食谱id """
         self.special_seasoning: int = 0
         """ 调味类型 """
+        self.special_seasoning_amount: int = 0
+        """ 特殊调味的量 """
         # self.cook: bool = False
         # """ 可烹饪 """
         # self.eat: bool = False
@@ -148,8 +150,8 @@ class Food:
         # """ 可作为调料 """
         # self.fruit: bool = False
         # """ 是否是水果 """
-        self.ml: int = 0
-        """ 毫升数 """
+        self.milk_ml: int = 0
+        """ 牛奶毫升数 """
 
 
 class Recipes:

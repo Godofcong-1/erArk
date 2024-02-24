@@ -677,7 +677,7 @@ class Debug_Panel:
             elif key_index == 7:
                 draw_text_list = []
                 info_text = f"\n"
-                for cid in target_data.ability:
+                for cid in game_config.config_ability:
                     name = game_config.config_ability[cid].name
                     info_text += f"{cid}:{name}={target_data.ability[cid]} "
                 draw_text_list.append(f"[000]:能力列表：\n{info_text}")
