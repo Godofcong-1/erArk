@@ -1298,7 +1298,7 @@ class Panel:
     """ 成人用品商店面板 """
     MAKE_FOOD = 7
     """ 做饭面板 """
-    FIND_CALL = 8
+    ALL_NPC_POSITION = 8
     """ 查询与召集面板 """
     EJACULATION = 9
     """ 射精面板 """
@@ -1693,6 +1693,8 @@ class Instruct:
     """ 购买成人用品 """
     BUY_FOOD = 0
     """ 购买食物 """
+    ALL_NPC_POSITION = 0
+    """ 干员位置一览 """
     FOLLOW = 0
     """ 邀请同行 """
     END_FOLLOW = 0
@@ -1817,8 +1819,6 @@ class Instruct:
     """ 查看收藏品 """
     SEE_FRIDGE = 0
     """ 查看冰箱 """
-    FIND_AND_CALL_NPC = 0
-    """ 查找与召集干员 """
     MANAGE_BASEMENT = 0
     """ 管理罗德岛 """
 

@@ -806,6 +806,8 @@ class Premise:
     """ 属性_特殊flag 当前没智能跟随玩家 """
     IS_FOLLOW_3 = "is_follow_3"
     """ 属性_特殊flag 当前正前往博士办公室 """
+    IS_FOLLOW_4 = "is_follow_4"
+    """ 属性_特殊flag 当前正前往博士所在位置 """
     TARGET_IS_FOLLOW = "t_is_follow"
     """ 属性_特殊flag 交互对象当前正跟随玩家 """
     TARGET_NOT_FOLLOW = "t_not_follow"

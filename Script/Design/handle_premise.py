@@ -14526,6 +14526,21 @@ def handle_is_follow_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IS_FOLLOW_4)
+def handle_is_follow_4(character_id: int) -> int:
+    """
+    校验是否当前正前往博士所在位置
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.is_follow == 4:
+        return 100
+    return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_IS_FOLLOW)
 def handle_target_is_follow(character_id: int) -> int:
     """

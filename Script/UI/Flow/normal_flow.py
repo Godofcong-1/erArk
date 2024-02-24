@@ -1,6 +1,7 @@
 from Script.Core import constant
 from Script.Design import handle_panel
 from Script.UI.Panel import (
+    all_npc_position_panel,
     normal_panel,
     h_item_shop_panel,
     in_scene_panel,
@@ -9,7 +10,6 @@ from Script.UI.Panel import (
     collection_panel,
     dirty_panel,
     ejaculation_panel,
-    find_call_panel,
     make_food_panel,
     food_bag_panel,
     food_shop_panel,
@@ -77,10 +77,10 @@ def ejaculation_flow():
     now_panel.draw()
 
 
-@handle_panel.add_panel(constant.Panel.FIND_CALL)
+@handle_panel.add_panel(constant.Panel.ALL_NPC_POSITION)
 def find_call():
-    """查找与召集面板"""
-    now_panel = find_call_panel.Find_call_Panel(width)
+    """干员位置一览面板"""
+    now_panel = all_npc_position_panel.All_Npc_Position_Panel(width)
     now_panel.draw()
 
 

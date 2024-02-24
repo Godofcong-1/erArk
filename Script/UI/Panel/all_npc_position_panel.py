@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, handle_premise, update
+from Script.Design import map_handle, handle_premise, character_move
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -18,7 +18,7 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-class Find_call_Panel:
+class All_Npc_Position_Panel:
     """
     总面板对象
     Keyword arguments:
@@ -37,50 +37,160 @@ class Find_call_Panel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw("干员位置一览", self.width)
+
+        draw_width = self.width / 3
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 60, 3, self.width, 1, 1, 0)
+        self.move_type = 0
+        move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
+        self.break_flag = False
         while 1:
+            title_draw.draw()
             py_cmd.clr_cmd()
             npc_list,return_list = [],[]
-            title_draw.draw()
-            info_draw = draw.NormalDraw()
-            follow_count = cache.character_data[0].pl_ability.follow_count
-            if not cache.debug_mode:
-                info_draw.text = f"●当前最大同时跟随角色数量：{str(follow_count)}，跟随中的角色会带*\n\n"
-            else:
-                info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)，跟随中的角色会带*\n\n"
-            info_draw.width = self.width
-            info_draw.draw()
+
+            # 暂时去掉同时跟随干员数量的提示信息
+            # info_draw = draw.NormalDraw()
+            # follow_count = cache.character_data[0].pl_ability.follow_count
+            # if not cache.debug_mode:
+            #     info_draw.text = f"●当前最大同时跟随角色数量：{str(follow_count)}，跟随中的角色会带*\n\n"
+            # else:
+            #     info_draw.text = "●当前最大同时跟随角色数量：999(debug模式)，跟随中的角色会带*\n\n"
+            # info_draw.width = self.width
+            # info_draw.draw()
+
+            # 全跟随按钮
             if cache.debug_mode:
-                text = "  [一键全召集]"
+                text = "  [debug用一键全跟随]"
                 name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.call_all)
                 name_draw.draw()
                 line_feed.draw()
                 line_feed.draw()
                 return_list.append(name_draw.return_text)
+
+            # 移动类型切换按钮
+            info_text = _("选择召集/移动方式：")
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+            for move_type_id in range(len(move_type_list)):
+                # 仅在debug模式下显示debug用对方智能跟随
+                if move_type_id == 3 and not cache.debug_mode:
+                    continue
+                move_type_text = move_type_list[move_type_id]
+                if move_type_id == self.move_type:
+                    move_type_text = f"▶{move_type_text}          "
+                    now_draw = draw.NormalDraw()
+                    now_draw.text = move_type_text
+                    now_draw.style = "gold_enrod"
+                    now_draw.width = draw_width
+                    now_draw.draw()
+                else:
+                    draw_text = f"  {move_type_text}     "
+                    now_draw = draw.LeftButton(
+                        draw_text, move_type_text, len(draw_text) * 2, cmd_func=self.move_type_change, args=(move_type_id,)
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+            line_feed.draw()
+            line_feed.draw()
+
             # 遍历角色id
+            chara_count = 0
             for npc_id in cache.npc_id_got:
                 if npc_id != 0:
-                    npc_list.append(npc_id)
-            self.handle_panel.text_list = npc_list
-            self.handle_panel.update()
-            self.handle_panel.draw()
+                    chara_count += 1
+                    # npc_list.append(npc_id)
+
+                    # 角色属性与信息
+                    character_data = cache.character_data[npc_id]
+                    name = character_data.name
+                    id = str(character_data.adv).rjust(4,'0')
+                    scene_position = character_data.position
+                    scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
+                    if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
+                        scene_position_str = scene_position_str[:-2] + "入口"
+
+                    # 输出干员名字
+                    now_draw_text = f"[{id}]{name}"
+                    # 输出跟随信息
+                    if character_data.sp_flag.is_follow == 1:
+                        now_draw_text += "(跟)"
+                    # 输出地点信息
+                    now_draw_text += f":{scene_position_str}   "
+
+                    status_text = game_config.config_status[character_data.state].name
+                    # 如果是在移动，则输出目的地
+                    # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
+                    if status_text == "移动" and len(character_data.behavior.move_final_target):
+                        now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
+                    # 否则输出状态
+                    else:
+                        now_draw_text += f"正在：{status_text}"
+
+                    # 输出按钮
+                    name_draw = draw.LeftButton(
+                        now_draw_text, name, draw_width, cmd_func=self.move, args=(npc_id,)
+                    )
+                    name_draw.draw()
+                    return_list.append(name_draw.return_text)
+
+                    # 每行三个，如果是第三个，且当前不是最后一个则换行
+                    if chara_count % 3 == 0 and chara_count != len(cache.npc_id_got):
+                        line_feed.draw()
+
             return_list.extend(self.handle_panel.return_list)
+            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == back_draw.return_text or self.break_flag:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def call_all(self):
-        """一键全召集"""
+        """一键全跟随"""
         for npc_id in cache.npc_id_got:
             if npc_id != 0:
                 character_data = cache.character_data[npc_id]
                 character_data.sp_flag.is_follow = 1
+
+    def move_type_change(self, new_type: int):
+        """移动类型切换"""
+        self.move_type = new_type
+
+    def move(self, character_id: int):
+        """移动"""
+
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        character_data: game_type.Character = cache.character_data[character_id]
+        now_draw = draw.NormalDraw()
+        # 召集干员的情况
+        if self.move_type != 2:
+            if not handle_premise.handle_normal_24567(character_id):
+                now_draw.text = f"***{character_data.name}状态异常，无法召集***\n"
+            elif self.move_type == 0:
+                character_data.sp_flag.is_follow = 3
+                now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
+            elif self.move_type == 1:
+                character_data.sp_flag.is_follow = 4
+                now_draw.text = character_data.name + "收到了博士的信息，询问了博士的位置之后开始移动\n"
+            elif self.move_type == 3:
+                character_data.sp_flag.is_follow = 1
+                now_draw.text = character_data.name + "收到了博士的信息，开始智能跟随\n"
+            now_draw.width = 1
+            now_draw.draw()
+        # 博士前往干员位置的情况
+        else:
+            target_position = character_data.position
+            # target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+            character_move.own_charcter_move(target_position)
+            self.break_flag = True
+
 
 class FindDraw:
     """

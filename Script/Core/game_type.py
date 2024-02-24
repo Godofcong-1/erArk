@@ -477,7 +477,7 @@ class SPECIAL_FLAG:
         self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0
-        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室] """
+        """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室,4前往博士当前位置] """
         self.tired: bool = 0
         """ 疲劳状态（HP=1） """
         self.angry_with_player: bool = 0

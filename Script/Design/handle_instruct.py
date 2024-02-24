@@ -227,15 +227,6 @@ def handle_owner_abl_up():
     now_draw.draw()
 
 
-@add_instruct(constant.Instruct.FIND_AND_CALL_NPC, constant.InstructType.WORK, _("查找与召集干员"),
-              {
-                  constant_promise.Premise.NOT_H,
-              })
-def handle_find_and_call_npc():
-    """处理查找与召集干员指令"""
-    cache.now_panel_id = constant.Panel.FIND_CALL
-
-
 @add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("查看污浊情况"),
               {constant_promise.Premise.HAVE_TARGET})
 def see_dirty():
@@ -1029,12 +1020,22 @@ def handle_make_food():
     cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 
+@add_instruct(constant.Instruct.ALL_NPC_POSITION, constant.InstructType.DAILY, _("干员位置一览"),
+              {
+                  constant_promise.Premise.NOT_H,
+              })
+def handle_all_npc_position():
+    """处理干员位置一览指令"""
+    cache.now_panel_id = constant.Panel.ALL_NPC_POSITION
+
+
 @add_instruct(
     constant.Instruct.FOLLOW,
     constant.InstructType.DAILY,
     _("邀请同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
 )
@@ -1072,6 +1073,7 @@ def handle_followed():
     _("结束同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_IS_FOLLOW},
 )

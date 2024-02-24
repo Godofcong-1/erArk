@@ -1119,7 +1119,7 @@ class Debug_Panel:
                 info_text += f"\n\n"
                 info_text += f"[000]:在H模式中：{target_data.sp_flag.is_h}\n"
                 info_text += f"[001]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}\n"
-                info_text += f"[002]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室]：{target_data.sp_flag.is_follow}\n"
+                info_text += f"[002]:跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室,4前往博士当前位置]：{target_data.sp_flag.is_follow}\n"
                 info_text += f"[003]:疲劳状态（HP=1）：{target_data.sp_flag.tired}\n"
                 info_text += f"[004]:被玩家惹生气：{target_data.sp_flag.angry_with_player}\n"
                 info_text += f"[005]:角色停止移动：{target_data.sp_flag.move_stop}\n"
