@@ -1627,6 +1627,7 @@ class CharacterBodyText:
             now_text += "  处女情况："
             if character_data.talent[0]:
                 now_text += "保有处女\n"
+                ui_text = game_config.ui_text_data['ability']['V感觉0']
             else:
                 sex_id = character_data.first_record.first_sex_id
                 sex_time = character_data.first_record.first_sex_time
@@ -1638,6 +1639,11 @@ class CharacterBodyText:
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
                     posture=sex_posture,
                 )
+                ui_text_lv = (character_data.ability[4] + 1 ) // 2
+                ui_text_cid = f"V感觉{ui_text_lv}"
+                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            # V感觉描述
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[7][3] == 0:
                 now_text += "  未射入过精液\n"
             else:
@@ -1648,6 +1654,7 @@ class CharacterBodyText:
             now_text += "  后庭处女情况："
             if character_data.talent[1]:
                 now_text += "保有后庭处女\n"
+                ui_text = game_config.ui_text_data['ability']['A感觉0']
             else:
                 a_sex_id = character_data.first_record.first_a_sex_id
                 a_sex_time = character_data.first_record.first_a_sex_time
@@ -1659,6 +1666,11 @@ class CharacterBodyText:
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
                     posture=a_sex_posture,
                 )
+                ui_text_lv = (character_data.ability[5] + 1 ) // 2
+                ui_text_cid = f"A感觉{ui_text_lv}"
+                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            # A感觉描述
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[8][3] == 0:
                 now_text += "  未射入过精液\n"
             else:
@@ -1666,6 +1678,12 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 子宫信息#
             now_text = f"\n 【宫】\n"
+            # W感觉描述
+            ui_text_lv = (character_data.ability[7] + 1 ) // 2
+            ui_text_cid = f"W感觉{ui_text_lv}"
+            ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            now_text += f"  {ui_text}\n"
+            # 怀孕情况
             if character_data.experience[86] == 0:
                 now_text += "  未怀孕过\n"
             else:
@@ -2171,6 +2189,7 @@ class SeeCharacterInfoHandle:
             now_character_panel = SeeCharacterInfoPanel(self.character_id, self.width)
             now_character_panel.change_panel(now_panel_id)
             now_character_panel.draw()
+            line_feed.draw()
             old_button_draw.draw()
             back_draw.draw()
             next_button_draw.draw()
