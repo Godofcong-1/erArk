@@ -1598,6 +1598,11 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 胸部信息#
             now_text = f"\n 【胸】\n"
+            # 根据胸部大小的素质来显示信息
+            for bust_cid in [121,122,123,124,125]:
+                if character_data.talent[bust_cid]:
+                    info_text = game_config.config_talent[bust_cid].info
+                    now_text += f"  {info_text}\n"
             if character_data.dirty.body_semen[3][3] == 0:
                 now_text += "  未淋上过精液\n"
             else:
