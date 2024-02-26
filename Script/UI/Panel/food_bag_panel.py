@@ -193,6 +193,10 @@ class SeeFoodListByFoodNameDraw:
             food_introduce = food_recipe.introduce
         food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
         food_quality_str = f"({food_quality_str})"
+        # 版本更新用修正
+        # 如果food_data没有milk_ml属性，则读取ml属性
+        if not hasattr(food_data, "milk_ml"):
+            food_data.milk_ml = food_data.ml
         # 如果是母乳，则不显示质量，而是显示母乳的ml
         if food_data.milk_ml > 0:
             food_quality_str = ""
