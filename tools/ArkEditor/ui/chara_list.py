@@ -408,6 +408,7 @@ class CharaList(QWidget):
                 break
         now_ability_dict = cache_control.now_chara_data.Ability
         # print(f"debug 更新了角色能力，cache_control.now_chara_data.Ability = {cache_control.now_chara_data.Ability}")
+        self.ability_widget.reset()
         self.ability_widget.items = []
         for key in now_ability_dict:
             self.ability_widget.addItems()
@@ -417,6 +418,7 @@ class CharaList(QWidget):
                     break
             self.ability_widget.items[-1][2].setText(str(now_ability_dict[key]))
         now_experience_dict = cache_control.now_chara_data.Experience
+        self.exprience_widget.reset()
         self.exprience_widget.items = []
         for key in now_experience_dict:
             self.exprience_widget.addItems()
@@ -426,6 +428,7 @@ class CharaList(QWidget):
                     break
             self.exprience_widget.items[-1][2].setText(str(now_experience_dict[key]))
         now_talent_dict = cache_control.now_chara_data.Talent
+        self.talent_widget.reset()
         self.talent_widget.items = []
         for key in now_talent_dict:
             self.talent_widget.addItems()
@@ -435,6 +438,7 @@ class CharaList(QWidget):
                     break
             self.talent_widget.items[-1][2].setText(str(now_talent_dict[key]))
         now_clothing_dict = cache_control.now_chara_data.Cloth
+        self.clothing_widget.reset()
         self.clothing_widget.items = []
         for key in now_clothing_dict:
             # 跳过默认服装
@@ -561,3 +565,8 @@ class MenuWidget(QWidget):
             comboBox.deleteLater()
             textEdit.deleteLater()
             self.items_per_layout -= 1  # 减少项目数量
+
+    def reset(self):
+        """重置"""
+        while self.items:
+            self.removeItems()
