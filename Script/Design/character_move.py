@@ -34,9 +34,12 @@ def own_charcter_move(target_scene: list):
                 break
             character_data.behavior.behavior_id = constant.Behavior.MOVE
             character_data.behavior.move_target = now_target_position
+            character_data.behavior.move_src = character_data.position
+            character_data.behavior.move_final_target = target_scene
             character_data.behavior.duration = now_need_time
             character_data.behavior.start_time = cache.game_time
             character_data.state = constant.CharacterStatus.STATUS_MOVE
+            # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)
         else:
             break

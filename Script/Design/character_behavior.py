@@ -142,6 +142,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
+            # 结算玩家在移动时同场景里的NPC的跟随情况
+            if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+                judge_same_position_npc_follow()
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
             character_aotu_change_value(character_id)
@@ -154,9 +157,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
             if time_judge:
                 cache.over_behavior_character.add(character_id)
         #         print(f"debug time_judge")
-        # print(f"debug 玩家结算完毕")
         # 最后结算疲劳
         judge_character_tired_sleep(character_id)
+        # print(f"debug 玩家结算完毕")
 
     # 再处理NPC部分
     if character_id:
@@ -166,17 +169,17 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
             find_character_target(character_id, now_time)
-            # 结算状态与事件
-            judge_character_status(character_id)
-            # 刷新会根据时间即时增加的角色数值
-            character_aotu_change_value(character_id)
-            # 结算角色的状态是否会持续
-            change_character_persistent_state(character_id)
+        # 结算状态与事件
+        judge_character_status(character_id)
+        # 刷新会根据时间即时增加的角色数值
+        character_aotu_change_value(character_id)
+        # 结算角色的状态是否会持续
+        change_character_persistent_state(character_id)
         time_judge = judge_character_status_time_over(character_id, now_time)
         if time_judge or character_data.state == constant.CharacterStatus.STATUS_WAIT:
             cache.over_behavior_character.add(character_id)
         # if character_data.name == "阿米娅":
-        #     print(f"debug 后：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        #     print(f"debug 后：{character_data.name}，time_judge = {time_judge}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
 
     # 自动获得对应素质和能力
     handle_talent.gain_talent(character_id,now_gain_type = 0)
@@ -395,6 +398,8 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     # print(f"debug {character_data.name}的end_time = {end_time}")
     time_judge = game_time.judge_date_big_or_small(now_time, end_time)
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
+    # if character_data.name == "阿米娅":
+    #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
     if not add_time:
         character_data.behavior = game_type.Behavior()
         character_data.behavior.start_time = now_time
@@ -841,9 +846,9 @@ def character_aotu_change_value(character_id: int):
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}")
 
-        # 非睡觉时间内，疲劳归零则直接结算当前行动
-        # if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
-        #     judge_character_status(character_id, now_time, end_now = 2)
+        # 疲劳归零，且HP、MP满值时，则自动结束睡觉
+        # if now_character_data.tired_point <= 0 and now_character_data.hit_point == now_character_data.hit_point_max and now_character_data.mana_point == now_character_data.mana_point_max:
+        #     judge_character_status(character_id)
 
 
     # 结算尿意值
@@ -1028,3 +1033,32 @@ def sanity_point_grow():
         now_draw.width = window_width
         now_draw.text = f"\n在刻苦的锻炼下，博士理智最大值成长了{grow_value}点\n"
         now_draw.draw()
+
+
+def judge_same_position_npc_follow():
+    """
+    判断同位置的NPC是否跟随玩家\n
+    Keyword arguments:
+    无
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    for character_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 智能跟随、位置在玩家移动的出发地、异常状态267正常
+        if (
+            character_data.sp_flag.is_follow == 1 and
+            character_data.position == pl_character_data.position and 
+            handle_premise.handle_normal_267(character_id)
+            ):
+
+            # 变成移动状态，目标为玩家位置
+            _, _, move_path, move_time = character_move.character_move(character_id, pl_character_data.behavior.move_final_target)
+            character_data.behavior.behavior_id = constant.Behavior.MOVE
+            character_data.state = constant.CharacterStatus.STATUS_MOVE
+            character_data.behavior.move_target = move_path
+            character_data.behavior.move_final_target = pl_character_data.behavior.move_final_target
+            character_data.behavior.duration = move_time
+            character_data.behavior.start_time = pl_character_data.behavior.start_time
+            character_data.target_character_id = character_id
+
+            # print(f"debug {character_data.name}跟随玩家，当前位置为{character_data.position}，当前目标位置为{move_path}，最终目标位置为{pl_character_data.behavior.move_final_target}，行动时间为{move_time}分钟, start_time = {character_data.behavior.start_time}")

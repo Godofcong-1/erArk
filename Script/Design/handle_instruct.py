@@ -1035,7 +1035,6 @@ def handle_all_npc_position():
     _("邀请同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
 )
@@ -1053,7 +1052,7 @@ def handle_followed():
     update.game_update_flow(5)
 
     now_draw = draw.NormalDraw()
-    now_draw.text = f"\n{target_data.name}进入跟随模式\n"
+    now_draw.text = f"\n{target_data.name}进入智能跟随模式\n"
 
     # 去掉其他NPC的跟随
     if not cache.debug_mode:
@@ -1073,7 +1072,6 @@ def handle_followed():
     _("结束同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_IS_FOLLOW},
 )
