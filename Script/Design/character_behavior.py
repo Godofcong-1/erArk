@@ -414,7 +414,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
                 judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
                 # 当前时间在醒来之前半小时内
                 if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(end_time, pl_character_data.action_info.wake_time):
-                    print(f"debug {character_data.name}刷新早安服务判断，state = {character_data.state}")
+                    # print(f"debug {character_data.name}刷新早安服务判断，state = {character_data.state}")
                     time_judge = 3
                     new_start_time = judge_wake_up_time
     if end_now:
@@ -823,10 +823,9 @@ def character_aotu_change_value(character_id: int):
         now_character_data.tired_point -= tired_change
         now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
 
-        #TODO 当前设置为指令会在最开始结算，所以不会提前终止执行。之后应该改成自动判定休息/睡觉的时间，来动态更改行动的持续时间
-        # 非睡觉时间内，疲劳归零则直接结算当前行动
-        # if now_character_data.tired_point <= 0 and (not handle_premise.handle_sleep_time(character_id)):
-        #     judge_character_status(character_id, now_time, end_now = 2)
+        # 疲劳归零则直接结算当前行动
+        # if now_character_data.tired_point <= 0:
+        #     judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
 
     # 睡觉时大量减少疲劳值
     elif now_character_data.state == constant.CharacterStatus.STATUS_SLEEP:
@@ -844,11 +843,17 @@ def character_aotu_change_value(character_id: int):
             now_character_data.sleep_point += add_sleep
         # 最高上限100
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
-        # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}")
+        # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
 
-        # 疲劳归零，且HP、MP满值时，则自动结束睡觉
-        # if now_character_data.tired_point <= 0 and now_character_data.hit_point == now_character_data.hit_point_max and now_character_data.mana_point == now_character_data.mana_point_max:
-        #     judge_character_status(character_id)
+        # 疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
+        # if (
+        #     now_character_data.tired_point <= 0 and
+        #     now_character_data.hit_point == now_character_data.hit_point_max and
+        #     now_character_data.mana_point == now_character_data.mana_point_max and
+        #     not handle_premise.handle_sleep_time(character_id)
+        # ):
+        #     judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+        #     print(f"debug {now_character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
 
 
     # 结算尿意值

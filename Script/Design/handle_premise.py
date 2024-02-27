@@ -5517,7 +5517,8 @@ def handle_mp_0(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     value = character_data.mana_point
     if value == 0:
-        return character_data.hit_point_max - character_data.hit_point
+        return_value = max(1, character_data.hit_point_max - character_data.hit_point)
+        return return_value
     else:
         return 0
 
