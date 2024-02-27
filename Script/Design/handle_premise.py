@@ -7590,6 +7590,154 @@ def handle_flag_baby_exist(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.REPRODUCTION_PERIOD_0)
+def handle_reproduction_period_0(character_id: int) -> int:
+    """
+    自己当前是安全期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    reproduction_period = character_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.REPRODUCTION_PERIOD_1)
+def handle_reproduction_period_1(character_id: int) -> int:
+    """
+    自己当前是普通期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    reproduction_period = character_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.REPRODUCTION_PERIOD_2)
+def handle_reproduction_period_2(character_id: int) -> int:
+    """
+    自己当前是危险期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    reproduction_period = character_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.REPRODUCTION_PERIOD_3)
+def handle_reproduction_period_3(character_id: int) -> int:
+    """
+    自己当前是排卵期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    reproduction_period = character_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_REPRODUCTION_PERIOD_0)
+def handle_t_reproduction_period_0(character_id: int) -> int:
+    """
+    交互对象当前是安全期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    reproduction_period = target_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_REPRODUCTION_PERIOD_1)
+def handle_t_reproduction_period_1(character_id: int) -> int:
+    """
+    交互对象当前是普通期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    reproduction_period = target_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_REPRODUCTION_PERIOD_2)
+def handle_t_reproduction_period_2(character_id: int) -> int:
+    """
+    交互对象当前是危险期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    reproduction_period = target_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_REPRODUCTION_PERIOD_3)
+def handle_t_reproduction_period_3(character_id: int) -> int:
+    """
+    交互对象当前是排卵期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    reproduction_period = target_data.pregnancy.reproduction_period
+    now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+    if now_reproduction_period_type == 3:
+        return 1
+    else:
+        return 0
+
+
 # @add_premise(constant_promise.Premise.TARGET_AGE_SIMILAR)
 # def handle_target_age_similar(character_id: int) -> int:
 #     """
