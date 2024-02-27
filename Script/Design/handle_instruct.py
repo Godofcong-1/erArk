@@ -2289,13 +2289,12 @@ def handle_confim_recruit():
         character_handle.get_new_character(new_chara_id)
         character_data = cache.character_data[new_chara_id]
         now_draw.text += _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
     now_draw.draw()
-
-    character_data.behavior.behavior_id = constant.Behavior.WAIT
-    character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
 
 
 @add_instruct(
