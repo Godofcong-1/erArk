@@ -120,7 +120,7 @@ class FoodBagPanel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
+            if yrn in return_list and yrn not in ["0","1"]:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
