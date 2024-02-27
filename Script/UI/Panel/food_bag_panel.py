@@ -53,8 +53,20 @@ class FoodBagPanel:
 
             # 读取背包食物，并只提取uid列表
             id_list_normal,id_list_special = [],[]
-            for i in character_data.food_bag:
+            del_food_flag = False
+            for i in character_data.food_bag.copy():
                 food_data: game_type.Food = cache.character_data[0].food_bag[i]
+                # 版本更新用修正
+                # 如果food_data没有milk_ml属性，则删除该食物
+                if not hasattr(food_data, "milk_ml"):
+                    del cache.character_data[0].food_bag[i]
+                    del_food_flag = True
+                    continue
+                # 如果food_data是精液调味(调味类型11和12)没有special_seasoning_amount属性，则删除该食物
+                elif food_data.special_seasoning in [11,12] and not hasattr(food_data, "special_seasoning_amount"):
+                    del cache.character_data[0].food_bag[i]
+                    del_food_flag = True
+                    continue
                 if food_data.special_seasoning == 0:
                     id_list_normal.append(i)
                 else:
@@ -65,6 +77,14 @@ class FoodBagPanel:
             self.handle_panel_special.text_list = id_list_special
             self.handle_panel_special.update()
             title_draw.draw()
+
+            # 输出删除食物的提示信息
+            if del_food_flag:
+                del_food_draw = draw.LeftDraw()
+                del_food_draw.text = _("\n检测到因版本变更导致的食物数据异常，已删除部分异常食物，并重置了部分食物的数据，请保存并覆盖原存档。\n")
+                del_food_draw.draw()
+                line_feed.draw()
+
             return_list = []
             for food_type in food_type_list:
                 if food_type == self.now_panel:
@@ -193,10 +213,6 @@ class SeeFoodListByFoodNameDraw:
             food_introduce = food_recipe.introduce
         food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
         food_quality_str = f"({food_quality_str})"
-        # 版本更新用修正
-        # 如果food_data没有milk_ml属性，则读取ml属性
-        if not hasattr(food_data, "milk_ml"):
-            food_data.milk_ml = food_data.ml
         # 如果是母乳，则不显示质量，而是显示母乳的ml
         if food_data.milk_ml > 0:
             food_quality_str = ""
@@ -233,7 +249,7 @@ class SeeFoodListByFoodNameDraw:
 
         if draw_button_flag:
             name_draw = draw.LeftButton(
-                button_text, str(self.text)[:3], self.width, cmd_func=self.eat_food
+                button_text, '\n' + str(self.text), self.width, cmd_func=self.eat_food
             )
             self.draw_text = button_text
             self.button_return = name_draw.return_text
