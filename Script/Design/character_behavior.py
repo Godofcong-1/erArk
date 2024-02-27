@@ -308,7 +308,7 @@ def judge_character_status(character_id: int) -> int:
     if start_event_draw != None:
         event_id = start_event_draw.event_id
         character_data.event.event_id = event_id
-        event_config = game_config.config_event[end_event_id]
+        event_config = game_config.config_event[event_id]
         event_type_now = event_config.type
         # 如果是父事件的话，则先输出文本
         if "10001" in event_config.effect:
@@ -1053,12 +1053,20 @@ def judge_same_position_npc_follow():
 
             # 变成移动状态，目标为玩家位置
             _, _, move_path, move_time = character_move.character_move(character_id, pl_character_data.behavior.move_final_target)
-            character_data.behavior.behavior_id = constant.Behavior.MOVE
-            character_data.state = constant.CharacterStatus.STATUS_MOVE
-            character_data.behavior.move_target = move_path
-            character_data.behavior.move_final_target = pl_character_data.behavior.move_final_target
-            character_data.behavior.duration = move_time
-            character_data.behavior.start_time = pl_character_data.behavior.start_time
-            character_data.target_character_id = character_id
+            move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
+            if move_flag:
+                character_data.behavior.behavior_id = constant.Behavior.MOVE
+                character_data.state = constant.CharacterStatus.STATUS_MOVE
+                character_data.behavior.move_target = move_path
+                character_data.behavior.move_final_target = pl_character_data.behavior.move_final_target
+                character_data.behavior.duration = move_time
+                character_data.behavior.start_time = pl_character_data.behavior.start_time
+                character_data.target_character_id = character_id
+                character_data.action_info.follow_wait_time = 0
+            elif wait_flag:
+                character_data.state = constant.CharacterStatus.STATUS_WAIT
+                character_data.behavior.behavior_id = constant.Behavior.WAIT
+                character_data.behavior.duration = 5
+                character_data.action_info.follow_wait_time += 5
 
             # print(f"debug {character_data.name}跟随玩家，当前位置为{character_data.position}，当前目标位置为{move_path}，最终目标位置为{pl_character_data.behavior.move_final_target}，行动时间为{move_time}分钟, start_time = {character_data.behavior.start_time}")
