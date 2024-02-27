@@ -285,10 +285,11 @@ class SeeCharacterBodyPanel:
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
             now_level = attr_calculation.get_semen_now_level(abdomen_all_semen, 20, 0)
-            dirty_text_cid = f"腹部整体精液污浊{str(now_level)}"
-            dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-            now_part_text = f" {dirty_text_context}"
-            all_part_text_list.append(now_part_text)
+            if now_level >= 2:
+                dirty_text_cid = f"腹部整体精液污浊{str(now_level)}"
+                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                now_part_text = f" {dirty_text_context}"
+                all_part_text_list.append(now_part_text)
 
         # 如果有生理透视，则显示当前生理周期与受精概率
         if character_data.pl_ability.visual and character_data.talent[309]:
