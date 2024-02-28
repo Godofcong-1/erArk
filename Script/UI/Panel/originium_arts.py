@@ -455,7 +455,7 @@ class Originium_Arts_Panel:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
                     # 绘制
-                    draw_text = f"  {talent_name}：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）\n"
+                    draw_text = f"  {talent_name}：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）"
                     if now_exp >= need_exp and now_degree >= need_degree:
                         now_draw = draw.LeftButton(
                             _(draw_text),
@@ -471,6 +471,7 @@ class Originium_Arts_Panel:
                         now_draw.text = _(draw_text)
                         now_draw.style = "deep_gray"
                         now_draw.draw()
+                    line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -491,11 +492,13 @@ class Originium_Arts_Panel:
         talent_name = game_config.config_talent[talent_id].name
         # 花费为10的cost次方
         money_cost = 10 ** (talent_of_arts_data.level - 1)
-        # 花费大于当前拥有的至纯源石则返回
-        if cache.rhodes_island.materials_resouce[3] < money_cost:
-            return
-        # 花费至纯源石
-        if not no_cost_flag:
+        # 不消耗直接获得或升级
+        if no_cost_flag:
+            pass
+        else:
+            # 花费大于当前拥有的至纯源石则返回
+            if cache.rhodes_island.materials_resouce[3] < money_cost:
+                return
             cache.rhodes_island.materials_resouce[3] -= money_cost
         # 升级或获得能力
         self.pl_character_data.talent[talent_id] = 1
