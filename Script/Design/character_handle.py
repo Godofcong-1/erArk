@@ -13,7 +13,7 @@ from Script.Design import (
     character,
     character_behavior,
     basement,
-    game_time
+    game_time,
 )
 from Script.Config import game_config, config_def, character_config
 
@@ -438,6 +438,8 @@ def visitor_leave(character_id: int):
     cache.npc_id_got.discard(character_id)
 
     # 位置初始化
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    cache.scene_data[scene_path_str].character_list.remove(character_id)
     character_data.position = ["0", "0"]
 
 
