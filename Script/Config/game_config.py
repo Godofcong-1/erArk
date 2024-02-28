@@ -70,6 +70,12 @@ config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
 config_body_part_volume: Dict[int, list] = {}
 """ 身体部位容积数据 """
+config_body_part_normal_flow: Dict[int, list] = {}
+""" 身体部位正常流通数据 """
+config_body_part_full_flow: Dict[int, list] = {}
+""" 身体部位满溢流通数据 """
+config_body_part_extra_flow: Dict[int, list] = {}
+""" 身体部位额外流通数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
 config_facility: Dict[int, config_def.Facility] = {}
@@ -632,9 +638,22 @@ def load_body_part():
         now_type = config_def.BodyPart()
         now_type.__dict__ = tem_data
         config_body_part[now_type.cid] = now_type
+        # 容积表
         volume_list = now_type.volume_table.split("-")
         volume_list = [int(volume) for volume in volume_list]
         config_body_part_volume[now_type.cid] = volume_list
+        # 流通表
+        def update_config_flow(flow_str, config_dict, cid):
+            if flow_str == "无":
+                config_dict[cid] = []
+            elif "+" in flow_str:
+                flow_list = flow_str.split("+")
+                config_dict[cid] = flow_list
+            else:
+                config_dict[cid] = [flow_str]
+        update_config_flow(now_type.normal_flow_table, config_body_part_normal_flow, now_type.cid)
+        update_config_flow(now_type.full_flow_table, config_body_part_full_flow, now_type.cid)
+        update_config_flow(now_type.extra_flow_table, config_body_part_extra_flow, now_type.cid)
 
 
 def load_collection_bonus_data():

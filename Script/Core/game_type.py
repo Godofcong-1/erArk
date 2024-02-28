@@ -303,6 +303,21 @@ class DIRTY:
         """
         self.a_clean: int = 0
         """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
+        self.semen_flow: list = []
+        """
+        精液流通情况，每个子list都是一个字典，字典有源头和目标，所有目标都在一个列表内
+        self.semen_flow = [
+            {
+                "source": {"type": "source_type1", "id": "source_id1"},
+                "targets": [
+                    {"type": "target_type1", "id": "target_id1", "remaining_volume": 10},
+                    {"type": "target_type2", "id": "target_id2", "remaining_volume": 20},
+                    # 更多的目标...
+                ]
+            },
+            # 更多的流通...
+        ]
+        """
 
 
 class PREGNANCY:
