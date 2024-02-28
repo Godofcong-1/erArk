@@ -1406,6 +1406,8 @@ def handle_collect():
     # 内裤
     if len(character_data.pl_collection.npc_panties_tem):
         for npc_id in character_data.pl_collection.npc_panties_tem:
+            if npc_id == 0:
+                continue
             for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
                 pan_name = game_config.config_clothing_tem[pan_id].name
                 now_draw = draw.WaitDraw()
@@ -1423,6 +1425,8 @@ def handle_collect():
     # 袜子
     if len(character_data.pl_collection.npc_socks_tem):
         for npc_id in character_data.pl_collection.npc_socks_tem:
+            if npc_id == 0:
+                continue
             for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
                 socks_name = game_config.config_clothing_tem[socks_id].name
                 now_draw = draw.WaitDraw()
