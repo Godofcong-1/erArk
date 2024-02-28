@@ -97,7 +97,7 @@ class Recruit_Panel:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
                     all_effect += character_effect
-                    now_text += f"{character_data.name}(话术lv{character_data.ability[48]}:{round(character_effect, 1)}%)"
+                    now_text += f"{character_data.name}(话术lv{character_data.ability[40]}:{round(character_effect, 1)}%)"
                 all_effect *= 1 + (facility_effect / 100)
                 now_text += f"] * 效率加成：设施(lv{now_level}:{facility_effect}%)"
                 now_text += f" = {round(all_effect, 1)}%      "
