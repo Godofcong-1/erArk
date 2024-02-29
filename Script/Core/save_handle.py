@@ -130,23 +130,27 @@ def input_load_save(save_id: str):
     """
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
+    character_data_type = game_type.Character()
+    update_count = 0
 
     # 从存档中加载字典
     loaded_dict = load_save(save_id).__dict__
 
-    draw_text = f"\n开始检测存档的数据结构是否需要跨版本更新\n\n"
+    draw_text = f"\n开始检测存档的数据结构是否需要跨版本更新\n"
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
 
     # 递归地更新 loaded_dict
-    update_dict_with_default(loaded_dict, new_cache.__dict__)
+    update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
+    # 遍历更新全角色属性
+    for key, value in loaded_dict["character_data"].items():
+        update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
 
-    draw_text = f"\n检测完毕\n"
+    draw_text = f"\n检测完毕，共有{update_count}条数据完成了更新\n"
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
-
 
     # 使用 update() 方法来更新 cache 的字典
     cache.__dict__.update(loaded_dict)
@@ -159,6 +163,7 @@ def update_dict_with_default(loaded_dict, default_dict):
     loaded_dict -- 要更新的字典
     default_dict -- 默认字典
     """
+    update_count = 0
     for key, value in default_dict.items():
         # print("存档修复: key", key, "value", value)
         # 跳过Python的内置方法
@@ -167,15 +172,17 @@ def update_dict_with_default(loaded_dict, default_dict):
         # 如果 key 不在 loaded_dict 中，将其添加到 loaded_dict 中
         if key not in loaded_dict:
             loaded_dict[key] = value
+            update_count += 1
             # 只有在不是私有属性时才会输出
             draw_text = f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
             now_draw = draw.LeftDraw()
             now_draw.text = draw_text
-            now_draw.draw()
+            # now_draw.draw()
         elif isinstance(value, game_type.Cache):
-            update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
+            update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
         elif hasattr(value, '__dict__'):  # 检查 value 是否是一个类的实例
-            update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
+            update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
+    return update_count
 
 
 def remove_save(save_id: str):
