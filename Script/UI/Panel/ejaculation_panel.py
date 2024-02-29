@@ -46,14 +46,22 @@ def common_ejaculation():
             semen_count = int(40 * random_weight)
             semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
 
-        # 更新射精计数
+        # 更新射精计数和总精液量
         character_data.h_state.orgasm_level[3] += 1
-
-        # 更新精液值
-        if semen_count > character_data.semen_point:
-            semen_count = character_data.semen_point
-        character_data.semen_point -= semen_count
         cache.rhodes_island.total_semen_count += semen_count
+
+        # # 更新精液值，目前弃用
+        # if semen_count > character_data.semen_point:
+        #     semen_count = character_data.semen_point
+
+        # 优先扣除临时额外精液值，不够的再扣除基础精液值
+        if character_data.tem_extra_semen_point > semen_count:
+            character_data.tem_extra_semen_point -= semen_count
+        else:
+            semen_count -= character_data.tem_extra_semen_point
+            character_data.tem_extra_semen_point = 0
+        character_data.semen_point -= semen_count
+        character_data.semen_point = max(0, character_data.semen_point)
 
         return semen_text,semen_count
 

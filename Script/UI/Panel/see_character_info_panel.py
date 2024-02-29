@@ -649,8 +649,8 @@ class CharacterInfoHead:
             semenpoint_draw.scale = 0.8
             semenpoint_draw.set(
                 "SemenPointBar",
-                int(character_data.semen_point_max),
-                int(character_data.semen_point),
+                int(character_data.semen_point_max + character_data.tem_extra_semen_point),
+                int(character_data.semen_point + character_data.tem_extra_semen_point),
                 _("精液"),
             )
         # status_text = game_config.config_status[character_data.state].name

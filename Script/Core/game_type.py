@@ -942,6 +942,8 @@ class Character:
         """ 角色最大精液槽 """
         self.semen_point: int = 0
         """ 角色当前精液槽 """
+        self.tem_extra_semen_point: int = 0
+        """ 角色临时最大精液槽 """
         self.angry_point: int = 0
         """ 角色当前愤怒槽 """
         self.tired_point: int = 0

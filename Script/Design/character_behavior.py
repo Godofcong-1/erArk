@@ -716,6 +716,7 @@ def update_sleep():
         # 玩家结算
         if character_id == 0:
             sanity_point_grow() # 玩家理智成长
+            refresh_temp_semen_max() # 刷新玩家临时精液上限
             character_data.eja_point = 0 # 清零射精槽
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.semen_point = character_data.semen_point_max # 恢复精液量
@@ -1075,3 +1076,29 @@ def judge_same_position_npc_follow():
                 character_data.action_info.follow_wait_time += 5
 
             # print(f"debug {character_data.name}跟随玩家，当前位置为{character_data.position}，当前目标位置为{move_path}，最终目标位置为{pl_character_data.behavior.move_final_target}，行动时间为{move_time}分钟, start_time = {character_data.behavior.start_time}")
+
+
+def refresh_temp_semen_max():
+    """
+    刷新临时最大精液量\n
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    now_semen = character_data.semen_point
+    if now_semen:
+        # 最大额外精液量为正常上限的4倍
+        character_data.tem_extra_semen_point += int(now_semen / 2)
+        character_data.tem_extra_semen_point = min(character_data.tem_extra_semen_point, character_data.semen_point_max * 4)
+        # 获得浓厚精液
+        if character_data.tem_extra_semen_point >= character_data.semen_point_max * 4:
+            character_data.talent[33] = 1
+        else:
+            character_data.talent[33] = 0
+        # 绘制说明信息
+        now_draw = draw.NormalDraw()
+        now_draw.width = window_width
+        draw_text = f"\n今日未消耗的 {now_semen}ml 精液转化为了 {int(now_semen / 2)}ml 次日额外精液"
+        if character_data.tem_extra_semen_point >= character_data.semen_point_max * 4:
+            draw_text += f"，额外精液量已达上限，并获得了为期一天的[浓厚精液]"
+        draw_text += "\n"
+        now_draw.text = draw_text
+        now_draw.draw()
