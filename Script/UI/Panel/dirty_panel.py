@@ -291,6 +291,13 @@ class SeeCharacterBodyPanel:
                 now_part_text = f" {dirty_text_context}"
                 all_part_text_list.append(now_part_text)
 
+        # 如果有腔内透视，则显示当前生理周期与受精概率
+        if character_data.pl_ability.visual and character_data.talent[308]:
+            # 如果有奶水，则显示奶水量
+            if target_character_data.pregnancy.milk:
+                lactation_text = f" 乳汁量为{target_character_data.pregnancy.milk}ml"
+                all_part_text_list.append(lactation_text)
+
         # 如果有生理透视，则显示当前生理周期与受精概率
         if character_data.pl_ability.visual and character_data.talent[309]:
             # 生理周期文本
