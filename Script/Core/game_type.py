@@ -906,6 +906,8 @@ class System_Setting:
         """ 是否自动升级NPC的能力 """
         self.choose_shoot_where: bool = False
         """ 每次射精时手动选择射在哪里 """
+        self.dr_need_pee: bool = False
+        """ 博士需要尿尿 """
 
 
 class Character:

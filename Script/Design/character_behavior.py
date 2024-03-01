@@ -858,9 +858,12 @@ def character_aotu_change_value(character_id: int):
 
 
     # 结算尿意值
-    add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
-    now_character_data.urinate_point += add_urinate
-    now_character_data.urinate_point = min(now_character_data.urinate_point,240)
+    if character_id == 0 and not cache.system_setting.dr_need_pee:
+        pass
+    else:
+        add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
+        now_character_data.urinate_point += add_urinate
+        now_character_data.urinate_point = min(now_character_data.urinate_point,240)
 
     # 结算饥饿值
     add_hunger = random.randint(int(add_time * 0.8), int(add_time * 1.2))

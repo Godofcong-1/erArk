@@ -107,6 +107,22 @@ class System_Setting_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
+            button_text = f"[005]博士是否需要尿尿："
+            if cache.system_setting.dr_need_pee:
+                draw_text = _("[是]")
+            else:
+                draw_text = _("[否，博士的尿意值不再自然增加]")
+            button_text += f"{draw_text}"
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _("5"),
+                window_width,
+                cmd_func=self.change_dr_need_pee,
+                )
+            line_feed.draw()
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -161,3 +177,7 @@ class System_Setting_Panel:
     def change_choose_shoot_where(self):
         """改变每次射精时手动选择射在哪里"""
         cache.system_setting.choose_shoot_where = not cache.system_setting.choose_shoot_where
+
+    def change_dr_need_pee(self):
+        """改变博士是否需要尿尿"""
+        cache.system_setting.dr_need_pee = not cache.system_setting.dr_need_pee
