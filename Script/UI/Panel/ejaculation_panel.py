@@ -21,7 +21,7 @@ window_width: int = normal_config.config_normal.text_width
 
 def common_ejaculation():
     """
-    通用射精结算
+    通用射精结算，进行一次射精，并返回射精文本和射精量
     return
     semen_text 射精文本
     semen_count 射精量
@@ -64,6 +64,89 @@ def common_ejaculation():
         character_data.semen_point = max(0, character_data.semen_point)
 
         return semen_text,semen_count
+
+
+def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_count: int, update_shoot_position_flag: bool = True):
+    """
+    更新部位的被射精污浊数据
+    Keyword arguments:
+    character_id -- 角色id
+    part_cid -- 部位cid
+    part_type -- 部位类型
+    semen_count -- 精液量
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 判断部位类型，0为身体部位，1为服装部位
+    if part_type == 0:
+        # 更新身体部位被射精污浊数据
+        character_data.dirty.body_semen[part_cid][1] += semen_count
+        character_data.dirty.body_semen[part_cid][1] = max(character_data.dirty.body_semen[part_cid][1], 0)
+        if semen_count > 0:
+            character_data.dirty.body_semen[part_cid][3] += semen_count
+        character_data.dirty.body_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.body_semen[part_cid][1], part_cid, 0)
+        # 记录射精部位
+        if update_shoot_position_flag:
+            character_data.h_state.shoot_position_body = part_cid
+    elif part_type == 1:
+        character_data.dirty.cloth_semen[part_cid][1] += semen_count
+        character_data.dirty.cloth_semen[part_cid][1] = max(character_data.dirty.cloth_semen[part_cid][1], 0)
+        if semen_count > 0:
+            character_data.dirty.cloth_semen[part_cid][3] += semen_count
+        character_data.dirty.cloth_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.cloth_semen[part_cid][1], part_cid, 1)
+        if update_shoot_position_flag:
+            character_data.h_state.shoot_position_cloth = part_cid
+
+
+def calculate_semen_flow(character_id: int, part_cid: int, part_type: int, semen_count: int):
+    """
+    计算精液流动
+    Keyword arguments:
+    character_id -- 角色id
+    part_cid -- 部位cid
+    part_type -- 部位类型
+    semen_count -- 精液量
+    """
+    if character_id != 0:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 创建精液流通情况字典
+        all_flow_dict = {}
+        all_flow_dict["source"] = {"type": part_type, "id": part_cid}
+        all_flow_dict["target"] = []
+
+        # 判断部位类型，0为身体部位，1为服装部位
+        if part_type == 0:
+            # 判断是否满溢
+            voluem_data_list = game_config.config_body_part_volume[part_cid]
+            # 满溢时使用满溢流动表
+            if character_data.dirty.body_semen[part_cid][1] > voluem_data_list[-1]:
+                flow_list = game_config.config_body_part_full_flow[part_cid]
+            # 未满溢时使用正常流动表
+            else:
+                flow_list = game_config.config_body_part_normal_flow[part_cid]
+            # 遍历流动表，计算应该向各部位流动多少，添加到精液流通情况字典中
+            for flow_str in flow_list:
+                # 获取流动类型，部位cid，流动比例
+                flow_type = flow_str[0]
+                flow_cid = int(flow_str[1:].split("-")[0])
+                flow_rate = int(flow_str[1:].split("-")[1])
+                # 创建流动情况字典
+                now_flow_dict = {}
+                # 判断流动类型，0为身体部位，1为服装部位，2为环境滴落
+                if flow_type == "B":
+                    now_flow_dict["type"] = 0
+                elif flow_type == "C":
+                    now_flow_dict["type"] = 1
+                elif flow_type == "E":
+                    now_flow_dict["type"] = 2
+                # 添加流动目标部位cid和流动量
+                now_flow_dict["id"] = flow_cid
+                now_flow_dict["remaining_volume"] = max(1, int(semen_count * flow_rate / 100))
+                # 添加到精液流通情况字典中
+                all_flow_dict["target"].append(now_flow_dict)
+        elif part_type == 1:
+            return 0
+        # 添加到目标角色的精液流通情况列表中
+        character_data.dirty.semen_flow.append(all_flow_dict)
 
 
 class Ejaculation_Panel:
@@ -189,33 +272,21 @@ class Ejaculation_Panel:
 
         semen_text, semen_count = common_ejaculation()
 
-        if part_type == 0:
+        # 更新被射精污浊数据
+        update_semen_dirty(character_data.target_character_id, part_cid, part_type, semen_count)
 
+        # 计算精液流动
+        calculate_semen_flow(character_data.target_character_id, part_cid, part_type, semen_count)
+
+        # 获取射精文本
+        if part_type == 0:
             part_name = game_config.config_body_part[part_cid].name
             now_text = "在" + target_data.name + "的" + part_name+ semen_text
-
-            # 记录射精部位
-            target_data.h_state.shoot_position_body = part_cid
-
-            # 更新污浊类里的身体部位精液参数
-            target_data.dirty.body_semen[part_cid][1] += semen_count
-            target_data.dirty.body_semen[part_cid][3] += semen_count
-            target_data.dirty.body_semen[part_cid][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[part_cid][1], part_cid, 0)
-
         elif part_type == 1:
-
-            # 记录射精部位
-            target_data.h_state.shoot_position_cloth = part_cid
-
-            # 更新污浊类里的服装部位精液参数
-            target_data.dirty.cloth_semen[part_cid][1] += semen_count
-            target_data.dirty.cloth_semen[part_cid][3] += semen_count
-            target_data.dirty.cloth_semen[part_cid][2] = attr_calculation.get_semen_now_level(
-                target_data.dirty.cloth_semen[part_cid][1], part_cid, 1)
-
             cloth_text = game_config.config_clothing_type[part_cid].name
             now_text = "在" + target_data.name + "的" + cloth_text + semen_text
 
+        # 绘制射精文本
         line_feed.draw()
         line = draw.LineDraw("-", self.width)
         line.draw()

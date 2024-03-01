@@ -31,7 +31,7 @@ from Script.Design import (
     update,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import draw_event_text_panel
+from Script.UI.Panel import draw_event_text_panel, ejaculation_panel
 from Script.Config import game_config, normal_config
 
 game_path = game_path_config.game_path
@@ -876,6 +876,7 @@ def character_aotu_change_value(character_id: int):
         now_character_data.pregnancy.milk += add_milk
         now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
 
+    # 结算玩家部分
     if character_id == 0:
 
         # 非H模式下结算玩家的射精值减少
@@ -945,6 +946,45 @@ def character_aotu_change_value(character_id: int):
                         judge_character_status(character_id)
                         # TODO 测试惊醒是否正常运作，是否需要时间推进十分钟
                         # update.game_update_flow(10)
+
+    # 结算非玩家部分
+    else:
+
+        # 结算精液流动
+        if len(now_character_data.dirty.semen_flow):
+            # 计算流动的精液量
+            flow_semen_max = int(add_time * 2)
+            """
+            # 实际流动的精液总量
+            all_real_flow = 0
+            new_flow_list = []
+            # 遍历每个部位的精液流动
+            for all_flow_dict in now_character_data.dirty.semen_flow:
+                new_target_list = []
+                # 遍历每个流动的目标
+                for now_flow_dict in all_flow_dict["targets"]:
+                    if now_flow_dict["remaining_volume"] > 0:
+                        # 计算该部位的精液流动
+                        now_flow = min(flow_semen_max, now_flow_dict["remaining_volume"])
+                        all_real_flow += now_flow
+                        now_flow_dict["remaining_volume"] -= now_flow
+                        now_part_cid = now_flow_dict["id"]
+                        # 目标部位的精液增加
+                        ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=now_part_cid, part_type=now_flow_dict["type"], semen_count=now_flow, update_shoot_position_flag=False)
+                        # 如果目标部位的精液流动完毕，则将其从流动列表中移除
+                        if now_flow_dict["remaining_volume"] > 0:
+                            new_target_list.append(now_flow_dict)
+                # 更新流动的目标列表
+                all_flow_dict["targets"] = new_target_list
+                # 遍历完全目标后，如果实际流动的精液总量大于0，则在源头部位减少相应的精液量
+                if all_real_flow > 0:
+                    ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=all_flow_dict["id"], part_type=all_flow_dict["type"], semen_count=-all_real_flow, update_shoot_position_flag=False)
+                # 如果源头部位的精液流动完毕，则将其从流动列表中移除
+                if all_flow_dict["remaining_volume"] > 0:
+                    new_flow_list.append(all_flow_dict)
+            # 更新流动的源头列表
+            now_character_data.dirty.semen_flow = new_flow_list
+            """
 
 
 def change_character_persistent_state(character_id: int):
