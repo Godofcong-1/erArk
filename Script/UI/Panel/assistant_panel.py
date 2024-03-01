@@ -115,6 +115,8 @@ class Assistant_Panel:
                     button_text += f"    强制跟随（测试用，会影响一部分游戏机能）"
                 elif target_data.sp_flag.is_follow == 3:
                     button_text += f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
+                elif target_data.sp_flag.is_follow == 4:
+                    button_text += f"    前往博士当前位置（抵达后会最多等待半小时）"
 
                 button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(2,4))
                 button_draw.draw()
@@ -287,6 +289,11 @@ class SeeNPCButtonList:
         # 去掉旧助理的跟随状态
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         old_assistant_data.sp_flag.is_follow = 0
+        # 去掉旧助理的同居状态
+        if old_assistant_data.dormitory == "中枢\博士房间":
+            old_assistant_data.dormitory = old_assistant_data.pre_dormitory
+        # 重置旧助理的助理服务数据体
+        old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
 
         # 判断旧助理是否是玩家自己
         pl_flag = False
@@ -311,7 +318,7 @@ class SeeNPCButtonList:
             info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
         if not pl_flag:
             old_assistant_data.second_behavior[1402] = 1
-            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，跟随状态也一并取消\n\n"
+            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，已清零助理服务相关的设置\n\n"
         info_draw.text = info_text
         info_draw.width = self.width
         info_draw.draw()
