@@ -15,9 +15,9 @@ class ItemTextEdit(QWidget):
         self.setFont(self.font)
         label_layout = QVBoxLayout()
         # 加入标题
-        label = QLabel()
-        label.setText("文本编辑")
-        label_layout.addWidget(label)
+        self.info_label = QLabel()
+        self.info_label.setText("文本编辑")
+        label_layout.addWidget(self.info_label)
         # 加入保存按钮
         self.save_button = QPushButton("保存")
         self.save_button.clicked.connect(self.save)
@@ -31,16 +31,17 @@ class ItemTextEdit(QWidget):
         self.insert_player_name_button = QPushButton("插入玩家名字")
         self.insert_player_name_button.clicked.connect(lambda: self.insert_text('{PlayerName}'))
         # 加入一行文本提示
-        label = QLabel()
-        label.setText("右键菜单可插入更多文本")
+        self.max_length = 0
+        self.info_label = QLabel()
+        self.info_label.setText(f"右键菜单可插入更多文本，当前最长行字符总长度为{self.max_length}，建议不要超过100")
         # 上述三个按钮的布局变成横向
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.save_button)
         button_layout.addWidget(self.insert_name_button)
         button_layout.addWidget(self.insert_target_name_button)
         button_layout.addWidget(self.insert_player_name_button)
-        button_layout.addWidget(label)
         label_layout.addLayout(button_layout)
+        label_layout.addWidget(self.info_label)
         # 加入文本编辑框
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
@@ -101,6 +102,14 @@ class ItemTextEdit(QWidget):
         # 将换行符"\n"换成真正的换行
         self.now_text = self.now_text.replace("\\n", "\n")
         self.label_text.setText(self.now_text)
+        # 计算最长行长度
+        max_length = 0
+        for line in self.now_text.split("\n"):
+            if len(line) > max_length:
+                max_length = len(line)
+        self.max_length = max_length
+        # 更新提示文本
+        self.info_label.setText(f"右键菜单可插入更多文本，当前最长行字符总长度为{self.max_length}，建议不要超过100")
 
     def save(self):
         """保存文本内容"""
