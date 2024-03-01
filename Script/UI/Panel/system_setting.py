@@ -39,7 +39,6 @@ class System_Setting_Panel:
     def draw(self):
         """绘制对象"""
 
-
         title_text = "系统设置"
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -48,7 +47,7 @@ class System_Setting_Panel:
 
             button_text = f"[001]主界面每次刷新时的空行数量："
             now_line_count = cache.system_setting.line_before_main_update
-            button_text += f"{now_line_count}行"
+            button_text += f"[{now_line_count}行]"
             button_draw = draw.LeftButton(
                 _(button_text),
                 _("1"),
@@ -107,7 +106,7 @@ class System_Setting_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            button_text = f"[005]博士是否需要尿尿："
+            button_text = f"[005]博士的尿意值自然增长(优先于6号的速度判定)："
             if cache.system_setting.dr_need_pee:
                 draw_text = _("[是]")
             else:
@@ -118,6 +117,26 @@ class System_Setting_Panel:
                 _("5"),
                 window_width,
                 cmd_func=self.change_dr_need_pee,
+                )
+            line_feed.draw()
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
+            button_text = f"[006]全角色尿意值的增长速度："
+            if cache.system_setting.urinate_grow_speed == 0:
+                draw_text = _("[不自然增加]")
+            elif cache.system_setting.urinate_grow_speed == 1:
+                draw_text = _("[慢，8h回满]")
+            elif cache.system_setting.urinate_grow_speed == 2:
+                draw_text = _("[中，4h回满]")
+            elif cache.system_setting.urinate_grow_speed == 3:
+                draw_text = _("[快，2h回满]")
+            button_text += f"{draw_text}"
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _("6"),
+                window_width,
+                cmd_func=self.change_urinate_grow_speed,
                 )
             line_feed.draw()
             button_draw.draw()
@@ -154,12 +173,13 @@ class System_Setting_Panel:
                 return_list.append(button_draw.return_text)
 
             line_feed.draw()
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list:
                 break
 
     def change_line_before_main_update(self, line_count):
@@ -181,3 +201,42 @@ class System_Setting_Panel:
     def change_dr_need_pee(self):
         """改变博士是否需要尿尿"""
         cache.system_setting.dr_need_pee = not cache.system_setting.dr_need_pee
+
+    def change_urinate_grow_speed(self):
+        """改变全角色尿意值的增长速度"""
+        while 1:
+            return_list = []
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            info_draw = draw.NormalDraw()
+            info_text = ""
+            info_text += f"\n当前全角色尿意值的增长速度："
+            info_draw.text = _(info_text)
+            info_draw.draw()
+
+            for i in [0,1,2,3]:
+                if i == 0:
+                    button_text = f" [不自然增加] "
+                elif i == 1:
+                    button_text = f" [慢，8h回满] "
+                elif i == 2:
+                    button_text = f" [中，4h回满] "
+                elif i == 3:
+                    button_text = f" [快，2h回满] "
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_urinate_grow_speed_, args=i)
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def change_urinate_grow_speed_(self, speed):
+        """改变全角色尿意值的增长速度"""
+        cache.system_setting.urinate_grow_speed = speed

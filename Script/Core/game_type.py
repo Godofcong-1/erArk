@@ -908,6 +908,8 @@ class System_Setting:
         """ 每次射精时手动选择射在哪里 """
         self.dr_need_pee: bool = False
         """ 博士需要尿尿 """
+        self.urinate_grow_speed: int = 2
+        """ 尿意值的增长速度，0不增长，1为8h增长到最大，2为4h增长到最大，3为2h增长到最大 """
 
 
 class Character:
