@@ -4262,7 +4262,7 @@ def handle_official_work_add_adjust(
         now_time: datetime.datetime,
 ):
     """
-    （处理公务用）根据自己（如果有的话再加上交互对象）的学识处理当前的剩余工作量
+    （处理公务用）根据自己（如果有的话再加上交互对象）的学识以及办公室等级来处理当前的剩余工作量
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4286,6 +4286,11 @@ def handle_official_work_add_adjust(
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
         now_draw_text += _(f"在{target_data.name}的帮助下，")
+    # 根据博士办公室的房间等级来调整
+    now_level = cache.rhodes_island.facility_level[22]
+    facility_cid = game_config.config_facility_effect_data["博士办公室"][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_cid].effect
+    adjust *= (1 + facility_effect / 100)
     # 处理工作
     finish_work = int(add_time * adjust * 5)
     cache.rhodes_island.office_work = int(max(cache.rhodes_island.office_work - finish_work, 0))
