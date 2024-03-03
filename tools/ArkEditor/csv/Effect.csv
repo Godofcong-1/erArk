@@ -195,6 +195,10 @@ cid,effect_name,effect_type,effect
 466,SWIM_FLAG_TO_1,属性_特殊flag,自身变成要换泳衣状态
 467,SWIM_FLAG_TO_2,属性_特殊flag,自身变成要游泳状态
 468,MAINTENANCE_FLAG_TO_0,属性_特殊flag,自身清零要检修状态
+475,H_FLAG_TO_0,属性_特殊flag,自身清零H状态
+476,H_FLAG_TO_1,属性_特殊flag,自身变成H状态
+477,T_H_FLAG_TO_0,属性_特殊flag,交互对象清零H状态
+478,T_H_FLAG_TO_1,属性_特殊flag,交互对象变成H状态
 481,UNCONSCIOUS_FLAG_TO_0,属性_特殊flag,自身清零无意识状态
 482,UNCONSCIOUS_FLAG_TO_1,属性_特殊flag,自身变成无意识_睡眠状态
 483,UNCONSCIOUS_FLAG_TO_2,属性_特殊flag,自身变成无意识_醉酒状态
@@ -216,7 +220,7 @@ cid,effect_name,effect_type,effect
 503,TARGET_COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据交互对象的料理技能进行好感度、信赖、好意调整
 504,SING_ADD_ADJUST,指令_专用结算,（唱歌用）根据自己的音乐技能进行好感度、信赖、好意调整
 505,PLAY_INSTRUMENT_ADD_ADJUST,指令_专用结算,（演奏乐器用）根据发起者的音乐技能进行好感度、信赖、好意调整
-506,OFFICIAL_WORK_ADD_ADJUST,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识处理当前的剩余工作量
+506,OFFICIAL_WORK_ADD_ADJUST,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识以及办公室等级来处理当前的剩余工作量
 507,CURE_PATIENT_ADD_ADJUST,指令_专用结算,（诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
 508,ADD_HPMP_MAX,指令_专用结算,（锻炼身体用）增加体力气力上限
 509,SLEEP_ADD_ADJUST,指令_专用结算,（睡觉用）清零熟睡值（暂弃用）

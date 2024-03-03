@@ -31,6 +31,24 @@ def handle_talk(character_id: int):
     ):
         must_show_talk_check(character_id)
         return
+    # 智能跟随模式下，跟随博士性质的移动不显示移动文本
+    if (
+        character_id != 0 and
+        character_data.sp_flag.is_follow == 1 and
+        character_data.behavior.behavior_id == constant.Behavior.MOVE and
+        (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(character_id))
+    ):
+        # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
+        return
+    # 智能跟随模式下，博士离开时，跟随的角色不显示送别文本
+    if (
+        character_id == 0 and
+        target_data.sp_flag.is_follow == 1 and
+        character_data.behavior.behavior_id == constant.Behavior.MOVE and
+        (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(0))
+    ):
+        # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
+        return
     # 第一段行为结算的口上
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
