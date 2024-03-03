@@ -224,7 +224,7 @@ def load_talk_data_to_cache():
                 continue
             for k in now_type_data:
                 now_type = now_type_data[k]
-                # print(f"debug row = {row}")
+                # print(f"debug row = {row}, k = {k}, now_type = {now_type}")
                 if not len(row[k]):
                     del row[k]
                     continue
@@ -237,6 +237,7 @@ def load_talk_data_to_cache():
                 elif now_type == "float":
                     row[k] = float(row[k])
             now_data.append(row)
+    # print(f"debug now_data = {now_data}")
 
     # 将读取的数据存入cache_control
     for idnex, value in enumerate(now_data):

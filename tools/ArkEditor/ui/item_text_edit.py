@@ -122,6 +122,8 @@ class ItemTextEdit(QWidget):
             cache_control.now_event_data[cache_control.now_select_id].text = now_text
         elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].text = now_text
+        # 检测英文双引号，直接删除，防止csv文件解析出错
+        now_text = now_text.replace("\"", "")
 
     def show_right_click_menu(self, pos):
         """显示右键菜单"""
