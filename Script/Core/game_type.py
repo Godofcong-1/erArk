@@ -910,6 +910,8 @@ class System_Setting:
         """ 博士需要尿尿 """
         self.urinate_grow_speed: int = 2
         """ 尿意值的增长速度，0不增长，1为8h增长到最大，2为4h增长到最大，3为2h增长到最大 """
+        self.semen_flow: bool = True
+        """ 是否开关精液流通功能 """
 
 
 class Character:

@@ -191,11 +191,17 @@ class ClothingType:
     """ 衣服种类配置 """
 
     cid: int
-    """ 类型id """
+    """ 配表id """
     name: str
-    """ 类型名字 """
+    """ 部位名字 """
     volume_table: str
     """ 容积表 """
+    normal_flow_table: str
+    """ 正常流通表 """
+    full_flow_table: str
+    """ 满溢流通表 """
+    extra_flow_table: str
+    """ 额外流通表 """
 
 
 class ClothingUseType:

@@ -58,6 +58,12 @@ config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
 config_clothing_type_volume: Dict[int, list] = {}
 """ 衣服种类容积配置数据 """
+config_cloth_part_normal_flow: Dict[int, list] = {}
+""" 衣服部位正常流通配置数据 """
+config_cloth_part_full_flow: Dict[int, list] = {}
+""" 衣服部位满溢流通配置数据 """
+config_cloth_part_extra_flow: Dict[int, list] = {}
+""" 衣服部位额外流通配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
 config_work_type: Dict[int, config_def.WorkType] = {}
@@ -585,9 +591,23 @@ def load_clothing_type():
         now_type = config_def.ClothingType()
         now_type.__dict__ = tem_data
         config_clothing_type[now_type.cid] = now_type
+        # 容积表
         volume_list = now_type.volume_table.split("-")
         volume_list = [int(volume) for volume in volume_list]
         config_clothing_type_volume[now_type.cid] = volume_list
+        # 流通表
+        def update_config_flow(flow_str, config_dict, cid):
+            if flow_str == "无":
+                config_dict[cid] = []
+            elif "+" in flow_str:
+                flow_list = flow_str.split("+")
+                config_dict[cid] = flow_list
+            else:
+                config_dict[cid] = [flow_str]
+        update_config_flow(now_type.normal_flow_table, config_cloth_part_normal_flow, now_type.cid)
+        update_config_flow(now_type.full_flow_table, config_cloth_part_full_flow, now_type.cid)
+        update_config_flow(now_type.extra_flow_table, config_cloth_part_extra_flow, now_type.cid)
+    # print(f"debug config_clothing_type_volume = {config_clothing_type_volume}\n config_cloth_part_normal_flow = {config_cloth_part_normal_flow}\n config_cloth_part_full_flow = {config_cloth_part_full_flow}\n config_cloth_part_extra_flow = {config_cloth_part_extra_flow}")
 
 
 def load_clothing_use_type():

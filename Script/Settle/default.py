@@ -15,7 +15,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel, originium_arts
+from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel
 from Script.Settle import default_experience
 
 import random
@@ -4808,10 +4808,7 @@ def handle_eat_add_just(
             semen_ml = now_food.special_seasoning_amount
             # 加精液到口腔
             cache.shoot_position = 2    # 口腔
-            target_data.h_state.shoot_position_body = 2
-            target_data.dirty.body_semen[2][1] += semen_ml
-            target_data.dirty.body_semen[2][3] += semen_ml
-            target_data.dirty.body_semen[2][2] = attr_calculation.get_semen_now_level(semen_ml, 2, 0)
+            ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml)
         # 药物食物则获得对应药物效果
         elif character_data.behavior.food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)

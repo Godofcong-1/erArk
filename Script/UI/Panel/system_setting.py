@@ -142,6 +142,22 @@ class System_Setting_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
+            button_text = f"[007]是否开关精液流通功能："
+            if cache.system_setting.dr_need_pee:
+                draw_text = _("[是，射上去的精液会有部分流向联通部位]")
+            else:
+                draw_text = _("[否，精液只会停留在射上去的部位]")
+            button_text += f"{draw_text}"
+            button_draw = draw.LeftButton(
+                _(button_text),
+                _("7"),
+                window_width,
+                cmd_func=self.change_semen_flow,
+                )
+            line_feed.draw()
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -240,3 +256,7 @@ class System_Setting_Panel:
     def change_urinate_grow_speed_(self, speed):
         """改变全角色尿意值的增长速度"""
         cache.system_setting.urinate_grow_speed = speed
+
+    def change_semen_flow(self):
+        """改变精液流通功能"""
+        cache.system_setting.semen_flow = not cache.system_setting.semen_flow
