@@ -622,6 +622,9 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
     # 如果没有精液，则返回0
     if value <= 0:
         return 0
+    # 如果部位错误，则返回0
+    if part_cid < 0:
+        return 0
     # 如果是身体部位
     if part_type == 0:
         if part_cid == 20:
