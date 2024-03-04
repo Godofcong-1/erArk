@@ -58,7 +58,8 @@ def init_character_behavior():
     while 1:
         # 先结算玩家部分
         while 0 not in cache.over_behavior_character:
-            character_behavior(0, cache.game_time)
+            pl_start_time = cache.character_data[0].behavior.start_time
+            character_behavior(0, cache.game_time, pl_start_time)
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
         # 后结算其他NPC部分
@@ -66,7 +67,7 @@ def init_character_behavior():
             for character_id in id_list:
                 if character_id in cache.over_behavior_character:
                     continue
-                character_behavior(character_id, cache.game_time)
+                character_behavior(character_id, cache.game_time, pl_start_time)
                 # logging.debug(f'当前已完成结算的角色有{cache.over_behavior_character}')
         # 新一天刷新
         # print(f"debug new_day_flag = {new_day_flag}， cache.game_time.day = {cache.game_time.day}， cache.pre_game_time.day = {cache.pre_game_time.day}")
@@ -100,7 +101,7 @@ def update_cafeteria():
         cooking.init_restaurant_data()
 
 
-def character_behavior(character_id: int, now_time: datetime.datetime):
+def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
     """
     角色行为控制
     Keyword arguments:
@@ -147,7 +148,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
                 judge_same_position_npc_follow()
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
-            character_aotu_change_value(character_id)
+            character_aotu_change_value(character_id, now_time, pl_start_time)
             # 睡觉刷新
             if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
                 update_sleep()
@@ -164,7 +165,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
@@ -172,7 +173,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime):
         # 结算状态与事件
         judge_character_status(character_id)
         # 刷新会根据时间即时增加的角色数值
-        character_aotu_change_value(character_id)
+        character_aotu_change_value(character_id, now_time, pl_start_time)
         # 结算角色的状态是否会持续
         change_character_persistent_state(character_id)
         time_judge = judge_character_status_time_over(character_id, now_time)
@@ -803,15 +804,28 @@ def update_save():
     save_handle.establish_save("auto")
 
 
-def character_aotu_change_value(character_id: int):
+def character_aotu_change_value(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
     """
     结算角色随时间自动增加的数值
     Keyword arguments:
     character_id -- 角色id
+    now_time -- 指定时间
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
     add_time = now_character_data.behavior.duration
+    # 真实的开始时间是当前角色行动开始时间和玩家行动开始时间中更晚的那个
+    now_character_behavior_start_time = now_character_data.behavior.start_time
+    true_start_time = max(now_character_behavior_start_time, pl_start_time)
+    # print(f"debug {now_character_data.name}的now_character_behavior_start_time = {now_character_behavior_start_time}，pl_start_time = {pl_start_time}，start_time = {true_start_time}")
+    # 真实的结束时间是当前角色行动结束时间和当前时间中更早的那个
+    now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
+    true_end_time = min(now_character_end_time, now_time)
+    # print(f"debug {now_character_data.name}的now_character_end_time = {now_character_end_time}，now_time = {now_time}，end_time = {true_end_time}")
+    # 真实的行动时间是真实的结束时间减去真实的开始时间
+    true_add_time = (true_end_time.timestamp() - true_start_time.timestamp()) / 60
+    # print(f"debug {now_character_data.name}的true_add_time = {true_add_time}，true_start_time = {true_start_time}，true_end_time = {true_end_time}")
+
 
     tired_change = int(add_time / 6)
     # 仅计算在不睡觉时的正常行动结算疲劳值
