@@ -17,8 +17,6 @@ def handle_talk(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     behavior_id = character_data.behavior.behavior_id
-    now_talk_data = {}
-    now_premise_data = {}
     # 检测是否是收藏模式#
     if cache.is_collection and character_id:
         player_data: game_type.Character = cache.character_data[0]
@@ -50,10 +48,47 @@ def handle_talk(character_id: int):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
     # 第一段行为结算的口上
+    now_talk_data = handle_talk_sub(character_id, behavior_id)
+    handle_talk_draw(character_id, now_talk_data)
+
+
+    # 第二段行为结算的口上
+
+    # 自己
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0:
+            now_talk_data = handle_talk_sub(character_id, second_behavior_id)
+            # 触发后该行为值归零
+            character_data.second_behavior[second_behavior_id] = 0
+            handle_talk_draw(character_id, now_talk_data)
+
+    # 交互对象
+    if character_id == 0 and character_data.target_character_id:
+        target_character_id = character_data.target_character_id
+        target_character_data: game_type.Character = cache.character_data[target_character_id]
+        for second_behavior_id, behavior_data in target_character_data.second_behavior.items():
+            if behavior_data != 0:
+                now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
+                # 触发后该行为值归零
+                target_character_data.second_behavior[second_behavior_id] = 0
+                handle_talk_draw(target_character_id, now_talk_data)
+
+
+def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
+    """
+    处理行为结算对话的内置循环部分
+    Keyword arguments:
+    character_id -- 角色id
+    behavior_id -- 行为id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_talk_data = {}
+    now_premise_data = {}
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
             if talk_config.adv_id != 0:
+                target_data: game_type.Character = cache.character_data[character_data.target_character_id]
                 # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
                 if character_data.adv != talk_config.adv_id:
                     if target_data.adv != talk_config.adv_id:
@@ -62,10 +97,13 @@ def handle_talk(character_id: int):
             if talk_id in game_config.config_talk_premise_data:
                 now_weight = 0
                 for premise in game_config.config_talk_premise_data[talk_id]:
-                    # 无意识模式判定
-                    if target_data.sp_flag.unconscious_h and ("unconscious" not in game_config.config_talk_premise_data[talk_id]):
-                        now_weight = 0
-                        break
+                    # 是否必须显示
+                    if not must_show:
+                        # 无意识模式判定
+                        if target_data.sp_flag.unconscious_h and ("unconscious" not in game_config.config_talk_premise_data[talk_id]):
+                            now_weight = 0
+                            break
+                    # 已录入前提的判定
                     if premise in now_premise_data:
                         if not now_premise_data[premise]:
                             now_weight = 0
@@ -95,75 +133,6 @@ def handle_talk(character_id: int):
                 # 如果该句文本是角色口上，则权重乘以三
                 if talk_config.adv_id != 0:
                     now_weight *= 3
-                now_talk_data.setdefault(now_weight, set())
-                now_talk_data[now_weight].add(talk_id)
-    handle_talk_draw(character_id, now_talk_data)
-
-
-    # 第二段行为结算的口上
-
-    # 自己
-    now_talk_data = {}
-    now_premise_data = {}
-    for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0:
-            now_talk_data = handle_talk_sub(character_id, second_behavior_id)
-            # 触发后该行为值归零
-            character_data.second_behavior[second_behavior_id] = 0
-            handle_talk_draw(character_id, now_talk_data)
-
-    # 交互对象
-    now_talk_data = {}
-    now_premise_data = {}
-    if character_id == 0 and character_data.target_character_id:
-        target_character_id = character_data.target_character_id
-        target_character_data: game_type.Character = cache.character_data[target_character_id]
-        for second_behavior_id, behavior_data in target_character_data.second_behavior.items():
-            if behavior_data != 0:
-                now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
-                # 触发后该行为值归零
-                target_character_data.second_behavior[second_behavior_id] = 0
-                handle_talk_draw(target_character_id, now_talk_data)
-
-
-def handle_talk_sub(character_id: int, behavior_id: int):
-    """
-    处理行为结算对话的内置循环部分
-    Keyword arguments:
-    character_id -- 角色id
-    behavior_id -- 行为id
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_talk_data = {}
-    now_premise_data = {}
-    if behavior_id in game_config.config_talk_data:
-        for talk_id in game_config.config_talk_data[behavior_id]:
-            talk_config = game_config.config_talk[talk_id]
-            if talk_config.adv_id != 0:
-                target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-                # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
-                if character_data.adv != talk_config.adv_id:
-                    if target_data.adv != talk_config.adv_id:
-                        continue
-            now_weight = 1
-            if talk_id in game_config.config_talk_premise_data:
-                now_weight = 0
-                for premise in game_config.config_talk_premise_data[talk_id]:
-                    if premise in now_premise_data:
-                        if not now_premise_data[premise]:
-                            now_weight = 0
-                            break
-                        else:
-                            now_weight += now_premise_data[premise]
-                    else:
-                        now_add_weight = constant.handle_premise_data[premise](character_id)
-                        now_premise_data[premise] = now_add_weight
-                        if now_add_weight:
-                            now_weight += now_add_weight
-                        else:
-                            now_weight = 0
-                            break
-            if now_weight:
                 now_talk_data.setdefault(now_weight, set())
                 now_talk_data[now_weight].add(talk_id)
     return now_talk_data
@@ -215,7 +184,7 @@ def must_show_talk_check(character_id: int):
                 998 in game_config.config_second_behavior_effect_data[second_behavior_id]
                 or second_behavior_id not in range(1100,1113)
                 ):
-                now_talk_data = handle_talk_sub(character_id, second_behavior_id)
+                now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
                 handle_talk_draw(character_id, now_talk_data)

@@ -78,13 +78,13 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         final_character_data = cache.character_data[final_character_id]
 
     # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,X信赖,G攻略程度
-    if len(premise_all_value_list[1]) > 1:
+    if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1][2:])
     if premise_all_value_list[1][0] == "A":
         final_value = final_character_data.ability[type_son_id]
     elif premise_all_value_list[1][0] == "T":
         if "Time" in premise_all_value_list[1]:
-            final_value = final_character_data.behavior.start_time.hour 
+            final_value = final_character_data.behavior.start_time.hour
         else:
             final_value = final_character_data.talent[type_son_id]
     elif premise_all_value_list[1][0] == "J":
