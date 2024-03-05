@@ -822,12 +822,13 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
     true_end_time = min(now_character_end_time, now_time)
     # print(f"debug {now_character_data.name}的now_character_end_time = {now_character_end_time}，now_time = {now_time}，end_time = {true_end_time}")
+    # if true_end_time == true_start_time:
+    #     print(f"debug {now_character_data.name}，behavior_id = {game_config.config_status[now_character_data.state].name}, duration = {add_time}")
     # 真实的行动时间是真实的结束时间减去真实的开始时间
-    true_add_time = (true_end_time.timestamp() - true_start_time.timestamp()) / 60
-    # print(f"debug {now_character_data.name}的true_add_time = {true_add_time}，true_start_time = {true_start_time}，true_end_time = {true_end_time}")
+    true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
+    # print(f"debug {now_character_data.name}的true_add_time = {true_add_time}，true_start_time = {true_start_time}，true_end_time = {true_end_time}\n")
 
-
-    tired_change = int(add_time / 6)
+    tired_change = int(true_add_time / 6)
     # 仅计算在不睡觉时的正常行动结算疲劳值
     if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
         now_character_data.tired_point += tired_change
@@ -850,11 +851,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 熟睡值在到熟睡之前快速增加
         sleep_level,tem = attr_calculation.get_sleep_level(now_character_data.sleep_point)
         if sleep_level <= 1:
-            add_sleep = int(add_time * 1.5)
+            add_sleep = int(true_add_time * 1.5)
             now_character_data.sleep_point += add_sleep
         # 熟睡值到熟睡后上下波动，加的可能性比减的可能性大一点点
         else:
-            add_sleep = random.randint(int(add_time * -0.5),int(add_time * 0.6))
+            add_sleep = random.randint(int(true_add_time * -0.5),int(true_add_time * 0.6))
             now_character_data.sleep_point += add_sleep
         # 最高上限100
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
@@ -875,13 +876,13 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     if character_id == 0 and not cache.system_setting.dr_need_pee:
         pass
     else:
-        add_urinate = random.randint(int(add_time * 0.8), int(add_time * 1.2))
+        add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
         add_urinate *= cache.system_setting.urinate_grow_speed / 2
         now_character_data.urinate_point += int(add_urinate)
         now_character_data.urinate_point = min(now_character_data.urinate_point,240)
 
     # 结算饥饿值
-    add_hunger = random.randint(int(add_time * 0.8), int(add_time * 1.2))
+    add_hunger = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
     now_character_data.hunger_point += add_hunger
     now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
@@ -889,7 +890,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
     # 结算乳汁量，仅结算有泌乳素质的
     if now_character_data.talent[27]:
-        milk_change = int(add_time * 2 / 3)
+        milk_change = int(true_add_time * 2 / 3)
         add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
         now_character_data.pregnancy.milk += add_milk
         now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
@@ -902,22 +903,22 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 上次射精时间距离现在超过一小时则射精值减少
             last_time = now_character_data.action_info.last_eaj_add_time
             if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
-                now_character_data.eja_point -= add_time * 10
+                now_character_data.eja_point -= true_add_time * 10
                 now_character_data.eja_point = max(now_character_data.eja_point,0)
 
         # 玩家缓慢恢复精液量
-        now_character_data.semen_point += int(add_time / 6)
+        now_character_data.semen_point += int(true_add_time / 6)
         now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
         # 激素系，改为不消耗理智
         # if now_character_data.pl_ability.hormone:
-        #     down_sp = max(int(add_time / 6),1)
+        #     down_sp = max(int(true_add_time / 6),1)
         #     now_character_data.sanity_point -= down_sp
         #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 视觉系
         if now_character_data.pl_ability.visual:
-            down_sp = max(int(add_time / 12),1)
+            down_sp = max(int(true_add_time / 12),1)
             # 倍率计算
             multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
             down_sp *= max(multiple, 1)
@@ -938,7 +939,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 睡奸判定
             if target_data.state == constant.CharacterStatus.STATUS_SLEEP and now_character_data.behavior.behavior_id >= 301:
                 # 减少熟睡值
-                down_sleep = int(add_time * 1.5)
+                down_sleep = int(true_add_time * 1.5)
                 target_data.sleep_point -= down_sleep
                 # 计算当前熟睡等级
                 sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
@@ -971,8 +972,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算精液流动
         if len(now_character_data.dirty.semen_flow):
             # 计算流动的精液量
-            flow_semen_max = int(add_time * 2)
-            # print(f"debug {now_character_data.name}的精液流动最大量为{flow_semen_max}，add_time = {add_time}")
+            flow_semen_max = int(true_add_time * 2)
+            # print(f"debug {now_character_data.name}的精液流动最大量为{flow_semen_max}，add_time = {true_add_time}")
 
             new_flow_list = []
             # 遍历每个部位的精液流动
