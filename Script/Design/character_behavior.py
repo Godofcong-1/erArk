@@ -170,8 +170,12 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
             find_character_target(character_id, now_time)
-        # 结算状态与事件
-        judge_character_status(character_id)
+            # 结算状态与事件
+            judge_character_status(character_id)
+        # 移动情况下也直接结算
+        elif character_data.state == constant.CharacterStatus.STATUS_MOVE:
+            # 结算状态与事件
+            judge_character_status(character_id)
         # 刷新会根据时间即时增加的角色数值
         character_aotu_change_value(character_id, now_time, pl_start_time)
         # 结算角色的状态是否会持续
