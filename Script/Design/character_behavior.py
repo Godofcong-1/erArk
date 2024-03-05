@@ -866,14 +866,14 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
 
         # 疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
-        # if (
-        #     now_character_data.tired_point <= 0 and
-        #     now_character_data.hit_point == now_character_data.hit_point_max and
-        #     now_character_data.mana_point == now_character_data.mana_point_max and
-        #     not handle_premise.handle_sleep_time(character_id)
-        # ):
-        #     judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-        #     print(f"debug {now_character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
+        if (
+            now_character_data.tired_point <= 0 and
+            now_character_data.hit_point == now_character_data.hit_point_max and
+            now_character_data.mana_point == now_character_data.mana_point_max and
+            not handle_premise.handle_sleep_time(character_id)
+        ):
+            judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+            # print(f"debug {now_character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
 
 
     # 结算尿意值
