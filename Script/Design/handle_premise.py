@@ -173,6 +173,21 @@ def handle_eat_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.BREAKFAST_TIME)
+def handle_breakfast_time(character_id: int) -> int:
+    """
+    校验当前时间是否处于早饭饭点（早上7~8点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.start_time.hour in {7, 8}:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.LAUNCH_TIME)
 def handle_launch_time(character_id: int) -> int:
     """
@@ -184,6 +199,21 @@ def handle_launch_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.behavior.start_time.hour in {12, 13}:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.DINNER_TIME)
+def handle_dinner_time(character_id: int) -> int:
+    """
+    校验当前时间是否处于晚饭饭点（晚上18~19点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.behavior.start_time.hour in {18, 19}:
         return 1
     return 0
 
@@ -419,10 +449,31 @@ def handle_time_weekend(character_id: int) -> int:
     return not game_time.judge_work_today(0)
 
 
-@add_premise(constant_promise.Premise.PL_AWAKE_30_MIN_BEFORE)
-def handle_pl_awake_30_min_before(character_id: int) -> int:
+@add_premise(constant_promise.Premise.MORIING_SALUTATION_TIME)
+def handle_morning_salutation_time(character_id: int) -> int:
     """
-    玩家醒来时间的前半小时以内（权重20）
+    当前是早安问候时间（玩家醒来半小时前以内，权重50）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    pl_character_data = cache.character_data[0]
+
+    judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
+    # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，醒来时间为{pl_character_data.action_info.wake_time}，判定时间为{judge_wake_up_time}")
+    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
+        print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，判定时间为{judge_wake_up_time}")
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_MORIING_SALUTATION_TIME)
+def handle_not_morning_salutation_time(character_id: int) -> int:
+    """
+    当前不是早安问候时间（玩家醒来半小时前以内）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -434,9 +485,8 @@ def handle_pl_awake_30_min_before(character_id: int) -> int:
 
     judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
     if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
-        # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前已过醒来时间")
-        return 20
-    return 0
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.HAVE_FOOD)
@@ -5374,7 +5424,7 @@ def handle_morning_salutation_flag_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_2)
 def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
-    自身已早安问候状态
+    自身已早安问候状态（权重100）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -5382,7 +5432,7 @@ def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.morning_salutation == 2:
-        return 1
+        return 100
     else:
         return 0
 
@@ -5505,6 +5555,23 @@ def handle_hp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.HP_MAX)
+def handle_hp_max(character_id: int) -> int:
+    """
+    角色自身体力等于100%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.hit_point / character_data.hit_point_max
+    if value >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.MP_0)
 def handle_mp_0(character_id: int) -> int:
     """
@@ -5552,6 +5619,23 @@ def handle_mp_high(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     value = character_data.mana_point / character_data.mana_point_max
     if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MP_MAX)
+def handle_mp_max(character_id: int) -> int:
+    """
+    自身气力等于100%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    value = character_data.mana_point / character_data.mana_point_max
+    if value >= 1:
         return 1
     else:
         return 0
@@ -5682,6 +5766,24 @@ def handle_target_mp_high(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
     value = target_data.mana_point / target_data.mana_point_max
     if value > 0.7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TIRED_LE_0)
+def handle_tired_le_0(character_id: int) -> int:
+    """
+    疲劳条≤0%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.tired_point / 160
+    if value <= 0:
         return 1
     else:
         return 0
@@ -14541,6 +14643,28 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ASSISTANT_SALUTATION_OF_AI_DISABLE)
+def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
+    """
+    自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间，开启但已问候）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 早饭的情况
+    if handle_breakfast_time(character_id):
+        if handle_assistant_morning_salutation_0(character_id):
+            return 1
+        else:
+            if handle_not_morning_salutation_time(character_id):
+                return 1
+            elif handle_morning_salutation_flag_2(character_id):
+                return 1
+            return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.JJ_0)
 def handle_jj_0(character_id: int) -> int:
     """
@@ -17120,6 +17244,7 @@ def handle_pl_action_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[0]
     if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+        print("校验玩家正在睡觉")
         return 1
     return 0
 

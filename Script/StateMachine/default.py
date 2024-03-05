@@ -1792,6 +1792,7 @@ def character_morning_salutation_flag_1(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_ARDER
+    # print(f"{character_data.name}进入要早安问候状态")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_FLAG_1)

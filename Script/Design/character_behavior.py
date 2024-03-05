@@ -180,6 +180,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         character_aotu_change_value(character_id, now_time, pl_start_time)
         # 结算角色的状态是否会持续
         change_character_persistent_state(character_id)
+        # 判断是否需要打断角色的当前行动
+        judge_interrupt_character_behavior(character_id)
         time_judge = judge_character_status_time_over(character_id, now_time)
         if time_judge or character_data.state == constant.CharacterStatus.STATUS_WAIT:
             cache.over_behavior_character.add(character_id)
@@ -865,17 +867,6 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
 
-        # 疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
-        if (
-            now_character_data.tired_point <= 0 and
-            now_character_data.hit_point == now_character_data.hit_point_max and
-            now_character_data.mana_point == now_character_data.mana_point_max and
-            not handle_premise.handle_sleep_time(character_id)
-        ):
-            judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-            # print(f"debug {now_character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
-
-
     # 结算尿意值
     if character_id == 0 and not cache.system_setting.dr_need_pee:
         pass
@@ -1171,3 +1162,39 @@ def refresh_temp_semen_max():
         draw_text += "\n"
         now_draw.text = draw_text
         now_draw.draw()
+
+
+def judge_interrupt_character_behavior(character_id: int) -> int:
+    """
+    判断是否需要打断角色的当前行动\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    interrupt_type -- 打断类型\n
+    Return arguments:
+    bool -- 是否打断
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
+    if (
+        handle_premise.handle_action_sleep(character_id) and
+        handle_premise.handle_tired_le_0(character_id) and
+        handle_premise.handle_hp_max(character_id) and
+        handle_premise.handle_mp_max(character_id) and
+        not handle_premise.handle_sleep_time(character_id)
+    ):
+        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+        # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
+        return 1
+
+    # 睡觉中，早安问候服务开启中，早安问候时间，则立刻结束睡觉
+    if (
+        handle_premise.handle_action_sleep(character_id) and
+        handle_premise.handle_assistant_morning_salutation_on(character_id) and
+        handle_premise.handle_morning_salutation_time(character_id)
+    ):
+        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+        # print(f"debug {character_data.name}要早安问候，结束睡觉，当前时间={cache.game_time}")
+        return 1
+
+    return 0
