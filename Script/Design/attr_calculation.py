@@ -1,13 +1,15 @@
 import random
-import datetime
+from types import FunctionType
 from Script.Core import (
     cache_control,
-    value_handle,
+    get_text,
     game_type,
 )
 from Script.Design import game_time
 from Script.Config import game_config
 
+_: FunctionType = get_text._
+""" 翻译api """
 cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
 
@@ -808,7 +810,7 @@ def judge_require(judge_text_list, character_id):
 
     character_data: game_type.Character = cache.character_data[character_id]
     judge = 1
-    reason = "需要:"
+    reason = _("需要:")
 
     for judge_text in judge_text_list:
         judge_type = judge_text.split('|')[0][0]

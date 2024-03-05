@@ -1,10 +1,13 @@
 # -*- coding: UTF-8 -*-
 import os
 import traceback
-from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd
+from types import FunctionType
+from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd, get_text
 from Script.Config import normal_config
 from Script.UI.Moudle import panel
 
+_: FunctionType = get_text._
+""" 翻译api """
 cache: game_type.Cache = cache_control.cache
 
 # 字符串定义###########################################################
@@ -61,14 +64,14 @@ def init(main_flow: object):
             traceback.print_exc(file=open(error_path, "a"))
             # 向游戏内写入错误信息
             error_text = "\n"
-            error_text += f"版本信息：{normal_config.config_normal.verson}\n"
-            error_text += f"最近输入指令：{cache.input_cache}\n"
+            error_text += _(f"版本信息：{normal_config.config_normal.verson}\n")
+            error_text += _(f"最近输入指令：{cache.input_cache}\n")
             error_text += traceback.format_exc()
-            error_text += "\n\n游戏发生错误，已将上述错误信息写入error.log\n\n"
+            error_text += _("\n\n游戏发生错误，已将上述错误信息写入error.log\n\n")
             # 输出选择面板
             ask_list = []
             askfor_panel = panel.OneMessageAndSingleColumnButton()
-            askfor_list = [("回到标题画面"), ("退出游戏")]
+            askfor_list = [(_("回到标题画面")), (_("退出游戏"))]
             askfor_panel.set(askfor_list, (error_text), 0)
             askfor_panel.draw()
             askfor_panel_return_list = askfor_panel.get_return_list()

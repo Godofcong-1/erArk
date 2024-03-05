@@ -136,7 +136,7 @@ def input_load_save(save_id: str):
     # 从存档中加载字典
     loaded_dict = load_save(save_id).__dict__
 
-    draw_text = f"\n开始检测存档的数据结构是否需要跨版本更新\n"
+    draw_text = _(f"\n开始检测存档的数据结构是否需要跨版本更新\n")
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
@@ -147,7 +147,7 @@ def input_load_save(save_id: str):
     for key, value in loaded_dict["character_data"].items():
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
 
-    draw_text = f"\n检测完毕，共有{update_count}条数据完成了更新\n"
+    draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
@@ -174,7 +174,7 @@ def update_dict_with_default(loaded_dict, default_dict):
             loaded_dict[key] = value
             update_count += 1
             # 只有在不是私有属性时才会输出
-            draw_text = f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
+            draw_text = _(f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n")
             now_draw = draw.LeftDraw()
             now_draw.text = draw_text
             # now_draw.draw()
