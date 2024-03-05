@@ -942,8 +942,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if target_data.sp_flag.unconscious_h:
             # 睡奸判定
             if target_data.state == constant.CharacterStatus.STATUS_SLEEP and now_character_data.behavior.behavior_id >= 301:
-                # 减少熟睡值
-                down_sleep = int(true_add_time * 1.5)
+                # 双倍扣除原本会增加的熟睡值
+                down_sleep = int(true_add_time * 3)
                 target_data.sleep_point -= down_sleep
                 # 计算当前熟睡等级
                 sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
@@ -963,6 +963,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         now_draw.width = window_width
                         now_draw.text = f"\n因为{now_character_data.name}的动作，{target_data.name}从梦中惊醒过来\n"
                         now_draw.draw()
+                        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
                         now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
                         now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
                         now_character_data.behavior.duration = 10
