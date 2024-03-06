@@ -980,6 +980,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                 source_id = all_flow_dict["source"]["id"]
                 source_type = all_flow_dict["source"]["type"]
                 new_target_list = []
+                # 如果all_flow_dict没有键"targets"，则跳过
+                if "targets" not in all_flow_dict:
+                    continue
                 # 遍历每个流动的目标
                 for now_flow_dict in all_flow_dict["targets"]:
                     if now_flow_dict["remaining_volume"] > 0:
