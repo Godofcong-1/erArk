@@ -61,11 +61,11 @@ class Close_Door_Panel:
 
             # 地点关门判定的三个分支
             if now_scene_data.close_type == 0:
-                info_text = "\n当前地点无法关门，要继续吗："
+                info_text = _("\n当前地点无法关门，要继续吗：")
             elif now_scene_data.close_type == 1:
-                info_text = "\n当前地点可以关门，关上之后里面的人可以出去，但外面的人将不能进来，要关门吗："
+                info_text = _("\n当前地点可以关门，关上之后里面的人可以出去，但外面的人将不能进来，要关门吗：")
             else:
-                info_text = "\n你正在一个可以关门的小隔间内，关上后别人仍可以进入该地点，但无法发现隔间内的人，要关门吗："
+                info_text = _("\n你正在一个可以关门的小隔间内，关上后别人仍可以进入该地点，但无法发现隔间内的人，要关门吗：")
 
             askfor_panel = panel.OneMessageAndSingleColumnButton()
             askfor_list = [_("是"), _("否")]
@@ -115,7 +115,7 @@ class Read_Book_Panel:
 
         character_data: game_type.Character = cache.character_data[0]
 
-        title_text = "读书"
+        title_text = _("读书")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
@@ -128,7 +128,7 @@ class Read_Book_Panel:
             # 如果未借书的话直接输出提示信息
             if len(book_id_set) == 0:
                 info_draw = draw.NormalDraw()
-                borrow_limit_text = f"\n当前未持有书籍，请前去图书馆借书\n"
+                borrow_limit_text = _(f"\n当前未持有书籍，请前去图书馆借书\n")
                 info_draw.text = borrow_limit_text
                 info_draw.width = self.width
                 info_draw.draw()
@@ -192,7 +192,7 @@ class Take_Care_Baby_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "照顾婴儿"
+        title_text = _("照顾婴儿")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
@@ -201,7 +201,7 @@ class Take_Care_Baby_Panel:
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = "\n当前育儿室正在照料的婴儿有：\n\n"
+            info_text = _("\n当前育儿室正在照料的婴儿有：\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
@@ -239,19 +239,19 @@ class Take_Care_Baby_Panel:
         self.target_chara_id = chara_id
         name = cache.character_data[self.target_chara_id].name
 
-        button_text_list = ["抱一抱她","哼唱儿歌","喂奶","换尿布","教她说话","给她玩玩具"]
+        button_text_list = [_("抱一抱她"),_("哼唱儿歌"),_("喂奶"),_("换尿布"),_("教她说话"),_("给她玩玩具")]
 
         while 1:
             return_list = []
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = f"\n选择照顾[{name}]的方式：\n\n"
+            info_text = _(f"\n选择照顾[{name}]的方式：\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
             for button_id in range(len(button_text_list)):
-                button_text = f"[00{button_id}]:{button_text_list[button_id]}"
+                button_text = _(f"[00{button_id}]:{button_text_list[button_id]}")
                 button_draw = draw.LeftButton(
                     _(button_text),
                     _(str(button_id)),
@@ -327,9 +327,9 @@ class Chose_First_bonus_ability_Panel:
             now_npc_draw = draw.NormalDraw()
             if self.chose_ability_id != 0:
                 ability_name = game_config.config_ability[self.chose_ability_id].name
-                now_npc_text = f"当前选择的能力为{ability_name}，请选择新的能力："
+                now_npc_text = _(f"当前选择的能力为{ability_name}，请选择新的能力：")
             else:
-                now_npc_text = f"当前没有选择能力，请选择："
+                now_npc_text = _(f"当前没有选择能力，请选择：")
             now_npc_draw.text = now_npc_text
             now_npc_draw.draw()
             line_feed.draw()
@@ -407,36 +407,36 @@ class Sleep_Panel:
 
             # 地点关门判定的三个分支
             if now_scene_data.close_type == 0:
-                info_text = "\n 当前地点无法关门，"
+                info_text = _("\n 当前地点无法关门，")
             elif now_scene_data.close_type == 1:
-                info_text = "\n 当前地点可以关门，关上之后其他人就进不来了，"
+                info_text = _("\n 当前地点可以关门，关上之后其他人就进不来了，")
             else:
-                info_text = "\n 当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，"
-            info_text += "当前：   "
+                info_text = _("\n 当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，")
+            info_text += _("当前：   ")
             now_draw.text = info_text
             now_draw.draw()
 
             # 绘制关门按钮
-            button_text = " [关门] " if self.close_door_flag else " [不关门] "
+            button_text = _(" [关门] ") if self.close_door_flag else _(" [不关门] ")
             button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.close_door_switch)
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            now_draw_text = f"\n\n 预计完全回复最少需要{need_time}小时，当前睡眠时间为：{self.sleep_time}小时     "
+            now_draw_text = _(f"\n\n 预计完全回复最少需要{need_time}小时，当前睡眠时间为：{self.sleep_time}小时     ")
             now_draw.text = now_draw_text
             now_draw.draw()
 
-            now_draw_text = f"\n 睡眠时间选择："
+            now_draw_text = _(f"\n 睡眠时间选择：")
             now_draw.text = now_draw_text
             now_draw.draw()
             for i in [1,4,8]:
-                button_text = f" [{i}小时] "
+                button_text = _(f" [{i}小时] ")
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.fast_choice_sleep_time, args=i)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
-            button_text = " [自定义睡眠时间] "
-            button_draw = draw.CenterButton(button_text, "请输入睡眠时间(最小1小时，最大8小时)：", len(button_text)*2, cmd_func=self.input_sleep_time)
+            button_text = _(" [自定义睡眠时间] ")
+            button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大8小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
@@ -466,7 +466,7 @@ class Sleep_Panel:
                 pl_character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
                 pl_character_data.action_info.wake_time = game_time.get_sub_date(minute=sleep_time, old_date=cache.game_time) # 记录醒来时间
                 # print(f"debug 玩家睡觉，睡觉时间 = {pl_character_data.action_info.sleep_time},醒来时间 = {pl_character_data.action_info.wake_time}")
-                cache.wframe_mouse.w_frame_skip_wait_mouse = 1
+                # cache.wframe_mouse.w_frame_skip_wait_mouse = 1
                 update.game_update_flow(sleep_time)
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
@@ -477,7 +477,7 @@ class Sleep_Panel:
     def input_sleep_time(self):
         """输入睡眠时间"""
         while 1:
-            user_input = flow_handle.askfor_str(_("请输入睡眠时间(最小1小时，最大8小时)："))
+            user_input = flow_handle.askfor_str(_(_("请输入睡眠时间(最小1小时，最大8小时)：")))
             try:
                 user_input = int(user_input)
             except:
@@ -516,21 +516,21 @@ class Fridge_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "冰箱"
+        title_text = _("冰箱")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
             return_list = []
             title_draw.draw()
             now_draw = draw.NormalDraw()
-            draw_text = "\n 【母乳】\n"
-            draw_text += "  ○母乳可以被博士带走饮用或制作其他乳制品，有效期截止当天24点，到期后背包和冰箱里未使用的母乳会全部转化为资源【鲜母乳】\n"
-            draw_text += "  当前冰箱内各干员母乳情况：\n"
+            draw_text = _("\n 【母乳】\n")
+            draw_text += _("  ○母乳可以被博士带走饮用或制作其他乳制品，有效期截止当天24点，到期后背包和冰箱里未使用的母乳会全部转化为资源【鲜母乳】\n")
+            draw_text += _("  当前冰箱内各干员母乳情况：\n")
             now_draw.text = draw_text
             now_draw.draw()
 
             if len(cache.rhodes_island.milk_in_fridge) == 0:
-                draw_text = "\n    当前冰箱里没有母乳\n"
+                draw_text = _("\n    当前冰箱里没有母乳\n")
                 now_draw.text = draw_text
                 now_draw.draw()
 
@@ -539,12 +539,12 @@ class Fridge_Panel:
                 character_data = cache.character_data[character_id]
                 character_name = character_data.name
                 character_milk = cache.rhodes_island.milk_in_fridge[character_id]
-                draw_text = f"  [{str(character_data.adv).rjust(4,'0')}]{character_name}：{character_milk}ml"
+                draw_text = _(f"  [{str(character_data.adv).rjust(4,'0')}]{character_name}：{character_milk}ml")
                 draw_text = draw_text.ljust(20, "　")
                 now_draw.text = draw_text
                 now_draw.draw()
                 # 拿走按钮
-                button_text = f"  [带走]  "
+                button_text = _(f"  [带走]  ")
                 button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text + f"_{character_id}"),
@@ -555,7 +555,7 @@ class Fridge_Panel:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 # 转化按钮
-                button_text = f"  [转化]  "
+                button_text = _(f"  [转化]  ")
                 button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text + f"_{character_id}"),
@@ -593,7 +593,7 @@ class Fridge_Panel:
         del cache.rhodes_island.milk_in_fridge[character_id]
 
         now_draw = draw.WaitDraw()
-        draw_text = f"\n  你将{character_data.name}的母乳（{new_food.milk_ml}ml）放进了背包\n"
+        draw_text = _(f"\n  你将{character_data.name}的母乳（{new_food.milk_ml}ml）放进了背包\n")
         now_draw.text = draw_text
         now_draw.draw()
 
@@ -605,7 +605,7 @@ class Fridge_Panel:
         cache.rhodes_island.materials_resouce[31] += cache.rhodes_island.milk_in_fridge[character_id]
 
         now_draw = draw.WaitDraw()
-        draw_text = f"\n  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n"
+        draw_text = _(f"\n  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n")
         now_draw.text = draw_text
         now_draw.draw()
 
