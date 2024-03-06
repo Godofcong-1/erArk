@@ -5430,7 +5430,7 @@ def handle_morning_salutation_flag_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_2)
 def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
-    自身已早安问候状态
+    自身已早安问候状态（权重100）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -5438,7 +5438,7 @@ def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.morning_salutation == 2:
-        return 1
+        return 100
     else:
         return 0
 

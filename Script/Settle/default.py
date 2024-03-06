@@ -4536,6 +4536,27 @@ def handle_milk_add_adjust(
     target_data.pregnancy.milk = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MORNING_SALUTATION_3_ADD_ADJUST)
+def handle_morning_salutation_3_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （早安咬）触发交互对象一次射精，射到发起者嘴里
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    ejaculation_panel.ejaculation_flow(2, 0, character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,
