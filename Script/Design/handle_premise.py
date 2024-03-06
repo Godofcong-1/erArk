@@ -465,7 +465,7 @@ def handle_morning_salutation_time(character_id: int) -> int:
     judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
     # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，醒来时间为{pl_character_data.action_info.wake_time}，判定时间为{judge_wake_up_time}")
     if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
-        print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，判定时间为{judge_wake_up_time}")
+        # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，判定时间为{judge_wake_up_time}")
         return 50
     return 0
 
@@ -5424,7 +5424,7 @@ def handle_morning_salutation_flag_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_FLAG_2)
 def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
-    自身已早安问候状态（权重100）
+    自身已早安问候状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -5432,7 +5432,7 @@ def handle_morning_salutation_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.morning_salutation == 2:
-        return 100
+        return 1
     else:
         return 0
 
@@ -14646,7 +14646,7 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ASSISTANT_SALUTATION_OF_AI_DISABLE)
 def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
     """
-    自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间，开启但已问候）
+    自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -14659,8 +14659,8 @@ def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
         else:
             if handle_not_morning_salutation_time(character_id):
                 return 1
-            elif handle_morning_salutation_flag_2(character_id):
-                return 1
+            # elif handle_morning_salutation_flag_2(character_id):
+            #     return 1
             return 0
     return 1
 

@@ -325,6 +325,8 @@ cid,effect_name,effect_type,effect
 1102,FIRST_HAND_IN_HAND,初次,记录初次牵手
 1103,FIRST_SEX,初次,记录处女
 1104,FIRST_A_SEX,初次,记录A处女
+1105,DAY_FIRST_MEET_0,初次,自己变为今天已见过面
+1106,DAY_FIRST_MEET_1,初次,自己变为今天未见过面
 
 1201,PENETRATING_VISION_ON,源石技艺,开启透视（含理智消耗）
 1202,PENETRATING_VISION_OFF,源石技艺,关闭透视

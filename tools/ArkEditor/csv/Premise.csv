@@ -263,7 +263,9 @@ time_morning,TIME_MORNING,时间_当前,时间:清晨（4点~8点）
 time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
 time_aftermoon,TIME_AFTERMOON,时间_当前,时间:下午（15点~18点）
 eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上18~19点）
+breakfast_time,BREAKFAST_TIME,时间_当前,早饭饭点（早上7~8点）
 launch_time,LAUNCH_TIME,时间_当前,午饭饭点（中午12~13点）
+dinner_time,DINNER_TIME,时间_当前,晚饭饭点（晚上18~19点）
 shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 not_shower_time,NOT_SHOWER_TIME,时间_当前,非淋浴时间（淋浴时间是晚上8点到晚上12点）
 sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
@@ -277,7 +279,8 @@ afternoon_entertainment_time,AFTERNOON_ENTERTAINMENT_TIME,时间_当前,下午�
 night_entertainment_time,NIGHT_ENTERTAINMENT_TIME,时间_当前,晚上娱乐时间（晚上19:00~晚上22:00）
 time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
-pl_awake_30_min_before,PL_AWAKE_30_MIN_BEFORE,时间_当前,玩家醒来时间的前半小时以内（权重20）
+morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来半小时前以内，权重50）
+not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来半小时前以内）
 
 
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态
@@ -313,9 +316,11 @@ t_unnormal_567,T_UNNORMAL_567,属性_异常状态,交互对象5或6或7异常
 
 hp_low,HP_LOW,属性_基础,自身体力低于30%
 hp_high,HP_HIGH,属性_基础,自身体力高于70%
+hp_max,HP_MAX,属性_基础,自身体力等于100%
 mp_0,MP_0,属性_基础,自身气力为0
 mp_low,MP_LOW,属性_基础,自身气力低于30%
 mp_high,MP_HIGH,属性_基础,自身气力高于70%
+mp_max,MP_MAX,属性_基础,自身气力等于100%
 hp_or_mp_low,HP_OR_MP_LOW,属性_基础,自身体力或气力有一项低于30%
 hp_or_mp_ge_80,HP_OR_MP_GE_80,属性_基础,自身体力或气力有一项低于80%
 t_hp_low,TARGET_HP_LOW,属性_基础,交互对象体力低于30%
@@ -323,6 +328,7 @@ t_hp_high,TARGET_HP_HIGH,属性_基础,交互对象体力高于70%
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
 t_mp_low,TARGET_MP_LOW,属性_基础,交互对象气力低于30%
 t_mp_high,TARGET_MP_HIGH,属性_基础,交互对象气力高于70%
+tired_le_0,TIRED_LE_0,属性_基础,疲劳条≤0%
 tired_ge_50,TIRED_GE_50,属性_基础,疲劳条≥50%
 tired_le_74,TIRED_LE_74,属性_基础,疲劳条≤74%，全指令自由
 tired_ge_75,TIRED_GE_75,属性_基础,疲劳条≥75%，部分指令受限
@@ -390,6 +396,7 @@ assistant_night_salutation_0,ASSISTANT_NIGHT_SALUTATION_0,属性_助理,自己�
 assistant_night_salutation_on,ASSISTANT_NIGHT_SALUTATION_ON,属性_助理,自己的助理属性中的晚安问候服务开启中
 assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
 assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
+assistant_salutation_of_ai_disable,ASSISTANT_SALUTATION_OF_AI_DISABLE,属性_助理,自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间）
 
 jj_0,JJ_0,属性_身体部位,自身阴茎大小为短小
 jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通

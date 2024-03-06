@@ -799,7 +799,7 @@ class Premise:
     ASSISTANT_NIGHT_SALUTATION_3 = "assistant_night_salutation_3"
     """ 属性_助理 自己的助理属性中的晚安问候服务为-晚安咬 """
     ASSISTANT_SALUTATION_OF_AI_DISABLE = "assistant_salutation_of_ai_disable"
-    """ 属性_助理 自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间，开启但已问候） """
+    """ 属性_助理 自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间） """
 
     JJ_0 = "jj_0"
     """ 属性_身体部位 自身阴茎大小为短小 """

@@ -26,7 +26,7 @@ ai的目标,,,
 36,44,sleep_flag_1|in_dor,要睡觉状态下，且已在宿舍，则睡觉
 37,44,tired_100,疲劳值到100%，当场直接爆睡
 
-41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，则进入要取餐状态
+41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态
 42,522,eat_food_flag_1|not_in_food_shop,要取餐状态下，且不在取餐区里，则去取餐区
 43,76,eat_food_flag_1|in_food_shop,要取餐状态下，且在取餐区里，则买食物
 44,523,eat_food_flag_2|not_in_din,要进食状态下，且不在食堂里，则去食堂
@@ -200,7 +200,7 @@ ai的目标,,,
 523,703,help_make_food_flag_1|in_kitchen,要做饭状态下，且在厨房，则做饭
 524,503,help_make_food_flag_2|place_1,要送饭状态下，且不在玩家位置，则移动到玩家位置
 
-531,704,normal_1267|morning_salutation_flag_0|assistant_morning_salutation_on|morning_salutation_time,1267正常（可能AI跟随、服装异常或意识模糊），自身没有早安问候状态，自己的助理属性中的早安问候服务开启中，玩家醒来时间的前半小时以内（权重20），则进入要早安问候状态
+531,704,normal_1267|morning_salutation_flag_0|assistant_morning_salutation_on|morning_salutation_time,1267正常（可能AI跟随、服装异常或意识模糊），自身没有早安问候状态，自己的助理属性中的早安问候服务开启中，玩家醒来时间的前半小时以内（权重50），则进入要早安问候状态
 532,503,place_1|morning_salutation_flag_1,不在玩家位置，自身要早安问候状态（权重100），则移动到玩家位置
 533,705,place_0|morning_salutation_flag_1|assistant_morning_salutation_1,在玩家位置，自身要早安问候状态（权重100），自己的助理属性中的早安问候服务为早上叫起床，则叫起床
 534,706,place_0|morning_salutation_flag_1|assistant_morning_salutation_2,在玩家位置，自身要早安问候状态（权重100），自己的助理属性中的早安问候服务为早安吻，则早安吻

@@ -639,6 +639,10 @@ class BehaviorEffect:
     """ 初次 记录处女 """
     FIRST_A_SEX = 1104
     """ 初次 记录A处女 """
+    DAY_FIRST_MEET_0 = 1105
+    """ 初次 自己变为今天已见过面 """
+    DAY_FIRST_MEET_1 = 1106
+    """ 初次 自己变为今天未见过面 """
 
     PENETRATING_VISION_ON = 1201
     """ 源石技艺 开启透视（含理智消耗） """

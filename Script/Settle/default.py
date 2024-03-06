@@ -1129,6 +1129,52 @@ def handle_first_a_sex(
             target_data.second_behavior[1052] = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_0)
+def handle_day_first_meet_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己变为今天已见过面
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.first_record.day_first_meet = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_1)
+def handle_day_first_meet_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己变为今天未见过面
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.first_record.day_first_meet = 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
 def handle_penetrating_vision_on(
         character_id: int,
