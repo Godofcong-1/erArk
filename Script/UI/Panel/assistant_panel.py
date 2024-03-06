@@ -290,7 +290,7 @@ class SeeNPCButtonList:
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         old_assistant_data.sp_flag.is_follow = 0
         # 去掉旧助理的同居状态
-        if old_assistant_data.dormitory == "中枢\博士房间":
+        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == "中枢\博士房间":
             old_assistant_data.dormitory = old_assistant_data.pre_dormitory
         # 重置旧助理的助理服务数据体
         old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()

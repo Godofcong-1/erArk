@@ -230,16 +230,8 @@ def get_rand_npc_sex() -> int:
 def init_character_dormitory():
     """
     分配角色宿舍
-    玩家分配到博士房间，角色分配到csv里所写的宿舍名所对应的房间坐标
+    角色分配到csv里所写的宿舍名所对应的房间坐标
     """
-    Dr_room = {
-        key: constant.place_data[key] for key in constant.place_data if "Dr_room" in key
-    }
-    Dr_room = {
-        x: 0 for j in [k[1] for k in sorted(Dr_room.items(), key=lambda x: x[0])] for x in j
-    }
-    now_room = list(Dr_room.keys())[0]
-    cache.character_data[0].dormitory = now_room
     dormitory = {
         key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
     }
