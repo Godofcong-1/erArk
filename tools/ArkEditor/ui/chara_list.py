@@ -305,11 +305,23 @@ class CharaList(QWidget):
     def update_chara_token(self):
         """根据文本编辑框更新当前的角色信物"""
         now_chara_token = self.chara_token_text_edit.toPlainText()
+        # 检测里面的","，换成"，"，防止csv文件解析出错
+        now_chara_token = now_chara_token.replace(",", "，")
+        # 检测换行符，换成"\n"，防止csv文件解析出错
+        now_chara_token = now_chara_token.replace("\n", "\\n")
+        # 检测英文双引号，直接删除，防止csv文件解析出错
+        now_chara_token = now_chara_token.replace("\"", "")
         cache_control.now_chara_data.Token = now_chara_token
 
     def update_chara_introduce(self):
         """根据文本编辑框更新当前的角色介绍"""
         now_chara_introduce = self.chara_introduce_text_edit.toPlainText()
+        # 检测里面的","，换成"，"，防止csv文件解析出错
+        now_chara_introduce = now_chara_introduce.replace(",", "，")
+        # 检测换行符，换成"\n"，防止csv文件解析出错
+        now_chara_introduce = now_chara_introduce.replace("\n", "\\n")
+        # 检测英文双引号，直接删除，防止csv文件解析出错
+        now_chara_introduce = now_chara_introduce.replace("\"", "")
         cache_control.now_chara_data.Introduce_1 = now_chara_introduce
 
     def update_chara_textcolor(self):
@@ -385,8 +397,12 @@ class CharaList(QWidget):
         now_chara_dormitory = cache_control.now_chara_data.Dormitory
         self.chara_dormitory_text_edit.setText(str(now_chara_dormitory))
         now_chara_token = cache_control.now_chara_data.Token
+        # 将换行符"\n"换成真正的换行
+        now_chara_token = now_chara_token.replace("\\n", "\n")
         self.chara_token_text_edit.setText(str(now_chara_token))
         now_chara_introduce = cache_control.now_chara_data.Introduce_1
+        # 将换行符"\n"换成真正的换行
+        now_chara_introduce = now_chara_introduce.replace("\\n", "\n")
         self.chara_introduce_text_edit.setText(str(now_chara_introduce))
         now_chara_textcolor = cache_control.now_chara_data.TextColor
         self.chara_textcolor_text_edit.setText(str(now_chara_textcolor))
