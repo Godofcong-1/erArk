@@ -396,6 +396,7 @@ class SeeCharacterClothPanel:
         # cloth_text_list = []
         now_text = ""
         # 遍历全部衣服类型
+        # print(f"debug target_character_data.cloth.cloth_wear = {target_character_data.cloth.cloth_wear}")
         for clothing_type in game_config.config_clothing_type:
             type_name = game_config.config_clothing_type[clothing_type].name
             # 当该类型里有衣服存在的时候才显示

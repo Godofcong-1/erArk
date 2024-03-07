@@ -79,7 +79,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     now_character.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
     for cloth_id in character_tem.Cloth:
         type = game_config.config_clothing_tem[cloth_id].clothing_type
-        # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+        # print(f"debug {character_tem.Name} cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
         now_character.cloth.clothing_tem.append(cloth_id)
         now_character.cloth.cloth_wear[type].append(cloth_id)
     # 生成藏品

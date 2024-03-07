@@ -1190,8 +1190,6 @@ class Cache:
         # self.system_setting: System_Setting = System_Setting()
         self.system_setting: Dict[int, int] = {}
         """ 系统设定，见System_Setting.csv """
-        self.init_character_cloth_count = 10001
-        """ 生成角色服装id """
 
 class TargetChange:
     """交互对象角色变化结构体"""

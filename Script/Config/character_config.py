@@ -9,8 +9,6 @@ character_config_data = {}
 """ 原始角色模板数据 """
 character_tem_list:List[game_type.NpcTem] = []
 """ 角色模板数据列表 """
-init_character_cloth_count = 10000
-""" 角色服装数据起始编号 """
 
 def init_character_tem_data():
     """ 初始化预设角色数据 """
@@ -18,8 +16,10 @@ def init_character_tem_data():
     character_config_data = json_handle.load_json(character_config_file)
     directory = 'data/talk/chara'
     for character_name in character_config_data:
+        # print(f"debug : character_name = {character_name}")
         now_tem = game_type.NpcTem()
         now_data = character_config_data[character_name]
+        cloth_count = 0
         for k in now_data:
             # print("k :",k)
             v = get_text._(now_data[k])
@@ -47,7 +47,8 @@ def init_character_tem_data():
                     now_cloth_cid = now_k
                 else:
                     cloth_list = [v, now_k]
-                    now_cloth_cid = add_cloth_data_to_config_data(cloth_list)
+                    now_cloth_cid = add_cloth_data_to_config_data(cloth_list, now_data["AdvNpc"], cloth_count)
+                    cloth_count += 1
                 # print(f"debug : k={k}, now_k ={now_k}, v={v}, now_cloth_cid = {now_cloth_cid}")
                 now_tem.Cloth.append(now_cloth_cid)
             elif k == "TextColor":
@@ -77,9 +78,8 @@ def find_files_and_get_size(directory, character):
     file_sizes = {file: os.path.getsize(file) for file in target_files}
     return file_sizes
 
-def add_cloth_data_to_config_data(cloth_list: List[int]):
+def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_count: int):
     """ 将服装数据加入服装模板数据 """
-    global init_character_cloth_count
     # print(f"debug cloth_list = {cloth_list}")
     # 新增服装数据到config_clothing_tem
     name, type = cloth_list[0], cloth_list[1]
@@ -95,12 +95,12 @@ def add_cloth_data_to_config_data(cloth_list: List[int]):
             tag = 4
         else:
             tag = 5
-    cloth_data = {'cid':init_character_cloth_count, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
+    now_cloth_cid = 10000 + AdvNpc * 50 + cloth_count
+    cloth_data = {'cid':now_cloth_cid, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
     # print(f"debug cloth_data = {cloth_data}")
     now_cloth = config_def.ClothingTem()
     now_cloth.__dict__ = cloth_data
     game_config.config_clothing_tem[now_cloth.cid] = now_cloth
-    init_character_cloth_count += 1
     return now_cloth.cid
 
 def add_text_color_data_to_config_data(text_color_list: List[str]):
