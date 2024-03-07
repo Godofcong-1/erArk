@@ -189,8 +189,8 @@ def update_dict_with_default(loaded_dict, default_dict):
             update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
         elif hasattr(value, '__dict__'):  # 检查 value 是否是一个类的实例
             update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
-        # 如果key的类型不同，将其更新为默认值
-        elif type(loaded_dict[key]) != type(default_dict[key]) and value != None:
+        # 如果key的类型不同，且value不为None，类型也不为int或float时，将其设为默认值
+        elif type(loaded_dict[key]) != type(default_dict[key]) and value != None and type(value) != int and type(value) != float:
             loaded_dict[key] = value
             update_count += 1
             draw_text = _(f"存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，新type {type(default_dict[key])}, 已设为默认值 {value}\n")

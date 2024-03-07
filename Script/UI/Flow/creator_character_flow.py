@@ -64,7 +64,7 @@ def game_start():
     character_handle.handle_character_setting()
     cooking.init_recipes()
     cooking.init_restaurant_data()
-    attr_calculation.get_system_setting_zero()
+    cache.system_setting = attr_calculation.get_system_setting_zero()
     basement.get_base_updata()
     character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面
     # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")

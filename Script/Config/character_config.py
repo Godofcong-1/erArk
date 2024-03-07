@@ -48,7 +48,7 @@ def init_character_tem_data():
                 else:
                     cloth_list = [v, now_k]
                     now_cloth_cid = add_cloth_data_to_config_data(cloth_list)
-                # print(f"debug : k={k}, now_k ={now_k}, v={v}")
+                # print(f"debug : k={k}, now_k ={now_k}, v={v}, now_cloth_cid = {now_cloth_cid}")
                 now_tem.Cloth.append(now_cloth_cid)
             elif k == "TextColor":
                 chara_id = now_data["AdvNpc"]
