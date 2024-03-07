@@ -833,6 +833,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     # 真实的行动时间是真实的结束时间减去真实的开始时间
     true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
     # print(f"debug {now_character_data.name}的true_add_time = {true_add_time}，true_start_time = {true_start_time}，true_end_time = {true_end_time}\n")
+    # 最少为1分钟，以免随机取值函数出错
+    true_add_time = max(true_add_time, 0)
 
     tired_change = int(true_add_time / 6)
     # 仅计算在不睡觉时的正常行动结算疲劳值
