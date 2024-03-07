@@ -19,6 +19,7 @@ def init_character_tem_data():
         # print(f"debug : character_name = {character_name}")
         now_tem = game_type.NpcTem()
         now_data = character_config_data[character_name]
+        # print(f"debug now_data = {now_data}")
         cloth_count = 0
         for k in now_data:
             # print("k :",k)
@@ -41,12 +42,16 @@ def init_character_tem_data():
             #     now_tem.Cloth.append(now_k)
             # 新的服装数据读取，读取的是str，直接获得服装数据，然后写入服装模板数据
             elif k.startswith("C|"):
-                now_k = int(k.lstrip("C|"))
+                if "-" not in k.lstrip("C|"):
+                    now_k = int(k.lstrip("C|"))
+                else:
+                    now_k = int(k.lstrip("C|").split("-")[0])
                 # 针对默认服装
                 if now_k in [5999, 8999]:
                     now_cloth_cid = now_k
                 else:
                     cloth_list = [v, now_k]
+                    # print(f"debug : cloth_list = {cloth_list}")
                     now_cloth_cid = add_cloth_data_to_config_data(cloth_list, now_data["AdvNpc"], cloth_count)
                     cloth_count += 1
                 # print(f"debug : k={k}, now_k ={now_k}, v={v}, now_cloth_cid = {now_cloth_cid}")
@@ -59,6 +64,7 @@ def init_character_tem_data():
                 now_tem.__dict__[k] = v
             else:
                 now_tem.__dict__[k] = v
+        # print(f"debug now_tem.Cloth = {now_tem.Cloth}")
         # 截取_之后的文本
         find_name = character_name.split("_")[1]
         talk_sizes = find_files_and_get_size(directory, find_name)
@@ -96,6 +102,7 @@ def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_coun
         else:
             tag = 5
     now_cloth_cid = 10000 + AdvNpc * 50 + cloth_count
+    # print(f"debug cloth_count = {cloth_count}, AdvNpc = {AdvNpc}, now_cloth_cid = {now_cloth_cid}")
     cloth_data = {'cid':now_cloth_cid, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
     # print(f"debug cloth_data = {cloth_data}")
     now_cloth = config_def.ClothingTem()

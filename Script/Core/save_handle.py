@@ -12,8 +12,8 @@ from Script.Core import (
     game_type,
     get_text,
 )
-from Script.Config import normal_config
-from Script.Design import attr_calculation
+from Script.Config import normal_config, game_config
+from Script.Design import attr_calculation, clothing
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -148,17 +148,24 @@ def input_load_save(save_id: str):
     for key, value in loaded_dict["character_data"].items():
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
         # 重置角色服装
+        reset_cloth_flag = False
         if len(value.cloth.cloth_wear):
-            cloth_count = 0
-            AdvNpc = value.adv
-            # print(f"debug old value.cloth.cloth_wear = {value.cloth.cloth_wear}")
             for now_type in value.cloth.cloth_wear:
                 # 将now_type_cloth_data中的服装id里大于等于10000的服装id重置为10000 + AdvNpc * 50 + cloth_count
                 now_type_cloth_data = value.cloth.cloth_wear[now_type]
                 for now_cloth_id in now_type_cloth_data:
-                    if now_cloth_id >= 10000:
-                        now_type_cloth_data[now_type_cloth_data.index(now_cloth_id)] = 10000 + AdvNpc * 50 + cloth_count
-                        cloth_count += 1
+                        # 查找该编号的服装数据是否存在，如果不存在，则重置该角色的服装数据
+                        if now_cloth_id not in game_config.config_clothing_tem:
+                            reset_cloth_flag = True
+                            break
+                if reset_cloth_flag:
+                    break
+        if reset_cloth_flag:
+            value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+            tem_character = cache.npc_tem_data[value.cid]
+            for cloth_id in tem_character.Cloth:
+                type = game_config.config_clothing_tem[cloth_id].clothing_type
+                value.cloth.cloth_wear[type].append(cloth_id)
             print(f"debug new value.cloth.cloth_wear = {value.cloth.cloth_wear}")
     # 重置系统设置
     if not len(loaded_dict["system_setting"]):
