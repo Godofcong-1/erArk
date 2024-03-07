@@ -240,7 +240,7 @@ class Ejaculation_Panel:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
-        if not cache.system_setting.choose_shoot_where:
+        if not cache.system_setting[4]:
             now_position = target_data.h_state.insert_position
             self.shoot_here(now_position, 0)
         # 手动选择射精部位

@@ -14,6 +14,20 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏内缓存数据 """
 
 
+def get_system_setting_zero() -> dict:
+    """
+    重置系统设置
+    """
+    system_setting_list = {}
+    default_dict = {1:2, 2:1, 3:0, 4:1, 5:1, 6:2, 7:0, 8:0}
+    for system_setting in game_config.config_system_setting:
+        if system_setting in default_dict:
+            system_setting_list[system_setting] = default_dict[system_setting]
+        else:
+            system_setting_list[system_setting] = 0
+    return system_setting_list
+
+
 def get_ability_zero(ability_dict) -> dict:
     """
     检查初始能力，将为空的项补为0

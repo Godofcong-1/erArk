@@ -45,7 +45,9 @@ class InScenePanel:
         while 1:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
-            for i in range(cache.system_setting.line_before_main_update):
+            len_str = game_config.config_system_setting_option[1][cache.system_setting[1]]
+            len_line = int(len_str[:-1])
+            for i in range(len_line):
                 line_feed.draw()
             title_draw.draw()
 

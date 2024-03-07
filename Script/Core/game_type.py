@@ -912,6 +912,8 @@ class System_Setting:
         """ 尿意值的增长速度，0不增长，1为8h增长到最大，2为4h增长到最大，3为2h增长到最大 """
         self.semen_flow: bool = True
         """ 是否开关精液流通功能 """
+        self.all_chara_use_common_text: bool = True
+        """ 所有角色使用通用文本 """
 
 
 class Character:
@@ -1185,8 +1187,9 @@ class Cache:
         """ 初期奖励 """
         self.world_setting: Dict[int, int] = {}
         """ 世界设定 """
-        self.system_setting: System_Setting = System_Setting()
-        """ 系统设定 """
+        # self.system_setting: System_Setting = System_Setting()
+        self.system_setting: Dict[int, int] = {}
+        """ 系统设定，见System_Setting.csv """
         self.init_character_cloth_count = 10001
         """ 生成角色服装id """
 

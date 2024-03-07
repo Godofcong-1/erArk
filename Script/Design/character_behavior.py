@@ -728,7 +728,7 @@ def update_sleep():
             character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
             character_data.semen_point = character_data.semen_point_max # 恢复精液量
             # 检查是否有可以升级的能力
-            if cache.system_setting.pl_ability_auto_lvup:
+            if cache.system_setting[2]:
                 handle_ability.gain_ability(character_id)
             line_feed.draw()
         else:
@@ -747,7 +747,7 @@ def update_sleep():
             # 检查是否有可以获得的素质
             handle_talent.gain_talent(character_id,now_gain_type = 3)
             # 检查是否有可以升级的能力
-            if cache.system_setting.npc_ability_auto_lvup:
+            if cache.system_setting[3]:
                 handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
@@ -870,11 +870,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
 
     # 结算尿意值
-    if character_id == 0 and not cache.system_setting.dr_need_pee:
+    if character_id == 0 and not cache.system_setting[5]:
         pass
     else:
         add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
-        add_urinate *= cache.system_setting.urinate_grow_speed / 2
+        add_urinate *= cache.system_setting[6] / 2
         now_character_data.urinate_point += int(add_urinate)
         now_character_data.urinate_point = min(now_character_data.urinate_point,240)
 

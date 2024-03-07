@@ -12773,7 +12773,8 @@ def handle_urinate_ge_80(character_id: int) -> int:
 
     value = character_data.urinate_point / 240
     if value > 0.79:
-        return character_data.urinate_point * 4
+        extra_value = character_data.urinate_point -  240 * 0.8
+        return extra_value * 5
     else:
         return 0
 
@@ -12867,7 +12868,8 @@ def handle_hunger_ge_80(character_id: int) -> int:
     value = character_data.hunger_point / 240
     if value > 0.79:
         # print(f"debug {character_id}角色饿了")
-        return character_data.hunger_point * 4
+        extra_value = character_data.hunger_point -  240 * 0.8
+        return extra_value * 5
     else:
         return 0
 

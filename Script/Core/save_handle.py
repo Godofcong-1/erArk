@@ -13,6 +13,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config
+from Script.Design import attr_calculation
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -146,9 +147,15 @@ def input_load_save(save_id: str):
     # 遍历更新全角色属性
     for key, value in loaded_dict["character_data"].items():
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
+    # 重置系统设置
+    if not len(loaded_dict["system_setting"]):
+        loaded_dict["system_setting"] = attr_calculation.get_system_setting_zero()
+        draw_text = _(f"\n系统设置已重置，如有需要请手动修改\n")
+        now_draw.text = draw_text
+        now_draw.draw()
 
-    draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
     now_draw = draw.LeftDraw()
+    draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
     now_draw.text = draw_text
     now_draw.draw()
 
@@ -182,6 +189,14 @@ def update_dict_with_default(loaded_dict, default_dict):
             update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
         elif hasattr(value, '__dict__'):  # 检查 value 是否是一个类的实例
             update_count += update_dict_with_default(loaded_dict[key].__dict__, value.__dict__)
+        # 如果key的类型不同，将其更新为默认值
+        elif type(loaded_dict[key]) != type(default_dict[key]) and value != None:
+            loaded_dict[key] = value
+            update_count += 1
+            draw_text = _(f"存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，新type {type(default_dict[key])}, 已设为默认值 {value}\n")
+            now_draw = draw.LeftDraw()
+            now_draw.text = draw_text
+            # now_draw.draw()
     return update_count
 
 

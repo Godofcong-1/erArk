@@ -679,61 +679,6 @@ class CharacterInfoHead:
             line_feed.draw()
 
 
-class CharacterWearClothingList:
-    """
-    角色已穿戴服装列表
-    Keyword arguments:
-    character_id -- 角色id
-    width -- 最大宽度
-    column -- 每行服装最大个数
-    """
-
-    def __init__(self, character_id: int, width: int, column: int):
-        """初始化绘制对象"""
-        self.character_id: int = character_id
-        """ 要绘制的角色id """
-        self.width: int = width
-        """ 当前最大可绘制宽度 """
-        self.column: int = column
-        """ 每行服装最大个数 """
-        character_data: game_type.Character = cache.character_data[character_id]
-        describe_list = [_("可爱的"), _("性感的"), _("帅气的"), _("清新的"), _("典雅的"), _("清洁的"), _("保暖的")]
-        clothing_info_list = []
-        title_draw = draw.LittleTitleLineDraw(_("衣着"), width, ":")
-        self.draw_list = [title_draw]
-        """ 绘制的对象列表 """
-        for clothing_type in game_config.config_clothing_type:
-            if clothing_type in character_data.put_on and isinstance(
-                    character_data.put_on[clothing_type], UUID
-            ):
-                now_id = character_data.put_on[clothing_type]
-                now_clothing: game_type.Clothing = character_data.clothing[clothing_type][now_id]
-                value_list = [
-                    now_clothing.sweet,
-                    now_clothing.sexy,
-                    now_clothing.handsome,
-                    now_clothing.fresh,
-                    now_clothing.elegant,
-                    now_clothing.cleanliness,
-                    now_clothing.warm,
-                ]
-                describe_id = value_list.index(max(value_list))
-                describe = describe_list[describe_id]
-                now_clothing_config = game_config.config_clothing_tem[now_clothing.tem_id]
-                clothing_name = f"[{now_clothing.evaluation}{describe}{now_clothing_config.name}]"
-                clothing_info_list.append(clothing_name)
-        now_draw = panel.LeftDrawTextListPanel()
-        now_draw.set(clothing_info_list, self.width, self.column)
-        self.draw_list.extend(now_draw.draw_list)
-
-    def draw(self):
-        """绘制对象"""
-        for draw_list in self.draw_list:
-            for now_draw in draw_list:
-                now_draw.draw()
-            line_feed.draw()
-
-
 class CharacterStatureText:
     """
     身材描述信息面板
@@ -1822,7 +1767,7 @@ class CharacterSetting:
     def draw(self):
         """绘制面板"""
         character_data = cache.character_data[self.character_id]
-        type_data = "角色设置"
+        type_data = _("角色设置")
         type_line = draw.LittleTitleLineDraw(type_data, self.width, ":")
         type_line.draw()
         now_draw = draw.NormalDraw()
@@ -1830,7 +1775,7 @@ class CharacterSetting:
         if self.character_id != 0:
 
             # 输出提示信息
-            info_text = " \n ○点击选项标题显示选项详细介绍，点击选项本身改变当前选择\n"
+            info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()
@@ -1845,6 +1790,9 @@ class CharacterSetting:
                 button_draw.draw()
                 self.return_list.append(button_draw.return_text)
 
+                # 如果没有该键，则创建一个，并置为0
+                if cid not in character_data.chara_setting:
+                    character_data.chara_setting[cid] = 0
                 now_setting_flag = character_data.chara_setting[cid] # 当前设置的值
                 option_len = len(game_config.config_chara_setting_option[cid]) # 选项的长度
 
@@ -1865,7 +1813,7 @@ class CharacterSetting:
                     button_draw.draw()
                     self.return_list.append(button_draw.return_text)
                 else:
-                    info_text = f" {button_text}(  更改{reason})"
+                    info_text = _(f" {button_text}(  更改{reason})")
                     now_draw.text = info_text
                     now_draw.width = self.width
                     now_draw.draw()
@@ -1874,7 +1822,7 @@ class CharacterSetting:
 
         # 玩家的设置
         else:
-            info_text = " \n 暂无设置\n"
+            info_text = _(" \n 暂无设置\n")
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()

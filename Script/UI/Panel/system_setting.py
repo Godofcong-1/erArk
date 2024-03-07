@@ -39,124 +39,43 @@ class System_Setting_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "系统设置"
+        title_text = _("系统设置")
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
             return_list = []
             title_draw.draw()
 
-            button_text = f"[001]主界面每次刷新时的空行数量："
-            now_line_count = cache.system_setting.line_before_main_update
-            button_text += f"[{now_line_count}行]"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("1"),
-                window_width,
-                cmd_func=self.line_before_main_update,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+            # 输出提示信息
+            now_draw = draw.NormalDraw()
+            info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
+            now_draw.text = info_text
+            now_draw.width = self.width
+            now_draw.draw()
 
-            button_text = f"[002]是否在博士入睡结算时自动升级玩家的能力："
-            if cache.system_setting.pl_ability_auto_lvup:
-                draw_text = _("[是]")
-            else:
-                draw_text = _("[否]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("2"),
-                window_width,
-                cmd_func=self.change_pl_ability_auto_lvup,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+            # 遍历全部设置
+            for cid in game_config.config_system_setting:
+                line_feed.draw()
+                system_setting_data = game_config.config_system_setting[cid]
+                # 选项名
+                button_text = f"  [{system_setting_data.name}]： "
+                button_len = max(len(button_text) * 2, 60)
+                button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.draw_info, args=(cid))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
 
-            button_text = f"[003]是否在博士入睡结算时自动升级干员的能力："
-            if cache.system_setting.npc_ability_auto_lvup:
-                draw_text = _("[是]")
-            else:
-                draw_text = _("[否]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("3"),
-                window_width,
-                cmd_func=self.change_npc_ability_auto_lvup,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+                # 如果没有该键，则创建一个，并置为0
+                if cid not in cache.system_setting:
+                    cache.system_setting[cid] = 0
+                now_setting_flag = cache.system_setting[cid] # 当前设置的值
+                option_len = len(game_config.config_system_setting_option[cid]) # 选项的长度
 
-            button_text = f"[004]每次射精时手动选择射在哪里："
-            if cache.system_setting.choose_shoot_where:
-                draw_text = _("[是]")
-            else:
-                draw_text = _("[否，自动射在当前阴茎所在的位置]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("4"),
-                window_width,
-                cmd_func=self.change_choose_shoot_where,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+                # 当前选择的选项的名字
+                button_text = f" [{game_config.config_system_setting_option[cid][now_setting_flag]}] "
+                button_len = max(len(button_text) * 2, 20)
 
-            button_text = f"[005]博士的尿意值自然增长(优先于6号的速度判定)："
-            if cache.system_setting.dr_need_pee:
-                draw_text = _("[是]")
-            else:
-                draw_text = _("[否，博士的尿意值不再自然增加]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("5"),
-                window_width,
-                cmd_func=self.change_dr_need_pee,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
-
-            button_text = f"[006]全角色尿意值的增长速度："
-            if cache.system_setting.urinate_grow_speed == 0:
-                draw_text = _("[不自然增加]")
-            elif cache.system_setting.urinate_grow_speed == 1:
-                draw_text = _("[慢，8h回满]")
-            elif cache.system_setting.urinate_grow_speed == 2:
-                draw_text = _("[中，4h回满]")
-            elif cache.system_setting.urinate_grow_speed == 3:
-                draw_text = _("[快，2h回满]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("6"),
-                window_width,
-                cmd_func=self.change_urinate_grow_speed,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
-
-            button_text = f"[007]是否开关精液流通功能："
-            if cache.system_setting.dr_need_pee:
-                draw_text = _("[是，射上去的精液会有部分流向联通部位]")
-            else:
-                draw_text = _("[否，精液只会停留在射上去的部位]")
-            button_text += f"{draw_text}"
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _("7"),
-                window_width,
-                cmd_func=self.change_semen_flow,
-                )
-            line_feed.draw()
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting, args=(cid, option_len))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
 
             line_feed.draw()
             line_feed.draw()
@@ -169,94 +88,27 @@ class System_Setting_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def line_before_main_update(self):
-        """主界面每次刷新时的空行数量"""
-        while 1:
-            return_list = []
-            line_draw = draw.LineDraw("-", self.width)
-            line_draw.draw()
-            now_line_count = cache.system_setting.line_before_main_update
-            info_draw = draw.NormalDraw()
-            info_text = ""
-            info_text += f"\n当前{now_line_count}行，行数选择："
-            info_draw.text = _(info_text)
-            info_draw.draw()
+    def draw_info(self, cid):
+        """绘制选项介绍信息"""
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        now_draw = draw.WaitDraw()
+        system_setting_data = game_config.config_system_setting[cid]
+        info_text = f"\n {system_setting_data.info}\n"
+        now_draw.text = info_text
+        now_draw.width = self.width
+        now_draw.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
 
-            for i in [1,2,3,5,10,50]:
-                button_text = f" [{i}行] "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_line_before_main_update, args=i)
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-            line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
-                break
-
-    def change_line_before_main_update(self, line_count):
-        """改变主界面每次刷新时的空行数量"""
-        cache.system_setting.line_before_main_update = line_count
-
-    def change_pl_ability_auto_lvup(self):
-        """改变自动升级玩家的能力"""
-        cache.system_setting.pl_ability_auto_lvup = not cache.system_setting.pl_ability_auto_lvup
-
-    def change_npc_ability_auto_lvup(self):
-        """改变自动升级干员的能力"""
-        cache.system_setting.npc_ability_auto_lvup = not cache.system_setting.npc_ability_auto_lvup
-
-    def change_choose_shoot_where(self):
-        """改变每次射精时手动选择射在哪里"""
-        cache.system_setting.choose_shoot_where = not cache.system_setting.choose_shoot_where
-
-    def change_dr_need_pee(self):
-        """改变博士是否需要尿尿"""
-        cache.system_setting.dr_need_pee = not cache.system_setting.dr_need_pee
-
-    def change_urinate_grow_speed(self):
-        """改变全角色尿意值的增长速度"""
-        while 1:
-            return_list = []
-            line_draw = draw.LineDraw("-", self.width)
-            line_draw.draw()
-            info_draw = draw.NormalDraw()
-            info_text = ""
-            info_text += f"\n当前全角色尿意值的增长速度："
-            info_draw.text = _(info_text)
-            info_draw.draw()
-
-            for i in [0,1,2,3]:
-                if i == 0:
-                    button_text = f" [不自然增加] "
-                elif i == 1:
-                    button_text = f" [慢，8h回满] "
-                elif i == 2:
-                    button_text = f" [中，4h回满] "
-                elif i == 3:
-                    button_text = f" [快，2h回满] "
-                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_urinate_grow_speed_, args=i)
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-            line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
-                break
-
-    def change_urinate_grow_speed_(self, speed):
-        """改变全角色尿意值的增长速度"""
-        cache.system_setting.urinate_grow_speed = speed
-
-    def change_semen_flow(self):
-        """改变精液流通功能"""
-        cache.system_setting.semen_flow = not cache.system_setting.semen_flow
+    def change_setting(self, cid, option_len):
+        """修改设置"""
+        if cache.system_setting[cid] < option_len - 1:
+            cache.system_setting[cid] += 1
+        else:
+            cache.system_setting[cid] = 0
+        # 全角色是否使用通用文本
+        if cid == 8:
+            for character_id in cache.character_data:
+                character_data = cache.character_data[character_id]
+                character_data.chara_setting[1] = cache.system_setting[cid]
