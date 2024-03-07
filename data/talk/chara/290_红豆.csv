@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1,1331,290,high_999,在{SceneName}见到了一名身材娇小的萨卡兹少女\n小小的个子配上保养良好的殷红长发\n再加上一杆差不多和她本人一样长的锐利长枪\n你的注意力很快就被吸引了。\n她同样注意到了你，向你搭话\n“请问，你知道博士在哪里吗，我找博士很久了。”\n“什么？你就是博士！”\n“哼哼，干员红豆来报道了！”\n小家伙看起来很开心的样子。\n不经意间，你发现自己也微微笑着。
+1,1331,290,high_999&sys_1,在{SceneName}见到了一名身材娇小的萨卡兹少女\n小小的个子配上保养良好的殷红长发\n再加上一杆差不多和她本人一样长的锐利长枪\n你的注意力很快就被吸引了。\n她同样注意到了你，向你搭话\n“请问，你知道博士在哪里吗，我找博士很久了。”\n“什么？你就是博士！”\n“哼哼，干员红豆来报道了！”\n小家伙看起来很开心的样子。\n不经意间，你发现自己也微微笑着。
 2,1,290,CVP_A2_F_G_0&sys_0&place_2&not_in_moden_music_room&t_action_not_sleep,在{SceneName}看到了{TargetName}\n“唔……不行，还要更加努力！”\n她似乎并没有注意到你在小声嘟囔着什么\n你向她打了个招呼，她看起来有点慌忙\n“呀！不好意思，刚刚没注意，你好呀{PlayerName}”\n不知道是不是错觉，她的耳朵看起来很红\n
 3,103,290,favorability_le_2&t_action_not_sleep&sys_0&high_5,“干什么啊！不要碰我啦！”\n她撅着嘴气鼓鼓地瞧着这边。
 4,1,290,sys_0&favorability_ge_3&t_action_not_sleep&place_2&not_in_moden_music_room&CVP_A2_F_G_0&high_1,在{SceneName}遇到了{TargetName}\n”啊，你好啊{PlayerName}，有什么事情吗？“\n少女歪着头微笑着打量着你。
@@ -25,8 +25,19 @@ str,int,int,str,str
 20,101,290,high_1&sys_0&not_angry_with_player&not_in_moden_music_room&t_unconscious_flag_0&t_imprisonment_0,“罗德岛真是个好地方。“\n”我比较喜欢哪里？“\n”首先，也只有这里的大家不会对我们萨卡兹评头论足了。“
 21,101,290,high_1&sys_0&t_unconscious_flag_0&not_angry_with_player&t_imprisonment_0&not_in_moden_music_room,“你问我这把枪会不会对我来说太长了？”\n“我觉得，只要我努力锻炼，精进自己的技艺，这应该不是问题吧。”\n“你不觉得就让这把枪孤零零地躺在仓库里也太可怜了吗？”
 22,101,290,high_1&sys_0&t_unconscious_flag_0&t_imprisonment_0&not_angry_with_player&not_in_moden_music_room,“音乐家帝王？常山豆子龙？”\n“这些都是什么东西？”\n“你说这，这，这，这，这是我？”\n“博士！请不要随便给人起奇怪的外号。”
-23,101,290,high_2&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&not_in_moden_music_room&sys_0&CVP_A2_F_G_0,”博士对音乐感兴趣吗？“\n”你反过来问我？“\n”那当然了，哼哼，我可是个吉他手呢。“\n{TargetName}看起来颇为自豪\n”你说听上去很厉害？“\n”嘿嘿，我可是一直在练习呢。“
+23,101,290,not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&not_in_moden_music_room&sys_0&CVP_A2_F_G_0&high_1,”博士对音乐感兴趣吗？“\n”你反过来问我？“\n”那当然了，哼哼，我可是个吉他手呢。“\n{TargetName}看起来颇为自豪\n”你说听上去很厉害？“\n”嘿嘿，我可是一直在练习呢。“
 24,102,290,high_1&not_angry_with_player&favorability_le_2&sys_0&not_in_moden_music_room,”有没有隔音室啊？我想去练琴了。“
 25,102,290,high_1&sys_0&t_imprisonment_0&not_in_moden_music_room&not_angry_with_player&CVP_A2_F_G_1000&favorability_ge_3&time_day&t_unconscious_flag_0,”好了好了，你该去工作了。“\n”你问我为什么老是管你这么多？“\n”那当然了，你可是这里的管理者，你要是这么松懈那也太不像话了。“
-26,102,290,high_1&sys_0&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&favorability_ge_3&not_in_moden_music_room&time_night&time_morning&CVP_A2_F_G_1000,”今天就聊到这里吧，我要去睡觉了。“
-27,102,290,not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&sys_0&high_2&not_in_moden_music_room&CVP_A2_F_G_2500,”啊！我该去看演出直播了！“\n”下次再聊！“
+26,102,290,high_1&sys_0&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&not_in_moden_music_room&time_night&time_morning&CVP_A2_F_G_1000,”今天就聊到这里吧，我要去睡觉了。“
+27,102,290,not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&sys_0&high_2&not_in_moden_music_room&CVP_A2_F_G_2500&time_day,”啊！我该去看演出直播了！“\n”下次再聊！“
+28,131,290,sys_0&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&cook_le_1&high_2&CVP_A2_F_G_500,“诶？你问我要不要喝咖啡？好呀好呀。”\n{TargetName}一脸期待地乖巧的坐在那里等候着\n是被她一直这样看着你有些紧张呢，还是因为你本来就菜呢\n你被蒸汽烫到了\n你把咖啡的粉末弄得到处都是\n糖也撒了不少\n奶油滴在了地上\n桌子上也尽是水渍\n你本来还想学他们那样拉个花\n但是已经过了很久了\n你看着眼前的一片狼藉\n还是放弃了\n这下应该要挨骂了\n你就这么不好意思地把你的杰作端给她\n“啊，终于来了！谢谢啦！”\n她高兴地接过杯子\n鼻子凑上去闻了闻\n脸上的表情逐渐从开心转成了疑惑\n她吹了一下，喝了一口\n她深吸一口气，缓缓地把咖啡放回桌上\n你也紧张起来，期待着对方的评价\n{TargetName}意味深长地看了你一眼，又看了看你身后\n长叹一口气后\n她就这么乐呵呵地看着你笑着\n她站起身来\n“谢谢你，博士，我来帮你一起收拾吧。”\n\n\n
+29,133,290,t_imprisonment_0&t_unconscious_flag_0&high_2&not_angry_with_player&not_in_moden_music_room&sys_0&CVP_A2_X_G_50%,“没问题！交给我吧！”\n{TargetName}收到了你的指示屁颠屁颠地跑去了茶水间\n过了一会儿\n你闻到不远处传来咖啡地浓醇香气\n小小的身影出现在你的视线里\n“锵锵锵！{PlayerName}点的【好喝的咖啡】已经做好了。”\n“来，请用。”\n{TargetName}站在一旁期待着你的评价。\n恰到好处的烘焙度\n柔和的口感\n醇香与苦味的适当配比\n花果的芬芳\n还有一丝咸香\n绝对不是你喝过的最好喝的咖啡\n但是绝对是你心头所好\n你一句话都还没说\n但是你的表情已经告诉了她她想要的答案。\n摇头晃脑的{TargetName}高兴地吹着口哨。\n
+30,101,290,not_angry_with_player&t_imprisonment_0&t_unconscious_flag_0&sys_0&CVP_A2_F_G_0&in_teahouse&high_2,“果然比起茶来说，我还是更喜欢咖啡呢。”\n”老实说，在来这里之前我都没喝过几次茶。“\n”哥伦比亚人不喝茶吗？“\n”土生土长的哥伦比亚人几乎不怎么喝茶，毕竟他们连热水壶都没有。“\n”那他们要喝的时候怎么办？“\n”他们会把茶叶加在冷水里，然后用微波炉加热。“\n你开始思考\n哥伦比亚到底是自己分裂出去的还是被维多利亚赶出去的\n
+31,101,290,not_angry_with_player&sys_0&high_2&t_unconscious_flag_0&in_moden_music_room&CVP_A2_F_G_0&t_imprisonment_0&CVP_A2_G_L_3,“总有一天，我和我的摇滚会回到卡兹戴尔。“
+32,371,290,high_10&sys_0&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0,在{SceneName}，你拉起了{TargetName}的手向她表明了心意\n毫无准备的{TargetName}在这突然袭击之下僵硬住了。\n她并没有抽走手的意思\n她满脸通红地侧过头去\n支支吾吾地说道\n“{PlayerName}，你，你，你是认真的吗？”\n你点了点头\n”真，真的吗？要是等会说是开玩笑什么的，我可是会哭出来的喔。“\n你微微一笑，再一次确认了自己的心意\n她猛地抱住你，踮起脚尖把脸埋进你的胸膛\n你也紧紧地抱住了她\n你听到了小声的抽泣\n你打趣道：“什么嘛，怎么还是哭了”\n“哎呀，你好烦啊~”\n你被掐了一下。\n
+33,397,290,high_5&sys_0&t_imprisonment_0&CVP_A2_G_LE_2,“你干什么啊！”\n伴随一声怒斥\n{TargetName}推开你\n向前一蹬\n手掌推向你的下巴\n你眼前一黑\n什么都不知道了\n等你恢复意识\n你收到一条来自凯尔希的讯息\n【情况我都听说了，\n{PlayerName}，\n希望你做出合理的解释】\n
+34,397,290,high_5&sys_0&t_unconscious_flag_0&t_imprisonment_0&not_angry_with_player&CVP_A2_G_GE_3,”嗯~ o(*￣▽￣*)o“\n她笑着推开了你\n”现在不行啦。“\n她摇着手指说道\n”真是的，这个人也不看看场合和气氛。“
+35,101,290,high_2&sys_0&t_unconscious_flag_0&t_imprisonment_0&not_angry_with_player&in_café&CVP_A2_X_G_25%&CVP_A2_F_G_500,”你说为什么你泡的咖啡总是没有店里的好喝？“\n”那是当然的啦，泡咖啡也是有学问的。“\n”{PlayerName}毕竟不是研究泡咖啡的博士呢。“\n”你要是很苦恼的话，我分享一个秘诀给你吧。“\n”加一点点的黄油在里面，咖啡会更好喝的哦！“
+36,119,290,high_1&not_angry_with_player&t_unconscious_flag_0&t_imprisonment_0&sys_0&CVP_A2_F_G_0,“唉，好想尝尝年的火锅啊。“\n”听他们说好像很好吃。”\n“为什么不和他们一起吃？”\n“那个太辣了啊，音乐人要时刻保养自己好自己的嗓子才行。”
+37,119,290,high_1&sys_0&t_unconscious_flag_0&t_imprisonment_0&t_is_assistant&CVP_A2_F_G_0,“{PlayerName}！”\n“你怎么老是把芙蓉做的便当塞给我。”\n“即使是助理，也不用做这种工作吧。”
+38,131,290,cook_2&sys_0&high_5&not_angry_with_player&t_imprisonment_0&t_unconscious_flag_0&CVP_A2_F_G_500,你已经积累了足够多的经验\n泡一杯咖啡这种小事\n不值一提\n你主动请缨为{TargetName}泡一杯咖啡\n“诶？那真是太好了！”\n她就在{SceneName}一边哼着歌一边摇摆\n没费多少功夫你就泡好了咖啡\n你琢磨了一下\n水温足够，咖啡粉够细，也加上了她要求的糖和奶油\n拉花也成功了\n完美。\n你就这么自信地把你的杰作端给她\n她高兴地接过杯子\n鼻子凑上去闻了闻\n“诶~？挺像那么回事嘛。没想到你手艺不错嘛。”\n她吹了一下，喝了一口\n“60分给咖啡。”\n你大惊失色\n“咖啡粉磨太细了，这样子会过酸。”\n“水温太高了，苦涩味很重。”\n“100分给{PlayerName}，谢谢你啦！”\n说完她又喝一口\n看起来很享受的样子。\n
