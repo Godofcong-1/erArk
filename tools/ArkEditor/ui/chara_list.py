@@ -237,8 +237,12 @@ class CharaList(QWidget):
                     out_data += f"T|{key},int,{cache_control.now_chara_data.Talent[key]},0,角色有{cache_control.talent_data[str(key)]}素质\n"
             if len(cache_control.now_chara_data.Cloth):
                 for key in cache_control.now_chara_data.Cloth:
-                    for i in range(len(cache_control.now_chara_data.Cloth[key])):
-                        out_data += f"C|{key},str,{cache_control.now_chara_data.Cloth[key][i]},1,角色{cache_control.clothing_data[str(key)]}为{cache_control.now_chara_data.Cloth[key][i]}\n"
+                    if len(cache_control.now_chara_data.Cloth[key]) <= 1:
+                        for i in range(len(cache_control.now_chara_data.Cloth[key])):
+                            out_data += f"C|{key},str,{cache_control.now_chara_data.Cloth[key][i]},1,角色{cache_control.clothing_data[str(key)]}为{cache_control.now_chara_data.Cloth[key][i]}\n"
+                    else:
+                        for i in range(len(cache_control.now_chara_data.Cloth[key])):
+                            out_data += f"C|{key}-{i},str,{cache_control.now_chara_data.Cloth[key][i]},1,角色{cache_control.clothing_data[str(key)]}为{cache_control.now_chara_data.Cloth[key][i]}\n"
 
             # 写入文件
             with open(cache_control.now_file_path, "w", encoding="utf-8") as f:
