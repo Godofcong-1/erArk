@@ -1,25 +1,7 @@
-import datetime
 from types import FunctionType
-from Script.Design import (
-    settle_behavior,
-    character,
-    character_handle,
-    map_handle,
-    attr_calculation,
-    game_time,
-    cooking,
-    update,
-    attr_text,
-    handle_instruct,
-    character_behavior,
-    basement,
-)
-from Script.Core import cache_control, constant, constant_effect, game_type, get_text
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel
-
-import random
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -108,4 +90,4 @@ def gain_ability(character_id: int):
             now_draw_succed = draw.WaitDraw()
             now_draw_succed.text = f"{character_data.name}的{ability_name}提升到{str(ability_level+1)}级\n"
             now_draw_succed.draw()
-    # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
+    # print(f"debug {character_data.name}的睡觉结算素质结束")
