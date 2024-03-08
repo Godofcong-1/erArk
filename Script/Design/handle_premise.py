@@ -491,6 +491,54 @@ def handle_not_morning_salutation_time(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.NIGHT_SALUTATION_TIME)
+def handle_night_salutation_time(character_id: int) -> int:
+    """
+    当前是晚安问候时间（计划睡觉时间之后，权重50）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 当前角色的行为时间
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    now_time_hour, now_time_minute = now_time.hour, now_time.minute
+    # 玩家的睡觉时间
+    pl_character_data = cache.character_data[0]
+    plan_to_sleep_time = pl_character_data.action_info.plan_to_sleep_time
+    sleep_time_hour, sleep_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
+    # print(f"debug {character_data.name}进行玩家的睡觉前提判定，当前时间为{now_time}，计划睡觉时间为{pl_character_data.action_info.plan_to_sleep_time}")
+    if now_time_hour > sleep_time_hour or (now_time_hour == sleep_time_hour and now_time_minute >= sleep_time_minute):
+        # print(f"debug 判定通过")
+        return 50
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_NIGHT_SALUTATION_TIME)
+def handle_not_night_salutation_time(character_id: int) -> int:
+    """
+    当前不是晚安问候时间（计划睡觉时间之后）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 当前角色的行为时间
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    now_time_hour, now_time_minute = now_time.hour, now_time.minute
+    # 玩家的睡觉时间
+    pl_character_data = cache.character_data[0]
+    plan_to_sleep_time = pl_character_data.action_info.plan_to_sleep_time
+    sleep_time_hour, sleep_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
+    # print(f"debug {character_data.name}进行玩家的睡觉前提判定，当前时间为{now_time}，计划睡觉时间为{pl_character_data.action_info.plan_to_sleep_time}")
+    if sleep_time_hour > now_time_hour or (sleep_time_hour == now_time_hour and sleep_time_minute >= now_time_minute):
+        # print(f"debug 判定通过")
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
@@ -14654,13 +14702,13 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ASSISTANT_SALUTATION_OF_AI_DISABLE)
 def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
     """
-    自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间）
+    自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    # 早饭的情况
+    # 早安问候不影响早饭
     if handle_breakfast_time(character_id):
         if handle_assistant_morning_salutation_0(character_id):
             return 1
@@ -14669,6 +14717,17 @@ def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
                 return 1
             # elif handle_morning_salutation_flag_2(character_id):
             #     return 1
+            return 0
+    # 晚安问候不影响睡觉
+    if handle_sleep_time(character_id):
+        if handle_assistant_night_salutation_0(character_id):
+            return 1
+        # 只要已开启，则必须在问候完才能睡觉
+        else:
+            if handle_night_salutation_flag_2(character_id):
+                # print("已晚安问候，可以睡觉了")
+                return 1
+            # print("未晚安问候，不能睡觉")
             return 0
     return 1
 
@@ -17252,7 +17311,7 @@ def handle_pl_action_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[0]
     if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
-        print("校验玩家正在睡觉")
+        # print("校验玩家正在睡觉")
         return 1
     return 0
 

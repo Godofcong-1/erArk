@@ -134,6 +134,9 @@ class Assistant_Panel:
                     service_option_text_all = service_option_data[0]
                     service_option_text_now = service_option_text_all[target_data.assistant_services[cid]]
                     service_option_len = len(service_option_text_all)
+                    # 晚安服务的额外输出
+                    if cid == 6 and target_data.assistant_services[cid]:
+                        service_option_text_now += f"    预定时间为{str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0')}"
 
                     # 绘制输出文本
                     button_text = f"[{str(cid).rjust(3,'0')}]{service_data.name}"
@@ -227,6 +230,11 @@ class Assistant_Panel:
                 # 再设置当前二段结算
                 target_data.second_behavior[now_index] = 1
 
+            # 晚安服务的时间选择
+            if service_cid == 6:
+                if target_data.assistant_services[service_cid]:
+                    self.select_night_salutation_time()
+
             # 同居服务的宿舍改变
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
@@ -235,6 +243,82 @@ class Assistant_Panel:
                 elif target_data.dormitory == "中枢\博士房间":
                     target_data.dormitory = target_data.pre_dormitory
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
+
+    def select_night_salutation_time(self):
+        """选择晚安服务的时间"""
+        character_data: game_type.Character = cache.character_data[0]
+        return_list = []
+
+        while 1:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            # 显示当前时间
+            plan_to_sleep_time = character_data.action_info.plan_to_sleep_time
+            now_time_hour, now_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
+            now_time_text = f"当前预定晚安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n"
+            now_time_text += "如果这个时间博士还没有入睡，助理干员会前来催促睡觉，一直到博士睡前进行晚安服务后再离开\n"
+            now_time_text += "如果这个时间博士已经入睡，助理干员会来到博士床前，悄悄进行晚安服务后离开\n"
+            now_time_draw = draw.NormalDraw()
+            now_time_draw.text = now_time_text
+            now_time_draw.width = window_width
+            now_time_draw.draw()
+            line_feed.draw()
+
+            # 更改小时与分钟的按钮
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至少为18时"), window_width / 6, cmd_func=self.change_hour)
+            hour_button.draw()
+            return_list.append(hour_button.return_text)
+            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute)
+            minute_button.draw()
+            return_list.append(minute_button.return_text)
+            line_feed.draw()
+            line_feed.draw()
+
+            # 返回按钮
+            back_button = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_button.draw()
+            line_feed.draw()
+            return_list.append(back_button.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_button.return_text:
+                break
+
+    def change_hour(self):
+        """更改小时"""
+        character_data: game_type.Character = cache.character_data[0]
+        while 1:
+            user_input = flow_handle.askfor_str(_(_("请输入小时(24小时制)：")))
+            try:
+                user_input = int(user_input)
+            except:
+                continue
+            if user_input <= 18:
+                user_input = 18
+            elif user_input > 0:
+                if user_input > 23:
+                    user_input = 23
+                character_data.action_info.plan_to_sleep_time[0] = user_input
+                break
+
+    def change_minute(self):
+        """更改分钟"""
+        character_data: game_type.Character = cache.character_data[0]
+        while 1:
+            user_input = flow_handle.askfor_str(_(_("请输入分钟：")))
+            try:
+                user_input = int(user_input)
+            except:
+                continue
+            if user_input <= 0:
+                continue
+            elif user_input > 0:
+                if user_input > 59:
+                    user_input = 59
+                character_data.action_info.plan_to_sleep_time[1] = user_input
+                break
 
 
 class SeeNPCButtonList:

@@ -469,6 +469,8 @@ class ACTION_INFO:
         """ 指定角色最后与自己社交的时间 """
         self.sleep_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次睡觉时间 """
+        self.plan_to_sleep_time: list = [18, 0]
+        """ 角色计划睡觉的时间，[0时,1分] """
         self.wake_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色醒来时间 """
         self.social_contact_last_cut_down_time: Dict[int, datetime.datetime] = {}

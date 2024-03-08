@@ -462,8 +462,8 @@ class BehaviorEffect:
     MILK_ADD_ADJUST = 519
     """ 指令_专用结算 （挤奶用）把交互对象的乳汁转移到厨房的冰箱里 """
     #TODO 转移到随身道具上，之后到饭点了的时候再放到厨房里
-    MORNING_SALUTATION_3_ADD_ADJUST = 520
-    """ 指令_专用结算 （早安咬）触发交互对象一次射精，射到发起者嘴里 """
+    SALUTATION_3_ADD_ADJUST = 520
+    """ 指令_专用结算 （早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

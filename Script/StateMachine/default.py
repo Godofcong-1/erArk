@@ -1808,6 +1808,7 @@ def character_night_salutation_flag_1(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_ARDER
+    # print(f"debug {character_data.name} 进入要晚安问候状态，time = {cache.game_time}")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.START_MILK)
@@ -2317,11 +2318,8 @@ def character_night_salutation_1(character_id: int):
     
     character_data.target_character_id = 0
     character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_1
-    character_data.behavior.duration = 5
+    character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_1
-    # 特殊flag进行对应更改
-    if character_data.sp_flag.night_salutation == 1:
-        character_data.sp_flag.night_salutation = 2
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_2)

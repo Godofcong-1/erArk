@@ -20,7 +20,7 @@ ai的目标,,,
 
 31,78,normal_1267|hp_1,1267正常（可能AI跟随、服装异常或意识模糊），hp1时，则进入要睡觉状态
 32,78,normal_1267|tired_ge_85|tired_l_100,1267正常（可能AI跟随、服装异常或意识模糊），疲劳值到85%且不到100%时，则进入要睡觉状态
-33,78,normal_1267|sleep_time|shower_flag_4,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，则进入要睡觉状态
+33,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态
 34,78,normal_1267|sleep_time|not_shower_time|not_morning_salutation_time,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，不是早安问候时间（玩家醒来半小时前以内），则进入要睡觉状态
 35,502,sleep_flag_1|not_in_dor,要睡觉状态下，不在宿舍，则回宿舍
 36,44,sleep_flag_1|in_dor,要睡觉状态下，且已在宿舍，则睡觉
@@ -207,9 +207,10 @@ ai的目标,,,
 535,707,place_0|morning_salutation_flag_1|assistant_morning_salutation_3,在玩家位置，自身要早安问候状态（权重100），自己的助理属性中的早安问候服务为早安咬，则早安咬
 536,2,place_0|morning_salutation_flag_2|pl_action_sleep,在玩家位置，自身已早安问候状态，玩家在睡觉，则等待十分钟
 
-541,708,normal_1267|night_salutation_flag_0|assistant_night_salutation_on|pl_action_sleep,1267正常（可能AI跟随、服装异常或意识模糊），自身没有晚安问候状态，自己的助理属性中的晚安问候服务开启中，已经到睡觉时间，则进入要晚安问候状态
+541,708,normal_1267|night_salutation_flag_0|assistant_night_salutation_on|night_salutation_time,1267正常（可能AI跟随、服装异常或意识模糊），自身没有晚安问候状态，自己的助理属性中的晚安问候服务开启中，当前是晚安问候时间（计划睡觉时间之后，权重50），则进入要晚安问候状态
 542,503,place_1|night_salutation_flag_1,不在玩家位置，自身要晚安问候状态（权重100），则移动到玩家位置
-543,710,place_0|night_salutation_flag_1|assistant_night_salutation_2,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安吻，则晚安吻
-544,711,place_0|night_salutation_flag_1|assistant_night_salutation_3,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
+543,709,place_0|night_salutation_flag_1|pl_action_not_sleep,在玩家位置，自身要晚安问候状态（权重100），玩家没有在睡觉，则催睡觉
+544,710,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_2,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安吻，则晚安吻
+545,711,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_3,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
 
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
