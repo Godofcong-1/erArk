@@ -145,28 +145,16 @@ def input_load_save(save_id: str):
     # 递归地更新 loaded_dict
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
     # 遍历更新全角色属性
+    cloth_update_count = 0
     for key, value in loaded_dict["character_data"].items():
+        # print(f"debug name = {value.name}")
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
-        # 重置角色服装
-        reset_cloth_flag = False
-        if len(value.cloth.cloth_wear):
-            for now_type in value.cloth.cloth_wear:
-                # 将now_type_cloth_data中的服装id里大于等于10000的服装id重置为10000 + AdvNpc * 50 + cloth_count
-                now_type_cloth_data = value.cloth.cloth_wear[now_type]
-                for now_cloth_id in now_type_cloth_data:
-                        # 查找该编号的服装数据是否存在，如果不存在，则重置该角色的服装数据
-                        if now_cloth_id not in game_config.config_clothing_tem:
-                            reset_cloth_flag = True
-                            break
-                if reset_cloth_flag:
-                    break
-        if reset_cloth_flag:
-            value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-            tem_character = cache.npc_tem_data[value.cid]
-            for cloth_id in tem_character.Cloth:
-                type = game_config.config_clothing_tem[cloth_id].clothing_type
-                value.cloth.cloth_wear[type].append(cloth_id)
-            print(f"debug new value.cloth.cloth_wear = {value.cloth.cloth_wear}")
+        cloth_update_count += update_chara_cloth(value)
+    if cloth_update_count:
+        draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
+        now_draw.text = draw_text
+        now_draw.draw()
+
     # 重置系统设置
     if not len(loaded_dict["system_setting"]):
         loaded_dict["system_setting"] = attr_calculation.get_system_setting_zero()
@@ -218,6 +206,51 @@ def update_dict_with_default(loaded_dict, default_dict):
             now_draw.text = draw_text
             # now_draw.draw()
     return update_count
+
+
+def update_chara_cloth(value):
+    """
+    更新角色服装数据
+    Keyword arguments:
+    value -- 角色数据
+    """
+    # 跳过玩家
+    if value.cid == 0:
+        return 0
+
+    # 判断是否需要重置服装数据
+    reset_cloth_flag = False
+    if len(value.cloth.cloth_wear):
+        for now_type in value.cloth.cloth_wear:
+            now_type_cloth_data = value.cloth.cloth_wear[now_type]
+            for now_cloth_id in now_type_cloth_data:
+                    # 查找该编号的服装数据是否存在，如果不存在，则重置该角色的服装数据
+                    if (
+                        now_cloth_id >= 10001 and
+                        now_cloth_id not in game_config.config_clothing_tem
+                    ):
+                        reset_cloth_flag = True
+                        break
+            if reset_cloth_flag:
+                break
+    # 进行服装数据的重置
+    if reset_cloth_flag:
+        value.cloth = attr_calculation.get_cloth_zero()
+        value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        tem_character = cache.npc_tem_data[value.cid-1]
+        for cloth_id in tem_character.Cloth:
+            if cloth_id not in game_config.config_clothing_tem:
+                continue
+            type = game_config.config_clothing_tem[cloth_id].clothing_type
+            value.cloth.cloth_wear[type].append(cloth_id)
+        bra_id, pan_id = clothing.get_random_underwear()
+        if not len(value.cloth.cloth_wear[6]):
+            value.cloth.cloth_wear[6].append(bra_id)
+        if not len(value.cloth.cloth_wear[9]):
+            value.cloth.cloth_wear[9].append(pan_id)
+        # print(f"debug new value.cloth.cloth_wear = {value.cloth.cloth_wear}")
+        return 1
+    return 0
 
 
 def remove_save(save_id: str):

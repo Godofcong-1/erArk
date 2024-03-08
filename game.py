@@ -37,7 +37,7 @@ if __name__ == "__main__":
     map_config.init_map_data()
 
 
-    from Script.Design import start_flow, handle_premise, game_time
+    from Script.Design import start_flow, character_handle, game_time
     from Script.Core import game_init
     import Script.Settle
     import Script.StateMachine
@@ -45,6 +45,7 @@ if __name__ == "__main__":
     from Script.Core import main_frame
     import multiprocessing
 
+    character_handle.init_character_tem()
 
     multiprocessing.freeze_support()
 

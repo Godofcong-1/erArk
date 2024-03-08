@@ -29,6 +29,28 @@ def get_npc_cloth(character_id: int):
             character_data.cloth.cloth_wear[type].append(cloth_id)
         get_underwear(character_id)
 
+
+def get_random_underwear():
+    """
+    随机返回一件内衣和一件内裤
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    bra_list = []
+    pan_list = []
+    for cloth_id in game_config.config_clothing_tem:
+        cloth = game_config.config_clothing_tem[cloth_id]
+        if cloth.clothing_type == 6:
+            bra_list.append(cloth_id)
+        elif cloth.clothing_type == 9:
+            pan_list.append(cloth_id)
+    bra_id = random.choice(bra_list)
+    pan_id = random.choice(pan_list)
+    return bra_id, pan_id
+
+
 def get_underwear(character_id: int, part_flag = 0):
     """
     随机穿内衣，包括胸罩和内裤
