@@ -154,6 +154,8 @@ def input_load_save(save_id: str):
         draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
         now_draw.text = draw_text
         now_draw.draw()
+    # 用新的角色预设属性代替旧的属性
+    loaded_dict["npc_tem_data"] = cache.npc_tem_data
 
     # 重置系统设置
     if not len(loaded_dict["system_setting"]):
@@ -234,6 +236,7 @@ def update_chara_cloth(value):
             if reset_cloth_flag:
                 break
     # 进行服装数据的重置
+    # print(f"debug old value.cloth.cloth_wear = {value.cloth.cloth_wear}")
     if reset_cloth_flag:
         value.cloth = attr_calculation.get_cloth_zero()
         value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
