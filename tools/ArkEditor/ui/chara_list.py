@@ -210,7 +210,7 @@ class CharaList(QWidget):
             # 通用开头
             out_data = ""
             out_data += "key,type,value,get_text,info\n"
-            out_data += "键,类型,值,多语言化处理(前面的类型里int则为0,str则为1),备注\n"
+            out_data += "键,类型,值,多语言化处理(前面的类型里int则为0，str则为1),备注\n"
 
             out_data += f"AdvNpc,int,{cache_control.now_chara_data.AdvNpc},0,角色编号\n"
             out_data += f"Name,str,{cache_control.now_chara_data.Name},1,角色姓名\n"

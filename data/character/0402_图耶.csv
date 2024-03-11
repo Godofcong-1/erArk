@@ -1,5 +1,5 @@
 key,type,value,get_text,info
-键,类型,值,多语言化处理(前面的类型里int则为0,str则为1),备注
+键,类型,值,多语言化处理(前面的类型里int则为0，str则为1),备注
 AdvNpc,int,402,0,干员编号：402
 Name,str,图耶,1,姓名：图耶
 Sex,int,1,0,性别：女
