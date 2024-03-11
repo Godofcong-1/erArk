@@ -165,7 +165,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
@@ -779,8 +779,10 @@ def update_new_day():
             # 刷新生理周期
             pregnancy.update_reproduction_period(character_id)
             # 清零助理服务的flag
-            character_data.sp_flag.morning_salutation = 0
-            character_data.sp_flag.night_salutation = 0
+            if character_data.sp_flag.morning_salutation == 2:
+                character_data.sp_flag.morning_salutation = 0
+            if character_data.sp_flag.night_salutation == 2:
+                character_data.sp_flag.night_salutation = 0
 
     # 非角色部分
     basement.update_base_resouce_newday()
@@ -1192,14 +1194,24 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
         # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
         return 1
 
-    # 睡觉中，早安问候服务开启中，早安问候时间，则立刻结束睡觉
+    # 睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
     if (
         handle_premise.handle_action_sleep(character_id) and
         handle_premise.handle_assistant_morning_salutation_on(character_id) and
-        handle_premise.handle_morning_salutation_time(character_id)
+        handle_premise.handle_morning_salutation_flag_0(character_id)
     ):
-        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-        # print(f"debug {character_data.name}要早安问候，结束睡觉，当前时间={cache.game_time}")
-        return 1
+        # 玩家醒来时间
+        pl_character_data = cache.character_data[0]
+        judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time)
+        # 角色醒来时间
+        start_time = character_data.behavior.start_time
+        end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+        # 如果角色的行动结束时间在玩家醒来时间之后，则将行动结束时间设为玩家醒来时间
+        # 通过判定行动时间来限制只触发一次
+        if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and character_data.behavior.duration == 480:
+            new_duration = int((judge_wake_up_time - start_time).seconds / 60)
+            # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
+            character_data.behavior.duration = new_duration
+            return 1
 
     return 0

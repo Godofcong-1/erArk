@@ -241,7 +241,7 @@ msgid "晚安服务"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:9
-msgid "否|晚安吻（未实装）|晚安咬（未实装）"
+msgid "否|晚安吻|晚安咬"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:10

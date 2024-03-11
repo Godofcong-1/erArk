@@ -21,7 +21,7 @@ ai的目标,,,
 31,78,normal_1267|hp_1,1267正常（可能AI跟随、服装异常或意识模糊），hp1时，则进入要睡觉状态
 32,78,normal_1267|tired_ge_85|tired_l_100,1267正常（可能AI跟随、服装异常或意识模糊），疲劳值到85%且不到100%时，则进入要睡觉状态
 33,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态
-34,78,normal_1267|sleep_time|not_shower_time|not_morning_salutation_time,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，不是早安问候时间（玩家醒来半小时前以内），则进入要睡觉状态
+34,78,normal_1267|sleep_time|not_shower_time|assistant_salutation_of_ai_disable,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，自己的助理属性中的问候服务不影响AI行动的情况，则进入要睡觉状态
 35,502,sleep_flag_1|not_in_dor,要睡觉状态下，不在宿舍，则回宿舍
 36,44,sleep_flag_1|in_dor,要睡觉状态下，且已在宿舍，则睡觉
 37,44,tired_100,疲劳值到100%，当场直接爆睡

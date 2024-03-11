@@ -17310,8 +17310,8 @@ def handle_pl_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
-        # print("校验玩家正在睡觉")
+    last_state = character_data.last_state[-1]
+    if last_state == constant.CharacterStatus.STATUS_SLEEP:
         return 1
     return 0
 
@@ -17326,7 +17326,8 @@ def handle_pl_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[0]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    last_state = character_data.last_state[-1]
+    if last_state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
 
