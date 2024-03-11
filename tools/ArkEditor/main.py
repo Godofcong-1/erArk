@@ -175,7 +175,10 @@ def load_chara_data_to_cache():
                 sub_key = int(now_key.lstrip("T|"))
                 now_chara_data.Talent[sub_key] = now_value
             elif now_key.startswith("C|"):
-                sub_key = int(now_key.lstrip("C|"))
+                if "-" not in now_key.lstrip("C|"):
+                    sub_key = int(now_key.lstrip("C|"))
+                else:
+                    sub_key = int(now_key.lstrip("C|").split("-")[0])
                 now_chara_data.Cloth.setdefault(sub_key,[])
                 now_chara_data.Cloth[sub_key].append(now_value)
             # print(f"debug now_key = {now_key}, sub_key = {sub_key}, now_value = {now_value}")
