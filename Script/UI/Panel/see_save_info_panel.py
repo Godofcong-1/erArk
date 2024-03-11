@@ -175,8 +175,7 @@ class SaveInfoDraw:
                 re_write_save_button = draw.Button(
                     text_handle.id_index(now_id) + _("覆盖"),
                     str(now_id),
-                    cmd_func=save_handle.establish_save,
-                    args=(self.text,),
+                    cmd_func=self.re_write_save,
                 )
                 re_write_save_button.width = self.width
                 re_write_save_button.draw()
@@ -209,4 +208,38 @@ class SaveInfoDraw:
 
     def delete_save(self):
         """删除存档"""
+        # 进行二次确认
+        while 1:
+            line_feed.draw()
+            sure_draw = draw.LeftButton(_("[000]确认删除存档?"), _("0"), self.width)
+            sure_draw.draw()
+            line_feed.draw()
+            back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([sure_draw.return_text, back_draw.return_text])
+            py_cmd.clr_cmd()
+            if yrn == sure_draw.return_text:
+                break
+            elif yrn == back_draw.return_text:
+                return
         save_handle.remove_save(self.text)
+
+    def re_write_save(self):
+        """覆盖存档"""
+        # 进行二次确认
+        while 1:
+            line_feed.draw()
+            sure_draw = draw.LeftButton(_("[000]确认覆盖存档?"), _("0"), self.width)
+            sure_draw.draw()
+            line_feed.draw()
+            back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([sure_draw.return_text, back_draw.return_text])
+            py_cmd.clr_cmd()
+            if yrn == sure_draw.return_text:
+                break
+            elif yrn == back_draw.return_text:
+                return
+        save_handle.establish_save(self.text)
