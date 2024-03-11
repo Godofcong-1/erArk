@@ -1,7 +1,7 @@
 cid,name,talent_id,hypnosis_degree,introduce
 催眠类型id,名称,需要的素质id,需要的催眠程度,介绍
 int,str,int,int,str
-0,0,0,0,1
+0,1,0,0,1
 催眠类型,,,,
 
 00, 无 ,331,50,不默认催眠类型，每次催眠时手动选择

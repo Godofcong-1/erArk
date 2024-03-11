@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-07 17:15+0800\n"
+"POT-Creation-Date: 2024-03-11 11:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,31 +53,38 @@ msgid ""
 "开始检测存档的数据结构是否需要跨版本更新\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:153
+#: .\Script\Core\save_handle.py:154
+#, python-brace-format
+msgid ""
+"\n"
+"共有{cloth_update_count}个角色的服装数据已重置\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:163
 msgid ""
 "\n"
 "系统设置已重置，如有需要请手动修改\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:158
+#: .\Script\Core\save_handle.py:168
 #, python-brace-format
 msgid ""
 "\n"
 "检测完毕，共有{update_count}条数据完成了更新\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:184
+#: .\Script\Core\save_handle.py:194
 #, python-brace-format
 msgid "存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:196
+#: .\Script\Core\save_handle.py:206
 msgid ""
 "存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，"
 "新type {type(default_dict[key])}, 已设为默认值 {value}\n"
 msgstr ""
 
-#: .\Script\Design\attr_calculation.py:827
+#: .\Script\Design\attr_calculation.py:829
 msgid "需要:"
 msgstr ""
 
@@ -1310,21 +1317,21 @@ msgid ""
 "{round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1)}%\n"
 msgstr ""
 
-#: .\Script\Settle\default_cloth.py:216
+#: .\Script\Settle\default_cloth.py:217
 #, python-brace-format
 msgid ""
 "\n"
 "获得了{target_data.name}的{TPanName}，可在藏品馆里纳入收藏\n"
 msgstr ""
 
-#: .\Script\Settle\default_cloth.py:248
+#: .\Script\Settle\default_cloth.py:249
 #, python-brace-format
 msgid ""
 "\n"
 "获得了{target_data.name}的{TSocName}，可在藏品馆里纳入收藏\n"
 msgstr ""
 
-#: .\Script\Settle\default_cloth.py:281
+#: .\Script\Settle\default_cloth.py:282
 #, python-brace-format
 msgid ""
 "\n"
@@ -1574,7 +1581,8 @@ msgstr ""
 #: .\Script\UI\Panel\ability_up_panel.py:440
 #: .\Script\UI\Panel\all_npc_position_panel.py:145
 #: .\Script\UI\Panel\assistant_panel.py:53
-#: .\Script\UI\Panel\assistant_panel.py:147
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
 #: .\Script\UI\Panel\borrow_book_panel.py:156
 #: .\Script\UI\Panel\building_panel.py:149
 #: .\Script\UI\Panel\building_panel.py:255
@@ -1617,7 +1625,7 @@ msgstr ""
 #: .\Script\UI\Panel\recruit_panel.py:293
 #: .\Script\UI\Panel\resource_exchange_panel.py:160
 #: .\Script\UI\Panel\resource_exchange_panel.py:224
-#: .\Script\UI\Panel\see_character_info_panel.py:2133
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
 #: .\Script\UI\Panel\see_item_info_panel.py:107
 #: .\Script\UI\Panel\see_save_info_panel.py:67
 #: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
@@ -1629,7 +1637,8 @@ msgstr ""
 #: .\Script\UI\Panel\ability_up_panel.py:440
 #: .\Script\UI\Panel\all_npc_position_panel.py:145
 #: .\Script\UI\Panel\assistant_panel.py:53
-#: .\Script\UI\Panel\assistant_panel.py:147
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
 #: .\Script\UI\Panel\borrow_book_panel.py:156
 #: .\Script\UI\Panel\building_panel.py:149
 #: .\Script\UI\Panel\building_panel.py:255
@@ -1673,7 +1682,7 @@ msgstr ""
 #: .\Script\UI\Panel\recruit_panel.py:293
 #: .\Script\UI\Panel\resource_exchange_panel.py:160
 #: .\Script\UI\Panel\resource_exchange_panel.py:224
-#: .\Script\UI\Panel\see_character_info_panel.py:2133
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
 #: .\Script\UI\Panel\see_item_info_panel.py:107
 #: .\Script\UI\Panel\see_item_info_panel.py:184
 #: .\Script\UI\Panel\see_map_panel.py:185
@@ -1809,6 +1818,30 @@ msgstr ""
 
 #: .\Script\UI\Panel\all_npc_position_panel.py:71
 msgid "选择召集/移动方式："
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:270
+msgid "[更改小时 (24小时制) ]"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:270
+msgid "更改小时，需至少为18时"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:273
+msgid "[更改分钟]"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:273
+msgid "更改分钟"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:293
+msgid "请输入小时(24小时制)："
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:310
+msgid "请输入分钟："
 msgstr ""
 
 #: .\Script\UI\Panel\borrow_book_panel.py:32
@@ -2036,22 +2069,22 @@ msgid "角色列表"
 msgstr ""
 
 #: .\Script\UI\Panel\get_up_panel.py:96
-#: .\Script\UI\Panel\see_character_info_panel.py:2128
+#: .\Script\UI\Panel\see_character_info_panel.py:2129
 msgid "[上一人]"
 msgstr ""
 
 #: .\Script\UI\Panel\get_up_panel.py:96
-#: .\Script\UI\Panel\see_character_info_panel.py:2128
+#: .\Script\UI\Panel\see_character_info_panel.py:2129
 msgid "上一人"
 msgstr ""
 
 #: .\Script\UI\Panel\get_up_panel.py:99
-#: .\Script\UI\Panel\see_character_info_panel.py:2131
+#: .\Script\UI\Panel\see_character_info_panel.py:2132
 msgid "[下一人]"
 msgstr ""
 
 #: .\Script\UI\Panel\get_up_panel.py:99
-#: .\Script\UI\Panel\see_character_info_panel.py:2131
+#: .\Script\UI\Panel\see_character_info_panel.py:2132
 msgid "下一人"
 msgstr ""
 
@@ -2408,7 +2441,7 @@ msgstr ""
 #: .\Script\UI\Panel\see_character_info_panel.py:45
 #: .\Script\UI\Panel\see_character_info_panel.py:57
 #: .\Script\UI\Panel\see_character_info_panel.py:64
-#: .\Script\UI\Panel\see_character_info_panel.py:2134
+#: .\Script\UI\Panel\see_character_info_panel.py:2135
 msgid "基础属性"
 msgstr ""
 
@@ -2430,185 +2463,185 @@ msgstr ""
 msgid "肉体情况"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:592
+#: .\Script\UI\Panel\see_character_info_panel.py:593
 #, python-brace-format
 msgid ""
 "{character_name} 好感度:{favorability}({f_lv})，信赖度:{trust}%({t_lv}) "
 "{angry} {sleep}{urinate}{hunger}{hypnosis}"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:606
+#: .\Script\UI\Panel\see_character_info_panel.py:607
 #, python-brace-format
 msgid "{character_name}{character_nick_name}{sleep}{urinate}{eja}"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:626
+#: .\Script\UI\Panel\see_character_info_panel.py:627
 msgid "体力"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:635
+#: .\Script\UI\Panel\see_character_info_panel.py:636
 msgid "气力"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:645
+#: .\Script\UI\Panel\see_character_info_panel.py:646
 msgid "理智"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:654
+#: .\Script\UI\Panel\see_character_info_panel.py:655
 msgid "精液"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:674
+#: .\Script\UI\Panel\see_character_info_panel.py:675
 msgid "人物属性"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:734
-#: .\Script\UI\Panel\see_character_info_panel.py:756
+#: .\Script\UI\Panel\see_character_info_panel.py:735
+#: .\Script\UI\Panel\see_character_info_panel.py:757
 msgid "暂无"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:738
+#: .\Script\UI\Panel\see_character_info_panel.py:739
 msgid "宿舍位置:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:751
+#: .\Script\UI\Panel\see_character_info_panel.py:752
 msgid "办公室位置:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:785
+#: .\Script\UI\Panel\see_character_info_panel.py:786
 #, python-brace-format
 msgid "生日:{birthday_month}月{birthday_day}日"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:817
+#: .\Script\UI\Panel\see_character_info_panel.py:818
 msgid "身高:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:819
+#: .\Script\UI\Panel\see_character_info_panel.py:820
 msgid "体重:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:823
+#: .\Script\UI\Panel\see_character_info_panel.py:824
 msgid "体脂率:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:824
+#: .\Script\UI\Panel\see_character_info_panel.py:825
 msgid "罩杯:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:858
+#: .\Script\UI\Panel\see_character_info_panel.py:859
 msgid "胸围:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:859
+#: .\Script\UI\Panel\see_character_info_panel.py:860
 msgid "腰围:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:860
+#: .\Script\UI\Panel\see_character_info_panel.py:861
 msgid "臀围"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:889
+#: .\Script\UI\Panel\see_character_info_panel.py:890
 msgid "Ｎ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:890
+#: .\Script\UI\Panel\see_character_info_panel.py:891
 msgid "Ｂ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:891
+#: .\Script\UI\Panel\see_character_info_panel.py:892
 msgid "Ｃ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:892
+#: .\Script\UI\Panel\see_character_info_panel.py:893
 msgid "Ｐ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:893
+#: .\Script\UI\Panel\see_character_info_panel.py:894
 msgid "Ｖ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:894
+#: .\Script\UI\Panel\see_character_info_panel.py:895
 msgid "Ａ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:895
+#: .\Script\UI\Panel\see_character_info_panel.py:896
 msgid "Ｕ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:896
+#: .\Script\UI\Panel\see_character_info_panel.py:897
 msgid "Ｗ感觉:"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1190
+#: .\Script\UI\Panel\see_character_info_panel.py:1191
 #, python-brace-format
 msgid " 职业    ：[{profession_text}]"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1194
+#: .\Script\UI\Panel\see_character_info_panel.py:1195
 #, python-brace-format
 msgid ""
 "\n"
 " 种族    ：[{race_text}]"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1198
+#: .\Script\UI\Panel\see_character_info_panel.py:1199
 #, python-brace-format
 msgid ""
 "\n"
 " 势力    ：[{nation_text}]"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1202
+#: .\Script\UI\Panel\see_character_info_panel.py:1203
 #, python-brace-format
 msgid ""
 "\n"
 " 出身地  ：[{birthplace_text}]"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1532
+#: .\Script\UI\Panel\see_character_info_panel.py:1533
 #, python-brace-format
 msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1581
+#: .\Script\UI\Panel\see_character_info_panel.py:1582
 #, python-brace-format
 msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1608
+#: .\Script\UI\Panel\see_character_info_panel.py:1609
 #, python-brace-format
 msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1770
+#: .\Script\UI\Panel\see_character_info_panel.py:1771
 msgid "角色设置"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1778
+#: .\Script\UI\Panel\see_character_info_panel.py:1779
 #: .\Script\UI\Panel\system_setting.py:50
 msgid ""
 " \n"
 " ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1816
+#: .\Script\UI\Panel\see_character_info_panel.py:1817
 #, python-brace-format
 msgid " {button_text}(  更改{reason})"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:1825
+#: .\Script\UI\Panel\see_character_info_panel.py:1826
 msgid ""
 " \n"
 " 暂无设置\n"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:2203
+#: .\Script\UI\Panel\see_character_info_panel.py:2204
 #, python-brace-format
 msgid "体力:({character_data.hit_point}/{character_data.hit_point_max})"
 msgstr ""
 
-#: .\Script\UI\Panel\see_character_info_panel.py:2204
+#: .\Script\UI\Panel\see_character_info_panel.py:2205
 #, python-brace-format
 msgid "气力:({character_data.mana_point}/{character_data.mana_point_max})"
 msgstr ""

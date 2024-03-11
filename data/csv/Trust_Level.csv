@@ -1,7 +1,7 @@
 cid,Trust_point,judge_add
 信赖等级cid,当前等级信赖最大值,实行值加成
 int,int,int
-0,0,1
+0,0,0
 信赖等级,,
 0,0,-10
 1,25,0

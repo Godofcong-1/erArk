@@ -1,7 +1,7 @@
 cid,name,ability_level
 食物质量cid,质量名,料理技能上限
 int,str,int
-0,0,1
+0,1,0
 质量等级,,
 0,粗劣,1
 1,逊色,3

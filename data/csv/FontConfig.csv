@@ -1,7 +1,7 @@
 cid,name,foreground,background,font,font_size,bold,underline,italic,selectbackground,info
 样式id,字体名,前景色,背景色,字体,字体大小,加粗,下划线,斜体,选中时背景色,备注
 int,str,str,str,str,int,bool,bool,bool,str,str
-0,0,0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0,0,1
 字体样式配置数据(富文本用),,,,,,,,,,
 0,standard,#c8c8c8,#000,,,0,0,0,grey,默认样式
 1,order,,,,,,,,,输入框字体

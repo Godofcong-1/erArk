@@ -1,7 +1,7 @@
 cid,name,zone_cid,NPC_id,info
 设施id,设施名字,开放所需的区块等级cid,开放所需的干员id,介绍信息
 int,str,int,int,str
-0,0,0,0,1
+0,1,0,0,1
 待开放的设施一览,,,
 
 

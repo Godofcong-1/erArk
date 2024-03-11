@@ -1,7 +1,7 @@
 cid,name,level,effect,power_use,resouce_use,money_use,info
 效果id,设施名字,设施等级,设施效果数值,耗电量,升级需要的基建材料数量,升级需要的龙门币数量,介绍信息
 int,str,int,int,int,int,int,str
-0,0,0,0,0,0,0,1
+0,1,0,0,0,0,0,1
 设施在不同等级下的效果,,,,,,,
 
 001,控制中枢,1,1,100,0,0,设施最高等级为二级

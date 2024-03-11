@@ -1,7 +1,7 @@
 cid,instruct_name,need_type,value
 编号id,对应的指令名字,需求类型（D为日常，S为性爱，V为访客）,需求值
 int,str,str,int
-0,0,0,1
+0,1,0,0
 每个指令的实行值判定数据,,
 0,H模式,S,350
 1,告白,D,250

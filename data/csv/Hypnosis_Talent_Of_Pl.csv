@@ -1,7 +1,7 @@
 cid,hypnosis_talent_id,need_talent_id,pl_experience,max_hypnosis_degree,npc_hypnosis_degree,todo
 cid,该素质id,前置素质id,需要的玩家催眠经验,最高单角色催眠程度,升级需要的NPC总催眠程度,未实装
 int,int,int,int,int,int,int
-0,0,0,0,0,0,1
+0,0,0,0,0,0,0
 玩家升级催眠素质,,,,,,
 
 331,331,0,1,50,1,0

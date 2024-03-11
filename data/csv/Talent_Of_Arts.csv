@@ -1,7 +1,7 @@
 cid,talent_id,need_id,level,todo
 序号,素质id,前置需求素质id,能力等级,未实装
 int,int,int,int,int
-0,0,0,0,1
+0,0,0,0,0
 源石技艺素质,,,,
 
 01,304,0,1,0

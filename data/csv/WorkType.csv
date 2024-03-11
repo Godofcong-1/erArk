@@ -1,7 +1,7 @@
 cid,name,department,place,tag,need,describe
 模板id,工作名,工作部门,工作地点,标签,必要条件,描述
 int,str,str,str,int,str,str
-0,1,0,0,0,0,1
+0,1,1,1,0,0,1
 工作模板,,,,,,
 
 0,无,无,无,0,无,无
