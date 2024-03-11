@@ -9624,124 +9624,184 @@ msgstr ""
 msgid "各类燃料，包括化石燃料与液化源石，用来驱动罗德岛及其他载具的航行。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:20
+#: .\data\csv\Resouce.csv:19
+msgid "香料"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:19
+msgid "材料"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:19
+msgid "各类香料，用以调制香精的原料，可以用来制作各种香水。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:21
 msgid "常规药物"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:20
+#: .\data\csv\Resouce.csv:21
 msgid "药剂"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:20
+#: .\data\csv\Resouce.csv:21
 msgid "治疗非矿石病的其他常规病症，包括外伤或常见疾病。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:21
+#: .\data\csv\Resouce.csv:22
 msgid "感染抑制剂小样"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:21
+#: .\data\csv\Resouce.csv:22
 msgid "药剂"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:21
+#: .\data\csv\Resouce.csv:22
 msgid "用于应急治疗早期感染的患者，也可维持轻症患者的病情。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:22
+#: .\data\csv\Resouce.csv:23
 msgid "感染抑制合剂"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:22
+#: .\data\csv\Resouce.csv:23
 msgid "药剂"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:22
+#: .\data\csv\Resouce.csv:23
 msgid "常规治疗药剂，可有效降低血液源石结晶密度。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:23
+#: .\data\csv\Resouce.csv:24
 msgid "感染抑制剂浓缩液"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:23
+#: .\data\csv\Resouce.csv:24
 msgid "药剂"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:23
+#: .\data\csv\Resouce.csv:24
 msgid "用于紧急治疗重度矿石病发作的患者，副作用较大，但见效极快。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:25
+#: .\data\csv\Resouce.csv:26
 msgid "鲜母乳"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:25
+#: .\data\csv\Resouce.csv:26
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:25
+#: .\data\csv\Resouce.csv:26
 msgid "新鲜的母乳，味道醇美，营养丰富，可以直接饮用或用来制作各种乳制品。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:26
+#: .\data\csv\Resouce.csv:27
 msgid "母乳酸奶"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:26
+#: .\data\csv\Resouce.csv:27
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:26
+#: .\data\csv\Resouce.csv:27
 msgid "鲜母乳发酵而成的酸奶，味道酸甜可口，含有丰富的益生菌。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:27
+#: .\data\csv\Resouce.csv:28
 msgid "母乳奶片"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:27
+#: .\data\csv\Resouce.csv:28
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:27
+#: .\data\csv\Resouce.csv:28
 msgid "鲜母乳制成的奶片，粉粉干脆的口感，嚼起来有浓浓的奶香。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:28
+#: .\data\csv\Resouce.csv:29
 msgid "母乳奶酪"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:28
+#: .\data\csv\Resouce.csv:29
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:28
+#: .\data\csv\Resouce.csv:29
 msgid "鲜母乳发酵而成的奶酪，味道醇厚，营养丰富，是一种高级乳制品。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:29
+#: .\data\csv\Resouce.csv:30
 msgid "母乳奶粉"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:29
+#: .\data\csv\Resouce.csv:30
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:29
+#: .\data\csv\Resouce.csv:30
 msgid "用鲜母乳制成的奶粉，便于携带和储存，冲泡后有着接近鲜母乳的口感。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:30
+#: .\data\csv\Resouce.csv:31
 msgid "母乳冰激凌"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:30
+#: .\data\csv\Resouce.csv:31
 msgid "乳制品"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:30
+#: .\data\csv\Resouce.csv:31
 msgid "用鲜母乳和其他配料制成的各口味冰激凌，口感顺滑，甜而不腻，每一口都能感受到浓郁的奶香。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:33
+msgid "浓缩香精"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:33
+msgid "香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:33
+msgid "用各类香料提炼而成的浓缩香精，在众多领域都有着广泛的应用。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:34
+msgid "普通香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:34
+msgid "香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:34
+msgid "用浓缩香精调制而成的香水，香味过于浓郁，持久性较差。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:35
+msgid "高级香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:35
+msgid "香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:35
+msgid "用精选香料和高级香精调制而成的香水，香气适中，香味持久，是一种高级香水。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:36
+msgid "药用香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:36
+msgid "香水"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:36
+msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
 msgstr ""
 
 #: .\data\csv\Season.csv:6

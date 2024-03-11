@@ -611,6 +611,8 @@ class Resouce:
     """ 资源类型 """
     price: int
     """ 资源价格 """
+    cant_buy: int
+    """ 是否无法购买 """
     info: str
     """ 介绍信息 """
 

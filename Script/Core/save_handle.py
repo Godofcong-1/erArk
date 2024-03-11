@@ -157,6 +157,13 @@ def input_load_save(save_id: str):
     # 用新的角色预设属性代替旧的属性
     loaded_dict["npc_tem_data"] = cache.npc_tem_data
 
+    # 更新罗德岛的资源
+    for all_cid in game_config.config_resouce:
+    # 不存在的资源数量设为0
+        if all_cid not in loaded_dict["rhodes_island"].materials_resouce:
+            loaded_dict["rhodes_island"].materials_resouce[all_cid] = 0
+            update_count += 1
+
     # 重置系统设置
     if not len(loaded_dict["system_setting"]):
         loaded_dict["system_setting"] = attr_calculation.get_system_setting_zero()

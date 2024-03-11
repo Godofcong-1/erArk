@@ -63,7 +63,7 @@ class Resource_Exchange_Line_Panel:
             all_info_draw.draw()
 
             # 检测该商品是否可以购买
-            if resouce_data.type in {"药剂", "乳制品"}:
+            if resouce_data.cant_buy == 1:
                 cant_buy_flag = True
             else:
                 cant_buy_flag = False
@@ -194,7 +194,7 @@ class Resource_Exchange_Line_Panel:
                 info_draw.draw()
 
                 # 遍历全资源类型
-                resouce_list = ["材料", "药剂", "乳制品"]
+                resouce_list = ["材料", "药剂", "乳制品", "香水"]
                 for resouce_type in resouce_list:
                     info_draw.text = f"\n {resouce_type}：\n"
                     info_draw.draw()
