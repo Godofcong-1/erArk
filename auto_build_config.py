@@ -10,11 +10,15 @@ talk_dir = os.path.join("data", "talk")
 target_dir = os.path.join("data", "target")
 config_data = {}
 config_def_str = ""
-config_po = "\n"
 msgData = set()
 class_data = set()
 character_dir = os.path.join("data","character")
 character_data = {}
+ui_text_dir = os.path.join("data", "ui_text")
+ui_text_data = {}
+po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
+po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
+config_po, talk_po = "", ""
 
 
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
@@ -46,6 +50,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
         config_data[type_text].setdefault("data", [])
         config_data[type_text].setdefault("gettext", {})
         for row in now_read:
+            # 获得当前的行数
+            now_index = now_read.line_num
             if not i:
                 for k in row:
                     now_docstring_data[k] = row[k]
@@ -88,7 +94,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 elif k == "target_id" and target:
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
-                    build_config_po(row[k], type_text, k, row["cid"])
+                    build_config_po(row[k], file_path, now_index, talk)
             config_data[type_text]["data"].append(row)
         config_data[type_text]["gettext"] = get_text_data
         build_config_def(type_text, now_type_data, now_docstring_data, class_text)
@@ -97,21 +103,35 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
 def build_config_def(class_name: str, value_type: dict, docstring: dict, class_text: str):
     global config_def_str
     if class_name not in class_data:
+        # 给talk补上一个头部空行
+        if class_name == "Talk":
+            config_def_str += "\n\n"
         config_def_str += "class " + class_name + ":"
         config_def_str += '\n    """ ' + class_text + ' """\n'
         for k in value_type:
             config_def_str += "\n    " + k + ": " + value_type[k] + "\n"
             config_def_str += "    " + '""" ' + docstring[k] + ' """'
         class_data.add(class_name)
+    # 去掉因为talk的csv文件而多出的尾部空行
+    else:
+        count_flag = 0
+        for i in range(3):
+            if config_def_str[-i] == "\n":
+                count_flag += 1
+        if count_flag >= 2:
+            config_def_str = config_def_str[:-2]
 
 
-def build_config_po(message: str, message_class: str, message_type: str, message_id: str):
-    global config_po
-    if message not in msgData:
-        config_po += f"#: class:{message_class} id:{message_id} type:{message_type}\n"
+def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False):
+    global config_po, talk_po
+    if talk:
+        talk_po += f"#: .\{file_path}:{now_index}\n"
+        talk_po += f'msgid "{message}"\n'
+        talk_po += 'msgstr ""\n\n'
+    else:
+        config_po += f"#: .\{file_path}:{now_index}\n"
         config_po += f'msgid "{message}"\n'
         config_po += f'msgstr ""\n\n'
-        msgData.add(message)
 
 
 def build_scene_config(data_path):
@@ -123,20 +143,16 @@ def build_scene_config(data_path):
                 with open(now_path, "r", encoding="utf-8") as now_file:
                     scene_data = json.loads(now_file.read())
                     scene_name = scene_data["SceneName"]
-                    if scene_name not in msgData:
-                        config_po += f"#: Scene:{now_path}\n"
-                        config_po += f'msgid "{scene_name}"\n'
-                        config_po += 'msgstr ""\n\n'
-                        msgData.add(scene_name)
+                    config_po += f"#: /'{now_path}:2\n"
+                    config_po += f'msgid "{scene_name}"\n'
+                    config_po += 'msgstr ""\n\n'
             elif i == "Map.json":
                 with open(now_path, "r", encoding="utf-8") as now_file:
                     map_data = json.loads(now_file.read())
                     map_name = map_data["MapName"]
-                    if map_name not in msgData:
-                        config_po += f"#: Map:{now_path}\n"
-                        config_po += f'msgid "{map_name}"\n'
-                        config_po += 'msgstr ""\n\n'
-                        msgData.add(map_name)
+                    config_po += f"#: /'{now_path}:2\n"
+                    config_po += f'msgid "{map_name}"\n'
+                    config_po += 'msgstr ""\n\n'
         else:
             build_scene_config(now_path)
 
@@ -150,6 +166,8 @@ def build_character_config(file_path:str,file_name:str):
         # now_type_data = {}
         i = 0
         for row in now_read:
+            # 获得当前的行数
+            now_index = now_read.line_num
             if not i:
                 i += 1
                 continue
@@ -162,12 +180,55 @@ def build_character_config(file_path:str,file_name:str):
                 now_data[row["key"]] = ast.literal_eval(row["value"])
             else:
                 now_data[row["key"]] = row["value"]
-            if row["get_text"]:
-                if row["value"] not in msgData:
-                    config_po += f"#: Character:{file_id}\n"
-                    config_po += "msgid" + " " + '"' + row["value"] + '"' + "\n"
-                    config_po += 'msgstr ""\n\n'
+            if row["get_text"] and row["type"] == 'str':
+                config_po += f"#: .\{file_path}:{now_index}\n"
+                config_po += "msgid" + " " + '"' + row["value"] + '"' + "\n"
+                config_po += 'msgstr ""\n\n'
         character_data[file_id] = now_data
+
+def build_ui_text(file_path:str,file_name:str):
+    global config_po
+    with open(file_path,encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        file_id = file_name.split(".")[0]
+        now_data = {}
+        i = 0
+        for row in now_read:
+            # 获得当前的行数
+            now_index = now_read.line_num
+            i += 1
+            if i <= 4:
+                continue
+            # print(f"debug row = {row}")
+            now_data[row["cid"]] = row["context"]
+            if row["context"] not in msgData:
+                config_po += f"#: .\{file_path}:{now_index}\n"
+                config_po += "msgid" + " " + '"' + row["context"] + '"' + "\n"
+                config_po += 'msgstr ""\n\n'
+        ui_text_data[file_id] = now_data
+
+def build_po_text(po):
+    po = "\n"
+    po += '# SOME DESCRIPTIVE TITLE.\n'
+    po += '# Copyright (C) YEAR Free Software Foundation, Inc.\n'
+    po += '# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n'
+    po += '#\n'
+    po += 'msgid ""\n'
+    po += 'msgstr ""\n'
+    po += '"Project-Id-Version: PACKAGE VERSION\\n"\n'
+    po += '"Report-Msgid-Bugs-To: \\n"\n'
+    po += '"POT-Creation-Date: 2024-03-11 08:00+0800\\n"\n'
+    po += '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n'
+    po += '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"\n'
+    po += '"Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\\n"\n'
+    po += '"Language: zh_CN\\n"\n'
+    po += '"MIME-Version: 1.0\\n"\n'
+    po += '"Content-Type: text/plain; charset=UTF-8\\n"\n'
+    po += '"Content-Transfer-Encoding: 8bit\\n"\n\n'
+    return po
+
+config_po = build_po_text(config_po)
+talk_po = build_po_text(talk_po)
 
 # print("进入buildconfig.py了")
 file_list = os.listdir(config_dir)
@@ -203,6 +264,10 @@ for i in character_file_list:
     now_path = os.path.join(character_dir,i)
     build_character_config(now_path,i)
 
+ui_text_file_list = os.listdir(ui_text_dir)
+for i in ui_text_file_list:
+    now_path = os.path.join(ui_text_dir,i)
+    build_ui_text(now_path,i)
 
 event_file_list = os.listdir(event_dir)
 event_list = []
@@ -243,11 +308,24 @@ config_data_path = os.path.join("data", "data.json")
 with open(config_data_path, "w", encoding="utf-8") as config_data_file:
     json.dump(config_data, config_data_file, ensure_ascii=0)
 
+ui_text_data_path = os.path.join("data", "ui_text.json")
+with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
+    json.dump(ui_text_data, ui_text_data_file, ensure_ascii=0)
+
 # package_path = os.path.join("package.json")
 # with open(package_path, "w", encoding="utf-8") as package_file:
 #     now_time = datetime.datetime.now()
 #     version = f"{now_time.year}.{now_time.month}.{now_time.day}"
 #     version_data = {"version": version}
 #     json.dump(version_data, package_file, ensure_ascii=0)
+
+
+# print(f"debug config_po = {config_po}")
+# 将po文件写入po_path
+with open(po_csv_path, "w", encoding="utf-8") as po_file:
+    po_file.write(config_po)
+
+with open(po_talk_path, "w", encoding="utf-8") as po_file:
+    po_file.write(talk_po)
 
 print("Config Building End")
