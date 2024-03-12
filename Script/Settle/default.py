@@ -4924,8 +4924,8 @@ def handle_add_hpmp_max(
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        add_hp = 10 * random.uniform(0.75, 1.25)
-        add_mp = 20 * random.uniform(0.75, 1.25)
+        add_hp = int(10 * random.uniform(0.75, 1.25))
+        add_mp = int(20 * random.uniform(0.75, 1.25))
         target_data.hit_point_max += add_hp
         target_data.mana_point_max += add_mp
         # 如果和玩家位于同一地点，则输出提示信息
