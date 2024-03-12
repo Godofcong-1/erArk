@@ -1,10 +1,8 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import manage_basement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -33,11 +31,12 @@ class Resource_Exchange_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
+        self.show_resource_type_dict: Dict = {"材料": False, "药剂": False, "乳制品": False, "香水": False}
 
     def draw(self):
         """绘制对象"""
 
-        title_text = "资源交易"
+        title_text = _("资源交易")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         self.now_select_resouce_id = 11
@@ -52,12 +51,12 @@ class Resource_Exchange_Line_Panel:
             all_info_draw = draw.NormalDraw()
             now_text = ""
             money = cache.rhodes_island.materials_resouce[1]
-            now_text += f"\n  当前龙门币数量    ：{money}"
+            now_text += _(f"\n  当前龙门币数量    ：{money}")
 
             resouce_data  = game_config.config_resouce[self.now_select_resouce_id]
             now_resouce_stock = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
             warehouse_capacity = cache.rhodes_island.warehouse_capacity
-            now_text += f"\n\n  要交易的资源为    ：{resouce_data.name}({now_resouce_stock}/{warehouse_capacity})    "
+            now_text += _(f"\n\n  要交易的资源为    ：{resouce_data.name}({now_resouce_stock}/{warehouse_capacity})    ")
             all_info_draw.text = now_text
             all_info_draw.width = self.width
             all_info_draw.draw()
@@ -68,7 +67,7 @@ class Resource_Exchange_Line_Panel:
             else:
                 cant_buy_flag = False
 
-            button_text = " [更改交易资源] "
+            button_text = _(" [更改交易资源] ")
             button_draw = draw.CenterButton(
                 _(button_text),
                 _(f"{button_text}"),
@@ -78,7 +77,7 @@ class Resource_Exchange_Line_Panel:
             return_list.append(button_draw.return_text)
             button_draw.draw()
 
-            all_info_draw.text = f"\n\n  要交易的数量为    ：{self.quantity_of_resouce}    "
+            all_info_draw.text = _(f"\n\n  要交易的数量为    ：{self.quantity_of_resouce}    ")
             all_info_draw.draw()
 
             # 绘制数量变更按钮
@@ -94,7 +93,7 @@ class Resource_Exchange_Line_Panel:
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
 
-            button_text = " [重置] "
+            button_text = _(" [重置] ")
             button_draw = draw.CenterButton(
                 _(button_text),
                 _(f"{button_text}"),
@@ -108,11 +107,11 @@ class Resource_Exchange_Line_Panel:
             price = resouce_data.price
             price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
             price = int(price)
-            all_info_draw.text = f"\n\n  交易的价格为      ："
+            all_info_draw.text = _(f"\n\n  交易的价格为      ：")
             all_info_draw.draw()
 
             # 绘制买入还是卖出的按钮
-            button_text = " [买入] " if self.buy_or_sell_flag else " [卖出] "
+            button_text = _(" [买入] ") if self.buy_or_sell_flag else _(" [卖出] ")
             button_draw = draw.CenterButton(
                 _(button_text),
                 _(f"{button_text}"),
@@ -124,22 +123,22 @@ class Resource_Exchange_Line_Panel:
 
             # 无法买入的，不显示价格
             if (self.buy_or_sell_flag and not cant_buy_flag) or not self.buy_or_sell_flag:
-                all_info_draw.text = f" {price}龙门币/1单位 "
+                all_info_draw.text = _(f" {price}龙门币/1单位 ")
                 all_info_draw.draw()
             line_feed.draw()
 
             # 输出总价
             if self.buy_or_sell_flag:
-                all_info_draw.text = f"\n  ○预计共花费{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
+                all_info_draw.text = _(f"\n  ○预计共花费{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n")
                 if price * self.quantity_of_resouce > money:
-                    all_info_draw.text += "  ●龙门币不足，无法购买\n"
+                    all_info_draw.text += _("  ●龙门币不足，无法购买\n")
                 # 如果是不可购买的则显示提示
                 if cant_buy_flag:
-                    all_info_draw.text = "\n  ●该资源无法购买，只能卖出\n"
+                    all_info_draw.text = _("\n  ●该资源无法购买，只能卖出\n")
             else:
-                all_info_draw.text = f"\n  ○预计共获得{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
+                all_info_draw.text = _(f"\n  ○预计共获得{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n")
                 if self.quantity_of_resouce > now_resouce_stock:
-                    all_info_draw.text += "  ●资源不足，无法出售\n"
+                    all_info_draw.text += _("  ●资源不足，无法出售\n")
             all_info_draw.draw()
 
             line_feed.draw()
@@ -176,7 +175,7 @@ class Resource_Exchange_Line_Panel:
 
 
     def select_exchange_resouce(self):
-        """选择流水线生产的产品"""
+        """选择交易资源"""
         while 1:
 
                 line = draw.LineDraw("-", window_width)
@@ -188,17 +187,35 @@ class Resource_Exchange_Line_Panel:
 
                 resouce_now_data = game_config.config_resouce[self.now_select_resouce_id]
 
-                info_text = f"当前的交易资源为：{resouce_now_data.name}"
-                info_text += "\n当前可以交易的资源有：\n"
+                info_text = _(f"当前的交易资源为：{resouce_now_data.name}")
+                info_text += _("\n当前可以交易的资源有：\n")
                 info_draw.text = info_text
                 info_draw.draw()
+                line_feed.draw()
 
                 # 遍历全资源类型
                 resouce_list = ["材料", "药剂", "乳制品", "香水"]
                 for resouce_type in resouce_list:
-                    info_draw.text = f"\n {resouce_type}：\n"
-                    info_draw.draw()
+
+                    # 判断是否显示该类型的资源
+                    if self.show_resource_type_dict[resouce_type]:
+                        draw_text = f" ▼[{resouce_type}]"
+                    else:
+                        draw_text = f" ▶[{resouce_type}]"
+                    button_draw = draw.LeftButton(
+                    f"{draw_text}",
+                    f"{resouce_type}",
+                    len(draw_text) * 2,
+                    cmd_func=self.settle_show_resource_type,
+                    args=(resouce_type)
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                    line_feed.draw()
+
                     # 遍历该类型的资源
+                    if not self.show_resource_type_dict[resouce_type]:
+                        continue
                     for resouce_id in game_config.config_resouce:
                         resouce_data  = game_config.config_resouce[resouce_id]
                         if resouce_data.type == resouce_type:
@@ -212,11 +229,11 @@ class Resource_Exchange_Line_Panel:
                             button_draw.draw()
                             return_list.append(button_draw.return_text)
 
-                            now_text = f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}"
+                            now_text = _(f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}")
                             # 判断是否可以买入卖出
                             if resouce_type not in {"药剂", "乳制品"}:
-                                now_text += f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位"
-                            now_text += f"   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n"
+                                now_text += _(f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位")
+                            now_text += _(f"   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n")
                             info_draw.text = now_text
                             info_draw.draw()
 
@@ -226,7 +243,7 @@ class Resource_Exchange_Line_Panel:
                 line_feed.draw()
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
+                if yrn in return_list and yrn not in resouce_list:
                     break
 
     def settle_now_select_resouce_id(self, resouce_id):
@@ -257,3 +274,7 @@ class Resource_Exchange_Line_Panel:
     def settle_buy_or_sell(self):
         """切换买入和卖出"""
         self.buy_or_sell_flag = not self.buy_or_sell_flag
+
+    def settle_show_resource_type(self, resouce_type):
+        """设置显示的资源类型"""
+        self.show_resource_type_dict[resouce_type] = not self.show_resource_type_dict[resouce_type]
