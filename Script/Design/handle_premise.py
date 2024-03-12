@@ -13508,8 +13508,8 @@ def handle_t_not_wear_gloves(character_id: int) -> int:
     return 1
 
 
-@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_UP)
-def handle_t_not_wear_in_up(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_DOWN)
+def handle_t_not_wear_in_down(character_id: int) -> int:
     """
     交互对象没有穿着下衣
     Keyword arguments:
