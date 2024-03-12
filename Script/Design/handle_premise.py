@@ -252,7 +252,7 @@ def handle_not_shower_time(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SLEEP_TIME)
 def handle_sleep_time(character_id: int) -> int:
     """
-    睡觉时间（晚上10点到早上6点）
+    角色行动开始时间为睡觉时间（晚上10点到早上6点）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -266,6 +266,21 @@ def handle_sleep_time(character_id: int) -> int:
         # print(f"debug {character_data.name}的睡觉前提判定，当前时间为{character_data.behavior.start_time}")
         # print(f"成功进入睡觉前提if，返回值为{(now_hour-21) *100}")
         return (now_hour - 21) * 100
+    return 0
+
+
+@add_premise(constant_promise.Premise.GAME_TIME_IS_SLEEP_TIME)
+def handle_game_time_is_sleep_time(character_id: int) -> int:
+    """
+    游戏系统时间为睡觉时间（晚上10点到早上6点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_hour = cache.game_time.hour
+    if now_hour in {0, 1, 2, 3, 4, 5, 22, 23}:
+        return 1
     return 0
 
 

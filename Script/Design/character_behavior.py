@@ -165,7 +165,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
@@ -1188,7 +1188,7 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
         handle_premise.handle_tired_le_0(character_id) and
         handle_premise.handle_hp_max(character_id) and
         handle_premise.handle_mp_max(character_id) and
-        not handle_premise.handle_sleep_time(character_id)
+        not handle_premise.handle_game_time_is_sleep_time(character_id)
     ):
         judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
         # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")

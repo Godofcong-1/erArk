@@ -268,7 +268,8 @@ launch_time,LAUNCH_TIME,时间_当前,午饭饭点（中午12~13点）
 dinner_time,DINNER_TIME,时间_当前,晚饭饭点（晚上18~19点）
 shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 not_shower_time,NOT_SHOWER_TIME,时间_当前,非淋浴时间（淋浴时间是晚上8点到晚上12点）
-sleep_time,SLEEP_TIME,时间_当前,睡觉时间（晚上10点到早上6点）
+sleep_time,SLEEP_TIME,时间_当前,角色行动开始时间为睡觉时间（晚上10点到早上6点）
+game_time_is_sleep_time,GAME_TIME_IS_SLEEP_TIME,时间_当前,游戏系统时间为睡觉时间（晚上10点到早上6点）
 tired_ge_75_or_sleep_time,TIRED_GE_75_OR_SLEEP_TIME,时间_当前,疲劳条≥75%或到了睡觉的时间
 to_work_time,TO_WORK_TIME,时间_当前,到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00）
 work_time,WORK_TIME,时间_当前,工作时间（工作日早上9:00~中午12:00，下午14:00~下午18:00）
@@ -281,6 +282,8 @@ time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
 morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来半小时前以内，权重50）
 not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来半小时前以内）
+night_salutation_time,NIGHT_SALUTATION_TIME,时间_当前,当前是晚安问候时间（计划睡觉时间之后，权重50）
+not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是晚安问候时间（计划睡觉时间之后）
 
 
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态
@@ -396,7 +399,7 @@ assistant_night_salutation_0,ASSISTANT_NIGHT_SALUTATION_0,属性_助理,自己�
 assistant_night_salutation_on,ASSISTANT_NIGHT_SALUTATION_ON,属性_助理,自己的助理属性中的晚安问候服务开启中
 assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
 assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
-assistant_salutation_of_ai_disable,ASSISTANT_SALUTATION_OF_AI_DISABLE,属性_助理,自己的助理属性中的问候服务不影响AI吃饭的情况（包括未开启，开启但当前非问候时间）
+assistant_salutation_of_ai_disable,ASSISTANT_SALUTATION_OF_AI_DISABLE,属性_助理,自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间）
 
 jj_0,JJ_0,属性_身体部位,自身阴茎大小为短小
 jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通
@@ -473,7 +476,7 @@ help_make_food_flag_1,HELP_MAKE_FOOD_FLAG_1,属性_特殊flag,自身要做饭状
 help_make_food_flag_2,HELP_MAKE_FOOD_FLAG_2,属性_特殊flag,自身做饭后要送饭状态
 morning_salutation_flag_0,MORIING_SALUTATION_FLAG_0,属性_特殊flag,自身没有早安问候状态
 morning_salutation_flag_1,MORIING_SALUTATION_FLAG_1,属性_特殊flag,自身要早安问候状态（权重100）
-morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,属性_特殊flag,自身已早安问候状态
+morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,属性_特殊flag,自身已早安问候状态（权重100）
 night_salutation_flag_0,NIGHT_SALUTATION_FLAG_0,属性_特殊flag,自身没有晚安问候状态
 night_salutation_flag_1,NIGHT_SALUTATION_FLAG_1,属性_特殊flag,自身要晚安问候状态（权重100）
 night_salutation_flag_2,NIGHT_SALUTATION_FLAG_2,属性_特殊flag,自身已晚安问候状态
