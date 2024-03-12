@@ -844,6 +844,10 @@ class Rhodes_Island:
 
         # 教育区
 
+        # 疗养庭院
+        self.agriculture_line: Dict[int, Tuple[int, set, int ,int]] = {}
+        """ 农业生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
         self.shop_max: int = 0
