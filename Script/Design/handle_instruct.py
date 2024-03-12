@@ -1409,6 +1409,9 @@ def handle_collect():
             if npc_id == 0:
                 continue
             for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
+                # 如果该内裤不存在，则跳过
+                if pan_id not in game_config.config_clothing_tem:
+                    continue
                 pan_name = game_config.config_clothing_tem[pan_id].name
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
@@ -1428,6 +1431,9 @@ def handle_collect():
             if npc_id == 0:
                 continue
             for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
+                # 如果该袜子不存在，则跳过
+                if socks_id not in game_config.config_clothing_tem:
+                    continue
                 socks_name = game_config.config_clothing_tem[socks_id].name
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
