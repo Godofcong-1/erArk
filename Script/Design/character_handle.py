@@ -44,7 +44,6 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # print("生成阶段，character_id :",character_id)
     # print("character_id=",character_id)
     now_character = game_type.Character()
-    pl_character_data = cache.character_data[0]
     now_character.cid = character_id
     now_character.name = character_tem.Name
     # 检测基础干员并加入已有干员列表
@@ -85,10 +84,12 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
         #     print(f"debug {character_tem.Name} cloth_wear = {now_character.cloth.cloth_wear}")
     # print(f"debug {character_tem.Name} cloth_wear = {now_character.cloth.cloth_wear}")
     # 生成藏品
-    pl_character_data.pl_collection.token_list[character_id] = False
-    pl_character_data.pl_collection.first_panties[character_id] = ""
-    pl_character_data.pl_collection.npc_panties[character_id] = []
-    pl_character_data.pl_collection.npc_socks[character_id] = []
+    if 0 in cache.character_data:
+        pl_character_data = cache.character_data[0]
+        pl_character_data.pl_collection.token_list[character_id] = False
+        pl_character_data.pl_collection.first_panties[character_id] = ""
+        pl_character_data.pl_collection.npc_panties[character_id] = []
+        pl_character_data.pl_collection.npc_socks[character_id] = []
     # 文本颜色
     if character_tem.TextColor:
         now_character.text_color = character_tem.TextColor
@@ -97,6 +98,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
     # 最后集成
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)
+    return cache.character_data[character_id]
 
 
 def first_NPC_work():

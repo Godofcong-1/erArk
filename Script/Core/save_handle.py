@@ -13,7 +13,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config, game_config
-from Script.Design import attr_calculation, clothing
+from Script.Design import attr_calculation, clothing, character_handle
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -156,6 +156,14 @@ def input_load_save(save_id: str):
         now_draw.draw()
     # 用新的角色预设属性代替旧的属性
     loaded_dict["npc_tem_data"] = cache.npc_tem_data
+    # 遍历角色预设，如果有键在预设中但不在角色属性中，将其添加到角色属性中
+    for i in range(len(loaded_dict["npc_tem_data"])):
+        now_id = i + 1
+        now_npc_data = loaded_dict["npc_tem_data"][i]
+        if now_id not in loaded_dict["character_data"]:
+            new_npc_data = character_handle.init_character(now_id, now_npc_data)
+            loaded_dict["character_data"][now_id] = new_npc_data
+            update_count += 1
 
     # 更新罗德岛的资源
     for all_cid in game_config.config_resouce:
