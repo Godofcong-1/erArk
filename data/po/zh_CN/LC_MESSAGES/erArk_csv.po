@@ -12781,31 +12781,43 @@ msgid "陈，龙门高级警司，龙门近卫局特别督察组组长，毕业�
 msgstr ""
 
 #: .\data\character\0010_陈.csv:30
-msgid "蓝黑色龙门警署制服外套"
+msgid "黄色领带"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:31
-msgid "白色制服衬衫"
+msgid "蓝黑色龙门警署制服外套"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:32
-msgid "蓝黑色制服短裤"
+msgid "白色制服衬衫"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:33
-msgid "黑色露指手套"
+msgid "蓝黑色制服短裤"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:34
-msgid "厚高跟作战靴"
+msgid "黑色露指手套"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:35
-msgid "短袜"
+msgid "厚高跟作战靴"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:36
+msgid "短袜"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:37
 msgid "小腿护具"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:38
+msgid "赤霄与近卫局制式长剑"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:39
+msgid "半片式绑腿"
 msgstr ""
 
 #: .\data\character\0012_米莎.csv:4
@@ -12882,6 +12894,10 @@ msgstr ""
 
 #: .\data\character\0017_煌.csv:35
 msgid "黑色作战靴"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:36
+msgid "链锯"
 msgstr ""
 
 #: .\data\character\0056_特蕾西娅.csv:4
@@ -12977,7 +12993,7 @@ msgid "黑色丝巾"
 msgstr ""
 
 #: .\data\character\0079_阿丽娜.csv:27
-msgid "黑白双色民族风格连衣长裙"
+msgid "深灰色长衫"
 msgstr ""
 
 #: .\data\character\0079_阿丽娜.csv:28
@@ -12985,11 +13001,67 @@ msgid "黑白双色民族风格连衣长裙"
 msgstr ""
 
 #: .\data\character\0079_阿丽娜.csv:29
-msgid "白色小腿袜"
+msgid "黑白双色民族风格连衣长裙"
 msgstr ""
 
 #: .\data\character\0079_阿丽娜.csv:30
+msgid "白色小腿袜"
+msgstr ""
+
+#: .\data\character\0079_阿丽娜.csv:31
 msgid "黑色皮靴"
+msgstr ""
+
+#: .\data\character\0079_阿丽娜.csv:32
+msgid "戒指角饰"
+msgstr ""
+
+#: .\data\character\0101_空.csv:4
+msgid "空"
+msgstr ""
+
+#: .\data\character\0101_空.csv:12
+msgid "无"
+msgstr ""
+
+#: .\data\character\0101_空.csv:13
+msgid "一片CD，是空作为偶像出道时发售的单曲CD。虽然是一首儿童向的卡通歌曲，但依然能感受到空她想要努力唱好的心境。"
+msgstr ""
+
+#: .\data\character\0101_空.csv:14
+msgid "一位偽裝成魯珀的卡特斯偶像。希望能用她的歌聲帶來和平"
+msgstr ""
+
+#: .\data\character\0101_空.csv:26
+msgid "紅色領帶"
+msgstr ""
+
+#: .\data\character\0101_空.csv:27
+msgid "黑色馬甲"
+msgstr ""
+
+#: .\data\character\0101_空.csv:28
+msgid "白色寬邊袖上衣"
+msgstr ""
+
+#: .\data\character\0101_空.csv:29
+msgid "黑色翻摺手套"
+msgstr ""
+
+#: .\data\character\0101_空.csv:30
+msgid "三色澎澎裙"
+msgstr ""
+
+#: .\data\character\0101_空.csv:31
+msgid "白色過膝袜"
+msgstr ""
+
+#: .\data\character\0101_空.csv:32
+msgid "白色長馬靴"
+msgstr ""
+
+#: .\data\character\0101_空.csv:33
+msgid "麥克風"
 msgstr ""
 
 #: .\data\character\0102_德克萨斯.csv:4
@@ -15410,6 +15482,46 @@ msgstr ""
 
 #: .\data\character\0220_格拉尼.csv:14
 msgid "格拉尼，维多利亚骑警，在突袭战，机动作战，纵深作战等高速运动战领域表现出了较高的天赋。现以合约干员身份为罗德岛各行动组提供支援，并主动承担罗德岛及周边地区的义务巡逻与防卫协助等工作。"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:15
+msgid "#fffff0"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:29
+msgid "半透明遮光罩"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:30
+msgid "黑色絲帶"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:31
+msgid "維多利亞騎警制服"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:32
+msgid "洋紅色襯衫"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:33
+msgid "雙色女士手套"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:34
+msgid "開口馬裤"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:35
+msgid "黑色短袜"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:36
+msgid "深灰色運動鞋"
+msgstr ""
+
+#: .\data\character\0220_格拉尼.csv:37
+msgid "摺疊騎槍"
 msgstr ""
 
 #: .\data\character\0222_风笛.csv:4
