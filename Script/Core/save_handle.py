@@ -156,14 +156,8 @@ def input_load_save(save_id: str):
         now_draw.draw()
     # 用新的角色预设属性代替旧的属性
     loaded_dict["npc_tem_data"] = cache.npc_tem_data
-    # 遍历角色预设，如果有键在预设中但不在角色属性中，将其添加到角色属性中
-    for i in range(len(loaded_dict["npc_tem_data"])):
-        now_id = i + 1
-        now_npc_data = loaded_dict["npc_tem_data"][i]
-        if now_id not in loaded_dict["character_data"]:
-            new_npc_data = character_handle.init_character(now_id, now_npc_data)
-            loaded_dict["character_data"][now_id] = new_npc_data
-            update_count += 1
+    # 更新新角色
+    update_count += update_new_character(loaded_dict)
 
     # 更新罗德岛的资源
     for all_cid in game_config.config_resouce:
@@ -269,6 +263,28 @@ def update_chara_cloth(value):
         # print(f"debug new value.cloth.cloth_wear = {value.cloth.cloth_wear}")
         return 1
     return 0
+
+
+def update_new_character(loaded_dict):
+    """
+    更新新角色
+    Keyword arguments:
+    loaded_dict -- 存档数据
+    """
+    update_count = 0
+    # 遍历角色预设，如果该角色在预设中但不在角色属性中，将其添加到需要增加的角色属性中
+    add_new_character_list = [now_npc_data for now_npc_data in loaded_dict["npc_tem_data"] 
+                              if not any(char_data.adv == now_npc_data.AdvNpc for char_data in loaded_dict["character_data"].values())]
+
+    # 新增该角色
+    len_old_character = len(loaded_dict["character_data"])
+    for i, now_npc_data in enumerate(add_new_character_list):
+        new_character_cid = len_old_character + i
+        new_character = character_handle.init_character(new_character_cid, now_npc_data)
+        loaded_dict["character_data"][new_character_cid] = new_character
+        update_count += 1
+
+    return update_count
 
 
 def remove_save(save_id: str):
