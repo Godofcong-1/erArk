@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import basement, attr_calculation
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel
+from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -110,6 +110,7 @@ class Manage_Basement_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
+        self.show_resource_type_dict: Dict = {"货币": True,"材料": False, "药剂": False, "乳制品": False, "香水": False}
 
     def draw(self):
         """绘制对象"""
@@ -123,6 +124,7 @@ class Manage_Basement_Panel:
             "贸易区":"[资源交易系统]",
             "文职部":"[招募系统]",
             "访客区":"[邀请访客系统]",
+            "疗养庭院":"[农业系统]",
             }
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -160,24 +162,48 @@ class Manage_Basement_Panel:
             # 罗德岛资源总览
             if self.now_panel == "罗德岛资源总览":
 
-                self.resouce_list = ["货币", "材料", "药剂", "乳制品"]
+                self.resouce_list = ["货币", "材料", "药剂", "乳制品", "香水"]
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
-                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
+                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n\n"
+                all_info_draw.width = self.width
+                all_info_draw.draw()
 
                 # 遍历全资源类型
                 for resouce in self.resouce_list:
-                    all_info_draw.text += f"\n {resouce}："
+
+                    # 判断是否显示该类型的资源
+                    if self.show_resource_type_dict[resouce]:
+                        draw_text = f" ▼[{resouce}]"
+                    else:
+                        draw_text = f" ▶[{resouce}]"
+                    button_draw = draw.LeftButton(
+                    f"{draw_text}",
+                    f"{resouce}",
+                    len(draw_text) * 2,
+                    cmd_func=self.settle_show_resource_type,
+                    args=(resouce)
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                    line_feed.draw()
+
+                    if not self.show_resource_type_dict[resouce]:
+                        line_feed.draw()
+                        continue
+
                     # 遍历该类型的资源
+                    all_info_draw = draw.NormalDraw()
+                    all_info_draw.width = self.width
+                    all_info_draw.text = ""
                     for material_id in cache.rhodes_island.materials_resouce:
                         material_data  = game_config.config_resouce[material_id]
                         if material_data.type == resouce:
                             all_info_draw.text += f"\n  {material_data.name}：{cache.rhodes_island.materials_resouce[material_id]}"
                     all_info_draw.text += "\n"
-
-                all_info_draw.width = self.width
-                all_info_draw.draw()
+                    all_info_draw.draw()
+                    line_feed.draw()
 
             # 各部门工作概况
             elif self.now_panel == "各部门工作概况":
@@ -295,6 +321,8 @@ class Manage_Basement_Panel:
                 now_panel =recruit_panel.Recruit_Panel(self.width)
         elif "邀请访客系统" in son_panel:
             now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
+        elif "农业系统" in son_panel:
+            now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
         now_panel.draw()
 
     def show_department(self, department: str):
@@ -411,6 +439,10 @@ class Manage_Basement_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+
+    def settle_show_resource_type(self, resouce_type):
+        """设置显示的资源类型"""
+        self.show_resource_type_dict[resouce_type] = not self.show_resource_type_dict[resouce_type]
 
 
 class ChangeWorkButtonList:

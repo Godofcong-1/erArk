@@ -6073,7 +6073,7 @@ msgid "疗养庭院"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:103
-msgid "开放基础设施:【香熏治疗室】和【莱娜的憩所】"
+msgid "开放基础设施:【农田】"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:104
@@ -6089,7 +6089,7 @@ msgid "疗养庭院"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:105
-msgid "开放新设施:【农田】（未实装），生产效率加成提升至20%"
+msgid "开放新设施:【香熏治疗室】（未实装），生产效率加成提升至20%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:106
@@ -6573,7 +6573,7 @@ msgid "暂无"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:26
-msgid "农田"
+msgid "香熏治疗室"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:26
@@ -10281,7 +10281,7 @@ msgid "制造产品"
 msgstr ""
 
 #: .\data\csv\Status.csv:78
-msgid "干员助理做饭"
+msgid "种植与养护作物"
 msgstr ""
 
 #: .\data\csv\Status.csv:79
@@ -10309,562 +10309,566 @@ msgid "晚安问候：晚安咬"
 msgstr ""
 
 #: .\data\csv\Status.csv:85
-msgid "摸头"
+msgid "干员助理做饭"
 msgstr ""
 
 #: .\data\csv\Status.csv:86
-msgid "摸胸"
+msgid "摸头"
 msgstr ""
 
 #: .\data\csv\Status.csv:87
-msgid "摸屁股"
+msgid "摸胸"
 msgstr ""
 
 #: .\data\csv\Status.csv:88
-msgid "摸耳朵"
+msgid "摸屁股"
 msgstr ""
 
 #: .\data\csv\Status.csv:89
-msgid "摸角"
+msgid "摸耳朵"
 msgstr ""
 
 #: .\data\csv\Status.csv:90
-msgid "摸尾巴"
+msgid "摸角"
 msgstr ""
 
 #: .\data\csv\Status.csv:91
-msgid "摸光环"
+msgid "摸尾巴"
 msgstr ""
 
 #: .\data\csv\Status.csv:92
-msgid "摸光翼"
+msgid "摸光环"
 msgstr ""
 
 #: .\data\csv\Status.csv:93
-msgid "摸触手"
+msgid "摸光翼"
 msgstr ""
 
 #: .\data\csv\Status.csv:94
-msgid "摸小车"
+msgid "摸触手"
 msgstr ""
 
 #: .\data\csv\Status.csv:95
-msgid "牵手"
+msgid "摸小车"
 msgstr ""
 
 #: .\data\csv\Status.csv:96
-msgid "拥抱"
+msgid "牵手"
 msgstr ""
 
 #: .\data\csv\Status.csv:97
-msgid "亲吻"
+msgid "拥抱"
 msgstr ""
 
 #: .\data\csv\Status.csv:98
-msgid "膝枕"
+msgid "亲吻"
 msgstr ""
 
 #: .\data\csv\Status.csv:99
-msgid "掀起裙子"
+msgid "膝枕"
 msgstr ""
 
 #: .\data\csv\Status.csv:100
-msgid "索要内裤"
+msgid "掀起裙子"
 msgstr ""
 
 #: .\data\csv\Status.csv:101
-msgid "索要袜子"
+msgid "索要内裤"
 msgstr ""
 
 #: .\data\csv\Status.csv:102
-msgid "阴蒂爱抚"
+msgid "索要袜子"
 msgstr ""
 
 #: .\data\csv\Status.csv:103
-msgid "手指插入（V）"
-msgstr ""
-
-#: .\data\csv\Status.csv:104
-msgid "手指插入（A）"
-msgstr ""
-
-#: .\data\csv\Status.csv:105
-msgid "挤奶"
-msgstr ""
-
-#: .\data\csv\Status.csv:106
-msgid "闻内衣"
-msgstr ""
-
-#: .\data\csv\Status.csv:107
-msgid "偷走内裤"
-msgstr ""
-
-#: .\data\csv\Status.csv:108
-msgid "偷走袜子"
-msgstr ""
-
-#: .\data\csv\Status.csv:109
-msgid "装袋搬走"
-msgstr ""
-
-#: .\data\csv\Status.csv:110
-msgid "投入监牢"
-msgstr ""
-
-#: .\data\csv\Status.csv:111
-msgid "解除囚禁"
-msgstr ""
-
-#: .\data\csv\Status.csv:112
-msgid "进入H状态"
-msgstr ""
-
-#: .\data\csv\Status.csv:113
-msgid "结束H"
-msgstr ""
-
-#: .\data\csv\Status.csv:114
-msgid "邀请H失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:115
-msgid "H时博士体力为零中断"
-msgstr ""
-
-#: .\data\csv\Status.csv:116
-msgid "H时交互对象体力为零中断"
-msgstr ""
-
-#: .\data\csv\Status.csv:117
-msgid "H时被人目击闯入中断"
-msgstr ""
-
-#: .\data\csv\Status.csv:118
-msgid "告白"
-msgstr ""
-
-#: .\data\csv\Status.csv:119
-msgid "告白失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:120
-msgid "戴上项圈"
-msgstr ""
-
-#: .\data\csv\Status.csv:121
-msgid "戴上项圈失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:122
-msgid "目睹玩家与其他角色H"
-msgstr ""
-
-#: .\data\csv\Status.csv:123
-msgid "亲吻失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:124
-msgid "重度猥亵失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:125
-msgid "轻度猥亵失败"
-msgstr ""
-
-#: .\data\csv\Status.csv:126
-msgid "身体爱抚"
-msgstr ""
-
-#: .\data\csv\Status.csv:127
-msgid "接吻"
-msgstr ""
-
-#: .\data\csv\Status.csv:128
-msgid "胸爱抚"
-msgstr ""
-
-#: .\data\csv\Status.csv:129
-msgid "玩弄乳头"
-msgstr ""
-
-#: .\data\csv\Status.csv:130
-msgid "舔吸乳头"
-msgstr ""
-
-#: .\data\csv\Status.csv:131
 msgid "阴蒂爱抚"
 msgstr ""
 
+#: .\data\csv\Status.csv:104
+msgid "手指插入（V）"
+msgstr ""
+
+#: .\data\csv\Status.csv:105
+msgid "手指插入（A）"
+msgstr ""
+
+#: .\data\csv\Status.csv:106
+msgid "挤奶"
+msgstr ""
+
+#: .\data\csv\Status.csv:107
+msgid "闻内衣"
+msgstr ""
+
+#: .\data\csv\Status.csv:108
+msgid "偷走内裤"
+msgstr ""
+
+#: .\data\csv\Status.csv:109
+msgid "偷走袜子"
+msgstr ""
+
+#: .\data\csv\Status.csv:110
+msgid "装袋搬走"
+msgstr ""
+
+#: .\data\csv\Status.csv:111
+msgid "投入监牢"
+msgstr ""
+
+#: .\data\csv\Status.csv:112
+msgid "解除囚禁"
+msgstr ""
+
+#: .\data\csv\Status.csv:113
+msgid "进入H状态"
+msgstr ""
+
+#: .\data\csv\Status.csv:114
+msgid "结束H"
+msgstr ""
+
+#: .\data\csv\Status.csv:115
+msgid "邀请H失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:116
+msgid "H时博士体力为零中断"
+msgstr ""
+
+#: .\data\csv\Status.csv:117
+msgid "H时交互对象体力为零中断"
+msgstr ""
+
+#: .\data\csv\Status.csv:118
+msgid "H时被人目击闯入中断"
+msgstr ""
+
+#: .\data\csv\Status.csv:119
+msgid "告白"
+msgstr ""
+
+#: .\data\csv\Status.csv:120
+msgid "告白失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:121
+msgid "戴上项圈"
+msgstr ""
+
+#: .\data\csv\Status.csv:122
+msgid "戴上项圈失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:123
+msgid "目睹玩家与其他角色H"
+msgstr ""
+
+#: .\data\csv\Status.csv:124
+msgid "亲吻失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:125
+msgid "重度猥亵失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:126
+msgid "轻度猥亵失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:127
+msgid "身体爱抚"
+msgstr ""
+
+#: .\data\csv\Status.csv:128
+msgid "接吻"
+msgstr ""
+
+#: .\data\csv\Status.csv:129
+msgid "胸爱抚"
+msgstr ""
+
+#: .\data\csv\Status.csv:130
+msgid "玩弄乳头"
+msgstr ""
+
+#: .\data\csv\Status.csv:131
+msgid "舔吸乳头"
+msgstr ""
+
 #: .\data\csv\Status.csv:132
-msgid "掰开阴唇观察"
+msgid "阴蒂爱抚"
 msgstr ""
 
 #: .\data\csv\Status.csv:133
-msgid "掰开肛门观察"
+msgid "掰开阴唇观察"
 msgstr ""
 
 #: .\data\csv\Status.csv:134
-msgid "舔阴"
+msgid "掰开肛门观察"
 msgstr ""
 
 #: .\data\csv\Status.csv:135
-msgid "舔肛"
+msgid "舔阴"
 msgstr ""
 
 #: .\data\csv\Status.csv:136
-msgid "手指插入(V)"
+msgid "舔肛"
 msgstr ""
 
 #: .\data\csv\Status.csv:137
-msgid "手指插入(A)"
+msgid "手指插入(V)"
 msgstr ""
 
 #: .\data\csv\Status.csv:138
-msgid "命令对方自慰"
+msgid "手指插入(A)"
 msgstr ""
 
 #: .\data\csv\Status.csv:139
-msgid "命令对方舔自己肛门"
+msgid "命令对方自慰"
 msgstr ""
 
 #: .\data\csv\Status.csv:140
-msgid "什么也不做"
+msgid "命令对方舔自己肛门"
 msgstr ""
 
 #: .\data\csv\Status.csv:141
-msgid "诱惑对方"
+msgid "什么也不做"
 msgstr ""
 
 #: .\data\csv\Status.csv:142
-msgid "手交"
+msgid "诱惑对方"
 msgstr ""
 
 #: .\data\csv\Status.csv:143
-msgid "口交"
+msgid "手交"
 msgstr ""
 
 #: .\data\csv\Status.csv:144
-msgid "乳交"
+msgid "口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:145
-msgid "足交"
+msgid "乳交"
 msgstr ""
 
 #: .\data\csv\Status.csv:146
-msgid "发交"
+msgid "足交"
 msgstr ""
 
 #: .\data\csv\Status.csv:147
-msgid "腋交"
+msgid "发交"
 msgstr ""
 
 #: .\data\csv\Status.csv:148
-msgid "素股"
+msgid "腋交"
 msgstr ""
 
 #: .\data\csv\Status.csv:149
-msgid "手交口交"
+msgid "素股"
 msgstr ""
 
 #: .\data\csv\Status.csv:150
-msgid "乳交口交"
+msgid "手交口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:151
-msgid "真空口交"
+msgid "乳交口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:152
-msgid "深喉插入"
+msgid "真空口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:153
-msgid "六九式"
+msgid "深喉插入"
 msgstr ""
 
 #: .\data\csv\Status.csv:154
-msgid "腿交"
+msgid "六九式"
 msgstr ""
 
 #: .\data\csv\Status.csv:155
-msgid "尾交"
+msgid "腿交"
 msgstr ""
 
 #: .\data\csv\Status.csv:156
-msgid "阴茎蹭脸"
+msgid "尾交"
 msgstr ""
 
 #: .\data\csv\Status.csv:157
-msgid "阴茎蹭角"
+msgid "阴茎蹭脸"
 msgstr ""
 
 #: .\data\csv\Status.csv:158
-msgid "阴茎蹭耳朵"
+msgid "阴茎蹭角"
 msgstr ""
 
 #: .\data\csv\Status.csv:159
-msgid "润滑液"
+msgid "阴茎蹭耳朵"
 msgstr ""
 
 #: .\data\csv\Status.csv:160
-msgid "事前避孕药"
+msgid "润滑液"
 msgstr ""
 
 #: .\data\csv\Status.csv:161
-msgid "事后避孕药"
+msgid "事前避孕药"
 msgstr ""
 
 #: .\data\csv\Status.csv:162
-msgid "媚药"
+msgid "事后避孕药"
 msgstr ""
 
 #: .\data\csv\Status.csv:163
-msgid "灌肠液"
+msgid "媚药"
 msgstr ""
 
 #: .\data\csv\Status.csv:164
-msgid "一次性利尿剂"
+msgid "灌肠液"
 msgstr ""
 
 #: .\data\csv\Status.csv:165
-msgid "持续性利尿剂"
+msgid "一次性利尿剂"
 msgstr ""
 
 #: .\data\csv\Status.csv:166
-msgid "安眠药"
+msgid "持续性利尿剂"
 msgstr ""
 
 #: .\data\csv\Status.csv:167
-msgid "排卵促进药"
+msgid "安眠药"
 msgstr ""
 
 #: .\data\csv\Status.csv:168
-msgid "戴上避孕套"
+msgid "排卵促进药"
 msgstr ""
 
 #: .\data\csv\Status.csv:169
-msgid "低温蜡烛"
+msgid "戴上避孕套"
 msgstr ""
 
 #: .\data\csv\Status.csv:170
-msgid "尿道棉棒"
+msgid "低温蜡烛"
 msgstr ""
 
 #: .\data\csv\Status.csv:171
-msgid "乳头跳蛋"
+msgid "尿道棉棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:172
-msgid "戴上乳头夹"
+msgid "乳头跳蛋"
 msgstr ""
 
 #: .\data\csv\Status.csv:173
-msgid "阴蒂跳蛋"
+msgid "戴上乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:174
-msgid "戴上阴蒂夹"
+msgid "阴蒂跳蛋"
 msgstr ""
 
 #: .\data\csv\Status.csv:175
-msgid "电动按摩棒"
+msgid "戴上阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:176
-msgid "V插入震动棒"
+msgid "电动按摩棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:177
-msgid "加粗震动棒"
+msgid "V插入震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:178
-msgid "巨型震动棒"
+msgid "加粗震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:179
-msgid "A插入震动棒"
+msgid "巨型震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:180
-msgid "加粗肛门震动棒"
+msgid "A插入震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:181
-msgid "巨型肛门震动棒"
+msgid "加粗肛门震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:182
-msgid "灌肠"
+msgid "巨型肛门震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:183
-msgid "肛塞"
+msgid "灌肠"
 msgstr ""
 
 #: .\data\csv\Status.csv:184
-msgid "塞入肛门拉珠"
+msgid "肛塞"
 msgstr ""
 
 #: .\data\csv\Status.csv:185
-msgid "拔出肛塞"
+msgid "塞入肛门拉珠"
 msgstr ""
 
 #: .\data\csv\Status.csv:186
-msgid "取下乳头夹"
+msgid "拔出肛塞"
 msgstr ""
 
 #: .\data\csv\Status.csv:187
-msgid "取下阴蒂夹"
+msgid "取下乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:188
-msgid "拔出震动棒"
+msgid "取下阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:189
-msgid "拔出肛门震动棒"
+msgid "拔出震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:190
-msgid "拔出肛门拉珠"
+msgid "拔出肛门震动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:191
-msgid "正常位"
+msgid "拔出肛门拉珠"
 msgstr ""
 
 #: .\data\csv\Status.csv:192
-msgid "背后位"
+msgid "正常位"
 msgstr ""
 
 #: .\data\csv\Status.csv:193
-msgid "骑乘位"
+msgid "背后位"
 msgstr ""
 
 #: .\data\csv\Status.csv:194
-msgid "对面座位"
+msgid "骑乘位"
 msgstr ""
 
 #: .\data\csv\Status.csv:195
-msgid "背面座位"
+msgid "对面座位"
 msgstr ""
 
 #: .\data\csv\Status.csv:196
-msgid "对面立位"
+msgid "背面座位"
 msgstr ""
 
 #: .\data\csv\Status.csv:197
-msgid "背面立位"
+msgid "对面立位"
 msgstr ""
 
 #: .\data\csv\Status.csv:198
-msgid "刺激G点"
+msgid "背面立位"
 msgstr ""
 
 #: .\data\csv\Status.csv:199
-msgid "玩弄子宫口"
+msgid "刺激G点"
 msgstr ""
 
 #: .\data\csv\Status.csv:200
-msgid "插入子宫"
+msgid "玩弄子宫口"
 msgstr ""
 
 #: .\data\csv\Status.csv:201
-msgid "正常位肛交"
+msgid "插入子宫"
 msgstr ""
 
 #: .\data\csv\Status.csv:202
-msgid "后背位肛交"
+msgid "正常位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:203
-msgid "骑乘位肛交"
+msgid "后背位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:204
-msgid "对面座位肛交"
+msgid "骑乘位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:205
-msgid "背面座位肛交"
+msgid "对面座位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:206
-msgid "对面立位肛交"
+msgid "背面座位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:207
-msgid "背面立位肛交"
+msgid "对面立位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:208
-msgid "玩弄s状结肠"
+msgid "背面立位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:209
+msgid "玩弄s状结肠"
+msgstr ""
+
+#: .\data\csv\Status.csv:210
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\data\csv\Status.csv:211
+#: .\data\csv\Status.csv:212
 msgid "装上搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:212
+#: .\data\csv\Status.csv:213
 msgid "采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:213
+#: .\data\csv\Status.csv:214
 msgid "绳子"
 msgstr ""
 
-#: .\data\csv\Status.csv:214
+#: .\data\csv\Status.csv:215
 msgid "眼罩"
 msgstr ""
 
-#: .\data\csv\Status.csv:215
+#: .\data\csv\Status.csv:216
 msgid "鞭子"
 msgstr ""
 
-#: .\data\csv\Status.csv:216
+#: .\data\csv\Status.csv:217
 msgid "针"
 msgstr ""
 
-#: .\data\csv\Status.csv:218
+#: .\data\csv\Status.csv:219
 msgid "取下搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:220
+#: .\data\csv\Status.csv:221
 msgid "脱衣服"
 msgstr ""
 
-#: .\data\csv\Status.csv:222
+#: .\data\csv\Status.csv:223
 msgid "开启透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:223
+#: .\data\csv\Status.csv:224
 msgid "关闭透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:224
+#: .\data\csv\Status.csv:225
 msgid "开启信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:225
+#: .\data\csv\Status.csv:226
 msgid "关闭信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:226
+#: .\data\csv\Status.csv:227
 msgid "单人催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:227
+#: .\data\csv\Status.csv:228
 msgid "集体催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:228
+#: .\data\csv\Status.csv:229
 msgid "解除催眠"
 msgstr ""
 
@@ -12617,18 +12621,34 @@ msgid "听老师讲课"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
+msgid "种植员（实装中）"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:20
+msgid "疗养庭院"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:20
+msgid "农田"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:20
+msgid "在农田里种植药材等农作物"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:21
 msgid "按摩师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "大浴场"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "浴场休息区"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 

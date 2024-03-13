@@ -3,6 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,221,0,high_1,{Name}触发了早安问候：叫起床的地文
-1,222,0,high_1,{Name}触发了早安问候：早安吻的地文
-2,223,0,high_1,{Name}触发了早安问候：早安咬的地文
+0,251,0,high_1,{Name}触发了早安问候：叫起床的地文
+1,252,0,high_1,{Name}触发了早安问候：早安吻的地文
+2,253,0,high_1,{Name}触发了早安问候：早安咬的地文

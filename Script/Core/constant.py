@@ -149,20 +149,22 @@ class CharacterStatus:
     """ 干员工作做饭 """
     STATUS_PRODUCE = 218
     """ 制造产品 """
-    STATUS_NPC_ASSISTANT_COOK = 219
-    """ 干员助理做饭 """
-    STATUS_MORNING_SALUTATION_1 = 221
+    STATUS_PLANT_MANAGE_CROP = 219
+    """ 种植与养护作物 """
+    STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
-    STATUS_MORNING_SALUTATION_2 = 222
+    STATUS_MORNING_SALUTATION_2 = 252
     """ 早安问候：早安吻 """
-    STATUS_MORNING_SALUTATION_3 = 223
+    STATUS_MORNING_SALUTATION_3 = 253
     """ 早安问候：早安咬 """
-    STATUS_NIGHT_SALUTATION_1 = 224
+    STATUS_NIGHT_SALUTATION_1 = 254
     """ 晚安问候：催睡觉 """
-    STATUS_NIGHT_SALUTATION_2 = 225
+    STATUS_NIGHT_SALUTATION_2 = 255
     """ 晚安问候：晚安吻 """
-    STATUS_NIGHT_SALUTATION_3 = 226
+    STATUS_NIGHT_SALUTATION_3 = 256
     """ 晚安问候：晚安咬 """
+    STATUS_NPC_ASSISTANT_COOK = 261
+    """ 干员助理做饭 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -609,20 +611,22 @@ class Behavior:
     """ 干员工作做饭 """
     PRODUCE = 218
     """ 制造产品 """
-    NPC_ASSISTANT_COOK = 219
-    """ 干员助理做饭 """
-    MORNING_SALUTATION_1 = 221
+    PLANT_MANAGE_CROP = 219
+    """ 种植与养护作物 """
+    MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
-    MORNING_SALUTATION_2 = 222
+    MORNING_SALUTATION_2 = 252
     """ 早安问候：早安吻 """
-    MORNING_SALUTATION_3 = 223
+    MORNING_SALUTATION_3 = 253
     """ 早安问候：早安咬 """
-    NIGHT_SALUTATION_1 = 224
+    NIGHT_SALUTATION_1 = 254
     """ 晚安问候：催睡觉 """
-    NIGHT_SALUTATION_2 = 225
+    NIGHT_SALUTATION_2 = 255
     """ 晚安问候：晚安吻 """
-    NIGHT_SALUTATION_3 = 226
+    NIGHT_SALUTATION_3 = 256
     """ 晚安问候：晚安咬 """
+    NPC_ASSISTANT_COOK = 261
+    """ 干员助理做饭 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -1032,6 +1036,8 @@ class StateMachine:
     """ 工作：按摩（自动寻找对象） """
     WORK_INVITE_VISITOR = 314
     """ 工作：邀请访客 """
+    WORK_PLANT_MANAGE_CROP = 315
+    """ 工作：种植与养护作物 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1192,6 +1198,8 @@ class StateMachine:
     """ 移动至铁匠铺 """
     MOVE_TO_DIPLOMATIC_OFFICE = 631
     """ 移动至外交官办公室 """
+    MOVE_TO_FARMLAND = 641
+    """ 移动至农田 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """
@@ -1811,6 +1819,8 @@ class Instruct:
     """ 管理图书馆 """
     MANAGE_ASSEMBLY_LINE = 0
     """ 管理流水线 """
+    MANAGE_FARM = 0
+    """ 管理农田 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
     NAVIGATION = 0

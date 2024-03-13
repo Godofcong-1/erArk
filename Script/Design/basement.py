@@ -57,9 +57,16 @@ def get_base_zero() -> dict:
     base_data.last_visitor_time = cache.game_time
 
     # 初始化流水线
-    base_data.recruit_line[0] = [0,0,set(),0]
     base_data.assembly_line[0] = [0,set(),0,0,0]
+
+    # 初始化招募
+    base_data.recruit_line[0] = [0,0,set(),0]
+
+    # 初始化邀请
     base_data.invite_visitor = [0,0,0]
+
+    # 初始化农田
+    base_data.agriculture_line[0] = [0,set(),0,0,0]
 
     # 初始化公务工作
     base_data.office_work += 200
@@ -194,6 +201,8 @@ def update_base_resouce_newday():
     settle_milk()
     # 结算流水线
     settle_assembly_line(newdayflag=True)
+    # 结算农业生产
+    settle_agriculture_line()
     # 结算访客抵达和离开
     settle_visitor_arrivals_and_departures()
     # 结算收入
@@ -387,6 +396,48 @@ def settle_assembly_line(newdayflag = False):
 
         # 重置收菜时间
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
+
+
+def settle_agriculture_line():
+    """
+    结算农业的生产
+    """
+    
+    # 遍历流水线
+    for agriculture_line_id in cache.rhodes_island.agriculture_line:
+        now_formula_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+        if now_formula_id != 0:
+            resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+            resouce_data = game_config.config_resouce[resouce_id]
+
+            # 每天生产一次
+            max_time = 1
+            produce_effect = cache.rhodes_island.agriculture_line[agriculture_line_id][2]
+            # 公务的总效率
+            produce_effect *= cache.rhodes_island.effectiveness / 100
+            # 计算最大生产数
+            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num = produce_num_max
+            # print(f"debug 流水线{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+
+            # 结算实际生产
+            if produce_num > 0:
+                # 结算实际生产的产品
+                cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+
+                now_text = f"\n 农田{agriculture_line_id}:今日共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
+                # 不会超过仓库容量
+                if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
+                    cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
+                    now_text += f"，由于仓库容量不足，{game_config.config_resouce[resouce_id].name}已达上限数量{cache.rhodes_island.warehouse_capacity}"
+                now_text += f"\n"
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = now_text
+                now_draw.draw()
+
+        # 重置收菜时间
+        cache.rhodes_island.agriculture_line[agriculture_line_id][4] = cache.game_time.hour
 
 
 def update_recruit():

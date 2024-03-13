@@ -13,7 +13,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config, game_config
-from Script.Design import attr_calculation, clothing, character_handle
+from Script.Design import attr_calculation, clothing, character_handle, basement
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -131,6 +131,7 @@ def input_load_save(save_id: str):
     """
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
+    new_cache.rhodes_island = basement.get_base_zero()
     character_data_type = game_type.Character()
     update_count = 0
 
