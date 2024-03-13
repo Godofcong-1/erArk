@@ -225,7 +225,7 @@ class Agriculture_Production_Panel:
             for chara_id in id_list:
                 character_data: game_type.Character = cache.character_data[chara_id]
                 # 找到职业是生产种植员的
-                if character_data.work.work_type == 121:
+                if character_data.work.work_type == 161:
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
                     button_text = f" [{character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)] "
                     button_draw = draw.CenterButton(
@@ -239,9 +239,9 @@ class Agriculture_Production_Panel:
                     return_list.append(button_draw.return_text)
                     flag_not_empty = True
 
-            # 如果没有工作是生产工人的干员则输出提示
+            # 如果没有工作是种植员的干员则输出提示
             if not flag_not_empty:
-                now_text = f" 暂无工作是生产工人的干员"
+                now_text = f" 暂无工作是种植员的干员"
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 

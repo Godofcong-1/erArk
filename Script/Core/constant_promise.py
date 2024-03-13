@@ -1644,6 +1644,8 @@ class Premise:
     """ 属性_工作 自己的工作为按摩师 """
     WORK_IS_DIPLOMAT = "work_is_diplomat"
     """ 属性_工作 自己的工作为外交官 """
+    WORK_IS_PLANTER = "work_is_planter"
+    """ 属性_工作 自己的工作为种植员 """
 
     ENTERTAINMENT_IS_READ = "entertainment_is_read"
     """ 属性_娱乐 自己当前时段的娱乐为读书 """

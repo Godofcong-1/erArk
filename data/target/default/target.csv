@@ -117,6 +117,10 @@ ai的目标,,,
 382,631,normal_all|work_is_diplomat|work_time|not_in_diplomatic_office,正常状态下，工作是外交官，在工作时间，如果不在外交官办公室，则去外交官办公室
 383,314,normal_all|work_is_diplomat|work_time|in_diplomatic_office|visitor_zone_have_target,正常状态下，工作是外交官，在工作时间，如果在外交官办公室，已选择邀请对象，则开始邀请访客
 
+391,641,normal_all|work_is_planter|to_work_time|not_in_farmland,正常状态下，工作是种植员，在到岗时间，如果不在农田，则去农田
+392,641,normal_all|work_is_planter|work_time|not_in_farmland,正常状态下，工作是种植员，在工作时间，如果不在农田，则去农田
+393,315,normal_all|work_is_planter|work_time|in_farmland,正常状态下，工作是种植员，在工作时间，如果在农田，则开始种植与养护作物
+
 401,552,normal_all|all_entertainment_time|entertainment_is_read|not_in_library,正常状态下，全娱乐时间，娱乐是读书，不在图书馆，则去图书馆
 402,401,normal_all|all_entertainment_time|entertainment_is_read|in_library,正常状态下，全娱乐时间，娱乐是读书，在图书馆，则读书
 

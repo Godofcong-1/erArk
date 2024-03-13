@@ -55,7 +55,7 @@ class Invite_Visitor_Panel:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     live_room = character_data.dormitory.split("\\")[-1]
                     leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[chara_id])
-                    now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}，居住房间：{live_room}，离开时间：{leav_time}\n"
+                    now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}，居住房间：{live_room}，离开{leav_time}\n"
                 now_text += f"\n"
 
             all_info_draw.text = now_text

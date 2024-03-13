@@ -9609,6 +9609,19 @@ def handle_work_is_diplomat(character_id: int) -> int:
     return character_data.work.work_type == 131
 
 
+@add_premise(constant_promise.Premise.WORK_IS_PLANTER)
+def handle_work_is_planter(character_id: int) -> int:
+    """
+    自己的工作为种植员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 161
+
+
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
 def handle_entertainment_is_read(character_id: int) -> int:
     """
