@@ -437,6 +437,9 @@ class SeeInstructPanel:
             if cache.instruct_type_filter[
                 now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
+                    # 如果该指令不存在，则置为存在
+                    if instruct not in cache.instruct_index_filter:
+                        cache.instruct_index_filter[instruct] = 1
                     # 如果在过滤列表里，则过滤
                     if not cache.instruct_index_filter[instruct]:
                         continue
