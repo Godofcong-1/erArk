@@ -35,7 +35,7 @@ def change_npc_work_out(width):
         # 遍历创建全部门的面板
         department_panels = []
         for department_name in range(len(department_names)+1):
-            department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 9, width, 1, 0, 0))
+            department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 8, width, 1, 0, 0))
 
         line = draw.LineDraw("-", width)
         line.draw()
@@ -45,7 +45,7 @@ def change_npc_work_out(width):
         return_list = []
 
         # 空闲干员
-        info_text = f"\n  空闲干员：\n"
+        info_text = _(f"\n  空闲干员：\n")
         info_draw.text = info_text
         info_draw.draw()
         idle_npc_list = []
@@ -79,7 +79,11 @@ def change_npc_work_out(width):
                 if work_type_data.department == department:
                     if len(cache.rhodes_island.all_work_npc_set[work_type_id]):
                         department_panels[department_count].text_list += list(cache.rhodes_island.all_work_npc_set[work_type_id])
-            n_flag = False if len(department_panels[department_count].text_list) else True
+            if len(department_panels[department_count].text_list):
+                n_flag = False
+                line_feed.draw()
+            else:
+                n_flag = True
             department_panels[department_count].update()
             department_panels[department_count].draw()
             return_list.extend(department_panels[department_count].return_list)
@@ -115,8 +119,8 @@ class Manage_Basement_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "管理罗德岛"
-        panel_list = [("罗德岛资源总览"), ("各部门工作概况"), ("全干员一览")]
+        title_text = _("管理罗德岛")
+        panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
             "工程部":"[基建系统]",
             "制造加工区":"[生产系统]",
@@ -221,8 +225,8 @@ class Manage_Basement_Panel:
                 patient_now = cache.rhodes_island.patient_now
                 work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
-                all_info_draw.text = f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}"
-                all_info_draw.text += f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n"
+                all_info_draw.text = _(f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}")
+                all_info_draw.text += _(f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n")
                 all_info_draw.draw()
 
                 # 遍历全部门
