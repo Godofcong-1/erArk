@@ -143,7 +143,7 @@ def input_name_panel() -> bool:
         if now_name.isdigit():
             not_num_error.draw()
             continue
-        if now_name in get_text.translation_values or now_name in get_text.translation._catalog:
+        if now_name in get_text.translation_values:
             not_system_error.draw()
             continue
         if now_name in cache.npc_name_data:
