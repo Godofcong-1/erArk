@@ -116,6 +116,9 @@ class All_Npc_Position_Panel:
                     # 输出跟随信息
                     if character_data.sp_flag.is_follow == 1:
                         now_draw_text += "(跟)"
+                    # 输出访客信息
+                    if npc_id in cache.rhodes_island.visitor_info:
+                        now_draw_text += "(访)"
                     # 输出地点信息
                     now_draw_text += f":{scene_position_str}   "
 
