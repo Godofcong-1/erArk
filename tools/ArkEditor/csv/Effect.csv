@@ -172,6 +172,11 @@ cid,effect_name,effect_type,effect
 338,ADD_1_Hypnosis_EXPERIENCE,属性_经验,增加1催眠经验
 339,TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,交互对象增加1被催眠经验
 340,PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,场景内所有其他角色均增加1被催眠经验
+341,ADD_1_Agriculture_EXPERIENCE,属性_经验,增加1农业经验
+342,ADD_1_Create_EXPERIENCE,属性_经验,增加1制造经验
+343,ADD_1_Paint_EXPERIENCE,属性_经验,增加1绘画经验
+344,ADD_1_Read_EXPERIENCE,属性_经验,增加1阅读经验
+345,ADD_1_Read_H_EXPERIENCE,属性_经验,增加1H书阅读经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
@@ -233,6 +238,7 @@ cid,effect_name,effect_type,effect
 516,EAT_ADD_ADJUST,指令_专用结算,（进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物食用
 518,INVITE_VISITOR_ADD_ADJUST,指令_专用结算,（邀请访客用）根据发起者(如果有的话再加上交互对象)的话术技能增加邀请槽
 519,MILK_ADD_ADJUST,指令_专用结算,（挤奶用）把交互对象的乳汁转移到厨房的冰箱里
+520,SALUTATION_3_ADD_ADJUST,指令_专用结算,（早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

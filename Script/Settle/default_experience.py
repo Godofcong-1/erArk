@@ -3214,6 +3214,136 @@ def handle_place_all_chara_add_1_been_hypnosis_experience(
         target_change.experience[123] += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Agriculture_EXPERIENCE)
+def handle_add_1_agriculture_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1农业经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(89, 0)
+    character_data.experience[89] += 1
+    change_data.experience.setdefault(89, 0)
+    change_data.experience[89] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Create_EXPERIENCE)
+def handle_add_1_create_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1制造经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(90, 0)
+    character_data.experience[90] += 1
+    change_data.experience.setdefault(90, 0)
+    change_data.experience[90] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Paint_EXPERIENCE)
+def handle_add_1_paint_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1制造经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(91, 0)
+    character_data.experience[91] += 1
+    change_data.experience.setdefault(91, 0)
+    change_data.experience[91] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Read_EXPERIENCE)
+def handle_add_1_read_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1阅读经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(92, 0)
+    character_data.experience[92] += 1
+    change_data.experience.setdefault(92, 0)
+    change_data.experience[92] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Read_H_EXPERIENCE)
+def handle_add_1_read_h_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1阅读经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(93, 0)
+    character_data.experience[93] += 1
+    change_data.experience.setdefault(93, 0)
+    change_data.experience[93] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.Both_ADD_1_Learn_EXPERIENCE)
 def handle_both_add_1_learn_experience(
         character_id: int,

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 13:53+0800\n"
+"POT-Creation-Date: 2024-03-14 17:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -265,6 +265,7 @@ msgid "导航"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:472
+#: .\Script\UI\Panel\manage_basement_panel.py:122
 msgid "管理罗德岛"
 msgstr ""
 
@@ -547,7 +548,7 @@ msgstr ""
 #: .\Script\Design\handle_instruct.py:1697
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\agriculture_production_panel.py:285
+#: .\Script\UI\Panel\agriculture_production_panel.py:281
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:357
 #: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
 #: .\Script\UI\Panel\resource_exchange_panel.py:156
@@ -1585,9 +1586,9 @@ msgstr ""
 #: .\Script\UI\Flow\creator_character_flow.py:608
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:127
-#: .\Script\UI\Panel\agriculture_production_panel.py:181
-#: .\Script\UI\Panel\agriculture_production_panel.py:289
+#: .\Script\UI\Panel\agriculture_production_panel.py:126
+#: .\Script\UI\Panel\agriculture_production_panel.py:180
+#: .\Script\UI\Panel\agriculture_production_panel.py:285
 #: .\Script\UI\Panel\all_npc_position_panel.py:148
 #: .\Script\UI\Panel\assistant_panel.py:53
 #: .\Script\UI\Panel\assistant_panel.py:150
@@ -1612,10 +1613,10 @@ msgstr ""
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:169
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:253
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:361
-#: .\Script\UI\Panel\manage_basement_panel.py:89
-#: .\Script\UI\Panel\manage_basement_panel.py:307
-#: .\Script\UI\Panel\manage_basement_panel.py:455
-#: .\Script\UI\Panel\manage_basement_panel.py:583
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
 #: .\Script\UI\Panel\manage_library.py:108
 #: .\Script\UI\Panel\manage_library.py:160
 #: .\Script\UI\Panel\manage_library.py:215
@@ -1644,9 +1645,9 @@ msgstr ""
 #: .\Script\UI\Flow\creator_character_flow.py:608
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:127
-#: .\Script\UI\Panel\agriculture_production_panel.py:181
-#: .\Script\UI\Panel\agriculture_production_panel.py:289
+#: .\Script\UI\Panel\agriculture_production_panel.py:126
+#: .\Script\UI\Panel\agriculture_production_panel.py:180
+#: .\Script\UI\Panel\agriculture_production_panel.py:285
 #: .\Script\UI\Panel\all_npc_position_panel.py:148
 #: .\Script\UI\Panel\assistant_panel.py:53
 #: .\Script\UI\Panel\assistant_panel.py:150
@@ -1672,10 +1673,10 @@ msgstr ""
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:169
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:253
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:361
-#: .\Script\UI\Panel\manage_basement_panel.py:89
-#: .\Script\UI\Panel\manage_basement_panel.py:307
-#: .\Script\UI\Panel\manage_basement_panel.py:455
-#: .\Script\UI\Panel\manage_basement_panel.py:583
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
 #: .\Script\UI\Panel\manage_library.py:108
 #: .\Script\UI\Panel\manage_library.py:160
 #: .\Script\UI\Panel\manage_library.py:215
@@ -1783,6 +1784,14 @@ msgstr ""
 msgid " -【断开连接】-"
 msgstr ""
 
+#: .\Script\UI\Flow\title_flow.py:62
+msgid "|            服务器            |"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:63
+msgid "|          泰拉(if_h)          |"
+msgstr ""
+
 #: .\Script\UI\Moudle\panel.py:165
 #, python-brace-format
 msgid "输入的字符超长，最大{input_max}个英文字符，请重试。"
@@ -1800,7 +1809,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\agriculture_production_panel.py:285
+#: .\Script\UI\Panel\agriculture_production_panel.py:281
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:357
 #: .\Script\UI\Panel\recruit_panel.py:288
 #: .\Script\UI\Panel\resource_exchange_panel.py:156
@@ -1814,13 +1823,113 @@ msgid "属性升级"
 msgstr ""
 
 #: .\Script\UI\Panel\agriculture_production_panel.py:32
+#: .\Script\UI\Panel\agriculture_production_panel.py:40
 msgid "农业生产"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:78
-#: .\Script\UI\Panel\agriculture_production_panel.py:265
+#: .\Script\UI\Panel\agriculture_production_panel.py:49
+#, python-brace-format
+msgid ""
+" 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上"
+"限）：{cache.rhodes_island.warehouse_capacity}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:71
+#: .\Script\UI\Panel\agriculture_production_panel.py:254
+#, python-brace-format
+msgid ""
+"\n"
+"    当前生产：{resouce_data.name}(10/d)      "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:74
+msgid " [生产调整] "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:77
+#: .\Script\UI\Panel\agriculture_production_panel.py:261
 #, python-brace-format
 msgid "{button_text}_{agriculture_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:91
+#, python-brace-format
+msgid ""
+"\n"
+"    当前效率加成：设施(lv{now_level}:{facility_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:97
+#: .\Script\UI\Panel\agriculture_production_panel.py:275
+#, python-brace-format
+msgid ""
+" + {character_data.name}(农业lv{character_data.ability[47]}:"
+"{character_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:104
+msgid "[001]种植员增减"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:115
+msgid "[002]位置调整"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:150
+#, python-brace-format
+msgid " 农田当前种植的是：{resouce_data.name}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:152
+msgid ""
+"\n"
+"\n"
+" 当前可以种植的有：\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:208
+msgid "未选择"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:211
+msgid ""
+"\n"
+"○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号农田调整到 "
+"{self.target_position + 1} 号农田"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:216
+msgid ""
+"\n"
+"可选种植员有：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:229
+#, python-brace-format
+msgid ""
+" [{character_data.name}(农业lv{character_data.ability[47]}:"
+"{character_effect}%)] "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:243
+msgid " 暂无工作是种植员的干员"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:250
+msgid ""
+"\n"
+" 农田："
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:258
+msgid " [将选择种植员调整至该农田] "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:270
+msgid ""
+"\n"
+"    当前种植员："
 msgstr ""
 
 #: .\Script\UI\Panel\all_npc_position_panel.py:44
@@ -2144,8 +2253,38 @@ msgstr ""
 msgid "{button_text}_{assembly_line_id}"
 msgstr ""
 
-#: .\Script\UI\Panel\manage_basement_panel.py:109
+#: .\Script\UI\Panel\manage_basement_panel.py:48
+msgid ""
+"\n"
+"  空闲干员：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:113
+#: .\Script\UI\Panel\manage_basement_panel.py:123
 msgid "罗德岛资源总览"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:123
+msgid "各部门工作概况"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:123
+msgid "全干员一览"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:228
+#, python-brace-format
+msgid ""
+"\n"
+" 当前工作中干员/总干员：{work_people_now}/{people_max}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:229
+msgid ""
+"\n"
+" ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的"
+"空白部门\n"
+"\n"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_library.py:156

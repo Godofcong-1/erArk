@@ -340,6 +340,16 @@ class BehaviorEffect:
     """ 属性_经验 交互对象增加1被催眠经验 """
     PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE = 340
     """ 属性_经验 场景内所有其他角色均增加1被催眠经验 """
+    ADD_1_Agriculture_EXPERIENCE = 341
+    """ 属性_经验 增加1农业经验 """
+    ADD_1_Create_EXPERIENCE = 342
+    """ 属性_经验 增加1制造经验 """
+    ADD_1_Paint_EXPERIENCE = 343
+    """ 属性_经验 增加1绘画经验 """
+    ADD_1_Read_EXPERIENCE = 344
+    """ 属性_经验 增加1阅读经验 """
+    ADD_1_Read_H_EXPERIENCE = 345
+    """ 属性_经验 增加1H书阅读经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 属性_经验 双方增加1学识经验 """
 

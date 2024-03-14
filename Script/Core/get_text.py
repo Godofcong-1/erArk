@@ -6,7 +6,8 @@ from Script.Config import normal_config
 
 po_data = os.path.join("data", "po")
 """ po文件路径 """
-now_language = normal_config.config_normal.language
+# 如果language在normal_config.config_normal中，就使用normal_config.config_normal.language，否则使用zh_CN
+now_language = normal_config.config_normal.language if hasattr(normal_config.config_normal, 'language') else "zh_CN"
 # print(now_language)
 
 # 如果是中文，不进行翻译，直接返回原文，否则进行翻译

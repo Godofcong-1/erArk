@@ -59,8 +59,8 @@ def draw_logo():
     logo_text = []
     logo_text.append("┌------------------------------┐")
     logo_text.append("|                              |")
-    logo_text.append("|            服务器            |")
-    logo_text.append("|          泰拉(if_h)          |")
+    logo_text.append(_("|            服务器            |"))
+    logo_text.append(_("|          泰拉(if_h)          |"))
     logo_text.append("|                              |")
     logo_text.append("|                              |")
     logo_text.append("|    #                         |")

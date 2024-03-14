@@ -179,6 +179,19 @@ def get_base_updata():
                     continue
                 room_count += 1
             cache.rhodes_island.visitor_max = room_count
+        elif facility_name == "疗养庭院":
+            # 初始化流水线
+            if 0 not in cache.rhodes_island.agriculture_line:
+                cache.rhodes_island.agriculture_line[0] = [0,set(),0,0,0]
+            # 计算当前总效率
+            for agriculture_line_id in cache.rhodes_island.agriculture_line:
+                cache.rhodes_island.agriculture_line[agriculture_line_id][2] = 100 + facility_effect
+                # print(f"debug agriculture_line_id = {agriculture_line_id},facility_effect = {facility_effect}, final_effect = {cache.rhodes_island.agriculture_line[agriculture_line_id][2]}")
+                # 遍历输出干员的能力效率加成
+                for chara_id in cache.rhodes_island.agriculture_line[agriculture_line_id][1]:
+                    character_data: game_type.Character = cache.character_data[chara_id]
+                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
+                    cache.rhodes_island.agriculture_line[agriculture_line_id][2] += character_effect
 
 
 def update_base_resouce_newday():
@@ -402,30 +415,30 @@ def settle_agriculture_line():
     """
     结算农业的生产
     """
-    
-    # 遍历流水线
+    # print("debug 开始结算农业生产")
+    # 遍历农田
     for agriculture_line_id in cache.rhodes_island.agriculture_line:
-        now_formula_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
-        if now_formula_id != 0:
-            resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+        resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+        # print(f"debug 农田{agriculture_line_id}，种植的作物id为{resouce_id}")
+        if resouce_id != 0:
             resouce_data = game_config.config_resouce[resouce_id]
 
             # 每天生产一次
-            max_time = 1
+            max_time = 10
             produce_effect = cache.rhodes_island.agriculture_line[agriculture_line_id][2]
             # 公务的总效率
             produce_effect *= cache.rhodes_island.effectiveness / 100
             # 计算最大生产数
             produce_num_max = int(max_time * produce_effect / 100)
             produce_num = produce_num_max
-            # print(f"debug 流水线{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+            # print(f"debug 农田{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
             # 结算实际生产
             if produce_num > 0:
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
-                now_text = f"\n 农田{agriculture_line_id}:今日共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
+                now_text = f"\n今日农田共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
