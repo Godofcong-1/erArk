@@ -2244,24 +2244,26 @@ class SeeCharacterInfoHandleInScene(SeeCharacterInfoHandle):
         """切换显示上一人"""
         if len(self.character_list):
             if self.character_id:
-                now_index = self.character_list.index(self.character_id)
-                if now_index:
-                    now_index -= 1
-                    self.character_id = self.character_list[now_index]
-                else:
-                    self.character_id = 0
+                if self.character_id in self.character_list:
+                    now_index = self.character_list.index(self.character_id)
+                    if now_index:
+                        now_index -= 1
+                        self.character_id = self.character_list[now_index]
+                    else:
+                        self.character_id = 0
             else:
                 self.character_id = self.character_list[len(self.character_list) - 1]
 
     def next_character(self):
-        """切换显示上一人"""
+        """切换显示下一人"""
         if len(self.character_list):
             if self.character_id:
-                now_index = self.character_list.index(self.character_id)
-                if now_index == len(self.character_list) - 1:
-                    self.character_id = 0
-                else:
-                    self.character_id = self.character_list[now_index + 1]
+                if self.character_id in self.character_list:
+                    now_index = self.character_list.index(self.character_id)
+                    if now_index == len(self.character_list) - 1:
+                        self.character_id = 0
+                    else:
+                        self.character_id = self.character_list[now_index + 1]
             else:
                 self.character_id = self.character_list[0]
 

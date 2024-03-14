@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import basement, attr_calculation
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel
+from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel, see_character_info_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -116,7 +116,7 @@ class Manage_Basement_Panel:
         """绘制对象"""
 
         title_text = "管理罗德岛"
-        panel_list = [("罗德岛资源总览"), ("各部门工作概况")]
+        panel_list = [("罗德岛资源总览"), ("各部门工作概况"), ("全干员一览")]
         department_son_panel_button_dict = {
             "工程部":"[基建系统]",
             "制造加工区":"[生产系统]",
@@ -283,6 +283,25 @@ class Manage_Basement_Panel:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
+            # 全干员一览
+            elif self.now_panel == "全干员一览":
+                chara_count = 0
+                for character_id in cache.npc_id_got:
+                    character_data = cache.character_data[character_id]
+                    name = character_data.name
+                    id = str(character_data.adv).rjust(4,'0')
+                    draw_width = self.width / 6
+                    # 输出干员名字
+                    now_draw_text = f"[{id}]{name}"
+                    name_draw = draw.LeftButton(
+                        now_draw_text, name, draw_width, cmd_func=self.see_attr, args=(character_id,)
+                    )
+                    name_draw.draw()
+                    return_list.append(name_draw.return_text)
+                    chara_count += 1
+                    if chara_count % 6 == 0:
+                        line_feed.draw()
+
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -443,6 +462,12 @@ class Manage_Basement_Panel:
     def settle_show_resource_type(self, resouce_type):
         """设置显示的资源类型"""
         self.show_resource_type_dict[resouce_type] = not self.show_resource_type_dict[resouce_type]
+
+    def see_attr(self, character_id: int):
+        now_draw = see_character_info_panel.SeeCharacterInfoInScenePanel(
+            character_id, self.width
+        )
+        now_draw.draw()
 
 
 class ChangeWorkButtonList:
