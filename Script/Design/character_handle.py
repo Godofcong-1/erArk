@@ -129,6 +129,22 @@ def init_character_tem():
     cache.npc_tem_data = character_config.character_tem_list
 
 
+def create_empty_character_tem():
+    """
+    生成空的角色模板数据
+    """
+    now_tem = game_type.NpcTem()
+    now_tem.Sex = 1
+    now_tem.Nation = 0
+    now_tem.Birthplace = 0
+    now_tem.Ability = {}
+    now_tem.Experience = {}
+    now_tem.Dormitory = "无"
+    now_tem.Token = "无"
+    now_tem.Cloth = []
+    return now_tem
+
+
 def born_new_character(mother_id,child_name):
     """
     生成新的小孩模板数据
@@ -138,17 +154,12 @@ def born_new_character(mother_id,child_name):
     #numpy.random.shuffle(npc_data)
     # print("初始化角色模板数据")
     mom_character_data: game_type.Character = cache.character_data[mother_id]
-    now_tem = game_type.NpcTem()
+    now_tem = create_empty_character_tem()
     now_tem.Name = child_name
-    now_tem.Sex = 1
     now_tem.Profession = random.randint(0,8)
     now_tem.Race = mom_character_data.race
-    now_tem.Nation = 0
-    now_tem.Birthplace = 0
     now_tem.Mother_id = mother_id
     now_tem.AdvNpc = random.randint(9000,9999)
-    now_tem.Ability = {}
-    now_tem.Experience = {}
     # 基础的素质
     now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,101:1,121:1,126:1,129:1,131:1,451:1}
     # 遗传母亲的可遗传素质
@@ -161,9 +172,6 @@ def born_new_character(mother_id,child_name):
     now_tem.Talent[121] = 1
     now_tem.Hp = random.randint(1000,2000)
     now_tem.Mp = random.randint(1000,2000)
-    now_tem.Dormitory = "无"
-    now_tem.Token = "无"
-    now_tem.Cloth = []
     cache.npc_tem_data.append(now_tem)
     now_id  = len(cache.npc_tem_data)
     # 给父母加上该孩子的社会关系

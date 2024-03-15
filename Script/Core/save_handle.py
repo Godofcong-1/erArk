@@ -145,20 +145,21 @@ def input_load_save(save_id: str):
 
     # 递归地更新 loaded_dict
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
+    update_count += update_dict_with_default(loaded_dict, cache.__dict__)
+    # 更新角色预设
+    update_count += update_tem_character(loaded_dict)
+
     # 遍历更新全角色属性
     cloth_update_count = 0
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
-        cloth_update_count += update_chara_cloth(value)
+        tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
+        cloth_update_count += update_chara_cloth(value, tem_character)
     if cloth_update_count:
         draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
         now_draw.text = draw_text
         now_draw.draw()
-    # 用新的角色预设属性代替旧的属性
-    loaded_dict["npc_tem_data"] = cache.npc_tem_data
-    # 更新新角色
-    update_count += update_new_character(loaded_dict)
 
     # 更新罗德岛的资源
     for all_cid in game_config.config_resouce:
@@ -220,7 +221,55 @@ def update_dict_with_default(loaded_dict, default_dict):
     return update_count
 
 
-def update_chara_cloth(value):
+def update_tem_character(loaded_dict):
+    """
+    更新角色预设
+    Keyword arguments:
+    loaded_dict -- 存档数据
+    """
+
+    update_count = 0
+    # 用新的角色预设属性代替旧的属性
+    for i in range(len(loaded_dict["npc_tem_data"])):
+        now_npc_tem_data = loaded_dict["npc_tem_data"][i]
+        if cache.npc_tem_data[i].Name == now_npc_tem_data.Name:
+            now_npc_tem_data = cache.npc_tem_data[i]
+    # 更新新角色
+    update_count += update_new_character(loaded_dict)
+    # 修正loaded_dict["npc_tem_data"]的元素的序号，如果与实际的序号不一致，将其修正
+    for key, value in loaded_dict["character_data"].items():
+        i = -10
+        # 跳过玩家
+        if value.cid == 0:
+            continue
+        while 1:
+            tem_cid = value.cid - 1 + i
+            # 如果超出了角色预设的数量，则赋予空白模板，然后跳出循环
+            if tem_cid >= len(loaded_dict["npc_tem_data"]):
+                tem_npc_data = character_handle.create_empty_character_tem()
+                loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
+                i = 0
+                break
+            tem_character = loaded_dict["npc_tem_data"][tem_cid]
+            # 循环的终止条件为找到名字相同的角色
+            if value.name == tem_character.Name:
+                break
+            i += 1
+            # print(f"debug i = {i}")
+        # 如果i不为0，说明序号不一致，需要修正
+        if i != 0:
+            # print(f"debug new_tem_cid = {value.cid - 1}, old_tem_cid = {tem_cid}")
+            tem_npc_data = loaded_dict["npc_tem_data"][tem_cid]
+            loaded_dict["npc_tem_data"].pop(tem_cid)
+            loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
+            now_draw = draw.LeftDraw()
+            draw_text = _(f"存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n")
+            now_draw.text = draw_text
+            # now_draw.draw()
+    return update_count
+
+
+def update_chara_cloth(value, tem_character):
     """
     更新角色服装数据
     Keyword arguments:
@@ -229,6 +278,8 @@ def update_chara_cloth(value):
     # 跳过玩家
     if value.cid == 0:
         return 0
+    # print(f"debug value.cid = {value.cid}")
+    tem_character = tem_character
 
     # 判断是否需要重置服装数据
     reset_cloth_flag = False
@@ -250,7 +301,6 @@ def update_chara_cloth(value):
     if reset_cloth_flag:
         value.cloth = attr_calculation.get_cloth_zero()
         value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        tem_character = cache.npc_tem_data[value.cid-1]
         for cloth_id in tem_character.Cloth:
             if cloth_id not in game_config.config_clothing_tem:
                 continue
