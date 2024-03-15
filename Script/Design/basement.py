@@ -65,7 +65,7 @@ def get_base_zero() -> dict:
     # 初始化邀请
     base_data.invite_visitor = [0,0,0]
 
-    # 初始化农田
+    # 初始化药田
     base_data.agriculture_line[0] = [0,set(),0,0,0]
 
     # 初始化公务工作
@@ -278,6 +278,11 @@ def update_work_people():
                     select_index = random.choice(line_id_list)
                     cache.rhodes_island.assembly_line[select_index][1].add(chara_id)
 
+            # 药材种植员默认分配到药田0里
+            if character_data.work.work_type == 161:
+                if chara_id not in cache.rhodes_island.agriculture_line[0][1]:
+                    cache.rhodes_island.agriculture_line[0][1].add(chara_id)
+
         else:
             cache.rhodes_island.all_work_npc_set[0].add(chara_id)
         # print(f"debug cache.base_resouce.all_work_npc_set = {cache.base_resouce.all_work_npc_set}")
@@ -416,10 +421,10 @@ def settle_agriculture_line():
     结算农业的生产
     """
     # print("debug 开始结算农业生产")
-    # 遍历农田
+    # 遍历药田
     for agriculture_line_id in cache.rhodes_island.agriculture_line:
         resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
-        # print(f"debug 农田{agriculture_line_id}，种植的作物id为{resouce_id}")
+        # print(f"debug 药田{agriculture_line_id}，种植的作物id为{resouce_id}")
         if resouce_id != 0:
             resouce_data = game_config.config_resouce[resouce_id]
 
@@ -431,14 +436,14 @@ def settle_agriculture_line():
             # 计算最大生产数
             produce_num_max = int(max_time * produce_effect / 100)
             produce_num = produce_num_max
-            # print(f"debug 农田{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+            # print(f"debug 药田{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
             # 结算实际生产
             if produce_num > 0:
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
-                now_text = f"\n今日农田共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
+                now_text = f"\n今日药田共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity

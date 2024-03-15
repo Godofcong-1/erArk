@@ -6073,7 +6073,7 @@ msgid "疗养庭院"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:103
-msgid "开放基础设施:【农田】"
+msgid "开放基础设施:【药田】"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:104
@@ -12621,7 +12621,7 @@ msgid "听老师讲课"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
-msgid "种植员（实装中）"
+msgid "药材种植员"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
@@ -12629,26 +12629,42 @@ msgid "疗养庭院"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
-msgid "农田"
+msgid "药田"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
-msgid "在农田里种植药材等农作物"
+msgid "在药田里种植药材等农作物"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:21
+msgid "花草种植员"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:21
+msgid "疗养庭院"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:21
+msgid "温室"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:21
+msgid "在温室里种植花草等香料"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:22
 msgid "按摩师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "大浴场"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "浴场休息区"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 
@@ -20584,10 +20600,6 @@ msgstr ""
 msgid "疗养庭院"
 msgstr ""
 
-#: /'data\map\疗养庭院\农田\Scene.json:2
-msgid "农田"
-msgstr ""
-
 #: /'data\map\疗养庭院\女士洗手间\Scene.json:2
 msgid "女士洗手间"
 msgstr ""
@@ -20612,8 +20624,8 @@ msgstr ""
 msgid "磐蟹养殖场"
 msgstr ""
 
-#: /'data\map\疗养庭院\药草园\Scene.json:2
-msgid "药草园"
+#: /'data\map\疗养庭院\药田\Scene.json:2
+msgid "药田"
 msgstr ""
 
 #: /'data\map\疗养庭院\莱娜的憩所\Scene.json:2

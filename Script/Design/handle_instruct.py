@@ -423,16 +423,16 @@ def handle_manage_library():
 
 
 @add_instruct(
-    constant.Instruct.MANAGE_FARM,
+    constant.Instruct.MANAGE_AGRICULTURE,
     constant.InstructType.WORK,
-    _("管理农田"),
+    _("管理农业生产"),
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
-        constant_promise.Premise.IN_FARMLAND,
+        constant_promise.Premise.IN_HERB_GARDEN,
     })
-def handle_manage_farm():
-    """处理管理农田指令"""
+def handle_manage_agriculture():
+    """处理管理农业生产指令"""
     now_draw = agriculture_production_panel.Agriculture_Production_Panel(width)
     now_draw.draw()
 

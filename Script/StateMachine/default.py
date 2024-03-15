@@ -724,23 +724,43 @@ def character_move_to_diplomatic_office(character_id: int):
         now_draw.draw()
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FARMLAND)
-def character_move_to_farmland(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HERB_GARDEN)
+def character_move_to_herb_garden(character_id: int):
     """
-    移动至农田
+    移动至药田
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    to_farmland = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Farmland"])
+    to_herb_garden = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Herb_Garden"])
     )
-    general_movement_module(character_id, to_farmland)
+    general_movement_module(character_id, to_herb_garden)
 
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = f"{character_data.name}打算去农田\n"
+        now_draw.text = f"{character_data.name}打算去药田\n"
+        now_draw.draw()
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_GREENHOUSE)
+def character_move_to_greenhouse(character_id: int):
+    """
+    移动至温室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_greenhouse = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Greenhouse"])
+    )
+    general_movement_module(character_id, to_greenhouse)
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"{character_data.name}打算去温室\n"
         now_draw.draw()
 
 

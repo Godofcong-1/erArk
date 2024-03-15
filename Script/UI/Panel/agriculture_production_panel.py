@@ -41,6 +41,7 @@ class Agriculture_Production_Panel:
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
+            basement.get_base_updata()
             return_list = []
             title_draw.draw()
 
@@ -59,7 +60,7 @@ class Agriculture_Production_Panel:
             all_info_draw.draw()
 
             for agriculture_line_id in cache.rhodes_island.agriculture_line:
-                now_text = f"\n 农田："
+                now_text = f"\n 药田："
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -109,18 +110,6 @@ class Agriculture_Production_Panel:
                 cmd_func=manage_basement_panel.change_npc_work_out,
                 args=self.width
                 )
-            return_list.append(button_draw.return_text)
-            button_draw.draw()
-            line_feed.draw()
-            button_text = _("[002]位置调整")
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _(button_text),
-                self.width,
-                cmd_func=self.select_npc_position,
-                )
-            return_list.append(button_draw.return_text)
-            button_draw.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -133,7 +122,7 @@ class Agriculture_Production_Panel:
                 break
 
     def select_agriculture_line_produce(self, agriculture_line_id):
-        """选择农田生产的产品"""
+        """选择药田生产的产品"""
         while 1:
 
                 line = draw.LineDraw("-", window_width)
@@ -147,7 +136,7 @@ class Agriculture_Production_Panel:
                 resouce_data = game_config.config_resouce[resouce_id]
 
                 info_text = f""
-                info_text += _(f" 农田当前种植的是：{resouce_data.name}")
+                info_text += _(f" 药田当前种植的是：{resouce_data.name}")
 
                 info_text += _("\n\n 当前可以种植的有：\n\n")
                 info_draw.text = info_text
@@ -185,128 +174,9 @@ class Agriculture_Production_Panel:
                 if yrn in return_list:
                     break
 
-    def select_npc_position(self):
-        """选择干员的工位"""
-
-        self.now_chara_id = -1
-        old_position = 0
-        self.target_position = 0
-
-        while 1:
-            return_list = []
-            line = draw.LineDraw("-", window_width)
-            line.draw()
-
-            if self.now_chara_id != -1:
-                now_character_data: game_type.Character = cache.character_data[self.now_chara_id]
-                now_select_npc_name = now_character_data.name
-                for agriculture_line_id in cache.rhodes_island.agriculture_line:
-                    if self.now_chara_id in cache.rhodes_island.agriculture_line[agriculture_line_id][1]:
-                        old_position = agriculture_line_id
-                        break
-            else:
-                now_select_npc_name = _("未选择")
-
-            all_info_draw = draw.NormalDraw()
-            now_text = _(f"\n○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号农田调整到 {self.target_position + 1} 号农田")
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-
-            # 遍历全干员
-            now_text = _(f"\n可选种植员有：\n")
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-            flag_not_empty = False
-            # 去掉玩家
-            cache.npc_id_got.discard(0)
-            # 去掉访客
-            id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
-            for chara_id in id_list:
-                character_data: game_type.Character = cache.character_data[chara_id]
-                # 找到职业是生产种植员的
-                if character_data.work.work_type == 161:
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
-                    button_text = _(f" [{character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)] ")
-                    button_draw = draw.CenterButton(
-                    _(button_text),
-                    _(button_text),
-                    int(len(button_text)*1.5),
-                    cmd_func=self.settle_npc_id,
-                    args=chara_id,
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                    flag_not_empty = True
-
-            # 如果没有工作是种植员的干员则输出提示
-            if not flag_not_empty:
-                now_text = _(f" 暂无工作是种植员的干员")
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-
-            line_feed.draw()
-
-            for agriculture_line_id in cache.rhodes_island.agriculture_line:
-                now_text = _(f"\n 农田：")
-
-                resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
-                resouce_data = game_config.config_resouce[resouce_id]
-                now_text += _(f"\n    当前生产：{resouce_data.name}(10/d)      ")
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-
-                button_text = _(f" [将选择种植员调整至该农田] ")
-                button_draw = draw.CenterButton(
-                _(button_text),
-                _(f"{button_text}_{agriculture_line_id}"),
-                int(len(button_text)*2),
-                cmd_func=self.settle_agriculture_line_id,
-                args=agriculture_line_id,
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-                # 生产效率
-                now_text = _(f"\n    当前种植员：")
-                # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.agriculture_line[agriculture_line_id][1]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
-                    now_text += _(f" + {character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)")
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-                line_feed.draw()
-
-            line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
-            if self.now_chara_id != -1:
-                yes_draw.draw()
-                return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-            # 确定的话就进行id的转移结算
-            elif yrn == yes_draw.return_text:
-                cache.rhodes_island.agriculture_line[old_position][1].discard(self.now_chara_id)
-                cache.rhodes_island.agriculture_line[self.target_position][1].add(self.now_chara_id)
-                basement.get_base_updata()
-                break
-
     def change_agriculture_line_produce(self, agriculture_line_id, formula_cid):
-        """更改农田的种植"""
+        """更改药田的种植"""
         if cache.rhodes_island.agriculture_line[agriculture_line_id][0] != 0 and cache.rhodes_island.agriculture_line[agriculture_line_id][4] != cache.game_time.hour:
             pass
         else:
             cache.rhodes_island.agriculture_line[agriculture_line_id][0] = formula_cid
-
-    def settle_npc_id(self, chara_id):
-        """结算干员的id变更"""
-        self.now_chara_id = chara_id
-
-    def settle_agriculture_line_id(self, agriculture_line_id):
-        """结算农田的id变更"""
-        self.target_position = agriculture_line_id

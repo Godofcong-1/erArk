@@ -1198,8 +1198,10 @@ class StateMachine:
     """ 移动至铁匠铺 """
     MOVE_TO_DIPLOMATIC_OFFICE = 631
     """ 移动至外交官办公室 """
-    MOVE_TO_FARMLAND = 641
-    """ 移动至农田 """
+    MOVE_TO_HERB_GARDEN = 641
+    """ 移动至药田 """
+    MOVE_TO_GREENHOUSE = 642
+    """ 移动至温室 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """
@@ -1819,8 +1821,8 @@ class Instruct:
     """ 管理图书馆 """
     MANAGE_ASSEMBLY_LINE = 0
     """ 管理流水线 """
-    MANAGE_FARM = 0
-    """ 管理农田 """
+    MANAGE_AGRICULTURE = 0
+    """ 管理农业生产 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
     NAVIGATION = 0
