@@ -438,38 +438,6 @@ def get_status_level(value: int) -> int:
     return level
 
 
-def get_ability_level(value: int) -> int:
-    """
-    按能力数值评定数字等级
-    Keyword arguments:
-    value -- 能力数值
-    Return arguments:
-    level -- 数字评级
-    """
-    if value < 100:
-        level = 0
-    elif value < 500:
-        level = 1
-    elif value < 3000:
-        level = 2
-    elif value < 10000:
-        level = 3
-    elif value < 30000:
-        level = 4
-    elif value < 60000:
-        level = 5
-    elif value < 100000:
-        level = 6
-    elif value < 150000:
-        level = 7
-    elif value < 250000:
-        level = 8
-    elif value < 400000:
-        level = 9
-    elif value >= 400000:
-        level = 10
-    return level
-
 def get_ability_adjust(value: int) -> int:
     """
     按能力数值评定修正比例
@@ -478,7 +446,7 @@ def get_ability_adjust(value: int) -> int:
     Return arguments:
     just -- 调整比例
     """
-    level = get_ability_level(value)
+    level = value
     if level == 0:
         just = 0.2
     elif level == 1:
@@ -512,14 +480,14 @@ def get_mark_debuff_adjust(value: int) -> int:
     Return arguments:
     just -- 调整比例
     """
-    level = get_ability_level(value)
+    level = value
     if level == 0:
         just = 1
     elif level == 1:
         just = 2
     elif level == 2:
         just = 5
-    elif level == 3:
+    elif level >= 3:
         just = 10
     return just
 
@@ -532,7 +500,7 @@ def get_juel(value: int) -> int:
     Return arguments:
     juel -- 最终珠值
     """
-    level = get_ability_level(value)
+    level = get_status_level(value)
     if level == 0:
         juel = round(0.2*value)
     elif level == 1:
@@ -566,7 +534,7 @@ def get_pain_adjust(value: int) -> int:
     Return arguments:
     just -- 调整比例
     """
-    level = get_ability_level(value)
+    level = get_status_level(value)
     if level == 0:
         just = 10.0
     elif level == 1:

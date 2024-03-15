@@ -161,15 +161,15 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 能力相关计算#
     # 亲密、快乐刻印、屈服刻印每级+0.2倍#
     for i in {13, 14, 32}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix += ability_level * 0.2
     # 苦痛刻印、恐怖刻印每级-0.3倍#
     for i in {15, 17}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 0.3
     # 反发刻印每级-1.0倍#
     for i in {18}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 1.0
 
     # 素质相关计算#
@@ -218,15 +218,15 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     # 能力相关计算#
     # 亲密、快乐刻印、屈服刻印每级+0.2倍#
     for i in {13, 14, 32}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix += ability_level * 0.2
     # 苦痛刻印、恐怖刻印每级-0.3倍#
     for i in {15, 17}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 0.3
     # 反发刻印每级-1.0倍#
     for i in {18}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 1.0
 
     # 素质相关计算#
