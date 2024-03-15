@@ -231,7 +231,7 @@ class Resource_Exchange_Line_Panel:
 
                             now_text = _(f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}")
                             # 判断是否可以买入卖出
-                            if resouce_type not in {"药剂", "乳制品"}:
+                            if resouce_data.cant_buy == 0:
                                 now_text += _(f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位")
                             now_text += _(f"   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n")
                             info_draw.text = now_text
