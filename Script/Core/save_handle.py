@@ -145,7 +145,6 @@ def input_load_save(save_id: str):
 
     # 递归地更新 loaded_dict
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
-    update_count += update_dict_with_default(loaded_dict, cache.__dict__)
     # 更新角色预设
     update_count += update_tem_character(loaded_dict)
 
@@ -230,10 +229,19 @@ def update_tem_character(loaded_dict):
 
     update_count = 0
     # 用新的角色预设属性代替旧的属性
+    all_new_tem_data = cache.npc_tem_data.copy()
     for i in range(len(loaded_dict["npc_tem_data"])):
         now_npc_tem_data = loaded_dict["npc_tem_data"][i]
-        if cache.npc_tem_data[i].Name == now_npc_tem_data.Name:
-            now_npc_tem_data = cache.npc_tem_data[i]
+        for j in range(len(cache.npc_tem_data)):
+            if cache.npc_tem_data[j].Name == now_npc_tem_data.Name:
+                loaded_dict["npc_tem_data"][i] = cache.npc_tem_data[j]
+                all_new_tem_data.remove(cache.npc_tem_data[j])
+                # print(f"debug 更新了{now_npc_tem_data.Name}的角色预设 ")
+                break
+    # 没有被替代的加在后面
+    for now_npc_tem_data in all_new_tem_data:
+        loaded_dict["npc_tem_data"].append(now_npc_tem_data)
+        # print(f"debug 新增了{now_npc_tem_data.Name}的角色预设 ")
     # 更新新角色
     update_count += update_new_character(loaded_dict)
     # 修正loaded_dict["npc_tem_data"]的元素的序号，如果与实际的序号不一致，将其修正
