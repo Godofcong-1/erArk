@@ -456,12 +456,20 @@ def check_second_effect(
 
     # 玩家检测自己
     if character_id == 0:
+        character_data = cache.character_data[0]
         # 高潮结算
         orgasm_effect(character_id)
         # 道具结算
         item_effect(character_id)
         # 进行结算
         second_behavior_effect(character_id, change_data)
+        # NPC的刻印结算
+        change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
+        mark_effect(character_data.target_character_id, target_change)
+        mark_list = [i for i in range(1030, 1048)]
+        # 单独遍历结算刻印
+        second_behavior_effect(character_data.target_character_id, target_change, mark_list)
 
 
     # NPC自己检测自己
@@ -478,12 +486,6 @@ def check_second_effect(
 
         # 进行结算
         second_behavior_effect(character_id, change_data)
-
-        # 刻印结算
-        mark_effect(character_id, change_data)
-        mark_list = [i for i in range(1030, 1048)]
-        # 单独遍历结算刻印
-        second_behavior_effect(character_id, change_data, mark_list)
 
 
 def second_behavior_effect(
@@ -679,6 +681,7 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # print()
     # print("进入刻印结算")
     character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"name = {character_data.name},change_data.status_data = {change_data.status_data}")
 
     # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     happy_count = 0
@@ -686,6 +689,7 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         happy_count += character_data.h_state.orgasm_count[orgasm][0]
         # 计数归零
         character_data.h_state.orgasm_count[orgasm][0] = 0
+    # print(f"debug happy_count = {happy_count}")
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1
