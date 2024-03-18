@@ -610,6 +610,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
         # 助理可以进锁门了的玩家房间
         elif character_id and character_id == pl_character_data.assistant_character_id:
             pass
+        # 博士可以无条件进博士房间和博士办公室
+        elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_office" in now_scene_data.scene_tag):
+            pass
         else:
             # 如果是玩家的话输出提示信息
             if character_id == 0:
