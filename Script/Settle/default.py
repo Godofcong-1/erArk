@@ -67,7 +67,7 @@ def handle_add_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 40
+    add_hit_point = add_time * 20
     now_add_hit_point = add_hit_point
     # 如果气力=0则恢复减半
     if character_data.mana_point == 0:
@@ -99,7 +99,7 @@ def handle_add_small_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 60
+    add_mana_point = add_time * 30
     character_data.mana_point += add_mana_point
     change_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
@@ -270,7 +270,7 @@ def handle_sub_both_small_hit_point(
     """
     if not add_time:
         return
-    sub_hit = add_time * 5
+    sub_hit = add_time * 3
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -303,7 +303,7 @@ def handle_sub_both_small_hit_point(
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_hit = add_time * 5
+        sub_hit = add_time * 3
         # 气力为0时体力消耗3倍
         if target_data.mana_point == 0:
             sub_hit *= 3
@@ -346,7 +346,7 @@ def handle_sub_both_small_mana_point(
     """
     if not add_time:
         return
-    sub_mana = add_time * 7.5
+    sub_mana = add_time * 6
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -380,7 +380,7 @@ def handle_sub_both_small_mana_point(
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_mana = add_time * 7.5
+        sub_mana = add_time * 6
         if target_data.mana_point >= sub_mana:
             target_data.mana_point -= sub_mana
             target_change.mana_point -= sub_mana
@@ -425,7 +425,7 @@ def handle_sub_self_small_hit_point(
     """
     if not add_time:
         return
-    sub_hit = add_time * 5
+    sub_hit = add_time * 3
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -466,7 +466,7 @@ def handle_sub_self_small_mana_point(
     """
     if not add_time:
         return
-    sub_mana = add_time * 7.5
+    sub_mana = add_time * 6
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -511,7 +511,7 @@ def handle_add_both_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 15
+    add_hit_point = add_time * 20
     now_add_hit_point = add_hit_point
     # 如果气力=0则恢复减半
     if character_data.mana_point == 0:
@@ -557,7 +557,7 @@ def handle_add_both_small_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 20
+    add_mana_point = add_time * 25
     character_data.mana_point += add_mana_point
     change_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
@@ -1421,7 +1421,7 @@ def handle_add_medium_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 100
+    add_hit_point = add_time * 80
     character_data.hit_point += add_hit_point
     if character_data.hit_point > character_data.hit_point_max:
         add_hit_point -= character_data.hit_point - character_data.hit_point_max
@@ -1449,7 +1449,7 @@ def handle_add_medium_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 150
+    add_mana_point = add_time * 100
     character_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
         add_mana_point -= character_data.mana_point - character_data.mana_point_max

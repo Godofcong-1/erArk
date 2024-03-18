@@ -152,11 +152,11 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 羞耻、苦痛每级-0.1倍#
     for i in {16, 17}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level * 0.2
-    # 恐怖、抑郁、反感每级-0.4倍#
+        fix -= status_level * 0.1
+    # 恐怖、抑郁、反感每级-0.3倍#
     for i in {18, 19, 20}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level * 0.4
+        fix -= status_level * 0.3
 
     # 能力相关计算#
     # 亲密、快乐刻印、屈服刻印每级+0.2倍#
@@ -175,13 +175,13 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 素质相关计算#
     # 爱情与隶属系加成0.5~2.0#
     if target_data.talent[201] or target_data.talent[211]:
-        fix += 0.5
+        fix += 0.25
     if target_data.talent[202] or target_data.talent[212]:
-        fix += 1.0
+        fix += 0.5
     if target_data.talent[203] or target_data.talent[213]:
-        fix += 1.5
+        fix += 0.75
     if target_data.talent[204] or target_data.talent[214]:
-        fix += 2.0
+        fix += 1.0
     # 受精、妊娠、育儿均+0.5#
     if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
         fix += 0.5
@@ -191,13 +191,13 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 讨厌男性-0.2#
     if target_data.talent[227]:
         fix -= 0.2
-    # 博士信息素每级+0.5#
+    # 博士信息素每级+0.25#
     if character_data.talent[306]:
-        fix += 1.5
+        fix += 0.75
     elif character_data.talent[305]:
-        fix += 1.0
-    elif character_data.talent[304]:
         fix += 0.5
+    elif character_data.talent[304]:
+        fix += 0.25
     favorability *= fix
     return favorability
 
@@ -232,13 +232,13 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     # 素质相关计算#
     # 爱情与隶属系加成0.5~2.0#
     if target_data.talent[201] or target_data.talent[211]:
-        fix += 0.5
+        fix += 0.25
     if target_data.talent[202] or target_data.talent[212]:
-        fix += 1.0
+        fix += 0.5
     if target_data.talent[203] or target_data.talent[213]:
-        fix += 1.5
+        fix += 0.75
     if target_data.talent[204] or target_data.talent[214]:
-        fix += 2.0
+        fix += 1.0
     # 受精、妊娠、育儿均+0.5#
     if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
         fix += 0.5
@@ -248,13 +248,13 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     # 讨厌男性-0.2#
     if target_data.talent[227]:
         fix -= 0.2
-    # 博士信息素每级+0.5#
+    # 博士信息素每级+0.25#
     if character_data.talent[306]:
-        fix += 1.5
+        fix += 0.75
     elif character_data.talent[305]:
-        fix += 1.0
-    elif character_data.talent[304]:
         fix += 0.5
+    elif character_data.talent[304]:
+        fix += 0.25
     trust_add = add_time / 60 * fix
     return trust_add
 
