@@ -5000,55 +5000,62 @@ def handle_sing_add_adjust(
 
         # print(f"debug 唱歌，adjust = {adjust}，add_favorability = {add_favorability}")
 
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
-        # 信赖变化#
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        if good_flag:
-            now_lust_multiple *= adjust
-        else:
-            now_lust_multiple *= (adjust - 1)
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        # 对在场的全部角色起效
+        for chara_id in cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)].character_list:
+            # 跳过玩家自己
+            if chara_id == character_id:
+                continue
+            target_data: game_type.Character = cache.character_data[chara_id]
 
-        # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        if good_flag:
-            now_add_lust *= adjust
-        else:
-            now_add_lust *= (adjust - 1)
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            character_handle.add_favorability(
+                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
+            )
+            # 信赖变化#
+            now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+            if good_flag:
+                now_lust_multiple *= adjust
+            else:
+                now_lust_multiple *= (adjust - 1)
+            target_data.trust += now_lust_multiple
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.trust += now_lust_multiple
+            if (character_id != 0) and (character_data.target_character_id == 0):
+                character_data.trust += now_lust_multiple
+                change_data.trust += now_lust_multiple
 
-        # 恐怖、抑郁、反感变化
-        if not good_flag:
-            for i in {18, 19, 20}:
-                now_lust = target_data.status_data[i]
-                now_lust_multiple = 100 + now_lust / 10
-                now_add_lust = add_time + now_lust_multiple
-                if good_flag:
-                    now_add_lust *= adjust
-                else:
-                    now_add_lust *= 10
-                target_data.status_data[i] += now_add_lust
-                change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-                target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-                target_change.status_data.setdefault(i, 0)
-                target_change.status_data[i] += now_add_lust
+            # 好意变化#
+            target_data.status_data.setdefault(11, 0)
+            now_lust = target_data.status_data[11]
+            now_lust_multiple = 100 + now_lust / 10
+            now_add_lust = add_time + now_lust_multiple
+            if good_flag:
+                now_add_lust *= adjust
+            else:
+                now_add_lust *= (adjust - 1)
+            target_data.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.status_data.setdefault(11, 0)
+            target_change.status_data[11] += now_add_lust
+
+            # 恐怖、抑郁、反感变化
+            if not good_flag:
+                for i in {18, 19, 20}:
+                    now_lust = target_data.status_data[i]
+                    now_lust_multiple = 100 + now_lust / 10
+                    now_add_lust = add_time + now_lust_multiple
+                    if good_flag:
+                        now_add_lust *= adjust
+                    else:
+                        now_add_lust *= 10
+                    target_data.status_data[i] += now_add_lust
+                    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+                    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+                    target_change.status_data.setdefault(i, 0)
+                    target_change.status_data[i] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLAY_INSTRUMENT_ADD_ADJUST)
@@ -5097,56 +5104,63 @@ def handle_play_instrument_add_adjust(
 
         # print(f"debug 乐器，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
 
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
-        # 信赖变化#
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        now_lust_multiple *= 2
-        if good_flag:
-            now_lust_multiple *= adjust
-        else:
-            now_lust_multiple *= (adjust - 1)
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        # 对在场的全部角色起效
+        for chara_id in cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)].character_list:
+            # 跳过玩家自己
+            if chara_id == character_id:
+                continue
+            target_data: game_type.Character = cache.character_data[chara_id]
 
-        # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 150 + now_lust / 8
-        now_add_lust = add_time + now_lust_multiple
-        if good_flag:
-            now_add_lust *= adjust
-        else:
-            now_add_lust *= (adjust - 1)
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            character_handle.add_favorability(
+                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
+            )
+            # 信赖变化#
+            now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+            now_lust_multiple *= 2
+            if good_flag:
+                now_lust_multiple *= adjust
+            else:
+                now_lust_multiple *= (adjust - 1)
+            target_data.trust += now_lust_multiple
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.trust += now_lust_multiple
+            if (character_id != 0) and (character_data.target_character_id == 0):
+                character_data.trust += now_lust_multiple
+                change_data.trust += now_lust_multiple
 
-        # 恐怖、抑郁、反感变化
-        if not good_flag:
-            for i in {18, 19, 20}:
-                now_lust = target_data.status_data[i]
-                now_lust_multiple = 150 + now_lust / 8
-                now_add_lust = add_time + now_lust_multiple
-                if good_flag:
-                    now_add_lust *= adjust
-                else:
-                    now_add_lust *= 10
-                target_data.status_data[i] += now_add_lust
-                change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-                target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-                target_change.status_data.setdefault(i, 0)
-                target_change.status_data[i] += now_add_lust
+            # 好意变化#
+            target_data.status_data.setdefault(11, 0)
+            now_lust = target_data.status_data[11]
+            now_lust_multiple = 150 + now_lust / 8
+            now_add_lust = add_time + now_lust_multiple
+            if good_flag:
+                now_add_lust *= adjust
+            else:
+                now_add_lust *= (adjust - 1)
+            target_data.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.status_data.setdefault(11, 0)
+            target_change.status_data[11] += now_add_lust
+
+            # 恐怖、抑郁、反感变化
+            if not good_flag:
+                for i in {18, 19, 20}:
+                    now_lust = target_data.status_data[i]
+                    now_lust_multiple = 150 + now_lust / 8
+                    now_add_lust = add_time + now_lust_multiple
+                    if good_flag:
+                        now_add_lust *= adjust
+                    else:
+                        now_add_lust *= 10
+                    target_data.status_data[i] += now_add_lust
+                    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+                    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+                    target_change.status_data.setdefault(i, 0)
+                    target_change.status_data[i] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_N_ADJUST)
