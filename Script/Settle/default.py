@@ -1198,6 +1198,7 @@ def handle_penetrating_vision_on(
     character_data.pl_ability.visual = True
     character_data.sanity_point = max(character_data.sanity_point - 5, 0)
     change_data.sanity_point -= 5
+    character_data.pl_ability.today_sanity_point_cost += 5
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_OFF)
@@ -1295,6 +1296,7 @@ def handle_hypnosis_one(
     # 结算理智消耗
     character_data.sanity_point = max(character_data.sanity_point - 20, 0)
     change_data.sanity_point -= 20
+    character_data.pl_ability.today_sanity_point_cost += 20
     # 结算催眠度增加
     hypnosis_degree_addition = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
     hypnosis_degree_grow = 10 * hypnosis_degree_addition
@@ -1341,6 +1343,7 @@ def handle_hypnosis_all(
     sanity_point_cost = 10 + 10 * len(scene_character_list)
     character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
     change_data.sanity_point -= sanity_point_cost
+    character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
     # 遍历角色列表
     for target_id in scene_character_list:
         target_character_data = cache.character_data[target_id]
