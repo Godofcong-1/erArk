@@ -164,13 +164,13 @@ class Manage_Basement_Panel:
             line.draw()
 
             # 罗德岛资源总览
-            if self.now_panel == "罗德岛资源总览":
+            if self.now_panel == _("罗德岛资源总览"):
 
                 self.resouce_list = ["货币", "材料", "药剂", "乳制品", "香水"]
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
-                all_info_draw.text += f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n\n"
+                all_info_draw.text += _(f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n\n")
                 all_info_draw.width = self.width
                 all_info_draw.draw()
 
@@ -210,7 +210,7 @@ class Manage_Basement_Panel:
                     line_feed.draw()
 
             # 各部门工作概况
-            elif self.now_panel == "各部门工作概况":
+            elif self.now_panel == _("各部门工作概况"):
 
                 # 遍历全部门
                 department_text_list = []
@@ -267,18 +267,18 @@ class Manage_Basement_Panel:
                         if work_data.department == department:
                             all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
                     if department == "医疗部":
-                        all_info_draw.text += f"  病人 — {patient_now}"
+                        all_info_draw.text += _(f"  病人 — {patient_now}")
                     all_info_draw.draw()
                     line_feed.draw()
 
                 # 收入
                 all_income = str(cache.rhodes_island.all_income)
-                all_info_draw.text = f"\n  截至目前为止，今日各部门龙门币总收入为：{all_income}\n\n"
+                all_info_draw.text = _(f"\n  截至目前为止，今日各部门龙门币总收入为：{all_income}\n\n")
                 all_info_draw.width = self.width
                 all_info_draw.draw()
 
                 button_draw = draw.LeftButton(
-                    f"[001]调整干员岗位",
+                    _(f"[001]调整干员岗位"),
                     f"\n1",
                     self.width ,
                     cmd_func=change_npc_work_out,
@@ -288,7 +288,7 @@ class Manage_Basement_Panel:
                 return_list.append(button_draw.return_text)
 
             # 全干员一览
-            elif self.now_panel == "全干员一览":
+            elif self.now_panel == _("全干员一览"):
                 chara_count = 0
                 for character_id in cache.npc_id_got:
                     character_data = cache.character_data[character_id]
@@ -361,11 +361,11 @@ class Manage_Basement_Panel:
             return_list = []
             now_draw = draw.NormalDraw()
 
-            now_text = f"\n当前{department}部门情况："
+            now_text = _(f"\n当前{department}部门情况：")
             for all_cid in game_config.config_work_type:
                 work_data = game_config.config_work_type[all_cid]
                 if work_data.department == department:
-                    now_text+= f"\n  当前正在工作的{work_data.name}："
+                    now_text+= _(f"\n  当前正在工作的{work_data.name}：")
                     if len(cache.rhodes_island.all_work_npc_set[all_cid]):
                         for npc_id in cache.rhodes_island.all_work_npc_set[all_cid]:
                             npc_name = cache.character_data[npc_id].name

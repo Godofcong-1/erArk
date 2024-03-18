@@ -8624,6 +8624,22 @@ msgstr ""
 msgid "5"
 msgstr ""
 
+#: .\data\csv\ProductFormula.csv:16
+msgid "1"
+msgstr ""
+
+#: .\data\csv\ProductFormula.csv:17
+msgid "2"
+msgstr ""
+
+#: .\data\csv\ProductFormula.csv:18
+msgid "3"
+msgstr ""
+
+#: .\data\csv\ProductFormula.csv:19
+msgid "5"
+msgstr ""
+
 #: .\data\csv\Profession.csv:7
 msgid "博士"
 msgstr ""
