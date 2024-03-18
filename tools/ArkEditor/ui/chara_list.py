@@ -52,7 +52,7 @@ class CharaList(QWidget):
         # 新增介绍文本
         intro_labels_text = []
         intro_labels_text.append("角色编号可以去prts的wiki，干员页面里右上角的[查看源代码]，干员id里中间的数字即为解包编号\nHP（体力）基础1500，可上下浮动最多1000\nMP（气力）基础1000，可上下浮动最多1000\n初始宿舍默认为无，自动分配到宿舍，有特殊需求的请联系作者\n字体颜色为16进制颜色代码，如#ffffff为白色\n如果是未收录的新角色，还需要将150*300像素，PNG格式的角色立绘图片复制在 image 文件夹中")
-        intro_labels_text.append("能力最高为8级，除极端人设外，一般初始能力最高不超过3级\n每1经验对应1次相应指令，除极端人设外，一般初始经验最高不超过200\n默认都有的基础素质是处女、A处女和无接吻经验，必选的素质有年龄素质，以及胸部、屁股、腿、脚四个部位的素质\n单个部位的服装可以有多个")
+        intro_labels_text.append("能力最高为8级，除极端人设外，一般初始能力最高不超过3级\n每1经验对应1次相应指令，除极端人设外，一般初始经验最高不超过200\n默认都有的基础素质是处女、A处女和无接吻经验，必选的素质有年龄素质，以及胸部、屁股、腿、脚四个部位的素质\n单个部位的服装可以有多个\n胸衣和内裤如果空缺则每日随机生成，非空缺则固定为该服装")
         intro_labels = [self.create_label(text, 700) for text in intro_labels_text]
 
         self.chara_id_text_edit = self.create_text_edit("0")
