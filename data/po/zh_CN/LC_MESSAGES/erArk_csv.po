@@ -12653,7 +12653,7 @@ msgid "听老师讲课"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
-msgid "药材种植员(实装中，有BUG)"
+msgid "药材种植员"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20
@@ -12669,7 +12669,7 @@ msgid "在药田里种植药材等农作物"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:21
-msgid "花草种植员(实装中，有BUG)"
+msgid "花草种植员"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:21
@@ -16242,6 +16242,42 @@ msgstr ""
 
 #: .\data\character\0290_红豆.csv:15
 msgid "#e51a3e"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:36
+msgid "黑色皮质女式鸭舌帽"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:37
+msgid "白色纽扣衬衣"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:38
+msgid "罗德岛战斗外套"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:39
+msgid "黑色皮制迷你裙"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:40
+msgid "红豆的改装长枪"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:41
+msgid "右脚红色长袜"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:42
+msgid "左脚黑色长袜"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:43
+msgid "黑色长筒靴"
+msgstr ""
+
+#: .\data\character\0290_红豆.csv:44
+msgid "腿环"
 msgstr ""
 
 #: .\data\character\0291_安洁莉娜.csv:4
