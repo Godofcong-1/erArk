@@ -66,7 +66,9 @@ def get_base_zero() -> dict:
     base_data.invite_visitor = [0,0,0]
 
     # 初始化药田
-    base_data.agriculture_line[0] = [0,set(),0,0,0]
+    base_data.herb_garden_line[0] = [0,set(),0,0,0]
+    # 初始化温室
+    base_data.green_house_line[0] = [0,set(),0,0,0]
 
     # 初始化公务工作
     base_data.office_work += 200
@@ -180,18 +182,31 @@ def get_base_updata():
                 room_count += 1
             cache.rhodes_island.visitor_max = room_count
         elif facility_name == "疗养庭院":
+            # 药田
             # 初始化流水线
-            if 0 not in cache.rhodes_island.agriculture_line:
-                cache.rhodes_island.agriculture_line[0] = [0,set(),0,0,0]
+            if 0 not in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[0] = [0,set(),0,0,0]
             # 计算当前总效率
-            for agriculture_line_id in cache.rhodes_island.agriculture_line:
-                cache.rhodes_island.agriculture_line[agriculture_line_id][2] = 100 + facility_effect
+            for agriculture_line_id in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[agriculture_line_id][2] = 100 + facility_effect
                 # print(f"debug agriculture_line_id = {agriculture_line_id},facility_effect = {facility_effect}, final_effect = {cache.rhodes_island.agriculture_line[agriculture_line_id][2]}")
                 # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.agriculture_line[agriculture_line_id][1]:
+                for chara_id in cache.rhodes_island.herb_garden_line[agriculture_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
-                    cache.rhodes_island.agriculture_line[agriculture_line_id][2] += character_effect
+                    cache.rhodes_island.herb_garden_line[agriculture_line_id][2] += character_effect
+            # 温室
+            # 初始化流水线
+            if 0 not in cache.rhodes_island.green_house_line:
+                cache.rhodes_island.green_house_line[0] = [0,set(),0,0,0]
+            # 计算当前总效率
+            for agriculture_line_id in cache.rhodes_island.green_house_line:
+                cache.rhodes_island.green_house_line[agriculture_line_id][2] = 100 + facility_effect
+                # 遍历输出干员的能力效率加成
+                for chara_id in cache.rhodes_island.green_house_line[agriculture_line_id][1]:
+                    character_data: game_type.Character = cache.character_data[chara_id]
+                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
+                    cache.rhodes_island.green_house_line[agriculture_line_id][2] += character_effect
 
 
 def update_base_resouce_newday():
@@ -280,8 +295,12 @@ def update_work_people():
 
             # 药材种植员默认分配到药田0里
             if character_data.work.work_type == 161:
-                if chara_id not in cache.rhodes_island.agriculture_line[0][1]:
-                    cache.rhodes_island.agriculture_line[0][1].add(chara_id)
+                if chara_id not in cache.rhodes_island.herb_garden_line[0][1]:
+                    cache.rhodes_island.herb_garden_line[0][1].add(chara_id)
+            # 花草种植员默认分配到温室0里
+            if character_data.work.work_type == 162:
+                if chara_id not in cache.rhodes_island.green_house_line[0][1]:
+                    cache.rhodes_island.green_house_line[0][1].add(chara_id)
 
         else:
             cache.rhodes_island.all_work_npc_set[0].add(chara_id)
@@ -422,15 +441,15 @@ def settle_agriculture_line():
     """
     # print("debug 开始结算农业生产")
     # 遍历药田
-    for agriculture_line_id in cache.rhodes_island.agriculture_line:
-        resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+    for agriculture_line_id in cache.rhodes_island.herb_garden_line:
+        resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
         # print(f"debug 药田{agriculture_line_id}，种植的作物id为{resouce_id}")
         if resouce_id != 0:
             resouce_data = game_config.config_resouce[resouce_id]
 
             # 每天生产一次
             max_time = 10
-            produce_effect = cache.rhodes_island.agriculture_line[agriculture_line_id][2]
+            produce_effect = cache.rhodes_island.herb_garden_line[agriculture_line_id][2]
             # 公务的总效率
             produce_effect *= cache.rhodes_island.effectiveness / 100
             # 计算最大生产数
@@ -443,11 +462,11 @@ def settle_agriculture_line():
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
-                now_text = f"\n今日药田共生产了{produce_num}个{game_config.config_resouce[resouce_id].name}"
+                now_text = f"\n今日药田共生产了{produce_num}个{resouce_data.name}"
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
-                    now_text += f"，由于仓库容量不足，{game_config.config_resouce[resouce_id].name}已达上限数量{cache.rhodes_island.warehouse_capacity}"
+                    now_text += f"，由于仓库容量不足，{resouce_data.name}已达上限数量{cache.rhodes_island.warehouse_capacity}"
                 now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
@@ -455,7 +474,43 @@ def settle_agriculture_line():
                 now_draw.draw()
 
         # 重置收菜时间
-        cache.rhodes_island.agriculture_line[agriculture_line_id][4] = cache.game_time.hour
+        cache.rhodes_island.herb_garden_line[agriculture_line_id][4] = cache.game_time.hour
+
+    # 遍历温室
+    for agriculture_line_id in cache.rhodes_island.green_house_line:
+        resouce_id = cache.rhodes_island.green_house_line[agriculture_line_id][0]
+        # print(f"debug 温室{agriculture_line_id}，种植的作物id为{resouce_id}")
+        if resouce_id != 0:
+            resouce_data = game_config.config_resouce[resouce_id]
+
+            # 每天生产一次
+            max_time = 10
+            produce_effect = cache.rhodes_island.green_house_line[agriculture_line_id][2]
+            # 公务的总效率
+            produce_effect *= cache.rhodes_island.effectiveness / 100
+            # 计算最大生产数
+            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num = produce_num_max
+            # print(f"debug 温室{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+
+            # 结算实际生产
+            if produce_num > 0:
+                # 结算实际生产的产品
+                cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+
+                now_text = f"\n今日温室共生产了{produce_num}个{resouce_data.name}"
+                # 不会超过仓库容量
+                if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
+                    cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
+                    now_text += f"，由于仓库容量不足，{resouce_data.name}已达上限数量{cache.rhodes_island.warehouse_capacity}"
+                now_text += f"\n"
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = now_text
+                now_draw.draw()
+
+        # 重置收菜时间
+        cache.rhodes_island.green_house_line[agriculture_line_id][4] = cache.game_time.hour
 
 
 def update_recruit():
@@ -482,6 +537,8 @@ def update_recruit():
                 chara_id = i + 1
                 # 本地招募
                 if recruitment_strategy == 0:
+                    if chara_id not in cache.character_data:
+                        continue
                     character_data = cache.character_data[chara_id]
                     # 筛选出未招募且出生地是当前所在地的角色
                     if chara_id in cache.npc_id_got or character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:

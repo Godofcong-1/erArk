@@ -59,13 +59,13 @@ class Agriculture_Production_Panel:
             all_info_draw.width = self.width
             all_info_draw.draw()
 
-            for agriculture_line_id in cache.rhodes_island.agriculture_line:
-                now_text = f"\n 药田："
+            for agriculture_line_id in cache.rhodes_island.herb_garden_line:
+                now_text = _(f"\n 药田：")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
                 # 基础数据
-                resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+                resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
                 resouce_data = game_config.config_resouce[resouce_id]
 
                 # 生产产品
@@ -75,10 +75,10 @@ class Agriculture_Production_Panel:
                 button_text = _(" [生产调整] ")
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(f"{button_text}_{agriculture_line_id}"),
+                    _(f"{button_text}_药田_{agriculture_line_id}"),
                     len(button_text) * 2,
                     cmd_func=self.select_agriculture_line_produce,
-                    args=agriculture_line_id,
+                    args = (agriculture_line_id, 0)
                     )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
@@ -91,7 +91,7 @@ class Agriculture_Production_Panel:
                 all_effect += facility_effect
                 now_text = _(f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)")
                 # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.agriculture_line[agriculture_line_id][1]:
+                for chara_id in cache.rhodes_island.herb_garden_line[agriculture_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
                     all_effect += character_effect
@@ -100,6 +100,50 @@ class Agriculture_Production_Panel:
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()
+
+            # 已开放温室再显示温室的生产情况
+            if cache.rhodes_island.facility_open[71]:
+                for agriculture_line_id in cache.rhodes_island.green_house_line:
+                    now_text = _(f"\n 温室：")
+                    all_info_draw.text = now_text
+                    all_info_draw.draw()
+
+                    # 基础数据
+                    resouce_id = cache.rhodes_island.green_house_line[agriculture_line_id][0]
+                    resouce_data = game_config.config_resouce[resouce_id]
+
+                    # 生产产品
+                    now_text = _(f"\n    当前生产：{resouce_data.name}(10/d)      ")
+                    all_info_draw.text = now_text
+                    all_info_draw.draw()
+                    button_text = _(" [生产调整] ")
+                    button_draw = draw.CenterButton(
+                        _(button_text),
+                        _(f"{button_text}_温室_{agriculture_line_id}"),
+                        len(button_text) * 2,
+                        cmd_func=self.select_agriculture_line_produce,
+                        args = (agriculture_line_id, 1)
+                        )
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+
+                    # 生产效率
+                    now_level = cache.rhodes_island.facility_level[12]
+                    facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
+                    all_effect = 0
+                    facility_effect = game_config.config_facility_effect[facility_cid].effect
+                    all_effect += facility_effect
+                    now_text = _(f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)")
+                    # 遍历输出干员的能力效率加成
+                    for chara_id in cache.rhodes_island.green_house_line[agriculture_line_id][1]:
+                        character_data: game_type.Character = cache.character_data[chara_id]
+                        character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
+                        all_effect += character_effect
+                        now_text += _(f" + {character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)")
+                    now_text += f" = {all_effect}%      "
+                    all_info_draw.text = now_text
+                    all_info_draw.draw()
+                    line_feed.draw()
 
             line_feed.draw()
             button_text = _("[001]种植员增减")
@@ -110,6 +154,8 @@ class Agriculture_Production_Panel:
                 cmd_func=manage_basement_panel.change_npc_work_out,
                 args=self.width
                 )
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -121,8 +167,16 @@ class Agriculture_Production_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def select_agriculture_line_produce(self, agriculture_line_id):
-        """选择药田生产的产品"""
+    def select_agriculture_line_produce(self, agriculture_line_id, agriculture_type):
+        """
+        选择生产的资源\n
+        agriculture_line_id: int 生产线id\n
+        agriculture_type: int 农业类型，0药田，1温室\n
+        """
+        if agriculture_type == 0:
+            resouce_id_list = [11]
+        elif agriculture_type == 1:
+            resouce_id_list = [16]
         while 1:
 
                 line = draw.LineDraw("-", window_width)
@@ -131,19 +185,19 @@ class Agriculture_Production_Panel:
                 info_draw.width = window_width
                 return_list = []
 
-                now_level = cache.rhodes_island.facility_level[12]
-                resouce_id = cache.rhodes_island.agriculture_line[agriculture_line_id][0]
+                # now_level = cache.rhodes_island.facility_level[12]
+                resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
                 resouce_data = game_config.config_resouce[resouce_id]
 
                 info_text = f""
-                info_text += _(f" 药田当前种植的是：{resouce_data.name}")
+                info_text += _(f" 当前种植的是：{resouce_data.name}")
 
                 info_text += _("\n\n 当前可以种植的有：\n\n")
                 info_draw.text = info_text
                 info_draw.draw()
 
                 # 遍历配方列表，获取每个配方的信息
-                for cid in [11]:
+                for cid in resouce_id_list:
                     resouce_now_data = game_config.config_resouce[cid]
 
                     # 判断当前配方是否可以生产，未解锁则跳过
@@ -159,7 +213,7 @@ class Agriculture_Production_Panel:
                             f"\n{cid}",
                             window_width ,
                             cmd_func=self.change_agriculture_line_produce,
-                            args=(agriculture_line_id ,cid)
+                            args=(agriculture_line_id ,cid, agriculture_type)
                         )
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
@@ -174,9 +228,15 @@ class Agriculture_Production_Panel:
                 if yrn in return_list:
                     break
 
-    def change_agriculture_line_produce(self, agriculture_line_id, formula_cid):
-        """更改药田的种植"""
-        if cache.rhodes_island.agriculture_line[agriculture_line_id][0] != 0 and cache.rhodes_island.agriculture_line[agriculture_line_id][4] != cache.game_time.hour:
-            pass
-        else:
-            cache.rhodes_island.agriculture_line[agriculture_line_id][0] = formula_cid
+    def change_agriculture_line_produce(self, agriculture_line_id, formula_cid, agriculture_type):
+        """更改农产品的种植"""
+        if agriculture_type == 0:
+            if cache.rhodes_island.herb_garden_line[agriculture_line_id][0] != 0 and cache.rhodes_island.herb_garden_line[agriculture_line_id][4] != cache.game_time.hour:
+                pass
+            else:
+                cache.rhodes_island.herb_garden_line[agriculture_line_id][0] = formula_cid
+        elif agriculture_type == 1:
+            if cache.rhodes_island.green_house_line[agriculture_line_id][0] != 0 and cache.rhodes_island.green_house_line[agriculture_line_id][4] != cache.game_time.hour:
+                pass
+            else:
+                cache.rhodes_island.green_house_line[agriculture_line_id][0] = formula_cid
