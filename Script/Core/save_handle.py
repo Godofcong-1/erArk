@@ -174,6 +174,9 @@ def input_load_save(save_id: str):
         now_draw.text = draw_text
         now_draw.draw()
 
+    # 更新游戏地图
+    update_count += update_map(loaded_dict)
+
     now_draw = draw.LeftDraw()
     draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
     now_draw.text = draw_text
@@ -342,6 +345,37 @@ def update_new_character(loaded_dict):
         new_character = character_handle.init_character(new_character_cid, now_npc_data)
         loaded_dict["character_data"][new_character_cid] = new_character
         update_count += 1
+
+    return update_count
+
+
+def update_map(loaded_dict):
+    """
+    更新地图
+    Keyword arguments:
+    loaded_dict -- 存档数据
+    """
+
+    update_count = 0
+
+    # 遍历地图数据，如果该地图在缓存数据中但不在存档中，将其添加到存档中
+    change_map_flag = False
+    for key, value in cache.scene_data.items():
+        if key not in loaded_dict["scene_data"]:
+            loaded_dict["scene_data"][key] = value
+            update_count += 1
+            change_map_flag = True
+    # 如果地图数据有变化，将地图路径也更新，同时删除不存在的地图数据
+    if change_map_flag:
+        loaded_dict["map_data"] = cache.map_data
+        for key, value in loaded_dict["scene_data"].copy().items():
+            if key not in cache.scene_data:
+                del loaded_dict["scene_data"][key]
+                update_count += 1
+        now_draw = draw.LeftDraw()
+        draw_text = _(f"\n游戏地图已更新\n")
+        now_draw.text = draw_text
+        now_draw.draw()
 
     return update_count
 
