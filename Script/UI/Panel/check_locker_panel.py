@@ -158,6 +158,9 @@ class FindDraw:
 
                 if len(cloth_list):
                     for cloth_id in cloth_list:
+                        # 跳过序号不存在的服装
+                        if cloth_id not in game_config.config_clothing_tem:
+                            continue
                         cloth_name = game_config.config_clothing_tem[cloth_id].name
                         cloth_show_text += f" {cloth_name}"
                     semen_now_count = self.character_data.dirty.cloth_locker_semen[clothing_type][1]
