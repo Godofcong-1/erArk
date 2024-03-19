@@ -417,23 +417,23 @@ def get_status_level(value: int) -> int:
         level = 0
     elif value < 500:
         level = 1
-    elif value < 3000:
+    elif value < 1000:
         level = 2
-    elif value < 10000:
+    elif value < 2500:
         level = 3
-    elif value < 30000:
+    elif value < 6000:
         level = 4
-    elif value < 60000:
+    elif value < 12000:
         level = 5
-    elif value < 100000:
+    elif value < 30000:
         level = 6
-    elif value < 150000:
+    elif value < 50000:
         level = 7
-    elif value < 500000:
+    elif value < 75000:
         level = 8
-    elif value < 999999:
+    elif value < 99999:
         level = 9
-    elif value >= 999999:
+    elif value >= 99999:
         level = 10
     return level
 
@@ -484,11 +484,11 @@ def get_mark_debuff_adjust(value: int) -> int:
     if level == 0:
         just = 1
     elif level == 1:
-        just = 2
+        just = 1.5
     elif level == 2:
-        just = 5
+        just = 3
     elif level >= 3:
-        just = 10
+        just = 5
     return just
 
 
@@ -536,27 +536,27 @@ def get_pain_adjust(value: int) -> int:
     """
     level = get_status_level(value)
     if level == 0:
-        just = 10.0
+        just = 6.2
     elif level == 1:
-        just = 6.0
+        just = 5.2
     elif level == 2:
-        just = 3.4
+        just = 4.3
     elif level == 3:
-        just = 2.8
+        just = 3.6
     elif level == 4:
-        just = 2.3
+        just = 3
     elif level == 5:
-        just = 1.8
+        just = 2.5
     elif level == 6:
-        just = 1.4
+        just = 2.1
     elif level == 7:
-        just = 1.0
+        just = 1.75
     elif level == 8:
-        just = 0.7
+        just = 1.45
     elif level == 9:
-        just = 0.4
+        just = 1.2
     elif level == 10:
-        just = 0.2
+        just = 1.0
     return just
 
 

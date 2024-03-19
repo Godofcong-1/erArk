@@ -29,7 +29,7 @@ def common_ejaculation():
     character_data: game_type.Character = cache.character_data[0]
 
     # 乘以一个随机数补正
-    random_weight = random.uniform(0.5, 1.5)
+    random_weight = random.uniform(0.8, 1.2)
 
     # 如果已经没有精液了，则不射精
     if character_data.semen_point <= 1:
@@ -37,13 +37,13 @@ def common_ejaculation():
     else:
         # 基础射精值，小中多射精区分
         if character_data.h_state.orgasm_level[3] % 3 == 0:
-            semen_count = int(5 * random_weight)
+            semen_count = int(10 * random_weight)
             semen_text = "射精，射出了" + str(semen_count) + "ml精液"
         if character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(20 * random_weight)
+            semen_count = int(25 * random_weight)
             semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
         if character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(40 * random_weight)
+            semen_count = int(45 * random_weight)
             semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
 
         # 更新射精计数和总精液量

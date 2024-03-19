@@ -705,79 +705,79 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     yield_count += character_data.status_data[10]
     yield_count += character_data.status_data[15]
     yield_count += character_data.status_data[16] / 5
-    if yield_count >= 1000 and character_data.ability[14] <= 0:
+    if yield_count >= 30000 and character_data.ability[14] <= 0:
         character_data.ability[14] = 1
         character_data.second_behavior[1033] = 1
         # 至少提升为顺从1
         if character_data.ability[31] <= 0:
             character_data.ability[31] = 1
-    if yield_count >= 3000 and character_data.ability[14] <= 1:
+    if yield_count >= 50000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
-        # 至少提升为顺从2
-        if character_data.ability[31] <= 1:
-            character_data.ability[31] = 2
-    if yield_count >= 10000 and character_data.ability[14] <= 2:
+        # 至少提升为顺从3
+        if character_data.ability[31] <= 3:
+            character_data.ability[31] = 3
+    if yield_count >= 100000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
-        # 至少提升为顺从3
-        if character_data.ability[31] <= 2:
-            character_data.ability[31] = 3
+        # 至少提升为顺从5
+        if character_data.ability[31] <= 5:
+            character_data.ability[31] = 5
 
-    # 苦痛刻印检测苦痛，2000苦痛1，4000苦痛2，8000苦痛3
+    # 苦痛刻印检测苦痛，20000苦痛1，40000苦痛2，80000苦痛3
     pain_count = 0
     if 17 in change_data.status_data:
         pain_count += change_data.status_data[17]
-        if pain_count >= 2000 and character_data.ability[15] <= 0:
+        if pain_count >= 20000 and character_data.ability[15] <= 0:
             character_data.ability[15] = 1
             character_data.second_behavior[1036] = 1
             # 至少提升为顺从1
             if character_data.ability[31] <= 0:
                 character_data.ability[31] = 1
-        if pain_count >= 4000 and character_data.ability[15] <= 1:
+        if pain_count >= 40000 and character_data.ability[15] <= 1:
             character_data.ability[15] = 2
             character_data.second_behavior[1037] = 1
-            # 至少提升为顺从2
-            if character_data.ability[31] <= 1:
-                character_data.ability[31] = 2
-        if pain_count >= 8000 and character_data.ability[15] <= 2:
+            # 至少提升为顺从3
+            if character_data.ability[31] <= 3:
+                character_data.ability[31] = 3
+        if pain_count >= 80000 and character_data.ability[15] <= 2:
             character_data.ability[15] = 3
             character_data.second_behavior[1038] = 1
-            # 至少提升为顺从3
-            if character_data.ability[31] <= 2:
-                character_data.ability[31] = 3
+            # 至少提升为顺从5
+            if character_data.ability[31] <= 5:
+                character_data.ability[31] = 5
 
     # 无觉刻印未实装
 
-    # 恐怖刻印检测恐怖+苦痛/5，2000恐怖1，4000恐怖2，8000恐怖3
+    # 恐怖刻印检测恐怖+苦痛/5，20000恐怖1，40000恐怖2，80000恐怖3
     terror_count = 0
     if 18 in change_data.status_data:
         terror_count += character_data.status_data[18]
         terror_count += character_data.status_data[17] / 5
-        if terror_count >= 2000 and character_data.ability[17] <= 0:
+        if terror_count >= 20000 and character_data.ability[17] <= 0:
             character_data.ability[17] = 1
             character_data.second_behavior[1042] = 1
-        if terror_count >= 4000 and character_data.ability[17] <= 1:
+        if terror_count >= 40000 and character_data.ability[17] <= 1:
             character_data.ability[17] = 2
             character_data.second_behavior[1043] = 1
-        if terror_count >= 8000 and character_data.ability[17] <= 2:
+        if terror_count >= 80000 and character_data.ability[17] <= 2:
             character_data.ability[17] = 3
             character_data.second_behavior[1044] = 1
 
-    # 反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，500反发1，1000反发2，2000反发3
+    # 反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，10000反发1，30000反发2，80000反发3
     hate_count = 0
     if 20 in change_data.status_data:
         hate_count += character_data.status_data[20]
         hate_count += character_data.status_data[18] / 5
         hate_count += character_data.status_data[19] / 5
         hate_count += character_data.status_data[17] / 10
-        if hate_count >= 1000 and character_data.ability[18] <= 0:
+        if hate_count >= 10000 and character_data.ability[18] <= 0:
             character_data.ability[18] = 1
             character_data.second_behavior[1045] = 1
-        if hate_count >= 2000 and character_data.ability[18] <= 1:
+        if hate_count >= 50000 and character_data.ability[18] <= 1:
             character_data.ability[18] = 2
             character_data.second_behavior[1046] = 1
-        if hate_count >= 4000 and character_data.ability[18] <= 2:
+        if hate_count >= 100000 and character_data.ability[18] <= 2:
             character_data.ability[18] = 3
             character_data.second_behavior[1047] = 1
 
