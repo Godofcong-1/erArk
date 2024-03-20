@@ -2261,7 +2261,7 @@ def handle_add_large_pain_first_sex(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_add_lust = 800
+    now_add_lust = 4000
     # 润滑修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
     now_add_lust *= adjust
@@ -2297,7 +2297,7 @@ def handle_add_large_pain_first_a_sex(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_add_lust = 600
+    now_add_lust = 2000
     # 润滑修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
     now_add_lust *= adjust
