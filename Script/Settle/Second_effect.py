@@ -474,6 +474,7 @@ def handle_add_small_lubrication(
     now_add_lust = 300
     character_data.status_data.setdefault(8, 0)
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -496,6 +497,7 @@ def handle_add_middle_lubrication(
     now_add_lust = 900
     character_data.status_data.setdefault(8, 0)
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -518,6 +520,7 @@ def handle_add_large_lubrication(
     now_add_lust = 3000
     character_data.status_data.setdefault(8, 0)
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -617,6 +620,7 @@ def handle_add_small_n_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[0] += now_add_lust
+    character_data.status_data[0] = min(99999, character_data.status_data[0])
     change_data.status_data.setdefault(0, 0)
     change_data.status_data[0] += now_add_lust
 
@@ -644,6 +648,7 @@ def handle_add_small_b_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[1] += now_add_lust
+    character_data.status_data[1] = min(99999, character_data.status_data[1])
     change_data.status_data.setdefault(1, 0)
     change_data.status_data[1] += now_add_lust
 
@@ -671,6 +676,7 @@ def handle_add_small_c_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[2] += now_add_lust
+    character_data.status_data[2] = min(99999, character_data.status_data[2])
     change_data.status_data.setdefault(2, 0)
     change_data.status_data[2] += now_add_lust
 
@@ -722,6 +728,7 @@ def handle_add_small_v_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[4] += now_add_lust
+    character_data.status_data[4] = min(99999, character_data.status_data[4])
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
@@ -748,6 +755,7 @@ def handle_add_small_a_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[5] += now_add_lust
+    character_data.status_data[5] = min(99999, character_data.status_data[5])
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
@@ -774,6 +782,7 @@ def handle_add_small_u_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[6] += now_add_lust
+    character_data.status_data[6] = min(99999, character_data.status_data[6])
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
@@ -800,6 +809,7 @@ def handle_add_small_w_feel(
     now_add_lust += now_lust / 20
 
     character_data.status_data[7] += now_add_lust
+    character_data.status_data[7] = min(99999, character_data.status_data[7])
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
 
@@ -827,6 +837,7 @@ def handle_add_small_lubrication_plus(
     now_add_lust += now_lust / 20
 
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -854,6 +865,7 @@ def handle_add_small_learn_plus(
     now_add_lust += now_lust / 20
 
     character_data.status_data[9] += now_add_lust
+    character_data.status_data[9] = min(99999, character_data.status_data[9])
     change_data.status_data.setdefault(9, 0)
     change_data.status_data[9] += now_add_lust
 
@@ -881,6 +893,7 @@ def handle_add_small_respect_plus(
     now_add_lust += now_lust / 20
 
     character_data.status_data[10] += now_add_lust
+    character_data.status_data[10] = min(99999, character_data.status_data[10])
     change_data.status_data.setdefault(10, 0)
     change_data.status_data[10] += now_add_lust
 
@@ -908,6 +921,7 @@ def handle_add_small_friendly(
     now_add_lust += now_lust / 20
 
     character_data.status_data[11] += now_add_lust
+    character_data.status_data[11] = min(99999, character_data.status_data[11])
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
@@ -934,6 +948,7 @@ def handle_add_small_desire(
     now_add_lust += now_lust / 20
 
     character_data.status_data[12] += now_add_lust
+    character_data.status_data[12] = min(99999, character_data.status_data[12])
     change_data.status_data.setdefault(12, 0)
     change_data.status_data[12] += now_add_lust
 
@@ -961,6 +976,7 @@ def handle_add_small_happy(
     now_add_lust += now_lust / 20
 
     character_data.status_data[13] += now_add_lust
+    character_data.status_data[13] = min(99999, character_data.status_data[13])
     change_data.status_data.setdefault(13, 0)
     change_data.status_data[13] += now_add_lust
 
@@ -988,6 +1004,7 @@ def handle_add_small_lead(
     now_add_lust += now_lust / 20
 
     character_data.status_data[14] += now_add_lust
+    character_data.status_data[14] = min(99999, character_data.status_data[14])
     change_data.status_data.setdefault(14, 0)
     change_data.status_data[14] += now_add_lust
 
@@ -1015,6 +1032,7 @@ def handle_add_small_submit(
     now_add_lust += now_lust / 20
 
     character_data.status_data[15] += now_add_lust
+    character_data.status_data[15] = min(99999, character_data.status_data[15])
     change_data.status_data.setdefault(15, 0)
     change_data.status_data[15] += now_add_lust
 
@@ -1042,6 +1060,7 @@ def handle_add_small_shy(
     now_add_lust += now_lust / 20
 
     character_data.status_data[16] += now_add_lust
+    character_data.status_data[16] = min(99999, character_data.status_data[16])
     change_data.status_data.setdefault(16, 0)
     change_data.status_data[16] += now_add_lust
 
@@ -1069,6 +1088,7 @@ def handle_add_small_pain(
     now_add_lust += now_lust / 20
 
     character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = min(99999, character_data.status_data[17])
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
@@ -1096,6 +1116,7 @@ def handle_add_small_terror(
     now_add_lust += now_lust / 20
 
     character_data.status_data[18] += now_add_lust
+    character_data.status_data[18] = min(99999, character_data.status_data[18])
     change_data.status_data.setdefault(18, 0)
     change_data.status_data[18] += now_add_lust
 
@@ -1120,6 +1141,7 @@ def handle_add_small_depression(
     now_add_lust = 20
 
     character_data.status_data[19] += now_add_lust
+    character_data.status_data[19] = min(99999, character_data.status_data[19])
     change_data.status_data.setdefault(19, 0)
     change_data.status_data[19] += now_add_lust
 
@@ -1147,6 +1169,7 @@ def handle_add_small_disgust(
     now_add_lust += now_lust / 20
 
     character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = min(99999, character_data.status_data[20])
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
 
@@ -1174,6 +1197,7 @@ def handle_add_middle_n_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[0] += now_add_lust
+    character_data.status_data[0] = min(99999, character_data.status_data[0])
     change_data.status_data.setdefault(0, 0)
     change_data.status_data[0] += now_add_lust
 
@@ -1201,6 +1225,7 @@ def handle_add_middle_b_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[1] += now_add_lust
+    character_data.status_data[1] = min(99999, character_data.status_data[1])
     change_data.status_data.setdefault(1, 0)
     change_data.status_data[1] += now_add_lust
 
@@ -1228,6 +1253,7 @@ def handle_add_middle_c_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[2] += now_add_lust
+    character_data.status_data[2] = min(99999, character_data.status_data[2])
     change_data.status_data.setdefault(2, 0)
     change_data.status_data[2] += now_add_lust
 
@@ -1255,6 +1281,7 @@ def handle_add_middle_p_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[3] += now_add_lust
+    character_data.status_data[3] = min(99999, character_data.status_data[3])
     change_data.status_data.setdefault(3, 0)
     change_data.status_data[3] += now_add_lust
 
@@ -1282,6 +1309,7 @@ def handle_add_middle_v_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[4] += now_add_lust
+    character_data.status_data[4] = min(99999, character_data.status_data[4])
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
@@ -1308,6 +1336,7 @@ def handle_add_middle_a_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[5] += now_add_lust
+    character_data.status_data[5] = min(99999, character_data.status_data[5])
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
@@ -1334,6 +1363,7 @@ def handle_add_middle_u_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[6] += now_add_lust
+    character_data.status_data[6] = min(99999, character_data.status_data[6])
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
@@ -1360,6 +1390,7 @@ def handle_add_middle_w_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[7] += now_add_lust
+    character_data.status_data[7] = min(99999, character_data.status_data[7])
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
 
@@ -1387,6 +1418,7 @@ def handle_add_middle_lubrication_plus(
     now_add_lust += now_lust / 10
 
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -1414,6 +1446,7 @@ def handle_add_middle_learn_plus(
     now_add_lust += now_lust / 10
 
     character_data.status_data[9] += now_add_lust
+    character_data.status_data[9] = min(99999, character_data.status_data[9])
     change_data.status_data.setdefault(9, 0)
     change_data.status_data[9] += now_add_lust
 
@@ -1441,6 +1474,7 @@ def handle_add_middle_respect_plus(
     now_add_lust += now_lust / 10
 
     character_data.status_data[10] += now_add_lust
+    character_data.status_data[10] = min(99999, character_data.status_data[10])
     change_data.status_data.setdefault(10, 0)
     change_data.status_data[10] += now_add_lust
 
@@ -1468,6 +1502,7 @@ def handle_add_middle_friendly(
     now_add_lust += now_lust / 10
 
     character_data.status_data[11] += now_add_lust
+    character_data.status_data[11] = min(99999, character_data.status_data[11])
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
@@ -1494,6 +1529,7 @@ def handle_add_middle_desire(
     now_add_lust += now_lust / 10
 
     character_data.status_data[12] += now_add_lust
+    character_data.status_data[12] = min(99999, character_data.status_data[12])
     change_data.status_data.setdefault(12, 0)
     change_data.status_data[12] += now_add_lust
 
@@ -1521,6 +1557,7 @@ def handle_add_middle_happy(
     now_add_lust += now_lust / 10
 
     character_data.status_data[13] += now_add_lust
+    character_data.status_data[13] = min(99999, character_data.status_data[13])
     change_data.status_data.setdefault(13, 0)
     change_data.status_data[13] += now_add_lust
 
@@ -1548,6 +1585,7 @@ def handle_add_middle_lead(
     now_add_lust += now_lust / 10
 
     character_data.status_data[14] += now_add_lust
+    character_data.status_data[14] = min(99999, character_data.status_data[14])
     change_data.status_data.setdefault(14, 0)
     change_data.status_data[14] += now_add_lust
 
@@ -1575,6 +1613,7 @@ def handle_add_middle_submit(
     now_add_lust += now_lust / 10
 
     character_data.status_data[15] += now_add_lust
+    character_data.status_data[15] = min(99999, character_data.status_data[15])
     change_data.status_data.setdefault(15, 0)
     change_data.status_data[15] += now_add_lust
 
@@ -1602,6 +1641,7 @@ def handle_add_middle_shy(
     now_add_lust += now_lust / 10
 
     character_data.status_data[16] += now_add_lust
+    character_data.status_data[16] = min(99999, character_data.status_data[16])
     change_data.status_data.setdefault(16, 0)
     change_data.status_data[16] += now_add_lust
 
@@ -1629,6 +1669,7 @@ def handle_add_middle_pain(
     now_add_lust += now_lust / 10
 
     character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = min(99999, character_data.status_data[17])
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
@@ -1656,6 +1697,7 @@ def handle_add_middle_terror(
     now_add_lust += now_lust / 10
 
     character_data.status_data[18] += now_add_lust
+    character_data.status_data[18] = min(99999, character_data.status_data[18])
     change_data.status_data.setdefault(18, 0)
     change_data.status_data[18] += now_add_lust
 
@@ -1680,6 +1722,7 @@ def handle_add_middle_depression(
     now_add_lust = 100
 
     character_data.status_data[19] += now_add_lust
+    character_data.status_data[19] = min(99999, character_data.status_data[19])
     change_data.status_data.setdefault(19, 0)
     change_data.status_data[19] += now_add_lust
 
@@ -1707,6 +1750,7 @@ def handle_add_middle_disgust(
     now_add_lust += now_lust / 10
 
     character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = min(99999, character_data.status_data[20])
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
 
@@ -1734,6 +1778,7 @@ def handle_add_large_n_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[0] += now_add_lust
+    character_data.status_data[0] = min(99999, character_data.status_data[0])
     change_data.status_data.setdefault(0, 0)
     change_data.status_data[0] += now_add_lust
 
@@ -1761,6 +1806,7 @@ def handle_add_large_b_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[1] += now_add_lust
+    character_data.status_data[1] = min(99999, character_data.status_data[1])
     change_data.status_data.setdefault(1, 0)
     change_data.status_data[1] += now_add_lust
 
@@ -1788,6 +1834,7 @@ def handle_add_large_c_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[2] += now_add_lust
+    character_data.status_data[2] = min(99999, character_data.status_data[2])
     change_data.status_data.setdefault(2, 0)
     change_data.status_data[2] += now_add_lust
 
@@ -1815,6 +1862,7 @@ def handle_add_large_p_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[3] += now_add_lust
+    character_data.status_data[3] = min(99999, character_data.status_data[3])
     change_data.status_data.setdefault(3, 0)
     change_data.status_data[3] += now_add_lust
 
@@ -1842,6 +1890,7 @@ def handle_add_large_v_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[4] += now_add_lust
+    character_data.status_data[4] = min(99999, character_data.status_data[4])
     change_data.status_data.setdefault(4, 0)
     change_data.status_data[4] += now_add_lust
 
@@ -1868,6 +1917,7 @@ def handle_add_large_a_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[5] += now_add_lust
+    character_data.status_data[5] = min(99999, character_data.status_data[5])
     change_data.status_data.setdefault(5, 0)
     change_data.status_data[5] += now_add_lust
 
@@ -1894,6 +1944,7 @@ def handle_add_large_u_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[6] += now_add_lust
+    character_data.status_data[6] = min(99999, character_data.status_data[6])
     change_data.status_data.setdefault(6, 0)
     change_data.status_data[6] += now_add_lust
 
@@ -1920,6 +1971,7 @@ def handle_add_large_w_feel(
     now_add_lust += now_lust / 10
 
     character_data.status_data[7] += now_add_lust
+    character_data.status_data[7] = min(99999, character_data.status_data[7])
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
 
@@ -1945,6 +1997,7 @@ def handle_add_large_lubrication_plus(
     now_add_lust *= adjust
 
     character_data.status_data[8] += now_add_lust
+    character_data.status_data[8] = min(99999, character_data.status_data[8])
     change_data.status_data.setdefault(8, 0)
     change_data.status_data[8] += now_add_lust
 
@@ -1970,6 +2023,7 @@ def handle_add_middle_learn_plus(
     now_add_lust *= adjust
 
     character_data.status_data[9] += now_add_lust
+    character_data.status_data[9] = min(99999, character_data.status_data[9])
     change_data.status_data.setdefault(9, 0)
     change_data.status_data[9] += now_add_lust
 
@@ -1995,6 +2049,7 @@ def handle_add_large_respect_plus(
     now_add_lust *= adjust
 
     character_data.status_data[10] += now_add_lust
+    character_data.status_data[10] = min(99999, character_data.status_data[10])
     change_data.status_data.setdefault(10, 0)
     change_data.status_data[10] += now_add_lust
 
@@ -2020,6 +2075,7 @@ def handle_add_large_friendly(
     now_add_lust *= adjust
 
     character_data.status_data[11] += now_add_lust
+    character_data.status_data[11] = min(99999, character_data.status_data[11])
     change_data.status_data.setdefault(11, 0)
     change_data.status_data[11] += now_add_lust
 
@@ -2044,6 +2100,7 @@ def handle_add_large_desire(
     now_add_lust *= adjust
 
     character_data.status_data[12] += now_add_lust
+    character_data.status_data[12] = min(99999, character_data.status_data[12])
     change_data.status_data.setdefault(12, 0)
     change_data.status_data[12] += now_add_lust
 
@@ -2069,6 +2126,7 @@ def handle_add_large_happy(
     now_add_lust *= adjust
 
     character_data.status_data[13] += now_add_lust
+    character_data.status_data[13] = min(99999, character_data.status_data[13])
     change_data.status_data.setdefault(13, 0)
     change_data.status_data[13] += now_add_lust
 
@@ -2094,6 +2152,7 @@ def handle_add_large_lead(
     now_add_lust *= adjust
 
     character_data.status_data[14] += now_add_lust
+    character_data.status_data[14] = min(99999, character_data.status_data[14])
     change_data.status_data.setdefault(14, 0)
     change_data.status_data[14] += now_add_lust
 
@@ -2119,6 +2178,7 @@ def handle_add_middle_submit(
     now_add_lust *= adjust
 
     character_data.status_data[15] += now_add_lust
+    character_data.status_data[15] = min(99999, character_data.status_data[15])
     change_data.status_data.setdefault(15, 0)
     change_data.status_data[15] += now_add_lust
 
@@ -2144,6 +2204,7 @@ def handle_add_large_shy(
     now_add_lust *= adjust
 
     character_data.status_data[16] += now_add_lust
+    character_data.status_data[16] = min(99999, character_data.status_data[16])
     change_data.status_data.setdefault(16, 0)
     change_data.status_data[16] += now_add_lust
 
@@ -2169,6 +2230,7 @@ def handle_add_large_pain(
     now_add_lust *= adjust
 
     character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = min(99999, character_data.status_data[17])
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
@@ -2194,6 +2256,7 @@ def handle_add_large_terror(
     now_add_lust *= adjust
 
     character_data.status_data[18] += now_add_lust
+    character_data.status_data[18] = min(99999, character_data.status_data[18])
     change_data.status_data.setdefault(18, 0)
     change_data.status_data[18] += now_add_lust
 
@@ -2217,6 +2280,7 @@ def handle_add_large_depression(
     now_add_lust = 1000
 
     character_data.status_data[19] += now_add_lust
+    character_data.status_data[19] = min(99999, character_data.status_data[19])
     change_data.status_data.setdefault(19, 0)
     change_data.status_data[19] += now_add_lust
 
@@ -2242,6 +2306,7 @@ def handle_add_large_disgust(
     now_add_lust *= adjust
 
     character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = min(99999, character_data.status_data[20])
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
 
@@ -2277,6 +2342,7 @@ def handle_add_large_pain_first_sex(
     now_add_lust /= adjust
 
     character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = min(99999, character_data.status_data[17])
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
     # print("破处修正", now_add_lust)
@@ -2313,6 +2379,7 @@ def handle_add_large_pain_first_a_sex(
     now_add_lust /= adjust
 
     character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = min(99999, character_data.status_data[17])
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
 
