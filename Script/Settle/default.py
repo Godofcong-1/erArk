@@ -1031,18 +1031,6 @@ def handle_first_sex(
         target_data.first_record.first_sex_posture = instruct_name
         target_data.second_behavior[1051] = 1
 
-        # 根据润滑来获得破处痛苦
-        # 获取调整值#
-        target_data.status_data.setdefault(8, 0)
-        adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
-        now_add_lust = 1000 * adjust
-        target_data.status_data[17] += now_add_lust
-        target_data.status_data[17] = min(99999, target_data.status_data[17])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(17, 0)
-        target_change.status_data[17] += now_add_lust
-
         # 处子血胖次
         no_pan_flag = False
         now_draw = draw.NormalDraw()

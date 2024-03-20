@@ -37,6 +37,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
         # 进行二段结算
         check_second_effect(character_id, change_data)
+        # 如果是玩家对NPC的行为，则额外进行对方的二段结算
+        if character_id == 0 and now_character_data.target_character_id != 0:
+            target_change: game_type.TargetChange = change_data.target_change[now_character_data.target_character_id]
+            check_second_effect(now_character_data.target_character_id, target_change)
         # 进行无意识结算
         check_unconscious_effect(character_id, add_time, change_data, now_time)
         # 结算上次进行聊天的时间，以重置聊天计数器#
@@ -453,6 +457,7 @@ def check_second_effect(
     change_data -- 状态变更信息记录对象
     """
     # print("进入第二结算")
+    mark_list = [i for i in range(1030, 1048)]
 
     # 玩家检测自己
     if character_id == 0:
@@ -467,7 +472,6 @@ def check_second_effect(
         change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
         mark_effect(character_data.target_character_id, target_change)
-        mark_list = [i for i in range(1030, 1048)]
         # 单独遍历结算刻印
         second_behavior_effect(character_data.target_character_id, target_change, mark_list)
 
@@ -486,6 +490,11 @@ def check_second_effect(
 
         # 进行结算
         second_behavior_effect(character_id, change_data)
+
+        # 刻印结算
+        mark_effect(character_id, change_data)
+        # 单独遍历结算刻印
+        second_behavior_effect(character_id, change_data, mark_list)
 
 
 def second_behavior_effect(
@@ -682,6 +691,8 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # print("进入刻印结算")
     character_data: game_type.Character = cache.character_data[character_id]
     # print(f"name = {character_data.name},change_data.status_data = {change_data.status_data}")
+    now_draw = draw.WaitDraw()
+    now_draw_text = ""
 
     # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     happy_count = 0
@@ -693,12 +704,24 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     if happy_count >= 2 and character_data.ability[13] <= 0:
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1
+        # 至少提升为欲望1
+        if character_data.ability[33] <= 0:
+            character_data.ability[33] = 1
+            now_draw_text += _(f"{character_data.name}的欲望提升至1级\n")
     if happy_count >= 8 and character_data.ability[13] <= 1:
         character_data.ability[13] = 2
         character_data.second_behavior[1031] = 1
+        # 至少提升为欲望3
+        if character_data.ability[33] <= 3:
+            character_data.ability[33] = 3
+            now_draw_text += _(f"{character_data.name}的欲望提升至3级\n")
     if happy_count >= 16 and character_data.ability[13] <= 2:
         character_data.ability[13] = 3
         character_data.second_behavior[1032] = 1
+        # 至少提升为欲望5
+        if character_data.ability[33] <= 5:
+            character_data.ability[33] = 5
+            now_draw_text += _(f"{character_data.name}的欲望提升至5级\n")
 
     # 屈服刻印检测屈服+恭顺+羞耻/5，1000以上屈服1,3000以上屈服2,10000以上屈服3
     yield_count = 0
@@ -711,18 +734,21 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         # 至少提升为顺从1
         if character_data.ability[31] <= 0:
             character_data.ability[31] = 1
+            now_draw_text += _(f"{character_data.name}的顺从提升至1级\n")
     if yield_count >= 50000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         # 至少提升为顺从3
         if character_data.ability[31] <= 3:
             character_data.ability[31] = 3
+            now_draw_text += _(f"{character_data.name}的顺从提升至3级\n")
     if yield_count >= 100000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         # 至少提升为顺从5
         if character_data.ability[31] <= 5:
             character_data.ability[31] = 5
+            now_draw_text += _(f"{character_data.name}的顺从提升至5级\n")
 
     # 苦痛刻印检测苦痛，20000苦痛1，40000苦痛2，80000苦痛3
     pain_count = 0
@@ -732,21 +758,24 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     if pain_count >= 20000 and character_data.ability[15] <= 0:
         character_data.ability[15] = 1
         character_data.second_behavior[1036] = 1
-        # 至少提升为顺从1
-        if character_data.ability[31] <= 0:
-            character_data.ability[31] = 1
+        # 至少提升为受虐1
+        if character_data.ability[36] <= 0:
+            character_data.ability[36] = 1
+            now_draw_text += _(f"{character_data.name}的受虐提升至1级\n")
     if pain_count >= 40000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
-        # 至少提升为顺从3
-        if character_data.ability[31] <= 3:
-            character_data.ability[31] = 3
+        # 至少提升为受虐3
+        if character_data.ability[36] <= 3:
+            character_data.ability[36] = 3
+            now_draw_text += _(f"{character_data.name}的受虐提升至3级\n")
     if pain_count >= 80000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
-        # 至少提升为顺从5
-        if character_data.ability[31] <= 5:
-            character_data.ability[31] = 5
+        # 至少提升为受虐5
+        if character_data.ability[36] <= 5:
+            character_data.ability[36] = 5
+            now_draw_text += _(f"{character_data.name}的受虐提升至5级\n")
 
     # 无觉刻印未实装
 
@@ -788,6 +817,10 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         character_data.ability[18] = 3
         character_data.second_behavior[1047] = 1
 
+    if len(now_draw_text) > 0:
+        now_draw_text += "\n"
+    now_draw.text = now_draw_text
+    now_draw.draw()
 
 def item_effect(character_id: int):
     """

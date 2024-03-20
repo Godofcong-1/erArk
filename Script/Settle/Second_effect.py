@@ -2261,7 +2261,7 @@ def handle_add_large_pain_first_sex(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_add_lust = 100
+    now_add_lust = 800
     # 润滑修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
     now_add_lust *= adjust
@@ -2279,6 +2279,7 @@ def handle_add_large_pain_first_sex(
     character_data.status_data[17] += now_add_lust
     change_data.status_data.setdefault(17, 0)
     change_data.status_data[17] += now_add_lust
+    # print("破处修正", now_add_lust)
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_A_SEX)
 def handle_add_large_pain_first_a_sex(
@@ -2296,7 +2297,7 @@ def handle_add_large_pain_first_a_sex(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_add_lust = 100
+    now_add_lust = 600
     # 润滑修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
     now_add_lust *= adjust
