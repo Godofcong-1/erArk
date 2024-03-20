@@ -5,7 +5,6 @@ import datetime
 import ast
 
 config_dir = os.path.join("data", "csv")
-# os.system("cp ./tools/DieloliEventEditor/default.json ./data/event/")
 event_dir = os.path.join("data", "event")
 talk_dir = os.path.join("data", "talk")
 target_dir = os.path.join("data", "target")
@@ -20,7 +19,7 @@ ui_text_data = {}
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
 config_po, talk_po = "", ""
-
+built = []
 
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
     # print(f"debug file_path = {file_path}")
@@ -82,7 +81,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 if now_type == "int":
                     row[k] = int(row[k])
                 elif now_type == "str":
-                    row[k] = str(row[k])
+                    row[k] = str(row[k]).replace('"','\\"') # 转义引号防止造成po文件混乱
                 elif now_type == "bool":
                     row[k] = int(row[k])
                 elif now_type == "float":
@@ -125,16 +124,17 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
 
 
 def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False):
-    global config_po, talk_po
-    if talk:
-        talk_po += f"#: .\{file_path}:{now_index}\n"
-        talk_po += f'msgid "{message}"\n'
-        talk_po += 'msgstr ""\n\n'
-    else:
-        config_po += f"#: .\{file_path}:{now_index}\n"
-        config_po += f'msgid "{message}"\n'
-        config_po += f'msgstr ""\n\n'
-    # print(f"debug message = {message}")
+    global config_po, talk_po,built
+    if not message in built:
+        if talk:
+            talk_po += f"#: .\{file_path}:{now_index}\n"
+            talk_po += f'msgid "{message}"\n'
+            talk_po += 'msgstr ""\n\n'
+        else:
+            config_po += f"#: .\{file_path}:{now_index}\n"
+            config_po += f'msgid "{message}"\n'
+            config_po += f'msgstr ""\n\n'
+        built.append(message)
 
 
 def build_scene_config(data_path):
@@ -146,22 +146,26 @@ def build_scene_config(data_path):
                 with open(now_path, "r", encoding="utf-8") as now_file:
                     scene_data = json.loads(now_file.read())
                     scene_name = scene_data["SceneName"]
-                    config_po += f"#: /'{now_path}:2\n"
-                    config_po += f'msgid "{scene_name}"\n'
-                    config_po += 'msgstr ""\n\n'
+                    if not scene_name in built:
+                        config_po += f"#: /'{now_path}:2\n"
+                        config_po += f'msgid "{scene_name}"\n'
+                        config_po += 'msgstr ""\n\n'
+                        built.append(scene_name)
             elif i == "Map.json":
                 with open(now_path, "r", encoding="utf-8") as now_file:
                     map_data = json.loads(now_file.read())
                     map_name = map_data["MapName"]
-                    config_po += f"#: /'{now_path}:2\n"
-                    config_po += f'msgid "{map_name}"\n'
-                    config_po += 'msgstr ""\n\n'
+                    if not map_name in built:
+                        config_po += f"#: /'{now_path}:2\n"
+                        config_po += f'msgid "{map_name}"\n'
+                        config_po += 'msgstr ""\n\n'
+                        built.append(map_name)
         else:
             build_scene_config(now_path)
 
 
 def build_character_config(file_path:str,file_name:str):
-    global config_po
+    global config_po,built
     with open(file_path,encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
@@ -183,14 +187,15 @@ def build_character_config(file_path:str,file_name:str):
                 now_data[row["key"]] = ast.literal_eval(row["value"])
             else:
                 now_data[row["key"]] = row["value"]
-            if row["get_text"] and row["type"] == 'str':
+            if row["get_text"] and row["type"] == 'str' and not row["value"] in built:
                 config_po += f"#: .\{file_path}:{now_index}\n"
                 config_po += "msgid" + " " + '"' + row["value"] + '"' + "\n"
                 config_po += 'msgstr ""\n\n'
+                built.append(row["value"])
         character_data[file_id] = now_data
 
 def build_ui_text(file_path:str,file_name:str):
-    global config_po
+    global config_po,built
     with open(file_path,encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
@@ -204,10 +209,11 @@ def build_ui_text(file_path:str,file_name:str):
                 continue
             # print(f"debug row = {row}")
             now_data[row["cid"]] = row["context"]
-            if row["context"] not in msgData:
+            if row["context"] not in msgData and not row["context"] in built:
                 config_po += f"#: .\{file_path}:{now_index}\n"
                 config_po += "msgid" + " " + '"' + row["context"] + '"' + "\n"
                 config_po += 'msgstr ""\n\n'
+                built.append(row["context"])
         ui_text_data[file_id] = now_data
 
 def build_po_text(po):
@@ -284,10 +290,11 @@ for i in event_file_list:
             now_event = now_event_data[event_id]
             event_list.append(now_event)
             now_event_text = now_event["text"]
-            if now_event_text not in msgData:
+            if now_event_text not in msgData and not now_event_text in built:
                 config_po += f"#: Event:{event_id}\n"
                 config_po += f'msgid "{now_event_text}"\n'
                 config_po += 'msgstr ""\n\n'
+                built.append(now_event_text)
                 msgData.add(now_event_text)
 config_data["Event"] = {}
 config_data["Event"]["data"] = event_list

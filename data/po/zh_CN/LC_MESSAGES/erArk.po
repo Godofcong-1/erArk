@@ -1,3 +1,21 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-20 10:34+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: .\Script\Core\flow_handle.py:280 .\Script\Core\flow_handle.py:301
 msgid "您输入的选项无效，请重试\n"
@@ -35,7 +53,7 @@ msgid ""
 "开始检测存档的数据结构是否需要跨版本更新\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:155
+#: .\Script\Core\save_handle.py:159
 #, python-brace-format
 msgid ""
 "\n"
@@ -48,25 +66,36 @@ msgid ""
 "系统设置已重置，如有需要请手动修改\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:178
+#: .\Script\Core\save_handle.py:181
 #, python-brace-format
 msgid ""
 "\n"
 "检测完毕，共有{update_count}条数据完成了更新\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:204
+#: .\Script\Core\save_handle.py:207
 #, python-brace-format
 msgid "存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
 msgstr ""
 
-#: .\Script\Core\save_handle.py:216
+#: .\Script\Core\save_handle.py:219
 msgid ""
 "存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，"
 "新type {type(default_dict[key])}, 已设为默认值 {value}\n"
 msgstr ""
 
-#: .\Script\Design\attr_calculation.py:829
+#: .\Script\Core\save_handle.py:277
+#, python-brace-format
+msgid "存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:376
+msgid ""
+"\n"
+"游戏地图已更新\n"
+msgstr ""
+
+#: .\Script\Design\attr_calculation.py:797
 msgid "需要:"
 msgstr ""
 
@@ -233,7 +262,7 @@ msgid "管理流水线"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:428
-msgid "管理农田"
+msgid "管理农业生产"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:443
@@ -530,8 +559,7 @@ msgstr ""
 #: .\Script\Design\handle_instruct.py:1697
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\agriculture_production_panel.py:281
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:357
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
 #: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
 #: .\Script\UI\Panel\resource_exchange_panel.py:156
 msgid "[确定]"
@@ -1209,75 +1237,125 @@ msgstr ""
 msgid "脱衣服"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:135
-#: .\Script\Design\settle_behavior.py:201
+#: .\Script\Design\settle_behavior.py:139
+#: .\Script\Design\settle_behavior.py:205
 msgid ""
 "\n"
 "  体力"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:139
-#: .\Script\Design\settle_behavior.py:204
+#: .\Script\Design\settle_behavior.py:143
+#: .\Script\Design\settle_behavior.py:208
 msgid ""
 "\n"
 "  气力"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:143
+#: .\Script\Design\settle_behavior.py:147
 msgid ""
 "\n"
 "  射精"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:147
+#: .\Script\Design\settle_behavior.py:151
 msgid ""
 "\n"
 "  理智"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:163
+#: .\Script\Design\settle_behavior.py:167
 msgid ""
 "\n"
 "  "
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:207
+#: .\Script\Design\settle_behavior.py:211
 #, python-brace-format
 msgid ""
 "\n"
 "  对{character_name}{character_nick_name}好感"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:213
+#: .\Script\Design\settle_behavior.py:217
 #, python-brace-format
 msgid ""
 "\n"
 "  对{character_name}{character_nick_name}信赖"
 msgstr ""
 
-#: .\Script\Design\settle_behavior.py:219
+#: .\Script\Design\settle_behavior.py:223
 msgid ""
 "\n"
 "  催眠度"
 msgstr ""
 
-#: .\Script\Settle\default.py:4334
+#: .\Script\Design\settle_behavior.py:710
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:717
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:724
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至5级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:737
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:744
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:751
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至5级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:764
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:771
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:778
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至5级\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4387
 #, python-brace-format
 msgid "在{target_data.name}的帮助下，"
 msgstr ""
 
-#: .\Script\Settle\default.py:4348
+#: .\Script\Settle\default.py:4399
+#, python-brace-format
+msgid "共处理了{finish_work}公务，"
+msgstr ""
+
+#: .\Script\Settle\default.py:4401
 #, python-brace-format
 msgid "还有{cache.rhodes_island.office_work}需要处理\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4350
+#: .\Script\Settle\default.py:4403
 msgid ""
 "已经全部处理完毕\n"
 "\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4398
+#: .\Script\Settle\default.py:4451
 #, python-brace-format
 msgid ""
 "\n"
@@ -1285,7 +1363,7 @@ msgid ""
 "医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4449
+#: .\Script\Settle\default.py:4502
 msgid ""
 "\n"
 "在{character_data.name}的努力下，{select_index}号招募位进度"
@@ -1293,13 +1371,13 @@ msgid ""
 "recruit_line[select_index][0] + now_add_lust,1)}%\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4488
+#: .\Script\Settle\default.py:4541
 msgid ""
 "\n"
 "请先使用邀请系统选择邀请的对象，再进行邀请\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4504
+#: .\Script\Settle\default.py:4557
 msgid ""
 "\n"
 "在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为"
@@ -1568,9 +1646,8 @@ msgstr ""
 #: .\Script\UI\Flow\creator_character_flow.py:608
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:126
-#: .\Script\UI\Panel\agriculture_production_panel.py:180
-#: .\Script\UI\Panel\agriculture_production_panel.py:285
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
 #: .\Script\UI\Panel\all_npc_position_panel.py:148
 #: .\Script\UI\Panel\assistant_panel.py:53
 #: .\Script\UI\Panel\assistant_panel.py:150
@@ -1579,8 +1656,8 @@ msgstr ""
 #: .\Script\UI\Panel\building_panel.py:149
 #: .\Script\UI\Panel\building_panel.py:255
 #: .\Script\UI\Panel\check_locker_panel.py:78
-#: .\Script\UI\Panel\check_locker_panel.py:238
-#: .\Script\UI\Panel\check_locker_panel.py:303
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
@@ -1592,9 +1669,9 @@ msgstr ""
 #: .\Script\UI\Panel\invite_visitor_panel.py:126
 #: .\Script\UI\Panel\invite_visitor_panel.py:250
 #: .\Script\UI\Panel\make_food_panel.py:145
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:169
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:253
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:361
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
 #: .\Script\UI\Panel\manage_basement_panel.py:93
 #: .\Script\UI\Panel\manage_basement_panel.py:311
 #: .\Script\UI\Panel\manage_basement_panel.py:459
@@ -1627,9 +1704,8 @@ msgstr ""
 #: .\Script\UI\Flow\creator_character_flow.py:608
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:126
-#: .\Script\UI\Panel\agriculture_production_panel.py:180
-#: .\Script\UI\Panel\agriculture_production_panel.py:285
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
 #: .\Script\UI\Panel\all_npc_position_panel.py:148
 #: .\Script\UI\Panel\assistant_panel.py:53
 #: .\Script\UI\Panel\assistant_panel.py:150
@@ -1638,8 +1714,8 @@ msgstr ""
 #: .\Script\UI\Panel\building_panel.py:149
 #: .\Script\UI\Panel\building_panel.py:255
 #: .\Script\UI\Panel\check_locker_panel.py:78
-#: .\Script\UI\Panel\check_locker_panel.py:238
-#: .\Script\UI\Panel\check_locker_panel.py:303
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
@@ -1652,9 +1728,9 @@ msgstr ""
 #: .\Script\UI\Panel\invite_visitor_panel.py:126
 #: .\Script\UI\Panel\invite_visitor_panel.py:250
 #: .\Script\UI\Panel\make_food_panel.py:145
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:169
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:253
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:361
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
 #: .\Script\UI\Panel\manage_basement_panel.py:93
 #: .\Script\UI\Panel\manage_basement_panel.py:311
 #: .\Script\UI\Panel\manage_basement_panel.py:459
@@ -1791,8 +1867,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\agriculture_production_panel.py:281
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:357
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
 #: .\Script\UI\Panel\recruit_panel.py:288
 #: .\Script\UI\Panel\resource_exchange_panel.py:156
 msgid "确定"
@@ -1809,109 +1884,82 @@ msgstr ""
 msgid "农业生产"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:49
+#: .\Script\UI\Panel\agriculture_production_panel.py:50
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:51
 #, python-brace-format
 msgid ""
 " 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上"
 "限）：{cache.rhodes_island.warehouse_capacity}\n"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:71
-#: .\Script\UI\Panel\agriculture_production_panel.py:254
+#: .\Script\UI\Panel\agriculture_production_panel.py:63
+msgid ""
+"\n"
+" 药田："
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:72
+#: .\Script\UI\Panel\agriculture_production_panel.py:116
 #, python-brace-format
 msgid ""
 "\n"
 "    当前生产：{resouce_data.name}(10/d)      "
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:74
+#: .\Script\UI\Panel\agriculture_production_panel.py:75
+#: .\Script\UI\Panel\agriculture_production_panel.py:119
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:101
 msgid " [生产调整] "
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:77
-#: .\Script\UI\Panel\agriculture_production_panel.py:261
+#: .\Script\UI\Panel\agriculture_production_panel.py:78
 #, python-brace-format
-msgid "{button_text}_{agriculture_line_id}"
+msgid "{button_text}_药田_{agriculture_line_id}"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:91
+#: .\Script\UI\Panel\agriculture_production_panel.py:92
+#: .\Script\UI\Panel\agriculture_production_panel.py:136
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:118
 #, python-brace-format
 msgid ""
 "\n"
 "    当前效率加成：设施(lv{now_level}:{facility_effect}%)"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:97
-#: .\Script\UI\Panel\agriculture_production_panel.py:275
+#: .\Script\UI\Panel\agriculture_production_panel.py:98
+#: .\Script\UI\Panel\agriculture_production_panel.py:142
 #, python-brace-format
 msgid ""
 " + {character_data.name}(农业lv{character_data.ability[47]}:"
 "{character_effect}%)"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:104
+#: .\Script\UI\Panel\agriculture_production_panel.py:107
+msgid ""
+"\n"
+" 温室："
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:122
+#, python-brace-format
+msgid "{button_text}_温室_{agriculture_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:149
 msgid "[001]种植员增减"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:115
-msgid "[002]位置调整"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:150
+#: .\Script\UI\Panel\agriculture_production_panel.py:193
 #, python-brace-format
-msgid " 农田当前种植的是：{resouce_data.name}"
+msgid " 当前种植的是：{resouce_data.name}"
 msgstr ""
 
-#: .\Script\UI\Panel\agriculture_production_panel.py:152
+#: .\Script\UI\Panel\agriculture_production_panel.py:195
 msgid ""
 "\n"
 "\n"
 " 当前可以种植的有：\n"
 "\n"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:208
-msgid "未选择"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:211
-msgid ""
-"\n"
-"○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号农田调整到 "
-"{self.target_position + 1} 号农田"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:216
-msgid ""
-"\n"
-"可选种植员有：\n"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:229
-#, python-brace-format
-msgid ""
-" [{character_data.name}(农业lv{character_data.ability[47]}:"
-"{character_effect}%)] "
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:243
-msgid " 暂无工作是种植员的干员"
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:250
-msgid ""
-"\n"
-" 农田："
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:258
-msgid " [将选择种植员调整至该农田] "
-msgstr ""
-
-#: .\Script\UI\Panel\agriculture_production_panel.py:270
-msgid ""
-"\n"
-"    当前种植员："
 msgstr ""
 
 #: .\Script\UI\Panel\all_npc_position_panel.py:44
@@ -1985,7 +2033,7 @@ msgstr ""
 msgid "{map_name}的衣柜"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:175
+#: .\Script\UI\Panel\check_locker_panel.py:178
 #: .\Script\UI\Panel\manage_library.py:59
 #: .\Script\UI\Panel\originium_arts.py:163
 #: .\Script\UI\Panel\originium_arts.py:462
@@ -1994,31 +2042,31 @@ msgstr ""
 msgid "1"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:188
+#: .\Script\UI\Panel\check_locker_panel.py:191
 #: .\Script\UI\Panel\manage_library.py:72
 #: .\Script\UI\Panel\originium_arts.py:175
 msgid "2"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:201
+#: .\Script\UI\Panel\check_locker_panel.py:204
 #: .\Script\UI\Panel\manage_library.py:85
 #: .\Script\UI\Panel\originium_arts.py:191
 msgid "3"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:213
+#: .\Script\UI\Panel\check_locker_panel.py:216
 #: .\Script\UI\Panel\manage_library.py:98
 #: .\Script\UI\Panel\originium_arts.py:204
 msgid "4"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:264
+#: .\Script\UI\Panel\check_locker_panel.py:267
 msgid ""
 "\n"
 "获得了{ self.character_data.name}的{pan_name}，可在藏品馆里纳入收藏\n"
 msgstr ""
 
-#: .\Script\UI\Panel\check_locker_panel.py:277
+#: .\Script\UI\Panel\check_locker_panel.py:280
 msgid ""
 "\n"
 "获得了{ self.character_data.name}的{socks_name}，可在藏品馆里纳入收藏\n"
@@ -2226,13 +2274,107 @@ msgid "当前位置的角色一览:    "
 msgstr ""
 
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:32
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:41
 msgid "产品生产"
 msgstr ""
 
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:103
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:337
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:69
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:347
+msgid ""
+"\n"
+" {assembly_line_id+1}号流水线："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:98
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:354
+#, python-brace-format
+msgid ""
+"\n"
+"    当前生产：{product_data.name}(1/h)      "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:104
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:361
 #, python-brace-format
 msgid "{button_text}_{assembly_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:124
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:375
+#, python-brace-format
+msgid ""
+" + {character_data.name}(制造lv{character_data.ability[48]}:"
+"{character_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:130
+msgid ""
+"\n"
+"    当前生产消耗："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:148
+msgid "[001]工人增减"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:159
+msgid "[002]工位调整"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:197
+msgid " {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:199
+msgid ""
+"\n"
+"\n"
+" 当前可以生成的产品有：\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:259
+msgid ""
+"\n"
+"     生产消耗："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:305
+msgid "未选择"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:308
+msgid ""
+"\n"
+"○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号流水线调整到 "
+"{self.target_position + 1} 号流水线"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:313
+msgid ""
+"\n"
+"可选工人有：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:326
+#, python-brace-format
+msgid ""
+" [{character_data.name}(制造lv{character_data.ability[48]}:"
+"{character_effect}%)] "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:340
+msgid " 暂无工作是生产工人的干员"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:358
+msgid " [将选择工人调整至该流水线] "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:370
+msgid ""
+"\n"
+"    当前工人："
 msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:48
@@ -2243,15 +2385,25 @@ msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:113
 #: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:167
 msgid "罗德岛资源总览"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:213
 msgid "各部门工作概况"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:291
 msgid "全干员一览"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:173
+#, python-brace-format
+msgid ""
+" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
+"\n"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:228
@@ -2267,6 +2419,37 @@ msgid ""
 " ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的"
 "空白部门\n"
 "\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:270
+#, python-brace-format
+msgid "  病人 — {patient_now}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:276
+#, python-brace-format
+msgid ""
+"\n"
+"  截至目前为止，今日各部门龙门币总收入为：{all_income}\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:281
+msgid "[001]调整干员岗位"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:364
+#, python-brace-format
+msgid ""
+"\n"
+"当前{department}部门情况："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:368
+#, python-brace-format
+msgid ""
+"\n"
+"  当前正在工作的{work_data.name}："
 msgstr ""
 
 #: .\Script\UI\Panel\manage_library.py:156
