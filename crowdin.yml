@@ -1,0 +1,3 @@
+files:
+  - source: /data/po/zh_CN/LC_MESSAGES/*.po
+    translation: /data/po/%locale%/%original_file_name%

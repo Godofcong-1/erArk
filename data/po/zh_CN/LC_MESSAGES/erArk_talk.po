@@ -1028,10 +1028,6 @@ msgstr ""
 msgid "“{PlayerNickName}你在这里啊。”"
 msgstr ""
 
-#: .\data\talk\chara\204_白金.csv:13
-msgid "“{PlayerNickName}，真是偶遇呢。”"
-msgstr ""
-
 #: .\data\talk\chara\204_白金.csv:14
 msgid "“{PlayerNickName}，过一会有空吗。”\n{TargetName}贴了过来抱住了{Name}的手臂。\n“想要{PlayerName}陪一会。”淡金色的眼睛平静地抬头看着{Name}。"
 msgstr ""
@@ -1736,19 +1732,11 @@ msgstr ""
 msgid "{TargetName}拿出一根棉棒示意{Name}过来躺在她的大腿上。\n“需要帮忙清理一下耳朵放松一下吗？”"
 msgstr ""
 
-#: .\data\talk\chara\204_白金.csv:190
-msgid "“呼唔……”\n{TargetName}一脸幸福地依偎在{Name}怀里"
-msgstr ""
-
 #: .\data\talk\chara\204_白金.csv:191
 msgid "“稍微，让我靠一会。”\n{Name}靠在{TargetName}的肩膀上闭上了眼睛"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:192
-msgid "临睡前，{TargetName}红着脸亲吻了{Name}的脸颊。\n“啾……嗯……晚安吻而已，晚安。”"
-msgstr ""
-
-#: .\data\talk\chara\204_白金.csv:193
 msgid "临睡前，{TargetName}红着脸亲吻了{Name}的脸颊。\n“啾……嗯……晚安吻而已，晚安。”"
 msgstr ""
 
@@ -2090,10 +2078,6 @@ msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:278
 msgid "“{PlayerNickName}再稍微对自己的体力有点自知之明比较好吧。”\n“这么勉强自己，结果在女孩子之前倒下了，只会给女孩子增加事后的工作量的。”\n逐渐从H的气氛中回复过来的{TargetName}慢慢地吐息着，用纸巾帮{Name}清理了身体。"
-msgstr ""
-
-#: .\data\talk\chara\204_白金.csv:279
-msgid "“累了吗？辛苦了。”看着瘫坐着难以再次勃起的{Name}，{TargetName}轻轻地叹了口气帮忙清理了一下。\n“不快点把衣服穿上的话可是会感冒的。”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:280
@@ -2637,7 +2621,7 @@ msgid "和趴在胸口上亲吻着的{TargetName}交缠了一会\n“嗯……�
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:415
-msgid "{Name}撩起了垂下来的头发放在耳边，仰起头送上了嘴唇。\n“嗯……啾……嗯”\因为心情似乎不错的样子，和轻轻地甩着尾巴的{TargetName}亲了更久的时间。\n不过就在{Name}想要进一步用舌头品尝嘴唇的时候，{TargetName}结束了亲吻直勾勾地看着{Name}。\n“那种，现在还不行……”"
+msgid "{Name}撩起了垂下来的头发放在耳边，仰起头送上了嘴唇。\n“嗯……啾……嗯”\n因为心情似乎不错的样子，和轻轻地甩着尾巴的{TargetName}亲了更久的时间。\n不过就在{Name}想要进一步用舌头品尝嘴唇的时候，{TargetName}结束了亲吻直勾勾地看着{Name}。\n“那种，现在还不行……”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:416
@@ -4009,7 +3993,7 @@ msgid "{TargetName}盯着某个点开始出神地发呆。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:758
-msgid "随着时间的延长{TargetName}越发困惑地看着{Name}。\n"{PlayerName}是在等谁吗？还有就算我在{PlayerName}身边，这也不应该是{PlayerName}可以一直在{SceneName}待着的理由吧。""
+msgid "随着时间的延长{TargetName}越发困惑地看着{Name}。\n\"{PlayerName}是在等谁吗？还有就算我在{PlayerName}身边，这也不应该是{PlayerName}可以一直在{SceneName}待着的理由吧。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:759
@@ -4017,11 +4001,11 @@ msgid "“有什么事情吗？“{TargetName}有些不耐烦地等着{Name}。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:760
-msgid "{TargetName}一副局促不安的样子，仔细看的话还会发现{TargetName}偷偷夹起了腿。\n"嗯……姆姆……"看起来已经快要忍耐到极限了。"
+msgid "{TargetName}一副局促不安的样子，仔细看的话还会发现{TargetName}偷偷夹起了腿。\n\"嗯……姆姆……\"看起来已经快要忍耐到极限了。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:761
-msgid "{TargetName}因为无事可做有点局促不安地夹着大腿。\n"……嗯，没什么……"似乎是因为股间某些布料的缺失，变得很在意自己的形象的样子。"
+msgid "{TargetName}因为无事可做有点局促不安地夹着大腿。\n\"……嗯，没什么……\"似乎是因为股间某些布料的缺失，变得很在意自己的形象的样子。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:762
@@ -4029,11 +4013,11 @@ msgid "{TargetName}似乎是完全习惯了某些布料缺失的感觉，安静�
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:763
-msgid "不知道什么时候{TargetName}趴上了{Name}的肩头，湿热又魅惑地吐息抚过{Name}的耳边。\n"呼……嗯……不来做一些有趣的事情吗？"\n{TargetName}的双眼朦胧地眯起，就像是在盯着猎物一样看着{Name}。"
+msgid "不知道什么时候{TargetName}趴上了{Name}的肩头，湿热又魅惑地吐息抚过{Name}的耳边。\n\"呼……嗯……不来做一些有趣的事情吗？\"\n{TargetName}的双眼朦胧地眯起，就像是在盯着猎物一样看着{Name}。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:764
-msgid "嗯……不知不觉中{TargetName}靠到了{PlayerName}的身边，牵起了{Name}的手。\n耳尖微红、眼神飘忽地引导着{Name}，将手指伸进自己轻飘飘的胸衣内。\n"想不想做点……有趣的事情？""
+msgid "嗯……不知不觉中{TargetName}靠到了{PlayerName}的身边，牵起了{Name}的手。\n耳尖微红、眼神飘忽地引导着{Name}，将手指伸进自己轻飘飘的胸衣内。\n\"想不想做点……有趣的事情？\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:765
@@ -4045,7 +4029,7 @@ msgid "“嗯……唔唔……变态。“因为{Name}随意的触摸{TargetNam
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:767
-msgid "“嗯！“因为{Name}的触摸{TargetName}变得紧张起来。\n"变态。"注意着{Name}不让手指过分抚摸下面的{TargetName}继续做起手上的事情。"
+msgid "“嗯！“因为{Name}的触摸{TargetName}变得紧张起来。\n\"变态。\"注意着{Name}不让手指过分抚摸下面的{TargetName}继续做起手上的事情。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:768
@@ -4057,11 +4041,11 @@ msgid "“嗯……菠菜，苋菜，还有这个小松菜到底要怎么区分�
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:770
-msgid "“不是很想做饭诶，上次做菜的时候还把准备好的鸡蛋液给打翻了。“\n"诶，诶诶先别给我系上围裙。""
+msgid "“不是很想做饭诶，上次做菜的时候还把准备好的鸡蛋液给打翻了。“\n\"诶，诶诶先别给我系上围裙。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:771
-msgid "{TargetName}捂住了耳朵，一副非常头疼的样子。\n"先不说莱塔尼亚和维多利亚了，恐怕在原始的萨米{Name}都会因为唱歌太难听被判有罪。""
+msgid "{TargetName}捂住了耳朵，一副非常头疼的样子。\n\"先不说莱塔尼亚和维多利亚了，恐怕在原始的萨米{Name}都会因为唱歌太难听被判有罪。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:772
@@ -4073,31 +4057,31 @@ msgid "“感觉还可以？因为{TargetName}不是专业的所以不好评价�
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:774
-msgid "”大概刚刚入门的级别？类比的话大概就是卡西米尔街头那些街头艺人的水平吧。“\n"如果去莱塔尼亚的话估计会因为哪里唱错掉被要求重新唱的。""
+msgid "”大概刚刚入门的级别？类比的话大概就是卡西米尔街头那些街头艺人的水平吧。“\n\"如果去莱塔尼亚的话估计会因为哪里唱错掉被要求重新唱的。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:775
-msgid "“如果去申请参加卡西米尔那些锦标赛的赛前活动的话，我觉得{PlayerName}说不定可以被选上来着。“\n"虽然我不是很建议{PlayerName}跟那些讨厌的家伙搭上边。""
+msgid "“如果去申请参加卡西米尔那些锦标赛的赛前活动的话，我觉得{PlayerName}说不定可以被选上来着。“\n\"虽然我不是很建议{PlayerName}跟那些讨厌的家伙搭上边。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:776
-msgid "“哦哦。“在歌唱结束之后，{TargetName}鼓起了掌。\n"再多准备一下的话就可以去录音室刻录了，对于我来说已经是很厉害的水平了。""
+msgid "“哦哦。“在歌唱结束之后，{TargetName}鼓起了掌。\n\"再多准备一下的话就可以去录音室刻录了，对于我来说已经是很厉害的水平了。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:777
-msgid "{TargetName}就像是听入迷了一样，即使是在结束之后还跟着歌曲的调子轻轻地哼唱。“\n"……啊，已经结束了吗？"{TargetName}有些尴尬地扯了扯衣袖，"唱的蛮好听的，没有注意到。""
+msgid "{TargetName}就像是听入迷了一样，即使是在结束之后还跟着歌曲的调子轻轻地哼唱。“\n\"……啊，已经结束了吗？\"{TargetName}有些尴尬地扯了扯衣袖，\"唱的蛮好听的，没有注意到。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:778
-msgid "“嘶……嘶嗯！“随着{Name}每次操弄乐器，被噪音刺激到炸毛的{TargetName}都会发出不快的声音。\n"停，停一下。{PlayerName}这样完全是不能称作演奏，只能说是在折磨乐器。"\n"
+msgid "“嘶……嘶嗯！“随着{Name}每次操弄乐器，被噪音刺激到炸毛的{TargetName}都会发出不快的声音。\n\"停，停一下。{PlayerName}这样完全是不能称作演奏，只能说是在折磨乐器。\"\n"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:779
-msgid "努力地听完演奏的{TargetName}叹了口气，两条漂亮的眉毛紧紧地缠在了一起。\n"我说啊，{PlayerName}还是尽量避开莱塔尼亚的干员好了。我可不想到时候帮{PlayerName}收尸。""
+msgid "努力地听完演奏的{TargetName}叹了口气，两条漂亮的眉毛紧紧地缠在了一起。\n\"我说啊，{PlayerName}还是尽量避开莱塔尼亚的干员好了。我可不想到时候帮{PlayerName}收尸。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:780
-msgid "听完乐器演奏的{TargetName}端着自己的下巴思考了一会。\n"大概还不错？至少没有让人不舒服的地方。再多练习的话应该可以更好，但是要这边陪练的话还是算了。""
+msgid "听完乐器演奏的{TargetName}端着自己的下巴思考了一会。\n\"大概还不错？至少没有让人不舒服的地方。再多练习的话应该可以更好，但是要这边陪练的话还是算了。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:781
@@ -4105,15 +4089,15 @@ msgid "“诶，这曲子蛮好听的，是从哪里改编的曲子吗？“"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:782
-msgid "{TargetName}在乐声中懒懒地伸了个懒腰。\n"在罗德岛工作还有上司主动给下属演奏乐器，这福利待遇确实是比当骑士的时候好很多。""
+msgid "{TargetName}在乐声中懒懒地伸了个懒腰。\n\"在罗德岛工作还有上司主动给下属演奏乐器，这福利待遇确实是比当骑士的时候好很多。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:783
-msgid "“嗯……这个程度的话完全可以去试着报名卡米西亚的演奏大赛或者是跟莱塔尼亚的干员们一起演奏了。“\n"如果真的要在岛上举办什么演奏会的话记得给我留一个位置。""
+msgid "“嗯……这个程度的话完全可以去试着报名卡米西亚的演奏大赛或者是跟莱塔尼亚的干员们一起演奏了。“\n\"如果真的要在岛上举办什么演奏会的话记得给我留一个位置。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:784
-msgid "“哼~哼嗯~“跟着曲调小声哼唱的{TargetName}在结束的时候为{PlayerName}献上了掌声。\n"下一首是什么呢？""
+msgid "“哼~哼嗯~“跟着曲调小声哼唱的{TargetName}在结束的时候为{PlayerName}献上了掌声。\n\"下一首是什么呢？\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:785
@@ -4125,7 +4109,7 @@ msgid "”有爆米花之类的什么吗?饼干或者薯片也可以。”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:787
-msgid "”要看什么样的电影？爱情片还是搞笑片？”\n"动作片或者是谍战片那一类的罐头电影还是算了吧。""
+msgid "”要看什么样的电影？爱情片还是搞笑片？”\n\"动作片或者是谍战片那一类的罐头电影还是算了吧。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:788
@@ -4153,7 +4137,7 @@ msgid "”晚上好，{PlayerName}。还没打算去睡觉吗？”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:794
-msgid "”嗯……{PlayerName}，今天好像还是第一次见。”\n{Name}揉着眼睛看起来有点困，似乎是已经想要去睡觉了的样子。\n"总之，哈……嗯，祝你今天顺利。""
+msgid "”嗯……{PlayerName}，今天好像还是第一次见。”\n{Name}揉着眼睛看起来有点困，似乎是已经想要去睡觉了的样子。\n\"总之，哈……嗯，祝你今天顺利。\""
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:795
@@ -5969,7 +5953,7 @@ msgid "“博士，你的臉色...有點差誒”\n{TargetName}向你伸出手\n
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:28
-msgid "“抱歉，博士”\{TargetName}伸了個懶腰\n“我現在的精神不是很好...”"
+msgid "“抱歉，博士”\n{TargetName}伸了個懶腰\n“我現在的精神不是很好...”"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:29
@@ -6061,11 +6045,11 @@ msgid "“要做的事已經完成了嗎? 博士”\n{TargetName}點了點頭\n�
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:51
-msgid "“能為我介紹這首歌嗎? ”\n{TargetName}微笑著看著你\“下次我也想一起合唱”"
+msgid "“能為我介紹這首歌嗎? ”\n{TargetName}微笑著看著你\n“下次我也想一起合唱”"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:52
-msgid "“姆...好多”\{TargetName}和你一起處理著成山的資料\n“這就是為了能讓陸行艦運作的工作量嗎?”"
+msgid "“姆...好多”\n{TargetName}和你一起處理著成山的資料\n“這就是為了能讓陸行艦運作的工作量嗎?”"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:53
@@ -6185,7 +6169,7 @@ msgid " 你緩緩捏住{TargetName}硬起體拔的乳首，緩慢捻柔，向外
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:82
-msgid " “博士這樣，就想小寶寶一樣...”\n在{Name}吮著乳頭的時候，{TargetName}輕輕地摟著你\n“但是小寶寶可不會有這麼兇惡的部位喔”\{TargetName}紅著臉，食指輕輕抵著你那挺立的老二"
+msgid " “博士這樣，就想小寶寶一樣...”\n在{Name}吮著乳頭的時候，{TargetName}輕輕地摟著你\n“但是小寶寶可不會有這麼兇惡的部位喔”\n{TargetName}紅著臉，食指輕輕抵著你那挺立的老二"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:83
@@ -6237,7 +6221,7 @@ msgid "“博士還有收集...這種的習慣嗎?”\n{TargetName}把還帶有�
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:95
-msgid "“唔...!嗚!! 好燙....”\龜頭頂開了子宮口，在嬌嫩的子宮內潑灑著滾燙的精液\n子宮內被填滿的充實感使的{TargetName}的身體跟著不住顫抖著，直到精液從接合部溢出，小腹隆起才停下"
+msgid "“唔...!嗚!! 好燙....”\n龜頭頂開了子宮口，在嬌嫩的子宮內潑灑著滾燙的精液\n子宮內被填滿的充實感使的{TargetName}的身體跟著不住顫抖著，直到精液從接合部溢出，小腹隆起才停下"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:96
@@ -6922,10 +6906,6 @@ msgstr ""
 
 #: .\data\talk\daily\ask_make_coffee.csv:70
 msgid "听见你的请求，{TargetName}开心地摇着尾巴去冲泡你的咖啡了。"
-msgstr ""
-
-#: .\data\talk\daily\ask_make_coffee.csv:71
-msgid "听从你的指示去泡咖啡的{TargetName}，隐约觉得你的双腿间鼓起了一个不小的帐篷。"
 msgstr ""
 
 #: .\data\talk\daily\ask_make_coffee.csv:72
@@ -8284,10 +8264,6 @@ msgstr ""
 msgid "{Name}听着音响里风吹树叶的声音，感觉到自己的身体和心灵都在逐渐平静下来，呼吸变得越来越缓慢，最终进入了一个美好的梦乡。"
 msgstr ""
 
-#: .\data\talk\daily\sleep.csv:38
-msgid "{Name}躺在床上，感觉到自己的身体逐渐松弛，思绪也逐渐清空，呼吸变得越来越轻柔，最终慢慢睡着了。"
-msgstr ""
-
 #: .\data\talk\daily\sleep.csv:39
 msgid "{Name}躺在床上，感受到身体逐渐变得舒适，思维也逐渐变得轻松，最终进入了一个美好的梦乡。"
 msgstr ""
@@ -8452,10 +8428,6 @@ msgstr ""
 msgid "{Name}感到身体已经快要崩溃，无法再支撑，只好在房间里的窗边躺下，一晃眼便进入了梦乡。"
 msgstr ""
 
-#: .\data\talk\daily\sleep.csv:83
-msgid "{Name}感到身体无法承受更多的疲劳，只好在房间里找了个地方躺下，短暂片刻便进入了梦境之中。"
-msgstr ""
-
 #: .\data\talk\daily\sleep.csv:84
 msgid "{Name}感受到全身的劳累已经达到极限，只好在房间里的沙发上躺下，须臾之间进入了梦乡。"
 msgstr ""
@@ -8470,10 +8442,6 @@ msgstr ""
 
 #: .\data\talk\daily\sleep.csv:87
 msgid "{Name}感到全身疲惫不堪，无法再行动，只好在房间里的椅子上躺下，瞬间进入了梦乡。"
-msgstr ""
-
-#: .\data\talk\daily\sleep.csv:88
-msgid "{Name}感到筋疲力尽，无法再支撑，只好在房间里的窗台上躺下，片刻之后便进入了美梦之中。"
 msgstr ""
 
 #: .\data\talk\daily\stroke.csv:6
@@ -10300,10 +10268,6 @@ msgstr ""
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然有些嘶哑，但知道只有不断努力才能克服困难。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:170
-msgid "{Name}一个人在{SceneName}里练习唱歌，虽然唱得不太好，但相信只要坚持下去，就会有所提高。"
-msgstr ""
-
 #: .\data\talk\play\singing.csv:171
 msgid "{Name}独自一人在练习唱歌，虽然有些紧张，但知道只有不断练习才能变得更加自信。"
 msgstr ""
@@ -10350,18 +10314,6 @@ msgstr ""
 
 #: .\data\talk\play\singing.csv:182
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然有些音色不够清晰，但相信只要坚持下去，就会有所提高。"
-msgstr ""
-
-#: .\data\talk\play\singing.csv:183
-msgid "{Name}独自一人在练习唱歌，虽然有些音准不够准确，但知道只有不断练习才能变得更加专业。"
-msgstr ""
-
-#: .\data\talk\play\singing.csv:184
-msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好听，但相信只要不断努力，就会变得更加动人。"
-msgstr ""
-
-#: .\data\talk\play\singing.csv:185
-msgid "{Name}独自一人在{SceneName}里练习唱歌，虽然有些音色不够丰富，但只要保持耐心，就会有所收获。"
 msgstr ""
 
 #: .\data\talk\play\singing.csv:187
@@ -10576,15 +10528,7 @@ msgstr ""
 msgid "{Name}将{TargetName}放下，并以后背位继续进攻{TargetName}后庭。"
 msgstr ""
 
-#: .\data\talk\sex\back_anal_sex.csv:12
-msgid "{Name}将{TargetName}放下，并以后背位继续进攻{TargetName}后庭。"
-msgstr ""
-
 #: .\data\talk\sex\back_anal_sex.csv:13
-msgid "{Name}推倒{TargetName}，以后背位将阴茎放入温暖的肠道中继续抽插。"
-msgstr ""
-
-#: .\data\talk\sex\back_anal_sex.csv:14
 msgid "{Name}推倒{TargetName}，以后背位将阴茎放入温暖的肠道中继续抽插。"
 msgstr ""
 
@@ -10696,10 +10640,6 @@ msgstr ""
 msgid "{Name}保持着插入的状态将{TargetName}按倒在地，以后背位插入的状态继续着性爱。"
 msgstr ""
 
-#: .\data\talk\sex\back_sex.csv:24
-msgid "{Name}保持着插入的状态将{TargetName}按倒在地，以后背位插入的状态继续着性爱。"
-msgstr ""
-
 #: .\data\talk\sex\back_sex.csv:25
 msgid "{Name}将{TargetName}从身上拉了下来并翻了个身，将肉棒从身上朝{TargetName}的小穴插去。"
 msgstr ""
@@ -10754,10 +10694,6 @@ msgstr ""
 
 #: .\data\talk\sex\change_top_and_bottom.csv:6
 msgid "{Name}触发了交给对方指令的地文"
-msgstr ""
-
-#: .\data\talk\sex\clit_caress.csv:6
-msgid "{Name}触发了阴蒂爱抚指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\clit_clamp.csv:6
@@ -10830,10 +10766,6 @@ msgstr ""
 
 #: .\data\talk\sex\face_stand_sex.csv:6
 msgid "{Name}触发了对面立位指令的地文"
-msgstr ""
-
-#: .\data\talk\sex\finger_insertion.csv:6
-msgid "{Name}触发了手指插入（V）指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\focus_blowjob.csv:6
