@@ -1,0 +1,2951 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: erark\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-03-20 10:34+0800\n"
+"PO-Revision-Date: 2024-03-20 10:42\n"
+"Last-Translator: \n"
+"Language-Team: English\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: erark\n"
+"X-Crowdin-Project-ID: 658386\n"
+"X-Crowdin-Language: en\n"
+"X-Crowdin-File: /master/data/po/zh_CN/LC_MESSAGES/erArk.po\n"
+"X-Crowdin-File-ID: 12\n"
+
+#: .\Script\Core\flow_handle.py:280 .\Script\Core\flow_handle.py:301
+msgid "您输入的选项无效，请重试\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:67
+#, python-brace-format
+msgid "版本信息：{normal_config.config_normal.verson}\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:68
+#, python-brace-format
+msgid "最近输入指令：{cache.input_cache}\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:70
+msgid "\n\n"
+"游戏发生错误，已将上述错误信息写入error.log\n\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:74
+msgid "回到标题画面"
+msgstr ""
+
+#: .\Script\Core\game_init.py:74
+msgid "退出游戏"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:141
+msgid "\n"
+"开始检测存档的数据结构是否需要跨版本更新\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:159
+#, python-brace-format
+msgid "\n"
+"共有{cloth_update_count}个角色的服装数据已重置\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:173
+msgid "\n"
+"系统设置已重置，如有需要请手动修改\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:181
+#, python-brace-format
+msgid "\n"
+"检测完毕，共有{update_count}条数据完成了更新\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:207
+#, python-brace-format
+msgid "存档跨版本更新: key {key}, not found，已设为默认值 {value}\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:219
+msgid "存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，新type {type(default_dict[key])}, 已设为默认值 {value}\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:277
+#, python-brace-format
+msgid "存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n"
+msgstr ""
+
+#: .\Script\Core\save_handle.py:376
+msgid "\n"
+"游戏地图已更新\n"
+msgstr ""
+
+#: .\Script\Design\attr_calculation.py:797
+msgid "需要:"
+msgstr ""
+
+#: .\Script\Design\cooking.py:358 .\Script\Design\cooking.py:428
+#: .\Script\UI\Panel\food_shop_panel.py:32
+#: .\Script\UI\Panel\make_food_panel.py:33
+#: .\Script\UI\Panel\make_food_panel.py:46
+msgid "主食"
+msgstr ""
+
+#: .\Script\Design\cooking.py:430 .\Script\UI\Panel\make_food_panel.py:46
+msgid "零食"
+msgstr ""
+
+#: .\Script\Design\cooking.py:432
+msgid "饮品"
+msgstr ""
+
+#: .\Script\Design\cooking.py:434
+msgid "酒类"
+msgstr ""
+
+#: .\Script\Design\cooking.py:436 .\Script\UI\Panel\make_food_panel.py:48
+#: .\Script\UI\Panel\make_food_panel.py:49
+#: .\Script\UI\Panel\make_food_panel.py:88
+msgid "咖啡"
+msgstr ""
+
+#: .\Script\Design\cooking.py:438
+msgid "其他"
+msgstr ""
+
+#: .\Script\Design\game_time.py:58
+#, python-brace-format
+msgid "时间:{year}年{month}月{day}日{hour}点{minute}分"
+msgstr ""
+
+#: .\Script\Design\game_time.py:83
+#, python-brace-format
+msgid "时间:{year}年{month}月{day}日"
+msgstr ""
+
+#: .\Script\Design\game_time.py:98
+#, python-brace-format
+msgid "时间:{year}年"
+msgstr ""
+
+#: .\Script\Design\game_time.py:119
+#, python-brace-format
+msgid "{month}"
+msgstr ""
+
+#: .\Script\Design\game_time.py:132
+#, python-brace-format
+msgid "{day}日 {hour}点{minute}分"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:92
+#: .\Script\UI\Panel\game_info_panel.py:77
+msgid "休息"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:109
+msgid "购买食物"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:120
+msgid "进食"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:131
+msgid "移动"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:140
+msgid "查看属性"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:152
+msgid "聊天"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:177
+msgid "购买成人用品"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:187
+msgid "道具"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:195
+msgid "读写存档"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:204
+msgid "属性上升"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:218
+msgid "自身属性上升"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:230
+msgid "查看污浊情况"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:237
+msgid "指令过滤"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:243
+msgid "开启DEBUG模式"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:251
+msgid "关闭DEBUG模式"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:260
+msgid "debug数值调整"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:270
+#: .\Script\UI\Panel\system_setting.py:42
+msgid "系统设置"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:281
+msgid "收藏该地点"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:294
+msgid "取消收藏地点"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:307
+msgid "查看收藏品"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:319
+msgid "查看冰箱"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:331
+msgid "授课"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:368
+msgid "借阅书籍"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:382 .\Script\UI\Panel\normal_panel.py:108
+#: .\Script\UI\Panel\normal_panel.py:118
+msgid "读书"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:397
+#: .\Script\UI\Panel\manage_library.py:32
+msgid "管理图书馆"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:413
+msgid "管理流水线"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:428
+msgid "管理农业生产"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:443
+#: .\Script\UI\Panel\resource_exchange_panel.py:30
+#: .\Script\UI\Panel\resource_exchange_panel.py:39
+msgid "资源交易"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:458
+msgid "导航"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:472
+#: .\Script\UI\Panel\manage_basement_panel.py:122
+msgid "管理罗德岛"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:487
+msgid "单人催眠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:510
+msgid "集体催眠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:535
+msgid "解除催眠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:557
+msgid "开启透视"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:577
+msgid "关闭透视"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:596
+msgid "开启信息素"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:615
+msgid "关闭信息素"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:632
+msgid "睡觉"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:647
+msgid "淋浴"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:698
+msgid "身体接触"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:717
+msgid "按摩"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:921
+msgid "等待五分钟"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:937
+msgid "等待一个小时"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:954
+msgid "等待六个小时"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:971
+msgid "泡咖啡"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:992
+msgid "泡咖啡（加料）"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1008
+msgid "让对方泡咖啡"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1029
+msgid "做饭"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1038
+#: .\Script\UI\Panel\all_npc_position_panel.py:32
+msgid "干员位置一览"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1050
+msgid "邀请同行"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1087
+msgid "结束同行"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1108
+msgid "道歉"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1141
+msgid "听牢骚"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1169
+msgid "源石技艺"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1181
+msgid "听肚子里的动静"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1201
+msgid "一起玩耍"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1221
+#: .\Script\UI\Panel\normal_panel.py:187 .\Script\UI\Panel\normal_panel.py:195
+msgid "照顾婴儿"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1236
+msgid "听取委托_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1252
+msgid "检查衣柜"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1265
+msgid "收起内裤_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1281
+msgid "邀请约会_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1297
+msgid "告白"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1320
+#, python-brace-format
+msgid "\\告白成功，[恋慕]转为[恋人]，{target_data.name}收下了你赠予的[戒指]\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1327
+msgid "\n"
+"告白失败，需要[恋慕]且满足实行值\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1336
+msgid "戴上项圈"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1359
+msgid "\\对方接受了项圈，[驯服]转为[宠物]\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1366
+msgid "\n"
+"戴上项圈失败，需要[驯服]且满足实行值\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1375
+msgid "劝酒_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1391
+msgid "解手"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1410
+msgid "摆放藏品"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1435
+#, python-brace-format
+msgid "\n"
+"已持有藏品：{cache.character_data[npc_id].name}的{pan_name}"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1438
+#, python-brace-format
+msgid "\n"
+"增加了藏品：{cache.character_data[npc_id].name}的{pan_name}"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1457
+#, python-brace-format
+msgid "\n"
+"已持有藏品：{cache.character_data[npc_id].name}的{socks_name}"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1460
+#, python-brace-format
+msgid "\n"
+"增加了藏品：{cache.character_data[npc_id].name}的{socks_name}"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1472
+msgid "邀请H"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1495
+msgid "\n"
+"进入H模式\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1509
+msgid "\n"
+"进入H模式失败\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1516
+msgid "睡眠猥亵"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1533
+msgid "\n"
+"进入睡眠猥亵模式\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1540
+msgid "停止睡眠猥亵"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1555
+msgid "\n"
+"退出睡眠猥亵模式\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1565
+msgid "无意识奸"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1585
+msgid "\n"
+"进入无意识奸模式\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1596
+msgid "H结束"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1628
+msgid "\n"
+"结束H模式\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1639
+msgid "唱歌"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1653
+#: .\Script\Design\handle_instruct.py:1691
+msgid "\n"
+"当前音乐能力小于等于2，可能会让对方感觉不适，确认要继续吗\n\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1656
+#: .\Script\Design\handle_instruct.py:1694
+msgid "[取消]"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1656
+#: .\Script\Design\handle_instruct.py:1694
+msgid "\n"
+"取消"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1659
+#: .\Script\Design\handle_instruct.py:1697
+#: .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\UI\Panel\ability_up_panel.py:384
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
+#: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
+#: .\Script\UI\Panel\resource_exchange_panel.py:156
+msgid "[确定]"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1659
+#: .\Script\Design\handle_instruct.py:1697
+msgid "\n"
+"确定"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1676
+msgid "演奏乐器"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1714
+msgid "看电影"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1732
+msgid "摄影"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1751
+msgid "玩水"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1770
+msgid "下棋"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1790
+msgid "打麻将"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1810
+msgid "打牌"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1830
+msgid "排演舞剧"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1849
+msgid "玩街机游戏"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1868
+msgid "游泳"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1887
+msgid "品酒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1906
+msgid "品茶"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1925
+msgid "品咖啡"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1944
+msgid "品尝点心"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1963
+msgid "品尝美食"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1984
+msgid "过家家"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2003
+msgid "修整发型"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2022
+msgid "全身造型服务"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2041
+msgid "泡脚"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2060
+msgid "蒸桑拿"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2079
+msgid "水疗护理"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2098
+msgid "泡温泉"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2119
+msgid "处理公务"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2138
+msgid "指挥作战（未实装）"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2153
+#: .\Script\UI\Panel\assistant_panel.py:73
+msgid "助理相关调整"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2163
+msgid "基建系统"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2173
+msgid "招募情况"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2183
+msgid "访客系统"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2194
+#: .\Script\UI\Panel\invite_visitor_panel.py:32
+msgid "邀请访客"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2210
+msgid "普瑞赛斯"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2222
+msgid "战斗训练"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2240
+msgid "锻炼身体"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2258
+msgid "诊疗病人"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2277
+msgid "招募干员"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2295
+msgid "确认已招募干员"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2310
+msgid "\n\n"
+"   ※ 空余宿舍不足，无法招募 ※\n\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2316
+#, python-brace-format
+msgid "\n\n"
+"   ※ 成功招募了{character_data.name} ※\n\n"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2328
+msgid "维护设施"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2346
+msgid "维修装备"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2365
+msgid "拥抱"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2388
+msgid "亲吻"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2411
+msgid "摸头"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2434
+msgid "摸胸"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2457
+msgid "摸屁股"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2480
+msgid "摸耳朵"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2503
+msgid "摸角"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2527
+msgid "摸尾巴"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2551
+msgid "摸光环"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2575
+msgid "摸光翼"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2599
+msgid "摸触手"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2623
+msgid "摸小车"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2647
+msgid "牵手"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2670
+msgid "膝枕"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2694
+msgid "掀起裙子"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2718
+msgid "索要内裤"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2743
+msgid "索要袜子"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2768
+msgid "偷走内裤"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2788
+msgid "偷走袜子"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2808
+#: .\Script\Design\handle_instruct.py:3055
+msgid "阴蒂爱抚"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2831
+msgid "手指插入（V）"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2854
+msgid "手指插入（A）"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2877
+msgid "挤奶"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2901
+msgid "装袋搬走"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2925
+msgid "投入监牢"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2946
+msgid "解除囚禁"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2970
+msgid "身体爱抚"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2987
+msgid "接吻"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3004
+msgid "胸爱抚"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3021
+msgid "玩弄乳头"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3038
+msgid "舔吸乳头"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3072
+msgid "掰开阴唇观察"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3089
+msgid "掰开肛门观察"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3106
+msgid "舔阴"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3123
+msgid "舔肛"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3140
+msgid "手指插入(V)"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3157
+msgid "手指插入(A)"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3174
+msgid "命令对方自慰"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3191
+msgid "命令对方舔自己肛门"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3208
+msgid "什么也不做"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3225
+msgid "诱惑对方"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3242
+msgid "手交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3259
+msgid "口交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3276
+msgid "乳交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3293
+msgid "足交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3311
+msgid "发交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3329
+msgid "腋交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3347
+msgid "素股"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3364
+msgid "手交口交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3383
+msgid "乳交口交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3402
+msgid "真空口交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3421
+msgid "深喉插入"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3440
+msgid "六九式"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3461
+msgid "腿交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3478
+msgid "尾交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3496
+msgid "阴茎蹭脸"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3513
+msgid "阴茎蹭角"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3531
+msgid "阴茎蹭耳朵"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3549
+msgid "戴上乳头夹"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3568
+msgid "取下乳头夹"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3587
+msgid "乳头跳蛋"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3605
+msgid "戴上阴蒂夹"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3624
+msgid "取下阴蒂夹"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3643
+msgid "阴蒂跳蛋"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3661
+msgid "电动按摩棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3679
+msgid "插入震动棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3698
+msgid "肛门插入震动棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3717
+msgid "拔出震动棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3736
+msgid "拔出肛门震动棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3755
+msgid "灌肠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3775
+msgid "拔出肛塞"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3795
+msgid "肛塞_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3814
+msgid "塞入肛门拉珠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3833
+msgid "拔出肛门拉珠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3852
+msgid "装上搾乳机"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3873
+msgid "取下搾乳机"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3893
+msgid "采尿器"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3912
+msgid "绳子"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3931
+msgid "眼罩"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3950
+msgid "鞭子"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3969
+msgid "针"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:3988
+msgid "戴上避孕套"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4006
+msgid "滴蜡"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4025
+msgid "润滑液"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4043
+msgid "媚药"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4061
+msgid "灌肠液_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4078
+msgid "一次性利尿剂"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4096
+msgid "持续性利尿剂"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4114
+msgid "安眠药"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4132
+msgid "排卵促进药"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4151
+msgid "事前避孕药"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4169
+msgid "事后避孕药"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4187
+msgid "正常位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4207
+msgid "背后位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4227
+msgid "骑乘位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4247
+msgid "对面座位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4267
+msgid "背面座位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4287
+msgid "对面立位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4306
+msgid "背面立位"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4325
+msgid "刺激G点"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4346
+msgid "玩弄子宫口"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4367
+msgid "插入子宫"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4388
+msgid "正常位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4408
+msgid "后背位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4428
+msgid "骑乘位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4448
+msgid "对面座位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4468
+msgid "背面座位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4488
+msgid "对面立位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4507
+msgid "背面立位肛交"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4526
+msgid "玩弄s状结肠"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4547
+msgid "隔着刺激阴道"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4568
+msgid "二穴插入_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4584
+msgid "尿道棉棒"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4602
+msgid "放尿play_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4618
+msgid "尿道插入_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4635
+msgid "打胸部_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4651
+msgid "打屁股"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4666
+msgid "羞耻play_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4682
+msgid "拘束play_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4698
+msgid "淋浴_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4714
+msgid "泡泡浴_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4730
+msgid "交给对方_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4746
+msgid "给对方口交_未实装"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4762
+#: .\Script\UI\Panel\undress_panel.py:32
+msgid "脱衣服"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:139
+#: .\Script\Design\settle_behavior.py:205
+msgid "\n"
+"  体力"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:143
+#: .\Script\Design\settle_behavior.py:208
+msgid "\n"
+"  气力"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:147
+msgid "\n"
+"  射精"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:151
+msgid "\n"
+"  理智"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:167
+msgid "\n"
+"  "
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:211
+#, python-brace-format
+msgid "\n"
+"  对{character_name}{character_nick_name}好感"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:217
+#, python-brace-format
+msgid "\n"
+"  对{character_name}{character_nick_name}信赖"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:223
+msgid "\n"
+"  催眠度"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:710
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:717
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:724
+#, python-brace-format
+msgid "{character_data.name}的欲望提升至5级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:737
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:744
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:751
+#, python-brace-format
+msgid "{character_data.name}的顺从提升至5级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:764
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至1级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:771
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至3级\n"
+msgstr ""
+
+#: .\Script\Design\settle_behavior.py:778
+#, python-brace-format
+msgid "{character_data.name}的受虐提升至5级\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4387
+#, python-brace-format
+msgid "在{target_data.name}的帮助下，"
+msgstr ""
+
+#: .\Script\Settle\default.py:4399
+#, python-brace-format
+msgid "共处理了{finish_work}公务，"
+msgstr ""
+
+#: .\Script\Settle\default.py:4401
+#, python-brace-format
+msgid "还有{cache.rhodes_island.office_work}需要处理\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4403
+msgid "已经全部处理完毕\n\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4451
+#, python-brace-format
+msgid "\n"
+"在{character_data.name}的努力下，医治了一名病人，支付了{now_add_lust}龙门币的医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4502
+msgid "\n"
+"在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1)}%\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4541
+msgid "\n"
+"请先使用邀请系统选择邀请的对象，再进行邀请\n"
+msgstr ""
+
+#: .\Script\Settle\default.py:4557
+msgid "\n"
+"在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1)}%\n"
+msgstr ""
+
+#: .\Script\Settle\default_cloth.py:217
+#, python-brace-format
+msgid "\n"
+"获得了{target_data.name}的{TPanName}，可在藏品馆里纳入收藏\n"
+msgstr ""
+
+#: .\Script\Settle\default_cloth.py:249
+#, python-brace-format
+msgid "\n"
+"获得了{target_data.name}的{TSocName}，可在藏品馆里纳入收藏\n"
+msgstr ""
+
+#: .\Script\Settle\default_cloth.py:282
+#, python-brace-format
+msgid "\n"
+"{target_data.name}穿回了脱下的衣服"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:76
+msgid "\n\n"
+"  免责声明：1.本游戏仅为开发者自娱自乐及代码练习所用，开发它是因为开发者趣味低下，思想低俗所致，无任何经济收益和利益驱动。\n\n\n"
+"            2.本游戏含有大量的R18色情内容，内容中可能会出现的有：多P、调教、轻度SM、非合意性行为、近亲相奸等，不会出现的有：NTR、重度SM、血腥、R18G等。\n\n\n"
+"            3.本游戏在设计理念和游戏内容上缝合了大量era与其他各类作品，仅适合era系列玩家或文字黄油爱好者进行游玩，不适合普通玩家游玩，特别是严格禁止未成年人游玩。\n\n\n"
+"            4.本游戏所使用的素材资源包括开发者自制、互联网收集与协力者提供，开发者与协力者来自于不同的国家和民族，彼此之间也不存在经济关系。\n\n\n"
+"            5.本游戏目前没有官方的公开发布地址，且因为游戏本身的性质，禁止在任何未成年人可以接触到的场合展示或传播本游戏，更禁止任何人通过任何方式使用本游戏进行盈利。\n\n\n"
+"            6.本游戏完全开源，在明确注明或保留游戏来源、不涉及任何商业目的和经济收益、并同样遵守本免责声明的情况下，允许他人与社区基于本游戏进行修改或二次开发。该授权将直接赋予本游戏的所有玩家，不需要专门征求开发者的明确同意。\n\n\n"
+"            7.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n"
+"            8.基于以上叠了这么多层buff，建议有大胆想法的人请现在关掉窗口并立刻删除该游戏，只要不删就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:77
+msgid "我读完并理解了以上8条，我对自己负责，我不删，我要玩"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:103
+msgid "睁开双眼"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:103
+msgid "重新设定"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:113
+msgid "这样可以吗?"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:131
+msgid "你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:135
+msgid "角色名不能为纯数字，请重新输入\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:137
+msgid "角色名不能为系统保留字，请重新输入\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:139
+msgid "已有角色使用该姓名，请重新输入\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:197
+msgid "详细设定"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:227
+#, python-brace-format
+msgid "\n"
+" 性别：{sex_text}      "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:231
+msgid "    [改变性别]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:234
+msgid "改变性别"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:287
+#, python-brace-format
+msgid "\n"
+" 阴茎大小：{jj_text}      "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:291
+msgid "    [改变大小]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:294
+msgid "改变大小"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:348
+msgid "【关闭debug模式】"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:350
+msgid "【开启debug模式】"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:353
+msgid "debug"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:405
+msgid " 当前初始干员有："
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:406
+msgid "\n"
+"   基础:"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:411
+msgid "\n"
+"   自选:"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:422
+msgid "[选择初期干员]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:425
+msgid "选择初期干员"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:433
+msgid "[指派干员工作]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:436
+msgid "指派干员工作"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:455
+#, python-brace-format
+msgid " 当前剩余可选干员数量 = {self.npc_select_now}"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:457
+msgid "  (debug模式下可选999个干员)"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:459
+msgid " 已选择全部初始干员"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:462
+#, python-brace-format
+msgid "， 当前工作中干员/总干员：{work_people_now}/{people_max}"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:546
+msgid " 有口上的角色会注明文本文件的大小，欢迎使用附带的编辑器erArkEditor，无需写代码仅写文本即可创作口上\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:547
+msgid "\n"
+" 当前已选干员："
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:552
+#, python-brace-format
+msgid "\n"
+" 当前剩余可选干员数量 = {self.npc_select_now}\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:557
+msgid " [一键全选] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:561
+msgid " [随机选择] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:566
+msgid " [姓名筛选中] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:569
+msgid " [姓名筛选] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:570
+#: .\Script\UI\Flow\creator_character_flow.py:638
+msgid "请输入要筛选的名字："
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:574
+msgid " [胸围筛选中-{chest_filter_list[self.chest_filter_flag]}] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:577
+msgid " [胸围筛选] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:582
+msgid " [外表年龄筛选中-{age_filter_list[self.age_filter_flag]}] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:585
+msgid " [外表年龄筛选] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:588
+msgid " [种族筛选中-{race_filter_list[self.race_filter_flag - 1]}] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:591
+msgid " [种族筛选] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:595
+msgid " [重置选择] "
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:608
+#: .\Script\UI\Panel\ability_up_panel.py:193
+#: .\Script\UI\Panel\ability_up_panel.py:440
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
+#: .\Script\UI\Panel\all_npc_position_panel.py:148
+#: .\Script\UI\Panel\assistant_panel.py:53
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
+#: .\Script\UI\Panel\borrow_book_panel.py:156
+#: .\Script\UI\Panel\building_panel.py:149
+#: .\Script\UI\Panel\building_panel.py:255
+#: .\Script\UI\Panel\check_locker_panel.py:78
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
+#: .\Script\UI\Panel\collection_panel.py:196
+#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
+#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
+#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\food_shop_panel.py:78
+#: .\Script\UI\Panel\food_shop_panel.py:170
+#: .\Script\UI\Panel\h_item_shop_panel.py:105
+#: .\Script\UI\Panel\instruct_filter_panel.py:58
+#: .\Script\UI\Panel\invite_visitor_panel.py:126
+#: .\Script\UI\Panel\invite_visitor_panel.py:250
+#: .\Script\UI\Panel\make_food_panel.py:145
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
+#: .\Script\UI\Panel\manage_library.py:108
+#: .\Script\UI\Panel\manage_library.py:160
+#: .\Script\UI\Panel\manage_library.py:215
+#: .\Script\UI\Panel\manage_library.py:261
+#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
+#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
+#: .\Script\UI\Panel\normal_panel.py:449 .\Script\UI\Panel\normal_panel.py:572
+#: .\Script\UI\Panel\originium_arts.py:106
+#: .\Script\UI\Panel\originium_arts.py:290
+#: .\Script\UI\Panel\originium_arts.py:386
+#: .\Script\UI\Panel\originium_arts.py:476
+#: .\Script\UI\Panel\originium_arts.py:574
+#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
+#: .\Script\UI\Panel\recruit_panel.py:184
+#: .\Script\UI\Panel\recruit_panel.py:293
+#: .\Script\UI\Panel\resource_exchange_panel.py:159
+#: .\Script\UI\Panel\resource_exchange_panel.py:241
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
+#: .\Script\UI\Panel\see_item_info_panel.py:107
+#: .\Script\UI\Panel\see_save_info_panel.py:67
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
+msgid "[返回]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:608
+#: .\Script\UI\Panel\ability_up_panel.py:193
+#: .\Script\UI\Panel\ability_up_panel.py:440
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
+#: .\Script\UI\Panel\all_npc_position_panel.py:148
+#: .\Script\UI\Panel\assistant_panel.py:53
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
+#: .\Script\UI\Panel\borrow_book_panel.py:156
+#: .\Script\UI\Panel\building_panel.py:149
+#: .\Script\UI\Panel\building_panel.py:255
+#: .\Script\UI\Panel\check_locker_panel.py:78
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
+#: .\Script\UI\Panel\collection_panel.py:196
+#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
+#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
+#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\food_shop_panel.py:78
+#: .\Script\UI\Panel\food_shop_panel.py:170
+#: .\Script\UI\Panel\get_up_panel.py:84 .\Script\UI\Panel\get_up_panel.py:85
+#: .\Script\UI\Panel\h_item_shop_panel.py:105
+#: .\Script\UI\Panel\instruct_filter_panel.py:58
+#: .\Script\UI\Panel\invite_visitor_panel.py:126
+#: .\Script\UI\Panel\invite_visitor_panel.py:250
+#: .\Script\UI\Panel\make_food_panel.py:145
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
+#: .\Script\UI\Panel\manage_library.py:108
+#: .\Script\UI\Panel\manage_library.py:160
+#: .\Script\UI\Panel\manage_library.py:215
+#: .\Script\UI\Panel\manage_library.py:261
+#: .\Script\UI\Panel\navigation_panel.py:208
+#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
+#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
+#: .\Script\UI\Panel\originium_arts.py:106
+#: .\Script\UI\Panel\originium_arts.py:290
+#: .\Script\UI\Panel\originium_arts.py:386
+#: .\Script\UI\Panel\originium_arts.py:476
+#: .\Script\UI\Panel\originium_arts.py:574
+#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
+#: .\Script\UI\Panel\recruit_panel.py:184
+#: .\Script\UI\Panel\recruit_panel.py:293
+#: .\Script\UI\Panel\resource_exchange_panel.py:159
+#: .\Script\UI\Panel\resource_exchange_panel.py:241
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
+#: .\Script\UI\Panel\see_item_info_panel.py:107
+#: .\Script\UI\Panel\see_item_info_panel.py:184
+#: .\Script\UI\Panel\see_map_panel.py:185
+#: .\Script\UI\Panel\see_save_info_panel.py:67
+#: .\Script\UI\Panel\see_save_info_panel.py:193
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
+msgid "返回"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:743
+msgid "(基础)"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:748
+msgid "(自选)"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:809
+msgid " 可选奖励有：\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:834
+#, python-brace-format
+msgid "(已选{ability_name})"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:837
+#, python-brace-format
+msgid "(已选{target_data.name})"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:856
+msgid " \n"
+" 当前为第 {str(cache.game_round)} 周目\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:857
+msgid " 当前剩余奖励点数 ="
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:858
+#, python-brace-format
+msgid " {self.bonus_now} = [周目数 * 20]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:860
+msgid " + [debug(999)]"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:963
+msgid "\n"
+" 当前剩余奖励不足\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:989
+msgid " 当前世界设定为：\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:990
+msgid "   ●基础世界设定：美好的黄油IF世界线，无具体时间线和剧情线，凡是有立绘的角色（包括敌我双方、路人、已便当的）均可招募上岛\n"
+msgstr ""
+
+#: .\Script\UI\Flow\creator_character_flow.py:991
+msgid "   ●基础角色设定：NPC为纯女性角色（伪娘、扶她均不存在，女性小车存在），且全员处女\n"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:31
+msgid "正在尝试与Rhodes Island(if_h)取得神经连接"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:41
+msgid " -【初次唤醒】-"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:41
+msgid " -【神经重载】-"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:41
+msgid " -【断开连接】-"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:62
+msgid "|            服务器            |"
+msgstr ""
+
+#: .\Script\UI\Flow\title_flow.py:63
+msgid "|          泰拉(if_h)          |"
+msgstr ""
+
+#: .\Script\UI\Moudle\panel.py:165
+#, python-brace-format
+msgid "输入的字符超长，最大{input_max}个英文字符，请重试。"
+msgstr ""
+
+#: .\Script\UI\Moudle\panel.py:705
+#, python-brace-format
+msgid "{old_page_index_text} 上一页"
+msgstr ""
+
+#: .\Script\UI\Moudle\panel.py:719
+#, python-brace-format
+msgid "{next_page_index_text} 下一页"
+msgstr ""
+
+#: .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\UI\Panel\ability_up_panel.py:384
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
+#: .\Script\UI\Panel\recruit_panel.py:288
+#: .\Script\UI\Panel\resource_exchange_panel.py:156
+msgid "确定"
+msgstr ""
+
+#: .\Script\UI\Panel\ability_up_panel.py:441
+#: .\Script\UI\Panel\ability_up_panel.py:472
+#: .\Script\UI\Panel\ability_up_panel.py:480
+msgid "属性升级"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:32
+#: .\Script\UI\Panel\agriculture_production_panel.py:40
+msgid "农业生产"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:50
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:51
+#, python-brace-format
+msgid " 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:63
+msgid "\n"
+" 药田："
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:72
+#: .\Script\UI\Panel\agriculture_production_panel.py:116
+#, python-brace-format
+msgid "\n"
+"    当前生产：{resouce_data.name}(10/d)      "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:75
+#: .\Script\UI\Panel\agriculture_production_panel.py:119
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:101
+msgid " [生产调整] "
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:78
+#, python-brace-format
+msgid "{button_text}_药田_{agriculture_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:92
+#: .\Script\UI\Panel\agriculture_production_panel.py:136
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:118
+#, python-brace-format
+msgid "\n"
+"    当前效率加成：设施(lv{now_level}:{facility_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:98
+#: .\Script\UI\Panel\agriculture_production_panel.py:142
+#, python-brace-format
+msgid " + {character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:107
+msgid "\n"
+" 温室："
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:122
+#, python-brace-format
+msgid "{button_text}_温室_{agriculture_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:149
+msgid "[001]种植员增减"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:193
+#, python-brace-format
+msgid " 当前种植的是：{resouce_data.name}"
+msgstr ""
+
+#: .\Script\UI\Panel\agriculture_production_panel.py:195
+msgid "\n\n"
+" 当前可以种植的有：\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\all_npc_position_panel.py:44
+msgid "召集到办公室"
+msgstr ""
+
+#: .\Script\UI\Panel\all_npc_position_panel.py:44
+msgid "召集到自己当前位置"
+msgstr ""
+
+#: .\Script\UI\Panel\all_npc_position_panel.py:44
+msgid "自己前去对方位置"
+msgstr ""
+
+#: .\Script\UI\Panel\all_npc_position_panel.py:44
+msgid "debug用对方智能跟随"
+msgstr ""
+
+#: .\Script\UI\Panel\all_npc_position_panel.py:71
+msgid "选择召集/移动方式："
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:270
+msgid "[更改小时 (24小时制) ]"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:270
+msgid "更改小时，需至少为18时"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:273
+msgid "[更改分钟]"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:273
+msgid "更改分钟"
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:293
+msgid "请输入小时(24小时制)："
+msgstr ""
+
+#: .\Script\UI\Panel\assistant_panel.py:310
+msgid "请输入分钟："
+msgstr ""
+
+#: .\Script\UI\Panel\borrow_book_panel.py:32
+#: .\Script\UI\Panel\borrow_book_panel.py:41
+msgid "技能类书籍"
+msgstr ""
+
+#: .\Script\UI\Panel\borrow_book_panel.py:41
+msgid "娱乐类书籍"
+msgstr ""
+
+#: .\Script\UI\Panel\borrow_book_panel.py:41
+msgid "色情类书籍"
+msgstr ""
+
+#: .\Script\UI\Panel\building_panel.py:32
+#: .\Script\UI\Panel\building_panel.py:43
+msgid "区块总览"
+msgstr ""
+
+#: .\Script\UI\Panel\building_panel.py:43
+msgid "特殊房间"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:44
+#, python-brace-format
+msgid "{map_name}的衣柜"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:178
+#: .\Script\UI\Panel\manage_library.py:59
+#: .\Script\UI\Panel\originium_arts.py:163
+#: .\Script\UI\Panel\originium_arts.py:462
+#: .\Script\UI\Panel\see_save_info_panel.py:217
+#: .\Script\UI\Panel\see_save_info_panel.py:236
+msgid "1"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:191
+#: .\Script\UI\Panel\manage_library.py:72
+#: .\Script\UI\Panel\originium_arts.py:175
+msgid "2"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:204
+#: .\Script\UI\Panel\manage_library.py:85
+#: .\Script\UI\Panel\originium_arts.py:191
+msgid "3"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:216
+#: .\Script\UI\Panel\manage_library.py:98
+#: .\Script\UI\Panel\originium_arts.py:204
+msgid "4"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:267
+msgid "\n"
+"获得了{ self.character_data.name}的{pan_name}，可在藏品馆里纳入收藏\n"
+msgstr ""
+
+#: .\Script\UI\Panel\check_locker_panel.py:280
+msgid "\n"
+"获得了{ self.character_data.name}的{socks_name}，可在藏品馆里纳入收藏\n"
+msgstr ""
+
+#: .\Script\UI\Panel\collection_panel.py:32
+#: .\Script\UI\Panel\collection_panel.py:43
+msgid "信物"
+msgstr ""
+
+#: .\Script\UI\Panel\collection_panel.py:43
+msgid "内裤"
+msgstr ""
+
+#: .\Script\UI\Panel\collection_panel.py:43
+msgid "袜子"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:32 .\Script\UI\Panel\debug_panel.py:41
+msgid "全局变量"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:41
+msgid "玩家属性"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:41
+msgid "NPC角色"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:331 .\Script\UI\Panel\debug_panel.py:596
+#: .\Script\UI\Panel\debug_panel.py:661 .\Script\UI\Panel\debug_panel.py:695
+#: .\Script\UI\Panel\debug_panel.py:730 .\Script\UI\Panel\debug_panel.py:765
+#: .\Script\UI\Panel\debug_panel.py:800 .\Script\UI\Panel\debug_panel.py:838
+#: .\Script\UI\Panel\debug_panel.py:893 .\Script\UI\Panel\debug_panel.py:942
+#: .\Script\UI\Panel\debug_panel.py:1013
+msgid "输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:338 .\Script\UI\Panel\debug_panel.py:391
+#: .\Script\UI\Panel\debug_panel.py:400 .\Script\UI\Panel\debug_panel.py:409
+#: .\Script\UI\Panel\debug_panel.py:419 .\Script\UI\Panel\debug_panel.py:428
+#: .\Script\UI\Panel\debug_panel.py:437 .\Script\UI\Panel\debug_panel.py:446
+#: .\Script\UI\Panel\debug_panel.py:458 .\Script\UI\Panel\debug_panel.py:467
+#: .\Script\UI\Panel\debug_panel.py:476 .\Script\UI\Panel\debug_panel.py:485
+#: .\Script\UI\Panel\debug_panel.py:494 .\Script\UI\Panel\debug_panel.py:503
+#: .\Script\UI\Panel\debug_panel.py:512 .\Script\UI\Panel\debug_panel.py:521
+#: .\Script\UI\Panel\debug_panel.py:603 .\Script\UI\Panel\debug_panel.py:668
+#: .\Script\UI\Panel\debug_panel.py:702 .\Script\UI\Panel\debug_panel.py:737
+#: .\Script\UI\Panel\debug_panel.py:772 .\Script\UI\Panel\debug_panel.py:807
+#: .\Script\UI\Panel\debug_panel.py:845 .\Script\UI\Panel\debug_panel.py:900
+#: .\Script\UI\Panel\debug_panel.py:949 .\Script\UI\Panel\debug_panel.py:1020
+msgid "输入改变后的值"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:371
+msgid "输入要改变第几号角色，以及这一项变成0或者1，中间用英文小写逗号隔开"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:971
+msgid "输入改变的项目，中间用英文小写逗号隔开。娱乐活动输入三个int；借还书则先输入0为删除1为增加，然后再输入书籍编号；可能性直接输入对应数字"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:1088
+msgid "输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成0或者1，中间用英文小写逗号隔开。列表的内容元素0为删除1为增加"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:1150
+msgid "输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:1212
+msgid "[继续修改]"
+msgstr ""
+
+#: .\Script\UI\Panel\debug_panel.py:1212
+msgid "继续修改"
+msgstr ""
+
+#: .\Script\UI\Panel\dirty_panel.py:33 .\Script\UI\Panel\dirty_panel.py:45
+#: .\Script\UI\Panel\ejaculation_panel.py:232
+msgid "身体"
+msgstr ""
+
+#: .\Script\UI\Panel\dirty_panel.py:45
+msgid "服装"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:31
+#: .\Script\UI\Panel\food_bag_panel.py:41
+msgid "当前持有食物"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:40
+msgid "食物背包"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:84
+msgid "\n"
+"检测到因版本变更导致的食物数据异常，已删除部分异常食物，并重置了部分食物的数据，请保存并覆盖原存档。\n"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:120
+msgid "  你已经吃饱了，无法再吃东西了。\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:129
+msgid "  当前没有目标，无法食用特殊调味食物。\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\food_bag_panel.py:131
+#, python-brace-format
+msgid "  {target_character_data.name}已经吃饱了，无法再吃东西了。\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\food_shop_panel.py:43
+msgid "当前提供的食物"
+msgstr ""
+
+#: .\Script\UI\Panel\game_info_panel.py:61
+msgid "(饭点)"
+msgstr ""
+
+#: .\Script\UI\Panel\game_info_panel.py:79
+msgid "工作日"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:47
+msgid "主页"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:82
+msgid "睡梦面板"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:84
+msgid "[起床]"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:85
+msgid "[睡觉时间]"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:89
+msgid "[角色列表]"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:89
+msgid "角色列表"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:96
+#: .\Script\UI\Panel\see_character_info_panel.py:2129
+msgid "[上一人]"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:96
+#: .\Script\UI\Panel\see_character_info_panel.py:2129
+msgid "上一人"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:99
+#: .\Script\UI\Panel\see_character_info_panel.py:2132
+msgid "[下一人]"
+msgstr ""
+
+#: .\Script\UI\Panel\get_up_panel.py:99
+#: .\Script\UI\Panel\see_character_info_panel.py:2132
+msgid "下一人"
+msgstr ""
+
+#: .\Script\UI\Panel\h_item_shop_panel.py:192
+#, python-brace-format
+msgid "{nickname}购买了{item_name}"
+msgstr ""
+
+#: .\Script\UI\Panel\in_scene_panel.py:44
+msgid "场景"
+msgstr ""
+
+#: .\Script\UI\Panel\in_scene_panel.py:74
+msgid "已死亡！"
+msgstr ""
+
+#: .\Script\UI\Panel\in_scene_panel.py:96
+msgid "当前位置:"
+msgstr ""
+
+#: .\Script\UI\Panel\in_scene_panel.py:104
+msgid "当前位置的角色一览:    "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:32
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:41
+msgid "产品生产"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:69
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:347
+msgid "\n"
+" {assembly_line_id+1}号流水线："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:98
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:354
+#, python-brace-format
+msgid "\n"
+"    当前生产：{product_data.name}(1/h)      "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:104
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:361
+#, python-brace-format
+msgid "{button_text}_{assembly_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:124
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:375
+#, python-brace-format
+msgid " + {character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:130
+msgid "\n"
+"    当前生产消耗："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:148
+msgid "[001]工人增减"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:159
+msgid "[002]工位调整"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:197
+msgid " {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:199
+msgid "\n\n"
+" 当前可以生成的产品有：\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:259
+msgid "\n"
+"     生产消耗："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:305
+msgid "未选择"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:308
+msgid "\n"
+"○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号流水线调整到 {self.target_position + 1} 号流水线"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:313
+msgid "\n"
+"可选工人有：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:326
+#, python-brace-format
+msgid " [{character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)] "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:340
+msgid " 暂无工作是生产工人的干员"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:358
+msgid " [将选择工人调整至该流水线] "
+msgstr ""
+
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:370
+msgid "\n"
+"    当前工人："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:48
+msgid "\n"
+"  空闲干员：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:113
+#: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:167
+msgid "罗德岛资源总览"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:213
+msgid "各部门工作概况"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:123
+#: .\Script\UI\Panel\manage_basement_panel.py:291
+msgid "全干员一览"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:173
+#, python-brace-format
+msgid " 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:228
+#, python-brace-format
+msgid "\n"
+" 当前工作中干员/总干员：{work_people_now}/{people_max}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:229
+msgid "\n"
+" ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:270
+#, python-brace-format
+msgid "  病人 — {patient_now}"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:276
+#, python-brace-format
+msgid "\n"
+"  截至目前为止，今日各部门龙门币总收入为：{all_income}\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:281
+msgid "[001]调整干员岗位"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:364
+#, python-brace-format
+msgid "\n"
+"当前{department}部门情况："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_basement_panel.py:368
+#, python-brace-format
+msgid "\n"
+"  当前正在工作的{work_data.name}："
+msgstr ""
+
+#: .\Script\UI\Panel\manage_library.py:156
+msgid "\n"
+"  目前无人借书，不需要催还\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_library.py:178
+#, python-brace-format
+msgid "\n"
+"{character_data.name}将在空闲时间前往图书馆还书\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_library.py:187
+#: .\Script\UI\Panel\originium_arts.py:304
+msgid "\n"
+"暂未实装\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_library.py:236
+msgid "\n"
+"  要把哪一天定为读书会呢？\n"
+msgstr ""
+
+#: .\Script\UI\Panel\manage_library.py:280
+msgid "\n"
+"这一天已经被选为其他活动了\n"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:47
+#, python-brace-format
+msgid "\n\n"
+"移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，燃料不足，无法移动\n"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:54
+#: .\Script\UI\Panel\normal_panel.py:71
+msgid "是"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:54
+#: .\Script\UI\Panel\normal_panel.py:71
+msgid "否"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:55
+#, python-brace-format
+msgid "\n"
+"移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，确定要移动吗\n"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:68
+msgid "\n"
+"输入错误，请重新输入\n"
+msgstr ""
+
+#: .\Script\UI\Panel\navigation_panel.py:73
+msgid "\n"
+"无法直接抵达非临近地点\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:40
+msgid "关门"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:64
+msgid "\n"
+"当前地点无法关门，要继续吗："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:66
+msgid "\n"
+"当前地点可以关门，关上之后里面的人可以出去，但外面的人将不能进来，要关门吗："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:68
+msgid "\n"
+"你正在一个可以关门的小隔间内，关上后别人仍可以进入该地点，但无法发现隔间内的人，要关门吗："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:131
+msgid "\n"
+"当前未持有书籍，请前去图书馆借书\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:204
+msgid "\n"
+"当前育儿室正在照料的婴儿有：\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "抱一抱她"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "哼唱儿歌"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "喂奶"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "换尿布"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "教她说话"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:242
+msgid "给她玩玩具"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:249
+#, python-brace-format
+msgid "\n"
+"选择照顾[{name}]的方式：\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:254
+#, python-brace-format
+msgid "[00{button_id}]:{button_text_list[button_id]}"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:330
+#, python-brace-format
+msgid "当前选择的能力为{ability_name}，请选择新的能力："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:332
+msgid "当前没有选择能力，请选择："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:410
+msgid "\n"
+" 当前地点无法关门，"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:412
+msgid "\n"
+" 当前地点可以关门，关上之后其他人就进不来了，"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:414
+msgid "\n"
+" 当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:415
+msgid "当前：   "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:420
+msgid " [关门] "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:420
+msgid " [不关门] "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:425
+#, python-brace-format
+msgid "\n\n"
+" 预计完全回复最少需要{need_time}小时，当前睡眠时间为：{self.sleep_time}小时     "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:429
+msgid "\n"
+" 睡眠时间选择："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:433
+#, python-brace-format
+msgid " [{i}小时] "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:438
+msgid " [自定义睡眠时间] "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:439 .\Script\UI\Panel\normal_panel.py:480
+msgid "请输入睡眠时间(最小1小时，最大8小时)："
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:446
+msgid "确定\n\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:449 .\Script\UI\Panel\normal_panel.py:572
+msgid "返回\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:519
+msgid "冰箱"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:526
+msgid "\n"
+" 【母乳】\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:527
+msgid "  ○母乳可以被博士带走饮用或制作其他乳制品，有效期截止当天24点，到期后背包和冰箱里未使用的母乳会全部转化为资源【鲜母乳】\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:528
+msgid "  当前冰箱内各干员母乳情况：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:533
+msgid "\n"
+"    当前冰箱里没有母乳\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:542
+msgid "  [{str(character_data.adv).rjust(4,'0')}]{character_name}：{character_milk}ml"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:547
+msgid "  [带走]  "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:550 .\Script\UI\Panel\normal_panel.py:561
+#, python-brace-format
+msgid "_{character_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:558
+msgid "  [转化]  "
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:596
+#, python-brace-format
+msgid "\n"
+"  你将{character_data.name}的母乳（{new_food.milk_ml}ml）放进了背包\n"
+msgstr ""
+
+#: .\Script\UI\Panel\normal_panel.py:608
+#, python-brace-format
+msgid "\n"
+"  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:228
+msgid "5"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:254
+msgid "6"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:267
+msgid "7"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:280
+msgid "11"
+msgstr ""
+
+#: .\Script\UI\Panel\recruit_panel.py:32
+msgid "招募"
+msgstr ""
+
+#: .\Script\UI\Panel\recruit_panel.py:78 .\Script\UI\Panel\recruit_panel.py:268
+#, python-brace-format
+msgid "{button_text}_{recruit_line_id}"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:54
+#, python-brace-format
+msgid "\n"
+"  当前龙门币数量    ：{money}"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:59
+#, python-brace-format
+msgid "\n\n"
+"  要交易的资源为    ：{resouce_data.name}({now_resouce_stock}/{warehouse_capacity})    "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:70
+msgid " [更改交易资源] "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:73
+#: .\Script\UI\Panel\resource_exchange_panel.py:88
+#: .\Script\UI\Panel\resource_exchange_panel.py:99
+#: .\Script\UI\Panel\resource_exchange_panel.py:117
+#, python-brace-format
+msgid "{button_text}"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:80
+#, python-brace-format
+msgid "\n\n"
+"  要交易的数量为    ：{self.quantity_of_resouce}    "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:96
+msgid " [重置] "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:110
+msgid "\n\n"
+"  交易的价格为      ："
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:114
+msgid " [买入] "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:114
+msgid " [卖出] "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:126
+#, python-brace-format
+msgid " {price}龙门币/1单位 "
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:132
+msgid "\n"
+"  ○预计共花费{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:134
+msgid "  ●龙门币不足，无法购买\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:137
+msgid "\n"
+"  ●该资源无法购买，只能卖出\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:139
+msgid "\n"
+"  ○预计共获得{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:141
+msgid "  ●资源不足，无法出售\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:190
+#, python-brace-format
+msgid "当前的交易资源为：{resouce_now_data.name}"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:191
+msgid "\n"
+"当前可以交易的资源有：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:232
+#, python-brace-format
+msgid "\n"
+"      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:235
+msgid "   买入:{int(resouce_data.price * 1.2)}龙门币/1单位"
+msgstr ""
+
+#: .\Script\UI\Panel\resource_exchange_panel.py:236
+msgid "   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:45
+#: .\Script\UI\Panel\see_character_info_panel.py:57
+#: .\Script\UI\Panel\see_character_info_panel.py:64
+#: .\Script\UI\Panel\see_character_info_panel.py:2135
+msgid "基础属性"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:58
+#: .\Script\UI\Panel\see_character_info_panel.py:65
+msgid "能力、经验与宝珠"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:59
+msgid "玩家能力"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:60
+#: .\Script\UI\Panel\see_character_info_panel.py:68
+msgid "角色设定"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:67
+msgid "肉体情况"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:593
+#, python-brace-format
+msgid "{character_name} 好感度:{favorability}({f_lv})，信赖度:{trust}%({t_lv}) {angry} {sleep}{urinate}{hunger}{hypnosis}"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:607
+#, python-brace-format
+msgid "{character_name}{character_nick_name}{sleep}{urinate}{eja}"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:627
+msgid "体力"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:636
+msgid "气力"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:646
+msgid "理智"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:655
+msgid "精液"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:675
+msgid "人物属性"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:735
+#: .\Script\UI\Panel\see_character_info_panel.py:757
+msgid "暂无"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:739
+msgid "宿舍位置:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:752
+msgid "办公室位置:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:786
+#, python-brace-format
+msgid "生日:{birthday_month}月{birthday_day}日"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:818
+msgid "身高:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:820
+msgid "体重:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:824
+msgid "体脂率:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:825
+msgid "罩杯:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:859
+msgid "胸围:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:860
+msgid "腰围:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:861
+msgid "臀围"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:890
+msgid "Ｎ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:891
+msgid "Ｂ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:892
+msgid "Ｃ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:893
+msgid "Ｐ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:894
+msgid "Ｖ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:895
+msgid "Ａ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:896
+msgid "Ｕ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:897
+msgid "Ｗ感觉:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1191
+#, python-brace-format
+msgid " 职业    ：[{profession_text}]"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1195
+#, python-brace-format
+msgid "\n"
+" 种族    ：[{race_text}]"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1199
+#, python-brace-format
+msgid "\n"
+" 势力    ：[{nation_text}]"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1203
+#, python-brace-format
+msgid "\n"
+" 出身地  ：[{birthplace_text}]"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1533
+#, python-brace-format
+msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1582
+#, python-brace-format
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1609
+#, python-brace-format
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1771
+msgid "角色设置"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1779
+#: .\Script\UI\Panel\system_setting.py:50
+msgid " \n"
+" ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1817
+#, python-brace-format
+msgid " {button_text}(  更改{reason})"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:1826
+msgid " \n"
+" 暂无设置\n"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:2204
+#, python-brace-format
+msgid "体力:({character_data.hit_point}/{character_data.hit_point_max})"
+msgstr ""
+
+#: .\Script\UI\Panel\see_character_info_panel.py:2205
+#, python-brace-format
+msgid "气力:({character_data.mana_point}/{character_data.mana_point_max})"
+msgstr ""
+
+#: .\Script\UI\Panel\see_item_info_panel.py:73
+msgid "人物道具"
+msgstr ""
+
+#: .\Script\UI\Panel\see_item_info_panel.py:181
+msgid "使用"
+msgstr ""
+
+#: .\Script\UI\Panel\see_map_panel.py:58
+msgid "当前区块:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_map_panel.py:172
+msgid "查看上级地图"
+msgstr ""
+
+#: .\Script\UI\Panel\see_map_panel.py:193
+msgid "查看下级地图"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:55
+msgid "神经连接柜"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:108
+msgid "空槽位"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:131
+msgid "游戏时间:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:132
+msgid "存档时间:"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:167
+msgid "读取"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:176
+msgid "覆盖"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:186
+msgid "删除"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:214
+msgid "[000]确认删除存档?"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:214
+#: .\Script\UI\Panel\see_save_info_panel.py:233
+msgid "0"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:217
+#: .\Script\UI\Panel\see_save_info_panel.py:236
+msgid "[001]取消"
+msgstr ""
+
+#: .\Script\UI\Panel\see_save_info_panel.py:233
+msgid "[000]确认覆盖存档?"
+msgstr ""
+
+#: .\Script\UI\Panel\sp_event_panel.py:93
+msgid "\n"
+msgstr ""
+
+#: .\Script\UI\Panel\sp_event_panel.py:106
+msgid " 你决定给女儿取名为——"
+msgstr ""
+
+#: .\Script\UI\Panel\undress_panel.py:218
+#, python-brace-format
+msgid "\n"
+"获得了{target_data.name}的{pan_name}，可在藏品馆里纳入收藏\n"
+msgstr ""
+
