@@ -448,27 +448,27 @@ def get_ability_adjust(value: int) -> int:
     """
     level = value
     if level == 0:
-        just = 0.2
-    elif level == 1:
-        just = 0.4
-    elif level == 2:
-        just = 0.7
-    elif level == 3:
         just = 1.0
-    elif level == 4:
+    elif level == 1:
+        just = 1.1
+    elif level == 2:
+        just = 1.25
+    elif level == 3:
         just = 1.4
+    elif level == 4:
+        just = 1.6
     elif level == 5:
         just = 1.8
     elif level == 6:
-        just = 2.3
+        just = 2.1
     elif level == 7:
-        just = 2.8
+        just = 2.4
     elif level == 8:
-        just = 3.4
+        just = 2.8
     elif level == 9:
-        just = 4.0
+        just = 3.2
     elif level == 10:
-        just = 5.0
+        just = 4.0
     return just
 
 
@@ -502,27 +502,27 @@ def get_juel(value: int) -> int:
     """
     level = get_status_level(value)
     if level == 0:
-        juel = round(0.2*value)
+        juel = round(1*value)
     elif level == 1:
-        juel = round(0.4*value)
+        juel = round(1*value)
     elif level == 2:
-        juel = round(0.7*value)
+        juel = round(0.9*value)
     elif level == 3:
-        juel = round(1.0*value)
+        juel = round(0.75*value)
     elif level == 4:
-        juel = round(1.4*value)
+        juel = round(0.6*value)
     elif level == 5:
-        juel = round(1.8*value)
+        juel = round(0.4*value)
     elif level == 6:
-        juel = round(2.3*value)
+        juel = round(0.3*value)
     elif level == 7:
-        juel = round(2.8*value)
+        juel = round(0.2*value)
     elif level == 8:
-        juel = round(3.4*value)
+        juel = round(0.15*value)
     elif level == 9:
-        juel = round(4.0*value)
+        juel = round(0.12*value)
     elif level == 10:
-        juel = round(5.0*value)
+        juel = round(0.1*value)
     return juel
 
 
