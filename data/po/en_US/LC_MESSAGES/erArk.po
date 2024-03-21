@@ -1,18 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Free Software Foundation, Inc.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 13:53+0800\n"
+"POT-Creation-Date: 2024-03-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
+"Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -120,22 +118,22 @@ msgid "{day}日 {hour}点{minute}分"
 msgstr "Time: {day} {hour}:{minute}"
 
 msgid "休息"
-msgstr "Resting"
+msgstr "Rest"
 
 msgid "购买食物"
-msgstr "Buying food"
+msgstr "Purchase food"
 
 msgid "进食"
-msgstr "Eating"
+msgstr "Eat"
 
 msgid "移动"
-msgstr "Moving"
+msgstr "Move"
 
 msgid "查看属性"
 msgstr "Check attributes"
 
 msgid "聊天"
-msgstr "Chatting"
+msgstr "Chat"
 
 msgid "购买成人用品"
 msgstr "Purchase adult items"
@@ -189,7 +187,7 @@ msgid "借阅书籍"
 msgstr "Borrow books"
 
 msgid "读书"
-msgstr "Reading"
+msgstr "Read books"
 
 msgid "管理图书馆"
 msgstr "Manage library"
@@ -210,37 +208,37 @@ msgid "管理罗德岛"
 msgstr "Manage Rhodes Island"
 
 msgid "单人催眠"
-msgstr "Activating individual hypnosis"
+msgstr "Individual hypnosis"
 
 msgid "集体催眠"
-msgstr "Group Hypnosis"
+msgstr "Group hypnosis"
 
 msgid "解除催眠"
-msgstr "Deactivating hypnosis"
+msgstr "Deactivate hypnosis"
 
 msgid "开启透视"
-msgstr "Activating perspective"
+msgstr "Activate perspective"
 
 msgid "关闭透视"
-msgstr "Deactivating perspective"
+msgstr "Deactivate perspective"
 
 msgid "开启信息素"
-msgstr "Activating pheromones"
+msgstr "Activate pheromones"
 
 msgid "关闭信息素"
-msgstr "Deactivating pheromones"
+msgstr "Deactivate pheromones"
 
 msgid "睡觉"
-msgstr "Sleeping"
+msgstr "Sleep"
 
 msgid "淋浴"
-msgstr "Showering Room"
+msgstr "Shower"
 
 msgid "身体接触"
-msgstr "Body contacting"
+msgstr "Body contact"
 
 msgid "按摩"
-msgstr "Massaging"
+msgstr "Massage"
 
 msgid "等待五分钟"
 msgstr "Wait for five minutes"
@@ -252,16 +250,16 @@ msgid "等待六个小时"
 msgstr "Wait for six hours"
 
 msgid "泡咖啡"
-msgstr "Making coffee"
+msgstr "Make coffee"
 
 msgid "泡咖啡（加料）"
 msgstr "Make coffee (with add ons)"
 
 msgid "让对方泡咖啡"
-msgstr "Having them making coffee"
+msgstr "Have her make coffee"
 
 msgid "做饭"
-msgstr "Cooking"
+msgstr "Cook"
 
 msgid "干员位置一览"
 msgstr "Find and gather Operators"
@@ -273,19 +271,19 @@ msgid "结束同行"
 msgstr "End being peers"
 
 msgid "道歉"
-msgstr "Apologizing"
+msgstr "Apologize"
 
 msgid "听牢骚"
-msgstr "Listening to complaints"
+msgstr "Listen to complaints"
 
 msgid "源石技艺"
 msgstr "Originium Arts"
 
 msgid "听肚子里的动静"
-msgstr "Hearing on stomach "
+msgstr "Hear on stomach"
 
 msgid "一起玩耍"
-msgstr "Playing together"
+msgstr "Play together"
 
 msgid "照顾婴儿"
 msgstr "Take care of baby"
@@ -303,7 +301,7 @@ msgid "邀请约会_未实装"
 msgstr "Ask for date (not implemented)"
 
 msgid "告白"
-msgstr "Proposing"
+msgstr "Propose"
 
 msgid "\\告白成功，[恋慕]转为[恋人]，{target_data.name}收下了你赠予的[戒指]\n"
 msgstr ""
@@ -318,7 +316,7 @@ msgstr ""
 "Propose failed, [Envy] and sufficient Execution Value required\n"
 
 msgid "戴上项圈"
-msgstr "Putting on collar"
+msgstr "Put on collar"
 
 msgid "\\对方接受了项圈，[驯服]转为[宠物]\n"
 msgstr "\\The target accepted the collar, [Tamed] changes to [Pet]\n"
@@ -334,7 +332,7 @@ msgid "劝酒_未实装"
 msgstr "Persuade to stop drinking (not implemented)"
 
 msgid "解手"
-msgstr "Relieving"
+msgstr "Relieve"
 
 msgid "摆放藏品"
 msgstr "Place collectibles"
@@ -425,7 +423,7 @@ msgstr ""
 "Ends H mode\n"
 
 msgid "唱歌"
-msgstr "Singing"
+msgstr "Sing"
 
 msgid ""
 "\n"
@@ -434,6 +432,7 @@ msgid ""
 msgstr ""
 "\n"
 "Current Music Skill is no more than 2, it may make the target uncomfortable, are you sure you want to continue\n"
+"\n"
 
 msgid "[取消]"
 msgstr "[Cancel]"
@@ -456,73 +455,73 @@ msgstr ""
 "Confirm"
 
 msgid "演奏乐器"
-msgstr "Playing instruments"
+msgstr "Play instruments"
 
 msgid "看电影"
-msgstr "Watching movies"
+msgstr "Watch movies"
 
 msgid "摄影"
-msgstr "Taking photos"
+msgstr "Photograph"
 
 msgid "玩水"
-msgstr "Playing water"
+msgstr "Play water"
 
 msgid "下棋"
-msgstr "Playing chess"
+msgstr "Play chess"
 
 msgid "打麻将"
-msgstr "Playing mahjong"
+msgstr "Play mahjong"
 
 msgid "打牌"
-msgstr "Playing cards"
+msgstr "Play cards"
 
 msgid "排演舞剧"
-msgstr "Rehearsing"
+msgstr "Rehearse"
 
 msgid "玩街机游戏"
-msgstr "Playing arcade games"
+msgstr "Play arcade games"
 
 msgid "游泳"
-msgstr "Swimming"
+msgstr "Swim"
 
 msgid "品酒"
-msgstr "Drinking alcohol"
+msgstr "Drink alcohol"
 
 msgid "品茶"
-msgstr "Drinking tea"
+msgstr "Drink tea"
 
 msgid "品咖啡"
-msgstr "Drinking coffee"
+msgstr "Drink coffee"
 
 msgid "品尝点心"
-msgstr "Trying on desserts"
+msgstr "Try on desserts"
 
 msgid "品尝美食"
-msgstr "Eating on all gourmets"
+msgstr "Try on gourmets"
 
 msgid "过家家"
-msgstr "Doing playhouse"
+msgstr "Playhouse"
 
 msgid "修整发型"
-msgstr "Fixing hair"
+msgstr "Hair fix"
 
 msgid "全身造型服务"
 msgstr "Full body styling"
 
 msgid "泡脚"
-msgstr "Soaking feet"
+msgstr "Soak feet"
 
 msgid "蒸桑拿"
-msgstr "Doing sauna"
+msgstr "Sauna"
 
 msgid "水疗护理"
-msgstr "Doing spa treatments"
+msgstr "Spa treatments"
 
 msgid "泡温泉"
-msgstr "Going to hot springs"
+msgstr "Hot springs"
 
 msgid "处理公务"
-msgstr "Working"
+msgstr "Work"
 
 msgid "指挥作战（未实装）"
 msgstr "Command (not implemented)"
@@ -540,7 +539,7 @@ msgid "访客系统"
 msgstr "Guest system"
 
 msgid "邀请访客"
-msgstr "Inviting guests"
+msgstr "Invite guests"
 
 msgid "普瑞赛斯"
 msgstr "Priestess"
@@ -549,13 +548,13 @@ msgid "战斗训练"
 msgstr "Combat training"
 
 msgid "锻炼身体"
-msgstr "Exercising"
+msgstr "Exercise"
 
 msgid "诊疗病人"
-msgstr "Diagnosising"
+msgstr "Diagnosis"
 
 msgid "招募干员"
-msgstr "Recruiting"
+msgstr "Recruit Operators"
 
 msgid "确认已招募干员"
 msgstr "Confirm recruited"
@@ -583,205 +582,205 @@ msgstr ""
 "\n"
 
 msgid "维护设施"
-msgstr "Maintaining facilities"
+msgstr "Maintain facilities"
 
 msgid "维修装备"
-msgstr "Maintaining equipments"
+msgstr "Maintain equipments"
 
 msgid "拥抱"
-msgstr "Hugging"
+msgstr "Hug"
 
 msgid "亲吻"
-msgstr "Kissing"
+msgstr "Kiss"
 
 msgid "摸头"
-msgstr "Touching head"
+msgstr "Touch head"
 
 msgid "摸胸"
-msgstr "Touching breasts"
+msgstr "Touch breasts"
 
 msgid "摸屁股"
-msgstr "Touching butt"
+msgstr "Touch butt"
 
 msgid "摸耳朵"
-msgstr "Touching ears"
+msgstr "Touch ears"
 
 msgid "摸角"
-msgstr "Touching horns"
+msgstr "Touch horns"
 
 msgid "摸尾巴"
-msgstr "Touching tail"
+msgstr "Touch tail"
 
 msgid "摸光环"
-msgstr "Touching halo"
+msgstr "Touch halo"
 
 msgid "摸光翼"
-msgstr "Touching wings"
+msgstr "Touch wings"
 
 msgid "摸触手"
-msgstr "Touching tentacles"
+msgstr "Touch tentacles"
 
 msgid "摸小车"
-msgstr "Touching little car"
+msgstr "Touch little car"
 
 msgid "牵手"
-msgstr "Holding hands"
+msgstr "Hold hands"
 
 msgid "膝枕"
-msgstr "Laying on lap"
+msgstr "Lay on lap"
 
 msgid "掀起裙子"
-msgstr "Lifting up skirt"
+msgstr "Lift up skirt"
 
 msgid "索要内裤"
-msgstr "Asking for underwear"
+msgstr "Ask for underwear"
 
 msgid "索要袜子"
-msgstr "Asking for socks"
+msgstr "Ask for socks"
 
 msgid "偷走内裤"
-msgstr "Stealing underwear"
+msgstr "Steal underwear"
 
 msgid "偷走袜子"
-msgstr "Stealing socks"
+msgstr "Steal socks"
 
 msgid "阴蒂爱抚"
-msgstr "Clitoral caressing"
+msgstr "Clitoral caress"
 
 msgid "手指插入（V）"
-msgstr "Inserting fingers (V)"
+msgstr "Insert fingers (V)"
 
 msgid "手指插入（A）"
-msgstr "Inserting fingers (A)"
+msgstr "Insert fingers (A)"
 
 msgid "挤奶"
 msgstr "Milking"
 
 msgid "装袋搬走"
-msgstr "Bagging and moving"
+msgstr "Bag and move"
 
 msgid "投入监牢"
-msgstr "Putting in prison"
+msgstr "Put in prison"
 
 msgid "解除囚禁"
-msgstr "Freeing from captivity"
+msgstr "Free from captivity"
 
 msgid "身体爱抚"
-msgstr "Body caressing"
+msgstr "Body caress"
 
 msgid "接吻"
-msgstr "Kissing"
+msgstr "Kiss"
 
 msgid "胸爱抚"
-msgstr "Breast caressing"
+msgstr "Breast caress"
 
 msgid "玩弄乳头"
-msgstr "Playing with nipples"
+msgstr "Play with nipples"
 
 msgid "舔吸乳头"
-msgstr "Licking nipples"
+msgstr "Lick nipples"
 
 msgid "掰开阴唇观察"
-msgstr "Observing labia"
+msgstr "Observe labia"
 
 msgid "掰开肛门观察"
-msgstr "Observing anus"
+msgstr "Observe anus"
 
 msgid "舔阴"
-msgstr "Doing cunnilingus"
+msgstr "Cunnilingus"
 
 msgid "舔肛"
 msgstr "Rimming"
 
 msgid "手指插入(V)"
-msgstr "Inserting fingers (V)"
+msgstr "Insert fingers (V)"
 
 msgid "手指插入(A)"
-msgstr "Inserting fingers (A)"
+msgstr "Insert fingers (A)"
 
 msgid "命令对方自慰"
-msgstr "Ordering to masturbate"
+msgstr "Order her to masturbate"
 
 msgid "命令对方舔自己肛门"
-msgstr "Ordering to lick anus"
+msgstr "Order her to lick anus"
 
 msgid "什么也不做"
-msgstr "Doing nothing"
+msgstr "Do nothing"
 
 msgid "诱惑对方"
-msgstr "Seducing"
+msgstr "Seduce her"
 
 msgid "手交"
-msgstr "Doing handjob"
+msgstr "Handjob"
 
 msgid "口交"
-msgstr "Doing fellatio"
+msgstr "Fellatio"
 
 msgid "乳交"
-msgstr "Doing paizuri"
+msgstr "Paizuri"
 
 msgid "足交"
-msgstr "Doing footjob"
+msgstr "Footjob"
 
 msgid "发交"
-msgstr "Doing hairjob"
+msgstr "Hairjob"
 
 msgid "腋交"
-msgstr "Doing axillajob"
+msgstr "Axillajob"
 
 msgid "素股"
-msgstr "Doing intercrural sex"
+msgstr "Intercrural sex"
 
 msgid "手交口交"
-msgstr "Doing hand blowjob"
+msgstr "Hands blowjob"
 
 msgid "乳交口交"
-msgstr "Doing tits blowjob"
+msgstr "Tits blowjob"
 
 msgid "真空口交"
-msgstr "Doing vacuum blowjob"
+msgstr "Vacuum blowjob"
 
 msgid "深喉插入"
-msgstr "Doing deepthroat penetration"
+msgstr "Deepthroat penetration"
 
 msgid "六九式"
-msgstr "Doing sixty-nine style"
+msgstr "Sixty-nine style"
 
 msgid "腿交"
-msgstr "Doing legjob"
+msgstr "Legjob"
 
 msgid "尾交"
-msgstr "Doing tailjob"
+msgstr "Tailjob"
 
 msgid "阴茎蹭脸"
-msgstr "Rubbing face with penis"
+msgstr "Rub face with penis"
 
 msgid "阴茎蹭角"
-msgstr "Rubbing horns with penis"
+msgstr "Rub horns with penis"
 
 msgid "阴茎蹭耳朵"
-msgstr "Rubbing ears with penis"
+msgstr "Rub ears with penis"
 
 msgid "戴上乳头夹"
-msgstr "Putting on nipple clamps"
+msgstr "Put on nipple clamps"
 
 msgid "取下乳头夹"
-msgstr "Taking off nipple clamps"
+msgstr "Take off nipple clamps"
 
 msgid "乳头跳蛋"
-msgstr "Applying nipple love egg"
+msgstr "Nipple love egg"
 
 msgid "戴上阴蒂夹"
-msgstr "Putting on clitoral clamp"
+msgstr "Put on clitoral clamp"
 
 msgid "取下阴蒂夹"
-msgstr "Taking off clitoral clamp"
+msgstr "Take off clitoral clamp"
 
 msgid "阴蒂跳蛋"
-msgstr "Putting on clitoral love egg"
+msgstr "Clitoral love egg"
 
 msgid "电动按摩棒"
-msgstr "Putting on electric massage stick"
+msgstr "Electric massage stick"
 
 msgid "插入震动棒"
 msgstr "Insert vibrator"
@@ -790,142 +789,142 @@ msgid "肛门插入震动棒"
 msgstr "Insert vibrator into anus"
 
 msgid "拔出震动棒"
-msgstr "Pulling out vibrator"
+msgstr "Pull out vibrator"
 
 msgid "拔出肛门震动棒"
-msgstr "Pulling out anus vibrator"
+msgstr "Pull out anus vibrator"
 
 msgid "灌肠"
-msgstr "Lavating"
+msgstr "Lavation"
 
 msgid "拔出肛塞"
-msgstr "Pulling out anal plug"
+msgstr "Pull out anal plug"
 
 msgid "肛塞_未实装"
 msgstr "Anal plug (not implemented)"
 
 msgid "塞入肛门拉珠"
-msgstr "Inserting anal beads"
+msgstr "Insert anal beads"
 
 msgid "拔出肛门拉珠"
-msgstr "Pulling out anal beads"
+msgstr "Pull out anal beads"
 
 msgid "装上搾乳机"
-msgstr "Putting on milking machine"
+msgstr "Put on milking machine"
 
 msgid "取下搾乳机"
-msgstr "Taking off milking machine"
+msgstr "Take off milking machine"
 
 msgid "采尿器"
-msgstr "Putting on urine collector"
+msgstr "Urine collector"
 
 msgid "绳子"
-msgstr "Using rope"
+msgstr "Rope"
 
 msgid "眼罩"
-msgstr "Putting on eye mask"
+msgstr "Eye mask"
 
 msgid "鞭子"
-msgstr "Using whip"
+msgstr "Whip"
 
 msgid "针"
-msgstr "Using needle"
+msgstr "Needle"
 
 msgid "戴上避孕套"
-msgstr "Putting on condom"
+msgstr "Put on condom"
 
 msgid "滴蜡"
 msgstr "Drip wax"
 
 msgid "润滑液"
-msgstr "Applying lubricating fluid"
+msgstr "Lubricating fluid"
 
 msgid "媚药"
-msgstr "Applying love potion"
+msgstr "Love potion"
 
 msgid "灌肠液_未实装"
 msgstr "Enema (not implemented)"
 
 msgid "一次性利尿剂"
-msgstr "Applying disposable diuretics"
+msgstr "Disposable diuretics"
 
 msgid "持续性利尿剂"
-msgstr "Applying continuous diuretics"
+msgstr "Continuous diuretics"
 
 msgid "安眠药"
-msgstr "Applying sleeping pills"
+msgstr "Sleeping pills"
 
 msgid "排卵促进药"
-msgstr "Applying ovulation drugs"
+msgstr "Ovulation drugs"
 
 msgid "事前避孕药"
-msgstr "Applying pre-event birth control pills"
+msgstr "Pre-event birth control pills"
 
 msgid "事后避孕药"
-msgstr "Applying post-event birth control pills"
+msgstr "Post-event birth control pills"
 
 msgid "正常位"
-msgstr "Entering missionary position"
+msgstr "Missionary position"
 
 msgid "背后位"
-msgstr "Entering doggy style"
+msgstr "Doggy style"
 
 msgid "骑乘位"
-msgstr "Entering cowgirl position"
+msgstr "Cowgirl position"
 
 msgid "对面座位"
-msgstr "Doing face sitting sex"
+msgstr "Face sitting sex"
 
 msgid "背面座位"
-msgstr "Doing back sitting sex"
+msgstr "Back sitting sex"
 
 msgid "对面立位"
-msgstr "Doing face standing sex"
+msgstr "Face standing sex"
 
 msgid "背面立位"
-msgstr "Doing back standing sex"
+msgstr "Back standing sex"
 
 msgid "刺激G点"
-msgstr "Stimulating G spot"
+msgstr "Stimulate G spot"
 
 msgid "玩弄子宫口"
-msgstr "Playing with cervix"
+msgstr "Play with cervix"
 
 msgid "插入子宫"
-msgstr "Inserting into womb"
+msgstr "Insert into womb"
 
 msgid "正常位肛交"
-msgstr "Doing missionary anal sex"
+msgstr "Missionary anal sex"
 
 msgid "后背位肛交"
-msgstr "Doing doggy anal sex"
+msgstr "Doggy anal sex"
 
 msgid "骑乘位肛交"
-msgstr "Doing cowgirl anal sex"
+msgstr "Cowgirl anal sex"
 
 msgid "对面座位肛交"
-msgstr "Doing face sitting anal sex"
+msgstr "Face sitting anal sex"
 
 msgid "背面座位肛交"
-msgstr "Doing back sitting anal sex"
+msgstr "Back sitting anal sex"
 
 msgid "对面立位肛交"
-msgstr "Doing face standing anal sex"
+msgstr "Face standing anal sex"
 
 msgid "背面立位肛交"
-msgstr "Doing back standing anal sex"
+msgstr "Back standing anal sex"
 
 msgid "玩弄s状结肠"
-msgstr "Playing with sigmoid colon"
+msgstr "Play with sigmoid colon"
 
 msgid "隔着刺激阴道"
-msgstr "Stimulating vagina"
+msgstr "Stimulate vagina"
 
 msgid "二穴插入_未实装"
 msgstr ""
 
 msgid "尿道棉棒"
-msgstr "Applying urethral swab"
+msgstr "Urethral swab"
 
 msgid "放尿play_未实装"
 msgstr ""
@@ -958,7 +957,7 @@ msgid "给对方口交_未实装"
 msgstr ""
 
 msgid "脱衣服"
-msgstr "Taking off clothes"
+msgstr "Take off clothes"
 
 msgid ""
 "\n"
@@ -998,14 +997,14 @@ msgid ""
 "  对{character_name}{character_nick_name}好感"
 msgstr ""
 "\n"
-"  Affinity of {character_name} towards {character_nick_name}"
+"  Affinity towards {character_name}{character_nick_name}"
 
 msgid ""
 "\n"
 "  对{character_name}{character_nick_name}信赖"
 msgstr ""
 "\n"
-"  Trust of {character_name} towards {character_nick_name}"
+"  Trust towards {character_name}{character_nick_name}"
 
 msgid ""
 "\n"
@@ -1182,7 +1181,6 @@ msgstr ""
 "\n"
 " Penis size: {jj_text}      "
 
-#: .\Script\UI\Flow\creator_character_flow.py:291
 msgid "    [改变大小]"
 msgstr "    [Change size]"
 
