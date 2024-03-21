@@ -242,7 +242,8 @@ class Ejaculation_Panel:
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
         if not cache.system_setting[4]:
             now_position = target_data.h_state.insert_position
-            self.shoot_here(now_position, 0)
+            if now_position != -1:
+                self.shoot_here(now_position, 0)
         # 手动选择射精部位
         else:
             title_name = "射精部位选择"
