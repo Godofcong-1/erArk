@@ -46,7 +46,7 @@ class InScenePanel:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
             len_str = game_config.config_system_setting_option[1][cache.system_setting[1]]
-            len_line = int(len_str[:-1])
+            len_line = int(len_str[:1])
             for i in range(len_line):
                 line_feed.draw()
             title_draw.draw()

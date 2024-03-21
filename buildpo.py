@@ -6,7 +6,7 @@ import shutil
 po_dir_path = os.path.join("data","po")
 po_dir_list = os.listdir(po_dir_path)
 po_dir = os.path.join(po_dir_path,"zh_CN","LC_MESSAGES")
-po_path = os.path.join(po_dir, "erArk.po")
+po_path = os.path.join(po_dir, "erArk_py.po")
 if os.path.exists(po_path):
     os.remove(po_path)
 # 在当前目录及其子目录中查找所有的.py文件，并将这些文件的路径写入到一个名为POTFILES的文件中

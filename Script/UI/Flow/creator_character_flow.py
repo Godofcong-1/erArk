@@ -150,7 +150,7 @@ def input_name_panel() -> bool:
             not_name_error.draw()
             continue
         character_data.name = now_name
-        character_data.nick_name = "博士"
+        character_data.nick_name = _("博士")
         create_judge = 1
 
         break
