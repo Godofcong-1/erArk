@@ -306,7 +306,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     calculation_text += "+信赖修正(" + str(judge_trust) + ")"
 
     # 状态修正，好意(11)和欲情(12)修正#
-    judge_status = int((target_data.status_data[11] + target_data.status_data[12]) / 10)
+    status_level_sum =  attr_calculation.get_status_level(target_data.status_data[11]) + attr_calculation.get_status_level(target_data.status_data[12])
+    judge_status = status_level_sum * 10
     judge += judge_status
     if judge_status:
         calculation_text += "+状态修正(" + str(judge_status) + ")"
@@ -389,10 +390,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 calculation_text += "+助理助攻(+50)"
 
         # 今天H被打断了修正
-        judge_h_interrupt = character_data.action_info.h_interrupt * 10
-        judge -= judge_h_interrupt
-        if judge_h_interrupt:
-            calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
+        if judge_data_type == "S":
+            judge_h_interrupt = character_data.action_info.h_interrupt * 10
+            judge -= judge_h_interrupt
+            if judge_h_interrupt:
+                calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
 
         # 监禁模式修正
         if target_data.sp_flag.imprisonment:
