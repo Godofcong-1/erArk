@@ -4806,7 +4806,7 @@ def handle_put_into_prison_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id
+    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id，清零各特殊状态flag
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4839,6 +4839,14 @@ def handle_put_into_prison_add_just(
     target_data.position = character_data.position
     target_data.behavior.move_src = character_data.position
     target_data.behavior.move_target = character_data.position
+    # 清零各特殊状态flag
+    target_data.sp_flag.is_follow = 0
+    target_data.sp_flag.sleep = 0
+    target_data.sp_flag.rest = 0
+    target_data.sp_flag.pee = 0
+    target_data.sp_flag.milk = 0
+    target_data.sp_flag.shower = 0
+    target_data.sp_flag.eat_food = 0
     # 地图数据结算
     old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if target_id not in cache.scene_data[old_scene_path_str].character_list:

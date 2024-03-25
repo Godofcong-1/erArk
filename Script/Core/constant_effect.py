@@ -460,7 +460,7 @@ class BehaviorEffect:
     BAGGING_AND_MOVING_ADD_ADJUST = 513
     """ 指令_专用结算 （装袋搬走用）交互对象获得装袋搬走flag，清除跟随和助理状态。并从当前场景移除角色id，玩家增加搬运人id """
     PUT_INTO_PRISON_ADD_ADJUST = 514
-    """ 指令_专用结算 （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id, """
+    """ 指令_专用结算 （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id，清零各特殊状态flag """
     SET_FREE_ADD_ADJUST = 515
     """ 指令_专用结算 （解除囚禁）交互对象失去监禁flag """
     EAT_ADD_ADJUST = 516
