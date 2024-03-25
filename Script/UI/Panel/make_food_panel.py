@@ -100,7 +100,7 @@ class Make_food_Panel:
                     now_draw.text = f"\n  精液:    "
                     now_draw.width = 1
                     now_draw.draw()
-                elif seasoning_cid == 103:
+                elif seasoning_cid == 102:
                     button_width = self.width/8
                     now_draw = draw.NormalDraw()
                     now_draw.text = f"\n  药物:    "
