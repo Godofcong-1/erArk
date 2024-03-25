@@ -1091,7 +1091,7 @@ def character_continue_move(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_RAND_CHARACTER)
 def character_chat_rand_character(character_id: int):
     """
-    角色和场景内随机角色聊天
+    角色和场景内玩家以外的随机角色聊天
     Keyword arguments:
     character_id -- 角色id
     """

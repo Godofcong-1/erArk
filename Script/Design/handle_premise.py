@@ -3044,6 +3044,42 @@ def handle_not_in_greenhouse(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_AROMATHERAPY_ROOM)
+def handle_in_aromatherapy_room(character_id: int) -> int:
+    """
+    校验角色是否在香薰治疗室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Aromatherapy_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_AROMATHERAPY_ROOM)
+def handle_not_in_aromatherapy_room(character_id: int) -> int:
+    """
+    校验角色是否不在香薰治疗室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Aromatherapy_Room" in now_scene_data.scene_tag:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.NOT_IN_TEACHER_OFFICE)
 def handle_not_in_teacher_office(character_id: int) -> int:
     """
