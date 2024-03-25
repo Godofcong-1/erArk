@@ -1,34 +1,20 @@
 import math
 import random
-import datetime
-from uuid import UUID
 from types import FunctionType
-from typing import Dict
 from Script.Core import (
     cache_control,
     game_path_config,
     game_type,
-    constant,
-    value_handle,
     get_text,
-    save_handle,
 )
 from Script.Design import (
     character_handle,
     game_time,
-    character,
-    handle_premise,
-    event,
     talk,
-    map_handle,
-    cooking,
-    attr_calculation,
-    character_move
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import sp_event_panel
 from Script.Config import game_config, normal_config
-import time
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -71,6 +57,7 @@ def check_fertilization(character_id: int):
     根据受精概率并判断是否受精
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
 
     # 仅在排卵日进行判定
     if character_data.pregnancy.reproduction_period != 5:
@@ -88,29 +75,34 @@ def check_fertilization(character_id: int):
 
         # 如果未初潮，则无法受精并触发对话
         if character_data.talent[6] == 1:
-            draw_text += f"\n因为{character_data.name}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n"
+            draw_text += _(f"\n因为{character_data.name}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n")
 
         # 正常情况下可以受精
         else:
             # 排卵促进药使受精概率*5
             if character_data.h_state.body_item[10][1]:
                 new_rate = min(100,character_data.pregnancy.fertilization_rate * 5)
-                draw_text += f"\n在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}\n"
+                draw_text += _(f"\n在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}%\n")
                 character_data.pregnancy.fertilization_rate = new_rate
                 character_data.h_state.body_item[10][1] = False
+            # 浓厚精液使受精概率*2
+                if pl_character_data.talent[33] == 1:
+                    new_rate = min(100,character_data.pregnancy.fertilization_rate * 2)
+                    draw_text += _(f"\n在浓厚精液的影响下，怀孕概率上升到了{new_rate}%\n")
+                    character_data.pregnancy.fertilization_rate = new_rate
 
             # 最后由随机数判断是否受精
             if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
                 draw_text += "\n※※※※※※※※※\n"
-                draw_text += f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n"
-                draw_text += f"\n{character_data.name}获得了[受精]\n"
+                draw_text += _(f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n")
+                draw_text += _(f"\n{character_data.name}获得了[受精]\n")
                 draw_text += "\n※※※※※※※※※\n"
                 character_data.talent[20] = 1
                 character_data.pregnancy.fertilization_time = cache.game_time
                 character_data.second_behavior[1311] = 1
             else:
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
-                    draw_text += f"\n在避孕药的影响下——"
+                    draw_text += _(f"\n在避孕药的影响下——")
                 draw_text += f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
                 character_data.second_behavior[1312] = 1
 
@@ -175,9 +167,9 @@ def check_near_born(character_id: int):
             character_data.second_behavior[1314] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n随着怀孕的进程，{character_data.name}临近生产，即将诞下爱的结晶\n"
-            draw_text += f"\n{character_data.name}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n"
-            draw_text += f"\n{character_data.name}从[妊娠]转变为[临盆]\n"
+            draw_text += _(f"\n随着怀孕的进程，{character_data.name}临近生产，即将诞下爱的结晶\n")
+            draw_text += _(f"\n{character_data.name}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n")
+            draw_text += _(f"\n{character_data.name}从[妊娠]转变为[临盆]\n")
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -224,9 +216,9 @@ def check_rearing(character_id: int):
             character_data.second_behavior[1318] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n{character_data.name}的产后休息结束了\n"
-            draw_text += f"\n{character_data.name}接下来的行动重心会以照顾{child_character_data.name}为主\n"
-            draw_text += f"\n{character_data.name}从[产后]转变为[育儿]\n"
+            draw_text += _(f"\n{character_data.name}的产后休息结束了\n")
+            draw_text += _(f"\n{character_data.name}接下来的行动重心会以照顾{child_character_data.name}为主\n")
+            draw_text += _(f"\n{character_data.name}从[产后]转变为[育儿]\n")
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -258,15 +250,15 @@ def check_rearing_complete(character_id: int):
             child_character_data.talent[102] = 1
             child_character_data.work.work_type = 152
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n"
-            draw_text += f"\n{character_data.name}完成了育儿行动，开始回到正常的工作生活中来\n"
-            draw_text += f"\n{child_character_data.name}能够初步独立了，在长大成人之前会一直在教育区上课学习\n"
+            draw_text += _(f"\n在{character_data.name}的悉心照料下，{child_character_data.name}顺利长大了\n")
+            draw_text += _(f"\n{character_data.name}完成了育儿行动，开始回到正常的工作生活中来\n")
+            draw_text += _(f"\n{child_character_data.name}能够初步独立了，在长大成人之前会一直在教育区上课学习\n")
             if len(cache.rhodes_island.all_work_npc_set[151]) == 0:
-                draw_text += f"\n当前教育区没有进行授课工作的老师，请尽快安排一名干员负责教师工作\n"
-            draw_text += f"\n{character_data.name}失去了[育儿]\n"
-            draw_text += f"\n{character_data.name}失去了[泌乳]\n"
-            draw_text += f"\n{child_character_data.name}从[婴儿]成长为了[幼女]\n"
-            draw_text += f"\n{child_character_data.name}成为了一名准干员\n"
+                draw_text += _(f"\n当前教育区没有进行授课工作的老师，请尽快安排一名干员负责教师工作\n")
+            draw_text += _(f"\n{character_data.name}失去了[育儿]\n")
+            draw_text += _(f"\n{character_data.name}失去了[泌乳]\n")
+            draw_text += _(f"\n{child_character_data.name}从[婴儿]成长为了[幼女]\n")
+            draw_text += _(f"\n{child_character_data.name}成为了一名准干员\n")
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -294,11 +286,11 @@ def check_grow_to_loli(character_id: int):
             character_data.talent[6] = 0
             chest_grow_text = chest_grow(character_id)
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n{character_data.name}的身体渐渐成长，开始进入青春期，在第二性征发育的同时，也迎来了第一次的初潮\n"
-            draw_text += f"\n{character_data.name}从[幼女]成长为了[萝莉]\n"
-            draw_text += f"\n{character_data.name}失去了[未初潮]\n"
+            draw_text += _(f"\n{character_data.name}的身体渐渐成长，开始进入青春期，在第二性征发育的同时，也迎来了第一次的初潮\n")
+            draw_text += _(f"\n{character_data.name}从[幼女]成长为了[萝莉]\n")
+            draw_text += _(f"\n{character_data.name}失去了[未初潮]\n")
             draw_text += chest_grow_text
-            draw_text += f"\n{character_data.name}可以参加上课以外的工作了\n"
+            draw_text += _(f"\n{character_data.name}可以参加上课以外的工作了\n")
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -326,11 +318,11 @@ def check_grow_to_girl(character_id: int):
             character_data.talent[7] = 0
             chest_grow_text = chest_grow(character_id)
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n{character_data.name}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n"
-            draw_text += f"\n{character_data.name}从[萝莉]成长为了[少女]\n"
-            draw_text += f"\n{character_data.name}失去了[未成年]\n"
+            draw_text += _(f"\n{character_data.name}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n")
+            draw_text += _(f"\n{character_data.name}从[萝莉]成长为了[少女]\n")
+            draw_text += _(f"\n{character_data.name}失去了[未成年]\n")
             draw_text += chest_grow_text
-            draw_text += f"\n{character_data.name}可以进行正常的工作了\n"
+            draw_text += _(f"\n{character_data.name}可以进行正常的工作了\n")
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -409,9 +401,9 @@ def chest_grow(character_id: int,print_flag = False):
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     if new_chest_id != old_chest_id:
-        now_text = f"\n{character_data.name}的胸部从[{old_name}]成长为了[{new_name}]\n"
+        now_text = _(f"\n{character_data.name}的胸部从[{old_name}]成长为了[{new_name}]\n")
     else:
-        now_text = f"\n{character_data.name}的胸部依旧保持在[{old_name}]没有成长\n"
+        now_text = _(f"\n{character_data.name}的胸部依旧保持在[{old_name}]没有成长\n")
     if print_flag:
         now_draw.text = now_text
         now_draw.draw()
