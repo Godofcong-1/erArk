@@ -237,8 +237,12 @@ in_class_room,IN_CLASS_ROOM,地点_定位,在教室
 not_in_class_room,NOT_IN_CLASS_ROOM,地点_定位,不在教室
 in_teacher_office,IN_TEACHER_OFFICE,地点_定位,在教师办公室
 not_in_teacher_office,NOT_IN_TEACHER_OFFICE,地点_定位,不在教师办公室
-in_farmland,IN_FARMLAND,地点_定位,在农田
-not_in_farmland,NOT_IN_FARMLAND,地点_定位,不在农田
+in_herb_garden,IN_HERB_GARDEN,地点_定位,在药田
+not_in_herb_garden,NOT_IN_HERB_GARDEN,地点_定位,不在药田
+in_greenhouse,IN_GREENHOUSE,地点_定位,在温室
+not_in_greenhouse,NOT_IN_GREENHOUSE,地点_定位,不在温室
+in_Aromatherapy_room,IN_AROMATHERAPY_ROOM,地点_定位,在香薰治疗室
+not_in_aromatherapy_room,NOT_IN_AROMATHERAPY_ROOM,地点_定位,不在香薰治疗室
 in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
 
@@ -825,7 +829,8 @@ work_is_cook,WORK_IS_COOK,属性_工作,自己的工作为厨师
 work_is_production_worker,WORK_IS_PRODUCTION_WORKER,属性_工作,自己的工作为生产工人
 work_is_massage_therapist,WORK_IS_MASSAGE_THERAPIST,属性_工作,自己的工作为按摩师
 work_is_diplomat,WORK_IS_DIPLOMAT,属性_工作,自己的工作为外交官
-work_is_planter,WORK_IS_PLANTER,属性_工作,自己的工作为种植员
+work_is_medicinal_planter,WORK_IS_MEDICINAL_PLANTER,属性_工作,自己的工作为药材种植员
+work_is_floral_planter,WORK_IS_FLORAL_PLANTER,属性_工作,自己的工作为花草种植员
 
 entertainment_is_read,ENTERTAINMENT_IS_READ,属性_娱乐,自己当前时段的娱乐为读书
 entertainment_is_sing,ENTERTAINMENT_IS_SING,属性_娱乐,自己当前时段的娱乐为唱歌

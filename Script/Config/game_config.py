@@ -243,6 +243,10 @@ config_productformula: Dict[int, config_def.ProductFormula] = {}
 """ 产品配方数据 条目cid:条目内容 """
 config_productformula_data: Dict[int, Dict[int, int]] = {}
 """ 产品配方具体数据 条目cid:[原料id:原料数量] """
+config_aromatherapy_recipes: Dict[int, config_def.Aromatherapy_Recipes] = {}
+""" 香薰疗愈配方数据 """
+config_aromatherapy_recipes_data: Dict[int, Dict[int, int]] = {}
+""" 香薰疗愈配方具体数据 配方id:[原料id:原料数量] """
 config_first_bonus: Dict[int, config_def.First_Bouns] = {}
 """ 初始奖励数据 奖励id:奖励内容 """
 config_chara_setting: Dict[int, config_def.CharaSetting] = {}
@@ -1140,6 +1144,29 @@ def load_product_formula():
             config_productformula_data[now_tem.cid][need_type] = need_value
 
 
+def load_aromatherapy_recipes():
+    """载入香薰疗愈"""
+    now_data = config_data["Aromatherapy_Recipes"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Aromatherapy_Recipes()
+        now_tem.__dict__ = tem_data
+        config_aromatherapy_recipes[now_tem.cid] = now_tem
+
+        formula_text = now_tem.formula
+        # 以&为分割判定是否有多个需求
+        if "&" not in formula_text:
+            need_list = []
+            need_list.append(formula_text)
+        else:
+            need_list = formula_text.split('&')
+        for need_text in need_list:
+            need_type = int(need_text.split('|')[0])
+            need_value = int(need_text.split('|')[1])
+            config_aromatherapy_recipes_data.setdefault(now_tem.cid, {})
+            config_aromatherapy_recipes_data[now_tem.cid][need_type] = need_value
+
+
 def load_chara_setting():
     """载入角色设置"""
     now_data = config_data["CharaSetting"]
@@ -1292,6 +1319,7 @@ def init():
     load_trust_level()
     load_seasoning()
     load_product_formula()
+    load_aromatherapy_recipes()
     load_prts()
     load_first_bonus()
     load_chara_setting()

@@ -1,7 +1,7 @@
 cid,product_id,formula,difficulty
 编号id,产品的资源id,配方(序号为资源序号),难易度
 int,int,str,int
-0,0,0,1
+0,0,0,0
 产品配方,,,
 0,0,0|0,0
 1,21,11|10,1

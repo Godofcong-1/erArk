@@ -124,6 +124,16 @@ class CharacterStatus:
     """ 水疗护理 """
     STATUS_ONSEN_BATH = 184
     """ 泡温泉 """
+    STATUS_AROMATHERAPY_1 = 191
+    """ 香薰疗愈_回复 """
+    STATUS_AROMATHERAPY_2 = 192
+    """ 香薰疗愈_习得 """
+    STATUS_AROMATHERAPY_3 = 193
+    """ 香薰疗愈_反感 """
+    STATUS_AROMATHERAPY_4 = 194
+    """ 香薰疗愈_快感 """
+    STATUS_AROMATHERAPY_5 = 195
+    """ 香薰疗愈_好感 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_ASSISTANT_ADJUSTMENTS = 204
@@ -582,6 +592,16 @@ class Behavior:
     """ 水疗护理 """
     ONSEN_BATH = 184
     """ 泡温泉 """
+    AROMATHERAPY_1 = 191
+    """ 香薰疗愈_回复 """
+    AROMATHERAPY_2 = 192
+    """ 香薰疗愈_习得 """
+    AROMATHERAPY_3 = 193
+    """ 香薰疗愈_反感 """
+    AROMATHERAPY_4 = 194
+    """ 香薰疗愈_快感 """
+    AROMATHERAPY_5 = 195
+    """ 香薰疗愈_好感 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
@@ -1355,6 +1375,8 @@ class Panel:
     """ 冰箱面板 """
     SYSTEM_SETTING = 29
     """ 系统设置面板 """
+    AROMATHERAPY = 30
+    """ 香薰疗愈面板 """
 
 
 class SecondBehavior:
@@ -1786,6 +1808,8 @@ class Instruct:
     """ 水疗护理 """
     ONSEN_BATH = 0
     """ 泡温泉 """
+    AROMATHERAPY = 0
+    """ 香薰疗愈 """
 
     #工作#
     OFFICIAL_WORK = 0

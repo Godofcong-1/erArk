@@ -537,6 +537,8 @@ class SPECIAL_FLAG:
         """ 晚安问候状态，int [0无,1要问候,2已问候] """
         self.vistor: int = 0
         """ 访客状态，int [0无,1访问中,2访问过] """
+        self.aromatherapy: int = 0
+        """ 香薰疗愈状态，int [0无,1回复,2习得,3反感，4快感,5好感] """
 
 
 class CHARA_WORK:
@@ -849,6 +851,8 @@ class Rhodes_Island:
         """ 药田生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
         self.green_house_line: Dict[int, Tuple[int, set, int]] = {}
         """ 温室生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        self.remaining_aromatherapy_sessions_today: int = 0
+        """ 今日剩余调香次数 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """

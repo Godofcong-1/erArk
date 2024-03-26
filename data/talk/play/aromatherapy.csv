@@ -1,0 +1,10 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,191,0,high_1,{Name}对{TargetName}触发了香薰疗愈_回复的地文
+1,192,0,high_1,{Name}对{TargetName}触发了香薰疗愈_习得的地文
+2,193,0,high_1,{Name}对{TargetName}触发了香薰疗愈_反感的地文
+3,194,0,high_1,{Name}对{TargetName}触发了香薰疗愈_快感的地文
+4,195,0,high_1,{Name}对{TargetName}触发了香薰疗愈_好感的地文

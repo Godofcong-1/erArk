@@ -2111,6 +2111,19 @@ def handle_onsen_bath():
     update.game_update_flow(60)
 
 
+@add_instruct(
+    constant.Instruct.AROMATHERAPY, constant.InstructType.PLAY, _("香薰疗愈"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_AROMATHERAPY_ROOM,
+        constant_promise.Premise.HAVE_TARGET,
+    }
+)
+def handle_aromatherapy():
+    """处理香薰疗愈指令"""
+    cache.now_panel_id = constant.Panel.AROMATHERAPY
+
+
 # 以下为工作#
 
 @add_instruct(

@@ -32,6 +32,7 @@ class Resource_Exchange_Line_Panel:
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
         self.show_resource_type_dict: Dict = {"材料": False, "药剂": False, "乳制品": False, "香水": False}
+        """ 显示的资源类型 """
 
     def draw(self):
         """绘制对象"""

@@ -31,6 +31,21 @@ class AbilityUp:
     """ 升级需求 """
 
 
+class Aromatherapy_Recipes:
+    """ 香薰疗愈配方 """
+
+    cid: int
+    """ 编号id """
+    name: str
+    """ 配方名 """
+    formula: str
+    """ 配方(序号为资源序号) """
+    difficulty: int
+    """ 难易度 """
+    info: str
+    """ 配方介绍 """
+
+
 class AssistantServices:
     """ 助理服务 """
 
@@ -855,6 +870,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:
