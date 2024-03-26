@@ -783,6 +783,9 @@ def update_new_day():
                 character_data.sp_flag.morning_salutation = 0
             if character_data.sp_flag.night_salutation == 2:
                 character_data.sp_flag.night_salutation = 0
+            # 清零香薰疗愈的flag
+            if character_data.sp_flag.aromatherapy != 0:
+                character_data.sp_flag.aromatherapy = 0
 
     # 非角色部分
     basement.update_base_resouce_newday()

@@ -4610,6 +4610,36 @@ def handle_salutation_3_add_adjust(
     ejaculation_panel.ejaculation_flow(2, 0, character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.AROMATHERAPY_ADD_ADJUST)
+def handle_aromatherapy_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （香薰疗愈用）对各配方结算各效果
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+
+    # 如果没有选择配方则直接返回
+    if target_character_data.sp_flag.aromatherapy == 0:
+        return
+
+    # 回复
+    if target_character_data.sp_flag.aromatherapy == 1:
+        target_character_data.hit_point = target_character_data.hit_point_max
+        target_character_data.mana_point = target_character_data.mana_point_max
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,

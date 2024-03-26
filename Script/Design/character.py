@@ -198,6 +198,9 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
         fix += 0.5
     elif character_data.talent[304]:
         fix += 0.25
+    # 好感香薰修正
+    if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
+        fix += 0.5
     favorability *= fix
     return favorability
 
@@ -255,6 +258,9 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
         fix += 0.5
     elif character_data.talent[304]:
         fix += 0.25
+    # 好感香薰修正
+    if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
+        fix += 0.5
     trust_add = add_time / 60 * fix
     return trust_add
 
