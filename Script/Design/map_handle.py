@@ -468,11 +468,11 @@ def init_scene_edge_path_data():
                 map_path = get_common_map_for_scene_path(now_position, target_scene)
                 now_map_scene_id = get_map_scene_id_for_scene_path(map_path, now_position)
                 target_map_scene_id = get_map_scene_id_for_scene_path(map_path, target_scene)
-                _, _, now_move_target, now_move_time = identical_map_move(
+                tem_1, tem_2, now_move_target, now_move_time = identical_map_move(
                     now_position, map_path, now_map_scene_id, target_map_scene_id
                 )
             else:
-                _, _, now_move_target, now_move_time = difference_map_move(now_position, target_scene)
+                tem_1, tem_2, now_move_target, now_move_time = difference_map_move(now_position, target_scene)
             scene_path_edge[now_position_str][target_scene_str] = [now_move_target, now_move_time]
     with open(scene_path_edge_path, "w") as path_edge_file:
         json.dump(scene_path_edge, path_edge_file)

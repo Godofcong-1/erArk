@@ -24,7 +24,7 @@ def general_movement_module(character_id: int, target_scene: list):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
-    _, _, move_path, move_time = character_move.character_move(character_id, target_scene)
+    tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, target_scene)
     character_data.behavior.move_final_target = target_scene
     character_data.behavior.behavior_id = constant.Behavior.MOVE
     character_data.behavior.move_target = move_path
@@ -1027,7 +1027,7 @@ def character_move_to_player(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     to_dr = cache.character_data[0].position
-    move_type, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+    move_type, tem_1, move_path, move_time = character_move.character_move(character_id, to_dr)
     move_flag = True # flase的话就是等待
     # if move_path == []:
     #     print(f"debug {character_data.name} 无法移动至玩家位置，move_type = {move_type},当前位置 = {character_data.position},move_path = {move_path}")
@@ -1065,7 +1065,7 @@ def character_continue_move(character_id: int):
 
             # 基础数据计算
             to_dr = cache.character_data[0].position
-            _, _, move_path, move_time = character_move.character_move(character_id, character_data.behavior.move_final_target)
+            tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, character_data.behavior.move_final_target)
             move_flag = True # true的话就是移动
             wait_flag = False # true的话就是等待
 

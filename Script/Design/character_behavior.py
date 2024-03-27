@@ -655,7 +655,7 @@ def judge_character_follow(character_id: int) -> int:
         if character_data.position != cache.character_data[0].position:
             # print("检测到跟随，NPC编号为：",character_id)
             to_dr = cache.character_data[0].position
-            _, _, move_path, move_time = character_move.character_move(character_id, to_dr)
+            tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, to_dr)
             # print("开始移动，路径为：",move_path,"，时间为：",move_time)
             character_data.behavior.behavior_id = constant.Behavior.MOVE
             character_data.behavior.move_target = move_path
@@ -1128,7 +1128,7 @@ def judge_same_position_npc_follow():
             ):
 
             # 变成移动状态，目标为玩家位置
-            _, _, move_path, move_time = character_move.character_move(character_id, pl_character_data.behavior.move_final_target)
+            tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, pl_character_data.behavior.move_final_target)
             move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
             if move_flag:
                 character_data.behavior.behavior_id = constant.Behavior.MOVE

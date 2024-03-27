@@ -897,7 +897,7 @@ class CharacterSexExperienceText:
             7: _("Ｗ感觉:"),
         }
         """ 性器官开发度描述 """
-        self.draw_list: List[draw.NormalDraw()] = []
+        self.draw_list: List[draw.NormalDraw] = []
         """ 绘制对象列表 """
         sex_tem = character_data.sex in (0, 3)
         organ_list = game_config.config_organ_data[sex_tem] | game_config.config_organ_data[2]
@@ -954,9 +954,9 @@ class CharacterabiText:
         # """ 每行状态最大个数 """
         character_data = cache.character_data[self.character_id]
         """ 角色数据 """
-        self.draw_list: List[draw.NormalDraw()] = []
+        self.draw_list: List[draw.NormalDraw] = []
         """ 绘制对象列表 """
-        self.title_list: List[draw.NormalDraw()] = []
+        self.title_list: List[draw.NormalDraw] = []
         """ 绘制标题列表 """
         ability_list = game_config.config_ability_type_data
         title_text = "能力"
@@ -1043,18 +1043,18 @@ class CharacterImage:
         # """ 当前绘制类型 """
         character_data = cache.character_data[self.character_id]
         """ 角色属性 """
-        self.draw_list: List[draw.NormalDraw()] = []
+        self.draw_list: List[draw.NormalDraw] = []
         """ 绘制对象列表 """
-        self.title_list: List[draw.NormalDraw()] = []
+        self.title_list: List[draw.NormalDraw] = []
         """ 绘制标题列表 """
-        title_text = "立绘"
+        title_text = _("立绘")
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.title_list.append(type_line)
 
         # 正常的立绘图片名为角色名，但女儿的情况下单独使用女儿图片
         self.image_name = character_data.name
         if character_data.relationship.father_id == 0:
-            self.image_name = "女儿_1"
+            self.image_name = _("女儿_1")
 
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
@@ -1175,7 +1175,7 @@ class CharacterTalentText:
         race_text = game_config.config_race[character_data.race].name
         birthplace_text = game_config.config_birthplace[character_data.relationship.birthplace].name
         nation_text = game_config.config_nation[character_data.relationship.nation].name
-        type_data = "素质"
+        type_data = _("素质")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         talent_list = game_config.config_talent_type_data
@@ -1267,16 +1267,16 @@ class CharacterDailyText:
             entertainment_text_list.append(entertainment_name)
 
 
-        type_data = "日程"
+        type_data = _("日程")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
 
         now_draw = panel.LeftDrawTextListPanel()
-        text_list = f"当前工作：{work_text}     "
+        text_list = _(f"当前工作：{work_text}     ")
         if game_time.judge_work_today(character_id) and character_data.work.work_type:
-            text_list += f" 今日上午：工作    今日下午：工作    今日晚上：{entertainment_text_list[2]}"
+            text_list += _(f" 今日上午：工作    今日下午：工作    今日晚上：{entertainment_text_list[2]}")
         else:
-            text_list += f" 今日上午：{entertainment_text_list[0]}    今日下午：{entertainment_text_list[1]}    今日晚上：{entertainment_text_list[2]}"
+            text_list += _(f" 今日上午：{entertainment_text_list[0]}    今日下午：{entertainment_text_list[1]}    今日晚上：{entertainment_text_list[2]}")
 
         text_draw = draw.LeftDraw()
         text_draw.text = text_list
@@ -1330,7 +1330,7 @@ class CharacterVisitorText:
         now_draw = panel.LeftDrawTextListPanel()
         text_list = ""
         # 计算访客留下概率
-        _, _, stay_posibility = character.calculation_instuct_judege(0, character_id, "访客留下")
+        tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, character_id, "访客留下")
         # 遍历所有留下态度
         for attitude_id in game_config.config_visitor_stay_attitude:
             attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
@@ -1341,9 +1341,9 @@ class CharacterVisitorText:
             break
         leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[character_id])
         live_room = character_data.dormitory.split("\\")[-1]
-        text_list += f"留下意愿：{stay_text}     "
-        text_list += f"离开时间：{leav_time}     "
-        text_list += f"居住房间：{live_room}"
+        text_list += _(f"留下意愿：{stay_text}     ")
+        text_list += _(f"离开时间：{leav_time}     ")
+        text_list += _(f"居住房间：{live_room}")
 
         text_draw = draw.LeftDraw()
         text_draw.text = text_list
