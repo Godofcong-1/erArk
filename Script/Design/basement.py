@@ -217,7 +217,7 @@ def get_base_updata():
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 3
             elif level == 4:
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 2
-            elif level == 3:
+            elif level <= 3:
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 1
 
 
@@ -838,7 +838,7 @@ def settle_aromatherapy_sessions():
         cache.rhodes_island.remaining_aromatherapy_sessions_today = 3
     elif level == 4:
         cache.rhodes_island.remaining_aromatherapy_sessions_today = 2
-    elif level == 3:
+    elif level <= 3:
         cache.rhodes_island.remaining_aromatherapy_sessions_today = 1
 
 
