@@ -1317,7 +1317,8 @@ def handle_confession():
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _(f"\告白成功，[恋慕]转为[恋人]，{target_data.name}收下了你赠予的[戒指]\n")
+        now_draw.text = _(f"\n告白成功，{target_data.name}收下了你赠予的[戒指]，[恋慕]转为[恋人]\n")
+        now_draw.text += _(f"\n获得了{target_data.name}的信物：{target_data.token_text}\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
@@ -1356,7 +1357,8 @@ def handle_give_necklace():
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _("\对方接受了项圈，[驯服]转为[宠物]\n")
+        now_draw.text = _(f"\n{target_data.name}接受了项圈，戴在了自己的脖子上，[驯服]转为[宠物]\n")
+        now_draw.text += _(f"\n获得了{target_data.name}的信物：{target_data.token_text}\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED
