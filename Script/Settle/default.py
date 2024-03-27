@@ -30,25 +30,84 @@ width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 
-def all_feel_common_settle(
-        character_id: int,
-        add_time: int,
-        part: int,
-        base_value: int = 50,
-        tech_level: int = 0,
-        extra_adjust: float = 0,
-        target_change_to_target_change: game_type.CharacterStatusChange = None,
-        ):
+def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
     """
-    部位快感通用结算函数
+    角色状态系数获得的共用函数
     Keyword arguments:
     character_id -- 角色id
-    add_time -- 结算时间
-    part -- 部位id
-    base_value -- 基础固定值
-    tech_level -- 技巧等级
-    extra_adjust -- 额外系数
-    target_change_to_target_change -- 结算信息记录对象
+    state_id -- 状态id
+    ability_level -- 系数修正用能力等级
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 系数加成
+    final_adjust = 0
+    # 能力修正
+    if ability_level in [13,14,15,16,17,18,19]:
+        feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
+    else:
+        feel_adjust = attr_calculation.get_ability_adjust(ability_level)
+    final_adjust += feel_adjust
+    # 调香
+    if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
+        final_adjust += 1
+    elif character_data.sp_flag.aromatherapy == 3 and state_id in [17, 18, 19, 20]:
+        final_adjust -= 0.5
+    elif character_data.sp_flag.aromatherapy == 4 and state_id ==12:
+        final_adjust += 1
+    final_adjust = max(0, final_adjust)
+
+    return final_adjust
+
+
+def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+    """
+    角色快感系数获得的共用函数
+    Keyword arguments:
+    character_id -- 角色id
+    state_id -- 状态id
+    ability_level -- 系数修正用能力等级
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 系数加成
+    final_adjust = 0
+    # 部位感觉
+    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
+    final_adjust += feel_adjust
+    # 技巧
+    if ability_level:
+        tech_adjust = attr_calculation.get_ability_adjust(ability_level)
+        final_adjust = math.sqrt(feel_adjust * tech_adjust)
+    # 调香
+    if character_data.sp_flag.aromatherapy == 4:
+        final_adjust += 1
+
+    return final_adjust
+
+
+def base_chara_state_common_settle(
+        character_id: int,
+        add_time: int,
+        state_id: int,
+        base_value: int = 30,
+        ability_level: int = 0,
+        extra_adjust: float = 0,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色状态通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    state_id -- 状态id\n
+    base_value -- 基础固定值\n
+    ability_level -- 系数修正用能力等级\n
+    extra_adjust -- 额外系数\n
+    change_data_to_target_change -- 结算信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
@@ -57,33 +116,28 @@ def all_feel_common_settle(
     # 基础固定值
     time_base_value = add_time + base_value
 
-    # 系数加成
-    final_adjust = 0
-    # 部位感觉
-    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[part])
-    final_adjust += feel_adjust
-    # 技巧
-    if tech_level:
-        tech_adjust = attr_calculation.get_ability_adjust(tech_level)
-        final_adjust = math.sqrt(feel_adjust * tech_adjust)
-    # 调香
-    if character_data.sp_flag.aromatherapy == 4:
-        final_adjust += 1
-    # 额外系数
-    final_adjust += extra_adjust
+    # 系数加成，区分快感状态和普通状态
+    if state_id <= 7:
+        final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
+    else:
+        final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
 
     # 最终值
-    final_value = time_base_value * final_adjust + character_data.status_data[part] / 10
+    final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
 
     # 结算最终值
-    character_data.status_data[part] += final_value
-    character_data.status_data[part] = min(99999, character_data.status_data[part])
+    character_data.status_data[state_id] += final_value
+    character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
+
     # 结算信息记录对象
-    if target_change_to_target_change:
-        target_change_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
-        target_change: game_type.TargetChange = target_change_to_target_change.target_change[character_id]
-        target_change.status_data.setdefault(part, 0)
-        target_change.status_data[part] += final_value
+    if change_data != None:
+        change_data.status_data.setdefault(state_id, 0)
+        change_data.status_data[state_id] += final_value
+    if change_data_to_target_change != None:
+        change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+        target_change.status_data.setdefault(state_id, 0)
+        target_change.status_data[state_id] += final_value
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
@@ -1676,7 +1730,7 @@ def handle_target_add_small_n_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 0)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_B_FEEL)
@@ -1697,7 +1751,7 @@ def handle_target_add_small_b_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 1)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
@@ -1718,7 +1772,7 @@ def handle_target_add_small_c_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 2)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
@@ -1774,7 +1828,7 @@ def handle_target_add_small_v_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 4)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
@@ -1795,7 +1849,7 @@ def handle_target_add_small_a_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 5)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_U_FEEL)
@@ -1816,7 +1870,7 @@ def handle_target_add_small_u_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 6)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_W_FEEL)
@@ -1837,7 +1891,7 @@ def handle_target_add_small_w_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    all_feel_common_settle(character_data.target_character_id, add_time, 7)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LUBRICATION)
@@ -1859,21 +1913,7 @@ def handle_target_add_small_lubrication(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(8, 0)
-    now_lust = target_data.status_data[8]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[8] += now_add_lust
-    target_data.status_data[8] = min(99999, target_data.status_data[8])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(8, 0)
-    target_change.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 8, ability_level = target_data.ability[33], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BODY_LUBRICANT)
@@ -2706,21 +2746,7 @@ def handle_target_add_small_learn(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(9, 0)
-    now_lust = target_data.status_data[9]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[30])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[9] += now_add_lust
-    target_data.status_data[9] = min(99999, target_data.status_data[9])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(9, 0)
-    target_change.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 9, ability_level = target_data.ability[30], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
@@ -2744,19 +2770,7 @@ def handle_target_add_small_repect(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(10, 0)
-    now_lust = target_data.status_data[10]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[31])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[10] += now_add_lust
-    target_data.status_data[10] = min(99999, target_data.status_data[10])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(10, 0)
-    target_change.status_data[10] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 10, ability_level = target_data.ability[31], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
@@ -2780,19 +2794,7 @@ def handle_target_add_small_friendly(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(11, 0)
-    now_lust = target_data.status_data[11]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[11] += now_add_lust
-    target_data.status_data[11] = min(99999, target_data.status_data[11])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(11, 0)
-    target_change.status_data[11] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
@@ -2816,19 +2818,7 @@ def handle_target_add_small_desire(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(12, 0)
-    now_lust = target_data.status_data[12]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[33])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[12] += now_add_lust
-    target_data.status_data[12] = min(99999, target_data.status_data[12])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(12, 0)
-    target_change.status_data[12] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 12, ability_level = target_data.ability[33], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
@@ -2852,19 +2842,7 @@ def handle_target_add_small_happy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(13, 0)
-    now_lust = target_data.status_data[13]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[13])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[13] += now_add_lust
-    target_data.status_data[13] = min(99999, target_data.status_data[13])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(13, 0)
-    target_change.status_data[13] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 13, ability_level = target_data.ability[13], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
@@ -2888,19 +2866,7 @@ def handle_target_add_small_lead(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(14, 0)
-    now_lust = target_data.status_data[14]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[35])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[14] += now_add_lust
-    target_data.status_data[14] = min(99999, target_data.status_data[14])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(14, 0)
-    target_change.status_data[14] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 14, ability_level = target_data.ability[35], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
@@ -2924,19 +2890,7 @@ def handle_target_add_small_submit(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(15, 0)
-    now_lust = target_data.status_data[15]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[14])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[15] += now_add_lust
-    target_data.status_data[15] = min(99999, target_data.status_data[15])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(15, 0)
-    target_change.status_data[15] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 15, ability_level = target_data.ability[14], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SHY)
@@ -2960,19 +2914,7 @@ def handle_target_add_small_shy(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(16, 0)
-    now_lust = target_data.status_data[16]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[16] += now_add_lust
-    target_data.status_data[16] = min(99999, target_data.status_data[16])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(16, 0)
-    target_change.status_data[16] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 16, ability_level = target_data.ability[34], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
@@ -2996,19 +2938,7 @@ def handle_target_add_small_pain(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(17, 0)
-    now_lust = target_data.status_data[17]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[17] += now_add_lust
-    target_data.status_data[17] = min(99999, target_data.status_data[17])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(17, 0)
-    target_change.status_data[17] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
@@ -3032,19 +2962,7 @@ def handle_target_add_small_terror(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(18, 0)
-    now_lust = target_data.status_data[18]
-    now_lust_multiple = 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[18] += now_add_lust
-    target_data.status_data[18] = min(99999, target_data.status_data[18])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(18, 0)
-    target_change.status_data[18] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 18, 10, ability_level = target_data.ability[17], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
@@ -3068,16 +2986,7 @@ def handle_target_add_small_depression(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(19, 0)
-    now_lust = target_data.status_data[19]
-    now_lust_multiple = 30
-    now_add_lust = add_time + now_lust_multiple
-    target_data.status_data[19] += now_add_lust
-    target_data.status_data[19] = min(99999, target_data.status_data[19])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(19, 0)
-    target_change.status_data[19] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 19, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
@@ -3101,19 +3010,7 @@ def handle_target_add_small_disgust(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(20, 0)
-    now_lust = target_data.status_data[20]
-    now_lust_multiple = 5
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[18])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-    target_data.status_data[20] += now_add_lust
-    target_data.status_data[20] = min(99999, target_data.status_data[20])
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(20, 0)
-    target_change.status_data[20] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 20, 5, ability_level = target_data.ability[18], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_P_FEEL)
@@ -3163,18 +3060,10 @@ def handle_both_add_small_learn(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    now_lust_multiple = 10
-    now_add_lust = add_time + now_lust_multiple
-    character_data.status_data[9] += now_add_lust
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_id, add_time, 9, 10, change_data = change_data)
     # 交互对象也同样#
-    if character_data.target_character_id:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(9, 0)
-        target_change.status_data[9] += now_add_lust
+    if character_data.target_character_id != character_id:
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 9, 10, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_LEARN)
@@ -3197,11 +3086,7 @@ def handle_add_small_learn(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    now_lust_multiple = 20
-    now_add_lust = add_time + now_lust_multiple
-    character_data.status_data[9] += now_add_lust
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_id, add_time, 9, 20, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET)
@@ -4150,31 +4035,9 @@ def handle_talk_add_adjust(
             character_id, target_data.cid, add_favorability, change_data, target_change, now_time
         )
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 30
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 10
-        target_data.status_data[11] += now_add_lust
-        target_data.status_data[11] = min(99999, target_data.status_data[11])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[40], change_data_to_target_change = change_data)
         # 快乐变化#
-        target_data.status_data.setdefault(13, 0)
-        now_lust = target_data.status_data[13]
-        now_lust_multiple = 30
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 10
-        target_data.status_data[13] += now_add_lust
-        target_data.status_data[13] = min(99999, target_data.status_data[13])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(13, 0)
-        target_change.status_data[13] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 13, ability_level = character_data.ability[40], change_data_to_target_change = change_data)
         # 记录谈话时间#
         target_data.action_info.talk_time = now_time
         # print("聊天计数器时间变为 ：",target_data.action_info.talk_time)
@@ -4228,18 +4091,7 @@ def handle_coffee_add_adjust(
             character_data.trust += now_lust_multiple
             change_data.trust += now_lust_multiple
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 30
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 10
-        target_data.status_data[11] += now_add_lust
-        target_data.status_data[11] = min(99999, target_data.status_data[11])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[43], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_COFFEE_ADD_ADJUST)
@@ -4290,18 +4142,7 @@ def handle_target_coffee_add_adjust(
             character_data.trust += now_lust_multiple
             change_data.trust += now_lust_multiple
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 30
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 10
-        target_data.status_data[11] += now_add_lust
-        target_data.status_data[11] = min(99999, target_data.status_data[11])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[43], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_WORK_ADD_ADJUST)
@@ -4688,14 +4529,8 @@ def handle_teach_add_just(
     now_add_lust = adjust * add_time * random.uniform(0.5, 1.5)
 
     # 增加自己的习得和学识经验
-    character_data.status_data[9] += now_add_lust
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
-
-    character_data.experience.setdefault(82, 0)
-    character_data.experience[82] += 1
-    change_data.experience.setdefault(82, 0)
-    change_data.experience[82] += 1
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], change_data = change_data)
+    default_experience.handle_add_1_learn_experience(character_id, add_time, change_data, now_time)
 
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -4713,18 +4548,13 @@ def handle_teach_add_just(
                 if other_character_data.state == constant.CharacterStatus.STATUS_ATTENT_CLASS:
 
                     # 增加习得和学识经验
-                    other_character_data.status_data[9] += now_add_lust
-                    other_character_data.experience.setdefault(82, 0)
-                    other_character_data.experience[82] += 1
-                    change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
-                    target_change: game_type.TargetChange = change_data.target_change[other_character_data.cid]
-                    target_change.status_data.setdefault(9, 0)
-                    target_change.status_data[9] += now_add_lust
-                    target_change.experience.setdefault(82, 0)
-                    target_change.experience[82] += 1
+                    base_chara_state_common_settle(chara_id, add_time, 9, ability_level = character_data.ability[45], change_data_to_target_change = change_data)
+                    default_experience.handle_add_1_learn_experience(chara_id, add_time, change_data, now_time)
 
                     # 如果老师是玩家
                     if character_id == 0:
+                        change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
+                        target_change: game_type.TargetChange = change_data.target_change[other_character_data.cid]
 
                         # 加好感
                         add_favorability = character.calculation_favorability(character_id, other_character_data.cid, add_time)
@@ -5225,25 +5055,10 @@ def handle_tech_add_n_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[0])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 0, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[0], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_B_ADJUST)
@@ -5272,25 +5087,10 @@ def handle_tech_add_b_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[1])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 1, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[1], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_C_ADJUST)
@@ -5319,25 +5119,10 @@ def handle_tech_add_c_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[2])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 2, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[2], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_P_ADJUST)
@@ -5425,25 +5210,10 @@ def handle_tech_add_v_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[4])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 4, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[4], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_A_ADJUST)
@@ -5472,25 +5242,10 @@ def handle_tech_add_a_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[5])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 5, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[5], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_U_ADJUST)
@@ -5519,25 +5274,10 @@ def handle_tech_add_u_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[6])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 6, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[6], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_W_ADJUST)
@@ -5566,25 +5306,10 @@ def handle_tech_add_w_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[7])
-        adjust = math.sqrt(abi_adjust * feel_adjust)
-        all_feel_common_settle(character_data.target_character_id, add_time, 7, tech_level=character_data.ability[30])
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 50
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 6
-        target_data.status_data[12] += now_add_lust
-        target_data.status_data[12] = min(99999, target_data.status_data[12])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[7], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
