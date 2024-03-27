@@ -1,9 +1,9 @@
 import random
 import datetime
-from typing import List
+from types import FunctionType
 from Script.Core import (
     cache_control,
-    value_handle,
+    get_text,
     constant,
     game_type,
     text_handle,
@@ -21,6 +21,9 @@ from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def init_attr(character_id: int):
@@ -75,11 +78,11 @@ def init_attr(character_id: int):
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()
         character_data.favorability = {0:0}
-        character_data.dormitory = "中枢\博士房间"
-        character_data.pre_dormitory = "中枢\博士房间"
+        character_data.dormitory = _("中枢\博士房间")
+        character_data.pre_dormitory = _("中枢\博士房间")
         # 初始收藏地点
-        cache.collect_position_list.append(['中枢', '博士房间'])
-        cache.collect_position_list.append(['中枢', '博士办公室'])
+        cache.collect_position_list.append([_('中枢'), _('博士房间')])
+        cache.collect_position_list.append([_('中枢'), _('博士办公室')])
 
     # 一系列初始化函数
     init_character_behavior_start_time(character_id,cache.game_time)
@@ -294,48 +297,48 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     calculation_text = ""
     if judge_data_type == "D":
-        calculation_text += "需要基础实行值至少为" + str(judge_data_value) + "\n"
+        calculation_text += _("需要基础实行值至少为") + str(judge_data_value) + "\n"
     elif judge_data_type == "S":
-        calculation_text += "需要性爱实行值至少为" + str(judge_data_value) + "\n"
-    calculation_text += "当前值为："
+        calculation_text += _("需要性爱实行值至少为") + str(judge_data_value) + "\n"
+    calculation_text += _("当前值为：")
 
     judge = 0
 
     # 好感判定#
     favorability_level,judge_favorability = attr_calculation.get_favorability_level(target_data.favorability[0])
-    calculation_text += "好感修正(" + str(judge_favorability) + ")"
+    calculation_text += _("好感修正(") + str(judge_favorability) + ")"
     judge += judge_favorability
 
     # 信赖判定#
     trust_level,judge_trust = attr_calculation.get_trust_level(target_data.trust)
     judge += judge_trust
-    calculation_text += "+信赖修正(" + str(judge_trust) + ")"
+    calculation_text += _("+信赖修正(") + str(judge_trust) + ")"
 
     # 状态修正，好意(11)和欲情(12)修正#
     status_level_sum =  attr_calculation.get_status_level(target_data.status_data[11]) + attr_calculation.get_status_level(target_data.status_data[12])
     judge_status = status_level_sum * 10
     judge += judge_status
     if judge_status:
-        calculation_text += "+状态修正(" + str(judge_status) + ")"
+        calculation_text += _("+状态修正(") + str(judge_status) + ")"
 
     # 能力修正，亲密(32)和欲望(33)修正#
     judge_ability = target_data.ability[32] * 10 + target_data.ability[33] * 5
     judge += judge_ability
     if judge_ability:
-        calculation_text += "+能力修正(" + str(judge_ability) + ")"
+        calculation_text += _("+能力修正(") + str(judge_ability) + ")"
 
     # 刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
     judge_mark = target_data.ability[13] * 20 + target_data.ability[14] * 20
     judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18] * 30
     judge += judge_mark
     if judge_mark:
-        calculation_text += "+刻印修正(" + str(judge_mark) + ")"
+        calculation_text += _("+刻印修正(") + str(judge_mark) + ")"
 
     # 心情修正，好心情+10，坏心情-10，愤怒-30
     judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
     judge += judge_angry
     if judge_angry:
-        calculation_text += "+心情修正(" + str(judge_angry) + ")"
+        calculation_text += _("+心情修正(") + str(judge_angry) + ")"
 
     # 陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
     judge_fall = target_data.talent[201] * 30 + target_data.talent[202] * 50 + target_data.talent[203] * 80 + \
@@ -343,24 +346,24 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                  target_data.talent[213] * 80 + target_data.talent[214] * 100
     judge += judge_fall
     if judge_fall:
-        calculation_text += "+陷落修正(" + str(judge_fall) + ")"
+        calculation_text += _("+陷落修正(") + str(judge_fall) + ")"
     # 讨厌男性修正#
     judge_hate = target_data.talent[227] * 30
     judge -= judge_hate
     if judge_hate:
-        calculation_text += "+讨厌男性(-" + str(judge_hate) + ")"
+        calculation_text += _("+讨厌男性(-") + str(judge_hate) + ")"
     # 难以越过的底线修正#
     judge_hardlove = target_data.talent[224] * 30
     judge -= judge_hardlove
     if judge_hardlove:
-        calculation_text += "+难以越过的底线(-" + str(judge_hardlove) + ")"
+        calculation_text += _("+难以越过的底线(-") + str(judge_hardlove) + ")"
 
     # 淫乱相关属性修正#
     # 仅能用在性爱指令上
     if judge_data_type == "S":
         if character_data.talent[40]:
             judge += 30
-            calculation_text += "+淫乱(+30)"
+            calculation_text += _("+淫乱(+30)")
 
     # 激素系能力修正#
     if character_data.pl_ability.hormone:
@@ -386,37 +389,37 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
             judge_other_people = int(judge_other_people * (adjust - 1.5))
             judge += judge_other_people
-            calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
+            calculation_text += _("+当前场景有其他人在(") + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
         # 助理助攻修正
         if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
             assistant_character_data = cache.character_data[character_data.assistant_character_id]
             if assistant_character_data.assistant_services[8]:
                 judge += 50
-                calculation_text += "+助理助攻(+50)"
+                calculation_text += _("+助理助攻(+50)")
 
         # 今天H被打断了修正
         if judge_data_type == "S":
             judge_h_interrupt = character_data.action_info.h_interrupt * 10
             judge -= judge_h_interrupt
             if judge_h_interrupt:
-                calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
+                calculation_text += _("+今天H被打断过(-") + str(judge_h_interrupt) + ")"
 
         # 监禁模式修正
         if target_data.sp_flag.imprisonment:
             judge += 400
-            calculation_text += "+监禁中(+400)"
+            calculation_text += _("+监禁中(+400)")
 
         # 无意识模式修正
         if target_data.sp_flag.unconscious_h == 1:
             judge += 1000
-            calculation_text += "+睡眠(+1000)"
+            calculation_text += _("+睡眠(+1000)")
 
     # 催眠系能力的最后补正，仅在平然/空气催眠、性爱判定、且实行值不足时生效
     if target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
         # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
         if (
-            (("骚扰" in instruct_name or "亲吻" in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
+            ((_("骚扰") in instruct_name or _("亲吻") in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
             (character_data.talent[332] and target_data.hypnosis.hypnosis_degree >= 100)
         ):
             # 实行值不够的差值为
@@ -432,17 +435,17 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             # 最后的总结算
             if sanity_point_cost <= character_data.sanity_point:
                 judge += judge_hypnosis
-                calculation_text += f"+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)"
+                calculation_text += _(f"+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)")
                 character_data.sanity_point -= sanity_point_cost
                 character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
             else:
-                calculation_text += f"+催眠(+0,理智不足,催眠解除)"
+                calculation_text += _(f"+催眠(+0,理智不足,催眠解除)")
                 target_data.sp_flag.unconscious_h = 0
 
     # debug模式修正
     if cache.debug_mode == True:
         judge += 99999
-        calculation_text += "+debug模式(+99999)"
+        calculation_text += _("+debug模式(+99999)")
 
     # 正常直接判定，并输出文本
     if judge_data_type != "V":

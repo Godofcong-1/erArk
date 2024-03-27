@@ -644,7 +644,7 @@ def settle_visitor_arrivals_and_departures():
         # 判断是否已经超过停留时间
         if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.visitor_info[visitor_id]):
             # 计算访客留下概率
-            tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, "访客留下")
+            tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
             # 遍历所有留下态度
             for attitude_id in game_config.config_visitor_stay_attitude:
                 attitude_data = game_config.config_visitor_stay_attitude[attitude_id]

@@ -1,15 +1,14 @@
-import math
 import datetime
-from typing import List
-from uuid import UUID
 from functools import wraps
 from types import FunctionType
-from Script.Core import cache_control, constant, constant_promise, game_type
+from Script.Core import cache_control, constant, constant_promise, game_type, get_text
 from Script.Design import map_handle, game_time, attr_calculation, character
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def add_premise(premise: str) -> FunctionType:
@@ -3581,7 +3580,7 @@ def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "初级骚扰")[0]:
+        if character.calculation_instuct_judege(0, character_data.target_character_id, _("初级骚扰"))[0]:
             return 1
     return 0
 
@@ -3597,7 +3596,7 @@ def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "严重骚扰")[0]:
+        if character.calculation_instuct_judege(0, character_data.target_character_id, _("严重骚扰"))[0]:
             return 1
     return 0
 
@@ -3613,7 +3612,7 @@ def handle_instruct_judge_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, "H模式")[0]:
+        if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
             return 1
     return 0
 

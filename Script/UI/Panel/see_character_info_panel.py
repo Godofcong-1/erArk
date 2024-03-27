@@ -1330,7 +1330,7 @@ class CharacterVisitorText:
         now_draw = panel.LeftDrawTextListPanel()
         text_list = ""
         # 计算访客留下概率
-        tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, character_id, "访客留下")
+        tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, character_id, _("访客留下"))
         # 遍历所有留下态度
         for attitude_id in game_config.config_visitor_stay_attitude:
             attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
