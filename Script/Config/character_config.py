@@ -79,9 +79,20 @@ def find_files_and_get_size(directory, character):
     path = os.path.join(directory, '*')
     # 查找文件名包含特定字符的文件
     files = glob.glob(path)
-    target_files = [file for file in files if character in os.path.basename(file)]
+    # print(f"debug files = {files}")
+    # 全角色名为，文件名的.之前的部分
+    all_chara_name = [os.path.basename(file).split(".")[0].split("_")[1] for file in files]
+    # print(f"debug all_chara_name = {all_chara_name}")
+    # 如果角色名等于特定角色名，将文件名加入目标文件列表
+    target_files = []
+    for i in range(len(all_chara_name)):
+        if character == all_chara_name[i]:
+            target_files = [files[i]]
+    # print(f"debug target_files = {target_files}")
     # 获取文件大小
-    file_sizes = {file: os.path.getsize(file) for file in target_files}
+    file_sizes = {}
+    if len(target_files):
+        file_sizes = {file: os.path.getsize(file) for file in target_files}
     return file_sizes
 
 def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_count: int):
