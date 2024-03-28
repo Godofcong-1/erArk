@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-27 16:50+0800\n"
+"POT-Creation-Date: 2024-03-28 18:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -239,6 +239,11 @@ msgid ""
 "\n"
 msgstr ""
 
+#: .\Script\Design\basement.py:647
+#: .\Script\UI\Panel\see_character_info_panel.py:1333
+msgid "访客留下"
+msgstr ""
+
 #: .\Script\Design\basement.py:656
 #, python-brace-format
 msgid ""
@@ -309,6 +314,367 @@ msgid ""
 "\n"
 "今日全角色总好感度上升为： {int(cache.rhodes_island."
 "total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n"
+msgstr ""
+
+#: .\Script\Design\character.py:88 .\Script\Design\character.py:89
+msgid "中枢\\博士房间"
+msgstr ""
+
+#: .\Script\Design\character.py:91 .\Script\Design\character.py:92
+msgid "中枢"
+msgstr ""
+
+#: .\Script\Design\character.py:91
+msgid "博士房间"
+msgstr ""
+
+#: .\Script\Design\character.py:92
+msgid "博士办公室"
+msgstr ""
+
+#: .\Script\Design\character.py:307
+msgid "需要基础实行值至少为"
+msgstr ""
+
+#: .\Script\Design\character.py:309
+msgid "需要性爱实行值至少为"
+msgstr ""
+
+#: .\Script\Design\character.py:310
+msgid "当前值为："
+msgstr ""
+
+#: .\Script\Design\character.py:316
+msgid "好感修正("
+msgstr ""
+
+#: .\Script\Design\character.py:322
+msgid "+信赖修正("
+msgstr ""
+
+#: .\Script\Design\character.py:329
+msgid "+状态修正("
+msgstr ""
+
+#: .\Script\Design\character.py:335
+msgid "+能力修正("
+msgstr ""
+
+#: .\Script\Design\character.py:342
+msgid "+刻印修正("
+msgstr ""
+
+#: .\Script\Design\character.py:348
+msgid "+心情修正("
+msgstr ""
+
+#: .\Script\Design\character.py:356
+msgid "+陷落修正("
+msgstr ""
+
+#: .\Script\Design\character.py:361
+msgid "+讨厌男性(-"
+msgstr ""
+
+#: .\Script\Design\character.py:366
+msgid "+难以越过的底线(-"
+msgstr ""
+
+#: .\Script\Design\character.py:373
+msgid "+淫乱(+30)"
+msgstr ""
+
+#: .\Script\Design\character.py:399
+msgid "+当前场景有其他人在("
+msgstr ""
+
+#: .\Script\Design\character.py:406
+msgid "+助理助攻(+50)"
+msgstr ""
+
+#: .\Script\Design\character.py:413
+msgid "+今天H被打断过(-"
+msgstr ""
+
+#: .\Script\Design\character.py:418
+msgid "+监禁中(+400)"
+msgstr ""
+
+#: .\Script\Design\character.py:423
+msgid "+睡眠(+1000)"
+msgstr ""
+
+#: .\Script\Design\character.py:426 .\Script\Design\character.py:446
+#: .\Script\Design\character.py:512 .\Script\Design\character.py:563
+#: .\Script\Design\handle_instruct.py:4156
+#: .\Script\Design\handle_instruct.py:4212
+#: .\Script\Design\handle_instruct.py:4232
+#: .\Script\Design\handle_instruct.py:4252
+#: .\Script\Design\handle_instruct.py:4272
+#: .\Script\Design\handle_instruct.py:4292
+#: .\Script\Design\handle_instruct.py:4311
+#: .\Script\Design\handle_instruct.py:4330
+#: .\Script\Design\handle_instruct.py:4351
+#: .\Script\Design\handle_instruct.py:4372
+#: .\Script\Design\handle_instruct.py:4393
+msgid "性交"
+msgstr ""
+
+#: .\Script\Design\character.py:428
+msgid "+处女(-100)"
+msgstr ""
+
+#: .\Script\Design\character.py:431 .\Script\Design\character.py:514
+#: .\Script\Design\character.py:566 .\Script\Design\handle_instruct.py:4413
+#: .\Script\Design\handle_instruct.py:4433
+#: .\Script\Design\handle_instruct.py:4453
+#: .\Script\Design\handle_instruct.py:4473
+#: .\Script\Design\handle_instruct.py:4493
+#: .\Script\Design\handle_instruct.py:4512
+#: .\Script\Design\handle_instruct.py:4531
+#: .\Script\Design\handle_instruct.py:4552
+#: .\Script\Design\handle_instruct.py:4573
+msgid "A性交"
+msgstr ""
+
+#: .\Script\Design\character.py:433
+msgid "+Ａ处女(-200)"
+msgstr ""
+
+#: .\Script\Design\character.py:436 .\Script\Design\character.py:569
+msgid "U性交"
+msgstr ""
+
+#: .\Script\Design\character.py:438
+msgid "+Ｕ处女(-300)"
+msgstr ""
+
+#: .\Script\Design\character.py:441 .\Script\Design\character.py:476
+#: .\Script\Design\character.py:510 .\Script\Design\character.py:560
+#: .\Script\Design\handle_instruct.py:2403
+#: .\Script\Design\handle_instruct.py:2414
+msgid "亲吻"
+msgstr ""
+
+#: .\Script\Design\character.py:443
+msgid "+初吻(-50)"
+msgstr ""
+
+#: .\Script\Design\character.py:460
+msgid "+安全期(-10)"
+msgstr ""
+
+#: .\Script\Design\character.py:463
+msgid "+普通期(-50)"
+msgstr ""
+
+#: .\Script\Design\character.py:466
+msgid "+危险期(-100)"
+msgstr ""
+
+#: .\Script\Design\character.py:469
+msgid "+排卵期(-300)"
+msgstr ""
+
+#: .\Script\Design\character.py:476
+msgid "骚扰"
+msgstr ""
+
+#: .\Script\Design\character.py:492
+#, python-brace-format
+msgid "+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)"
+msgstr ""
+
+#: .\Script\Design\character.py:496
+msgid "+催眠(+0,理智不足,催眠解除)"
+msgstr ""
+
+#: .\Script\Design\character.py:502
+msgid "+debug模式(+99999)"
+msgstr ""
+
+#: .\Script\Design\character.py:511
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+" 是否要夺走{target_data.name}的初吻？("
+msgstr ""
+
+#: .\Script\Design\character.py:513
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+" 是否要夺走{target_data.name}的处女？("
+msgstr ""
+
+#: .\Script\Design\character.py:515
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+" 是否要夺走{target_data.name}的A处女？("
+msgstr ""
+
+#: .\Script\Design\character.py:518
+msgid " 对方的态度："
+msgstr ""
+
+#: .\Script\Design\character.py:520
+msgid "拒绝)\n"
+msgstr ""
+
+#: .\Script\Design\character.py:522
+msgid "犹豫)\n"
+msgstr ""
+
+#: .\Script\Design\character.py:524
+msgid "接受)\n"
+msgstr ""
+
+#: .\Script\Design\character.py:534 .\Script\Design\handle_instruct.py:1661
+#: .\Script\Design\handle_instruct.py:1699
+#: .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\UI\Panel\ability_up_panel.py:384
+#: .\Script\UI\Panel\aromatherapy.py:110
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
+#: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
+#: .\Script\UI\Panel\resource_exchange_panel.py:157
+msgid "[确定]"
+msgstr ""
+
+#: .\Script\Design\character.py:534 .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\UI\Panel\ability_up_panel.py:384
+#: .\Script\UI\Panel\aromatherapy.py:110
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
+#: .\Script\UI\Panel\recruit_panel.py:288
+#: .\Script\UI\Panel\resource_exchange_panel.py:157
+msgid "确定"
+msgstr ""
+
+#: .\Script\Design\character.py:537
+#: .\Script\UI\Flow\creator_character_flow.py:608
+#: .\Script\UI\Panel\ability_up_panel.py:193
+#: .\Script\UI\Panel\ability_up_panel.py:440
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
+#: .\Script\UI\Panel\all_npc_position_panel.py:148
+#: .\Script\UI\Panel\aromatherapy.py:122 .\Script\UI\Panel\aromatherapy.py:189
+#: .\Script\UI\Panel\assistant_panel.py:53
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
+#: .\Script\UI\Panel\borrow_book_panel.py:156
+#: .\Script\UI\Panel\building_panel.py:149
+#: .\Script\UI\Panel\building_panel.py:255
+#: .\Script\UI\Panel\check_locker_panel.py:78
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
+#: .\Script\UI\Panel\collection_panel.py:196
+#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
+#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
+#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\food_shop_panel.py:78
+#: .\Script\UI\Panel\food_shop_panel.py:170
+#: .\Script\UI\Panel\h_item_shop_panel.py:105
+#: .\Script\UI\Panel\instruct_filter_panel.py:58
+#: .\Script\UI\Panel\invite_visitor_panel.py:126
+#: .\Script\UI\Panel\invite_visitor_panel.py:250
+#: .\Script\UI\Panel\make_food_panel.py:145
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
+#: .\Script\UI\Panel\manage_library.py:108
+#: .\Script\UI\Panel\manage_library.py:160
+#: .\Script\UI\Panel\manage_library.py:215
+#: .\Script\UI\Panel\manage_library.py:261
+#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
+#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
+#: .\Script\UI\Panel\normal_panel.py:449 .\Script\UI\Panel\normal_panel.py:572
+#: .\Script\UI\Panel\originium_arts.py:106
+#: .\Script\UI\Panel\originium_arts.py:290
+#: .\Script\UI\Panel\originium_arts.py:386
+#: .\Script\UI\Panel\originium_arts.py:476
+#: .\Script\UI\Panel\originium_arts.py:574
+#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
+#: .\Script\UI\Panel\recruit_panel.py:184
+#: .\Script\UI\Panel\recruit_panel.py:293
+#: .\Script\UI\Panel\resource_exchange_panel.py:160
+#: .\Script\UI\Panel\resource_exchange_panel.py:242
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
+#: .\Script\UI\Panel\see_item_info_panel.py:107
+#: .\Script\UI\Panel\see_save_info_panel.py:67
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
+msgid "[返回]"
+msgstr ""
+
+#: .\Script\Design\character.py:537
+#: .\Script\UI\Flow\creator_character_flow.py:608
+#: .\Script\UI\Panel\ability_up_panel.py:193
+#: .\Script\UI\Panel\ability_up_panel.py:440
+#: .\Script\UI\Panel\agriculture_production_panel.py:161
+#: .\Script\UI\Panel\agriculture_production_panel.py:223
+#: .\Script\UI\Panel\all_npc_position_panel.py:148
+#: .\Script\UI\Panel\aromatherapy.py:122 .\Script\UI\Panel\aromatherapy.py:189
+#: .\Script\UI\Panel\assistant_panel.py:53
+#: .\Script\UI\Panel\assistant_panel.py:150
+#: .\Script\UI\Panel\assistant_panel.py:280
+#: .\Script\UI\Panel\borrow_book_panel.py:156
+#: .\Script\UI\Panel\building_panel.py:149
+#: .\Script\UI\Panel\building_panel.py:255
+#: .\Script\UI\Panel\check_locker_panel.py:78
+#: .\Script\UI\Panel\check_locker_panel.py:241
+#: .\Script\UI\Panel\check_locker_panel.py:306
+#: .\Script\UI\Panel\collection_panel.py:196
+#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
+#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
+#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\food_shop_panel.py:78
+#: .\Script\UI\Panel\food_shop_panel.py:170
+#: .\Script\UI\Panel\get_up_panel.py:84 .\Script\UI\Panel\get_up_panel.py:85
+#: .\Script\UI\Panel\h_item_shop_panel.py:105
+#: .\Script\UI\Panel\instruct_filter_panel.py:58
+#: .\Script\UI\Panel\invite_visitor_panel.py:126
+#: .\Script\UI\Panel\invite_visitor_panel.py:250
+#: .\Script\UI\Panel\make_food_panel.py:145
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
+#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
+#: .\Script\UI\Panel\manage_basement_panel.py:93
+#: .\Script\UI\Panel\manage_basement_panel.py:311
+#: .\Script\UI\Panel\manage_basement_panel.py:459
+#: .\Script\UI\Panel\manage_basement_panel.py:587
+#: .\Script\UI\Panel\manage_library.py:108
+#: .\Script\UI\Panel\manage_library.py:160
+#: .\Script\UI\Panel\manage_library.py:215
+#: .\Script\UI\Panel\manage_library.py:261
+#: .\Script\UI\Panel\navigation_panel.py:208
+#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
+#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
+#: .\Script\UI\Panel\originium_arts.py:106
+#: .\Script\UI\Panel\originium_arts.py:290
+#: .\Script\UI\Panel\originium_arts.py:386
+#: .\Script\UI\Panel\originium_arts.py:476
+#: .\Script\UI\Panel\originium_arts.py:574
+#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
+#: .\Script\UI\Panel\recruit_panel.py:184
+#: .\Script\UI\Panel\recruit_panel.py:293
+#: .\Script\UI\Panel\resource_exchange_panel.py:160
+#: .\Script\UI\Panel\resource_exchange_panel.py:242
+#: .\Script\UI\Panel\see_character_info_panel.py:2134
+#: .\Script\UI\Panel\see_item_info_panel.py:107
+#: .\Script\UI\Panel\see_item_info_panel.py:184
+#: .\Script\UI\Panel\see_map_panel.py:185
+#: .\Script\UI\Panel\see_save_info_panel.py:67
+#: .\Script\UI\Panel\see_save_info_panel.py:193
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
+msgid "返回"
 msgstr ""
 
 #: .\Script\Design\cooking.py:358 .\Script\Design\cooking.py:428
@@ -619,6 +985,7 @@ msgid "邀请约会_未实装"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1297
+#: .\Script\Design\handle_instruct.py:1309
 msgid "告白"
 msgstr ""
 
@@ -644,6 +1011,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1337
+#: .\Script\Design\handle_instruct.py:1349
 msgid "戴上项圈"
 msgstr ""
 
@@ -702,6 +1070,11 @@ msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1474
 msgid "邀请H"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:1486
+#: .\Script\Design\handle_premise.py:3615
+msgid "H模式"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1497
@@ -778,17 +1151,6 @@ msgstr ""
 msgid ""
 "\n"
 "取消"
-msgstr ""
-
-#: .\Script\Design\handle_instruct.py:1661
-#: .\Script\Design\handle_instruct.py:1699
-#: .\Script\UI\Panel\ability_up_panel.py:197
-#: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\aromatherapy.py:110
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
-#: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
-#: .\Script\UI\Panel\resource_exchange_panel.py:157
-msgid "[确定]"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1661
@@ -974,8 +1336,19 @@ msgstr ""
 msgid "拥抱"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:2403
-msgid "亲吻"
+#: .\Script\Design\handle_instruct.py:2390
+#: .\Script\Design\handle_instruct.py:2437
+#: .\Script\Design\handle_instruct.py:2506
+#: .\Script\Design\handle_instruct.py:2530
+#: .\Script\Design\handle_instruct.py:2554
+#: .\Script\Design\handle_instruct.py:2578
+#: .\Script\Design\handle_instruct.py:2602
+#: .\Script\Design\handle_instruct.py:2626
+#: .\Script\Design\handle_instruct.py:2650
+#: .\Script\Design\handle_instruct.py:2673
+#: .\Script\Design\handle_instruct.py:2697
+#: .\Script\Design\handle_premise.py:3583
+msgid "初级骚扰"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:2426
@@ -984,6 +1357,19 @@ msgstr ""
 
 #: .\Script\Design\handle_instruct.py:2449
 msgid "摸胸"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:2460
+#: .\Script\Design\handle_instruct.py:2483
+#: .\Script\Design\handle_instruct.py:2721
+#: .\Script\Design\handle_instruct.py:2746
+#: .\Script\Design\handle_instruct.py:2771
+#: .\Script\Design\handle_instruct.py:2833
+#: .\Script\Design\handle_instruct.py:2856
+#: .\Script\Design\handle_instruct.py:2879
+#: .\Script\Design\handle_instruct.py:2903
+#: .\Script\Design\handle_premise.py:3599
+msgid "严重骚扰"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:2472
@@ -2093,128 +2479,6 @@ msgstr ""
 msgid " [重置选择] "
 msgstr ""
 
-#: .\Script\UI\Flow\creator_character_flow.py:608
-#: .\Script\UI\Panel\ability_up_panel.py:193
-#: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:161
-#: .\Script\UI\Panel\agriculture_production_panel.py:223
-#: .\Script\UI\Panel\all_npc_position_panel.py:148
-#: .\Script\UI\Panel\aromatherapy.py:122 .\Script\UI\Panel\aromatherapy.py:189
-#: .\Script\UI\Panel\assistant_panel.py:53
-#: .\Script\UI\Panel\assistant_panel.py:150
-#: .\Script\UI\Panel\assistant_panel.py:280
-#: .\Script\UI\Panel\borrow_book_panel.py:156
-#: .\Script\UI\Panel\building_panel.py:149
-#: .\Script\UI\Panel\building_panel.py:255
-#: .\Script\UI\Panel\check_locker_panel.py:78
-#: .\Script\UI\Panel\check_locker_panel.py:241
-#: .\Script\UI\Panel\check_locker_panel.py:306
-#: .\Script\UI\Panel\collection_panel.py:196
-#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
-#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
-#: .\Script\UI\Panel\food_shop_panel.py:78
-#: .\Script\UI\Panel\food_shop_panel.py:170
-#: .\Script\UI\Panel\h_item_shop_panel.py:105
-#: .\Script\UI\Panel\instruct_filter_panel.py:58
-#: .\Script\UI\Panel\invite_visitor_panel.py:126
-#: .\Script\UI\Panel\invite_visitor_panel.py:250
-#: .\Script\UI\Panel\make_food_panel.py:145
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
-#: .\Script\UI\Panel\manage_basement_panel.py:93
-#: .\Script\UI\Panel\manage_basement_panel.py:311
-#: .\Script\UI\Panel\manage_basement_panel.py:459
-#: .\Script\UI\Panel\manage_basement_panel.py:587
-#: .\Script\UI\Panel\manage_library.py:108
-#: .\Script\UI\Panel\manage_library.py:160
-#: .\Script\UI\Panel\manage_library.py:215
-#: .\Script\UI\Panel\manage_library.py:261
-#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
-#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
-#: .\Script\UI\Panel\normal_panel.py:449 .\Script\UI\Panel\normal_panel.py:572
-#: .\Script\UI\Panel\originium_arts.py:106
-#: .\Script\UI\Panel\originium_arts.py:290
-#: .\Script\UI\Panel\originium_arts.py:386
-#: .\Script\UI\Panel\originium_arts.py:476
-#: .\Script\UI\Panel\originium_arts.py:574
-#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
-#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
-#: .\Script\UI\Panel\recruit_panel.py:184
-#: .\Script\UI\Panel\recruit_panel.py:293
-#: .\Script\UI\Panel\resource_exchange_panel.py:160
-#: .\Script\UI\Panel\resource_exchange_panel.py:242
-#: .\Script\UI\Panel\see_character_info_panel.py:2134
-#: .\Script\UI\Panel\see_item_info_panel.py:107
-#: .\Script\UI\Panel\see_save_info_panel.py:67
-#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
-msgid "[返回]"
-msgstr ""
-
-#: .\Script\UI\Flow\creator_character_flow.py:608
-#: .\Script\UI\Panel\ability_up_panel.py:193
-#: .\Script\UI\Panel\ability_up_panel.py:440
-#: .\Script\UI\Panel\agriculture_production_panel.py:161
-#: .\Script\UI\Panel\agriculture_production_panel.py:223
-#: .\Script\UI\Panel\all_npc_position_panel.py:148
-#: .\Script\UI\Panel\aromatherapy.py:122 .\Script\UI\Panel\aromatherapy.py:189
-#: .\Script\UI\Panel\assistant_panel.py:53
-#: .\Script\UI\Panel\assistant_panel.py:150
-#: .\Script\UI\Panel\assistant_panel.py:280
-#: .\Script\UI\Panel\borrow_book_panel.py:156
-#: .\Script\UI\Panel\building_panel.py:149
-#: .\Script\UI\Panel\building_panel.py:255
-#: .\Script\UI\Panel\check_locker_panel.py:78
-#: .\Script\UI\Panel\check_locker_panel.py:241
-#: .\Script\UI\Panel\check_locker_panel.py:306
-#: .\Script\UI\Panel\collection_panel.py:196
-#: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
-#: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:159 .\Script\UI\Panel\food_bag_panel.py:139
-#: .\Script\UI\Panel\food_shop_panel.py:78
-#: .\Script\UI\Panel\food_shop_panel.py:170
-#: .\Script\UI\Panel\get_up_panel.py:84 .\Script\UI\Panel\get_up_panel.py:85
-#: .\Script\UI\Panel\h_item_shop_panel.py:105
-#: .\Script\UI\Panel\instruct_filter_panel.py:58
-#: .\Script\UI\Panel\invite_visitor_panel.py:126
-#: .\Script\UI\Panel\invite_visitor_panel.py:250
-#: .\Script\UI\Panel\make_food_panel.py:145
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:170
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:277
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:385
-#: .\Script\UI\Panel\manage_basement_panel.py:93
-#: .\Script\UI\Panel\manage_basement_panel.py:311
-#: .\Script\UI\Panel\manage_basement_panel.py:459
-#: .\Script\UI\Panel\manage_basement_panel.py:587
-#: .\Script\UI\Panel\manage_library.py:108
-#: .\Script\UI\Panel\manage_library.py:160
-#: .\Script\UI\Panel\manage_library.py:215
-#: .\Script\UI\Panel\manage_library.py:261
-#: .\Script\UI\Panel\navigation_panel.py:208
-#: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
-#: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
-#: .\Script\UI\Panel\originium_arts.py:106
-#: .\Script\UI\Panel\originium_arts.py:290
-#: .\Script\UI\Panel\originium_arts.py:386
-#: .\Script\UI\Panel\originium_arts.py:476
-#: .\Script\UI\Panel\originium_arts.py:574
-#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
-#: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
-#: .\Script\UI\Panel\recruit_panel.py:184
-#: .\Script\UI\Panel\recruit_panel.py:293
-#: .\Script\UI\Panel\resource_exchange_panel.py:160
-#: .\Script\UI\Panel\resource_exchange_panel.py:242
-#: .\Script\UI\Panel\see_character_info_panel.py:2134
-#: .\Script\UI\Panel\see_item_info_panel.py:107
-#: .\Script\UI\Panel\see_item_info_panel.py:184
-#: .\Script\UI\Panel\see_map_panel.py:185
-#: .\Script\UI\Panel\see_save_info_panel.py:67
-#: .\Script\UI\Panel\see_save_info_panel.py:193
-#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
-msgid "返回"
-msgstr ""
-
 #: .\Script\UI\Flow\creator_character_flow.py:743
 msgid "(基础)"
 msgstr ""
@@ -2315,15 +2579,6 @@ msgstr ""
 #: .\Script\UI\Moudle\panel.py:719
 #, python-brace-format
 msgid "{next_page_index_text} 下一页"
-msgstr ""
-
-#: .\Script\UI\Panel\ability_up_panel.py:197
-#: .\Script\UI\Panel\ability_up_panel.py:384
-#: .\Script\UI\Panel\aromatherapy.py:110
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:381
-#: .\Script\UI\Panel\recruit_panel.py:288
-#: .\Script\UI\Panel\resource_exchange_panel.py:157
-msgid "确定"
 msgstr ""
 
 #: .\Script\UI\Panel\ability_up_panel.py:441

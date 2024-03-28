@@ -7,6 +7,7 @@ from Script.Core import (
     constant,
     game_type,
     text_handle,
+    flow_handle,
 )
 from Script.Design import (
     map_handle,
@@ -14,9 +15,9 @@ from Script.Design import (
     clothing,
     game_time,
     handle_talent,
-
+    handle_premise,
 )
-from Script.Config import game_config
+from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -24,6 +25,12 @@ cache: game_type.Cache = cache_control.cache
 
 _: FunctionType = get_text._
 """ 翻译api """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
+window_width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
 
 
 def init_attr(character_id: int):
@@ -415,7 +422,54 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge += 1000
             calculation_text += _("+睡眠(+1000)")
 
+    # 处女修正
+    if instruct_name == _("性交") and target_data.talent[0]:
+        judge -= 100
+        calculation_text += _("+处女(-100)")
+
+    # A处女修正
+    if instruct_name == _("A性交") and target_data.talent[1]:
+        judge -= 200
+        calculation_text += _("+Ａ处女(-200)")
+
+    # U处女修正
+    if instruct_name == _("U性交") and target_data.talent[2]:
+        judge -= 300
+        calculation_text += _("+Ｕ处女(-300)")
+
+    # 初吻修正
+    if instruct_name == _("亲吻") and target_data.talent[4]:
+        judge -= 50
+        calculation_text += _("+初吻(-50)")
+
+    # 性交的避孕相关修正
+    if instruct_name == _("性交"):
+        # 妊娠合意、避孕套、避孕中出合意+事前避孕药，以上可直接通过
+        if (
+            target_data.talent[14] or
+            (target_data.talent[13] and target_data.h_state.body_item[11][1])
+            ):
+            pass
+        else:
+            if handle_premise.handle_reproduction_period_0(target_character_id):
+                # 避孕中出合意合意
+                if target_data.talent[13]:
+                    pass
+                else:
+                    judge -= 10
+                    calculation_text += _("+安全期(-10)")
+            elif handle_premise.handle_reproduction_period_1(target_character_id):
+                judge -= 50
+                calculation_text += _("+普通期(-50)")
+            elif handle_premise.handle_reproduction_period_2(target_character_id):
+                judge -= 100
+                calculation_text += _("+危险期(-100)")
+            elif handle_premise.handle_reproduction_period_3(target_character_id):
+                judge -= 300
+                calculation_text += _("+排卵期(-300)")
+
     # 催眠系能力的最后补正，仅在平然/空气催眠、性爱判定、且实行值不足时生效
+    judge_hypnosis = 0 # 初始为零，方便其他修正判断是否进行了催眠
     if target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
         # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
         if (
@@ -431,7 +485,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             else:
                 # 1理智折算为10实行值
                 judge_hypnosis = unenough
-                sanity_point_cost = round((unenough - 100) / 10)
+                sanity_point_cost = round(unenough / 10)
             # 最后的总结算
             if sanity_point_cost <= character_data.sanity_point:
                 judge += judge_hypnosis
@@ -447,6 +501,49 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge += 99999
         calculation_text += _("+debug模式(+99999)")
 
+    # 是否通过
+    final_judge = judge >= judge_data_value
+    judge_rate = judge / judge_data_value
+
+    # 询问信息
+    ask_text = ""
+    if instruct_name == _("亲吻") and target_data.talent[4]:
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？(")
+    elif instruct_name == _("性交") and target_data.talent[0]:
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？(")
+    elif instruct_name == _("A性交") and target_data.talent[1]:
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？(")
+    if len(ask_text):
+        # 判断态度
+        ask_text += _(" 对方的态度：")
+        if judge_rate < 0.5:
+            ask_text += _("拒绝)\n")
+        elif judge_rate < 1:
+            ask_text += _("犹豫)\n")
+        else:
+            ask_text += _("接受)\n")
+        while 1:
+            return_list = []
+            ask_draw = draw.WaitDraw()
+            ask_draw.width = 1
+            ask_draw.text = ask_text
+            ask_draw.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                return [0, judge, judge_rate]
+            elif yrn == yes_draw.return_text:
+                break
+
     # 正常直接判定，并输出文本
     if judge_data_type != "V":
         calculation_text += " = " + str(judge) + "\n"
@@ -454,8 +551,30 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         now_draw.width = 1
         now_draw.text = calculation_text
         now_draw.draw()
+
+    # 合意获得的结算
+    if final_judge and target_data.sp_flag.unconscious_h == 0:
+        agree_draw = draw.WaitDraw()
+        agree_draw.width = 1
+        draw_text = ""
+        if instruct_name == _("亲吻") and target_data.talent[11] == 0:
+            target_data.talent[11] = 1
+            draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
+        if instruct_name == _("性交") and target_data.talent[12] == 0:
+            target_data.talent[12] = 1
+            draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
+        if instruct_name == _("A性交") and target_data.talent[15] == 0:
+            target_data.talent[15] = 1
+            draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
+        if instruct_name == _("U性交") and target_data.talent[16] == 0:
+            target_data.talent[16] = 1
+            draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+        if len(draw_text):
+            agree_draw.text = draw_text
+            agree_draw.draw()
+
     # 返回判定结果
-    return [judge >= judge_data_value, judge, judge / judge_data_value]
+    return [final_judge, judge, judge_rate]
 
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:

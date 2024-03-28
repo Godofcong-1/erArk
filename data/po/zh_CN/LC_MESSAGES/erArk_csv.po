@@ -7613,19 +7613,19 @@ msgid "同意亲吻"
 msgstr ""
 
 #: .\data\csv\Talent.csv:17
-msgid "Ｈ合意"
+msgid "本番合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:17
-msgid "同意V性行为"
+msgid "同意避孕套下的本番行为"
 msgstr ""
 
 #: .\data\csv\Talent.csv:18
-msgid "中出合意"
+msgid "避孕中出合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:18
-msgid "同意不带套射在里面，但是要吃药"
+msgid "同意在安全期或已经服用避孕药的情况下内射"
 msgstr ""
 
 #: .\data\csv\Talent.csv:19
@@ -7633,878 +7633,886 @@ msgid "妊娠合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:19
-msgid "同意不带套射在里面，不需要吃药"
+msgid "同意在任何时候内射"
 msgstr ""
 
 #: .\data\csv\Talent.csv:20
-msgid "Ａ合意"
+msgid "Ａ性交合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:20
 msgid "同意A性行为"
 msgstr ""
 
-#: .\data\csv\Talent.csv:22
-msgid "受精"
+#: .\data\csv\Talent.csv:21
+msgid "Ｕ性交合意"
+msgstr ""
+
+#: .\data\csv\Talent.csv:21
+msgid "同意U性行为"
 msgstr ""
 
 #: .\data\csv\Talent.csv:23
-msgid "妊娠"
+msgid "受精"
 msgstr ""
 
 #: .\data\csv\Talent.csv:24
-msgid "临盆"
+msgid "妊娠"
 msgstr ""
 
 #: .\data\csv\Talent.csv:25
-msgid "产后"
+msgid "临盆"
 msgstr ""
 
 #: .\data\csv\Talent.csv:26
+msgid "产后"
+msgstr ""
+
+#: .\data\csv\Talent.csv:27
 msgid "育儿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:27
+#: .\data\csv\Talent.csv:28
 msgid "孕肚"
 msgstr ""
 
-#: .\data\csv\Talent.csv:27
+#: .\data\csv\Talent.csv:28
 msgid "怀孕中后期腹部隆起"
 msgstr ""
 
-#: .\data\csv\Talent.csv:28
+#: .\data\csv\Talent.csv:29
 msgid "泌乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:28
+#: .\data\csv\Talent.csv:29
 msgid "孕后分泌母乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:30
+#: .\data\csv\Talent.csv:31
 msgid "精爱味觉"
 msgstr ""
 
-#: .\data\csv\Talent.csv:30
+#: .\data\csv\Talent.csv:31
 msgid "经常性地在绝顶的同时被口内射精而获得的素质，尝到精液的味道就会条件反射性地绝顶"
 msgstr ""
 
-#: .\data\csv\Talent.csv:31
+#: .\data\csv\Talent.csv:32
 msgid "精液膨腹"
 msgstr ""
 
-#: .\data\csv\Talent.csv:31
+#: .\data\csv\Talent.csv:32
 msgid "在子宫内被射入了极其大量的精液，导致腹部宛如孕妇一般高高地隆起"
 msgstr ""
 
-#: .\data\csv\Talent.csv:32
+#: .\data\csv\Talent.csv:33
 msgid "浓厚精液"
 msgstr ""
 
-#: .\data\csv\Talent.csv:32
+#: .\data\csv\Talent.csv:33
 msgid "积攒了多天的精液导致精子浓度变高了，此时进行内射会大幅度提高对方的受精率"
 msgstr ""
 
-#: .\data\csv\Talent.csv:33
+#: .\data\csv\Talent.csv:34
 msgid "漏尿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:33
+#: .\data\csv\Talent.csv:34
 msgid "经常性地在绝顶的同时被迫尿出来而获得的素质，感受到性快感就会条件反射性地漏尿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:35
+#: .\data\csv\Talent.csv:36
 msgid "淫乱"
 msgstr ""
 
-#: .\data\csv\Talent.csv:35
+#: .\data\csv\Talent.csv:36
 msgid "淫乱系素质的基础"
 msgstr ""
 
-#: .\data\csv\Talent.csv:36
+#: .\data\csv\Talent.csv:37
 msgid "淫体"
 msgstr ""
 
-#: .\data\csv\Talent.csv:36
+#: .\data\csv\Talent.csv:37
 msgid "N"
 msgstr ""
 
-#: .\data\csv\Talent.csv:37
+#: .\data\csv\Talent.csv:38
 msgid "淫乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:37
+#: .\data\csv\Talent.csv:38
 msgid "B"
 msgstr ""
 
-#: .\data\csv\Talent.csv:38
+#: .\data\csv\Talent.csv:39
 msgid "淫核"
 msgstr ""
 
-#: .\data\csv\Talent.csv:38
+#: .\data\csv\Talent.csv:39
 msgid "C"
 msgstr ""
 
-#: .\data\csv\Talent.csv:39
+#: .\data\csv\Talent.csv:40
 msgid "淫茎"
 msgstr ""
 
-#: .\data\csv\Talent.csv:39
+#: .\data\csv\Talent.csv:40
 msgid "P"
 msgstr ""
 
-#: .\data\csv\Talent.csv:40
+#: .\data\csv\Talent.csv:41
 msgid "淫膣"
 msgstr ""
 
-#: .\data\csv\Talent.csv:40
+#: .\data\csv\Talent.csv:41
 msgid "V"
 msgstr ""
 
-#: .\data\csv\Talent.csv:41
+#: .\data\csv\Talent.csv:42
 msgid "淫肛"
 msgstr ""
 
-#: .\data\csv\Talent.csv:41
+#: .\data\csv\Talent.csv:42
 msgid "A"
 msgstr ""
 
-#: .\data\csv\Talent.csv:42
+#: .\data\csv\Talent.csv:43
 msgid "淫胱"
 msgstr ""
 
-#: .\data\csv\Talent.csv:42
+#: .\data\csv\Talent.csv:43
 msgid "U"
 msgstr ""
 
-#: .\data\csv\Talent.csv:43
+#: .\data\csv\Talent.csv:44
 msgid "淫宫"
 msgstr ""
 
-#: .\data\csv\Talent.csv:43
+#: .\data\csv\Talent.csv:44
 msgid "W"
 msgstr ""
 
-#: .\data\csv\Talent.csv:44
+#: .\data\csv\Talent.csv:45
 msgid "真·淫魔"
 msgstr ""
 
-#: .\data\csv\Talent.csv:44
+#: .\data\csv\Talent.csv:45
 msgid "淫乱系最终素质"
 msgstr ""
 
-#: .\data\csv\Talent.csv:46
+#: .\data\csv\Talent.csv:47
 msgid "精液中毒"
 msgstr ""
 
-#: .\data\csv\Talent.csv:47
+#: .\data\csv\Talent.csv:48
 msgid "自慰中毒"
 msgstr ""
 
-#: .\data\csv\Talent.csv:48
+#: .\data\csv\Talent.csv:49
 msgid "膣射中毒"
 msgstr ""
 
-#: .\data\csv\Talent.csv:49
+#: .\data\csv\Talent.csv:50
 msgid "肛射中毒"
 msgstr ""
 
-#: .\data\csv\Talent.csv:50
+#: .\data\csv\Talent.csv:51
 msgid "饮精中毒"
 msgstr ""
 
-#: .\data\csv\Talent.csv:52
+#: .\data\csv\Talent.csv:53
 msgid "周期性发情"
 msgstr ""
 
-#: .\data\csv\Talent.csv:52
+#: .\data\csv\Talent.csv:53
 msgid "隔一段时间会发情"
 msgstr ""
 
-#: .\data\csv\Talent.csv:53
+#: .\data\csv\Talent.csv:54
 msgid "发情期中"
 msgstr ""
 
-#: .\data\csv\Talent.csv:54
+#: .\data\csv\Talent.csv:55
 msgid "不易湿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:55
+#: .\data\csv\Talent.csv:56
 msgid "容易湿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:57
+#: .\data\csv\Talent.csv:58
 msgid "已催眠·浅"
 msgstr ""
 
-#: .\data\csv\Talent.csv:57
+#: .\data\csv\Talent.csv:58
 msgid "被施加了浅层的催眠状态，意识有些模糊，会下意识地同意有些不合理的要求"
 msgstr ""
 
-#: .\data\csv\Talent.csv:58
+#: .\data\csv\Talent.csv:59
 msgid "已催眠·深"
 msgstr ""
 
-#: .\data\csv\Talent.csv:58
+#: .\data\csv\Talent.csv:59
 msgid "被施加了深层的催眠状态，意识飘在空中，会毫无抵抗地接受对方的任何行为"
 msgstr ""
 
-#: .\data\csv\Talent.csv:59
+#: .\data\csv\Talent.csv:60
 msgid "已催眠·极"
 msgstr ""
 
-#: .\data\csv\Talent.csv:59
+#: .\data\csv\Talent.csv:60
 msgid "抵达了完全的催眠状态，身体和意识被随意控制和摆弄，只能沦为一具人偶"
 msgstr ""
 
-#: .\data\csv\Talent.csv:61
+#: .\data\csv\Talent.csv:62
 msgid "Ｎ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:62
+#: .\data\csv\Talent.csv:63
 msgid "Ｎ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:63
+#: .\data\csv\Talent.csv:64
 msgid "Ｂ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:64
+#: .\data\csv\Talent.csv:65
 msgid "Ｂ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:65
+#: .\data\csv\Talent.csv:66
 msgid "Ｃ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:66
+#: .\data\csv\Talent.csv:67
 msgid "Ｃ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:67
+#: .\data\csv\Talent.csv:68
 msgid "Ｐ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:68
+#: .\data\csv\Talent.csv:69
 msgid "Ｐ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:69
+#: .\data\csv\Talent.csv:70
 msgid "Ｖ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:70
+#: .\data\csv\Talent.csv:71
 msgid "Ｖ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:71
+#: .\data\csv\Talent.csv:72
 msgid "Ａ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:72
+#: .\data\csv\Talent.csv:73
 msgid "Ａ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:73
+#: .\data\csv\Talent.csv:74
 msgid "Ｕ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:74
+#: .\data\csv\Talent.csv:75
 msgid "Ｕ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:75
+#: .\data\csv\Talent.csv:76
 msgid "Ｗ钝感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:76
+#: .\data\csv\Talent.csv:77
 msgid "Ｗ敏感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:78
+#: .\data\csv\Talent.csv:79
 msgid "婴儿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:78
+#: .\data\csv\Talent.csv:79
 msgid "身体年龄特征"
 msgstr ""
 
-#: .\data\csv\Talent.csv:79
+#: .\data\csv\Talent.csv:80
 msgid "幼女"
 msgstr ""
 
-#: .\data\csv\Talent.csv:81
+#: .\data\csv\Talent.csv:82
 msgid "少女"
 msgstr ""
 
-#: .\data\csv\Talent.csv:82
+#: .\data\csv\Talent.csv:83
 msgid "大姐姐"
 msgstr ""
 
-#: .\data\csv\Talent.csv:83
+#: .\data\csv\Talent.csv:84
 msgid "熟女"
 msgstr ""
 
-#: .\data\csv\Talent.csv:84
+#: .\data\csv\Talent.csv:85
 msgid "人妻"
 msgstr ""
 
-#: .\data\csv\Talent.csv:85
+#: .\data\csv\Talent.csv:86
 msgid "长生者"
 msgstr ""
 
-#: .\data\csv\Talent.csv:85
+#: .\data\csv\Talent.csv:86
 msgid "可与以上几个叠加"
 msgstr ""
 
-#: .\data\csv\Talent.csv:89
+#: .\data\csv\Talent.csv:90
 msgid "兽尾"
 msgstr ""
 
-#: .\data\csv\Talent.csv:90
+#: .\data\csv\Talent.csv:91
 msgid "光环"
 msgstr ""
 
-#: .\data\csv\Talent.csv:91
+#: .\data\csv\Talent.csv:92
 msgid "光翼"
 msgstr ""
 
-#: .\data\csv\Talent.csv:92
+#: .\data\csv\Talent.csv:93
 msgid "触手"
 msgstr ""
 
-#: .\data\csv\Talent.csv:93
+#: .\data\csv\Talent.csv:94
 msgid "小车"
 msgstr ""
 
-#: .\data\csv\Talent.csv:95
+#: .\data\csv\Talent.csv:96
 msgid "绝壁"
 msgstr ""
 
-#: .\data\csv\Talent.csv:95
+#: .\data\csv\Talent.csv:96
 msgid "两片小巧的乳房仅形成一个微弱的突起，乳房的边缘轮廓模糊，和胸口没有明显的分界线，两点浅色的乳头几乎隐没在乳晕之中。手掌可以轻易地整个盖住。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:96
+#: .\data\csv\Talent.csv:97
 msgid "贫乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:96
+#: .\data\csv\Talent.csv:97
 msgid "两片微微隆起的乳房，线条柔和，呈现出自然突出的形状，乳头的形状若隐若现，蕴含着朦胧的性感。乳房突起也不明显，手掌可以整个握住。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:97
+#: .\data\csv\Talent.csv:98
 msgid "普乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:97
+#: .\data\csv\Talent.csv:98
 msgid "丰满而不过分的乳房，蕴含着成熟女性的魅力，既健康又迷人。乳房有一个自然的弧度，手掌可以包裹住，但很难整个握住。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:98
+#: .\data\csv\Talent.csv:99
 msgid "巨乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:98
+#: .\data\csv\Talent.csv:99
 msgid "过分丰满的乳房高高耸立，乳房呈现出饱满高耸的弧度，线条丰腴流畅。手掌无法整个握住，从指缝间会有乳肉溢出。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:99
+#: .\data\csv\Talent.csv:100
 msgid "爆乳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:99
+#: .\data\csv\Talent.csv:100
 msgid "乳房高高隆起，饱满程度近乎极致，服装近乎完全无法束缚这一切。达到了令人视线完全无法离开的程度，有着手掌完全无法握住的大小，整张脸也肯定可以埋得进去。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:100
+#: .\data\csv\Talent.csv:101
 msgid "小臀"
 msgstr ""
 
-#: .\data\csv\Talent.csv:100
+#: .\data\csv\Talent.csv:101
 msgid "臀部较小，仅比手掌大去不多，并没有得到充分发育，臀型较为平坦，缺乏曲线感。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:101
+#: .\data\csv\Talent.csv:102
 msgid "普臀"
 msgstr ""
 
-#: .\data\csv\Talent.csv:101
+#: .\data\csv\Talent.csv:102
 msgid "双手难以覆盖。臀型明显丰满上翘，有弧度感。看上去完全能够诞下非常健康的孩子，臀肉较为饱满有力。"
 msgstr ""
 
-#: .\data\csv\Talent.csv:102
+#: .\data\csv\Talent.csv:103
 msgid "巨臀"
 msgstr ""
 
-#: .\data\csv\Talent.csv:102
+#: .\data\csv\Talent.csv:103
 msgid "臀部高度丰满，双手无法覆盖大部分区域。臀型极为饱满翘挺，雄性近乎于无法抗拒的程度，非常吸引人的眼球。亦可以称之为成熟雌性的典范"
 msgstr ""
 
-#: .\data\csv\Talent.csv:103
+#: .\data\csv\Talent.csv:104
 msgid "细腿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:104
+#: .\data\csv\Talent.csv:105
 msgid "肉腿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:105
+#: .\data\csv\Talent.csv:106
 msgid "小足"
 msgstr ""
 
-#: .\data\csv\Talent.csv:106
+#: .\data\csv\Talent.csv:107
 msgid "长足"
 msgstr ""
 
-#: .\data\csv\Talent.csv:108
+#: .\data\csv\Talent.csv:109
 msgid "源石病感染者"
 msgstr ""
 
-#: .\data\csv\Talent.csv:109
+#: .\data\csv\Talent.csv:110
 msgid "嗜睡"
 msgstr ""
 
-#: .\data\csv\Talent.csv:110
+#: .\data\csv\Talent.csv:111
 msgid "高温体质"
 msgstr ""
 
-#: .\data\csv\Talent.csv:111
+#: .\data\csv\Talent.csv:112
 msgid "低温体质"
 msgstr ""
 
-#: .\data\csv\Talent.csv:112
+#: .\data\csv\Talent.csv:113
 msgid "带电体质"
 msgstr ""
 
-#: .\data\csv\Talent.csv:113
+#: .\data\csv\Talent.csv:114
 msgid "带毒体质"
 msgstr ""
 
-#: .\data\csv\Talent.csv:114
+#: .\data\csv\Talent.csv:115
 msgid "视力障碍"
 msgstr ""
 
-#: .\data\csv\Talent.csv:115
+#: .\data\csv\Talent.csv:116
 msgid "听力障碍"
 msgstr ""
 
-#: .\data\csv\Talent.csv:116
+#: .\data\csv\Talent.csv:117
 msgid "失忆"
 msgstr ""
 
-#: .\data\csv\Talent.csv:117
+#: .\data\csv\Talent.csv:118
 msgid "人格障碍"
 msgstr ""
 
-#: .\data\csv\Talent.csv:118
+#: .\data\csv\Talent.csv:119
 msgid "行动不便"
 msgstr ""
 
-#: .\data\csv\Talent.csv:119
+#: .\data\csv\Talent.csv:120
 msgid "低存在感"
 msgstr ""
 
-#: .\data\csv\Talent.csv:120
+#: .\data\csv\Talent.csv:121
 msgid "体表源石结晶"
 msgstr ""
 
-#: .\data\csv\Talent.csv:121
+#: .\data\csv\Talent.csv:122
 msgid "义肢"
 msgstr ""
 
-#: .\data\csv\Talent.csv:122
+#: .\data\csv\Talent.csv:123
 msgid "毒抗性"
 msgstr ""
 
-#: .\data\csv\Talent.csv:122
+#: .\data\csv\Talent.csv:123
 msgid "下药无效"
 msgstr ""
 
-#: .\data\csv\Talent.csv:123
+#: .\data\csv\Talent.csv:124
 msgid "大胃王"
 msgstr ""
 
-#: .\data\csv\Talent.csv:124
+#: .\data\csv\Talent.csv:125
 msgid "昼伏夜出"
 msgstr ""
 
-#: .\data\csv\Talent.csv:124
+#: .\data\csv\Talent.csv:125
 msgid "作息规律相反"
 msgstr ""
 
-#: .\data\csv\Talent.csv:125
+#: .\data\csv\Talent.csv:126
 msgid "猫舌"
 msgstr ""
 
-#: .\data\csv\Talent.csv:125
+#: .\data\csv\Talent.csv:126
 msgid "口系减值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:126
+#: .\data\csv\Talent.csv:127
 msgid "水分身"
 msgstr ""
 
-#: .\data\csv\Talent.csv:126
+#: .\data\csv\Talent.csv:127
 msgid "可以召唤分身"
 msgstr ""
 
-#: .\data\csv\Talent.csv:128
+#: .\data\csv\Talent.csv:129
 msgid "思慕"
 msgstr ""
 
-#: .\data\csv\Talent.csv:128
+#: .\data\csv\Talent.csv:129
 msgid "爱情系第一阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:129
+#: .\data\csv\Talent.csv:130
 msgid "恋慕"
 msgstr ""
 
-#: .\data\csv\Talent.csv:129
+#: .\data\csv\Talent.csv:130
 msgid "爱情系第二阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:130
+#: .\data\csv\Talent.csv:131
 msgid "恋人"
 msgstr ""
 
-#: .\data\csv\Talent.csv:130
+#: .\data\csv\Talent.csv:131
 msgid "爱情系第三阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:131
+#: .\data\csv\Talent.csv:132
 msgid "爱侣"
 msgstr ""
 
-#: .\data\csv\Talent.csv:131
+#: .\data\csv\Talent.csv:132
 msgid "爱情系第四阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:132
+#: .\data\csv\Talent.csv:133
 msgid "指令[告白]成功后获得"
 msgstr ""
 
-#: .\data\csv\Talent.csv:134
+#: .\data\csv\Talent.csv:135
 msgid "屈从"
 msgstr ""
 
-#: .\data\csv\Talent.csv:134
+#: .\data\csv\Talent.csv:135
 msgid "隶属系第一阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:135
+#: .\data\csv\Talent.csv:136
 msgid "驯服"
 msgstr ""
 
-#: .\data\csv\Talent.csv:135
+#: .\data\csv\Talent.csv:136
 msgid "隶属系第二阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:136
+#: .\data\csv\Talent.csv:137
 msgid "宠物"
 msgstr ""
 
-#: .\data\csv\Talent.csv:136
+#: .\data\csv\Talent.csv:137
 msgid "隶属系第三阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:137
+#: .\data\csv\Talent.csv:138
 msgid "奴隶"
 msgstr ""
 
-#: .\data\csv\Talent.csv:137
+#: .\data\csv\Talent.csv:138
 msgid "隶属系第四阶段"
 msgstr ""
 
-#: .\data\csv\Talent.csv:138
+#: .\data\csv\Talent.csv:139
 msgid "指令[戴上项圈]成功后获得"
 msgstr ""
 
-#: .\data\csv\Talent.csv:140
+#: .\data\csv\Talent.csv:141
 msgid "性好奇"
 msgstr ""
 
-#: .\data\csv\Talent.csv:140
+#: .\data\csv\Talent.csv:141
 msgid "H指令加值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:141
+#: .\data\csv\Talent.csv:142
 msgid "性冷漠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:141
+#: .\data\csv\Talent.csv:142
 msgid "H指令减值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:142
+#: .\data\csv\Talent.csv:143
 msgid "性无知"
 msgstr ""
 
-#: .\data\csv\Talent.csv:143
+#: .\data\csv\Talent.csv:144
 msgid "感情缺乏"
 msgstr ""
 
-#: .\data\csv\Talent.csv:143
+#: .\data\csv\Talent.csv:144
 msgid "全体状态上升难"
 msgstr ""
 
-#: .\data\csv\Talent.csv:144
+#: .\data\csv\Talent.csv:145
 msgid "难以与越过的底线"
 msgstr ""
 
-#: .\data\csv\Talent.csv:144
+#: .\data\csv\Talent.csv:145
 msgid "全abl上升难，实行值降低"
 msgstr ""
 
-#: .\data\csv\Talent.csv:145
+#: .\data\csv\Talent.csv:146
 msgid "献身"
 msgstr ""
 
-#: .\data\csv\Talent.csv:145
+#: .\data\csv\Talent.csv:146
 msgid "abl_受虐上升易，恭顺、屈服上升易"
 msgstr ""
 
-#: .\data\csv\Talent.csv:146
+#: .\data\csv\Talent.csv:147
 msgid "倒错"
 msgstr ""
 
-#: .\data\csv\Talent.csv:146
+#: .\data\csv\Talent.csv:147
 msgid "苦痛系、SM系实行值上升、效果上升"
 msgstr ""
 
-#: .\data\csv\Talent.csv:147
+#: .\data\csv\Talent.csv:148
 msgid "讨厌男性"
 msgstr ""
 
-#: .\data\csv\Talent.csv:147
+#: .\data\csv\Talent.csv:148
 msgid "男性博士全实行值降低"
 msgstr ""
 
-#: .\data\csv\Talent.csv:148
+#: .\data\csv\Talent.csv:149
 msgid "讨厌女性"
 msgstr ""
 
-#: .\data\csv\Talent.csv:148
+#: .\data\csv\Talent.csv:149
 msgid "女性博士全实行值降低"
 msgstr ""
 
-#: .\data\csv\Talent.csv:149
+#: .\data\csv\Talent.csv:150
 msgid "施虐狂"
 msgstr ""
 
-#: .\data\csv\Talent.csv:150
+#: .\data\csv\Talent.csv:151
 msgid "受虐狂"
 msgstr ""
 
-#: .\data\csv\Talent.csv:152
+#: .\data\csv\Talent.csv:153
 msgid "勤劳"
 msgstr ""
 
-#: .\data\csv\Talent.csv:152
+#: .\data\csv\Talent.csv:153
 msgid "习得、先导上升易"
 msgstr ""
 
-#: .\data\csv\Talent.csv:153
+#: .\data\csv\Talent.csv:154
 msgid "懒散"
 msgstr ""
 
-#: .\data\csv\Talent.csv:153
+#: .\data\csv\Talent.csv:154
 msgid "习得、先导上升难"
 msgstr ""
 
-#: .\data\csv\Talent.csv:154
+#: .\data\csv\Talent.csv:155
 msgid "脆弱"
 msgstr ""
 
-#: .\data\csv\Talent.csv:154
+#: .\data\csv\Talent.csv:155
 msgid "恭顺、屈服上升易"
 msgstr ""
 
-#: .\data\csv\Talent.csv:155
+#: .\data\csv\Talent.csv:156
 msgid "坚强"
 msgstr ""
 
-#: .\data\csv\Talent.csv:155
+#: .\data\csv\Talent.csv:156
 msgid "恭顺、屈服上升难"
 msgstr ""
 
-#: .\data\csv\Talent.csv:156
+#: .\data\csv\Talent.csv:157
 msgid "热情"
 msgstr ""
 
-#: .\data\csv\Talent.csv:156
+#: .\data\csv\Talent.csv:157
 msgid "好意、快乐上升易"
 msgstr ""
 
-#: .\data\csv\Talent.csv:157
+#: .\data\csv\Talent.csv:158
 msgid "孤僻"
 msgstr ""
 
-#: .\data\csv\Talent.csv:157
+#: .\data\csv\Talent.csv:158
 msgid "好意、快乐上升难"
 msgstr ""
 
-#: .\data\csv\Talent.csv:158
+#: .\data\csv\Talent.csv:159
 msgid "欲情、羞耻上升易"
 msgstr ""
 
-#: .\data\csv\Talent.csv:159
+#: .\data\csv\Talent.csv:160
 msgid "开放"
 msgstr ""
 
-#: .\data\csv\Talent.csv:159
+#: .\data\csv\Talent.csv:160
 msgid "欲情、羞耻上升难"
 msgstr ""
 
-#: .\data\csv\Talent.csv:162
+#: .\data\csv\Talent.csv:163
 msgid "博士信息素集组"
 msgstr ""
 
-#: .\data\csv\Talent.csv:162
+#: .\data\csv\Talent.csv:163
 msgid "中级激素系能力，散发出令人着迷的气味，可以较多地增加指令的实行值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:163
+#: .\data\csv\Talent.csv:164
 msgid "博士信息素阵列"
 msgstr ""
 
-#: .\data\csv\Talent.csv:163
+#: .\data\csv\Talent.csv:164
 msgid "高级激素系能力，散发出近乎媚药等级的气味，可以极大地增加指令的实行值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:165
+#: .\data\csv\Talent.csv:166
 msgid "腔内透视"
 msgstr ""
 
-#: .\data\csv\Talent.csv:165
+#: .\data\csv\Talent.csv:166
 msgid "中级视觉系能力，可以看到对方腔内的情况"
 msgstr ""
 
-#: .\data\csv\Talent.csv:166
+#: .\data\csv\Talent.csv:167
 msgid "生理透视"
 msgstr ""
 
-#: .\data\csv\Talent.csv:166
+#: .\data\csv\Talent.csv:167
 msgid "高级视觉系能力，可以看到对方的生理周期与受精概率"
 msgstr ""
 
-#: .\data\csv\Talent.csv:167
+#: .\data\csv\Talent.csv:168
 msgid "隔空触摸"
 msgstr ""
 
-#: .\data\csv\Talent.csv:167
+#: .\data\csv\Talent.csv:168
 msgid "初级触觉系能力，可以隔空抚摸对方的身体"
 msgstr ""
 
-#: .\data\csv\Talent.csv:168
+#: .\data\csv\Talent.csv:169
 msgid "隔空脱衣"
 msgstr ""
 
-#: .\data\csv\Talent.csv:168
+#: .\data\csv\Talent.csv:169
 msgid "中级触觉系能力，可以隔空脱掉对方的衣服"
 msgstr ""
 
-#: .\data\csv\Talent.csv:169
+#: .\data\csv\Talent.csv:170
 msgid "隔空插入"
 msgstr ""
 
-#: .\data\csv\Talent.csv:169
+#: .\data\csv\Talent.csv:170
 msgid "高级触觉系能力，可以隔空插入对方的腔内"
 msgstr ""
 
-#: .\data\csv\Talent.csv:171
+#: .\data\csv\Talent.csv:172
 msgid "性爱催眠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:171
+#: .\data\csv\Talent.csv:172
 msgid "中级催眠系能力，可以让对方陷入深层催眠状态，不会抵抗任何性行为"
 msgstr ""
 
-#: .\data\csv\Talent.csv:172
+#: .\data\csv\Talent.csv:173
 msgid "高级催眠系能力，可以同时催眠复数对象，对同房间的所有人共同施加催眠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:173
+#: .\data\csv\Talent.csv:174
 msgid "心体催眠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:173
+#: .\data\csv\Talent.csv:174
 msgid "特级催眠系能力，可以使用体控和心控的催眠，单独操控被催眠的对象的身体或向心灵灌输特定的命令"
 msgstr ""
 
-#: .\data\csv\Talent.csv:175
+#: .\data\csv\Talent.csv:176
 msgid "回复慢"
 msgstr ""
 
-#: .\data\csv\Talent.csv:175
+#: .\data\csv\Talent.csv:176
 msgid "进行体力气力恢复时有减值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:176
+#: .\data\csv\Talent.csv:177
 msgid "回复快"
 msgstr ""
 
-#: .\data\csv\Talent.csv:176
+#: .\data\csv\Talent.csv:177
 msgid "进行体力气力恢复时有加值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:177
+#: .\data\csv\Talent.csv:178
 msgid "酒量差"
 msgstr ""
 
-#: .\data\csv\Talent.csv:178
+#: .\data\csv\Talent.csv:179
 msgid "酒量好"
 msgstr ""
 
-#: .\data\csv\Talent.csv:179
+#: .\data\csv\Talent.csv:180
 msgid "千杯不醉"
 msgstr ""
 
-#: .\data\csv\Talent.csv:180
+#: .\data\csv\Talent.csv:181
 msgid "灵活手指"
 msgstr ""
 
-#: .\data\csv\Talent.csv:181
+#: .\data\csv\Talent.csv:182
 msgid "灵活舌头"
 msgstr ""
 
-#: .\data\csv\Talent.csv:182
+#: .\data\csv\Talent.csv:183
 msgid "教官"
 msgstr ""
 
-#: .\data\csv\Talent.csv:183
+#: .\data\csv\Talent.csv:184
 msgid "厨艺"
 msgstr ""
 
-#: .\data\csv\Talent.csv:183
+#: .\data\csv\Talent.csv:184
 msgid "料理加值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:185
+#: .\data\csv\Talent.csv:186
 msgid "持有博士把柄"
 msgstr ""
 
-#: .\data\csv\Talent.csv:185
+#: .\data\csv\Talent.csv:186
 msgid "实行值减少"
 msgstr ""
 
-#: .\data\csv\Talent.csv:186
+#: .\data\csv\Talent.csv:187
 msgid "被博士持有把柄"
 msgstr ""
 
-#: .\data\csv\Talent.csv:186
+#: .\data\csv\Talent.csv:187
 msgid "实行值增加"
 msgstr ""
 
-#: .\data\csv\Talent.csv:188
+#: .\data\csv\Talent.csv:189
 msgid "把自己的信物交给了博士"
 msgstr ""
 
-#: .\data\csv\Talent.csv:190
+#: .\data\csv\Talent.csv:191
 msgid "女儿"
 msgstr ""
 
-#: .\data\csv\Talent.csv:190
+#: .\data\csv\Talent.csv:191
 msgid "是博士的女儿"
 msgstr ""
 
