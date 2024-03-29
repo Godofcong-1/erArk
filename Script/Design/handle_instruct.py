@@ -1051,6 +1051,7 @@ def handle_all_npc_position():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_2467,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
 )
 def handle_followed():
@@ -1064,7 +1065,6 @@ def handle_followed():
     target_data.sp_flag.is_follow = 1
     # print("进入同行模式")
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
-    update.game_update_flow(5)
 
     now_draw = draw.NormalDraw()
     now_draw.text = f"\n{target_data.name}进入智能跟随模式\n"
@@ -1076,9 +1076,11 @@ def handle_followed():
                 other_character_data = cache.character_data[npc_id]
                 if other_character_data.sp_flag.is_follow:
                     other_character_data.sp_flag.is_follow = 0
-                    now_draw.text += f"当前最大跟随数量：1人（助理除外），{other_character_data.name}退出跟随模式\n"
+                    now_draw.text += f"当前最大跟随数量：1人，{other_character_data.name}退出跟随模式\n"
     now_draw.width = 1
     now_draw.draw()
+
+    update.game_update_flow(5)
 
 
 @add_instruct(
@@ -1475,6 +1477,7 @@ def handle_collect():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_do_h():

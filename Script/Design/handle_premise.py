@@ -5875,6 +5875,23 @@ def handle_target_hp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_HP_NE_1)
+def handle_target_hp_ne_1(character_id: int) -> int:
+    """
+    交互对象体力不等于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.hit_point > 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_MP_0)
 def handle_target_mp_0(character_id: int) -> int:
     """

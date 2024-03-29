@@ -674,6 +674,8 @@ class Premise:
     """ 属性_基础 交互对象体力低于30% """
     TARGET_HP_HIGH = "t_hp_high"
     """ 属性_基础 交互对象体力高于70% """
+    TARGET_HP_NE_1 = "t_hp_ne_1"
+    """ 属性_基础 交互对象体力不等于1 """
     TARGET_MP_0 = "t_mp_0"
     """ 属性_基础 交互对象气力为0 """
     TARGET_MP_LOW = "t_mp_low"
