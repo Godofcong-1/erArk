@@ -4006,6 +4006,7 @@ def handle_neddle():
     _("戴上避孕套"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_CONDOM},
 )
 def handle_put_condom():

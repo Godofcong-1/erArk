@@ -613,6 +613,8 @@ class BehaviorEffect:
     """ 道具_增减 使用了一个项圈 """
     USE_BAG = 952
     """ 道具_增减 使用了一个干员携袋 """
+    USE_CONDOM = 953
+    """ 道具_增减 使用了一个避孕套 """
     DELETE_FOOD = 991
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992
@@ -644,6 +646,8 @@ class BehaviorEffect:
     """ 道具_使用效果 交互对象获得事前避孕药状态 """
     TARGET_NO_PREGNANCY_FROM_LAST_H = 1010
     """ 道具_使用效果 交互对象获得事后避孕药状态 """
+    WEAR_CONDOM = 1011
+    """ 道具_使用效果 自己获得戴上避孕套状态 """
 
     FIRST_KISS = 1101
     """ 初次 记录初吻 """
