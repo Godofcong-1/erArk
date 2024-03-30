@@ -186,23 +186,42 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         target_character_id = character_data.target_character_id
     target_data: game_type.Character = cache.character_data[target_character_id]
 
-    cache.shoot_position = part_cid
 
     semen_text, semen_count = common_ejaculation()
 
-    # 更新被射精污浊数据
-    update_semen_dirty(character_data.target_character_id, part_cid, part_type, semen_count)
+    # 正常射精时
+    if character_data.h_state.body_item[13][1] == False:
 
-    # 计算精液流动
-    calculate_semen_flow(character_data.target_character_id, part_cid, part_type, semen_count)
+        cache.shoot_position = part_cid
 
-    # 获取射精文本
-    if part_type == 0:
-        part_name = game_config.config_body_part[part_cid].name
-        now_text = "在" + target_data.name + "的" + part_name+ semen_text
-    elif part_type == 1:
-        cloth_text = game_config.config_clothing_type[part_cid].name
-        now_text = "在" + target_data.name + "的" + cloth_text + semen_text
+        # 更新被射精污浊数据
+        update_semen_dirty(character_data.target_character_id, part_cid, part_type, semen_count)
+
+        # 计算精液流动
+        calculate_semen_flow(character_data.target_character_id, part_cid, part_type, semen_count)
+
+        # 获取射精文本
+        if part_type == 0:
+            part_name = game_config.config_body_part[part_cid].name
+            now_text = "在" + target_data.name + "的" + part_name+ semen_text
+        elif part_type == 1:
+            cloth_text = game_config.config_clothing_type[part_cid].name
+            now_text = "在" + target_data.name + "的" + cloth_text + semen_text
+    
+    # 戴着避孕套射精时
+    else:
+
+        cache.shoot_position = 0
+
+        # 将射精量转化为避孕套中的精液量
+        character_data.h_state.condom_count[0] += 1
+        character_data.h_state.condom_count[1] += semen_count
+        # 去掉避孕套状态
+        character_data.h_state.body_item[13][1] = False
+
+        # 获取射精文本
+        now_text = "在避孕套里" + semen_text
+
 
     # 绘制射精文本
     if draw_flag:

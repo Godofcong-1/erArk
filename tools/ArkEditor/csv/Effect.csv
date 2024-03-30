@@ -311,6 +311,7 @@ cid,effect_name,effect_type,effect
 950,USE_RING,道具_增减,使用了一个戒指
 951,USE_COLLAR,道具_增减,使用了一个项圈
 952,USE_BAG,道具_增减,使用了一个干员携袋
+953,USE_CONDOM,道具_增减,使用了一个避孕套
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
 993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
@@ -327,6 +328,7 @@ cid,effect_name,effect_type,effect
 1008,TARGET_ADD_PREGNANCY_CHANCE,道具_使用效果,交互对象获得排卵促进药状态
 1009,TARGET_NO_PREGNANCY_NEXT_DAY,道具_使用效果,交互对象获得事前避孕药状态
 1010,TARGET_NO_PREGNANCY_FROM_LAST_H,道具_使用效果,交互对象获得事后避孕药状态
+1011,WEAR_CONDOM,道具_使用效果,自己获得戴上避孕套状态
 
 1101,FIRST_KISS,初次,记录初吻
 1102,FIRST_HAND_IN_HAND,初次,记录初次牵手

@@ -334,6 +334,7 @@ hp_or_mp_low,HP_OR_MP_LOW,属性_基础,自身体力或气力有一项低于30%
 hp_or_mp_ge_80,HP_OR_MP_GE_80,属性_基础,自身体力或气力有一项低于80%
 t_hp_low,TARGET_HP_LOW,属性_基础,交互对象体力低于30%
 t_hp_high,TARGET_HP_HIGH,属性_基础,交互对象体力高于70%
+t_hp_ne_1,TARGET_HP_NE_1,属性_基础,交互对象体力不等于1
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
 t_mp_low,TARGET_MP_LOW,属性_基础,交互对象气力低于30%
 t_mp_high,TARGET_MP_HIGH,属性_基础,交互对象气力高于70%
@@ -1036,6 +1037,8 @@ target_now_vibrator_insertion_anal,TARGET_NOW_VIBRATOR_INSERTION_ANAL,道具_使
 target_not_vibrator_insertion,TARGET_NOT_VIBRATOR_INSERTION_ANAL,道具_使用,交互对象A没有在插入震动棒
 target_now_milking_machine,TARGET_NOW_MILKING_MACHINE,道具_使用,交互对象正在搾乳机
 target_not_milking_machine,TARGET_NOT_MILKING_MACHINE,道具_使用,交互对象没有在搾乳机
+now_condom,NOW_CONDOM,道具_使用,自己正戴着避孕套
+now_not_condom,NOW_NOT_CONDOM,道具_使用,自己没有戴着避孕套
 
 have_collection,HAVE_COLLECTION,收集,持有藏品
 c_bonus_103,COLLECT_BONUS_102,收集,收藏奖励_102_解锁索要内裤

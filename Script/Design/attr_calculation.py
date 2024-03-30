@@ -7,6 +7,7 @@ from Script.Core import (
 )
 from Script.Design import game_time
 from Script.Config import game_config
+from Script.UI.Panel import dirty_panel
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -195,8 +196,8 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     直接将H状态结构体归0
     """
     h_state_data = old_h_state_data
-    body_item_list = ["乳头夹","阴蒂夹","V震动棒","A震动棒","搾乳机","采尿器","眼罩","肛门拉珠","持续性利尿剂","安眠药","排卵促进药","事前避孕药","事后避孕药","避孕套"]
-    # bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
+    body_item_list = dirty_panel.body_item_list
+    bondage_list = dirty_panel.bondage_list
 
     if len(h_state_data.body_item) == 0:
         for body_item in body_item_list:
@@ -214,6 +215,7 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
 
     h_state_data.insert_position = -1
     h_state_data.bondage = 0
+    h_state_data.condom_count = 0
 
     return h_state_data
 

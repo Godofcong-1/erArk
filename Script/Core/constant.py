@@ -350,6 +350,8 @@ class CharacterStatus:
     """ 低温蜡烛 """
     STATUS_URETHRAL_SWAB = 473
     """ 尿道棉棒 """
+    STATUS_TAKE_CONDOM_OUT = 474
+    """ 摘掉避孕套 """
     STATUS_NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     STATUS_NIPPLE_CLAMP_ON = 482
@@ -822,6 +824,8 @@ class Behavior:
     """ 低温蜡烛 """
     URETHRAL_SWAB = 473
     """ 尿道棉棒 """
+    TAKE_CONDOM_OUT = 474
+    """ 摘掉避孕套 """
     NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     NIPPLE_CLAMP_ON = 482
@@ -2038,6 +2042,8 @@ class Instruct:
     """ 事后避孕药 """
     PUT_CONDOM = 0
     """ 戴上避孕套 """
+    TAKE_CONDOM_OUT = 0
+    """ 摘掉避孕套 """
     SAFE_CANDLES = 0
     """ 滴蜡 """
     URETHRAL_SWAB = 0
@@ -2046,10 +2052,14 @@ class Instruct:
     """ 乳头跳蛋 """
     NIPPLE_CLAMP_ON = 0
     """ 戴上乳头夹 """
+    NIPPLE_CLAMP_OFF = 0
+    """ 取下乳头夹 """
     CLIT_LOVE_EGG = 0
     """ 阴蒂跳蛋 """
     CLIT_CLAMP_ON = 0
     """ 戴上阴蒂夹 """
+    CLIT_CLAMP_OFF = 0
+    """ 取下阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 0
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 0
@@ -2058,28 +2068,24 @@ class Instruct:
     """ 加粗震动棒 """
     HUGE_VIBRATOR_INSERTION = 0
     """ 巨型震动棒 """
+    VIBRATOR_INSERTION_OFF = 0
+    """ 拔出振动棒 """
     VIBRATOR_INSERTION_ANAL = 0
     """ 肛门插入振动棒 """
     BIG_VIBRATOR_INSERTION_ANAL = 0
     """ 加粗肛门震动棒 """
     HUGE_VIBRATOR_INSERTION_ANAL = 0
     """ 巨型肛门震动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 0
+    """ 拔出肛门振动棒 """
     CLYSTER = 0
     """ 灌肠 """
     ANAL_PLUG = 0
     """ 肛塞 """
-    ANAL_BEADS = 0
-    """ 塞入肛门拉珠 """
     CLYSTER_END = 0
     """ 拔出肛塞 """
-    NIPPLE_CLAMP_OFF = 0
-    """ 取下乳头夹 """
-    CLIT_CLAMP_OFF = 0
-    """ 取下阴蒂夹 """
-    VIBRATOR_INSERTION_OFF = 0
-    """ 拔出振动棒 """
-    VIBRATOR_INSERTION_ANAL_OFF = 0
-    """ 拔出肛门振动棒 """
+    ANAL_BEADS = 0
+    """ 塞入肛门拉珠 """
     ANAL_BEADS_OFF = 0
     """ 拔出肛门拉珠 """
     MILKING_MACHINE_ON = 0

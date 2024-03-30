@@ -2061,6 +2061,10 @@ class Premise:
     """ 道具_使用 交互对象正在搾乳机 """
     TARGET_NOT_MILKING_MACHINE = "target_not_milking_machine"
     """ 道具_使用 交互对象没有在搾乳机 """
+    NOW_CONDOM = "now_condom"
+    """ 道具_使用 自己正戴着避孕套 """
+    NOW_NOT_CONDOM = "now_not_condom"
+    """ 道具_使用 自己没有戴着避孕套 """
 
     HAVE_COLLECTION = "have_collection"
     """ 收集 持有藏品 """

@@ -1145,6 +1145,12 @@ def handle_first_sex(
         target_data.first_record.first_sex_place = target_data.position
         target_data.first_record.first_sex_posture = instruct_name
         target_data.second_behavior[1051] = 1
+        # 失去性无知
+        if target_data.talent[222] == 1:
+            target_data.talent[222] = 0
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"\n{target_data.name}失去了【性无知】\n\n"
+            now_draw.draw()
 
         # 处子血胖次
         no_pan_flag = False

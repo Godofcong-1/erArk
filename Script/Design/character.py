@@ -283,7 +283,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     target_character_id -- 目标角色id\n
     instruct_name -- 指令名字\n
     Return arguments:\n
-    bool -- 是否成功\n
+    int -- 1成功,0失败,-1无副作用返回\n
     int -- 实行值\n
     float -- 实行值与目标值的比值\n
     """
@@ -292,7 +292,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     # 对玩家为目标的指令是必定成功的
     if target_character_id == 0:
-        return [True, 1, 1.0]
+        return [1, 1, 1.0]
 
     for judge_id in game_config.config_instruct_judge_data:
         # 匹配到能力的id与能力等级对应的前提#
@@ -444,10 +444,12 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     # 性交的避孕相关修正
     if instruct_name == _("性交"):
-        # 妊娠合意、避孕套、避孕中出合意+事前避孕药，以上可直接通过
+        # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
         if (
             target_data.talent[14] or
-            (target_data.talent[13] and target_data.h_state.body_item[11][1])
+            character_data.h_state.body_item[13][1] or
+            (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
+            target_data.talent[222]
             ):
             pass
         else:
@@ -502,20 +504,42 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         calculation_text += _("+debug模式(+99999)")
 
     # 是否通过
-    final_judge = judge >= judge_data_value
+    if judge >= judge_data_value:
+        final_judge = 1
+    else:
+        final_judge = 0
     judge_rate = judge / judge_data_value
 
     # 询问信息
     ask_text = ""
     if instruct_name == _("亲吻") and target_data.talent[4]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？(")
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？")
     elif instruct_name == _("性交") and target_data.talent[0]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？(")
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？")
     elif instruct_name == _("A性交") and target_data.talent[1]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？(")
+        ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？")
+    # 询问戴套
+    condom_flag = False
+    if instruct_name == _("性交"):
+        # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
+        if (
+            target_data.talent[14] or
+            character_data.h_state.body_item[13][1] or
+            (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
+            target_data.talent[222]
+            ):
+            pass
+        else:
+            condom_flag = True
+            if judge_rate < 0.5:
+                ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
+            elif judge_rate < 1:
+                ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
+            else:
+                ask_text += _(f"{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n")
     if len(ask_text):
         # 判断态度
-        ask_text += _(" 对方的态度：")
+        ask_text += _(" (对方的态度：")
         if judge_rate < 0.5:
             ask_text += _("拒绝)\n")
         elif judge_rate < 1:
@@ -540,7 +564,10 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
-                return [0, judge, judge_rate]
+                if condom_flag:
+                    return [-1, judge, judge_rate]
+                else:
+                    return [0, judge, judge_rate]
             elif yrn == yes_draw.return_text:
                 break
 
@@ -569,6 +596,25 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if instruct_name == _("U性交") and target_data.talent[16] == 0:
             target_data.talent[16] = 1
             draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+        # 避孕相关合意
+        # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
+        if (
+            instruct_name == _("性交") and
+            target_data.talent[13] == 0 and
+            condom_flag and
+            (handle_premise.handle_reproduction_period_0(target_character_id))
+            ):
+            target_data.talent[13] = 1
+            draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
+        # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
+        if (
+            instruct_name == _("性交") and
+            target_data.talent[14] == 0 and
+            condom_flag and
+            (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
+            ):
+            target_data.talent[14] = 1
+            draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
         if len(draw_text):
             agree_draw.text = draw_text
             agree_draw.draw()

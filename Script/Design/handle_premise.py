@@ -12216,6 +12216,36 @@ def handle_target_not_milking_machine(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.NOW_CONDOM)
+def handle_now_condom(character_id: int) -> int:
+    """
+    自己正戴着避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.body_item[13][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOW_NOT_CONDOM)
+def handle_now_not_condom(character_id: int) -> int:
+    """
+    自己没有戴着避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.body_item[13][1]:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)
 def handle_have_milking_machine(character_id: int) -> int:
     """
