@@ -153,7 +153,10 @@ def input_load_save(save_id: str):
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
+        # 角色素质、经验、宝珠、能力的更新
+        update_count += update_character_config_data(value)
         tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
+        # 角色服装数据的更新
         cloth_update_count += update_chara_cloth(value, tem_character)
     if cloth_update_count:
         draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
@@ -277,6 +280,42 @@ def update_tem_character(loaded_dict):
             draw_text = _(f"存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n")
             now_draw.text = draw_text
             # now_draw.draw()
+    return update_count
+
+
+def update_character_config_data(value):
+    """
+    更新角色属性数据
+    Keyword arguments:
+    value -- 角色数据
+    """
+    update_count = 0
+    # 更新角色素质、经验、宝珠、能力
+    # 素质
+    if len(value.talent) != len(game_config.config_talent):
+        for key in game_config.config_talent:
+            if key not in value.talent:
+                value.talent[key] = 0
+                update_count += 1
+                # print(f"debug key = {key}")
+    # 经验
+    if len(value.experience) != len(game_config.config_experience):
+        for key in game_config.config_experience:
+            if key not in value.experience:
+                value.experience[key] = 0
+                update_count += 1
+    # 宝珠
+    if len(value.juel) != len(game_config.config_juel):
+        for key in game_config.config_juel:
+            if key not in value.juel:
+                value.juel[key] = 0
+                update_count += 1
+    # 能力
+    if len(value.ability) != len(game_config.config_ability):
+        for key in game_config.config_ability:
+            if key not in value.ability:
+                value.ability[key] = 0
+                update_count += 1
     return update_count
 
 
