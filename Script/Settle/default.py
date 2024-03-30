@@ -1109,14 +1109,19 @@ def handle_first_sex(
         item_flag = True
 
     # 遍历指令列表，获得指令的中文名
-    i = 0
-    for k in constant.Instruct.__dict__:
-        # print(f"debug i = {i}，k = {k}")
-        # print(f"debug 上指令 = {cache.input_cache[len(cache.input_cache)-1]}")
-        if int(cache.input_cache[len(cache.input_cache) - 1]) + 2 == i:
-            instruct_name = constant.instruct_en2cn[k]
-            break
-        i += 1
+    for i in range(len(cache.input_cache)):
+        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
+        # print(f"debug 上指令 = {last_instruct}")
+        if last_instruct == "确定":
+            continue
+        count = 0
+        for instruct_en_name in constant.Instruct.__dict__:
+            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
+            if int(last_instruct) + 2 == count:
+                instruct_name = constant.instruct_en2cn[instruct_en_name]
+                break
+            count += 1
+        break
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -1196,12 +1201,19 @@ def handle_first_a_sex(
         item_flag = True
 
     # 遍历指令列表，获得指令的中文名
-    i = 0
-    for k in constant.Instruct.__dict__:
-        if int(cache.input_cache[len(cache.input_cache) - 1]) + 2 == i:
-            instruct_name = constant.instruct_en2cn[k]
-            break
-        i += 1
+    for i in range(len(cache.input_cache)):
+        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
+        # print(f"debug 上指令 = {last_instruct}")
+        if last_instruct == "确定":
+            continue
+        count = 0
+        for instruct_en_name in constant.Instruct.__dict__:
+            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
+            if int(last_instruct) + 2 == count:
+                instruct_name = constant.instruct_en2cn[instruct_en_name]
+                break
+            count += 1
+        break
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -2766,8 +2778,7 @@ def handle_wear_condom(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.h_state.body_item[13][1] = True
+    character_data.h_state.body_item[13][1] = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
