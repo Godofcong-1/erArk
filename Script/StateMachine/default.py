@@ -777,9 +777,10 @@ def character_move_to_rest_room(character_id: int):
     find_flag = False
     for place in constant.place_data["Rest_Room"]:
         if place.split("\\")[0] == now_position:
-            to_rest_room = map_handle.get_map_system_path_for_str(place)
-            find_flag = True
-            break
+            if map_handle.judge_scene_accessible(place,character_id) == "open":
+                to_rest_room = map_handle.get_map_system_path_for_str(place)
+                find_flag = True
+                break
     if not find_flag:
         to_rest_room = map_handle.get_map_system_path_for_str(
     random.choice(constant.place_data["Rest_Room"])
