@@ -654,15 +654,15 @@ class Character_FirstNPC:
         if self.chest_filter_flag == 0:
             self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         elif self.chest_filter_flag == 1:
-            self.id_list = self.chest_filter_id_dict["绝壁"]
+            self.id_list = self.chest_filter_id_dict[_("绝壁")]
         elif self.chest_filter_flag == 2:
-            self.id_list = self.chest_filter_id_dict["贫乳"]
+            self.id_list = self.chest_filter_id_dict[_("贫乳")]
         elif self.chest_filter_flag == 3:
-            self.id_list = self.chest_filter_id_dict["普乳"]
+            self.id_list = self.chest_filter_id_dict[_("普乳")]
         elif self.chest_filter_flag == 4:
-            self.id_list = self.chest_filter_id_dict["巨乳"]
+            self.id_list = self.chest_filter_id_dict[_("巨乳")]
         elif self.chest_filter_flag == 5:
-            self.id_list = self.chest_filter_id_dict["爆乳"]
+            self.id_list = self.chest_filter_id_dict[_("爆乳")]
         self.age_filter_flag = 0
     
     def age_filter(self):
@@ -671,17 +671,17 @@ class Character_FirstNPC:
         if self.age_filter_flag == 0:
             self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         elif self.age_filter_flag == 1:
-            self.id_list = self.age_filter_id_dict["幼女"]
+            self.id_list = self.age_filter_id_dict[_("幼女")]
         elif self.age_filter_flag == 2:
-            self.id_list = self.age_filter_id_dict["萝莉"]
+            self.id_list = self.age_filter_id_dict[_("萝莉")]
         elif self.age_filter_flag == 3:
-            self.id_list = self.age_filter_id_dict["少女"]
+            self.id_list = self.age_filter_id_dict[_("少女")]
         elif self.age_filter_flag == 4:
-            self.id_list = self.age_filter_id_dict["大姐姐"]
+            self.id_list = self.age_filter_id_dict[_("大姐姐")]
         elif self.age_filter_flag == 5:
-            self.id_list = self.age_filter_id_dict["熟女"]
+            self.id_list = self.age_filter_id_dict[_("熟女")]
         elif self.age_filter_flag == 6:
-            self.id_list = self.age_filter_id_dict["人妻"]
+            self.id_list = self.age_filter_id_dict[_("人妻")]
         self.chest_filter_flag = 0
 
     def race_filter(self):

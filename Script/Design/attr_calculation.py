@@ -215,7 +215,7 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
 
     h_state_data.insert_position = -1
     h_state_data.bondage = 0
-    h_state_data.condom_count = 0
+    h_state_data.condom_count = [0, 0]
 
     return h_state_data
 

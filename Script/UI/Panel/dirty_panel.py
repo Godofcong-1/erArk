@@ -346,6 +346,8 @@ class SeeCharacterBodyPanel:
             all_part_text_list.append(now_text)
 
         # 避孕套文本
+        if not len(character_data.h_state.condom_count):
+            character_data.h_state.condom_count = [0, 0]
         if character_data.h_state.condom_count[0]:
             condom_text = f" 用掉了{str(character_data.h_state.condom_count[0])}个避孕套，总精液量{str(character_data.h_state.condom_count[1])}ml"
             all_part_text_list.append(condom_text)
