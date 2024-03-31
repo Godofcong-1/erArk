@@ -2813,15 +2813,15 @@ msgid "眼镜"
 msgstr ""
 
 #: .\data\csv\ClothingType.csv:8
-msgid "耳部"
+msgid "耳饰"
 msgstr ""
 
 #: .\data\csv\ClothingType.csv:9
-msgid "脖子"
+msgid "脖饰"
 msgstr ""
 
 #: .\data\csv\ClothingType.csv:10
-msgid "嘴部"
+msgid "口饰"
 msgstr ""
 
 #: .\data\csv\ClothingType.csv:11
