@@ -32,7 +32,7 @@ def common_ejaculation():
     random_weight = random.uniform(0.8, 1.2)
 
     # 如果已经没有精液了，则不射精
-    if character_data.semen_point <= 1:
+    if character_data.semen_point + character_data.tem_extra_semen_point <= 0:
         return "只流出了些许前列腺液，已经射不出精液了",0
     else:
         # 基础射精值，小中多射精区分
@@ -45,6 +45,9 @@ def common_ejaculation():
         if character_data.h_state.orgasm_level[3] % 3 == 2:
             semen_count = int(45 * random_weight)
             semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+
+        # 射精量不高于剩余精液值
+        semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
 
         # 更新射精计数和总精液量
         character_data.h_state.orgasm_level[3] += 1
@@ -60,7 +63,7 @@ def common_ejaculation():
         else:
             semen_count -= character_data.tem_extra_semen_point
             character_data.tem_extra_semen_point = 0
-        character_data.semen_point -= semen_count
+            character_data.semen_point -= semen_count
         character_data.semen_point = max(0, character_data.semen_point)
 
         return semen_text,semen_count
