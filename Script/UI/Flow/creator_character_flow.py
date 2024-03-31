@@ -404,7 +404,8 @@ class Character_FirstNPC:
         info_draw.width = 1
         info_draw.text = _(f" 当前初始干员有：")
         info_draw.text += _(f"\n   基础:")
-        for character_id in cache.npc_id_got:
+        npc_id_got_list = sorted(cache.npc_id_got)
+        for character_id in npc_id_got_list:
             npc_character_data = cache.character_data[character_id]
             if npc_character_data.name in constant.first_NPC_name_set:
                 info_draw.text += f" ●{npc_character_data.name}"

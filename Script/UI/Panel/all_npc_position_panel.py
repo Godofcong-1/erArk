@@ -97,7 +97,8 @@ class All_Npc_Position_Panel:
 
             # 遍历角色id
             chara_count = 0
-            for npc_id in cache.npc_id_got:
+            npc_id_got_list = sorted(cache.npc_id_got)
+            for npc_id in npc_id_got_list:
                 if npc_id != 0:
                     chara_count += 1
                     # npc_list.append(npc_id)
