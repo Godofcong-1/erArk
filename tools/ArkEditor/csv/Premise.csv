@@ -355,6 +355,7 @@ t_tired_100,TARGET_TIRED_100,属性_基础,交互对象疲劳条100%，当场爆
 urinate_le_49,URINATE_LE_49,属性_基础,尿意条≤49%，可以继续喝咖啡
 urinate_le_79,URINATE_LE_79,属性_基础,尿意条≤79%，不需要排尿
 urinate_ge_80,URINATE_GE_80,属性_基础,尿意条≥80%，需要排尿
+urinate_ge_100,URINATE_GE_100,属性_基础,尿意条≥100%，需要当场排尿
 t_urinate_le_49,TARGET_URINATE_LE_49,属性_基础,交互对象尿意条≤49%，可以继续喝咖啡
 t_urinate_le_79,TARGET_URINATE_LE_79,属性_基础,交互对象尿意条≤79%，不需要排尿
 t_urinate_ge_80,TARGET_URINATE_GE_80,属性_基础,交互对象尿意条≥80%，需要排尿

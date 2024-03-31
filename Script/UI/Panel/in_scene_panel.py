@@ -1,4 +1,3 @@
-from os import name
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel

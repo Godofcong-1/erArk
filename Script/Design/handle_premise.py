@@ -13004,6 +13004,24 @@ def handle_urinate_ge_80(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.URINATE_GE_100)
+def handle_urinate_ge_100(character_id: int) -> int:
+    """
+    尿意条≥100%，需要当场排尿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value >= 1:
+        return character_data.urinate_point * 5
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_URINATE_LE_49)
 def handle_target_urinate_le_49(character_id: int) -> int:
     """

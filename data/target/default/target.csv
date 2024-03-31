@@ -47,6 +47,7 @@ ai的目标,,,
 66,80,normal_1267|urinate_ge_80,1267正常（可能AI跟随、服装异常或意识模糊），尿意值到80%，则进入要撒尿状态
 67,511,pee_flag_1|not_in_toilet_female,要撒尿状态，不在洗手间里，则去洗手间
 68,50,pee_flag_1|in_toilet_female,要撒尿状态，且正在洗手间里，则解手
+69,50,urinate_ge_100|not_in_toilet_female,尿意值到100%，不在洗手间里，当场直接排尿
 
 71,2,unnormal_27,27异常（妊娠限制或监禁），则原地待机30分钟
 72,43,unnormal_27|be_bagged_0|mp_0,27异常（妊娠限制或监禁），没有在被装袋搬走，气力0，则休息

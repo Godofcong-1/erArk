@@ -1,14 +1,15 @@
-import datetime
+from types import FunctionType
 import random
-from typing import List
 from Script.Settle import default
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
-from Script.Core import cache_control, game_type, constant
+from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 line_feed = draw.NormalDraw()
 """ 换行绘制对象 """
 line_feed.text = "\n"
@@ -1669,6 +1670,10 @@ def character_pee(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.PEE
     character_data.state = constant.CharacterStatus.STATUS_PEE
     character_data.behavior.duration = 5
+    if handle_premise.handle_urinate_ge_100(character_id) and handle_premise.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
+        now_draw = draw.WaitDraw()
+        now_draw.text = _(f"尿意达到了极限的{character_data.name}实在无法继续憋下去，被迫当场尿了出来\n")
+        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.START_SHOWER)
