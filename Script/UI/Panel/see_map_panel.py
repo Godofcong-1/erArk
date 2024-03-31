@@ -52,6 +52,8 @@ class SeeMapPanel:
             line_feed.draw()
             if cache.now_panel_id != constant.Panel.SEE_MAP:
                 break
+            if len(self.now_map) >= 2 and self.now_map[-1] == "0":
+                self.now_map.pop()
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
             map_name = attr_text.get_map_path_text(self.now_map)
