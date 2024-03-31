@@ -99,6 +99,8 @@ class HandleFilterButtonList:
         instruct_name = constant.handle_instruct_name_data[self.index]
         button_text = f"[{self.index}]{instruct_name}"
 
+        if self.index not in cache.instruct_index_filter:
+            cache.instruct_index_filter[self.index] = 1
         text_style = "standard" if cache.instruct_index_filter[self.index] else "deep_gray"
 
         name_draw = draw.LeftButton(
