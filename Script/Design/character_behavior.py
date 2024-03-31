@@ -841,7 +841,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     # 最少为1分钟，以免随机取值函数出错
     true_add_time = max(true_add_time, 0)
 
-    tired_change = int(true_add_time / 6)
+    tired_change = max(int(true_add_time / 6), 1)
     # 仅计算在不睡觉时的正常行动结算疲劳值
     if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
         now_character_data.tired_point += tired_change
@@ -849,7 +849,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
     # 休息时小幅度减少疲劳值
     elif now_character_data.state == constant.CharacterStatus.STATUS_REST:
-        now_character_data.tired_point -= tired_change
+        now_character_data.tired_point -= tired_change / 2
         now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
 
         # 疲劳归零则直接结算当前行动

@@ -6030,7 +6030,7 @@ def handle_tired_le_84(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     value = character_data.tired_point / 160
-    if value <= 0.89:
+    if value <= 0.84:
         return 1
     else:
         return 0
@@ -6048,7 +6048,7 @@ def handle_tired_ge_85(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     value = character_data.tired_point / 160
-    if value > 0.89:
+    if value > 0.84:
         return character_data.tired_point * 5
     else:
         return 0
@@ -6169,7 +6169,7 @@ def handle_t_tired_le_84(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_TIRED_GE_85)
 def handle_t_tired_ge_85(character_id: int) -> int:
     """
-    交互对象疲劳条≥90%
+    交互对象疲劳条≥85%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -6179,7 +6179,7 @@ def handle_t_tired_ge_85(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
 
     value = target_data.tired_point / 160
-    if value > 0.85:
+    if value > 0.84:
         return target_data.tired_point * 5
     else:
         return 0
