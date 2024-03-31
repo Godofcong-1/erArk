@@ -22,6 +22,11 @@ def own_charcter_move(target_scene: list):
         if character_data.sp_flag.move_stop:
             character_data.sp_flag.move_stop = 0
             break
+        # 如果当前场景已锁，离开时会把锁解开
+        now_scene_data = cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)]
+        if now_scene_data.close_flag == 1:
+            now_scene_data.close_flag = 0
+            print(f"debug {character_data.name}离开{now_scene_data.scene_name}时，解开了锁")
         if character_data.position != target_scene:
             (
                 move_now,
