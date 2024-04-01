@@ -841,7 +841,10 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     # 最少为1分钟，以免随机取值函数出错
     true_add_time = max(true_add_time, 0)
 
-    tired_change = max(int(true_add_time / 6), 1)
+    tired_change = int(true_add_time / 6)
+    # 基础行动结算1疲劳值
+    if true_add_time == 5:
+        tired_change = 1
     # 仅计算在不睡觉时的正常行动结算疲劳值
     if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
         now_character_data.tired_point += tired_change
@@ -881,7 +884,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
         add_urinate *= cache.system_setting[6] / 2
         now_character_data.urinate_point += int(add_urinate)
-        now_character_data.urinate_point = min(now_character_data.urinate_point,240)
+        now_character_data.urinate_point = min(now_character_data.urinate_point,300)
 
     # 结算饥饿值
     add_hunger = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
