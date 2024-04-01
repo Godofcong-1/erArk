@@ -278,7 +278,7 @@ class Ejaculation_Panel:
                 # 绘制身体部位按钮
                 for body_part_cid in game_config.config_body_part:
                     part_name = game_config.config_body_part[body_part_cid].name
-                    draw_text = f"[{body_part_cid} {part_name}]"
+                    draw_text = f"[{body_part_cid}]{part_name}"
                     # print("debug draw_text = ",draw_text)
                     show_flag = self.part_can_choose(body_part_cid)
                     if show_flag:
@@ -293,7 +293,7 @@ class Ejaculation_Panel:
                 # 绘制服装部位按钮
                 for clothing_type in game_config.config_clothing_type:
                     cloth_name = game_config.config_clothing_type[clothing_type].name
-                    draw_text = f"[{clothing_type} {cloth_name}]"
+                    draw_text = f"[{clothing_type}]{cloth_name}"
                     show_flag = len(target_data.cloth.cloth_wear[clothing_type])
                     if show_flag:
                         name_draw = draw.CenterButton(

@@ -256,7 +256,7 @@ def judge_character_tired_sleep(character_id : int):
     if character_id:
         if character_data.sp_flag.is_h or character_data.sp_flag.is_follow:
             
-            if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
+            if character_data.hit_point <= 1 or character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.NormalDraw()
@@ -268,9 +268,14 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
                 # H时
-                elif character_data.sp_flag.is_h and not character_data.sp_flag.unconscious_h:
+                # 去掉了不在无意识H模式下的限制
+                # elif character_data.sp_flag.is_h and not character_data.sp_flag.unconscious_h:
+                elif character_data.sp_flag.is_h:
+                    character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
+                    pl_character_data.behavior.duration = 5
+                    # update.game_update_flow(5)
 
                 # 新：交给指令里的end_h结算(旧：数据结算)
                 # character_data.sp_flag.is_h = False
