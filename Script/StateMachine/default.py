@@ -1670,7 +1670,7 @@ def character_pee(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.PEE
     character_data.state = constant.CharacterStatus.STATUS_PEE
     character_data.behavior.duration = 5
-    if handle_premise.handle_urinate_ge_100(character_id) and handle_premise.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
+    if handle_premise.handle_urinate_ge_125(character_id) and handle_premise.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
         now_draw = draw.WaitDraw()
         now_draw.text = _(f"尿意达到了极限的{character_data.name}实在无法继续憋下去，被迫当场尿了出来\n")
         now_draw.draw()
