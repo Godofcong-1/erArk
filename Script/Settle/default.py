@@ -1103,10 +1103,7 @@ def handle_first_sex(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-    # 判定是否为道具性交
     item_flag = False
-    if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.VIBRATOR_INSERTION):
-        item_flag = True
 
     # 遍历指令列表，获得指令的中文名
     for i in range(len(cache.input_cache)):
@@ -1114,6 +1111,11 @@ def handle_first_sex(
         # print(f"debug 上指令 = {last_instruct}")
         if last_instruct == "确定":
             continue
+
+        # 判定是否为道具性交
+        if cache.input_cache[len(cache.input_cache) - 1 - i] == str(constant.Instruct.VIBRATOR_INSERTION):
+            item_flag = True
+
         count = 0
         for instruct_en_name in constant.Instruct.__dict__:
             # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
@@ -1516,6 +1518,9 @@ def handle_hypnosis_cancel(
         return
     if target_character_data.sp_flag.unconscious_h >= 4:
         target_character_data.sp_flag.unconscious_h = 0
+    # 空气催眠则重置催眠地点和解开门锁
+    if target_character_data.sp_flag.unconscious_h == 5:
+        character_data.pl_ability.air_hypnosis_position = ""
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)

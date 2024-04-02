@@ -119,7 +119,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
         judge_character_cant_move(character_id) # 无法自由移动的角色
         judge_character_follow(character_id) # 跟随模式
-        judge_character_h_and_obscenity(character_id) # H与猥亵
+        judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
 
     # 处理公共资源
     update_cafeteria() # 刷新食堂的饭
@@ -139,7 +139,6 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
 
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(character_id)
-            # logging.debug(f'角色编号{character_id}空闲，执行可用行动，到结算为止耗时为{end_judge - start_character}')
             # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
@@ -158,8 +157,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             if time_judge:
                 cache.over_behavior_character.add(character_id)
         #         print(f"debug time_judge")
-        # 最后结算疲劳
-        judge_character_tired_sleep(character_id)
+        judge_character_tired_sleep(character_id) # 结算疲劳
+        judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
         # print(f"debug 玩家结算完毕")
 
     # 再处理NPC部分
@@ -287,7 +286,7 @@ def judge_character_tired_sleep(character_id : int):
         if character_data.sp_flag.tired and target_data.sp_flag.is_h:
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
-            character_data.sp_flag.tired = 0
+            target_data.sp_flag.is_h = False
 
 
 def judge_character_status(character_id: int) -> int:
@@ -669,9 +668,9 @@ def judge_character_follow(character_id: int) -> int:
     return 1
 
 
-def judge_character_h_and_obscenity(character_id: int) -> int:
+def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     """
-    维持H状态与猥亵\n
+    判断H状态、猥亵与无意识\n
     Keyword arguments:
     character_id -- 角色id\n
     Return arguments:
@@ -680,7 +679,19 @@ def judge_character_h_and_obscenity(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
-    # 如果不在同一位置，则结束H状态
+    # 玩家部分
+    if character_id == 0 and character_data.position != character_data.pl_ability.air_hypnosis_position:
+        character_data.pl_ability.air_hypnosis_position = ""
+
+    # 非玩家部分
+    if character_id == 0:
+        return 1
+
+    # 空气催眠中如果不在同一位置，则结束
+    if character_data.sp_flag.unconscious_h == 5 and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
+        character_data.sp_flag.unconscious_h = 0
+
+    # 如果不在同一位置，则结束H状态和无意识状态
     if character_data.sp_flag.is_h and character_data.position != pl_character_data.position:
         character_data.sp_flag.is_h = False
         character_data.sp_flag.unconscious_h = 0

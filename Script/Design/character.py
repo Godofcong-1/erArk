@@ -211,6 +211,9 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 好感香薰修正
     if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
         fix += 0.5
+    # 空气催眠置为零
+    if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
+        fix = 0
     favorability *= fix
     return favorability
 
@@ -271,6 +274,9 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     # 好感香薰修正
     if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
         fix += 0.5
+    # 空气催眠置为零
+    if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
+        fix = 0
     trust_add = add_time / 60 * fix
     return trust_add
 

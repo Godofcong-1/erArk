@@ -605,6 +605,8 @@ class PLAYER_ABILITY:
         """ 今日已消耗的理智值 """
         self.hypnosis_type: int = 0
         """ 催眠类型 """
+        self.air_hypnosis_position: str = ""
+        """ 空气催眠地点 """
 
 
 # class Height:

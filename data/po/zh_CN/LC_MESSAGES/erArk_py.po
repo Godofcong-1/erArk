@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-31 23:59+0800\n"
+"POT-Creation-Date: 2024-04-02 18:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,6 +46,7 @@ msgid "您输入的选项无效，请重试\n"
 msgstr ""
 
 #: .\Script\Core\game_init.py:67
+#, python-brace-format
 msgid "版本信息：{normal_config.config_normal.verson}\n"
 msgstr ""
 
@@ -178,6 +179,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\basement.py:426
+#, python-brace-format
 msgid ""
 "上次结算是{cache.rhodes_island.assembly_line[assembly_line_id][4]}时，到现在"
 "已过{max_time}小时，"
@@ -189,10 +191,12 @@ msgid "由于原料不足，最大可以生产{produce_num}个，实际"
 msgstr ""
 
 #: .\Script\Design\basement.py:429
+#, python-brace-format
 msgid "共生产了{produce_num}个{game_config.config_resouce[product_id].name}"
 msgstr ""
 
 #: .\Script\Design\basement.py:433
+#, python-brace-format
 msgid ""
 "，由于仓库容量不足，{game_config.config_resouce[product_id].name}已达上限数量"
 "{cache.rhodes_island.warehouse_capacity}"
@@ -206,6 +210,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\basement.py:475 .\Script\Design\basement.py:511
+#, python-brace-format
 msgid ""
 "，由于仓库容量不足，{resouce_data.name}已达上限数量{cache.rhodes_island."
 "warehouse_capacity}"
@@ -268,6 +273,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\basement.py:709
+#, python-brace-format
 msgid ""
 "\n"
 " ○【{cache.character_data[visitor_id].name}】作为临时访客抵达了罗德岛\n"
@@ -288,6 +294,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\basement.py:800
+#, python-brace-format
 msgid ""
 "\n"
 "今日剩余待处理公务量为{now_work}，因此今日罗德岛的各设施的总效率为{cache."
@@ -325,82 +332,82 @@ msgstr ""
 msgid "博士办公室"
 msgstr ""
 
-#: .\Script\Design\character.py:307
+#: .\Script\Design\character.py:313
 msgid "需要基础实行值至少为"
 msgstr ""
 
-#: .\Script\Design\character.py:309
+#: .\Script\Design\character.py:315
 msgid "需要性爱实行值至少为"
 msgstr ""
 
-#: .\Script\Design\character.py:310
+#: .\Script\Design\character.py:316
 msgid "当前值为："
 msgstr ""
 
-#: .\Script\Design\character.py:316
+#: .\Script\Design\character.py:322
 msgid "好感修正("
 msgstr ""
 
-#: .\Script\Design\character.py:322
+#: .\Script\Design\character.py:328
 msgid "+信赖修正("
 msgstr ""
 
-#: .\Script\Design\character.py:329
+#: .\Script\Design\character.py:335
 msgid "+状态修正("
 msgstr ""
 
-#: .\Script\Design\character.py:335
+#: .\Script\Design\character.py:341
 msgid "+能力修正("
 msgstr ""
 
-#: .\Script\Design\character.py:342
+#: .\Script\Design\character.py:348
 msgid "+刻印修正("
 msgstr ""
 
-#: .\Script\Design\character.py:348
+#: .\Script\Design\character.py:354
 msgid "+心情修正("
 msgstr ""
 
-#: .\Script\Design\character.py:356
+#: .\Script\Design\character.py:362
 msgid "+陷落修正("
 msgstr ""
 
-#: .\Script\Design\character.py:361
+#: .\Script\Design\character.py:367
 msgid "+讨厌男性(-"
 msgstr ""
 
-#: .\Script\Design\character.py:366
+#: .\Script\Design\character.py:372
 msgid "+难以越过的底线(-"
 msgstr ""
 
-#: .\Script\Design\character.py:373
+#: .\Script\Design\character.py:379
 msgid "+淫乱(+30)"
 msgstr ""
 
-#: .\Script\Design\character.py:399
+#: .\Script\Design\character.py:405
 msgid "+当前场景有其他人在("
 msgstr ""
 
-#: .\Script\Design\character.py:406
+#: .\Script\Design\character.py:412
 msgid "+助理助攻(+50)"
 msgstr ""
 
-#: .\Script\Design\character.py:413
+#: .\Script\Design\character.py:419
 msgid "+今天H被打断过(-"
 msgstr ""
 
-#: .\Script\Design\character.py:418
+#: .\Script\Design\character.py:424
 msgid "+监禁中(+400)"
 msgstr ""
 
-#: .\Script\Design\character.py:423
+#: .\Script\Design\character.py:429
 msgid "+睡眠(+1000)"
 msgstr ""
 
-#: .\Script\Design\character.py:426 .\Script\Design\character.py:446
-#: .\Script\Design\character.py:517 .\Script\Design\character.py:523
-#: .\Script\Design\character.py:590 .\Script\Design\character.py:602
-#: .\Script\Design\character.py:611 .\Script\Design\handle_instruct.py:4245
+#: .\Script\Design\character.py:432 .\Script\Design\character.py:452
+#: .\Script\Design\character.py:523 .\Script\Design\character.py:529
+#: .\Script\Design\character.py:596 .\Script\Design\character.py:608
+#: .\Script\Design\character.py:617 .\Script\Design\handle_instruct.py:4245
 #: .\Script\Design\handle_instruct.py:4273
 #: .\Script\Design\handle_instruct.py:4301
 #: .\Script\Design\handle_instruct.py:4329
@@ -413,12 +420,12 @@ msgstr ""
 msgid "性交"
 msgstr ""
 
-#: .\Script\Design\character.py:428
+#: .\Script\Design\character.py:434
 msgid "+处女(-100)"
 msgstr ""
 
-#: .\Script\Design\character.py:431 .\Script\Design\character.py:519
-#: .\Script\Design\character.py:593 .\Script\Design\handle_instruct.py:4527
+#: .\Script\Design\character.py:437 .\Script\Design\character.py:525
+#: .\Script\Design\character.py:599 .\Script\Design\handle_instruct.py:4527
 #: .\Script\Design\handle_instruct.py:4550
 #: .\Script\Design\handle_instruct.py:4573
 #: .\Script\Design\handle_instruct.py:4596
@@ -430,63 +437,63 @@ msgstr ""
 msgid "A性交"
 msgstr ""
 
-#: .\Script\Design\character.py:433
+#: .\Script\Design\character.py:439
 msgid "+Ａ处女(-200)"
 msgstr ""
 
-#: .\Script\Design\character.py:436 .\Script\Design\character.py:596
+#: .\Script\Design\character.py:442 .\Script\Design\character.py:602
 msgid "U性交"
 msgstr ""
 
-#: .\Script\Design\character.py:438
+#: .\Script\Design\character.py:444
 msgid "+Ｕ处女(-300)"
 msgstr ""
 
-#: .\Script\Design\character.py:441 .\Script\Design\character.py:478
-#: .\Script\Design\character.py:515 .\Script\Design\character.py:587
+#: .\Script\Design\character.py:447 .\Script\Design\character.py:484
+#: .\Script\Design\character.py:521 .\Script\Design\character.py:593
 #: .\Script\Design\handle_instruct.py:2406
 #: .\Script\Design\handle_instruct.py:2417
 msgid "亲吻"
 msgstr ""
 
-#: .\Script\Design\character.py:443
+#: .\Script\Design\character.py:449
 msgid "+初吻(-50)"
 msgstr ""
 
-#: .\Script\Design\character.py:462
+#: .\Script\Design\character.py:468
 msgid "+安全期(-10)"
 msgstr ""
 
-#: .\Script\Design\character.py:465
+#: .\Script\Design\character.py:471
 msgid "+普通期(-50)"
 msgstr ""
 
-#: .\Script\Design\character.py:468
+#: .\Script\Design\character.py:474
 msgid "+危险期(-100)"
 msgstr ""
 
-#: .\Script\Design\character.py:471
+#: .\Script\Design\character.py:477
 msgid "+排卵期(-300)"
 msgstr ""
 
-#: .\Script\Design\character.py:478
+#: .\Script\Design\character.py:484
 msgid "骚扰"
 msgstr ""
 
-#: .\Script\Design\character.py:494
+#: .\Script\Design\character.py:500
 #, python-brace-format
 msgid "+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)"
 msgstr ""
 
-#: .\Script\Design\character.py:498
+#: .\Script\Design\character.py:504
 msgid "+催眠(+0,理智不足,催眠解除)"
 msgstr ""
 
-#: .\Script\Design\character.py:504
+#: .\Script\Design\character.py:510
 msgid "+debug模式(+99999)"
 msgstr ""
 
-#: .\Script\Design\character.py:516
+#: .\Script\Design\character.py:522
 #, python-brace-format
 msgid ""
 "\n"
@@ -494,7 +501,7 @@ msgid ""
 " 是否要夺走{target_data.name}的初吻？"
 msgstr ""
 
-#: .\Script\Design\character.py:518
+#: .\Script\Design\character.py:524
 #, python-brace-format
 msgid ""
 "\n"
@@ -502,7 +509,7 @@ msgid ""
 " 是否要夺走{target_data.name}的处女？"
 msgstr ""
 
-#: .\Script\Design\character.py:520
+#: .\Script\Design\character.py:526
 #, python-brace-format
 msgid ""
 "\n"
@@ -510,52 +517,51 @@ msgid ""
 " 是否要夺走{target_data.name}的A处女？"
 msgstr ""
 
-#: .\Script\Design\character.py:535
+#: .\Script\Design\character.py:541
 #, python-brace-format
 msgid "{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:537
+#: .\Script\Design\character.py:543
 #, python-brace-format
 msgid "{target_data.name}希望你戴上避孕套，是否坚持不带套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:539
+#: .\Script\Design\character.py:545
 #, python-brace-format
 msgid ""
 "{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带"
 "套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:542
+#: .\Script\Design\character.py:548
 msgid " (对方的态度："
 msgstr ""
 
-#: .\Script\Design\character.py:544
+#: .\Script\Design\character.py:550
 msgid "拒绝)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:546
+#: .\Script\Design\character.py:552
 msgid "犹豫)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:548
+#: .\Script\Design\character.py:554
 msgid "接受)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:558 .\Script\Design\handle_instruct.py:1664
+#: .\Script\Design\character.py:564 .\Script\Design\handle_instruct.py:1664
 #: .\Script\Design\handle_instruct.py:1702
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
 #: .\Script\UI\Panel\aromatherapy.py:110
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:381
-#: .\Script\UI\Panel\normal_panel.py:446
-#: .\Script\UI\Panel\recruit_panel.py:288
+#: .\Script\UI\Panel\normal_panel.py:446 .\Script\UI\Panel\recruit_panel.py:288
 #: .\Script\UI\Panel\resource_exchange_panel.py:157
 msgid "[确定]"
 msgstr ""
 
-#: .\Script\Design\character.py:558 .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\Design\character.py:564 .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
 #: .\Script\UI\Panel\aromatherapy.py:110
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:381
@@ -564,7 +570,7 @@ msgstr ""
 msgid "确定"
 msgstr ""
 
-#: .\Script\Design\character.py:561
+#: .\Script\Design\character.py:567
 #: .\Script\UI\Flow\creator_character_flow.py:609
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
@@ -584,8 +590,7 @@ msgstr ""
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:162
-#: .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:139
 #: .\Script\UI\Panel\food_shop_panel.py:78
 #: .\Script\UI\Panel\food_shop_panel.py:170
 #: .\Script\UI\Panel\h_item_shop_panel.py:105
@@ -607,12 +612,12 @@ msgstr ""
 #: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
 #: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
 #: .\Script\UI\Panel\normal_panel.py:449 .\Script\UI\Panel\normal_panel.py:572
-#: .\Script\UI\Panel\originium_arts.py:106
-#: .\Script\UI\Panel\originium_arts.py:290
-#: .\Script\UI\Panel\originium_arts.py:386
-#: .\Script\UI\Panel\originium_arts.py:476
-#: .\Script\UI\Panel\originium_arts.py:574
-#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\originium_arts.py:126
+#: .\Script\UI\Panel\originium_arts.py:310
+#: .\Script\UI\Panel\originium_arts.py:406
+#: .\Script\UI\Panel\originium_arts.py:501
+#: .\Script\UI\Panel\originium_arts.py:599
+#: .\Script\UI\Panel\originium_arts.py:648 .\Script\UI\Panel\prts_panel.py:95
 #: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
 #: .\Script\UI\Panel\recruit_panel.py:184
 #: .\Script\UI\Panel\recruit_panel.py:293
@@ -621,12 +626,11 @@ msgstr ""
 #: .\Script\UI\Panel\see_character_info_panel.py:2134
 #: .\Script\UI\Panel\see_item_info_panel.py:107
 #: .\Script\UI\Panel\see_save_info_panel.py:67
-#: .\Script\UI\Panel\system_setting.py:82
-#: .\Script\UI\Panel\undress_panel.py:55
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
 msgid "[返回]"
 msgstr ""
 
-#: .\Script\Design\character.py:561
+#: .\Script\Design\character.py:567
 #: .\Script\UI\Flow\creator_character_flow.py:609
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
@@ -646,8 +650,7 @@ msgstr ""
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:162
-#: .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:139
 #: .\Script\UI\Panel\food_shop_panel.py:78
 #: .\Script\UI\Panel\food_shop_panel.py:170
 #: .\Script\UI\Panel\get_up_panel.py:84 .\Script\UI\Panel\get_up_panel.py:85
@@ -670,12 +673,12 @@ msgstr ""
 #: .\Script\UI\Panel\navigation_panel.py:208
 #: .\Script\UI\Panel\normal_panel.py:154 .\Script\UI\Panel\normal_panel.py:228
 #: .\Script\UI\Panel\normal_panel.py:266 .\Script\UI\Panel\normal_panel.py:354
-#: .\Script\UI\Panel\originium_arts.py:106
-#: .\Script\UI\Panel\originium_arts.py:290
-#: .\Script\UI\Panel\originium_arts.py:386
-#: .\Script\UI\Panel\originium_arts.py:476
-#: .\Script\UI\Panel\originium_arts.py:574
-#: .\Script\UI\Panel\originium_arts.py:623 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\originium_arts.py:126
+#: .\Script\UI\Panel\originium_arts.py:310
+#: .\Script\UI\Panel\originium_arts.py:406
+#: .\Script\UI\Panel\originium_arts.py:501
+#: .\Script\UI\Panel\originium_arts.py:599
+#: .\Script\UI\Panel\originium_arts.py:648 .\Script\UI\Panel\prts_panel.py:95
 #: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
 #: .\Script\UI\Panel\recruit_panel.py:184
 #: .\Script\UI\Panel\recruit_panel.py:293
@@ -687,8 +690,7 @@ msgstr ""
 #: .\Script\UI\Panel\see_map_panel.py:187
 #: .\Script\UI\Panel\see_save_info_panel.py:67
 #: .\Script\UI\Panel\see_save_info_panel.py:193
-#: .\Script\UI\Panel\system_setting.py:82
-#: .\Script\UI\Panel\undress_panel.py:55
+#: .\Script\UI\Panel\system_setting.py:82 .\Script\UI\Panel\undress_panel.py:55
 msgid "返回"
 msgstr ""
 
@@ -840,8 +842,8 @@ msgstr ""
 msgid "借阅书籍"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:382
-#: .\Script\UI\Panel\normal_panel.py:108 .\Script\UI\Panel\normal_panel.py:118
+#: .\Script\Design\handle_instruct.py:382 .\Script\UI\Panel\normal_panel.py:108
+#: .\Script\UI\Panel\normal_panel.py:118
 msgid "读书"
 msgstr ""
 
@@ -1056,24 +1058,28 @@ msgid "摆放藏品"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1439
+#, python-brace-format
 msgid ""
 "\n"
 "已持有藏品：{cache.character_data[npc_id].name}的{pan_name}"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1442
+#, python-brace-format
 msgid ""
 "\n"
 "增加了藏品：{cache.character_data[npc_id].name}的{pan_name}"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1461
+#, python-brace-format
 msgid ""
 "\n"
 "已持有藏品：{cache.character_data[npc_id].name}的{socks_name}"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1464
+#, python-brace-format
 msgid ""
 "\n"
 "增加了藏品：{cache.character_data[npc_id].name}的{socks_name}"
@@ -1259,8 +1265,8 @@ msgstr ""
 msgid "泡温泉"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:2120
-#: .\Script\UI\Panel\aromatherapy.py:31 .\Script\UI\Panel\aromatherapy.py:41
+#: .\Script\Design\handle_instruct.py:2120 .\Script\UI\Panel\aromatherapy.py:31
+#: .\Script\UI\Panel\aromatherapy.py:41
 msgid "香薰疗愈"
 msgstr ""
 
@@ -1880,6 +1886,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\pregnancy.py:85
+#, python-brace-format
 msgid ""
 "\n"
 "在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}"
@@ -2182,34 +2189,36 @@ msgstr ""
 msgid "{character_data.name}的受虐提升至5级\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4239
+#: .\Script\Settle\default.py:4244
 #, python-brace-format
 msgid "在{target_data.name}的帮助下，"
 msgstr ""
 
-#: .\Script\Settle\default.py:4251
+#: .\Script\Settle\default.py:4256
 #, python-brace-format
 msgid "共处理了{finish_work}公务，"
 msgstr ""
 
-#: .\Script\Settle\default.py:4253
+#: .\Script\Settle\default.py:4258
+#, python-brace-format
 msgid "还有{cache.rhodes_island.office_work}需要处理\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4255
+#: .\Script\Settle\default.py:4260
 msgid ""
 "已经全部处理完毕\n"
 "\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4303
+#: .\Script\Settle\default.py:4308
+#, python-brace-format
 msgid ""
 "\n"
 "在{character_data.name}的努力下，医治了一名病人，支付了{now_add_lust}龙门币的"
 "医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4354
+#: .\Script\Settle\default.py:4359
 msgid ""
 "\n"
 "在{character_data.name}的努力下，{select_index}号招募位进度"
@@ -2217,13 +2226,13 @@ msgid ""
 "recruit_line[select_index][0] + now_add_lust,1)}%\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4393
+#: .\Script\Settle\default.py:4398
 msgid ""
 "\n"
 "请先使用邀请系统选择邀请的对象，再进行邀请\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4409
+#: .\Script\Settle\default.py:4414
 msgid ""
 "\n"
 "在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为"
@@ -2658,6 +2667,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\agriculture_production_panel.py:50
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:51
+#, python-brace-format
 msgid ""
 " 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上"
 "限）：{cache.rhodes_island.warehouse_capacity}\n"
@@ -2699,6 +2709,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\agriculture_production_panel.py:98
 #: .\Script\UI\Panel\agriculture_production_panel.py:142
+#, python-brace-format
 msgid ""
 " + {character_data.name}(农业lv{character_data.ability[47]}:"
 "{character_effect}%)"
@@ -2759,10 +2770,11 @@ msgid ""
 msgstr ""
 
 #: .\Script\UI\Panel\aromatherapy.py:62
+#, python-brace-format
 msgid ""
 "\n"
-"  今日剩余调香次数    ：  {cache.rhodes_island."
-"remaining_aromatherapy_sessions_today}次"
+"  今日剩余调香次数    ：  {cache.rhodes_island.remaining_aromatherapy_sessions_today}"
+"次"
 msgstr ""
 
 #: .\Script\UI\Panel\aromatherapy.py:69
@@ -2810,8 +2822,8 @@ msgstr ""
 #: .\Script\UI\Panel\aromatherapy.py:101
 #: .\Script\UI\Panel\check_locker_panel.py:178
 #: .\Script\UI\Panel\manage_library.py:59
-#: .\Script\UI\Panel\originium_arts.py:163
-#: .\Script\UI\Panel\originium_arts.py:462
+#: .\Script\UI\Panel\originium_arts.py:183
+#: .\Script\UI\Panel\originium_arts.py:486
 #: .\Script\UI\Panel\see_save_info_panel.py:217
 #: .\Script\UI\Panel\see_save_info_panel.py:236
 msgid "1"
@@ -2883,19 +2895,19 @@ msgstr ""
 
 #: .\Script\UI\Panel\check_locker_panel.py:191
 #: .\Script\UI\Panel\manage_library.py:72
-#: .\Script\UI\Panel\originium_arts.py:175
+#: .\Script\UI\Panel\originium_arts.py:195
 msgid "2"
 msgstr ""
 
 #: .\Script\UI\Panel\check_locker_panel.py:204
 #: .\Script\UI\Panel\manage_library.py:85
-#: .\Script\UI\Panel\originium_arts.py:191
+#: .\Script\UI\Panel\originium_arts.py:211
 msgid "3"
 msgstr ""
 
 #: .\Script\UI\Panel\check_locker_panel.py:216
 #: .\Script\UI\Panel\manage_library.py:98
-#: .\Script\UI\Panel\originium_arts.py:204
+#: .\Script\UI\Panel\originium_arts.py:224
 msgid "4"
 msgstr ""
 
@@ -3020,7 +3032,7 @@ msgid "避孕套"
 msgstr ""
 
 #: .\Script\UI\Panel\dirty_panel.py:36 .\Script\UI\Panel\dirty_panel.py:48
-#: .\Script\UI\Panel\ejaculation_panel.py:251
+#: .\Script\UI\Panel\ejaculation_panel.py:254
 msgid "身体"
 msgstr ""
 
@@ -3046,7 +3058,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\food_bag_panel.py:120
 msgid ""
-"  你已经吃饱了，无法再吃东西了。\n"
+"  你现在不饿，无法吃东西。\n"
 "\n"
 msgstr ""
 
@@ -3059,7 +3071,7 @@ msgstr ""
 #: .\Script\UI\Panel\food_bag_panel.py:131
 #, python-brace-format
 msgid ""
-"  {target_character_data.name}已经吃饱了，无法再吃东西了。\n"
+"  {target_character_data.name}现在不饿，无法吃东西。\n"
 "\n"
 msgstr ""
 
@@ -3168,6 +3180,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:124
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:375
+#, python-brace-format
 msgid ""
 " + {character_data.name}(制造lv{character_data.ability[48]}:"
 "{character_effect}%)"
@@ -3223,6 +3236,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:326
+#, python-brace-format
 msgid ""
 " [{character_data.name}(制造lv{character_data.ability[48]}:"
 "{character_effect}%)] "
@@ -3265,6 +3279,7 @@ msgid "全干员一览"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_basement_panel.py:173
+#, python-brace-format
 msgid ""
 " 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n"
 "\n"
@@ -3330,7 +3345,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\UI\Panel\manage_library.py:187
-#: .\Script\UI\Panel\originium_arts.py:304
+#: .\Script\UI\Panel\originium_arts.py:324
 msgid ""
 "\n"
 "暂未实装\n"
@@ -3591,25 +3606,38 @@ msgid ""
 msgstr ""
 
 #: .\Script\UI\Panel\normal_panel.py:608
+#, python-brace-format
 msgid ""
 "\n"
 "  你将{character_data.name}的母乳（{cache.rhodes_island."
 "milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n"
 msgstr ""
 
-#: .\Script\UI\Panel\originium_arts.py:228
+#: .\Script\UI\Panel\originium_arts.py:48
+msgid ""
+"\n"
+"当前地点不能锁门，无法进行空气催眠\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:55
+msgid ""
+"\n"
+"为了防止有人打扰，将门锁上了\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:248
 msgid "5"
 msgstr ""
 
-#: .\Script\UI\Panel\originium_arts.py:254
+#: .\Script\UI\Panel\originium_arts.py:274
 msgid "6"
 msgstr ""
 
-#: .\Script\UI\Panel\originium_arts.py:267
+#: .\Script\UI\Panel\originium_arts.py:287
 msgid "7"
 msgstr ""
 
-#: .\Script\UI\Panel\originium_arts.py:280
+#: .\Script\UI\Panel\originium_arts.py:300
 msgid "11"
 msgstr ""
 
@@ -3617,8 +3645,7 @@ msgstr ""
 msgid "招募"
 msgstr ""
 
-#: .\Script\UI\Panel\recruit_panel.py:78
-#: .\Script\UI\Panel\recruit_panel.py:268
+#: .\Script\UI\Panel\recruit_panel.py:78 .\Script\UI\Panel\recruit_panel.py:268
 #, python-brace-format
 msgid "{button_text}_{recruit_line_id}"
 msgstr ""
@@ -3723,6 +3750,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\UI\Panel\resource_exchange_panel.py:233
+#, python-brace-format
 msgid ""
 "\n"
 "      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache."

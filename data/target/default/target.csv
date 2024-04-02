@@ -222,3 +222,5 @@ ai的目标,,,
 545,711,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_3,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
 
 601,40,place_door_open|place_is_h|not_in_dor,当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
+
+701,1,normal_1|unconscious_flag_5,1正常（基础正常），自身被空气催眠，则原地待机10分钟

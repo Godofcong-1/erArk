@@ -3626,44 +3626,18 @@ def handle_normal_all(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-         handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_1_2_4)
@@ -3678,33 +3652,14 @@ def handle_normal_1_2_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_4(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_3_4)
@@ -3719,24 +3674,14 @@ def handle_normal_2_3_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_1)
@@ -3853,6 +3798,7 @@ def handle_normal_6(character_id: int) -> int:
          (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
         or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
+        or handle_unconscious_flag_5(character_id)
     ):
         return 0
     else:
@@ -3871,11 +3817,7 @@ def handle_t_normal_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
+    if handle_normal_6(target_chara_id):
         return 0
     else:
         return 1
@@ -3911,19 +3853,13 @@ def handle_normal_2_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_4(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_267)
@@ -3938,25 +3874,14 @@ def handle_normal_267(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_2467)
@@ -3972,30 +3897,15 @@ def handle_normal_2467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_2467)
@@ -4013,30 +3923,15 @@ def handle_t_normal_2467(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-         handle_parturient_1(target_chara_id)
-        or handle_postpartum_1(target_chara_id)
-        or handle_t_baby_1(target_chara_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(target_chara_id)
-        or handle_cloth_most_off(target_chara_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(target_chara_id)
-        or handle_imprisonment_1(target_chara_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(target_chara_id) and 
+        handle_normal_4(target_chara_id) and 
+        handle_normal_6(target_chara_id) and 
+        handle_normal_7(target_chara_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_23467)
@@ -4053,35 +3948,16 @@ def handle_normal_23467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_24567)
@@ -4098,35 +3974,16 @@ def handle_normal_24567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_4(character_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_24567)
@@ -4145,35 +4002,16 @@ def handle_t_normal_24567(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_4(target_chara_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(target_chara_id)
-        or handle_postpartum_1(target_chara_id)
-        or handle_t_baby_1(target_chara_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(target_chara_id)
-        or handle_cloth_most_off(target_chara_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(target_chara_id)
-        or handle_imprisonment_1(target_chara_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_2(target_chara_id) and 
+        handle_normal_4(target_chara_id) and 
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id) and 
+        handle_normal_7(target_chara_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_124567)
@@ -4191,44 +4029,17 @@ def handle_normal_124567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 0
-    if(
-        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_4(character_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_1267)
@@ -4244,34 +4055,15 @@ def handle_normal_1267(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_123467)
@@ -4289,44 +4081,17 @@ def handle_normal_123467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 0
-    elif(
-         handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 0
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 0
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_2)
@@ -4340,14 +4105,10 @@ def handle_t_normal_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if(
-        handle_parturient_1(character_data.target_character_id)
-        or handle_postpartum_1(character_data.target_character_id)
-        or handle_t_baby_1(character_data.target_character_id)
-    ):
-        return 0
-    else:
+    if handle_normal_2(character_data.target_character_id):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.UNNORMAL)
@@ -4365,39 +4126,17 @@ def handle_unnormal(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_rest_flag_1(character_id)
-        or handle_sleep_flag_1(character_id)
-        or handle_pee_flag_1(character_id)
-        or handle_eat_food_flag_ge_1(character_id)
-        or handle_shower_flag_123(character_id)
-        or handle_milk_flag_1(character_id)
-    ):
-        return 1
-    elif(
-        handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 1
-    elif(
-        handle_is_assistant(character_id)
-        or handle_is_follow(character_id)
-    ):
-        return 1
-    elif(
-        handle_cloth_off(character_id)
-        or handle_cloth_most_off(character_id)
-    ):
-        return 1
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 1
-    else:
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id)
+        ):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_27)
@@ -4411,19 +4150,13 @@ def handle_unnormal_27(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        handle_parturient_1(character_id)
-        or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
-    ):
-        return 1
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 1
-    else:
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_5_6)
@@ -4439,19 +4172,13 @@ def handle_t_normal_5_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_4(target_chara_id)
-    ):
-        return 0
-    elif(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 0
-    else:
+    if (
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id)
+        ):
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.T_UNNORMAL_5_6)
@@ -4467,19 +4194,13 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_4(target_chara_id)
-    ):
-        return 1
-    elif(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 1
-    else:
+    if (
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id)
+        ):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.T_UNNORMAL_6)
@@ -4494,14 +4215,10 @@ def handle_t_unnormal_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 1
-    else:
+    if handle_normal_6(target_chara_id):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_567)
@@ -4516,24 +4233,14 @@ def handle_unnormal_567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if(
-        (handle_sleep_level_0(character_id) and handle_action_sleep(character_id))
-        or handle_unconscious_flag_4(character_id)
-    ):
-        return 1
-    elif(
-         (handle_sleep_level_1(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_2(character_id) and handle_action_sleep(character_id))
-        or (handle_sleep_level_3(character_id) and handle_action_sleep(character_id))
-    ):
-        return 1
-    elif(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 1
-    else:
+    if (
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.T_UNNORMAL_567)
@@ -4550,24 +4257,14 @@ def handle_t_unnormal_567(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if(
-        (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-        or handle_unconscious_flag_4(target_chara_id)
-    ):
-        return 1
-    elif(
-         (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-        or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-    ):
-        return 1
-    elif(
-        handle_be_bagged_1(target_chara_id)
-        or handle_imprisonment_1(target_chara_id)
-    ):
-        return 1
-    else:
+    if (
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id) and 
+        handle_normal_7(target_chara_id)
+        ):
         return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.HP_1)
@@ -11020,9 +10717,14 @@ def handle_last_cmd_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
+    len_input = len(cache.input_cache)
+
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        # print(f"debug 上指令 = {last_cmd}")
+        if last_cmd == "确定":
+            continue
+
     sex = {
         str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),

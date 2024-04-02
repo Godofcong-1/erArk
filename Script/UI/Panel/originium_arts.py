@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_talent
+from Script.Design import handle_talent, map_handle
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 import random
@@ -37,6 +37,26 @@ def evaluate_hypnosis_completion(character_id: int):
             chose_hypnosis_type_panel = Chose_Hypnosis_Type_Panel(window_width)
             chose_hypnosis_type_panel.draw()
             now_hypnosis_type = pl_character_data.pl_ability.hypnosis_type
+        # 空气催眠
+        if now_hypnosis_type == 2:
+            # 限制为需要锁门的地点，并强制锁门
+            now_position = pl_character_data.position
+            now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+            now_scene_data = cache.scene_data[now_scene_str]
+            if now_scene_data.close_type != 1:
+                now_draw = draw.WaitDraw()
+                draw_text = _(f"\n当前地点不能锁门，无法进行空气催眠\n")
+                now_draw.text = draw_text
+                now_draw.draw()
+                return 0
+            else:
+                cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
+                now_draw = draw.WaitDraw()
+                draw_text = _(f"\n为了防止有人打扰，将门锁上了\n")
+                now_draw.text = draw_text
+                now_draw.draw()
+            # 更新记录当前地点
+            pl_character_data.pl_ability.air_hypnosis_position = pl_character_data.position
         character_data.sp_flag.unconscious_h = now_hypnosis_type + 3
         # print(f"debug {character_data.name} unconscious_h = {character_data.sp_flag.unconscious_h}")
         # 进行素质获得检测
@@ -455,8 +475,12 @@ class Originium_Arts_Panel:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
                     # 绘制
-                    draw_text = f"  {talent_name}：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）"
-                    if now_exp >= need_exp and now_degree >= need_degree:
+                    draw_text = f"  {talent_name}"
+                    if up_data.todo:
+                        draw_text += "(未实装)"
+                    draw_text += f"：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）"
+                    # 可以解锁则绘制按钮
+                    if not up_data.todo and now_exp >= need_exp and now_degree >= need_degree:
                         now_draw = draw.LeftButton(
                             _(draw_text),
                             _(str(cid) + "1"),
@@ -466,6 +490,7 @@ class Originium_Arts_Panel:
                             )
                         return_list.append(now_draw.return_text)
                         now_draw.draw()
+                    # 不可解锁则绘制灰色文本
                     else:
                         now_draw = draw.NormalDraw()
                         now_draw.text = _(draw_text)

@@ -4841,15 +4841,15 @@ msgid "被催眠的干员会正常与博士交互，但会很普通的接受博�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:9
-msgid "空气"
+msgid "空气(实装中)"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:9
-msgid "被催眠的干员将会把博士视为空气，无论博士做什么都不会引起干员的注意，对自身和周围发生的任何事情也不会觉得奇怪，效果持续到干员离开当前场所或者博士主动解除为止。"
+msgid "被催眠的干员将会把博士视为空气，无论博士做什么都不会引起干员的注意，对自身和周围发生的任何事情也不会觉得奇怪，效果持续到博士或干员离开当前场所，或者博士主动解除为止。"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
-msgid "体控"
+msgid "体控(未实装)"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
@@ -4857,7 +4857,7 @@ msgid "被催眠的干员会在精神正常的情况下，只有身体听从博�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11
-msgid "心控"
+msgid "心控(未实装)"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11
