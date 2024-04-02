@@ -46,6 +46,7 @@ def own_charcter_move(target_scene: list):
             # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)
         else:
+            move_now = "end"
             break
     cache.character_data[0].target_character_id = 0
     if move_now in ["Null","wait_open","door_lock"]:
