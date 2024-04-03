@@ -3818,9 +3818,9 @@ def handle_t_normal_6(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
     if handle_normal_6(target_chara_id):
-        return 0
-    else:
         return 1
+    else:
+        return 0
 
 
 @add_premise(constant_promise.Premise.NORMAL_7)
@@ -10719,12 +10719,6 @@ def handle_last_cmd_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
 
-    for i in range(len_input):
-        last_cmd = cache.input_cache[len_input - 1 - i]
-        # print(f"debug 上指令 = {last_cmd}")
-        if last_cmd == "确定":
-            continue
-
     sex = {
         str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
@@ -10732,10 +10726,16 @@ def handle_last_cmd_sex(character_id: int) -> int:
         str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
         str(constant.Instruct.WOMB_INSERTION)
     }
-    if len_input:
+
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        print(f"debug 上指令 = {last_cmd}")
+        if last_cmd == "确定":
+            continue
         if last_cmd in sex:
+            print(f"debug last_cmd = {last_cmd}")
             return 1
-    return 0
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_W_SEX)
@@ -10747,16 +10747,17 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
+    len_input = len(cache.input_cache)
     sex = {
         str(constant.Instruct.WOMB_OS_CARESS), str(constant.Instruct.WOMB_INSERTION)
     }
-    if len_input:
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == "确定":
+            continue
         if last_cmd in sex:
             return 1
-    return 0
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_A_SEX)
@@ -10768,9 +10769,7 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
+    len_input = len(cache.input_cache)
     sex = {
         str(constant.Instruct.NORMAL_ANAL_SEX), str(constant.Instruct.BACK_ANAL_SEX),
         str(constant.Instruct.RIDING_ANAL_SEX),
@@ -10778,10 +10777,14 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
         str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
         str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA)
     }
-    if len_input:
+
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == "确定":
+            continue
         if last_cmd in sex:
             return 1
-    return 0
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_U_SEX)
@@ -10793,16 +10796,18 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 1]
+    len_input = len(cache.input_cache)
     sex = {
         str(constant.Instruct.URETHRAL_INSERTION)
     }
-    if len_input:
+
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == "确定":
+            continue
         if last_cmd in sex:
             return 1
-    return 0
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BREAST_CARESS_TYPE)
