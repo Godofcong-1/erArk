@@ -1002,7 +1002,7 @@ def handle_in_dormitory(character_id: int) -> int:
     now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
     # 因为在这里出现过BUG，所以加一个额外的修正判定，强制将博士的宿舍定为中枢\博士房间
     if character_id == 0 and character_data.dormitory == "":
-        character_data.dormitory = "中枢\博士房间"
+        character_data.dormitory = _("中枢\博士房间")
     # print(f"debug {character_data.name}的宿舍前提判定，当前位置为{now_position}，宿舍位置为{character_data.dormitory}")
     return now_position == character_data.dormitory
 
@@ -10729,7 +10729,7 @@ def handle_last_cmd_sex(character_id: int) -> int:
 
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
-        if last_cmd == "确定":
+        if last_cmd == _("确定"):
             continue
         if last_cmd in sex:
             return 1
@@ -10751,7 +10751,7 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     }
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
-        if last_cmd == "确定":
+        if last_cmd == _("确定"):
             continue
         if last_cmd in sex:
             return 1
@@ -10778,7 +10778,7 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
 
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
-        if last_cmd == "确定":
+        if last_cmd == _("确定"):
             continue
         if last_cmd in sex:
             return 1
@@ -10801,7 +10801,7 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
 
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
-        if last_cmd == "确定":
+        if last_cmd == _("确定"):
             continue
         if last_cmd in sex:
             return 1
