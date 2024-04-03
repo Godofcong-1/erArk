@@ -49,13 +49,24 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     else:
         feel_adjust = attr_calculation.get_ability_adjust(ability_level)
     final_adjust += feel_adjust
+    # 攻略进度素质对负面状态的减少
+    if state_id in [17, 18, 19, 20]:
+        if character_data.talent[204] or character_data.talent[214]:
+            final_adjust -= 0.5
+        elif character_data.talent[203] or character_data.talent[213]:
+            final_adjust -= 0.3
+        elif character_data.talent[202] or character_data.talent[212]:
+            final_adjust -= 0.2
+        elif character_data.talent[201] or character_data.talent[211]:
+            final_adjust -= 0.1
     # 调香
-    if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
-        final_adjust += 1
-    elif character_data.sp_flag.aromatherapy == 3 and state_id in [17, 18, 19, 20]:
-        final_adjust -= 0.5
-    elif character_data.sp_flag.aromatherapy == 4 and state_id ==12:
-        final_adjust += 1
+    if character_data.sp_flag.aromatherapy:
+        if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
+            final_adjust += 1
+        elif character_data.sp_flag.aromatherapy == 3 and state_id in [17, 18, 19, 20]:
+            final_adjust -= 0.5
+        elif character_data.sp_flag.aromatherapy == 4 and state_id ==12:
+            final_adjust += 1
     final_adjust = max(0, final_adjust)
 
     return final_adjust

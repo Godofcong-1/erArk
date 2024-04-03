@@ -10729,11 +10729,9 @@ def handle_last_cmd_sex(character_id: int) -> int:
 
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
-        print(f"debug 上指令 = {last_cmd}")
         if last_cmd == "确定":
             continue
         if last_cmd in sex:
-            print(f"debug last_cmd = {last_cmd}")
             return 1
         return 0
 
