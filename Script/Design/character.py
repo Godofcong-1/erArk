@@ -281,13 +281,14 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     return trust_add
 
 
-def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str):
+def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str, not_draw_flag = False):
     """
     根据角色和目标角色的各属性来计算总实行值\n
     Keyword arguments:\n
     character_id -- 角色id\n
     target_character_id -- 目标角色id\n
     instruct_name -- 指令名字\n
+    not_draw_flag -- 是否不输出文本\n
     Return arguments:\n
     int -- 1成功,0失败,-1无副作用返回\n
     int -- 实行值\n
@@ -516,114 +517,117 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         final_judge = 0
     judge_rate = judge / judge_data_value
 
-    # 询问信息
-    ask_text = ""
-    if instruct_name == _("亲吻") and target_data.talent[4]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？")
-    elif instruct_name == _("性交") and target_data.talent[0]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？")
-    elif instruct_name == _("A性交") and target_data.talent[1]:
-        ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？")
-    # 询问戴套
-    condom_flag = False
-    if instruct_name == _("性交"):
-        # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
-        if (
-            target_data.talent[14] or
-            character_data.h_state.body_item[13][1] or
-            (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
-            target_data.talent[222]
-            ):
-            pass
-        else:
-            condom_flag = True
-            if judge_rate < 0.5:
-                ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
-            elif judge_rate < 1:
-                ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
+    # 是否进行相关信息的绘制与结算
+    if not not_draw_flag:
+
+        # 询问信息
+        ask_text = ""
+        if instruct_name == _("亲吻") and target_data.talent[4]:
+            ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？")
+        elif instruct_name == _("性交") and target_data.talent[0]:
+            ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？")
+        elif instruct_name == _("A性交") and target_data.talent[1]:
+            ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？")
+        # 询问戴套
+        condom_flag = False
+        if instruct_name == _("性交"):
+            # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
+            if (
+                target_data.talent[14] or
+                character_data.h_state.body_item[13][1] or
+                (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
+                target_data.talent[222]
+                ):
+                pass
             else:
-                ask_text += _(f"{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n")
-    if len(ask_text):
-        # 判断态度
-        ask_text += _(" (对方的态度：")
-        if judge_rate < 0.5:
-            ask_text += _("拒绝)\n")
-        elif judge_rate < 1:
-            ask_text += _("犹豫)\n")
-        else:
-            ask_text += _("接受)\n")
-        while 1:
-            return_list = []
-            ask_draw = draw.WaitDraw()
-            ask_draw.width = 1
-            ask_draw.text = ask_text
-            ask_draw.draw()
-
-            line_feed.draw()
-            line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
-            yes_draw.draw()
-            return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                if condom_flag:
-                    return [-1, judge, judge_rate]
+                condom_flag = True
+                if judge_rate < 0.5:
+                    ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
+                elif judge_rate < 1:
+                    ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
                 else:
-                    return [0, judge, judge_rate]
-            elif yrn == yes_draw.return_text:
-                break
+                    ask_text += _(f"{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n")
+        if len(ask_text):
+            # 判断态度
+            ask_text += _(" (对方的态度：")
+            if judge_rate < 0.5:
+                ask_text += _("拒绝)\n")
+            elif judge_rate < 1:
+                ask_text += _("犹豫)\n")
+            else:
+                ask_text += _("接受)\n")
+            while 1:
+                return_list = []
+                ask_draw = draw.WaitDraw()
+                ask_draw.width = 1
+                ask_draw.text = ask_text
+                ask_draw.draw()
 
-    # 正常直接判定，并输出文本
-    if judge_data_type != "V":
-        calculation_text += " = " + str(judge) + "\n"
-        now_draw = draw.WaitDraw()
-        now_draw.width = 1
-        now_draw.text = calculation_text
-        now_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+                back_draw.draw()
+                line_feed.draw()
+                return_list.append(back_draw.return_text)
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn == back_draw.return_text:
+                    if condom_flag:
+                        return [-1, judge, judge_rate]
+                    else:
+                        return [0, judge, judge_rate]
+                elif yrn == yes_draw.return_text:
+                    break
 
-    # 合意获得的结算
-    if final_judge and target_data.sp_flag.unconscious_h == 0:
-        agree_draw = draw.WaitDraw()
-        agree_draw.width = 1
-        draw_text = ""
-        if instruct_name == _("亲吻") and target_data.talent[11] == 0:
-            target_data.talent[11] = 1
-            draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
-        if instruct_name == _("性交") and target_data.talent[12] == 0:
-            target_data.talent[12] = 1
-            draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
-        if instruct_name == _("A性交") and target_data.talent[15] == 0:
-            target_data.talent[15] = 1
-            draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
-        if instruct_name == _("U性交") and target_data.talent[16] == 0:
-            target_data.talent[16] = 1
-            draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
-        # 避孕相关合意
-        # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
-        if (
-            instruct_name == _("性交") and
-            target_data.talent[13] == 0 and
-            condom_flag and
-            (handle_premise.handle_reproduction_period_0(target_character_id))
-            ):
-            target_data.talent[13] = 1
-            draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
-        # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
-        if (
-            instruct_name == _("性交") and
-            target_data.talent[14] == 0 and
-            condom_flag and
-            (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
-            ):
-            target_data.talent[14] = 1
-            draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
-        if len(draw_text):
-            agree_draw.text = draw_text
-            agree_draw.draw()
+        # 正常直接判定，并输出文本
+        if judge_data_type != "V":
+            calculation_text += " = " + str(judge) + "\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = 1
+            now_draw.text = calculation_text
+            now_draw.draw()
+
+        # 合意获得的结算
+        if final_judge and target_data.sp_flag.unconscious_h == 0:
+            agree_draw = draw.WaitDraw()
+            agree_draw.width = 1
+            draw_text = ""
+            if instruct_name == _("亲吻") and target_data.talent[11] == 0:
+                target_data.talent[11] = 1
+                draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
+            if instruct_name == _("性交") and target_data.talent[12] == 0:
+                target_data.talent[12] = 1
+                draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
+            if instruct_name == _("A性交") and target_data.talent[15] == 0:
+                target_data.talent[15] = 1
+                draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
+            if instruct_name == _("U性交") and target_data.talent[16] == 0:
+                target_data.talent[16] = 1
+                draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+            # 避孕相关合意
+            # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
+            if (
+                instruct_name == _("性交") and
+                target_data.talent[13] == 0 and
+                condom_flag and
+                (handle_premise.handle_reproduction_period_0(target_character_id))
+                ):
+                target_data.talent[13] = 1
+                draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
+            # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
+            if (
+                instruct_name == _("性交") and
+                target_data.talent[14] == 0 and
+                condom_flag and
+                (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
+                ):
+                target_data.talent[14] = 1
+                draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
+            if len(draw_text):
+                agree_draw.text = draw_text
+                agree_draw.draw()
 
     # 返回判定结果
     return [final_judge, judge, judge_rate]

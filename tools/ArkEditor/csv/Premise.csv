@@ -17,9 +17,9 @@ sys_4,TARGET_IS_PLAYER,指令_触发与交互,交互对象是玩家角色
 sys_5,TARGET_NO_PLAYER,指令_触发与交互,交互对象不是玩家
 sex_0,IS_MAN,指令_触发与交互,触发该指令的是男性
 sex_1,IS_WOMAN,指令_触发与交互,触发该指令的是女性
-instruct_judge_low_obscenity,INSTRUCT_JUDGE_LOW_OBSCENITY,指令_触发与交互,当前实行值足以轻度性骚扰
-instruct_judge_high_obscenity,INSTRUCT_JUDGE_HIGH_OBSCENITY,指令_触发与交互,当前实行值足以重度性骚扰
-instruct_judge_h,INSTRUCT_JUDGE_H,指令_触发与交互,当前实行值足以H
+instruct_judge_low_obscenity,INSTRUCT_JUDGE_LOW_OBSCENITY,指令_触发与交互,口上用：当前实行值足以轻度性骚扰
+instruct_judge_high_obscenity,INSTRUCT_JUDGE_HIGH_OBSCENITY,指令_触发与交互,口上用：当前实行值足以重度性骚扰
+instruct_judge_h,INSTRUCT_JUDGE_H,指令_触发与交互,口上用：当前实行值足以邀请H
 
 high_1,HIGH_1,指令_权重,优先度为1的空白前提
 high_2,HIGH_2,指令_权重,优先度为2的空白前提
@@ -355,7 +355,7 @@ t_tired_100,TARGET_TIRED_100,属性_基础,交互对象疲劳条100%，当场爆
 urinate_le_49,URINATE_LE_49,属性_基础,尿意条≤49%，可以继续喝咖啡
 urinate_le_79,URINATE_LE_79,属性_基础,尿意条≤79%，不需要排尿
 urinate_ge_80,URINATE_GE_80,属性_基础,尿意条≥80%，需要排尿
-urinate_ge_100,URINATE_GE_100,属性_基础,尿意条≥100%，需要当场排尿
+urinate_ge_125,URINATE_GE_125,属性_基础,尿意条≥125%，需要当场排尿
 t_urinate_le_49,TARGET_URINATE_LE_49,属性_基础,交互对象尿意条≤49%，可以继续喝咖啡
 t_urinate_le_79,TARGET_URINATE_LE_79,属性_基础,交互对象尿意条≤79%，不需要排尿
 t_urinate_ge_80,TARGET_URINATE_GE_80,属性_基础,交互对象尿意条≥80%，需要排尿
