@@ -103,6 +103,7 @@ class FoodBagPanel:
                     )
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
+            line_feed.draw()
             line = draw.LineDraw("+", self.width)
             line.draw()
             now_draw = draw.NormalDraw()
@@ -237,14 +238,14 @@ class SeeFoodListByFoodNameDraw:
         # 正常调味的情况下
         if food_data.special_seasoning == 0:
             # 自己已经吃饱了则不显示按钮
-            if handle_premise.handle_hunger_ge_80(0):
+            if handle_premise.handle_hunger_le_79(0):
                 draw_button_flag = False
         else:
             # 特殊调味的情况下，如果没有目标则不显示按钮
             if character_data.target_character_id == 0:
                 draw_button_flag = False
             # 如果目标已经吃饱了则不显示按钮
-            if handle_premise.handle_hunger_ge_80(character_data.target_character_id):
+            if handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 draw_button_flag = False
 
         if draw_button_flag:
