@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-02 18:24+0800\n"
+"POT-Creation-Date: 2024-04-03 16:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -317,6 +317,7 @@ msgid ""
 msgstr ""
 
 #: .\Script\Design\character.py:88 .\Script\Design\character.py:89
+#: .\Script\Design\handle_premise.py:1005
 msgid "中枢\\博士房间"
 msgstr ""
 
@@ -332,82 +333,82 @@ msgstr ""
 msgid "博士办公室"
 msgstr ""
 
-#: .\Script\Design\character.py:313
+#: .\Script\Design\character.py:314
 msgid "需要基础实行值至少为"
 msgstr ""
 
-#: .\Script\Design\character.py:315
+#: .\Script\Design\character.py:316
 msgid "需要性爱实行值至少为"
 msgstr ""
 
-#: .\Script\Design\character.py:316
+#: .\Script\Design\character.py:317
 msgid "当前值为："
 msgstr ""
 
-#: .\Script\Design\character.py:322
+#: .\Script\Design\character.py:323
 msgid "好感修正("
 msgstr ""
 
-#: .\Script\Design\character.py:328
+#: .\Script\Design\character.py:329
 msgid "+信赖修正("
 msgstr ""
 
-#: .\Script\Design\character.py:335
+#: .\Script\Design\character.py:336
 msgid "+状态修正("
 msgstr ""
 
-#: .\Script\Design\character.py:341
+#: .\Script\Design\character.py:342
 msgid "+能力修正("
 msgstr ""
 
-#: .\Script\Design\character.py:348
+#: .\Script\Design\character.py:349
 msgid "+刻印修正("
 msgstr ""
 
-#: .\Script\Design\character.py:354
+#: .\Script\Design\character.py:355
 msgid "+心情修正("
 msgstr ""
 
-#: .\Script\Design\character.py:362
+#: .\Script\Design\character.py:363
 msgid "+陷落修正("
 msgstr ""
 
-#: .\Script\Design\character.py:367
+#: .\Script\Design\character.py:368
 msgid "+讨厌男性(-"
 msgstr ""
 
-#: .\Script\Design\character.py:372
+#: .\Script\Design\character.py:373
 msgid "+难以越过的底线(-"
 msgstr ""
 
-#: .\Script\Design\character.py:379
+#: .\Script\Design\character.py:380
 msgid "+淫乱(+30)"
 msgstr ""
 
-#: .\Script\Design\character.py:405
+#: .\Script\Design\character.py:406
 msgid "+当前场景有其他人在("
 msgstr ""
 
-#: .\Script\Design\character.py:412
+#: .\Script\Design\character.py:413
 msgid "+助理助攻(+50)"
 msgstr ""
 
-#: .\Script\Design\character.py:419
+#: .\Script\Design\character.py:420
 msgid "+今天H被打断过(-"
 msgstr ""
 
-#: .\Script\Design\character.py:424
+#: .\Script\Design\character.py:425
 msgid "+监禁中(+400)"
 msgstr ""
 
-#: .\Script\Design\character.py:429
+#: .\Script\Design\character.py:430
 msgid "+睡眠(+1000)"
 msgstr ""
 
-#: .\Script\Design\character.py:432 .\Script\Design\character.py:452
-#: .\Script\Design\character.py:523 .\Script\Design\character.py:529
-#: .\Script\Design\character.py:596 .\Script\Design\character.py:608
-#: .\Script\Design\character.py:617 .\Script\Design\handle_instruct.py:4245
+#: .\Script\Design\character.py:433 .\Script\Design\character.py:453
+#: .\Script\Design\character.py:527 .\Script\Design\character.py:533
+#: .\Script\Design\character.py:600 .\Script\Design\character.py:612
+#: .\Script\Design\character.py:621 .\Script\Design\handle_instruct.py:4245
 #: .\Script\Design\handle_instruct.py:4273
 #: .\Script\Design\handle_instruct.py:4301
 #: .\Script\Design\handle_instruct.py:4329
@@ -420,12 +421,12 @@ msgstr ""
 msgid "性交"
 msgstr ""
 
-#: .\Script\Design\character.py:434
+#: .\Script\Design\character.py:435
 msgid "+处女(-100)"
 msgstr ""
 
-#: .\Script\Design\character.py:437 .\Script\Design\character.py:525
-#: .\Script\Design\character.py:599 .\Script\Design\handle_instruct.py:4527
+#: .\Script\Design\character.py:438 .\Script\Design\character.py:529
+#: .\Script\Design\character.py:603 .\Script\Design\handle_instruct.py:4527
 #: .\Script\Design\handle_instruct.py:4550
 #: .\Script\Design\handle_instruct.py:4573
 #: .\Script\Design\handle_instruct.py:4596
@@ -437,76 +438,60 @@ msgstr ""
 msgid "A性交"
 msgstr ""
 
-#: .\Script\Design\character.py:439
+#: .\Script\Design\character.py:440
 msgid "+Ａ处女(-200)"
 msgstr ""
 
-#: .\Script\Design\character.py:442 .\Script\Design\character.py:602
+#: .\Script\Design\character.py:443 .\Script\Design\character.py:606
 msgid "U性交"
 msgstr ""
 
-#: .\Script\Design\character.py:444
+#: .\Script\Design\character.py:445
 msgid "+Ｕ处女(-300)"
 msgstr ""
 
-#: .\Script\Design\character.py:447 .\Script\Design\character.py:484
-#: .\Script\Design\character.py:521 .\Script\Design\character.py:593
+#: .\Script\Design\character.py:448 .\Script\Design\character.py:485
+#: .\Script\Design\character.py:525 .\Script\Design\character.py:597
 #: .\Script\Design\handle_instruct.py:2406
 #: .\Script\Design\handle_instruct.py:2417
 msgid "亲吻"
 msgstr ""
 
-#: .\Script\Design\character.py:449
+#: .\Script\Design\character.py:450
 msgid "+初吻(-50)"
 msgstr ""
 
-#: .\Script\Design\character.py:468
+#: .\Script\Design\character.py:469
 msgid "+安全期(-10)"
 msgstr ""
 
-#: .\Script\Design\character.py:471
+#: .\Script\Design\character.py:472
 msgid "+普通期(-50)"
 msgstr ""
 
-#: .\Script\Design\character.py:474
+#: .\Script\Design\character.py:475
 msgid "+危险期(-100)"
 msgstr ""
 
-#: .\Script\Design\character.py:477
+#: .\Script\Design\character.py:478
 msgid "+排卵期(-300)"
 msgstr ""
 
-#: .\Script\Design\character.py:484
+#: .\Script\Design\character.py:485
 msgid "骚扰"
 msgstr ""
 
-#: .\Script\Design\character.py:500
+#: .\Script\Design\character.py:501
 #, python-brace-format
 msgid "+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)"
 msgstr ""
 
-#: .\Script\Design\character.py:504
+#: .\Script\Design\character.py:505
 msgid "+催眠(+0,理智不足,催眠解除)"
 msgstr ""
 
-#: .\Script\Design\character.py:510
+#: .\Script\Design\character.py:511
 msgid "+debug模式(+99999)"
-msgstr ""
-
-#: .\Script\Design\character.py:522
-#, python-brace-format
-msgid ""
-"\n"
-"\n"
-" 是否要夺走{target_data.name}的初吻？"
-msgstr ""
-
-#: .\Script\Design\character.py:524
-#, python-brace-format
-msgid ""
-"\n"
-"\n"
-" 是否要夺走{target_data.name}的处女？"
 msgstr ""
 
 #: .\Script\Design\character.py:526
@@ -514,43 +499,59 @@ msgstr ""
 msgid ""
 "\n"
 "\n"
+" 是否要夺走{target_data.name}的初吻？"
+msgstr ""
+
+#: .\Script\Design\character.py:528
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
+" 是否要夺走{target_data.name}的处女？"
+msgstr ""
+
+#: .\Script\Design\character.py:530
+#, python-brace-format
+msgid ""
+"\n"
+"\n"
 " 是否要夺走{target_data.name}的A处女？"
 msgstr ""
 
-#: .\Script\Design\character.py:541
+#: .\Script\Design\character.py:545
 #, python-brace-format
 msgid "{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:543
+#: .\Script\Design\character.py:547
 #, python-brace-format
 msgid "{target_data.name}希望你戴上避孕套，是否坚持不带套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:545
+#: .\Script\Design\character.py:549
 #, python-brace-format
 msgid ""
 "{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带"
 "套？\n"
 msgstr ""
 
-#: .\Script\Design\character.py:548
+#: .\Script\Design\character.py:552
 msgid " (对方的态度："
 msgstr ""
 
-#: .\Script\Design\character.py:550
+#: .\Script\Design\character.py:554
 msgid "拒绝)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:552
+#: .\Script\Design\character.py:556
 msgid "犹豫)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:554
+#: .\Script\Design\character.py:558
 msgid "接受)\n"
 msgstr ""
 
-#: .\Script\Design\character.py:564 .\Script\Design\handle_instruct.py:1664
+#: .\Script\Design\character.py:568 .\Script\Design\handle_instruct.py:1664
 #: .\Script\Design\handle_instruct.py:1702
 #: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
@@ -561,7 +562,11 @@ msgstr ""
 msgid "[确定]"
 msgstr ""
 
-#: .\Script\Design\character.py:564 .\Script\UI\Panel\ability_up_panel.py:197
+#: .\Script\Design\character.py:568 .\Script\Design\handle_premise.py:10732
+#: .\Script\Design\handle_premise.py:10754
+#: .\Script\Design\handle_premise.py:10781
+#: .\Script\Design\handle_premise.py:10804
+#: .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:384
 #: .\Script\UI\Panel\aromatherapy.py:110
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:381
@@ -570,7 +575,7 @@ msgstr ""
 msgid "确定"
 msgstr ""
 
-#: .\Script\Design\character.py:567
+#: .\Script\Design\character.py:571
 #: .\Script\UI\Flow\creator_character_flow.py:609
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
@@ -590,7 +595,7 @@ msgstr ""
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:140
 #: .\Script\UI\Panel\food_shop_panel.py:78
 #: .\Script\UI\Panel\food_shop_panel.py:170
 #: .\Script\UI\Panel\h_item_shop_panel.py:105
@@ -617,7 +622,7 @@ msgstr ""
 #: .\Script\UI\Panel\originium_arts.py:406
 #: .\Script\UI\Panel\originium_arts.py:501
 #: .\Script\UI\Panel\originium_arts.py:599
-#: .\Script\UI\Panel\originium_arts.py:648 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\originium_arts.py:647 .\Script\UI\Panel\prts_panel.py:95
 #: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
 #: .\Script\UI\Panel\recruit_panel.py:184
 #: .\Script\UI\Panel\recruit_panel.py:293
@@ -630,7 +635,7 @@ msgstr ""
 msgid "[返回]"
 msgstr ""
 
-#: .\Script\Design\character.py:567
+#: .\Script\Design\character.py:571
 #: .\Script\UI\Flow\creator_character_flow.py:609
 #: .\Script\UI\Panel\ability_up_panel.py:193
 #: .\Script\UI\Panel\ability_up_panel.py:440
@@ -650,7 +655,7 @@ msgstr ""
 #: .\Script\UI\Panel\collection_panel.py:196
 #: .\Script\UI\Panel\debug_panel.py:212 .\Script\UI\Panel\debug_panel.py:301
 #: .\Script\UI\Panel\debug_panel.py:1210 .\Script\UI\Panel\debug_panel.py:1316
-#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:139
+#: .\Script\UI\Panel\dirty_panel.py:162 .\Script\UI\Panel\food_bag_panel.py:140
 #: .\Script\UI\Panel\food_shop_panel.py:78
 #: .\Script\UI\Panel\food_shop_panel.py:170
 #: .\Script\UI\Panel\get_up_panel.py:84 .\Script\UI\Panel\get_up_panel.py:85
@@ -678,7 +683,7 @@ msgstr ""
 #: .\Script\UI\Panel\originium_arts.py:406
 #: .\Script\UI\Panel\originium_arts.py:501
 #: .\Script\UI\Panel\originium_arts.py:599
-#: .\Script\UI\Panel\originium_arts.py:648 .\Script\UI\Panel\prts_panel.py:95
+#: .\Script\UI\Panel\originium_arts.py:647 .\Script\UI\Panel\prts_panel.py:95
 #: .\Script\UI\Panel\prts_panel.py:143 .\Script\UI\Panel\recruit_panel.py:132
 #: .\Script\UI\Panel\recruit_panel.py:184
 #: .\Script\UI\Panel\recruit_panel.py:293
@@ -969,6 +974,7 @@ msgid "听牢骚"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1171
+#: .\Script\UI\Panel\originium_arts.py:162
 msgid "源石技艺"
 msgstr ""
 
@@ -2189,28 +2195,28 @@ msgstr ""
 msgid "{character_data.name}的受虐提升至5级\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4244
+#: .\Script\Settle\default.py:4255
 #, python-brace-format
 msgid "在{target_data.name}的帮助下，"
 msgstr ""
 
-#: .\Script\Settle\default.py:4256
+#: .\Script\Settle\default.py:4267
 #, python-brace-format
 msgid "共处理了{finish_work}公务，"
 msgstr ""
 
-#: .\Script\Settle\default.py:4258
+#: .\Script\Settle\default.py:4269
 #, python-brace-format
 msgid "还有{cache.rhodes_island.office_work}需要处理\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4260
+#: .\Script\Settle\default.py:4271
 msgid ""
 "已经全部处理完毕\n"
 "\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4308
+#: .\Script\Settle\default.py:4319
 #, python-brace-format
 msgid ""
 "\n"
@@ -2218,7 +2224,7 @@ msgid ""
 "医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4359
+#: .\Script\Settle\default.py:4370
 msgid ""
 "\n"
 "在{character_data.name}的努力下，{select_index}号招募位进度"
@@ -2226,13 +2232,13 @@ msgid ""
 "recruit_line[select_index][0] + now_add_lust,1)}%\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4398
+#: .\Script\Settle\default.py:4409
 msgid ""
 "\n"
 "请先使用邀请系统选择邀请的对象，再进行邀请\n"
 msgstr ""
 
-#: .\Script\Settle\default.py:4414
+#: .\Script\Settle\default.py:4425
 msgid ""
 "\n"
 "在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为"
@@ -3056,19 +3062,19 @@ msgid ""
 "据，请保存并覆盖原存档。\n"
 msgstr ""
 
-#: .\Script\UI\Panel\food_bag_panel.py:120
+#: .\Script\UI\Panel\food_bag_panel.py:121
 msgid ""
 "  你现在不饿，无法吃东西。\n"
 "\n"
 msgstr ""
 
-#: .\Script\UI\Panel\food_bag_panel.py:129
+#: .\Script\UI\Panel\food_bag_panel.py:130
 msgid ""
 "  当前没有目标，无法食用特殊调味食物。\n"
 "\n"
 msgstr ""
 
-#: .\Script\UI\Panel\food_bag_panel.py:131
+#: .\Script\UI\Panel\food_bag_panel.py:132
 #, python-brace-format
 msgid ""
 "  {target_character_data.name}现在不饿，无法吃东西。\n"
@@ -3625,20 +3631,203 @@ msgid ""
 "为了防止有人打扰，将门锁上了\n"
 msgstr ""
 
+#: .\Script\UI\Panel\originium_arts.py:87
+msgid "选择催眠类型"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:94
+msgid ""
+"\n"
+"要使用哪一种催眠类型呢？\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:104
+#: .\Script\UI\Panel\originium_arts.py:362
+msgid ""
+"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠"
+"深度达到{hypnosis_type_data.hypnosis_degree}%)"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:172
+msgid ""
+"\n"
+"要使用哪一个源石技艺呢？\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:180
+msgid "[001]消除负面刻印"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:192
+msgid "[002]时间停止(未实装)"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:205
+msgid "[003]催眠"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:208
+#, python-brace-format
+msgid "（当前默认催眠类型：{now_type_name}）"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:221
+msgid "[004]自我强化(未实装)"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:234
+msgid "[005]激素系能力："
+msgstr ""
+
 #: .\Script\UI\Panel\originium_arts.py:248
 msgid "5"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:258
+msgid "[006]视觉系能力："
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:271
+msgid "({count*5}理智/h)"
 msgstr ""
 
 #: .\Script\UI\Panel\originium_arts.py:274
 msgid "6"
 msgstr ""
 
+#: .\Script\UI\Panel\originium_arts.py:284
+msgid "[007]触觉系能力(未实装)"
+msgstr ""
+
 #: .\Script\UI\Panel\originium_arts.py:287
 msgid "7"
 msgstr ""
 
+#: .\Script\UI\Panel\originium_arts.py:297
+msgid "[011]能力获得与升级"
+msgstr ""
+
 #: .\Script\UI\Panel\originium_arts.py:300
 msgid "11"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:337
+msgid ""
+"\n"
+"○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员"
+"也不会对催眠中的行为起疑\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:338
+msgid ""
+"\n"
+"催眠系能力：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:348
+#, python-brace-format
+msgid "  {talent_name}(最高催眠深度{max_degree}%)：{talent_info}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:351
+#: .\Script\UI\Panel\originium_arts.py:401
+#, python-brace-format
+msgid "  {talent_name}(未解锁)：{talent_info}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:356
+msgid ""
+"\n"
+"催眠类型：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:387
+msgid ""
+"\n"
+"激素系能力（不消耗理智）：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:391
+msgid ""
+"\n"
+"视觉系能力（每级消耗5理智/h）：\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:422
+#, python-brace-format
+msgid ""
+"\n"
+"能力可以直接消耗至纯源石或满足特定条件解锁，当前至纯源石：{cache."
+"rhodes_island.materials_resouce[3]}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:423
+msgid ""
+"\n"
+"当前可以获得/升级的能力有：\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:443
+#, python-brace-format
+msgid "  {talent_name}({money_cost}至纯源石-当前源石不足)：{talent_info}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:449
+#, python-brace-format
+msgid "  {talent_name}(未实装)：{talent_info}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:454
+#, python-brace-format
+msgid "  {talent_name}( {money_cost} 至纯源石)：{talent_info}"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:480
+msgid "(未实装)"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:481
+#, python-brace-format
+msgid ""
+"：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度"
+"≥{need_degree}%（当前{now_degree}%）"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:530
+#, python-brace-format
+msgid ""
+"\n"
+"习得了{talent_name}\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:553
+msgid "降低负面素质"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:563
+msgid ""
+"\n"
+"当前拥有反发刻印或恐怖刻印的角色有：\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:595
+msgid "  没有符合条件的角色\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:623
+msgid ""
+"\n"
+"要降低[{name}]的哪个刻印呢？(需要消耗该角色已收藏至藏品馆的5条内裤，当前共"
+"{len(panties_data)}条)\n"
+"\n"
+msgstr ""
+
+#: .\Script\UI\Panel\originium_arts.py:625
+msgid ""
+"当前为debug模式，不需要消耗内裤\n"
+"\n"
 msgstr ""
 
 #: .\Script\UI\Panel\recruit_panel.py:32
