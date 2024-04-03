@@ -21,6 +21,8 @@ class DataList(QWidget):
         self.text_id_text_edit = QTextEdit("0")
         self.text_id_change_button = QPushButton("修改序号")
         self.text_id_change_button.clicked.connect(self.update_text_id)
+        self.info_button = QPushButton("使用说明书")
+        self.info_button.clicked.connect(function.show_talk_introduce)
         self.status_menu: QMenu = None
         self.type_menu: QMenu = None
         # 新增条目、复制条目、删除条目
@@ -82,6 +84,7 @@ class DataList(QWidget):
         self.top_layout.addWidget(label3_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
+        self.top_layout.addWidget(self.info_button)
 
         # 设置编辑框的高度和宽度
         self.chara_id_text_edit.setFixedHeight(32)
@@ -374,6 +377,11 @@ class DataList(QWidget):
                         break
 
         elif cache_control.now_edit_type_flag == 1:
+
+            # 清除self.info_button的连接
+            self.info_button.clicked.disconnect()
+            self.info_button.clicked.connect(function.show_event_introduce)
+
             type_text_list = ["跳过指令", "指令前置", "指令后置"]
             for uid in cache_control.now_event_data:
                 now_event: game_type.Event = cache_control.now_event_data[uid]
