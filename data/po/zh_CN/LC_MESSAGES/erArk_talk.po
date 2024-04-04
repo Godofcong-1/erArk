@@ -7293,19 +7293,467 @@ msgid "你身为罗德岛的管理者，公务繁忙。数不清的报告图表�
 msgstr ""
 
 #: .\data\talk\chara\358_铃兰.csv:6
-msgid "{Name}表达了对{TargetName}尾巴的在意\n在意我的尾巴吗？\n其实来到罗德岛之后，我也意识到尾巴的数量好像和其他沃尔珀姐姐们不太一样，也不知道该找谁商量......\n不过爸爸的同事们都有很多尾巴呀，真奇怪。"
+msgid "罗德岛干员丽萨……啊不对，是铃兰，干员铃兰！是我自己挑的代号喔，今天开始正式作为干员行动，请多指教！"
 msgstr ""
 
 #: .\data\talk\chara\358_铃兰.csv:7
-msgid "询问了{TargetName}的烦恼\n烦恼？谢谢{Name}的关心，大家对我都很好，我不能太任性。\n不过......不过罗德岛的床铺有点小，睡觉的时候尾巴很难办......\n还有我养的盆栽总是有人帮我浇好水，其实不用这么麻烦的。"
+msgid "{PlayerName}博士，辛苦了。"
 msgstr ""
 
 #: .\data\talk\chara\358_铃兰.csv:8
-msgid "与{TargetName}谈论了阿米娅\n阿米娅姐姐真的很厉害，她有很多我没有想过的想法，也能很好的成为大家的表率。\n但阿米娅姐姐和我一样，她不是大人，她也会失落，也会焦躁，博士，你应该多陪陪阿米娅姐姐。"
+msgid "{PlayerName}博士需要帮忙吗？那学业就一会再说……"
 msgstr ""
 
 #: .\data\talk\chara\358_铃兰.csv:9
+msgid "{Name}低头看着{TargetName}小小的身体，脑袋中的理智迅速变成了妄想。\n{TargetName}发现了{Name}的异样，开口问道\n“{Name}博士…？身体不舒服吗…？”\n{TargetName}弱弱的声音传到了你的耳边，把你拉回了现实之中"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:10
+msgid "{PlayerName}脑内的理智完全不够用了\n伸出手对着{TargetName}的腿摸了过去\n{TargetName}瞬间变成了对{PlayerName}的嫌弃脸，脸上挂满了一道道黑线\n“{PlayerName}博士...最低了…真的好糟糕啊，这个变态博士…！！！”\n{TargetName}发出了嫌弃{PlayerName}的喊声，推开{PlayerName}的双手，把腿抽了出来\n然而{PlayerName}却还在回味着{TargetName}生气的样子，对着{TargetName}的嫌弃脸依然发着呆\n过了好一阵，{PlayerName}才站起来变回了普通的兜帽人"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:11
+msgid "“矿石病的日常检查吗？好…{TargetName}会配合博士的。”\n{PlayerName}对{TargetName}提出了检查身体的要求，{TargetName}点点头同意了。\n{PlayerName}把手放在{TargetName}露出的肩膀上，小心的触摸着{TargetName}的肌肤。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:12
+msgid "“矿石病的日常检查吗？好…{TargetName}会配合博士的。”\n{PlayerName}对{TargetName}提出了检查身体的要求，{TargetName}点点头同意了。\n{PlayerName}把手放在{TargetName}的头上，感受着{TargetName}发丝的触感，又摸了摸毛茸茸的耳朵。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:13
+msgid "“矿石病的日常检查吗？好…{TargetName}会配合博士的。”\n{PlayerName}对{TargetName}提出了检查身体的要求，{TargetName}点点头同意了。\n{PlayerName}轻轻举起{TargetName}的手臂，摸了摸{TargetName}纤细的手腕。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:14
+msgid "{PlayerName}摸着{TargetName}的小脑袋\n“诶嘿嘿…博士的手好温暖”\n{TargetName}闭着眼享受着{PlayerName}的抚摸。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:15
+msgid "{PlayerName}摸着{TargetName}的小脑袋\n“哈…又被博士触摸了…唔~”\n{TargetName}红着脸享受着{PlayerName}的抚摸。含情脉脉的望着{PlayerName}\n“这一边…也请摸一摸哦。”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:16
+msgid "“博士…博士，早上了哟”\n{TargetName}的声音在耳边低语着\n{PlayerName}睁开了眼，视线边缘出现了熟悉的毛茸茸兽耳。\n“早安，博士~”\n{TargetName}双手撑在床边笑盈盈的对着{PlayerName}"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:17
+msgid "“啊，博士还在睡呢。”\n{Name}轻轻的推开房门，来到了{PlayerName}的床边\n“呼~”\n{Name}朝着睡梦中的{PlayerName}的耳朵吹了一口气\n{PlayerName}感受到耳边温热的气息，意识从睡眠中清醒了一半\n一定是小狐狸又来喊自己了，但是好享受，还想要更舒服一点。\n这样想着的{PlayerName}决定继续装睡\n“这样都没有醒吗…看来是需要更多的刺激了…哈…”\n耳朵被持续的轻吹热气，{PlayerName}的心跳都被刺激的加快了\n{Name}轻轻的把手放在{PlayerName}的胸口上，这下装睡的事就暴露了…\n“阿米娅姐姐给我读过的睡前故事里有这样一段，\n睡不醒的公主被吻一下就能从梦境中苏醒\n要不要，试一试呢？~”\n听着{Name}在耳边的低语，心跳更快了。\n“那么…试一下吧 啾~”\n身边的气息来到了脸上，嘴唇传来了湿润柔软的触感。\n轻轻的把眼睛咪开一条缝，小狐狸精致的容颜就在自己的面前。\n“哈啊…阿米娅姐姐讲的故事是真的诶~”\n{Name}从自己身上撑起一点身子，脸红着闭上双眼微笑的小狐狸击沉了{PlayerName}的心房\n{Name}，她就是我们的光…\n{PlayerName}激动地抱住了靠在自己身上的{Name}\n“早安…博士，该去吃早餐了，要好好吃饭哟”\n耳边传来甜甜的声音，精神抖擞的{PlayerName}回味了好一阵才放开{Name}爬了起来\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:18
+msgid "“博士…差不多该，啊，已经睡着了啊”\n{Name}轻轻的推开房门，来到了{PlayerName}的床边\n“今天也忙碌了一天，辛苦了哦博士~”\n{Name}小心的抱住了{PlayerName}在耳边低语\n{PlayerName}在睡梦中也能感觉到这份温暖，紧绷的身体也难得的放松了。\n“睡得真香呢…”\n{Name}摸了摸{PlayerName}的头，轻轻的吻在了{PlayerName}的嘴唇上。停留了片刻。\n不知为何\n{PlayerName}的梦中出现了一个穿着红色军服带着面具的男子\n他正举起手说道我们终于互相理解了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:19
+msgid "“呼…呼，博士，终于找到您了，都这个时间了…去您的房间却没有找到人呢”\n{Name}脸上立刻流露出忧虑的神情，她轻咬着下唇，声音里带着难掩的焦急\n“哎呀，博士您怎么这么晚了还在工作呢？这对您的身体可不好啊！”\n{Name}伸手轻轻抚上{PlayerName}的手臂，掌心温暖柔软，让人不由自主地放松下来。\n“您知道我最担心的就是您的健康状况了。要是您累坏了身子，我会非常伤心的。”\n{Name}水汪汪的眼睛里透着真挚的关切之情。\n“博士，今晚就别再工作了…和我回房间吧？我准备了热牛奶和饼干喔？…”\n{Name}说着，眼中流露出撒娇般的神采，让{PlayerName}不禁心跳加速。\n{Name}温柔的声音像是最有效的安眠药，让{PlayerName}感到无比安心与放松。\n“所以…跟我回房间休息吧？”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:20
+msgid "“博士…打扰了哟”\n在{PlayerName}准备休息的时候，门外传来了{Name}的声音\n{Name}打开门低着头红着脸走了进来，{Name}轻咬着嘴唇，犹豫了好一会儿才开口道\n“那个…博士，您提出的要求…我都会努力的做到的！我会…尽可能…满足..博..…….”\n{PlayerName}笑着看着身前的小狐狸，就这样盯着{Name}说话的小嘴让{Name}的声音越来越小。\n{Name}又抬眼看了我一眼，眼神中透着难以掩饰的羞涩。{Name}慢慢地走到{PlayerName}面前，\n跪坐在{PlayerName}脚下，小心翼翼地解开了{PlayerName}的裤链…\n然后慢慢把脸凑近{PlayerName}的下体，犹豫片刻后{Name}闭上了眼…\n{Name}伸出粉嫩的小舌头，仔细地舔弄着{PlayerName}雄伟的肉棒。\n她那张娇艳欲滴的小红唇，此刻却做着如此禁忌之事。\n{PlayerName}最敏感的地带不断被{Name}湿漉漉的柔软香舌探索着\n让{PlayerName}舒服的长出了一口气。\n“勃…勃式…咕哈…啾…略咯略咯…这样子…舒服吗？”\n{Name}一手轻轻撸动着柱身，一手抚慰着囊袋，同时灵活的小舌头不停歇地在顶端打转。\n{Name}的眼神中逐渐露出了沉浸在口淫中的神情。发出的声音也越来越下流\n耳边传来绵绵不绝的淫靡之声，{Name}露出了平日里谁也无法看到的表情\n{Name}突然用力一吸，将{PlayerName}的硕大龟头包裹在小小的嘴里\n吸了一口也没有放开的意思，完全把{PlayerName}的龟头当做目标\n一口又一口的吮吸着面前的美味，中间还夹杂着舌头时不时的在最前端划过\n{PlayerName}不断感受着龟头被裹紧的快感，\n感觉自己的理智正在一点点不断的被身下的小狐狸吸走\n脑内也被想要满足的欲望充满了，把手轻轻按在{Name}的小脑袋上。\n{Name}立刻明白了{PlayerName}的状态\n双手撑在{PlayerName}的大腿两侧，\n俯下身上下吞吐起来。故意发出夸张的吸允声，\n时而用力一吸，发出“啵”的一声脆响，仿佛要将{PlayerName}的下体全部吸入腹中。\n“嗯…嗯…勃式的大肉棒真好吃…{Name}要被喂饱了呢…”边吸边说着下流的话语，故意用娇媚的眼神朝{PlayerName}看过来。\n{PlayerName}感觉身体快要爆炸了，这种视觉与听觉的双重刺激实在太过强烈。不断的喘着粗气。\n“可要全部射给{Name}才行哦……”\n说完{Name}继续卖力地吞吐。\n{PlayerName}感觉自己到达极限了，在{Name}又一次深喉的时候，{PlayerName}终于忍不住了\n按住身下{Name}的头，用力地挺进，将精液全部释放在{Name}的小口中。\n瞬间就把湿漉漉的口腔内部喷满了{PlayerName}的浓精，舌头，喉咙的小口，全部铺上了浓浓的一层白浊\n“唔…唔唔…好多…博士…好喜欢…❤”\n{Name}闭着眼，安静地任由{PlayerName}在她口中释放，\n直到最后一刻都不愿意抽离出来。\n“吸溜…咕噜噜…舔舔…prpr…全都交给{Name}…要睡觉了…今天的量要全部都交给{Name}的嘴巴才行…❤”\n{PlayerName}的精液此时完全变成了{Name}因为表现优秀得到的奖励一般，就算射出了这么多\n{Name}还是用舌头缠着肉棒轻轻的做着榨取的动作。一直吸到最后一滴为止\n接着{Name}把整根吞入口中，一边吸紧一边小脑袋慢慢的往后退，\n直到“啵”的一声，{PlayerName}的整根肉棒上都没留下一点精液的痕迹，被清扫的干干净净\n“哈…博士的…好美味…”\n{Name}如同展示一般的慢慢张开自己喷出热气的口腔，里面充满了{PlayerName}射入的液体\n展示完以后，{Name}合上嘴巴，喉咙明显的蠕动了几下。\n再次张开嘴，口腔中的浓精明显少了许多\n“博士，我做的好吗？”\n{PlayerName}看着小脸通红的{Name}，身体舒服的说不出话\n摸了摸{Name}的小脑袋\n“谢谢博士的款待…祝博士睡个好觉❤”\n{Name}捧起{PlayerName}的肉棒，再次吻在了龟头上\n仔细的为肉棒擦拭干净，\n等到博士回到床上躺下，\n走到房间门口关上了博士房间的灯。\n \n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:21
+msgid "{Name}先{PlayerName}一步起了床，趁着{PlayerName}还没起来，去做好了助手的准备工作\n随后小心的来到博士房间门口，将门打开一点往里看博士有没有起来\n“唔姆…还没有起来呀…”\n{Name}小心翼翼的踏入{PlayerName}的房间\n不过{Name}的体重很轻，就算不这样小心也不会发出什么声音吧\n“还睡得很好的样子呢…嘿嘿…”\n{Name}走到了{PlayerName}床边，把博士今日的行程表放在了床头柜上\n“哎呀？…博士睡的小薄被上…有什么东西吗？…”\n{Name}发现{PlayerName}的被子上有一块微微的隆起，想着是不是{PlayerName}指挥作战的时候睡着了，忘了把终端拿出来呢\n轻轻的，小心翼翼的，从下拉开被子的一角，把小脑袋探进去看了一下。\n“？！唔哇哇…”\n然而…被子里的并不是{Name}想的{PlayerName}博士手握着终端\n那是，没有穿裤子的{PlayerName}此刻正在睡梦中雄起的肉棒。\n“博…博士的…”\n{Name}的小脸变得像烧开的水壶一样红…眼神想要躲闪\n可是最终都会回到博士那根，吸引少女的肉棒上。{Name}不自觉的吞咽了一下\n“博…博士还没有起床…就…呜…”\n{Name}就这样在{PlayerName}的被窝里面愣了一小会…{PlayerName}的肉棒就算在睡眠中也不断的朝着周围释放着信息素…\n“博士的味道…好浓郁…\n只是…一小下下的话…\n呜…肯定…不会被发现…的吧…\n是…是啊…”\n{Name}说服，催眠了自己，朝着{PlayerName}的那根带有浓郁雄性气味的雄伟肉棒，慢慢凑的越来越近…\n当{Name}的鼻子贴在那根肉棒上的时候，呼吸到的味道，让{Name}的小腹一下子热了起来\n“好…好厉害…博士…博士的……哈啊啊”\n{Name}…在无意识间…就对着{PlayerName}的东西屈服了，无意识的伸出了小舌头，顺着冠状沟处，缓缓的舔了上去……\n\n\n\n\n\n\n十分钟后……\n“吸溜…唔希…啵叭啵叭…吸吸吸溜…”\n意识，逐渐回到这副身体中，为什么一大早的，就能听到这种水声呢？\n下一秒，下半身的快感才像初次苏醒那样直冲天灵盖\n肉棒好舒服…一下子爽到忍不住吐出一口气，脑袋瞬间被这强烈的刺激弄到清醒了。比每天喝的咖啡还好使\n视线往下望去，自己的被子正高高的凸起来，这种大小…还有那耳朵的形状…？是阿米娅吗？…发情期到了么？…\n唔喔喔…被吸的好爽…是没有察觉到自己起来了吗…这种激烈的真空吸吮…真是要把理智全部抽空了…好厉害的口交\n冠状沟被舌头一圈圈的扫过，又能感受到嘴唇吸紧在棒身上一上一下的激烈动作，还有这毫不掩饰的水声。\n“啾叭~啾啪~啾啾哧溜~哧溜溜❤❤”\n被子内人影的吞吐一下子变的更加激烈了…自己的被子正在因为她的动作不断的上下大幅度动着\n而这种激烈的动作更是彻底切断了我的思考能力，想要把身下的小嘴射满\n完全忍耐不住，快感被这种动作不断的牵引出来，要射了，我要射在这个温暖的嘴穴里\n忍不住的往上挺起了腰，一下子好像塞进了身下少女相当深的喉咙深处\n一瞬间肉棒的快感聚集到了一点，完全不想忍耐的一口气把子种汁喷进身下的喉穴深处\n“唔❤唔咕❤”\n喷的比想象中的更大力，能感受到对方的喉咙被精液一波波的撞击的紧缩又张开，直接射入食道深处的动作\n这种程度的口交…连被催眠的少女都没办法做到…\n一波又一波的射精结束后，感受着柔软的嘴唇紧紧的裹着肉棒根部，一点点往后退的最后一波快感，接着听到了小小的吞咽声\n“哈…哈啊…好难全部咽下去❤…不过…不能浪费…也不能被发现…偷偷的…嘿嘿嘿❤…”\n看着被子里的脑袋形状一点点的往后退，先是露出那双白色丝袜，然后是白色洛丽塔的衣服\n最后，是那双不知道摸过多少次的狐狸耳朵。\n对视上的时候\n{Name}嘴边的精液，还没有擦干净。\n“哇哇哇…那个…那个…博士早早…早…”\n看着瞪大眼睛的{Name}迅速的溜出了房间。\n看来只能自己清理肉棒了啊。\n\n\n于是红着脸去餐厅吃饭的{Name}，被阿米娅说嘴边有没喝完的牛奶\n脸变的更加红了\n\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:22
+msgid "在{SceneName}就忍不住摸上了{TargetName}还未发育的胸，享受了一番少女的触感\n“呀啊…在外面就突然…真的是无药可救的变态啊…！”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:23
+msgid "摸上了{TargetName}还未发育的胸，享受了一番少女的触感\n“呀啊…！突然就摸上来什么的…博士真是的！”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:24
+msgid "在{SceneName}就忍不住摸上了{TargetName}小小的臀部，肉不算很多，但是握起来刚刚好\n“哈…博士真是糟糕…”\n声音很小听不到哦，这样说着{PlayerName}加重了手上的动作"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:25
+msgid "摸上了{TargetName}小小的臀部，肉不算很多，但是握起来刚刚好\n“哈…博士就那么喜欢屁股肉吗…天天都在摸”\n因为小{TargetName}的屁股摸起来刚刚好哦\n这样说着{PlayerName}加重了手上的动作"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:26
+msgid "在{SceneName}把手伸向了{TargetName}的狐耳，揉啊揉，在手指中仔细的品鉴了一番\n“呜啊…博士…请稍微温柔一点，耳朵好敏感呜哇呜哇…”\n在{TargetName}的声音变得奇怪之前，松开了手\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:27
+msgid "把手伸向了{TargetName}的狐耳，揉啊揉，在手指中仔细的品鉴了一番\n“呜啊…博士…那里好敏感的…”\n看着{TargetName}的可爱样子，{PlayerName}更加仔细的玩弄狐耳\n“啊啊啊…奇怪的声音要漏出来了呀…”\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:28
+msgid "在{SceneName}靠近{TargetName}背后，把手伸进{TargetName}的尾巴里面感受毛茸茸的温暖\n“嗯…今天的课有…？！诶诶诶诶诶诶？”\n{TargetName}小声地惊呼，抬起头才发现是{PlayerName}\n“博士…还请不要突然就…”\n真可爱，下次还要多摸摸"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:29
+msgid "凑到{TargetName}背后，把{TargetName}的尾巴聚成一堆，另一只手来回的玩弄九尾狐的尾尖\n“呀啊…博士呀…我的尾巴不是玩具啦…呜…”\n{TargetName}对着{PlayerName}小声的抗议，但是似乎被摸的很舒服呢"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:30
+msgid "在{SceneName}和{TargetName}并肩走的时候，握住了{TargetName}的手\n“博士的手握起来比我的大呢…嘿嘿嘿，很暖和哦博士”\n笑的好可爱"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:31
+msgid "牵起了{TargetName}的手，仔细的看了看\n“自从手臂受伤以后，妈妈就很少让我出门了。虽然现在只能跟在前辈身后，回忆也不全都是美好的，但我很珍惜现在的生活，嗯！”\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:32
+msgid "在{SceneName}弯下腰把{TargetName}抱住了\n小小的软软的像一个大号手办一样呢\n“诶多…突然怎么了嘛？乖~乖~”\n被反过来摸头了…"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:33
+msgid "蹲下来把{TargetName}抱在了怀里\n“诶呀…博士想要撒娇了吗？{TargetName}会一直陪在博士身边的哦”\n一边被安抚着后背一边用令人安心的语气说着"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:34
+msgid "在{SceneName}低下身子把{TargetName}的脑袋捧着吻了起来\n柔软的触感从嘴唇传了过来，贴在一起，闻到了{TargetName}身上的香味\n“博…博士…咕…啾\n哈啊……突然就这样…犯规…”\n{TargetName}的脸红红的，低下头去不看你了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:35
+msgid "蹲下来抱住{TargetName}吻了上去\n“博…博士…咕…啾\n……嘴里都是博士的味道…”\n看着可爱的{TargetName}，忍不住抱的更用力，舌头也伸进了{TargetName}的口腔索取更多\n“唔唔…博士…我不会跑掉的啦…抱的…好紧..哈唔”\n和{TargetName}一直亲热了几分钟，{PlayerName}才意犹未尽的松开手"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:36
+msgid "在{SceneName}对{TargetName}提出了膝枕的请求\n“膝…膝枕？在这里？”\n{TargetName}扫视着{SceneName}的情况，犹豫了一下\n“好吧，既然是博士的请求的话，{TargetName}都会满足的…不过！不准把头对着肚子枕哦…”\n{TargetName}勉强的答应了{PlayerName}的要求\n整理着自己穿着的{TagetSkiName}，找地方坐了下来\n“那么…请吧”\n{PlayerName}靠在了{TargetName}的腿上\n腿部{TagetSocName}的触感\n让{PlayerName}感到安心\n差点就睡在这里了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:37
+msgid "对{TargetName}提出了膝枕的请求\n“膝枕？真拿博士没办法…”\n{TargetName}整理着自己穿着的{TagetSkiName}，找地方坐了下来\n“好了~博士”\n{TargetName}抱着{PlayerName}的头靠在自己腿上\n腿上{TagetSocName}的触感\n让{PlayerName}感到安心\n偷偷的看了一下裙底，今天是{TagetPanName}"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:38
+msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TagetSkiName}掀了起来露出了{TagetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“？！啊？啊？！刀客塔！！你在做什么呀…！”\n可怜的{TargetName}突然就急得要哭出来了一样，\n“鬼畜…下流……”\n{TargetName}咬牙切齿又无可奈何的皱着眉看着{PlayerName}"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:39
+msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TagetSkiName}掀了起来露出了{TagetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“哈啊…唔…唔啊~”\n被突然袭击的{TargetName}发出了微小的呻吟声，咬住了自己的手指\n“变态…博士❤咿啊…今天的是{TagetPanName}哦…”\n{TargetName}轻轻的推开{PlayerName}的头\n拉起{TagetSkiName}对着{PlayerName}博士展示起来"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:40
+msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}，走到{TargetName}面前\n“博？博士？…”\n{TargetName}抬起头看着{PlayerName}眼神里带着一丝疑惑\n拉起{TagetSkiName}的一角，往上拉了起来\n“诶？”\n{TargetName}愣在了那里\n清楚地看到了{TargetName}正穿着{TagetPanName}\n“发生…发生什么了...”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:41
+msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}\n“…今天是{TagetPanName}”\n{TargetName}不等{PlayerName}走过来，就爆出了自己的内裤样式\n“反正博士就是想看这个吧…”\n{TargetName}双手拉住{TagetSkiName}的边角，提了起来\n“看到了吧？没有骗你哦”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:42
+msgid "在{SceneName}的时候脑内突然闪过一道电光！感受到了{TagetPanName}的气息！\n来了吗…！这个感觉…是{TargetName}吗！\n欸…！只要能脱下来的东西就不必穿在身上…！\n{TargetName}哟…是你的话一定能理解我的吧？！\n{PlayerName}突然以三倍的速度突进来到{TargetName}面前，\n众人只看到了一抹赤色如同彗星般从{TargetName}身边掠过\n{TargetName}感觉到身下一凉\n“没…没了？！”\n{TargetName}大惊失色\n“好快…！”\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:43
+msgid "对{TargetName}提出，想要正在穿着的胖次\n{TargetName}似乎有些意外{PlayerName}的请求，呆呆地看着{PlayerName}，一时之间竟不知如何作答。\n但很快{TargetName}就回过神来，眼神中流露出难以掩饰的羞涩。\n{TargetName}轻咬着下唇，脸上泛起一层淡淡的红晕。扭捏地笑了笑，有些不好意思地说\n“{PlayerName}博士，您的要求实在太出乎意料了…虽然已经知道博士很变态啦…但是居然当面就要这样…”\n她并没有拒绝，缓缓地站起来，面对着{PlayerName}脱下了自己的内裤。她将那条{TagetPanName}捧在手里，递给{PlayerName}。\n“这个，送给博士吧…如果博士喜欢的话…”\n{TargetName}声音越来越小，似乎有些不好意思。\n{PlayerName}将{TagetPanName}珍重地收好"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:44
+msgid "在{SceneName}看到了{TargetName}穿着{TagetSocName}在自己面前走过\n飘过的风中带着{TargetName}身上特有的少女气息\n{PlayerName}望着{TargetName}的背影，踩在鞋子里的{TagetSocName}吸引了{PlayerName}的注意\n想要知道{TagetSocName}的味道\n看着{TargetName}走过了拐角，{PlayerName}的意识突然断线了\n\n等{PlayerName}的意识重新连接的时候\n手正插在兜里，不过兜里多了什么东西？\n看了一眼是{TagetSocName}\n抬起头，发现了变成裸足的{TargetName}的背影\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:45
+msgid "当{TargetName}正在{PlayerName}面前打扫的时候，盯着{TargetName}正穿着的{TagetSocName}看。\n{TargetName}似乎对我的目光有些不解，她歪着头问道\n“博士，您为什么一直在盯着我看？有什么不对劲吗？”\n{PlayerName}尴尬地移开视线，说自己只是在想事情而已。\n但很快又将目光锁定在{TargetName}的身上，紧紧盯着她的双足。\n{TargetName}今天穿的是一双{TagetSocName}，搭配着{TagetSkiName}，显得既纯洁又性感\n{PlayerName}看得出神，几乎忘记了这双玉足主人的存在。\n我可以…要你的一样东西吗？\n{TargetName}闻言一愣，随后看着{PlayerName}直直的视线立刻明白了{PlayerName}的意思\n脸腾地一下红了\n“博士，您…您要我的袜子？”\n她结结巴巴地问。\n没有回答，只是点点头，目光仍死死地锁在那双{TagetSocName}上。\n{TargetName}虽然害羞，但并没有真正反对的意思。\n她咬了咬嘴唇，最终还是点了点头。\n“好吧…如果博士真的很在意的话…”\n说完便红着脸脱掉了左脚的袜子，望着博士慢慢又扯下另一只\n折叠起来后塞进了我的手里。羞涩地低下了头，不敢与我直视。\n{PlayerName}知道，{TargetName}是很乐意满足自己这个小小要求的。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:46
+msgid "伸出手指在{TargetName}的肌肤上爱抚着\n“博士…手指的动作…好色情…”\n{TargetName}微微仰起头，闭上眼睛，似乎很是享受爱抚。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:47
+msgid "将{TargetName}拥入怀中\n手掌压在稚嫩的小屁股上不断的揉弄\n“哈啊…博士…”\n{TargetName}动情的望着{PlayerName}的脸"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:48
+msgid "手顺着{TargetName}的脖颈一路向下，抚过细腻的肩头\n停留在{TargetName}柔软稚嫩的胸部上。揉捏着那两团小小的雪白软肉，\n爱抚着两颗可爱的的果实，拨弄着顶端的红樱。{TargetName}呻吟一声双腿夹紧，身体不自觉地磨蹭着{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:49
+msgid "手掌伸向{TargetName}贫瘠的小胸，握着乳肉玩弄起来\n{TargetName}似乎有些难为情，用手遮住胸前\n“博士，不要这样…那里还没有发育完全，博士会笑话我的…”\n摇摇头，用手指拨开{TargetName}的手，让那对小小的乳房暴露在空气中。\n怎么会呢，在我看来它们已经很完美了。\n俯下身子，在粉嫩的乳尖上轻轻一吻。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:50
+msgid "{TargetName}还没怎么发育的双峰虽不及其他干员，但也小巧精致\n“博士…还是盯着看…就那么喜欢这样的嘛…？”\n看着{TargetName}胸前粉嫩的两颗乳头充血立起的样子，也足够让{PlayerName}感到兴奋\n伸出食指挑逗着敏感的两点，轻轻拨弄，听着{TargetName}口中吐出更多的媚叫，浑身颤抖不已"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:51
+msgid "{TargetName}一副任由宰割的样子让{PlayerName}性趣高涨。\n低头埋入{TargetName}的胸口，伸出舌头在柔软的乳尖上来回舔舐。\n舔到湿润，再整个含入嘴里，用舌尖不停戳刺着{TargetName}敏感的乳孔。\n{TargetName}被如此激烈的进攻弄得娇喘连连，双手紧紧抓着{PlayerName}的头发\n“博士…想要博士…多尝尝这里…哈啊~{TargetName}的小乳房都是属于博士一个人的…博士想要怎么玩都可以…”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:52
+msgid "把{TargetName}小小的身体压在了自己身下，肉棒顶开那条小小的蜜缝，感觉到膣内瞬间收缩地紧紧的\n“呼啊……嗯嗯…请让我更舒服起来吧…博士…咿吖”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:53
+msgid "{PlayerName}开始顶弄子宫口时，那种被完全打开的陌生感觉让{TargetName}差点失控\n“啊…不要…”\n{TargetName}抓着{PlayerName}的手臂\n“那里不行…受不了的…”\n{TargetName}感受着肉棒一次又一次擦过宫颈，带来一阵阵无法抵挡的酸胀感。\n{PlayerName}越发用力地顶弄着那处脆弱的入口。{TargetName}觉得自己随时都会被顶穿\n“呜…啊…”\n{TargetName}忍不住发出一声高亢的呻吟，随即意识到自己失态，连忙用手捂住了嘴巴。\n可{TargetName}还是止不住身体的本能反应，双腿绞紧了{PlayerName}的腰间，\n小腹也不断向上挺动着迎合{PlayerName}的入侵。\n那种快要被打开的感觉太过强烈，让{TargetName}的理智彻底瓦解。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:54
+msgid "{PlayerName}重重的整根没入{TargetName}的体内，力道几乎要把{TargetName}的子宫顶穿了。\n“啊啊啊…好深…博士…慢点…{TargetName}…要被你插坏了…呜…不行了”\n{PlayerName}依旧一下下的顶开{TargetName}的子宫口，硕大的龟头碰撞着{TargetName}的子宫壁\n把{TargetName}的小腹插到鼓起肉棒的形状\n“不…不行了…里面…完全变成博士的形状了…”\n{TargetName}嘴角留着口水，口中不停地呼出热气。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:55
+msgid "{PlayerName}的动作越发激烈，将{TargetName}压紧在自己的肉棒上紧密贴合，开始了冲刺。\n“唉嘿、诶嘿嘿…已经什么…都…没办法思考了…”\n{TargetName}双目失神地看着前方。随着{PlayerName}的动作剧烈颠簸。\n“啊啊…被…灌进来了…博士……博士❤…”\n{TargetName}闷哼着\n停下了所有的动作。{TargetName}感觉到一股股滚烫的热流直接注入着子宫深处。\n“博士…”\n两人的结合部位白浊不断流出"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:58
+msgid "看着身前的少女，按耐不住的感觉涌了上来\n对着{TargetName}射了出来\n“博士…唔唔…”\n少女承受着{PlayerName}喷出的精液"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:59
+msgid "博士怎么了？欸？想和我...做色色的事?虽然不是很懂…不过是博士的话…应该没问题吧…\n{PlayerName}对着性无知的{TargetName}提出了更进一步的请求\n“接下来要怎么做呢？…博士…”\n还真是令人期待啊"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:60
+msgid "欸欸欸！？想和我...做色色的事?虽然不是很懂…不过是博士的话…应该没问题吧…\n\n“{PlayerName}博士，打扰一下。有你需要处理的…”\n糟…糟了，凯尔希拿着文件走了进来，看到眼前的一幕，脸顿时黑了下去\n“{PlayerName}……你果然是这种人。”\n冷淡的声音让恐惧爬上{PlayerName}的后背…不 不对，这坚硬的触感并不是情绪…\n{PlayerName}短暂的失去了意识"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:61
+msgid "和少女亲热了一番后穿好了衣服\n这次就先到这里吧\n“知道了…博士”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:62
+msgid "好久没有过如此激烈的运动\n{PlayerName}累的压在了{TargetName}身上\n“哈...哈啊...博 博士?..好重…唔，出了好多的汗...很累了吗?...休息一下也可以的..哦...哈...”\n作为对象的{TargetName}也喘着气抱住了{PlayerName}"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:63
+msgid "{TargetName}彻底瘫在了身边\n嘴巴像鱼一样不停地一开一合\n“啊…啊…啊啊…”\n双眼失去了高光，断了线一样\n还是先让{TargetName}歇一下吧"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:64
+msgid "看到{PlayerName}明显异常的朝着这边走过来\n要伸出手的时候{TargetName}往后退了\n“不…不要过来…”\n{TargetName}的身边冒起了小小的狐火"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:65
+msgid "对{TargetName}进行性骚扰的时候一副手铐突然拷住了{PlayerName}\n“粉肠，有什么话跟我走了再说吧，去我那边让我好好招待一下你。”\n{PlayerName}被陈带走了\n\n{TargetName}对着离开的{PlayerName}皱着眉骂了一句“最低”\n不过还是跟着到保卫科说博士没有做过分的事\n看向{PlayerName}的眼神中带着厌恶"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:66
+msgid "“不要！别过来！”\n{TargetName}双手把法杖撑在身前保护起自己"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:67
+msgid "“那里…不可以用舌头…舔的..啊啊”\n看着{TargetName}可爱的样子\n忍不住把头埋的更深，仔细的用舌头寻遍{TargetName}纯洁的花苞"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:68
+msgid "轻轻的剥开少女纯洁的花瓣\n{TargetName}最重要的地方\n就这样被{PlayerName}视奸起来\n“博士…那样盯着看…好害羞呜呜…”\n{TargetName}捂住了自己羞红的脸"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:69
+msgid "缓缓的用拇指把{TargetName}娇嫩的不洁肉壁往两边掰开\n粉嫩的肉穴暴露在{PlayerName}眼前，看起来紧紧的\n忍不住咽口水了\n“博士…那里…不可以看的呀…”\n{TargetName}的手臂遮住了脸"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:70
+msgid "把头埋进{TargetName}充满少女气息的腿间\n伸出舌头品尝起了少女的稚嫩肉穴\n“博士那里不是好吃的地方…嗯嗯…感觉…好奇怪啊”\n少女的身体未掺杂一丝多余的气味\n让{PlayerName}更加贪婪的渴求"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:71
+msgid "提出了想要{TargetName}在眼前做给自己看\n“自己..自己做?博士想要看吗…那种事…完全不会啊…”\n{TargetName}虽然在平时和{PlayerName}相处时有时会小腹热热的\n但还没有完全觉醒性方面的知识\n{PlayerName}抓着{TargetName}的手顺着小腹往下摸下去\n让{TargetName}抚摸自己作为女性敏感的小豆豆\n“嗯啊…是…这样吗？好…好奇怪…像触电一样但是好舒服啊…”\n小手在性器上轻轻的抚摸，只是这样就时不时想要夹紧双腿的样子\n{PlayerName}观赏着少女在眼前做着生疏的自慰"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:72
+msgid "{PlayerName}把自己的那根对着{TargetName}\n从未见过男性坚挺的{TargetName}本能的把头撇到一边，但有时又会把目光转过来一瞬\n“博士…诶？要用手握着吗…”\n{TargetName}犹豫了一下，伸出手缓缓的摸在了{PlayerName}的那根上\n“好烫…”\n纯洁的少女为自己进行着不熟练的手淫，没什么快感但是{PlayerName}的心里觉得异常兴奋"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:73
+msgid "{PlayerName}把男性器对着{TargetName}的小脸\n“用…嘴巴吗？…”\n少女的口腔可是从未有任何异物进入过的，却被{PlayerName}要求着用来为自己的男性器服务\n“博士这么说的话…啊………”\n看着{TargetName}对着自己的肉棒张开那双小嘴，{PlayerName}感觉莫大的满足\n接着就感受到少女口内的温暖，从最敏感的龟头上深深传到大脑\n孩子般的{TargetName}还长着可爱的小虎牙，{TargetName}也小心的不让龟头被蹭到\n感受着少女稚嫩的口淫"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:74
+msgid "{PlayerName}将硬邦邦的肉棍戳到{TargetName}胸前\n龟头在{TargetName}未发育的小胸上蹭来蹭去，涂满了先走汁\n故意在敏感的乳头上用自己滚烫的先端戳来戳去，刺激着少女敏感的部位\n“分明…那么小…博士也要不停的这样玩弄…真是…”\n{TargetName}的反应太可爱了，这才衬托出了稚嫩胸部的价值\n让{PlayerName}更兴奋的玩弄着身前少女的身体"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:75
+msgid "{PlayerName}盯着{TargetName}的嫩足\n“博士…就那么喜欢脚吗？…平时也是…经常看向博士就发现博士的视线在看着大家下面…”\n没有回答，挺起的肉棒回应着{TargetName}\n“呜…涨的那么大……变态……”\n握住{TargetName}小巧的玉足，把龟头顶在了柔软的脚心上\n“博士…啊…已经完全听不到我说话了…”\n就这样玩弄着{TargetName}的双脚，{TargetName}最后也无可奈何的只能配合{PlayerName}不断做着想做的事"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:76
+msgid "握住{TargetName}的双足套在肉棒上激烈的撸动\n“一做起来就停不下来…那里分明不是性器啊…呜…”\n{PlayerName}越来越兴奋，把{TargetName}的脚侵犯到黏糊糊的"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:77
+msgid "“博士真的是变态…用到这里就会这么兴奋…”\n{TargetName}左脚撑着棒身，右脚脚趾不断地在先端滑过\n“很喜欢被这样吧？…无论是阿米娅姐姐的丝袜…还是凯尔希医生的透明靴子…每天都能看到博士在偷看哦…我都有偷偷观察的呢”\n“不过…这也不算什么秘密就是了…”\n{TargetName}坐在{PlayerName}面前，把双脚对着{PlayerName}的脸抬起来\n“博士…因为你…把我的脚都弄成这样了”\n展示一般的张开脚趾，上面全是黏糊糊的痕迹，看的{PlayerName}不断地喘气\n接着{TargetName}的双脚把肉棒托在中间，挤压着{PlayerName}的男性器紧紧的合拢\n用自己小巧的足穴包住大半根，激烈的上下套弄刺激着{PlayerName}的神经\n“来吧博士…射出来…射出来…把你一直想对着脚上喷出的肮脏的淫秽…弄脏{TargetName}的这双小脚吧”\n小狐狸的认真足穴榨精直接让{PlayerName}脑袋放空了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:78
+msgid "牵起{TargetName}的头发，抚摸着\n“啊，要做平时的那个吗~”\n{TargetName}乖巧的眯着眼把头凑过来，不过今天的可不一样呢\n{PlayerName}将金色长发在自己那玩意上绕了几圈，做成了“卷发棒”\n“博士…？好像有点奇怪…”\n睁开眼的{TargetName}发现{PlayerName}正站在{TargetName}身边挺着腰、套弄。享受着自己的头发\n低下头去任{PlayerName}对自己做着奇怪的事"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:79
+msgid "看着身前的少女，按耐不住的感觉涌了上来\n对着{TargetName}大量的射了出来\n“…好多…”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:80
+msgid "对着身前的少女，兴奋到了极点\n对着{TargetName}不断的喷出\n“呜…啊…这样的…好厉害…”\n射到停不下来"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:81
+msgid "走到{TargetName}身后，按住了{TargetName}的肩膀\n将肉棒戳进{TargetName}的腋下，变成了巨型的体温计\n小狐狸一下子就低下了头，羞得没法说话，余光撇到从腋下伸出来的那根东西前后抽动着\n“……唔”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:82
+msgid "找了找附近有没有合适的凳子或床，让{TargetName}踩上去\n“博士…怎么…呀啊…”\n为了把小狐狸的身高抬高一点而方便抱着{TargetName}，{PlayerName}将滚烫的肉棒戳进{TargetName}的腿间把性器官贴在一起\n搂住{TargetName}的小屁股，抱在身前挺着腰享用起{TargetName}的股间"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:83
+msgid "找了找附近有没有合适的凳子或床，让{TargetName}踩上去\n“博士…怎么…呀啊…”\n为了把小狐狸的身高抬高一点而方便抱着{TargetName}，{PlayerName}将滚烫的肉棒戳进{TargetName}的腿间把性器官贴在一起\n搂住{TargetName}的腰间，从背后搂紧小小的身子不断的让肉棒从{TargetName}身下顶出来"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:84
+msgid "托着{TargetName}的后脑勺靠的更紧，让{TargetName}一边含着先端的同时不断地套弄棒身\n“博士的味道…好重…但是…好好闻…咕啵…咕啵…”\n胯下的{TargetName}享受其中的样子"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:85
+msgid "“不行的啦…做不到的…唔…”\n就算{TargetName}的小胸没办法夹住{PlayerName}的肉棒，还是靠在胸前按下{TargetName}的后脑勺将肉棒含了进去\n{PlayerName}的子种袋蹭着{TargetName}的乳肉，因为没有乳穴的缓冲，每次挺腰都插入{TargetName}的喉咙深处。\n可爱的小胸当然也不能就这样看着，轻轻的捏住敏感的小葡萄，拉起一点不断地用手指刺激。\n“哈唔…哈唔…哈唔❤❤唔唔~~~❤”\n不断的刺激让{TargetName}的身体不停颤抖"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:86
+msgid "在{TargetName}正在身下口淫的时候摸上了她的头，抚摸着狐耳，提出了想要被{TargetName}吮吸的要求\n“勃式…咕吸…哈 知道了 咕啾咕啾…吸溜——”\n{TargetName}本就包裹感很强的口腔内壁更加吸紧了\n快感变的更加强烈，吸紧肉棒后又开始吞吐起来\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:87
+msgid "按住{TargetName}口淫中的后脑\n“唔？唔唔…！！”\n用力按在身下让{TargetName}的脸全部贴在自己身上\n抱着{TargetName}把小嘴当成性器一样不断的朝喉穴深处顶上，撞击着食道口\n因为受不了脸上流下了泪痕，喉咙不断本能的缩紧想要干呕\n就算如此。{PlayerName}还是把{TargetName}的头固定在身下，发泄着自己的欲望"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:88
+msgid "在{SceneName}忍不住抱起{TargetName}小小的身子\n“欸？博士突然怎么…哎哎？…”\n抱到脸上来遵从欲望舔舐起面前的蜜缝\n“哈……哈啊…好高…会掉下去的…”\n越舔越兴奋，{TargetName}的腿微微颤抖起来，抓住{TargetName}的脚腕，拉开一点二人的距离，\n小小的{TargetName}就这样头朝下的倒垂下去，再紧紧的抱着腰按回自己身前贴紧。再次把舌头伸进{TargetName}体内\n“博士…哈！呜？！”\n按住{TargetName}的脑袋对着肉棒压过去，就这样倒插嘴里\n{PlayerName}按着{TargetName}的后脑一边把头埋进面前的小穴一边让肉棒在口中抽送\n“噗咕…咕…好深…哈…”\n{TargetName}因为倒吊着的原因，刘海都朝头上垂了下去，尾巴也靠在背上\n{PlayerName}强制的激烈口淫让{TargetName}的口中不断溢出黏糊糊的透明液体，弄脏了{TargetName}的脸\n“已经…呜…”\n{PlayerName}好像还不够过瘾似的，把{TargetName}按在附近的墙上，一只手垫着{TargetName}的后脑勺。\n就这样把{TargetName}压在墙上狠狠的侵犯着{TargetName}的小嘴，整个房间回荡着淫靡的水声"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:89
+msgid "躺下来抱着{TargetName}的腰按在了自己脸上舔舐起幼小的蜜裂\n按着{TargetName}的背让她的头凑到自己两腿中间去，{PlayerName}的那玩意对着{TargetName}的脸高高的立起\n“啊…博士…像小狗狗一样不停地舔…让我也…”\n{TargetName}对着面前的那根伸出了自己的小舌头\n二人就这样抱在一起互相吸舔着性器"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:90
+msgid "{PlayerName}调整了姿势，侧躺着抱住身前的{TargetName}舔着稚嫩的性器\n张开自己的腿，压下{TargetName}的头把肉棒塞了进去\n“咕…博士…总是这样…呜咕…”\n互相用嘴舔着性器的感觉让{TargetName}的身体发烫，{PlayerName}按着脑袋缓缓的挺动着腰"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:91
+msgid "“博士…唔？！”\n{PlayerName}突然的把{TargetName}的脑袋压在了身下\n深深地挺入{TargetName}的口中\n好像还不够过瘾\n保持着肉棒插入的姿势，挪了几次身体把脸挪到{TargetName}的两腿之间\n抱起没什么肉的大腿埋了进去\n少女的味道让{PlayerName}更加兴奋，整个身体都盖住{TargetName}的身体，咕啾咕啾的扭动着腰侵犯着{TargetName}的口穴\n“鼻子里充满了博士的味道……再这样下去的话…我会…呜❤”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:92
+msgid "把{TargetName}的尾巴聚在一堆，让{TargetName}缠紧，塞入了肉棒\n“这种事…怎么会有人想做要这种事嘛…足和口都能理解…居然…连尾巴也要…侍奉博士的那根…简直全身都变成了玩具…”\n听着{TargetName}小小的抱怨声，感受着肉棒上毛茸茸的温暖触感\n和少女的娇嫩肌肤比起来，这么大的尾巴插起来更像是在戳着什么动物一样…"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:93
+msgid "扶着肉棒戳在了{TargetName}的脸上，兴奋到硬的滴出水的龟头把{TargetName}的小脸蹭的黏黏的\n“博士…哈…味道全部涂在脸上…都染上博士的气味了…”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:94
+msgid "把肉棒戳在{TargetName}的狐耳上，{TargetName}吓得立刻惊呼\n“博士！那里不是可以插进去的洞哦？！…诶…觉得毛茸茸的想蹭蹭看…？\n耳朵…很敏感…呼啊…耳朵边都是博士发出的黏糊糊的声音…\n这样下去…唔啊~感觉…还蛮享受…呜…”\n用肉棒给{TargetName}做了ASMR的样子呢？\n这边也很享受哦…"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:95
+msgid "让{TargetName}后背朝上趴在床上，\n按着{TargetName}的肩膀深深地插进了嫩穴之中。{TargetName}顿时仰起头吐出了舌头\n背部紧贴在{PlayerName}的胸前，臀部高高翘起迎接冲撞。\n“啊…好深…博士…”{TargetName}双手紧紧抱住了枕头。脚趾紧紧的蹦在一起\n{PlayerName}的每一下都深深地顶撞在最敏感的点上\n整根没入又拔出，带出一股股淫靡的水声。\n“博士…好厉害…这样的…哦哦”\n{PlayerName}抱着{TargetName}，激烈的动作让撞击屁股的啪啪声传遍房间\n"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:96
+msgid "{TargetName}手撑着{PlayerName}的肚子坐在腿上\n“博士的欧金金…好大啊…”\n{PlayerName}的肉棒一跳一跳的，戳着{TargetName}的小腹\n{TargetName}吞咽了一下\n“这也是…作为【铃兰】的任务吧…”\n身下的肉棒就算不用扶着也高高的对着{TargetName}\n看着{TargetName}缓缓抬起臀部，对准了博士的肉棒坐下，让{PlayerName}的肉棒一点点进入她的体内。\n“进来了…哦哦…被博士的东西…撑开了…肚子好满…”\n{TargetName}的萝莉肉壁紧紧吸肉棒着真是要爽爆了，看着{TargetName}撑在自己身上，开始加快节奏的一上一下的抬起、坐下\n贴合处都撞的拉出了透明的银丝，听着{TargetName}的娇喘声，把主导权完全交给了对方。{PlayerName}享受着萝莉小穴的侍奉"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:97
+msgid "抱起{TargetName}的身体面对面坐在自己肉棒上\n“呜哦……哦哦…”\n一下子坐的相当的深让{TargetName}眼睛往上翻了许多\n{PlayerName}还是抱着{TargetName}的屁股一下下的按下在肉棒上坐动起来\n“等……等一下…哦啊…啊啊啊❤❤”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:98
+msgid "把{TargetName}背对着抱到腿上来，用肉棒顶在{TargetName}小腹上量了一下长度\n“博士的…会把里面撑坏的吧…”\n试试看就知道了\n举起{TargetName}的腰对着肉棒压下，深深地直入{TargetName}的子宫口"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:99
+msgid "把{TargetName}像猫猫一样举了起来，双脚悬空的{TargetName}低头看到顶在自己小腹上那根雄起就明白了\n{PlayerName}抱着{TargetName}的腰，把肉棒对准了幼小的缝隙顶了进去，\n“博士…啊…坏心眼…”\n{TargetName}的双脚在{PlayerName}的腿前晃来晃去，连反抗的力气都使不上，只能任由{PlayerName}按着屁股不断地侵犯自己"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:100
+msgid "从背后抱住{TargetName}的同时拉开{TargetName}茂密的尾巴，{PlayerName}的肉棒压过来寻找着能让小狐狸怀孕的洞，\n“博士…啊…不是那里…”\n{TargetName}垫起了脚，把自己撑高了一点，让{PlayerName}的肉棒从错误的穴口挪开\n“呜呜…好累…”\n垫着脚很辛苦的样子，就这样帮{TargetName}一下吧\n抓紧{TargetName}的身子顶入小穴，抱着{TargetName}啪啪啪的把腰撞在小屁股上\n猛烈的撞击很快让{TargetName}根本站不稳了，{PlayerName}抱起{TargetName}，按着腰享受着柔软的嫩穴\n“博士❤呜❤” 铃兰吐着舌头眼里冒出了爱心\n小脚不断的在半空中摇晃，交合处的爱液都顺着{TargetName}的腿流下来滴到了地上。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:101
+msgid "“嗯啊…乳头…麻麻的…呜~”\n{TargetName}挺立的乳头好像突然经过了微弱电流一样"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:102
+msgid "“嗯啊…乳头…好舒服…嗯！~”\n{TargetName}挺立的乳头好像突然经过了电流一样颤抖着高潮了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:103
+msgid "“呜啊~乳头…不要玩了不行了呜啊啊啊啊啊啊❤❤”\n{TargetName}的胸口不停地颤抖着"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:104
+msgid "“哈……哈…身体好奇怪…”\n{TargetName}夹着双腿"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:105
+msgid "“呜~唔~好舒服呜啊——”\n{TargetName}微微地仰着头"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:106
+msgid "“小豆豆❤啊啊要被玩坏了停不下来呜呜呜”\n{TargetName}的小穴中喷出一股液体"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:107
+msgid "“呜…”\n{TargetName}深情地看向{PlayerName}的方向"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:108
+msgid "“博士…博士博士❤啊啊❤”\n{TargetName}的小穴不断的缩紧，嘴角留下口水"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:109
+msgid "“呜哦哦哦哦哦不行了要坏掉了去了去了❤”\n{TargetName}眼睛上翻，身体颤抖地从稚嫩的身体中喷出大量的液体"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:110
+msgid "{TargetName}的身体初次品尝到了雌性的快乐\n“呃啊…嗯啊…从来不知道有这种事…好厉害…”"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:111
+msgid "“博士博士啊啊啊啊❤❤{TargetName}已经…回不去了…❤”\n{TargetName}抱紧{PlayerName}感受着全身带来的快乐"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:112
+msgid "“更多…更多❤博士…让我知道更多的快乐吧❤”\n{TargetName}眼中冒着爱心，直勾勾的望着{PlayerName}\n和当初可爱的{TargetName}完全不像一个人了呢"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:113
+msgid "第一条……！\n父母重于一切。\n绝不允许违逆。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:114
+msgid "第二条……！\n博士重于一切。\n要赌命保护，被夺走时务必救回。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:115
+msgid "第三条……！\n服从内心的渴求，\n索取并不屈辱。\n一定要满足主上。\n不择手段。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:116
+msgid "{TargetName}的表情一瞬间暗淡了许多，似乎对{PlayerName}没有那么高的兴趣了？"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:117
+msgid "{TargetName}的表情已经变成了扑克脸，这时完成任务的红来到了{PlayerName}的身边\n二人在自己眼前靠近的瞬间，{PlayerName}突然捂住了头\n\n脑子的病可治不好 咔咔咔咔的齿轮声在脑子里要把意识碾碎了。\n                                                                             侵犯\n                                                                             殺害\n小红帽？…{PlayerName}对着面前的少女伸出手\n“？”\n被{TargetName}一巴掌打清醒了"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:118
+msgid "{TargetName}如同再看垃圾般，一脸嫌弃的看着{PlayerName}\n金发、水蓝色的发饰……\n{PlayerName}明白了\n是爱丽丝啊。\n爱丽丝不够了，必须要找到爱丽丝才行。\n爱丽丝？要去哪里？\n\n{PlayerName}身边的环境渐渐变化，自己正躺在一张床上，四周的一切都和之前完全不同了。\n床头，放着心爱少女的照片。\n打开门，外面播放着令人舒缓的音乐，穿过走廊，走进了一扇不知通往哪里的门\n面前出现一个木屋，{PlayerName}走了过去\n魔女装扮的背影出现在眼前。\n笨蛋弟子，愣在那里干嘛？\n\n…………\n\n师匠，我，不能过去。\n\n\n嘟-嘟-嘟-嘟---\n\n开始循环………………阻升主……停跳液注入完成……\n……体温过低…………海克赛米松20cc，静推。\n\n博士……\n……手！\n抓……紧！\n\n刚才，刚才博士……明明已经拉住我的手了。\n但是到现在，博士都没有清醒……怎么办……\n听到了，阿米娅在身边着急的声音\n睁开眼看到{TargetName}站在身边，脑子好痛。好像丢掉了什么重要的记忆\n\n过了一阵，阿米娅说已经没事了。\n可始终没有说刚才发生了什么事。\n{TargetName}也不再理我了。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:119
+msgid "{Name}表达了对{TargetName}尾巴的在意\n在意我的尾巴吗？\n其实来到罗德岛之后，我也意识到尾巴的数量好像和其他沃尔珀姐姐们不太一样，也不知道该找谁商量......\n不过爸爸的同事们都有很多尾巴呀，真奇怪。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:120
+msgid "询问了{TargetName}的烦恼\n烦恼？谢谢{Name}的关心，大家对我都很好，我不能太任性。\n不过......不过罗德岛的床铺有点小，睡觉的时候尾巴很难办......\n还有我养的盆栽总是有人帮我浇好水，其实不用这么麻烦的。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:121
+msgid "与{TargetName}谈论了阿米娅\n阿米娅姐姐真的很厉害，她有很多我没有想过的想法，也能很好的成为大家的表率。\n但阿米娅姐姐和我一样，她不是大人，她也会失落，也会焦躁，博士，你应该多陪陪阿米娅姐姐。"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:122
 msgid "咿呀！{Name}......突然之间是怎么了？"
+msgstr ""
+
+#: .\data\talk\chara\358_铃兰.csv:123
+msgid "博士？啊，要吃小蛋糕吗？本来是给医疗部门的各位准备的慰问品，不过博士也很辛苦……所以不要客气！"
 msgstr ""
 
 #: .\data\talk\chara\377_澄闪.csv:6
