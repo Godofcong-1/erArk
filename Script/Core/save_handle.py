@@ -11,8 +11,9 @@ from Script.Core import (
     game_path_config,
     game_type,
     get_text,
+    io_init,
 )
-from Script.Config import normal_config, game_config
+from Script.Config import normal_config, game_config, character_config
 from Script.Design import attr_calculation, clothing, character_handle, basement
 from Script.UI.Moudle import draw
 
@@ -150,6 +151,7 @@ def input_load_save(save_id: str):
 
     # 遍历更新全角色属性
     cloth_update_count = 0
+    color_update_count = 0
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
@@ -157,13 +159,27 @@ def input_load_save(save_id: str):
         update_count += update_character_config_data(value)
         tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
         # 更新角色口上颜色
-        value.text_color = tem_character.TextColor
+        if value.cid != 0 and tem_character.TextColor != value.text_color:
+            # print(f"debug value.name = {value.name}，tem_character.TextColor = {tem_character.TextColor}，value.text_color = {value.text_color}")
+            value.text_color = tem_character.TextColor
+            text_color_list = [value.adv, value.name, tem_character.TextColor]
+            character_config.add_text_color_data_to_config_data(text_color_list)
+            update_count += 1
+            color_update_count += 1
         # 角色服装数据的更新
         cloth_update_count += update_chara_cloth(value, tem_character)
     if cloth_update_count:
+        now_draw = draw.LeftDraw()
         draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
         now_draw.text = draw_text
         now_draw.draw()
+    # 更新字体颜色
+    if color_update_count:
+        now_draw = draw.LeftDraw()
+        draw_text = _(f"\n共有{color_update_count}个角色的口上颜色已更新\n")
+        now_draw.text = draw_text
+        now_draw.draw()
+        io_init.init_style()
 
     # 更新罗德岛的资源
     for all_cid in game_config.config_resouce:
@@ -176,13 +192,14 @@ def input_load_save(save_id: str):
     zero_system_setting = attr_calculation.get_system_setting_zero()
     if len(loaded_dict["system_setting"]) != len(zero_system_setting):
         loaded_dict["system_setting"] = zero_system_setting
+        now_draw = draw.WaitDraw()
         draw_text = _(f"\n系统设置已重置，如有需要请手动修改\n")
         now_draw.text = draw_text
+        now_draw.style = "warning"
         now_draw.draw()
 
     # 更新游戏地图
     update_count += update_map(loaded_dict)
-
     now_draw = draw.LeftDraw()
     draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
     now_draw.text = draw_text
