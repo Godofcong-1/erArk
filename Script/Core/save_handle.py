@@ -156,6 +156,8 @@ def input_load_save(save_id: str):
         # 角色素质、经验、宝珠、能力的更新
         update_count += update_character_config_data(value)
         tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
+        # 更新角色口上颜色
+        value.text_color = tem_character.TextColor
         # 角色服装数据的更新
         cloth_update_count += update_chara_cloth(value, tem_character)
     if cloth_update_count:
