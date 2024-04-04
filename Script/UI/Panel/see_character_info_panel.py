@@ -529,29 +529,45 @@ class CharacterInfoHead:
         self.draw_title: bool = True
         """ 是否绘制面板标题 """
         character_data: game_type.Character = cache.character_data[character_id]
-        sex_text = game_config.config_sex_tem[character_data.sex].name
+        # sex_text = game_config.config_sex_tem[character_data.sex].name
+
+        # 好感与信赖
+        favorability_and_trust_text = ""
+        if character_id:
+            favorability_lv,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
+            favorability_lv_letter = attr_calculation.judge_grade(favorability_lv)
+            trust_lv,tem = attr_calculation.get_trust_level(character_data.trust)
+            trust_lv_letter = attr_calculation.judge_grade(trust_lv)
+            favorability_text = f"{int(character_data.favorability[0])}"
+            trust_text = f"{round(character_data.trust, 1)}%"
+            # 只显示等级
+            if cache.system_setting[9] == 1:
+                favorability_and_trust_text = _(f"好感度:{favorability_lv_letter}，信赖度:{trust_lv_letter}")
+            # 显示数值和等级
+            elif cache.system_setting[9] == 2:
+                favorability_and_trust_text = _(f"好感度:{favorability_text}({favorability_lv_letter})，信赖度:{trust_text}%({trust_lv_letter})")
 
         # 非清醒时输出当前状态
-        sleep_text_list = [" <清醒>", " <疲劳>", " <昏昏欲睡>", " <随时睡着>"]
+        sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
         sleep_text = sleep_text_list[attr_calculation.get_tired_level(character_data.tired_point)]
         status_text = game_config.config_status[character_data.state].name
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
-        sleep_text = "" if sleep_text == " <清醒>" else sleep_text
-        if status_text == "睡觉" or character_data.sp_flag.unconscious_h == 1:
+        sleep_text = "" if sleep_text == _(" <清醒>" )else sleep_text
+        if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
             tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
             sleep_text = f" <{sleep_name}>"
 
         # 非普通时输出当前心情
         angry_text = attr_calculation.get_angry_text(character_data.angry_point)
-        angry_text = "" if angry_text == "普通" else angry_text
+        angry_text = "" if angry_text == _("普通") else " " + angry_text
 
         # 有尿意时进行提示
-        urinate_text = " <尿>" if character_data.urinate_point >= 192 else ""
+        urinate_text = _(" <尿>") if character_data.urinate_point >= 192 else ""
 
         # 饥饿时进行提示
-        hunger_text = " <饿>" if character_data.hunger_point >= 192 else ""
+        hunger_text = _(" <饿>") if character_data.hunger_point >= 192 else ""
         start_time = character_data.behavior.start_time
         hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
 
@@ -559,43 +575,37 @@ class CharacterInfoHead:
         eja_text = ""
         if character_id == 0 and character_data.eja_point > 0:
             if character_data.eja_point <= 300:
-                eja_text = " <射精欲:低>"
+                eja_text = _(" <射精欲:低>")
             elif character_data.eja_point <= 600:
-                eja_text = " <射精欲:中>"
+                eja_text = _(" <射精欲:中>")
             elif character_data.eja_point <= 900:
-                eja_text = " <射精欲:高>"
+                eja_text = _(" <射精欲:高>")
             else:
-                eja_text = " <射精欲:极>"
+                eja_text = _(" <射精欲:极>")
 
         # 催眠状态时进行提示
         hypnosis_text = ""
-        if character_data.sp_flag.unconscious_h >= 4:
-            if character_data.sp_flag.unconscious_h == 4:
-                hypnosis_text = " <催眠:平然>"
-            elif character_data.sp_flag.unconscious_h == 5:
-                hypnosis_text = " <催眠:空气>"
-            elif character_data.sp_flag.unconscious_h == 6:
-                hypnosis_text = " <催眠:体控>"
-            elif character_data.sp_flag.unconscious_h == 7:
-                hypnosis_text = " <催眠:心控>"
+        if cache.system_setting[10] and character_data.hypnosis.hypnosis_degree:
+            if character_data.sp_flag.unconscious_h >= 4:
+                hypnosis_text = _(" <催眠")
+                # 是否显示具体数值
+                if cache.system_setting[9] == 2:
+                    hypnosis_text += f"({character_data.hypnosis.hypnosis_degree}%)"
+                hypnosis_cid = character_data.sp_flag.unconscious_h - 3
+                hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
+                hypnosis_text += _(f":{hypnosis_name}")
+                hypnosis_text += ">"
 
         # 携袋状态进行提示
         bag_text = ""
         if character_data.sp_flag.bagging_chara_id:
-            bag_text = f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>"
+            bag_text = _(f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>")
 
         if character_id:
-            favorability_lv,tem = attr_calculation.get_favorability_level(character_data.favorability[0])
-            favorability_lv_letter = attr_calculation.judge_grade(favorability_lv)
-            trust_lv,tem = attr_calculation.get_trust_level(character_data.trust)
-            trust_lv_letter = attr_calculation.judge_grade(trust_lv)
             message = _(
-                "{character_name} 好感度:{favorability}({f_lv})，信赖度:{trust}%({t_lv}) {angry} {sleep}{urinate}{hunger}{hypnosis}").format(
+                "{character_name} {favorability_and_trust}{angry}{sleep}{urinate}{hunger}{hypnosis}").format(
                 character_name=character_data.name,
-                favorability=int(character_data.favorability[0]),
-                f_lv=favorability_lv_letter,
-                trust=round(character_data.trust, 1),
-                t_lv=trust_lv_letter,
+                favorability_and_trust=favorability_and_trust_text,
                 angry=angry_text,
                 sleep=sleep_text,
                 urinate=urinate_text,
@@ -604,12 +614,12 @@ class CharacterInfoHead:
             )
         else:
             message = _(
-                "{character_name}{character_nick_name}{sleep}{urinate}{eja}").format(
+                "{character_name}{character_nick_name}{urinate}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
-                sleep=sleep_text,
+                # sleep=sleep_text,
                 urinate=urinate_text,
                 eja=eja_text,
                 bag=bag_text,

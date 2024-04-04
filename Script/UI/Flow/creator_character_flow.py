@@ -55,6 +55,7 @@ def first_bonus_and_setting_updata():
         cache.first_bonus[cid] = False
     for cid in game_config.config_world_setting:
         cache.world_setting[cid] = 0
+    cache.system_setting = attr_calculation.get_system_setting_zero()
 
 def game_start():
     """初始化游戏数据"""

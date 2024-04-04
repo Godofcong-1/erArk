@@ -173,8 +173,9 @@ def input_load_save(save_id: str):
             update_count += 1
 
     # 重置系统设置
-    if not len(loaded_dict["system_setting"]):
-        loaded_dict["system_setting"] = attr_calculation.get_system_setting_zero()
+    zero_system_setting = attr_calculation.get_system_setting_zero()
+    if len(loaded_dict["system_setting"]) != len(zero_system_setting):
+        loaded_dict["system_setting"] = zero_system_setting
         draw_text = _(f"\n系统设置已重置，如有需要请手动修改\n")
         now_draw.text = draw_text
         now_draw.draw()

@@ -7572,6 +7572,30 @@ msgstr ""
 msgid "指令文本分为通用文本和角色专属文本，通用文本可以被所有角色使用，角色专属文本只能被指定角色使用。注意，改变该项将会覆盖全角色的该个人选项，如需个别调整请手动调整对应角色"
 msgstr ""
 
+#: .\data\csv\System_Setting.csv:14
+msgid "主界面中干员好感与信赖的显示"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:14
+msgid "是否在主界面的角色信息中显示好感与信赖的情况，以及要显示多详细"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:14
+msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:15
+msgid "主界面中干员催眠情况的显示"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:15
+msgid "是否在主界面的角色信息中显示催眠的情况，以及要显示多详细"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:15
+msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
+msgstr ""
+
 #: .\data\csv\Talent.csv:7
 msgid "处女"
 msgstr ""
