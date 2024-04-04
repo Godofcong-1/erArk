@@ -9276,19 +9276,23 @@ msgstr ""
 msgid "雷蛇，黑钢国际私人安全顾问公司雇员，为跨国企业、政府部门和无国界组织等提供安全防卫服务，于冲突地带积累了丰富的实战经验。现于安保条约期内，为罗德岛提供专业的安全保障与咨询。"
 msgstr ""
 
-#: .\data\character\0107_雷蛇.csv:29
-msgid "灰色丝巾"
-msgstr ""
-
-#: .\data\character\0107_雷蛇.csv:30
-msgid "蓝色运动外套"
-msgstr ""
-
-#: .\data\character\0107_雷蛇.csv:32
-msgid "黑色短百褶裙"
+#: .\data\character\0107_雷蛇.csv:15
+msgid "#b3acb4"
 msgstr ""
 
 #: .\data\character\0107_雷蛇.csv:33
+msgid "灰色丝巾"
+msgstr ""
+
+#: .\data\character\0107_雷蛇.csv:34
+msgid "蓝色运动外套"
+msgstr ""
+
+#: .\data\character\0107_雷蛇.csv:36
+msgid "黑色短百褶裙"
+msgstr ""
+
+#: .\data\character\0107_雷蛇.csv:37
 msgid "透肉黑色过膝袜"
 msgstr ""
 
