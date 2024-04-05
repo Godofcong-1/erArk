@@ -574,10 +574,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 return_list.append(back_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn == back_draw.return_text:
-                    if condom_flag:
-                        return [-1, judge, judge_rate]
-                    else:
-                        return [0, judge, judge_rate]
+                    return [-1, judge, judge_rate]
                 elif yrn == yes_draw.return_text:
                     break
 

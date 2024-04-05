@@ -4524,9 +4524,12 @@ def handle_normal_anal_sex():
     """处理正常位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.NORMAL_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_NORMAL_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4547,9 +4550,12 @@ def handle_back_anal_sex():
     """处理后背位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.BACK_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4570,9 +4576,12 @@ def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.RIDING_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_RIDING_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4593,9 +4602,12 @@ def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.FACE_SEAT_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_SEAT_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4616,9 +4628,12 @@ def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.BACK_SEAT_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_SEAT_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4638,9 +4653,12 @@ def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.FACE_STAND_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_FACE_STAND_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4660,9 +4678,12 @@ def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.BACK_STAND_ANAL_SEX
         character_data.state = constant.CharacterStatus.STATUS_BACK_STAND_ANAL_SEX
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4684,9 +4705,12 @@ def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.STIMULATE_SIGMOID_COLON
         character_data.state = constant.CharacterStatus.STATUS_STIMULATE_SIGMOID_COLON
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
@@ -4708,9 +4732,12 @@ def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("A性交"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.STIMULATE_VAGINA
         character_data.state = constant.CharacterStatus.STATUS_STIMULATE_VAGINA
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
