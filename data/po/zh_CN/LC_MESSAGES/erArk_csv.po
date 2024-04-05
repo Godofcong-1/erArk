@@ -5836,6 +5836,18 @@ msgstr ""
 msgid "岁片"
 msgstr ""
 
+#: .\data\csv\Race.csv:49
+msgid "羽蛇"
+msgstr ""
+
+#: .\data\csv\Race.csv:50
+msgid "神"
+msgstr ""
+
+#: .\data\csv\Race.csv:51
+msgid "鵺"
+msgstr ""
+
 #: .\data\csv\Recipes.csv:6
 msgid "两面包夹芝士"
 msgstr ""
@@ -10588,6 +10600,38 @@ msgstr ""
 msgid "前哥伦比亚少年兵，所属部队覆灭后被“退役”。在随后的流浪佣兵生活中和罗德岛建立关系，经过一段时间合作后被吸收进入罗德岛。拥有非常丰富的战场经验，本身的战斗技巧也不容小觑，对罗德岛来说，是不可多得的优秀战力。"
 msgstr ""
 
+#: .\data\character\0194_烈夏.csv:4
+msgid "烈夏"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:13
+msgid "用于提升烈夏的潜能。\n一瓶代表家乡味道的蜂蜜饮料。烈夏将它递给你之后，立刻就要与你“干瓶”。"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:14
+msgid "烈夏，本名罗莎琳·塔季扬诺夫娜·拉里娜，切尔诺伯格事变前于切城某中学就读，在校期间与干员凛冬皆为学生中的领军人物。现作为外勤小组的成员，多负责中长线的外勤任务。\n"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:27
+msgid "露脐水手服"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:28
+msgid "长柄异形斧"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:29
+msgid "过臀长短裙"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:30
+msgid "棕红色过膝袜"
+msgstr ""
+
+#: .\data\character\0194_烈夏.csv:31
+msgid "长筒登山靴"
+msgstr ""
+
 #: .\data\character\0195_真理.csv:4
 msgid "真理"
 msgstr ""
@@ -10894,6 +10938,38 @@ msgstr ""
 
 #: .\data\character\0243_槐琥.csv:14
 msgid "槐琥，龙门在校大学生，龙门-罗德岛秘密商业交流协议中第一批次录用人员之一。由龙门某事务所推荐，在各项测试中得到了与身份不符的成绩，且具备一定的实战经验。多项调查正在跟进中。"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:4
+msgid "塑心"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:13
+msgid "一副质地考究的黑色手套。既能安抚琴弦，也能安抚繁杂的心声。"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:14
+msgid "阿尔图罗·吉亚洛，出身于拉特兰、活跃于泰拉大地的著名音乐家。受莱塔尼亚帝国宫廷、拉特兰教皇厅委托，罗德岛与两方签署协议确认，在受相应人员的严格监管下，允许其以干员“塑心”身份暂留罗德岛。"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:27
+msgid "皮质过肘手套"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:28
+msgid "烫金纹花边黑色布料裙"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:29
+msgid "黑色蕾丝过膝吊带袜"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:30
+msgid "亮黑色高跟鞋"
+msgstr ""
+
+#: .\data\character\0245_塑心.csv:31
+msgid "白色丝质黑衬上衣"
 msgstr ""
 
 #: .\data\character\0248_麦哲伦.csv:4
@@ -11264,6 +11340,38 @@ msgstr ""
 msgid "萨卡兹雇佣兵泥岩，随军加入整合运动后，由于意见不合而带领小队成员远离了乌萨斯。完全没有参与整合运动在切尔诺伯格及龙门的行动。为了寻找落脚点，泥岩带队前往莱塔尼亚，在当地吸纳了大量莱塔尼亚的感染者后，泥岩被众人推崇为领袖，开始以“泥岩小队”的名号被人所知。尽管泥岩多次试图避免与其他势力发生冲突，但她们依旧一次又一次地被卷入纷争，为了避免更多无意义的牺牲，泥岩选择逃往卡兹戴尔。在卡兹戴尔境内与精英干员Logos接触，随后者前往罗德岛。"
 msgstr ""
 
+#: .\data\character\0326_格劳克斯.csv:4
+msgid "格劳克斯"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:13
+msgid "一节没电的电池，无用之物最后的用处就是收藏。"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:14
+msgid "格劳克斯出生于阿戈尔地区，却早早离开家园四处流浪。机缘巧合下加入罗德岛，现为雷神工业先端武器测评师。\n除了对尖端武器进行研究调整之外，格劳克斯也会在需求对空特化的任务中亲自出击。"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:26
+msgid "可爱风御寒帽"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:27
+msgid "加厚式御寒冲锋衣"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:28
+msgid "超短裙"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:29
+msgid "透肉过膝袜"
+msgstr ""
+
+#: .\data\character\0326_格劳克斯.csv:30
+msgid "特化改装战地靴"
+msgstr ""
+
 #: .\data\character\0328_卡达.csv:4
 msgid "卡达"
 msgstr ""
@@ -11308,6 +11416,30 @@ msgstr ""
 msgid "摄影师稀音，擅长以摄影辅助设备“镜头”为主的机器人小队勘察战场，传达图像信息，同时为罗德岛提供野地考察与战场侦察服务。不过，干员稀音的运动能力十分低下，辅助工作的后勤干员必不可少。"
 msgstr ""
 
+#: .\data\character\0337_宴.csv:4
+msgid "宴"
+msgstr ""
+
+#: .\data\character\0337_宴.csv:13
+msgid "一个漆黑的盒子。里面是漆黑的盒子，漆黑的盒子，以及......美甲套装？！"
+msgstr ""
+
+#: .\data\character\0337_宴.csv:14
+msgid "从东国前来龙门游学的普通学生，被卷入感染者事件后患上了矿石病，后听从医师的建议来到罗德岛，经过评审成为了干员。\n对矿石病看得很开，仍旧如同患病前那样生活，但在执行任务的时候，会显现出一种令人畏惧的态度。\n（在宽松的外衣之下其实隐藏着非常傲人的身材）"
+msgstr ""
+
+#: .\data\character\0337_宴.csv:28
+msgid "宽松款女式卫衣"
+msgstr ""
+
+#: .\data\character\0337_宴.csv:29
+msgid "热裤"
+msgstr ""
+
+#: .\data\character\0337_宴.csv:31
+msgid "精致小皮鞋"
+msgstr ""
+
 #: .\data\character\0338_爱丽丝.csv:4
 msgid "爱丽丝"
 msgstr ""
@@ -11326,6 +11458,34 @@ msgstr ""
 
 #: .\data\character\0340_黑.csv:14
 msgid "前汐斯塔市市长SP兼城市治安局局长，随干员锡兰共同加入罗德岛。在隐秘行动、侦察与反侦察、野外求生、弩使用等技能上拥有卓越的造诣。在担任博士护卫的同时，负责一部分罗德岛基层干员的训练工作。"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:4
+msgid "寒檀"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:13
+msgid "块雕刻着奇异符号的木块。你记得寒檀告诉过你，符号的意义是“温暖”。"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:14
+msgid "因故自我流放的萨米部族萨满，在矿石病病情延缓后将罗德岛当作自己的部族，从此获得了新生。\n擅长操控风雪，能在低温环境和能见度极低的暴风中来去自如，被不了解萨米的敌人畏惧地称作“女巫”。"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:28
+msgid "高筒御寒帽"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:29
+msgid "覆臂式御寒长手套"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:30
+msgid "低叉抗寒连衣裙"
+msgstr ""
+
+#: .\data\character\0341_寒檀.csv:31
+msgid "极地保暖用长筒靴"
 msgstr ""
 
 #: .\data\character\0343_月禾.csv:4
@@ -11896,6 +12056,38 @@ msgstr ""
 msgid "帕拉斯，曾在米诺斯担任祭司职务。在离开雅赛努斯城邦去往阿克罗蒂村任职期间，带领当地民众进行了对萨尔贡周边部落长年侵扰的反抗，并在当地推行旅游及文化产业的发展。后因矿石病病况恶化，来到罗德岛进行秘密治疗。"
 msgstr ""
 
+#: .\data\character\0488_青枳.csv:4
+msgid "青枳"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:13
+msgid "一颗小小的、青绿色的果子，果皮无法完全包裹住它的酸涩与清香。她说可以种在花盆里，幸运的话会结出饱满甜蜜的果实——大概吧。"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:14
+msgid "青枳，主修土木工程专业，曾在哥伦比亚、汐斯塔等地从事建筑建造、修缮与拆迁工作。现由锡兰医生推荐，在罗德岛接受矿石病治疗，同时与工程部签署合作协议，兼职协助罗德岛改建、整修舰内空间。\n（嗯，土木老姐）"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:27
+msgid "黑色帆船帽"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:28
+msgid "深色束胸上衣"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:29
+msgid "深棕色热裤"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:30
+msgid "黑色长筒袜"
+msgstr ""
+
+#: .\data\character\0488_青枳.csv:31
+msgid "长筒运动靴"
+msgstr ""
+
 #: .\data\character\0492_夏栎.csv:4
 msgid "夏栎"
 msgstr ""
@@ -11918,6 +12110,34 @@ msgstr ""
 
 #: .\data\character\0493_火哨.csv:14
 msgid "火哨，雷姆必拓某小型安保公司负责人，代表公司与罗德岛签订合作协议，同时以干员身份为罗德岛提供服务。"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:4
+msgid "刺玫"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:13
+msgid "一枝枯萎的白玫瑰，米黄色花瓣上浸染了无法抹去的暗红痕迹，记录着她过去生活的某段回忆。过往已逝，她能攥住的并不多。"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:14
+msgid "玛格达尔·肖，布伦特伍德镇上血魔大君仪式的幸存者，小镇近乎大半被夷为废墟，她所珍爱的家传温室也被彻底摧毁。\n受伦蒂尼姆市民自救军成员洛洛与费斯特的邀请，玛格达尔加入自救军，以后勤人员的身份提供帮助，后加入罗德岛。伦蒂尼姆事件结束之后，玛格达尔主动申请回到维多利亚重建家乡，并担任当地罗德岛办事处的联络员。"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:27
+msgid "黑色冠状头饰"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:28
+msgid "制式夹克"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:29
+msgid "白色荷叶边裙"
+msgstr ""
+
+#: .\data\character\0494_刺玫.csv:31
+msgid "亮铜色高跟鞋"
 msgstr ""
 
 #: .\data\character\0496_深靛.csv:4
@@ -11964,6 +12184,194 @@ msgstr ""
 msgid "银币"
 msgstr ""
 
+#: .\data\character\1011_炎狱炎熔.csv:4
+msgid "炎狱炎熔"
+msgstr ""
+
+#: .\data\character\1011_炎狱炎熔.csv:13
+msgid "布满伤痕的匕首套。曾经亲自雕琢的特色花纹，在使用过程中已被磨损得看不见纹路。"
+msgstr ""
+
+#: .\data\character\1011_炎狱炎熔.csv:14
+msgid "生于维多利亚的伦蒂尼姆，干员芙蓉的孪生妹妹。自从因为感染矿石病来到罗德岛，已经经历了数年的时光。在罗德岛的这段时间，她从未有一日的懈怠，不断寻找着突破自己源石技艺极限的方法。"
+msgstr ""
+
+#: .\data\character\1011_炎狱炎熔.csv:29
+msgid "战损版罗德岛制式干员上衣"
+msgstr ""
+
+#: .\data\character\1011_炎狱炎熔.csv:30
+msgid "破损版黑色热裤"
+msgstr ""
+
+#: .\data\character\1011_炎狱炎熔.csv:32
+msgid "濒毁的匕首"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:4
+msgid "浊心斯卡蒂"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:13
+msgid "一根软骨形成的弯曲尖刺。随着淡蓝色的液体自刺尖滴滴坠落，实验生物的生理结构剧烈地转化了。"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:14
+msgid "照这个方向发展下去，就不会有人关心她究竟是什么了。不是斯卡蒂的问题，一个人也不能改变什么。我说的是，这种生理状态，以及该类生物性物质表现出的最终状态，可能会摧毁我们社会、历史与科学的所有度量衡。希望我们简陋的医疗科研条件现在还够使上点劲......\n（还能听到我的声音吗...Dr?）"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:27
+msgid "骸饰帆船帽"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:28
+msgid "大红色歌者缎带上衣"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:29
+msgid "大红色木耳边短裙"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:30
+msgid "白色高跟长筒靴"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:31
+msgid "剑骸长杖"
+msgstr ""
+
+#: .\data\character\1012_浊心斯卡蒂.csv:32
+msgid "腿部绑带"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:4
+msgid "假日威龙陈"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:13
+msgid "一本笔记本，上面密密麻麻记载了陈在多索雷斯的调查记录，还有她的一些想法。她看起来有征求你意见的意思，当然，她没有明说。"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:14
+msgid "陈，前龙门高级警司，前龙门近卫局特别督察组组长，毕业于维多利亚皇家近卫学校，成绩优异，表现突出。在龙门近卫局供职期间，力主取缔龙门境内非法活动，对抗暴力犯罪和有组织犯罪，追缉武装逃犯与国际重犯等行动，并取得多项重大成果。\n现辞去职务，正式成为罗德岛的一员。依本人意愿，任务多以外派为主，为各地外派干员提供有力支援以及现场指导。"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:27
+msgid "假日风格鸭舌帽"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:28
+msgid "皮质黑色夹克"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:29
+msgid "蓝渐变色光滑热裤"
+msgstr ""
+
+#: .\data\character\1013_假日威龙陈.csv:30
+msgid "在沙滩上行走需要这种东西吗"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:4
+msgid "耀骑士临光"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:13
+msgid "恢复光彩的卡西米尔骑士纹章。被精心擦拭过，天马的金羽射出凛然辉光。"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:14
+msgid "临光，卡西米尔耀骑士。在掩护己方队员、机动作战、歼灭战与开阔地带作战中体现出极高的战斗技巧和个人军事素养。\n在重返卡西米尔并夺得第二十四届骑士特别锦标赛决斗赛冠军之后，留在卡西米尔处理后续事务。作为合作干员为罗德岛驻卡瓦莱利亚基办事处提供战术支援，必要时也会去往其他地区协助本舰展开各项行动。\n（大荒星陨！）"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:27
+msgid "纯白色风格骑士长袍"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:28
+msgid "纯黑色热裤"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:29
+msgid "金属风格覆腿护膝"
+msgstr ""
+
+#: .\data\character\1014_耀骑士临光.csv:30
+msgid "皮质长筒靴"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:4
+msgid "纯烬艾雅法拉"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:13
+msgid "一块又小又轻的火山石，投入水中后会上下翻滚，嗞嗞的气泡声轻响不绝。这即是生命之歌。"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:14
+msgid "艾雅法拉，火山学家，天灾信使。近年参与拍摄多部火山纪录片，并参与撰写出版火山相关书籍。现于罗德岛继续接受治疗，并视需求参与包括天灾研究在内的多项活动。"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:27
+msgid "白色罗德岛制式改装风衣"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:29
+msgid "深色过膝袜"
+msgstr ""
+
+#: .\data\character\1016_纯烬艾雅法拉.csv:30
+msgid "粉色高跟鞋"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:4
+msgid "焰影苇草"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:13
+msgid "一本用陌生语言抄下的诗歌集。她不求所有人都读懂，只希望想读这些诗歌的人有可以栖身的一隅。"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:14
+msgid "苇草，驻留罗德岛的维多利亚南部办事处期间，曾提出撤离申请，近期再次成功与罗德岛建立联络。目前正以深池名义带领小股部队在维多利亚境内活动，以救助被暴力胁迫的塔拉人为主要行动目标。"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:27
+msgid "皮质白色纹饰连衣裙"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:28
+msgid "安全裤"
+msgstr ""
+
+#: .\data\character\1020_焰影苇草.csv:29
+msgid "黑色茉莉纹连裤袜"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:4
+msgid "寒芒克洛丝"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:13
+msgid "支吸盘箭，箭羽上系着个铃铛。 有了这支箭，你可以报个名字，只要罗德岛上有且可以射击的，她都能把箭钉在目标上。"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:14
+msgid "经过长久的训练与磨砺后，克洛丝顺利晋升为正式干员，主要负责外勤任务。在罗德岛教官的指导和外勤任务的磨炼下，她已经成长许多，在射击技巧与隐匿行动上有了自己的心得与看法。"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:28
+msgid "白色衬衫"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:29
+msgid "黑色丝质夹克"
+msgstr ""
+
+#: .\data\character\1021_寒芒克洛丝.csv:30
+msgid "黑色热裤"
+msgstr ""
+
 #: .\data\character\1023_归溟幽灵鲨.csv:4
 msgid "归溟幽灵鲨"
 msgstr ""
@@ -11972,12 +12380,136 @@ msgstr ""
 msgid "幽灵鲨，本名劳伦缇娜，阿戈尔军事团体“深海猎人”成员，在对抗大型生物与破坏硬目标等行动中展现出极强的技巧。“愚人号”事件后，其精神状态趋于稳定，记忆恢复，情绪趋于稳定。"
 msgstr ""
 
+#: .\data\character\1024_濯尘芙蓉.csv:4
+msgid "濯尘芙蓉"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:13
+msgid "一朵用纸折成的小花。在每一位即将出院的病人的床边留下这样一个小小的纪念品，已经成了芙蓉的习惯。"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:14
+msgid "经过系统的医疗理论培训以及长时间的临床实践训练后，芙蓉已经由实习医生转为正式医疗干员，并且成为了医疗部的主治医师之一。芙蓉不仅在医疗外勤任务上有相当丰富的经验，在健康管理以及病后护理的理论研究方面也颇有建树。"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:28
+msgid "制式罗德岛上衣"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:29
+msgid "黑色勒肉安全裤"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:30
+msgid "透肉黑色连裤袜"
+msgstr ""
+
+#: .\data\character\1024_濯尘芙蓉.csv:31
+msgid "皮质黑色长筒靴"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:4
+msgid "百炼嘉维尔"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:13
+msgid "一个密度超高的合金哑铃，看起来非常便携。嘉维尔把它送给你时忘了告诉你哑铃的重量，不得不额外花半个小时处理你闪到的腰。"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:14
+msgid "嘉维尔现在仍是罗德岛医疗部的一员，但在罗德岛需要她发挥自己的战斗力而非医学素养的时候，她也会拿起战斧，冲锋陷阵。"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:29
+msgid "墨绿色胸衣"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:30
+msgid "绿色携物特化改装热裤"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:31
+msgid "黑色连袜护膝"
+msgstr ""
+
+#: .\data\character\1026_百炼嘉维尔.csv:32
+msgid "凉鞋"
+msgstr ""
+
 #: .\data\character\1028_缄默德克萨斯.csv:4
 msgid "缄默德克萨斯"
 msgstr ""
 
 #: .\data\character\1028_缄默德克萨斯.csv:14
 msgid "企鹅物流员工，最后的德克萨斯家族成员，单兵作战能力出类拔萃。"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:4
+msgid "淬羽赫默"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:13
+msgid "一副稍显古旧的圆眼镜。有人说戴上眼镜的她会少几分锐气，她于是将眼镜交给你来保管。在罗德岛上，她希望自己还是过去的自己。"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:14
+msgid "《特里蒙科学伦理联合宣言》发起人，莱茵生命总辖构件科执行顾问，在医疗事务方面与罗德岛展开了深度合作。\n本人拥有丰富的医学临床经验，在罗德岛接受矿石病相关治疗的同时，为罗德岛提供医学支持。"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:28
+msgid "改版莱茵生命制式服装"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:30
+msgid "透肉色短袜"
+msgstr ""
+
+#: .\data\character\1031_淬羽赫默.csv:31
+msgid "淡绿色防护靴"
+msgstr ""
+
+#: .\data\character\1033_琳琅诗怀雅.csv:4
+msgid "琳琅诗怀雅"
+msgstr ""
+
+#: .\data\character\1033_琳琅诗怀雅.csv:13
+msgid "一枚金光闪闪的金币。沉重，光泽逼人，成色极好，放在手中欣赏，还会从中掉出......闪着寒光的暗器！是她送予你防身的礼物。"
+msgstr ""
+
+#: .\data\character\1033_琳琅诗怀雅.csv:14
+msgid "诗怀雅，龙门近卫局局长。\n于汐斯塔度假归来，目前仅以私人身份视情况为罗德岛工作提供协助。"
+msgstr ""
+
+#: .\data\character\1033_琳琅诗怀雅.csv:27
+msgid "清凉款黑色露胸凉衣"
+msgstr ""
+
+#: .\data\character\1033_琳琅诗怀雅.csv:30
+msgid "全覆盖式大号遮阳帽"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:4
+msgid "涤火杰西卡"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:13
+msgid "一副定制激光瞄准镜，适用于夜间精确观瞄。她一直紧盯着前方，从未将视线移开。"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:14
+msgid "杰西卡·布林雷，因私人原因离开黑钢基地后，选择去往拓荒地，成为了一名治安官。现作为当地办事处的合作干员为罗德岛提供帮助与支持。"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:27
+msgid "制式外勤风衣"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:28
+msgid "黑色高腰裙"
+msgstr ""
+
+#: .\data\character\1034_涤火杰西卡.csv:30
+msgid "白色球鞋"
 msgstr ""
 
 #: .\data\character\1502_弑君者.csv:4
@@ -11992,12 +12524,140 @@ msgstr ""
 msgid "文月"
 msgstr ""
 
+#: .\data\character\2012_提丰.csv:4
+msgid "提丰"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:13
+msgid "一瓶散发着浓郁气味的植物提取液。掩盖文明的气味，融入荒野，成为猎人，成为她的同伴。"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:14
+msgid "提丰，活跃于萨米的萨卡兹，以猎人自居，对萨米的自然环境和潜在威胁有着充足的知识储备和应对技巧。现应干员麦哲伦邀请与罗德岛进行合作，协助罗德岛在萨米及无尽冰原地区的事务。"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:27
+msgid "束腰式紧身上衣"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:28
+msgid "皮质安全裤"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:29
+msgid "黑色吊带袜"
+msgstr ""
+
+#: .\data\character\2012_提丰.csv:30
+msgid "象牙白式高跟鞋"
+msgstr ""
+
 #: .\data\character\2013_刻俄柏.csv:4
 msgid "刻俄柏"
 msgstr ""
 
 #: .\data\character\2013_刻俄柏.csv:13
 msgid "花了好长时间才叠出来的短刀纸模。歪歪扭扭，满是折痕，不怎么精致。收到的人会喜欢吗？"
+msgstr ""
+
+#: .\data\character\2014_年.csv:4
+msgid "年"
+msgstr ""
+
+#: .\data\character\2014_年.csv:13
+msgid "一把设计古朴的匕首。据说只要用来从事谋杀之类的事业，匕首的锋刃就会消失。"
+msgstr ""
+
+#: .\data\character\2014_年.csv:14
+msgid "年，无业游民，熟习各类金属工艺，拥有与身份不符的渊博冶金知识。现凭访客身份逗留于罗德岛，偶尔为罗德岛的金属加工项目提供建议。声称自己擅长音像娱乐工作，经常提供一些罗德岛干员普遍不太喜爱的音像产品。"
+msgstr ""
+
+#: .\data\character\2014_年.csv:28
+msgid "白色长袍"
+msgstr ""
+
+#: .\data\character\2014_年.csv:29
+msgid "红色束胸"
+msgstr ""
+
+#: .\data\character\2014_年.csv:30
+msgid "纯白色热裤"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:4
+msgid "夕"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:13
+msgid "一支看似无奇的毛笔。夕的笔，可生万物，也可生笔，用的时候要留神一点。"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:14
+msgid "夕，炎国画家，待业。在留舰人员年的积极行动下，被以访客身份挟持至罗德岛。擅长绘画，尤其是炎国传统绘画。现寓居罗德岛某偏僻走道的墙内。"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:27
+msgid "水墨色渐变长长袍"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:28
+msgid "碎蓝色辅白色旗袍"
+msgstr ""
+
+#: .\data\character\2015_夕.csv:29
+msgid "画出来的靴子"
+msgstr ""
+
+#: .\data\character\2023_令.csv:4
+msgid "令"
+msgstr ""
+
+#: .\data\character\2023_令.csv:13
+msgid "一盏灯。你十分确定你曾在某个夜晚梦见过这个场景，灯挑夜，箭如雨，大漠飞火。"
+msgstr ""
+
+#: .\data\character\2023_令.csv:14
+msgid "令，寓居尚蜀的诗人，与炎国司岁台等政府部门均有联系，在尚蜀事件中接触罗德岛，现通过审核，以访客身份驻留本舰。"
+msgstr ""
+
+#: .\data\character\2023_令.csv:27
+msgid "白色披袍"
+msgstr ""
+
+#: .\data\character\2023_令.csv:28
+msgid "白色束胸"
+msgstr ""
+
+#: .\data\character\2023_令.csv:29
+msgid "黑色超短热裤"
+msgstr ""
+
+#: .\data\character\2023_令.csv:30
+msgid "白色过踝球鞋"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:4
+msgid "黍"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:13
+msgid "一张古老的图画，体现了千年前人们对四季轮回原理的想象。时光流转，惟斯不变。"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:14
+msgid "黍，炎国农业天师，天师府授业天师。曾于炎国北部农业基地大荒城从事农业研究多年且已有丰富的科研成果。现因访问亲属，以访客身份暂驻罗德岛。"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:27
+msgid "白色云纹饰束胸"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:28
+msgid "白色宽松喇叭裤"
+msgstr ""
+
+#: .\data\character\2025_黍.csv:29
+msgid "深色防水长筒靴"
 msgstr ""
 
 #: .\data\character\4004_布丁.csv:4
@@ -12036,6 +12696,30 @@ msgstr ""
 msgid "艾丽妮，前伊比利亚审判官，大审判官达里奥的学生。对伊比利亚历史、律法、人文地理等知识十分了解。在“愚人号”事件后，辞去审判官职务，经凯尔希亲自推荐，现以审判庭信使的身份与罗德岛签订合作协议，为应对来自海洋的威胁而做准备。"
 msgstr ""
 
+#: .\data\character\4013_耶拉.csv:4
+msgid "耶拉"
+msgstr ""
+
+#: .\data\character\4013_耶拉.csv:13
+msgid "一条手织围脖，用料很足，在谢拉格围上都会觉得热。没有任何特殊之处，但光是编出这样一条精致围脖的手艺已经足以令人发出赞叹。"
+msgstr ""
+
+#: .\data\character\4013_耶拉.csv:14
+msgid "谢拉格圣女，恩雅·希瓦艾什，也就是干员初雪的侍女长，作为圣女的代表加入罗德岛。\n负责初雪秘密访问罗德岛的诸多对接事宜，除此之外，本人也十分享受干员生活，现作为术师干员活跃于各种任务中。\n"
+msgstr ""
+
+#: .\data\character\4013_耶拉.csv:27
+msgid "渐变色羽饰外衬"
+msgstr ""
+
+#: .\data\character\4013_耶拉.csv:28
+msgid "白色黑网格壁袍"
+msgstr ""
+
+#: .\data\character\4013_耶拉.csv:30
+msgid "白色高跟鞋"
+msgstr ""
+
 #: .\data\character\4014_子月.csv:4
 msgid "子月"
 msgstr ""
@@ -12046,6 +12730,30 @@ msgstr ""
 
 #: .\data\character\4014_子月.csv:14
 msgid "子月，游荡在叙拉古荒野上的猎人，经由企鹅物流的介绍加入罗德岛，担任罗德岛在叙拉古野外行动的向导，兼职狙击干员。"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:4
+msgid "空构"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:13
+msgid "一本精密机械的使用说明书，里面却只写着一串特殊的电话号码，她认为亲口告诉你怎么做更简单。但有的时候，她也会看心情教你一些错误的使用方法。"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:14
+msgid "空构，本名斯普莉雅，拉特兰公民，就职于教皇厅第六厅，于安布罗修事件后跟随执行者里凯莱以拉特兰外派人员的身份加入罗德岛。\n精通铳械辅助技术，在通讯、机械工程等领域亦有造诣，现作为访学人员为工程部提供协助。"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:27
+msgid "灰绿色夹克"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:28
+msgid "白色西装裤"
+msgstr ""
+
+#: .\data\character\4015_空构.csv:30
+msgid "白色球靴"
 msgstr ""
 
 #: .\data\character\4016_风丸.csv:4
@@ -12070,6 +12778,30 @@ msgstr ""
 
 #: .\data\character\4019_九色鹿.csv:14
 msgid "九色鹿，自称来自大炎的某一片山林，具体位置并未告知。自身具有丰富的药草采集和制作的相关知识，并具备一定作战能力。经其他干员介绍，来到罗德岛交流学习，近期将与罗德岛同行。"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:4
+msgid "霍尔海雅"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:13
+msgid "一本装帧精美的历史书，每一页都密密麻麻写满了她的笔记。了解历史，就是在靠近她。"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:14
+msgid "前梅兰德基金会所属特工，在凯尔希医生与博士的引荐下加入罗德岛。\n擅长单兵作战，并且能够应对各种极端环境，在各类隐秘行动中发挥了重大价值。"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:27
+msgid "白色梅兰德制式上袍"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:28
+msgid "长款包臀裙"
+msgstr ""
+
+#: .\data\character\4027_霍尔海雅.csv:30
+msgid "黑色高更鞋"
 msgstr ""
 
 #: .\data\character\4032_但书.csv:4
@@ -12176,6 +12908,178 @@ msgstr ""
 msgid "原为叙拉古城邦法官，通过干员德克萨斯与罗德岛建立联系。于后勤部工作，担任罗德岛法律顾问一职。"
 msgstr ""
 
+#: .\data\character\4071_明椒.csv:4
+msgid "明椒"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:13
+msgid "毛绒绒护耳罩。集美观、保暖、防护于一身的毛线耳罩，由女孩亲手编织而成。"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:14
+msgid "萨卡兹雇佣兵中的一员，自哥伦比亚被曼弗雷德召集至伦蒂尼姆，后因理念不合而带小队脱离原本阵营，受袭途中被搭救。\n现接受罗德岛雇佣，为作战小队提供战场医疗支援。"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:27
+msgid "深色战地上衣"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:28
+msgid "战损版安全裤"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:29
+msgid "黑色泡泡袜"
+msgstr ""
+
+#: .\data\character\4071_明椒.csv:30
+msgid "黑色拖鞋？"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:4
+msgid "截云"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:13
+msgid "一坛味道辛辣的浊酒。夜晚的沙漠温度骤降，喝下它能够驱走些许寒意。"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:14
+msgid "截云，生活在炎国西北部沙漠中的阿纳萨少女，经槐琥介绍来到罗德岛在大炎的办事处接受治疗，同时担任外勤干员。"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:27
+msgid "黑色露脐上衣"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:28
+msgid "开口喇叭裤"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:29
+msgid "踝高短袜"
+msgstr ""
+
+#: .\data\character\4078_截云.csv:30
+msgid "白色沙漠靴"
+msgstr ""
+
+#: .\data\character\4080_林.csv:4
+msgid "林"
+msgstr ""
+
+#: .\data\character\4080_林.csv:13
+msgid "一条项链一个精致小巧的沙漏，玻璃晶莹，流沙细腻。时间在翻覆颠倒中流逝，有些事物却从未改变"
+msgstr ""
+
+#: .\data\character\4080_林.csv:14
+msgid "林，本名林雨霞，龙门人。本职工作不明，本人提供的档案资料信息十分有限，同样存疑。\n于“玉门事件”后，主动提出与罗德岛正式建立合作。为罗德岛在龙门收治感染者的工作提供帮助"
+msgstr ""
+
+#: .\data\character\4080_林.csv:27
+msgid "黑底蓝缎饰紧身裙"
+msgstr ""
+
+#: .\data\character\4080_林.csv:29
+msgid "黑色透肉连裤袜"
+msgstr ""
+
+#: .\data\character\4080_林.csv:30
+msgid "黑色高跟长筒靴"
+msgstr ""
+
+#: .\data\character\4081_温米.csv:4
+msgid "温米"
+msgstr ""
+
+#: .\data\character\4081_温米.csv:13
+msgid "一辆用糖纸叠成的小小运载车。你在旅途中给了温米几颗雷姆必拓奶糖，她变了个样子回赠与你。"
+msgstr ""
+
+#: .\data\character\4081_温米.csv:14
+msgid "温米，出生于雷姆必拓的一座矿业小镇，虽年纪尚小，却在烹饪、机械修理等技术领域展露出了出色的天分。经干员暴行推荐，在监护人阿兰娜的陪同下来到罗德岛接受治疗，同时在舰上学习源石技艺基础课程。"
+msgstr ""
+
+#: .\data\character\4081_温米.csv:28
+msgid "白色绿饰点缀连衣裙"
+msgstr ""
+
+#: .\data\character\4081_温米.csv:31
+msgid "红棕色小皮鞋"
+msgstr ""
+
+#: .\data\character\4082_仇白.csv:4
+msgid "仇白"
+msgstr ""
+
+#: .\data\character\4082_仇白.csv:13
+msgid "一块普通的磨刀石。山脚下、大江边，随处可见的石头，因磨砺剑锋而变得光滑。"
+msgstr ""
+
+#: .\data\character\4082_仇白.csv:14
+msgid "仇白，剑客，出生于炎国姜齐城附近的水寨，后因家庭变故离开故乡，常年行走于炎国各地，并无固定居所与工作。\n经调查，仇白曾在不同事件中与多位干员有过接触，后接受罗德岛的合作邀请，为罗德岛在炎国境内的各项事务提供支持。"
+msgstr ""
+
+#: .\data\character\4082_仇白.csv:27
+msgid "黑色红饰吊带裙"
+msgstr ""
+
+#: .\data\character\4082_仇白.csv:29
+msgid "黑色过肘护手"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:4
+msgid "铎铃"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:13
+msgid "一枚铜制的铃铛，经过一点加工，要稍微用力才能摇响。她怕不解人意的风激起铃声，聒碎远行之人的乡心。"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:14
+msgid "铎铃，奔波在炎国西北部的乡村信使，曾使数个闭塞的村庄获得了相对通畅的信息交流。因矿石病来罗德岛求医，现兼职为罗德岛提供信使服务。"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:28
+msgid "白色露脐运动上衣"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:29
+msgid "运动裤"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:30
+msgid "耐磨短袜"
+msgstr ""
+
+#: .\data\character\4083_铎铃.csv:31
+msgid "运动鞋"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:4
+msgid "伊内丝"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:13
+msgid "一枚内敛锋芒的绣针。伊内丝不需要显眼的物件来彰显她的身份，这枚藏匿了光芒的锋锐之物就是对她最恰当的阐述。"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:14
+msgid "前萨卡兹佣兵头目，伊内丝。曾短暂参与卡兹戴尔的混乱内战，直到切尔诺伯格事件时，她借助假死彻底消失在所有人的视野中。此后，伊内丝隐藏了自己的踪迹，但通过最近的伦蒂尼姆事件，她正式与罗德岛恢复了联系。期间她经历了什么无从查验，最后在阿斯卡纶的担保下与罗德岛签订了战略合作条款。"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:28
+msgid "黑色短袖战地风夹克"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:29
+msgid "深色包臀裙"
+msgstr ""
+
+#: .\data\character\4087_伊内丝.csv:30
+msgid "褐色护膝"
+msgstr ""
+
 #: .\data\character\4091_U-Official.csv:4
 msgid "U-Official"
 msgstr ""
@@ -12218,6 +13122,158 @@ msgstr ""
 
 #: .\data\character\4091_U-Official.csv:39
 msgid "粉色洞洞鞋"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:4
+msgid "薇薇安娜"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:13
+msgid "一枚风干的金盏花书签。与书同行的旅程漫长而遥远，在离席暂别前，让它成为驻足于此的信标吧。"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:14
+msgid "薇薇安娜·德罗斯特，莱塔尼亚施彤领选帝侯霍赫贝格家族后裔，前卡西米尔人气竞技骑士。经耀骑士临光举荐，在罗德岛登记为合作干员。\n擅长使用光影类源石技艺，配以华丽的剑术技巧，能在战场上灵活御敌。驻留本舰期间将为罗德岛提供战术与外勤任务支援。"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:27
+msgid "带兜帽披袍"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:28
+msgid "黑色底色白饰洛丽塔"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:30
+msgid "白色长筒高跟靴"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:4
+msgid "冰酿"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:13
+msgid "一颗被切割成圆球的冰块，放进杯子里大小刚好。如果想尝尝她的自酿酒，建议加冰稀释，更建议不要尝试。"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:14
+msgid "海伦娜，经杰西卡介绍成为罗德岛的合作干员，为拓荒地办事处提供帮助。"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:27
+msgid "露脐短版上衬"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:28
+msgid "黑色包臀裙"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:29
+msgid "黑色透肉过膝袜"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:30
+msgid "深色长筒靴"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:31
+msgid "围裙"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:4
+msgid "戴菲恩"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:13
+msgid "一枚精致的袖扣。温德米尔出身的军人向来军容整洁，一丝不苟，现在她主动将这枚小信物摘下送给你。"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:14
+msgid "戴菲恩，曾作为情报人员在诺伯特区活动多年，后以典范军成员的身份参与了伦蒂尼姆周边的一系列战役。在维多利亚事件结束后，同罗德岛达成了一系列战略合作条款，为罗德岛驻维多利亚办事处提供协助。"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:27
+msgid "维多利亚式军装"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:28
+msgid "黑色超短裤"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:29
+msgid "黑色踝袜"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:4
+msgid "锏"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:13
+msgid "一个只能拨通她的号码的通讯终端。和普通的通讯终端在外表上明明没什么区别，却能给人无上的安心感。"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:14
+msgid "前卡西米尔骑士竞赛三届冠军，喀兰贸易总裁恩希欧迪斯的贴身保镖。基于博士与恩希欧迪斯签订的合同，无限期作为干员加入罗德岛。\n现作为近卫干员活跃于各种任务之中，以其强大无比的战斗力为其他干员开辟道路。\n\n我收到一些反馈，说大部分任务有她在的话，和野营没什么区别。这确实不怪博士，她主动去的，而且看起来她还挺乐在其中的。呃，那我也没什么理由反对，不是吗？"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:27
+msgid "深色莱塔尼亚军装"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:28
+msgid "深色西装裤"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:30
+msgid "雪地军靴"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:4
+msgid "莱伊"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:13
+msgid "一本看不出制作者意图的剪贴册。里面的“奇异生物照片”似乎也是拼贴合成的图像，要不要告诉她呢？"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:14
+msgid "莱伊，雷姆必拓人，无稳定职业，较常从事在雷姆必拓被称为“探井人”的矿井安保工作。偶遇故地重游的阿米娅、博士与暴行后，主动申请加入罗德岛。现作为罗德岛驻舰干员参与各类安保、战斗及勘探任务。"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:27
+msgid "露脐黑色短衬衫"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:28
+msgid "深色热裤"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:30
+msgid "黑色登山靴"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:13
+msgid "一支手工制作的竹笛，声音清亮，但音准稍稍有些问题。"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:14
+msgid "小满，来自炎国北部农业重镇大荒城的普通女孩，在管理牧兽方面颇有心得。跟随黍以访客身份暂居罗德岛。"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:27
+msgid "绿色长褂"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:28
+msgid "墨绿色短裙"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:29
+msgid "短筒袜"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:30
+msgid "深色运动鞋"
 msgstr ""
 
 #: .\data\ui_text\ability.csv:6

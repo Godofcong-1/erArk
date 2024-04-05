@@ -260,13 +260,15 @@ def update_tem_character(loaded_dict):
         now_npc_tem_data = loaded_dict["npc_tem_data"][i]
         for j in range(len(cache.npc_tem_data)):
             if cache.npc_tem_data[j].Name == now_npc_tem_data.Name:
-                loaded_dict["npc_tem_data"][i] = cache.npc_tem_data[j]
-                all_new_tem_data.remove(cache.npc_tem_data[j])
                 # print(f"debug 更新了{now_npc_tem_data.Name}的角色预设 ")
+                loaded_dict["npc_tem_data"][i] = cache.npc_tem_data[j]
+                if cache.npc_tem_data[j] in all_new_tem_data:
+                    all_new_tem_data.remove(cache.npc_tem_data[j])
                 break
     # 没有被替代的加在后面
     for now_npc_tem_data in all_new_tem_data:
         loaded_dict["npc_tem_data"].append(now_npc_tem_data)
+        update_count += 1
         # print(f"debug 新增了{now_npc_tem_data.Name}的角色预设 ")
     # 更新新角色
     update_count += update_new_character(loaded_dict)
