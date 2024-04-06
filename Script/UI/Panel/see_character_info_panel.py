@@ -614,12 +614,12 @@ class CharacterInfoHead:
             )
         else:
             message = _(
-                "{character_name}{character_nick_name}{urinate}{eja}").format(
+                "{character_name}{character_nick_name}{sleep}{urinate}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
-                # sleep=sleep_text,
+                sleep=sleep_text,
                 urinate=urinate_text,
                 eja=eja_text,
                 bag=bag_text,
