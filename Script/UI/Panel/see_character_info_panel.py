@@ -545,7 +545,7 @@ class CharacterInfoHead:
                 favorability_and_trust_text = _(f"好感度:{favorability_lv_letter}，信赖度:{trust_lv_letter}")
             # 显示数值和等级
             elif cache.system_setting[9] == 2:
-                favorability_and_trust_text = _(f"好感度:{favorability_text}({favorability_lv_letter})，信赖度:{trust_text}%({trust_lv_letter})")
+                favorability_and_trust_text = _(f"好感度:{favorability_text}({favorability_lv_letter})，信赖度:{trust_text}({trust_lv_letter})")
 
         # 非清醒时输出当前状态
         sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
@@ -585,16 +585,18 @@ class CharacterInfoHead:
 
         # 催眠状态时进行提示
         hypnosis_text = ""
-        if cache.system_setting[10] and character_data.hypnosis.hypnosis_degree:
+        if cache.system_setting[10] and character_data.hypnosis.hypnosis_degree > 0:
+            hypnosis_text = _(" <催眠")
+            # 是否显示具体数值
+            if cache.system_setting[9] == 2:
+                # 显示到小数点后一位
+                hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
+            # 是否显示催眠类型
             if character_data.sp_flag.unconscious_h >= 4:
-                hypnosis_text = _(" <催眠")
-                # 是否显示具体数值
-                if cache.system_setting[9] == 2:
-                    hypnosis_text += f"({character_data.hypnosis.hypnosis_degree}%)"
                 hypnosis_cid = character_data.sp_flag.unconscious_h - 3
                 hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
                 hypnosis_text += _(f":{hypnosis_name}")
-                hypnosis_text += ">"
+            hypnosis_text += ">"
 
         # 携袋状态进行提示
         bag_text = ""

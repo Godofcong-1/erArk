@@ -363,7 +363,7 @@ class HYPNOSIS:
 
     def __init__(self):
 
-        self.hypnosis_degree: int = 0
+        self.hypnosis_degree: float = 0
         """ 催眠程度 """
 
 
@@ -1233,7 +1233,7 @@ class TargetChange:
         """ 经验变化 """
         self.sanity_point: int = 0
         """ 理智变化 """
-        self.hypnosis_degree: int = 0
+        self.hypnosis_degree: float = 0
         """ 催眠程度变化 """
 
 
@@ -1267,7 +1267,7 @@ class CharacterStatusChange:
         """ 经验变化 """
         self.sanity_point: int = 0
         """ 理智变化 """
-        self.hypnosis_degree: int = 0
+        self.hypnosis_degree: float = 0
         """ 催眠程度变化 """
 
 

@@ -735,13 +735,13 @@ def get_trust_level(value: int):
     return max_cid,max_data.judge_add
 
 
-def hypnosis_degree_calculation(target_character_id: int) -> int:
+def hypnosis_degree_calculation(target_character_id: int) -> float:
     """
     计算催眠的增长程度
     Keyword arguments:
     target_character_id -- 角色id
     Return arguments:
-    int -- 催眠增长系数
+    float -- 催眠增长值
     """
     pl_character_data: game_type.Character = cache.character_data[0]
     target_character_data: game_type.Character = cache.character_data[target_character_id]
@@ -753,18 +753,29 @@ def hypnosis_degree_calculation(target_character_id: int) -> int:
     hypnosis_degree_limit = hypnosis_degree_limit_calculation()
     if target_character_data.hypnosis.hypnosis_degree >= hypnosis_degree_limit:
         return 0
+    
+    base_addition = 1
 
     # 根据玩家的催眠能力，计算催眠增长系数
-    hypnosis_degree_addition = 1
+    hypnosis_degree_adjust = 2
     if pl_character_data.talent[334]:
-        hypnosis_degree_addition = 4
+        hypnosis_degree_adjust = 6
     elif pl_character_data.talent[333]:
-        hypnosis_degree_addition = 2
+        hypnosis_degree_adjust = 4
 
     # 根据无觉刻印的等级，计算催眠增长系数
-    hypnosis_degree_addition += get_ability_adjust(target_character_data.ability[19])
+    hypnosis_degree_adjust *= get_ability_adjust(target_character_data.ability[19])
 
-    return hypnosis_degree_addition
+    # 乘以0.5~1.5的随机系数
+    hypnosis_degree_adjust *= random.uniform(0.5, 1.5)
+
+    # 最后计算
+    final_addition = base_addition * hypnosis_degree_adjust
+    # 限制为1位小数
+    final_addition = round(final_addition, 1)
+    # print(f"debug final_addition = {final_addition}")
+
+    return final_addition
 
 
 def hypnosis_degree_limit_calculation() -> int:

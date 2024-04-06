@@ -142,7 +142,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}")
                 draw_text_list.append(f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}")
                 draw_text_list.append(f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}")
-                draw_text_list.append(f"[008]:全源石技艺全开")
+                draw_text_list.append(f"[008]:全源石技艺全开，理智9999")
                 draw_text_list.append(f"[009]:资源全99999")
                 draw_text_list.append(f"[010]:设施全满级、全开放")
 
@@ -522,8 +522,10 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].hunger_point = new_value
                 elif key_index == 8:
-                    for talent_id in {304,305,306,307,308,309,310,311,312}:
+                    for talent_id in {304,305,306,307,308,309,310,311,312,331,332,333,334}:
                         cache.character_data[0].talent[talent_id] = 1
+                        cache.character_data[0].sanity_point = 9999
+                        cache.character_data[0].sanity_point_max = 9999
                 elif key_index == 9:
                     for material_id in cache.rhodes_island.materials_resouce:
                         cache.rhodes_island.materials_resouce[material_id] = 99999

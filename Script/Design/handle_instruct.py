@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -498,6 +498,11 @@ def handle_hypnosis_one():
     """处理单人催眠"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    if character_data.pl_ability.hypnosis_type == 0:
+        chose_hypnosis_type_panel = originium_arts.Chose_Hypnosis_Type_Panel(width)
+        chose_hypnosis_type_panel.draw()
+        if character_data.pl_ability.hypnosis_type == 0:
+            return
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ONE
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ONE
     character_data.behavior.duration = 10
@@ -520,9 +525,16 @@ def handle_hypnosis_one():
 def handle_hypnosis_all():
     """处理集体催眠"""
     character.init_character_behavior_start_time(0, cache.game_time)
-    now_draw = normal_panel.Close_Door_Panel(width)
-    now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if cache.scene_data[now_scene_str].close_flag == 0:
+        now_draw = normal_panel.Close_Door_Panel(width)
+        now_draw.draw()
+    if character_data.pl_ability.hypnosis_type == 0:
+        chose_hypnosis_type_panel = originium_arts.Chose_Hypnosis_Type_Panel(width)
+        chose_hypnosis_type_panel.draw()
+        if character_data.pl_ability.hypnosis_type == 0:
+            return
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ALL
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ALL
     character_data.behavior.duration = 30
@@ -1487,9 +1499,10 @@ def handle_do_h():
     target_data = cache.character_data[character_data.target_character_id]
     h_flag = False
     if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
-        now_draw = normal_panel.Close_Door_Panel(width)
-        # if now_draw.draw():
-        now_draw.draw()
+        now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        if cache.scene_data[now_scene_str].close_flag == 0:
+            now_draw = normal_panel.Close_Door_Panel(width)
+            now_draw.draw()
         h_flag = True
         target_data.sp_flag.is_h = 1
         target_data.sp_flag.is_follow = 0
@@ -1530,8 +1543,10 @@ def handle_sleep_obscenity():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    now_draw = normal_panel.Close_Door_Panel(width)
-    now_draw.draw()
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if cache.scene_data[now_scene_str].close_flag == 0:
+        now_draw = normal_panel.Close_Door_Panel(width)
+        now_draw.draw()
     target_data.sp_flag.unconscious_h = 1
     now_draw = draw.WaitDraw()
     now_draw.width = width
@@ -1578,9 +1593,10 @@ def handle_unconscious_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    now_draw = normal_panel.Close_Door_Panel(width)
-    # if now_draw.draw():
-    now_draw.draw()
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if cache.scene_data[now_scene_str].close_flag == 0:
+        now_draw = normal_panel.Close_Door_Panel(width)
+        now_draw.draw()
     target_data.sp_flag.is_h = 1
     target_data.sp_flag.is_follow = 0
     character_data.behavior.behavior_id = constant.Behavior.H

@@ -1439,8 +1439,7 @@ def handle_hypnosis_one(
     change_data.sanity_point -= 20
     character_data.pl_ability.today_sanity_point_cost += 20
     # 结算催眠度增加
-    hypnosis_degree_addition = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
-    hypnosis_degree_grow = 10 * hypnosis_degree_addition
+    hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
     # debug下催眠增加到999
     if cache.debug_mode:
         hypnosis_degree_grow = 999
@@ -1450,7 +1449,15 @@ def handle_hypnosis_one(
     target_change.hypnosis_degree += hypnosis_degree_grow
     # 判断催眠完成
     originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
-
+    # 判断是否理智已耗尽导致催眠结束
+    if character_data.sanity_point == 0 and target_character_data.sp_flag.unconscious_h:
+        target_character_data.sp_flag.unconscious_h = 0
+        # 空气催眠则重置催眠地点和解开门锁
+        if target_character_data.sp_flag.unconscious_h == 5:
+            character_data.pl_ability.air_hypnosis_position = ""
+        now_draw = draw.NormalDraw()
+        now_draw.text = f"\n{character_data.name}的理智耗尽，催眠结束\n\n"
+        now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ALL)
 def handle_hypnosis_all(
@@ -1493,8 +1500,7 @@ def handle_hypnosis_all(
         if target_character_data.dead:
             continue
         # 结算催眠度增加
-        hypnosis_degree_addition = attr_calculation.hypnosis_degree_calculation(target_id)
-        hypnosis_degree_grow = 10 * hypnosis_degree_addition
+        hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(target_id)
         # debug下催眠增加到999
         if cache.debug_mode:
             hypnosis_degree_grow = 999
@@ -1504,6 +1510,17 @@ def handle_hypnosis_all(
         target_change.hypnosis_degree += hypnosis_degree_grow
         # 判断催眠完成
         originium_arts.evaluate_hypnosis_completion(target_id)
+    # 判断是否理智已耗尽导致催眠结束
+    if character_data.sanity_point == 0:
+        for target_id in scene_character_list:
+            target_character_data = cache.character_data[target_id]
+            target_character_data.sp_flag.unconscious_h = 0
+            # 空气催眠则重置催眠地点和解开门锁
+            if target_character_data.sp_flag.unconscious_h == 5:
+                character_data.pl_ability.air_hypnosis_position = ""
+            now_draw = draw.NormalDraw()
+            now_draw.text = f"\n{character_data.name}的理智耗尽，催眠结束\n\n"
+            now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_CANCEL)

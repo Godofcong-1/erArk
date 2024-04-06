@@ -150,9 +150,9 @@ def npc_gain_hypnosis_talent(character_id: int):
             # 触发对应的二段行为结算
             character_data.second_behavior[now_data.second_behavior_id] = 1
             # 替换旧素质
-            if now_data.hypnosis_talent_id > 71:
-                old_talent_id = now_data.hypnosis_talent_id - 1
-                character_data.talent[old_talent_id] = 0
+            # if now_data.hypnosis_talent_id > 71:
+            #     old_talent_id = now_data.hypnosis_talent_id - 1
+            #     character_data.talent[old_talent_id] = 0
             # 绘制获得素质提示
             now_draw_succed = draw.WaitDraw()
             now_draw_succed.text = f"\n○{character_data.name}的催眠深度达到{now_data.hypnosis_degree}%，获得了[{talent_name}]\n"

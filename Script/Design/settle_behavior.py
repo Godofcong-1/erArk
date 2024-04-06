@@ -220,7 +220,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                     ) + text_handle.number_to_symbol_string(float(format(target_change.trust, '.1f'))) + "%"
                     judge = 1
                 if target_change.hypnosis_degree:
-                    now_text += _("\n  催眠度") + text_handle.number_to_symbol_string(int(target_change.hypnosis_degree))
+                    now_text += _("\n  催眠度") + text_handle.number_to_symbol_string(float(format(target_change.hypnosis_degree, '.1f'))) + "%"
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
