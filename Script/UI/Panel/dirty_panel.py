@@ -357,6 +357,11 @@ class SeeCharacterBodyPanel:
             enemas_text = game_config.ui_text_data['dirty'][f"灌肠{str(target_character_data.dirty.a_clean)}"]
             all_part_text_list.append(f" <{enemas_text}>")
 
+        # 香薰疗愈文本
+        if target_character_data.sp_flag.aromatherapy != 0:
+            aromatherapy_text = game_config.config_aromatherapy_recipes[target_character_data.sp_flag.aromatherapy].name
+            all_part_text_list.append(f" <{aromatherapy_text}>")
+
         # 如果文本不为空，则加入到绘制列表中
         all_part_text = ""
         if len(all_part_text_list):

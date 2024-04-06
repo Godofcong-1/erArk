@@ -4243,6 +4243,32 @@ def handle_unnormal_567(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG)
+def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
+    """
+    交互对象256正常或无意识
+    \n包括2:临盆、产后、婴儿
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_chara_id = character_data.target_character_id
+    if (
+        handle_normal_2(target_chara_id) and 
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id)
+        ):
+        return 1
+    if target_data.sp_flag.unconscious_h != 0:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_UNNORMAL_567)
 def handle_t_unnormal_567(character_id: int) -> int:
     """
@@ -5340,40 +5366,196 @@ def handle_night_salutation_flag_2(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG)
-def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_0)
+def handle_aromatherapy_flag_0(character_id: int) -> int:
     """
-    交互对象256正常或无意识
-    \n包括2:临盆、产后、婴儿
-    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
-    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    自身没有香薰疗愈状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_1)
+def handle_aromatherapy_flag_1(character_id: int) -> int:
+    """
+    自身香薰疗愈-回复
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_2)
+def handle_aromatherapy_flag_2(character_id: int) -> int:
+    """
+    自身香薰疗愈-习得
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_3)
+def handle_aromatherapy_flag_3(character_id: int) -> int:
+    """
+    自身香薰疗愈-反感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 3:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_4)
+def handle_aromatherapy_flag_4(character_id: int) -> int:
+    """
+    自身香薰疗愈-快感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 4:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_5)
+def handle_aromatherapy_flag_5(character_id: int) -> int:
+    """
+    自身香薰疗愈-好感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_0)
+def handle_t_aromatherapy_flag_0(character_id: int) -> int:
+    """
+    交互对象没有香薰疗愈状态
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
     target_chara_id = character_data.target_character_id
-    if target_data.sp_flag.unconscious_h == 0:
-        if(
-            handle_parturient_1(target_chara_id)
-            or handle_postpartum_1(target_chara_id)
-            or handle_t_baby_1(target_chara_id)
-        ):
-            return 0
-        if(
-            (handle_sleep_level_0(target_chara_id) and handle_action_sleep(target_chara_id))
-            or handle_unconscious_flag_4(target_chara_id)
-        ):
-            return 0
-        if(
-            (handle_sleep_level_1(target_chara_id) and handle_action_sleep(target_chara_id))
-            or (handle_sleep_level_2(target_chara_id) and handle_action_sleep(target_chara_id))
-            or (handle_sleep_level_3(target_chara_id) and handle_action_sleep(target_chara_id))
-        ):
-            return 0
-    return 1
+    if handle_aromatherapy_flag_0(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_1)
+def handle_t_aromatherapy_flag_1(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-回复
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_1(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_2)
+def handle_t_aromatherapy_flag_2(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-习得
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_2(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_3)
+def handle_t_aromatherapy_flag_3(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-反感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_3(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_4)
+def handle_t_aromatherapy_flag_4(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-快感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_4(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_5)
+def handle_t_aromatherapy_flag_5(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-好感
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_5(target_chara_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HP_LOW)
