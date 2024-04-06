@@ -3413,43 +3413,43 @@ msgid "头发散乱地散开的{TargetName}就像是睡着了一样一动不动�
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:297
-msgid "“啊……”\n{TargetName}微红着脸用力地推开{Name}，冷静地整理好凌乱的衣服。\n“{入侵者}小姐……没什么……刚刚只是帮{PlayerNickName}做工作而已……”{TargetName}装出什么都没有发生的样子拉开了与{Name}的距离。"
+msgid "“啊……”\n{TargetName}微红着脸用力地推开{Name}，冷静地整理好凌乱的衣服。\n“{HInterruptCharaName}小姐……没什么……刚刚只是帮{PlayerNickName}做工作而已……”{TargetName}装出什么都没有发生的样子拉开了与{Name}的距离。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:298
-msgid "“{PlayerNickName}，让一下……{入侵者}来了。”\n{TargetName}拍打抱着自己的{Name}的胸口要求停下。\n“……下次至少把门关上……”{TargetName}闭上眼睛恢复了平时冷静的样子。"
+msgid "“{PlayerNickName}，让一下……{HInterruptCharaName}来了。”\n{TargetName}拍打抱着自己的{Name}的胸口要求停下。\n“……下次至少把门关上……”{TargetName}闭上眼睛恢复了平时冷静的样子。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:299
-msgid "像野兽一样被{Name}压在身下交配的{TargetName}看着进入房间的{入侵者}羞红了脸。\n“{入侵者}小姐……请不要看……唔……”不敢直视{入侵者}的眼睛的{TargetName}在身下用力地挣扎着想要{Name}停止，“{PlayerNickName}也不要再玩了……快点离开……”\n最后中断了H的{TargetName}害羞地用衣服藏起自己的脸，过了好一会才重新露出平时的表情。"
+msgid "像野兽一样被{Name}压在身下交配的{TargetName}看着进入房间的{HInterruptCharaName}羞红了脸。\n“{HInterruptCharaName}小姐……请不要看……唔……”不敢直视{HInterruptCharaName}的眼睛的{TargetName}在身下用力地挣扎着想要{Name}停止，“{PlayerNickName}也不要再玩了……快点离开……”\n最后中断了H的{TargetName}害羞地用衣服藏起自己的脸，过了好一会才重新露出平时的表情。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:300
-msgid "看到{入侵者}进入房间，还咬着{Name}的阴茎的{TargetName}急切地拍打{Name}的大腿示意停下。\n“咕……哈嗯……”推着{Name}的腰吐出阴茎的{TargetName}羞耻地转过头去擦掉了嘴角的液体，“被看到了……”"
+msgid "看到{HInterruptCharaName}进入房间，还咬着{Name}的阴茎的{TargetName}急切地拍打{Name}的大腿示意停下。\n“咕……哈嗯……”推着{Name}的腰吐出阴茎的{TargetName}羞耻地转过头去擦掉了嘴角的液体，“被看到了……”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:301
-msgid "因为{入侵者}的进入，害羞地提出了结束的请求的{TargetName}红着脸又拉住了正准备离开的{Name}的手。\n“让我休息一下……拜托了。”因为过度的劳累，疲倦地站不稳的{TargetName}抱着{Name}将隐秘的部位遮挡了起来。\n“……谢谢……”逐渐回复了体力的{TargetName}低垂下眼睛，整理好了衣服。"
+msgid "因为{HInterruptCharaName}的进入，害羞地提出了结束的请求的{TargetName}红着脸又拉住了正准备离开的{Name}的手。\n“让我休息一下……拜托了。”因为过度的劳累，疲倦地站不稳的{TargetName}抱着{Name}将隐秘的部位遮挡了起来。\n“……谢谢……”逐渐回复了体力的{TargetName}低垂下眼睛，整理好了衣服。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:302
-msgid "被{入侵者}目击到了正在被插入下体的{TargetName}，羞耻地红透了脸。\n“先拔出去……等会……再说……”咬着嘴唇的{TargetName}用力地推开{Name}，坚决地要求了停止。\n……强制地结束了H，一言不发的{TargetName}躲到了比较远的地方整理起自己的衣服。"
+msgid "被{HInterruptCharaName}目击到了正在被插入下体的{TargetName}，羞耻地红透了脸。\n“先拔出去……等会……再说……”咬着嘴唇的{TargetName}用力地推开{Name}，坚决地要求了停止。\n……强制地结束了H，一言不发的{TargetName}躲到了比较远的地方整理起自己的衣服。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:303
-msgid "“等……等一下，{PlayerNickName}……”正在接受{Name}的射精的{TargetName}深深地藏起自己羞红的脸\n用力地推开了结束射精的{Name}，有些消沉的{TargetName}用手遮挡住颤抖着还没冷静下来还在流出精液的下体。\n“被{入侵者}小姐看到了……交配的样子”"
+msgid "“等……等一下，{PlayerNickName}……”正在接受{Name}的射精的{TargetName}深深地藏起自己羞红的脸\n用力地推开了结束射精的{Name}，有些消沉的{TargetName}用手遮挡住颤抖着还没冷静下来还在流出精液的下体。\n“被{HInterruptCharaName}小姐看到了……交配的样子”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:304
-msgid "“哈……哈，{入侵者}小姐，在看着……{PlayerNickName}快让开……”\n因为多次高潮变得疲惫不堪的{TargetName}勉强地推开{Name}，抓起自己的衣服遮挡住自己的身体。\n“……没事……嗯……让我休息一会……”躲避着视线，{TargetName}用汗水浸湿的头发遮挡住了眼睛。"
+msgid "“哈……哈，{HInterruptCharaName}小姐，在看着……{PlayerNickName}快让开……”\n因为多次高潮变得疲惫不堪的{TargetName}勉强地推开{Name}，抓起自己的衣服遮挡住自己的身体。\n“……没事……嗯……让我休息一会……”躲避着视线，{TargetName}用汗水浸湿的头发遮挡住了眼睛。"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:305
-msgid "察觉到了{入侵者}的进入，{TargetName}推开了抱上来的{Name}示意H的终止。\n“对不起……让{入侵者}小姐看到了不好的事情。”{TargetName}冷静地穿上衣服。\n“我们这就结束……可以请您当做没有看到吗？”"
+msgid "察觉到了{HInterruptCharaName}的进入，{TargetName}推开了抱上来的{Name}示意H的终止。\n“对不起……让{HInterruptCharaName}小姐看到了不好的事情。”{TargetName}冷静地穿上衣服。\n“我们这就结束……可以请您当做没有看到吗？”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:306
-msgid "面色潮红的{TargetName}按住{Name}的胸口示意了H的停止。\n从对方的身上离开的{TargetName}毫不在意地向{入侵者}展示着因为刚刚的秘事兴奋地上下起伏的身体，“啊……失礼……我这就穿上衣服。”\n“只是刚刚在帮变态的{PlayerNickName}做处理的工作而已……请{入侵者}小姐不要太在意……”"
+msgid "面色潮红的{TargetName}按住{Name}的胸口示意了H的停止。\n从对方的身上离开的{TargetName}毫不在意地向{HInterruptCharaName}展示着因为刚刚的秘事兴奋地上下起伏的身体，“啊……失礼……我这就穿上衣服。”\n“只是刚刚在帮变态的{PlayerNickName}做处理的工作而已……请{HInterruptCharaName}小姐不要太在意……”"
 msgstr ""
 
 #: .\data\talk\chara\204_白金.csv:307

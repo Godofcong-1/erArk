@@ -69,6 +69,7 @@ class ItemTextEdit(QWidget):
             {"text": "插入当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
             {"text": "插入当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
             {"text": "插入当前行为榨出母乳的毫升数", "slot": lambda: self.insert_text('{MilkMl}')},
+            {"text": "插入H行为被打断时的闯入者的名字", "slot": lambda: self.insert_text('{HInterruptCharaName}')},
             {"text": "插入当前场景名字", "slot": lambda: self.insert_text('{SceneName}')},
             {"text": "插入当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},
             {"text": "插入移动目标场景名字", "slot": lambda: self.insert_text('{TargetSceneName}')},

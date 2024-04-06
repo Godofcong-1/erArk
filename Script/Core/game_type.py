@@ -661,6 +661,8 @@ class Behavior:
         """ 前提结算用:书籍名字 """
         self.milk_ml: int = 0
         """ 前提结算用:榨出母乳的毫升数 """
+        self.h_interrupt_chara_name: str = ""
+        """ 前提结算用:打断H的角色的名字 """
 
 
 class Chara_Event:

@@ -289,6 +289,7 @@ def code_text_to_draw_text(now_talk:str, character_id: int):
         AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,
         MilkMl = character_data.behavior.milk_ml,
+        HInterruptCharaName = character_data.behavior.h_interrupt_chara_name,
 
         SceneName=scene_name,
         SceneOneCharaName=random_chara_name,
