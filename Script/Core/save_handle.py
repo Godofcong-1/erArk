@@ -157,7 +157,10 @@ def input_load_save(save_id: str):
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
         # 角色素质、经验、宝珠、能力的更新
         update_count += update_character_config_data(value)
+        # 当前角色模板数据
         tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
+        # 更新角色服装
+        cloth_update_count += update_chara_cloth(value, tem_character)
         # 更新角色口上颜色
         if value.cid != 0 and tem_character.TextColor != value.text_color:
             # print(f"debug value.name = {value.name}，tem_character.TextColor = {tem_character.TextColor}，value.text_color = {value.text_color}")
@@ -166,8 +169,14 @@ def input_load_save(save_id: str):
             character_config.add_text_color_data_to_config_data(text_color_list)
             update_count += 1
             color_update_count += 1
-        # 角色服装数据的更新
-        cloth_update_count += update_chara_cloth(value, tem_character)
+        # 更新到玩家收藏品列表
+        if value.cid != 0 and value.cid not in loaded_dict["character_data"][0].pl_collection.token_list:
+            loaded_dict["character_data"][0].pl_collection.token_list[value.cid] = False
+            loaded_dict["character_data"][0].pl_collection.first_panties[value.cid] = ""
+            loaded_dict["character_data"][0].pl_collection.npc_panties[value.cid] = []
+            loaded_dict["character_data"][0].pl_collection.npc_socks[value.cid] = []
+            # print(f"debug value.cid = {value.cid}, value.name = {value.name}")
+            update_count += 1
     if cloth_update_count:
         now_draw = draw.LeftDraw()
         draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
@@ -254,22 +263,23 @@ def update_tem_character(loaded_dict):
     """
 
     update_count = 0
-    # 用新的角色预设属性代替旧的属性
-    all_new_tem_data = cache.npc_tem_data.copy()
-    for i in range(len(loaded_dict["npc_tem_data"])):
-        now_npc_tem_data = loaded_dict["npc_tem_data"][i]
-        for j in range(len(cache.npc_tem_data)):
-            if cache.npc_tem_data[j].Name == now_npc_tem_data.Name:
-                # print(f"debug 更新了{now_npc_tem_data.Name}的角色预设 ")
-                loaded_dict["npc_tem_data"][i] = cache.npc_tem_data[j]
-                if cache.npc_tem_data[j] in all_new_tem_data:
-                    all_new_tem_data.remove(cache.npc_tem_data[j])
-                break
-    # 没有被替代的加在后面
-    for now_npc_tem_data in all_new_tem_data:
-        loaded_dict["npc_tem_data"].append(now_npc_tem_data)
-        update_count += 1
-        # print(f"debug 新增了{now_npc_tem_data.Name}的角色预设 ")
+
+    # 将cache.npc_tem_data转换为字典，以便快速查找
+    cache_dict = {npc.Name: npc for npc in cache.npc_tem_data}
+
+    # 更新loaded_dict["npc_tem_data"]，用新的角色预设属性代替旧的属性
+    for i, now_npc_tem_data in enumerate(loaded_dict["npc_tem_data"]):
+        if now_npc_tem_data.Name in cache_dict:
+            # print(f"debug 更新了{now_npc_tem_data.Name}的角色预设 ")
+            loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.Name]
+            # 从cache_dict中移除已经使用的元素
+            del cache_dict[now_npc_tem_data.Name]
+
+    # 将剩余的元素添加到loaded_dict["npc_tem_data"]的末尾
+    # print(f"debug cache_dict = {cache_dict}")
+    loaded_dict["npc_tem_data"].extend(cache_dict.values())
+    update_count += len(cache_dict)
+
     # 更新新角色
     update_count += update_new_character(loaded_dict)
     # 修正loaded_dict["npc_tem_data"]的元素的序号，如果与实际的序号不一致，将其修正
