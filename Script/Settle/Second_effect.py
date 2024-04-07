@@ -2,18 +2,12 @@ import datetime
 from types import FunctionType
 from Script.Design import (
     settle_behavior,
-    character,
-    character_handle,
-    map_handle,
     attr_calculation,
-    game_time,
-    cooking,
-    update,
-    attr_text,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
+from Script.Settle import default
 
 
 _: FunctionType = get_text._
@@ -1162,16 +1156,7 @@ def handle_add_small_disgust(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_lust = character_data.status_data[20]
-    now_add_lust = 20
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 20
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = min(99999, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
+    default.base_chara_state_common_settle(character_id, 0, 20, 20, ability_level = character_data.ability[18], change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_N_FEEL)
@@ -1743,16 +1728,7 @@ def handle_add_middle_disgust(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_lust = character_data.status_data[20]
-    now_add_lust = 100
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-    now_add_lust += now_lust / 10
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = min(99999, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
+    default.base_chara_state_common_settle(character_id, 0, 20, 100, ability_level = character_data.ability[18], change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_N_FEEL)

@@ -44,7 +44,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     # 系数加成
     final_adjust = 0
     # 能力修正
-    if ability_level in [13,14,15,16,17,18,19]:
+    if state_id in [13,14,15,16,17,18,19]:
         feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
     else:
         feel_adjust = attr_calculation.get_ability_adjust(ability_level)
@@ -52,13 +52,13 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     # 攻略进度素质对负面状态的减少
     if state_id in [17, 18, 19, 20]:
         if character_data.talent[204] or character_data.talent[214]:
-            final_adjust -= 0.5
+            final_adjust -= 0.8
         elif character_data.talent[203] or character_data.talent[213]:
-            final_adjust -= 0.3
+            final_adjust -= 0.6
         elif character_data.talent[202] or character_data.talent[212]:
-            final_adjust -= 0.2
+            final_adjust -= 0.4
         elif character_data.talent[201] or character_data.talent[211]:
-            final_adjust -= 0.1
+            final_adjust -= 0.2
     # 调香
     if character_data.sp_flag.aromatherapy:
         if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
