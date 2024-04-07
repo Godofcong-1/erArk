@@ -249,8 +249,10 @@ class SeeFoodListByFoodNameDraw:
                 draw_button_flag = False
 
         if draw_button_flag:
+            # 将uuid的前三位作为按钮的返回值
+            return_text = f"\n{food_name}_{str(self.text)[:3]}"
             name_draw = draw.LeftButton(
-                button_text, '\n' + str(self.text), self.width, cmd_func=self.eat_food
+                button_text, return_text, self.width, cmd_func=self.eat_food
             )
             self.draw_text = button_text
             self.button_return = name_draw.return_text
