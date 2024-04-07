@@ -468,7 +468,7 @@ def handle_time_weekend(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_TIME)
 def handle_morning_salutation_time(character_id: int) -> int:
     """
-    当前是早安问候时间（玩家醒来半小时前以内，权重50）
+    当前是早安问候时间（玩家醒来时间之后，动态权重50+超时分钟数 * 5）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -476,20 +476,25 @@ def handle_morning_salutation_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
+    now_time_hour, now_time_minute = now_time.hour, now_time.minute
+    # 玩家的醒来时间
     pl_character_data = cache.character_data[0]
-
-    judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-    # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，醒来时间为{pl_character_data.action_info.wake_time}，判定时间为{judge_wake_up_time}")
-    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
-        # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，判定时间为{judge_wake_up_time}")
-        return 50
+    plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+    wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+    # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，计划醒来时间为{pl_character_data.action_info.plan_to_wake_time}")
+    if now_time_hour > wake_time_hour or (now_time_hour == wake_time_hour and now_time_minute >= wake_time_minute):
+        # print(f"debug 判定通过")
+        # 超时分钟数
+        over_time_minute = (now_time_hour - wake_time_hour) * 60 + now_time_minute - wake_time_minute
+        over_time_minute = max(0, over_time_minute)
+        return 50 + over_time_minute * 5
     return 0
 
 
 @add_premise(constant_promise.Premise.NOT_MORIING_SALUTATION_TIME)
 def handle_not_morning_salutation_time(character_id: int) -> int:
     """
-    当前不是早安问候时间（玩家醒来半小时前以内）
+    当前不是早安问候时间（玩家醒来时间之后）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -497,10 +502,13 @@ def handle_not_morning_salutation_time(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
+    now_time_hour, now_time_minute = now_time.hour, now_time.minute
     pl_character_data = cache.character_data[0]
-
-    judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-    if game_time.judge_date_big_or_small(now_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(now_time, pl_character_data.action_info.wake_time):
+    plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+    wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+    # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，计划醒来时间为{pl_character_data.action_info.plan_to_wake_time}")
+    if now_time_hour > wake_time_hour or (now_time_hour == wake_time_hour and now_time_minute >= wake_time_minute):
+        # print(f"debug 判定通过")
         return 0
     return 1
 
@@ -5297,7 +5305,8 @@ def handle_morning_salutation_flag_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.morning_salutation == 1:
-        return 100
+        weight = handle_morning_salutation_time(character_id)
+        return 100 + weight
     else:
         return 0
 

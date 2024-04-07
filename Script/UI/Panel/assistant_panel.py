@@ -31,9 +31,9 @@ def chose_assistant():
         line.draw()
         now_npc_draw = draw.NormalDraw()
         if character_data.assistant_character_id != 0:
-            now_npc_text = f"当前助理为{target_data.name}，请选择新的助理："
+            now_npc_text = _(f"当前助理为{target_data.name}，请选择新的助理：")
         else:
-            now_npc_text = f"当前无助理，请选择新的助理："
+            now_npc_text = _(f"当前无助理，请选择新的助理：")
         now_npc_draw.text = now_npc_text
         now_npc_draw.draw()
         line_feed.draw()
@@ -75,7 +75,7 @@ class Assistant_Panel:
 
     def draw(self):
         """绘制对象"""
-        title_draw = draw.TitleLineDraw("助理相关调整", self.width)
+        title_draw = draw.TitleLineDraw(_("助理相关调整"), self.width)
 
         while 1:
             character_data: game_type.Character = cache.character_data[0]
@@ -86,16 +86,16 @@ class Assistant_Panel:
             return_list = []
 
             info_draw = draw.NormalDraw()
-            info_draw.text = f"\n●助理会自动获得打开玩家房门的权限，因此在执行问候、同居等服务时可以自由进出玩家房间\n\n"
+            info_draw.text = _(f"\n●助理会自动获得打开玩家房门的权限，因此在执行问候、同居等服务时可以自由进出玩家房间\n\n")
             info_draw.draw()
 
 
-            button_text = f"[001]助理服务"
+            button_text = _(f"[001]助理服务")
             if character_data.assistant_character_id == 0:
-                button_text += f"    当前无助理"
+                button_text += _(f"    当前无助理")
             else:
                 assistant_name = target_data.name
-                button_text += f"    当前助理：{assistant_name}"
+                button_text += _(f"    当前助理：{assistant_name}")
 
             button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(0,1))
             button_draw.draw()
@@ -105,18 +105,18 @@ class Assistant_Panel:
             if character_data.assistant_character_id != 0:
 
                 # 跟随服务
-                button_text = f"[002]跟随服务"
+                button_text = _(f"[002]跟随服务")
 
                 if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
                 elif target_data.sp_flag.is_follow == 1:
-                    button_text += f"    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）"
+                    button_text += _(f"    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）")
                 elif target_data.sp_flag.is_follow == 2:
-                    button_text += f"    强制跟随（测试用，会影响一部分游戏机能）"
+                    button_text += _(f"    强制跟随（测试用，会影响一部分游戏机能）")
                 elif target_data.sp_flag.is_follow == 3:
-                    button_text += f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
+                    button_text += _(f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）")
                 elif target_data.sp_flag.is_follow == 4:
-                    button_text += f"    前往博士当前位置（抵达后会最多等待半小时）"
+                    button_text += _(f"    前往博士当前位置（抵达后会最多等待半小时）")
 
                 button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(2,4))
                 button_draw.draw()
@@ -134,9 +134,6 @@ class Assistant_Panel:
                     service_option_text_all = service_option_data[0]
                     service_option_text_now = service_option_text_all[target_data.assistant_services[cid]]
                     service_option_len = len(service_option_text_all)
-                    # 晚安服务的额外输出
-                    if cid == 6 and target_data.assistant_services[cid]:
-                        service_option_text_now += f"    预定时间为{str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0')}"
 
                     # 绘制输出文本
                     button_text = f"[{str(cid).rjust(3,'0')}]{service_data.name}"
@@ -145,6 +142,21 @@ class Assistant_Panel:
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
                     line_feed.draw()
+
+                    # 早安服务的时间变更按钮
+                    if cid == 5 and target_data.assistant_services[cid]:
+                        button_text = _(f"  [更改早安服务预定时间]——当前预定时间：{str(character_data.action_info.plan_to_wake_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_wake_time[1]).rjust(2,'0')}")
+                        button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_morning_salutation_time)
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+                        line_feed.draw()
+                    # 晚安服务的时间变更按钮
+                    if cid == 6 and target_data.assistant_services[cid]:
+                        button_text = _(f"  [更改晚安服务预定时间]——当前预定时间：{str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0')}")
+                        button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_night_salutation_time)
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+                        line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -192,7 +204,7 @@ class Assistant_Panel:
                 # 不符合解锁条件时输出提示信息并归零
                 else:
                     info_draw = draw.WaitDraw()
-                    info_text = f"\n  ○更改失败，[{service_option_text_next}]{reason}\n"
+                    info_text = _(f"\n  ○更改失败，[{service_option_text_next}]{reason}\n")
                     info_draw.text = info_text
                     info_draw.draw()
                     target_data.assistant_services[service_cid] = 0
@@ -230,22 +242,17 @@ class Assistant_Panel:
                 # 再设置当前二段结算
                 target_data.second_behavior[now_index] = 1
 
-            # 晚安服务的时间选择
-            if service_cid == 6:
-                if target_data.assistant_services[service_cid]:
-                    self.select_night_salutation_time()
-
             # 同居服务的宿舍改变
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
                     target_data.pre_dormitory = target_data.dormitory
-                    target_data.dormitory = "中枢\博士房间"
-                elif target_data.dormitory == "中枢\博士房间":
+                    target_data.dormitory = _("中枢\博士房间")
+                elif target_data.dormitory == _("中枢\博士房间"):
                     target_data.dormitory = target_data.pre_dormitory
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
 
-    def select_night_salutation_time(self):
-        """选择晚安服务的时间"""
+    def select_morning_salutation_time(self):
+        """选择早安服务的时间"""
         character_data: game_type.Character = cache.character_data[0]
         return_list = []
 
@@ -255,11 +262,11 @@ class Assistant_Panel:
             line_draw.draw()
             line_feed.draw()
             # 显示当前时间
-            plan_to_sleep_time = character_data.action_info.plan_to_sleep_time
-            now_time_hour, now_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
-            now_time_text = f"当前预定晚安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n"
-            now_time_text += "如果这个时间博士还没有入睡，助理干员会前来催促睡觉，一直到博士睡前进行晚安服务后再离开\n"
-            now_time_text += "如果这个时间博士已经入睡，助理干员会来到博士床前，悄悄进行晚安服务后离开\n"
+            plan_to_wake_time = character_data.action_info.plan_to_wake_time
+            now_time_hour, now_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+            now_time_text = _(f"当前预定早安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n")
+            now_time_text += _("如果这个时间博士还没醒来，助理干员会来到博士床前，悄悄进行早安问候，然后一直等待到博士醒来为止\n")
+            now_time_text += _("如果这个时间博士已经醒来，助理干员会直接前往博士身边，进行早安服务后离开\n")
             now_time_draw = draw.NormalDraw()
             now_time_draw.text = now_time_text
             now_time_draw.width = window_width
@@ -267,10 +274,10 @@ class Assistant_Panel:
             line_feed.draw()
 
             # 更改小时与分钟的按钮
-            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至少为18时"), window_width / 6, cmd_func=self.change_hour)
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至晚为9时"), window_width / 6, cmd_func=self.change_hour, args=(True,))
             hour_button.draw()
             return_list.append(hour_button.return_text)
-            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute)
+            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(True,))
             minute_button.draw()
             return_list.append(minute_button.return_text)
             line_feed.draw()
@@ -286,7 +293,49 @@ class Assistant_Panel:
             if yrn == back_button.return_text:
                 break
 
-    def change_hour(self):
+    def select_night_salutation_time(self):
+        """选择晚安服务的时间"""
+        character_data: game_type.Character = cache.character_data[0]
+        return_list = []
+
+        while 1:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            # 显示当前时间
+            plan_to_sleep_time = character_data.action_info.plan_to_sleep_time
+            now_time_hour, now_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
+            now_time_text = _(f"当前预定晚安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n")
+            now_time_text += _("如果这个时间博士还没有入睡，助理干员会前来催促睡觉，一直到博士睡前进行晚安服务后再离开\n")
+            now_time_text += _("如果这个时间博士已经入睡，助理干员会来到博士床前，悄悄进行晚安服务后离开\n")
+            now_time_draw = draw.NormalDraw()
+            now_time_draw.text = now_time_text
+            now_time_draw.width = window_width
+            now_time_draw.draw()
+            line_feed.draw()
+
+            # 更改小时与分钟的按钮
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至少为18时"), window_width / 6, cmd_func=self.change_hour, args=(False,))
+            hour_button.draw()
+            return_list.append(hour_button.return_text)
+            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(False,))
+            minute_button.draw()
+            return_list.append(minute_button.return_text)
+            line_feed.draw()
+            line_feed.draw()
+
+            # 返回按钮
+            back_button = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_button.draw()
+            line_feed.draw()
+            return_list.append(back_button.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_button.return_text:
+                break
+
+    def change_hour(self, morning_flag : bool = True):
         """更改小时"""
         character_data: game_type.Character = cache.character_data[0]
         while 1:
@@ -295,15 +344,23 @@ class Assistant_Panel:
                 user_input = int(user_input)
             except:
                 continue
-            if user_input <= 18:
-                user_input = 18
-            elif user_input > 0:
-                if user_input > 23:
-                    user_input = 23
-                character_data.action_info.plan_to_sleep_time[0] = user_input
+            if morning_flag:
+                if user_input <= 0:
+                    user_input = 0
+                elif user_input > 9:
+                    user_input = 9
+                character_data.action_info.plan_to_wake_time[0] = user_input
                 break
+            else:
+                if user_input <= 18:
+                    user_input = 18
+                elif user_input > 0:
+                    if user_input > 23:
+                        user_input = 23
+                    character_data.action_info.plan_to_sleep_time[0] = user_input
+                    break
 
-    def change_minute(self):
+    def change_minute(self, morning_flag : bool = True):
         """更改分钟"""
         character_data: game_type.Character = cache.character_data[0]
         while 1:
@@ -317,7 +374,10 @@ class Assistant_Panel:
             elif user_input > 0:
                 if user_input > 59:
                     user_input = 59
-                character_data.action_info.plan_to_sleep_time[1] = user_input
+                if morning_flag:
+                    character_data.action_info.plan_to_wake_time[1] = user_input
+                else:
+                    character_data.action_info.plan_to_sleep_time[1] = user_input
                 break
 
 
@@ -374,7 +434,7 @@ class SeeNPCButtonList:
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         old_assistant_data.sp_flag.is_follow = 0
         # 去掉旧助理的同居状态
-        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == "中枢\博士房间":
+        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == _("中枢\博士房间"):
             old_assistant_data.dormitory = old_assistant_data.pre_dormitory
         # 重置旧助理的助理服务数据体
         old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
@@ -392,17 +452,17 @@ class SeeNPCButtonList:
         if self.NPC_id == character_data.assistant_character_id:
             character_data.assistant_character_id = 0
         elif handle_premise.handle_unnormal_27(self.NPC_id):
-            info_text += f"\n{new_assistant_data.name}的状态异常，无法任命为助理干员\n"
+            info_text += _(f"\n{new_assistant_data.name}的状态异常，无法任命为助理干员\n")
             pl_flag = True
         else:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             new_assistant_data.sp_flag.is_follow = 1
             new_assistant_data.second_behavior[1401] = 1
-            info_text += f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n"
+            info_text += _(f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n")
         if not pl_flag:
             old_assistant_data.second_behavior[1402] = 1
-            info_text += f"\n\n{old_assistant_data.name}不再是助理干员了，已清零助理服务相关的设置\n\n"
+            info_text += _(f"\n\n{old_assistant_data.name}不再是助理干员了，已清零助理服务相关的设置\n\n")
         info_draw.text = info_text
         info_draw.width = self.width
         info_draw.draw()
