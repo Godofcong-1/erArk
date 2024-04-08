@@ -42,7 +42,7 @@ class Base_function_class:
             # 当前燃料
             now_fuel = cache.rhodes_island.materials_resouce[15]
             need_fuel = 1000 * scene_path[1]
-            if now_fuel <= need_fuel and not cache.debug_mode:
+            if now_fuel < need_fuel and not cache.debug_mode:
                 now_draw = draw.WaitDraw()
                 now_draw.text = _(f"\n\n移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，燃料不足，无法移动\n")
                 now_draw.width = window_width
