@@ -258,7 +258,7 @@ class Character_talent_show_Text:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_love = draw.NormalDraw()
-            info_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级高于顺从等级\n"
+            info_draw_love.text = "爱情路线前提： 苦痛刻印0 恐怖刻印0 亲密等级至少为2\n"
             info_draw_love.width = 1
             info_draw_love.draw()
 
@@ -275,7 +275,7 @@ class Character_talent_show_Text:
                 if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
                     text_draw_love_text += "  未满足共通基础前提\n"
                     judge = 0
-                if self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or self.character_data.ability[32] <= self.character_data.ability[31]:
+                if self.character_data.ability[15] != 0 or self.character_data.ability[17] != 0 or self.character_data.ability[32] < 3:
                     text_draw_love_text += "  未满足爱情路线前提\n"
                     judge = 0
                 text_draw_love.text = text_draw_love_text
@@ -290,7 +290,7 @@ class Character_talent_show_Text:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_obey = draw.NormalDraw()
-            info_draw_obey.text = "隶属路线前提： 快乐刻印>=1 屈服刻印>=1 顺从等级高于亲密等级\n"
+            info_draw_obey.text = "隶属路线前提： 快乐刻印>=1 屈服刻印>=1 顺从等级至少为2\n"
             info_draw_obey.width = 1
             info_draw_obey.draw()
 
@@ -305,7 +305,7 @@ class Character_talent_show_Text:
                 if self.character_data.favorability[0] < 500 or self.character_data.trust < 50 or self.character_data.ability[18] != 0:
                     text_draw_obey_text += "  未满足共通基础前提\n"
                     judge = 0
-                if self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or self.character_data.ability[31] <= self.character_data.ability[32]:
+                if self.character_data.ability[13] == 0 or self.character_data.ability[14] == 0 or self.character_data.ability[31] <= 3:
                     text_draw_obey_text += "  未满足隶属路线前提\n"
                     judge = 0
                 text_draw_obey.text = text_draw_obey_text
