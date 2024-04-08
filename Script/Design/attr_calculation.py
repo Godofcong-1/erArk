@@ -753,7 +753,7 @@ def hypnosis_degree_calculation(target_character_id: int) -> float:
     hypnosis_degree_limit = hypnosis_degree_limit_calculation()
     if target_character_data.hypnosis.hypnosis_degree >= hypnosis_degree_limit:
         return 0
-    
+
     base_addition = 1
 
     # 根据玩家的催眠能力，计算催眠增长系数
@@ -762,6 +762,10 @@ def hypnosis_degree_calculation(target_character_id: int) -> float:
         hypnosis_degree_adjust = 6
     elif pl_character_data.talent[333]:
         hypnosis_degree_adjust = 4
+
+    # 调香的加成
+    if target_character_data.sp_flag.aromatherapy == 6:
+        hypnosis_degree_adjust += 5
 
     # 根据无觉刻印的等级，计算催眠增长系数
     hypnosis_degree_adjust *= get_ability_adjust(target_character_data.ability[19])

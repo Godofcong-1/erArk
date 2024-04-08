@@ -992,6 +992,8 @@ class Premise:
     """ 属性_特殊flag 自身香薰疗愈-快感 """
     AROMATHERAPY_FLAG_5 = "aromatherapy_flag_5"
     """ 属性_特殊flag 自身香薰疗愈-好感 """
+    AROMATHERAPY_FLAG_6 = "aromatherapy_flag_6"
+    """ 属性_特殊flag 自身香薰疗愈-催眠 """
     T_AROMATHERAPY_FLAG_0 = "t_aromatherapy_flag_0"
     """ 属性_特殊flag 交互对象没有香薰疗愈状态 """
     T_AROMATHERAPY_FLAG_1 = "t_aromatherapy_flag_1"
@@ -1004,6 +1006,8 @@ class Premise:
     """ 属性_特殊flag 交互对象香薰疗愈-快感 """
     T_AROMATHERAPY_FLAG_5 = "t_aromatherapy_flag_5"
     """ 属性_特殊flag 交互对象香薰疗愈-好感 """
+    T_AROMATHERAPY_FLAG_6 = "t_aromatherapy_flag_6"
+    """ 属性_特殊flag 交互对象香薰疗愈-催眠 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """

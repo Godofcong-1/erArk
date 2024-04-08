@@ -239,6 +239,7 @@ class Aromatherapy_Panel:
                 3: (constant.Behavior.AROMATHERAPY_3, constant.CharacterStatus.STATUS_AROMATHERAPY_3),
                 4: (constant.Behavior.AROMATHERAPY_4, constant.CharacterStatus.STATUS_AROMATHERAPY_4),
                 5: (constant.Behavior.AROMATHERAPY_5, constant.CharacterStatus.STATUS_AROMATHERAPY_5),
+                6: (constant.Behavior.AROMATHERAPY_6, constant.CharacterStatus.STATUS_AROMATHERAPY_6),
             }
             if self.now_choice_recipe_id in aromatherapy_dict:
                 pl_character_data.behavior.behavior_id, pl_character_data.state = aromatherapy_dict[self.now_choice_recipe_id]

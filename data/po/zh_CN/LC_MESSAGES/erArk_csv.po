@@ -256,6 +256,14 @@ msgstr ""
 msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
 msgstr ""
 
+#: .\data\csv\Aromatherapy_Recipes.csv:12
+msgid "下坠天空"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:12
+msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
+msgstr ""
+
 #: .\data\csv\AssistantServices.csv:6
 msgid "辅佐服务"
 msgstr ""

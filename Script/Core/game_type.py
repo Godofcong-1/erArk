@@ -542,7 +542,7 @@ class SPECIAL_FLAG:
         self.vistor: int = 0
         """ 访客状态，int [0无,1访问中,2访问过] """
         self.aromatherapy: int = 0
-        """ 香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感] """
+        """ 香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感,6催眠] """
 
 
 class CHARA_WORK:

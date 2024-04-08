@@ -134,6 +134,8 @@ class CharacterStatus:
     """ 香薰疗愈_快感 """
     STATUS_AROMATHERAPY_5 = 195
     """ 香薰疗愈_好感 """
+    STATUS_AROMATHERAPY_6 = 196
+    """ 香薰疗愈_催眠 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_ASSISTANT_ADJUSTMENTS = 204
@@ -604,6 +606,8 @@ class Behavior:
     """ 香薰疗愈_快感 """
     AROMATHERAPY_5 = 195
     """ 香薰疗愈_好感 """
+    AROMATHERAPY_6 = 196
+    """ 香薰疗愈_催眠 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
