@@ -293,6 +293,9 @@ def update_tem_character(loaded_dict):
             # 如果超出了角色预设的数量，则赋予空白模板，然后跳出循环
             if tem_cid >= len(loaded_dict["npc_tem_data"]):
                 tem_npc_data = character_handle.create_empty_character_tem()
+                tem_npc_data.Name = value.name
+                tem_npc_data.AdvNpc = value.adv
+                tem_npc_data.Mother_id = value.relationship.mother_id
                 loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
                 i = 0
                 break
@@ -304,7 +307,7 @@ def update_tem_character(loaded_dict):
             # print(f"debug i = {i}")
         # 如果i不为0，说明序号不一致，需要修正
         if i != 0:
-            # print(f"debug new_tem_cid = {value.cid - 1}, old_tem_cid = {tem_cid}")
+            # print(f"debug name = {value.name}, chara_cid = {value.cid}, new_tem_cid = {value.cid - 1}, old_tem_cid = {tem_cid}")
             tem_npc_data = loaded_dict["npc_tem_data"][tem_cid]
             loaded_dict["npc_tem_data"].pop(tem_cid)
             loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
@@ -312,6 +315,16 @@ def update_tem_character(loaded_dict):
             draw_text = _(f"存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n")
             now_draw.text = draw_text
             # now_draw.draw()
+
+    # 如果预设数量大于角色属性，则从尾部开始检查是否有空白预设，如果有则删除到与角色属性数量相同为止
+    if len(loaded_dict["npc_tem_data"]) > len(loaded_dict["character_data"]):
+        for i in range(len(loaded_dict["npc_tem_data"]) - len(loaded_dict["character_data"]) + 1):
+            cid = len(loaded_dict["npc_tem_data"]) - i - 1
+            if loaded_dict["npc_tem_data"][-1].Name == "":
+                # print(f"debug 删除了空白预设，序号为{len(loaded_dict['npc_tem_data']) - 1}")
+                loaded_dict["npc_tem_data"].pop()
+                update_count += 1
+
     return update_count
 
 
@@ -413,6 +426,7 @@ def update_new_character(loaded_dict):
     len_old_character = len(loaded_dict["character_data"])
     for i, now_npc_data in enumerate(add_new_character_list):
         new_character_cid = len_old_character + i
+        # print(f"debug new_character_cid = {new_character_cid}")
         new_character = character_handle.init_character(new_character_cid, now_npc_data)
         loaded_dict["character_data"][new_character_cid] = new_character
         update_count += 1
