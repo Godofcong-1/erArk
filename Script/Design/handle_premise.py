@@ -4301,6 +4301,34 @@ def handle_t_unnormal_567(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS)
+def handle_normal_all_except_special_hypnosis(character_id: int) -> int:
+    """
+    没有任何异常的普通状态或被空气或体控催眠中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if (
+        handle_normal_1(character_id) and 
+        handle_normal_2(character_id) and 
+        handle_normal_3(character_id) and 
+        handle_normal_4(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id) and 
+        handle_normal_7(character_id)
+        ):
+        return 1
+    elif (
+        handle_unconscious_flag_5(character_id) or
+        handle_unconscious_flag_6(character_id)
+        ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.HP_1)
 def handle_hp_1(character_id: int) -> int:
     """

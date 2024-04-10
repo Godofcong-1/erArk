@@ -651,6 +651,8 @@ class Premise:
     """ 属性_异常状态 交互对象256正常或无意识 """
     T_UNNORMAL_567 = "t_unnormal_567"
     """ 属性_异常状态 交互对象5或6或7异常 """
+    NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS = "normal_all_except_special_hypnosis"
+    """ 属性_异常状态 没有任何异常的普通状态或被空气或体控催眠中 """
 
     HP_LOW = "hp_low"
     """ 属性_基础 自身体力低于30% """
