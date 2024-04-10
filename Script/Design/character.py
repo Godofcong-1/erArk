@@ -541,7 +541,10 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 pass
             else:
                 condom_flag = True
-                if judge_rate < 0.5:
+                # 首先检测是否无意识
+                if target_data.sp_flag.unconscious_h:
+                    ask_text += _(f"当前正在对{target_data.name}无意识奸，是否不戴套？\n")
+                elif judge_rate < 0.5:
                     ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
                 elif judge_rate < 1:
                     ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
