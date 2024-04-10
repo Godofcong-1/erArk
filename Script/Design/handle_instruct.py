@@ -489,7 +489,6 @@ def handle_manage_basement():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_ONLY_TWO,
-     constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
      constant_promise.Premise.TIRED_LE_84}
@@ -517,7 +516,6 @@ def handle_hypnosis_one():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_OVER_TWO,
-     constant_promise.Premise.TARGET_NOT_IN_HYPNOSIS,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
      constant_promise.Premise.TIRED_LE_84}
