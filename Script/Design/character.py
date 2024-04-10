@@ -531,25 +531,33 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         # 询问戴套
         condom_flag = False
         if instruct_name == _("性交"):
-            # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
+            # 避孕套、已显示过该信息，以上可直接通过
             if (
-                target_data.talent[14] or
                 character_data.h_state.body_item[13][1] or
-                (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
-                target_data.talent[222]
+                target_data.h_state.condom_info_show_flag == False
                 ):
                 pass
             else:
                 condom_flag = True
-                # 首先检测是否无意识
+                # 无意识
                 if target_data.sp_flag.unconscious_h:
                     ask_text += _(f"当前正在对{target_data.name}无意识奸，是否不戴套？\n")
+                # 妊娠合意
+                elif target_data.talent[14]:
+                    ask_text += _(f"{target_data.name}已经做好了随时都可以怀孕的准备，是否不戴套？\n")
+                # 避孕中出合意+事前避孕药
+                elif target_data.talent[13] and target_data.h_state.body_item[11][1]:
+                    ask_text += _(f"{target_data.name}已经吃过事前避孕药了，所以内射也不会怀孕，是否不戴套？\n")
+                # 性无知
+                elif target_data.talent[222]:
+                    ask_text += _(f"{target_data.name}似乎对性和避孕都一无所知，是否不戴套？\n")
                 elif judge_rate < 0.5:
                     ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
                 elif judge_rate < 1:
                     ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
                 else:
                     ask_text += _(f"{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n")
+                target_data.h_state.condom_info_show_flag = False
         if len(ask_text):
             # 判断态度
             ask_text += _(" (对方的态度：")

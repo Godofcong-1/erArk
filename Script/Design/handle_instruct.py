@@ -1506,6 +1506,7 @@ def handle_do_h():
         h_flag = True
         target_data.sp_flag.is_h = 1
         target_data.sp_flag.is_follow = 0
+        target_data.h_state.condom_info_show_flag = True
         character_data.behavior.behavior_id = constant.Behavior.H
         character_data.state = constant.CharacterStatus.STATUS_H
         now_draw = draw.WaitDraw()
@@ -1599,6 +1600,7 @@ def handle_unconscious_h():
         now_draw.draw()
     target_data.sp_flag.is_h = 1
     target_data.sp_flag.is_follow = 0
+    target_data.h_state.condom_info_show_flag = True
     character_data.behavior.behavior_id = constant.Behavior.H
     character_data.state = constant.CharacterStatus.STATUS_H
     now_draw = draw.WaitDraw()

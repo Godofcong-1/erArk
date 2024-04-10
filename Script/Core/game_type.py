@@ -411,6 +411,8 @@ class BODY_H_STATE:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
+        self.condom_info_show_flag: bool = False
+        """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
         """ 已使用的避孕套计数，[0总个数，1总精液量] """
 
