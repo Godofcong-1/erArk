@@ -10,6 +10,7 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import update, map_handle, character, game_time, cooking
+import math
 
 panel_info_data = {}
 
@@ -383,11 +384,14 @@ class Sleep_Panel:
         """绘制对象"""
         pl_character_data: game_type.Character = cache.character_data[0]
 
-        # 计算回复时间
-        hp_recover_time = int((pl_character_data.hit_point_max - pl_character_data.hit_point) / 100 / 60)
-        mp_recover_time = int((pl_character_data.mana_point_max - pl_character_data.mana_point) / 150 / 60)
-        need_time = max(hp_recover_time, mp_recover_time)
-        need_time = max(need_time, 1)
+        # 计算回复时间，此处引用的是handle_add_medium_hit_point的回复速度和handle_add_medium_mana_point
+        hp_recover_time = math.ceil((pl_character_data.hit_point_max - pl_character_data.hit_point) / 80 / 60)
+        mp_recover_time = math.ceil((pl_character_data.mana_point_max - pl_character_data.mana_point) / 100 / 60)
+        hpmp_need_time = max(hp_recover_time, mp_recover_time)
+        hpmp_need_time = max(hpmp_need_time, 1)
+        # 疲劳值回复时间
+        tired_recover_time = math.ceil((pl_character_data.tired_point) * 3 / 60)
+        need_time = max(hpmp_need_time, tired_recover_time)
         self.sleep_time = need_time
 
         title_text = "睡眠"
@@ -422,7 +426,7 @@ class Sleep_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            now_draw_text = _(f"\n\n 预计完全回复最少需要{need_time}小时，当前睡眠时间为：{self.sleep_time}小时     ")
+            now_draw_text = _(f"\n\n 预计完全回复体力和气力最少需要 {hpmp_need_time} 小时，预计完全回复疲劳至少需要 {tired_recover_time} 小时，当前决定的睡眠时间为：{self.sleep_time} 小时（默认取两者最大值）")
             now_draw.text = now_draw_text
             now_draw.draw()
 
