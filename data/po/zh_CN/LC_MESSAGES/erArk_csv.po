@@ -7433,30 +7433,54 @@ msgid "脱衣服"
 msgstr ""
 
 #: .\data\csv\Status.csv:229
-msgid "开启透视"
+msgid "抱小孩"
 msgstr ""
 
 #: .\data\csv\Status.csv:230
-msgid "关闭透视"
+msgid "哼唱儿歌"
 msgstr ""
 
 #: .\data\csv\Status.csv:231
-msgid "开启信息素"
+msgid "喂奶"
 msgstr ""
 
 #: .\data\csv\Status.csv:232
-msgid "关闭信息素"
+msgid "换尿布"
 msgstr ""
 
 #: .\data\csv\Status.csv:233
-msgid "单人催眠"
+msgid "教说话"
 msgstr ""
 
 #: .\data\csv\Status.csv:234
+msgid "给玩具"
+msgstr ""
+
+#: .\data\csv\Status.csv:236
+msgid "开启透视"
+msgstr ""
+
+#: .\data\csv\Status.csv:237
+msgid "关闭透视"
+msgstr ""
+
+#: .\data\csv\Status.csv:238
+msgid "开启信息素"
+msgstr ""
+
+#: .\data\csv\Status.csv:239
+msgid "关闭信息素"
+msgstr ""
+
+#: .\data\csv\Status.csv:240
+msgid "单人催眠"
+msgstr ""
+
+#: .\data\csv\Status.csv:241
 msgid "集体催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:235
+#: .\data\csv\Status.csv:242
 msgid "解除催眠"
 msgstr ""
 
