@@ -588,7 +588,7 @@ class CharacterInfoHead:
         if cache.system_setting[10] and character_data.hypnosis.hypnosis_degree > 0:
             hypnosis_text = _(" <催眠")
             # 是否显示具体数值
-            if cache.system_setting[9] == 2:
+            if cache.system_setting[10] == 2:
                 # 显示到小数点后一位
                 hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
             # 是否显示催眠类型
