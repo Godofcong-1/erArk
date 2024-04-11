@@ -549,6 +549,8 @@ class Premise:
     """ 时间_当前 非淋浴时间（淋浴时间是晚上8点到晚上12点） """
     SLEEP_TIME = "sleep_time"
     """ 时间_当前 角色行动开始时间为睡觉时间（晚上10点到早上6点） """
+    NOT_SLEEP_TIME = "not_sleep_time"
+    """ 时间_当前 角色行动开始时间不是睡觉时间（晚上10点到早上6点） """
     GAME_TIME_IS_SLEEP_TIME = "game_time_is_sleep_time"
     """ 时间_当前 游戏系统时间为睡觉时间（晚上10点到早上6点） """
     TIRED_GE_75_OR_SLEEP_TIME = "tired_ge_75_or_sleep_time"

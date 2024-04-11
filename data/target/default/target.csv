@@ -40,7 +40,7 @@ ai的目标,,,
 56,601,shower_flag_3|not_in_bathzone_locker_room,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
 57,74,shower_flag_3|in_bathzone_locker_room,要披浴巾状态，当前在大浴室的更衣室，则围上浴巾
 
-61,79,normal_1267|mp_0,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，则进入要休息状态
+61,79,normal_1267|mp_0|not_sleep_time,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，非睡觉时间，则进入要休息状态
 62,512,rest_flag_1|not_in_restroom,要休息状态，且不在休息室，则去休息室
 63,43,rest_flag_1|in_restroom,要休息状态，且在休息室，则休息
 

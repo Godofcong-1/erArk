@@ -268,6 +268,23 @@ def handle_sleep_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_SLEEP_TIME)
+def handle_not_sleep_time(character_id: int) -> int:
+    """
+    角色行动开始时间不为睡觉时间（晚上10点到早上6点）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.GAME_TIME_IS_SLEEP_TIME)
 def handle_game_time_is_sleep_time(character_id: int) -> int:
     """

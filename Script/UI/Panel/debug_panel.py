@@ -145,6 +145,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[008]:全源石技艺全开，理智9999")
                 draw_text_list.append(f"[009]:资源全99999")
                 draw_text_list.append(f"[010]:设施全满级、全开放")
+                draw_text_list.append(f"[011]:重置全角色特殊flag")
 
 
                 for i in range(len(draw_text_list)):
@@ -535,6 +536,11 @@ class Debug_Panel:
                         for cid in cache.rhodes_island.facility_open:
                             cache.rhodes_island.facility_open[cid] = 1
                         basement.get_base_updata()
+                elif key_index == 11:
+                    cache.npc_id_got.discard(0)
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        character_data.sp_flag = game_type.SPECIAL_FLAG()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
