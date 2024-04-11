@@ -151,6 +151,80 @@ def base_chara_state_common_settle(
         target_change.status_data[state_id] += final_value
 
 
+def base_chara_favorability_and_trust_common_settle(
+        character_id: int,
+        add_time: int,
+        favorability_flag: bool,
+        base_value: int = 0,
+        extra_adjust: float = 0,
+        change_data: game_type.CharacterStatusChange = None,
+        target_character_id: int = 0,
+        ):
+    """
+    基础角色状态通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    favorability_flag -- true为好感,false为信赖\n
+    base_value -- 基础固定值\n
+    extra_adjust -- 额外系数\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if target_character_id == 0:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    else:
+        target_data: game_type.Character = cache.character_data[target_character_id]
+    if character_id != target_data.cid and (character_id != 0 or target_data.cid != 0):
+        if character_data.dead:
+            return
+        if character_data.sp_flag.unconscious_h or target_data.sp_flag.unconscious_h:
+            return
+
+        # 结算信息记录对象
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+
+        # 好感
+        if favorability_flag:
+            # 基础固定值
+            add_favorability = base_value + character.calculation_favorability(character_id, target_data.cid, add_time)
+
+            # 结算系数
+            if extra_adjust != 0:
+                add_favorability *= extra_adjust
+                if extra_adjust < 0 and add_favorability > 0:
+                    add_favorability *= -1
+
+            # 结算最终值
+            character_handle.add_favorability(character_id, target_data.cid, add_favorability, change_data, target_change)
+
+        # 信赖
+        else:
+            if character_id == 0 and character_data.target_character_id != 0:
+                add_trust = base_value + character.calculation_trust(character_id, target_data.cid, add_time)
+            else:
+                add_trust = base_value + character.calculation_trust(target_data.cid, character_id, add_time)
+
+            # 结算系数
+            if extra_adjust != 0:
+                add_trust *= extra_adjust
+                if extra_adjust < 0 and add_trust > 0:
+                    add_trust *= -1
+
+            # 结算最终值
+            if character_id == 0 and character_data.target_character_id != 0:
+                target_data.trust += add_trust
+                target_data.trust = min(300, target_data.trust)
+                target_change.trust += add_trust
+            else:
+                character_data.trust += add_trust
+                character_data.trust = min(300, character_data.trust)
+                change_data.trust += add_trust
+
+    else:
+        return
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
 def handle_nothing(
         character_id: int,
@@ -244,20 +318,7 @@ def handle_add_interaction_favoravility(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        if target_data.sp_flag.unconscious_h:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_INTERACTION_FAVORABILITY)
@@ -277,20 +338,7 @@ def handle_down_interaction_favoravility(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        if target_data.sp_flag.unconscious_h:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_TRUST)
@@ -310,29 +358,7 @@ def handle_add_small_trust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    # 首先需要有交互对象，然后要么是玩家发起指令，要么是NPC对玩家发起指令
-    if character_data.target_character_id != character_id and (
-            character_id != 0 or character_data.target_character_id != 0):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if character_id != 0 and character_data.target_character_id != 0:
-            return
-        if target_data.sp_flag.unconscious_h:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        if now_lust_multiple < 0:
-            now_lust_multiple = 0
-        target_data.trust += now_lust_multiple
-        target_data.trust = min(300, target_data.trust)
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        # NPC对玩家发起指令的情况
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, 0, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SMALL_TRUST)
@@ -352,26 +378,7 @@ def handle_down_small_trust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if character_id != 0 and character_data.target_character_id != 0:
-            return
-        if target_data.sp_flag.unconscious_h:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        if now_lust_multiple > 0:
-            now_lust_multiple *= -1
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
@@ -774,14 +781,7 @@ def handle_make_food(
         make_food_time = 0
         food_name = cache.recipe_data[food.recipe].name
         make_food_time = cache.recipe_data[food.recipe].time
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.cid:
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change = change_data.target_change[target_data.cid]
-            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-            character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-            )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_SHOP)
@@ -4120,13 +4120,7 @@ def handle_talk_add_adjust(
         character_data.ability.setdefault(40, 0)
         adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 好意变化#
         base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[40], change_data_to_target_change = change_data)
         # 快乐变化#
@@ -4166,23 +4160,9 @@ def handle_coffee_add_adjust(
         character_data.ability.setdefault(43, 0)
         adjust = attr_calculation.get_ability_adjust(character_data.ability[43])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        now_lust_multiple *= adjust * 0.4
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data)
         # 好意变化#
         base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[43], change_data_to_target_change = change_data)
 
@@ -4217,23 +4197,9 @@ def handle_target_coffee_add_adjust(
         target_data.ability.setdefault(43, 0)
         adjust = attr_calculation.get_ability_adjust(target_data.ability[43])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
-        now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-        now_lust_multiple *= adjust * 0.4
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data)
         # 好意变化#
         base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[43], change_data_to_target_change = change_data)
 
@@ -4646,21 +4612,10 @@ def handle_teach_add_just(
 
                     # 如果老师是玩家
                     if character_id == 0:
-                        change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
-                        target_change: game_type.TargetChange = change_data.target_change[other_character_data.cid]
-
                         # 加好感
-                        add_favorability = character.calculation_favorability(character_id, other_character_data.cid, add_time)
-                        character_handle.add_favorability(
-                            character_id, other_character_data.cid, add_favorability, change_data, target_change, now_time
-                        )
-
+                        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, other_character_data.ability[32], change_data, other_character_data.cid)
                         # 加信赖
-                        now_lust_multiple = character.calculation_trust(character_id, other_character_data.cid, add_time)
-                        now_lust_multiple *= attr_calculation.get_ability_adjust(other_character_data.ability[32])
-                        other_character_data.trust += now_lust_multiple
-                        change_data.target_change.setdefault(other_character_data.cid, game_type.TargetChange())
-                        target_change.trust += now_lust_multiple
+                        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, other_character_data.ability[32], change_data, other_character_data.cid)
 
                     # 手动结算该状态
                     character_behavior.judge_character_status(chara_id)
@@ -4819,10 +4774,7 @@ def handle_eat_add_just(
 
         # 加好感
         if chara_id:
-            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-            character_handle.add_favorability(
-                    character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-                )
+            base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data, chara_id)
 
         # 加体力气力，清零饥饿值和进食状态
         handle_add_small_hit_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
@@ -4941,13 +4893,6 @@ def handle_sing_add_adjust(
         if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
-        # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        # print(f"debug 唱歌，角色 = {character_data.name}，目标= {target_data.name}，add_favorability = {add_favorability}")
-        if good_flag or add_favorability < 0:
-            add_favorability *= adjust
-        else:
-            add_favorability *= (adjust - 1)
 
         # print(f"debug 唱歌，adjust = {adjust}，add_favorability = {add_favorability}")
 
@@ -4960,22 +4905,13 @@ def handle_sing_add_adjust(
 
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
             target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-            )
-            # 信赖变化#
-            now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
+            # 好感与信赖变化#
             if good_flag:
-                now_lust_multiple *= adjust
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data, chara_id)
             else:
-                now_lust_multiple *= (adjust - 1)
-            target_data.trust += now_lust_multiple
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            target_change.trust += now_lust_multiple
-            if (character_id != 0) and (character_data.target_character_id == 0):
-                character_data.trust += now_lust_multiple
-                change_data.trust += now_lust_multiple
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust - 1, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust - 1, change_data, chara_id)
 
             # 好意变化#
             target_data.status_data.setdefault(11, 0)
@@ -5050,12 +4986,6 @@ def handle_play_instrument_add_adjust(
         if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
-        # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        if good_flag or add_favorability < 0:
-            add_favorability *= adjust
-        else:
-            add_favorability *= (adjust - 1)
 
         # print(f"debug 乐器，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
 
@@ -5068,23 +4998,14 @@ def handle_play_instrument_add_adjust(
 
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
             target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-            )
-            # 信赖变化#
-            now_lust_multiple = character.calculation_trust(character_id, target_data.cid, add_time)
-            now_lust_multiple *= 2
+
+            # 好感与信赖变化#
             if good_flag:
-                now_lust_multiple *= adjust
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust * 2, change_data, chara_id)
             else:
-                now_lust_multiple *= (adjust - 1)
-            target_data.trust += now_lust_multiple
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            target_change.trust += now_lust_multiple
-            if (character_id != 0) and (character_data.target_character_id == 0):
-                character_data.trust += now_lust_multiple
-                change_data.trust += now_lust_multiple
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, (adjust - 1) * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, (adjust - 1) * 2, change_data, chara_id)
 
             # 好意变化#
             target_data.status_data.setdefault(11, 0)
@@ -5514,28 +5435,13 @@ def handle_low_obscenity_failed_adjust(
         # if not character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
 
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
         # 加反感
-        target_data.status_data.setdefault(20, 0)
-        now_lust = target_data.status_data[20]
-        now_lust_multiple = 200
-        now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
-        now_add_lust *= adjust
-        now_add_lust += now_lust / 10
-        target_data.status_data[20] += now_add_lust
-        target_data.status_data[20] = min(99999, target_data.status_data[20])
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change.status_data.setdefault(20, 0)
-        target_change.status_data[20] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 20, 200, ability_level = target_data.ability[18], change_data_to_target_change = change_data)
         # 加愤怒
         target_data.angry_point += 50
         target_data.sp_flag.angry_with_player = True
         # 降好感
-        minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HIGH_OBSCENITY_FAILED_ADJUST)
@@ -5581,11 +5487,7 @@ def handle_high_obscenity_failed_adjust(
         target_data.angry_point += 100
         target_data.sp_flag.angry_with_player = True
         # 降好感
-        minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        minus_favorability *= 3
-        character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -3, change_data)
         # 降信赖
         now_lust_multiple = target_data.trust * 0.2 + 2
         target_data.trust -= now_lust_multiple
@@ -5637,11 +5539,7 @@ def handle_do_h_failed_adjust(
         target_data.angry_point += 100
         target_data.sp_flag.angry_with_player = True
         # 降好感
-        minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        minus_favorability *= 15
-        character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -15, change_data)
         # 降信赖
         now_lust_multiple = target_data.trust * 0.4 - 5
         target_data.trust -= now_lust_multiple

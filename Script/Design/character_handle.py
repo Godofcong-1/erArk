@@ -453,7 +453,6 @@ def add_favorability(
     now_add_favorability: int,
     change_data: game_type.CharacterStatusChange,
     target_change: game_type.TargetChange,
-    now_time: datetime.datetime,
 ):
     """
     增加目标角色对当前角色的好感
@@ -462,7 +461,6 @@ def add_favorability(
     target_id -- 目标角色id
     now_add_favorability -- 增加的好感
     target_change -- 角色状态改变对象
-    now_time -- 增加好感的时间
     """
     target_data: game_type.Character = cache.character_data[target_id]
     target_data.favorability.setdefault(character_id, 0)
