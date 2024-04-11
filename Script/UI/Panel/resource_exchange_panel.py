@@ -82,7 +82,7 @@ class Resource_Exchange_Line_Panel:
             all_info_draw.draw()
 
             # 绘制数量变更按钮
-            button_text_list = [" [-100] ", " [-10] ", " [-1] ", " [+1] ", " [+10] ", " [+100] "]
+            button_text_list = [" [-1000] "," [-100] ", " [-10] ", " [-1] ", " [+1] ", " [+10] ", " [+100] ", " [+1000] "]
             for button_text in button_text_list:
                 button_draw = draw.CenterButton(
                     _(button_text),
