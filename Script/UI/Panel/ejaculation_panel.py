@@ -198,10 +198,10 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         cache.shoot_position = part_cid
 
         # 更新被射精污浊数据
-        update_semen_dirty(character_data.target_character_id, part_cid, part_type, semen_count)
+        update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
 
         # 计算精液流动
-        calculate_semen_flow(character_data.target_character_id, part_cid, part_type, semen_count)
+        calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
 
         # 获取射精文本
         if part_type == 0:
