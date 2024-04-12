@@ -475,6 +475,18 @@ class CharacterStatus:
     """ 集体催眠 """
     STATUS_HYPNOSIS_CANCEL = 913
     """ 解除催眠 """
+    STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY = 921
+    """ 体控-敏感度提升 """
+    STATUS_HYPNOSIS_FORCE_CLIMAX = 922
+    """ 体控-强制高潮 """
+    STATUS_HYPNOSIS_FORCE_OVULATION = 923
+    """ 体控-强制排卵 """
+    STATUS_HYPNOSIS_BLOCKHEAD = 924
+    """ 体控-木头人 """
+    STATUS_HYPNOSIS_ACTIVE_H = 925
+    """ 体控-逆推 """
+    STATUS_HYPNOSIS_ROLEPLAY = 931
+    """ 心控-角色扮演 """
 
 
 class Behavior:
@@ -955,7 +967,18 @@ class Behavior:
     """ 集体催眠 """
     HYPNOSIS_CANCEL = 913
     """ 解除催眠 """
-
+    HYPNOSIS_INCREASE_BODY_SENSITIVITY = 921
+    """ 体控-敏感度提升 """
+    HYPNOSIS_FORCE_CLIMAX = 922
+    """ 体控-强制高潮 """
+    HYPNOSIS_FORCE_OVULATION = 923
+    """ 体控-强制排卵 """
+    HYPNOSIS_BLOCKHEAD = 924
+    """ 体控-木头人 """
+    HYPNOSIS_ACTIVE_H = 925
+    """ 体控-逆推 """
+    HYPNOSIS_ROLEPLAY = 931
+    """ 心控-角色扮演 """
 
 class StateMachine:
     """状态机id"""
@@ -1876,6 +1899,18 @@ class Instruct:
     """ 集体催眠 """
     HYPNOSIS_CANCEL = 0
     """ 解除催眠 """
+    HYPNOSIS_INCREASE_BODY_SENSITIVITY = 0
+    """ 体控-敏感度提升 """
+    HYPNOSIS_FORCE_CLIMAX = 0
+    """ 体控-强制高潮 """
+    HYPNOSIS_FORCE_OVULATION = 0
+    """ 体控-强制排卵 """
+    HYPNOSIS_BLOCKHEAD = 0
+    """ 体控-木头人 """
+    HYPNOSIS_ACTIVE_H = 0
+    """ 体控-逆推 """
+    HYPNOSIS_ROLEPLAY = 0
+    """ 心控-角色扮演 """
     PENETRATING_VISION_ON = 0
     """ 开启透视 """
     PENETRATING_VISION_OFF = 0

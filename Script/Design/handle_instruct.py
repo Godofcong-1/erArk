@@ -562,6 +562,133 @@ def handle_hypnosis_cancel():
 
 
 @add_instruct(
+    constant.Instruct.HYPNOSIS_INCREASE_BODY_SENSITIVITY,
+    constant.InstructType.ARTS,
+    _("体控-敏感度提升"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_increase_body_sensitivity():
+    """处理体控-敏感度提升"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_INCREASE_BODY_SENSITIVITY
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_FORCE_CLIMAX,
+    constant.InstructType.ARTS,
+    _("体控-强制高潮"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_force_climax():
+    """处理体控-强制高潮"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_FORCE_CLIMAX
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_CLIMAX
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_FORCE_OVULATION,
+    constant.InstructType.ARTS,
+    _("体控-强制排卵"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_force_ovulation():
+    """处理体控-强制排卵"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_FORCE_OVULATION
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_OVULATION
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_BLOCKHEAD,
+    constant.InstructType.ARTS,
+    _("体控-木头人"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_blockhead():
+    """处理体控-木头人"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_BLOCKHEAD
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_BLOCKHEAD
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_ACTIVE_H,
+    constant.InstructType.ARTS,
+    _("体控-逆推"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_active_h():
+    """处理体控-逆推"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ACTIVE_H
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ACTIVE_H
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_ROLEPLAY,
+    constant.InstructType.ARTS,
+    _("心控-角色扮演"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_roleplay():
+    """处理心控-角色扮演"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ROLEPLAY
+    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
     constant.Instruct.PENETRATING_VISION_ON,
     constant.InstructType.ARTS,
     _("开启透视"),

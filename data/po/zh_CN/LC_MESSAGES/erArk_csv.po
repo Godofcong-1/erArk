@@ -4857,7 +4857,7 @@ msgid "被催眠的干员会把博士视为空气，无论博士做什么都不�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
-msgid "体控(未实装)"
+msgid "体控(实装中)"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
@@ -4865,7 +4865,7 @@ msgid "被催眠的干员会在精神正常的情况下，只有身体听从博�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11
-msgid "心控(未实装)"
+msgid "心控(实装中)"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11
@@ -7482,6 +7482,30 @@ msgstr ""
 
 #: .\data\csv\Status.csv:242
 msgid "解除催眠"
+msgstr ""
+
+#: .\data\csv\Status.csv:243
+msgid "体控-敏感度提升"
+msgstr ""
+
+#: .\data\csv\Status.csv:244
+msgid "体控-强制高潮"
+msgstr ""
+
+#: .\data\csv\Status.csv:245
+msgid "体控-强制排卵"
+msgstr ""
+
+#: .\data\csv\Status.csv:246
+msgid "体控-木头人"
+msgstr ""
+
+#: .\data\csv\Status.csv:247
+msgid "体控-逆推"
+msgstr ""
+
+#: .\data\csv\Status.csv:248
+msgid "心控-角色扮演"
 msgstr ""
 
 #: .\data\csv\SunTime.csv:6
