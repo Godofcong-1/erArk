@@ -16,6 +16,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: .\data\talk\arts\active_h.csv:6
+msgid "{Name}触发了对{TargetName}使用体控催眠-逆推的地文"
+msgstr ""
+
+#: .\data\talk\arts\blockhead.csv:6
+msgid "{Name}触发了对{TargetName}使用体控催眠-木头人的地文"
+msgstr ""
+
+#: .\data\talk\arts\force_climax.csv:6
+msgid "{Name}触发了对{TargetName}使用体控催眠-强制高潮的地文"
+msgstr ""
+
+#: .\data\talk\arts\force_ovulation.csv:6
+msgid "{Name}触发了对{TargetName}使用体控催眠-强制排卵的地文"
+msgstr ""
+
 #: .\data\talk\arts\hormone_off.csv:6
 msgid "{Name}关闭了信息素"
 msgstr ""
@@ -36,12 +52,20 @@ msgstr ""
 msgid "{Name}对{TargetName}晃了晃手指，一股无形的源石力量渐渐深入{TargetName}的心灵之中"
 msgstr ""
 
+#: .\data\talk\arts\increase_body_sensitivity.csv:6
+msgid "{Name}触发了对{TargetName}使用体控催眠-敏感度提升的地文"
+msgstr ""
+
 #: .\data\talk\arts\penetrating_vision_off.csv:6
 msgid "{Name}短暂的闭上眼睛，等到再次睁眼时已经没了源石技艺带来的透视效果"
 msgstr ""
 
 #: .\data\talk\arts\penetrating_vision_on.csv:6
 msgid "{Name}发动了透视——！"
+msgstr ""
+
+#: .\data\talk\arts\roleplay.csv:6
+msgid "{Name}触发了对{TargetName}使用心控催眠-角色扮演的地文"
 msgstr ""
 
 #: .\data\talk\chara\001_阿米娅.csv:6

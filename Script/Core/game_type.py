@@ -365,7 +365,16 @@ class HYPNOSIS:
 
         self.hypnosis_degree: float = 0
         """ 催眠程度 """
-
+        self.increase_body_sensitivity: bool = False
+        """ 体控-敏感度提升 """
+        self.force_ovulation: bool = False
+        """ 体控-强制排卵 """
+        self.blockhead: bool = False
+        """ 体控-木头人 """
+        self.active_h: bool = False
+        """ 体控-逆推 """
+        self.roleplay: int = 0
+        """ 心控-角色扮演 """
 
 
 class CLOTH:

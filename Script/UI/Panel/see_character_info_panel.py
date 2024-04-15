@@ -596,6 +596,16 @@ class CharacterInfoHead:
                 hypnosis_cid = character_data.sp_flag.unconscious_h - 3
                 hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
                 hypnosis_text += _(f":{hypnosis_name}")
+                if character_data.hypnosis.increase_body_sensitivity:
+                    hypnosis_text += _("(敏感度提升)")
+                if character_data.hypnosis.force_ovulation:
+                    hypnosis_text += _("(强制排卵)")
+                if character_data.hypnosis.blockhead:
+                    hypnosis_text += _("(木头人)")
+                if character_data.hypnosis.active_h:
+                    hypnosis_text += _("(逆推)")
+                if character_data.hypnosis.roleplay:
+                    hypnosis_text += _("(角色扮演)")
             hypnosis_text += ">"
 
         # 携袋状态进行提示

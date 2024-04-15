@@ -9492,6 +9492,276 @@ def handle_advanced_telekinesis(character_id: int) -> int:
     return character_data.talent[312]
 
 
+@add_premise(constant_promise.Premise.HYPNOSIS_INCREASE_BODY_SENSITIVITY)
+def handle_hypnosis_increase_body_sensitivity(character_id: int) -> int:
+    """
+    自己被体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hypnosis.increase_body_sensitivity
+
+
+@add_premise(constant_promise.Premise.NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY)
+def handle_not_hypnosis_increase_body_sensitivity(character_id: int) -> int:
+    """
+    自己未被体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.hypnosis.increase_body_sensitivity
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY)
+def handle_target_hypnosis_increase_body_sensitivity(character_id: int) -> int:
+    """
+    交互对象被体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.increase_body_sensitivity
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY)
+def handle_target_not_hypnosis_increase_body_sensitivity(character_id: int) -> int:
+    """
+    交互对象未被体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.hypnosis.increase_body_sensitivity
+
+
+@add_premise(constant_promise.Premise.HYPNOSIS_FORCE_OVULATION)
+def handle_hypnosis_force_ovulation(character_id: int) -> int:
+    """
+    自己被体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hypnosis.force_ovulation
+
+
+@add_premise(constant_promise.Premise.NOT_HYPNOSIS_FORCE_OVULATION)
+def handle_not_hypnosis_force_ovulation(character_id: int) -> int:
+    """
+    自己未被体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.hypnosis.force_ovulation
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_FORCE_OVULATION)
+def handle_target_hypnosis_force_ovulation(character_id: int) -> int:
+    """
+    交互对象被体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.force_ovulation
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION)
+def handle_target_not_hypnosis_force_ovulation(character_id: int) -> int:
+    """
+    交互对象未被体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.hypnosis.force_ovulation
+
+
+@add_premise(constant_promise.Premise.HYPNOSIS_BLOCKHEAD)
+def handle_hypnosis_blockhead(character_id: int) -> int:
+    """
+    自己被体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hypnosis.blockhead
+
+
+@add_premise(constant_promise.Premise.NOT_HYPNOSIS_BLOCKHEAD)
+def handle_not_hypnosis_blockhead(character_id: int) -> int:
+    """
+    自己未被体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.hypnosis.blockhead
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_BLOCKHEAD)
+def handle_target_hypnosis_blockhead(character_id: int) -> int:
+    """
+    交互对象被体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.blockhead
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD)
+def handle_target_not_hypnosis_blockhead(character_id: int) -> int:
+    """
+    交互对象未被体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.hypnosis.blockhead
+
+
+@add_premise(constant_promise.Premise.HYPNOSIS_ACTIVE_H)
+def handle_hypnosis_active_h(character_id: int) -> int:
+    """
+    自己被体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hypnosis.active_h
+
+
+@add_premise(constant_promise.Premise.NOT_HYPNOSIS_ACTIVE_H)
+def handle_not_hypnosis_active_h(character_id: int) -> int:
+    """
+    自己未被体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.hypnosis.active_h
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ACTIVE_H)
+def handle_target_hypnosis_active_h(character_id: int) -> int:
+    """
+    交互对象被体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.active_h
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H)
+def handle_target_not_hypnosis_active_h(character_id: int) -> int:
+    """
+    交互对象未被体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.hypnosis.active_h
+
+
+@add_premise(constant_promise.Premise.HYPNOSIS_ROLEPLAY)
+def handle_hypnosis_roleplay(character_id: int) -> int:
+    """
+    自己被心控-角色扮演
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hypnosis.roleplay
+
+
+@add_premise(constant_promise.Premise.NOT_HYPNOSIS_ROLEPLAY)
+def handle_not_hypnosis_roleplay(character_id: int) -> int:
+    """
+    自己未被心控-角色扮演
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not character_data.hypnosis.roleplay
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY)
+def handle_target_hypnosis_roleplay(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY)
+def handle_target_not_hypnosis_roleplay(character_id: int) -> int:
+    """
+    交互对象未被心控-角色扮演
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return not target_data.hypnosis.roleplay
+
+
 @add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
 def handle_work_is_maintenance_engineer(character_id: int) -> int:
     """
@@ -13377,6 +13647,57 @@ def handle_sanity_point_ge_10(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     if character_data.sanity_point >= 10:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_GE_20)
+def handle_sanity_point_ge_20(character_id: int) -> int:
+    """
+    理智值≥20
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point >= 20:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_GE_40)
+def handle_sanity_point_ge_40(character_id: int) -> int:
+    """
+    理智值≥40
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point >= 40:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.SANITY_POINT_GE_50)
+def handle_sanity_point_ge_50(character_id: int) -> int:
+    """
+    理智值≥50
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.sanity_point >= 50:
         return 1
     else:
         return 0

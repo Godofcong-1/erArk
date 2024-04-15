@@ -548,7 +548,6 @@ def handle_hypnosis_all():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TARGET_IN_HYPNOSIS,
-     constant_promise.Premise.SANITY_POINT_GE_5,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_cancel():
@@ -566,10 +565,10 @@ def handle_hypnosis_cancel():
     constant.InstructType.ARTS,
     _("体控-敏感度提升"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_20,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_increase_body_sensitivity():
@@ -590,7 +589,7 @@ def handle_hypnosis_increase_body_sensitivity():
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_force_climax():
@@ -612,7 +611,8 @@ def handle_hypnosis_force_climax():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_50,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_force_ovulation():
@@ -633,7 +633,8 @@ def handle_hypnosis_force_ovulation():
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_50,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_blockhead():
@@ -654,7 +655,8 @@ def handle_hypnosis_blockhead():
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_50,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_active_h():
@@ -675,7 +677,8 @@ def handle_hypnosis_active_h():
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
-     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.SANITY_POINT_GE_50,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_roleplay():

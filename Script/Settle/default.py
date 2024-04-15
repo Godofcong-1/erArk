@@ -67,6 +67,9 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
             final_adjust -= 0.5
         elif character_data.sp_flag.aromatherapy == 4 and state_id ==12:
             final_adjust += 1
+    # 催眠-敏感
+    if character_data.hypnosis.increase_body_sensitivity and state_id ==12:
+        final_adjust += 2
     final_adjust = max(0, final_adjust)
 
     return final_adjust
@@ -95,6 +98,9 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 调香
     if character_data.sp_flag.aromatherapy == 4:
         final_adjust += 1
+    # 催眠-敏感
+    if character_data.hypnosis.increase_body_sensitivity:
+        final_adjust += 2
 
     return final_adjust
 
@@ -1549,6 +1555,216 @@ def handle_hypnosis_cancel(
     # 空气催眠则重置催眠地点和解开门锁
     if target_character_data.sp_flag.unconscious_h == 5:
         character_data.pl_ability.air_hypnosis_position = ""
+    # 去掉全部的心体催眠状态
+    target_character_data.hypnosis.increase_body_sensitivity = False
+    target_character_data.hypnosis.force_ovulation = False
+    target_character_data.hypnosis.blockhead = False
+    target_character_data.hypnosis.active_h = False
+    target_character_data.hypnosis.roleplay = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON)
+def handle_target_hypnosis_increase_body_sensitivity_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-敏感度提升（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.increase_body_sensitivity = True
+    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
+    change_data.sanity_point -= 20
+    character_data.pl_ability.today_sanity_point_cost += 20
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF)
+def handle_target_hypnosis_increase_body_sensitivity_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.increase_body_sensitivity = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
+def handle_target_hypnosis_force_ovulation_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.force_ovulation = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_OFF)
+def handle_target_hypnosis_force_ovulation_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.force_ovulation = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_ON)
+def handle_target_hypnosis_blockhead_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.blockhead = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_OFF)
+def handle_target_hypnosis_blockhead_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.blockhead = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_ON)
+def handle_target_hypnosis_active_h_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.active_h = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_OFF)
+def handle_target_hypnosis_active_h_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.active_h = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)

@@ -676,6 +676,24 @@ class BehaviorEffect:
     """ 源石技艺 集体催眠（含理智消耗） """
     HYPNOSIS_CANCEL = 1213
     """ 源石技艺 解除催眠 """
+    TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON = 1221
+    """ 源石技艺 对方开启体控-敏感度提升（含理智消耗） """
+    TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF = 1222
+    """ 源石技艺 对方关闭体控-敏感度提升 """
+    TARGET_HYPNOSIS_FORCE_CLIMAX = 1223
+    """ 源石技艺 对方体控-强制高潮（含理智消耗） """
+    TARGET_HYPNOSIS_FORCE_OVULATION_ON = 1224
+    """ 源石技艺 对方开启体控-强制排卵（含理智消耗） """
+    TARGET_HYPNOSIS_FORCE_OVULATION_OFF = 1225
+    """ 源石技艺 对方关闭体控-强制排卵 """
+    TARGET_HYPNOSIS_BLOCKHEAD_ON = 1226
+    """ 源石技艺 对方开启体控-木头人（含理智消耗） """
+    TARGET_HYPNOSIS_BLOCKHEAD_OFF = 1227
+    """ 源石技艺 对方关闭体控-木头人 """
+    TARGET_HYPNOSIS_ACTIVE_H_ON = 1228
+    """ 源石技艺 对方开启体控-逆推（含理智消耗） """
+    TARGET_HYPNOSIS_ACTIVE_H_OFF = 1229
+    """ 源石技艺 对方关闭体控-逆推 """
 
 class SecondEffect:
     """二段结算效果函数"""

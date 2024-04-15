@@ -33,6 +33,7 @@ from Script.Design import (
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel, ejaculation_panel
 from Script.Config import game_config, normal_config
+from Script.Settle import default
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -687,7 +688,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     if character_id == 0:
         return 1
 
-    # 空气催眠中如果不在同一位置，则结束
+    # 如果不在同一位置，则结束空气催眠
     if character_data.sp_flag.unconscious_h == 5 and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
         character_data.sp_flag.unconscious_h = 0
 
@@ -767,6 +768,15 @@ def update_sleep():
                 handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+            # 清零催眠状态
+            if character_data.sp_flag.unconscious_h >= 4:
+                character_data.sp_flag.unconscious_h = 0
+            character_data.hypnosis.increase_body_sensitivity = False
+            character_data.hypnosis.force_ovulation = False
+            character_data.hypnosis.blockhead = False
+            character_data.hypnosis.active_h = False
+            character_data.hypnosis.roleplay = 0
+
 
     # 非角色部分
     update_save()
@@ -949,6 +959,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if now_character_data.sanity_point < 0:
             now_character_data.sanity_point = 0
             now_character_data.pl_ability.visual = False
+            # 解除目标的催眠
+            if target_data.sp_flag.unconscious_h >= 4:
+                default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
             # 输出提示信息
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
