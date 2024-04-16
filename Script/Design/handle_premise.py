@@ -5224,7 +5224,7 @@ def handle_t_unconscious_flag_6(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.sp_flag.unconscious_h == 6:
+    if target_data.sp_flag.unconscious_h == 7:
         return 1
     else:
         return 0
@@ -5241,7 +5241,7 @@ def handle_t_unconscious_flag_7(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.sp_flag.unconscious_h == 7:
+    if target_data.sp_flag.unconscious_h == 6:
         return 1
     else:
         return 0

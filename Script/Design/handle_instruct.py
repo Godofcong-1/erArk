@@ -586,7 +586,6 @@ def handle_hypnosis_increase_body_sensitivity():
     constant.InstructType.ARTS,
     _("体控-强制高潮"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,

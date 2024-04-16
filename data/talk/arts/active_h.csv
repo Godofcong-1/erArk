@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,925,0,high_1,{Name}触发了对{TargetName}使用体控催眠-逆推的地文
+0,925,0,high_1&t_unconscious_flag,{Name}触发了对{TargetName}使用体控催眠-逆推的地文

@@ -1613,6 +1613,50 @@ def handle_target_hypnosis_increase_body_sensitivity_off(
     target_character_data.hypnosis.increase_body_sensitivity = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_CLIMAX)
+def handle_target_hypnosis_force_climax(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-强制高潮（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+    # 增加快感值
+    random_adjust = random.uniform(0.8, 1.2)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 500, extra_adjust = random_adjust, change_data_to_target_change = change_data)
+
+    # 触发高潮结算
+    num = 1012  # 通过num值来判断是二段行为记录的哪个位置
+    pre_data = target_character_data.h_state.orgasm_level[4] # 记录里的前高潮程度
+    if pre_data % 3 == 0:
+        # now_draw.text = _("\n触发小绝顶\n")
+        target_character_data.second_behavior[num] = 1
+    elif pre_data % 3 == 1:
+        # now_draw.text = _("\n触发普绝顶\n")
+        target_character_data.second_behavior[num + 1] = 1
+    elif pre_data % 3 == 2:
+        # now_draw.text = _("\n触发强绝顶\n")
+        target_character_data.second_behavior[num + 2] = 1
+    target_character_data.h_state.orgasm_level[4] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
 def handle_target_hypnosis_force_ovulation_on(
         character_id: int,

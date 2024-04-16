@@ -100,9 +100,16 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
                     # 是否必须显示
                     if not must_show:
                         # 无意识模式判定
-                        if target_data.sp_flag.unconscious_h and ("unconscious" not in game_config.config_talk_premise_data[talk_id]):
-                            now_weight = 0
-                            break
+                        if target_data.sp_flag.unconscious_h != 0 and target_data.sp_flag.unconscious_h <= 5:
+                            unconscious_h_pass_flag = False
+                            # 需要前提里有无意识的判定，否则不显示
+                            for premise in game_config.config_talk_premise_data[talk_id]:
+                                if "unconscious" in premise:
+                                    unconscious_h_pass_flag = True
+                                    break
+                            if not unconscious_h_pass_flag:
+                                now_weight = 0
+                                break
                     # 已录入前提的判定
                     if premise in now_premise_data:
                         if not now_premise_data[premise]:

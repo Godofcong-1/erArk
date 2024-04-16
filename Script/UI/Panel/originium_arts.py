@@ -370,7 +370,7 @@ class Originium_Arts_Panel:
                         line_feed.draw()
                         # 体控催眠的补充说明
                         if cid == 3:
-                            info_draw.text = _("  包括以下可用的催眠：敏感度提升、强制排卵\n")
+                            info_draw.text = _("  包括以下可用的催眠：敏感度提升、强制高潮、强制排卵\n")
                             info_draw.draw()
                     # 未解锁则绘制灰色文本
                     else:
