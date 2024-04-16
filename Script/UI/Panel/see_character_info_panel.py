@@ -1549,7 +1549,7 @@ class CharacterBodyText:
             now_text += "  初吻情况："
             if character_data.talent[4]:
                 now_text += "保有初吻\n"
-            else:
+            elif character_data.first_record.first_kiss_id != -1:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
                 now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
@@ -1596,7 +1596,7 @@ class CharacterBodyText:
             if character_data.talent[0]:
                 now_text += "保有处女\n"
                 ui_text = game_config.ui_text_data['ability']['V感觉0']
-            else:
+            elif character_data.first_record.first_sex_id != -1:
                 sex_id = character_data.first_record.first_sex_id
                 sex_time = character_data.first_record.first_sex_time
                 sex_posture = character_data.first_record.first_sex_posture
@@ -1623,7 +1623,7 @@ class CharacterBodyText:
             if character_data.talent[1]:
                 now_text += "保有后庭处女\n"
                 ui_text = game_config.ui_text_data['ability']['A感觉0']
-            else:
+            elif character_data.first_record.first_a_sex_id != -1:
                 a_sex_id = character_data.first_record.first_a_sex_id
                 a_sex_time = character_data.first_record.first_a_sex_time
                 a_sex_posture = character_data.first_record.first_a_sex_posture

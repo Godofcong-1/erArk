@@ -13216,23 +13216,23 @@ msgstr ""
 msgid "海伦娜，经杰西卡介绍成为罗德岛的合作干员，为拓荒地办事处提供帮助。"
 msgstr ""
 
-#: .\data\character\4104_冰酿.csv:27
+#: .\data\character\4104_冰酿.csv:30
 msgid "露脐短版上衬"
 msgstr ""
 
-#: .\data\character\4104_冰酿.csv:28
+#: .\data\character\4104_冰酿.csv:31
 msgid "黑色包臀裙"
 msgstr ""
 
-#: .\data\character\4104_冰酿.csv:29
+#: .\data\character\4104_冰酿.csv:32
 msgid "黑色透肉过膝袜"
 msgstr ""
 
-#: .\data\character\4104_冰酿.csv:30
+#: .\data\character\4104_冰酿.csv:33
 msgid "深色长筒靴"
 msgstr ""
 
-#: .\data\character\4104_冰酿.csv:31
+#: .\data\character\4104_冰酿.csv:34
 msgid "围裙"
 msgstr ""
 
@@ -13316,19 +13316,19 @@ msgstr ""
 msgid "小满，来自炎国北部农业重镇大荒城的普通女孩，在管理牧兽方面颇有心得。跟随黍以访客身份暂居罗德岛。"
 msgstr ""
 
-#: .\data\character\4122_小满.csv:27
+#: .\data\character\4122_小满.csv:28
 msgid "绿色长褂"
 msgstr ""
 
-#: .\data\character\4122_小满.csv:28
+#: .\data\character\4122_小满.csv:29
 msgid "墨绿色短裙"
 msgstr ""
 
-#: .\data\character\4122_小满.csv:29
+#: .\data\character\4122_小满.csv:30
 msgid "短筒袜"
 msgstr ""
 
-#: .\data\character\4122_小满.csv:30
+#: .\data\character\4122_小满.csv:31
 msgid "深色运动鞋"
 msgstr ""
 
