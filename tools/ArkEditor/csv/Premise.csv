@@ -245,6 +245,8 @@ in_Aromatherapy_room,IN_AROMATHERAPY_ROOM,地点_定位,在香薰治疗室
 not_in_aromatherapy_room,NOT_IN_AROMATHERAPY_ROOM,地点_定位,不在香薰治疗室
 in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
+in_deck,IN_DECK,地点_定位,在甲板
+not_in_deck,NOT_IN_DECK,地点_定位,不在甲板
 
 move_to_toilet_female,MOVE_TO_TOILET_FEMALE,地点_移动,角色抵达女士洗手间
 move_to_locker_room,MOVE_TO_LOCKER_ROOM,地点_移动,角色抵达更衣室
@@ -275,6 +277,7 @@ dinner_time,DINNER_TIME,时间_当前,晚饭饭点（晚上18~19点）
 shower_time,SHOWER_TIME,时间_当前,淋浴时间（晚上8点到晚上12点）
 not_shower_time,NOT_SHOWER_TIME,时间_当前,非淋浴时间（淋浴时间是晚上8点到晚上12点）
 sleep_time,SLEEP_TIME,时间_当前,角色行动开始时间为睡觉时间（晚上10点到早上6点）
+not_sleep_time,NOT_SLEEP_TIME,时间_当前,角色行动开始时间不是睡觉时间（晚上10点到早上6点）
 game_time_is_sleep_time,GAME_TIME_IS_SLEEP_TIME,时间_当前,游戏系统时间为睡觉时间（晚上10点到早上6点）
 tired_ge_75_or_sleep_time,TIRED_GE_75_OR_SLEEP_TIME,时间_当前,疲劳条≥75%或到了睡觉的时间
 to_work_time,TO_WORK_TIME,时间_当前,到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00）
@@ -286,8 +289,8 @@ afternoon_entertainment_time,AFTERNOON_ENTERTAINMENT_TIME,时间_当前,下午�
 night_entertainment_time,NIGHT_ENTERTAINMENT_TIME,时间_当前,晚上娱乐时间（晚上19:00~晚上22:00）
 time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
-morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来半小时前以内，权重50）
-not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来半小时前以内）
+morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来时间之后，动态权重50+超时分钟数
+not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来时间之后）
 night_salutation_time,NIGHT_SALUTATION_TIME,时间_当前,当前是晚安问候时间（计划睡觉时间之后，权重50）
 not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是晚安问候时间（计划睡觉时间之后）
 
@@ -322,6 +325,7 @@ t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
 unnormal_567,UNNORMAL_567,属性_异常状态,自身5或6或7异常
 t_normal_256_or_unconscious_flag,T_NORMAL_256_OR_UNCONSCIOUS_FLAG,属性_异常状态,交互对象256正常或无意识
 t_unnormal_567,T_UNNORMAL_567,属性_异常状态,交互对象5或6或7异常
+normal_all_except_special_hypnosis,NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS,属性_异常状态,没有任何异常的普通状态或被空气或体控催眠中
 
 hp_low,HP_LOW,属性_基础,自身体力低于30%
 hp_high,HP_HIGH,属性_基础,自身体力高于70%
@@ -381,6 +385,9 @@ sanity_point_l_5,SANITY_POINT_L_5,属性_基础,理智值<5
 sanity_point_ge_5,SANITY_POINT_GE_5,属性_基础,理智值≥5
 sanity_point_l_10,SANITY_POINT_L_10,属性_基础,理智值<10
 sanity_point_ge_10,SANITY_POINT_GE_10,属性_基础,理智值≥10
+sanity_point_ge_20,SANITY_POINT_GE_20,属性_基础,理智值≥20
+sanity_point_ge_40,SANITY_POINT_GE_40,属性_基础,理智值≥40
+sanity_point_ge_50,SANITY_POINT_GE_50,属性_基础,理智值≥50
 
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）
@@ -483,7 +490,7 @@ help_make_food_flag_0,HELP_MAKE_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙
 help_make_food_flag_1,HELP_MAKE_FOOD_FLAG_1,属性_特殊flag,自身要做饭状态
 help_make_food_flag_2,HELP_MAKE_FOOD_FLAG_2,属性_特殊flag,自身做饭后要送饭状态
 morning_salutation_flag_0,MORIING_SALUTATION_FLAG_0,属性_特殊flag,自身没有早安问候状态
-morning_salutation_flag_1,MORIING_SALUTATION_FLAG_1,属性_特殊flag,自身要早安问候状态（权重100）
+morning_salutation_flag_1,MORIING_SALUTATION_FLAG_1,属性_特殊flag,自身要早安问候状态（动态权重）
 morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,属性_特殊flag,自身已早安问候状态（权重100）
 night_salutation_flag_0,NIGHT_SALUTATION_FLAG_0,属性_特殊flag,自身没有晚安问候状态
 night_salutation_flag_1,NIGHT_SALUTATION_FLAG_1,属性_特殊flag,自身要晚安问候状态（权重100）
@@ -494,12 +501,14 @@ aromatherapy_flag_2,AROMATHERAPY_FLAG_2,属性_特殊flag,自身香薰疗愈-习
 aromatherapy_flag_3,AROMATHERAPY_FLAG_3,属性_特殊flag,自身香薰疗愈-反感
 aromatherapy_flag_4,AROMATHERAPY_FLAG_4,属性_特殊flag,自身香薰疗愈-快感
 aromatherapy_flag_5,AROMATHERAPY_FLAG_5,属性_特殊flag,自身香薰疗愈-好感
+aromatherapy_flag_6,AROMATHERAPY_FLAG_6,属性_特殊flag,自身香薰疗愈-催眠
 t_aromatherapy_flag_0,T_AROMATHERAPY_FLAG_0,属性_特殊flag,交互对象没有香薰疗愈状态
 t_aromatherapy_flag_1,T_AROMATHERAPY_FLAG_1,属性_特殊flag,交互对象香薰疗愈-回复
 t_aromatherapy_flag_2,T_AROMATHERAPY_FLAG_2,属性_特殊flag,交互对象香薰疗愈-习得
 t_aromatherapy_flag_3,T_AROMATHERAPY_FLAG_3,属性_特殊flag,交互对象香薰疗愈-反感
 t_aromatherapy_flag_4,T_AROMATHERAPY_FLAG_4,属性_特殊flag,交互对象香薰疗愈-快感
 t_aromatherapy_flag_5,T_AROMATHERAPY_FLAG_5,属性_特殊flag,交互对象香薰疗愈-好感
+t_aromatherapy_flag_6,T_AROMATHERAPY_FLAG_6,属性_特殊flag,交互对象香薰疗愈-催眠
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
@@ -829,6 +838,27 @@ hormone_off,HORMONE_OFF,属性_源石技艺,信息素关闭中
 primary_telekinesis,PRIMARY_TELEKINESIS,属性_源石技艺,拥有初级隔空肢体
 intermediate_telekinesis,INTERMEDIATE_TELEKINESIS,属性_源石技艺,拥有中级隔空肢体
 advanced_telekinesis,ADVANCED_TELEKINESIS,属性_源石技艺,拥有高级隔空肢体
+hypnosis_increase_body_sensitivity,HYPNOSIS_INCREASE_BODY_SENSITIVITY,属性_源石技艺,自己被体控-敏感度提升
+not_hypnosis_increase_body_sensitivity,NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,属性_源石技艺,自己未被体控-敏感度提升
+t_hypnosis_increase_body_sensitivity,TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY,属性_源石技艺,交互对象被体控-敏感度提升
+t_not_hypnosis_increase_body_sensitivity,TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,属性_源石技艺,交互对象未被体控-敏感度提升
+hypnosis_force_ovulation,HYPNOSIS_FORCE_OVULATION,属性_源石技艺,自己被体控-强制排卵
+not_hypnosis_force_ovulation,NOT_HYPNOSIS_FORCE_OVULATION,属性_源石技艺,自己未被体控-强制排卵
+t_hypnosis_force_ovulation,TARGET_HYPNOSIS_FORCE_OVULATION,属性_源石技艺,交互对象被体控-强制排卵
+t_not_hypnosis_force_ovulation,TARGET_NOT_HYPNOSIS_FORCE_OVULATION,属性_源石技艺,交互对象未被体控-强制排卵
+hypnosis_blockhead,HYPNOSIS_BLOCKHEAD,属性_源石技艺,自己被体控-木头人
+not_hypnosis_blockhead,NOT_HYPNOSIS_BLOCKHEAD,属性_源石技艺,自己未被体控-木头人
+t_hypnosis_blockhead,TARGET_HYPNOSIS_BLOCKHEAD,属性_源石技艺,交互对象被体控-木头人
+t_not_hypnosis_blockhead,TARGET_NOT_HYPNOSIS_BLOCKHEAD,属性_源石技艺,交互对象未被体控-木头人
+hypnosis_active_h,HYPNOSIS_ACTIVE_H,属性_源石技艺,自己被体控-逆推
+not_hypnosis_active_h,NOT_HYPNOSIS_ACTIVE_H,属性_源石技艺,自己未被体控-逆推
+t_hypnosis_active_h,TARGET_HYPNOSIS_ACTIVE_H,属性_源石技艺,交互对象被体控-逆推
+t_not_hypnosis_active_h,TARGET_NOT_HYPNOSIS_ACTIVE_H,属性_源石技艺,交互对象未被体控-逆推
+hypnosis_roleplay,HYPNOSIS_ROLEPLAY,属性_源石技艺,自己被心控-角色扮演
+not_hypnosis_roleplay,NOT_HYPNOSIS_ROLEPLAY,属性_源石技艺,自己未被心控-角色扮演
+t_hypnosis_roleplay,TARGET_HYPNOSIS_ROLEPLAY,属性_源石技艺,交互对象被心控-角色扮演
+t_not_hypnosis_roleplay,TARGET_NOT_HYPNOSIS_ROLEPLAY,属性_源石技艺,交互对象未被心控-角色扮演
+
 
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,属性_工作,自己的工作为检修工程师
 work_is_blacksmith,WORK_IS_BLACKSMITH,属性_工作,自己的工作为铁匠

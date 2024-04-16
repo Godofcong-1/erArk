@@ -493,6 +493,10 @@ class Premise:
     """ 地点_定位 在监牢 """
     NOT_IN_PRISON = "not_in_prison"
     """ 地点_定位 不在监牢 """
+    IN_DECK = "in_deck"
+    """ 地点_定位 在甲板 """
+    NOT_IN_DECK = "not_in_deck"
+    """ 地点_定位 不在甲板 """
 
     MOVE_TO_TOILET_FEMALE = "move_to_toilet_female"
     """ 地点_移动 角色抵达女士洗手间 """
