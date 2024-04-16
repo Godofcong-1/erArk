@@ -675,7 +675,7 @@ class BehaviorEffect:
     HYPNOSIS_ALL = 1212
     """ 源石技艺 集体催眠（含理智消耗） """
     HYPNOSIS_CANCEL = 1213
-    """ 源石技艺 解除催眠 """
+    """ 源石技艺 解除交互对象的催眠 """
     TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON = 1221
     """ 源石技艺 对方开启体控-敏感度提升（含理智消耗） """
     TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF = 1222

@@ -772,7 +772,6 @@ def update_sleep():
             if character_data.sp_flag.unconscious_h >= 4:
                 character_data.sp_flag.unconscious_h = 0
             character_data.hypnosis.increase_body_sensitivity = False
-            character_data.hypnosis.force_ovulation = False
             character_data.hypnosis.blockhead = False
             character_data.hypnosis.active_h = False
             character_data.hypnosis.roleplay = 0

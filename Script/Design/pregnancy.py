@@ -33,13 +33,15 @@ def get_fertilization_rate(character_id: int):
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    draw_text = ""
+
     semen_count = character_data.dirty.body_semen[7][1]
     semen_level = character_data.dirty.body_semen[7][2]
     now_reproduction = character_data.pregnancy.reproduction_period
     # 基础概率
     now_rate = math.pow(semen_count / 1000,2) * 100 + semen_level * 5
-    # 生理周期修正
-    now_rate *= game_config.config_reproduction_period[now_reproduction].type
+
     # 事前避孕药修正
     if character_data.h_state.body_item[11][1]:
         now_rate = 0
@@ -49,7 +51,32 @@ def get_fertilization_rate(character_id: int):
     if character_data.h_state.body_item[12][1]:
         now_rate = 0
         character_data.h_state.body_item[12][1] = False
-    character_data.pregnancy.fertilization_rate += now_rate
+    if semen_count > 0:
+        # 如果避孕的话绘制信息
+        if now_rate == 0:
+            draw_text += _(f"\n在避孕药的影响下，{pl_character_data.name}的精子无法受精\n")
+        # 其他修正
+        else:
+            # 生理周期修正
+            now_rate *= game_config.config_reproduction_period[now_reproduction].type
+            # 排卵促进药
+            if character_data.h_state.body_item[10][1]:
+                new_rate = min(100, now_rate * 5)
+                draw_text += _(f"\n在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}%\n")
+                character_data.pregnancy.fertilization_rate = new_rate
+                character_data.h_state.body_item[10][1] = False
+            # 排卵催眠
+            if character_data.hypnosis.force_ovulation:
+                new_rate = min(100, now_rate * 5)
+                draw_text += _(f"\n在催眠-强制排卵的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}%\n")
+                character_data.pregnancy.fertilization_rate = new_rate
+                character_data.hypnosis.force_ovulation = False
+            # 浓厚精液
+            if pl_character_data.talent[33] == 1:
+                new_rate = min(100, now_rate * 2)
+                draw_text += _(f"\n在浓厚精液的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}%\n")
+                character_data.pregnancy.fertilization_rate = new_rate
+    character_data.pregnancy.fertilization_rate = now_rate
 
 
 def check_fertilization(character_id: int):
@@ -57,7 +84,6 @@ def check_fertilization(character_id: int):
     根据受精概率并判断是否受精
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
 
     # 仅在排卵日进行判定
     if character_data.pregnancy.reproduction_period != 5:
@@ -79,19 +105,8 @@ def check_fertilization(character_id: int):
 
         # 正常情况下可以受精
         else:
-            # 排卵促进药使受精概率*5
-            if character_data.h_state.body_item[10][1]:
-                new_rate = min(100,character_data.pregnancy.fertilization_rate * 5)
-                draw_text += _(f"\n在排卵促进药的影响下，怀孕概率由{character_data.pregnancy.fertilization_rate}上升到了{new_rate}%\n")
-                character_data.pregnancy.fertilization_rate = new_rate
-                character_data.h_state.body_item[10][1] = False
-            # 浓厚精液使受精概率*2
-                if pl_character_data.talent[33] == 1:
-                    new_rate = min(100,character_data.pregnancy.fertilization_rate * 2)
-                    draw_text += _(f"\n在浓厚精液的影响下，怀孕概率上升到了{new_rate}%\n")
-                    character_data.pregnancy.fertilization_rate = new_rate
 
-            # 最后由随机数判断是否受精
+            # 由随机数判断是否受精
             if random.randint(1,100) <= character_data.pregnancy.fertilization_rate:
                 draw_text += "\n※※※※※※※※※\n"
                 draw_text += _(f"\n博士的精子与{character_data.name}的卵子结合，成功在子宫里着床了\n")

@@ -65,10 +65,10 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
             final_adjust += 1
         elif character_data.sp_flag.aromatherapy == 3 and state_id in [17, 18, 19, 20]:
             final_adjust -= 0.5
-        elif character_data.sp_flag.aromatherapy == 4 and state_id ==12:
+        elif character_data.sp_flag.aromatherapy == 4 and state_id == 12:
             final_adjust += 1
     # 催眠-敏感
-    if character_data.hypnosis.increase_body_sensitivity and state_id ==12:
+    if character_data.hypnosis.increase_body_sensitivity and state_id == 12:
         final_adjust += 2
     final_adjust = max(0, final_adjust)
 
@@ -1537,7 +1537,7 @@ def handle_hypnosis_cancel(
         now_time: datetime.datetime,
 ):
     """
-    解除催眠
+    解除交互对象的催眠
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1555,9 +1555,8 @@ def handle_hypnosis_cancel(
     # 空气催眠则重置催眠地点和解开门锁
     if target_character_data.sp_flag.unconscious_h == 5:
         character_data.pl_ability.air_hypnosis_position = ""
-    # 去掉全部的心体催眠状态
+    # 去掉大部分的心体催眠状态
     target_character_data.hypnosis.increase_body_sensitivity = False
-    target_character_data.hypnosis.force_ovulation = False
     target_character_data.hypnosis.blockhead = False
     target_character_data.hypnosis.active_h = False
     target_character_data.hypnosis.roleplay = 0
@@ -1622,7 +1621,7 @@ def handle_target_hypnosis_force_ovulation_on(
         now_time: datetime.datetime,
 ):
     """
-    对方开启体控-强制排卵
+    对方开启体控-强制排卵（含理智消耗）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

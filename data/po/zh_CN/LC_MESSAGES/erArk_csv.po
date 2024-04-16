@@ -509,7 +509,7 @@ msgid "背部"
 msgstr ""
 
 #: .\data\csv\Book.csv:6
-msgid "天灾详解"
+msgid "《天灾详解》"
 msgstr ""
 
 #: .\data\csv\Book.csv:6
@@ -517,7 +517,7 @@ msgid "详细介绍了各种天灾以及相应的影响"
 msgstr ""
 
 #: .\data\csv\Book.csv:7
-msgid "急救说明"
+msgid "《急救说明》"
 msgstr ""
 
 #: .\data\csv\Book.csv:7
@@ -580,163 +580,171 @@ msgstr ""
 msgid "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。"
 msgstr ""
 
-#: .\data\csv\Book.csv:16
-msgid "测试书籍_技能_话术"
+#: .\data\csv\Book.csv:15
+msgid "《无名诗集》"
+msgstr ""
+
+#: .\data\csv\Book.csv:15
+msgid "“酒杯的碎屑在我皮肉里欢唱，鲜血自指缝间攀上脊索。饮下尖锐的晶莹光彩，脏腑随之璨烂流落。”"
 msgstr ""
 
 #: .\data\csv\Book.csv:17
-msgid "测试书籍_技能_指挥"
+msgid "测试书籍_技能_话术"
 msgstr ""
 
 #: .\data\csv\Book.csv:18
-msgid "测试书籍_技能_战斗"
+msgid "测试书籍_技能_指挥"
 msgstr ""
 
 #: .\data\csv\Book.csv:19
-msgid "测试书籍_技能_料理"
+msgid "测试书籍_技能_战斗"
 msgstr ""
 
 #: .\data\csv\Book.csv:20
-msgid "测试书籍_技能_音乐"
+msgid "测试书籍_技能_料理"
 msgstr ""
 
 #: .\data\csv\Book.csv:21
-msgid "测试书籍_技能_学识"
+msgid "测试书籍_技能_音乐"
 msgstr ""
 
 #: .\data\csv\Book.csv:22
-msgid "测试书籍_技能_医疗"
+msgid "测试书籍_技能_学识"
 msgstr ""
 
 #: .\data\csv\Book.csv:23
-msgid "测试书籍_技能_农业"
+msgid "测试书籍_技能_医疗"
 msgstr ""
 
 #: .\data\csv\Book.csv:24
-msgid "测试书籍_技能_制造"
+msgid "测试书籍_技能_农业"
 msgstr ""
 
 #: .\data\csv\Book.csv:25
+msgid "测试书籍_技能_制造"
+msgstr ""
+
+#: .\data\csv\Book.csv:26
 msgid "测试书籍_技能_绘画"
 msgstr ""
 
-#: .\data\csv\Book.csv:27
+#: .\data\csv\Book.csv:28
 msgid "测试书籍_色情_手交"
 msgstr ""
 
-#: .\data\csv\Book.csv:28
+#: .\data\csv\Book.csv:29
 msgid "测试书籍_色情_口交"
 msgstr ""
 
-#: .\data\csv\Book.csv:29
+#: .\data\csv\Book.csv:30
 msgid "测试书籍_色情_足交"
 msgstr ""
 
-#: .\data\csv\Book.csv:30
+#: .\data\csv\Book.csv:31
 msgid "测试书籍_色情_乳交"
 msgstr ""
 
-#: .\data\csv\Book.csv:31
+#: .\data\csv\Book.csv:32
 msgid "测试书籍_色情_本番"
 msgstr ""
 
-#: .\data\csv\Book.csv:32
+#: .\data\csv\Book.csv:33
 msgid "测试书籍_色情_肛交"
 msgstr ""
 
-#: .\data\csv\Book.csv:33
+#: .\data\csv\Book.csv:34
 msgid "测试书籍_色情_榨精"
 msgstr ""
 
-#: .\data\csv\Book.csv:35
+#: .\data\csv\Book.csv:36
 msgid "测试书籍_色情_纯爱"
 msgstr ""
 
-#: .\data\csv\Book.csv:36
+#: .\data\csv\Book.csv:37
 msgid "测试书籍_色情_后宫"
 msgstr ""
 
-#: .\data\csv\Book.csv:37
+#: .\data\csv\Book.csv:38
 msgid "测试书籍_色情_萝莉"
 msgstr ""
 
-#: .\data\csv\Book.csv:38
+#: .\data\csv\Book.csv:39
 msgid "测试书籍_色情_强奸"
 msgstr ""
 
-#: .\data\csv\Book.csv:39
+#: .\data\csv\Book.csv:40
 msgid "测试书籍_色情_逆强奸"
 msgstr ""
 
-#: .\data\csv\Book.csv:40
+#: .\data\csv\Book.csv:41
 msgid "测试书籍_色情_怀孕与母乳"
 msgstr ""
 
-#: .\data\csv\Book.csv:41
+#: .\data\csv\Book.csv:42
 msgid "测试书籍_色情_角色扮演"
 msgstr ""
 
-#: .\data\csv\Book.csv:42
+#: .\data\csv\Book.csv:43
 msgid "测试书籍_色情_情趣服装"
 msgstr ""
 
-#: .\data\csv\Book.csv:43
+#: .\data\csv\Book.csv:44
 msgid "测试书籍_色情_调教与凌辱"
 msgstr ""
 
-#: .\data\csv\Book.csv:44
+#: .\data\csv\Book.csv:45
 msgid "测试书籍_色情_近亲"
 msgstr ""
 
-#: .\data\csv\Book.csv:45
+#: .\data\csv\Book.csv:46
 msgid "测试书籍_色情_露出"
 msgstr ""
 
-#: .\data\csv\Book.csv:46
+#: .\data\csv\Book.csv:47
 msgid "测试书籍_色情_成人玩具"
 msgstr ""
 
-#: .\data\csv\Book.csv:47
+#: .\data\csv\Book.csv:48
 msgid "测试书籍_色情_校园"
 msgstr ""
 
-#: .\data\csv\Book.csv:49
+#: .\data\csv\Book.csv:50
 msgid "测试书籍_娱乐_童话绘本"
 msgstr ""
 
-#: .\data\csv\Book.csv:50
+#: .\data\csv\Book.csv:51
 msgid "测试书籍_娱乐_科幻小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:51
+#: .\data\csv\Book.csv:52
 msgid "测试书籍_娱乐_推理小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:52
+#: .\data\csv\Book.csv:53
 msgid "测试书籍_娱乐_武侠小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:53
+#: .\data\csv\Book.csv:54
 msgid "测试书籍_娱乐_仙侠小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:54
+#: .\data\csv\Book.csv:55
 msgid "测试书籍_娱乐_言情小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:55
+#: .\data\csv\Book.csv:56
 msgid "测试书籍_娱乐_悬疑小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:56
+#: .\data\csv\Book.csv:57
 msgid "测试书籍_娱乐_历史小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:57
+#: .\data\csv\Book.csv:58
 msgid "测试书籍_娱乐_军事小说/漫画"
 msgstr ""
 
-#: .\data\csv\Book.csv:58
+#: .\data\csv\Book.csv:59
 msgid "测试书籍_娱乐_诗歌"
 msgstr ""
 

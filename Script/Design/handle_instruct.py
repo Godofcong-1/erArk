@@ -607,7 +607,6 @@ def handle_hypnosis_force_climax():
     constant.InstructType.ARTS,
     _("体控-强制排卵"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
