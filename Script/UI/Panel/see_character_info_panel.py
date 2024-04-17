@@ -1593,6 +1593,7 @@ class CharacterBodyText:
             # 膣部信息#
             now_text = f"\n 【膣】\n"
             now_text += "  处女情况："
+            ui_text = ""
             if character_data.talent[0]:
                 now_text += "保有处女\n"
                 ui_text = game_config.ui_text_data['ability']['V感觉0']
@@ -1620,6 +1621,7 @@ class CharacterBodyText:
             # 肛部信息#
             now_text = f"\n 【肛】\n"
             now_text += "  后庭处女情况："
+            ui_text = ""
             if character_data.talent[1]:
                 now_text += "保有后庭处女\n"
                 ui_text = game_config.ui_text_data['ability']['A感觉0']
