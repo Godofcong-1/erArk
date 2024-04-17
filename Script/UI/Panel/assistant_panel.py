@@ -194,7 +194,7 @@ class Assistant_Panel:
                 service_option_text_next = service_option_text_all[target_data.assistant_services[service_cid]+1]
                 service_require_text_all = service_option_data[1]
                 service_require_text_next = service_require_text_all[target_data.assistant_services[service_cid]+1]
-                judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id)
+                judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id, hypnosis_replace_trust_flag = True)
 
                 if judge:
                     target_data.assistant_services[service_cid] += 1

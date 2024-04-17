@@ -802,12 +802,13 @@ def hypnosis_degree_limit_calculation() -> int:
     return hypnosis_degree_limit
 
 
-def judge_require(judge_text_list, character_id):
+def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = False):
     """
     判断角色是否满足文本列表里的全部需求\n
     Keyword arguments:\n
     judge_text_list -- 需要判断的文本列表(A能力,T素质,J宝珠,E经验,F好感度,X信赖,O设施解锁)\n
     character_id -- 角色id\n
+    hypnosis_replace_trust_flag -- 是否可以用催眠进度来代替信赖度\n
     Return arguments:\n
     judge -- 是否满足需求\n
     reason -- 不满足需求的原因\n
@@ -849,8 +850,15 @@ def judge_require(judge_text_list, character_id):
                 break
         elif judge_type == "X":
             if character_data.trust < judge_value:
+                # 催眠进度代替信赖度
+                if hypnosis_replace_trust_flag:
+                    if character_data.hypnosis.hypnosis_degree >= judge_value / 2:
+                        continue
                 judge = 0
-                reason += f"信赖度>={judge_value}  "
+                reason += f"信赖度>={judge_value}"
+                if hypnosis_replace_trust_flag:
+                    reason += f"或催眠进度>={judge_value/2}"
+                reason += "  "
                 break
         elif judge_type == "O":
             if not cache.rhodes_island.facility_open[judge_type_id]:
