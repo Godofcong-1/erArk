@@ -55,4 +55,5 @@ for msgid, msgstr in msgid_msgstr_dict.items():
 # 将新的PO文件保存到磁盘
 new_po.save(po_path)
 
+# 将PO文件编译成MO文件
 os.system("msgfmt " + po_path + " -o " + mo_path)
