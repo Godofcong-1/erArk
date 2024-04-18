@@ -563,6 +563,11 @@ class CharacterInfoHead:
         angry_text = attr_calculation.get_angry_text(character_data.angry_point)
         angry_text = "" if angry_text == _("普通") else " " + angry_text
 
+        # 智能跟随状态
+        follow_text = ""
+        if character_data.sp_flag.is_follow == 1:
+            follow_text = _(" <跟>")
+
         # 有尿意时进行提示
         urinate_text = _(" <尿>") if character_data.urinate_point >= 192 else ""
 
@@ -613,16 +618,29 @@ class CharacterInfoHead:
         if character_data.sp_flag.bagging_chara_id:
             bag_text = _(f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>")
 
+        # 监禁状态
+        imprisonment_text = ""
+        if character_data.sp_flag.imprisonment:
+            imprisonment_text = _(" <监禁>")
+
+        # 访客
+        visitor_text = ""
+        if character_data.sp_flag.vistor == 1:
+            visitor_text = _(" <访>")
+
         if character_id:
             message = _(
-                "{character_name} {favorability_and_trust}{angry}{sleep}{urinate}{hunger}{hypnosis}").format(
+                "{character_name} {favorability_and_trust}{angry}{sleep}{follow}{urinate}{hunger}{hypnosis}{imprisonment}{visitor}").format(
                 character_name=character_data.name,
                 favorability_and_trust=favorability_and_trust_text,
                 angry=angry_text,
                 sleep=sleep_text,
+                follow=follow_text,
                 urinate=urinate_text,
                 hunger=hunger_text,
                 hypnosis=hypnosis_text,
+                imprisonment=imprisonment_text,
+                visitor=visitor_text,
             )
         else:
             message = _(
