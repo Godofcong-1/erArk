@@ -628,7 +628,6 @@ def handle_hypnosis_force_ovulation():
     constant.InstructType.ARTS,
     _("体控-木头人"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,

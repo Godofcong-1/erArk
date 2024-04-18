@@ -639,7 +639,7 @@ def judge_character_cant_move(character_id: int) -> int:
         if "Inpatient_Department" not in now_scene_data.scene_tag:
             to_Inpatient_Department = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Inpatient_Department"]))
             map_handle.character_move_scene(character_data.position, to_Inpatient_Department, character_id)
-    return 1
+    return cant_move_flag
 
 
 def judge_character_follow(character_id: int) -> int:
@@ -706,8 +706,8 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     if character_data.sp_flag.unconscious_h == 1 and character_data.position != pl_character_data.position:
         character_data.sp_flag.unconscious_h = 0
 
-    # 维持H状态，行动锁死为等待不动
-    if character_data.sp_flag.is_h:
+    # H状态或木头人时，行动锁死为等待不动
+    if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.behavior.start_time = pl_character_data.behavior.start_time
