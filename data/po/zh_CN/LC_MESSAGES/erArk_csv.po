@@ -4865,7 +4865,7 @@ msgid "被催眠的干员会把博士视为空气，无论博士做什么都不�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
-msgid "体控(实装中)"
+msgid "体控"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:10
@@ -4873,7 +4873,7 @@ msgid "被催眠的干员会在精神正常的情况下，只有身体听从博�
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11
-msgid "心控(实装中)"
+msgid "心控"
 msgstr ""
 
 #: .\data\csv\Hypnosis_Type.csv:11

@@ -1897,6 +1897,14 @@ class Instruct:
     """ 单人催眠 """
     HYPNOSIS_ALL = 0
     """ 集体催眠 """
+    HYPNOSIS_NORMAL = 0
+    """ 平然催眠 """
+    HYPNOSIS_AIR = 0
+    """ 空气催眠 """
+    HYPNOSIS_BODY = 0
+    """ 体控催眠 """
+    HYPNOSIS_HEART = 0
+    """ 心控催眠 """
     HYPNOSIS_CANCEL = 0
     """ 解除催眠 """
     HYPNOSIS_INCREASE_BODY_SENSITIVITY = 0

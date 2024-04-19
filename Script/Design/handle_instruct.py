@@ -497,11 +497,6 @@ def handle_hypnosis_one():
     """处理单人催眠"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    if character_data.pl_ability.hypnosis_type == 0:
-        chose_hypnosis_type_panel = originium_arts.Chose_Hypnosis_Type_Panel(width)
-        chose_hypnosis_type_panel.draw()
-        if character_data.pl_ability.hypnosis_type == 0:
-            return
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ONE
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ONE
     character_data.behavior.duration = 10
@@ -528,15 +523,99 @@ def handle_hypnosis_all():
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
         now_draw.draw()
-    if character_data.pl_ability.hypnosis_type == 0:
-        chose_hypnosis_type_panel = originium_arts.Chose_Hypnosis_Type_Panel(width)
-        chose_hypnosis_type_panel.draw()
-        if character_data.pl_ability.hypnosis_type == 0:
-            return
     character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ALL
     character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ALL
     character_data.behavior.duration = 30
     update.game_update_flow(30)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_NORMAL,
+    constant.InstructType.ARTS,
+    _("平然催眠"),
+    {constant_promise.Premise.PRIMARY_HYPNOSIS,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_HAS_BEEN_PRIMARY_HYPNOSIS,
+     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_4,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_normal():
+    """处理平然催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_ability.hypnosis_type = 1
+    target_data.sp_flag.unconscious_h = 4
+    now_draw = draw.WaitDraw()
+    now_draw.text = _(f"\n{target_data.name}会理所当然地接受{character_data.name}的不合理行为了\n")
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_AIR,
+    constant.InstructType.ARTS,
+    _("空气催眠"),
+    {constant_promise.Premise.ADVANCED_HYPNOSIS,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_HAS_BEEN_DEEP_HYPNOSIS,
+     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_5,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_air():
+    """处理空气催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_ability.hypnosis_type = 2
+    if originium_arts.evaluate_hypnosis_completion(0):
+        target_data.sp_flag.unconscious_h = 5
+        now_draw = draw.WaitDraw()
+        now_draw.text = _(f"\n{target_data.name}会把{character_data.name}视为空气了\n")
+        now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_BODY,
+    constant.InstructType.ARTS,
+    _("体控催眠"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_HAS_BEEN_COMPLETE_HYPNOSIS,
+     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_6,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_body():
+    """处理体控催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_ability.hypnosis_type = 3
+    target_data.sp_flag.unconscious_h = 6
+    now_draw = draw.WaitDraw()
+    now_draw.text = _(f"\n{character_data.name}可以随意地操纵{target_data.name}的身体了\n")
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_HEART,
+    constant.InstructType.ARTS,
+    _("心控催眠"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_HAS_BEEN_COMPLETE_HYPNOSIS,
+     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_heart():
+    """处理心控催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.pl_ability.hypnosis_type = 4
+    target_data.sp_flag.unconscious_h = 7
+    now_draw = draw.WaitDraw()
+    now_draw.text = _(f"\n{character_data.name}可以向{target_data.name}的潜意识灌输指令了\n")
+    now_draw.draw()
 
 
 @add_instruct(
@@ -566,7 +645,7 @@ def handle_hypnosis_cancel():
     _("体控-敏感度提升"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_20,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,
      constant_promise.Premise.TIRED_LE_84}
@@ -587,7 +666,7 @@ def handle_hypnosis_increase_body_sensitivity():
     _("体控-强制高潮"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -607,7 +686,7 @@ def handle_hypnosis_force_climax():
     _("体控-强制排卵"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION,
@@ -629,7 +708,7 @@ def handle_hypnosis_force_ovulation():
     _("体控-木头人"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.TIRED_LE_84}
@@ -651,7 +730,7 @@ def handle_hypnosis_blockhead():
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.TIRED_LE_84}
@@ -672,7 +751,7 @@ def handle_hypnosis_active_h():
     _("心控-角色扮演"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
      constant_promise.Premise.TIRED_LE_84}
