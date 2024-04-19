@@ -62,76 +62,6 @@ def evaluate_hypnosis_completion(character_id: int):
         return 0
 
 
-class Chose_Hypnosis_Type_Panel:
-    """
-    用于选择催眠类型的面板对象
-    Keyword arguments:
-    width -- 绘制宽度
-    """
-
-    def __init__(self, width: int):
-        """初始化绘制对象"""
-        self.width: int = width
-        """ 绘制的最大宽度 """
-        self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的文本列表 """
-
-    def draw(self):
-        """绘制对象"""
-
-        title_text = _("选择催眠类型")
-        title_draw = draw.TitleLineDraw(title_text, self.width)
-        while 1:
-            return_list = []
-            title_draw.draw()
-            pl_character_data: game_type.Character = cache.character_data[0]
-            cinfo_draw = draw.NormalDraw()
-            info_text = _(f"\n要使用哪一种催眠类型呢？\n")
-            cinfo_draw.text = info_text
-            cinfo_draw.draw()
-
-            for cid in game_config.config_hypnosis_type:
-                # 去掉手动选择
-                if cid == 0:
-                    continue
-                hypnosis_type_data = game_config.config_hypnosis_type[cid]
-                draw_text = f"  [{hypnosis_type_data.name}]"
-                draw_text += _(f"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠深度达到{hypnosis_type_data.hypnosis_degree}%)")
-                draw_text += f"：{hypnosis_type_data.introduce}"
-                # 已解锁则绘制按钮
-                if pl_character_data.talent[hypnosis_type_data.talent_id]:
-                    button_draw = draw.LeftButton(
-                        _(draw_text),
-                        _(hypnosis_type_data.name),
-                        window_width,
-                        cmd_func=self.ability_switch,
-                        args=(cid,),
-                    )
-                    return_list.append(button_draw.return_text)
-                    button_draw.draw()
-                    line_feed.draw()
-                # 未解锁则绘制灰色文本
-                else:
-                    now_draw = draw.NormalDraw()
-                    draw_text += f"\n"
-                    now_draw.text = _(draw_text)
-                    now_draw.style = "deep_gray"
-                    now_draw.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
-                break
-
-    def ability_switch(self, hypnosis_type_cid):
-        """能力开关"""
-        pl_character_data: game_type.Character = cache.character_data[0]
-        pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
-
-
 class Originium_Arts_Panel:
     """
     用于源石技艺的面板对象
@@ -679,3 +609,149 @@ class Down_Negative_Talent_Panel:
         line = draw.LineDraw("-", self.width)
         line.draw()
 
+
+class Chose_Hypnosis_Type_Panel:
+    """
+    用于选择催眠类型的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("选择催眠类型")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+        while 1:
+            return_list = []
+            title_draw.draw()
+            pl_character_data: game_type.Character = cache.character_data[0]
+            cinfo_draw = draw.NormalDraw()
+            info_text = _(f"\n要使用哪一种催眠类型呢？\n")
+            cinfo_draw.text = info_text
+            cinfo_draw.draw()
+
+            for cid in game_config.config_hypnosis_type:
+                # 去掉手动选择
+                if cid == 0:
+                    continue
+                hypnosis_type_data = game_config.config_hypnosis_type[cid]
+                draw_text = f"  [{hypnosis_type_data.name}]"
+                draw_text += _(f"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠深度达到{hypnosis_type_data.hypnosis_degree}%)")
+                draw_text += f"：{hypnosis_type_data.introduce}"
+                # 已解锁则绘制按钮
+                if pl_character_data.talent[hypnosis_type_data.talent_id]:
+                    button_draw = draw.LeftButton(
+                        _(draw_text),
+                        _(hypnosis_type_data.name),
+                        window_width,
+                        cmd_func=self.ability_switch,
+                        args=(cid,),
+                    )
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                    line_feed.draw()
+                # 未解锁则绘制灰色文本
+                else:
+                    now_draw = draw.NormalDraw()
+                    draw_text += f"\n"
+                    now_draw.text = _(draw_text)
+                    now_draw.style = "deep_gray"
+                    now_draw.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def ability_switch(self, hypnosis_type_cid):
+        """能力开关"""
+        pl_character_data: game_type.Character = cache.character_data[0]
+        pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
+
+
+class Chose_Roleplay_Type_Panel:
+    """
+    用于选择心控催眠-角色扮演的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("选择角色扮演类型")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+        while 1:
+            return_list = []
+            title_draw.draw()
+            pl_character_data: game_type.Character = cache.character_data[0]
+            target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+            info_draw = draw.NormalDraw()
+            info_text = _(f"\n○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n")
+            info_text += _(f"\n  要催眠为哪一种角色扮演呢？")
+            info_text += _(f"（当前为：")
+
+            if target_data.hypnosis.roleplay == 0:
+                info_text += _(f"无）\n")
+            else:
+                info_text += _(f"{game_config.config_roleplay[target_data.hypnosis.roleplay].name}）\n")
+            info_draw.text = info_text
+            info_draw.draw()
+            line_feed.draw()
+
+            # 遍历角色扮演数据库，输出按钮
+            for cid in game_config.config_roleplay:
+                if cid == 0:
+                    continue
+                roleplay_data = game_config.config_roleplay[cid]
+                draw_text = f"[{cid}]{roleplay_data.name}"
+                button_draw = draw.LeftButton(
+                    _(draw_text),
+                    _(roleplay_data.name),
+                    window_width,
+                    cmd_func=self.choose_this_type,
+                    args=(cid,),
+                )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def choose_this_type(self, cid):
+        """选择该类型"""
+        pl_character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        target_data.hypnosis.roleplay = cid
+
+        # 绘制提示信息
+        info_draw = draw.WaitDraw()
+        info_draw.style = "gold_enrod"
+        info_text = _(f"\n{target_data.name}被催眠了，开始进行{game_config.config_roleplay[cid].name}的扮演\n\n")
+        info_draw.text = info_text
+        info_draw.draw()

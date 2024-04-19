@@ -671,7 +671,6 @@ def handle_hypnosis_active_h():
     constant.InstructType.ARTS,
     _("心控-角色扮演"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
@@ -680,12 +679,16 @@ def handle_hypnosis_active_h():
 )
 def handle_hypnosis_roleplay():
     """处理心控-角色扮演"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    now_draw = originium_arts.Chose_Roleplay_Type_Panel(width)
+    now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ROLEPLAY
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.hypnosis.roleplay != 0:
+        character.init_character_behavior_start_time(0, cache.game_time)
+        character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ROLEPLAY
+        character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(

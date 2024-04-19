@@ -1711,6 +1711,18 @@ class Premise:
     """ 属性_源石技艺 交互对象被心控-角色扮演 """
     TARGET_NOT_HYPNOSIS_ROLEPLAY = "t_not_hypnosis_roleplay"
     """ 属性_源石技艺 交互对象未被心控-角色扮演 """
+    TARGET_HYPNOSIS_ROLEPLAY_1 = "t_hypnosis_roleplay_1"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-妻子 """
+    TARGET_HYPNOSIS_ROLEPLAY_2 = "t_hypnosis_roleplay_2"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-妹妹 """
+    TARGET_HYPNOSIS_ROLEPLAY_3 = "t_hypnosis_roleplay_3"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-女儿 """
+    TARGET_HYPNOSIS_ROLEPLAY_4 = "t_hypnosis_roleplay_4"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-女仆 """
+    TARGET_HYPNOSIS_ROLEPLAY_5 = "t_hypnosis_roleplay_5"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-宠物猫 """
+    TARGET_HYPNOSIS_ROLEPLAY_6 = "t_hypnosis_roleplay_6"
+    """ 属性_源石技艺 交互对象被心控-角色扮演-宠物狗 """
 
 
     WORK_IS_MAINTENANCE_ENGINEER = "work_is_maintenance_engineer"

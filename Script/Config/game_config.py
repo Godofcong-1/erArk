@@ -275,6 +275,8 @@ config_hypnosis_talent_of_pl: Dict[int, config_def.Hypnosis_Talent_Of_Pl] = {}
 """ 玩家获得催眠素质 """
 config_talent_of_arts: Dict[int, config_def.Talent_Of_Arts] = {}
 """ 源石技艺素质 """
+config_roleplay: Dict[int, config_def.Roleplay] = {}
+""" 角色扮演 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1121,6 +1123,16 @@ def load_talent_of_arts():
         config_talent_of_arts[now_tem.cid] = now_tem
 
 
+def load_roleplay():
+    """载入角色扮演数据"""
+    now_data = config_data["Roleplay"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Roleplay()
+        now_tem.__dict__ = tem_data
+        config_roleplay[now_tem.cid] = now_tem
+
+
 def load_product_formula():
     """载入产品配方"""
     now_data = config_data["ProductFormula"]
@@ -1332,3 +1344,4 @@ def init():
     load_hypnosis_talent_of_npc()
     load_hypnosis_talent_of_player()
     load_talent_of_arts()
+    load_roleplay()

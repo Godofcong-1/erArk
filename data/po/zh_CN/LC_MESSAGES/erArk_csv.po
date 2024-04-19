@@ -6564,6 +6564,86 @@ msgstr ""
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:7
+msgid "0"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:8
+msgid "妻子"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:8
+msgid "家庭"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:9
+msgid "姐姐"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:10
+msgid "妹妹"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:11
+msgid "女儿"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:12
+msgid "妈妈"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:13
+msgid "女仆"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:13
+msgid "职业"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:14
+msgid "老师"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:15
+msgid "学生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:16
+msgid "护士"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:17
+msgid "警察"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:18
+msgid "宠物猫"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:18
+msgid "宠物"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:19
+msgid "宠物狗"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:20
+msgid "电车痴汉"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:20
+msgid "场景"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:21
+msgid "户外当众"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:22
+msgid "公共厕所"
+msgstr ""
+
 #: .\data\csv\Season.csv:6
 msgid "春"
 msgstr ""
@@ -8313,10 +8393,6 @@ msgid "隶属系第二阶段"
 msgstr ""
 
 #: .\data\csv\Talent.csv:137
-msgid "宠物"
-msgstr ""
-
-#: .\data\csv\Talent.csv:137
 msgid "隶属系第三阶段"
 msgstr ""
 
@@ -8610,10 +8686,6 @@ msgstr ""
 
 #: .\data\csv\Talent.csv:189
 msgid "把自己的信物交给了博士"
-msgstr ""
-
-#: .\data\csv\Talent.csv:191
-msgid "女儿"
 msgstr ""
 
 #: .\data\csv\Talent.csv:191
@@ -8958,10 +9030,6 @@ msgstr ""
 
 #: .\data\csv\WorkType.csv:18
 msgid "给学生上课"
-msgstr ""
-
-#: .\data\csv\WorkType.csv:19
-msgid "学生"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:19

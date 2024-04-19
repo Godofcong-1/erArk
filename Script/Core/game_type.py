@@ -374,7 +374,7 @@ class HYPNOSIS:
         self.active_h: bool = False
         """ 体控-逆推 """
         self.roleplay: int = 0
-        """ 心控-角色扮演 """
+        """ 心控-角色扮演，0为无，其他见Roleplay.csv """
 
 
 class CLOTH:

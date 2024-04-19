@@ -632,6 +632,17 @@ class Resouce:
     """ 介绍信息 """
 
 
+class Roleplay:
+    """ 角色扮演列表 """
+
+    cid: int
+    """ 角色扮演id """
+    name: str
+    """ 角色扮演名 """
+    type: str
+    """ 角色扮演类型 """
+
+
 class Season:
     """ 季节配置 """
 
