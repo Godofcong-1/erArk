@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 11:31+0800\n"
+"POT-Creation-Date: 2024-04-22 18:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,27 +17,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "阿米娅"
 msgstr ""
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "凯尔希"
 msgstr ""
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "可露希尔"
 msgstr ""
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "特蕾西娅"
 msgstr ""
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "华法琳"
 msgstr ""
 
-#: .\Script\Core\constant.py:2261
+#: .\Script\Core\constant.py:2267
 msgid "杜宾"
 msgstr ""
 
@@ -126,7 +126,7 @@ msgid ""
 "游戏地图已更新\n"
 msgstr ""
 
-#: .\Script\Design\attr_calculation.py:819
+#: .\Script\Design\attr_calculation.py:827
 msgid "需要:"
 msgstr ""
 
@@ -427,7 +427,8 @@ msgstr ""
 #: .\Script\Design\handle_instruct.py:4650
 #: .\Script\Design\handle_instruct.py:4679
 #: .\Script\Design\handle_instruct.py:4709
-#: .\Script\Design\handle_instruct.py:4738
+#: .\Script\Design\handle_instruct.py:4739
+#: .\Script\Design\handle_instruct.py:4769
 msgid "性交"
 msgstr ""
 
@@ -436,15 +437,15 @@ msgid "+处女(-100)"
 msgstr ""
 
 #: .\Script\Design\character.py:438 .\Script\Design\character.py:529
-#: .\Script\Design\character.py:611 .\Script\Design\handle_instruct.py:4766
-#: .\Script\Design\handle_instruct.py:4792
-#: .\Script\Design\handle_instruct.py:4818
-#: .\Script\Design\handle_instruct.py:4844
-#: .\Script\Design\handle_instruct.py:4870
-#: .\Script\Design\handle_instruct.py:4895
-#: .\Script\Design\handle_instruct.py:4920
-#: .\Script\Design\handle_instruct.py:4947
-#: .\Script\Design\handle_instruct.py:4974
+#: .\Script\Design\character.py:611 .\Script\Design\handle_instruct.py:4797
+#: .\Script\Design\handle_instruct.py:4823
+#: .\Script\Design\handle_instruct.py:4849
+#: .\Script\Design\handle_instruct.py:4875
+#: .\Script\Design\handle_instruct.py:4901
+#: .\Script\Design\handle_instruct.py:4926
+#: .\Script\Design\handle_instruct.py:4951
+#: .\Script\Design\handle_instruct.py:4978
+#: .\Script\Design\handle_instruct.py:5005
 msgid "A性交"
 msgstr ""
 
@@ -1981,94 +1982,98 @@ msgid "玩弄子宫口"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:4727
-msgid "插入子宫"
+msgid "插入子宫口"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4756
+#: .\Script\Design\handle_instruct.py:4757
+msgid "子宫姦"
+msgstr ""
+
+#: .\Script\Design\handle_instruct.py:4787
 msgid "正常位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4782
+#: .\Script\Design\handle_instruct.py:4813
 msgid "后背位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4808
+#: .\Script\Design\handle_instruct.py:4839
 msgid "骑乘位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4834
+#: .\Script\Design\handle_instruct.py:4865
 msgid "对面座位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4860
+#: .\Script\Design\handle_instruct.py:4891
 msgid "背面座位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4886
+#: .\Script\Design\handle_instruct.py:4917
 msgid "对面立位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4911
+#: .\Script\Design\handle_instruct.py:4942
 msgid "背面立位肛交"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4936
+#: .\Script\Design\handle_instruct.py:4967
 msgid "玩弄s状结肠"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4963
+#: .\Script\Design\handle_instruct.py:4994
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:4990
+#: .\Script\Design\handle_instruct.py:5021
 msgid "二穴插入_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5007
+#: .\Script\Design\handle_instruct.py:5038
 msgid "尿道棉棒"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5026
+#: .\Script\Design\handle_instruct.py:5057
 msgid "放尿play_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5042
+#: .\Script\Design\handle_instruct.py:5073
 msgid "尿道插入_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5060
+#: .\Script\Design\handle_instruct.py:5091
 msgid "打胸部_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5076
+#: .\Script\Design\handle_instruct.py:5107
 msgid "打屁股"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5091
+#: .\Script\Design\handle_instruct.py:5122
 msgid "羞耻play_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5107
+#: .\Script\Design\handle_instruct.py:5138
 msgid "拘束play_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5123
+#: .\Script\Design\handle_instruct.py:5154
 msgid "淋浴_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5139
+#: .\Script\Design\handle_instruct.py:5170
 msgid "泡泡浴_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5155
+#: .\Script\Design\handle_instruct.py:5186
 msgid "交给对方_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5171
+#: .\Script\Design\handle_instruct.py:5202
 msgid "给对方口交_未实装"
 msgstr ""
 
-#: .\Script\Design\handle_instruct.py:5187
+#: .\Script\Design\handle_instruct.py:5218
 #: .\Script\UI\Panel\undress_panel.py:32
 msgid "脱衣服"
 msgstr ""

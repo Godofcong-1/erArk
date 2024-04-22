@@ -13317,11 +13317,15 @@ msgid "{Name}触发了肛门振动棒指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\womb_insertion.csv:6
-msgid "{Name}触发了插入子宫指令的地文"
+msgid "{Name}触发了插入子宫口指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\womb_os_caress.csv:6
 msgid "{Name}触发了玩弄子宫口指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\womb_sex.csv:6
+msgid "{Name}触发了子宫姦指令的地文"
 msgstr ""
 
 #: .\data\talk\system\abl_up.csv:6

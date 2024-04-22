@@ -126,6 +126,14 @@ class BehaviorEffect:
     """ 属性_状态特殊补正 根据交互对象的技巧技能对发起者进行P快调整 """
     TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
     """ 属性_状态特殊补正 根据交互对象的润滑情况对其进行苦痛调整 """
+    TARGET_V_ADJUST_ADD_PAIN = 122
+    """ 属性_状态特殊补正 根据交互对象的V属性(润滑+扩张+阴茎大小)对其进行苦痛调整 """
+    TARGET_A_ADJUST_ADD_PAIN = 123
+    """ 属性_状态特殊补正 根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整 """
+    TARGET_U_ADJUST_ADD_PAIN = 124
+    """ 属性_状态特殊补正 根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整 """
+    TARGET_W_ADJUST_ADD_PAIN = 125
+    """ 属性_状态特殊补正 根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整 """
 
     LOW_OBSCENITY_FAILED_ADJUST = 151
     """ 属性_失败状态 轻度性骚扰失败的加反感、加愤怒、降好感度修正 """

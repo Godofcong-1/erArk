@@ -532,37 +532,45 @@ def get_juel(value: int) -> int:
     return juel
 
 
-def get_pain_adjust(value: int) -> int:
+def get_pain_adjust(value: int, level_flag = False) -> int:
     """
     按润滑程度修正苦痛值比例
     Keyword arguments:
     value -- 能力数值
+    level_flag -- 输入值是否直接就是等级，不需要再计算
     Return arguments:
     just -- 调整比例
     """
-    level = get_status_level(value)
-    if level == 0:
-        just = 6.2
-    elif level == 1:
-        just = 5.2
-    elif level == 2:
-        just = 4.3
-    elif level == 3:
-        just = 3.6
-    elif level == 4:
+    if level_flag:
+        level = value
+    else:
+        level = get_status_level(value)
+    if level == -2:
+        just = 10
+    if level == -1:
+        just = 5
+    elif level == 0:
         just = 3
-    elif level == 5:
+    elif level == 1:
         just = 2.5
-    elif level == 6:
+    elif level == 2:
         just = 2.1
-    elif level == 7:
-        just = 1.75
-    elif level == 8:
-        just = 1.45
-    elif level == 9:
+    elif level == 3:
+        just = 1.8
+    elif level == 4:
+        just = 1.5
+    elif level == 5:
         just = 1.2
-    elif level == 10:
+    elif level == 6:
         just = 1.0
+    elif level == 7:
+        just = 0.8
+    elif level == 8:
+        just = 0.6
+    elif level == 9:
+        just = 0.4
+    elif level == 10:
+        just = 0.2
     return just
 
 

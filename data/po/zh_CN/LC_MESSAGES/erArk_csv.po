@@ -7469,130 +7469,134 @@ msgid "玩弄子宫口"
 msgstr ""
 
 #: .\data\csv\Status.csv:207
-msgid "插入子宫"
+msgid "插入子宫口"
 msgstr ""
 
 #: .\data\csv\Status.csv:208
-msgid "正常位肛交"
+msgid "子宫姦"
 msgstr ""
 
 #: .\data\csv\Status.csv:209
-msgid "后背位肛交"
+msgid "正常位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:210
-msgid "骑乘位肛交"
+msgid "后背位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:211
-msgid "对面座位肛交"
+msgid "骑乘位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:212
-msgid "背面座位肛交"
+msgid "对面座位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:213
-msgid "对面立位肛交"
+msgid "背面座位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:214
-msgid "背面立位肛交"
+msgid "对面立位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:215
-msgid "玩弄s状结肠"
+msgid "背面立位肛交"
 msgstr ""
 
 #: .\data\csv\Status.csv:216
+msgid "玩弄s状结肠"
+msgstr ""
+
+#: .\data\csv\Status.csv:217
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\data\csv\Status.csv:218
+#: .\data\csv\Status.csv:219
 msgid "装上搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:225
+#: .\data\csv\Status.csv:226
 msgid "取下搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:227
+#: .\data\csv\Status.csv:228
 msgid "脱衣服"
 msgstr ""
 
-#: .\data\csv\Status.csv:229
+#: .\data\csv\Status.csv:230
 msgid "抱小孩"
 msgstr ""
 
-#: .\data\csv\Status.csv:230
+#: .\data\csv\Status.csv:231
 msgid "哼唱儿歌"
 msgstr ""
 
-#: .\data\csv\Status.csv:231
+#: .\data\csv\Status.csv:232
 msgid "喂奶"
 msgstr ""
 
-#: .\data\csv\Status.csv:232
+#: .\data\csv\Status.csv:233
 msgid "换尿布"
 msgstr ""
 
-#: .\data\csv\Status.csv:233
+#: .\data\csv\Status.csv:234
 msgid "教说话"
 msgstr ""
 
-#: .\data\csv\Status.csv:234
+#: .\data\csv\Status.csv:235
 msgid "给玩具"
 msgstr ""
 
-#: .\data\csv\Status.csv:236
+#: .\data\csv\Status.csv:237
 msgid "开启透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:237
+#: .\data\csv\Status.csv:238
 msgid "关闭透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:238
+#: .\data\csv\Status.csv:239
 msgid "开启信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:239
+#: .\data\csv\Status.csv:240
 msgid "关闭信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:240
+#: .\data\csv\Status.csv:241
 msgid "单人催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:241
+#: .\data\csv\Status.csv:242
 msgid "集体催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:242
+#: .\data\csv\Status.csv:243
 msgid "解除催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:243
+#: .\data\csv\Status.csv:244
 msgid "体控-敏感度提升"
 msgstr ""
 
-#: .\data\csv\Status.csv:244
+#: .\data\csv\Status.csv:245
 msgid "体控-强制高潮"
 msgstr ""
 
-#: .\data\csv\Status.csv:245
+#: .\data\csv\Status.csv:246
 msgid "体控-强制排卵"
 msgstr ""
 
-#: .\data\csv\Status.csv:246
+#: .\data\csv\Status.csv:247
 msgid "体控-木头人"
 msgstr ""
 
-#: .\data\csv\Status.csv:247
+#: .\data\csv\Status.csv:248
 msgid "体控-逆推"
 msgstr ""
 
-#: .\data\csv\Status.csv:248
+#: .\data\csv\Status.csv:249
 msgid "心控-角色扮演"
 msgstr ""
 
