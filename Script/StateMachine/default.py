@@ -1231,13 +1231,13 @@ def character_see_h_and_move_to_dormitory(character_id: int):
 
     # 输出提示信息，并结算把柄
     now_draw = draw.NormalDraw()
-    now_draw.text = f"被{character_data.name}看到了情事现场\n"
+    now_draw.text = _(f"被{character_data.name}看到了情事现场\n")
     if character_data.talent[222]:
-        now_draw.text += f"{character_data.name}还不懂这是什么意义，被你随口糊弄走了"
+        now_draw.text += _(f"{character_data.name}还不懂这是什么意义，被你随口糊弄走了")
     else:
         character_data.talent[401] = 1
-        now_draw.text += f"{character_data.name}获得了[持有博士把柄]\n"
-        now_draw.text += f"{character_data.name}红着脸跑走了"
+        now_draw.text += _(f"{character_data.name}获得了[持有博士把柄]\n")
+        now_draw.text += _(f"{character_data.name}红着脸跑走了")
     now_draw.draw()
     line_feed.draw()
 

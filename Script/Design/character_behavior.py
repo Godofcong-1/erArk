@@ -263,7 +263,7 @@ def judge_character_tired_sleep(character_id : int):
                 now_draw.width = width
                 # 跟随和H的分歧，忽略H后停留的情况
                 if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
-                    draw_text = "太累了，无法继续跟随\n" if character_data.sp_flag.tired else "太困了，无法继续跟随\n"
+                    draw_text = _("太累了，无法继续跟随\n") if character_data.sp_flag.tired else _("太困了，无法继续跟随\n")
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
@@ -591,15 +591,15 @@ def settle_character_juel(character_id: int) -> int:
             # print("宝珠名：",juel_text,"。增加了 :",add_juel)
     # 当反感珠大于0时，计算和其他珠的抵消
     if character_data.juel[20] > 0:
-        draw_text = f"\n当前共{character_data.juel[20]}反发珠，抵消了："
+        draw_text = _(f"\n当前共{character_data.juel[20]}反发珠，抵消了：")
         for i in [15, 10, 11, 12, 13]:
             # 1好意抵消2反发
             if character_data.juel[i] > 0:
                 juel_down = min(character_data.juel[20], character_data.juel[i] * 2)
                 character_data.juel[20] -= juel_down
                 character_data.juel[i] -= juel_down // 2
-                draw_text += f" {juel_down//2}个{game_config.config_juel[i].name} "
-        draw_text += f"，剩余{character_data.juel[20]}个反发珠\n"
+                draw_text += _(f" {juel_down//2}个{game_config.config_juel[i].name} ")
+        draw_text += _(f"，剩余{character_data.juel[20]}个反发珠\n")
         now_draw = draw.NormalDraw()
         now_draw.text = draw_text
         # now_draw.draw()
@@ -727,7 +727,7 @@ def update_sleep():
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n博士入睡，开始结算各种数据\n"
+    now_draw.text = _("\n博士入睡，开始结算各种数据\n")
     now_draw.draw()
     id_list = cache.npc_id_got.copy()
     id_list.add(0)
@@ -792,7 +792,7 @@ def update_new_day():
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n已过24点，开始结算各种数据\n\n"
+    now_draw.text = _("\n已过24点，开始结算各种数据\n\n")
     now_draw.draw()
 
     # 角色刷新
@@ -828,14 +828,14 @@ def update_save():
     """
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
-    now_draw.text = "\n全部结算完毕，开始自动保存\n"
+    now_draw.text = _("\n全部结算完毕，开始自动保存\n")
     # 播放一条提示信息
     info_list = []
     for i in game_config.config_tip_tem:
         info_list.append(i)
     info_id = random.choice(info_list)
     info_text = game_config.config_tip_tem[info_id].info
-    now_draw.text += f"\n请博士在保存时阅读今日的小贴士：\n\n  {info_text}\n\n\n"
+    now_draw.text += _(f"\n请博士在保存时阅读今日的小贴士：\n\n  {info_text}\n\n\n")
     now_draw.draw()
     save_handle.establish_save("auto")
 
@@ -964,7 +964,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 输出提示信息
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
-            now_draw.text = "\n理智值不足，开启的源石技艺已全部中断\n"
+            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
             now_draw.draw()
 
         # 结算对无意识对象的结算
@@ -990,7 +990,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         # 输出提示信息
                         now_draw = draw.WaitDraw()
                         now_draw.width = window_width
-                        now_draw.text = f"\n因为{now_character_data.name}的动作，{target_data.name}从梦中惊醒过来\n"
+                        now_draw.text = _(f"\n因为{now_character_data.name}的动作，{target_data.name}从梦中惊醒过来\n")
                         now_draw.draw()
                         judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
                         now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
@@ -1138,7 +1138,7 @@ def sanity_point_grow():
         # 绘制说明信息
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = f"\n在刻苦的锻炼下，博士理智最大值成长了{grow_value}点\n"
+        now_draw.text = _(f"\n在刻苦的锻炼下，博士理智最大值成长了{grow_value}点\n")
         now_draw.draw()
 
 
@@ -1197,9 +1197,9 @@ def refresh_temp_semen_max():
         # 绘制说明信息
         now_draw = draw.NormalDraw()
         now_draw.width = window_width
-        draw_text = f"\n今日未消耗的 {now_semen}ml 精液转化为了 {int(now_semen / 2)}ml 次日额外精液"
+        draw_text = _(f"\n今日未消耗的 {now_semen}ml 精液转化为了 {int(now_semen / 2)}ml 次日额外精液")
         if character_data.tem_extra_semen_point >= character_data.semen_point_max * 4:
-            draw_text += f"，额外精液量已达上限，并获得了为期一天的[浓厚精液]"
+            draw_text += _(f"，额外精液量已达上限，并获得了为期一天的[浓厚精液]")
         draw_text += "\n"
         now_draw.text = draw_text
         now_draw.draw()

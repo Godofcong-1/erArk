@@ -2638,14 +2638,19 @@ def handle_kiss():
     """处理亲吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("亲吻"))[0]:
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("亲吻"))
+    if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.KISS
         character_data.state = constant.CharacterStatus.STATUS_KISS
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
+    elif judge_list[0] == -1:
+        pass
     else:
         character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
         character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
-    update.game_update_flow(5)
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
 
 @add_instruct(
@@ -3235,10 +3240,19 @@ def handle_kiss_h():
     """处理接吻指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.KISS_H
-    character_data.state = constant.CharacterStatus.STATUS_KISS_H
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("亲吻"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.KISS_H
+        character_data.state = constant.CharacterStatus.STATUS_KISS_H
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.KISS_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_KISS_FAIL
+        character_data.behavior.duration = 5
+        update.game_update_flow(5)
 
 
 @add_instruct(
