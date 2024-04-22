@@ -4724,21 +4724,52 @@ def handle_womb_os_caress():
 @add_instruct(
     constant.Instruct.WOMB_INSERTION,
     constant.InstructType.SEX,
-    _("插入子宫"),
+    _("插入子宫口"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
+     constant_promise.Premise.T_W_DILATE_GE_3,
      constant_promise.Premise.TECHNIQUE_GE_3},
 )
 def handle_womb_insertion():
-    """处理插入子宫指令"""
+    """处理插入子宫口指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("性交"))
     if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.WOMB_INSERTION
         character_data.state = constant.CharacterStatus.STATUS_WOMB_INSERTION
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.WOMB_SEX,
+    constant.InstructType.SEX,
+    _("子宫姦"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.LAST_CMD_W_SEX,
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
+     constant_promise.Premise.T_W_DILATE_GE_5,
+     constant_promise.Premise.TECHNIQUE_GE_5},
+)
+def handle_womb_insertion():
+    """处理子宫姦指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.WOMB_SEX
+        character_data.state = constant.CharacterStatus.STATUS_WOMB_SEX
         character_data.behavior.duration = 10
         update.game_update_flow(10)
     elif judge_list[0] == -1:

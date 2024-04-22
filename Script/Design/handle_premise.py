@@ -11389,7 +11389,7 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
     sex = {
-        str(constant.Instruct.WOMB_OS_CARESS), str(constant.Instruct.WOMB_INSERTION)
+        str(constant.Instruct.WOMB_OS_CARESS), str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_SEX)
     }
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
@@ -16415,6 +16415,38 @@ def handle_t_wfeel_l_5(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[7] < 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_W_DILATE_GE_3)
+def handle_t_w_dilate_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｗ扩张>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[12] >= 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_W_DILATE_GE_5)
+def handle_t_w_dilate_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｗ扩张>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[12] >= 5:
         return 1
     return 0
 
