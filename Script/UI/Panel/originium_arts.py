@@ -17,6 +17,9 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+unconscious_list = [_("无"),_("睡眠"),_("醉酒"),_("时停"),_("平然催眠"),_("空气催眠"),_("体控催眠"),_("心控催眠")]
+""" 无意识状态列表 """
+
 def evaluate_hypnosis_completion(character_id: int):
     """
     判断与结算催眠完成\n
@@ -52,7 +55,10 @@ def evaluate_hypnosis_completion(character_id: int):
                 now_draw.draw()
             # 更新记录当前地点
             pl_character_data.pl_ability.air_hypnosis_position = pl_character_data.position
-        character_data.sp_flag.unconscious_h = now_hypnosis_type + 3
+        if now_hypnosis_type != 0:
+            character_data.sp_flag.unconscious_h = now_hypnosis_type + 3
+        else:
+            character_data.sp_flag.unconscious_h = 0
         # print(f"debug {character_data.name} unconscious_h = {character_data.sp_flag.unconscious_h}")
         # 进行素质获得检测
         handle_talent.npc_gain_hypnosis_talent(character_id)

@@ -5,7 +5,7 @@ from Script.Core import cache_control, constant, game_type, get_text, text_handl
 from Script.Design import attr_text, attr_calculation, handle_premise
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import ejaculation_panel
+from Script.UI.Panel import ejaculation_panel, originium_arts
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -17,7 +17,7 @@ _: FunctionType = get_text._
 
 def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instruct_flag = 1):
     """
-    处理结算角色行为
+    处理结算角色行为并输出对应文本
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
@@ -197,8 +197,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                     target_data: game_type.Character = cache.character_data[target_character_id]
                 else:
                     judge = 1
-                name = f"\n{target_data.name}:"
-                now_text = name
+                name = f"\n{target_data.name}"
+                # 输出无意识状态的提示信息
+                if target_data.sp_flag.unconscious_h:
+                    name += _(f"({originium_arts.unconscious_list[target_data.sp_flag.unconscious_h]})")
+                now_text = name + ":"
 
                 # 体力/气力/好感/信赖/催眠度的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
@@ -562,6 +565,8 @@ def check_unconscious_effect(
                 # 性交经验
                 elif experience_id in range(51, 55):
                     constant.settle_behavior_effect_data[279](character_id, add_time, change_data, now_time)
+
+    return target_character_data.sp_flag.unconscious_h
 
 
 def judge_character_first_meet(character_id: int) -> int:
