@@ -64,6 +64,10 @@ cid,effect_name,effect_type,effect
 117,TECH_ADD_W_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行W快、欲情调整
 120,TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧技能对发起者进行P快调整
 121,TARGET_LUBRICATION_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的润滑情况对其进行苦痛调整
+122,TARGET_V_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的V属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+123,TARGET_A_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+124,TARGET_U_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+125,TARGET_W_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整
 
 151,LOW_OBSCENITY_FAILED_ADJUST,属性_失败状态,轻度性骚扰失败的加反感、加愤怒、降好感度修正
 152,HIGH_OBSCENITY_FAILED_ADJUST,属性_失败状态,重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正
@@ -343,7 +347,7 @@ cid,effect_name,effect_type,effect
 1204,HORMONE_OFF,源石技艺,关闭信息素
 1211,HYPNOSIS_ONE,源石技艺,单人催眠（含理智消耗）
 1212,HYPNOSIS_ALL,源石技艺,集体催眠（含理智消耗）
-1213,HYPNOSIS_CANCEL,源石技艺,解除催眠
+1213,HYPNOSIS_CANCEL,源石技艺,解除交互对象的催眠
 1221,TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON,源石技艺,对方开启体控-敏感度提升（含理智消耗）
 1222,TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF,源石技艺,对方关闭体控-敏感度提升
 1223,TARGET_HYPNOSIS_FORCE_CLIMAX,源石技艺,对方体控-强制高潮（含理智消耗）

@@ -16435,6 +16435,54 @@ def handle_t_wfeel_l_5(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.T_U_DILATE_GE_1)
+def handle_t_u_dilate_ge_1(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｕ扩张>=1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[11] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_U_DILATE_GE_2)
+def handle_t_u_dilate_ge_2(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｕ扩张>=2
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[11] >= 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_U_DILATE_GE_5)
+def handle_t_u_dilate_ge_5(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｕ扩张>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[11] >= 5:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_W_DILATE_GE_3)
 def handle_t_w_dilate_ge_3(character_id: int) -> int:
     """

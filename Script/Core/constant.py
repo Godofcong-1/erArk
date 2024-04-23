@@ -434,6 +434,10 @@ class CharacterStatus:
     """ 玩弄s状结肠 """
     STATUS_STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+    STATUS_URETHRAL_FINGER_INSERTION = 541
+    """ 尿道指姦 """
+    STATUS_URETHRAL_SEX = 542
+    """ 尿道姦 """
     STATUS_MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """
     STATUS_URINE_COLLECTOR = 602
@@ -924,6 +928,10 @@ class Behavior:
     """ 玩弄s状结肠 """
     STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+    URETHRAL_FINGER_INSERTION = 541
+    """ 尿道指姦 """
+    URETHRAL_SEX = 542
+    """ 尿道姦 """
 
     MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """
@@ -2195,10 +2203,12 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
+    URETHRAL_FINGER_INSERTION = 0
+    """ 尿道指姦 """
+    URETHRAL_SEX = 0
+    """ 尿道姦 """
     PISSING_PLAY = 0
     """ 放尿play """
-    URETHRAL_INSERTION = 0
-    """ 尿道插入 """
     BEAT_BREAST = 0
     """ 打胸部 """
     SPANKING = 0

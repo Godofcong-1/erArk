@@ -5079,24 +5079,6 @@ def handle_pissing_play():
 
 
 @add_instruct(
-    constant.Instruct.URETHRAL_INSERTION,
-    constant.InstructType.SEX,
-    _("尿道插入_未实装"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
-     constant_promise.Premise.TECHNIQUE_GE_5},
-)
-def handle_urethral_insertion():
-    """处理尿道插入指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    # if character.calculation_instuct_judege(0,character_data.target_character_id,"U性交")[0]:
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-
-@add_instruct(
     constant.Instruct.BEAT_BREAST,
     constant.InstructType.SEX,
     _("打胸部_未实装"),

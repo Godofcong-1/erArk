@@ -430,6 +430,7 @@ is_follow_4,IS_FOLLOW_4,属性_特殊flag,当前正前往博士所在位置
 t_is_follow,TARGET_IS_FOLLOW,属性_特殊flag,交互对象当前正跟随玩家
 t_not_follow,TARGET_NOT_FOLLOW,属性_特殊flag,交互对象当前没跟随玩家
 hp_1,HP_1,属性_特殊flag,自身疲劳（体力=1）
+hp_g_1,HP_G_1,属性_特殊flag,自身未疲劳（体力>1）
 be_bagged_0,BE_BAGGED_0,属性_特殊flag,自身没有被装袋搬走
 be_bagged_1,BE_BAGGED_1,属性_特殊flag,自身被装袋搬走
 pl_bagging_chara,PL_BAGGING_CHARA,属性_特殊flag,玩家正在装袋搬走某个角色
@@ -478,10 +479,14 @@ t_unconscious_flag,T_UNCONSCIOUS_FLAG,属性_特殊flag,对方有无意识状态
 t_unconscious_flag_1,T_UNCONSCIOUS_FLAG_1,属性_特殊flag,对方有无意识_睡眠状态
 t_unconscious_flag_2,T_UNCONSCIOUS_FLAG_2,属性_特殊flag,对方有无意识_醉酒状态
 t_unconscious_flag_3,T_UNCONSCIOUS_FLAG_3,属性_特殊flag,对方有无意识_时停状态
-t_unconscious_flag_4,T_UNCONSCIOUS_FLAG_4,属性_特殊flag,对方有无意识_空气状态
-t_unconscious_flag_5,T_UNCONSCIOUS_FLAG_5,属性_特殊flag,对方有无意识_平然状态
-t_unconscious_flag_6,T_UNCONSCIOUS_FLAG_6,属性_特殊flag,对方有无意识_心控状态
-t_unconscious_flag_7,T_UNCONSCIOUS_FLAG_7,属性_特殊flag,对方有无意识_体控状态
+t_unconscious_flag_4,T_UNCONSCIOUS_FLAG_4,属性_特殊flag,对方有无意识_平然状态
+t_not_unconscious_flag_4,T_NOT_UNCONSCIOUS_FLAG_4,属性_特殊flag,对方没有无意识_平然状态
+t_unconscious_flag_5,T_UNCONSCIOUS_FLAG_5,属性_特殊flag,对方有无意识_空气状态
+t_not_unconscious_flag_5,T_NOT_UNCONSCIOUS_FLAG_5,属性_特殊flag,对方没有无意识_空气状态
+t_unconscious_flag_6,T_UNCONSCIOUS_FLAG_6,属性_特殊flag,对方有无意识_体控状态
+t_not_unconscious_flag_6,T_NOT_UNCONSCIOUS_FLAG_6,属性_特殊flag,对方没有无意识_体控状态
+t_unconscious_flag_7,T_UNCONSCIOUS_FLAG_7,属性_特殊flag,对方有无意识_心控状态
+t_not_unconscious_flag_7,T_NOT_UNCONSCIOUS_FLAG_7,属性_特殊flag,对方没有无意识_心控状态
 help_buy_food_flag_0,HELP_BUY_FOOD_FLAG_0,属性_特殊flag,自身没有帮忙买午饭状态
 help_buy_food_flag_1,HELP_BUY_FOOD_FLAG_1,属性_特殊flag,自身要买饭状态
 help_buy_food_flag_2,HELP_BUY_FOOD_FLAG_2,属性_特殊flag,自身要买第二份饭状态
@@ -582,6 +587,11 @@ t_wfeel_ge_7,T_WFEEL_GE_7,属性_能力,交互对象Ｗ感觉>=7
 t_wfeel_l_1,T_WFEEL_L_1,属性_能力,交互对象Ｗ感觉<1
 t_wfeel_l_3,T_WFEEL_L_3,属性_能力,交互对象Ｗ感觉<3
 t_wfeel_l_5,T_WFEEL_L_5,属性_能力,交互对象Ｗ感觉<5
+t_u_dilate_ge_1,T_U_DILATE_GE_1,属性_能力,交互对象Ｕ扩张>=1
+t_u_dilate_ge_2,T_U_DILATE_GE_2,属性_能力,交互对象Ｕ扩张>=2
+t_u_dilate_ge_5,T_U_DILATE_GE_5,属性_能力,交互对象Ｕ扩张>=5
+t_w_dilate_ge_3,T_W_DILATE_GE_3,属性_能力,交互对象Ｗ扩张>=3
+t_w_dilate_ge_5,T_W_DILATE_GE_5,属性_能力,交互对象Ｗ扩张>=5
 technique_ge_3,TECHNIQUE_GE_3,属性_能力,自身技巧技能>=3
 technique_ge_5,TECHNIQUE_GE_5,属性_能力,自身技巧技能>=5
 t_technique_ge_3,TARGET_TECHNIQUE_GE_3,属性_能力,交互对象技巧技能>=3
@@ -858,6 +868,12 @@ hypnosis_roleplay,HYPNOSIS_ROLEPLAY,属性_源石技艺,自己被心控-角色�
 not_hypnosis_roleplay,NOT_HYPNOSIS_ROLEPLAY,属性_源石技艺,自己未被心控-角色扮演
 t_hypnosis_roleplay,TARGET_HYPNOSIS_ROLEPLAY,属性_源石技艺,交互对象被心控-角色扮演
 t_not_hypnosis_roleplay,TARGET_NOT_HYPNOSIS_ROLEPLAY,属性_源石技艺,交互对象未被心控-角色扮演
+t_hypnosis_roleplay_1,TARGET_HYPNOSIS_ROLEPLAY_1,属性_源石技艺,交互对象被心控-角色扮演-妻子
+t_hypnosis_roleplay_2,TARGET_HYPNOSIS_ROLEPLAY_2,属性_源石技艺,交互对象被心控-角色扮演-妹妹
+t_hypnosis_roleplay_3,TARGET_HYPNOSIS_ROLEPLAY_3,属性_源石技艺,交互对象被心控-角色扮演-女儿
+t_hypnosis_roleplay_4,TARGET_HYPNOSIS_ROLEPLAY_4,属性_源石技艺,交互对象被心控-角色扮演-女仆
+t_hypnosis_roleplay_5,TARGET_HYPNOSIS_ROLEPLAY_5,属性_源石技艺,交互对象被心控-角色扮演-宠物猫
+t_hypnosis_roleplay_6,TARGET_HYPNOSIS_ROLEPLAY_6,属性_源石技艺,交互对象被心控-角色扮演-宠物狗
 
 
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,属性_工作,自己的工作为检修工程师
