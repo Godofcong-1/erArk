@@ -589,8 +589,13 @@ class CharacterInfoHead:
                 eja_text = _(" <射精欲:极>")
 
         # 催眠状态时进行显示
+        # 首先需要判断是否开启了催眠显示，其次要么已经是某个催眠状态下，要么催眠度大于0而且开启了显示催眠度
         hypnosis_text = ""
-        if cache.system_setting[10] and character_data.hypnosis.hypnosis_degree > 0:
+        if (
+            cache.system_setting[10] and 
+            (character_data.sp_flag.unconscious_h >= 4 or
+            (character_data.hypnosis.hypnosis_degree > 0 and cache.system_setting[10] == 2))
+        ):
             hypnosis_text = _(" <催眠")
             # 是否显示具体数值
             if cache.system_setting[10] == 2:
