@@ -3,7 +3,7 @@ from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,character_handle, handle_premise, attr_calculation
+from Script.Design import basement,character_handle, handle_premise, attr_calculation, clothing
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -146,6 +146,8 @@ class Debug_Panel:
                 draw_text_list.append(f"[009]:资源全99999")
                 draw_text_list.append(f"[010]:设施全满级、全开放")
                 draw_text_list.append(f"[011]:重置全角色特殊flag")
+                draw_text_list.append(f"[012]:重置全角色服装")
+                draw_text_list.append(f"[013]:重置全角色位置至宿舍")
 
 
                 for i in range(len(draw_text_list)):
@@ -541,6 +543,15 @@ class Debug_Panel:
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
                         character_data.sp_flag = game_type.SPECIAL_FLAG()
+                elif key_index == 12:
+                    cache.npc_id_got.discard(0)
+                    for chara_id in cache.npc_id_got:
+                        clothing.get_npc_cloth(chara_id)
+                elif key_index == 13:
+                    cache.npc_id_got.discard(0)
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        character_data.position = character_data.dormitory
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

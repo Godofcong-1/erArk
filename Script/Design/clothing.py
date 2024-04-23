@@ -21,7 +21,7 @@ def get_npc_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        tem_character = cache.npc_tem_data[character_id]
+        tem_character = cache.npc_tem_data[character_id - 1]
 
         for cloth_id in tem_character.Cloth:
             type = game_config.config_clothing_tem[cloth_id].clothing_type

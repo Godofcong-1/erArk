@@ -1641,6 +1641,11 @@ def handle_collect():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
 
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n开始摆放藏品\n")
+    now_draw.draw()
+
     # 内裤
     if len(character_data.pl_collection.npc_panties_tem):
         for npc_id in character_data.pl_collection.npc_panties_tem:
@@ -1653,12 +1658,15 @@ def handle_collect():
                 pan_name = game_config.config_clothing_tem[pan_id].name
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
+                """
                 # 如果已经重复持有，则进行提示
-                if pan_name in character_data.pl_collection.npc_panties[npc_id]:
-                    now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{pan_name}")
-                else:
-                    character_data.pl_collection.npc_panties[npc_id].append(pan_name)
-                    now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                # if pan_name in character_data.pl_collection.npc_panties[npc_id]:
+                #     now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                # else:
+                """
+                # 改为可以重复持有
+                character_data.pl_collection.npc_panties[npc_id].append(pan_name)
+                now_draw.text = _(f"增加了藏品：{cache.character_data[npc_id].name}的{pan_name}\n")
                 now_draw.draw()
         # 最后清空
         character_data.pl_collection.npc_panties_tem.clear()
@@ -1675,12 +1683,15 @@ def handle_collect():
                 socks_name = game_config.config_clothing_tem[socks_id].name
                 now_draw = draw.WaitDraw()
                 now_draw.width = width
+                """
                 # 如果已经重复持有，则进行提示
                 if socks_name in character_data.pl_collection.npc_socks[npc_id]:
                     now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{socks_name}")
                 else:
-                    character_data.pl_collection.npc_socks[npc_id].append(socks_name)
-                    now_draw.text = _(f"\n增加了藏品：{cache.character_data[npc_id].name}的{socks_name}")
+                """
+                # 改为可以重复持有
+                character_data.pl_collection.npc_socks[npc_id].append(socks_name)
+                now_draw.text = _(f"增加了藏品：{cache.character_data[npc_id].name}的{socks_name}\n")
                 now_draw.draw()
         # 装完了之后清空
         character_data.pl_collection.npc_socks_tem.clear()

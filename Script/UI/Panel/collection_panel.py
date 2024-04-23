@@ -154,15 +154,28 @@ class Collection_Panel:
 
                         # 如果有收集到该角色的处子胖次或其他普通胖次则开始绘制
                         if character_data.pl_collection.first_panties[npc_id] != "" or len(character_data.pl_collection.npc_panties[npc_id]):
+
+                            # 首先对列表进行排序
+                            character_data.pl_collection.npc_panties[npc_id].sort()
+
                             npc_name = cache.character_data[npc_id].name
                             collection_text += f"\n  {npc_name}："
-                            if npc_id in character_data.pl_collection.first_panties:
+                            if npc_id in character_data.pl_collection.first_panties and character_data.pl_collection.first_panties[npc_id] != "":
                                 collection_text += f" {character_data.pl_collection.first_panties[npc_id]}"
                                 self.pan_count += 1
                             if npc_id in character_data.pl_collection.npc_panties:
+
+                                # 统计当前角色的普通胖次数量
+                                self.pan_count += len(character_data.pl_collection.npc_panties[npc_id])
+
+                                # 通过字典统计，输出每种内裤的数量
+                                pan_counts = {}
                                 for pan in character_data.pl_collection.npc_panties[npc_id]:
-                                    collection_text += f" {pan}"
-                                    self.pan_count += 1
+                                    pan_counts[pan] = pan_counts.get(pan, 0) + 1
+                                
+                                for pan, count in pan_counts.items():
+                                    collection_text += f" {pan}({count})"
+
                             collection_text += f"\n"
                 collection_text += f"\n当前共{self.pan_count}条\n"
 
@@ -177,12 +190,25 @@ class Collection_Panel:
                     if npc_id != 0:
 
                         if len(character_data.pl_collection.npc_socks[npc_id]):
+
+                            # 首先对列表进行排序
+                            character_data.pl_collection.npc_socks[npc_id].sort()
+
                             npc_name = cache.character_data[npc_id].name
                             collection_text += f"\n  {npc_name}："
                             if npc_id in character_data.pl_collection.npc_socks:
-                                for socks in character_data.pl_collection.npc_socks[npc_id]:
-                                    collection_text += f" {socks}"
-                                    self.sock_count += 1
+
+                                # 统计当前角色的袜子数量
+                                self.sock_count += len(character_data.pl_collection.npc_socks[npc_id])
+
+                                # 通过字典统计，输出每种袜子的数量
+                                sock_counts = {}
+                                for sock in character_data.pl_collection.npc_socks[npc_id]:
+                                    sock_counts[sock] = sock_counts.get(sock, 0) + 1
+
+                                for sock, count in sock_counts.items():
+                                    collection_text += f" {sock}({count})"
+
                             collection_text += f"\n"
                 collection_text += f"\n当前共{self.sock_count}双\n"
 
