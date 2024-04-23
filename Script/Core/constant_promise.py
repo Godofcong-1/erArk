@@ -864,6 +864,8 @@ class Premise:
     """ 属性_特殊flag 交互对象当前没跟随玩家 """
     HP_1 = "hp_1"
     """ 属性_特殊flag 自身疲劳（体力=1） """
+    HP_G_1 = "hp_g_1"
+    """ 属性_特殊flag 自身未疲劳（体力>1） """
     BE_BAGGED_0 = "be_bagged_0"
     """ 属性_特殊flag 自身没有被装袋搬走 """
     BE_BAGGED_1 = "be_bagged_1"

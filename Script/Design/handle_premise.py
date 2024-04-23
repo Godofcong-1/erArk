@@ -4398,6 +4398,22 @@ def handle_hp_1(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.HP_G_1)
+def handle_hp_g_1(character_id: int) -> int:
+    """
+    自身未疲劳（体力>1）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.tired == 1:
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.IMPRISONMENT_1)
 def handle_imprisonment_1(character_id: int) -> int:
     """
