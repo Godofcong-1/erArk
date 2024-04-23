@@ -545,7 +545,7 @@ class Down_Negative_Talent_Panel:
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = _(f"\n要降低[{name}]的哪个刻印呢？(需要消耗该角色已收藏至藏品馆的5条内裤，当前共{len(panties_data)}条)\n\n")
+            info_text = _(f"\n要降低[{name}]的哪个刻印呢？(需要消耗该角色已收藏至藏品馆的5条内裤，当前共{len(panties_data)}条，优先消耗重复款式)\n\n")
             if cache.debug_mode:
                 info_text += _("当前为debug模式，不需要消耗内裤\n\n")
             info_draw.text = info_text
@@ -585,11 +585,32 @@ class Down_Negative_Talent_Panel:
 
         # 计算当前该角色的胖次数量，大于五则成功，不足则弹出失败提示
         pl_character_data = cache.character_data[0]
-        panties_data = pl_character_data.pl_collection.npc_panties[self.chara_id]
-        if len(panties_data) >= 5 or cache.debug_mode:
+        if len(pl_character_data.pl_collection.npc_panties[self.chara_id]) >= 5 or cache.debug_mode:
+            # debug模式下不消耗内裤
             if not cache.debug_mode:
-                for i in range(5):
-                    panties_data.pop()
+
+                # 先统计每种内裤的数量
+                pan_counts = {}
+                for pan in pl_character_data.pl_collection.npc_panties[self.chara_id]:
+                    pan_counts[pan] = pan_counts.get(pan, 0) + 1
+                # 遍历全部内裤，优先删除重复款式的内裤，如果删除的数量不够5个，则从前往后删除
+                pop_pan_count = 0
+                for pan, count in pan_counts.items():
+                    # 优先删除重复款式的内裤
+                    if count > 1:
+                        remove_count = min(count - 1, 5 - pop_pan_count)
+                        for tem in range(remove_count):
+                            pl_character_data.pl_collection.npc_panties[self.chara_id].remove(pan)
+                        pop_pan_count += remove_count
+                        if pop_pan_count >= 5:
+                            break
+                # 从前往后删除
+                while pop_pan_count < 5:
+                    if pop_pan_count < 5:
+                        pl_character_data.pl_collection.npc_panties[self.chara_id].pop(0)
+                        pop_pan_count += 1
+
+            # 降低刻印
             character_data.ability[ability_id] -= 1
             # 也降低刻印对应的主状态值
             if ability_id == 17:
