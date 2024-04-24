@@ -84,7 +84,7 @@ class Agriculture_Production_Panel:
                 button_draw.draw()
 
                 # 生产效率
-                now_level = cache.rhodes_island.facility_level[12]
+                now_level = cache.rhodes_island.facility_level[16]
                 facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
@@ -128,7 +128,7 @@ class Agriculture_Production_Panel:
                     button_draw.draw()
 
                     # 生产效率
-                    now_level = cache.rhodes_island.facility_level[12]
+                    now_level = cache.rhodes_island.facility_level[16]
                     facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
                     all_effect = 0
                     facility_effect = game_config.config_facility_effect[facility_cid].effect
@@ -185,7 +185,7 @@ class Agriculture_Production_Panel:
                 info_draw.width = window_width
                 return_list = []
 
-                # now_level = cache.rhodes_island.facility_level[12]
+                # now_level = cache.rhodes_island.facility_level[16]
                 resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
                 resouce_data = game_config.config_resouce[resouce_id]
 
