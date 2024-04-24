@@ -5087,8 +5087,16 @@ def handle_add_hpmp_max(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hp = int(character_data.hit_point_max * 0.005 * random.uniform(0.8, 1.2))
-    add_mp = int(character_data.mana_point_max * 0.01 * random.uniform(0.5, 1.2))
+    # 设施效率
+    now_level = cache.rhodes_island.facility_level[9]
+    facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_cid].effect
+    facility_adjust = 1 + facility_effect / 100
+
+    # 最终增加值
+    add_hp = int(character_data.hit_point_max * 0.005 * facility_adjust * random.uniform(0.8, 1.2))
+    add_mp = int(character_data.mana_point_max * 0.01 * facility_adjust * random.uniform(0.5, 1.2))
+    # 增加上限
     character_data.hit_point_max += add_hp
     character_data.mana_point_max += add_mp
     # 如果和玩家位于同一地点，则输出提示信息
