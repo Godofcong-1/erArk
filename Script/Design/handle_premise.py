@@ -11295,7 +11295,7 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
         str(constant.Instruct.FACE_SEAT_ANAL_SEX), str(constant.Instruct.BACK_SEAT_ANAL_SEX),
         str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
         str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA),
-        str(constant.Instruct.URETHRAL_INSERTION),
+        str(constant.Instruct.URETHRAL_SEX),
         str(constant.Instruct.HANDJOB), str(constant.Instruct.HAND_BLOWJOB),
         str(constant.Instruct.BLOWJOB), str(constant.Instruct.PAIZURI),
         str(constant.Instruct.TITS_BLOWJOB), str(constant.Instruct.FOCUS_BLOWJOB),
@@ -11454,7 +11454,7 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
     sex = {
-        str(constant.Instruct.URETHRAL_INSERTION)
+        str(constant.Instruct.URETHRAL_SEX)
     }
 
     for i in range(len_input):
