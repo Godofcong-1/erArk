@@ -155,7 +155,7 @@ def input_load_save(save_id: str):
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
-        # 角色素质、经验、宝珠、能力的更新
+        # 角色素质、经验、宝珠、能力、设置的更新
         update_count += update_character_config_data(value)
         # 当前角色模板数据
         tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
@@ -335,7 +335,7 @@ def update_character_config_data(value):
     value -- 角色数据
     """
     update_count = 0
-    # 更新角色素质、经验、宝珠、能力
+    # 更新角色素质、经验、宝珠、能力、设置
     # 素质
     if len(value.talent) != len(game_config.config_talent):
         for key in game_config.config_talent:
@@ -360,6 +360,12 @@ def update_character_config_data(value):
         for key in game_config.config_ability:
             if key not in value.ability:
                 value.ability[key] = 0
+                update_count += 1
+    # 设置
+    if len(value.chara_setting) != len(game_config.config_chara_setting):
+        for key in game_config.config_chara_setting:
+            if key not in value.chara_setting:
+                value.chara_setting[key] = 0
                 update_count += 1
     return update_count
 

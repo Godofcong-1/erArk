@@ -1036,6 +1036,14 @@ msgstr ""
 msgid "仅使用角色专属文本|使用通用文本+角色专属文本"
 msgstr ""
 
+#: .\data\csv\CharaSetting.csv:8
+msgid "是否设为收藏角色"
+msgstr ""
+
+#: .\data\csv\CharaSetting.csv:8
+msgid "当招募的干员数量过多时，可以将心仪的角色设为收藏角色，方便在干员位置等面板进行快速筛选"
+msgstr ""
+
 #: .\data\csv\City.csv:8
 msgid "多索雷斯"
 msgstr ""

@@ -33,6 +33,10 @@ class All_Npc_Position_Panel:
         """ 当前绘制的食物类型 """
         self.handle_panel: panel.PageHandlePanel = None
         """ 当前名字列表控制面板 """
+        self.select_type = 0
+        """ 当前筛选类型 """
+        self.move_type = 0
+        """ 当前移动类型 """
 
     def draw(self):
         """绘制对象"""
@@ -40,7 +44,7 @@ class All_Npc_Position_Panel:
 
         draw_width = self.width / 3
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 60, 3, self.width, 1, 1, 0)
-        self.move_type = 0
+        select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
         while 1:
@@ -66,6 +70,29 @@ class All_Npc_Position_Panel:
                 line_feed.draw()
                 line_feed.draw()
                 return_list.append(name_draw.return_text)
+
+            # 人员筛选
+            info_text = _("选择人员筛选方式：")
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+            for select_type_id in range(len(select_type_list)):
+                if select_type_id == self.select_type:
+                    select_type_text = f"▶{select_type_list[select_type_id]}          "
+                    now_draw = draw.NormalDraw()
+                    now_draw.text = select_type_text
+                    now_draw.style = "gold_enrod"
+                    now_draw.width = draw_width
+                    now_draw.draw()
+                else:
+                    draw_text = f"  {select_type_list[select_type_id]}     "
+                    now_draw = draw.LeftButton(
+                        draw_text, select_type_list[select_type_id], len(draw_text) * 2, cmd_func=self.select_type_change, args=(select_type_id,)
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+            line_feed.draw()
 
             # 移动类型切换按钮
             info_text = _("选择召集/移动方式：")
@@ -100,17 +127,23 @@ class All_Npc_Position_Panel:
             npc_id_got_list = sorted(cache.npc_id_got)
             for npc_id in npc_id_got_list:
                 if npc_id != 0:
-                    chara_count += 1
+                    character_data = cache.character_data[npc_id]
+                    # 收藏筛选
+                    if self.select_type == 1 and character_data.chara_setting[2] != 1:
+                        continue
+                    # 访客筛选
+                    if self.select_type == 2 and npc_id not in cache.rhodes_island.visitor_info:
+                        continue
                     # npc_list.append(npc_id)
 
                     # 角色属性与信息
-                    character_data = cache.character_data[npc_id]
                     name = character_data.name
                     id = str(character_data.adv).rjust(4,'0')
                     scene_position = character_data.position
                     scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
                     if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
                         scene_position_str = scene_position_str[:-2] + "入口"
+                    chara_count += 1
 
                     # 输出干员名字
                     now_draw_text = f"[{id}]{name}"
@@ -165,6 +198,10 @@ class All_Npc_Position_Panel:
     def move_type_change(self, new_type: int):
         """移动类型切换"""
         self.move_type = new_type
+
+    def select_type_change(self, new_type: int):
+        """筛选类型切换"""
+        self.select_type = new_type
 
     def move(self, character_id: int):
         """移动"""
