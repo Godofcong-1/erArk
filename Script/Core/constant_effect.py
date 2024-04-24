@@ -484,6 +484,10 @@ class BehaviorEffect:
     """ 指令_专用结算 （早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里 """
     AROMATHERAPY_ADD_ADJUST = 521
     """ 指令_专用结算 （香薰疗愈用）对各配方结算各效果 """
+    URETHRAL_SWAB_ADD_ADJUST = 522
+    """ 指令_专用结算 （尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
+    URETHRAL_FINGER_INSERTION_ADD_ADJUST = 523
+    """ 指令_专用结算 （尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -623,6 +627,8 @@ class BehaviorEffect:
     """ 道具_增减 使用了一个干员携袋 """
     USE_CONDOM = 953
     """ 道具_增减 使用了一个避孕套 """
+    USE_URETHRAL_SWAB = 954
+    """ 道具_增减 使用了一个尿道棉棒 """
     DELETE_FOOD = 991
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992

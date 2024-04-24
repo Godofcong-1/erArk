@@ -13296,12 +13296,16 @@ msgstr ""
 msgid "{Name}触发了H时{TargetName}体力为零中断的地文"
 msgstr ""
 
-#: .\data\talk\sex\urethral_insertion.csv:6
-msgid "{Name}触发了尿道插入指令的地文"
+#: .\data\talk\sex\urethral_finger_insertion.csv:6
+msgid "{Name}对{TargetName}触发了尿道指姦指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\urethral_sex.csv:6
+msgid "{Name}对{TargetName}触发了尿道姦指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\urethral_swab.csv:6
-msgid "{Name}触发了尿道棉棒指令的地文"
+msgid "{Name}对{TargetName}触发了尿道棉棒指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\urine_collector.csv:6

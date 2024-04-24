@@ -244,6 +244,8 @@ cid,effect_name,effect_type,effect
 519,MILK_ADD_ADJUST,指令_专用结算,（挤奶用）把交互对象的乳汁转移到厨房的冰箱里
 520,SALUTATION_3_ADD_ADJUST,指令_专用结算,（早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里
 521,AROMATHERAPY_ADD_ADJUST,指令_专用结算,（香薰疗愈用）对各配方结算各效果
+522,URETHRAL_SWAB_ADD_ADJUST,指令_专用结算,（尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+523,URETHRAL_FINGER_INSERTION_ADD_ADJUST,指令_专用结算,（尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -316,6 +318,7 @@ cid,effect_name,effect_type,effect
 951,USE_COLLAR,道具_增减,使用了一个项圈
 952,USE_BAG,道具_增减,使用了一个干员携袋
 953,USE_CONDOM,道具_增减,使用了一个避孕套
+954,USE_URETHRAL_SWAB,道具_增减,使用了一个尿道棉棒
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
 993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中

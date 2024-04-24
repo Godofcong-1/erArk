@@ -5045,7 +5045,7 @@ msgid "相机"
 msgstr ""
 
 #: .\data\csv\Item.csv:10
-msgid "可以用来拍照。"
+msgid "可以用来拍照，暂未实装。"
 msgstr ""
 
 #: .\data\csv\Item.csv:11
@@ -5053,7 +5053,7 @@ msgid "录像机"
 msgstr ""
 
 #: .\data\csv\Item.csv:11
-msgid "可以用来录像。"
+msgid "可以用来录像，暂未实装。"
 msgstr ""
 
 #: .\data\csv\Item.csv:12
@@ -5200,6 +5200,10 @@ msgstr ""
 msgid "绳子"
 msgstr ""
 
+#: .\data\csv\Item.csv:32
+msgid "暂未实装"
+msgstr ""
+
 #: .\data\csv\Item.csv:33
 msgid "眼罩"
 msgstr ""
@@ -5230,6 +5234,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:39
 msgid "灭菌棉签"
+msgstr ""
+
+#: .\data\csv\Item.csv:39
+msgid "用于进行尿道的开发，需要【技巧】至少为5级才能使用，每次使用消耗一个"
 msgstr ""
 
 #: .\data\csv\Item.csv:40

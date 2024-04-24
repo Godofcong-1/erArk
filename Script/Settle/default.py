@@ -2919,6 +2919,27 @@ def handle_use_condom(
     character_data.item[120] -= 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_URETHRAL_SWAB)
+def handle_use_urethral_swab(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个尿道棉棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[139] -= 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_URINATE)
 def handle_target_add_urinate(
         character_id: int,
@@ -4750,6 +4771,86 @@ def handle_aromatherapy_add_adjust(
         target_character_data.mana_point = target_character_data.mana_point_max
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_SWAB_ADD_ADJUST)
+def handle_target_u_adjust_add_pain_not_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于插入等级的调整，棉棒默认为无影响
+        dilate_level = target_data.ability[11]
+        size_adjust = attr_calculation.get_pain_adjust(dilate_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17,base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_FINGER_INSERTION_ADD_ADJUST)
+def handle_target_u_adjust_add_pain_not_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于插入等级的调整，手指为-2级扩张
+        dilate_level = target_data.ability[11] - 2
+        size_adjust = attr_calculation.get_pain_adjust(dilate_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17,base_value = 400, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,
@@ -5780,16 +5881,16 @@ def handle_target_u_adjust_add_pain(
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 扩长等级相对于阴茎等级的调整，因为尿道非常小，所以相对于V和A，初始+1-4 = -3
         jj_size = character_data.pl_ability.jj_size
         dilate_level = target_data.ability[11]
-        final_level = dilate_level - jj_size + 1
+        final_level = dilate_level - jj_size - 3
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
         final_adjust = pain_adjust * size_adjust
 
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 1000, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_W_ADJUST_ADD_PAIN)
@@ -5822,16 +5923,16 @@ def handle_target_w_adjust_add_pain(
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 扩长等级相对于阴茎等级的调整，因为子宫较小，所以相对于V和A，初始+1-2=-1
         jj_size = character_data.pl_ability.jj_size
         dilate_level = target_data.ability[12]
-        final_level = dilate_level - jj_size + 1
+        final_level = dilate_level - jj_size - 1
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
         final_adjust = pain_adjust * size_adjust
 
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)

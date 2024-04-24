@@ -5047,17 +5047,82 @@ def handle_double_penetration():
     constant.Instruct.URETHRAL_SWAB,
     constant.InstructType.SEX,
     _("尿道棉棒"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
-     constant_promise.Premise.HAVE_COTTON_STICK},
+    {
+    constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.IS_H,
+    constant_promise.Premise.HAVE_COTTON_STICK,
+    constant_promise.Premise.TECHNIQUE_GE_5,
+    },
 )
 def handle_urethral_swab():
     """处理尿道棉棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.URETHRAL_SWAB
-    character_data.state = constant.CharacterStatus.STATUS_URETHRAL_SWAB
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.URETHRAL_SWAB
+        character_data.state = constant.CharacterStatus.STATUS_URETHRAL_SWAB
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.URETHRAL_FINGER_INSERTION,
+    constant.InstructType.SEX,
+    _("尿道指姦"),
+    {
+    constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.IS_H,
+    constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.T_U_DILATE_GE_2,
+    },
+)
+def handle_urethral_finger_insertion():
+    """处理尿道指姦指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.URETHRAL_FINGER_INSERTION
+        character_data.state = constant.CharacterStatus.STATUS_URETHRAL_FINGER_INSERTION
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.URETHRAL_SEX,
+    constant.InstructType.SEX,
+    _("尿道姦"),
+    {
+    constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.IS_H,
+    constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.T_U_DILATE_GE_5,
+    },
+)
+def handle_urethral_sex():
+    """处理尿道姦指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.URETHRAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_URETHRAL_SEX
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 

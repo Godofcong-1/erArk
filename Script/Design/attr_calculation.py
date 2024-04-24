@@ -545,9 +545,13 @@ def get_pain_adjust(value: int, level_flag = False) -> int:
         level = value
     else:
         level = get_status_level(value)
-    if level == -2:
+    if level <= -4:
+        just = 50
+    elif level == -3:
+        just = 20
+    elif level == -2:
         just = 10
-    if level == -1:
+    elif level == -1:
         just = 5
     elif level == 0:
         just = 3
@@ -569,7 +573,7 @@ def get_pain_adjust(value: int, level_flag = False) -> int:
         just = 0.6
     elif level == 9:
         just = 0.4
-    elif level == 10:
+    elif level >= 10:
         just = 0.2
     return just
 
