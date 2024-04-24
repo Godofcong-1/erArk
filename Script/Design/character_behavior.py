@@ -29,6 +29,7 @@ from Script.Design import (
     handle_talent,
     handle_ability,
     update,
+    handle_instruct,
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel, ejaculation_panel
@@ -275,7 +276,8 @@ def judge_character_tired_sleep(character_id : int):
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
                     pl_character_data.behavior.duration = 5
-                    # update.game_update_flow(5)
+                    handle_instruct.instruct_filter_H_change(False)
+                    update.game_update_flow(5)
 
                 # 新：交给指令里的end_h结算(旧：数据结算)
                 # character_data.sp_flag.is_h = False
@@ -288,6 +290,8 @@ def judge_character_tired_sleep(character_id : int):
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
             target_data.sp_flag.is_h = False
+            handle_instruct.instruct_filter_H_change(False)
+            update.game_update_flow(5)
 
 
 def judge_character_status(character_id: int) -> int:
