@@ -152,6 +152,8 @@ class Food:
         # """ 是否是水果 """
         self.milk_ml: int = 0
         """ 牛奶毫升数 """
+        self.urine_ml: int = 0
+        """ 圣水的毫升数 """
 
 
 class Recipes:
@@ -673,7 +675,9 @@ class Behavior:
         self.book_name: str = ""
         """ 前提结算用:书籍名字 """
         self.milk_ml: int = 0
-        """ 前提结算用:榨出母乳的毫升数 """
+        """ 前提结算用:母乳的毫升数 """
+        self.urine_ml: int = 0
+        """ 前提结算用:圣水的毫升数 """
         self.h_interrupt_chara_name: str = ""
         """ 前提结算用:打断H的角色的名字 """
 
@@ -830,6 +834,8 @@ class Rhodes_Island:
         """ 已治疗的患者总人数 """
         self.cure_income_all: int = 0
         """ 至今为止的治疗总收入 """
+        self.urine_in_fridge: Dict[int, Tuple[int]] = {}
+        """ 收集的每个干员的圣水量，干员id:圣水ml存量 """
 
         # 文职区
         self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}
@@ -901,7 +907,6 @@ class Rhodes_Island:
 
 
 '''
-
         self.daily_necessities : int = 0
         """ 生活必需品数量 """
         self.common_medicinal_materials : int = 0

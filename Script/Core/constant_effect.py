@@ -901,8 +901,14 @@ class SecondEffect:
     """ 增加尿意（持续性利尿剂） """
     ADD_TIRED = 403
     """ 维持疲劳和熟睡值（安眠药） """
-    ADD_MILK = 404
-    """ 增加乳汁（挤奶） """
+    MILKING_MACHINE = 404
+    """ 角色的奶量转化为乳汁（搾乳机） """
+    URINE_COLLECTOR = 405
+    """ 角色的尿液转化为圣水（采尿器） """
+    B_ORGASM_TO_MILK = 406
+    """ 结算因B绝顶而被迫喷乳 """
+    U_ORGASM_TO_PEE = 407
+    """ 结算因U绝顶而被迫漏尿 """
 
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_双方归零 """

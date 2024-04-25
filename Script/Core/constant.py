@@ -452,6 +452,8 @@ class CharacterStatus:
     """ 针 """
     STATUS_MILKING_MACHINE_OFF = 631
     """ 取下搾乳机 """
+    STATUS_URINE_COLLECTOR_OFF = 632
+    """ 取下采尿器 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
     STATUS_HOLD_CHILD = 801
@@ -935,8 +937,8 @@ class Behavior:
 
     MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """
-    URINE_COLLECTOR = 602
-    """ 采尿器 """
+    URINE_COLLECTOR_ON = 602
+    """ 装上采尿器 """
     BONDAGE = 603
     """ 绳子 """
     PATCH = 604
@@ -948,6 +950,8 @@ class Behavior:
 
     MILKING_MACHINE_OFF = 631
     """ 取下搾乳机 """
+    URINE_COLLECTOR_OFF = 632
+    """ 取下采尿器 """
 
     UNDRESS = 701
     """ 脱衣服 """
@@ -1527,6 +1531,11 @@ class SecondBehavior:
     """ 结算无觉刻印5 """
     UNCONSCIOUS_MARK_6 = 1066
     """ 结算无觉刻印6 """
+
+    B_ORGASM_TO_MILK = 1071
+    """ 结算因B绝顶而被迫喷乳 """
+    U_ORGASM_TO_PEE = 1072
+    """ 结算因U绝顶而被迫漏尿 """
 
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
@@ -2151,8 +2160,10 @@ class Instruct:
     """ 装上搾乳机 """
     MILKING_MACHINE_OFF = 0
     """ 取下搾乳机 """
-    URINE_COLLECTOR = 0
-    """ 采尿器 """
+    URINE_COLLECTOR_ON = 0
+    """ 装上采尿器 """
+    URINE_COLLECTOR_OFF = 0
+    """ 取下采尿器 """
     BONDAGE = 0
     """ 绳子 """
     PATCH = 0

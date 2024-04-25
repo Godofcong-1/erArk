@@ -677,6 +677,14 @@ def orgasm_effect(character_id: int):
                     elif pre_data % 3 == 2:
                         # now_draw.text = _("\n触发强绝顶\n")
                         character_data.second_behavior[num + 2] = 1
+                # B绝顶喷乳，需要乳汁量到80%
+                if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):
+                    # now_draw.text += _("\n触发B绝顶喷乳\n")
+                    character_data.second_behavior[1071] = 1
+                # U绝顶排尿，需要尿意条到80%
+                if orgasm == 6 and handle_premise.handle_urinate_ge_80(character_id):
+                    # now_draw.text += _("\n触发U绝顶排尿\n")
+                    character_data.second_behavior[1072] = 1
                 # now_draw.draw()
 
                 # 刷新记录

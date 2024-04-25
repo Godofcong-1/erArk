@@ -12579,6 +12579,38 @@ def handle_target_not_milking_machine(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.TARGET_NOW_URINE_COLLECTOR)
+def handle_target_now_urine_collector(character_id: int) -> int:
+    """
+    交互对象正在采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[5][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR)
+def handle_target_not_urine_collector(character_id: int) -> int:
+    """
+    交互对象没有在采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[5][1]:
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.NOW_CONDOM)
 def handle_now_condom(character_id: int) -> int:
     """
@@ -16463,6 +16495,22 @@ def handle_t_u_dilate_ge_2(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.ability[11] >= 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_U_DILATE_GE_3)
+def handle_t_u_dilate_ge_3(character_id: int) -> int:
+    """
+    校验交互对象是否交互对象Ｕ扩张>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.ability[11] >= 3:
         return 1
     return 0
 

@@ -4156,20 +4156,29 @@ def handle_milking_machine_off():
 
 
 @add_instruct(
-    constant.Instruct.URINE_COLLECTOR,
+    constant.Instruct.URINE_COLLECTOR_ON,
     constant.InstructType.SEX,
-    _("采尿器"),
+    _("装上采尿器"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
+     constant_promise.Premise.T_U_DILATE_GE_3,
+     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
      constant_promise.Premise.HAVE_URINE_COLLECTOR},
 )
-def handle_urine_collector():
-    """处理采尿器指令"""
+def handle_urine_collector_on():
+    """处理装上采尿器指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.URINE_COLLECTOR
-    character_data.state = constant.CharacterStatus.STATUS_URINE_COLLECTOR
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.URINE_COLLECTOR_ON
+        character_data.state = constant.CharacterStatus.STATUS_URINE_COLLECTOR
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 10
     update.game_update_flow(10)
 
