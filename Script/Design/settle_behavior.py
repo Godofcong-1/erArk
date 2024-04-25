@@ -700,35 +700,38 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     now_draw_text = ""
 
     # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
-    happy_count = 0
+    # 或检测单次H中总绝顶次数，5次快乐1,20次快乐2,50次快乐3
+    single_happy_count = 0
+    all_happy_count = 0
     for orgasm in range(8):
-        happy_count += character_data.h_state.orgasm_count[orgasm][0]
+        single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
+        all_happy_count += character_data.h_state.orgasm_count[orgasm][1]
         # 计数归零
         character_data.h_state.orgasm_count[orgasm][0] = 0
     # print(f"debug happy_count = {happy_count}")
-    if happy_count >= 2 and character_data.ability[13] <= 0:
+    if character_data.ability[13] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):
         character_data.ability[13] = 1
         character_data.second_behavior[1030] = 1
         # 至少提升为欲望1
-        if character_data.ability[33] <= 0:
+        if character_data.ability[33] < 0:
             character_data.ability[33] = 1
-            now_draw_text += _(f"{character_data.name}的欲望提升至1级\n")
-    if happy_count >= 8 and character_data.ability[13] <= 1:
+            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至1级\n")
+    if character_data.ability[13] <= 1 and (single_happy_count >= 8 or all_happy_count >= 20):
         character_data.ability[13] = 2
         character_data.second_behavior[1031] = 1
         # 至少提升为欲望3
-        if character_data.ability[33] <= 3:
+        if character_data.ability[33] < 3:
             character_data.ability[33] = 3
-            now_draw_text += _(f"{character_data.name}的欲望提升至3级\n")
-    if happy_count >= 16 and character_data.ability[13] <= 2:
+            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至3级\n")
+    if character_data.ability[13] <= 2 and (single_happy_count >= 16 or all_happy_count >= 50):
         character_data.ability[13] = 3
         character_data.second_behavior[1032] = 1
         # 至少提升为欲望5
-        if character_data.ability[33] <= 5:
+        if character_data.ability[33] < 5:
             character_data.ability[33] = 5
-            now_draw_text += _(f"{character_data.name}的欲望提升至5级\n")
+            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至5级\n")
 
-    # 屈服刻印检测屈服+恭顺+羞耻/5，1000以上屈服1,3000以上屈服2,10000以上屈服3
+    # 屈服刻印检测屈服+恭顺+羞耻/5，30000屈服1，50000屈服2，100000屈服3
     yield_count = 0
     yield_count += character_data.status_data[10]
     yield_count += character_data.status_data[15]
@@ -737,56 +740,58 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         character_data.ability[14] = 1
         character_data.second_behavior[1033] = 1
         # 至少提升为顺从1
-        if character_data.ability[31] <= 0:
+        if character_data.ability[31] < 1:
             character_data.ability[31] = 1
-            now_draw_text += _(f"{character_data.name}的顺从提升至1级\n")
+            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至1级\n")
     if yield_count >= 50000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         # 至少提升为顺从3
-        if character_data.ability[31] <= 3:
+        if character_data.ability[31] < 3:
             character_data.ability[31] = 3
-            now_draw_text += _(f"{character_data.name}的顺从提升至3级\n")
+            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至3级\n")
     if yield_count >= 100000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         # 至少提升为顺从5
-        if character_data.ability[31] <= 5:
+        if character_data.ability[31] < 5:
             character_data.ability[31] = 5
-            now_draw_text += _(f"{character_data.name}的顺从提升至5级\n")
+            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至5级\n")
 
     # 苦痛刻印检测苦痛，20000苦痛1，40000苦痛2，80000苦痛3
     pain_count = 0
     pain_count += character_data.status_data[17]
+    # 单次增加量
     if 17 in change_data.status_data:
         pain_count += change_data.status_data[17] * 5
     if pain_count >= 20000 and character_data.ability[15] <= 0:
         character_data.ability[15] = 1
         character_data.second_behavior[1036] = 1
         # 至少提升为受虐1
-        if character_data.ability[36] <= 0:
+        if character_data.ability[36] < 1:
             character_data.ability[36] = 1
-            now_draw_text += _(f"{character_data.name}的受虐提升至1级\n")
+            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至1级\n")
     if pain_count >= 40000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
         # 至少提升为受虐3
-        if character_data.ability[36] <= 3:
+        if character_data.ability[36] < 3:
             character_data.ability[36] = 3
-            now_draw_text += _(f"{character_data.name}的受虐提升至3级\n")
+            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至3级\n")
     if pain_count >= 80000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
         # 至少提升为受虐5
-        if character_data.ability[36] <= 5:
+        if character_data.ability[36] < 5:
             character_data.ability[36] = 5
-            now_draw_text += _(f"{character_data.name}的受虐提升至5级\n")
+            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至5级\n")
 
     # 无觉刻印未实装
 
     # 恐怖刻印检测恐怖+苦痛/5，20000恐怖1，40000恐怖2，80000恐怖3
     terror_count = 0
     terror_count += character_data.status_data[18]
+    # 单次增加量
     if 18 in change_data.status_data:
         terror_count += character_data.status_data[18] * 5
     if 17 in change_data.status_data:
@@ -801,9 +806,10 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
-    # 反发刻印检测反感+抑郁/5+恐怖/5+苦痛/10，10000反发1，30000反发2，80000反发3
+    # 反发刻印检测反感+抑郁+恐怖+苦痛，10000反发1，30000反发2，80000反发3
     hate_count = 0
-    terror_count += character_data.status_data[20]
+    hate_count += character_data.status_data[20]
+    # 单次增加量
     if 20 in change_data.status_data:
         hate_count += character_data.status_data[20] * 5
     if 18 in change_data.status_data:
@@ -811,7 +817,7 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     if 19 in change_data.status_data:
         hate_count += character_data.status_data[19]
     if 17 in change_data.status_data:
-        hate_count += character_data.status_data[17] / 2
+        hate_count += character_data.status_data[17]
     if hate_count >= 10000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1
