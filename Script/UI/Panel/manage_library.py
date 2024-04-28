@@ -127,6 +127,8 @@ class Manage_Library_Panel:
 
             # 按类型遍历全图书，寻找已经被借出的书籍
             for book_type_cid in game_config.config_book_type:
+                if book_type_cid == 0:
+                    continue
                 book_type_data = game_config.config_book_type[book_type_cid]
                 for book_cid in game_config.config_book_type_data[book_type_cid]:
                     book_data = game_config.config_book[book_cid]
