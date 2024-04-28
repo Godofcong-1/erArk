@@ -1632,6 +1632,8 @@ class CharacterBodyText:
                     posture=sex_posture,
                 )
                 ui_text_lv = (character_data.ability[4] + 1 ) // 2
+                ui_text_lv = max(1, ui_text_lv)
+                ui_text_lv = min(4, ui_text_lv)
                 ui_text_cid = f"V感觉{ui_text_lv}"
                 ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             # V感觉描述
@@ -1660,6 +1662,8 @@ class CharacterBodyText:
                     posture=a_sex_posture,
                 )
                 ui_text_lv = (character_data.ability[5] + 1 ) // 2
+                ui_text_lv = max(1, ui_text_lv)
+                ui_text_lv = min(4, ui_text_lv)
                 ui_text_cid = f"A感觉{ui_text_lv}"
                 ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             # A感觉描述
