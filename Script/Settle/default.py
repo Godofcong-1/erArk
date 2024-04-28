@@ -6015,6 +6015,8 @@ def handle_high_obscenity_failed_adjust(
         base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -3, change_data)
         # 降信赖
         now_lust_multiple = target_data.trust * 0.2 + 2
+        if now_lust_multiple < 0:
+            now_lust_multiple *= -1
         target_data.trust -= now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -6066,7 +6068,9 @@ def handle_do_h_failed_adjust(
         # 降好感
         base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -15, change_data)
         # 降信赖
-        now_lust_multiple = target_data.trust * 0.4 - 5
+        now_lust_multiple = target_data.trust * 0.4 + 5
+        if now_lust_multiple < 0:
+            now_lust_multiple *= -1
         target_data.trust -= now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
