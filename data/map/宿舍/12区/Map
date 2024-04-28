@@ -1,0 +1,21 @@
+╔══════════╦╗┅┅┅┅╔╦══════════════╦═════════════╦╗┅┅┅┅╔╗
+║  <mapbutton>舍管房</mapbutton>  ║│    │║      <mapbutton>1212</mapbutton>    ║      <mapbutton>1213</mapbutton>   ║│    │║
+║     ╟ ┐  ║      ║  ╔┅┅╗        ║  ╔┅┅╗       ║      ║
+║     ║ │ ▓║      ║  ║  ║     ▓▓ ║  ║  ║    ▓▓ ║      ║
+╚┅┅┅┅┅╠═╧══╝      ╚┄┄╩══╩════════╩┄┄╩══╩═══════╝      ║
+╔  <mapbutton>0</mapbutton>  ┆                     <mapbutton>外走廊</mapbutton>                    ║
+╠══╤══╩┄╦┄═══╤══╗  ╔══╤═══┄╦═┄══╤══╗  ╔══╤═══┄╦═┄══╤══╣
+║  │  ══╬══  │  ║  ║  │  ══╬══  │  ║  ║  │  ══╬══  │  ║
+╟─┅┘<mapbutton>1201</mapbutton>║<mapbutton>1202</mapbutton>└┅─╢  ╟─┅┘<mapbutton>1203</mapbutton>║<mapbutton>1204</mapbutton>└┅─╢  ╟─┅┘<mapbutton>1205</mapbutton>║<mapbutton>1206</mapbutton>└┅─╢
+║       ║       ║  ║       ║       ║  ║       ║       ║
+║       ║       ║  ║       ║       ║  ║       ║       ║
+║ ▓▓    ║    ▓▓ ║  ║ ▓▓    ║    ▓▓ ║  ║ ▓▓    ║    ▓▓ ║
+╠═══════╩═══════╝  ╚═══════╩═══════╝  ╚═══════╩═══════╣
+║                          <mapbutton>内走廊</mapbutton>                     ║
+╠══╤═══┄╦═┄══╤══╦═┄══╤══╗             ╔══╤═══┄╦═┄══╤══╣
+║  │  ══╬══  │  ╠══  │  ║             ║  │  ══╬══  │  ║
+║─┅┘<mapbutton>1207</mapbutton>║<mapbutton>1208</mapbutton>└┅─╢<mapbutton>1209</mapbutton>└┅─║             ╟─┅┘<mapbutton>1210</mapbutton>║<mapbutton>1211</mapbutton>└┅─╢
+║       ║       ║       ║             ║       ║       ║
+║       ║       ║       ║             ║       ║       ║
+║ ▓▓    ║    ▓▓ ║    ▓▓ ║    │    │   ║ ▓▓    ║    ▓▓ ║
+╚═══════╩═══════╩═══════╩════╧┅┅┅┅╧═══╩═══════╩═══════╝
