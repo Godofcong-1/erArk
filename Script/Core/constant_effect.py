@@ -601,6 +601,10 @@ class BehaviorEffect:
     """ 道具_增减 交互对象戴上搾乳机 """
     TARGET_MILKING_MACHINE_OFF = 922
     """ 道具_增减 交互对象取下搾乳机 """
+    TARGET_URINE_COLLECTOR_ON = 923
+    """ 道具_增减 交互对象戴上采尿器 """
+    TARGET_URINE_COLLECTOR_OFF = 924
+    """ 道具_增减 交互对象取下采尿器 """
     USE_BODY_LUBRICANT = 941
     """ 道具_增减 使用了一个润滑液 """
     USE_PHILTER = 942

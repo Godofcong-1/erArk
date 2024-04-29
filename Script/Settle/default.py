@@ -2709,6 +2709,50 @@ def handle_target_milking_machine_off(
     target_data.h_state.body_item[4][1] = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINE_COLLECTOR_ON)
+def handle_target_urine_collector_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象戴上采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[5][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINE_COLLECTOR_OFF)
+def handle_target_urine_collector_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象取下采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[5][1] = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_DIURETICS_ONCE)
 def handle_use_diuretics_once(
         character_id: int,
