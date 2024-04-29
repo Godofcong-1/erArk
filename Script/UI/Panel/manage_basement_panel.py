@@ -136,6 +136,7 @@ class Manage_Basement_Panel:
         # 进行一轮刷新
         basement.update_work_people()
         basement.update_facility_people()
+        basement.get_base_updata()
 
         while 1:
             return_list = []
