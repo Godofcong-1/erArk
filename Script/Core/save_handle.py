@@ -196,6 +196,10 @@ def input_load_save(save_id: str):
         if all_cid not in loaded_dict["rhodes_island"].materials_resouce:
             loaded_dict["rhodes_island"].materials_resouce[all_cid] = 0
             update_count += 1
+    for all_cid in game_config.config_facility_open:
+        # 没有记录的设施改为初始关闭
+        if all_cid not in loaded_dict["rhodes_island"].facility_open:
+            loaded_dict["rhodes_island"].facility_open[all_cid] = False
 
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()

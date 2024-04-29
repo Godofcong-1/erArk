@@ -37,7 +37,7 @@ class Building_Panel:
     def draw(self):
         """绘制对象"""
 
-        character_data: game_type.Character = cache.character_data[0]
+        basement.get_base_updata()
 
         title_text = "基建系统"
         building_type_list = [_("区块总览"), _("特殊房间")]
