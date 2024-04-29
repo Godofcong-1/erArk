@@ -3,7 +3,7 @@ from typing import Dict, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,character_handle, handle_premise, attr_calculation, clothing
+from Script.Design import basement,character_handle, handle_premise, attr_calculation, clothing, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -551,7 +551,9 @@ class Debug_Panel:
                     cache.npc_id_got.discard(0)
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
-                        character_data.position = character_data.dormitory
+                        # 将字符串中的"01区"替换为"1区"
+                        character_data.dormitory = character_data.dormitory.replace("01区","1区")
+                        character_data.position = map_handle.get_map_system_path_for_str(character_data.dormitory)
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
