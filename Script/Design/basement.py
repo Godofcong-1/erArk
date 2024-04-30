@@ -100,9 +100,15 @@ def get_base_updata():
 
         # 如果满足设施开放的前提条件，则开放该设施
         for open_cid in game_config.config_facility_open:
+            if game_config.config_facility_open[open_cid] == True:
+                continue
+            # 如果zone_cid和facility_cid相等，则开放该设施
             if game_config.config_facility_open[open_cid].zone_cid == facility_cid:
                 # print(f"debug zone_cid = {game_config.config_facility_open[open_cid].zone_cid}")
                 # print(f"debug facility_cid = {facility_cid}")
+                cache.rhodes_island.facility_open[open_cid] = True
+            # 如果zone_cid和facility_cid除以十的除数相等，且facility_cid的个位数大于等于zone_cid的个位数，则开放该设施
+            elif game_config.config_facility_open[open_cid].zone_cid // 10 == facility_cid // 10 and facility_cid % 10 >= game_config.config_facility_open[open_cid].zone_cid % 10:
                 cache.rhodes_island.facility_open[open_cid] = True
 
     # print(f"debug power_use = {base_data.power_use}")
