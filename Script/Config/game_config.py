@@ -92,6 +92,8 @@ config_facility_effect_data: Dict[str, Set] = {}
 """ 设施效果分类数据 """
 config_facility_open: Dict[int, config_def.Facility_open] = {}
 """ 设施开放数据 """
+config_facility_open_name_set: Set = set()
+""" 设施开放名称集合 """
 config_resouce: Dict[int, config_def.Resouce] = {}
 """ 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
@@ -731,6 +733,7 @@ def load_facility_open():
         now_tem = config_def.Facility_open()
         now_tem.__dict__ = tem_data
         config_facility_open[now_tem.cid] = now_tem
+        config_facility_open_name_set.add(now_tem.name)
 
 
 def load_resouce():
