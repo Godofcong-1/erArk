@@ -206,14 +206,18 @@ config_talk_premise_data: Dict[int, Set] = {}
 """ 口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
 """ 目标配置数据 """
+config_target_premise_data: Dict[int, Set] = {}
+""" 目标前提配置数据 """
+config_target_type_index: Dict[int, List] = {}
+""" 目标配置数据的种类索引 """
+config_target_type: Dict[int, config_def.Target_Type] = {}
+""" 目标类型表 """
 config_target_effect: Dict[int, config_def.TargetEffect] = {}
 """ 目标效果配置 """
 config_target_effect_data: Dict[int, Set] = {}
 """ 目标效果配置数据 """
 config_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
-config_target_premise_data: Dict[int, Set] = {}
-""" 目标前提配置数据 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
 config_event: Dict[str, game_type.Event] = {}
@@ -937,6 +941,7 @@ def load_target():
         now_tem.__dict__ = tem_data
         config_target[now_tem.cid] = now_tem
 
+        # 目标前提数据
         config_target_premise_data.setdefault(now_tem.cid, set())
         if len(now_tem.premise_id):
             if "|" not in now_tem.premise_id:
@@ -945,6 +950,20 @@ def load_target():
                 premise_list = now_tem.premise_id.split('|')
                 for premise_id in premise_list:
                     config_target_premise_data[now_tem.cid].add(premise_id)
+
+        # 目标种类数据
+        config_target_type_index.setdefault(now_tem.type, list())
+        config_target_type_index[now_tem.type].append(now_tem.cid)
+
+
+def load_target_type():
+    """载入目标类型配置"""
+    now_data = config_data["Target_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Target_Type()
+        now_tem.__dict__ = tem_data
+        config_target_type[now_tem.cid] = now_tem
 
 
 def load_target_effect():
@@ -1324,6 +1343,7 @@ def init():
     load_talent_type_data()
     load_talent_gain_data()
     load_target()
+    load_target_type()
     load_target_effect()
     load_week_day()
     load_event()

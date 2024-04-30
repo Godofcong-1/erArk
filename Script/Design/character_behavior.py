@@ -202,9 +202,10 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     character_data: game_type.Character = cache.character_data[character_id]
     PC_character_data: game_type.Character = cache.character_data[0]
     start_time = character_data.behavior.start_time
-    target_list = list(game_config.config_target.keys())
+    all_target_list = list(game_config.config_target.keys())
     premise_data = {}
     target_weight_data = {}
+    null_target_set = set()
 
     # 如果该NPC在H模式，则不赋予新活动，且直接加入结束列表
     if character_data.sp_flag.is_h:
@@ -218,17 +219,58 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     #     if character_data.state not in safe_instruct:
     #         character_data.sp_flag.wait_flag = 1
 
+    # TODO 根据AI行动的类型来判断对target_list进行剪枝
+
+    # 首先判定是否有高优先级的行动
+    type_0_target_list = game_config.config_target_type_index[0]
     target, weight, judge = search_target(
         character_id,
-        target_list,
-        set(),
+        type_0_target_list,
+        null_target_set,
         premise_data,
         target_weight_data,
     )
-    # if character_data.name == "阿米娅":
-    #     print(f"\ndebug 阿米娅的target = {target},weight = {weight},now_time = {now_time}")
-    #     if 5 <= int(target) <= 30:
-    #         print(f"debug position = {character_data.position},move_final_target = {character_data.behavior.move_final_target}")
+    # 将行动列表加到null_target中
+    null_target_set.update(type_0_target_list)
+    # 然后判断是否正在需求链中
+    if judge == 0 and not handle_premise.handle_normal_1(character_id):
+        now_target_list = game_config.config_target_type_index[12]
+        target, weight, judge = search_target(
+            character_id,
+            now_target_list,
+            null_target_set,
+            premise_data,
+            target_weight_data,
+        )
+        null_target_set.update(now_target_list)
+    # TODO 然后判断是否正在助理服务链中
+    # 如果以上都没有，则开始遍历各大类的目标行动
+    if judge == 0:
+        now_target_list = []
+        target_type_list = []
+
+        # 如果已经有now_target_list了，则直接使用
+        if len(now_target_list):
+            now_target_list = now_target_list
+        # 或者有target_type_list，则遍历后加入now_target_list
+        elif len(target_type_list):
+            for target_type in target_type_list:
+                now_target_list.extend(game_config.config_target_type_index[target_type])
+        # 如果还是没有，则遍历所有大类
+        else:
+            now_target_list = all_target_list
+
+        target, weight, judge = search_target(
+            character_id,
+            now_target_list,
+            null_target_set,
+            premise_data,
+            target_weight_data,
+        )
+        # if character_data.name == "阿米娅":
+        #     print(f"\ndebug 阿米娅的target = {target},weight = {weight},now_time = {now_time}")
+        #     if 5 <= int(target) <= 30:
+        #         print(f"debug position = {character_data.position},move_final_target = {character_data.behavior.move_final_target}")
     if judge:
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id

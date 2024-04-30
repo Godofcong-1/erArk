@@ -796,6 +796,17 @@ class Talent_Of_Arts:
     """ 未实装 """
 
 
+class Target_Type:
+    """ AI行动目标的类型表 """
+
+    cid: int
+    """ 类型id """
+    father_type: str
+    """ 父类 """
+    name: str
+    """ 名字 """
+
+
 class Tip:
     """ 提示信息 """
 
@@ -904,5 +915,7 @@ class Target:
     """ 执行的状态机id """
     premise_id: str
     """ 所需前提id """
+    type: int
+    """ 行动类型（见Target_Type） """
     remarks: str
     """ 备注 """
