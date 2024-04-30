@@ -707,6 +707,9 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     now_draw = draw.WaitDraw()
     now_draw_text = ""
 
+    if character_id == 0:
+        return
+
     # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
     # 或检测单次H中总绝顶次数，5次快乐1,20次快乐2,50次快乐3
     single_happy_count = 0
