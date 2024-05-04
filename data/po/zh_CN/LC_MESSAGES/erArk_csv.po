@@ -11260,6 +11260,46 @@ msgstr ""
 msgid "暴行，原雷姆必拓矿业公司安保人员。任职期间表现优秀，于破坏硬目标，要员保护等任务中皆有优异表现。加入罗德岛后，作为近卫干员于罗德岛某作战小队任职。"
 msgstr ""
 
+#: .\data\character\0230_暴行.csv:15
+msgid "#616161"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:29
+msgid "深灰色套頭披肩"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:30
+msgid "黑色無袖開背衫"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:31
+msgid "乳貼"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:32
+msgid "黑灰條文側開短裙"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:33
+msgid "黑色長筒手套"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:34
+msgid "黑色蕾絲內褲"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:35
+msgid "中丹數黑色連褲襪"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:36
+msgid "高筒高跟靴"
+msgstr ""
+
+#: .\data\character\0230_暴行.csv:37
+msgid "爆破錘"
+msgstr ""
+
 #: .\data\character\0233_蔓德拉.csv:4
 msgid "蔓德拉"
 msgstr ""
