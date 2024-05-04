@@ -563,6 +563,8 @@ class Premise:
     """ 时间_当前 到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00） """
     WORK_TIME = "work_time"
     """ 时间_当前 工作时间（工作日早上9:00~中午12:00，下午14:00~下午18:00） """
+    TO_WORK_TIME_OR_WORK_TIME = "to_work_time_or_work_time"
+    """ 时间_当前 到岗时间或工作时间（工作日早上8:40~中午12:00，下午13:40~下午18:00） """
     ALL_ENTERTAINMENT_TIME = "all_entertainment_time"
     """ 时间_当前 全娱乐时间（休息日为工作时间+下班，工作日为仅下班） """
     NOT_ALL_ENTERTAINMENT_TIME = "not_all_entertainment_time"
@@ -836,6 +838,8 @@ class Premise:
     """ 属性_助理 自己的助理属性中的晚安问候服务为-晚安咬 """
     ASSISTANT_SALUTATION_OF_AI_DISABLE = "assistant_salutation_of_ai_disable"
     """ 属性_助理 自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间） """
+    IN_ASSISTANT_AI_LINK = "in_assistant_ai_link"
+    """ 属性_助理 自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候 """
 
     JJ_0 = "jj_0"
     """ 属性_身体部位 自身阴茎大小为短小 """
@@ -1747,6 +1751,8 @@ class Premise:
     """ 属性_源石技艺 交互对象被心控-角色扮演-宠物狗 """
 
 
+    HAVE_WORK = "have_work"
+    """ 属性_工作 自己有工作 """
     WORK_IS_MAINTENANCE_ENGINEER = "work_is_maintenance_engineer"
     """ 属性_工作 自己的工作为检修工程师 """
     WORK_IS_BLACKSMITH = "work_is_blacksmith"

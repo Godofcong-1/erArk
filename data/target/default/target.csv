@@ -192,9 +192,9 @@ ai的目标,,,,
 484,81,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_soak_feet,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为泡脚，则穿回鞋袜并将flag置0
 485,88,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_bathhouse_shower_cloth_type,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为大浴场类_需要换浴衣的娱乐，则清空身上的衣服然后穿回衣柜的衣服并将flag置0
 
-501,571,normal_124567|is_assistant|assistant_help_work_1|not_follow|to_work_time|not_in_dr_off,42,124567正常（可能AI跟随），是助理，开启了助理辅佐服务，没有在跟随，在到岗时间，如果不在博士办公室，则去博士办公室
-502,571,normal_124567|is_assistant|assistant_help_work_1|not_follow|work_time|not_in_dr_off,42,124567正常（可能AI跟随），是助理，开启了助理辅佐服务，没有在跟随，在工作时间，如果不在博士办公室，则去博士办公室
-503,312,normal_124567|is_assistant|assistant_help_work_1|not_follow|work_time|in_dr_off,42,124567正常（可能AI跟随），是助理，开启了助理辅佐服务，没有在跟随，在工作时间，如果在博士办公室，则开始处理公务
+501,571,normal_124567|assistant_help_work_1|not_follow|to_work_time|not_in_dr_off,43,124567正常（可能AI跟随），开启了助理辅佐服务，没有在跟随，在到岗时间，如果不在博士办公室，则去博士办公室
+502,571,normal_124567|assistant_help_work_1|not_follow|work_time|not_in_dr_off,43,124567正常（可能AI跟随），开启了助理辅佐服务，没有在跟随，在工作时间，如果不在博士办公室，则去博士办公室
+503,312,normal_124567|assistant_help_work_1|not_follow|work_time|in_dr_off,43,124567正常（可能AI跟随），了助理辅佐服务，没有在跟随，在工作时间，如果在博士办公室，则开始处理公务
 
 511,701,normal_1267|hunger_ge_80|launch_time|assistant_send_food_1_able,41,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在午饭饭点，且满足助理帮忙买午饭（设定为1，flag为0，且当前为午饭），则进入要买饭状态
 512,522,help_buy_food_flag_1|not_in_food_shop,42,要买饭状态下，且不在取餐区里，则去取餐区

@@ -363,6 +363,28 @@ def handle_work_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TO_WORK_TIME_OR_WORK_TIME)
+def handle_to_work_time_or_work_time(character_id: int) -> int:
+    """
+    到岗时间或工作时间（工作日早上8:40~中午12:00，下午13:40~下午18:00）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = game_time.get_sun_time(character_data.behavior.start_time)
+    # return (now_time == 4) * 100
+    # 首先需要是工作日
+    if game_time.judge_work_today(0):
+        if ((character_data.behavior.start_time.hour == 8 and character_data.behavior.start_time.minute >= 40)
+        or (character_data.behavior.start_time.hour == 13 and character_data.behavior.start_time.minute >= 40)
+        or (9 <= character_data.behavior.start_time.hour < 12)
+        or (14 <= character_data.behavior.start_time.hour < 18)):
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.ALL_ENTERTAINMENT_TIME)
 def handle_all_entertainment_time(character_id: int) -> int:
     """
@@ -9882,6 +9904,19 @@ def handle_target_not_hypnosis_roleplay(character_id: int) -> int:
     return not target_data.hypnosis.roleplay
 
 
+@add_premise(constant_promise.Premise.HAVE_WORK)
+def handle_have_work(character_id: int) -> int:
+    """
+    自己有工作
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type > 0
+
+
 @add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
 def handle_work_is_maintenance_engineer(character_id: int) -> int:
     """
@@ -15371,6 +15406,34 @@ def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
             # print("未晚安问候，不能睡觉")
             return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.IN_ASSISTANT_AI_LINK)
+def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
+    """
+    自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 是否为要买饭或者要送饭
+    if handle_help_make_food_flag_1(character_id):
+        return 1
+    elif handle_help_make_food_flag_2(character_id):
+        return 1
+    elif handle_help_buy_food_flag_1(character_id):
+        return 1
+    elif handle_help_buy_food_flag_2(character_id):
+        return 1
+    elif handle_help_buy_food_flag_3(character_id):
+        return 1
+    # 是否为要早晚安问候
+    elif handle_morning_salutation_flag_1(character_id):
+        return 1
+    elif handle_night_salutation_flag_1(character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.JJ_0)

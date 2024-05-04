@@ -282,6 +282,7 @@ game_time_is_sleep_time,GAME_TIME_IS_SLEEP_TIME,时间_当前,游戏系统时间
 tired_ge_75_or_sleep_time,TIRED_GE_75_OR_SLEEP_TIME,时间_当前,疲劳条≥75%或到了睡觉的时间
 to_work_time,TO_WORK_TIME,时间_当前,到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00）
 work_time,WORK_TIME,时间_当前,工作时间（工作日早上9:00~中午12:00，下午14:00~下午18:00）
+to_work_time_or_work_time,TO_WORK_TIME_OR_WORK_TIME,时间_当前,到岗时间或工作时间（工作日早上8:40~中午12:00，下午13:40~下午18:00）
 all_entertainment_time,ALL_ENTERTAINMENT_TIME,时间_当前,全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
 not_all_entertainment_time,NOT_ALL_ENTERTAINMENT_TIME,时间_当前,非全娱乐时间（休息日为工作时间+下班，工作日为仅下班）
 morning_entertainment_time,MORNING_ENTERTAINMENT_TIME,时间_当前,上午娱乐时间（早上9:00~早上12:00）
@@ -415,6 +416,7 @@ assistant_night_salutation_on,ASSISTANT_NIGHT_SALUTATION_ON,属性_助理,自己
 assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
 assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
 assistant_salutation_of_ai_disable,ASSISTANT_SALUTATION_OF_AI_DISABLE,属性_助理,自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间）
+in_assistant_ai_link,IN_ASSISTANT_AI_LINK,属性_助理,自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候
 
 jj_0,JJ_0,属性_身体部位,自身阴茎大小为短小
 jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通
@@ -589,6 +591,7 @@ t_wfeel_l_3,T_WFEEL_L_3,属性_能力,交互对象Ｗ感觉<3
 t_wfeel_l_5,T_WFEEL_L_5,属性_能力,交互对象Ｗ感觉<5
 t_u_dilate_ge_1,T_U_DILATE_GE_1,属性_能力,交互对象Ｕ扩张>=1
 t_u_dilate_ge_2,T_U_DILATE_GE_2,属性_能力,交互对象Ｕ扩张>=2
+t_u_dilate_ge_3,T_U_DILATE_GE_3,属性_能力,交互对象Ｕ扩张>=3
 t_u_dilate_ge_5,T_U_DILATE_GE_5,属性_能力,交互对象Ｕ扩张>=5
 t_w_dilate_ge_3,T_W_DILATE_GE_3,属性_能力,交互对象Ｗ扩张>=3
 t_w_dilate_ge_5,T_W_DILATE_GE_5,属性_能力,交互对象Ｗ扩张>=5
@@ -876,6 +879,7 @@ t_hypnosis_roleplay_5,TARGET_HYPNOSIS_ROLEPLAY_5,属性_源石技艺,交互对�
 t_hypnosis_roleplay_6,TARGET_HYPNOSIS_ROLEPLAY_6,属性_源石技艺,交互对象被心控-角色扮演-宠物狗
 
 
+have_work,HAVE_WORK,属性_工作,自己有工作
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,属性_工作,自己的工作为检修工程师
 work_is_blacksmith,WORK_IS_BLACKSMITH,属性_工作,自己的工作为铁匠
 work_is_doctor,WORK_IS_DOCTOR,属性_工作,自己的工作为医生
@@ -1096,6 +1100,8 @@ target_now_vibrator_insertion_anal,TARGET_NOW_VIBRATOR_INSERTION_ANAL,道具_使
 target_not_vibrator_insertion,TARGET_NOT_VIBRATOR_INSERTION_ANAL,道具_使用,交互对象A没有在插入震动棒
 target_now_milking_machine,TARGET_NOW_MILKING_MACHINE,道具_使用,交互对象正在搾乳机
 target_not_milking_machine,TARGET_NOT_MILKING_MACHINE,道具_使用,交互对象没有在搾乳机
+target_now_urine_collector,TARGET_NOW_URINE_COLLECTOR,道具_使用,交互对象正在采尿器
+target_not_urine_collector,TARGET_NOT_URINE_COLLECTOR,道具_使用,交互对象没有在采尿器
 now_condom,NOW_CONDOM,道具_使用,自己正戴着避孕套
 now_not_condom,NOW_NOT_CONDOM,道具_使用,自己没有戴着避孕套
 
