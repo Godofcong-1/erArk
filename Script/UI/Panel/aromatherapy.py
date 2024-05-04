@@ -51,12 +51,6 @@ class Aromatherapy_Panel:
             all_info_draw = draw.NormalDraw()
             all_info_draw.width = self.width
 
-            now_text = ""
-            now_text += _(f"\n！实装中！\n")
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-            line_feed.draw()
-
             # 剩余调香次数
             now_text = ""
             now_text += _(f"\n  今日剩余调香次数    ：  {cache.rhodes_island.remaining_aromatherapy_sessions_today}次")
