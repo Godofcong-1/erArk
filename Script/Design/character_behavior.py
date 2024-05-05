@@ -264,7 +264,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             null_target_set.update(now_target_list)
         # 工作准备
         if judge == 0:
-            now_target_list = game_config.config_target_type_index[23]
+            now_target_list = game_config.config_target_type_index[21]
             target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
     # 然后判断娱乐，需要在娱乐时间
