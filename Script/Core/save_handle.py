@@ -371,6 +371,12 @@ def update_character_config_data(value):
             if key not in value.chara_setting:
                 value.chara_setting[key] = 0
                 update_count += 1
+    # 道具
+    if len(value.item) != len(game_config.config_item):
+        for key in game_config.config_item:
+            if key not in value.item:
+                value.item[key] = 0
+                update_count += 1
     return update_count
 
 
