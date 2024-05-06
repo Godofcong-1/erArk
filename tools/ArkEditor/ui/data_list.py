@@ -60,6 +60,7 @@ class DataList(QWidget):
         self.list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.list_widget.customContextMenuRequested.connect(self.right_button_menu)
         self.update_clear = 0
+        self.now_in_moving_flag = False # 是否正在移动条目
 
         # 连接 self.text_edit 的 textChanged 信号到 update_adv_id 方法
         self.chara_id_text_edit.textChanged.connect(self.update_adv_id)
@@ -156,6 +157,26 @@ class DataList(QWidget):
                 delete_action.setText("删除口上")
                 delete_action.triggered.connect(self.delete_talk)
                 menu.addAction(delete_action)
+        # 移动相关
+        if self.list_widget.itemAt(old_position):
+            if self.now_in_moving_flag == False:
+                move_action: QWidgetAction = QWidgetAction(self)
+                move_action.setText("移动该条目")
+                move_action.triggered.connect(self.move_item)
+                menu.addAction(move_action)
+            else:
+                move_up_action: QWidgetAction = QWidgetAction(self)
+                move_up_action.setText("移至选中条目上方")
+                move_up_action.triggered.connect(self.move_to_up)
+                menu.addAction(move_up_action)
+                move_down_action: QWidgetAction = QWidgetAction(self)
+                move_down_action.setText("移至选中条目下方")
+                move_down_action.triggered.connect(self.move_to_down)
+                menu.addAction(move_down_action)
+                move_cancel_action: QWidgetAction = QWidgetAction(self)
+                move_cancel_action.setText("取消移动")
+                move_cancel_action.triggered.connect(self.move_cancel)
+                menu.addAction(move_cancel_action)
         menu.exec(position)
 
     def buton_add(self):
@@ -305,6 +326,88 @@ class DataList(QWidget):
         self.list_widget.insertItem(talk_index + 1, new_item)
         cache_control.now_select_id = talk.cid
         self.update()
+
+    def move_item(self):
+        """移动条目"""
+        self.now_in_moving_flag = True
+        self.edited_item = self.list_widget.currentItem()
+        self.edited_item.setBackground(QColor("light green"))
+
+    def move_to_up(self):
+        """移至选中条目上方"""
+        if self.edited_item is None:
+            return
+        # 获取当前选中的条目的cid
+        current_select_cid = self.list_widget.currentItem().uid
+        # 获取要移动的条目的cid
+        need_move_cid = self.edited_item.uid
+        # 将其加入临时数据中，然后删除原始数据中的要移动的条目
+        cache_control.tem_talk_data[str(int(current_select_cid))] = cache_control.now_talk_data[need_move_cid]
+        cache_control.tem_talk_data[str(int(current_select_cid))].cid = str(int(current_select_cid))
+        del cache_control.now_talk_data[need_move_cid]
+        # 更新当前选中的条目的cid
+        cache_control.now_select_id = current_select_cid
+        # 遍历全部条目
+        for i in range(self.list_widget.count()):
+            # 获取cid
+            now_cid = self.list_widget.item(i).uid
+            # 检测是否为当前选中的条目
+            if now_cid == current_select_cid:
+                # 将其序号+1然后加入临时数据中
+                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
+                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
+                # 删除原始数据中的当前选中的条目
+                del cache_control.now_talk_data[now_cid]
+                # 序号+1来更新当前选中的条目的cid
+                current_select_cid = str(int(current_select_cid) + 1)
+        # 如果临时数据中有数据，则将其更新至原始数据中
+        if len(cache_control.tem_talk_data):
+            cache_control.now_talk_data.update(cache_control.tem_talk_data)
+            cache_control.tem_talk_data.clear()
+            self.now_in_moving_flag = False
+        # 更新界面
+        self.update()
+
+    def move_to_down(self):
+        """移至选中条目下方"""
+        if self.edited_item is None:
+            return
+        # 获取当前选中的条目的cid
+        current_select_cid = self.list_widget.currentItem().uid
+        # 获取要移动的条目的cid
+        need_move_cid = self.edited_item.uid
+        # 将其加入临时数据中，然后删除原始数据中的要移动的条目
+        cache_control.tem_talk_data[str(int(current_select_cid) + 1)] = cache_control.now_talk_data[need_move_cid]
+        cache_control.tem_talk_data[str(int(current_select_cid) + 1)].cid = str(int(current_select_cid) + 1)
+        del cache_control.now_talk_data[need_move_cid]
+        # 更新当前选中的条目的cid
+        current_select_cid = str(int(current_select_cid) + 1)
+        cache_control.now_select_id = current_select_cid
+        # 遍历全部条目
+        for i in range(self.list_widget.count()):
+            # 获取cid
+            now_cid = self.list_widget.item(i).uid
+            # 检测是否为当前选中的条目
+            if now_cid == current_select_cid:
+                # 将其序号+1然后加入临时数据中
+                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
+                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
+                # 删除原始数据中的当前选中的条目
+                del cache_control.now_talk_data[now_cid]
+                # 序号+1来更新当前选中的条目的cid
+                current_select_cid = str(int(current_select_cid) + 1)
+        # 如果临时数据中有数据，则将其更新至原始数据中
+        if len(cache_control.tem_talk_data):
+            cache_control.now_talk_data.update(cache_control.tem_talk_data)
+            cache_control.tem_talk_data.clear()
+            self.now_in_moving_flag = False
+        # 更新界面
+        self.update()
+
+    def move_cancel(self):
+        """取消移动"""
+        self.now_in_moving_flag = False
+        self.edited_item.setBackground(QColor("white"))
 
     def update_adv_id(self):
         """根据文本编辑框更新当前的角色id"""

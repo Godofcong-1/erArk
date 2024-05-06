@@ -13,6 +13,8 @@ now_edit_type_flag = 1
 
 now_talk_data: Dict[str, game_type.Talk] = {}
 """ 当前口上数据 """
+tem_talk_data: Dict[str, game_type.Talk] = {}
+""" 临时口上数据 """
 now_chara_data: game_type.Chara_Data = game_type.Chara_Data
 """ 当前角色属性数据 """
 
