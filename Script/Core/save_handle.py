@@ -466,6 +466,10 @@ def update_map(loaded_dict):
             loaded_dict["scene_data"][key] = value
             update_count += 1
             change_map_flag = True
+        if value.scene_tag != loaded_dict["scene_data"][key].scene_tag:
+            loaded_dict["scene_data"][key].scene_tag = value.scene_tag
+            update_count += 1
+            change_map_flag = True
     # 如果地图数据有变化，将地图路径也更新，同时删除不存在的地图数据
     if change_map_flag:
         loaded_dict["map_data"] = cache.map_data
