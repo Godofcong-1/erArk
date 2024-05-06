@@ -1,10 +1,12 @@
-from PySide6.QtWidgets import QDialog, QTextEdit, QVBoxLayout, QSizePolicy
-from PySide6.QtGui import QFontMetrics, QFont
+from PySide6.QtWidgets import QDialog, QTextEdit, QVBoxLayout, QSizePolicy, QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QLabel, QGridLayout, QMenu, QCheckBox, QComboBox
+from PySide6.QtGui import QFontMetrics, QFont, QFontDatabase
 import cache_control, game_type
 import json
 
+
 font = QFont()
-font.setPointSize(11)
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 def read_CVP(cvp_value_str: str):
     """读取CVP字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
@@ -106,7 +108,7 @@ def save_talk_data():
             f.close()
 
 def show_talk_introduce():
-    """显示只读文本框的对话框"""
+    """显示口上的说明对话框"""
     dialog = QDialog()
     text_edit = QTextEdit(dialog)
     text_edit.setFont(font)
@@ -143,7 +145,7 @@ def show_talk_introduce():
 
 
 def show_event_introduce():
-    """显示只读文本框的对话框"""
+    """显示事件的说明对话框"""
     dialog = QDialog()
     text_edit = QTextEdit(dialog)
     text_edit.setFont(font)
@@ -174,7 +176,7 @@ def show_event_introduce():
 
 
 def show_chara_introduce():
-    """显示只读文本框的对话框"""
+    """显示角色属性的说明对话框"""
     dialog = QDialog()
     text_edit = QTextEdit(dialog)
     text_edit.setFont(font)
@@ -196,3 +198,49 @@ def show_chara_introduce():
     layout = QVBoxLayout(dialog)
     layout.addWidget(text_edit)
     dialog.exec_()
+
+
+def show_setting():
+    """显示和修改编辑器的各种设置"""
+
+    def save_font(font_name: str, font_size: int):
+        """保存字体设置"""
+        cache_control.now_font_name = font_name
+        cache_control.now_font_size = font_size
+        font.setFamily(font_name)
+        font.setPointSize(font_size)
+        font_dialog.close()
+
+    # 字体设置，可以修改字体和大小
+    font_dialog = QDialog()
+    font_dialog.setWindowTitle("字体设置")
+    font_dialog.setFont(font)
+    font_dialog.setFixedWidth(300)
+    font_dialog.setFixedHeight(200)
+    font_dialog.setLayout(QVBoxLayout())
+    # 当前的字体名字
+    font_name_label = QLabel(font_dialog)
+    font_name_label.setText("当前字体：" + cache_control.now_font_name)
+    font_dialog.layout().addWidget(font_name_label)
+    # 创建下拉框来选择字体
+    font_combobox = QComboBox(font_dialog)
+    font_combobox.addItems(QFontDatabase().families())
+    font_combobox.setCurrentText(cache_control.now_font_name)
+    font_combobox.currentTextChanged.connect(lambda text: font_name_label.setText("当前字体：" + text))
+    font_dialog.layout().addWidget(font_combobox)
+    # 当前的字体大小
+    font_size_label = QLabel(font_dialog)
+    font_size_label.setText("当前字号：" + str(cache_control.now_font_size))
+    font_dialog.layout().addWidget(font_size_label)
+    # 创建文本框来输入字号
+    font_size_text = QTextEdit(font_dialog)
+    font_size_text.setText(str(cache_control.now_font_size))
+    font_size_text.setFixedHeight(32)
+    font_size_text.setFixedWidth(200)
+    font_size_text.textChanged.connect(lambda: font_size_label.setText("当前字号：" + font_size_text.toPlainText()))
+    font_dialog.layout().addWidget(font_size_text)
+    # 保存按钮
+    save_button = QPushButton("保存")
+    save_button.clicked.connect(lambda: save_font(font_combobox.currentText(), int(font_size_text.toPlainText())))
+    font_dialog.layout().addWidget(save_button)
+    font_dialog.exec_()

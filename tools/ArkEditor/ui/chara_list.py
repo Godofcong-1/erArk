@@ -2,6 +2,10 @@ from PySide6.QtWidgets import QVBoxLayout, QSplitter, QPushButton, QHBoxLayout, 
 from PySide6.QtGui import QFont, QPalette, QColor
 import cache_control
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
+
 
 class CharaList(QWidget):
     """表单主体"""
@@ -36,8 +40,7 @@ class CharaList(QWidget):
         self.rightLayout = QVBoxLayout(self.rightColumn)
 
         # 条目列表
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.setFont(self.font)
 
         self.first_layouts = [QHBoxLayout() for _ in range(14)]

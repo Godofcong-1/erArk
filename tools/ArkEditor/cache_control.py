@@ -1,6 +1,11 @@
 from typing import Dict, Set, List
 import game_type
 
+# 当前字体
+now_font_name: str = "等距更纱黑体 SC"
+now_font_bold: bool = False
+now_font_size: int = 13
+
 now_file_path: str = ""
 """ 当前事件数据文件路径 """
 now_edit_type_flag = 1

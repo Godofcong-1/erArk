@@ -2,6 +2,9 @@ from PySide6.QtWidgets import QMenuBar, QMenu
 from PySide6.QtGui import QFont
 import cache_control
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class ToolsBar(QMenuBar):
     """筛选表单用菜单栏"""
@@ -9,8 +12,7 @@ class ToolsBar(QMenuBar):
     def __init__(self):
         """初始化顶部筛选栏"""
         super(ToolsBar, self).__init__()
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.npc_menu: QMenu = QMenu("0", self)
         self.npc_menu.setFixedWidth(50)
         self.addMenu(self.npc_menu)

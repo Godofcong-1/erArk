@@ -11,6 +11,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QFont, Qt
 import cache_control
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class TreeItem(QTreeWidgetItem):
     """树选框对象"""
@@ -29,8 +32,7 @@ class EffectMenu(QDialog):
         """初始化事件效果复选框"""
         super(EffectMenu, self).__init__()
         self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.layout: QVBoxLayout = QVBoxLayout()
         self.resize(1000,1000)
         # 增加一个搜索框，确定键，重置键，三个合在一起，放在最上面作为一个横向的搜索栏

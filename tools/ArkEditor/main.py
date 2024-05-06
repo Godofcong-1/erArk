@@ -42,6 +42,10 @@ cache_control.item_effect_list = item_effect_list
 item_text_edit: ItemTextEdit = ItemTextEdit()
 cache_control.item_text_edit = item_text_edit
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
+
 # envpath = '/home/diyun/anaconda3/envs/transformer_py38/lib/python3.8/site-packages/cv2/qt/plugins/platforms'
 # os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = envpath
 
@@ -308,8 +312,6 @@ def change_status_menu(action: QWidgetAction):
     cache_control.now_status = cid
     data_list.status_menu.clear()
     status_group = QActionGroup(data_list.status_menu)
-    font = QFont()
-    font.setPointSize(11)
     for status_type in cache_control.status_type_data:
         status_menu = QMenu(status_type, data_list.status_menu)
         for cid in cache_control.status_type_data[status_type]:
@@ -378,10 +380,24 @@ def update_premise_and_settle_list(model_index: QModelIndex):
         data_list.update()
 
 
+def font_update():
+    """更新字体"""
+    function.show_setting()
+    font.setPointSize(cache_control.now_font_size)
+    font.setFamily(cache_control.now_font_name)
+    main_window.setFont(font)
+    menu_bar.setFont(font)
+    tools_bar.setFont(font)
+    data_list.setFont(font)
+    data_list.list_widget.setFont(font)
+    chara_list.setFont(font)
+    item_premise_list.setFont(font)
+    item_effect_list.setFont(font)
+    item_text_edit.setFont(font)
+
+
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 status_group = QActionGroup(data_list.status_menu)
-font = QFont()
-font.setPointSize(11)
 for status_type in cache_control.status_type_data:
     status_menu = QMenu(status_type, data_list.status_menu)
     for cid in cache_control.status_type_data[status_type]:
@@ -433,6 +449,7 @@ menu_bar.new_talk_file_action.triggered.connect(create_talk_data)
 menu_bar.save_talk_action.triggered.connect(function.save_talk_data)
 menu_bar.select_chara_file_action.triggered.connect(load_chara_data)
 menu_bar.new_chara_file_action.triggered.connect(create_chara_data)
+menu_bar.setting_action.triggered.connect(font_update)
 
 # 将文本编辑器的保存键绑定到口上事件列表的更新与文件的更新
 item_text_edit.save_button.clicked.connect(data_list.update)

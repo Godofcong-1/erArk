@@ -3,6 +3,9 @@ from PySide6.QtGui import QFont, QAction
 from PySide6.QtCore import Qt
 import cache_control
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class ItemTextEdit(QWidget):
     """文本编辑框主体"""
@@ -10,8 +13,7 @@ class ItemTextEdit(QWidget):
     def __init__(self):
         """初始化文本编辑框主体"""
         super(ItemTextEdit, self).__init__()
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.setFont(self.font)
         label_layout = QVBoxLayout()
         # 加入标题

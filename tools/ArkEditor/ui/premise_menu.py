@@ -15,6 +15,9 @@ from PySide6.QtGui import QFont, Qt
 import cache_control
 import function
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class TreeItem(QTreeWidgetItem):
     """树选框对象"""
@@ -35,8 +38,7 @@ class PremiseMenu(QDialog):
             self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         elif cache_control.now_edit_type_flag == 0:
             self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.layout: QVBoxLayout = QVBoxLayout()
         self.resize(1000,1000)
         # 增加一个搜索框，确定键，重置键，三个合在一起，放在最上面作为一个横向的搜索栏
@@ -255,8 +257,7 @@ class CVPMenu(QDialog):
             self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
         elif cache_control.now_edit_type_flag == 0:
             self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.layout: QVBoxLayout = QVBoxLayout()
         self.ABCD_button_layout = QHBoxLayout()
         self.resize(1000,50)

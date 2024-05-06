@@ -7,6 +7,9 @@ import cache_control
 import game_type
 import function
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class DataList(QWidget):
     """表单主体"""
@@ -48,8 +51,7 @@ class DataList(QWidget):
         self.search_flag = 0
         # 条目列表
         self.list_widget = QListWidget()
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.setFont(self.font)
         self.list_widget.setFont(self.font)
         self.close_flag = 1
@@ -108,6 +110,12 @@ class DataList(QWidget):
         self.layout.setColumnStretch(1, 1)
         self.layout.setColumnStretch(2, 1)
 
+    def update_font(self, font):
+        print(font)
+        self.font = font
+        for widget in self.findChildren(QWidget):
+            widget.setFont(font)
+
     def right_button_menu(self, old_position):
         """
         右键菜单
@@ -119,8 +127,6 @@ class DataList(QWidget):
             return
         menu.setFont(self.font)
         position = QCursor.pos()
-        font = QFont()
-        font.setPointSize(13)
 
         if cache_control.now_edit_type_flag == 1:
             create_action: QWidgetAction = QWidgetAction(self)

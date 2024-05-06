@@ -4,6 +4,10 @@ from PySide6.QtCore import Qt
 import cache_control
 from ui.effect_menu import EffectMenu
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
+
 
 class ItemEffectList(QWidget):
     """结算表单主体"""
@@ -11,8 +15,7 @@ class ItemEffectList(QWidget):
     def __init__(self):
         """初始化结算表单主体"""
         super(ItemEffectList, self).__init__()
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.setFont(self.font)
         main_layout = QVBoxLayout()  # 主布局
         # 标题布局

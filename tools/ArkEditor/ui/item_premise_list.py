@@ -5,6 +5,9 @@ import cache_control
 import function
 from ui.premise_menu import PremiseMenu, CVPMenu
 
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
 
 class ItemPremiseList(QWidget):
     """前提表单主体"""
@@ -12,8 +15,7 @@ class ItemPremiseList(QWidget):
     def __init__(self):
         """初始化前提表单主体"""
         super(ItemPremiseList, self).__init__()
-        self.font = QFont()
-        self.font.setPointSize(11)
+        self.font = font
         self.setFont(self.font)
         main_layout = QVBoxLayout()  # 主布局
         # 标题布局
