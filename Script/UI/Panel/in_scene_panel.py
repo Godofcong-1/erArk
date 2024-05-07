@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel
 from Script.Core import (
     get_text,
     cache_control,
@@ -274,8 +274,9 @@ class InScenePanel:
                     label.draw()
 
             # ↓以下为服装栏的内容↓#
+            # 移动至服装文件中
             if cache.scene_panel_show[1] and character_data.target_character_id:
-                character_cloth_draw = see_character_info_panel.SeeCharacterClothPanel(
+                character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
                     character_data.cid, self.width, 20, 0, 0
                 )
                 character_cloth_draw.draw()
