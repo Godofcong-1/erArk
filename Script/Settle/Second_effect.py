@@ -2415,6 +2415,7 @@ def handle_milking_machine(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2424,6 +2425,8 @@ def handle_milking_machine(
         now_milk = min(character_data.pregnancy.milk, now_milk)
         cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
         cache.rhodes_island.milk_in_fridge[character_id] += now_milk
+        pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
+        pl_character_data.pl_collection.milk_total[character_id] += now_milk
         character_data.pregnancy.milk -= now_milk
         character_data.behavior.milk_ml += now_milk
 
@@ -2463,6 +2466,7 @@ def handle_urine_collector(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2472,6 +2476,8 @@ def handle_urine_collector(
         now_urine = min(character_data.urinate_point, now_urine)
         cache.rhodes_island.urine_in_fridge.setdefault(character_id, 0)
         cache.rhodes_island.urine_in_fridge[character_id] += now_urine
+        pl_character_data.pl_collection.urine_total.setdefault(character_id, 0)
+        pl_character_data.pl_collection.urine_total[character_id] += now_urine
         character_data.urinate_point -= now_urine
         character_data.behavior.urine_ml += now_urine
 
@@ -2496,6 +2502,7 @@ def handle_b_orgasm_to_milk(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2503,21 +2510,23 @@ def handle_b_orgasm_to_milk(
     add_milk = character_data.pregnancy.milk_max * 0.2
     character_data.pregnancy.milk += add_milk
     # 喷乳至回到最大值的40%，其余的喷出
-    eject_milk = character_data.pregnancy.milk - character_data.pregnancy.milk_max * 0.4
-    character_data.pregnancy.milk = character_data.pregnancy.milk_max * 0.4
-    character_data.behavior.milk_ml += eject_milk
-
-    # 如果已经装上搾乳机了，则收集至搾乳机中
-    if character_data.h_state.body_item[4][1]:
-        cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
-        cache.rhodes_island.milk_in_fridge[character_id] += eject_milk
-        now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁被收集到搾乳机中\n")
-    # 否则普通的喷出
-    else:
-        now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁散落的到处都是\n")
-
-    # 绘制信息
+    eject_milk = int(character_data.pregnancy.milk - character_data.pregnancy.milk_max * 0.4)
     if eject_milk > 0:
+        character_data.pregnancy.milk = character_data.pregnancy.milk_max * 0.4
+        character_data.behavior.milk_ml += eject_milk
+
+        # 如果已经装上搾乳机了，则收集至搾乳机中
+        if character_data.h_state.body_item[4][1]:
+            cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
+            cache.rhodes_island.milk_in_fridge[character_id] += eject_milk
+            pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
+            pl_character_data.pl_collection.milk_total[character_id] += eject_milk
+            now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁被收集到搾乳机中\n")
+        # 否则普通的喷出
+        else:
+            now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁散落的到处都是\n")
+
+        # 绘制信息
         now_draw = draw.NormalDraw()
         now_draw.text = now_text
         now_draw.width = window_width
@@ -2536,6 +2545,7 @@ def handle_u_orgasm_to_pee(
     change_data -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -2543,20 +2553,22 @@ def handle_u_orgasm_to_pee(
     add_urine = 240 * 0.2
     character_data.urinate_point += add_urine
     # 喷至回到最大值的40%，其余的喷出
-    eject_urine = character_data.urinate_point - 240 * 0.4
-    character_data.urinate_point = 240 * 0.4
-
-    # 如果已经装上采尿器了，则收集至采尿器中
-    if character_data.h_state.body_item[5][1]:
-        cache.rhodes_island.urine_in_fridge.setdefault(character_id, 0)
-        cache.rhodes_island.urine_in_fridge[character_id] += eject_urine
-        now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液被收集到采尿器中\n")
-    # 否则普通的喷出
-    else:
-        now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液在地上汇成一滩\n")
-
-    # 绘制信息
+    eject_urine = int(character_data.urinate_point - 240 * 0.4)
     if eject_urine > 0:
+        character_data.urinate_point = 240 * 0.4
+
+        # 如果已经装上采尿器了，则收集至采尿器中
+        if character_data.h_state.body_item[5][1]:
+            cache.rhodes_island.urine_in_fridge.setdefault(character_id, 0)
+            cache.rhodes_island.urine_in_fridge[character_id] += eject_urine
+            pl_character_data.pl_collection.urine_total.setdefault(character_id, 0)
+            pl_character_data.pl_collection.urine_total[character_id] += eject_urine
+            now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液被收集到采尿器中\n")
+        # 否则普通的喷出
+        else:
+            now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液在地上汇成一滩\n")
+
+        # 绘制信息
         now_draw = draw.NormalDraw()
         now_draw.text = now_text
         now_draw.width = window_width

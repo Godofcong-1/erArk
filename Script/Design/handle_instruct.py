@@ -4161,7 +4161,6 @@ def handle_milking_machine_off():
     _("装上采尿器"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_U_DILATE_GE_3,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
      constant_promise.Premise.HAVE_URINE_COLLECTOR},
@@ -4170,10 +4169,37 @@ def handle_urine_collector_on():
     """处理装上采尿器指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U开发"))
     if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.URINE_COLLECTOR_ON
         character_data.state = constant.CharacterStatus.STATUS_URINE_COLLECTOR
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    character_data.behavior.duration = 10
+    update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.URINE_COLLECTOR_OFF,
+    constant.InstructType.SEX,
+    _("取下采尿器"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_U_DILATE_GE_3,
+     constant_promise.Premise.TARGET_NOW_URINE_COLLECTOR,
+     constant_promise.Premise.HAVE_URINE_COLLECTOR},
+)
+def handle_urine_collector_off():
+    """处理取下采尿器指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U开发"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.URINE_COLLECTOR_OFF
+        character_data.state = constant.CharacterStatus.STATUS_URINE_COLLECTOR_OFF
     elif judge_list[0] == -1:
         pass
     else:
@@ -5060,6 +5086,7 @@ def handle_double_penetration():
     constant_promise.Premise.HAVE_TARGET,
     constant_promise.Premise.IS_H,
     constant_promise.Premise.HAVE_COTTON_STICK,
+    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.TECHNIQUE_GE_5,
     },
 )
@@ -5067,7 +5094,7 @@ def handle_urethral_swab():
     """处理尿道棉棒指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U开发"))
     if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.URETHRAL_SWAB
         character_data.state = constant.CharacterStatus.STATUS_URETHRAL_SWAB
@@ -5088,6 +5115,7 @@ def handle_urethral_swab():
     constant_promise.Premise.HAVE_TARGET,
     constant_promise.Premise.IS_H,
     constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.T_U_DILATE_GE_2,
     },
 )
@@ -5095,7 +5123,7 @@ def handle_urethral_finger_insertion():
     """处理尿道指姦指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U性交"))
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("U开发"))
     if judge_list[0] == 1:
         character_data.behavior.behavior_id = constant.Behavior.URETHRAL_FINGER_INSERTION
         character_data.state = constant.CharacterStatus.STATUS_URETHRAL_FINGER_INSERTION
@@ -5115,6 +5143,7 @@ def handle_urethral_finger_insertion():
     {
     constant_promise.Premise.HAVE_TARGET,
     constant_promise.Premise.IS_H,
+    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.TECHNIQUE_GE_5,
     constant_promise.Premise.T_U_DILATE_GE_5,
     },
@@ -5137,17 +5166,28 @@ def handle_urethral_sex():
 
 
 @add_instruct(
-    constant.Instruct.PISSING_PLAY,
+    constant.Instruct.ASK_PEE,
     constant.InstructType.SEX,
-    _("放尿play_未实装"),
+    _("命令对方小便"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
+     constant_promise.Premise.TARGET_URINATE_GE_80,
+     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
+    },
 )
-def handle_pissing_play():
-    """处理放尿play指令"""
+def handle_ask_pee():
+    """处理命令对方小便指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("严重骚扰"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.ASK_PEE
+        character_data.state = constant.CharacterStatus.STATUS_ASK_PEE
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 

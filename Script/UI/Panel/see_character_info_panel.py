@@ -1403,6 +1403,7 @@ class CharacterBodyText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
+        pl_character_data = cache.character_data[0]
         type_data = "肉体情况"
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
@@ -1449,6 +1450,11 @@ class CharacterBodyText:
                 now_text += "  未淋上过精液\n"
             else:
                 now_text += f"  总共被淋上过{character_data.dirty.body_semen[3][3]}ml精液\n"
+            # 收集的乳汁
+            if character_id in pl_character_data.pl_collection.milk_total:
+                milk_total = pl_character_data.pl_collection.milk_total[character_id]
+                if milk_total > 0:
+                    now_text += f"  总共收集了{milk_total}ml乳汁\n"
             body_text_list.append(now_text)
             # 指部信息#
             now_text = f"\n 【指】\n"
@@ -1546,6 +1552,11 @@ class CharacterBodyText:
                 now_text += "  未射入过精液\n"
             else:
                 now_text += f"  总共被射入过{character_data.dirty.body_semen[9][3]}ml精液\n"
+            # 圣水情况
+            if character_id in pl_character_data.pl_collection.urine_total:
+                urine_total = pl_character_data.pl_collection.urine_total[character_id]
+                if urine_total > 0:
+                    now_text += f"  总共收集了{urine_total}ml圣水\n"
             body_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()

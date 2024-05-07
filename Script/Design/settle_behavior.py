@@ -40,7 +40,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # 如果是玩家对NPC的行为，则额外进行对方的二段结算
         if character_id == 0 and now_character_data.target_character_id != 0:
             target_change: game_type.TargetChange = change_data.target_change[now_character_data.target_character_id]
-            check_second_effect(now_character_data.target_character_id, target_change)
+            check_second_effect(now_character_data.target_character_id, target_change, pl_to_npc = True)
         # 进行无意识结算
         check_unconscious_effect(character_id, add_time, change_data, now_time)
         # 结算上次进行聊天的时间，以重置聊天计数器#
@@ -259,10 +259,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                             judge = 1
                 if judge and (now_text != name):
                     now_text_list.append(now_text)
-        if not exchange_flag:
-            now_text_time = "\n\n " + str(add_time) + "分钟过去了\n"
+        if add_time > 0:
+            if not exchange_flag:
+                now_text_time = "\n\n " + str(add_time) + "分钟过去了\n"
+            else:
+                now_text_time = "\n\n 该行动将持续" + str(add_time) + "分钟\n"
         else:
-            now_text_time = "\n\n 该行动将持续" + str(add_time) + "分钟\n"
+            now_text_time = "\n"
         if now_text_list:
             now_text_list.append(now_text_time)
         now_panel = panel.LeftDrawTextListPanel()
@@ -452,12 +455,14 @@ def get_favorability_social(favorability: int) -> int:
 def check_second_effect(
         character_id: int,
         change_data: game_type.CharacterStatusChange,
+        pl_to_npc: bool = False,
 ):
     """
     处理第二结算
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
+    pl_to_npc -- 玩家对NPC的行为结算
     """
     # print("进入第二结算")
     mark_list = [i for i in range(1030, 1048)]
@@ -488,7 +493,7 @@ def check_second_effect(
         # 高潮结算
         orgasm_effect(character_id)
         # 道具结算
-        item_effect(character_id)
+        item_effect(character_id, pl_to_npc)
         # 素质结算
 
         # 进行结算
@@ -844,19 +849,27 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     now_draw.text = now_draw_text
     now_draw.draw()
 
-def item_effect(character_id: int):
+def item_effect(character_id: int, pl_to_npc: bool = False):
     """
     处理第二结算中的道具结算
     Keyword arguments:
     character_id -- 角色id
+    pl_to_npc -- 玩家对NPC的行为结算
     """
 
     # print()
     # print(f"进入道具结算")
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     num = 1100  # 通过num值来判断是二段行为记录的哪个位置
 
     if character_id != 0:
+
+        # 玩家在H中正在对该NPC进行交互时，仅计算一遍，避免二次结算
+        if pl_to_npc:
+            pass
+        elif pl_character_data.target_character_id == character_id and character_data.sp_flag.is_h:
+            return
 
         for i in range(len(character_data.h_state.body_item)):
             if character_data.h_state.body_item[i][1]:

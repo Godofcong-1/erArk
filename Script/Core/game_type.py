@@ -600,6 +600,10 @@ class PLAYER_COLLECTION:
         """ 临时获得的角色袜子 """
         self.eqip_token: List = [0, [0]]
         """ 装备的信物 """
+        self.milk_total: Dict[int, int] = {}
+        """ 收集的各角色总乳汁量，单位毫升 """
+        self.urine_total: Dict[int, int] = {}
+        """ 收集的各角色总圣水量，单位毫升 """
 
 
 class PLAYER_ABILITY:
@@ -835,7 +839,7 @@ class Rhodes_Island:
         self.cure_income_all: int = 0
         """ 至今为止的治疗总收入 """
         self.urine_in_fridge: Dict[int, Tuple[int]] = {}
-        """ 收集的每个干员的圣水量，干员id:圣水ml存量 """
+        """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
 
         # 文职区
         self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}

@@ -294,6 +294,8 @@ class CharacterStatus:
     """ 什么也不做 """
     STATUS_SEDECU = 416
     """ 诱惑对方 """
+    STATUS_ASK_PEE = 417
+    """ 命令对方小便 """
     STATUS_HANDJOB = 420
     """ 手交 """
     STATUS_BLOWJOB = 421
@@ -790,6 +792,8 @@ class Behavior:
     """ 什么也不做 """
     SEDECU = 416
     """ 诱惑对方 """
+    ASK_PEE = 417
+    """ 命令对方小便 """
     HANDJOB = 420
     """ 手交 """
     BLOWJOB = 421
@@ -2050,6 +2054,8 @@ class Instruct:
     """ 命令对方自慰 """
     MAKE_LICK_ANAL = 0
     """ 命令对方舔自己肛门 """
+    ASK_PEE = 0
+    """ 命令对方小便 """
     DO_NOTHING = 0
     """ 什么也不做 """
     SEDECU = 0
@@ -2218,8 +2224,6 @@ class Instruct:
     """ 尿道指姦 """
     URETHRAL_SEX = 0
     """ 尿道姦 """
-    PISSING_PLAY = 0
-    """ 放尿play """
     BEAT_BREAST = 0
     """ 打胸部 """
     SPANKING = 0

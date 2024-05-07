@@ -13392,6 +13392,10 @@ msgstr ""
 msgid "分开{TargetName}下身穿着的{TagetPanName}，{Name}将手指深入进去大概5厘米的深度。"
 msgstr ""
 
+#: .\data\talk\sex\ask_pee.csv:6
+msgid "{Name}触发了命令对方小便指令的地文"
+msgstr ""
+
 #: .\data\talk\sex\axillajob.csv:6
 msgid "{Name}将阴茎凑到了{TargetName}的腋窝处，不是性器的部位似乎也能激起{Name}的兽欲。"
 msgstr ""
@@ -13792,10 +13796,6 @@ msgstr ""
 msgid "{Name}触发了媚药指令的地文"
 msgstr ""
 
-#: .\data\talk\sex\pissing_play.csv:6
-msgid "{Name}触发了放尿play指令的地文"
-msgstr ""
-
 #: .\data\talk\sex\put_condom.csv:6
 msgid "{Name}触发了避孕套指令的地文"
 msgstr ""
@@ -13876,8 +13876,12 @@ msgstr ""
 msgid "{Name}对{TargetName}触发了尿道棉棒指令的地文"
 msgstr ""
 
-#: .\data\talk\sex\urine_collector.csv:6
-msgid "{Name}触发了采尿器指令的地文"
+#: .\data\talk\sex\urine_collector_off.csv:6
+msgid "{Name}触发了取下采尿器指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\urine_collector_on.csv:6
+msgid "{Name}触发了装上采尿器指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\vibrator_insertion.csv:6
