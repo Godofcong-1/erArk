@@ -498,11 +498,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             # 最后的总结算
             if sanity_point_cost <= character_data.sanity_point:
                 judge += judge_hypnosis
-                calculation_text += _(f"+催眠(+{judge_hypnosis},消耗{sanity_point_cost}理智)")
+                calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
                 character_data.sanity_point -= sanity_point_cost
                 character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
             else:
-                calculation_text += _(f"+催眠(+0,理智不足,催眠解除)")
+                calculation_text += _("+催眠(+0,理智不足,催眠解除)")
                 target_data.sp_flag.unconscious_h = 0
 
     # debug模式修正
@@ -523,11 +523,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         # 询问信息
         ask_text = ""
         if instruct_name == _("亲吻") and target_data.talent[4]:
-            ask_text += _(f"\n\n 是否要夺走{target_data.name}的初吻？")
+            ask_text += _("\n\n 是否要夺走{0}的初吻？").format(target_data.name)
         elif instruct_name == _("性交") and target_data.talent[0]:
-            ask_text += _(f"\n\n 是否要夺走{target_data.name}的处女？")
+            ask_text += _("\n\n 是否要夺走{0}的处女？").format(target_data.name)
         elif instruct_name == _("A性交") and target_data.talent[1]:
-            ask_text += _(f"\n\n 是否要夺走{target_data.name}的A处女？")
+            ask_text += _("\n\n 是否要夺走{0}的A处女？").format(target_data.name)
         # 询问戴套
         condom_flag = False
         if instruct_name == _("性交"):
@@ -541,22 +541,22 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 condom_flag = True
                 # 无意识
                 if target_data.sp_flag.unconscious_h:
-                    ask_text += _(f"当前正在对{target_data.name}无意识奸，是否不戴套？\n")
+                    ask_text += _("当前正在对{0}无意识奸，是否不戴套？\n").format(target_data.name)
                 # 妊娠合意
                 elif target_data.talent[14]:
-                    ask_text += _(f"{target_data.name}已经做好了随时都可以怀孕的准备，是否不戴套？\n")
+                    ask_text += _("{0}已经做好了随时都可以怀孕的准备，是否不戴套？\n").format(target_data.name)
                 # 避孕中出合意+事前避孕药
                 elif target_data.talent[13] and target_data.h_state.body_item[11][1]:
-                    ask_text += _(f"{target_data.name}已经吃过事前避孕药了，所以内射也不会怀孕，是否不戴套？\n")
+                    ask_text += _("{0}已经吃过事前避孕药了，所以内射也不会怀孕，是否不戴套？\n").format(target_data.name)
                 # 性无知
                 elif target_data.talent[222]:
-                    ask_text += _(f"{target_data.name}似乎对性和避孕都一无所知，是否不戴套？\n")
+                    ask_text += _("{0}似乎对性和避孕都一无所知，是否不戴套？\n").format(target_data.name)
                 elif judge_rate < 0.5:
-                    ask_text += _(f"{target_data.name}坚决地要求你必须戴上避孕套，是否坚持不带套？\n")
+                    ask_text += _("{0}坚决地要求你必须戴上避孕套，是否坚持不带套？\n").format(target_data.name)
                 elif judge_rate < 1:
-                    ask_text += _(f"{target_data.name}希望你戴上避孕套，是否坚持不带套？\n")
+                    ask_text += _("{0}希望你戴上避孕套，是否坚持不带套？\n").format(target_data.name)
                 else:
-                    ask_text += _(f"{target_data.name}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n")
+                    ask_text += _("{0}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n").format(target_data.name)
                 target_data.h_state.condom_info_show_flag = False
         if len(ask_text):
             # 判断态度

@@ -2433,7 +2433,7 @@ def handle_milking_machine(
         # 绘制信息
         if now_milk:
             now_draw = draw.NormalDraw()
-            now_text = _(f"\n{character_data.name}被搾乳机榨出了{now_milk}ml的乳汁\n")
+            now_text = _("\n{0}被搾乳机榨出了{1}ml的乳汁\n").format(character_data.name, now_milk)
             now_draw.text = now_text
             now_draw.width = window_width
             now_draw.draw()
@@ -2484,7 +2484,7 @@ def handle_urine_collector(
         # 绘制信息
         if now_urine:
             now_draw = draw.NormalDraw()
-            now_text = _(f"\n{character_data.name}被采尿器吸出了{now_urine}ml的圣水\n")
+            now_text = _("\n{0}被采尿器吸出了{1}ml的圣水\n").format(character_data.name, now_urine)
             now_draw.text = now_text
             now_draw.width = window_width
             now_draw.draw()
@@ -2521,10 +2521,10 @@ def handle_b_orgasm_to_milk(
             cache.rhodes_island.milk_in_fridge[character_id] += eject_milk
             pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
             pl_character_data.pl_collection.milk_total[character_id] += eject_milk
-            now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁被收集到搾乳机中\n")
+            now_text = _("\n{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁被收集到搾乳机中\n").format(character_data.name, eject_milk)
         # 否则普通的喷出
         else:
-            now_text = _(f"\n{character_data.name}在绝顶的同时喷出了{eject_milk}ml的乳汁，喷出的乳汁散落的到处都是\n")
+            now_text = _("\n{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁散落的到处都是\n").format(character_data.name, eject_milk)
 
         # 绘制信息
         now_draw = draw.NormalDraw()
@@ -2563,10 +2563,10 @@ def handle_u_orgasm_to_pee(
             cache.rhodes_island.urine_in_fridge[character_id] += eject_urine
             pl_character_data.pl_collection.urine_total.setdefault(character_id, 0)
             pl_character_data.pl_collection.urine_total[character_id] += eject_urine
-            now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液被收集到采尿器中\n")
+            now_text = _("\n{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液被收集到采尿器中\n").format(character_data.name, eject_urine)
         # 否则普通的喷出
         else:
-            now_text = _(f"\n{character_data.name}在绝顶的同时漏出了{eject_urine}ml的尿液，漏出的尿液在地上汇成一滩\n")
+            now_text = _("\n{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液在地上汇成一滩\n").format(character_data.name, eject_urine)
 
         # 绘制信息
         now_draw = draw.NormalDraw()

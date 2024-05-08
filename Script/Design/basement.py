@@ -428,15 +428,15 @@ def settle_assembly_line(newdayflag = False):
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[product_id] += produce_num
 
-                now_text = _(f"\n 流水线{assembly_line_id}:")
-                now_text += _(f"上次结算是{cache.rhodes_island.assembly_line[assembly_line_id][4]}时，到现在已过{max_time}小时，")
+                now_text = _("\n 流水线{0}:").format(assembly_line_id)
+                now_text += _("上次结算是{0}时，到现在已过{1}小时，").format(cache.rhodes_island.assembly_line[assembly_line_id][4], max_time)
                 if produce_num < produce_num_max:
-                    now_text += _(f"由于原料不足，最大可以生产{produce_num}个，实际")
-                now_text += _(f"共生产了{produce_num}个{game_config.config_resouce[product_id].name}")
+                    now_text += _("由于原料不足，最大可以生产{0}个，实际").format(produce_num)
+                now_text += _("共生产了{0}个{1}").format(produce_num, game_config.config_resouce[product_id].name)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[product_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[product_id] = cache.rhodes_island.warehouse_capacity
-                    now_text += _(f"，由于仓库容量不足，{game_config.config_resouce[product_id].name}已达上限数量{cache.rhodes_island.warehouse_capacity}")
+                    now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(game_config.config_resouce[product_id].name, cache.rhodes_island.warehouse_capacity)
                 now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
@@ -474,11 +474,11 @@ def settle_agriculture_line():
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
-                now_text = _(f"\n今日药田共生产了{produce_num}个{resouce_data.name}")
+                now_text = _("\n今日药田共生产了{0}个{1}").format(produce_num, resouce_data.name)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
-                    now_text += _(f"，由于仓库容量不足，{resouce_data.name}已达上限数量{cache.rhodes_island.warehouse_capacity}")
+                    now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
                 now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
@@ -510,11 +510,11 @@ def settle_agriculture_line():
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
-                now_text = _(f"\n今日温室共生产了{produce_num}个{resouce_data.name}")
+                now_text = _("\n今日温室共生产了{0}个{1}").format(produce_num, resouce_data.name)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
-                    now_text += _(f"，由于仓库容量不足，{resouce_data.name}已达上限数量{cache.rhodes_island.warehouse_capacity}")
+                    now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
                 now_text += f"\n"
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
@@ -567,10 +567,10 @@ def update_recruit():
                 choice_id = random.choice(wait_id_set)
                 cache.rhodes_island.recruited_id.add(choice_id)
 
-                now_draw.text = _(f"\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
+                now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
                 now_draw.draw()
             else:
-                now_draw.text = _(f"\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
                 now_draw.draw()
                 cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
 
@@ -659,19 +659,19 @@ def settle_visitor_arrivals_and_departures():
                 # 获得留下态度对应的文本
                 stay_text = attitude_data.name
                 break
-            now_draw.text = _(f"\n 访客【{character_data.name}】预定的停留期限到了，她当前的留下意愿为：【{stay_text}】")
+            now_draw.text = _("\n 访客【{0}】预定的停留期限到了，她当前的留下意愿为：【{1}】").format(character_data.name, stay_text)
             # 随机计算访客是否留下
             if random.random() < stay_posibility:
                 # 访客留下
                 character_handle.visitor_to_operator(visitor_id)
                 # 输出提示信息
-                now_draw.text += _(f"\n ○【{character_data.name}】决定放弃离开，留在罗德岛成为一名正式干员\n")
+                now_draw.text += _("\n ○【{0}】决定放弃离开，留在罗德岛成为一名正式干员\n").format(character_data.name)
                 now_draw.draw()
             else:
                 # 访客离开
                 character_handle.visitor_leave(visitor_id)
                 # 输出提示信息
-                now_draw.text += _(f"\n ●【{character_data.name}】打包好行李，离开了罗德岛\n")
+                now_draw.text += _("\n ●【{0}】打包好行李，离开了罗德岛\n").format(character_data.name)
                 now_draw.draw()
 
 
@@ -689,7 +689,7 @@ def settle_visitor_arrivals(visitor_id = 0):
     # 判断是否有空闲客房
     if len(cache.rhodes_island.visitor_info) >= cache.rhodes_island.visitor_max:
         # 输出提示信息
-        now_draw.text = _(f"\n ●由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n")
+        now_draw.text = _("\n ●由于没有空闲的客房，罗德岛没有接待到一名新抵达的访客\n")
         now_draw.draw()
         return 0
     else:
@@ -712,7 +712,7 @@ def settle_visitor_arrivals(visitor_id = 0):
         # 处理获得新访客
         character_handle.get_new_character(visitor_id, True)
         # 输出提示信息
-        now_draw.text = _(f"\n ○【{cache.character_data[visitor_id].name}】作为临时访客抵达了罗德岛\n")
+        now_draw.text = _("\n ○【{0}】作为临时访客抵达了罗德岛\n").format(cache.character_data[visitor_id].name)
         now_draw.draw()
         return 1
 
@@ -752,7 +752,7 @@ def settle_milk():
     if all_milk > 0:
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n今日共有{all_milk}ml母乳未使用，已全部转化为【鲜母乳】\n")
+        now_draw.text = _("\n今日共有{0}ml母乳未使用，已全部转化为【鲜母乳】\n").format(all_milk)
         now_draw.draw()
 
 
@@ -769,7 +769,7 @@ def settle_semen():
     if today_semen:
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n今日共射出{today_semen}ml精液，已全部转化为【矿石病药材】\n")
+        now_draw.text = _("\n今日共射出{0}ml精液，已全部转化为【矿石病药材】\n").format(today_semen)
         now_draw.draw()
 
 
@@ -803,7 +803,7 @@ def settle_office_work():
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _(f"\n今日剩余待处理公务量为{now_work}，因此今日罗德岛的各设施的总效率为{cache.rhodes_island.effectiveness}%\n")
+    now_draw.text = _("\n今日剩余待处理公务量为{0}，因此今日罗德岛的各设施的总效率为{1}%\n").format(now_work, cache.rhodes_island.effectiveness)
     now_draw.draw()
 
 
@@ -828,7 +828,7 @@ def settle_income():
     # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _(f"\n今日罗德岛总收入为： 医疗部收入{today_cure_income}，乘以效率后最终收入为{today_all_income}，已全部转化为龙门币\n")
+    now_draw.text = _("\n今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n").format(today_cure_income, today_all_income)
     now_draw.draw()
 
 
@@ -858,7 +858,7 @@ def settle_pink_certificate():
     cache.rhodes_island.materials_resouce[4] += pink_certificate_add
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _(f"\n今日全角色总好感度上升为： {int(cache.rhodes_island.total_favorability_increased)}，折合为{pink_certificate_add}粉红凭证\n")
+    now_draw.text = _("\n今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n").format(int(cache.rhodes_island.total_favorability_increased), pink_certificate_add)
     now_draw.draw()
     # 清零好感度合计计数
     cache.rhodes_island.total_favorability_increased = 0

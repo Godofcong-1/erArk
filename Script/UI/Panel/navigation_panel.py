@@ -44,7 +44,7 @@ class Base_function_class:
             need_fuel = 1000 * scene_path[1]
             if now_fuel < need_fuel and not cache.debug_mode:
                 now_draw = draw.WaitDraw()
-                now_draw.text = _(f"\n\n移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，燃料不足，无法移动\n")
+                now_draw.text = _("\n\n移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，燃料不足，无法移动\n").format(scene_path[0], need_fuel, now_fuel)
                 now_draw.width = window_width
                 now_draw.draw()
             else:
@@ -52,7 +52,7 @@ class Base_function_class:
                     ask_list = []
                     askfor_panel = panel.OneMessageAndSingleColumnButton()
                     askfor_list = [_("是"), _("否")]
-                    askfor_panel.set(askfor_list, _(f"\n移动至{scene_path[0]}需要消耗{need_fuel}燃料，当前有{now_fuel}单位燃料，确定要移动吗\n"), 0)
+                    askfor_panel.set(askfor_list, _("\n移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，确定要移动吗\n").format(scene_path[0], need_fuel, now_fuel), 0)
                     askfor_panel.draw()
                     askfor_panel_return_list = askfor_panel.get_return_list()
                     ask_list.extend(askfor_panel_return_list.keys())

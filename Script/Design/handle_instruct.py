@@ -547,7 +547,7 @@ def handle_hypnosis_normal():
     character_data.pl_ability.hypnosis_type = 1
     target_data.sp_flag.unconscious_h = 4
     now_draw = draw.WaitDraw()
-    now_draw.text = _(f"\n{target_data.name}会理所当然地接受{character_data.name}的不合理行为了\n")
+    now_draw.text = _("\n{0}会理所当然地接受{1}的不合理行为了\n").format(target_data.name, character_data.name)
     now_draw.draw()
 
 
@@ -570,7 +570,7 @@ def handle_hypnosis_air():
     if originium_arts.evaluate_hypnosis_completion(0):
         target_data.sp_flag.unconscious_h = 5
         now_draw = draw.WaitDraw()
-        now_draw.text = _(f"\n{target_data.name}会把{character_data.name}视为空气了\n")
+        now_draw.text = _("\n{0}会把{1}视为空气了\n").format(target_data.name, character_data.name)
         now_draw.draw()
 
 
@@ -592,7 +592,7 @@ def handle_hypnosis_body():
     character_data.pl_ability.hypnosis_type = 3
     target_data.sp_flag.unconscious_h = 6
     now_draw = draw.WaitDraw()
-    now_draw.text = _(f"\n{character_data.name}可以随意地操纵{target_data.name}的身体了\n")
+    now_draw.text = _("\n{0}可以随意地操纵{1}的身体了\n").format(character_data.name, target_data.name)
     now_draw.draw()
 
 
@@ -614,7 +614,7 @@ def handle_hypnosis_heart():
     character_data.pl_ability.hypnosis_type = 4
     target_data.sp_flag.unconscious_h = 7
     now_draw = draw.WaitDraw()
-    now_draw.text = _(f"\n{character_data.name}可以向{target_data.name}的潜意识灌输指令了\n")
+    now_draw.text = _("\n{0}可以向{1}的潜意识灌输指令了\n").format(character_data.name, target_data.name)
     now_draw.draw()
 
 
@@ -1538,8 +1538,8 @@ def handle_confession():
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _(f"\n告白成功，{target_data.name}收下了你赠予的[戒指]，[恋慕]转为[恋人]\n")
-        now_draw.text += _(f"\n获得了{target_data.name}的信物：{target_data.token_text}\n")
+        now_draw.text = _("\n告白成功，{0}收下了你赠予的[戒指]，[恋慕]转为[恋人]\n").format(target_data.name)
+        now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
@@ -1578,8 +1578,8 @@ def handle_give_necklace():
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _(f"\n{target_data.name}接受了项圈，戴在了自己的脖子上，[驯服]转为[宠物]\n")
-        now_draw.text += _(f"\n获得了{target_data.name}的信物：{target_data.token_text}\n")
+        now_draw.text = _("\n{0}接受了项圈，戴在了自己的脖子上，[驯服]转为[宠物]\n").format(target_data.name)
+        now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED
@@ -1661,12 +1661,12 @@ def handle_collect():
                 """
                 # 如果已经重复持有，则进行提示
                 # if pan_name in character_data.pl_collection.npc_panties[npc_id]:
-                #     now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{pan_name}")
+                #     now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, pan_name)
                 # else:
                 """
                 # 改为可以重复持有
                 character_data.pl_collection.npc_panties[npc_id].append(pan_name)
-                now_draw.text = _(f"增加了藏品：{cache.character_data[npc_id].name}的{pan_name}\n")
+                now_draw.text = _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, pan_name)
                 now_draw.draw()
         # 最后清空
         character_data.pl_collection.npc_panties_tem.clear()
@@ -1686,12 +1686,12 @@ def handle_collect():
                 """
                 # 如果已经重复持有，则进行提示
                 if socks_name in character_data.pl_collection.npc_socks[npc_id]:
-                    now_draw.text = _(f"\n已持有藏品：{cache.character_data[npc_id].name}的{socks_name}")
+                    now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, socks_name)
                 else:
                 """
                 # 改为可以重复持有
                 character_data.pl_collection.npc_socks[npc_id].append(socks_name)
-                now_draw.text = _(f"增加了藏品：{cache.character_data[npc_id].name}的{socks_name}\n")
+                now_draw.text = _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, socks_name)
                 now_draw.draw()
         # 装完了之后清空
         character_data.pl_collection.npc_socks_tem.clear()
@@ -1866,7 +1866,7 @@ def handle_end_h():
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _(f"\n结束H模式\n")
+    now_draw.text = _("\n结束H模式\n")
     now_draw.draw()
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -2561,13 +2561,13 @@ def handle_confim_recruit():
     now_draw.text = ""
 
     if len(cache.npc_id_got) >= cache.rhodes_island.people_max:
-        now_draw.text += _(f"\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
+        now_draw.text += _("\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
 
     elif len(cache.rhodes_island.recruited_id):
         new_chara_id = cache.rhodes_island.recruited_id.pop()
         character_handle.get_new_character(new_chara_id)
         character_data = cache.character_data[new_chara_id]
-        now_draw.text += _(f"\n\n   ※ 成功招募了{character_data.name} ※\n\n")
+        now_draw.text += _("\n\n   ※ 成功招募了{0} ※\n\n").format(character_data.name)
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.duration = 5

@@ -155,7 +155,7 @@ class Manage_Library_Panel:
             if book_count == 0:
                 now_draw = draw.NormalDraw()
                 now_draw.width = window_width
-                now_draw.text = _(f"\n  目前无人借书，不需要催还\n")
+                now_draw.text = _("\n  目前无人借书，不需要催还\n")
                 now_draw.draw()
 
             line_feed.draw()
@@ -177,7 +177,7 @@ class Manage_Library_Panel:
         character_data.entertainment.entertainment_type = [101] * len(character_data.entertainment.entertainment_type)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n{character_data.name}将在空闲时间前往图书馆还书\n")
+        now_draw.text = _("\n{0}将在空闲时间前往图书馆还书\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -186,7 +186,7 @@ class Manage_Library_Panel:
 
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n暂未实装\n")
+        now_draw.text = _("\n暂未实装\n")
         now_draw.draw()
 
 
@@ -235,7 +235,7 @@ class Manage_Library_Panel:
             # 提示信息
             now_draw = draw.NormalDraw()
             now_draw.width = window_width
-            now_draw.text = _(f"\n  要把哪一天定为读书会呢？\n")
+            now_draw.text = _("\n  要把哪一天定为读书会呢？\n")
             now_draw.draw()
 
             # 遍历一周七天
@@ -279,7 +279,7 @@ class Manage_Library_Panel:
         elif party_entertain_id:
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
-            now_draw.text = _(f"\n这一天已经被选为其他活动了\n")
+            now_draw.text = _("\n这一天已经被选为其他活动了\n")
             now_draw.draw()
         else:
             # 先取消掉其他日子可能有的读书会

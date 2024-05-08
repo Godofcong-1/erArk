@@ -393,10 +393,10 @@ class CharacterInfoHead:
             trust_text = f"{round(character_data.trust, 1)}%"
             # 只显示等级
             if cache.system_setting[9] == 1:
-                favorability_and_trust_text = _(f"好感度:{favorability_lv_letter}，信赖度:{trust_lv_letter}")
+                favorability_and_trust_text = _("好感度:{0}，信赖度:{1}").format(favorability_lv_letter, trust_lv_letter)
             # 显示数值和等级
             elif cache.system_setting[9] == 2:
-                favorability_and_trust_text = _(f"好感度:{favorability_text}({favorability_lv_letter})，信赖度:{trust_text}({trust_lv_letter})")
+                favorability_and_trust_text = _("好感度:{0}({1})，信赖度:{2}({3})").format(favorability_text, favorability_lv_letter, trust_text, trust_lv_letter)
 
         # 非清醒时输出当前状态
         sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
@@ -456,7 +456,7 @@ class CharacterInfoHead:
             if character_data.sp_flag.unconscious_h >= 4:
                 hypnosis_cid = character_data.sp_flag.unconscious_h - 3
                 hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
-                hypnosis_text += _(f":{hypnosis_name}")
+                hypnosis_text += _(":{0}").format(hypnosis_name)
             if character_data.hypnosis.increase_body_sensitivity:
                 hypnosis_text += _("(敏感度提升)")
             if character_data.hypnosis.force_ovulation:
@@ -472,7 +472,7 @@ class CharacterInfoHead:
         # 携袋状态进行提示
         bag_text = ""
         if character_data.sp_flag.bagging_chara_id:
-            bag_text = _(f" <携袋:{cache.character_data[character_data.sp_flag.bagging_chara_id].name}>")
+            bag_text = _(" <携袋:{0}>").format(cache.character_data[character_data.sp_flag.bagging_chara_id].name)
 
         # 监禁状态
         imprisonment_text = ""
@@ -1174,11 +1174,11 @@ class CharacterDailyText:
         self.draw_list.append(type_line)
 
         now_draw = panel.LeftDrawTextListPanel()
-        text_list = _(f"当前工作：{work_text}     ")
+        text_list = _("当前工作：{0}     ").format(work_text)
         if game_time.judge_work_today(character_id) and character_data.work.work_type:
-            text_list += _(f" 今日上午：工作    今日下午：工作    今日晚上：{entertainment_text_list[2]}")
+            text_list += _(" 今日上午：工作    今日下午：工作    今日晚上：{0}").format(entertainment_text_list[2])
         else:
-            text_list += _(f" 今日上午：{entertainment_text_list[0]}    今日下午：{entertainment_text_list[1]}    今日晚上：{entertainment_text_list[2]}")
+            text_list += _(" 今日上午：{0}    今日下午：{1}    今日晚上：{2}").format(entertainment_text_list[0], entertainment_text_list[1], entertainment_text_list[2])
 
         text_draw = draw.LeftDraw()
         text_draw.text = text_list
@@ -1243,9 +1243,9 @@ class CharacterVisitorText:
             break
         leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[character_id])
         live_room = character_data.dormitory.split("\\")[-1]
-        text_list += _(f"留下意愿：{stay_text}     ")
-        text_list += _(f"离开时间：{leav_time}     ")
-        text_list += _(f"居住房间：{live_room}")
+        text_list += _("留下意愿：{0}     ").format(stay_text)
+        text_list += _("离开时间：{0}     ").format(leav_time)
+        text_list += _("居住房间：{0}").format(live_room)
 
         text_draw = draw.LeftDraw()
         text_draw.text = text_list
@@ -1733,7 +1733,7 @@ class CharacterSetting:
                     button_draw.draw()
                     self.return_list.append(button_draw.return_text)
                 else:
-                    info_text = _(f" {button_text}(  更改{reason})")
+                    info_text = _(" {0}(  更改{1})").format(button_text, reason)
                     now_draw.text = info_text
                     now_draw.width = self.width
                     now_draw.draw()

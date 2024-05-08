@@ -31,9 +31,9 @@ def chose_assistant():
         line.draw()
         now_npc_draw = draw.NormalDraw()
         if character_data.assistant_character_id != 0:
-            now_npc_text = _(f"当前助理为{target_data.name}，请选择新的助理：")
+            now_npc_text = _("当前助理为{0}，请选择新的助理：").format(target_data.name)
         else:
-            now_npc_text = _(f"当前无助理，请选择新的助理：")
+            now_npc_text = _("当前无助理，请选择新的助理：")
         now_npc_draw.text = now_npc_text
         now_npc_draw.draw()
         line_feed.draw()
@@ -86,16 +86,16 @@ class Assistant_Panel:
             return_list = []
 
             info_draw = draw.NormalDraw()
-            info_draw.text = _(f"\n●助理会自动获得打开玩家房门的权限，因此在执行问候、同居等服务时可以自由进出玩家房间\n\n")
+            info_draw.text = _("\n●助理会自动获得打开玩家房门的权限，因此在执行问候、同居等服务时可以自由进出玩家房间\n\n")
             info_draw.draw()
 
 
-            button_text = _(f"[001]助理服务")
+            button_text = _("[001]助理服务")
             if character_data.assistant_character_id == 0:
-                button_text += _(f"    当前无助理")
+                button_text += _("    当前无助理")
             else:
                 assistant_name = target_data.name
-                button_text += _(f"    当前助理：{assistant_name}")
+                button_text += _("    当前助理：{0}").format(assistant_name)
 
             button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(0,1))
             button_draw.draw()
@@ -105,18 +105,18 @@ class Assistant_Panel:
             if character_data.assistant_character_id != 0:
 
                 # 跟随服务
-                button_text = _(f"[002]跟随服务")
+                button_text = _("[002]跟随服务")
 
                 if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
                 elif target_data.sp_flag.is_follow == 1:
-                    button_text += _(f"    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）")
+                    button_text += _("    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）")
                 elif target_data.sp_flag.is_follow == 2:
-                    button_text += _(f"    强制跟随（测试用，会影响一部分游戏机能）")
+                    button_text += _("    强制跟随（测试用，会影响一部分游戏机能）")
                 elif target_data.sp_flag.is_follow == 3:
-                    button_text += _(f"    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）")
+                    button_text += _("    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）")
                 elif target_data.sp_flag.is_follow == 4:
-                    button_text += _(f"    前往博士当前位置（抵达后会最多等待半小时）")
+                    button_text += _("    前往博士当前位置（抵达后会最多等待半小时）")
 
                 button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(2,4))
                 button_draw.draw()
@@ -145,14 +145,14 @@ class Assistant_Panel:
 
                     # 早安服务的时间变更按钮
                     if cid == 5 and target_data.assistant_services[cid]:
-                        button_text = _(f"  [更改早安服务预定时间]——当前预定时间：{str(character_data.action_info.plan_to_wake_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_wake_time[1]).rjust(2,'0')}")
+                        button_text = _("  [更改早安服务预定时间]——当前预定时间：{0}:{1}").format(str(character_data.action_info.plan_to_wake_time[0]).rjust(2,'0'), str(character_data.action_info.plan_to_wake_time[1]).rjust(2,'0'))
                         button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_morning_salutation_time)
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                         line_feed.draw()
                     # 晚安服务的时间变更按钮
                     if cid == 6 and target_data.assistant_services[cid]:
-                        button_text = _(f"  [更改晚安服务预定时间]——当前预定时间：{str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0')}:{str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0')}")
+                        button_text = _("  [更改晚安服务预定时间]——当前预定时间：{0}:{1}").format(str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0'), str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0'))
                         button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_night_salutation_time)
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
@@ -204,7 +204,7 @@ class Assistant_Panel:
                 # 不符合解锁条件时输出提示信息并归零
                 else:
                     info_draw = draw.WaitDraw()
-                    info_text = _(f"\n  ○更改失败，[{service_option_text_next}]{reason}\n")
+                    info_text = _("\n  ○更改失败，[{0}]{1}\n").format(service_option_text_next, reason)
                     info_draw.text = info_text
                     info_draw.draw()
                     target_data.assistant_services[service_cid] = 0
@@ -264,7 +264,7 @@ class Assistant_Panel:
             # 显示当前时间
             plan_to_wake_time = character_data.action_info.plan_to_wake_time
             now_time_hour, now_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
-            now_time_text = _(f"当前预定早安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n")
+            now_time_text = _("当前预定早安服务时间为：{0}:{1}\n\n").format(str(now_time_hour).rjust(2,'0'), str(now_time_minute).rjust(2,'0'))
             now_time_text += _("如果这个时间博士还没醒来，助理干员会来到博士床前，悄悄进行早安问候，然后一直等待到博士醒来为止\n")
             now_time_text += _("如果这个时间博士已经醒来，助理干员会直接前往博士身边，进行早安服务后离开\n")
             now_time_draw = draw.NormalDraw()
@@ -306,7 +306,7 @@ class Assistant_Panel:
             # 显示当前时间
             plan_to_sleep_time = character_data.action_info.plan_to_sleep_time
             now_time_hour, now_time_minute = plan_to_sleep_time[0], plan_to_sleep_time[1]
-            now_time_text = _(f"当前预定晚安服务时间为：{str(now_time_hour).rjust(2,'0')}:{str(now_time_minute).rjust(2,'0')}\n\n")
+            now_time_text = _("当前预定晚安服务时间为：{0}:{1}\n\n").format(str(now_time_hour).rjust(2,'0'), str(now_time_minute).rjust(2,'0'))
             now_time_text += _("如果这个时间博士还没有入睡，助理干员会前来催促睡觉，一直到博士睡前进行晚安服务后再离开\n")
             now_time_text += _("如果这个时间博士已经入睡，助理干员会来到博士床前，悄悄进行晚安服务后离开\n")
             now_time_draw = draw.NormalDraw()
@@ -452,17 +452,17 @@ class SeeNPCButtonList:
         if self.NPC_id == character_data.assistant_character_id:
             character_data.assistant_character_id = 0
         elif handle_premise.handle_unnormal_27(self.NPC_id):
-            info_text += _(f"\n{new_assistant_data.name}的状态异常，无法任命为助理干员\n")
+            info_text += _("\n{0}的状态异常，无法任命为助理干员\n").format(new_assistant_data.name)
             pl_flag = True
         else:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             new_assistant_data.sp_flag.is_follow = 1
             new_assistant_data.second_behavior[1401] = 1
-            info_text += _(f"\n{new_assistant_data.name}成为助理干员了，并默认开启智能跟随模式\n")
+            info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         if not pl_flag:
             old_assistant_data.second_behavior[1402] = 1
-            info_text += _(f"\n\n{old_assistant_data.name}不再是助理干员了，已清零助理服务相关的设置\n\n")
+            info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
         info_draw.text = info_text
         info_draw.width = self.width
         info_draw.draw()

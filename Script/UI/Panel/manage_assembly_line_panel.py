@@ -48,7 +48,7 @@ class Manage_Assembly_Line_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            now_text += _(f" 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n")
+            now_text += _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
 
             # 遍历全资源类型
             self.resouce_list = ["材料", "药剂", "乳制品", "香水"]
@@ -66,7 +66,7 @@ class Manage_Assembly_Line_Panel:
             all_info_draw.draw()
 
             for assembly_line_id in cache.rhodes_island.assembly_line:
-                now_text = _(f"\n {assembly_line_id+1}号流水线：")
+                now_text = _("\n {0}号流水线：").format(assembly_line_id+1)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -83,7 +83,7 @@ class Manage_Assembly_Line_Panel:
                 #     button_text = " [生产结算] "
                 #     button_draw = draw.CenterButton(
                 #         _(button_text),
-                #         _(f"{button_text}_{assembly_line_id}"),
+                #         _("{0}_{1}").format(button_text, assembly_line_id),
                 #         len(button_text) * 2,
                 #         cmd_func=basement.settle_assembly_line,
                 #         )
@@ -95,13 +95,13 @@ class Manage_Assembly_Line_Panel:
                 #     all_info_draw.draw()
 
                 # 生产产品
-                now_text = _(f"\n    当前生产：{product_data.name}(1/h)      ")
+                now_text = _("\n    当前生产：{0}(1/h)      ").format(product_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 button_text = _(" [生产调整] ")
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(f"{button_text}_{assembly_line_id}"),
+                    _("{0}_{1}").format(button_text, assembly_line_id),
                     len(button_text) * 2,
                     cmd_func=self.select_assembly_line_produce,
                     args=assembly_line_id,
@@ -115,19 +115,19 @@ class Manage_Assembly_Line_Panel:
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 all_effect += facility_effect
-                now_text = _(f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)")
+                now_text = _("\n    当前效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
                     all_effect += character_effect
-                    now_text += _(f" + {character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)")
+                    now_text += _(" + {0}(制造lv{1}:{2}%)").format(character_data.name, character_data.ability[48], character_effect)
                 now_text += f" = {all_effect}%      "
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
                 # 生产消耗
-                now_text = _(f"\n    当前生产消耗：")
+                now_text = _("\n    当前生产消耗：")
                 formula_text = formula_data.formula
                 # 以&为分割判定是否有多个需求
                 if "&" not in formula_text:
@@ -194,7 +194,7 @@ class Manage_Assembly_Line_Panel:
 
                 info_text = f""
                 # info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
-                info_text += _(f" {assembly_line_id+1}号流水线当前生产的产品为：{product_now_data.name}")
+                info_text += _(" {0}号流水线当前生产的产品为：{1}").format(assembly_line_id+1, product_now_data.name)
 
                 info_text += _("\n\n 当前可以生成的产品有：\n\n")
                 info_draw.text = info_text
@@ -256,7 +256,7 @@ class Manage_Assembly_Line_Panel:
                                 return_list.append(button_draw.return_text)
 
                                 formula_text = formula_data.formula
-                                now_text = _(f"\n     生产消耗：")
+                                now_text = _("\n     生产消耗：")
                                 # 以&为分割判定是否有多个需求
                                 if "&" not in formula_text:
                                     need_list = []
@@ -305,12 +305,12 @@ class Manage_Assembly_Line_Panel:
                 now_select_npc_name = _("未选择")
 
             all_info_draw = draw.NormalDraw()
-            now_text = _(f"\n○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号流水线调整到 {self.target_position + 1} 号流水线")
+            now_text = _("\n○当前的决定： 把 {0} 从 {1} 号流水线调整到 {2} 号流水线").format(now_select_npc_name, old_position + 1, self.target_position + 1)
             all_info_draw.text = now_text
             all_info_draw.draw()
 
             # 遍历全干员
-            now_text = _(f"\n可选工人有：\n")
+            now_text = _("\n可选工人有：\n")
             all_info_draw.text = now_text
             all_info_draw.draw()
             flag_not_empty = False
@@ -323,7 +323,7 @@ class Manage_Assembly_Line_Panel:
                 # 找到职业是生产工人的
                 if character_data.work.work_type == 121:
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    button_text = _(f" [{character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)] ")
+                    button_text = _(" [{0}(制造lv{1}:{2}%)] ").format(character_data.name, character_data.ability[48], character_effect)
                     button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text),
@@ -337,28 +337,28 @@ class Manage_Assembly_Line_Panel:
 
             # 如果没有工作是生产工人的干员则输出提示
             if not flag_not_empty:
-                now_text = _(f" 暂无工作是生产工人的干员")
+                now_text = _(" 暂无工作是生产工人的干员")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
             line_feed.draw()
 
             for assembly_line_id in cache.rhodes_island.assembly_line:
-                now_text = _(f"\n {assembly_line_id+1}号流水线：")
+                now_text = _("\n {0}号流水线：").format(assembly_line_id+1)
 
                 # 生产产品
                 formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
                 formula_data = game_config.config_productformula[formula_id]
                 product_id = formula_data.product_id
                 product_data = game_config.config_resouce[product_id]
-                now_text += _(f"\n    当前生产：{product_data.name}(1/h)      ")
+                now_text += _("\n    当前生产：{0}(1/h)      ").format(product_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
-                button_text = _(f" [将选择工人调整至该流水线] ")
+                button_text = _(" [将选择工人调整至该流水线] ")
                 button_draw = draw.CenterButton(
                 _(button_text),
-                _(f"{button_text}_{assembly_line_id}"),
+                _("{0}_{1}").format(button_text, assembly_line_id),
                 int(len(button_text)*2),
                 cmd_func=self.settle_assembly_line_id,
                 args=assembly_line_id,
@@ -367,12 +367,12 @@ class Manage_Assembly_Line_Panel:
                 return_list.append(button_draw.return_text)
 
                 # 生产效率
-                now_text = _(f"\n    当前工人：")
+                now_text = _("\n    当前工人：")
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    now_text += _(f" + {character_data.name}(制造lv{character_data.ability[48]}:{character_effect}%)")
+                    now_text += _(" + {0}(制造lv{1}:{2}%)").format(character_data.name, character_data.ability[48], character_effect)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()

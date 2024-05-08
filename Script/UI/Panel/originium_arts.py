@@ -43,14 +43,14 @@ def evaluate_hypnosis_completion(character_id: int):
             now_scene_data = cache.scene_data[now_scene_str]
             if now_scene_data.close_type != 1:
                 now_draw = draw.WaitDraw()
-                draw_text = _(f"\n当前地点不能锁门，无法进行空气催眠\n")
+                draw_text = _("\n当前地点不能锁门，无法进行空气催眠\n")
                 now_draw.text = draw_text
                 now_draw.draw()
                 return 0
             elif cache.scene_data[now_scene_str].close_flag == 0:
                 cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
                 now_draw = draw.WaitDraw()
-                draw_text = _(f"\n为了防止有人打扰，将门锁上了\n")
+                draw_text = _("\n为了防止有人打扰，将门锁上了\n")
                 now_draw.text = draw_text
                 now_draw.draw()
             # 更新记录当前地点
@@ -100,7 +100,7 @@ class Originium_Arts_Panel:
             pl_character_data: game_type.Character = cache.character_data[0]
             target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
             cinfo_draw = draw.NormalDraw()
-            info_text = _(f"\n要使用哪一个源石技艺呢？\n")
+            info_text = _("\n要使用哪一个源石技艺呢？\n")
             cinfo_draw.text = info_text
             cinfo_draw.draw()
 
@@ -108,7 +108,7 @@ class Originium_Arts_Panel:
             # button_all_draw = panel.LeftDrawTextListPanel()
 
             DNT_Panel = Down_Negative_Talent_Panel(self.width)
-            button1_text = _(f"[001]消除负面刻印")
+            button1_text = _("[001]消除负面刻印")
             button1_draw = draw.LeftButton(
                 _(button1_text),
                 _("1"),
@@ -120,7 +120,7 @@ class Originium_Arts_Panel:
             return_list.append(button1_draw.return_text)
 
             if 0:
-                button2_text = _(f"[002]时间停止(未实装)")
+                button2_text = _("[002]时间停止(未实装)")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("2"),
@@ -133,10 +133,10 @@ class Originium_Arts_Panel:
                 return_list.append(button2_draw.return_text)
 
             if handle_talent.have_hypnosis_talent():
-                button3_text = _(f"[003]催眠")
+                button3_text = _("[003]催眠")
                 now_type_id = self.pl_character_data.pl_ability.hypnosis_type
                 now_type_name = game_config.config_hypnosis_type[now_type_id].name
-                button3_text += _(f"（当前默认催眠类型：{now_type_name}）")
+                button3_text += _("（当前默认催眠类型：{0}）").format(now_type_name)
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
@@ -149,7 +149,7 @@ class Originium_Arts_Panel:
                 return_list.append(button3_draw.return_text)
 
             if 0:
-                button4_text = _(f"[004]自我强化(未实装)")
+                button4_text = _("[004]自我强化(未实装)")
                 button4_draw = draw.LeftButton(
                     _(button4_text),
                     _("4"),
@@ -162,7 +162,7 @@ class Originium_Arts_Panel:
                 return_list.append(button4_draw.return_text)
 
             if handle_talent.have_hormone_talent():
-                button5_text = _(f"[005]激素系能力：")
+                button5_text = _("[005]激素系能力：")
                 # 输出当前开启的视觉系能力
                 talent_id_list = [304,305,309]
                 count = 0
@@ -186,7 +186,7 @@ class Originium_Arts_Panel:
                 return_list.append(button5_draw.return_text)
 
             if handle_talent.have_visual_talent():
-                button6_text = _(f"[006]视觉系能力：")
+                button6_text = _("[006]视觉系能力：")
                 # 输出当前开启的视觉系能力
                 talent_id_list = [307,308,309]
                 count = 0
@@ -199,7 +199,7 @@ class Originium_Arts_Panel:
                     button6_text += f"{talent_name}"
                     count += 1
                 # 输出理智消耗
-                button6_text += _(f"({count*5}理智/h)")
+                button6_text += _("({0}理智/h)").format(count*5)
                 button6_draw = draw.LeftButton(
                     _(button6_text),
                     _("6"),
@@ -212,7 +212,7 @@ class Originium_Arts_Panel:
                 return_list.append(button6_draw.return_text)
 
             if handle_talent.have_tactile_talent():
-                button7_text = _(f"[007]触觉系能力(未实装)")
+                button7_text = _("[007]触觉系能力(未实装)")
                 button7_draw = draw.LeftButton(
                     _(button7_text),
                     _("7"),
@@ -225,7 +225,7 @@ class Originium_Arts_Panel:
                 return_list.append(button7_draw.return_text)
 
             if 1:
-                button11_text = _(f"[011]能力获得与升级")
+                button11_text = _("[011]能力获得与升级")
                 button11_draw = draw.LeftButton(
                     _(button11_text),
                     _("11"),
@@ -252,7 +252,7 @@ class Originium_Arts_Panel:
 
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n暂未实装\n")
+        now_draw.text = _("\n暂未实装\n")
         now_draw.draw()
 
     def arts_show(self, ability_type):
@@ -265,8 +265,8 @@ class Originium_Arts_Panel:
             info_text = ""
             # 催眠系
             if ability_type == 3:
-                info_text += _(f"\n○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n")
-                info_text += _(f"\n催眠系能力：\n")
+                info_text += _("\n○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n")
+                info_text += _("\n催眠系能力：\n")
                 # 催眠能力
                 info_draw.text = _(info_text)
                 info_draw.draw()
@@ -276,21 +276,21 @@ class Originium_Arts_Panel:
                     max_degree = hypnosis_data.max_hypnosis_degree
                     talent_name = game_config.config_talent[talent_id].name
                     talent_info = game_config.config_talent[talent_id].info
-                    draw_text = _(f"  {talent_name}(最高催眠深度{max_degree}%)：{talent_info}\n")
+                    draw_text = _("  {0}(最高催眠深度{1}%)：{2}\n").format(talent_name, max_degree, talent_info)
                     now_draw = draw.NormalDraw()
                     if not self.pl_character_data.talent[talent_id]:
-                        draw_text = _(f"  {talent_name}(未解锁)：{talent_info}\n")
+                        draw_text = _("  {0}(未解锁)：{1}\n").format(talent_name, talent_info)
                         now_draw.style = "deep_gray"
                     now_draw.text = _(draw_text)
                     now_draw.draw()
                 # 催眠类型
-                info_text = _(f"\n催眠类型：\n")
+                info_text = _("\n催眠类型：\n")
                 info_draw.text = _(info_text)
                 info_draw.draw()
                 for cid in game_config.config_hypnosis_type:
                     hypnosis_type_data = game_config.config_hypnosis_type[cid]
                     draw_text = f"  [{hypnosis_type_data.name}]"
-                    draw_text += _(f"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠深度达到{hypnosis_type_data.hypnosis_degree}%)")
+                    draw_text += _("(需要[{0}]，且催眠深度达到{1}%)").format(game_config.config_talent[hypnosis_type_data.talent_id].name, hypnosis_type_data.hypnosis_degree)
                     draw_text += f"：{hypnosis_type_data.introduce}"
                     # 已解锁则绘制按钮
                     if self.pl_character_data.talent[hypnosis_type_data.talent_id]:
@@ -315,11 +315,11 @@ class Originium_Arts_Panel:
                 # 激素系
                 if ability_type == 5:
                     talent_id_list = [304,305,306]
-                    info_text = _(f"\n激素系能力（不消耗理智）：\n")
+                    info_text = _("\n激素系能力（不消耗理智）：\n")
                 # 视觉系
                 elif ability_type == 6:
                     talent_id_list = [307,308,309]
-                    info_text = _(f"\n视觉系能力（每级消耗5理智/h）：\n")
+                    info_text = _("\n视觉系能力（每级消耗5理智/h）：\n")
                 info_draw.text = _(info_text)
                 info_draw.draw()
                 # 遍历输出该能力的全素质
@@ -329,7 +329,7 @@ class Originium_Arts_Panel:
                     draw_text = f"  {talent_name}：{talent_info}\n"
                     now_draw = draw.NormalDraw()
                     if not self.pl_character_data.talent[talent_id]:
-                        draw_text = _(f"  {talent_name}(未解锁)：{talent_info}\n")
+                        draw_text = _("  {0}(未解锁)：{1}\n").format(talent_name, talent_info)
                         now_draw.style = "deep_gray"
                     now_draw.text = _(draw_text)
                     now_draw.draw()
@@ -350,8 +350,8 @@ class Originium_Arts_Panel:
             line_draw.draw()
             info_draw = draw.NormalDraw()
             info_text = ""
-            info_text += _(f"\n能力可以直接消耗至纯源石或满足特定条件解锁，当前至纯源石：{cache.rhodes_island.materials_resouce[3]}\n")
-            info_text += _(f"\n当前可以获得/升级的能力有：\n\n")
+            info_text += _("\n能力可以直接消耗至纯源石或满足特定条件解锁，当前至纯源石：{0}\n").format(cache.rhodes_island.materials_resouce[3])
+            info_text += _("\n当前可以获得/升级的能力有：\n\n")
             info_draw.text = _(info_text)
             info_draw.draw()
             # 遍历输出该能力的全素质
@@ -371,18 +371,18 @@ class Originium_Arts_Panel:
                 money_cost = 10 ** (talent_of_arts_data.level - 1)
                 if cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
-                    draw_text = _(f"  {talent_name}({money_cost}至纯源石-当前源石不足)：{talent_info}\n")
+                    draw_text = _("  {0}({1}至纯源石-当前源石不足)：{2}\n").format(talent_name, money_cost, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 elif talent_of_arts_data.todo:
                     now_draw = draw.NormalDraw()
-                    draw_text = _(f"  {talent_name}(未实装)：{talent_info}\n")
+                    draw_text = _("  {0}(未实装)：{1}\n").format(talent_name, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 else:
-                    draw_text = _(f"  {talent_name}( {money_cost} 至纯源石)：{talent_info}")
+                    draw_text = _("  {0}( {1} 至纯源石)：{2}").format(talent_name, money_cost, talent_info)
                     now_draw = draw.LeftButton(
                         _(draw_text),
                         _(str(cid)),
@@ -409,7 +409,7 @@ class Originium_Arts_Panel:
                     draw_text = f"  {talent_name}"
                     if up_data.todo:
                         draw_text += _("(未实装)")
-                    draw_text += _(f"：需要博士催眠经验≥{need_exp}（当前{now_exp}），需要全干员总催眠深度≥{need_degree}%（当前{now_degree}%）")
+                    draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
                     # 可以解锁则绘制按钮
                     if not up_data.todo and now_exp >= need_exp and now_degree >= need_degree:
                         now_draw = draw.LeftButton(
@@ -458,7 +458,7 @@ class Originium_Arts_Panel:
             cache.rhodes_island.materials_resouce[3] -= money_cost
         # 升级或获得能力
         self.pl_character_data.talent[talent_id] = 1
-        info_text = _(f"\n习得了{talent_name}\n")
+        info_text = _("\n习得了{0}\n").format(talent_name)
         info_draw = draw.WaitDraw()
         info_draw.text = _(info_text)
         info_draw.draw()
@@ -551,7 +551,7 @@ class Down_Negative_Talent_Panel:
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = _(f"\n要降低[{name}]的哪个刻印呢？(需要消耗该角色已收藏至藏品馆的5条内裤，当前共{len(panties_data)}条，优先消耗重复款式)\n\n")
+            info_text = _("\n要降低[{0}]的哪个刻印呢？(需要消耗该角色已收藏至藏品馆的5条内裤，当前共{1}条，优先消耗重复款式)\n\n").format(name, len(panties_data))
             if cache.debug_mode:
                 info_text += _("当前为debug模式，不需要消耗内裤\n\n")
             info_draw.text = info_text
@@ -657,7 +657,7 @@ class Chose_Hypnosis_Type_Panel:
             title_draw.draw()
             pl_character_data: game_type.Character = cache.character_data[0]
             cinfo_draw = draw.NormalDraw()
-            info_text = _(f"\n要使用哪一种催眠类型呢？\n")
+            info_text = _("\n要使用哪一种催眠类型呢？\n")
             cinfo_draw.text = info_text
             cinfo_draw.draw()
 
@@ -667,7 +667,7 @@ class Chose_Hypnosis_Type_Panel:
                     continue
                 hypnosis_type_data = game_config.config_hypnosis_type[cid]
                 draw_text = f"  [{hypnosis_type_data.name}]"
-                draw_text += _(f"(需要[{game_config.config_talent[hypnosis_type_data.talent_id].name}]，且催眠深度达到{hypnosis_type_data.hypnosis_degree}%)")
+                draw_text += _("(需要[{0}]，且催眠深度达到{1}%)").format(game_config.config_talent[hypnosis_type_data.talent_id].name, hypnosis_type_data.hypnosis_degree)
                 draw_text += f"：{hypnosis_type_data.introduce}"
                 # 已解锁则绘制按钮
                 if pl_character_data.talent[hypnosis_type_data.talent_id]:
@@ -728,14 +728,14 @@ class Chose_Roleplay_Type_Panel:
             pl_character_data: game_type.Character = cache.character_data[0]
             target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
             info_draw = draw.NormalDraw()
-            info_text = _(f"\n○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n")
-            info_text += _(f"\n  要催眠为哪一种角色扮演呢？")
-            info_text += _(f"（当前为：")
+            info_text = _("\n○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n")
+            info_text += _("\n  要催眠为哪一种角色扮演呢？")
+            info_text += _("（当前为：")
 
             if target_data.hypnosis.roleplay == 0:
-                info_text += _(f"无）\n")
+                info_text += _("无）\n")
             else:
-                info_text += _(f"{game_config.config_roleplay[target_data.hypnosis.roleplay].name}）\n")
+                info_text += _("{0}）\n").format(game_config.config_roleplay[target_data.hypnosis.roleplay].name)
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
@@ -775,6 +775,6 @@ class Chose_Roleplay_Type_Panel:
         # 绘制提示信息
         info_draw = draw.WaitDraw()
         info_draw.style = "gold_enrod"
-        info_text = _(f"\n{target_data.name}被催眠了，开始进行{game_config.config_roleplay[cid].name}的扮演\n\n")
+        info_text = _("\n{0}被催眠了，开始进行{1}的扮演\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
         info_draw.text = info_text
         info_draw.draw()

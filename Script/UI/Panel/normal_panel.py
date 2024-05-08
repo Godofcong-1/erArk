@@ -129,7 +129,7 @@ class Read_Book_Panel:
             # 如果未借书的话直接输出提示信息
             if len(book_id_set) == 0:
                 info_draw = draw.NormalDraw()
-                borrow_limit_text = _(f"\n当前未持有书籍，请前去图书馆借书\n")
+                borrow_limit_text = _("\n当前未持有书籍，请前去图书馆借书\n")
                 info_draw.text = borrow_limit_text
                 info_draw.width = self.width
                 info_draw.draw()
@@ -247,12 +247,12 @@ class Take_Care_Baby_Panel:
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = _(f"\n选择照顾[{name}]的方式：\n\n")
+            info_text = _("\n选择照顾[{0}]的方式：\n\n").format(name)
             info_draw.text = info_text
             info_draw.draw()
 
             for button_id in range(len(button_text_list)):
-                button_text = _(f"[00{button_id}]:{button_text_list[button_id]}")
+                button_text = _("[00{0}]:{1}").format(button_id, button_text_list[button_id])
                 button_draw = draw.LeftButton(
                     _(button_text),
                     _(str(button_id)),
@@ -328,9 +328,9 @@ class Chose_First_bonus_ability_Panel:
             now_npc_draw = draw.NormalDraw()
             if self.chose_ability_id != 0:
                 ability_name = game_config.config_ability[self.chose_ability_id].name
-                now_npc_text = _(f"当前选择的能力为{ability_name}，请选择新的能力：")
+                now_npc_text = _("当前选择的能力为{0}，请选择新的能力：").format(ability_name)
             else:
-                now_npc_text = _(f"当前没有选择能力，请选择：")
+                now_npc_text = _("当前没有选择能力，请选择：")
             now_npc_draw.text = now_npc_text
             now_npc_draw.draw()
             line_feed.draw()
@@ -426,15 +426,15 @@ class Sleep_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            now_draw_text = _(f"\n\n 预计完全回复体力和气力最少需要 {hpmp_need_time} 小时，预计完全回复疲劳至少需要 {tired_recover_time} 小时，当前决定的睡眠时间为：{self.sleep_time} 小时（默认取两者最大值）")
+            now_draw_text = _("\n\n 预计完全回复体力和气力最少需要 {0} 小时，预计完全回复疲劳至少需要 {1} 小时，当前决定的睡眠时间为：{2} 小时（默认取两者最大值）").format(hpmp_need_time, tired_recover_time, self.sleep_time)
             now_draw.text = now_draw_text
             now_draw.draw()
 
-            now_draw_text = _(f"\n 睡眠时间选择：")
+            now_draw_text = _("\n 睡眠时间选择：")
             now_draw.text = now_draw_text
             now_draw.draw()
             for i in [1,4,8]:
-                button_text = _(f" [{i}小时] ")
+                button_text = _(" [{0}小时] ").format(i)
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.fast_choice_sleep_time, args=i)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
@@ -543,12 +543,12 @@ class Fridge_Panel:
                 character_data = cache.character_data[character_id]
                 character_name = character_data.name
                 character_milk = cache.rhodes_island.milk_in_fridge[character_id]
-                draw_text = _(f"  [{str(character_data.adv).rjust(4,'0')}]{character_name}：{character_milk}ml")
+                draw_text = _("  [{0}]{1}：{2}ml").format(str(character_data.adv).rjust(4,'0'), character_name, character_milk)
                 draw_text = draw_text.ljust(20, "　")
                 now_draw.text = draw_text
                 now_draw.draw()
                 # 拿走按钮
-                button_text = _(f"  [带走]  ")
+                button_text = _("  [带走]  ")
                 button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text + f"_{character_id}"),
@@ -559,7 +559,7 @@ class Fridge_Panel:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 # 转化按钮
-                button_text = _(f"  [转化]  ")
+                button_text = _("  [转化]  ")
                 button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text + f"_{character_id}"),
@@ -597,7 +597,7 @@ class Fridge_Panel:
         del cache.rhodes_island.milk_in_fridge[character_id]
 
         now_draw = draw.WaitDraw()
-        draw_text = _(f"\n  你将{character_data.name}的母乳（{new_food.milk_ml}ml）放进了背包\n")
+        draw_text = _("\n  你将{0}的母乳（{1}ml）放进了背包\n").format(character_data.name, new_food.milk_ml)
         now_draw.text = draw_text
         now_draw.draw()
 
@@ -609,7 +609,7 @@ class Fridge_Panel:
         cache.rhodes_island.materials_resouce[31] += cache.rhodes_island.milk_in_fridge[character_id]
 
         now_draw = draw.WaitDraw()
-        draw_text = _(f"\n  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n")
+        draw_text = _("\n  你将{0}的母乳（{1}ml）转化为了【鲜母乳】\n").format(character_data.name, cache.rhodes_island.milk_in_fridge[character_id])
         now_draw.text = draw_text
         now_draw.draw()
 

@@ -1176,10 +1176,10 @@ msgstr "Change gender"
 
 msgid ""
 "\n"
-" 阴茎大小：{jj_text}      "
+" 阴茎大小：{0}      "
 msgstr ""
 "\n"
-" Penis size: {jj_text}      "
+" Penis size: {0}      "
 
 msgid "    [改变大小]"
 msgstr "    [Change size]"

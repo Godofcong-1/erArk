@@ -41,7 +41,7 @@ class Check_locker_Panel:
         map_name = attr_text.get_map_path_text(now_map)
         map_path_str = map_handle.get_map_system_path_str_for_list(pl_data.position)
         map_data = cache.scene_data[map_path_str]
-        title_draw = draw.TitleLineDraw(_(f"{map_name}的衣柜"), self.width)
+        title_draw = draw.TitleLineDraw(_("{0}的衣柜").format(map_name), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 8, self.width, 1, 1, 0)
         while 1:
@@ -264,7 +264,7 @@ class FindDraw:
         self.character_data.cloth.cloth_locker[9] = []
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n获得了{ self.character_data.name}的{pan_name}，可在藏品馆里纳入收藏\n")
+        now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format( self.character_data.name, pan_name)
         now_draw.draw()
 
     def get_socks(self):
@@ -277,7 +277,7 @@ class FindDraw:
         self.character_data.cloth.cloth_locker[10] = []
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n获得了{ self.character_data.name}的{socks_name}，可在藏品馆里纳入收藏\n")
+        now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format( self.character_data.name, socks_name)
         now_draw.draw()
 
     def shoot_in_cloth(self):

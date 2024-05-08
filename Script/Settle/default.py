@@ -4559,7 +4559,7 @@ def handle_official_work_add_adjust(
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
-        now_draw_text += _(f"在{target_data.name}的帮助下，")
+        now_draw_text += _("在{0}的帮助下，").format(target_data.name)
     # 根据博士办公室的房间等级来调整
     now_level = cache.rhodes_island.facility_level[22]
     facility_cid = game_config.config_facility_effect_data["博士办公室"][int(now_level)]
@@ -4571,11 +4571,11 @@ def handle_official_work_add_adjust(
     # 输出处理结果
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw_text += _(f"共处理了{finish_work}公务，")
+        now_draw_text += _("共处理了{0}公务，").format(finish_work)
         if cache.rhodes_island.office_work > 0:
-            now_draw_text += _(f"还有{cache.rhodes_island.office_work}需要处理\n")
+            now_draw_text += _("还有{0}需要处理\n").format(cache.rhodes_island.office_work)
         else:
-            now_draw_text += _(f"已经全部处理完毕\n\n")
+            now_draw_text += _("已经全部处理完毕\n\n")
         now_draw.text = now_draw_text
         now_draw.width = width
         now_draw.draw()
@@ -4623,7 +4623,7 @@ def handle_cure_patient_add_just(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"\n在{character_data.name}的努力下，医治了一名病人，支付了{now_add_lust}龙门币的医疗费。（今日剩余病人数：{cache.rhodes_island.patient_now}人）\n")
+        now_draw.text = _("\n在{0}的努力下，医治了一名病人，支付了{1}龙门币的医疗费。（今日剩余病人数：{2}人）\n").format(character_data.name, now_add_lust, cache.rhodes_island.patient_now)
         now_draw.draw()
 
 
@@ -4674,7 +4674,7 @@ def handle_recruit_add_just(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"\n在{character_data.name}的努力下，{select_index}号招募位进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1)}%\n")
+        now_draw.text = _("\n在{0}的努力下，{1}号招募位进度+{2}%，现在为{3}%\n").format(character_data.name, select_index, round(now_add_lust,1), round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1))
         now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
@@ -4713,7 +4713,7 @@ def handle_invite_visitor_add_adjust(
         if character_id == 0:
             now_draw = draw.NormalDraw()
             now_draw.width = width
-            now_draw.text = _(f"\n请先使用邀请系统选择邀请的对象，再进行邀请\n")
+            now_draw.text = _("\n请先使用邀请系统选择邀请的对象，再进行邀请\n")
             now_draw.draw()
         return
 
@@ -4729,7 +4729,7 @@ def handle_invite_visitor_add_adjust(
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _(f"\n在{character_data.name}的努力下，邀请进度+{round(now_add_lust,1)}%，现在为{round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1)}%\n")
+        now_draw.text = _("\n在{0}的努力下，邀请进度+{1}%，现在为{2}%\n").format(character_data.name, round(now_add_lust,1), round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1))
         now_draw.draw()
 
     # 增加对应槽的邀请值，并进行结算

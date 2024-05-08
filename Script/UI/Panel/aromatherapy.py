@@ -53,25 +53,25 @@ class Aromatherapy_Panel:
 
             # 剩余调香次数
             now_text = ""
-            now_text += _(f"\n  今日剩余调香次数    ：  {cache.rhodes_island.remaining_aromatherapy_sessions_today}次")
+            now_text += _("\n  今日剩余调香次数    ：  {0}次").format(cache.rhodes_island.remaining_aromatherapy_sessions_today)
             all_info_draw.text = now_text
             all_info_draw.draw()
             line_feed.draw()
 
             # 当前调香对象
             now_text = ""
-            now_text += _(f"\n  当前调香对象        ：  {target_character_data.name}")
+            now_text += _("\n  当前调香对象        ：  {0}").format(target_character_data.name)
             # 判断对方今日是否已调香
             if target_character_data.sp_flag.aromatherapy != 0:
                 # 输出调香状态
-                now_text += _(f"(今日已调香-{game_config.config_aromatherapy_recipes[target_character_data.sp_flag.aromatherapy].name})")
+                now_text += _("(今日已调香-{0})").format(game_config.config_aromatherapy_recipes[target_character_data.sp_flag.aromatherapy].name)
             all_info_draw.text = now_text
             all_info_draw.draw()
             line_feed.draw()
 
             # 资源信息
             now_text = ""
-            now_text += _(f"\n  当前调香资源        ：")
+            now_text += _("\n  当前调香资源        ：")
             for recipes_id in cache.rhodes_island.materials_resouce:
                 recipes_data  = game_config.config_resouce[recipes_id]
                 if recipes_data.name == _("香料") or recipes_data.type == _("香水"):
@@ -82,8 +82,8 @@ class Aromatherapy_Panel:
 
             # 当前配方
             now_text = ""
-            now_text += _(f"\n  当前选择的调香配方  ：")
-            now_text += _(f"  {game_config.config_aromatherapy_recipes[self.now_choice_recipe_id].name}")
+            now_text += _("\n  当前选择的调香配方  ：")
+            now_text += _("  {0}").format(game_config.config_aromatherapy_recipes[self.now_choice_recipe_id].name)
             all_info_draw.text = now_text
             all_info_draw.draw()
             line_feed.draw()
@@ -136,7 +136,7 @@ class Aromatherapy_Panel:
             return_list = []
 
             now_text = ""
-            now_text += _(f"\n\n当前可选的配方有：\n")
+            now_text += _("\n\n当前可选的配方有：\n")
             all_info_draw.text = now_text
             all_info_draw.draw()
 
@@ -163,7 +163,7 @@ class Aromatherapy_Panel:
                     return_list.append(button_draw.return_text)
 
                     formula_text = recipes_data.formula
-                    now_text = _(f"\n     调香消耗：")
+                    now_text = _("\n     调香消耗：")
                     # 以&为分割判定是否有多个需求
                     if "&" not in formula_text:
                         need_list = []

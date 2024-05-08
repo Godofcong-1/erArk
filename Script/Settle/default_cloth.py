@@ -214,7 +214,7 @@ def handle_get_t_pan(
     # 绘制信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _(f"\n获得了{target_data.name}的{TPanName}，可在藏品馆里纳入收藏\n")
+    now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, TPanName)
     now_draw.draw()
 
 
@@ -246,7 +246,7 @@ def handle_get_t_sock(
     # 绘制信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _(f"\n获得了{target_data.name}的{TSocName}，可在藏品馆里纳入收藏\n")
+    now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, TSocName)
     now_draw.draw()
 
 
@@ -279,7 +279,7 @@ def handle_t_cloth_back(
     if wear_flag:
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n{target_data.name}穿回了脱下的衣服")
+        now_draw.text = _("\n{0}穿回了脱下的衣服").format(target_data.name)
         now_draw.draw()
 
 

@@ -200,7 +200,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                 name = f"\n{target_data.name}"
                 # 输出无意识状态的提示信息
                 if target_data.sp_flag.unconscious_h:
-                    name += _(f"({originium_arts.unconscious_list[target_data.sp_flag.unconscious_h]})")
+                    name += _("({0})").format(originium_arts.unconscious_list[target_data.sp_flag.unconscious_h])
                 now_text = name + ":"
 
                 # 体力/气力/好感/信赖/催眠度的结算输出
@@ -731,21 +731,21 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         # 至少提升为欲望1
         if character_data.ability[33] < 0:
             character_data.ability[33] = 1
-            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至1级\n")
+            now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至1级\n").format(character_data.name)
     if character_data.ability[13] <= 1 and (single_happy_count >= 8 or all_happy_count >= 20):
         character_data.ability[13] = 2
         character_data.second_behavior[1031] = 1
         # 至少提升为欲望3
         if character_data.ability[33] < 3:
             character_data.ability[33] = 3
-            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至3级\n")
+            now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至3级\n").format(character_data.name)
     if character_data.ability[13] <= 2 and (single_happy_count >= 16 or all_happy_count >= 50):
         character_data.ability[13] = 3
         character_data.second_behavior[1032] = 1
         # 至少提升为欲望5
         if character_data.ability[33] < 5:
             character_data.ability[33] = 5
-            now_draw_text += _(f"在快乐刻印的影响下，{character_data.name}的欲望提升至5级\n")
+            now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至5级\n").format(character_data.name)
 
     # 屈服刻印检测屈服+恭顺+羞耻/5，30000屈服1，50000屈服2，100000屈服3
     yield_count = 0
@@ -758,21 +758,21 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         # 至少提升为顺从1
         if character_data.ability[31] < 1:
             character_data.ability[31] = 1
-            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至1级\n")
+            now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至1级\n").format(character_data.name)
     if yield_count >= 50000 and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         # 至少提升为顺从3
         if character_data.ability[31] < 3:
             character_data.ability[31] = 3
-            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至3级\n")
+            now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至3级\n").format(character_data.name)
     if yield_count >= 100000 and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         # 至少提升为顺从5
         if character_data.ability[31] < 5:
             character_data.ability[31] = 5
-            now_draw_text += _(f"在屈服刻印的影响下，{character_data.name}的顺从提升至5级\n")
+            now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至5级\n").format(character_data.name)
 
     # 苦痛刻印检测苦痛，20000苦痛1，40000苦痛2，80000苦痛3
     pain_count = 0
@@ -786,21 +786,21 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         # 至少提升为受虐1
         if character_data.ability[36] < 1:
             character_data.ability[36] = 1
-            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至1级\n")
+            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至1级\n").format(character_data.name)
     if pain_count >= 40000 and character_data.ability[15] <= 1:
         character_data.ability[15] = 2
         character_data.second_behavior[1037] = 1
         # 至少提升为受虐3
         if character_data.ability[36] < 3:
             character_data.ability[36] = 3
-            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至3级\n")
+            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至3级\n").format(character_data.name)
     if pain_count >= 80000 and character_data.ability[15] <= 2:
         character_data.ability[15] = 3
         character_data.second_behavior[1038] = 1
         # 至少提升为受虐5
         if character_data.ability[36] < 5:
             character_data.ability[36] = 5
-            now_draw_text += _(f"在苦痛刻印的影响下，{character_data.name}的受虐提升至5级\n")
+            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至5级\n").format(character_data.name)
 
     # 无觉刻印未实装
 

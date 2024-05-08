@@ -1231,13 +1231,13 @@ def character_see_h_and_move_to_dormitory(character_id: int):
 
     # 输出提示信息，并结算把柄
     now_draw = draw.NormalDraw()
-    now_draw.text = _(f"被{character_data.name}看到了情事现场\n")
+    now_draw.text = _("被{0}看到了情事现场\n").format(character_data.name)
     if character_data.talent[222]:
-        now_draw.text += _(f"{character_data.name}还不懂这是什么意义，被你随口糊弄走了")
+        now_draw.text += _("{0}还不懂这是什么意义，被你随口糊弄走了").format(character_data.name)
     else:
         character_data.talent[401] = 1
-        now_draw.text += _(f"{character_data.name}获得了[持有博士把柄]\n")
-        now_draw.text += _(f"{character_data.name}红着脸跑走了")
+        now_draw.text += _("{0}获得了[持有博士把柄]\n").format(character_data.name)
+        now_draw.text += _("{0}红着脸跑走了").format(character_data.name)
     now_draw.draw()
     line_feed.draw()
 
@@ -1692,7 +1692,7 @@ def character_pee(character_id: int):
     character_data.behavior.duration = 5
     if handle_premise.handle_urinate_ge_125(character_id) and handle_premise.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
         now_draw = draw.WaitDraw()
-        now_draw.text = _(f"尿意达到了极限的{character_data.name}实在无法继续憋下去，被迫当场尿了出来\n")
+        now_draw.text = _("尿意达到了极限的{0}实在无法继续憋下去，被迫当场尿了出来\n").format(character_data.name)
         now_draw.draw()
 
 

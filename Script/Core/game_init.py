@@ -64,8 +64,8 @@ def init(main_flow: object):
             traceback.print_exc(file=open(error_path, "a"))
             # 向游戏内写入错误信息
             error_text = "\n"
-            error_text += _(f"版本信息：{normal_config.config_normal.verson}\n")
-            error_text += _(f"最近输入指令：{cache.input_cache}\n")
+            error_text += _("版本信息：{0}\n").format(normal_config.config_normal.verson)
+            error_text += _("最近输入指令：{0}\n").format(cache.input_cache)
             error_text += traceback.format_exc()
             error_text += _("\n\n游戏发生错误，已将上述错误信息写入error.log\n\n")
             # 输出选择面板

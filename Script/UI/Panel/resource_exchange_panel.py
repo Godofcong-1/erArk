@@ -52,12 +52,12 @@ class Resource_Exchange_Line_Panel:
             all_info_draw = draw.NormalDraw()
             now_text = ""
             money = cache.rhodes_island.materials_resouce[1]
-            now_text += _(f"\n  当前龙门币数量    ：{money}")
+            now_text += _("\n  当前龙门币数量    ：{0}").format(money)
 
             resouce_data  = game_config.config_resouce[self.now_select_resouce_id]
             now_resouce_stock = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
             warehouse_capacity = cache.rhodes_island.warehouse_capacity
-            now_text += _(f"\n\n  要交易的资源为    ：{resouce_data.name}({now_resouce_stock}/{warehouse_capacity})    ")
+            now_text += _("\n\n  要交易的资源为    ：{0}({1}/{2})    ").format(resouce_data.name, now_resouce_stock, warehouse_capacity)
             all_info_draw.text = now_text
             all_info_draw.width = self.width
             all_info_draw.draw()
@@ -71,14 +71,14 @@ class Resource_Exchange_Line_Panel:
             button_text = _(" [更改交易资源] ")
             button_draw = draw.CenterButton(
                 _(button_text),
-                _(f"{button_text}"),
+                _("{0}").format(button_text),
                 len(button_text) * 2,
                 cmd_func=self.select_exchange_resouce,
                 )
             return_list.append(button_draw.return_text)
             button_draw.draw()
 
-            all_info_draw.text = _(f"\n\n  要交易的数量为    ：{self.quantity_of_resouce}    ")
+            all_info_draw.text = _("\n\n  要交易的数量为    ：{0}    ").format(self.quantity_of_resouce)
             all_info_draw.draw()
 
             # 绘制数量变更按钮
@@ -86,7 +86,7 @@ class Resource_Exchange_Line_Panel:
             for button_text in button_text_list:
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(f"{button_text}"),
+                    _("{0}").format(button_text),
                     len(button_text) * 2,
                     cmd_func=self.settle_quantity,
                     args=(button_text, ),
@@ -97,7 +97,7 @@ class Resource_Exchange_Line_Panel:
             button_text = _(" [重置] ")
             button_draw = draw.CenterButton(
                 _(button_text),
-                _(f"{button_text}"),
+                _("{0}").format(button_text),
                 len(button_text) * 2,
                 cmd_func=self.reset_quantity,
                 )
@@ -108,14 +108,14 @@ class Resource_Exchange_Line_Panel:
             price = resouce_data.price
             price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
             price = int(price)
-            all_info_draw.text = _(f"\n\n  交易的价格为      ：")
+            all_info_draw.text = _("\n\n  交易的价格为      ：")
             all_info_draw.draw()
 
             # 绘制买入还是卖出的按钮
             button_text = _(" [买入] ") if self.buy_or_sell_flag else _(" [卖出] ")
             button_draw = draw.CenterButton(
                 _(button_text),
-                _(f"{button_text}"),
+                _("{0}").format(button_text),
                 len(button_text) * 2,
                 cmd_func=self.settle_buy_or_sell,
                 )
@@ -124,20 +124,20 @@ class Resource_Exchange_Line_Panel:
 
             # 无法买入的，不显示价格
             if (self.buy_or_sell_flag and not cant_buy_flag) or not self.buy_or_sell_flag:
-                all_info_draw.text = _(f" {price}龙门币/1单位 ")
+                all_info_draw.text = _(" {0}龙门币/1单位 ").format(price)
                 all_info_draw.draw()
             line_feed.draw()
 
             # 输出总价
             if self.buy_or_sell_flag:
-                all_info_draw.text = _(f"\n  ○预计共花费{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n")
+                all_info_draw.text = _("\n  ○预计共花费{0} * {1} = {2}龙门币\n").format(price, self.quantity_of_resouce, price * self.quantity_of_resouce)
                 if price * self.quantity_of_resouce > money:
                     all_info_draw.text += _("  ●龙门币不足，无法购买\n")
                 # 如果是不可购买的则显示提示
                 if cant_buy_flag:
                     all_info_draw.text = _("\n  ●该资源无法购买，只能卖出\n")
             else:
-                all_info_draw.text = _(f"\n  ○预计共获得{price} * {self.quantity_of_resouce} = {price * self.quantity_of_resouce}龙门币\n")
+                all_info_draw.text = _("\n  ○预计共获得{0} * {1} = {2}龙门币\n").format(price, self.quantity_of_resouce, price * self.quantity_of_resouce)
                 if self.quantity_of_resouce > now_resouce_stock:
                     all_info_draw.text += _("  ●资源不足，无法出售\n")
             all_info_draw.draw()
@@ -188,7 +188,7 @@ class Resource_Exchange_Line_Panel:
 
                 resouce_now_data = game_config.config_resouce[self.now_select_resouce_id]
 
-                info_text = _(f"当前的交易资源为：{resouce_now_data.name}")
+                info_text = _("当前的交易资源为：{0}").format(resouce_now_data.name)
                 info_text += _("\n当前可以交易的资源有：\n")
                 info_draw.text = info_text
                 info_draw.draw()
@@ -230,11 +230,11 @@ class Resource_Exchange_Line_Panel:
                             button_draw.draw()
                             return_list.append(button_draw.return_text)
 
-                            now_text = _(f"\n      当前存量：{cache.rhodes_island.materials_resouce[resouce_id]}/{cache.rhodes_island.warehouse_capacity}")
+                            now_text = _("\n      当前存量：{0}/{1}").format(cache.rhodes_island.materials_resouce[resouce_id], cache.rhodes_island.warehouse_capacity)
                             # 判断是否可以买入卖出
                             if resouce_data.cant_buy == 0:
-                                now_text += _(f"   买入:{int(resouce_data.price * 1.2)}龙门币/1单位")
-                            now_text += _(f"   卖出:{int(resouce_data.price * 0.8)}龙门币/1单位\n")
+                                now_text += _("   买入:{0}龙门币/1单位").format(int(resouce_data.price * 1.2))
+                            now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 0.8))
                             info_draw.text = now_text
                             info_draw.draw()
 

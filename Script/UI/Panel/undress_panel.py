@@ -215,7 +215,7 @@ class SeeUndressButtonList:
                 target_data.cloth.cloth_wear[i] = []
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
-            now_draw.text = _(f"\n获得了{target_data.name}的{pan_name}，可在藏品馆里纳入收藏\n")
+            now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, pan_name)
             now_draw.draw()
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK

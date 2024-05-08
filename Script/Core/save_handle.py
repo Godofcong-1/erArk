@@ -139,7 +139,7 @@ def input_load_save(save_id: str):
     # 从存档中加载字典
     loaded_dict = load_save(save_id).__dict__
 
-    draw_text = _(f"\n开始检测存档的数据结构是否需要跨版本更新\n")
+    draw_text = _("\n开始检测存档的数据结构是否需要跨版本更新\n")
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
@@ -179,13 +179,13 @@ def input_load_save(save_id: str):
             update_count += 1
     if cloth_update_count:
         now_draw = draw.LeftDraw()
-        draw_text = _(f"\n共有{cloth_update_count}个角色的服装数据已重置\n")
+        draw_text = _("\n共有{0}个角色的服装数据已重置\n").format(cloth_update_count)
         now_draw.text = draw_text
         now_draw.draw()
     # 更新字体颜色
     if color_update_count:
         now_draw = draw.LeftDraw()
-        draw_text = _(f"\n共有{color_update_count}个角色的口上颜色已更新\n")
+        draw_text = _("\n共有{0}个角色的口上颜色已更新\n").format(color_update_count)
         now_draw.text = draw_text
         now_draw.draw()
         io_init.init_style()
@@ -206,7 +206,7 @@ def input_load_save(save_id: str):
     if len(loaded_dict["system_setting"]) != len(zero_system_setting):
         loaded_dict["system_setting"] = zero_system_setting
         now_draw = draw.WaitDraw()
-        draw_text = _(f"\n系统设置已重置，如有需要请手动修改\n")
+        draw_text = _("\n系统设置已重置，如有需要请手动修改\n")
         now_draw.text = draw_text
         now_draw.style = "warning"
         now_draw.draw()
@@ -214,7 +214,7 @@ def input_load_save(save_id: str):
     # 更新游戏地图
     update_count += update_map(loaded_dict)
     now_draw = draw.LeftDraw()
-    draw_text = _(f"\n检测完毕，共有{update_count}条数据完成了更新\n")
+    draw_text = _("\n检测完毕，共有{0}条数据完成了更新\n").format(update_count)
     now_draw.text = draw_text
     now_draw.draw()
 
@@ -240,7 +240,7 @@ def update_dict_with_default(loaded_dict, default_dict):
             loaded_dict[key] = value
             update_count += 1
             # 只有在不是私有属性时才会输出
-            draw_text = _(f"存档跨版本更新: key {key}, not found，已设为默认值 {value}\n")
+            draw_text = _("存档跨版本更新: key {0}, not found，已设为默认值 {1}\n").format(key, value)
             now_draw = draw.LeftDraw()
             now_draw.text = draw_text
             # now_draw.draw()
@@ -252,7 +252,7 @@ def update_dict_with_default(loaded_dict, default_dict):
         elif type(loaded_dict[key]) != type(default_dict[key]) and value != None and type(value) != int and type(value) != float:
             loaded_dict[key] = value
             update_count += 1
-            draw_text = _(f"存档跨版本更新: key {key}, type not match，原type {type(loaded_dict[key])}，新type {type(default_dict[key])}, 已设为默认值 {value}\n")
+            draw_text = _("存档跨版本更新: key {0}, type not match，原type {1}，新type {2}, 已设为默认值 {3}\n").format(key, type(loaded_dict[key]), type(default_dict[key]), value)
             now_draw = draw.LeftDraw()
             now_draw.text = draw_text
             # now_draw.draw()
@@ -316,7 +316,7 @@ def update_tem_character(loaded_dict):
             loaded_dict["npc_tem_data"].pop(tem_cid)
             loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
             now_draw = draw.LeftDraw()
-            draw_text = _(f"存档跨版本更新: 角色 {value.name} 的序号不一致，已修正\n")
+            draw_text = _("存档跨版本更新: 角色 {0} 的序号不一致，已修正\n").format(value.name)
             now_draw.text = draw_text
             # now_draw.draw()
 
@@ -478,7 +478,7 @@ def update_map(loaded_dict):
                 del loaded_dict["scene_data"][key]
                 update_count += 1
         now_draw = draw.LeftDraw()
-        draw_text = _(f"\n游戏地图已更新\n")
+        draw_text = _("\n游戏地图已更新\n")
         now_draw.text = draw_text
         now_draw.draw()
 

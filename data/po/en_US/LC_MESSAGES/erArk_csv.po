@@ -212,6 +212,58 @@ msgstr "Skills"
 msgid "技术"
 msgstr "Techniques"
 
+#: .\data\csv\Aromatherapy_Recipes.csv:6
+msgid "无"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:7
+msgid "宁静时光"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:7
+msgid "放松身心，舒缓紧张，能够将体力与气力全部回满"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:8
+msgid "灵感烛光"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:8
+msgid "提高认知功能与精神专注，今日习得的获得速度+1倍"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:9
+msgid "橙色心灵"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:9
+msgid "振奋精神，积极向上，今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:10
+msgid "迷乱情梦"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:10
+msgid "提升感官敏感度，促进荷尔蒙分泌，今日全部位快感与欲情的获得速度+1倍"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:11
+msgid "情感共鸣"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:11
+msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:12
+msgid "下坠天空"
+msgstr ""
+
+#: .\data\csv\Aromatherapy_Recipes.csv:12
+msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
+msgstr ""
+
 #: .\data\csv\AssistantServices.csv:6
 msgid "辅佐服务"
 msgstr "Help service"
@@ -1319,6 +1371,14 @@ msgstr "Command test is separated into general and specific, where general can b
 #: .\data\csv\CharaSetting.csv:7
 msgid "仅使用角色专属文本|使用通用文本+角色专属文本"
 msgstr "Only use specifics|Use both"
+
+#: .\data\csv\CharaSetting.csv:8
+msgid "是否设为收藏角色"
+msgstr ""
+
+#: .\data\csv\CharaSetting.csv:8
+msgid "当招募的干员数量过多时，可以将心仪的角色设为收藏角色，方便在干员位置等面板进行快速筛选"
+msgstr ""
 
 #: .\data\csv\City.csv:8
 msgid "多索雷斯"
@@ -6073,8 +6133,8 @@ msgid "疗养庭院"
 msgstr "Convalescence Garden"
 
 #: .\data\csv\Facility_effect.csv:103
-msgid "开放基础设施:【香熏治疗室】和【莱娜的憩所】"
-msgstr "Opens basic facilities: [Aromatherapy Treatment Room] and [Lena's Rest]"
+msgid "开放基础设施:【药田】"
+msgstr ""
 
 #: .\data\csv\Facility_effect.csv:104
 msgid "疗养庭院"
@@ -6089,24 +6149,24 @@ msgid "疗养庭院"
 msgstr "Convalescence Garden"
 
 #: .\data\csv\Facility_effect.csv:105
-msgid "开放新设施:【农田】（未实装），生产效率加成提升至20%"
-msgstr "Opens new facility: [Farmland], production speed +20% "
+msgid "开放新设施:【香熏治疗室】，生产效率加成提升至20%，每日可进行一次香薰疗愈"
+msgstr ""
 
 #: .\data\csv\Facility_effect.csv:106
 msgid "疗养庭院"
 msgstr "Convalescence Garden"
 
 #: .\data\csv\Facility_effect.csv:106
-msgid "开放新设施:【磐蟹养殖场】（未实装），生产效率加成提升至50%"
-msgstr "Opens new facility: [Metal Crab Breeding Farm], production speed +50%"
+msgid "开放新设施:【磐蟹养殖场】（未实装），生产效率加成提升至50%，每日可进行两次香薰疗愈"
+msgstr ""
 
 #: .\data\csv\Facility_effect.csv:107
 msgid "疗养庭院"
 msgstr "Convalescence Garden"
 
 #: .\data\csv\Facility_effect.csv:107
-msgid "开放新设施:【小树林】（未实装），生产效率加成提升至100%"
-msgstr "Opens new facility: [Grove], production speed +100%"
+msgid "开放新设施:【小树林】（未实装），生产效率加成提升至100%，每日可进行三次香薰疗愈"
+msgstr ""
 
 #: .\data\csv\Facility_effect.csv:109
 msgid "大浴场"
@@ -6732,6 +6792,62 @@ msgstr "Room 114"
 msgid "暂无"
 msgstr "None"
 
+#: .\data\csv\Facility_open.csv:48
+msgid "宿舍115房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:49
+msgid "宿舍116房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:50
+msgid "宿舍117房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:51
+msgid "宿舍118房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:52
+msgid "宿舍119房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:53
+msgid "宿舍120房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:54
+msgid "宿舍121房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:55
+msgid "宿舍122房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:56
+msgid "宿舍123房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:57
+msgid "宿舍124房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:58
+msgid "宿舍125房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:59
+msgid "宿舍126房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:60
+msgid "宿舍127房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:61
+msgid "宿舍128房"
+msgstr ""
+
 #: .\data\csv\Facility_open.csv:47
 msgid "宿舍201房"
 msgstr "Room 201"
@@ -6831,6 +6947,70 @@ msgstr "None"
 #: .\data\csv\Facility_open.csv:59
 msgid "宿舍213房"
 msgstr "Room 213"
+
+#: .\data\csv\Facility_open.csv:75
+msgid "宿舍214房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:76
+msgid "宿舍215房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:77
+msgid "宿舍216房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:78
+msgid "宿舍217房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:79
+msgid "宿舍218房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:80
+msgid "宿舍219房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:81
+msgid "宿舍220房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:82
+msgid "宿舍221房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:83
+msgid "宿舍222房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:84
+msgid "宿舍223房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:85
+msgid "宿舍224房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:86
+msgid "宿舍225房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:87
+msgid "宿舍226房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:88
+msgid "宿舍227房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:89
+msgid "宿舍228房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:90
+msgid "宿舍229房"
+msgstr ""
 
 #: .\data\csv\Facility_open.csv:59
 msgid "暂无"
@@ -7455,6 +7635,58 @@ msgstr "None"
 #: .\data\csv\Facility_open.csv:137
 msgid "宿舍813房"
 msgstr "Room 813"
+
+#: .\data\csv\Facility_open.csv:169
+msgid "宿舍901房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:170
+msgid "宿舍902房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:171
+msgid "宿舍903房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:172
+msgid "宿舍904房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:173
+msgid "宿舍905房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:174
+msgid "宿舍906房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:175
+msgid "宿舍907房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:176
+msgid "宿舍908房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:177
+msgid "宿舍909房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:178
+msgid "宿舍910房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:179
+msgid "宿舍911房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:180
+msgid "宿舍912房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:181
+msgid "宿舍913房"
+msgstr ""
 
 #: .\data\csv\Facility_open.csv:137
 msgid "暂无"
@@ -9803,6 +10035,82 @@ msgstr "Perfumes"
 #: .\data\csv\Resouce.csv:36
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
 msgstr "Perfume refined from medicinal spices and essences, with a fragrance that nearly rivals advanced perfumes while having high medicinal value."
+
+#: .\data\csv\Roleplay.csv:8
+msgid "妻子"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:8
+msgid "家庭"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:9
+msgid "姐姐"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:10
+msgid "妹妹"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:11
+msgid "女儿"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:12
+msgid "妈妈"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:13
+msgid "女仆"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:13
+msgid "职业"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:14
+msgid "老师"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:15
+msgid "学生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:16
+msgid "护士"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:17
+msgid "警察"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:18
+msgid "宠物猫"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:18
+msgid "宠物"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:19
+msgid "宠物狗"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:20
+msgid "电车痴汉"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:20
+msgid "场景"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:21
+msgid "户外当众"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:22
+msgid "公共厕所"
+msgstr ""
 
 #: .\data\csv\Season.csv:6
 msgid "春"
@@ -18377,6 +18685,158 @@ msgstr "White sock"
 #: .\data\character\4091_U-Official.csv:39
 msgid "粉色洞洞鞋"
 msgstr "Pink crocs"
+
+#: .\data\character\4098_薇薇安娜.csv:4
+msgid "薇薇安娜"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:13
+msgid "一枚风干的金盏花书签。与书同行的旅程漫长而遥远，在离席暂别前，让它成为驻足于此的信标吧。"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:14
+msgid "薇薇安娜·德罗斯特，莱塔尼亚施彤领选帝侯霍赫贝格家族后裔，前卡西米尔人气竞技骑士。经耀骑士临光举荐，在罗德岛登记为合作干员。\n擅长使用光影类源石技艺，配以华丽的剑术技巧，能在战场上灵活御敌。驻留本舰期间将为罗德岛提供战术与外勤任务支援。"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:27
+msgid "带兜帽披袍"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:28
+msgid "黑色底色白饰洛丽塔"
+msgstr ""
+
+#: .\data\character\4098_薇薇安娜.csv:30
+msgid "白色长筒高跟靴"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:4
+msgid "冰酿"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:13
+msgid "一颗被切割成圆球的冰块，放进杯子里大小刚好。如果想尝尝她的自酿酒，建议加冰稀释，更建议不要尝试。"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:14
+msgid "海伦娜，经杰西卡介绍成为罗德岛的合作干员，为拓荒地办事处提供帮助。"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:30
+msgid "露脐短版上衬"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:31
+msgid "黑色包臀裙"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:32
+msgid "黑色透肉过膝袜"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:33
+msgid "深色长筒靴"
+msgstr ""
+
+#: .\data\character\4104_冰酿.csv:34
+msgid "围裙"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:4
+msgid "戴菲恩"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:13
+msgid "一枚精致的袖扣。温德米尔出身的军人向来军容整洁，一丝不苟，现在她主动将这枚小信物摘下送给你。"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:14
+msgid "戴菲恩，曾作为情报人员在诺伯特区活动多年，后以典范军成员的身份参与了伦蒂尼姆周边的一系列战役。在维多利亚事件结束后，同罗德岛达成了一系列战略合作条款，为罗德岛驻维多利亚办事处提供协助。"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:27
+msgid "维多利亚式军装"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:28
+msgid "黑色超短裤"
+msgstr ""
+
+#: .\data\character\4110_戴菲恩.csv:29
+msgid "黑色踝袜"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:4
+msgid "锏"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:13
+msgid "一个只能拨通她的号码的通讯终端。和普通的通讯终端在外表上明明没什么区别，却能给人无上的安心感。"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:14
+msgid "前卡西米尔骑士竞赛三届冠军，喀兰贸易总裁恩希欧迪斯的贴身保镖。基于博士与恩希欧迪斯签订的合同，无限期作为干员加入罗德岛。\n现作为近卫干员活跃于各种任务之中，以其强大无比的战斗力为其他干员开辟道路。\n\n我收到一些反馈，说大部分任务有她在的话，和野营没什么区别。这确实不怪博士，她主动去的，而且看起来她还挺乐在其中的。呃，那我也没什么理由反对，不是吗？"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:27
+msgid "深色莱塔尼亚军装"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:28
+msgid "深色西装裤"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:30
+msgid "雪地军靴"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:4
+msgid "莱伊"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:13
+msgid "一本看不出制作者意图的剪贴册。里面的“奇异生物照片”似乎也是拼贴合成的图像，要不要告诉她呢？"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:14
+msgid "莱伊，雷姆必拓人，无稳定职业，较常从事在雷姆必拓被称为“探井人”的矿井安保工作。偶遇故地重游的阿米娅、博士与暴行后，主动申请加入罗德岛。现作为罗德岛驻舰干员参与各类安保、战斗及勘探任务。"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:27
+msgid "露脐黑色短衬衫"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:28
+msgid "深色热裤"
+msgstr ""
+
+#: .\data\character\4117_莱伊.csv:30
+msgid "黑色登山靴"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:13
+msgid "一支手工制作的竹笛，声音清亮，但音准稍稍有些问题。"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:14
+msgid "小满，来自炎国北部农业重镇大荒城的普通女孩，在管理牧兽方面颇有心得。跟随黍以访客身份暂居罗德岛。"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:28
+msgid "绿色长褂"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:29
+msgid "墨绿色短裙"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:30
+msgid "短筒袜"
+msgstr ""
+
+#: .\data\character\4122_小满.csv:31
+msgid "深色运动鞋"
+msgstr ""
 
 #: .\data\ui_text\ability.csv:6
 msgid "完全没有性经验。阴道处于未开发状态。阴道口细小。处女膜完好。内壁柔软而紧致。阴道狭窄干涩。无法接纳任何物体的插入。性对她来说是一个完全陌生的概念。"

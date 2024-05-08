@@ -47,7 +47,7 @@ class Agriculture_Production_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            now_text += _(f" 当前仓库等级：{cache.rhodes_island.facility_level[3]}，容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n")
+            now_text += _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
 
             # 遍历该类型的资源
             for material_id in [11, 16]:
@@ -60,7 +60,7 @@ class Agriculture_Production_Panel:
             all_info_draw.draw()
 
             for agriculture_line_id in cache.rhodes_island.herb_garden_line:
-                now_text = _(f"\n 药田：")
+                now_text = _("\n 药田：")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -69,13 +69,13 @@ class Agriculture_Production_Panel:
                 resouce_data = game_config.config_resouce[resouce_id]
 
                 # 生产产品
-                now_text = _(f"\n    当前生产：{resouce_data.name}(10/d)      ")
+                now_text = _("\n    当前生产：{0}(10/d)      ").format(resouce_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 button_text = _(" [生产调整] ")
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(f"{button_text}_药田_{agriculture_line_id}"),
+                    _("{0}_药田_{1}").format(button_text, agriculture_line_id),
                     len(button_text) * 2,
                     cmd_func=self.select_agriculture_line_produce,
                     args = (agriculture_line_id, 0)
@@ -89,13 +89,13 @@ class Agriculture_Production_Panel:
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 all_effect += facility_effect
-                now_text = _(f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)")
+                now_text = _("\n    当前效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.rhodes_island.herb_garden_line[agriculture_line_id][1]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
                     all_effect += character_effect
-                    now_text += _(f" + {character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)")
+                    now_text += _(" + {0}(农业lv{1}:{2}%)").format(character_data.name, character_data.ability[47], character_effect)
                 now_text += f" = {all_effect}%      "
                 all_info_draw.text = now_text
                 all_info_draw.draw()
@@ -104,7 +104,7 @@ class Agriculture_Production_Panel:
             # 已开放温室再显示温室的生产情况
             if cache.rhodes_island.facility_open[71]:
                 for agriculture_line_id in cache.rhodes_island.green_house_line:
-                    now_text = _(f"\n 温室：")
+                    now_text = _("\n 温室：")
                     all_info_draw.text = now_text
                     all_info_draw.draw()
 
@@ -113,13 +113,13 @@ class Agriculture_Production_Panel:
                     resouce_data = game_config.config_resouce[resouce_id]
 
                     # 生产产品
-                    now_text = _(f"\n    当前生产：{resouce_data.name}(10/d)      ")
+                    now_text = _("\n    当前生产：{0}(10/d)      ").format(resouce_data.name)
                     all_info_draw.text = now_text
                     all_info_draw.draw()
                     button_text = _(" [生产调整] ")
                     button_draw = draw.CenterButton(
                         _(button_text),
-                        _(f"{button_text}_温室_{agriculture_line_id}"),
+                        _("{0}_温室_{1}").format(button_text, agriculture_line_id),
                         len(button_text) * 2,
                         cmd_func=self.select_agriculture_line_produce,
                         args = (agriculture_line_id, 1)
@@ -133,13 +133,13 @@ class Agriculture_Production_Panel:
                     all_effect = 0
                     facility_effect = game_config.config_facility_effect[facility_cid].effect
                     all_effect += facility_effect
-                    now_text = _(f"\n    当前效率加成：设施(lv{now_level}:{facility_effect}%)")
+                    now_text = _("\n    当前效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
                     # 遍历输出干员的能力效率加成
                     for chara_id in cache.rhodes_island.green_house_line[agriculture_line_id][1]:
                         character_data: game_type.Character = cache.character_data[chara_id]
                         character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[47]))
                         all_effect += character_effect
-                        now_text += _(f" + {character_data.name}(农业lv{character_data.ability[47]}:{character_effect}%)")
+                        now_text += _(" + {0}(农业lv{1}:{2}%)").format(character_data.name, character_data.ability[47], character_effect)
                     now_text += f" = {all_effect}%      "
                     all_info_draw.text = now_text
                     all_info_draw.draw()
@@ -190,7 +190,7 @@ class Agriculture_Production_Panel:
                 resouce_data = game_config.config_resouce[resouce_id]
 
                 info_text = f""
-                info_text += _(f" 当前种植的是：{resouce_data.name}")
+                info_text += _(" 当前种植的是：{0}").format(resouce_data.name)
 
                 info_text += _("\n\n 当前可以种植的有：\n\n")
                 info_draw.text = info_text

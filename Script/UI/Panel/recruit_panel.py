@@ -37,7 +37,7 @@ class Recruit_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "招募"
+        title_text = _("招募")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
@@ -47,9 +47,9 @@ class Recruit_Panel:
             all_info_draw = draw.NormalDraw()
             now_text = ""
             if len(cache.rhodes_island.recruited_id) == 0:
-                now_text += " 当前没有招募到干员\n"
+                now_text += _(" 当前没有招募到干员\n")
             else:
-                now_text += f" 当前已招募待确认的干员有："
+                now_text += _(" 当前已招募待确认的干员有：")
                 for chara_id in cache.rhodes_island.recruited_id:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
@@ -60,7 +60,7 @@ class Recruit_Panel:
             all_info_draw.draw()
 
             for recruit_line_id in cache.rhodes_island.recruit_line:
-                now_text = f"\n {recruit_line_id+1}号招募进度：{cache.rhodes_island.recruit_line[recruit_line_id][0]}"
+                now_text = _("\n {0}号招募进度：{1}").format(recruit_line_id+1, cache.rhodes_island.recruit_line[recruit_line_id][0])
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -69,13 +69,13 @@ class Recruit_Panel:
                 recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
 
                 # 招募策略
-                now_text = f"\n    招募策略：{recruitment_strategy_data.name}(1/h)      "
+                now_text = _("\n    招募策略：{0}(1/h)      ").format(recruitment_strategy_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
-                button_text = " [调整策略] "
+                button_text = _(" [调整策略] ")
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _(f"{button_text}_{recruit_line_id}"),
+                    _("{0}_{1}").format(button_text, recruit_line_id),
                     len(button_text) * 2,
                     cmd_func=self.select_recruitment_strategy,
                     args=recruit_line_id,
@@ -88,7 +88,7 @@ class Recruit_Panel:
                 facility_cid = game_config.config_facility_effect_data["文职部"][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
-                now_text = f"\n    当前效率加成：["
+                now_text = _("\n    当前效率加成：[")
                 # 遍历输出干员的能力效率加成，40号话术技能
                 for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
                     # 第一次循环不加"+"，之后都加
@@ -97,9 +97,9 @@ class Recruit_Panel:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
                     all_effect += character_effect
-                    now_text += f"{character_data.name}(话术lv{character_data.ability[40]}:{round(character_effect, 1)}%)"
+                    now_text += _("{0}(话术lv{1}:{2}%)").format(character_data.name, character_data.ability[40], round(character_effect, 1))
                 all_effect *= 1 + (facility_effect / 100)
-                now_text += f"] * 效率加成：设施(lv{now_level}:{facility_effect}%)"
+                now_text += _("] * 效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
                 now_text += f" = {round(all_effect, 1)}%      "
                 all_info_draw.text = now_text
                 all_info_draw.draw()
@@ -107,7 +107,7 @@ class Recruit_Panel:
                 line_feed.draw()
 
             line_feed.draw()
-            button_text = "[001]人员增减"
+            button_text = _("[001]人员增减")
             button_draw = draw.LeftButton(
                 _(button_text),
                 _(button_text),
@@ -118,7 +118,7 @@ class Recruit_Panel:
             return_list.append(button_draw.return_text)
             button_draw.draw()
             line_feed.draw()
-            button_text = "[002]工位调整"
+            button_text = _("[002]工位调整")
             button_draw = draw.LeftButton(
                 _(button_text),
                 _(button_text),
@@ -151,10 +151,10 @@ class Recruit_Panel:
                 recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
                 recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
 
-                info_text = f""
-                info_text += f" {recruit_line_id+1}号招募当前的策略为：{recruitment_strategy_data.name}"
+                info_text = ""
+                info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
 
-                info_text += "\n\n 当前可以选择的策略有：\n"
+                info_text += _("\n\n 当前可以选择的策略有：\n")
                 info_draw.text = info_text
                 info_draw.draw()
 
@@ -209,15 +209,15 @@ class Recruit_Panel:
                         old_position = recruit_line_id
                         break
             else:
-                now_select_npc_name = "未选择"
+                now_select_npc_name = _("未选择")
 
             all_info_draw = draw.NormalDraw()
-            now_text = f"\n○当前的决定： 把 {now_select_npc_name} 从 {old_position + 1} 号招募调整到 {self.target_position + 1} 号招募"
+            now_text = _("\n○当前的决定： 把 {0} 从 {1} 号招募调整到 {2} 号招募").format(now_select_npc_name, old_position + 1, self.target_position + 1)
             all_info_draw.text = now_text
             all_info_draw.draw()
 
             # 遍历全干员
-            now_text = f"\n可选招募专员有：\n"
+            now_text = _("\n可选招募专员有：\n")
             all_info_draw.text = now_text
             all_info_draw.draw()
             flag_not_empty = False
@@ -230,7 +230,7 @@ class Recruit_Panel:
                 # 找到职业是招募专员的
                 if character_data.work.work_type == 71:
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    button_text = f" [{character_data.name}(话术lv{character_data.ability[40]}:{round(character_effect, 1)}%)] "
+                    button_text = _(" [{0}(话术lv{1}:{2}%)] ").format(character_data.name, character_data.ability[40], round(character_effect, 1))
                     button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text),
@@ -244,28 +244,28 @@ class Recruit_Panel:
 
             # 如果没有工作是招募专员的干员则输出提示
             if not flag_not_empty:
-                now_text = f" 暂无工作是招募专员的干员"
+                now_text = _(" 暂无工作是招募专员的干员")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
             line_feed.draw()
 
             for recruit_line_id in cache.rhodes_island.recruit_line:
-                now_text = f"\n {recruit_line_id+1}号招募："
+                now_text = _("\n {0}号招募：").format(recruit_line_id+1)
 
                 # 招募
 
                 recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
                 recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
 
-                now_text += f"\n    当前招募策略：{recruitment_strategy_data.name}      "
+                now_text += _("\n    当前招募策略：{0}      ").format(recruitment_strategy_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
-                button_text = f" [将选择专员调整至该招募] "
+                button_text = _(" [将选择专员调整至该招募] ")
                 button_draw = draw.CenterButton(
                 _(button_text),
-                _(f"{button_text}_{recruit_line_id}"),
+                _("{0}_{1}").format(button_text, recruit_line_id),
                 int(len(button_text)*2),
                 cmd_func=self.settle_assembly_line_id,
                 args=recruit_line_id,
@@ -274,12 +274,12 @@ class Recruit_Panel:
                 return_list.append(button_draw.return_text)
 
                 # 生产效率
-                now_text = f"\n    当前招募专员："
+                now_text = _("\n    当前招募专员：")
                 # 遍历输出干员的能力效率加成
                 for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    now_text += f" + {character_data.name}(话术lv{character_data.ability[40]}:{round(character_effect, 1)}%)"
+                    now_text += _(" + {0}(话术lv{1}:{2}%)").format(character_data.name, character_data.ability[40], round(character_effect, 1))
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()

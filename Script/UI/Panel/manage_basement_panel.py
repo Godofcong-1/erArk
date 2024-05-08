@@ -45,7 +45,7 @@ def change_npc_work_out(width):
         return_list = []
 
         # 空闲干员
-        info_text = _(f"\n  空闲干员：\n")
+        info_text = _("\n  空闲干员：\n")
         info_draw.text = info_text
         info_draw.draw()
         idle_npc_list = []
@@ -171,7 +171,7 @@ class Manage_Basement_Panel:
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
-                all_info_draw.text += _(f" 当前仓库容量（单资源存放上限）：{cache.rhodes_island.warehouse_capacity}\n\n")
+                all_info_draw.text += _(" 当前仓库容量（单资源存放上限）：{0}\n\n").format(cache.rhodes_island.warehouse_capacity)
                 all_info_draw.width = self.width
                 all_info_draw.draw()
 
@@ -226,8 +226,8 @@ class Manage_Basement_Panel:
                 patient_now = cache.rhodes_island.patient_now
                 work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
-                all_info_draw.text = _(f"\n 当前工作中干员/总干员：{work_people_now}/{people_max}")
-                all_info_draw.text += _(f"\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n")
+                all_info_draw.text = _("\n 当前工作中干员/总干员：{0}/{1}").format(work_people_now, people_max)
+                all_info_draw.text += _("\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n")
                 all_info_draw.draw()
 
                 # 遍历全部门
@@ -268,18 +268,18 @@ class Manage_Basement_Panel:
                         if work_data.department == department:
                             all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
                     if department == "医疗部":
-                        all_info_draw.text += _(f"  病人 — {patient_now}")
+                        all_info_draw.text += _("  病人 — {0}").format(patient_now)
                     all_info_draw.draw()
                     line_feed.draw()
 
                 # 收入
                 all_income = str(cache.rhodes_island.all_income)
-                all_info_draw.text = _(f"\n  截至目前为止，今日各部门龙门币总收入为：{all_income}\n\n")
+                all_info_draw.text = _("\n  截至目前为止，今日各部门龙门币总收入为：{0}\n\n").format(all_income)
                 all_info_draw.width = self.width
                 all_info_draw.draw()
 
                 button_draw = draw.LeftButton(
-                    _(f"[001]调整干员岗位"),
+                    _("[001]调整干员岗位"),
                     f"\n1",
                     self.width ,
                     cmd_func=change_npc_work_out,
@@ -362,11 +362,11 @@ class Manage_Basement_Panel:
             return_list = []
             now_draw = draw.NormalDraw()
 
-            now_text = _(f"\n当前{department}部门情况：")
+            now_text = _("\n当前{0}部门情况：").format(department)
             for all_cid in game_config.config_work_type:
                 work_data = game_config.config_work_type[all_cid]
                 if work_data.department == department:
-                    now_text+= _(f"\n  当前正在工作的{work_data.name}：")
+                    now_text+= _("\n  当前正在工作的{0}：").format(work_data.name)
                     if len(cache.rhodes_island.all_work_npc_set[all_cid]):
                         for npc_id in cache.rhodes_island.all_work_npc_set[all_cid]:
                             npc_name = cache.character_data[npc_id].name

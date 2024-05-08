@@ -129,7 +129,7 @@ class FoodBagPanel:
             if character_data.target_character_id == 0:
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
             elif handle_premise.handle_hunger_le_79(character_data.target_character_id):
-                now_draw.text += _(f"  {target_character_data.name}现在不饿，无法吃东西。\n\n")
+                now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
             now_draw.width = 1
             now_draw.draw()
             self.handle_panel_special.draw()

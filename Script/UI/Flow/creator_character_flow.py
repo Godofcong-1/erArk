@@ -74,7 +74,7 @@ def confirm_game_info_panel():
     """确认游戏说明面板"""
     now_line = draw.LineDraw("-", width)
     now_line.draw()
-    info_text = _(f"\n\n  免责声明：1.本游戏仅为开发者自娱自乐及代码练习所用，开发它是因为开发者趣味低下，思想低俗所致，无任何经济收益和利益驱动。\n\n\n            2.本游戏含有大量的R18色情内容，内容中可能会出现的有：多P、调教、轻度SM、非合意性行为、近亲相奸等，不会出现的有：NTR、重度SM、血腥、R18G等。\n\n\n            3.本游戏在设计理念和游戏内容上缝合了大量era与其他各类作品，仅适合era系列玩家或文字黄油爱好者进行游玩，不适合普通玩家游玩，特别是严格禁止未成年人游玩。\n\n\n            4.本游戏所使用的素材资源包括开发者自制、互联网收集与协力者提供，开发者与协力者来自于不同的国家和民族，彼此之间也不存在经济关系。\n\n\n            5.本游戏目前没有官方的公开发布地址，且因为游戏本身的性质，禁止在任何未成年人可以接触到的场合展示或传播本游戏，更禁止任何人通过任何方式使用本游戏进行盈利。\n\n\n            6.本游戏完全开源，在明确注明或保留游戏来源、不涉及任何商业目的和经济收益、并同样遵守本免责声明的情况下，允许他人与社区基于本游戏进行修改或二次开发。该授权将直接赋予本游戏的所有玩家，不需要专门征求开发者的明确同意。\n\n\n            7.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n            8.基于以上叠了这么多层buff，建议有大胆想法的人请现在关掉窗口并立刻删除该游戏，只要不删就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n")
+    info_text = _("\n\n  免责声明：1.本游戏仅为开发者自娱自乐及代码练习所用，开发它是因为开发者趣味低下，思想低俗所致，无任何经济收益和利益驱动。\n\n\n            2.本游戏含有大量的R18色情内容，内容中可能会出现的有：多P、调教、轻度SM、非合意性行为、近亲相奸等，不会出现的有：NTR、重度SM、血腥、R18G等。\n\n\n            3.本游戏在设计理念和游戏内容上缝合了大量era与其他各类作品，仅适合era系列玩家或文字黄油爱好者进行游玩，不适合普通玩家游玩，特别是严格禁止未成年人游玩。\n\n\n            4.本游戏所使用的素材资源包括开发者自制、互联网收集与协力者提供，开发者与协力者来自于不同的国家和民族，彼此之间也不存在经济关系。\n\n\n            5.本游戏目前没有官方的公开发布地址，且因为游戏本身的性质，禁止在任何未成年人可以接触到的场合展示或传播本游戏，更禁止任何人通过任何方式使用本游戏进行盈利。\n\n\n            6.本游戏完全开源，在明确注明或保留游戏来源、不涉及任何商业目的和经济收益、并同样遵守本免责声明的情况下，允许他人与社区基于本游戏进行修改或二次开发。该授权将直接赋予本游戏的所有玩家，不需要专门征求开发者的明确同意。\n\n\n            7.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n            8.基于以上叠了这么多层buff，建议有大胆想法的人请现在关掉窗口并立刻删除该游戏，只要不删就默认你已经理解并遵守该声明，在不遵守的情况下出现的任何事故和法律责任都和开发者没有任何关系。\n\n\n")
     askfor_list = [_("我读完并理解了以上8条，我对自己负责，我不删，我要玩")]
     askfor_panel = panel.OneMessageAndSingleColumnButton()
     askfor_panel.set(askfor_list, info_text, 0)
@@ -225,11 +225,11 @@ class Character_Sex:
 
         sex_draw = draw.LeftDraw()
         sex_draw.width = 1
-        sex_draw.text = _(f"\n 性别：{sex_text}      ")
+        sex_draw.text = _("\n 性别：{0}      ").format(sex_text)
         now_draw.draw_list.append(sex_draw)
         now_draw.width += len(sex_draw.text)
 
-        button_text = _(f"    [改变性别]")
+        button_text = _("    [改变性别]")
         sex_button_draw = draw.LeftButton(
             _(button_text),
             _('改变性别'),
@@ -285,11 +285,11 @@ class Character_JJ:
 
         jj_draw = draw.LeftDraw()
         jj_draw.width = 1
-        jj_draw.text = _(f"\n 阴茎大小：{jj_text}      ")
+        jj_draw.text = _("\n 阴茎大小：{0}      ").format(jj_text)
         now_draw.draw_list.append(jj_draw)
         now_draw.width += len(jj_draw.text)
 
-        button_text = _(f"    [改变大小]")
+        button_text = _("    [改变大小]")
         jj_button_draw = draw.LeftButton(
             _(button_text),
             _('改变大小'),
@@ -346,9 +346,9 @@ class Character_Debug:
         if normal_config.config_normal.debug:
             now_draw.draw_list.append(line_feed_draw)
             if cache.debug_mode:
-                button_text = _(f"【关闭debug模式】")
+                button_text = _("【关闭debug模式】")
             else:
-                button_text = _(f"【开启debug模式】")
+                button_text = _("【开启debug模式】")
             button_draw = draw.CenterButton(
                 _(button_text),
                 _('debug'),
@@ -403,14 +403,14 @@ class Character_FirstNPC:
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = _(f" 当前初始干员有：")
-        info_draw.text += _(f"\n   基础:")
+        info_draw.text = _(" 当前初始干员有：")
+        info_draw.text += _("\n   基础:")
         npc_id_got_list = sorted(cache.npc_id_got)
         for character_id in npc_id_got_list:
             npc_character_data = cache.character_data[character_id]
             if npc_character_data.name in constant.first_NPC_name_set:
                 info_draw.text += f" ●{npc_character_data.name}"
-        info_draw.text += _(f"\n   自选:")
+        info_draw.text += _("\n   自选:")
         for character_id in cache.npc_id_got:
             npc_character_data = cache.character_data[character_id]
             if npc_character_data.name not in constant.first_NPC_name_set:
@@ -421,7 +421,7 @@ class Character_FirstNPC:
         now_draw.draw_list.append(line_feed_draw)
         now_draw.width += 1
 
-        button_text = _(f"[选择初期干员]")
+        button_text = _("[选择初期干员]")
         button_select_draw = draw.CenterButton(
             _(button_text),
             _('选择初期干员'),
@@ -432,7 +432,7 @@ class Character_FirstNPC:
         now_draw.draw_list.append(button_select_draw)
         now_draw.width += len(button_select_draw.text)
 
-        button_text = _(f"[指派干员工作]")
+        button_text = _("[指派干员工作]")
         button_select_draw = draw.CenterButton(
             _(button_text),
             _('指派干员工作'),
@@ -454,14 +454,14 @@ class Character_FirstNPC:
         else:
             self.npc_select_now = 9 - len(cache.npc_id_got)
         if self.npc_select_now:
-            info_last_draw.text = _(f" 当前剩余可选干员数量 = {self.npc_select_now}")
+            info_last_draw.text = _(" 当前剩余可选干员数量 = {0}").format(self.npc_select_now)
             if cache.debug_mode:
-                info_last_draw.text += _(f"  (debug模式下可选999个干员)")
+                info_last_draw.text += _("  (debug模式下可选999个干员)")
         else:
-            info_last_draw.text = _(f" 已选择全部初始干员")
+            info_last_draw.text = _(" 已选择全部初始干员")
 
         work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
-        info_last_draw.text += _(f"， 当前工作中干员/总干员：{work_people_now}/{people_max}")
+        info_last_draw.text += _("， 当前工作中干员/总干员：{0}/{1}").format(work_people_now, people_max)
 
         now_draw.draw_list.append(info_last_draw)
         now_draw.width += len(info_last_draw.text)
@@ -545,13 +545,13 @@ class Character_FirstNPC:
             else:
                 self.npc_select_now = 9 - len(cache.npc_id_got)
             now_npc_draw.text = ""
-            now_npc_draw.text += _(f" 有口上的角色会注明文本文件的大小，欢迎使用附带的编辑器erArkEditor，无需写代码仅写文本即可创作口上\n")
-            now_npc_draw.text += _(f"\n 当前已选干员：")
+            now_npc_draw.text += _(" 有口上的角色会注明文本文件的大小，欢迎使用附带的编辑器erArkEditor，无需写代码仅写文本即可创作口上\n")
+            now_npc_draw.text += _("\n 当前已选干员：")
             for character_id in cache.npc_id_got:
                 npc_character_data = cache.character_data[character_id]
                 if npc_character_data.name not in constant.first_NPC_name_set:
                     now_npc_draw.text += f" ●{npc_character_data.name}"
-            now_npc_draw.text += _(f"\n 当前剩余可选干员数量 = {self.npc_select_now}\n")
+            now_npc_draw.text += _("\n 当前剩余可选干员数量 = {0}\n").format(self.npc_select_now)
             now_npc_draw.draw()
 
             # 绘制各按钮
@@ -573,7 +573,7 @@ class Character_FirstNPC:
             button_draw.draw()
             return_list.append(button_draw.return_text)
             if self.chest_filter_flag:
-                button_text = _(f" [胸围筛选中-{chest_filter_list[self.chest_filter_flag]}] ")
+                button_text = _(" [胸围筛选中-{0}] ").format(chest_filter_list[self.chest_filter_flag])
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.chest_filter)
             else:
                 button_text = _(" [胸围筛选] ")
@@ -581,13 +581,13 @@ class Character_FirstNPC:
             button_draw.draw()
             return_list.append(button_draw.return_text)
             if self.age_filter_flag:
-                button_text = _(f" [外表年龄筛选中-{age_filter_list[self.age_filter_flag]}] ")
+                button_text = _(" [外表年龄筛选中-{0}] ").format(age_filter_list[self.age_filter_flag])
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.age_filter)
             else:
                 button_text = _(" [外表年龄筛选] ")
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.age_filter)
             if self.race_filter_flag:
-                button_text = _(f" [种族筛选中-{race_filter_list[self.race_filter_flag - 1]}] ")
+                button_text = _(" [种族筛选中-{0}] ").format(race_filter_list[self.race_filter_flag - 1])
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.race_filter)
             else:
                 button_text = _(" [种族筛选] ")
@@ -742,12 +742,12 @@ class SelectFirstNPCButton:
         name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
             if target_data.name in constant.first_NPC_name_set:
-                button_text += _(f"(基础)")
+                button_text += _("(基础)")
                 name_draw.text = button_text
                 name_draw.width = self.width
                 name_draw.style = "gold_enrod"
             else:
-                button_text += _(f"(自选)")
+                button_text += _("(自选)")
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             # 如果有口上颜色的话，输出颜色
@@ -808,7 +808,7 @@ class Character_Bonus:
 
         info_talent_draw = draw.LeftDraw()
         info_talent_draw.width = 1
-        info_talent_draw.text = _(f" 可选奖励有：\n")
+        info_talent_draw.text = _(" 可选奖励有：\n")
         now_draw.draw_list.append(info_talent_draw)
         now_draw.width += len(info_talent_draw.text)
 
@@ -833,10 +833,10 @@ class Character_Bonus:
             if cache.first_bonus[cid]:
                 if cid == 21:
                     ability_name = game_config.config_ability[cache.first_bonus[cid]].name
-                    button_text += _(f"(已选{ability_name})")
+                    button_text += _("(已选{0})").format(ability_name)
                 elif cid == 22:
                     target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-                    button_text += _(f"(已选{target_data.name})")
+                    button_text += _("(已选{0})").format(target_data.name)
             # 文本3
             button_text += f"{first_bonus_data.introduce}"
             # 绘制按钮
@@ -855,11 +855,11 @@ class Character_Bonus:
 
         info_draw = draw.LeftDraw()
         info_draw.width = 1
-        info_draw.text = _(f" \n 当前为第 {str(cache.game_round)} 周目\n")
-        info_draw.text += _(f" 当前剩余奖励点数 =")
-        info_draw.text += _(f" {self.bonus_now} = [周目数 * 20]")
+        info_draw.text = _(" \n 当前为第 {0} 周目\n").format(str(cache.game_round))
+        info_draw.text += _(" 当前剩余奖励点数 =")
+        info_draw.text += _(" {0} = [周目数 * 20]").format(self.bonus_now)
         if cache.debug_mode:
-            info_draw.text += _(f" + [debug(999)]")
+            info_draw.text += _(" + [debug(999)]")
         info_draw.text += f"{bonus_use_text}\n"
         now_draw.draw_list.append(info_draw)
         now_draw.width += len(info_draw.text)
@@ -962,7 +962,7 @@ class Character_Bonus:
         if fail_flag:
             info_last_draw = draw.WaitDraw()
             info_last_draw.width = 1
-            info_last_draw.text = _(f"\n 当前剩余奖励不足\n")
+            info_last_draw.text = _("\n 当前剩余奖励不足\n")
             info_last_draw.draw()
 
 
@@ -988,9 +988,9 @@ class World_Setting:
 
         setting_info_draw = draw.LeftDraw()
         setting_info_draw.width = 1
-        draw_text = _(f" 当前世界设定为：\n")
-        draw_text += _(f"   ●基础世界设定：美好的黄油IF世界线，无具体时间线和剧情线，凡是有立绘的角色（包括敌我双方、路人、已便当的）均可招募上岛\n")
-        draw_text += _(f"   ●基础角色设定：NPC为纯女性角色（伪娘、扶她均不存在，女性小车存在），且全员处女\n")
+        draw_text = _(" 当前世界设定为：\n")
+        draw_text += _("   ●基础世界设定：美好的黄油IF世界线，无具体时间线和剧情线，凡是有立绘的角色（包括敌我双方、路人、已便当的）均可招募上岛\n")
+        draw_text += _("   ●基础角色设定：NPC为纯女性角色（伪娘、扶她均不存在，女性小车存在），且全员处女\n")
         setting_info_draw.text = draw_text
         now_draw.draw_list.append(setting_info_draw)
         now_draw.width += len(setting_info_draw.text)
