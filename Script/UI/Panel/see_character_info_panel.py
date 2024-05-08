@@ -1069,7 +1069,13 @@ class CharacterTalentText:
         character_data = cache.character_data[character_id]
         profession_text = game_config.config_profession[character_data.profession].name
         race_text = game_config.config_race[character_data.race].name
+        # 如果birthplace是str的话，将其转换为int
+        if isinstance(character_data.relationship.birthplace, str):
+            character_data.relationship.birthplace = int(character_data.relationship.birthplace)
         birthplace_text = game_config.config_birthplace[character_data.relationship.birthplace].name
+        # 如果nation是str的话，将其转换为int
+        if isinstance(character_data.relationship.nation, str):
+            character_data.relationship.nation = int(character_data.relationship.nation)
         nation_text = game_config.config_nation[character_data.relationship.nation].name
         type_data = _("素质")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
