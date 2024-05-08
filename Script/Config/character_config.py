@@ -1,5 +1,6 @@
 import os, glob
 from typing import List
+from types import FunctionType
 from Script.Core import json_handle,game_type,get_text
 from Script.Config import game_config, config_def
 
@@ -9,6 +10,9 @@ character_config_data = {}
 """ 原始角色模板数据 """
 character_tem_list:List[game_type.NpcTem] = []
 """ 角色模板数据列表 """
+
+_: FunctionType = get_text._
+""" 翻译api """
 
 def init_character_tem_data():
     """ 初始化预设角色数据 """
@@ -125,8 +129,7 @@ def add_text_color_data_to_config_data(text_color_list: List[str]):
     """ 将口上颜色加入角色模板数据 """
     character_id, character_name, text_color = text_color_list[0], text_color_list[1], text_color_list[2]
     # 用同Script\Config\game_config.py\load_font_data的方式赋予到config_font
-    tem_data = {'cid':1000 + character_id,'name':character_name,'foreground':text_color, 'info': character_name + '的文本颜色'}
-    # print(f"debug tem_data = {tem_data}")
+    tem_data = {'cid':1000 + character_id,'name':_(character_name),'foreground':text_color, 'info': character_name + '的文本颜色'}
     now_font = config_def.FontConfig()
     now_font.__dict__ = tem_data
     game_config.config_font[now_font.cid] = now_font
