@@ -638,7 +638,7 @@ class CharacterImageButton:
             # print(f"debug 打印女儿头像")
             now_draw = draw.ImageButton("女儿_1", character_data.name + "头像", self.width, self.change_target)
         else:
-            now_draw = draw.ImageButton(character_data.name, character_data.name + "头像", self.width, self.change_target)
+            now_draw = draw.ImageButton(_(character_data.name, revert_translation=True), character_data.name + "头像", self.width, self.change_target)
         now_draw.draw()
         self.return_text = character_data.name + "头像"
 
