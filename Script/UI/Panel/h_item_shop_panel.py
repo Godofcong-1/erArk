@@ -155,12 +155,15 @@ class BuyItemByItemNameDraw:
         if (flag_consumables and flag_not_max) or (not flag_consumables and not flag_have):
             if num_button:
                 button_text = f"{index_text}{item_config.name}：{item_config.price}凭证"
+                draw_style = "standard"
                 if flag_consumables:
                     button_text += "(持有：" + str(self.character_data.item[self.text]) + ")"
+                    if self.character_data.item[self.text] > 0:
+                        draw_style = "dark_green"
                 else:
                     button_text += "(未持有)"
                 name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.buy_item
+                    button_text, self.button_return, self.width, normal_style = draw_style, cmd_func=self.buy_item
                 )
             self.draw_text = button_text
         else:
@@ -170,6 +173,7 @@ class BuyItemByItemNameDraw:
                 name_draw.text += "(持有：" + str(self.character_data.item[self.text]) + ")"
             else:
                 name_draw.text += "(已持有)"
+            name_draw.style = "gold_enrod"
             name_draw.width = self.width
             self.draw_text = name_draw.text
 
