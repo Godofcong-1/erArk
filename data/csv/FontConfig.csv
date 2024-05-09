@@ -33,3 +33,15 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 27,deep_gray,#666666,,,,,,,,深灰色，未开放地点
 28,green,#008000,,,,,,,,绿色，有NPC的地点
 29,dark_green,#006400,,,,,,,,深绿色
+30,hot_pink,#ff69b4,,,,,,,,亮粉
+31,deep_pink,#ff1493,,,,,,,,深粉
+32,dark_slate_blue,#483d8b,,,,,,,,深岩暗蓝灰色
+33,little_dark_slate_blue,#5550aa,,,,,,,,比深岩暗蓝灰色亮一点
+34,slate_blue,#6a5acd,,,,,,,,岩暗蓝灰色
+35,wheat,#f5deb3,,,,,,,,小麦色
+36,light_cyan,#e1ffff,,,,,,,,浅青色
+37,red,#ff0000,,,,,,,,红色
+38,coral,#ff7f50,,,,,,,,珊瑚色
+39,pink,#ffc0cb,,,,,,,,粉红
+40,light_pink,#ffb6c1,,,,,,,,浅粉红
+41,purple,#800080,,,,,,,,紫色

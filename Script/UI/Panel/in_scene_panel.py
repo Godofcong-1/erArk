@@ -148,11 +148,7 @@ class InScenePanel:
                 character_data.target_character_id, self.width
             )
             character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]
-            character_head_draw_list[0].text += " " + character_head_draw_list[2].text
-            del character_head_draw_list[2]
             target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
-            target_head_draw_list[0].text += " " + target_head_draw_list[2].text
-            del target_head_draw_list[2]
             for value_tuple in character_head_draw_list:
                 value_tuple.draw()
             line_feed.draw()

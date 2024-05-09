@@ -399,20 +399,31 @@ class CharacterInfoHead:
                 favorability_and_trust_text = _("好感度:{0}({1})，信赖度:{2}({3})").format(favorability_text, favorability_lv_letter, trust_text, trust_lv_letter)
 
         # 非清醒时输出当前状态
+        sleep_draw = draw.LeftDraw()
+        sleep_draw.style = "little_dark_slate_blue"
         sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
         sleep_text = sleep_text_list[attr_calculation.get_tired_level(character_data.tired_point)]
         status_text = game_config.config_status[character_data.state].name
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
-        sleep_text = "" if sleep_text == _(" <清醒>" )else sleep_text
+        sleep_text = "" if sleep_text == _(" <清醒>" ) else sleep_text
         if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
             tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
             sleep_text = f" <{sleep_name}>"
+        sleep_draw.text = sleep_text
 
         # 非普通时输出当前心情
-        angry_text = attr_calculation.get_angry_text(character_data.angry_point)
-        angry_text = "" if angry_text == _("普通") else " " + angry_text
+        angry_draw = draw.LeftDraw()
+        angry_text = ""
+        if character_id != 0:
+            angry_text = attr_calculation.get_angry_text(character_data.angry_point)
+            angry_text = "" if angry_text == _("普通") else " " + angry_text
+        if angry_text == _(" 愉快"):
+            angry_draw.style = "coral"
+        else:
+            angry_draw.style = "red"
+        angry_draw.text = angry_text
 
         # 智能跟随状态
         follow_text = ""
@@ -420,12 +431,20 @@ class CharacterInfoHead:
             follow_text = _(" <跟>")
 
         # 有尿意时进行提示
+        urinate_draw = draw.LeftDraw()
+        urinate_draw.style = "light_cyan"
         urinate_text = _(" <尿>") if character_data.urinate_point >= 192 else ""
+        urinate_draw.text = urinate_text
 
         # 饥饿时进行提示
-        hunger_text = _(" <饿>") if character_data.hunger_point >= 192 else ""
-        start_time = character_data.behavior.start_time
-        hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
+        hunger_draw = draw.LeftDraw()
+        hunger_draw.style = "wheat"
+        hunger_text = ""
+        if character_id != 0:
+            hunger_text = _(" <饿>") if character_data.hunger_point >= 192 else ""
+            start_time = character_data.behavior.start_time.hour
+            hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
+        hunger_draw.text = hunger_text
 
         # 射精欲不为零时进行提示
         eja_text = ""
@@ -441,6 +460,7 @@ class CharacterInfoHead:
 
         # 催眠状态时进行显示
         # 首先需要判断是否开启了催眠显示，其次要么已经是某个催眠状态下，要么催眠度大于0而且开启了显示催眠度
+        hypnosis_draw = draw.LeftDraw()
         hypnosis_text = ""
         if (
             cache.system_setting[10] and 
@@ -448,6 +468,15 @@ class CharacterInfoHead:
             (character_data.hypnosis.hypnosis_degree > 0 and cache.system_setting[10] == 2))
         ):
             hypnosis_text = _(" <催眠")
+            # 根据催眠程度来区分颜色
+            if character_data.hypnosis.hypnosis_degree < 50:
+                hypnosis_draw.style = "pink"
+            elif character_data.hypnosis.hypnosis_degree < 100:
+                hypnosis_draw.style = "hot_pink"
+            elif character_data.hypnosis.hypnosis_degree < 200:
+                hypnosis_draw.style = "deep_pink"
+            else:
+                hypnosis_draw.style = "purple"
             # 是否显示具体数值
             if cache.system_setting[10] == 2:
                 # 显示到小数点后一位
@@ -468,6 +497,7 @@ class CharacterInfoHead:
             if character_data.hypnosis.roleplay:
                 hypnosis_text += _("(角色扮演)")
             hypnosis_text += ">"
+        hypnosis_draw.text = hypnosis_text
 
         # 携袋状态进行提示
         bag_text = ""
@@ -486,32 +516,29 @@ class CharacterInfoHead:
 
         if character_id:
             message = _(
-                "{character_name} {favorability_and_trust}{angry}{sleep}{follow}{urinate}{hunger}{hypnosis}{imprisonment}{visitor}").format(
+                "{character_name} {favorability_and_trust}{follow}{imprisonment}{visitor}").format(
                 character_name=character_data.name,
                 favorability_and_trust=favorability_and_trust_text,
-                angry=angry_text,
-                sleep=sleep_text,
                 follow=follow_text,
-                urinate=urinate_text,
-                hunger=hunger_text,
-                hypnosis=hypnosis_text,
                 imprisonment=imprisonment_text,
                 visitor=visitor_text,
             )
         else:
             message = _(
-                "{character_name}{character_nick_name}{sleep}{urinate}{eja}").format(
+                "{character_name}{character_nick_name}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,
                 character_nick_name=character_data.nick_name,
                 # sex_text=sex_text,
-                sleep=sleep_text,
-                urinate=urinate_text,
                 eja=eja_text,
                 bag=bag_text,
             )
         message_draw = draw.CenterDraw()
-        message_draw.width = width / 3.5
+        # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
+        text_width = text_handle.get_text_index(message)
+        base_width = width / 3.5 - text_handle.get_text_index(angry_text + sleep_text + urinate_text + hypnosis_text + hunger_text)
+        max_width = max(base_width, text_width)
+        message_draw.width = max_width
         message_draw.text = message
         hp_draw = draw.InfoBarDraw()
         hp_draw.width = width / 6
@@ -558,7 +585,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, hypnosis_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)

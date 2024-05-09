@@ -604,13 +604,13 @@ def get_angry_text(value: int) -> str:
     level -- 生气程度的文本
     """
     if value <= 5:
-        return "愉快"
+        return _("愉快")
     elif 5 < value and value <= 30:
-        return "普通"
+        return _("普通")
     elif 30 < value and value <=50:
-        return "不爽"
+        return _("不爽")
     elif value > 50:
-        return "愤怒"
+        return _("愤怒")
 
 
 def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:

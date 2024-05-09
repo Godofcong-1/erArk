@@ -5052,6 +5052,54 @@ msgstr ""
 msgid "深绿色"
 msgstr ""
 
+#: .\data\csv\FontConfig.csv:36
+msgid "亮粉"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:37
+msgid "深粉"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:38
+msgid "深岩暗蓝灰色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:39
+msgid "比深岩暗蓝灰色亮一点"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:40
+msgid "岩暗蓝灰色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:41
+msgid "小麦色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:42
+msgid "浅青色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:43
+msgid "红色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:44
+msgid "珊瑚色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:45
+msgid "粉红"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:46
+msgid "浅粉红"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:47
+msgid "紫色"
+msgstr ""
+
 #: .\data\csv\Food_Quality.csv:6
 msgid "粗劣"
 msgstr ""
