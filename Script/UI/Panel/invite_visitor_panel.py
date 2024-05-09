@@ -196,6 +196,12 @@ class Invite_Visitor_Panel:
                 # 去掉待确认招募的角色
                 if chara_id in cache.rhodes_island.recruited_id:
                     continue
+                # 跳过女儿
+                if cache.npc_tem_data[i].Mother_id != 0 or cache.npc_tem_data[i].AdvNpc > 9000:
+                    continue
+                # 跳过不存在的
+                if chara_id not in cache.character_data:
+                    continue
                 # 本地
                 if now_level == 2:
                     character_data = cache.character_data[chara_id]

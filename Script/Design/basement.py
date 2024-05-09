@@ -547,22 +547,27 @@ def update_recruit():
             wait_id_set = []
             for i in range(len(cache.npc_tem_data)):
                 chara_id = i + 1
+                # 跳过已有的
+                if chara_id in cache.npc_id_got:
+                    continue
+                # 跳过女儿
+                if cache.npc_tem_data[i].Mother_id != 0 or cache.npc_tem_data[i].AdvNpc > 9000:
+                    continue
+                # 跳过不存在的
+                if chara_id not in cache.character_data:
+                    continue
                 # 本地招募
                 if recruitment_strategy == 0:
-                    if chara_id not in cache.character_data:
-                        continue
                     character_data = cache.character_data[chara_id]
-                    # 筛选出未招募且出生地是当前所在地的角色
-                    if chara_id in cache.npc_id_got or character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                    # 筛选出出生地是当前罗德岛所在地的角色
+                    if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
                         continue
                     else:
-                            wait_id_set.append(chara_id)
+                        wait_id_set.append(chara_id)
                 # 全泰拉招募
                 # TODO 当前其他招聘策略均由全泰拉招聘代替，需要实装
                 elif recruitment_strategy == 1 or recruitment_strategy in {2,3,4}:
-                    # 筛选出未招募的角色
-                    if chara_id not in cache.npc_id_got:
-                        wait_id_set.append(chara_id)
+                    wait_id_set.append(chara_id)
             if len(wait_id_set):
                 choice_id = random.choice(wait_id_set)
                 cache.rhodes_island.recruited_id.add(choice_id)
