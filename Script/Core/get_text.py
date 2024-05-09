@@ -15,7 +15,7 @@ translation_dict = {}
 
 # 如果是中文，不进行翻译，直接返回原文，否则进行翻译
 if now_language == "zh_CN":
-    def _translation_gettext(message):
+    def _translation_gettext(message, skip_translation=False, revert_translation=False):
         return message
     translation_values = set()
 else:
