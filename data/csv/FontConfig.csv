@@ -45,3 +45,7 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 39,pink,#ffc0cb,,,,,,,,粉红
 40,light_pink,#ffb6c1,,,,,,,,浅粉红
 41,purple,#800080,,,,,,,,紫色
+42,khaki,#f0e68c,,,,,,,,黄褐色（卡其布）
+43,beige,#f5f5dc,,,,,,,,米色
+44,medium_spring_green,#00ff7f,,,,,,,,适中的春天的绿色
+45,spring_green,#3cb371,,,,,,,,春天的绿色

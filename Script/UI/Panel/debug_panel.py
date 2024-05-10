@@ -148,6 +148,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[011]:重置全角色特殊flag")
                 draw_text_list.append(f"[012]:重置全角色服装")
                 draw_text_list.append(f"[013]:重置全角色位置至宿舍")
+                draw_text_list.append(f"[014]:重置文职部的招募数据")
 
 
                 for i in range(len(draw_text_list)):
@@ -273,6 +274,7 @@ class Debug_Panel:
             draw_text_list.append(f"[018]:怀孕（已实装）")
             draw_text_list.append(f"[019]:社会关系（已实装）")
             draw_text_list.append(f"[020]:特殊flag（已实装）")
+            draw_text_list.append(f"[021]:催眠（已实装）")
 
 
             for i in range(len(draw_text_list)):
@@ -452,6 +454,7 @@ class Debug_Panel:
 
             elif self.now_panel == "玩家属性":
 
+                # 当前HP
                 if key_index == 0:
                     info_text = f"[000]:当前HP：{cache.character_data[0].hit_point}"
                     info_draw.text = info_text
@@ -461,6 +464,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].hit_point = new_value
+                # 最大HP
                 elif key_index == 1:
                     info_text = f"[001]:最大HP：{cache.character_data[0].hit_point_max}"
                     info_draw.text = info_text
@@ -470,6 +474,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].hit_point_max = new_value
+                # 当前MP
                 elif key_index == 2:
                     info_text = f"[002]:当前MP：{cache.character_data[0].mana_point}"
                     info_draw.text = info_text
@@ -479,6 +484,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].mana_point = new_value
+                # 最大MP
                 elif key_index == 3:
                     info_text = f"[003]:最大MP：{cache.character_data[0].mana_point_max}"
                     info_draw.text = info_text
@@ -488,6 +494,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].mana_point_max = new_value
+                # 当前射精槽
                 elif key_index == 4:
                     info_text = f"[004]:当前射精槽：{cache.character_data[0].eja_point}"
                     info_draw.text = info_text
@@ -497,6 +504,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].eja_point = new_value
+                # 疲劳值
                 elif key_index == 5:
                     info_text = f"[005]:疲劳值 6m=1点，16h=160点(max)：{cache.character_data[0].tired_point}"
                     info_draw.text = info_text
@@ -506,6 +514,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].tired_point = new_value
+                # 尿意值
                 elif key_index == 6:
                     info_text = f"[006]:尿意值 1m=1点，4h=240点(max)：{cache.character_data[0].urinate_point}"
                     info_draw.text = info_text
@@ -515,6 +524,7 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].urinate_point = new_value
+                # 饥饿值
                 elif key_index == 7:
                     info_text = f"[007]:饥饿值 1m=1点，4h=240点(max)：{cache.character_data[0].hunger_point}"
                     info_draw.text = info_text
@@ -524,29 +534,35 @@ class Debug_Panel:
                     change_value_panel.set(_("输入改变后的值"), 100)
                     new_value = int(change_value_panel.draw())
                     cache.character_data[0].hunger_point = new_value
+                # 全源石技艺全开，理智9999
                 elif key_index == 8:
                     for talent_id in {304,305,306,307,308,309,310,311,312,331,332,333,334}:
                         cache.character_data[0].talent[talent_id] = 1
                         cache.character_data[0].sanity_point = 9999
                         cache.character_data[0].sanity_point_max = 9999
+                # 资源全99999
                 elif key_index == 9:
                     for material_id in cache.rhodes_island.materials_resouce:
                         cache.rhodes_island.materials_resouce[material_id] = 99999
+                # 设施全满级、全开放
                 elif key_index == 10:
                     for all_cid in cache.rhodes_island.facility_level:
                         cache.rhodes_island.facility_level[all_cid] = 5
                         for cid in cache.rhodes_island.facility_open:
                             cache.rhodes_island.facility_open[cid] = 1
                         basement.get_base_updata()
+                # 重置全角色特殊flag
                 elif key_index == 11:
                     cache.npc_id_got.discard(0)
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
                         character_data.sp_flag = game_type.SPECIAL_FLAG()
+                # 重置全角色服装
                 elif key_index == 12:
                     cache.npc_id_got.discard(0)
                     for chara_id in cache.npc_id_got:
                         clothing.get_npc_cloth(chara_id)
+                # 重置全角色位置至宿舍
                 elif key_index == 13:
                     cache.npc_id_got.discard(0)
                     for chara_id in cache.npc_id_got:
@@ -554,6 +570,11 @@ class Debug_Panel:
                         # 将字符串中的"01区"替换为"1区"
                         character_data.dormitory = character_data.dormitory.replace("01区","1区")
                         character_data.position = map_handle.get_map_system_path_for_str(character_data.dormitory)
+                # 重置文职部的招募数据
+                elif key_index == 14:
+                    for i in range(len(cache.rhodes_island.recruit_line)):
+                        cache.rhodes_island.recruit_line[i] = [0,0,set(),0]
+                    cache.rhodes_island.recruited_id = set()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -1228,6 +1249,46 @@ class Debug_Panel:
                     elif value_index[0] == 22:
                         target_data.sp_flag.milk = value_index[1]
 
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+
+            # 催眠数据
+            elif key_index == 21:
+                info_text = f""
+                info_text += f"[000]:催眠程度：{target_data.hypnosis.hypnosis_degree}\n"
+                info_text += f"[001]:体控-敏感度提升：{target_data.hypnosis.increase_body_sensitivity}\n"
+                info_text += f"[002]:体控-强制排卵：{target_data.hypnosis.force_ovulation}\n"
+                info_text += f"[003]:体控-木头人：{target_data.hypnosis.blockhead}\n"
+                info_text += f"[004]:体控-逆推：{target_data.hypnosis.active_h}\n"
+                info_text += f"[005]:心控-角色扮演，0为无，其他见Roleplay.csv：{target_data.hypnosis.roleplay}\n"
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
+
+                if change_draw_flag:
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变的项目，如果是列表则输入要改变第几号数据，以及这一项变成几，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        info_draw.text = "\n输出格式错误，请重试\n"
+                        info_draw.draw()
+                        continue
+                    if value_index[0] == 0:
+                        target_data.hypnosis.hypnosis_degree = value_index[1]
+                    elif value_index[0] == 1:
+                        target_data.hypnosis.increase_body_sensitivity = value_index[1]
+                    elif value_index[0] == 2:
+                        target_data.hypnosis.force_ovulation = value_index[1]
+                    elif value_index[0] == 3:
+                        target_data.hypnosis.blockhead = value_index[1]
+                    elif value_index[0] == 4:
+                        target_data.hypnosis.active_h = value_index[1]
+                    elif value_index[0] == 5:
+                        target_data.hypnosis.roleplay = value_index[1]
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
                     continue

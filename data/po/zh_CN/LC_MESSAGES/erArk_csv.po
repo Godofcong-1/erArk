@@ -5100,6 +5100,22 @@ msgstr ""
 msgid "紫色"
 msgstr ""
 
+#: .\data\csv\FontConfig.csv:48
+msgid "黄褐色（卡其布）"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:49
+msgid "米色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:50
+msgid "适中的春天的绿色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:51
+msgid "春天的绿色"
+msgstr ""
+
 #: .\data\csv\Food_Quality.csv:6
 msgid "粗劣"
 msgstr ""
