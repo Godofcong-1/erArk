@@ -478,7 +478,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     结算角色状态是否本次行动已经结束
     Keyword arguments:
     character_id -- 角色id
-    end_now -- 是否要强制结算
+    end_now -- 是否要强制结算，1为当前时间大于行动结束时间，2为当前时间等于行动结束时间
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
@@ -506,17 +506,6 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         return 0
-    # 助理的特殊判断
-    if character_id and character_id == pl_character_data.assistant_character_id:
-        if not time_judge:
-            # 早安服务
-            if character_data.assistant_services[5] and character_data.sp_flag.morning_salutation == 0:
-                judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time) # 醒来之前半小时
-                # 当前时间在醒来之前半小时内
-                if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and not game_time.judge_date_big_or_small(end_time, pl_character_data.action_info.wake_time):
-                    # print(f"debug {character_data.name}刷新早安服务判断，state = {character_data.state}")
-                    time_judge = 3
-                    new_start_time = judge_wake_up_time
     if end_now:
         time_judge = end_now
     if time_judge:
@@ -542,10 +531,6 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         elif time_judge == 2:
             character.init_character_behavior_start_time(character_id, now_time)
             return 1
-        # 特殊情况下提前终止
-        elif time_judge == 3:
-            character_data.behavior.start_time = new_start_time
-            return 0
     return 1
 
 
@@ -1335,5 +1320,17 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
             # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
             character_data.behavior.duration = new_duration
             return 1
+
+    # 工作或娱乐中，今日未洗澡，到了淋浴时间，距离行动结束时间还有至少30分钟，正常状态下，则立刻结束工作或娱乐
+    if(
+        handle_premise.handle_action_work_or_entertainment(character_id) and
+        handle_premise.handle_shower_flag_0(character_id) and
+        handle_premise.handle_shower_time(character_id) and
+        handle_premise.handle_still_30_minutes_before_end(character_id) and
+        handle_premise.handle_normal_all(character_id)
+    ):
+        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+        # print(f"debug {character_data.name}立刻结束工作或娱乐，当前时间={cache.game_time}")
+        return 1
 
     return 0

@@ -587,6 +587,8 @@ class Premise:
     """ 时间_当前 当前是晚安问候时间（计划睡觉时间之后，权重50） """
     NOT_NIGHT_SALUTATION_TIME = "not_night_salutation_time"
     """ 时间_当前 当前不是晚安问候时间（计划睡觉时间之后） """
+    STILL_30_MINUTES_BEFORE_END = "still_30_minutes_before_end"
+    """ 时间_当前 距离行动结束时间还有至少30分钟 """
 
     #"""
     #异常状态类型：\n
@@ -2221,6 +2223,8 @@ class Premise:
     """ 行动 交互对象正在睡觉 """
     T_ACTION_NOT_SLEEP = "t_action_not_sleep"
     """ 行动 交互对象没有在睡觉 """
+    ACTION_WORK_OR_ENTERTAINMENT = "action_work_or_entertainment"
+    """ 行动 自己正在工作或娱乐 """
     PL_ACTION_FOOD_NORMAL = "pl_action_food_normal"
     """ 行动 食物调味_正常 """
     PL_ACTION_FOOD_SOUR = "pl_action_food_sour"

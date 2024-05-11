@@ -600,6 +600,26 @@ def handle_not_night_salutation_time(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.STILL_30_MINUTES_BEFORE_END)
+def handle_still_30_minutes_before_end(character_id: int) -> int:
+    """
+    距离行动结束时间还有至少30分钟
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 当前角色的行为时间
+    character_data: game_type.Character = cache.character_data[character_id]
+    start_time = character_data.behavior.start_time
+    end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+    now_time = cache.game_time
+    true_add_time = int((now_time.timestamp() - end_time.timestamp()) / 60)
+    if true_add_time >= 30:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
@@ -18192,6 +18212,21 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.ACTION_WORK_OR_ENTERTAINMENT)
+def handle_action_work_or_entertainment(character_id: int) -> int:
+    """
+    自己正在工作或娱乐
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if 151 <= character_data.state <= 250:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.PL_ACTION_FOOD_NORMAL)
