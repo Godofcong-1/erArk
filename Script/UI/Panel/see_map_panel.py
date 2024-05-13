@@ -57,7 +57,7 @@ class SeeMapPanel:
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
             map_name = attr_text.get_map_path_text(self.now_map)
-            title_draw = draw.TitleLineDraw(_("当前区块:") + map_name, self.width)
+            title_draw = draw.TitleLineDraw(_("当前区块:") + _(map_name), self.width)
             title_draw.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
@@ -348,9 +348,9 @@ class MapSceneNameDraw:
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
                 # 如果编号=0的话为出口，单独标注，其他的不标注序号
                 if scene_id == '0':
-                    now_id_text = f"→0:{load_scene_data.scene_name}"
+                    now_id_text = f"→0:{_(load_scene_data.scene_name)}"
                 else:
-                    now_id_text = f"→{load_scene_data.scene_name}"
+                    now_id_text = f"→{_(load_scene_data.scene_name)}"
                 # 如果是当前位置则标注当前
                 if scene_id == character_scene_id:
                     text_flag = True
@@ -692,12 +692,12 @@ class CollectionSceneNamePanel:
                 draw_text = f"→{scene_position_str}"
                 if text_flag:
                     collect_scene_name_draw = draw.LeftDraw()
-                    collect_scene_name_draw.text = draw_text
+                    collect_scene_name_draw.text = _(draw_text)
                     collect_scene_name_draw.width = self.width
                     collect_scene_name_draw.style = "gold_enrod"
                 else:
                     collect_scene_name_draw = draw.LeftButton(
-                        draw_text, draw_text, self.width, cmd_func=self.move_now, args=(collect_position,)
+                        _(draw_text), draw_text, self.width, cmd_func=self.move_now, args=(collect_position,)
                     )
                     self.return_list.append(collect_scene_name_draw.return_text)
                 draw_list.append(collect_scene_name_draw)
