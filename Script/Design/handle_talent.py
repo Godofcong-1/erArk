@@ -1,25 +1,8 @@
-import datetime
 from types import FunctionType
-from Script.Design import (
-    settle_behavior,
-    character,
-    character_handle,
-    map_handle,
-    attr_calculation,
-    game_time,
-    cooking,
-    update,
-    attr_text,
-    handle_instruct,
-    character_behavior,
-    basement,
-)
-from Script.Core import cache_control, constant, constant_effect, game_type, get_text
+from Script.Design import attr_calculation
+from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel
-
-import random
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -78,13 +61,15 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
                 character_data.talent[old_talent_id] = 0
 
             now_draw_succed = draw.WaitDraw()
-            now_draw_succed.text = f"\n{character_data.name}获得了{talent_name}\n"
+            now_draw_succed.text = _("\n{0}获得了{1}\n").format(character_data.name, talent_name)
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
     # 特殊素质获得
     if now_gain_type == 0:
         npc_gain_and_lost_cumflation(character_id)
+    if now_gain_type == 3:
+        npc_lost_no_menarche_talent(character_id)
 
 def have_hypnosis_talent():
     """
@@ -155,7 +140,7 @@ def npc_gain_hypnosis_talent(character_id: int):
             #     character_data.talent[old_talent_id] = 0
             # 绘制获得素质提示
             now_draw_succed = draw.WaitDraw()
-            now_draw_succed.text = f"\n○{character_data.name}的催眠深度达到{now_data.hypnosis_degree}%，获得了[{talent_name}]\n"
+            now_draw_succed.text = _("\n○{0}的催眠深度达到{1}%，获得了[{2}]\n").format(character_data.name, now_data.hypnosis_degree, talent_name)
             now_draw_succed.draw()
             break
 
@@ -179,13 +164,28 @@ def npc_gain_and_lost_cumflation(character_id: int):
     now_draw_text = ""
     if abdomen_all_semen >= 6000 and not character_data.talent[32]:
         character_data.talent[32] = 1
-        now_draw_text += f"\n○{character_data.name}获得了[精液膨腹]\n"
+        now_draw_text += _("\n○{0}获得了[精液膨腹]\n").format(character_data.name)
     elif abdomen_all_semen < 6000 and character_data.talent[32]:
         character_data.talent[32] = 0
-        now_draw_text += f"\n○{character_data.name}失去了[精液膨腹]\n"
+        now_draw_text += _("\n○{0}失去了[精液膨腹]\n").format(character_data.name)
 
     # 绘制获得素质提示
     if now_draw_text != "" and character_data.position == pl_character_data.position:
         now_draw_succed = draw.WaitDraw()
         now_draw_succed.text = now_draw_text
         now_draw_succed.draw()
+
+def npc_lost_no_menarche_talent(character_id: int):
+    """
+    干员失去未初潮素质\n
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[6]:
+        # 需要W相关开发至少为4级
+        if character_data.ability[7] + character_data.ability[12] >= 4:
+            character_data.talent[6] = 0
+            now_draw_text = _("\n在对子宫的持续开发下，{0}提前迎来了性成熟，可以受精怀孕了\n").format(character_data.name)
+            now_draw_text += _("○{0}失去了[未初潮]\n").format(character_data.name)
+            now_draw_succed = draw.WaitDraw()
+            now_draw_succed.text = now_draw_text
+            now_draw_succed.draw()
