@@ -2091,6 +2091,15 @@ class Premise:
     T_TURN_M_ORGASM_G_3 = "t_turn_m_orgasm_g_3"
     """ H_射精与绝顶 交互对象本次H中M绝顶次数>3 """
 
+    NPC_ACTIVE_H = "npc_active_h"
+    """ H_逆推 自己正在主动H """
+    NPC_NOT_ACTIVE_H = "npc_not_active_h"
+    """ H_逆推 自己没有在主动H """
+    T_NPC_ACTIVE_H = "t_npc_active_h"
+    """ H_逆推 交互对象正在主动H """
+    T_NPC_NOT_ACTIVE_H = "t_npc_not_active_h"
+    """ H_逆推 交互对象没有在主动H """
+
     HAVE_FOOD = "have_food"
     """ 道具_持有 拥有食物 """
     NOT_HAVE_FOOD = "not_have_food"

@@ -713,6 +713,15 @@ class BehaviorEffect:
     TARGET_HYPNOSIS_ACTIVE_H_OFF = 1229
     """ 源石技艺 对方关闭体控-逆推 """
 
+    NPC_ACTIVE_H_ON = 1401
+    """ 属性_H 自己开启主动H """
+    NPC_ACTIVE_H_OFF = 1402
+    """ 属性_H 自己关闭主动H """
+    TARGET_NPC_ACTIVE_H_ON = 1403
+    """ 属性_H 对方开启主动H """
+    TARGET_NPC_ACTIVE_H_OFF = 1404
+    """ 属性_H 对方关闭主动H """
+
 class SecondEffect:
     """二段结算效果函数"""
 

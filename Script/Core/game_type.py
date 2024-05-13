@@ -426,6 +426,8 @@ class BODY_H_STATE:
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
         """ 已使用的避孕套计数，[0总个数，1总精液量] """
+        self.npc_active_h: bool = False
+        """ NPC主动H """
 
 
 class FIRST_RECORD:

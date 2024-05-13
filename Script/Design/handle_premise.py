@@ -12352,6 +12352,68 @@ def handle_t_turn_m_orgasm_g_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NPC_ACTIVE_H)
+def handle_npc_active_h(character_id: int) -> int:
+    """
+    自己正在主动H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.npc_active_h:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NPC_NOT_ACTIVE_H)
+def handle_npc_not_active_h(character_id: int) -> int:
+    """
+    自己没有在主动H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.npc_active_h:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.T_NPC_ACTIVE_H)
+def handle_t_npc_active_h(character_id: int) -> int:
+    """
+    交互对象正在主动H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.npc_active_h:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_NPC_NOT_ACTIVE_H)
+def handle_t_npc_not_active_h(character_id: int) -> int:
+    """
+    交互对象没有在主动H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.npc_active_h:
+        return 0
+    return 1
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)
