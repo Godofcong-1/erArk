@@ -47,6 +47,7 @@ class All_Npc_Position_Panel:
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
+        self.move_type = cache.all_npc_position_panel_move_type
         while 1:
             title_draw.draw()
             py_cmd.clr_cmd()
@@ -198,6 +199,7 @@ class All_Npc_Position_Panel:
     def move_type_change(self, new_type: int):
         """移动类型切换"""
         self.move_type = new_type
+        cache.all_npc_position_panel_move_type = new_type
 
     def select_type_change(self, new_type: int):
         """筛选类型切换"""

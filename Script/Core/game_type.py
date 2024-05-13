@@ -1221,6 +1221,8 @@ class Cache:
         """ 是否开启debug模式 """
         self.game_round: int = 1
         """ 当前周目数 """
+        self.all_npc_position_panel_move_type: int = 0
+        """ 所有npc位置面板移动类型 """
         self.rhodes_island: Rhodes_Island = Rhodes_Island
         """ 罗德岛相关属性 """
         self.first_bonus: Dict[int, int] = {}
