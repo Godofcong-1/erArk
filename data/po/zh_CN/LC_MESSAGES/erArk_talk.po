@@ -13652,10 +13652,6 @@ msgstr ""
 msgid "{Name}触发了邀请H失败指令的地文"
 msgstr ""
 
-#: .\data\talk\sex\do_nothing.csv:6
-msgid "{Name}触发了什么也不做指令的地文"
-msgstr ""
-
 #: .\data\talk\sex\electric_message_stick.csv:6
 msgid "{Name}触发了电动按摩棒指令的地文"
 msgstr ""
@@ -13726,6 +13722,10 @@ msgstr ""
 
 #: .\data\talk\sex\h_interrupt.csv:6
 msgid "{Name}触发了H时被人目击闯入中断的地文"
+msgstr ""
+
+#: .\data\talk\sex\keep_enjoy.csv:6
+msgid "{Name}触发了继续享受指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\kiss_h.csv:6

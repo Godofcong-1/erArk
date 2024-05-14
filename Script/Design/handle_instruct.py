@@ -1,12 +1,11 @@
-import random
 import time
 import queue
 from functools import wraps
 from typing import Set, List
 from types import FunctionType
 from threading import Thread
-from Script.Core import constant, constant_promise, cache_control, game_type, get_text, save_handle, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise
+from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
 from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -3471,20 +3470,53 @@ def handle_make_lick_anal():
 
 
 @add_instruct(
-    constant.Instruct.DO_NOTHING,
+    constant.Instruct.CHANGE_TOP_AND_BOTTOM,
     constant.InstructType.SEX,
-    _("什么也不做"),
+    _("交给对方_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H},
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO},
 )
-def handle_do_nothing():
-    """处理什么也不做指令"""
+def handle_change_top_and_bottom():
+    """处理交给对方指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.DO_NOTHING
-    character_data.state = constant.CharacterStatus.STATUS_DO_NOTHING
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.KEEP_ENJOY,
+    constant.InstructType.SEX,
+    _("继续享受"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.IS_H},
+)
+def handle_keep_enjoy():
+    """处理继续享受指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.KEEP_ENJOY
+    character_data.state = constant.CharacterStatus.STATUS_KEEP_ENJOY
     character_data.behavior.duration = 10
     update.game_update_flow(10)
+
+
+@add_instruct(
+    constant.Instruct.TRY_PL_ACTIVE_H,
+    constant.InstructType.SEX,
+    _("尝试掌握主动权"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO},
+)
+def handle_try_pl_active_h():
+    """处理尝试掌握主动权指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
 
 @add_instruct(
@@ -3492,6 +3524,7 @@ def handle_do_nothing():
     constant.InstructType.SEX,
     _("诱惑对方"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IS_H},
 )
 def handle_sedecu():
@@ -5281,22 +5314,6 @@ def handle_take_shower():
 )
 def handle_bubble_bath():
     """处理泡泡浴指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-
-@add_instruct(
-    constant.Instruct.CHANGE_TOP_AND_BOTTOM,
-    constant.InstructType.SEX,
-    _("交给对方_未实装"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
-)
-def handle_change_top_and_bottom():
-    """处理交给对方指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5

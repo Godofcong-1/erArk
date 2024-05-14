@@ -1334,3 +1334,105 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
         return 1
 
     return 0
+
+
+def npc_active_h():
+    """
+    判断NPC的逆推ai\n
+    Return arguments:
+    bool -- 0为失败，1为正常逆推
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_character_id = pl_character_data.target_character_id
+    target_character_data = cache.character_data[target_character_id]
+
+    # 如果对方不是主动H状态，则返回
+    if target_character_data.hypnosis.active_h == False or target_character_data.h_state.npc_active_h == False:
+        return 0
+
+    # 按照部位统计权重，初始权重为1
+    part_weight = {}
+    for i in range(8):
+        part_weight[i] = 1
+
+    # 部位经验权重为1
+    for experience_id in game_config.config_experience:
+        # 去掉非部位的经验
+        if (
+            20 <= experience_id <= 60 or
+            experience_id >= 78
+        ):
+            continue
+
+        # 取除以10的余数
+        part_id = experience_id % 10
+        now_exp = target_character_data.experience[experience_id]
+        part_weight[part_id] += now_exp
+
+    # 能力等级权重为20
+    for ability_id in game_config.config_ability:
+        # 去掉非部位的能力
+        if ability_id >= 13:
+            continue
+        if ability_id <= 8:
+            part_id = ability_id
+        # 将扩张的序号转换为部位序号
+        else:
+            part_id = ability_id - 5
+        now_ability = target_character_data.ability[ability_id]
+        part_weight[part_id] += now_ability * 20
+
+    # 在最后将阴茎的权重置为0
+    part_weight[3] = 0
+
+    # 根据权重，随机选择一个部位
+    part_id = random.choices(list(part_weight.keys()), weights=list(part_weight.values()), k=1)[0]
+    # print(f"debug {target_character_data.name}的逆推ai选择了{game_config.config_part[part_id].name}部位")
+
+    # 以防万一，如果因为BUG选中了阴茎，则返回
+    if part_id == 3:
+        return 0
+
+    # 遍历全状态
+    all_stastus_list = []
+    for status_id in game_config.config_status:
+        # 获得各状态的tag
+        status_data = game_config.config_status[status_id]
+        status_tag_list = status_data.tag.split("|")
+        # 跳过其中非性爱类，道具类、药物类、SM类
+        if(
+            "性爱" not in status_tag_list or
+            "道具" in status_tag_list or
+            "药物" in status_tag_list or
+            "SM" in status_tag_list
+        ):
+            continue
+        # 如果是V和A状态，且NPC为处，则跳过破处类
+        if part_id == 4 and target_character_data.talent[0] and "破处" in status_tag_list:
+            continue
+        if part_id == 5 and target_character_data.talent[1] and "破处" in status_tag_list:
+            continue
+        # 开始加入列表中
+        if part_id == 0 and "N" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 1 and "B" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 2 and "C" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 4 and "V" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 5 and "A" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 6 and "U" in status_tag_list:
+            all_stastus_list.append(status_id)
+        elif part_id == 7 and "W" in status_tag_list:
+            all_stastus_list.append(status_id)
+
+    # 如果没有符合条件的状态，则返回
+    if len(all_stastus_list) == 0:
+        return 0
+    
+    # 随机选择一个状态
+    status_id = random.choice(all_stastus_list)
+
+    # TODO 赋予给玩家

@@ -290,8 +290,8 @@ class CharacterStatus:
     """ 命令对方自慰 """
     STATUS_MAKE_LICK_ANAL = 414
     """ 命令对方舔自己肛门 """
-    STATUS_DO_NOTHING = 415
-    """ 什么也不做 """
+    STATUS_KEEP_ENJOY = 415
+    """ 继续享受 """
     STATUS_SEDECU = 416
     """ 诱惑对方 """
     STATUS_ASK_PEE = 417
@@ -788,8 +788,8 @@ class Behavior:
     """ 命令对方自慰 """
     MAKE_LICK_ANAL = 414
     """ 命令对方舔自己肛门 """
-    DO_NOTHING = 415
-    """ 什么也不做 """
+    KEEP_ENJOY = 415
+    """ 继续享受 """
     SEDECU = 416
     """ 诱惑对方 """
     ASK_PEE = 417
@@ -1299,68 +1299,6 @@ class StateMachine:
     """ 晚安问候：晚安吻 """
     NIGHT_SALUTATION_3 = 711
     """ 晚安问候：晚安咬 """
-
-
-    # MOVE_TO_CLASS = 0
-    # """ 移动到所属教室 """
-    # MOVE_TO_RAND_CAFETERIA = 1
-    # """ 移动到随机取餐区 """
-    # MOVE_TO_RAND_RESTAURANT = 3
-    # """ 移动至随机就餐区 """
-    # WEAR_CLEAN_UNDERWEAR = 6
-    # """ 穿干净的上衣 """
-    # WEAR_CLEAN_UNDERPANTS = 7
-    # """ 穿干净的内裤 """
-    # WEAR_CLEAN_BRA = 8
-    # """ 穿干净的胸罩 """
-    # WEAR_CLEAN_PANTS = 9
-    # """ 穿干净的裤子 """
-    # WEAR_CLEAN_SKIRT = 10
-    # """ 穿干净的短裙 """
-    # WEAR_CLEAN_SHOES = 11
-    # """ 穿干净的鞋子 """
-    # WEAR_CLEAN_SOCKS = 12
-    # """ 穿干净的袜子 """
-    # PLAY_PIANO = 13
-    # """ 弹钢琴 """
-    # SINGING = 15
-    # """ 唱歌 """
-    # SING_RAND_CHARACTER = 16
-    # """ 唱歌给场景里随机对象听 """
-    # PLAY_PIANO_RAND_CHARACTER = 17
-    # """ 弹奏钢琴给场景里随机对象听 """
-    # TOUCH_HEAD_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 18
-    # """ 对场景中抱有超越友谊想法的随机对象摸头 """
-    # EMBRACE_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 23
-    # """ 对场景中抱有超越友谊想法的随机对象拥抱 """
-    # KISS_TO_LIKE_TARGET_IN_SCENE = 24
-    # """ 和场景中自己喜欢的随机对象接吻 """
-    # MOVE_TO_LIKE_TARGET_SCENE = 25
-    # """ 移动至随机某个自己喜欢的人所在场景 """
-    # HAND_IN_HAND_TO_LIKE_TARGET_IN_SCENE = 26
-    # """ 牵住场景中自己喜欢的随机对象的手 """
-    # KISS_TO_NO_FIRST_KISS_TARGET_IN_SCENE = 27
-    # """ 和场景中自己喜欢的还是初吻的随机对象接吻 """
-    # MOVE_TO_NO_FIRST_KISS_LIKE_TARGET_SCENE = 28
-    # """ 移动至喜欢的还是初吻的人所在的场景 """
-    # DRINK_RAND_DRINKS = 29
-    # """ 饮用背包内随机饮料 """
-    # BUY_RAND_DRINKS_AT_CAFETERIA = 30
-    # """ 在取餐区购买随机饮料 """
-    # ATTEND_CLASS = 31
-    # """ 在教室上课 """
-    # TEACH_A_LESSON = 32
-    # """ 在教室教课 """
-    # MOVE_TO_GROVE = 33
-    # """ 移动至加工站入口场景 """
-    # MOVE_TO_ITEM_SHOP = 34
-    # """ 移动至训练场入口场景 """
-    # BUY_GUITAR = 35
-    # """ 购买吉他 """
-    # PLAY_GUITAR = 36
-    # """ 弹吉他 """
-    # SELF_STUDY = 37
-    # """ 自习 """
 
 
 class Panel:
@@ -2056,8 +1994,12 @@ class Instruct:
     """ 命令对方舔自己肛门 """
     ASK_PEE = 0
     """ 命令对方小便 """
-    DO_NOTHING = 0
-    """ 什么也不做 """
+    CHANGE_TOP_AND_BOTTOM = 0
+    """ 交给对方 """
+    KEEP_ENJOY = 0
+    """ 继续享受 """
+    TRY_PL_ACTIVE_H = 0
+    """ 尝试掌握主动权 """
     SEDECU = 0
     """ 诱惑 """
     HANDJOB = 0
@@ -2236,8 +2178,6 @@ class Instruct:
     """ 淋浴 """
     BUBBLE_BATH = 0
     """ 泡泡浴 """
-    CHANGE_TOP_AND_BOTTOM = 0
-    """ 交给对方 """
     GIVE_BLOWJOB = 0
     """ 给对方口交 """
     UNDRESS = 0

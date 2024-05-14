@@ -716,6 +716,8 @@ class Status:
     """ 状态id """
     name: str
     """ 描述 """
+    tag: str
+    """ 标签 """
 
 
 class SunTime:
