@@ -1835,6 +1835,7 @@ def handle_unconscious_h():
     constant.InstructType.SEX,
     _("H结束"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_end_h():
@@ -3227,6 +3228,7 @@ def handle_set_free():
     constant.InstructType.SEX,
     _("身体爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_making_out():
@@ -3244,6 +3246,7 @@ def handle_making_out():
     constant.InstructType.SEX,
     _("接吻"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_kiss_h():
@@ -3270,6 +3273,7 @@ def handle_kiss_h():
     constant.InstructType.SEX,
     _("胸爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_breast_caress():
@@ -3287,6 +3291,7 @@ def handle_breast_caress():
     constant.InstructType.SEX,
     _("玩弄乳头"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_twiddle_nipples():
@@ -3304,6 +3309,7 @@ def handle_twiddle_nipples():
     constant.InstructType.SEX,
     _("舔吸乳头"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_breast_sucking():
@@ -3321,6 +3327,7 @@ def handle_breast_sucking():
     constant.InstructType.SEX,
     _("阴蒂爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_cilt_caress():
@@ -3338,6 +3345,7 @@ def handle_cilt_caress():
     constant.InstructType.SEX,
     _("掰开阴唇观察"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_open_labia():
@@ -3355,6 +3363,7 @@ def handle_open_labia():
     constant.InstructType.SEX,
     _("掰开肛门观察"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_open_anus():
@@ -3372,6 +3381,7 @@ def handle_open_anus():
     constant.InstructType.SEX,
     _("舔阴"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_cunnilingus():
@@ -3389,6 +3399,7 @@ def handle_cunnilingus():
     constant.InstructType.SEX,
     _("舔肛"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_lict_anal():
@@ -3406,6 +3417,7 @@ def handle_lict_anal():
     constant.InstructType.SEX,
     _("手指插入(V)"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_finger_insertion():
@@ -3423,6 +3435,7 @@ def handle_finger_insertion():
     constant.InstructType.SEX,
     _("手指插入(A)"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_anal_caress():
@@ -3440,6 +3453,7 @@ def handle_anal_caress():
     constant.InstructType.SEX,
     _("命令对方自慰"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_make_masturebate():
@@ -3457,6 +3471,7 @@ def handle_make_masturebate():
     constant.InstructType.SEX,
     _("命令对方舔自己肛门"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_make_lick_anal():
@@ -3472,17 +3487,17 @@ def handle_make_lick_anal():
 @add_instruct(
     constant.Instruct.CHANGE_TOP_AND_BOTTOM,
     constant.InstructType.SEX,
-    _("交给对方_未实装"),
+    _("交给对方"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H},
 )
 def handle_change_top_and_bottom():
     """处理交给对方指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.h_state.npc_active_h = True
+    character_behavior.npc_active_h()
 
 
 @add_instruct(
@@ -3490,17 +3505,12 @@ def handle_change_top_and_bottom():
     constant.InstructType.SEX,
     _("继续享受"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.T_NPC_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_keep_enjoy():
     """处理继续享受指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.KEEP_ENJOY
-    character_data.state = constant.CharacterStatus.STATUS_KEEP_ENJOY
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    character_behavior.npc_active_h()
 
 
 @add_instruct(
@@ -3508,15 +3518,14 @@ def handle_keep_enjoy():
     constant.InstructType.SEX,
     _("尝试掌握主动权"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
+     constant_promise.Premise.T_NPC_ACTIVE_H,
+     constant_promise.Premise.IS_H},
 )
 def handle_try_pl_active_h():
     """处理尝试掌握主动权指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.h_state.npc_active_h = False
 
 
 @add_instruct(
@@ -3524,8 +3533,9 @@ def handle_try_pl_active_h():
     constant.InstructType.SEX,
     _("诱惑对方"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
-     constant_promise.Premise.IS_H},
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TO_DO},
 )
 def handle_sedecu():
     """处理诱惑对方指令"""
@@ -3542,6 +3552,7 @@ def handle_sedecu():
     constant.InstructType.SEX,
     _("手交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_handjob():
@@ -3559,6 +3570,7 @@ def handle_handjob():
     constant.InstructType.SEX,
     _("口交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_blowjob():
@@ -3576,6 +3588,7 @@ def handle_blowjob():
     constant.InstructType.SEX,
     _("乳交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_paizuri():
@@ -3593,6 +3606,7 @@ def handle_paizuri():
     constant.InstructType.SEX,
     _("足交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
 )
@@ -3611,6 +3625,7 @@ def handle_footjob():
     constant.InstructType.SEX,
     _("发交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
 )
@@ -3629,6 +3644,7 @@ def handle_hairjob():
     constant.InstructType.SEX,
     _("腋交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_5},
 )
@@ -3647,6 +3663,7 @@ def handle_axillajob():
     constant.InstructType.SEX,
     _("素股"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_rub_buttock():
@@ -3664,6 +3681,7 @@ def handle_rub_buttock():
     constant.InstructType.SEX,
     _("手交口交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
@@ -3683,6 +3701,7 @@ def handle_hand_blowjob():
     constant.InstructType.SEX,
     _("乳交口交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_PAIZURI,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
@@ -3702,6 +3721,7 @@ def handle_tits_blowjob():
     constant.InstructType.SEX,
     _("真空口交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
@@ -3721,6 +3741,7 @@ def handle_focus_blowjob():
     constant.InstructType.SEX,
     _("深喉插入"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
@@ -3740,6 +3761,7 @@ def handle_deep_throat():
     constant.InstructType.SEX,
     _("六九式"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_CUNNILINGUS,
@@ -3761,6 +3783,7 @@ def handle_sixty_nine():
     constant.InstructType.SEX,
     _("腿交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_legjob():
@@ -3778,8 +3801,9 @@ def handle_legjob():
     constant.InstructType.SEX,
     _("尾交"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TARGET_HAVE_TAIL,
-     constant_promise.Premise.IS_H},
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_HAVE_TAIL},
 )
 def handle_tailjob():
     """处理尾交指令"""
@@ -3796,6 +3820,7 @@ def handle_tailjob():
     constant.InstructType.SEX,
     _("阴茎蹭脸"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_face_rub():
@@ -3813,8 +3838,9 @@ def handle_face_rub():
     constant.InstructType.SEX,
     _("阴茎蹭角"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TARGET_HAVE_HORN,
-     constant_promise.Premise.IS_H},
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_HAVE_HORN},
 )
 def handle_horn_rub():
     """处理阴茎蹭角指令"""
@@ -3831,8 +3857,9 @@ def handle_horn_rub():
     constant.InstructType.SEX,
     _("阴茎蹭耳朵"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TARGET_HAVE_EARS,
-     constant_promise.Premise.IS_H},
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_HAVE_EARS},
 )
 def handle_eras_rub():
     """处理阴茎蹭耳朵指令"""
@@ -3849,6 +3876,7 @@ def handle_eras_rub():
     constant.InstructType.SEX,
     _("戴上乳头夹"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_NIPPLE_CLAMP,
      constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP},
@@ -3868,6 +3896,7 @@ def handle_nipple_clamp_on():
     constant.InstructType.SEX,
     _("取下乳头夹"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_NIPPLE_CLAMP,
      constant_promise.Premise.TARGET_NOW_NIPPLE_CLAMP},
@@ -3887,6 +3916,7 @@ def handle_nipple_clamp_off():
     constant.InstructType.SEX,
     _("乳头跳蛋"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_LOVE_EGG},
 )
@@ -3905,6 +3935,7 @@ def handle_nipples_love_egg():
     constant.InstructType.SEX,
     _("戴上阴蒂夹"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLIT_CLAMP,
      constant_promise.Premise.TARGET_NOT_CLIT_CLAMP},
@@ -3924,6 +3955,7 @@ def handle_clit_clamp_on():
     constant.InstructType.SEX,
     _("取下阴蒂夹"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLIT_CLAMP,
      constant_promise.Premise.TARGET_NOW_CLIT_CLAMP},
@@ -3943,6 +3975,7 @@ def handle_clit_clamp_off():
     constant.InstructType.SEX,
     _("阴蒂跳蛋"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_LOVE_EGG},
 )
@@ -3961,6 +3994,7 @@ def handle_clit_love_egg():
     constant.InstructType.SEX,
     _("电动按摩棒"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ELECTRIC_MESSAGE_STICK},
 )
@@ -3979,6 +4013,7 @@ def handle_electric_message_stick():
     constant.InstructType.SEX,
     _("插入震动棒"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -3998,6 +4033,7 @@ def handle_vibrator_insertion():
     constant.InstructType.SEX,
     _("肛门插入震动棒"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
@@ -4017,6 +4053,7 @@ def handle_vibrator_insertion_anal():
     constant.InstructType.SEX,
     _("拔出震动棒"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION},
@@ -4036,6 +4073,7 @@ def handle_vibrator_insertion_off():
     constant.InstructType.SEX,
     _("拔出肛门震动棒"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL},
@@ -4055,6 +4093,7 @@ def handle_vibrator_insertion_anal_off():
     constant.InstructType.SEX,
     _("灌肠"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
      constant_promise.Premise.T_NOT_ENEMA,
@@ -4075,6 +4114,7 @@ def handle_clyster():
     constant.InstructType.SEX,
     _("拔出肛塞"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
      constant_promise.Premise.T_ENEMA,
@@ -4095,6 +4135,7 @@ def handle_clyster_end():
     constant.InstructType.SEX,
     _("肛塞_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_PLUG,
      constant_promise.Premise.TO_DO},
@@ -4114,6 +4155,7 @@ def handle_anal_plug():
     constant.InstructType.SEX,
     _("塞入肛门拉珠"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_BEADS,
      constant_promise.Premise.TARGET_NOT_ANAL_BEADS},
@@ -4133,6 +4175,7 @@ def handle_anal_beads():
     constant.InstructType.SEX,
     _("拔出肛门拉珠"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_BEADS,
      constant_promise.Premise.TARGET_NOW_ANAL_BEADS},
@@ -4152,6 +4195,7 @@ def handle_anal_beads_off():
     constant.InstructType.SEX,
     _("装上搾乳机"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.T_LACTATION_1,
      constant_promise.Premise.TARGET_MILK_GE_30,
@@ -4173,6 +4217,7 @@ def handle_milking_machine_on():
     constant.InstructType.SEX,
     _("取下搾乳机"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.T_LACTATION_1,
      constant_promise.Premise.TARGET_NOW_MILKING_MACHINE,
@@ -4193,6 +4238,7 @@ def handle_milking_machine_off():
     constant.InstructType.SEX,
     _("装上采尿器"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.T_U_DILATE_GE_3,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
@@ -4220,6 +4266,7 @@ def handle_urine_collector_on():
     constant.InstructType.SEX,
     _("取下采尿器"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.T_U_DILATE_GE_3,
      constant_promise.Premise.TARGET_NOW_URINE_COLLECTOR,
@@ -4247,6 +4294,7 @@ def handle_urine_collector_off():
     constant.InstructType.SEX,
     _("绳子"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_BONDAGE},
@@ -4266,6 +4314,7 @@ def handle_bondage():
     constant.InstructType.SEX,
     _("眼罩"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_PATCH},
@@ -4285,6 +4334,7 @@ def handle_patch():
     constant.InstructType.SEX,
     _("鞭子"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_WHIP},
@@ -4304,6 +4354,7 @@ def handle_whip():
     constant.InstructType.SEX,
     _("针"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_NEEDLE},
@@ -4323,6 +4374,7 @@ def handle_neddle():
     constant.InstructType.SEX,
     _("戴上避孕套"),
     {constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.NOW_NOT_CONDOM,
      constant_promise.Premise.HAVE_CONDOM},
 )
@@ -4341,6 +4393,7 @@ def handle_put_condom():
     constant.InstructType.SEX,
     _("摘掉避孕套"),
     {constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.NOW_CONDOM,
     },
 )
@@ -4359,6 +4412,7 @@ def handle_take_condom_out():
     constant.InstructType.SEX,
     _("滴蜡"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_SAFE_CANDLES},
@@ -4378,6 +4432,7 @@ def handle_safe_candles():
     constant.InstructType.SEX,
     _("润滑液"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BODY_LUBRICANT},
 )
@@ -4396,6 +4451,7 @@ def handle_body_lubricant():
     constant.InstructType.SEX,
     _("媚药"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_PHILTER},
 )
@@ -4414,6 +4470,7 @@ def handle_philter():
     constant.InstructType.SEX,
     _("灌肠液_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ENEMAS,
      constant_promise.Premise.TO_DO},
@@ -4431,6 +4488,7 @@ def handle_enemas():
     constant.InstructType.SEX,
     _("一次性利尿剂"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_DIURETICS_ONCE},
 )
@@ -4449,6 +4507,7 @@ def handle_diuretics_once():
     constant.InstructType.SEX,
     _("持续性利尿剂"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_DIURETICS_PERSISTENT},
 )
@@ -4467,6 +4526,7 @@ def handle_diuretics_persistent():
     constant.InstructType.SEX,
     _("安眠药"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_SLEEPING_PILLS},
 )
@@ -4491,6 +4551,7 @@ def handle_sleeping_pills():
     constant.InstructType.SEX,
     _("排卵促进药"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLOMID},
 )
@@ -4516,6 +4577,7 @@ def handle_clomid():
     constant.InstructType.SEX,
     _("事前避孕药"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_BEFORE},
 )
@@ -4534,6 +4596,7 @@ def handle_birth_control_pills_before():
     constant.InstructType.SEX,
     _("事后避孕药"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_AFTER},
 )
@@ -4552,6 +4615,7 @@ def handle_birth_control_pills_after():
     constant.InstructType.SEX,
     _("正常位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4580,6 +4644,7 @@ def handle_normal_sex():
     constant.InstructType.SEX,
     _("背后位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4608,6 +4673,7 @@ def handle_back_sex():
     constant.InstructType.SEX,
     _("骑乘位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4636,6 +4702,7 @@ def handle_riding_sex():
     constant.InstructType.SEX,
     _("对面座位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4664,6 +4731,7 @@ def handle_face_seat_sex():
     constant.InstructType.SEX,
     _("背面座位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4692,6 +4760,7 @@ def handle_back_seat_sex():
     constant.InstructType.SEX,
     _("对面立位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
@@ -4719,6 +4788,7 @@ def handle_face_stand_sex():
     constant.InstructType.SEX,
     _("背面立位"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
 )
@@ -4746,6 +4816,7 @@ def handle_back_stand_sex():
     constant.InstructType.SEX,
     _("刺激G点"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
@@ -4775,6 +4846,7 @@ def handle_stimulate_g_point():
     constant.InstructType.SEX,
     _("玩弄子宫口"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
@@ -4805,6 +4877,7 @@ def handle_womb_os_caress():
     constant.InstructType.SEX,
     _("插入子宫口"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
@@ -4835,6 +4908,7 @@ def handle_womb_insertion():
     constant.InstructType.SEX,
     _("子宫姦"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_W_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
@@ -4865,6 +4939,7 @@ def handle_womb_insertion():
     constant.InstructType.SEX,
     _("正常位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
@@ -4891,6 +4966,7 @@ def handle_normal_anal_sex():
     constant.InstructType.SEX,
     _("后背位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
@@ -4917,6 +4993,7 @@ def handle_back_anal_sex():
     constant.InstructType.SEX,
     _("骑乘位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
@@ -4943,6 +5020,7 @@ def handle_riding_anal_sex():
     constant.InstructType.SEX,
     _("对面座位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.PLACE_FURNITURE_2},
@@ -4969,6 +5047,7 @@ def handle_face_seat_anal_sex():
     constant.InstructType.SEX,
     _("背面座位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
@@ -4995,6 +5074,7 @@ def handle_back_seat_anal_sex():
     constant.InstructType.SEX,
     _("对面立位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
@@ -5020,6 +5100,7 @@ def handle_face_stand_anal_sex():
     constant.InstructType.SEX,
     _("背面立位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
 )
@@ -5045,6 +5126,7 @@ def handle_back_stand_anal_sex():
     constant.InstructType.SEX,
     _("玩弄s状结肠"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.LAST_CMD_A_SEX,
@@ -5072,6 +5154,7 @@ def handle_stimulate_sigmoid_colon():
     constant.InstructType.SEX,
     _("隔着刺激阴道"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.LAST_CMD_A_SEX,
@@ -5099,6 +5182,7 @@ def handle_stimulate_vagina():
     constant.InstructType.SEX,
     _("二穴插入_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.TECHNIQUE_GE_5},
@@ -5117,6 +5201,7 @@ def handle_double_penetration():
     _("尿道棉棒"),
     {
     constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
     constant_promise.Premise.IS_H,
     constant_promise.Premise.HAVE_COTTON_STICK,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
@@ -5146,6 +5231,7 @@ def handle_urethral_swab():
     _("尿道指姦"),
     {
     constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
     constant_promise.Premise.IS_H,
     constant_promise.Premise.TECHNIQUE_GE_5,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
@@ -5175,6 +5261,7 @@ def handle_urethral_finger_insertion():
     _("尿道姦"),
     {
     constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
     constant_promise.Premise.IS_H,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.TECHNIQUE_GE_5,
@@ -5203,6 +5290,7 @@ def handle_urethral_sex():
     constant.InstructType.SEX,
     _("命令对方小便"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_URINATE_GE_80,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
@@ -5230,6 +5318,7 @@ def handle_ask_pee():
     constant.InstructType.SEX,
     _("打胸部_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5246,6 +5335,7 @@ def handle_beat_breast():
     constant.InstructType.SEX,
     _("打屁股"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
 def handle_spanking():
@@ -5261,6 +5351,7 @@ def handle_spanking():
     constant.InstructType.SEX,
     _("羞耻play_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5277,6 +5368,7 @@ def handle_shame_play():
     constant.InstructType.SEX,
     _("拘束play_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5293,6 +5385,7 @@ def handle_bundled_play():
     constant.InstructType.SEX,
     _("淋浴_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5309,6 +5402,7 @@ def handle_take_shower():
     constant.InstructType.SEX,
     _("泡泡浴_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5325,6 +5419,7 @@ def handle_bubble_bath():
     constant.InstructType.SEX,
     _("给对方口交_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
@@ -5342,6 +5437,7 @@ def handle_give_blowjob():
     _("脱衣服"),
     {
         constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.IS_H,
     })
 def handle_undress():
