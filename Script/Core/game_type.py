@@ -1004,6 +1004,8 @@ class Character:
         """ 饥饿值 1m=1点，4h=240点(max)"""
         self.sleep_point: int = 0
         """ 熟睡值 1m=10点，10min=100点(max)"""
+        self.desire_point: int = 0
+        """ 欲望值 1m=10点，10min=100点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
         self.last_state: List = [0]

@@ -56,6 +56,8 @@ class BehaviorEffect:
     """ 属性_基础 自己增加少量尿意值 """
     TARGET_ADD_SMALL_URINATE_POINT = 39
     """ 属性_基础 交互对象增加少量尿意值 """
+    TARGET_DESIRE_POINT_ZERO = 40
+    """ 属性_基础 交互对象欲望值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
