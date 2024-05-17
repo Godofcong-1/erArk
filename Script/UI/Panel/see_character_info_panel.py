@@ -509,20 +509,30 @@ class CharacterInfoHead:
 
         # 监禁状态
         imprisonment_text = ""
+        imprisonment_draw = draw.LeftDraw()
+        imprisonment_draw.style = "crimson"
         if character_data.sp_flag.imprisonment:
-            imprisonment_text = _(" <监禁>")
+            imprisonment_text = _(" <监>")
+        imprisonment_draw.text = imprisonment_text
 
         # 访客
         visitor_text = ""
         if character_data.sp_flag.vistor == 1:
             visitor_text = _(" <访>")
 
+        # 逆推H
+        active_h_text = ""
+        active_h_draw = draw.LeftDraw()
+        active_h_draw.style = "light_pink"
+        if character_data.h_state.npc_active_h:
+            active_h_text = _(" <逆>")
+        active_h_draw.text = active_h_text
+
         if character_id:
             message = _(
-                "{character_name} {favorability_and_trust}{imprisonment}{visitor}").format(
+                "{character_name} {favorability_and_trust}{visitor}").format(
                 character_name=character_data.name,
                 favorability_and_trust=favorability_and_trust_text,
-                imprisonment=imprisonment_text,
                 visitor=visitor_text,
             )
         else:
@@ -538,7 +548,7 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + urinate_text + hypnosis_text + hunger_text)
+        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + urinate_text + hypnosis_text + hunger_text + active_h_text + imprisonment_text)
         max_width = max(base_width, text_width)
         message_draw.width = max_width
         message_draw.text = message
@@ -587,7 +597,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, hypnosis_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, hypnosis_draw, active_h_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)
