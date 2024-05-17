@@ -332,11 +332,13 @@ def check_grow_to_girl(character_id: int):
             character_data.talent[104] = 1
             character_data.talent[7] = 0
             chest_grow_text = chest_grow(character_id)
+            body_part_grow_text = body_part_grow(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的身体完全长成，迎来了自己的成人礼，成为了一位亭亭玉立的少女\n").format(character_data.name)
             draw_text += _("\n{0}从[萝莉]成长为了[少女]\n").format(character_data.name)
             draw_text += _("\n{0}失去了[未成年]\n").format(character_data.name)
             draw_text += chest_grow_text
+            draw_text += body_part_grow_text
             draw_text += _("\n{0}可以进行正常的工作了\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
@@ -424,4 +426,45 @@ def chest_grow(character_id: int,print_flag = False):
         now_draw.draw()
 
     # 返回胸部成长情况的文本
+    return now_text
+
+def body_part_grow(character_id: int,print_flag = False):
+    """
+    进行除胸部外其他部位的生长判定
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    mom_id = character_data.relationship.mother_id
+    mom_character_data: game_type.Character = cache.character_data[mom_id]
+    now_text = ""
+
+    old_talent_id_list, new_talent_id_list = [], []
+    # 获得本人的臀部大小和母亲的臀部大小
+    for i in {126,127,128,129,130,131,132}:
+        if character_data.talent[i]:
+            old_talent_id_list.append(i)
+        if mom_character_data.talent[i]:
+            new_talent_id_list.append(i)
+
+    # 把旧的素质换成新的
+    for old_talent_id in old_talent_id_list:
+        character_data.talent[old_talent_id] = 0
+    for new_talent_id in new_talent_id_list:
+        character_data.talent[new_talent_id] = 1
+
+    # 根据flag判定是否要绘制输出
+    for i in range(len(old_talent_id_list)):
+        old_talent_id = old_talent_id_list[i]
+        new_talent_id = new_talent_id_list[i]
+        old_name = game_config.config_talent[old_talent_id].name
+        new_name = game_config.config_talent[new_talent_id].name
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        if new_talent_id != old_talent_id:
+            now_text += _("\n{0}的[{1}]成长为了[{2}]\n").format(character_data.name, old_name, new_name)
+        if print_flag:
+            now_draw.text = now_text
+            now_draw.draw()
+
+    # 返回成长情况的文本
     return now_text
