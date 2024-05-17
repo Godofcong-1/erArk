@@ -223,7 +223,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     target, weight, judge = search_target(character_id, type_0_target_list, null_target_set, premise_data, target_weight_data)
     # 将行动列表加到null_target中
     null_target_set.update(type_0_target_list)
-    # 然后判断需求，先判断是否需要进入需求链，再判断需求链中的需求，最后判断非链中的需求
+    # 然后判断需求，先判断需求链中的需求，再判断非链中的需求，最后判断是否需要进入需求链
     if judge == 0 and not handle_premise.handle_normal_1(character_id):
         now_target_list = game_config.config_target_type_index[12]
         target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
@@ -584,6 +584,9 @@ def search_target(
                 now_weight += premise_judge
             else:
                 if premise in game_config.config_effect_target_data and premise not in premise_data:
+                    pass
+                    # 暂时不用该功能
+                    """
                     now_target_list = game_config.config_effect_target_data[premise] - null_target
                     now_target, now_target_weight, now_judge = search_target(
                         character_id,
@@ -599,6 +602,7 @@ def search_target(
                     else:
                         now_target_pass_judge = 1
                         break
+                    """
                 else:
                     now_target_pass_judge = 1
                     break
@@ -610,6 +614,9 @@ def search_target(
             target_data.setdefault(now_weight, set())
             target_data[now_weight].add(target)
             target_weight_data[target] = now_weight
+            # 如果权重已经大于100，则跳出
+            # if now_weight >= 100:
+            #     break
         else:
             now_value_weight = value_handle.get_rand_value_for_value_region(list(now_target_data.keys()))
             target_data.setdefault(now_weight, set())

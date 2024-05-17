@@ -6166,7 +6166,7 @@ def handle_tired_le_84(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TIRED_GE_85)
 def handle_tired_ge_85(character_id: int) -> int:
     """
-    疲劳条≥90%
+    疲劳条≥85%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

@@ -105,26 +105,7 @@ def character_sleep(character_id: int):
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     character_data.sp_flag.tired = 0
-    # 早安问候的助理则重新计算睡眠时间
-    pl_character_data = cache.character_data[0]
-    if character_id == pl_character_data.assistant_character_id and character_data.assistant_services[5]:
-        # 计算从现在到博士睡醒所经过的时间
-        plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
-        wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
-        # 计算博士睡醒的时间，是明天的睡醒时候
-        now_time = character_data.behavior.start_time
-        if now_time.hour > 12:
-            new_wake_time = game_time.get_sub_date(day = 1,old_date = now_time)
-        else:
-            new_wake_time = now_time
-        # 将小时和分钟进行替换
-        new_wake_time = new_wake_time.replace(hour=wake_time_hour,minute=wake_time_minute)
-        # 计算总睡眠分钟数
-        true_add_time = int((new_wake_time.timestamp() - now_time.timestamp()) / 60)
-        # print(f"debug plan_to_wake_time = {plan_to_wake_time},new_wake_time = {new_wake_time},true_add_time = {true_add_time}")
-        # 取更小的时间
-        if true_add_time < character_data.behavior.duration:
-            character_data.behavior.duration = true_add_time
+
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
 # def character_follow(character_id: int):
@@ -2078,7 +2059,7 @@ def character_start_sleep(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.START_REST)
