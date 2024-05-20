@@ -145,6 +145,7 @@ def base_chara_state_common_settle(
     # 结算最终值
     character_data.status_data[state_id] += final_value
     character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
+    character_data.status_data[state_id] = max(0, character_data.status_data[state_id])
 
     # 结算信息记录对象
     if change_data != None:

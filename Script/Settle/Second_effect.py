@@ -2285,6 +2285,159 @@ def handle_add_large_disgust(
     change_data.status_data.setdefault(20, 0)
     change_data.status_data[20] += now_add_lust
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_PAIN)
+def handle_down_small_pain(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少少量苦痛（苦痛刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -50
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+
+    character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = max(0, character_data.status_data[17])
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_DISGUST)
+def handle_down_small_disgust(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少少量反感（反发刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -50
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
+    now_add_lust *= adjust
+
+    character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = max(0, character_data.status_data[20])
+    change_data.status_data.setdefault(20, 0)
+    change_data.status_data[20] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_PAIN)
+def handle_down_middle_pain(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量苦痛（苦痛刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -500 - character_data.status_data[17] / 10
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+
+    character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = max(0, character_data.status_data[17])
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_DISGUST)
+def handle_down_middle_disgust(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量反感（反发刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -500 - character_data.status_data[20] / 10
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
+    now_add_lust *= adjust
+
+    character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = max(0, character_data.status_data[20])
+    change_data.status_data.setdefault(20, 0)
+    change_data.status_data[20] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_PAIN)
+def handle_down_large_pain(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量苦痛（苦痛刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -2000 - character_data.status_data[17] / 5
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+    now_add_lust *= adjust
+
+    character_data.status_data[17] += now_add_lust
+    character_data.status_data[17] = max(0, character_data.status_data[17])
+    change_data.status_data.setdefault(17, 0)
+    change_data.status_data[17] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_DISGUST)
+def handle_down_large_disgust(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量反感（反发刻印补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = -2000 - character_data.status_data[20] / 5
+    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
+    now_add_lust *= adjust
+
+    character_data.status_data[20] += now_add_lust
+    character_data.status_data[20] = max(0, character_data.status_data[20])
+    change_data.status_data.setdefault(20, 0)
+    change_data.status_data[20] += now_add_lust
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_SEX)
 def handle_add_large_pain_first_sex(
     character_id: int,
@@ -2611,8 +2764,8 @@ def handle_add_1_sex_v_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[61] += 1
-    change_data.sex_experience.setdefault(61, 0)
-    change_data.status_data[61] += 1
+    change_data.experience.setdefault(61, 0)
+    change_data.experience[61] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_A_EXPERIENCE)
@@ -2631,8 +2784,8 @@ def handle_add_1_sex_a_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[62] += 1
-    change_data.sex_experience.setdefault(62, 0)
-    change_data.status_data[62] += 1
+    change_data.experience.setdefault(62, 0)
+    change_data.experience[62] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_U_EXPERIENCE)
@@ -2651,8 +2804,8 @@ def handle_add_1_sex_u_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[63] += 1
-    change_data.sex_experience.setdefault(63, 0)
-    change_data.status_data[63] += 1
+    change_data.experience.setdefault(63, 0)
+    change_data.experience[63] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_W_EXPERIENCE)
@@ -2671,8 +2824,8 @@ def handle_add_1_sex_w_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[64] += 1
-    change_data.sex_experience.setdefault(64, 0)
-    change_data.status_data[64] += 1
+    change_data.experience.setdefault(64, 0)
+    change_data.experience[64] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_V_EXPERIENCE)
@@ -2691,8 +2844,8 @@ def handle_add_1_expand_v_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[65] += 1
-    change_data.sex_experience.setdefault(65, 0)
-    change_data.status_data[65] += 1
+    change_data.experience.setdefault(65, 0)
+    change_data.experience[65] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_A_EXPERIENCE)
@@ -2711,8 +2864,8 @@ def handle_add_1_expand_a_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[66] += 1
-    change_data.sex_experience.setdefault(66, 0)
-    change_data.status_data[66] += 1
+    change_data.experience.setdefault(66, 0)
+    change_data.experience[66] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_U_EXPERIENCE)
@@ -2731,8 +2884,8 @@ def handle_add_1_expand_u_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[67] += 1
-    change_data.sex_experience.setdefault(67, 0)
-    change_data.status_data[67] += 1
+    change_data.experience.setdefault(67, 0)
+    change_data.experience[67] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_W_EXPERIENCE)
@@ -2751,6 +2904,6 @@ def handle_add_1_expand_w_experience(
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.experience[68] += 1
-    change_data.sex_experience.setdefault(68, 0)
-    change_data.status_data[68] += 1
+    change_data.experience.setdefault(68, 0)
+    change_data.experience[68] += 1
 

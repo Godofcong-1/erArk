@@ -908,6 +908,18 @@ class SecondEffect:
     """ 增加大量抑郁 """
     ADD_LARGE_DISGUST = 299
     """ 增加大量反感（反发刻印补正） """
+    DOWN_SMALL_PAIN = 301
+    """ 减少少量苦痛（苦痛刻印补正） """
+    DOWN_SMALL_DISGUST = 302
+    """ 减少少量反感（反发刻印补正） """
+    DOWN_MIDDLE_PAIN = 303
+    """ 减少中量苦痛（苦痛刻印补正） """
+    DOWN_MIDDLE_DISGUST = 304
+    """ 减少中量反感（反发刻印补正） """
+    DOWN_LARGE_PAIN = 305
+    """ 减少大量苦痛（苦痛刻印补正） """
+    DOWN_LARGE_DISGUST = 306
+    """ 减少大量反感（反发刻印补正） """
     ADD_LARGE_PAIN_FIRST_SEX = 400
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401
