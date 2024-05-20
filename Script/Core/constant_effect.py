@@ -928,3 +928,19 @@ class SecondEffect:
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_双方归零 """
 
+    ADD_1_SEX_V_EXPERIENCE = 601
+    """ 属性_经验 增加1V性交经验 """
+    ADD_1_SEX_A_EXPERIENCE = 602
+    """ 属性_经验 增加1A性交经验 """
+    ADD_1_SEX_U_EXPERIENCE = 603
+    """ 属性_经验 增加1U性交经验 """
+    ADD_1_SEX_W_EXPERIENCE = 604
+    """ 属性_经验 增加1W性交经验 """
+    ADD_1_EXPAND_V_EXPERIENCE = 605
+    """ 属性_经验 增加1V扩张经验 """
+    ADD_1_EXPAND_A_EXPERIENCE = 606
+    """ 属性_经验 增加1A扩张经验 """
+    ADD_1_EXPAND_U_EXPERIENCE = 607
+    """ 属性_经验 增加1U扩张经验 """
+    ADD_1_EXPAND_W_EXPERIENCE = 608
+    """ 属性_经验 增加1W扩张经验 """

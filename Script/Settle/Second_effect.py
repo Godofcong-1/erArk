@@ -2594,3 +2594,163 @@ def handle_penis_in_t_reset(
     target_data.h_state.insert_position = -1
     character_data.h_state.insert_position = -1
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_V_EXPERIENCE)
+def handle_add_1_sex_v_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1V性交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[61] += 1
+    change_data.sex_experience.setdefault(61, 0)
+    change_data.status_data[61] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_A_EXPERIENCE)
+def handle_add_1_sex_a_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1A性交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[62] += 1
+    change_data.sex_experience.setdefault(62, 0)
+    change_data.status_data[62] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_U_EXPERIENCE)
+def handle_add_1_sex_u_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1U性交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[63] += 1
+    change_data.sex_experience.setdefault(63, 0)
+    change_data.status_data[63] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_W_EXPERIENCE)
+def handle_add_1_sex_w_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1W性交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[64] += 1
+    change_data.sex_experience.setdefault(64, 0)
+    change_data.status_data[64] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_V_EXPERIENCE)
+def handle_add_1_expand_v_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1V扩张经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[65] += 1
+    change_data.sex_experience.setdefault(65, 0)
+    change_data.status_data[65] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_A_EXPERIENCE)
+def handle_add_1_expand_a_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1A扩张经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[66] += 1
+    change_data.sex_experience.setdefault(66, 0)
+    change_data.status_data[66] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_U_EXPERIENCE)
+def handle_add_1_expand_u_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1U扩张经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[67] += 1
+    change_data.sex_experience.setdefault(67, 0)
+    change_data.status_data[67] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_EXPAND_W_EXPERIENCE)
+def handle_add_1_expand_w_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1W扩张经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[68] += 1
+    change_data.sex_experience.setdefault(68, 0)
+    change_data.status_data[68] += 1
+
