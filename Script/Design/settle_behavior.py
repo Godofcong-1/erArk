@@ -809,9 +809,9 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     terror_count += character_data.status_data[18]
     # 单次增加量
     if 18 in change_data.status_data:
-        terror_count += character_data.status_data[18] * 5
+        terror_count += change_data.status_data[18] * 5
     if 17 in change_data.status_data:
-        terror_count += character_data.status_data[17]
+        terror_count += change_data.status_data[17]
     if terror_count >= 20000 and character_data.ability[17] <= 0:
         character_data.ability[17] = 1
         character_data.second_behavior[1042] = 1
@@ -827,13 +827,13 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     hate_count += character_data.status_data[20]
     # 单次增加量
     if 20 in change_data.status_data:
-        hate_count += character_data.status_data[20] * 5
+        hate_count += change_data.status_data[20] * 5
     if 18 in change_data.status_data:
-        hate_count += character_data.status_data[18]
+        hate_count += change_data.status_data[18]
     if 19 in change_data.status_data:
-        hate_count += character_data.status_data[19]
+        hate_count += change_data.status_data[19]
     if 17 in change_data.status_data:
-        hate_count += character_data.status_data[17]
+        hate_count += change_data.status_data[17]
     if hate_count >= 10000 and character_data.ability[18] <= 0:
         character_data.ability[18] = 1
         character_data.second_behavior[1045] = 1
