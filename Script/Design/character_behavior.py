@@ -891,6 +891,8 @@ def update_new_day():
             # 清零香薰疗愈的flag
             if character_data.sp_flag.aromatherapy != 0:
                 character_data.sp_flag.aromatherapy = 0
+            # 增加欲望值
+            character_data.desire_point += random.randint(5, 15)
 
     # 非角色部分
     basement.update_base_resouce_newday()

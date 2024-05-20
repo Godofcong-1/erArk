@@ -786,6 +786,10 @@ class Premise:
     """ 属性_基础 理智值≥40 """
     SANITY_POINT_GE_50 = "sanity_point_ge_50"
     """ 属性_基础 理智值≥50 """
+    DESIRE_POINT_GE_80 = "desire_point_ge_80"
+    """ 属性_基础 欲望值≥80 """
+    DESIRE_POINT_L_80 = "desire_point_l_80"
+    """ 属性_基础 欲望值<80 """
 
     FAVORABILITY_LE_2 = "favorability_le_2"
     """ 属性_好感与信赖 指令双方中NPC方对玩家的好感等级小于等于2（1000点） """

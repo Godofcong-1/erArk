@@ -294,6 +294,7 @@ morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问
 not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来时间之后）
 night_salutation_time,NIGHT_SALUTATION_TIME,时间_当前,当前是晚安问候时间（计划睡觉时间之后，权重50）
 not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是晚安问候时间（计划睡觉时间之后）
+still_30_minutes_before_end,STILL_30_MINUTES_BEFORE_END,时间_当前,距离行动结束时间还有至少30分钟
 
 
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态
@@ -389,6 +390,8 @@ sanity_point_ge_10,SANITY_POINT_GE_10,属性_基础,理智值≥10
 sanity_point_ge_20,SANITY_POINT_GE_20,属性_基础,理智值≥20
 sanity_point_ge_40,SANITY_POINT_GE_40,属性_基础,理智值≥40
 sanity_point_ge_50,SANITY_POINT_GE_50,属性_基础,理智值≥50
+desire_point_ge_80,DESIRE_POINT_GE_80,属性_基础,欲望值≥80
+desire_point_l_80,DESIRE_POINT_L_80,属性_基础,欲望值<80
 
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）
@@ -1051,6 +1054,11 @@ t_turn_u_orgasm_g_3,T_TURN_U_ORGASM_G_3,H_射精与绝顶,交互对象本次H中
 t_turn_w_orgasm_g_3,T_TURN_W_ORGASM_G_3,H_射精与绝顶,交互对象本次H中W绝顶次数>3
 t_turn_m_orgasm_g_3,T_TURN_M_ORGASM_G_3,H_射精与绝顶,交互对象本次H中M绝顶次数>3
 
+npc_active_h,NPC_ACTIVE_H,H_逆推,自己正在主动H
+npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H
+t_npc_active_h,T_NPC_ACTIVE_H,H_逆推,交互对象正在主动H
+t_npc_not_active_h,T_NPC_NOT_ACTIVE_H,H_逆推,交互对象没有在主动H
+
 have_food,HAVE_FOOD,道具_持有,拥有食物
 not_have_food,NOT_HAVE_FOOD,道具_持有,未拥有食物
 have_camera,HAVE_CAMERA,道具_持有,已持有相机
@@ -1119,6 +1127,7 @@ action_sleep,ACTION_SLEEP,行动,自己正在睡觉
 action_not_sleep,ACTION_NOT_SLEEP,行动,自己没有在睡觉
 t_action_sleep,T_ACTION_SLEEP,行动,交互对象正在睡觉
 t_action_not_sleep,T_ACTION_NOT_SLEEP,行动,交互对象没有在睡觉
+action_work_or_entertainment,ACTION_WORK_OR_ENTERTAINMENT,行动,自己正在工作或娱乐
 pl_action_food_normal,PL_ACTION_FOOD_NORMAL,行动,食物调味_正常
 pl_action_food_sour,PL_ACTION_FOOD_SOUR,行动,食物调味_酸
 pl_action_food_sweet,PL_ACTION_FOOD_SWEET,行动,食物调味_甜

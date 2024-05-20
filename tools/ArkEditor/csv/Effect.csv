@@ -1,4 +1,5 @@
 cid,effect_name,effect_type,effect
+二段结算,行为结算效果函数
 
 9999,NOTHING,系统状态,什么都没有的空结算
 10000,INTERRUPT_TARGET_ACTIVITY,系统状态,打断交互对象活动
@@ -28,6 +29,7 @@ cid,effect_name,effect_type,effect
 37,TARGET_SLEEP_POINT_ZERO,属性_基础,交互对象熟睡值归零
 38,ADD_SMALL_URINATE_POINT,属性_基础,自己增加少量尿意值
 39,TARGET_ADD_SMALL_URINATE_POINT,属性_基础,交互对象增加少量尿意值
+40,TARGET_DESIRE_POINT_ZERO,属性_基础,交互对象欲望值归零
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
@@ -305,6 +307,8 @@ cid,effect_name,effect_type,effect
 920,TARGET_ANAL_BEADS_OFF,道具_增减,交互对象拔出肛门拉珠
 921,TARGET_MILKING_MACHINE_ON,道具_增减,交互对象戴上搾乳机
 922,TARGET_MILKING_MACHINE_OFF,道具_增减,交互对象取下搾乳机
+923,TARGET_URINE_COLLECTOR_ON,道具_增减,交互对象戴上采尿器
+924,TARGET_URINE_COLLECTOR_OFF,道具_增减,交互对象取下采尿器
 941,USE_BODY_LUBRICANT,道具_增减,使用了一个润滑液
 942,USE_PHILTER,道具_增减,使用了一个媚药
 943,USE_ENEMAS,道具_增减,使用了一个灌肠液
@@ -360,3 +364,8 @@ cid,effect_name,effect_type,effect
 1227,TARGET_HYPNOSIS_BLOCKHEAD_OFF,源石技艺,对方关闭体控-木头人
 1228,TARGET_HYPNOSIS_ACTIVE_H_ON,源石技艺,对方开启体控-逆推（含理智消耗）
 1229,TARGET_HYPNOSIS_ACTIVE_H_OFF,源石技艺,对方关闭体控-逆推
+
+1401,NPC_ACTIVE_H_ON,属性_H,自己开启主动H
+1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
+1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
+1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H

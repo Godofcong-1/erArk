@@ -39,7 +39,7 @@ now_type: str = "跳过指令"
 """ 当前事件类型 """
 start_status: str = "开始"
 """ 当前事件开始类型 """
-now_adv_id: int = 0
+now_adv_id: str = 0
 """ 当前事件角色id """
 now_select_id: str = ""
 """ 当前选择的项目id """

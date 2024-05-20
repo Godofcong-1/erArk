@@ -13972,6 +13972,40 @@ def handle_sanity_point_ge_50(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.DESIRE_POINT_GE_80)
+def handle_desire_point_ge_80(character_id: int) -> int:
+    """
+    欲望值≥80
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.desire_point >= 80:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.DESIRE_POINT_L_80)
+def handle_desire_point_l_80(character_id: int) -> int:
+    """
+    欲望值<80
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.desire_point < 80:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.SLEEP_LEVEL_0)
 def handle_sleep_level_0(character_id: int) -> int:
     """
