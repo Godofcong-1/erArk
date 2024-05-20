@@ -1137,7 +1137,11 @@ def handle_first_sex(
         for instruct_en_name in constant.Instruct.__dict__:
             # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
             if int(last_instruct) + 2 == count:
-                instruct_name = constant.instruct_en2cn[instruct_en_name]
+                # 以防没有对应的中文名，直接使用原名
+                if instruct_en_name not in constant.instruct_en2cn:
+                    instruct_name = instruct_en_name
+                else:
+                    instruct_name = constant.instruct_en2cn[instruct_en_name]
                 break
             count += 1
         break
