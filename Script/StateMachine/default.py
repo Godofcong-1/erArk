@@ -1689,7 +1689,7 @@ def character_start_shower(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SIWM_1)
@@ -1704,7 +1704,7 @@ def character_swim_1(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SIWM_2)
@@ -1733,7 +1733,7 @@ def character_start_bathhouse_entertainment(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.FOOT_CLOTH_TO_LOCKER)
@@ -1796,7 +1796,7 @@ def character_help_buy_food(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
@@ -1817,7 +1817,7 @@ def character_help_make_food(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
@@ -1838,7 +1838,7 @@ def character_morning_salutation_flag_1(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
     # print(f"{character_data.name}进入要早安问候状态")
 
 
@@ -1854,7 +1854,7 @@ def character_night_salutation_flag_1(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
     # print(f"debug {character_data.name} 进入要晚安问候状态，time = {cache.game_time}")
 
 
@@ -1870,7 +1870,7 @@ def character_start_milk(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MAKE_MILK)
@@ -1970,7 +1970,7 @@ def character_start_eat_food(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)
@@ -2074,7 +2074,7 @@ def character_start_rest(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.START_PEE)
@@ -2089,7 +2089,7 @@ def character_start_pee(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_CURE_PATIENT)
@@ -2226,7 +2226,7 @@ def character_work_maintenance_1(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
-    character_data.state = constant.CharacterStatus.STATUS_ARDER
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # 指定的地点需要是可进入的
     while 1:

@@ -9,7 +9,7 @@ class CharacterStatus:
     """角色状态id"""
 
     STATUS_ARDER = 0
-    """ 休闲状态 """
+    """ 空闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
     STATUS_WAIT = 2
