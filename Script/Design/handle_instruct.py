@@ -1844,24 +1844,32 @@ def handle_end_h():
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     special_end_list = [constant.Behavior.H_INTERRUPT, constant.Behavior.H_HP_0, constant.Behavior.T_H_HP_0]
+
+    # 非特殊中断的情况下，正常结束H
     if character_data.behavior.behavior_id not in special_end_list:
-        character_data.behavior.behavior_id = constant.Behavior.END_H
-        character_data.state = constant.CharacterStatus.STATUS_END_H
+        # 无意识H下
+        if target_data.sp_flag.unconscious_h > 0:
+            target_data.sp_flag.unconscious_h = 0
+            character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
+            character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
+        else:
+            character_data.behavior.behavior_id = constant.Behavior.END_H
+            character_data.state = constant.CharacterStatus.STATUS_END_H
+            # 如果是非监禁对象，则进入跟随
+            if not target_data.sp_flag.imprisonment:
+                target_data.sp_flag.is_follow = 1
 
     instruct_filter_H_change(False)
 
     # H结束时的其他处理
     if target_data.sp_flag.is_h == 1:
         target_data.sp_flag.is_h = 0
-        target_data.sp_flag.unconscious_h = 0
-        # 如果是非监禁对象，则进入跟随，并原地待机十分钟
-        if not target_data.sp_flag.imprisonment:
-            target_data.sp_flag.is_follow = 1
-            character.init_character_behavior_start_time(character_data.target_character_id, cache.game_time)
-            target_data.behavior.behavior_id = constant.Behavior.WAIT
-            target_data.behavior.duration = 10
-            target_data.state = constant.CharacterStatus.STATUS_WAIT
-            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 对方原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.behavior.duration = 10
+    target_data.behavior.start_time = character_data.behavior.start_time
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

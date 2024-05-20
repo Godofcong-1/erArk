@@ -13657,7 +13657,7 @@ msgid "{Name}触发了电动按摩棒指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\end_h.csv:6
-msgid "{Name}触发了停止H指令的地文"
+msgid "{Name}触发了结束H指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\enemas.csv:6
@@ -13774,6 +13774,10 @@ msgstr ""
 
 #: .\data\talk\sex\normal_sex.csv:6
 msgid "{Name}触发了正常位指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\no_conscious_h_end.csv:6
+msgid "{Name}触发了结束无意识H指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\open_anus.csv:6

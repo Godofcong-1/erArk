@@ -246,6 +246,8 @@ class CharacterStatus:
     """ H时交互对象体力为零中断 """
     STATUS_H_INTERRUPT = 366
     """ H时被人目击闯入中断 """
+    STATUS_NO_CONSCIOUS_H_END = 367
+    """ 结束无意识H """
     STATUS_CONFESSION = 371
     """ 告白 """
     STATUS_CONFESSION_FAILED = 372
@@ -744,6 +746,8 @@ class Behavior:
     """ H时交互对象体力为零中断 """
     H_INTERRUPT = 366
     """ H时被人目击闯入中断 """
+    NO_CONSCIOUS_H_END = 367
+    """ 结束无意识H """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372
