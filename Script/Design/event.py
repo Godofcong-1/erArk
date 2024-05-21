@@ -1,6 +1,6 @@
 import random
 from Script.Core import cache_control, game_type, value_handle, constant
-from Script.Design import map_handle
+from Script.Design import handle_premise
 from Script.UI.Panel import draw_event_text_panel
 from Script.Config import normal_config, game_config
 
@@ -45,8 +45,15 @@ def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel
                             break
                         now_weight += now_premise_data[premise]
                     else:
-                        now_add_weight = constant.handle_premise_data[premise](character_id)
-                        now_premise_data[premise] = now_add_weight
+                        # 综合数值前提判定
+                        if "CVP" in premise:
+                            premise_all_value_list = premise.split("_")[1:]
+                            now_add_weight = handle_premise.handle_comprehensive_value_premise(character_id, premise_all_value_list)
+                            now_premise_data[premise] = now_add_weight
+                        # 其他正常口上判定
+                        else:
+                            now_add_weight = constant.handle_premise_data[premise](character_id)
+                            now_premise_data[premise] = now_add_weight
                         if now_add_weight:
                             now_weight += now_add_weight
                         else:

@@ -52,7 +52,7 @@ class EffectMenu(QDialog):
         self.layout.addLayout(self.search_layout)
         # 创建一个新的 QHBoxLayout，用于左右排列两个 tree
         self.tree_layout = QHBoxLayout()
-        all_type_list = sorted(list(cache_control.effect_type_data.keys()))
+        all_type_list = sorted([k for k in cache_control.effect_type_data.keys() if k is not None])
         range_index = int(len(all_type_list) / 2) + 1
         range_a = all_type_list[:range_index]
         range_b = all_type_list[range_index :]

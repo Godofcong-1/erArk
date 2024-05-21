@@ -624,6 +624,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[018]:信赖度：{target_data.trust}")
                 draw_text_list.append(f"[019]:乳汁量：{target_data.pregnancy.milk}")
                 draw_text_list.append(f"[020]:乳汁上限：{target_data.pregnancy.milk_max}")
+                draw_text_list.append(f"[021]:欲望值：{target_data.desire_point}")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -677,6 +678,8 @@ class Debug_Panel:
                         target_data.pregnancy.milk = new_value
                     elif value_index == 20:
                         target_data.pregnancy.milk_max = new_value
+                    elif value_index == 21:
+                        target_data.desire_point = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
