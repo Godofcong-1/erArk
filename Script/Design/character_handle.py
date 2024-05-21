@@ -275,8 +275,31 @@ def init_character_dormitory():
         else:
             for n in list(dormitory.keys()):
                 if cache.scene_data[n].scene_name == character_data.dormitory:
-                    character_data.dormitory = n
-                    # print(f"debug n :{n}")
+                    # 如果要住宿舍的话，那先检测宿舍是否已经有人住了
+                    if "宿舍" in character_data.dormitory:
+                        already_live = False
+                        for now_character_id in cache.npc_id_got:
+                            if now_character_id == character_id:
+                                continue
+                            now_character_data = cache.character_data[now_character_id]
+                            # 如果已经有人住了，则置flag为true，跳出循环
+                            if now_character_data.dormitory == character_data.dormitory:
+                                already_live = True
+                                break
+                        # 如果已经有人住了，则换成普通宿舍，重新分配
+                        if already_live:
+                            character_data.dormitory = "无"
+                            init_character_dormitory()
+                            break
+                        else:
+                            character_data.dormitory = n
+                            # print(f"debug n :{n}")
+                            break
+                    # 非宿舍的话直接住
+                    else:
+                        character_data.dormitory = n
+                        # print(f"debug n :{n}")
+                        break
 
 
 def new_character_get_dormitory(character_id: int):
