@@ -7269,7 +7269,7 @@ msgid "衣柜衣服穿回身上"
 msgstr ""
 
 #: .\data\csv\Status.csv:35
-msgid "准备游泳"
+msgid "脱掉衣服并换上泳衣"
 msgstr ""
 
 #: .\data\csv\Status.csv:36
@@ -14226,6 +14226,22 @@ msgstr ""
 
 #: Event:11844e82-ab59-42fd-9eba-047a595f7228
 msgid "{Name}带着自己从厨房做的{AllFoodName}回来，向{PlayerName}打了个招呼"
+msgstr ""
+
+#: Event:88ee6490-b213-470c-8feb-55190c58471d
+msgid "{Name}最近有些欲求不满，看到房间里四下无人，终于抑制不住自己的冲动，一边解开衣服一边向{PlayerName}扑了过来"
+msgstr ""
+
+#: Event:3bbe039d-fabc-4c86-aa35-8825afb318ce
+msgid "逆来顺受|毫不反抗的{PlayerName}被{Name}推倒了"
+msgstr ""
+
+#: Event:4b7ef712-24a4-4581-8184-5fdda794dab2
+msgid "反身欺上|经过一番激烈的博弈，终于反过来将{Name}推倒了"
+msgstr ""
+
+#: Event:0d92bc0a-c0e3-44c2-a18f-c514708e12d9
+msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
 msgstr ""
 
 #: /'data\map\0\0\Scene.json:2

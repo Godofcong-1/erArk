@@ -1,5 +1,6 @@
 import time
 import queue
+import datetime
 from functools import wraps
 from typing import Set, List
 from types import FunctionType
@@ -83,9 +84,84 @@ def instruct_filter_H_change(on_off_flag: bool):
         cache.instruct_type_filter[6] = 1
         for i in {1, 2, 3, 4, 5}:
             cache.instruct_type_filter[i] = 0
-
+        # print(f"debug 开启H面板，关闭其他面板")
     else:
         cache.instruct_type_filter = cache.instruct_type_filter_cache.copy()
+        # print(f"debug 关闭H面板，恢复其他面板")
+
+
+def chara_handle_instruct_common_settle(
+        state_id: int,
+        character_id: int = 0,
+        behevior_id: int = 0,
+        duration: int = 0,
+        game_update_flag: bool = False,
+):
+    """
+    角色处理指令通用结算函数\n
+    Keyword arguments:\n
+    state_id -- 状态id\n
+    character_id -- 角色id，默认=0时为玩家指令\n
+    behevior_id -- 行动id，默认=0时为同状态id\n
+    duration -- 行动持续时间，默认=0时进行查表获得\n
+    """
+    # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
+    character_id = 0
+    character.init_character_behavior_start_time(character_id, cache.game_time)
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.state = state_id
+    # 如果行动id为0，则行动id等于状态id
+    if behevior_id == 0:
+        behevior_id = state_id
+    character_data.behavior.behavior_id = behevior_id
+    # 查表获取行动持续时间
+    if duration == 0:
+        duration = game_config.config_status[state_id].duration
+        # 如果持续时间小于等于0，则持续时间为1
+        if duration <= 0:
+            duration = 1
+    character_data.behavior.duration = duration
+    # 仅在玩家指令时更新游戏流程
+    if character_id == 0 or game_update_flag:
+        update.game_update_flow(duration)
+
+
+def handle_comprehensive_state_effect(
+        effect_all_value_list: list,
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    综合指令状态结算
+    Keyword arguments:
+    effect_all_value_list -- 结算的各项数值
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    print(f"debug effect_all_value_list:{effect_all_value_list}")
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
+    if effect_all_value_list[0] == "A1":
+        final_character_id = character_id
+    elif effect_all_value_list[0] == "A2":
+        # 如果没有交互对象，则返回0
+        if character_data.target_character_id == character_id:
+            return 0
+        final_character_id = character_data.target_character_id
+    elif effect_all_value_list[0][:2] == "A3":
+        final_character_id = int(effect_all_value_list[0][3:])
+        # 如果还没拥有该角色，则返回0
+        if final_character_id not in cache.npc_id_got:
+            return 0
+
+    status_id = int(effect_all_value_list[1])
+    chara_handle_instruct_common_settle(status_id, final_character_id, game_update_flag = True)
 
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),
@@ -96,13 +172,7 @@ def instruct_filter_H_change(on_off_flag: bool):
               )
 def handle_rest():
     """处理休息指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.REST
-    character_data.state = constant.CharacterStatus.STATUS_REST
-    update.game_update_flow(60)
-
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REST)
 
 @add_instruct(
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
@@ -159,17 +229,13 @@ def handle_chat():
     """处理聊天指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
-    character_data.behavior.duration = 5
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.action_info.talk_count > character_data.ability[40] + 1:
-        character_data.behavior.behavior_id = constant.Behavior.CHAT_FAILED
-        character_data.state = constant.CharacterStatus.STATUS_CHAT_FAILED
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHAT_FAILED)
     else:
-        character_data.behavior.behavior_id = constant.Behavior.CHAT
-        character_data.state = constant.CharacterStatus.STATUS_CHAT
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHAT)
     target_data.action_info.talk_count += 1
     # print("聊天计数器+1，现在为 ：",target_data.action_info.talk_count)
-    update.game_update_flow(5)
 
 
 @add_instruct(
@@ -494,12 +560,7 @@ def handle_manage_basement():
 )
 def handle_hypnosis_one():
     """处理单人催眠"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ONE
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ONE
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ONE)
 
 
 @add_instruct(
@@ -516,16 +577,12 @@ def handle_hypnosis_one():
 )
 def handle_hypnosis_all():
     """处理集体催眠"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
         now_draw.draw()
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ALL
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ALL
-    character_data.behavior.duration = 30
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ALL)
 
 
 @add_instruct(
@@ -630,12 +687,7 @@ def handle_hypnosis_heart():
 )
 def handle_hypnosis_cancel():
     """处理解除催眠"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_CANCEL
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_CANCEL
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_CANCEL)
 
 
 @add_instruct(
@@ -651,12 +703,7 @@ def handle_hypnosis_cancel():
 )
 def handle_hypnosis_increase_body_sensitivity():
     """处理体控-敏感度提升"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_INCREASE_BODY_SENSITIVITY
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY)
 
 
 @add_instruct(
@@ -671,12 +718,7 @@ def handle_hypnosis_increase_body_sensitivity():
 )
 def handle_hypnosis_force_climax():
     """处理体控-强制高潮"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_FORCE_CLIMAX
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_CLIMAX
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_CLIMAX)
 
 
 @add_instruct(
@@ -693,12 +735,7 @@ def handle_hypnosis_force_climax():
 )
 def handle_hypnosis_force_ovulation():
     """处理体控-强制排卵"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_FORCE_OVULATION
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_OVULATION
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_OVULATION)
 
 
 @add_instruct(
@@ -714,12 +751,7 @@ def handle_hypnosis_force_ovulation():
 )
 def handle_hypnosis_blockhead():
     """处理体控-木头人"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_BLOCKHEAD
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_BLOCKHEAD
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_BLOCKHEAD)
 
 
 @add_instruct(
@@ -736,12 +768,7 @@ def handle_hypnosis_blockhead():
 )
 def handle_hypnosis_active_h():
     """处理体控-逆推"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ACTIVE_H
-    character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ACTIVE_H
-    character_data.behavior.duration = 10
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ACTIVE_H)
 
 
 @add_instruct(
@@ -762,11 +789,7 @@ def handle_hypnosis_roleplay():
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.hypnosis.roleplay != 0:
-        character.init_character_behavior_start_time(0, cache.game_time)
-        character_data.behavior.behavior_id = constant.Behavior.HYPNOSIS_ROLEPLAY
-        character_data.state = constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY)
 
 
 @add_instruct(
@@ -781,12 +804,7 @@ def handle_hypnosis_roleplay():
 )
 def handle_penetrating_vision_on():
     """处理开启透视"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_ON
-    character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_ON
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PENETRATING_VISION_ON)
 
 
 @add_instruct(
@@ -800,12 +818,7 @@ def handle_penetrating_vision_on():
 )
 def handle_penetrating_vision_off():
     """处理关闭透视"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.PENETRATING_VISION_OFF
-    character_data.state = constant.CharacterStatus.STATUS_PENETRATING_VISION_OFF
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PENETRATING_VISION_OFF)
 
 
 @add_instruct(
@@ -819,12 +832,7 @@ def handle_penetrating_vision_off():
 )
 def handle_hormone_on():
     """处理开启信息素"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HORMONE_ON
-    character_data.state = constant.CharacterStatus.STATUS_HORMONE_ON
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HORMONE_ON)
 
 
 @add_instruct(
@@ -838,12 +846,7 @@ def handle_hormone_on():
 )
 def handle_hormone_off():
     """处理关闭信息素"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.HORMONE_OFF
-    character_data.state = constant.CharacterStatus.STATUS_HORMONE_OFF
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HORMONE_OFF)
 
 
 @add_instruct(
@@ -869,45 +872,7 @@ def handle_sleep():
 )
 def handle_take_shower():
     """处理淋浴指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 15
-    character_data.behavior.behavior_id = constant.Behavior.TAKE_SHOWER
-    character_data.state = constant.CharacterStatus.STATUS_TAKE_SHOWER
-    update.game_update_flow(15)
-
-
-# @add_instruct(
-#     constant.Instruct.DRINK_SPRING, constant.InstructType.DAILY, _("喝泉水"), {constant_promise.Premise.IN_FOUNTAIN}
-# )
-# def handle_drink_spring():
-#     """处理喝泉水指令"""
-#     value = random.randint(0, 100)
-#     now_draw = draw.WaitDraw()
-#     now_draw.width = width
-#     now_draw.text = "\n"
-#     character_data: game_type.Character = cache.character_data[0]
-#     if value <= 5 and not character_data.sex:
-#         now_draw.text += _("喝到了奇怪的泉水！身体变化了！！！")
-#         character_data.sex = 1
-#         character_data.height = attr_calculation.get_height(1, character_data.age)
-#         bmi = attr_calculation.get_bmi(character_data.weight_tem)
-#         character_data.weight = attr_calculation.get_weight(bmi, character_data.height.now_height)
-#         character_data.bodyfat = attr_calculation.get_body_fat(
-#             character_data.sex, character_data.bodyfat_tem
-#         )
-#         character_data.measurements = attr_calculation.get_measurements(
-#             character_data.sex,
-#             character_data.height.now_height,
-#             character_data.weight,
-#             character_data.bodyfat,
-#             character_data.bodyfat_tem,
-#         )
-#     else:
-#         now_draw.text += _("喝到了甜甜的泉水～")
-#         character_data.status[28] = 0
-#     now_draw.text += "\n"
-#     now_draw.draw()
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TAKE_SHOWER)
 
 
 @add_instruct(
@@ -1731,8 +1696,6 @@ def handle_do_h():
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
 
-        instruct_filter_H_change(True)
-
     else:
         character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
         character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
@@ -1825,7 +1788,6 @@ def handle_unconscious_h():
     now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
 
-    instruct_filter_H_change(True)
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
@@ -1849,7 +1811,6 @@ def handle_end_h():
     if character_data.behavior.behavior_id not in special_end_list:
         # 无意识H下
         if target_data.sp_flag.unconscious_h > 0:
-            target_data.sp_flag.unconscious_h = 0
             character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
             character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
         else:
@@ -1858,8 +1819,6 @@ def handle_end_h():
             # 如果是非监禁对象，则进入跟随
             if not target_data.sp_flag.imprisonment:
                 target_data.sp_flag.is_follow = 1
-
-    instruct_filter_H_change(False)
 
     # H结束时的其他处理
     if target_data.sp_flag.is_h == 1:
@@ -2122,13 +2081,7 @@ def handle_play_arcade_game():
 )
 def handle_swimming():
     """处理游泳指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.SWIMMING
-    character_data.state = constant.CharacterStatus.STATUS_SWIMMING
-    update.game_update_flow(60)
-
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SWIMMING)
 
 @add_instruct(
     constant.Instruct.TASTE_WINE,

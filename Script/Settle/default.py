@@ -2051,6 +2051,42 @@ def handle_target_to_player(
     character_data.target_character_id = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OPEN_INSTRUCT_FILTER_H)
+def handle_open_instruct_filter_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启H面板过滤器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    handle_instruct.instruct_filter_H_change(True)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLOSE_INSTRUCT_FILTER_H)
+def handle_close_instruct_filter_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭H面板过滤器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    handle_instruct.instruct_filter_H_change(False)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
 def handle_not_tired(
         character_id: int,

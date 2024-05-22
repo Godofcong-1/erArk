@@ -716,6 +716,8 @@ class Status:
     """ 状态id """
     name: str
     """ 描述 """
+    duration: int
+    """ 耗时 """
     tag: str
     """ 标签 """
 

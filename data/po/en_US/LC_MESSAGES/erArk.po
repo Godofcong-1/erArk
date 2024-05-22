@@ -7640,7 +7640,7 @@ msgstr "Taking clothes to closet"
 msgid "衣柜衣服穿回身上"
 msgstr "Wearing clothes from closet"
 
-msgid "准备游泳"
+msgid "脱掉衣服并换上泳衣"
 msgstr "Preparing to swim"
 
 msgid "脱鞋袜"

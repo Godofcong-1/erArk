@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise
+from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel, originium_arts
@@ -53,9 +53,15 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             # print(f"debug handle_settle_behavior event_id = {event_id}")
             event_data: game_type.Event = game_config.config_event[event_id]
             for effect in event_data.effect:
-                constant.settle_behavior_effect_data[int(effect)](
-                    character_id, add_time, change_data, now_time
-                )
+                # 综合指令状态结算判定
+                if "CSE" in effect:
+                    effect_all_value_list = effect.split("_")[1:]
+                    handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
+                # 其他正常口上判定
+                else:
+                    constant.settle_behavior_effect_data[int(effect)](
+                        character_id, add_time, change_data, now_time
+                    )
 
         # 子事件
         son_event_id = now_character_data.event.son_event_id
@@ -64,9 +70,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             # print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
             event_data: game_type.Event = game_config.config_event[son_event_id]
             for effect in event_data.effect:
-                constant.settle_behavior_effect_data[int(effect)](
-                    character_id, add_time, change_data, now_time
-                )
+                if "CSE" in effect:
+                    effect_all_value_list = effect.split("_")[1:]
+                    handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
+                else:
+                    constant.settle_behavior_effect_data[int(effect)](
+                        character_id, add_time, change_data, now_time
+                    )
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)

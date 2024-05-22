@@ -9,6 +9,10 @@ class BehaviorEffect:
     """ 系统状态 开启子选项面板 """
     TARGET_TO_PLAYER = 10002
     """ 系统状态 交互对象设为对玩家交互 """
+    OPEN_INSTRUCT_FILTER_H = 10003
+    """ 系统状态 开启H面板过滤器 """
+    CLOSE_INSTRUCT_FILTER_H = 10004
+    """ 系统状态 关闭H面板过滤器 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """

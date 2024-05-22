@@ -360,7 +360,6 @@ def judge_character_tired_sleep(character_id : int):
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
                     pl_character_data.behavior.duration = 5
-                    handle_instruct.instruct_filter_H_change(False)
                     update.game_update_flow(5)
 
                 # 新：交给指令里的end_h结算(旧：数据结算)
@@ -374,7 +373,6 @@ def judge_character_tired_sleep(character_id : int):
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
             target_data.sp_flag.is_h = False
-            handle_instruct.instruct_filter_H_change(False)
             update.game_update_flow(5)
 
 
