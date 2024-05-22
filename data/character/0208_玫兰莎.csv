@@ -3,7 +3,7 @@ key,type,value,get_text,info
 AdvNpc,int,208,0,干员编号：208
 Name,str,玫兰莎,1,姓名：玫兰莎
 Sex,int,1,0,性别：女
-Profession,int,4,0,职业：术师
+Profession,int,5,0,职业：近卫
 Race,int,13,0,种族：菲林
 Nation,int,6,0,势力：行动预备组A4
 Birthplace,int,13,0,出生地：维多利亚
