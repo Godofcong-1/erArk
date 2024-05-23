@@ -11437,7 +11437,7 @@ def handle_last_cmd_sex(character_id: int) -> int:
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
         str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
         str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
-        str(constant.Instruct.WOMB_INSERTION)
+        str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_OS_CARESS)
     }
 
     for i in range(len_input):
@@ -11460,7 +11460,7 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
     sex = {
-        str(constant.Instruct.WOMB_OS_CARESS), str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_SEX)
+        str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_SEX)
     }
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
