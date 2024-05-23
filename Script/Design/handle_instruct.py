@@ -93,6 +93,7 @@ def instruct_filter_H_change(on_off_flag: bool):
 def chara_handle_instruct_common_settle(
         state_id: int,
         character_id: int = 0,
+        target_character_id: int = 0,
         behevior_id: int = 0,
         duration: int = 0,
         game_update_flag: bool = False,
@@ -102,11 +103,11 @@ def chara_handle_instruct_common_settle(
     Keyword arguments:\n
     state_id -- 状态id\n
     character_id -- 角色id，默认=0时为玩家指令\n
+    target_character_id -- 指定目标角色id，默认=0时没有指定目标角色\n
     behevior_id -- 行动id，默认=0时为同状态id\n
     duration -- 行动持续时间，默认=0时进行查表获得\n
     """
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
-    character_id = 0
     character.init_character_behavior_start_time(character_id, cache.game_time)
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.state = state_id
@@ -121,6 +122,9 @@ def chara_handle_instruct_common_settle(
         if duration <= 0:
             duration = 1
     character_data.behavior.duration = duration
+    # 如果有指定目标角色id，则设置目标角色id
+    if target_character_id != 0:
+        character_data.target_character_id = target_character_id
     # 仅在玩家指令时更新游戏流程
     if character_id == 0 or game_update_flag:
         update.game_update_flow(duration)
@@ -144,24 +148,27 @@ def handle_comprehensive_state_effect(
     """
     if not add_time:
         return
-    print(f"debug effect_all_value_list:{effect_all_value_list}")
-    character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"debug effect_all_value_list:{effect_all_value_list}")
+    character_data: game_type.Character = cache.character_data[0]
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
     if effect_all_value_list[0] == "A1":
-        final_character_id = character_id
+        target_character_id = 0
     elif effect_all_value_list[0] == "A2":
+        # 如果是NPC触发且该NPC不是玩家当前的交互对象，则将其设为交互对象
+        if character_id != 0 and character_id != character_data.target_character_id:
+            character_data.target_character_id = character_id
         # 如果没有交互对象，则返回0
-        if character_data.target_character_id == character_id:
+        if character_data.target_character_id == 0:
             return 0
-        final_character_id = character_data.target_character_id
+        target_character_id = character_data.target_character_id
     elif effect_all_value_list[0][:2] == "A3":
-        final_character_id = int(effect_all_value_list[0][3:])
+        target_character_id = int(effect_all_value_list[0][3:])
         # 如果还没拥有该角色，则返回0
-        if final_character_id not in cache.npc_id_got:
+        if target_character_id not in cache.npc_id_got:
             return 0
 
     status_id = int(effect_all_value_list[1])
-    chara_handle_instruct_common_settle(status_id, final_character_id, game_update_flag = True)
+    chara_handle_instruct_common_settle(status_id, target_character_id = target_character_id, game_update_flag = True)
 
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),

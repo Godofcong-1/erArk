@@ -128,13 +128,18 @@ class CSEMenu(QDialog):
         self.resize(1000,50)
 
         # 一段说明文字，用来介绍各个功能，位置在最上面的第一行
-        self.cvp_text = QLabel("用于实现指令状态方面的综合型万用结算")
+        self.cvp_text = QLabel("用于实现指令状态方面的综合型万用结算，目前仅支持触发玩家的指令")
         self.cvp_text.setFont(self.font)
         self.layout.addWidget(self.cvp_text)
 
+        self.text_label = QLabel("玩家对")
+        self.text_label.setFont(self.font)
+        self.ABCD_button_layout.addWidget(self.text_label)
+
         # A数值为对象，仅在"角色id为"时出现a2文本框
         self.cvp_a = QComboBox()
-        self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
+        # self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
+        self.cvp_a.addItems(["自己", "交互对象"])
         self.cvp_a.setCurrentIndex(0)
         self.cvp_a.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_a)
