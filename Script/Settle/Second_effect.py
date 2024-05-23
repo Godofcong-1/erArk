@@ -529,7 +529,7 @@ def handle_down_small_hit_point(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    sub_hit = 20
+    sub_hit = 10
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -565,7 +565,7 @@ def handle_down_small_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 40
+    sub_mana = 20
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
