@@ -475,7 +475,9 @@ def check_second_effect(
     pl_to_npc -- 玩家对NPC的行为结算
     """
     # print("进入第二结算")
+    orgasm_list = [i for i in range(1000, 1024)]
     mark_list = [i for i in range(1030, 1048)]
+    item_list = [i for i in range(1100, 1199)]
 
     # 玩家检测自己
     if character_id == 0:
@@ -500,10 +502,12 @@ def check_second_effect(
         judge_character_first_meet(character_id)
         # 阴茎位置结算
         insert_position_effect(character_id)
-        # 高潮结算
-        orgasm_effect(character_id)
         # 道具结算
         item_effect(character_id, pl_to_npc)
+        # 单独遍历道具
+        second_behavior_effect(character_id, change_data, item_list)
+        # 高潮结算
+        orgasm_effect(character_id)
         # 素质结算
 
         # 进行结算
@@ -525,6 +529,7 @@ def second_behavior_effect(
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
+    second_behavior_list -- 仅计算该范围内的二段行为id列表，默认为None
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
