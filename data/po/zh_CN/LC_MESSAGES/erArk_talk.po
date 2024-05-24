@@ -10149,27 +10149,27 @@ msgid "“哈哈哈~男主这也太可乐了~唔嗯？”\n\n{TargetName}正在�
 msgstr ""
 
 #: .\data\talk\daily\apologize.csv:6
-msgid "{Name}的道歉失败了"
-msgstr ""
-
-#: .\data\talk\daily\apologize.csv:7
-msgid "{Name}表达了对{TargetName}的歉意，但对方没有接受"
-msgstr ""
-
-#: .\data\talk\daily\apologize.csv:8
-msgid "{Name}向{TargetName}道歉了，但对方依旧很生气"
-msgstr ""
-
-#: .\data\talk\daily\apologize_failed.csv:6
 msgid "{Name}双手合十希望得到原谅"
 msgstr ""
 
-#: .\data\talk\daily\apologize_failed.csv:7
+#: .\data\talk\daily\apologize.csv:7
 msgid "{Name}表达了对{TargetName}的歉意"
 msgstr ""
 
-#: .\data\talk\daily\apologize_failed.csv:8
+#: .\data\talk\daily\apologize.csv:8
 msgid "{Name}向{TargetName}的道歉得到了原谅，不过下一次恐怕不会这么轻松了。"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:6
+msgid "{Name}的道歉失败了"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:7
+msgid "{Name}表达了对{TargetName}的歉意，但对方没有接受"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:8
+msgid "{Name}向{TargetName}道歉了，但对方依旧很生气"
 msgstr ""
 
 #: .\data\talk\daily\ask_date.csv:6
