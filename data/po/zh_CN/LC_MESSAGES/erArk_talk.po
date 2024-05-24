@@ -14689,7 +14689,7 @@ msgid "{Name}触发了二穴插入指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\do_h_fail.csv:6
-msgid "{Name}触发了邀请H失败指令的地文"
+msgid "{Name}触发了H失败指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\electric_message_stick.csv:6

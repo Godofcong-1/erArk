@@ -1800,6 +1800,23 @@ def handle_unconscious_h():
 
 
 @add_instruct(
+    constant.Instruct.WAIT_5_MIN_IN_H,
+    constant.InstructType.SEX,
+    _("等待五分钟"),
+    {constant_promise.Premise.IS_H,
+     constant_promise.Premise.T_ACTION_SLEEP,},
+)
+def handle_wait_5_min_in_h():
+    """处理等待五分钟指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
     constant.Instruct.END_H,
     constant.InstructType.SEX,
     _("H结束"),

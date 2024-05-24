@@ -23,7 +23,7 @@ ai的目标,,,,
 33,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态
 34,78,normal_1267|sleep_time|not_shower_time|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，自己的助理属性中的问候服务不影响AI行动的情况，则进入要睡觉状态
 35,502,sleep_flag_1|not_in_dor,12,要睡觉状态下，不在宿舍，则回宿舍
-36,44,sleep_flag_1|in_dor,12,要睡觉状态下，且已在宿舍，则睡觉
+36,44,sleep_flag_1|sleep_h_awake_0|in_dor,12,要睡觉状态下，没有睡奸中醒来状态，且已在宿舍，则睡觉
 37,44,tired_100,0,疲劳值到100%，当场直接爆睡
 
 41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态

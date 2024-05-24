@@ -519,6 +519,10 @@ t_aromatherapy_flag_3,T_AROMATHERAPY_FLAG_3,属性_特殊flag,交互对象香薰
 t_aromatherapy_flag_4,T_AROMATHERAPY_FLAG_4,属性_特殊flag,交互对象香薰疗愈-快感
 t_aromatherapy_flag_5,T_AROMATHERAPY_FLAG_5,属性_特殊flag,交互对象香薰疗愈-好感
 t_aromatherapy_flag_6,T_AROMATHERAPY_FLAG_6,属性_特殊flag,交互对象香薰疗愈-催眠
+sleep_h_awake_0,SLEEP_H_AWAKE_0,属性_特殊flag,自身没有睡奸中醒来状态
+sleep_h_awake_1,SLEEP_H_AWAKE_1,属性_特殊flag,自身睡奸中醒来状态
+t_sleep_h_awake_0,TARGET_SLEEP_H_AWAKE_0,属性_特殊flag,交互对象没有睡奸中醒来状态
+t_sleep_h_awake_1,TARGET_SLEEP_H_AWAKE_1,属性_特殊flag,交互对象睡奸中醒来状态
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
@@ -947,6 +951,7 @@ wear_pan,WEAR_PAN,属性_服装,穿着内裤
 t_wear_pan,TARGET_WEAR_PAN,属性_服装,交互对象穿着内裤
 t_not_wear_pan,TARGET_NOT_WEAR_PAN,属性_服装,交互对象没有穿着内裤
 wear_socks,WEAR_SOCKS,属性_服装,穿着袜子
+not_wear_shoes,NOT_WEAR_SHOES,属性_服装,没有穿着鞋子
 t_wear_socks,TARGET_WEAR_SOCKS,属性_服装,交互对象穿着袜子
 t_not_wear_socks,TARGET_NOT_WEAR_SOCKS,属性_服装,交互对象没有穿着袜子
 t_not_wear_shoes,TARGET_NOT_WEAR_SHOES,属性_服装,交互对象没有穿着鞋子

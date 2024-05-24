@@ -1966,6 +1966,8 @@ class Instruct:
     """ 戴上项圈 """
 
     #性爱#
+    WAIT_5_MIN_IN_H = 0
+    """ 等待五分钟(H中) """
     END_H = 0
     """ H结束 """
     MAKING_OUT = 0

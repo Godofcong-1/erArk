@@ -5806,6 +5806,67 @@ def handle_t_aromatherapy_flag_6(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SLEEP_H_AWAKE_0)
+def handle_sleep_h_awake_0(character_id: int) -> int:
+    """
+    自身没有睡奸中醒来状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.sp_flag.sleep_h_awake == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_H_AWAKE_1)
+def handle_sleep_h_awake_1(character_id: int) -> int:
+    """
+    自身睡奸中醒来状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_sleep_h_awake_0(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_H_AWAKE_0)
+def handle_t_sleep_h_awake_0(character_id: int) -> int:
+    """
+    交互对象没有睡奸中醒来状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_sleep_h_awake_0(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_H_AWAKE_1)
+def handle_t_sleep_h_awake_1(character_id: int) -> int:
+    """
+    交互对象睡奸中醒来状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_sleep_h_awake_0(target_chara_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HP_LOW)
 def handle_hp_low(character_id: int) -> int:
     """

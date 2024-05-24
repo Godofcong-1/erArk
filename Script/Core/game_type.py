@@ -510,6 +510,8 @@ class SPECIAL_FLAG:
         """ 在H模式中 """
         self.unconscious_h: int = 0
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
+        self.sleep_h_awake: bool = 0
+        """ 睡奸中醒来 """
         self.wait_flag: bool = 0
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0

@@ -786,8 +786,11 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
 
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
+        # 睡奸时例外
+        if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+            return 1
         character_data.behavior.behavior_id = constant.Behavior.WAIT
-        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.start_time = pl_character_data.behavior.start_time
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
@@ -853,6 +856,8 @@ def update_sleep():
             character_data.hypnosis.blockhead = False
             character_data.hypnosis.active_h = False
             character_data.hypnosis.roleplay = 0
+            # 清零睡奸中醒来状态
+            character_data.sp_flag.sleep_h_awake = 0
 
 
     # 非角色部分
@@ -976,7 +981,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             now_character_data.sleep_point += add_sleep
         # 熟睡值到熟睡后上下波动，加的可能性比减的可能性大一点点
         else:
-            add_sleep = random.randint(int(true_add_time * -0.5),int(true_add_time * 0.6))
+            add_sleep = random.randint(int(true_add_time * -0.3),int(true_add_time * 0.6))
             now_character_data.sleep_point += add_sleep
         # 最高上限100
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
@@ -1050,13 +1055,19 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:
             # 睡奸判定
-            if target_data.state == constant.CharacterStatus.STATUS_SLEEP and now_character_data.behavior.behavior_id >= 301:
-                # 双倍扣除原本会增加的熟睡值
-                down_sleep = int(true_add_time * 3)
-                target_data.sleep_point -= down_sleep
-                # 计算当前熟睡等级
-                sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
-                # print(f"debug {target_data.name}熟睡值={target_data.sleep_point}，熟睡等级{sleep_level}")
+            if target_data.state == constant.CharacterStatus.STATUS_SLEEP and target_data.sp_flag.unconscious_h == 1:
+                # 如果是等待指令则无事发生
+                if now_character_data.state == constant.CharacterStatus.STATUS_WAIT:
+                    # 赋值为2来规避吵醒判定
+                    sleep_level = 2
+                # 如果是其他行动则判定是否吵醒
+                else:
+                    # 双倍扣除原本会增加的熟睡值
+                    down_sleep = int(true_add_time * 3)
+                    target_data.sleep_point -= down_sleep
+                    # 计算当前熟睡等级
+                    sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
+                    # print(f"debug {target_data.name}熟睡值={target_data.sleep_point}，熟睡等级{sleep_level}")
                 # 熟睡等级小于等于1时判定是否吵醒
                 if sleep_level <= 1:
                     # 浅睡和半梦半醒时递增苏醒概率
@@ -1072,13 +1083,19 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         now_draw.width = window_width
                         now_draw.text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
                         now_draw.draw()
-                        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-                        now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-                        now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                        # 终止对方的睡眠
+                        judge_character_status_time_over(now_character_data.target_character_id, cache.game_time, end_now = 2)
+                        # 停止对方的无意识状态与H状态
+                        target_data.sp_flag.unconscious_h = 0
+                        target_data.sp_flag.is_h = False
+                        # 对方获得睡奸醒来状态
+                        target_data.sp_flag.sleep_h_awake = True
+                        # 玩家的行动设为H失败
+                        now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+                        now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
                         now_character_data.behavior.duration = 10
-                        judge_character_status(character_id)
                         # TODO 测试惊醒是否正常运作，是否需要时间推进十分钟
-                        # update.game_update_flow(10)
+                        update.game_update_flow(10)
 
     # 结算非玩家部分
     else:
