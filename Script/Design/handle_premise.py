@@ -14433,6 +14433,22 @@ def handle_wear_socks(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.NOT_WEAR_SHOES)
+def handle_not_wear_shoes(character_id: int) -> int:
+    """
+    没有穿着鞋子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth.cloth_wear[11]):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.TARGET_WEAR_SOCKS)
 def handle_t_wear_socks(character_id: int) -> int:
     """

@@ -1885,6 +1885,8 @@ class Premise:
     """ 属性_服装 交互对象没有穿着内裤 """
     WEAR_SOCKS = "wear_socks"
     """ 属性_服装 穿着袜子 """
+    NOT_WEAR_SHOES = "not_wear_shoes"
+    """ 属性_服装 没有穿着鞋子 """
     TARGET_WEAR_SOCKS = "t_wear_socks"
     """ 属性_服装 交互对象穿着袜子 """
     TARGET_NOT_WEAR_SOCKS = "t_not_wear_socks"

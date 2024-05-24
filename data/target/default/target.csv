@@ -16,7 +16,7 @@ ai的目标,,,,
 10,501,normal_123467,1,123467正常（可能意识模糊），则闲逛
 11,502,normal_123467,1,123467正常（可能意识模糊），则回宿舍
 12,571,normal_123467,1,123467正常（可能意识模糊），则移动至博士办公室
-13,504,normal_1267|move_not_finish,0,1267正常（可能AI跟随、服装异常或意识模糊），如果角色移动未完成(权重为10)，则继续移动
+13,504,normal_123467|move_not_finish,0,1267正常（可能意识模糊），如果角色移动未完成(权重为10)，则继续移动
 
 31,78,normal_1267|hp_1,11,1267正常（可能AI跟随、服装异常或意识模糊），hp1时，则进入要睡觉状态
 32,78,normal_1267|tired_ge_85|tired_l_100,11,1267正常（可能AI跟随、服装异常或意识模糊），疲劳值到85%且不到100%时，则进入要睡觉状态
@@ -188,9 +188,10 @@ ai的目标,,,,
 480,425,normal_all_except_special_hypnosis|all_entertainment_time|bathhouse_entertainment_flag_2|in_spa_room|entertainment_is_hydrotherapy_treatment,32,正常状态下或被空气或体控催眠中，全娱乐时间，要去大浴场娱乐_要娱乐状态，在水疗房中，自己的娱乐为水疗护理，则水疗护理
 481,605,normal_all|all_entertainment_time|bathhouse_entertainment_flag_2|not_in_onsen|entertainment_is_onsen_bath,31,正常状态下，全娱乐时间，要去大浴场娱乐_要娱乐状态，不在温泉中，自己的娱乐为泡温泉，则移动至温泉
 482,426,normal_all_except_special_hypnosis|all_entertainment_time|bathhouse_entertainment_flag_2|in_onsen|entertainment_is_onsen_bath,32,正常状态下或被空气或体控催眠中，全娱乐时间，要去大浴场娱乐_要娱乐状态，在温泉中，自己的娱乐为泡温泉，则泡温泉
-483,601,bathhouse_entertainment_flag_2|not_all_entertainment_time|not_in_bathzone_locker_room,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前不在浴场更衣室，则去浴场更衣室
-484,81,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_soak_feet,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为泡脚，则穿回鞋袜并将flag置0
-485,88,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_bathhouse_shower_cloth_type,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为大浴场类_需要换浴衣的娱乐，则清空身上的衣服然后穿回衣柜的衣服并将flag置0
+483,601,bathhouse_entertainment_flag_2|not_all_entertainment_time|shower_cloth|not_in_bathzone_locker_room,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，自己围着浴巾，当前不在浴场更衣室，则去浴场更衣室
+484,601,bathhouse_entertainment_flag_2|not_all_entertainment_time|not_wear_shoes|not_in_bathzone_locker_room|entertainment_is_soak_feet,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，没有穿鞋，当前不在浴场更衣室，自己的娱乐为泡脚，则去浴场更衣室
+485,81,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_soak_feet,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为泡脚，则穿回鞋袜并将flag置0
+486,88,bathhouse_entertainment_flag_2|not_all_entertainment_time|in_bathzone_locker_room|entertainment_is_bathhouse_shower_cloth_type,33,要去大浴场娱乐_要娱乐状态，当前不是娱乐时间，当前在浴场更衣室，自己的娱乐为大浴场类_需要换浴衣的娱乐，则清空身上的衣服然后穿回衣柜的衣服并将flag置0
 
 501,571,normal_124567|assistant_help_work_1|not_follow|to_work_time|not_in_dr_off,43,124567正常（可能AI跟随），开启了助理辅佐服务，没有在跟随，在到岗时间，如果不在博士办公室，则去博士办公室
 502,571,normal_124567|assistant_help_work_1|not_follow|work_time|not_in_dr_off,43,124567正常（可能AI跟随），开启了助理辅佐服务，没有在跟随，在工作时间，如果不在博士办公室，则去博士办公室
