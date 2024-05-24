@@ -85,7 +85,7 @@ def instruct_filter_H_change(on_off_flag: bool):
         for i in {1, 2, 3, 4, 5}:
             cache.instruct_type_filter[i] = 0
         # print(f"debug 开启H面板，关闭其他面板")
-    else:
+    elif len(cache.instruct_type_filter_cache):
         cache.instruct_type_filter = cache.instruct_type_filter_cache.copy()
         # print(f"debug 关闭H面板，恢复其他面板")
 
