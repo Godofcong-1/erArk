@@ -6,7 +6,7 @@ from Script.Config import game_config
 
 
 # 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件,6前提文件转在线表格,7行为文件转status
-mode = 2
+mode = 4
 command_str = "lactation_1"
 capital_command = command_str.upper()
 dataname = "泌乳"
@@ -196,6 +196,9 @@ def constand_effect_2_csv():
     out_str = "cid,effect_name,effect_type,effect\n"
 
     for line in a:
+        # 到二段结算则跳出
+        if "二段结算" in line:
+            break
         if len(line) >= 3 and "#" not in line:
             if line[-3] == "\"" and " " in line:
                 effect_text = line.split("\"")[-4].strip().split(" ")

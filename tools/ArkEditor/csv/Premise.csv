@@ -1132,6 +1132,12 @@ action_sleep,ACTION_SLEEP,行动,自己正在睡觉
 action_not_sleep,ACTION_NOT_SLEEP,行动,自己没有在睡觉
 t_action_sleep,T_ACTION_SLEEP,行动,交互对象正在睡觉
 t_action_not_sleep,T_ACTION_NOT_SLEEP,行动,交互对象没有在睡觉
+action_move,ACTION_MOVE,行动,自己正在移动
+action_not_move,ACTION_NOT_MOVE,行动,自己没有在移动
+pl_action_move,PL_ACTION_MOVE,行动,玩家正在移动
+pl_action_not_move,PL_ACTION_NOT_MOVE,行动,玩家没有在移动
+t_action_move,T_ACTION_MOVE,行动,交互对象正在移动
+t_action_not_move,T_ACTION_NOT_MOVE,行动,交互对象没有在移动
 action_work_or_entertainment,ACTION_WORK_OR_ENTERTAINMENT,行动,自己正在工作或娱乐
 pl_action_food_normal,PL_ACTION_FOOD_NORMAL,行动,食物调味_正常
 pl_action_food_sour,PL_ACTION_FOOD_SOUR,行动,食物调味_酸

@@ -13,6 +13,8 @@ class BehaviorEffect:
     """ 系统状态 开启H面板过滤器 """
     CLOSE_INSTRUCT_FILTER_H = 10004
     """ 系统状态 关闭H面板过滤器 """
+    PL_TARGET_TO_ME = 10005
+    """ 系统状态 将玩家的交互对象设为自己 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -62,6 +64,10 @@ class BehaviorEffect:
     """ 属性_基础 交互对象增加少量尿意值 """
     TARGET_DESIRE_POINT_ZERO = 40
     """ 属性_基础 交互对象欲望值归零 """
+    DESIRE_POINT_TO_79 = 1501
+    """ 属性_基础 自己欲望值调为79 """
+    TARGET_DESIRE_POINT_TO_79 = 1502
+    """ 属性_基础 交互对象欲望值调为79 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """

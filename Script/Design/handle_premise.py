@@ -18387,6 +18387,93 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.ACTION_MOVE)
+def handle_action_move(character_id: int) -> int:
+    """
+    自己正在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ACTION_NOT_MOVE)
+def handle_action_not_move(character_id: int) -> int:
+    """
+    自己没有在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_action_move(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_MOVE)
+def handle_pl_action_move(character_id: int) -> int:
+    """
+    玩家正在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_action_move(0):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_ACTION_NOT_MOVE)
+def handle_pl_action_not_move(character_id: int) -> int:
+    """
+    玩家没有在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_action_move(0):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.T_ACTION_MOVE)
+def handle_t_action_move(character_id: int) -> int:
+    """
+    交互对象正在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_action_move(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_ACTION_NOT_MOVE)
+def handle_t_action_not_move(character_id: int) -> int:
+    """
+    交互对象没有在移动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_action_move(character_data.target_character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.ACTION_WORK_OR_ENTERTAINMENT)
 def handle_action_work_or_entertainment(character_id: int) -> int:
     """

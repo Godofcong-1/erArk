@@ -5,6 +5,9 @@ cid,effect_name,effect_type,effect
 10000,INTERRUPT_TARGET_ACTIVITY,系统状态,打断交互对象活动
 10001,OPTION_FATER,系统状态,开启子选项面板
 10002,TARGET_TO_PLAYER,系统状态,交互对象设为对玩家交互
+10003,OPEN_INSTRUCT_FILTER_H,系统状态,开启H面板过滤器
+10004,CLOSE_INSTRUCT_FILTER_H,系统状态,关闭H面板过滤器
+10005,PL_TARGET_TO_ME,系统状态,将玩家的交互对象设为自己
 
 0,ADD_SMALL_HIT_POINT,属性_基础,增加少量体力
 1,ADD_SMALL_MANA_POINT,属性_基础,增加少量气力
@@ -30,6 +33,8 @@ cid,effect_name,effect_type,effect
 38,ADD_SMALL_URINATE_POINT,属性_基础,自己增加少量尿意值
 39,TARGET_ADD_SMALL_URINATE_POINT,属性_基础,交互对象增加少量尿意值
 40,TARGET_DESIRE_POINT_ZERO,属性_基础,交互对象欲望值归零
+1501,DESIRE_POINT_TO_79,属性_基础,自己欲望值调为79
+1502,TARGET_DESIRE_POINT_TO_79,属性_基础,交互对象欲望值调为79
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
@@ -369,3 +374,4 @@ cid,effect_name,effect_type,effect
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
 1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
 1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H
+
