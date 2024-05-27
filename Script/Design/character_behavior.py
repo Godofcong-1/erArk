@@ -503,7 +503,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior.start_time = now_time
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
-        return 0
+        return 1
     if end_now:
         time_judge = end_now
     if time_judge:
