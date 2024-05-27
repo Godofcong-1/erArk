@@ -861,6 +861,7 @@ def settle_pink_certificate():
 
     # 输出好感度合计与粉红凭证增加
     pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
+    pink_certificate_add = min(pink_certificate_add, 0)
     cache.rhodes_island.materials_resouce[4] += pink_certificate_add
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
