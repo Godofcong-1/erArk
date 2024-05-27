@@ -9616,6 +9616,22 @@ msgstr ""
 msgid "特蕾西娅"
 msgstr ""
 
+#: .\data\character\0056_特蕾西娅.csv:13
+msgid "巴别塔的创立者，特蕾西娅。一段来自过去的回响，承载着通往未来的爱与希望。"
+msgstr ""
+
+#: .\data\character\0056_特蕾西娅.csv:14
+msgid "特蕾西娅，卡兹戴尔移动城市的建立者，卡兹戴尔军事委员会创始人之一，巴别塔组织的创立者，曾是卡兹戴尔的最高领袖。执政期间，她致力于推进医疗、教育、城市基础建设等事业，多次带领萨卡兹击退了外敌的入侵，并且在外交工作中颇有建树。"
+msgstr ""
+
+#: .\data\character\0056_特蕾西娅.csv:15
+msgid "#FBCED7"
+msgstr ""
+
+#: .\data\character\0056_特蕾西娅.csv:40
+msgid "文明的存续"
+msgstr ""
+
 #: .\data\character\0078_塔露拉.csv:4
 msgid "塔露拉"
 msgstr ""
