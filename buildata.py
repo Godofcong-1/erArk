@@ -6,7 +6,7 @@ from Script.Config import game_config
 
 
 # 1单条前提生成到三个文件里,2前提文件转csv,3csv转前提文件,4结算文件转csv,5csv转结算文件,6前提文件转在线表格,7行为文件转status
-mode = 4
+mode = 2
 command_str = "lactation_1"
 capital_command = command_str.upper()
 dataname = "泌乳"

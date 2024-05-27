@@ -243,6 +243,8 @@ in_greenhouse,IN_GREENHOUSE,地点_定位,在温室
 not_in_greenhouse,NOT_IN_GREENHOUSE,地点_定位,不在温室
 in_Aromatherapy_room,IN_AROMATHERAPY_ROOM,地点_定位,在香薰治疗室
 not_in_aromatherapy_room,NOT_IN_AROMATHERAPY_ROOM,地点_定位,不在香薰治疗室
+in_breeding_farm,IN_BREEDING_FARM,地点_定位,在磐蟹养殖场
+not_in_breeding_farm,NOT_IN_BREEDING_FARM,地点_定位,不在磐蟹养殖场
 in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
 in_deck,IN_DECK,地点_定位,在甲板
