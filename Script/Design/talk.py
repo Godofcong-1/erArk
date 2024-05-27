@@ -117,6 +117,11 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
                             break
                         else:
                             now_weight += now_premise_data[premise]
+                            # 如果premise的前5个字符是"high_"，则将权重加上对应值，否则权重为1
+                            if premise[:5] == "high_":
+                                now_weight += now_premise_data[premise]
+                            else:
+                                now_weight += 1
                     else:
                         # 综合数值前提判定
                         if "CVP" in premise:
@@ -130,9 +135,10 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
                         if now_add_weight:
                             # 如果premise的前5个字符是"high_"，则将权重加上对应值，否则权重为1
                             if premise[:5] == "high_":
-                                now_weight += now_add_weight
+                                now_add_weight = now_add_weight
                             else:
-                                now_weight = max(now_weight, 1)
+                                now_add_weight = 1
+                            now_weight += now_add_weight
                         else:
                             now_weight = 0
                             break
