@@ -351,9 +351,13 @@ class DataList(QWidget):
         for i in range(self.list_widget.count()):
             # 获取cid
             now_cid = self.list_widget.item(i).uid
+            # 跳过与移动的条目相同的条目
+            if now_cid == need_move_cid:
+                continue
             # 检测是否为当前选中的条目
             if now_cid == current_select_cid:
                 # 将其序号+1然后加入临时数据中
+                # print(f"debug now_cid: {now_cid},type = {type(now_cid)}")
                 cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
                 cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
                 # 删除原始数据中的当前选中的条目
@@ -387,6 +391,9 @@ class DataList(QWidget):
         for i in range(self.list_widget.count()):
             # 获取cid
             now_cid = self.list_widget.item(i).uid
+            # 跳过与移动的条目相同的条目
+            if now_cid == need_move_cid:
+                continue
             # 检测是否为当前选中的条目
             if now_cid == current_select_cid:
                 # 将其序号+1然后加入临时数据中
