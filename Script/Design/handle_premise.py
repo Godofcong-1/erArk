@@ -15665,6 +15665,35 @@ def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ASSISTANT_LIVE_TOGETHER_ON)
+def handle_assistant_live_together_on(character_id: int) -> int:
+    """
+    自己的助理属性为正在同居
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[7] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASSISTANT_LIVE_TOGETHER_OFF)
+def handle_assistant_live_together_off(character_id: int) -> int:
+    """
+    自己的助理属性为未同居
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_assistant_live_together_on(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.JJ_0)
 def handle_jj_0(character_id: int) -> int:
     """

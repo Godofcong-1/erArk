@@ -850,6 +850,10 @@ class Premise:
     """ 属性_助理 自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间） """
     IN_ASSISTANT_AI_LINK = "in_assistant_ai_link"
     """ 属性_助理 自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候 """
+    ASSISTANT_LIVE_TOGETHER_ON = "assistant_live_together_on"
+    """ 属性_助理 自己的助理属性为正在同居 """
+    ASSISTANT_LIVE_TOGETHER_OFF = "assistant_live_together_off"
+    """ 属性_助理 自己的助理属性为未同居 """
 
     JJ_0 = "jj_0"
     """ 属性_身体部位 自身阴茎大小为短小 """
