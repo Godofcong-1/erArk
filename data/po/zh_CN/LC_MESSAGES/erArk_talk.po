@@ -1005,7 +1005,7 @@ msgid "“其实，我很不擅长应付芙兰卡这样的人。当初是怎么�
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:9
-msgid "“进入BSW必须经过严格的选拔。我很矮小，也没有优秀的法术天赋和血统，所以被大家说是绝对不可能过关的，就连我自己也曾这样认为......”"
+msgid "“进入BSW必须经过严格的选拔。我很矮小，也没有优秀的法术天赋和血统……”\n“所以被大家说是绝对不可能过关的，就连我自己也曾这样认为......”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:10
@@ -1233,7 +1233,7 @@ msgid "“在黑钢也有接触过文职工作，没问题的。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:66
-msgid "我可不会像芙兰卡那么轻松。”\n“只有努力，才能跟上大家。”"
+msgid "“我可不会像芙兰卡那么轻松。”\n“只有努力，才能跟上大家。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:67
@@ -1257,7 +1257,7 @@ msgid "“先吃饭吧，这样才可以专注在工作上。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:72
-msgid "“好了，暂停一下，吃饭了。\n\"不需要我喂你吧？”"
+msgid "“好了，暂停一下，吃饭了。”\n“不需要我喂你吧？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:73
@@ -1269,7 +1269,7 @@ msgid "“{PlayerName}博士，快起床，不然我得把你电击起来咯。�
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:75
-msgid "“起床了，亲爱的。”\n“快点，我们还有很多事情要一起做……”\n“……是想要我用点……”那个“吗？”"
+msgid "“起床了，亲爱的。”\n“快点，我们还有很多事情要一起做……”\n“……是想要我用点……‘那个’吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:76
@@ -1413,7 +1413,7 @@ msgid "雷蛇将她的手放到了{PlayerName}的手中。\n“希望不会出�
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:111
-msgid "{PlayerName}隐约感觉到雷蛇的手抓的越来越紧。\n\"……不好意思。我只是害怕，这一放手就再也握不到了。毕竟……”\n“我们都是站在前线的，随时都有战死的准备。我……不想我们失去彼此。”"
+msgid "{PlayerName}隐约感觉到雷蛇的手抓的越来越紧。\n“……不好意思。我只是害怕，这一放手就再也握不到了。毕竟……”\n“我们都是站在前线的，随时都有战死的准备。我……不想我们失去彼此。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:112
@@ -1437,7 +1437,7 @@ msgid "{PlayerName}想放开的时候，意识到雷蛇没有想松手的意思�
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:117
-msgid "那个，慢着，我还没准备好……”\n雷蛇看着{PlayerName}，深深的吸了一口气。\n“希望我不会后悔把这个交给你。\n雷蛇随后闭上了眼，静静等待着双方唇间的初次接触。"
+msgid "“那个，慢着，我还没准备好……”\n雷蛇看着{PlayerName}，深深的吸了一口气。\n“希望我不会后悔把这个交给你。”\n雷蛇随后闭上了眼，静静等待着双方唇间的初次接触。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:118
@@ -1521,7 +1521,7 @@ msgid "雷蛇看着{PlayerName}的手移动，顿时有点害羞了起来。\n�
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:138
-msgid "雷蛇看着{PlayerName}的手移动，顿时有点害羞了起来。\n“感觉快出来了！快停下！”"
+msgid "雷蛇看着{PlayerName}的手移动，顿时有点害羞了起来。\n“感觉快出来了……快停下！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:139
@@ -1633,246 +1633,646 @@ msgid "雷蛇一点不动的躺着。\n“啊~呃啊~我怎么会……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:170
-msgid "雷蛇整理好自己后，脸红地看着{PlayerName}。\n“如果我里面出了问题，你要负责哦……”"
+msgid "雷蛇整理好自己后，脸红地看着{PlayerName}。\n“让我好好休息一下……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:171
-msgid "雷蛇貌似不知满足地看向{PlayerName}。\n“别小看瓦伊凡的体力啊……”"
+msgid "雷蛇整理好自己后，脸红地看着{PlayerName}。\n“如果我里面出了问题，你要负责哦……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:172
-msgid "“哈~哈~没力气了？”"
+msgid "雷蛇貌似不知满足地看向{PlayerName}。\n“别小看瓦伊凡的体力啊……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:173
-msgid "“跟不上瓦伊凡的节奏了？”"
+msgid "“哈~哈~没力气了？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:174
-msgid "“我不行了……”"
+msgid "“跟不上瓦伊凡的节奏了？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:175
-msgid "“你也挺行的，能把我搞成这样……”"
+msgid "“我不行了……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:176
-msgid "“我就说，被发现了……”"
+msgid "“你也挺行的，能把我搞成这样……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:177
-msgid "“糟糕……真可惜~”"
+msgid "“我就说，被发现了……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:178
-msgid "雷蛇尴尬地看着{PlayerName}。\n“没想到你是这种人……”"
+msgid "“糟糕……真可惜~”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:179
-msgid "雷蛇失望地看着{PlayerName}。\n“你怎么可以这样对我……”"
+msgid "雷蛇尴尬地看着{PlayerName}。\n“没想到你是这种人……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:180
-msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的戒指，瞬间不知道该说什么。\n“抱歉……我还没做好准备。不是现在……对不起。”"
+msgid "雷蛇失望地看着{PlayerName}。\n“你怎么可以这样对我……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:181
-msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的戒指，瞬间不知道该说什么。\n“……你还记得我是名雇佣兵吧？”\n“你确定……这个选择是正确的？把未来交给一个随时都会倒下的人上？”\n看着{PlayerName}点了点头，雷蛇脸上逐渐出现了笑容。\n“谢谢你。我接受你的请求。”"
+msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的戒指，瞬间不知道该说什么。\n“抱歉……我还没做好准备。不是现在……对不起。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:182
-msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的项圈，瞬间不知道该说什么。\n“抱歉，但你还没向我展示你的力量。”"
+msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的戒指，瞬间不知道该说什么。\n“……你还记得我是名雇佣兵吧？”\n“你确定……这个选择是正确的？把未来交给一个随时都会倒下的人上？”\n看着{PlayerName}点了点头，雷蛇脸上逐渐出现了笑容。\n“谢谢你。我接受你的请求。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:183
-msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的项圈，瞬间不知道该说什么。\n“……你还记得我是名雇佣兵吧？”\n“你确定……你做的到？把一个坚强的瓦伊凡变为你的傀儡？”\n看着{PlayerName}点了点头，雷蛇脸上逐渐出现了笑容。\n“那我倒要看看你的本事。我接受你的请求。”"
+msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的项圈，瞬间不知道该说什么。\n“抱歉，但你还没向我展示你的力量。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:184
-msgid "雷蛇直接把{PlayerName}推开了。\n“我不喜欢这样……就算是你也一样……”"
+msgid "“那……那个……”\n雷蛇看着{PlayerName}手中的项圈，瞬间不知道该说什么。\n“……你还记得我是名雇佣兵吧？”\n“你确定……你做的到？把一个坚强的瓦伊凡变为你的傀儡？”\n看着{PlayerName}点了点头，雷蛇脸上逐渐出现了笑容。\n“那我倒要看看你的本事。我接受你的请求。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:185
-msgid "雷蛇直接把{PlayerName}推开了。\n“这里可不是你撒野的地方。”"
+msgid "雷蛇直接把{PlayerName}推开了。\n“我不喜欢这样……就算是你也一样……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:186
-msgid "雷蛇把枪指向了{PlayerName}。\n“我是这里的干员，不是你的玩具。我的工作是守护，不是和你乱来。”"
+msgid "雷蛇直接把{PlayerName}推开了。\n“这里可不是你撒野的地方。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:187
-msgid "“别别别，快停下……”\n雷蛇慌张的看着你，眼里凸显出恐惧。\n“我还没准备好……不行……”\n“拜托，求你了，别……啊啊啊~\"\n随着处血的流出，雷蛇彻底失去了纯洁。\n“……”\n“……”\n"
+msgid "雷蛇把枪指向了{PlayerName}。\n“我是这里的干员，不是你的玩具。我的工作是守护，不是和你乱来。”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:188
-msgid "“怎么身体有点怪怪的……”"
+msgid "“感觉好舒服……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:189
-msgid "“好像要……更多……”"
+msgid "雷蛇看着{PlayerName}从下往上摸着她的身体，呻吟了一声。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:190
-msgid "“别……别停下……”"
-msgstr ""
-
-#: .\data\talk\chara\0107_雷蛇.csv:191
-msgid "“胸部有点怪怪的……”"
+msgid "“希望我的身型能让你满意……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:192
-msgid "“感觉乳汁要喷出来了……”"
+msgid "{PlayerName}朝着雷蛇的嘴唇就亲了上去，丝毫不给她说话的机会。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:193
-msgid "“继续……把我的乳汁全部挤出来！”"
+msgid "“想先来点热身是不是？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:194
-msgid "“下面好痒……”"
+msgid "“哈啊~”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:195
-msgid "“咿呀……！”\n雷蛇不自觉呻吟了一声。"
+msgid "雷蛇看着{PlayerName}揉着自己的胸部，心跳扑通扑通的狂跳着。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:196
-msgid "“继续，别停下……呃啊！”"
+msgid "雷蛇看着{PlayerName}揉着自己的胸部，乳汁流动的声音在她体内环绕。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:197
-msgid "“进去了……呀！”\n在{PlayerName}射入精液时，雷蛇呻吟了一声。"
+msgid "“这大小可以吧？还是……要更大一些？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:198
-msgid "“怎么还有……啊~”\n在{PlayerName}继续射入精液时，雷蛇呻吟了一声。"
+msgid "“唔伊-”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:199
-msgid "“好多精液……你到底存了多久……啊！”\n在{PlayerName}大量射入精液时，雷蛇呻吟了一声。"
+msgid "“啊哈-”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:200
-msgid "“这到底是几天的量……肚子好涨……啊啊~”\n在{PlayerName}大量射入精液时，雷蛇呻吟了一声。"
+msgid "“别舔，这样好痒……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:201
-msgid "“肚子好涨……好重……好热……”\n“这么多精液……不会是想让我怀孕吧？”\n雷蛇的肚子在{PlayerName}把存储全灌进去时，咕噜了几声。\n此时雷蛇感受到了，精液的重量把自己拉了下去。"
+msgid "“现在可没有奶给你……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:202
-msgid "“怎么感觉下面有点空荡荡的……？”"
+msgid "“留一点给孩子……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:203
-msgid "“快点……快进去……”"
+msgid "“哈~我可没有在享受！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:204
-msgid "“深一点……快一点！”"
+msgid "“感觉快出来了……快停下！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:205
-msgid "“别别别，快停下……”\n雷蛇慌张的看着你，眼里凸显出恐惧。\n“我还没准备好……不行……”\n“拜托，求你了，别……啊啊啊~\"\n随着处血的流出，雷蛇彻底失去了纯洁。\n“……”\n“……”"
+msgid "“哈~哈~快去了！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:206
-msgid "“好想排泄……”"
+msgid "“看那里干什么……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:207
-msgid "“感觉这几天的食物快流出来了……”"
-msgstr ""
-
-#: .\data\talk\chara\0107_雷蛇.csv:208
-msgid "“肠道感觉好干净……好想要有东西插进去……”"
-msgstr ""
-
-#: .\data\talk\chara\0107_雷蛇.csv:209
-msgid "“感觉快尿出来了……”"
+msgid "“你在想着什么……？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:210
-msgid "“感觉好几天的水分聚在了膀胱里……”"
-msgstr ""
-
-#: .\data\talk\chara\0107_雷蛇.csv:211
-msgid "“尿液和精液合在一起……会是什么感觉？”"
+msgid "“别舔那里……！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:212
-msgid "“里面感觉打开了……”"
-msgstr ""
-
-#: .\data\talk\chara\0107_雷蛇.csv:213
-msgid "“好，好舒服……”"
+msgid "“那边不行！”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:214
-msgid "“射进去……趁现在……快让我怀孕！”"
+msgid "仿佛听到命令一般，雷蛇开始玩弄自己的身体，爱液顿时漂了出来。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:215
-msgid "雷蛇想着与{PlayerName}的点点滴滴，不自觉的微笑了起来。\n“感觉与你越来越近了……”"
+msgid "仿佛听到命令一般，雷蛇开始玩弄自己的身体，边身体移动边呻吟着。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:216
-msgid "“不行，忍不住了……”\n“那，那个……”\n“我……喜欢你……”\n雷蛇看着{PlayerName}，一脸羞红的说道。"
+msgid "仿佛听到命令一般，雷蛇开始朝着{PlayerName}的肛门移动。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:217
-msgid "看着手指上的戒指，雷蛇的眼泪滴了下来。\n\"谢谢你，愿意陪着我走这条路。\""
+msgid "仿佛听到命令一般，雷蛇开始把舌头舔向{PlayerName}的肛门。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:218
-msgid "“我发誓，无论付出什么代价……我都会保护着我面前的人。那位……我最爱的人……”\n“……直到永远。”"
+msgid "“……在等什么？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:219
-msgid "雷蛇看着你的眼神开始带着尊敬。\n“谢谢你……还有你优秀的指挥。”"
+msgid "“怎么了？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:220
-msgid "雷蛇看着你的眼神渐渐失去了自尊。\n“你这么对我是为了什么……？”"
+msgid "“要我干什么……？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:221
-msgid "看着颈上的项圈，雷蛇笑了起来。\n“让我看看，你能不能制服我的身心。\""
+msgid "“要我靠过来？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:222
-msgid "“我承诺，我的这副身躯，将只为您所用。无论您对我做什么，我都不会反抗。”\n“……尽情的玩吧。趁你还可以的时候……”"
+msgid "“我现在也没有啊……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:223
-msgid "“啊啊，肚子里好烫……”\n雷蛇捂着自己那被注入过精液的肚子。\n“感觉快流出来了……得赶紧清理干净……”"
+msgid "仿佛听到命令般，雷蛇脱下了裙子和内裤，当场尿了出来。\n尿完后，她把裙子和内裤穿了回去。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:224
-msgid "“啊啊，肚子里好烫……”\n雷蛇捂着自己那被注入过精液的肚子。\n“感觉有种奇妙的感觉……啊~”\n在雷蛇呻吟的那一刻，一条全新的生命已经临床在了她的子宫里。\n“如果我怀孕了，你会怎么样呢……？”"
+msgid "仿佛听到命令般，雷蛇当场尿了出来。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:225
-msgid "“身体好不舒服……”\n雷蛇近几天来都感到不适，时不时就会直接呕出来。\n“肚子好像大了一点……”\n“……不会是有了吧……”\n“……”\n买了根验孕棒，结果大吃一惊，上面明显的画着两条线。\n“验孕棒的结果不会骗人……”\n“我……怀孕了……”"
+msgid "“我没做过……希望这手感能让你满意……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:226
-msgid "雷蛇捂着大大的孕肚看着{PlayerName}。\n“我们的孩子在里面也快临月了呢……”\n“这几天就是预产期……记得来看我哦。”"
+msgid "“需要用手帮你的‘枪’充能吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:227
-msgid "雷蛇捂着大大的孕肚等着，突然感觉下面又湿又冷。\n“羊水破了……”\n“咿啊！好痛！”\n孩子已经发出了信号……当父母的时候到了。\n“哈……哈……啊啊啊~！”\n伴随着孩子的哭声，雷蛇顺利诞下了一条新生命。"
+msgid "握着{PlayerName}的阴茎，雷蛇上下移动着她的手，利用摩擦的热度给予双方快感。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:228
-msgid "“取好名字了吧？”\n“看看她，是不是很可爱？”\n雷蛇看着手中的孩子，微笑了起来。\n“我现在得顾着她，工作这边得麻烦你了……抱歉。”\n“等她够大了，我会回来帮你的，一定。”"
+msgid "仿佛感觉到了{PlayerName}的不满足，雷蛇加快了手速，你顿时感觉下面快烧起来了。"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:229
-msgid "雷蛇看着已经可以自己走路的孩子，笑了一声。\n“希望你之后也能平安长大。”\n“放心，爸爸妈妈会守护着你的……”"
+msgid "在{PlayerName}准备享受时，下方传来了一阵剧烈疼痛。\n{PlayerName}往下面看起，一条明显的齿印刻在{PlayerName}的阴茎上。\n“对不起，太用力了……”"
 msgstr ""
 
 #: .\data\talk\chara\0107_雷蛇.csv:230
+msgid "“唔姆……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:231
+msgid "雷蛇张开了嘴，在达到{PlayerName}的阴茎处时，合上了嘴巴，整个阴茎此时含在了雷蛇的嘴里。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:232
+msgid "见{PlayerName}没有动静，雷蛇开始前后移动，嘴里的口水与阴茎上的汗水在雷蛇嘴里结合。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:233
+msgid "两个巨大的胸部中间压着{PlayerName}的阴茎，力度不对换来了双方的紧绷感。\n与其说在乳交，更像是用胸来对阴茎按摩。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:234
+msgid "“大小与力度都刚好……希望你会喜欢……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:235
+msgid "“你这太大了，我很难包住……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:236
+msgid "两个巨大的胸部中间夹着{PlayerName}的阴茎，在适当的摩擦下中间的柱子慢慢挺了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:237
+msgid "两个巨大的胸部中间夹着{PlayerName}的阴茎，双方都感觉得到精液和乳汁的流动。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:238
+msgid "雷蛇作为重装的腿力惊人，然而这代表没适当调整的话和踩下去没两样。\n刚夹上去，{PlayerName}感觉下面都快断开了。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:239
+msgid "“用脚按摩的感觉如何？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:240
+msgid "双脚夹着{PlayerName}的阴茎，雷蛇扭动着腿部，摩擦着这想要“压力”的命根。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:241
+msgid "{PlayerName}的阴茎插入了雷蛇的头发，银白色下明显的看得出皮肤色的条状物体。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:242
+msgid "{PlayerName}的阴茎插入了雷蛇的头发，痒感带来的自然是无尽的快感。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:243
+msgid "用腋夹着{PlayerName}的阴茎，雷蛇扭动着手臂，汗水的交加使得腋下湿润润的。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:244
+msgid "用腋夹着{PlayerName}的阴茎，雷蛇扭动着手臂的同时明显感觉腋下的玩意在膨胀。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:245
+msgid "{PlayerName}把阴茎插入雷蛇的大腿之间，表现出类似交接的形状。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:246
+msgid "{PlayerName}前后移动，阴茎在雷蛇的大腿之间摩擦着。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:247
+msgid "{PlayerName}前后移动，把交接的欲望用在雷蛇大腿之间的阴茎表现了出来。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:248
+msgid "手里握着，口里含着，雷蛇做出了饮用液体的姿势，只不过该液体不是通常的透明色。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:249
+msgid "雷蛇摩擦着{PlayerName}的阴茎，貌似想用嘴巴接住挤出来的液体。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:250
+msgid "雷蛇嘴里含着{PlayerName}的阴茎，等待着自己的手把“猎物”赶出来。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:251
+msgid "{PlayerName}的阴茎完全被雷蛇包着，没有一丝遗漏。\n在胸部夹着“山脚”的同时，雷蛇的嘴里含着那座“山顶”。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:252
+msgid "在{PlayerName}感受下方的温度时，雷蛇正在尝试包着那逐渐升起的“山”。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:253
+msgid "雷蛇上下移动着，同时用着胸部和嘴唇摩擦着{PlayerName}的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:254
+msgid "{PlayerName}面对的，是雷蛇的入口，而雷蛇面对的，是{PlayerName}的入口。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:255
+msgid "“看着我那里很爽吧？那就别介意我玩玩你这边吧？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:256
+msgid "雷蛇玩弄着{PlayerName}的阴茎。\n{PlayerName}想舔雷蛇，但被她那有力的双脚夹得头根本动不了。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:257
+msgid "{PlayerName}做在雷蛇的上方，而雷蛇正面对面看着对面的阴茎插入了自己的小穴里。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:258
+msgid "“要开始了吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:259
+msgid "“你这笑容……你等了很久是不是？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:260
+msgid "{PlayerName}做在雷蛇的上方，而雷蛇只能凭空感觉有什么插入了自己的小穴里。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:261
+msgid "“什么玩意……？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:262
+msgid "“这种未知……感觉真奇怪……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:263
+msgid "{PlayerName}躺在雷蛇的下方，而雷蛇自己坐上了{PlayerName}的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:264
+msgid "“嘿咻……！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:265
+msgid "“应该不会被坐断吧？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:266
+msgid "{PlayerName}和雷蛇面对面坐着，同时把自己的阴茎插入了雷蛇的小穴。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:267
+msgid "“来吧，趁你还撑得住。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:268
+msgid "“我坐在你腿上，难道不会痠吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:269
+msgid "雷蛇如坐在椅子上似的坐在了{PlayerName}腿上，同时感受着某种条状物体插入了自己的小穴。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:270
+msgid "“别以为我不知道你在摸哪里……等等，那里不行！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:271
+msgid "“真好奇你现在的表情是怎么样的。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:272
+msgid "{PlayerName}和雷蛇面对面站着，同时把自己的阴茎插入了雷蛇的小穴。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:273
+msgid "“别把我抬起来……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:274
+msgid "“近距离这么看，你也没多高嘛。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:275
+msgid "雷蛇如靠墙似的靠在了{PlayerName}身上，同时感受着自己的小穴被侵略着。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:276
+msgid "“能不能插准一点？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:277
+msgid "“怎么？看不到那里？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:278
+msgid "“也太长了吧……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:279
+msgid "“别，别碰那里……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:280
+msgid "“呀！很痒，快停下！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:281
+msgid "“想插进去就快点，别想太多了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:282
+msgid "想把体内的野兽逼出来的{PlayerName}，牢牢的按着雷蛇。\n没一丝犹豫，什么都没说，就直接用力的把阴茎捅进了雷蛇的子宫里。\n一秒都不到的时间，它已经位于子宫的最深部……是交接的领域。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:283
+msgid "“别那么用力……啊！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:284
+msgid "“等不及了吗……？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:285
+msgid "“我知道你忍了很久，想射进去就快点！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:286
+msgid "“插那么深干什么，都顶到宝宝了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:287
+msgid "“等不及和宝宝打招呼了吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:288
+msgid "把阴茎插入雷蛇的子宫里后，{PlayerName}开始反应性的移动，貌似想把里面的种子撒出去。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:289
+msgid "“哈啊……哈啊……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:290
+msgid "“还没出来的话……你那么急干什么？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:291
+msgid "“别别别，快停下……”\n雷蛇慌张的看着你，眼里凸显出恐惧。\n“我还没准备好……不行……”\n“拜托，求你了，别……啊啊啊~”\n随着处血的流出，雷蛇彻底失去了纯洁。\n“……”\n“……”\n"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:292
+msgid "“怎么身体有点怪怪的……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:293
+msgid "“好像要……更多……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:294
+msgid "“别……别停下……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:295
+msgid "“胸部有点怪怪的……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:296
+msgid "“感觉乳汁要喷出来了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:297
+msgid "“继续……把我的乳汁全部逼出来！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:298
+msgid "“下面好痒……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:299
+msgid "“咿呀……！”\n雷蛇不自觉呻吟了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:300
+msgid "“继续，别停下……呃啊！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:301
+msgid "“进去了……呀！”\n在{PlayerName}射入精液时，雷蛇呻吟了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:302
+msgid "“怎么还有……啊~”\n在{PlayerName}继续射入精液时，雷蛇呻吟了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:303
+msgid "“好多精液……你到底存了多久……啊！”\n在{PlayerName}大量射入精液时，雷蛇呻吟了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:304
+msgid "“这到底是几天的量……肚子好涨……啊啊~”\n在{PlayerName}大量射入精液时，雷蛇呻吟了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:305
+msgid "“肚子好涨……好重……好热……”\n“这么多精液……不会是想让我怀孕吧？”\n雷蛇的肚子在{PlayerName}把存储全灌进去时，咕噜了几声。\n此时雷蛇感受到了，精液的重量把自己拉了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:306
+msgid "“怎么感觉下面有点空荡荡的……？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:307
+msgid "“快点……快进去……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:308
+msgid "“深一点……快一点！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:309
+msgid "“别别别，快停下……”\n雷蛇慌张的看着你，眼里凸显出恐惧。\n“我还没准备好……不行……”\n“拜托，求你了，别……啊啊啊~”\n随着处血的流出，雷蛇彻底失去了纯洁。\n“……”\n“……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:310
+msgid "“好想排泄……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:311
+msgid "“感觉这几天的食物快流出来了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:312
+msgid "“肠道感觉好干净……好想要有东西插进去……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:313
+msgid "“感觉快尿出来了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:314
+msgid "“感觉好几天的水分聚在了膀胱里……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:315
+msgid "“尿液和精液合在一起……会是什么感觉？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:316
+msgid "“里面感觉打开了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:317
+msgid "“好，好舒服……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:318
+msgid "“射进去……趁现在……快让我怀孕！”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:319
+msgid "雷蛇想着与{PlayerName}的点点滴滴，不自觉的微笑了起来。\n“感觉与你越来越近了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:320
+msgid "“不行，忍不住了……”\n“那，那个……”\n“我……喜欢你……”\n雷蛇看着{PlayerName}，一脸羞红的说道。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:321
+msgid "看着手指上的戒指，雷蛇的眼泪滴了下来。\n“谢谢你，愿意陪着我走这条路。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:322
+msgid "“我发誓，无论付出什么代价……我都会保护着我面前的人。那位……我最爱的人……”\n“……直到永远。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:323
+msgid "雷蛇看着你的眼神开始带着尊敬。\n“谢谢你……还有你优秀的指挥。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:324
+msgid "雷蛇看着你的眼神渐渐失去了自尊。\n“你这么对我是为了什么……？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:325
+msgid "看着颈上的项圈，雷蛇笑了起来。\n“让我看看，你能不能制服我的身心。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:326
+msgid "“我承诺，我的这副身躯，将只为您所用。无论您对我做什么，我都不会反抗。”\n“……尽情的玩吧。趁你还可以的时候……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:327
+msgid "“啊啊，肚子里好烫……”\n雷蛇捂着自己那被注入过精液的肚子。\n“感觉快流出来了……得赶紧清理干净……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:328
+msgid "“啊啊，肚子里好烫……”\n雷蛇捂着自己那被注入过精液的肚子。\n“感觉有种奇妙的感觉……啊~”\n在雷蛇呻吟的那一刻，一条全新的生命已经临床在了她的子宫里。\n“如果我怀孕了，你会怎么样呢……？”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:329
+msgid "“身体好不舒服……”\n雷蛇近几天来都感到不适，时不时就会直接呕出来。\n“肚子好像大了一点……”\n“……不会是有了吧……”\n“……”\n买了根验孕棒，结果大吃一惊，上面明显的画着两条线。\n“验孕棒的结果不会骗人……”\n“我……怀孕了……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:330
+msgid "雷蛇捂着大大的孕肚看着{PlayerName}。\n“我们的孩子在里面也快临月了呢……”\n“这几天就是预产期……记得来看我哦。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:331
+msgid "雷蛇捂着大大的孕肚等着，突然感觉下面又湿又热。\n“羊水破了……”\n“咿啊！好痛！”\n孩子已经发出了信号……当父母的时候到了。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:332
+msgid "“取好名字了吧？”\n“看看她，是不是很可爱？”\n雷蛇看着手中的孩子，微笑了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:333
+msgid "“我现在得顾着她，工作这边得麻烦你了……抱歉。”\n“等她够大了，我会回来帮你的，一定。”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:334
+msgid "雷蛇看着已经可以自己走路的孩子，笑了一声。\n“希望你之后也能平安长大。”\n“放心，爸爸妈妈会守护着你的……”"
+msgstr ""
+
+#: .\data\talk\chara\0107_雷蛇.csv:335
 msgid "“重装干员雷蛇，待命中。”\n“我曾参与数次要人保全、据点攻坚、人质解救、威胁肃清的特种行动。”\n“在此次派遣行动期间，我会严格保障您的人身安全。”"
 msgstr ""
 
@@ -8378,6 +8778,170 @@ msgstr ""
 
 #: .\data\talk\chara\0249_缪尔赛思.csv:247
 msgid "“{PlayerName}，如果想要我喝些什么的话，用不着将其放进菜品里的”\n“这样子一整个餐点都会变得不好吃的”\n{TargetName}刚接过你手中的餐点，看了几眼，然后直接将你加了东西的地方给翻开来了...\n但她似乎没有怪罪你的样子，反倒是只对在菜品里面加东西有着微词\n而且她最后还是拿起了餐具，慢慢吃着餐点\n“但我也不反对啦...下次需要的话直接让我喝掉就行了~~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:248
+msgid "“想要给我按摩？嗯...也可以”\n在听到你的要求后，{TargetName}半推半就的坐在一边，让你轻轻揉捏着她的肩膀来按摩\n“嗯...啊嘶——有点疼，{Name}，小点力气，好吗？”\n似乎{TargetName}并没有完全放松身体，只是用力揉捏几下就觉得疼痛了...\n看起来她还是没怎么放心呢..."
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:249
+msgid "在征求了{TargetName}的同意后，你轻轻锤着{TargetName}的背，为她做着按摩\n而全程，{TargetName}都没有说一句话，不过可以从她的表情看出，她还是蛮享受这种待遇的\n待按摩结束后，{TargetName}轻轻活动了一下腰肢，对你笑了笑"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:250
+msgid "“按摩的话...也可以，最近双腿总有点酸疼，不清楚是不是站太久的原因...”\n{TargetName}如此说着，这种程度的暗示自然不可能让你忽略掉\n于是你将{TargetName}的双腿抬了起来，用手揉捏，捶打着{TargetName}的大腿\n{TargetName}先是对你的突然举动感到了一些意外，不过她也没有做出反抗的样子，就任你按摩大腿了\n很快，按摩结束，{TargetName}活动着被你按摩过的双腿，笑着\n“...确实没那么酸疼了，谢谢了，{Name}”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:251
+msgid "“想要给我按摩？当然可以了{Name}”\n{TargetName}很欢快的就同意了你的按摩请求，而你也立马趁着她坐在身边之时，为她揉搓着肩膀\n“嗯对...就是那里...嗯...”\n全程，{TargetName}虽然有些被刺激到发抖，但除此之外，就没有任何不舒服的表现了\n最后，在向你道谢完，{TargetName}便站了起来，继续她想做的事情了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:252
+msgid "{TargetName}很快便同意了你的请求，在随后的捶背按摩中，{TargetName}保持着高度放松的样子，没有任何不适的迹象\n当然，如此简单的按摩对你来说也不可能做砸，毕竟只是简单的锤击背部，只要力气不大，就永远不会出事\n在按摩结束后，{TargetName}站了起来活动了一下身躯，随后便握住了你的手，微微笑着，看着你\n嗯...你似乎从什么地方见过这种场面？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:253
+msgid "“当然可以了{Name}，不过要按摩的话...按摩下我的腿如何？”\n{TargetName}说着将腿抬到了你的腿上，笑着，很自然的，{TargetName}都如此要求，你也只能招办\n按照你脑中的记忆，你轻轻揉捏，捶打着{TargetName}的大腿\n而在你的一次次锤击中，{TargetName}的大腿也逐渐放松，让按摩的效果更加良好\n在最后的一次全面揉搓后，这场按摩也宣告结束了\n“感觉很不错呢{Name}，希望下次还有哦~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:254
+msgid "“按摩当然可以了{Name}~”\n{TargetName}毫无抗拒的同意了你的请求，当然，你也顺势让她坐在了你的腿上，为她揉搓着肩膀\n她的肩膀捏起来完全没有神经紧绷的感觉，这也给了你一个很好的发挥条件\n“嗯...好舒服...嗯哈——”\n不过，最为享受的自然是{TargetName}，在一阵一阵的揉捏刺激中，她的身体轻轻颤抖，这正是你想要看到的\n全程，都很完美"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:255
+msgid "{TargetName}很自然的同意了你的请求，在随后的捶背按摩中，{TargetName}的身体完全放松，让你可以放开手脚的去按摩\n在做到最好的同时，你也仔细观察着她的神情，确保在按摩中，不会对{TargetName}感到任何一点的不适感\n在按摩结束后，身心轻松的{TargetName}给予了你一个完美的拥抱作为报答，随后她看着你，眼神中流露出了一丝...爱意？\n不管了，这场交易，也算值得了~"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:256
+msgid "“当然可以了{Name}~不过还是按摩下我的腿如何？”\n待{TargetName}坐下后，她才笑着对你提出这额外的要求——当然，你不可能拒绝\n随后，你便抬起了{TargetName}的两条腿，用手同时按摩着，虽然说{TargetName}的腿比较细，但在放松的时候揉搓起来倒没有看起来那么瘦\n不过，按摩是一门技术活，既然是技术活，那肯定还是得追求尽善尽美的，全程下来，你已经拼尽全力做好这一你提出的“工作”\n没有意外，没有错误，一次完美的按摩\n“还是很舒服呢{Name}~真的很好~”\n刚说完，{TargetName}就猝不及防的抱住了你的身体，将脸埋在你的胸口中，而你也抱住了她，抚摸着她的头"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:257
+msgid "{TargetName}很快就同意了你的请求，不过这次，你随身带着一瓶专门用来按摩的按摩液\n“...这是？”\n不过，{TargetName}刚开始对你手上的那瓶按摩液感到有些意外，但很快她就理解了你的意思，她与你一起，走到了按摩室里面\n然后，她脱掉了身上的衣物，背部向上，躺在了旁边的床垫上，而你也换好了衣物，站在一边，往她的身上倒按摩液\n随之你便伸出手在{TargetName}的背上按摩起来，刚开始{TargetName}似乎还不够放松，肌肉有些许的僵硬\n但很快她便放松下来，任你按摩，你在她的背上不断揉捏，锤击，推搡，尽全力让她能够舒服起来\n直到按摩结束，你才松了一口气，不过很意外的是，全程{TargetName}没有发出一点声音...\n而在你定睛一看的时候你才发现，{TargetName}已经舒服的睡着了\n你轻轻的将{TargetName}给摇醒，洗完澡后，你与她手挽着手走回了原地\n“真没想到，{Name}居然这么会按摩呢...我居然还睡过去了”\n“不愧是...我的博士呢♡~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:258
+msgid "在按摩中，{TargetName}此刻正躺在按摩室中的垫子上，而你正准备着按摩用的按摩液——\n——当然，这瓶按摩液是你精心调剂而成的，含有强烈媚药成分的按摩液\n当你将这瓶按摩液倒在{TargetName}的身上，并开始按摩的时候，媚药的成分正不断渗透进{TargetName}的身体中...\n“哈啊♡...哈啊♡...嗯♡...”\n逐渐的，媚药的成分开始不断发作，你也觉得是时候做出激烈一些的行为了，于是你将涂满媚药按摩液的手指，摸向了{TargetName}的小穴\n随着一声清楚的喘声，你轻轻松松的将自己的手指插进了{TargetName}的小穴，并不断在里面搅和着\n“哈嗯♡——哈...{Name}...那...那里不是♡♡——嗯嗯嗯♡♡——”\n一阵阵激烈的刺激让她的身体如触电般发抖，而你也自然不可能就这么停下来，不仅不停下来，你还将手伸向了{TargetName}的小豆豆，不断刺激，挑逗\n“啊噫噫噫♡♡——那，那里♡——嗯嗯嗯♡——好♡...好舒服♡——嗯♡♡——”\n刚碰到一下她的小豆豆，{TargetName}便发出了无法抑制的叫声，而她只能用力将脸埋进垫子中，不断颤抖和浪叫\n在之后的时间中，你不断刺激着她的小穴和小豆豆，让{TargetName}不断感受着巨量的刺激，而在不断的刺激攻势下，她叫的也是越来越淫荡\n“哈啊♡♡——哈啊♡♡——噫噫噫噫♡♡♡——要♡——要去了要去了♡♡♡♡——”\n直到{TargetName}大声叫唤着即将高潮时，你最后大力插进了她的小穴，另一只手也同时狠狠捏住了她的小豆豆\n这最后一次剧烈的刺激彻底的将{TargetName}的意识冲散，大量的淫液从她的小穴中喷出，潮吹的快感让她的腰直接弓了起来\n虽然你看不到她的脸，但即使看不到，你也能想象出来有多淫荡\n最后，{TargetName}脱力的躺在床垫上，露出了无比舒爽和淫荡的表情，当然，短时间内估计她是缓不过来了\n等她起来的时候再道歉吧~"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:259
+msgid "{Name}伸了伸懒腰，用略感疲惫的眼神看着你\n“{PlayerName}，我先去找个地方休息一会，有点累了”\n“晚点见哦~~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:260
+msgid "{Name}轻轻的打了一个小哈欠，随后略感疲惫的闭上眼睛，摇了摇头再睁开眼，随后看向你\n“{PlayerName}，我得去休息一会——哈欠~”\n“晚点见哦~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:261
+msgid "在休息室中，{Name}似乎已经撑不住身体带来的疲劳感，在旁边的一张躺椅上躺了下来，闭上眼睛，小眯一会"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:262
+msgid "在休息室中，{Name}在一张沙发旁边坐了下来，手靠在脖子上刷着终端，还时不时打着哈欠，看起来在休息呢"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:263
+msgid "在房间中，{Name}半躺在床上，从床旁的柜子中拿出了一本书翻看着，看起来在休息呢"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:264
+msgid "在房间中，{Name}疲惫地坐在阳台旁的植物身边，静静眯着眼，阳光洒在她的脸上意外的美丽，好好休息吧{Name}"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:265
+msgid "“想来坐会的话自然可以啦”\n坐在沙发上的{TargetName}稍稍往一边让了一个位置让你一起来坐着休息\n而你也自然的坐在上面，跟{TargetName}谈论起一些鸡毛蒜皮的小事"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:266
+msgid "“...一起休息可以是可以啦...但别打扰我小眯哦”\n{TargetName}打着小哈欠跟你说着，随后便闭上眼睛，继续眯着了\n你静悄悄的坐在她的身边，看着{TargetName}闭眼养神的样子...真的很可爱呢"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:267
+msgid "{TargetName}无言的点了点头，算是同意了你一起来休息的决定\n不过说是一起休息，但你们两人倒也没啥互动，就是坐在一起而已\n不过嘛，这种安静的休息，其实也还不错"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:268
+msgid "“那就来坐会吧{Name}”\n{TargetName}很快就同意了你的请求，而当你刚坐下来不久，{TargetName}的手就不经意间碰到了你，而你也被这突然的一碰惊了一下\n“啊不好意思{Name}，我刚只是想伸个懒腰”\n{TargetName}忙不迭的说着，对你道歉，当然，你不会在意的——\n对吧？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:269
+msgid "{TargetName}微笑着在她旁边让了一个位置给你一起休息，待你刚坐上去后，你看到{TargetName}似乎正用终端刷着什么东西\n“啊，我在看我买的新东西的交易行情呢，{Name}你对此有什么了解吗？”\n“有的话那太好了~能一起帮我看看这个嘛？”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:270
+msgid "{TargetName}对你轻轻点了点头，随后困困的打了一个大哈欠，脸侧向一边，又小睡过去了\n你坐在她的身边，静静看着沉睡过去的{TargetName}，突然，她的眼睛睁开了一条缝隙，与你的眼睛对视了\n刚想转移视线的你发现{TargetName}似乎并没有多么抗拒你看她，甚至还对你微微笑了一下，然后又睡过去了\n她这是在...做梦吗？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:271
+msgid "“当然可以，不过{Name}，我在想一些事情，不要打断哦”\n{TargetName}如此对你说着，之后便测过脸，心事重重的看着窗户外的景色\n坐在她身边的你同时也在思考{TargetName}到底在想些什么，不过最后，还是{TargetName}先开口\n“{Name}，想知道我在想些什么吗？”\n“好吧，事情是这样的...”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:272
+msgid "在得到了{TargetName}的同意后，你静静的坐在了她的身边，而她却在你刚坐下来后，一直笑看着你\n你还在想是不是自己脸上有什么脏东西的时候，{TargetName}倒是先开口了\n“{Name}，休息时间，不打算聊些什么吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:273
+msgid "“要一起休息的话，不来点糖果怎么行呢？”\n在你刚坐在她身边之后，{TargetName}不知道从哪掏出来了一袋橙味风暴递给了你\n“拿一颗试试看如何？”\n既然已经被邀请那也不得不上了，于是你从袋子里面拿出了一颗糖，剥开了外衣将其放入嘴中，嗯，浓烈的橙子味\n“味道如何？”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:274
+msgid "{TargetName}在你刚坐下来没多久，她的手就悄悄的握住了你的手，虽然她看样子像是在眯着，但你很清楚她并没有睡着\n不过她都这么主动了，你也不可能就这么僵着，于是你也握住了她的手，慢慢揉搓着她的手\n她的手，依然还是那么温暖"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:275
+msgid "你大胆，坦然的直接坐在了{TargetName}的身边，而原本打着瞌睡的{TargetName}被你这么一坐直接惊醒了\n“嗯...啊，是{Name}啊，想要一起休息？”\n你静静点了点头，随后便轻轻摸了摸她困乏的脸，而她也对你笑了笑，将手握住了你摸着她脸的手，随后又眯着了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:276
+msgid "你悄悄坐在了已经沉沉睡去的{TargetName}，跟她一起眯着眼睛小睡一会\n但就在困意来袭的时候，你突然感觉到自己的肩膀上似乎有什么香香的东西靠了过来\n而当你睁开眼睛看去，{TargetName}不知道什么时候将自己的头靠在你的肩膀上，脸上挂着美丽的微笑...\n...好好睡吧，缪缪"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:277
+msgid "“想坐随时都可以哦{Name}~”\n{TargetName}立刻就同意你与她一起休息，在你刚坐到她身边时，她就将头靠在你的肩膀上，手挽住你的身体，与你贴在一起\n“不过，也让我抱你一下吧？”\n说罢，{TargetName}抱你抱得更紧了，而后你也伸出手将她挽住，你们两人头靠着头，享受着这完美的休息时刻"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:278
+msgid "在休息中，你与{TargetName}两人互相靠着，充当对方的靠背，沉沉睡去\n你们两人手拉着手，互相感受着对方的体温，仿佛这片大地就只有你们两位如此的相信，并爱着对方\n即使到天涯海角，即使到时间尽头，都不会抛弃对方\n真是美好啊~~~"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:279
+msgid "在休息中，{TargetName}靠着你的肩膀沉沉睡去，而你则在一旁看着她睡去的小脸，微笑着\n“...{Name}...我...我喜欢...喜欢你...嘿嘿...”\n{TargetName}在睡梦中还说着与你有关的甜美梦话，每次说完都会傻笑，对于这种情况，你会将她挽的更紧，让她更能感觉到，来自于你的安全感\n睡吧，睡吧，我可爱的缪缪，不管如何，我都会陪着你的"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:280
+msgid "“呼啊——”\n{Name}疲乏地揉了揉自己的眼睛，打了一个大大的哈欠，随后便躺在床上，沉沉的睡去了\n“我先睡了哦{PlayerName}...”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:281
+msgid "身心疲惫的{Name}在脱下自己的外套后，便躺在床上，盖好被子，闭上眼睛，睡着了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:282
+msgid "{Name}拖着疲惫的身躯走到了自己的床边，狠狠的往床上一蹦，调整好位置后，就此睡着了\n“呼......呼......”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:283
+msgid "{Name}在看了看时间后，走到床边，然后躺了上去，看起来她准备睡觉了\n“晚安哦{PlayerName}~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:284
+msgid "“到睡觉时间了”\n说罢，坐在一边的{Name}站起身来伸了伸懒腰，随后她便爬上了床，盖好被子后关上了灯\n“明天见哦{PlayerName}，早点睡~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:285
+msgid "“呼啊——”\n{Name}打了个哈欠，看了一眼终端上的时间，随后脱下了外套，躺在了床上\n“我先睡了哦{PlayerName}，别熬太晚~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:286
+msgid "“呼啊——忍不住....了........”\n{Name}没能抗住如山一般的疲劳感，正打算回到宿舍睡觉的她还是就地倒了下去，沉沉的睡着了\n...怎么办呢？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:287
+msgid "没等你反应过来，原本在你身边站着的{Name}突然就倒了下去\n你立马蹲下看了看{Name}的情况，还好，只是太疲劳了，睡着了...\n怎么办呢..."
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:288
+msgid "“不行...太困了...还是...”\n过于疲劳的{TargetName}最终还是没能抗住疲劳的压力，她摇摇晃晃的走到了最近的一处干净的地方，就地躺下，随后光速睡着了\n而你就在一边看的清清楚楚，，，"
 msgstr ""
 
 #: .\data\talk\chara\0274_星极.csv:6
