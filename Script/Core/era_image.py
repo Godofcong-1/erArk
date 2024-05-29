@@ -11,6 +11,8 @@ cache: game_type.Cache = cache_control.cache
 image_dir_path = os.path.join("image")
 for image_file_path_id in os.listdir(image_dir_path):
     image_file_path = os.path.join(image_dir_path, image_file_path_id)
+    if not image_file_path.endswith(".png"):
+        continue
     image_file_name = image_file_path_id.rstrip(".png")
     old_image = PhotoImage(file=image_file_path)
     old_height = old_image.height()
