@@ -85,8 +85,8 @@ def init_attr(character_id: int):
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()
         character_data.favorability = {0:0}
-        character_data.dormitory = _("中枢\博士房间")
-        character_data.pre_dormitory = _("中枢\博士房间")
+        character_data.dormitory = "中枢\博士房间" # 此处不可使用翻译
+        character_data.pre_dormitory = "中枢\博士房间"
         # 初始收藏地点
         cache.collect_position_list.append([_('中枢'), _('博士房间')])
         cache.collect_position_list.append([_('中枢'), _('博士办公室')])
