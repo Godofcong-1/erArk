@@ -181,13 +181,13 @@ msgid "查看冰箱"
 msgstr "View fridge"
 
 msgid "授课"
-msgstr "Teaching"
+msgstr "Give lessons"
 
 msgid "借阅书籍"
 msgstr "Borrow books"
 
 msgid "读书"
-msgstr "Read books"
+msgstr "Reading"
 
 msgid "管理图书馆"
 msgstr "Manage library"
@@ -423,7 +423,7 @@ msgstr ""
 "Ends H mode\n"
 
 msgid "唱歌"
-msgstr "Sing"
+msgstr "Singing"
 
 msgid ""
 "\n"
@@ -458,43 +458,43 @@ msgid "演奏乐器"
 msgstr "Play instruments"
 
 msgid "看电影"
-msgstr "Watch movies"
+msgstr "Watching movies"
 
 msgid "摄影"
-msgstr "Photograph"
+msgstr "Photography"
 
 msgid "玩水"
-msgstr "Play water"
+msgstr "Playing water"
 
 msgid "下棋"
-msgstr "Play chess"
+msgstr "Playing chess"
 
 msgid "打麻将"
-msgstr "Play mahjong"
+msgstr "Playing mahjong"
 
 msgid "打牌"
-msgstr "Play cards"
+msgstr "Playing cards"
 
 msgid "排演舞剧"
-msgstr "Rehearse"
+msgstr "Rehearsing"
 
 msgid "玩街机游戏"
-msgstr "Play arcade games"
+msgstr "Playing arcade games"
 
 msgid "游泳"
-msgstr "Swim"
+msgstr "Swimming"
 
 msgid "品酒"
-msgstr "Drink alcohol"
+msgstr "Drinking alcohol"
 
 msgid "品茶"
-msgstr "Drink tea"
+msgstr "Drinking tea"
 
 msgid "品咖啡"
-msgstr "Drink coffee"
+msgstr "Drinking coffee"
 
 msgid "品尝点心"
-msgstr "Try on desserts"
+msgstr "Trying on desserts"
 
 msgid "品尝美食"
 msgstr "Try on gourmets"
@@ -503,13 +503,13 @@ msgid "过家家"
 msgstr "Playhouse"
 
 msgid "修整发型"
-msgstr "Hair fix"
+msgstr "Fixing hair"
 
 msgid "全身造型服务"
 msgstr "Full body styling"
 
 msgid "泡脚"
-msgstr "Soak feet"
+msgstr "Soaking feet"
 
 msgid "蒸桑拿"
 msgstr "Sauna"
@@ -518,7 +518,7 @@ msgid "水疗护理"
 msgstr "Spa treatments"
 
 msgid "泡温泉"
-msgstr "Hot springs"
+msgstr "Going to hot springs"
 
 msgid "处理公务"
 msgstr "Work"
@@ -627,7 +627,7 @@ msgid "牵手"
 msgstr "Hold hands"
 
 msgid "膝枕"
-msgstr "Lay on lap"
+msgstr "Kiss"
 
 msgid "掀起裙子"
 msgstr "Lift up skirt"
@@ -1466,7 +1466,7 @@ msgid "信物"
 msgstr "Token"
 
 msgid "内裤"
-msgstr "Underwears"
+msgstr "Underwear"
 
 msgid "袜子"
 msgstr "Socks"
@@ -1587,7 +1587,7 @@ msgid "{nickname}购买了{item_name}"
 msgstr "{nickname} bought {item_name}"
 
 msgid "场景"
-msgstr "Background"
+msgstr "Scenario"
 
 msgid "已死亡！"
 msgstr "Dead!"
@@ -2768,13 +2768,13 @@ msgstr ""
 "{0} can now insert commands into the conscious of {1} now\n"
 
 msgid "体控-敏感度提升"
-msgstr "Body control-Increase body sensitivity"
+msgstr "Body control-Sensitivity"
 
 msgid "体控-强制高潮"
-msgstr "Body control-Climax command"
+msgstr "Body control-Climax"
 
 msgid "体控-强制排卵"
-msgstr "Body control-Force ovulation"
+msgstr "Body control-Ovulation"
 
 msgid "体控-木头人"
 msgstr "Body control-Blockhead"
@@ -2858,10 +2858,10 @@ msgid "子宫姦"
 msgstr "Womb rape"
 
 msgid "尿道指姦"
-msgstr "Urethral finger rape"
+msgstr "Urethra finger rape"
 
 msgid "尿道姦"
-msgstr "Urethral rape"
+msgstr "Urethra rape"
 
 msgid "命令对方小便"
 msgstr "Order her to pee"
@@ -9536,7 +9536,7 @@ msgid "立夏"
 msgstr "Lixia"
 
 msgid "小满"
-msgstr "Xiaoman"
+msgstr "Grain Buds"
 
 msgid "芒种"
 msgstr "Mangzhong"
@@ -14691,6 +14691,12 @@ msgstr "U-Official's folder"
 msgid ""
 "U-Official，通称主播U，曾在某移动城市作为网络主播活动，经干员卡达介绍与罗德岛签订合作协议，在为干员们提供直播服务的同时负责活动主持等工作，也作为顾问在罗德岛与各地传媒机构合作时提供帮助。"
 msgstr ""
+"U-Official, commonly known as Streamer U, used to be an online streamer in a"
+" certain nomadic city. After being recommended by Operator Click, she signed"
+" a cooperation agreement with Rhodes Island. In addition to providing "
+"broadcasting services for our operators, she is responsible for hosting "
+"events and other work. She also serves as a consultant and provides support "
+"when Rhodes Island interfaces with media organizations."
 
 msgid "#ff66cc"
 msgstr ""
@@ -14809,7 +14815,7 @@ msgstr ""
 msgid "子宫口基本打开，插入会引起一定不适，但很快转为酥痒感。子宫口对刺激产生本能反应，分泌液体润滑。"
 msgstr ""
 "The cervix is basically open, and while insertions bring uncomfort, it'll be"
-" changed to itchiness quickly. The cervix has produced natural reflexes "
+"  changed to itchiness quickly. The cervix has produced natural reflexes "
 "towards stimulation, and secreted liquid for lubrication."
 
 msgid "子宫口开发到一定程度，插入会引起轻微快感，子宫口会有轻微吸吮感。这是子宫准备好迎接交合的信号。"
@@ -14934,7 +14940,7 @@ msgid "肚子像是怀孕了一般高高膨胀"
 msgstr "Belly is swollen like pregnant"
 
 msgid "肚子圆滚滚的像是快要生产三胞胎似的"
-msgstr "Belly is as round as having triplets"
+msgstr "Belly is as round as about to give birth to triplets"
 
 msgid "被精液覆盖"
 msgstr "Covered by semen"
@@ -15111,13 +15117,13 @@ msgstr ""
 "{PlayerName}"
 
 msgid "罗德岛出口"
-msgstr "Rhodes Island Exit"
+msgstr "Exit"
 
 msgid "走廊"
 msgstr "Corridor"
 
 msgid "控制中枢入口"
-msgstr "Control Center Entrance"
+msgstr "Control Center"
 
 msgid "会议室"
 msgstr "Meeting Room"
@@ -15132,7 +15138,7 @@ msgid "茶水间"
 msgstr "Pantry"
 
 msgid "图书馆入口"
-msgstr "Library Entrance"
+msgstr "Library"
 
 msgid "图书馆办公室"
 msgstr "Office"
@@ -15141,19 +15147,19 @@ msgid "藏品馆"
 msgstr "Collection Hall"
 
 msgid "仓储区入口"
-msgstr "Storage Room Entrance"
+msgstr "Storage Room"
 
 msgid "原材料库"
-msgstr "Raw Material Storage Room"
+msgstr "Raw Material"
 
 msgid "建材库"
-msgstr "Building Material Storage Room"
+msgstr "Building Material"
 
 msgid "武器装备库"
-msgstr "Equipment Storage Room"
+msgstr "Equipment"
 
 msgid "燃料库"
-msgstr "Fuel Storage Room"
+msgstr "Fuel"
 
 msgid "粮仓"
 msgstr "Barn"
@@ -15165,7 +15171,7 @@ msgid "裁缝铺"
 msgstr "Tailor Shop"
 
 msgid "关押区入口"
-msgstr "Detention Zone Entrance"
+msgstr "Detention Zone"
 
 msgid "监牢1"
 msgstr "Prison 1"
@@ -15195,16 +15201,16 @@ msgid "调教室"
 msgstr "Humiliation Room"
 
 msgid "制造加工区入口"
-msgstr "Production Zone Entrance"
+msgstr "Production Zone"
 
 msgid "仓库"
 msgstr "Storage"
 
 msgid "生产车间1"
-msgstr "Production Workshop 1"
+msgstr "Workshop 1"
 
 msgid "动力区入口"
-msgstr "Power Zone Entrance"
+msgstr "Power Zone"
 
 msgid "内走廊"
 msgstr "Inner Corridor"
@@ -15297,13 +15303,13 @@ msgid "宿舍1区"
 msgstr "Zone 1"
 
 msgid "宿舍1区内走廊"
-msgstr "Zone 1 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍1区外走廊"
-msgstr "Zone 1 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍1区管理员房间"
-msgstr "Zone 1 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍2区入口"
 msgstr "Zone 2 Entrance"
@@ -15312,13 +15318,13 @@ msgid "宿舍2区"
 msgstr "Zone 2"
 
 msgid "宿舍2区内走廊"
-msgstr "Zone 2 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍2区外走廊"
-msgstr "Zone 2 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍2区管理员房间"
-msgstr "Zone 2 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍3区入口"
 msgstr "Zone 3 Entrance"
@@ -15327,13 +15333,13 @@ msgid "宿舍3区"
 msgstr "Zone 3"
 
 msgid "宿舍3区内走廊"
-msgstr "Zone 3 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍3区外走廊"
-msgstr "Zone 3 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍3区管理员房间"
-msgstr "Zone 3 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍4区入口"
 msgstr "Zone 4 Entrance"
@@ -15342,13 +15348,13 @@ msgid "宿舍4区"
 msgstr "Zone 4"
 
 msgid "宿舍4区内走廊"
-msgstr "Zone 4 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍4区外走廊"
-msgstr "Zone 4 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍4区管理员房间"
-msgstr "Zone 4 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍5区入口"
 msgstr "Zone 5 Entrance"
@@ -15357,13 +15363,13 @@ msgid "宿舍5区"
 msgstr "Zone 5"
 
 msgid "宿舍5区内走廊"
-msgstr "Zone 5 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍5区外走廊"
-msgstr "Zone 5 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍5区管理员房间"
-msgstr "Zone 5 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍6区入口"
 msgstr "Zone 6 Entrance"
@@ -15372,13 +15378,13 @@ msgid "宿舍6区"
 msgstr "Zone 6"
 
 msgid "宿舍6区内走廊"
-msgstr "Zone 6 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍6区外走廊"
-msgstr "Zone 6 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍6区管理员房间"
-msgstr "Zone 6 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍7区入口"
 msgstr "Zone 7 Entrance"
@@ -15387,13 +15393,13 @@ msgid "宿舍7区"
 msgstr "Zone 7"
 
 msgid "宿舍7区内走廊"
-msgstr "Zone 7 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍7区外走廊"
-msgstr "Zone 7 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍7区管理员房间"
-msgstr "Zone 7 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "宿舍8区入口"
 msgstr "Zone 8 Entrance"
@@ -15402,28 +15408,28 @@ msgid "宿舍8区"
 msgstr "Zone 8"
 
 msgid "宿舍8区内走廊"
-msgstr "Zone 8 Inner Corridor"
+msgstr "Inner Corridor"
 
 msgid "宿舍8区外走廊"
-msgstr "Zone 8 Outer Corridor"
+msgstr "Outer Corridor"
 
 msgid "宿舍8区管理员房间"
-msgstr "Zone 8 Manager's Room"
+msgstr "Manager's Room"
 
 msgid "工程部入口"
-msgstr "Engineering Zone Entrance"
+msgstr "Engineering Zone"
 
 msgid "工程区"
 msgstr "Engineering Zone"
 
 msgid "基建部"
-msgstr "Base Building Department"
+msgstr "Base Building"
 
 msgid "机房"
 msgstr "Engine Room"
 
 msgid "教育区入口"
-msgstr "Education Zone Entrance"
+msgstr "Education Zone"
 
 msgid "教师办公室"
 msgstr "Office"
@@ -15435,7 +15441,7 @@ msgid "育儿室"
 msgstr "Parenting Room"
 
 msgid "文职办公部入口"
-msgstr "Civil Service Zone Entrance"
+msgstr "Civil Service Zone"
 
 msgid "文职区"
 msgstr "Civil Service Zone"
@@ -15462,13 +15468,13 @@ msgid "泰拉"
 msgstr "Terra"
 
 msgid "生活娱乐区入口"
-msgstr "Entertainment Zone Entrance"
+msgstr "Entertainment Zone"
 
 msgid "仿临光家客厅"
-msgstr "Nearls' Living Room Replica"
+msgstr "Nearls' Living Room"
 
 msgid "企鹅物流安全屋"
-msgstr "Penguin Logistics Safe House"
+msgstr "P.L. Safe House"
 
 msgid "兰赛拉尔宴会厅"
 msgstr "Reimselar Ballroom"
@@ -15480,16 +15486,16 @@ msgid "取餐区"
 msgstr "Meal Taking Zone"
 
 msgid "夕照区印象音乐室"
-msgstr "Afterglow-styled Music Room"
+msgstr "Afterglow Music Room"
 
 msgid "多媒体室"
 msgstr "Multimedia Room"
 
 msgid "大水坑快活体验屋"
-msgstr "Great Aquapit Experientorium"
+msgstr "Great Aquapit"
 
 msgid "愚人号会客室"
-msgstr "Stultifera Navis Reception Room"
+msgstr "S.N. Reception Room"
 
 msgid "拉特兰公证所休息室"
 msgstr "Laterano Lounge"
@@ -15504,16 +15510,16 @@ msgid "炎式厅堂"
 msgstr "Yan Reception Hall"
 
 msgid "现代音乐排练室"
-msgstr "Modern Music Rehearsal Room"
+msgstr "Modern Rehearsal Room"
 
 msgid "卡西米尔直播间"
 msgstr "Livestream Room"
 
 msgid "糖果仙子宴会厅"
-msgstr "Sugar Pome Fairy's Banquet Hall"
+msgstr "Fairy's Banquet Hall"
 
 msgid "红松骑士团休息室"
-msgstr "Pinus Sylvestris Break Room"
+msgstr "P.S. Break Room"
 
 msgid "萨卡兹佣兵休息室"
 msgstr "Sarkaz Lounge"
@@ -15555,7 +15561,7 @@ msgid "桅杆"
 msgstr "Mast"
 
 msgid "疗养庭院入口"
-msgstr "Convalescence Garden Entrance"
+msgstr "Convalescence Garden"
 
 msgid "工具间"
 msgstr "Workshop"
@@ -15567,7 +15573,7 @@ msgid "过道"
 msgstr "Aisle"
 
 msgid "科研部入口"
-msgstr "Research Department Entrance"
+msgstr "Research Department"
 
 msgid "医疗临床"
 msgstr "Medical Clinical"
@@ -15594,7 +15600,7 @@ msgid "源石部"
 msgstr "Originium Department"
 
 msgid "训练场入口"
-msgstr "Training Room Entrance"
+msgstr "Training Room"
 
 msgid "射击房"
 msgstr "Shooting Room"
@@ -15603,22 +15609,22 @@ msgid "木桩房"
 msgstr "Stake Room"
 
 msgid "访客区入口"
-msgstr "Guest Zone Entrance"
+msgstr "Guest Zone"
 
 msgid "外交会议室"
 msgstr "Meeting Room"
 
 msgid "贸易区入口"
-msgstr "Commerce Zone Entrance"
+msgstr "Commerce Zone"
 
 msgid "七城风情餐厅"
-msgstr "Seven Cities-style Restaurant"
+msgstr "7 Cities Restaurant"
 
 msgid "乐器维修工坊"
-msgstr "Instrument Repair Workshop"
+msgstr "Instrument Repair"
 
 msgid "人气快餐开封菜"
-msgstr "Popular Fast Food KaiFengCai"
+msgstr "Fast Food KaiFengCai"
 
 msgid "伊比利亚度假村"
 msgstr "Iberian Resort Town"
@@ -15627,7 +15633,7 @@ msgid "健康快餐店"
 msgstr "Healthy Diner"
 
 msgid "前卫街机厅"
-msgstr "Avant-Garde Arcade Hall"
+msgstr "Avant-Garde Arcade"
 
 msgid "哥伦比亚咖啡馆"
 msgstr "Columbian Café"
@@ -15648,7 +15654,7 @@ msgid "山城茶馆"
 msgstr "Shan-Ch'eng Teahouse"
 
 msgid "快捷连锁披萨店"
-msgstr "Express Chain Pizzeria"
+msgstr "Express Pizzeria"
 
 msgid "成人用品店"
 msgstr "Adult Items' Shop"
@@ -15679,3 +15685,1654 @@ msgstr "Tribal-style Inn"
 
 msgid "龙门食坊"
 msgstr "Lungmen Eatery"
+
+msgid "宁静时光"
+msgstr "Calm Moment"
+
+msgid "放松身心，舒缓紧张，能够将体力与气力全部回满"
+msgstr ""
+"Loose body and mind, relieve the tension, and recovers Stamina and Energyto "
+"max"
+
+msgid "灵感烛光"
+msgstr "Inspiring Candlelight"
+
+msgid "提高认知功能与精神专注，今日习得的获得速度+1倍"
+msgstr "Strengthen the cognitive and focus, gaining doubled Acquirement"
+
+msgid "橙色心灵"
+msgstr "Orange Soul"
+
+msgid "振奋精神，积极向上，今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgstr ""
+"Hardens the will, be motivated, and halved the gain of Terror, Pain, "
+"Depression and Antipathy"
+
+msgid "迷乱情梦"
+msgstr "Chaotic Dream"
+
+msgid "提升感官敏感度，促进荷尔蒙分泌，今日全部位快感与欲情的获得速度+1倍"
+msgstr ""
+"Increases sensitivity and stimulate hormone secretion, doubling the gain of "
+"Happiness and Lust"
+
+msgid "情感共鸣"
+msgstr "Emotion Resonance"
+
+msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
+msgstr ""
+"Open your heart, encouraging emotion interflow, granting a 50% boost "
+"onAffinity anf Trust gain"
+
+msgid "下坠天空"
+msgstr "Falling Sky"
+
+msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
+msgstr ""
+"Dropping consciousness to the abyss, delaying the thoughts, sextuplingthe "
+"gain of Hypnosis Depth"
+
+msgid "否|晚安吻|晚安咬"
+msgstr "No|Night Kiss|Night Bite"
+
+msgid "《天灾详解》"
+msgstr "\"Catastrophe Explanations\""
+
+msgid "《急救说明》"
+msgstr "\"First Aid Instructions\""
+
+msgid "《无名诗集》"
+msgstr "\"Nameless Poetry\""
+
+msgid "“酒杯的碎屑在我皮肉里欢唱，鲜血自指缝间攀上脊索。饮下尖锐的晶莹光彩，脏腑随之璨烂流落。”"
+msgstr ""
+"\"The shards of the wine glass sung within my flesh, and fresh blood "
+"climbedbetween my fingers towards my spine. As I lapped up the sharp, "
+"crystalline brilliance, light began to flow from my viscera."
+
+msgid "是否设为收藏角色"
+msgstr "Set as Favourites?"
+
+msgid "当招募的干员数量过多时，可以将心仪的角色设为收藏角色，方便在干员位置等面板进行快速筛选"
+msgstr ""
+"When there is too many Operators recruited, you may set your "
+"favouriteOperators on Favourites, so that it's easier to filter"
+
+msgid "天蓝色内裤"
+msgstr "Sky blue underwear"
+
+msgid "洋红色内裤"
+msgstr "Magenta underwear"
+
+msgid "淡灰色内裤"
+msgstr "Light gray underwear"
+
+msgid "浅黄色内裤"
+msgstr "Light yellow underwear"
+
+msgid "米黄色内裤"
+msgstr "Cream underwear"
+
+msgid "小鸭图案内裤"
+msgstr "Duck pattern underwear"
+
+msgid "花瓣图案内裤"
+msgstr "Petal pattern underwear"
+
+msgid "水滴图案内裤"
+msgstr "Waterdrop pattern underwear"
+
+msgid "波浪图案内裤"
+msgstr "Wave pattern underwear"
+
+msgid "海豚图案内裤"
+msgstr "Dolphin pattern underwear"
+
+msgid "小鸟图案内裤"
+msgstr "Birb pattern underwear"
+
+msgid "云朵图案内裤"
+msgstr "Cloud pattern underwear"
+
+msgid "薄纱内裤"
+msgstr "Chiffon underwear"
+
+msgid "镂空内裤"
+msgstr "Hollow underwear"
+
+msgid "耳饰"
+msgstr "Ear ornaments"
+
+msgid "脖饰"
+msgstr "Neck ornament"
+
+msgid "口饰"
+msgstr "Mouth ornament"
+
+msgid "开放新设施：【生物工程部】（未实装）"
+msgstr "Opens new facility: [Bioengineering Department] (not implemented)"
+
+msgid "宿舍开放至1区全部，干员最大人数提升至56人"
+msgstr ""
+"Dormitory opens to the whole Zone 1, maximum number of Operators increasesto"
+" 56"
+
+msgid "宿舍开放至3区全部，干员最大人数提升至140人"
+msgstr ""
+"Dormitory opens to the whole Zone 3, maximum number of Operators increasesto"
+" 140"
+
+msgid "宿舍开放至6区全部，干员最大人数提升至218人"
+msgstr ""
+"Dormitory opens to the whole Zone 6, maximum number of Operators increasesto"
+" 218"
+
+msgid "宿舍开放至9区全部，干员最大人数提升至296人"
+msgstr ""
+"Dormitory opens to the whole Zone 9, maximum number of Operators increasesto"
+" 296"
+
+msgid "开放新功能：【招募路人干员】（未实装），可同时招募4名干员，招募效率+50%"
+msgstr ""
+"Opens new function: [Recruit passerby Operators] (not implemented), "
+"recruitment speed +50%"
+
+msgid "开放新设施:【影像厅】（未实装），学习效率加成提升至20%"
+msgstr ""
+"Opens new facility: [Video Hall] (not implemented), learning speed +20%"
+
+msgid "载具相关设施，未实装"
+msgstr "Vehicle-related facility, not implemented"
+
+msgid "开放基础设施:【药田】"
+msgstr "Opens basic facilities: [Herb Garden]"
+
+msgid "开放新设施:【温室】，生产效率加成提升至5%"
+msgstr "Opens new facility: [Conservatory], production speed +5%"
+
+msgid "开放新设施:【香熏治疗室】，生产效率加成提升至20%，每日可进行一次香薰疗愈"
+msgstr ""
+"Opens new facilities: [Aromatherapy Treatment Room], production speed +20%, "
+"gains 1 aromatherapy attempt daily"
+
+msgid "开放新设施:【磐蟹养殖场】（未实装），生产效率加成提升至50%，每日可进行两次香薰疗愈"
+msgstr ""
+"Opens new facility: [Metal Crab Breeding Farm] (not implemented), "
+"productionspeed +50%, gains 2 aromatherapy attempts daily"
+
+msgid "开放新设施:【小树林】（未实装），生产效率加成提升至100%，每日可进行三次香薰疗愈"
+msgstr ""
+"Opens new facility: [Grove] (not implemented), production speed +100%, gains"
+" 3 aromatherapy attempts daily"
+
+msgid "开放新设施:【秘密通道】（未实装）"
+msgstr "Opens new facility: [Secret Passage] (not implemented)"
+
+msgid "炮塔与飞行器与机甲弹射出口，未实装"
+msgstr "Launch point of turrets, aircrafts and mechas, not implemented"
+
+msgid "开放基础设施：【监牢】和【调教室】"
+msgstr "Opens basic facilities: [Prison] and [Humiliation Room]"
+
+msgid "可同时派出2名干员进行战斗（未实装）"
+msgstr "Can dispatch 2 Operators for battle (not implemented)"
+
+msgid "同时派出的干员数量提升至5人（未实装）"
+msgstr "Increases number of dispatchable Operators to 5 (not implemented)"
+
+msgid "同时派出的干员数量提升至10人（未实装）"
+msgstr "Increases number of dispatchable Operators to 10 (not implemented)"
+
+msgid "同时派出的干员数量提升至20人（未实装）"
+msgstr "Increases number of dispatchable Operators to 20 (not implemented)"
+
+msgid "同时派出的干员数量提升至50人（未实装）"
+msgstr "Increases number of dispatchable Operators to 50 (not implemented)"
+
+msgid "宿舍115房"
+msgstr "Room 115"
+
+msgid "宿舍116房"
+msgstr "Room 116"
+
+msgid "宿舍117房"
+msgstr "Room 117"
+
+msgid "宿舍118房"
+msgstr "Room 118"
+
+msgid "宿舍119房"
+msgstr "Room 119"
+
+msgid "宿舍120房"
+msgstr "Room 120"
+
+msgid "宿舍121房"
+msgstr "Room 121"
+
+msgid "宿舍122房"
+msgstr "Room 122"
+
+msgid "宿舍123房"
+msgstr "Room 123"
+
+msgid "宿舍124房"
+msgstr "Room 124"
+
+msgid "宿舍125房"
+msgstr "Room 125"
+
+msgid "宿舍126房"
+msgstr "Room 126"
+
+msgid "宿舍127房"
+msgstr "Room 127"
+
+msgid "宿舍128房"
+msgstr "Room 128"
+
+msgid "宿舍214房"
+msgstr "Room 214"
+
+msgid "宿舍215房"
+msgstr "Room 215"
+
+msgid "宿舍216房"
+msgstr "Room 216"
+
+msgid "宿舍217房"
+msgstr "Room 217"
+
+msgid "宿舍218房"
+msgstr "Room 218"
+
+msgid "宿舍219房"
+msgstr "Room 219"
+
+msgid "宿舍220房"
+msgstr "Room 220"
+
+msgid "宿舍221房"
+msgstr "Room 221"
+
+msgid "宿舍222房"
+msgstr "Room 222"
+
+msgid "宿舍223房"
+msgstr "Room 223"
+
+msgid "宿舍224房"
+msgstr "Room 224"
+
+msgid "宿舍225房"
+msgstr "Room 225"
+
+msgid "宿舍226房"
+msgstr "Room 226"
+
+msgid "宿舍227房"
+msgstr "Room 227"
+
+msgid "宿舍228房"
+msgstr "Room 228"
+
+msgid "宿舍229房"
+msgstr "Room 229"
+
+msgid "宿舍901房"
+msgstr "Room 901"
+
+msgid "宿舍902房"
+msgstr "Room 902"
+
+msgid "宿舍903房"
+msgstr "Room 903"
+
+msgid "宿舍904房"
+msgstr "Room 904"
+
+msgid "宿舍905房"
+msgstr "Room 905"
+
+msgid "宿舍906房"
+msgstr "Room 906"
+
+msgid "宿舍907房"
+msgstr "Room 907"
+
+msgid "宿舍908房"
+msgstr "Room 908"
+
+msgid "宿舍909房"
+msgstr "Room 909"
+
+msgid "宿舍910房"
+msgstr "Room 910"
+
+msgid "宿舍911房"
+msgstr "Room 911"
+
+msgid "宿舍912房"
+msgstr "Room 912"
+
+msgid "宿舍913房"
+msgstr "Room 913"
+
+msgid "被催眠的干员会把博士视为空气，无论博士做什么都不会引起干员的注意，对自身和周围发生的任何事情也不会觉得奇怪，效果持续到离开当前场所为止。"
+msgstr ""
+"Hypnotized Operators will see the Doctor as thin air, and won't pay "
+"attentionto what the Doctor is doing, and won't feel strange on anything on "
+"and around self, effect lasts until leaving or manual removal."
+
+msgid "精力剂"
+msgstr "Energizer"
+
+msgid "使用后回复100精液量。暂未实装。"
+msgstr "Recovers 100 Semen (not implemented)"
+
+msgid "可以用来拍照，暂未实装。"
+msgstr "Can be used to take photos (not implemented)"
+
+msgid "可以用来录像，暂未实装。"
+msgstr "Can be used to record videos (not implemented)"
+
+msgid "暂未实装"
+msgstr "Not implemented"
+
+msgid "用于进行尿道的开发，需要【技巧】至少为5级才能使用，每次使用消耗一个"
+msgstr ""
+"Used for development of urethra, can only be used at Technique Lv5 or above,"
+" consuming one per use"
+
+msgid "如何提升博士或干员的体力与气力上限？"
+msgstr "How to increase Doctor's or Operators' Stamina and Energy limit?"
+
+msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可是用"
+msgstr ""
+"[Exercise] in [Fitness Zone] of [Training Room], but be reminded this is "
+"notavailable until base upgrade"
+
+msgid "如何提升博士的理智上限？"
+msgstr "How to increase Sanity limit?"
+
+msgid "每日多多使用源石技艺，将理智尽量消耗光，会根据消耗的量来缓慢提升理智上限"
+msgstr ""
+"Use Originium Arts frequently, and it will increase slowly based on "
+"consumption"
+
+msgid "羽蛇"
+msgstr "K'uk'ulkan"
+
+msgid "神"
+msgstr "Feranmut"
+
+msgid "鵺"
+msgstr "Nue"
+
+msgid "妻子"
+msgstr "Wife"
+
+msgid "家庭"
+msgstr "Family"
+
+msgid "姐姐"
+msgstr "Older sister"
+
+msgid "妹妹"
+msgstr "Younger sister"
+
+msgid "妈妈"
+msgstr "Mother"
+
+msgid "女仆"
+msgstr "Maid"
+
+msgid "职业"
+msgstr "Profession"
+
+msgid "老师"
+msgstr "Teacher"
+
+msgid "护士"
+msgstr "Nurse"
+
+msgid "警察"
+msgstr "Police"
+
+msgid "宠物猫"
+msgstr "Pet cat"
+
+msgid "宠物狗"
+msgstr "Pet dog"
+
+msgid "电车痴汉"
+msgstr "Weirdo on tram"
+
+msgid "户外当众"
+msgstr "Outdoor"
+
+msgid "公共厕所"
+msgstr "Public toilet"
+
+msgid "对目标香薰疗愈_回复"
+msgstr "Aromatherapy-Recovery"
+
+msgid "对目标香薰疗愈_习得"
+msgstr "Aromatherapy-Acquirement"
+
+msgid "对目标香薰疗愈_反感"
+msgstr "Aromatherapy-Antipathy"
+
+msgid "对目标香薰疗愈_快感"
+msgstr "Aromatherapy-Happiness"
+
+msgid "对目标香薰疗愈_好感"
+msgstr "Aromatherapy-Affinity"
+
+msgid "对目标香薰疗愈_催眠"
+msgstr "Aromatherapy-Hypnosis"
+
+msgid "抱小孩"
+msgstr "Hug"
+
+msgid "教说话"
+msgstr "Teach to speak"
+
+msgid "给玩具"
+msgstr "Give toys"
+
+msgid "主界面中干员好感与信赖的显示"
+msgstr "Display of Affinity and Trust"
+
+msgid "是否在主界面的角色信息中显示好感与信赖的情况，以及要显示多详细"
+msgstr ""
+"Do you want to display Affinity and Trust for Operators, and by how detailed"
+
+msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
+msgstr ""
+"Don't display|Display Affinity and Trust level|Display Affinity and "
+"Trustlevel and value"
+
+msgid "主界面中干员催眠情况的显示"
+msgstr "Display of Hypnosis state"
+
+msgid "是否在主界面的角色信息中显示催眠的情况，以及要显示多详细"
+msgstr "Do you want to display Hypnosis state, and by how detailed"
+
+msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
+msgstr ""
+"Don't display|Display Hypnosis type|Display Hypnosis type and progress"
+
+msgid "本番合意"
+msgstr ""
+
+msgid "同意避孕套下的本番行为"
+msgstr ""
+
+msgid "避孕中出合意"
+msgstr "Birth Controlled Creampie Agreement"
+
+msgid "同意在安全期或已经服用避孕药的情况下内射"
+msgstr ""
+"Allows being ejaculated inside while at Safe Period or after consumingbirth "
+"control pills"
+
+msgid "同意在任何时候内射"
+msgstr "Allows being ejaculated inside at any time"
+
+msgid "Ａ性交合意"
+msgstr "A Sex Agreement"
+
+msgid "Ｕ性交合意"
+msgstr "U Sex Agreement"
+
+msgid "同意U性行为"
+msgstr "Allows U-type actions"
+
+msgid "药材种植员"
+msgstr "Herb Planter"
+
+msgid "药田"
+msgstr "Herb Garden"
+
+msgid "在药田里种植药材等农作物"
+msgstr "Planting crops like herbs at Herb Garden"
+
+msgid "花草种植员"
+msgstr "Flower Planter"
+
+msgid "在温室里种植花草等香料"
+msgstr "Planting spices like flowers at Conservatory"
+
+msgid "#b3acb4"
+msgstr ""
+
+msgid "清道夫"
+msgstr "Scavenger"
+
+msgid "烈夏"
+msgstr "Leto"
+
+msgid ""
+"用于提升烈夏的潜能。\n"
+"一瓶代表家乡味道的蜂蜜饮料。烈夏将它递给你之后，立刻就要与你“干瓶”。"
+msgstr ""
+
+msgid ""
+"烈夏，本名罗莎琳·塔季扬诺夫娜·拉里娜，切尔诺伯格事变前于切城某中学就读，在校期间与干员凛冬皆为学生中的领军人物。现作为外勤小组的成员，多负责中长线的外勤任务。\n"
+msgstr ""
+
+msgid "露脐水手服"
+msgstr "Revealing sailor suit"
+
+msgid "长柄异形斧"
+msgstr "Long-handled scythe"
+
+msgid "过臀长短裙"
+msgstr "Overhip short skirt"
+
+msgid "棕红色过膝袜"
+msgstr "Brown-red overknee socks"
+
+msgid "长筒登山靴"
+msgstr "Platform mountaineering boots"
+
+msgid "#415567"
+msgstr ""
+
+msgid "#616161"
+msgstr ""
+
+msgid "深灰色套頭披肩"
+msgstr "Dark-gray pullover shawl"
+
+msgid "黑色無袖開背衫"
+msgstr "Black sleeveless cardigan"
+
+msgid "乳貼"
+msgstr "Breast bandage"
+
+msgid "黑灰條文側開短裙"
+msgstr "Black-gray striped opensided short skirt"
+
+msgid "黑色長筒手套"
+msgstr "Black long gloves"
+
+msgid "黑色蕾絲內褲"
+msgstr "Black lace underwear"
+
+msgid "中丹數黑色連褲襪"
+msgstr "Mid-den black pantyhose"
+
+msgid "高筒高跟靴"
+msgstr "Platform heels"
+
+msgid "爆破錘"
+msgstr "Explosive hammer"
+
+msgid "塑心"
+msgstr "Virtuosa"
+
+msgid "一副质地考究的黑色手套。既能安抚琴弦，也能安抚繁杂的心声。"
+msgstr ""
+"A pair of black gloves made from fine materials, bringing calm to "
+"theinstrument's strings, and to the restless sounds of the heart."
+
+msgid ""
+"阿尔图罗·吉亚洛，出身于拉特兰、活跃于泰拉大地的著名音乐家。受莱塔尼亚帝国宫廷、拉特兰教皇厅委托，罗德岛与两方签署协议确认，在受相应人员的严格监管下，允许其以干员“塑心”身份暂留罗德岛。"
+msgstr ""
+"Arturia Giallo, Laterano-born, is an active and renowned musician acrossall "
+"Terra. Rhodes Island has entered a tripartite agreement as requested by "
+"theImperial Court of Leithanien and the Lateran Curia to authorize—given "
+"strictsupervision by relevant personnel—her provisional onboarding at Rhodes"
+" Island asOperator \"Virtuosa.\""
+
+msgid "皮质过肘手套"
+msgstr "Elbow-length leather gloves"
+
+msgid "烫金纹花边黑色布料裙"
+msgstr "Bronzing flower-edged black fabric skirt"
+
+msgid "黑色蕾丝过膝吊带袜"
+msgstr "Black lace overknee garter stockings"
+
+msgid "亮黑色高跟鞋"
+msgstr "Bright-black heels"
+
+msgid "白色丝质黑衬上衣"
+msgstr "White silk black lined shirt"
+
+msgid "黑色皮质女式鸭舌帽"
+msgstr "Black leather peaked cap for ladies"
+
+msgid "白色纽扣衬衣"
+msgstr "White buttoned shirt"
+
+msgid "罗德岛战斗外套"
+msgstr "Rhodes Island battle "
+
+msgid "黑色皮制迷你裙"
+msgstr "Black leather miniskirt"
+
+msgid "红豆的改装长枪"
+msgstr "Vigna's retrofitted lance"
+
+msgid "右脚红色长袜"
+msgstr "Right red long sock"
+
+msgid "左脚黑色长袜"
+msgstr "Left black long sock"
+
+msgid "格劳克斯"
+msgstr "Glaucus"
+
+msgid "一节没电的电池，无用之物最后的用处就是收藏。"
+msgstr ""
+"A dead battery. The final purpose of a useless item is to be part of a "
+"collection."
+
+msgid ""
+"格劳克斯出生于阿戈尔地区，却早早离开家园四处流浪。机缘巧合下加入罗德岛，现为雷神工业先端武器测评师。\n"
+"除了对尖端武器进行研究调整之外，格劳克斯也会在需求对空特化的任务中亲自出击。"
+msgstr ""
+"Glaucus was born in the Ægir Region, but left at an early age to wander about. By chance, she happened to join Rhodes Island and is now a Raythean cutting-edge weapon tester. \n"
+"In addition to performing research on cutting-edge weapon modification, Glaucus also carries out assaults on air missions when required."
+
+msgid "可爱风御寒帽"
+msgstr "Cute-styled coldproof hat"
+
+msgid "加厚式御寒冲锋衣"
+msgstr "Thickened coldproof jacket"
+
+msgid "超短裙"
+msgstr "Ultrashort skirt"
+
+msgid "透肉过膝袜"
+msgstr "Sheer overknee socks"
+
+msgid "特化改装战地靴"
+msgstr "Specialized battle boots"
+
+msgid "宴"
+msgstr "Utage"
+
+msgid "一个漆黑的盒子。里面是漆黑的盒子，漆黑的盒子，以及......美甲套装？！"
+msgstr ""
+"A black box. Inside it is another black box. Inside that is another black "
+"boxInside that is... a manicure set?!"
+
+msgid ""
+"从东国前来龙门游学的普通学生，被卷入感染者事件后患上了矿石病，后听从医师的建议来到罗德岛，经过评审成为了干员。\n"
+"对矿石病看得很开，仍旧如同患病前那样生活，但在执行任务的时候，会显现出一种令人畏惧的态度。\n"
+"（在宽松的外衣之下其实隐藏着非常傲人的身材）"
+msgstr ""
+"An ordinary student from Higashi who came to study in Lungmen, Utage contracted Oripathy after getting pulled into an incident with Infected persons. After coming to Rhodes Island per physician's advice, Utage passed the evaluation to become an Operator. \n"
+"She is level-headed in her view of Oripathy, living life largely the same as before she became Infected. However, when she is working, she exhibits a terrifying demeanor.\n"
+"(A very seducing body is hidden under her loose shirt)"
+
+msgid "宽松款女式卫衣"
+msgstr "Loose hoodie for ladies"
+
+msgid "热裤"
+msgstr "Hot pants"
+
+msgid "精致小皮鞋"
+msgstr "Exquisite leather boots"
+
+msgid "寒檀"
+msgstr "Santalla"
+
+msgid "块雕刻着奇异符号的木块。你记得寒檀告诉过你，符号的意义是“温暖”。"
+msgstr ""
+"A curiously carved marker of wood. You recall Santalla once telling you how "
+"it signifies \"warmth.\""
+
+msgid ""
+"因故自我流放的萨米部族萨满，在矿石病病情延缓后将罗德岛当作自己的部族，从此获得了新生。\n"
+"擅长操控风雪，能在低温环境和能见度极低的暴风中来去自如，被不了解萨米的敌人畏惧地称作“女巫”。"
+msgstr ""
+"A Sami tribal shaman, formerly in self-imposed exile. After her Oripathy symptoms were alleviated, she adopted Rhodes Island as her tribe and began a new life. \n"
+"She is adept at controlling the wind and snow, and can move freely even in low-temperature environments and through storms with extremely low visibility. Those who do not understand Sami have fearfully labeled her a Witch."
+
+msgid "高筒御寒帽"
+msgstr "High coldproof hat"
+
+msgid "覆臂式御寒长手套"
+msgstr "Covering coldproof long gloves"
+
+msgid "低叉抗寒连衣裙"
+msgstr "Low cut coldproof turtleneck dress"
+
+msgid "极地保暖用长筒靴"
+msgstr "Polar warming platform boots"
+
+msgid "#e7d7ae"
+msgstr ""
+
+msgid "青枳"
+msgstr "Poncirus"
+
+msgid "一颗小小的、青绿色的果子，果皮无法完全包裹住它的酸涩与清香。她说可以种在花盆里，幸运的话会结出饱满甜蜜的果实——大概吧。"
+msgstr ""
+"The littlest, most verdant citrus, its peel not enough to fully hide its "
+"tart fragrance. She tells you you can plant it in a pot, and with some luck "
+"it'll bear sweet, decadent fruits—probably."
+
+msgid ""
+"青枳，主修土木工程专业，曾在哥伦比亚、汐斯塔等地从事建筑建造、修缮与拆迁工作。现由锡兰医生推荐，在罗德岛接受矿石病治疗，同时与工程部签署合作协议，兼职协助罗德岛改建、整修舰内空间。\n"
+"（嗯，土木老姐）"
+msgstr ""
+"Poncirus, a civil engineer by training who has previously worked on the "
+"construction, renovation, and demolition of buildings in places such as "
+"Columbia and Siesta. Recommended to Rhodes Island by Dr. Ceylon, she is "
+"currently aboard Rhodes Island for Oripathy treatment. At the same time, she"
+" has entered into a cooperation agreement with Engineering and assists "
+"Rhodes Island with the refurbishment and renovation of its indoor spaces on "
+"a part-time basis."
+
+msgid "黑色帆船帽"
+msgstr "Black sailor cap"
+
+msgid "深色束胸上衣"
+msgstr "Dark corset shirt"
+
+msgid "深棕色热裤"
+msgstr "Dark brown hot pants"
+
+msgid "黑色长筒袜"
+msgstr "Black platform socks"
+
+msgid "长筒运动靴"
+msgstr "Platform sports boots"
+
+msgid "刺玫"
+msgstr "Vendela"
+
+msgid "一枝枯萎的白玫瑰，米黄色花瓣上浸染了无法抹去的暗红痕迹，记录着她过去生活的某段回忆。过往已逝，她能攥住的并不多。"
+msgstr ""
+"A withered white rose, cream-colored petals stained by irremovable traces of"
+" deep red, reflecting certain recollections of her past life. Bygones are "
+"bygones, and there is so little she can hold onto."
+
+msgid ""
+"玛格达尔·肖，布伦特伍德镇上血魔大君仪式的幸存者，小镇近乎大半被夷为废墟，她所珍爱的家传温室也被彻底摧毁。\n"
+"受伦蒂尼姆市民自救军成员洛洛与费斯特的邀请，玛格达尔加入自救军，以后勤人员的身份提供帮助，后加入罗德岛。伦蒂尼姆事件结束之后，玛格达尔主动申请回到维多利亚重建家乡，并担任当地罗德岛办事处的联络员。"
+msgstr ""
+"Magdelene Shaw, survivor of the Sanguinarch's ceremony in the town of Brentwood. More than half the town was razed, including the family greenhouse she so cherished. \n"
+"At the invitation of Rockrock and Feist, she joined the Self-Salvation Corps, offering them her assistance before eventually joining Rhodes Island. After the Londinium incident, she decided on her own to apply to return to Victoria to rebuild her hometown, taking up a post as a local Rhodes Island branch office liaison."
+
+msgid "黑色冠状头饰"
+msgstr "Black coronal head decoration"
+
+msgid "制式夹克"
+msgstr "Uniform jacket"
+
+msgid "白色荷叶边裙"
+msgstr "White ruffled skirt"
+
+msgid "亮铜色高跟鞋"
+msgstr "Light bronze heels"
+
+msgid "炎狱炎熔"
+msgstr "Lava the Purgatory"
+
+msgid "布满伤痕的匕首套。曾经亲自雕琢的特色花纹，在使用过程中已被磨损得看不见纹路。"
+msgstr ""
+"A sheath covered in scars. The once distinctive patterns she'd engraved "
+"herself have been worn away through constant use, the lines now invisible."
+
+msgid ""
+"生于维多利亚的伦蒂尼姆，干员芙蓉的孪生妹妹。自从因为感染矿石病来到罗德岛，已经经历了数年的时光。在罗德岛的这段时间，她从未有一日的懈怠，不断寻找着突破自己源石技艺极限的方法。"
+msgstr ""
+"Born in Londinium, Victoria, Lava is the younger twin sister of her fellow "
+"Operator, Hibiscus. It has been a few years since she contracted Oripathy "
+"and came to Rhodes Island for treatment. She has remained ever diligent "
+"during her time in Rhodes Island and never wasted even a moment in her quest"
+" to hone her Originium Arts prowess."
+
+msgid "战损版罗德岛制式干员上衣"
+msgstr "Broken Rhodes Island uniform shirt"
+
+msgid "破损版黑色热裤"
+msgstr "Broken black hot pants"
+
+msgid "濒毁的匕首"
+msgstr "Near broken dagger"
+
+msgid "浊心斯卡蒂"
+msgstr "Skadi the Corrupting Heart"
+
+msgid "一根软骨形成的弯曲尖刺。随着淡蓝色的液体自刺尖滴滴坠落，实验生物的生理结构剧烈地转化了。"
+msgstr ""
+"A curved quill formed of cartilage. A light blue liquid drips from the "
+"quill's point, violently transforming an experimental organism's "
+"physiological structure."
+
+msgid ""
+"照这个方向发展下去，就不会有人关心她究竟是什么了。不是斯卡蒂的问题，一个人也不能改变什么。我说的是，这种生理状态，以及该类生物性物质表现出的最终状态，可能会摧毁我们社会、历史与科学的所有度量衡。希望我们简陋的医疗科研条件现在还够使上点劲......\n"
+"（还能听到我的声音吗...Dr?）"
+msgstr ""
+"If things continue to develop in this direction, no one will care what "
+"exactly she is. It is not Skadi's problem, and a single person can only "
+"change so much. What I'm talking about is her physiological state, as well "
+"as the final state exhibited by this kind of biological substance. It is "
+"something that may well shatter the scales of our society, history, and "
+"science. I only pray that our porous medical research conditions are strong "
+"enough..."
+
+msgid "骸饰帆船帽"
+msgstr "Skull decorated sailor cap"
+
+msgid "大红色歌者缎带上衣"
+msgstr "Red singer ribboned shirt"
+
+msgid "大红色木耳边短裙"
+msgstr "Red fungus-edged short skirt"
+
+msgid "白色高跟长筒靴"
+msgstr "White high heel platform boots"
+
+msgid "剑骸长杖"
+msgstr "Swordskull long staff"
+
+msgid "腿部绑带"
+msgstr "Leg straps"
+
+msgid "假日威龙陈"
+msgstr "Ch'en the Holungday"
+
+msgid "一本笔记本，上面密密麻麻记载了陈在多索雷斯的调查记录，还有她的一些想法。她看起来有征求你意见的意思，当然，她没有明说。"
+msgstr ""
+"A notebook, densely packed with Ch'en's records of her investigation in "
+"Dossoles, and a few of her thoughts. She seems to be implying she's seeking "
+"your opinions, though of course, she hasn't said that outright."
+
+msgid ""
+"陈，前龙门高级警司，前龙门近卫局特别督察组组长，毕业于维多利亚皇家近卫学校，成绩优异，表现突出。在龙门近卫局供职期间，力主取缔龙门境内非法活动，对抗暴力犯罪和有组织犯罪，追缉武装逃犯与国际重犯等行动，并取得多项重大成果。\n"
+"现辞去职务，正式成为罗德岛的一员。依本人意愿，任务多以外派为主，为各地外派干员提供有力支援以及现场指导。"
+msgstr ""
+"Ch'en, former Lungmen superintendent and former head of the L.G.D.'s Special Inspection Unit, graduated from the Victorian Royal Guard Academy with superb marks and outstanding achievements. During her time with the Department, she cracked down on crime, fought violent offenders, tracked down armed fugitives, and brought down international criminals. \n"
+"Having resigned from the L.G.D., she is now officially a member of Rhodes Island. In accordance with her wishes, she is mainly assigned to provide field operators adequate support and on-location guidance."
+
+msgid "假日风格鸭舌帽"
+msgstr "Holiday styled peaked cap"
+
+msgid "皮质黑色夹克"
+msgstr "Black leather jacket"
+
+msgid "蓝渐变色光滑热裤"
+msgstr "Blue gradient smooth hot pants"
+
+msgid "在沙滩上行走需要这种东西吗"
+msgstr "Why you need this on beaches"
+
+msgid "耀骑士临光"
+msgstr "Nearl the Radiant Knight"
+
+msgid "恢复光彩的卡西米尔骑士纹章。被精心擦拭过，天马的金羽射出凛然辉光。"
+msgstr ""
+"A Kazimierzian knightly coat of arms, restored to splendor. After a "
+"meticulous polishing, the pegasus' golden wings give off an awe-inspiring "
+"glow."
+
+msgid ""
+"临光，卡西米尔耀骑士。在掩护己方队员、机动作战、歼灭战与开阔地带作战中体现出极高的战斗技巧和个人军事素养。\n"
+"在重返卡西米尔并夺得第二十四届骑士特别锦标赛决斗赛冠军之后，留在卡西米尔处理后续事务。作为合作干员为罗德岛驻卡瓦莱利亚基办事处提供战术支援，必要时也会去往其他地区协助本舰展开各项行动。\n"
+"（大荒星陨！）"
+msgstr ""
+"Nearl, the Radiant Knight of Kazimierz. Embodies extreme combat skill and personal military accomplishment in protecting allies, flexible engagement, annihilation and open-zone battle. \n"
+"After returning to Kazimierz and being crowned winner of the 24th Kazimierz Major, remained in Kazimierz to follow up on remaining affairs. Provides tactical support to the Rhodes Island Kawalerielki Branch Office as a collaborating operator, as well as assisting the landship with assorted operations in other regions in times of need."
+
+msgid "纯白色风格骑士长袍"
+msgstr "Pure white knight robe"
+
+msgid "纯黑色热裤"
+msgstr "Pure black hot pants"
+
+msgid "金属风格覆腿护膝"
+msgstr "Metallic leg-covered leggings"
+
+msgid "皮质长筒靴"
+msgstr "Leather platform boots"
+
+msgid "纯烬艾雅法拉"
+msgstr "Eyjafjalla the Hvit Aska"
+
+msgid "一块又小又轻的火山石，投入水中后会上下翻滚，嗞嗞的气泡声轻响不绝。这即是生命之歌。"
+msgstr ""
+"A small and light piece of volcanic rock that tumbles about floating and "
+"sinking once dropped in water, gently fizzing away without end. This is the "
+"very song of Life."
+
+msgid ""
+"艾雅法拉，火山学家，天灾信使。近年参与拍摄多部火山纪录片，并参与撰写出版火山相关书籍。现于罗德岛继续接受治疗，并视需求参与包括天灾研究在内的多项活动。"
+msgstr ""
+"Eyjafjalla, Volcanologist and Catastrophe Messenger. In recent years, she "
+"has participated in the production of multiple documentaries and written and"
+" published multiple books on volcanoes. She continues to receive treatment "
+"at Rhodes Island and undertakes a variety of activities, including "
+"Catastrophe research, as needed."
+
+msgid "白色罗德岛制式改装风衣"
+msgstr "White Rhodes Island modified trench coat"
+
+msgid "深色过膝袜"
+msgstr "Dark overknee socks"
+
+msgid "粉色高跟鞋"
+msgstr "Pink heels"
+
+msgid "焰影苇草"
+msgstr "Reed the Flame Shadow"
+
+msgid "一本用陌生语言抄下的诗歌集。她不求所有人都读懂，只希望想读这些诗歌的人有可以栖身的一隅。"
+msgstr ""
+"A poetry anthology transcribed in an unfamiliar language. She does not seek "
+"for all to understand it—she simply hopes there will be a corner to reside "
+"in, for those who wish to read these poems."
+
+msgid ""
+"苇草，驻留罗德岛的维多利亚南部办事处期间，曾提出撤离申请，近期再次成功与罗德岛建立联络。目前正以深池名义带领小股部队在维多利亚境内活动，以救助被暴力胁迫的塔拉人为主要行动目标。"
+msgstr ""
+"Reed previously applied to withdraw while stationed at a Rhodes Island "
+"branch office in southern Victoria, and has only recently reestablished "
+"contact with us. Presently actively leading a small force within Victorian "
+"borders under Dublinn's name, with her primary objective being to aid those "
+"Tarans forcefully displaced."
+
+msgid "皮质白色纹饰连衣裙"
+msgstr "White leather patterned dress"
+
+msgid "安全裤"
+msgstr "Safety pants"
+
+msgid "黑色茉莉纹连裤袜"
+msgstr "Black jasmine pattern pantyhose"
+
+msgid "寒芒克洛丝"
+msgstr "Kroos the Keen Glint"
+
+msgid "支吸盘箭，箭羽上系着个铃铛。 有了这支箭，你可以报个名字，只要罗德岛上有且可以射击的，她都能把箭钉在目标上。"
+msgstr ""
+"A sucker arrow, several small bells tied to the fletching. With this arrow, "
+"you can provide a name, and so long as it's present on Rhodes Island and can"
+" be shot, she'll land this straight on the target."
+
+msgid ""
+"经过长久的训练与磨砺后，克洛丝顺利晋升为正式干员，主要负责外勤任务。在罗德岛教官的指导和外勤任务的磨炼下，她已经成长许多，在射击技巧与隐匿行动上有了自己的心得与看法。"
+msgstr ""
+"Following extensive training and practical experience, Kroos has been "
+"smoothly promoted to formal Operator status, principally tasked with field "
+"missions. Under the guidance of Rhodes Island's Instructors and from "
+"tempering in the field, she has greatly matured, gaining her own insight "
+"into and views on firing techniques and concealing movements."
+
+msgid "白色衬衫"
+msgstr "White shirt"
+
+msgid "黑色丝质夹克"
+msgstr "Black silk jacket"
+
+msgid "黑色热裤"
+msgstr "Black hot pants"
+
+msgid "濯尘芙蓉"
+msgstr "Hibiscus the Purifier"
+
+msgid "一朵用纸折成的小花。在每一位即将出院的病人的床边留下这样一个小小的纪念品，已经成了芙蓉的习惯。"
+msgstr ""
+"A small flower folded from paper. It has become Hibiscus's habit to leave a "
+"small memento like this next to the bed of each patient as they are about to"
+" be discharged."
+
+msgid ""
+"经过系统的医疗理论培训以及长时间的临床实践训练后，芙蓉已经由实习医生转为正式医疗干员，并且成为了医疗部的主治医师之一。芙蓉不仅在医疗外勤任务上有相当丰富的经验，在健康管理以及病后护理的理论研究方面也颇有建树。"
+msgstr ""
+"Following both systematic training in medical theory and long-term training "
+"in clinical practice, Hibiscus has graduated from intern doctor to formal "
+"Medic Operator, as well as one of the Medical Department's attending "
+"physicians. Hibiscus possesses not only ample experience in medical field "
+"work, but has made considerable contributions to health management and "
+"aftercare as a theoretical researcher."
+
+msgid "制式罗德岛上衣"
+msgstr "Rhodes Island uniform shirt"
+
+msgid "黑色勒肉安全裤"
+msgstr "Black tight safety pants"
+
+msgid "透肉黑色连裤袜"
+msgstr "Sheer black pantyhose"
+
+msgid "皮质黑色长筒靴"
+msgstr "Black leather platform boots"
+
+msgid "百炼嘉维尔"
+msgstr "Gavial the Invincible"
+
+msgid "一个密度超高的合金哑铃，看起来非常便携。嘉维尔把它送给你时忘了告诉你哑铃的重量，不得不额外花半个小时处理你闪到的腰。"
+msgstr ""
+"An excessively dense alloy dumbbell, while appearing deceptively liftable. "
+"Gavial neglected to tell you its weight when she gave it to you, and you had"
+" to spend half an hour soothing your poor, pulled back."
+
+msgid "嘉维尔现在仍是罗德岛医疗部的一员，但在罗德岛需要她发挥自己的战斗力而非医学素养的时候，她也会拿起战斧，冲锋陷阵。"
+msgstr ""
+"Gavial remains a member of the Rhodes Island Medical Department, but "
+"whenever Rhodes Island needs her combat prowess instead of her medical "
+"knowledge, she won't hesitate to pick up her battleaxe and charge toward her"
+" enemies."
+
+msgid "墨绿色胸衣"
+msgstr "Dark green corset"
+
+msgid "绿色携物特化改装热裤"
+msgstr "Green modified-for-carrying hot pants"
+
+msgid "黑色连袜护膝"
+msgstr "Black sock leggings"
+
+msgid "凉鞋"
+msgstr "Sandals"
+
+msgid "淬羽赫默"
+msgstr "Silence the Paradigmatic"
+
+msgid "一副稍显古旧的圆眼镜。有人说戴上眼镜的她会少几分锐气，她于是将眼镜交给你来保管。在罗德岛上，她希望自己还是过去的自己。"
+msgstr ""
+"A pair of somewhat antiquated-looking round glasses. Some have told her that"
+" they make her look less courageous. As such, she decided to entrust her "
+"glasses to you. Aboard Rhodes Island, she wants to be her past self."
+
+msgid ""
+"《特里蒙科学伦理联合宣言》发起人，莱茵生命总辖构件科执行顾问，在医疗事务方面与罗德岛展开了深度合作。\n"
+"本人拥有丰富的医学临床经验，在罗德岛接受矿石病相关治疗的同时，为罗德岛提供医学支持。"
+msgstr ""
+"Sponsor of the \"Trimounts Ethics in Scientific Research Joint Declaration\" and executive advisor to Rhine Lab's Components Control Section, now cooperating with Rhodes Island in medical matters. \n"
+"She has extensive clinical experience in medicine, and provides medical support to Rhodes Island as she receives Oripathy related treatment."
+
+msgid "改版莱茵生命制式服装"
+msgstr "Modified Rhine Lab uniform"
+
+msgid "透肉色短袜"
+msgstr "Sheer short socks"
+
+msgid "淡绿色防护靴"
+msgstr "Light green protection boots"
+
+msgid "琳琅诗怀雅"
+msgstr "Swire the Elegant Wit"
+
+msgid "一枚金光闪闪的金币。沉重，光泽逼人，成色极好，放在手中欣赏，还会从中掉出......闪着寒光的暗器！是她送予你防身的礼物。"
+msgstr ""
+"A glinting, glittering gold coin. Heavy, oppressively lustrous, fabulously "
+"pure. Put it in your palm to admire, and out falls... a secret fluorescent "
+"flashbang! A self-defense gift from her to you."
+
+msgid ""
+"诗怀雅，龙门近卫局局长。\n"
+"于汐斯塔度假归来，目前仅以私人身份视情况为罗德岛工作提供协助。"
+msgstr ""
+"Swire, Commissioner of the Lungmen Guard Department. \n"
+"Returning from her holiday in Siesta, she is currently providing Rhodes Island assistance in her capacity as a private individual, and based on her own judgment."
+
+msgid "清凉款黑色露胸凉衣"
+msgstr "Cool black revealing cooling shirt"
+
+msgid "全覆盖式大号遮阳帽"
+msgstr "Full-covered big sun-covering hat"
+
+msgid "涤火杰西卡"
+msgstr "Jessica the Liberated"
+
+msgid "一副定制激光瞄准镜，适用于夜间精确观瞄。她一直紧盯着前方，从未将视线移开。"
+msgstr ""
+"A custom-ordered laser scope, used for precision nighttime aiming. She "
+"always has her sights set dead ahead, and never looks away."
+
+msgid "杰西卡·布林雷，因私人原因离开黑钢基地后，选择去往拓荒地，成为了一名治安官。现作为当地办事处的合作干员为罗德岛提供帮助与支持。"
+msgstr ""
+"Jessica Brynley, after departing from Blacksteel HQ for personal reasons, "
+"chose to go to the frontier to become a sheriff. Currently, she provides "
+"assistance to Rhodes Island as a partnered operator in the local branch "
+"office."
+
+msgid "制式外勤风衣"
+msgstr "Uniform fieldwork trench coat"
+
+msgid "黑色高腰裙"
+msgstr "Black high waist skirt"
+
+msgid "白色球鞋"
+msgstr "White sneakers"
+
+msgid "提丰"
+msgstr "Typhon"
+
+msgid "一瓶散发着浓郁气味的植物提取液。掩盖文明的气味，融入荒野，成为猎人，成为她的同伴。"
+msgstr ""
+"A bottle of pungently aromatic plant extract. A scent to smother "
+"civilization. Blend into the wilds; become the hunter, and become her "
+"companion."
+
+msgid ""
+"提丰，活跃于萨米的萨卡兹，以猎人自居，对萨米的自然环境和潜在威胁有着充足的知识储备和应对技巧。现应干员麦哲伦邀请与罗德岛进行合作，协助罗德岛在萨米及无尽冰原地区的事务。"
+msgstr ""
+"Typhon, a Sarkaz active in Sami, considers herself a hunter and has both the"
+" knowledge and skills to deal with the dangers of Sami's natural "
+"environment. At Operator Magallan's invitation, she is currently cooperating"
+" with Rhodes Island and assisting in our affairs in Sami and the endless "
+"icefields."
+
+msgid "束腰式紧身上衣"
+msgstr "Waist tight shirt"
+
+msgid "皮质安全裤"
+msgstr "Leather safety pants"
+
+msgid "黑色吊带袜"
+msgstr "Black garter stockings"
+
+msgid "象牙白式高跟鞋"
+msgstr "Ivory white heels"
+
+msgid "年"
+msgstr "Nian"
+
+msgid "一把设计古朴的匕首。据说只要用来从事谋杀之类的事业，匕首的锋刃就会消失。"
+msgstr ""
+"A simple, antique dagger. Legend holds that if this dagger is ever lifted "
+"with an intent to murder, the blade will disappear."
+
+msgid ""
+"年，无业游民，熟习各类金属工艺，拥有与身份不符的渊博冶金知识。现凭访客身份逗留于罗德岛，偶尔为罗德岛的金属加工项目提供建议。声称自己擅长音像娱乐工作，经常提供一些罗德岛干员普遍不太喜爱的音像产品。"
+msgstr ""
+"Nian, unemployed, is familiar with all kinds of metal craftsmanship and "
+"exhibits a profound knowledge in metallurgy that is inconsistent with her "
+"background. She is currently staying in Rhodes Island as a visitor, "
+"occasionally advising on Rhodes Island's metalworking projects. She claims "
+"to be skilled in audio-visual entertainment, often providing products that "
+"are not received too well by Operators."
+
+msgid "白色长袍"
+msgstr "White gown"
+
+msgid "红色束胸"
+msgstr "Red corset"
+
+msgid "纯白色热裤"
+msgstr "Pure white hot pants"
+
+msgid "夕"
+msgstr "Dusk"
+
+msgid "一支看似无奇的毛笔。夕的笔，可生万物，也可生笔，用的时候要留神一点。"
+msgstr ""
+"A seemingly ordinary brush. Dusk's brushes can give rise to all life as well"
+" as brushstrokes. Be a little careful when using it."
+
+msgid "夕，炎国画家，待业。在留舰人员年的积极行动下，被以访客身份挟持至罗德岛。擅长绘画，尤其是炎国传统绘画。现寓居罗德岛某偏僻走道的墙内。"
+msgstr ""
+"Dusk, a painter from Yan, awaiting assignment. Following the rather "
+"excitable actions of a certain resident of the landship by the name of Nian,"
+" Dusk has been held as a guest of Rhodes Island. Her skills with a brush are"
+" impressive, particularly when it comes the traditional Yan painting style. "
+"She currently resides off an isolated Rhodes Island walkway."
+
+msgid "水墨色渐变长长袍"
+msgstr "Ink gradient long robe"
+
+msgid "碎蓝色辅白色旗袍"
+msgstr "Brokenblue white cheongsam"
+
+msgid "画出来的靴子"
+msgstr "Drawn boots"
+
+msgid "令"
+msgstr "Ling"
+
+msgid "一盏灯。你十分确定你曾在某个夜晚梦见过这个场景，灯挑夜，箭如雨，大漠飞火。"
+msgstr ""
+"A lantern. You're absolutely sure you once saw this in some late-night "
+"dream. Lanterns light the eve, arrows fall as rain, the desert flared with "
+"fire."
+
+msgid "令，寓居尚蜀的诗人，与炎国司岁台等政府部门均有联系，在尚蜀事件中接触罗德岛，现通过审核，以访客身份驻留本舰。"
+msgstr ""
+"Ling, resident poet of Shangshu, tied to the Sui Regulator and other "
+"governmental organs of Yan. Came into contact with Rhodes Island during the "
+"Shangshu incident. Now remaining as a visitor aboard the landship, following"
+" thorough audits."
+
+msgid "白色披袍"
+msgstr "White robe"
+
+msgid "白色束胸"
+msgstr "White corset"
+
+msgid "黑色超短热裤"
+msgstr "Black ultrashort hot pants"
+
+msgid "白色过踝球鞋"
+msgstr "White overankle sneakers"
+
+msgid "黍"
+msgstr "Shu"
+
+msgid "一张古老的图画，体现了千年前人们对四季轮回原理的想象。时光流转，惟斯不变。"
+msgstr ""
+
+msgid "黍，炎国农业天师，天师府授业天师。曾于炎国北部农业基地大荒城从事农业研究多年且已有丰富的科研成果。现因访问亲属，以访客身份暂驻罗德岛。"
+msgstr ""
+
+msgid "白色云纹饰束胸"
+msgstr "White moire corset"
+
+msgid "白色宽松喇叭裤"
+msgstr "White loose flare"
+
+msgid "深色防水长筒靴"
+msgstr "Dark waterproof platform boots"
+
+msgid "耶拉"
+msgstr "Kjera"
+
+msgid "一条手织围脖，用料很足，在谢拉格围上都会觉得热。没有任何特殊之处，但光是编出这样一条精致围脖的手艺已经足以令人发出赞叹。"
+msgstr ""
+"A hand-knitted scarf. The materials are excessive, and you'd find it hot "
+"even wearing it in Kjerag. No unusual features at all, just the "
+"craftsmanship that goes into knitting a fine scarf like this is already "
+"enough to make you gasp in admiration."
+
+msgid ""
+"谢拉格圣女，恩雅·希瓦艾什，也就是干员初雪的侍女长，作为圣女的代表加入罗德岛。\n"
+"负责初雪秘密访问罗德岛的诸多对接事宜，除此之外，本人也十分享受干员生活，现作为术师干员活跃于各种任务中。\n"
+msgstr ""
+"Head maid to Kjerag Saintess Enya Silverash (also known as Operator Pramanix), joining Rhodes Island as delegate of the Saintess. \n"
+"Responsible for a great deal of connective matters in Pramanix's secret visits to Rhodes Island. Extremely keen on the operator life, presently active as a Caster Operator in all manner of missions.\n"
+
+msgid "渐变色羽饰外衬"
+msgstr "Gradient feathered shirt"
+
+msgid "白色黑网格壁袍"
+msgstr "White black-netted robe"
+
+msgid "白色高跟鞋"
+msgstr "White heels"
+
+msgid "空构"
+msgstr "Spuria"
+
+msgid "一本精密机械的使用说明书，里面却只写着一串特殊的电话号码，她认为亲口告诉你怎么做更简单。但有的时候，她也会看心情教你一些错误的使用方法。"
+msgstr ""
+"A user manual for precision machinery. Though the only thing inside is a "
+"special phone number, since she thinks telling you what to do directly is "
+"easier. (But sometimes she'll teach you wrong on purpose—depends on her "
+"mood.)"
+
+msgid ""
+"空构，本名斯普莉雅，拉特兰公民，就职于教皇厅第六厅，于安布罗修事件后跟随执行者里凯莱以拉特兰外派人员的身份加入罗德岛。\n"
+"精通铳械辅助技术，在通讯、机械工程等领域亦有造诣，现作为访学人员为工程部提供协助。"
+msgstr ""
+"A native of Laterano, real name Serpilia. Spuria was dispatched to Rhodes Island alongside Executor Richele by the Sixth Tribunal of the Lateran Curia following the Ambrosii Incident. \n"
+"She is an expert in firearms technology, and proficient in communications and mechanical engineering. She is currently a visiting associate of the Engineering Department."
+
+msgid "灰绿色夹克"
+msgstr "Gray green jacket"
+
+msgid "白色西装裤"
+msgstr "White suit pants"
+
+msgid "白色球靴"
+msgstr "White sneakers"
+
+msgid "霍尔海雅"
+msgstr "Ho'olheyak"
+
+msgid "一本装帧精美的历史书，每一页都密密麻麻写满了她的笔记。了解历史，就是在靠近她。"
+msgstr ""
+"A beautifully-designed history book. Each and every page is jampacked with "
+"her notes. By understanding history, you bring yourself closer to her."
+
+msgid ""
+"前梅兰德基金会所属特工，在凯尔希医生与博士的引荐下加入罗德岛。\n"
+"擅长单兵作战，并且能够应对各种极端环境，在各类隐秘行动中发挥了重大价值。"
+msgstr ""
+"A former Maylander Foundation agent, she joined Rhodes Island on the recommendations of Dr. Kal'tsit and the Doctor. \n"
+"Her proficiency in fighting solo and adapting to all kinds of extreme environments has proven invaluable to our myriad covert operations."
+
+msgid "白色梅兰德制式上袍"
+msgstr "White Maylander upper robe"
+
+msgid "长款包臀裙"
+msgstr "Long hip-covering skirt"
+
+msgid "黑色高更鞋"
+msgstr "Black heels"
+
+msgid "明椒"
+msgstr "Paprika"
+
+msgid "毛绒绒护耳罩。集美观、保暖、防护于一身的毛线耳罩，由女孩亲手编织而成。"
+msgstr ""
+"Fluffy ear mufflers. Lovely and warm in the cold, they'll keep your whole "
+"body safe and were hand-knitted by the girl herself."
+
+msgid ""
+"萨卡兹雇佣兵中的一员，自哥伦比亚被曼弗雷德召集至伦蒂尼姆，后因理念不合而带小队脱离原本阵营，受袭途中被搭救。\n"
+"现接受罗德岛雇佣，为作战小队提供战场医疗支援。"
+msgstr ""
+"A member of the Columbian mercenaries recruited to Londinium by Manfred. She and her squad left his command owing to conflicting ideals, and when they were ambushed, we were there to rescue them. \n"
+"Now employed by Rhodes Island, she provides on-field medical support to our combat squads."
+
+msgid "深色战地上衣"
+msgstr "Dark battlefield shirt"
+
+msgid "战损版安全裤"
+msgstr "Broken safety pants"
+
+msgid "黑色泡泡袜"
+msgstr "Black bubble socks"
+
+msgid "黑色拖鞋？"
+msgstr "Black sneakers"
+
+msgid "截云"
+msgstr "Jieyun"
+
+msgid "一坛味道辛辣的浊酒。夜晚的沙漠温度骤降，喝下它能够驱走些许寒意。"
+msgstr ""
+"A jar of pungent, biting unstrained wine. Temperatures plummet in the desert"
+" at night, and drinking this can drive away some of the chill."
+
+msgid "截云，生活在炎国西北部沙漠中的阿纳萨少女，经槐琥介绍来到罗德岛在大炎的办事处接受治疗，同时担任外勤干员。"
+msgstr ""
+"Jieyun, an Anasa girl living in the northwestern deserts of Yan, was "
+"introduced by Waai Fu to Rhodes Island's Great Yan branch for treatment, and"
+" simultaneously serves as a field operator."
+
+msgid "黑色露脐上衣"
+msgstr "Black revealing shirt"
+
+msgid "开口喇叭裤"
+msgstr "Opening flare"
+
+msgid "踝高短袜"
+msgstr "Ankle-short socks"
+
+msgid "白色沙漠靴"
+msgstr "White desert boots"
+
+msgid "林"
+msgstr "Lin"
+
+msgid "一条项链一个精致小巧的沙漏，玻璃晶莹，流沙细腻。时间在翻覆颠倒中流逝，有些事物却从未改变"
+msgstr ""
+"A delicate, detailed hourglass, the glass sparkling, the sand of finest "
+"grain. Time passes through overturnings and upheavals, but some things never"
+" change."
+
+msgid ""
+"林，本名林雨霞，龙门人。本职工作不明，本人提供的档案资料信息十分有限，同样存疑。\n"
+"于“玉门事件”后，主动提出与罗德岛正式建立合作。为罗德岛在龙门收治感染者的工作提供帮助"
+msgstr ""
+"Lin, full name Lin Yühsia, is a Lungmenite. Her occupation remains unclear, and her file remains equally suspect, owing to how little information she provided. \n"
+"After the \"Yumen Incident\" came to an end, she proposed to Rhodes Island the formation of a formal cooperative agreement, and she now assists Rhodes Island with its treatment of the Infected populace in Lungmen."
+
+msgid "黑底蓝缎饰紧身裙"
+msgstr "Black blue-ribboned tight dress"
+
+msgid "黑色透肉连裤袜"
+msgstr "Black sheer pantyhose"
+
+msgid "黑色高跟长筒靴"
+msgstr "Black high heel platform boots"
+
+msgid "温米"
+msgstr "Warmy"
+
+msgid "一辆用糖纸叠成的小小运载车。你在旅途中给了温米几颗雷姆必拓奶糖，她变了个样子回赠与你。"
+msgstr ""
+
+msgid ""
+"温米，出生于雷姆必拓的一座矿业小镇，虽年纪尚小，却在烹饪、机械修理等技术领域展露出了出色的天分。经干员暴行推荐，在监护人阿兰娜的陪同下来到罗德岛接受治疗，同时在舰上学习源石技艺基础课程。"
+msgstr ""
+
+msgid "白色绿饰点缀连衣裙"
+msgstr "White green-adorned dress"
+
+msgid "红棕色小皮鞋"
+msgstr "Red brown leather shoes"
+
+msgid "仇白"
+msgstr "Qiubai"
+
+msgid "一块普通的磨刀石。山脚下、大江边，随处可见的石头，因磨砺剑锋而变得光滑。"
+msgstr ""
+"An ordinary whetstone. Those most common of stones, found upon the mounts "
+"and by the rivers, become smooth and sleek by the sharpening of sword's "
+"edges."
+
+msgid ""
+"仇白，剑客，出生于炎国姜齐城附近的水寨，后因家庭变故离开故乡，常年行走于炎国各地，并无固定居所与工作。\n"
+"经调查，仇白曾在不同事件中与多位干员有过接触，后接受罗德岛的合作邀请，为罗德岛在炎国境内的各项事务提供支持。"
+msgstr ""
+"Qiubai, swordswoman, born in a river fort near the Yanese city of Jiangqi, later left her hometown due to changes in her family and travels the country year-round without a fixed residence or job. \n"
+"On investigation, Qiubai had already been in contact with several Operators in separate incidents, and later accepted Rhodes Island's invitation to cooperate and provide support to our various affairs in Yan."
+
+msgid "黑色红饰吊带裙"
+msgstr "Black red-suspended dress"
+
+msgid "黑色过肘护手"
+msgstr "Black elbow-length handguard"
+
+msgid "铎铃"
+msgstr "Wind Chimes"
+
+msgid "一枚铜制的铃铛，经过一点加工，要稍微用力才能摇响。她怕不解人意的风激起铃声，聒碎远行之人的乡心。"
+msgstr ""
+"A small copper-forged bell, worked slightly such that a little force is "
+"required for it to ring. Her worry was that an unsympathetic wind might "
+"sound the bell, rousing the far-flung traveler's heart for home."
+
+msgid "铎铃，奔波在炎国西北部的乡村信使，曾使数个闭塞的村庄获得了相对通畅的信息交流。因矿石病来罗德岛求医，现兼职为罗德岛提供信使服务。"
+msgstr ""
+"Wind Chimes, a Messenger who travels around northwestern Yan, allowing "
+"remote villages to communicate with each other. She came to Rhodes Island "
+"for Oripathy treatment and now works part-time as a Messenger for Rhodes "
+"Island."
+
+msgid "白色露脐运动上衣"
+msgstr "White revealing sports shirt"
+
+msgid "运动裤"
+msgstr "Sweatpants"
+
+msgid "耐磨短袜"
+msgstr "Wear-resistant short socks"
+
+msgid "运动鞋"
+msgstr "Sneakers"
+
+msgid "伊内丝"
+msgstr "Ines"
+
+msgid "一枚内敛锋芒的绣针。伊内丝不需要显眼的物件来彰显她的身份，这枚藏匿了光芒的锋锐之物就是对她最恰当的阐述。"
+msgstr ""
+"A sharp, unassuming embroidery needle. Ines does not need anything eye-"
+"catching to prove her identity. This pointed yet lackluster object is her "
+"most appropriate justification."
+
+msgid ""
+"前萨卡兹佣兵头目，伊内丝。曾短暂参与卡兹戴尔的混乱内战，直到切尔诺伯格事件时，她借助假死彻底消失在所有人的视野中。此后，伊内丝隐藏了自己的踪迹，但通过最近的伦蒂尼姆事件，她正式与罗德岛恢复了联系。期间她经历了什么无从查验，最后在阿斯卡纶的担保下与罗德岛签订了战略合作条款。"
+msgstr ""
+"Former Sarkaz mercenary, Ines. She briefly participated in Kazdel's chaotic "
+"civil war, until faking her death and disappearing during the Chernobog "
+"Incident. She proceeded to conceal her tracks, but ultimately reestablished "
+"contact with Rhodes Island during the Londinium Incident. The details of her"
+" experiences in the meantime remain unverifiable, but with Ascalon's "
+"guarantee, she ultimately signed strategic cooperation terms with Rhodes "
+"Island."
+
+msgid "黑色短袖战地风夹克"
+msgstr "Black short sleeved battlefield jacket"
+
+msgid "深色包臀裙"
+msgstr "Dark hip-covering skirt"
+
+msgid "褐色护膝"
+msgstr "Brown leggings"
+
+msgid "薇薇安娜"
+msgstr "Viviana"
+
+msgid "一枚风干的金盏花书签。与书同行的旅程漫长而遥远，在离席暂别前，让它成为驻足于此的信标吧。"
+msgstr ""
+"A dried marigold bookmark. A book's journey is long and far; let it mark a "
+"temporary repose, the place to return to after stepping away."
+
+msgid ""
+"薇薇安娜·德罗斯特，莱塔尼亚施彤领选帝侯霍赫贝格家族后裔，前卡西米尔人气竞技骑士。经耀骑士临光举荐，在罗德岛登记为合作干员。\n"
+"擅长使用光影类源石技艺，配以华丽的剑术技巧，能在战场上灵活御敌。驻留本舰期间将为罗德岛提供战术与外勤任务支援。"
+msgstr ""
+"Viviana Droste, descendant of the House of Hochberg's Kurfürst of Sturmland, and formerly a popular competition knight in Kazimierz. At the recommendation of Nearl the Radiant Knight, she has registered as a collaborating operator with Rhodes Island. \n"
+"Proficient in light and shadow-based Arts, she is skilled at fending off enemies on the battlefield. During her time aboard the landship, she will be providing us tactical and field operational support."
+
+msgid "带兜帽披袍"
+msgstr "Hooded robe"
+
+msgid "黑色底色白饰洛丽塔"
+msgstr "Black white lolita"
+
+msgid "白色长筒高跟靴"
+msgstr "White platform high heel boots"
+
+msgid "冰酿"
+msgstr "Coldshot"
+
+msgid "一颗被切割成圆球的冰块，放进杯子里大小刚好。如果想尝尝她的自酿酒，建议加冰稀释，更建议不要尝试。"
+msgstr ""
+"A chunk of ice carved into a globe, a perfect fit for the glass it sits in. "
+"To those interested in trying her homebrew, we suggest you take it on the "
+"rocks to water it down. Or better yet, DON'T try it."
+
+msgid "海伦娜，经杰西卡介绍成为罗德岛的合作干员，为拓荒地办事处提供帮助。"
+msgstr ""
+"Helena, a collaborating operator introduced to Rhodes Island by Jessica, now"
+" assisting with our local office in the frontier."
+
+msgid "露脐短版上衬"
+msgstr "Revealing short shirt"
+
+msgid "黑色包臀裙"
+msgstr "Black hip-covering skirt"
+
+msgid "黑色透肉过膝袜"
+msgstr "Black sheer overknee socks"
+
+msgid "深色长筒靴"
+msgstr "Dark platform boots"
+
+msgid "围裙"
+msgstr "Apron"
+
+msgid "戴菲恩"
+msgstr "Delphine"
+
+msgid "一枚精致的袖扣。温德米尔出身的军人向来军容整洁，一丝不苟，现在她主动将这枚小信物摘下送给你。"
+msgstr ""
+"A refined cufflink. Servicemen of Windermere lineage have always been "
+"fastidious about their martial appearances, with not a hair out of place. "
+"Now, she's removed this small token of her own accord, and gifted it to you."
+
+msgid ""
+"戴菲恩，曾作为情报人员在诺伯特区活动多年，后以典范军成员的身份参与了伦蒂尼姆周边的一系列战役。在维多利亚事件结束后，同罗德岛达成了一系列战略合作条款，为罗德岛驻维多利亚办事处提供协助。"
+msgstr ""
+"Delphine, formerly an active intelligence officer in Norport for many years,"
+" later participating in a series of military campaigns near Londinium as a "
+"member of the Exemplars. After the Victoria incident, she worked out a "
+"number of cooperative strategic agreements with Rhodes Island to assist the "
+"Victorian branch office."
+
+msgid "维多利亚式军装"
+msgstr "Victorian military uniform"
+
+msgid "黑色超短裤"
+msgstr "Black ultrashorts"
+
+msgid "黑色踝袜"
+msgstr "Black revealing socks"
+
+msgid "锏"
+msgstr "Degenbrecher"
+
+msgid "一个只能拨通她的号码的通讯终端。和普通的通讯终端在外表上明明没什么区别，却能给人无上的安心感。"
+msgstr ""
+
+msgid ""
+"前卡西米尔骑士竞赛三届冠军，喀兰贸易总裁恩希欧迪斯的贴身保镖。基于博士与恩希欧迪斯签订的合同，无限期作为干员加入罗德岛。\n"
+"现作为近卫干员活跃于各种任务之中，以其强大无比的战斗力为其他干员开辟道路。\n"
+"\n"
+"我收到一些反馈，说大部分任务有她在的话，和野营没什么区别。这确实不怪博士，她主动去的，而且看起来她还挺乐在其中的。呃，那我也没什么理由反对，不是吗？"
+msgstr ""
+
+msgid "深色莱塔尼亚军装"
+msgstr "Dark Leithanien military uniform"
+
+msgid "深色西装裤"
+msgstr "Dark suit pants"
+
+msgid "雪地军靴"
+msgstr "Snowfield military boots"
+
+msgid "莱伊"
+msgstr "Ray"
+
+msgid "一本看不出制作者意图的剪贴册。里面的“奇异生物照片”似乎也是拼贴合成的图像，要不要告诉她呢？"
+msgstr ""
+
+msgid ""
+"莱伊，雷姆必拓人，无稳定职业，较常从事在雷姆必拓被称为“探井人”的矿井安保工作。偶遇故地重游的阿米娅、博士与暴行后，主动申请加入罗德岛。现作为罗德岛驻舰干员参与各类安保、战斗及勘探任务。"
+msgstr ""
+
+msgid "露脐黑色短衬衫"
+msgstr "Revealing black short shirt"
+
+msgid "深色热裤"
+msgstr "Dark hot pants"
+
+msgid "黑色登山靴"
+msgstr "Black mountaineering boots"
+
+msgid "一支手工制作的竹笛，声音清亮，但音准稍稍有些问题。"
+msgstr ""
+
+msgid "小满，来自炎国北部农业重镇大荒城的普通女孩，在管理牧兽方面颇有心得。跟随黍以访客身份暂居罗德岛。"
+msgstr ""
+
+msgid "绿色长褂"
+msgstr "Green long coat"
+
+msgid "墨绿色短裙"
+msgstr "Dark green skirt"
+
+msgid "短筒袜"
+msgstr "Short socks"
+
+msgid "深色运动鞋"
+msgstr "Dark sneakers"
+
+msgid "宿舍9区入口"
+msgstr "Zone 9 Entrance"
+
+msgid "宿舍9区"
+msgstr "Zone 9"
+
+msgid "宿舍9区内走廊"
+msgstr "Inner Corridor"
+
+msgid "宿舍9区外走廊"
+msgstr "Outer Corridor"
+
+msgid "宿舍9区管理员房间"
+msgstr "Manager's Room"
