@@ -452,6 +452,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身清零要挤奶状态 """
     HYPNOSIS_FLAG_TO_0 = 495
     """ 属性_特殊flag 自身清零催眠系的flag状态 """
+    TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 496
+    """ 属性_特殊flag 交互对象清零对玩家的愤怒状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

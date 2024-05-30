@@ -96,6 +96,7 @@ def chara_handle_instruct_common_settle(
         target_character_id: int = 0,
         behevior_id: int = 0,
         duration: int = 0,
+        judge: str = "",
         game_update_flag: bool = False,
 ):
     """
@@ -106,10 +107,27 @@ def chara_handle_instruct_common_settle(
     target_character_id -- 指定目标角色id，默认=0时没有指定目标角色\n
     behevior_id -- 行动id，默认=0时为同状态id\n
     duration -- 行动持续时间，默认=0时进行查表获得\n
+    judge -- 进行指令判断，默认为空\n
+    game_update_flag -- 是否更新游戏流程，默认=False\n
     """
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
     character.init_character_behavior_start_time(character_id, cache.game_time)
     character_data: game_type.Character = cache.character_data[character_id]
+    # 如果有指定目标角色id，则设置目标角色id
+    if target_character_id != 0:
+        character_data.target_character_id = target_character_id
+    # 如果有判断条件，则先进行判断
+    if judge != "":
+        judge_list = character.calculation_instuct_judege(character_id, character_data.target_character_id, judge)
+        if judge_list[0] == 0:
+            if judge == "初级骚扰":
+                state_id = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+            elif judge == "严重骚扰":
+                state_id = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+            elif judge == "亲吻":
+                state_id = constant.CharacterStatus.STATUS_KISS_FAIL
+        elif judge_list[0] == -1:
+            return 0
     character_data.state = state_id
     # 如果行动id为0，则行动id等于状态id
     if behevior_id == 0:
@@ -122,9 +140,6 @@ def chara_handle_instruct_common_settle(
         if duration <= 0:
             duration = 1
     character_data.behavior.duration = duration
-    # 如果有指定目标角色id，则设置目标角色id
-    if target_character_id != 0:
-        character_data.target_character_id = target_character_id
     # 仅在玩家指令时更新游戏流程
     if character_id == 0 or game_update_flag:
         update.game_update_flow(duration)
@@ -893,12 +908,7 @@ def handle_take_shower():
 )
 def handle_stroke():
     """处理身体接触指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.STROKE
-    character_data.state = constant.CharacterStatus.STATUS_STROKE
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_STROKE)
 
 
 @add_instruct(
@@ -913,12 +923,7 @@ def handle_stroke():
 )
 def handle_massage():
     """处理按摩指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.MASSAGE
-    character_data.state = constant.CharacterStatus.STATUS_MASSAGE
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MASSAGE)
 
 
 # @add_instruct(
@@ -1168,12 +1173,7 @@ def handle_wait_6_hour():
 )
 def handle_make_coffee():
     """处理泡咖啡指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 15
-    character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE
-    character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE
-    update.game_update_flow(15)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MAKE_COFFEE)
 
 
 @add_instruct(
@@ -1205,12 +1205,7 @@ def handle_make_coffee_add():
 )
 def handle_ask_make_coffee():
     """处理让对方泡咖啡指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.ASK_MAKE_COFFEE
-    character_data.state = constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE
-    character_data.behavior.duration = 15
-    update.game_update_flow(15)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE)
 
 
 @add_instruct(
@@ -1317,14 +1312,9 @@ def handle_apologize():
     target_data.angry_point -= value
     # 判定是否不生气了
     if target_data.angry_point <= 30:
-        character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE
-        character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE
-        target_data.sp_flag.angry_with_player = False
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE)
     else:
-        character_data.behavior.behavior_id = constant.Behavior.APOLOGIZE_FAILED
-        character_data.state = constant.CharacterStatus.STATUS_APOLOGIZE_FAILED
-    character_data.behavior.duration = 60
-    update.game_update_flow(60)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE_FAILED)
 
 
 @add_instruct(
@@ -1349,10 +1339,7 @@ def handle_listen_complaint():
     value = 10 + adjust * 10
     # 减愤怒值
     target_data.angry_point -= value
-    character_data.behavior.behavior_id = constant.Behavior.LISTEN_COMPLAINT
-    character_data.state = constant.CharacterStatus.STATUS_LISTEN_COMPLAINT
-    character_data.behavior.duration = 45
-    update.game_update_flow(45)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LISTEN_COMPLAINT)
 
 
 @add_instruct(
@@ -1379,12 +1366,7 @@ def handle_originium_arts():
 )
 def handle_listen_inflation():
     """处理听肚子里的动静指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.LISTEN_INFLATION
-    character_data.state = constant.CharacterStatus.STATUS_LISTEN_INFLATION
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LISTEN_INFLATION)
 
 
 @add_instruct(
@@ -1399,12 +1381,7 @@ def handle_listen_inflation():
 )
 def handle_play_with_child():
     """处理一起玩耍指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_WITH_CHILD
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_WITH_CHILD
-    character_data.behavior.duration = 30
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_WITH_CHILD)
 
 
 @add_instruct(
@@ -1590,12 +1567,7 @@ def handle_drink_alcohol():
 )
 def handle_pee():
     """处理解手指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.PEE
-    character_data.state = constant.CharacterStatus.STATUS_PEE
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PEE)
 
 
 @add_instruct(
@@ -1896,10 +1868,7 @@ def handle_singing():
                 return
             elif yrn == yes_draw.return_text:
                 break
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.SINGING
-    character_data.state = constant.CharacterStatus.STATUS_SINGING
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SINGING)
 
 
 @add_instruct(
@@ -1934,10 +1903,7 @@ def handle_play_instrument():
                 return
             elif yrn == yes_draw.return_text:
                 break
-    character_data.behavior.duration = 10
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
-    update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_INSTRUMENT)
 
 
 @add_instruct(
@@ -1951,12 +1917,8 @@ def handle_play_instrument():
 )
 def handle_watch_movie():
     """处理看电影指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 120
-    character_data.behavior.behavior_id = constant.Behavior.WATCH_MOVIE
-    character_data.state = constant.CharacterStatus.STATUS_WATCH_MOVIE
-    update.game_update_flow(120)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WATCH_MOVIE)
+
 
 @add_instruct(
     constant.Instruct.PHOTOGRAPHY,
@@ -1969,12 +1931,7 @@ def handle_watch_movie():
 )
 def handle_photography():
     """处理摄影指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PHOTOGRAPHY
-    character_data.state = constant.CharacterStatus.STATUS_PHOTOGRAPHY
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PHOTOGRAPHY)
 
 
 @add_instruct(
@@ -1988,12 +1945,7 @@ def handle_photography():
 )
 def handle_play_water():
     """处理玩水指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_WATER
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_WATER
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_WATER)
 
 
 @add_instruct(
@@ -2008,12 +1960,7 @@ def handle_play_water():
 )
 def handle_play_chess():
     """处理下棋指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_CHESS
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_CHESS
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CHESS)
 
 
 @add_instruct(
@@ -2028,12 +1975,7 @@ def handle_play_chess():
 )
 def handle_play_mahjong():
     """处理打麻将指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_MAHJONG
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_MAHJONG
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_MAHJONG)
 
 
 @add_instruct(
@@ -2048,12 +1990,7 @@ def handle_play_mahjong():
 )
 def handle_play_cards():
     """处理打牌指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_CARDS
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_CARDS
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CARDS)
 
 
 @add_instruct(
@@ -2067,12 +2004,7 @@ def handle_play_cards():
 )
 def handle_rehearse_dance():
     """处理排演舞剧指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 120
-    character_data.behavior.behavior_id = constant.Behavior.REHEARSE_DANCE
-    character_data.state = constant.CharacterStatus.STATUS_REHEARSE_DANCE
-    update.game_update_flow(120)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REHEARSE_DANCE)
 
 
 @add_instruct(
@@ -2086,12 +2018,7 @@ def handle_rehearse_dance():
 )
 def handle_play_arcade_game():
     """处理玩街机游戏指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_ARCADE_GAME
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME)
 
 
 @add_instruct(
@@ -2118,12 +2045,7 @@ def handle_swimming():
 )
 def handle_taste_wine():
     """处理品酒指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.TASTE_WINE
-    character_data.state = constant.CharacterStatus.STATUS_TASTE_WINE
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TASTE_WINE)
 
 
 @add_instruct(
@@ -2137,12 +2059,7 @@ def handle_taste_wine():
 )
 def handle_taste_tea():
     """处理品茶指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.TASTE_TEA
-    character_data.state = constant.CharacterStatus.STATUS_TASTE_TEA
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TASTE_TEA)
 
 
 @add_instruct(
@@ -2156,12 +2073,7 @@ def handle_taste_tea():
 )
 def handle_taste_coffee():
     """处理品咖啡指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.TASTE_COFFEE
-    character_data.state = constant.CharacterStatus.STATUS_TASTE_COFFEE
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TASTE_COFFEE)
 
 
 @add_instruct(
@@ -2175,12 +2087,7 @@ def handle_taste_coffee():
 )
 def handle_taste_dessert():
     """处理品尝点心指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.TASTE_DESSERT
-    character_data.state = constant.CharacterStatus.STATUS_TASTE_DESSERT
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TASTE_DESSERT)
 
 
 @add_instruct(
@@ -2196,12 +2103,7 @@ def handle_taste_dessert():
 )
 def handle_taste_food():
     """处理品尝美食指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.TASTE_FOOD
-    character_data.state = constant.CharacterStatus.STATUS_TASTE_FOOD
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TASTE_FOOD)
 
 
 @add_instruct(
@@ -2215,12 +2117,7 @@ def handle_taste_food():
 )
 def handle_play_house():
     """处理过家家指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.PLAY_HOUSE
-    character_data.state = constant.CharacterStatus.STATUS_PLAY_HOUSE
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_HOUSE)
 
 
 @add_instruct(
@@ -2234,12 +2131,7 @@ def handle_play_house():
 )
 def handle_style_hair():
     """处理修整发型指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.STYLE_HAIR
-    character_data.state = constant.CharacterStatus.STATUS_STYLE_HAIR
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_STYLE_HAIR)
 
 
 @add_instruct(
@@ -2253,12 +2145,7 @@ def handle_style_hair():
 )
 def handle_full_body_styling():
     """处理全身造型服务指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 120
-    character_data.behavior.behavior_id = constant.Behavior.FULL_BODY_STYLING
-    character_data.state = constant.CharacterStatus.STATUS_FULL_BODY_STYLING
-    update.game_update_flow(120)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FULL_BODY_STYLING)
 
 
 @add_instruct(
@@ -2272,12 +2159,7 @@ def handle_full_body_styling():
 )
 def handle_soak_feet():
     """处理泡脚指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.SOAK_FEET
-    character_data.state = constant.CharacterStatus.STATUS_SOAK_FEET
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SOAK_FEET)
 
 
 @add_instruct(
@@ -2291,12 +2173,7 @@ def handle_soak_feet():
 )
 def handle_steam_sauna():
     """处理蒸桑拿指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.STEAM_SAUNA
-    character_data.state = constant.CharacterStatus.STATUS_STEAM_SAUNA
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_STEAM_SAUNA)
 
 
 @add_instruct(
@@ -2310,12 +2187,7 @@ def handle_steam_sauna():
 )
 def handle_hydrotherapy_treatment():
     """处理水疗护理指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.HYDROTHERAPY_TREATMENT
-    character_data.state = constant.CharacterStatus.STATUS_HYDROTHERAPY_TREATMENT
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYDROTHERAPY_TREATMENT)
 
 
 @add_instruct(
@@ -2329,12 +2201,7 @@ def handle_hydrotherapy_treatment():
 )
 def handle_onsen_bath():
     """处理泡温泉指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.ONSEN_BATH
-    character_data.state = constant.CharacterStatus.STATUS_ONSEN_BATH
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ONSEN_BATH)
 
 
 @add_instruct(
@@ -2363,12 +2230,7 @@ def handle_aromatherapy():
 )
 def handle_official_work():
     """处理处理公务指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
-    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_OFFICIAL_WORK)
 
 
 @add_instruct(
@@ -2437,12 +2299,7 @@ def handle_visitor_system():
 )
 def handle_invite_visitor():
     """处理邀请访客指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.INVITE_VISITOR
-    character_data.state = constant.CharacterStatus.STATUS_INVITE_VISITOR
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_INVITE_VISITOR)
 
 
 @add_instruct(
@@ -2465,12 +2322,7 @@ def handle_prts():
 )
 def handle_training():
     """处理战斗训练指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 120
-    character_data.behavior.behavior_id = constant.Behavior.TRAINING
-    character_data.state = constant.CharacterStatus.STATUS_TRAINING
-    update.game_update_flow(120)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TRAINING)
 
 
 @add_instruct(
@@ -2483,12 +2335,7 @@ def handle_training():
 )
 def handle_exercise():
     """处理锻炼身体指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.EXERCISE
-    character_data.state = constant.CharacterStatus.STATUS_EXERCISE
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EXERCISE)
 
 
 @add_instruct(
@@ -2502,12 +2349,7 @@ def handle_exercise():
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
-    character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
-    update.game_update_flow(30)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CURE_PATIENT)
 
 
 @add_instruct(
@@ -2520,12 +2362,7 @@ def handle_cure_patient():
 )
 def handle_recruit():
     """处理招募干员指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.RECRUIT
-    character_data.state = constant.CharacterStatus.STATUS_RECRUIT
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_RECRUIT)
 
 
 @add_instruct(
@@ -2571,12 +2408,7 @@ def handle_confim_recruit():
 )
 def handle_maintenance_facilities():
     """处理维护设施指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.MAINTENANCE_FACILITIES
-    character_data.state = constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES)
 
 
 @add_instruct(
@@ -2589,12 +2421,7 @@ def handle_maintenance_facilities():
 )
 def handle_repair_equipment():
     """处理维修装备指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data = cache.character_data[0]
-    character_data.behavior.duration = 60
-    character_data.behavior.behavior_id = constant.Behavior.REPAIR_EQUIPMENT
-    character_data.state = constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT)
 
 
 # 以下为猥亵#
@@ -2614,6 +2441,7 @@ def handle_embrace():
     if character.calculation_instuct_judege(0, character_data.target_character_id, _("初级骚扰"))[0]:
         character_data.behavior.behavior_id = constant.Behavior.EMBRACE
         character_data.state = constant.CharacterStatus.STATUS_EMBRACE
+        
     else:
         character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
         character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
