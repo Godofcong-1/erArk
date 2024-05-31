@@ -11052,8 +11052,16 @@ msgstr ""
 msgid "调香师"
 msgstr ""
 
+#: .\data\character\0181_调香师.csv:13
+msgid "富有米诺斯古典时代气息的双耳花瓶。需赠送者本人定期更换新鲜花卉。"
+msgstr ""
+
 #: .\data\character\0181_调香师.csv:14
 msgid "调香师莱娜，米诺斯大家族出身，家境殷实，不谙世事。虽然种族特性以听觉灵敏著称，但调香师的嗅觉更在其上，因此在香料调制上有着极高天赋。她通过正常应聘程序来到罗德岛，作为休养设施“疗养庭院”的管理人为其他干员提供支援。"
+msgstr ""
+
+#: .\data\character\0181_调香师.csv:15
+msgid "#e3b9a1"
 msgstr ""
 
 #: .\data\character\0183_地灵.csv:4
