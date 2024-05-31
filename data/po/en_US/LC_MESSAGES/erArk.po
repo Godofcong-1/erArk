@@ -7359,7 +7359,7 @@ msgid "乌萨斯学生活动室"
 msgstr "Activity Room"
 
 msgid "香熏治疗室"
-msgstr "Aromatherapy Treatment Room"
+msgstr "Aromatherapy"
 
 msgid "莱娜的憩所"
 msgstr "Lena's Rest"
@@ -7371,7 +7371,7 @@ msgid "农田"
 msgstr "Farmland"
 
 msgid "磐蟹养殖场"
-msgstr "Metal Crab Breeding Farm"
+msgstr "Metal Crab Farm"
 
 msgid "小树林"
 msgstr "Grove"
@@ -16500,7 +16500,7 @@ msgid "濒毁的匕首"
 msgstr "Near broken dagger"
 
 msgid "浊心斯卡蒂"
-msgstr "Skadi the Corrupting Heart"
+msgstr "Skadi Corrupting Heart"
 
 msgid "一根软骨形成的弯曲尖刺。随着淡蓝色的液体自刺尖滴滴坠落，实验生物的生理结构剧烈地转化了。"
 msgstr ""
@@ -16567,7 +16567,7 @@ msgid "在沙滩上行走需要这种东西吗"
 msgstr "Why you need this on beaches"
 
 msgid "耀骑士临光"
-msgstr "Nearl the Radiant Knight"
+msgstr "Nearl Radiant Knight"
 
 msgid "恢复光彩的卡西米尔骑士纹章。被精心擦拭过，天马的金羽射出凛然辉光。"
 msgstr ""
@@ -16596,7 +16596,7 @@ msgid "皮质长筒靴"
 msgstr "Leather platform boots"
 
 msgid "纯烬艾雅法拉"
-msgstr "Eyjafjalla the Hvit Aska"
+msgstr "Eyjafjalla Hvit Aska"
 
 msgid "一块又小又轻的火山石，投入水中后会上下翻滚，嗞嗞的气泡声轻响不绝。这即是生命之歌。"
 msgstr ""
@@ -16736,7 +16736,7 @@ msgid "凉鞋"
 msgstr "Sandals"
 
 msgid "淬羽赫默"
-msgstr "Silence the Paradigmatic"
+msgstr "Silence Paradigmatic"
 
 msgid "一副稍显古旧的圆眼镜。有人说戴上眼镜的她会少几分锐气，她于是将眼镜交给你来保管。在罗德岛上，她希望自己还是过去的自己。"
 msgstr ""
