@@ -933,6 +933,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_time -- 指定时间
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
+    if now_character_data.target_character_id not in cache.character_data:
+        now_character_data.target_character_id = character_id
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
     add_time = now_character_data.behavior.duration
     # 真实的开始时间是当前角色行动开始时间和玩家行动开始时间中更晚的那个
