@@ -20,12 +20,11 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-def select_cross_section_image():
+def draw_cross_section_image():
     """
-    选择断面图
+    选择并绘制断面图
     """
     pl_character_data: game_type.Character = cache.character_data[0]
-    target_character_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
     # 如果没有目标角色则返回
     if pl_character_data.target_character_id == 0:
         return
@@ -54,7 +53,5 @@ def select_cross_section_image():
     # 判断阴茎位置
     if handle_premise.handle_penis_in_t_vagina(0):
         img_name += "_插入"
-    # cross_section_draw = draw.ImageDraw(img_name)
-    # cross_section_draw.draw()
-    # line_feed.draw()
-    # line_feed.draw()
+    cross_section_draw = draw.ImageDraw(img_name)
+    cross_section_draw.draw()

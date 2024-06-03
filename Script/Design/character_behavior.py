@@ -29,7 +29,6 @@ from Script.Design import (
     handle_talent,
     handle_ability,
     update,
-    cross_section_image,
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import draw_event_text_panel, ejaculation_panel
@@ -449,10 +448,6 @@ def judge_character_status(character_id: int) -> int:
             start_event_draw = son_event_draw
         else:
             end_event_draw = son_event_draw
-
-    # 玩家在V性交时显示断面图
-    if character_id == 0 and handle_premise.handle_last_cmd_sex(0):
-        cross_section_image.select_cross_section_image()
 
     # 如果有事件则显示事件，否则显示口上
     if start_event_draw != None:

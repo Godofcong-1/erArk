@@ -30,5 +30,8 @@ data/ScenePath
 # 存档
 save
 
+# 原图
+image/断面图/原图
+
 # 错误log
 error.log

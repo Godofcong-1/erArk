@@ -12,7 +12,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_instruct, handle_premise
+from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image
 from Script.Config import game_config
 import logging, time
 
@@ -561,6 +561,14 @@ class CharacterImageListDraw:
             now_draw = CharacterImageButton(player_data.target_character_id, self.width)
             now_draw.draw()
             self.return_list.append(now_draw.return_text)
+
+            # H状态下，且玩家开启了腔内透视
+            if handle_premise.handle_is_h(0) and handle_premise.handle_intermediate_penetrating_vision(0) and handle_premise.handle_penetrating_vision_on(0):
+                text_draw.text = "    "
+                text_draw.draw()
+                cross_section_image.draw_cross_section_image()
+                text_draw.text = "  "
+                text_draw.draw()
 
             text_draw = draw.NormalDraw()
             text_draw.width = 1
