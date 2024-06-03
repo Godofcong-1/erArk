@@ -11533,8 +11533,7 @@ def handle_last_cmd_sex(character_id: int) -> int:
         str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
         str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
-        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
-        str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_OS_CARESS)
+        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS)
     }
 
     for i in range(len_input):

@@ -450,6 +450,12 @@ def judge_character_status(character_id: int) -> int:
         else:
             end_event_draw = son_event_draw
 
+    # 玩家在V性交时显示断面图
+    if character_id == 0 and handle_premise.handle_last_cmd_sex(0):
+        cross_section_draw = draw.ImageDraw("标准状态")
+        # cross_section_draw.draw()
+        line_feed.draw()
+
     # 如果有事件则显示事件，否则显示口上
     if start_event_draw != None:
         start_event_draw.draw()
