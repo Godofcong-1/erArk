@@ -986,6 +986,16 @@ semen_enema_end,SEMEN_ENEMA_END,污浊_身体,已精液灌肠
 t_semen_enema_end,T_SEMEN_ENEMA_END,污浊_身体,交互对象已精液灌肠
 t_hair_semen,T_HAIR_SEMEN,污浊_身体,交互对象当前头发有精液
 t_womb_semen,T_WOMB_SEMEN,污浊_身体,交互对象当前子宫有精液
+v_semen_g_1,VW_SEMEN_G_1,污浊_身体,自身当前小穴和子宫总精液量大于1ml
+t_v_semen_g_1,T_VW_SEMEN_G_1,污浊_身体,交互对象当前小穴和子宫总精液量大于1ml
+v_semen_le_200,VW_SEMEN_LE_200,污浊_身体,自身当前小穴和子宫总精液量小于等于200ml
+t_v_semen_le_200,T_VW_SEMEN_LE_200,污浊_身体,交互对象当前小穴和子宫总精液量小于等于200ml
+v_semen_g_200,VW_SEMEN_G_200,污浊_身体,自身当前小穴和子宫总精液量大于200ml
+t_v_semen_g_200,T_VW_SEMEN_G_200,污浊_身体,交互对象当前小穴和子宫总精液量大于200ml
+v_semen_le_1000,VW_SEMEN_LE_1000,污浊_身体,自身当前小穴和子宫总精液量小于等于1000ml
+t_v_semen_le_1000,T_VW_SEMEN_LE_1000,污浊_身体,交互对象当前小穴和子宫总精液量小于等于1000ml
+v_semen_g_1000,VW_SEMEN_G_1000,污浊_身体,自身当前小穴和子宫总精液量大于1000ml
+t_v_semen_g_1000,T_VW_SEMEN_G_1000,污浊_身体,交互对象当前小穴和子宫总精液量大于1000ml
 
 hat_semen,HAT_SEMEN,污浊_服装,自身当前帽子有精液
 t_hat_semen,T_HAT_SEMEN,污浊_服装,交互对象当前帽子有精液

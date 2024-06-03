@@ -4,6 +4,7 @@ from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type, get_text
 from Script.Design import map_handle, game_time, attr_calculation, character
 from Script.Config import normal_config, game_config
+from Script.UI.Panel import dirty_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -13553,6 +13554,160 @@ def handle_t_womb_semen(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dirty.body_semen[7][1]:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.VW_SEMEN_G_1)
+def handle_vw_semen_g_1(character_id: int) -> int:
+    """
+    自身当前小穴和子宫总精液量大于1ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_id)
+    if all_semen_count > 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_VW_SEMEN_G_1)
+def handle_t_vw_semen_g_1(character_id: int) -> int:
+    """
+    交互对象当前小穴和子宫总精液量大于1ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_data.target_character_id)
+    if all_semen_count > 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.VW_SEMEN_LE_200)
+def handle_vw_semen_le_200(character_id: int) -> int:
+    """
+    自身当前小穴和子宫总精液量小于等于200ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_id)
+    if all_semen_count <= 200:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_VW_SEMEN_LE_200)
+def handle_t_vw_semen_le_200(character_id: int) -> int:
+    """
+    交互对象当前小穴和子宫总精液量小于等于200ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_data.target_character_id)
+    if all_semen_count <= 200:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.VW_SEMEN_G_200)
+def handle_vw_semen_g_200(character_id: int) -> int:
+    """
+    自身当前小穴和子宫总精液量大于200ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_id)
+    if all_semen_count > 200:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_VW_SEMEN_G_200)
+def handle_t_vw_semen_g_200(character_id: int) -> int:
+    """
+    交互对象当前小穴和子宫总精液量大于200ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_data.target_character_id)
+    if all_semen_count > 200:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.VW_SEMEN_LE_1000)
+def handle_vw_semen_le_1000(character_id: int) -> int:
+    """
+    自身当前小穴和子宫总精液量小于等于1000ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_id)
+    if all_semen_count <= 1000:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_VW_SEMEN_LE_1000)
+def handle_t_vw_semen_le_1000(character_id: int) -> int:
+    """
+    交互对象当前小穴和子宫总精液量小于等于1000ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_data.target_character_id)
+    if all_semen_count <= 1000:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.VW_SEMEN_G_1000)
+def handle_vw_semen_g_1000(character_id: int) -> int:
+    """
+    自身当前小穴和子宫总精液量大于1000ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_id)
+    if all_semen_count > 1000:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_VW_SEMEN_G_1000)
+def handle_t_vw_semen_g_1000(character_id: int) -> int:
+    """
+    交互对象当前小穴和子宫总精液量大于1000ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    all_semen_count = dirty_panel.get_v_and_w_semen_count(character_data.target_character_id)
+    if all_semen_count > 1000:
         return 1
     return 0
 

@@ -24,6 +24,19 @@ bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚
 """ 绳子捆绑列表 """
 
 
+def get_v_and_w_semen_count(character_id: int) -> int:
+    """
+    获取角色的小穴和子宫精液总量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 精液总量
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    all_semen_count = character_data.dirty.body_semen[6][1] + character_data.dirty.body_semen[7][1]
+    return all_semen_count
+
+
 class Dirty_Panel:
     """
     用于显示污浊界面面板对象
