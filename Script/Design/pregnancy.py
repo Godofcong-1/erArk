@@ -257,7 +257,7 @@ def check_rearing_complete(character_id: int):
         # 90天在游戏内实际体验是30天
         if past_day >= 90:
             character_data.talent[24] = 0
-            character_data.talent[26] = 0
+            character_data.talent[27] = 0
             character_handle.get_new_character(child_id)
             character_data.second_behavior[1319] = 1
             talk.must_show_talk_check(character_id)
