@@ -967,6 +967,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         elif attribute_name == "trust":
             final_character_data.trust = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
         elif attribute_name == "flag":
+            final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
             final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
         else:
             # 对属性进行操作
