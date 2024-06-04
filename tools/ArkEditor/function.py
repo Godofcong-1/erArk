@@ -60,6 +60,31 @@ def read_CVP(cvp_value_str: str):
     return cvp_str
 
 
+def read_CSE(cse_value_str: str):
+    """读取CSE字符串 """
+    cse_str_list = cse_value_str.split("_")
+    # print(f"cse_str_list = {cse_str_list}")
+    cse_str_list[0] = cse_str_list[0].replace("CSE", "综合指令状态结算 玩家对")
+    cse_str_list[1] = cse_str_list[1].replace("A1", "自己")
+    cse_str_list[1] = cse_str_list[1].replace("A2", "交互对象")
+
+    # 将cse_str_list转为str的cse_str
+    cse_str = ""
+    for i in cse_str_list:
+        cse_str += i
+    # print(f"debug cse_str = {cse_str}, cse_str_list = {cse_str_list}")
+    # 处理A3部分
+    if "A3" in cse_str:
+        a3_value = cse_str.split("A3|")[1].split("_")[0]
+        cse_str = cse_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
+    # 然后处理B属性部分
+    # print(f"debug cse_str_list[2] = {cse_str_list[2]}")
+    cse_b_value = cache_control.status_data[(cse_str_list[2])]
+    cse_str = cse_str.replace(f"{cse_str_list[2]}", f" 进行 {cse_b_value}")
+    # print(f"debug cse_str = {cse_str}")
+    return cse_str
+
+
 def save_data():
     """保存文件"""
     if len(cache_control.now_file_path):

@@ -75,7 +75,10 @@ def load_event_data():
                 del now_event.premise[premise]
             delete_effect_list = []
             for effect in now_event.effect:
-                if effect not in cache_control.effect_data:
+                if "CSE" in effect:
+                    cse_str = function.read_CSE(effect)
+                    cache_control.effect_data[effect] = cse_str
+                elif effect not in cache_control.effect_data:
                     delete_effect_list.append(effect)
             for effect in delete_effect_list:
                 del now_event.effect[effect]

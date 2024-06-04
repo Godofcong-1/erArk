@@ -128,28 +128,28 @@ class CSEMenu(QDialog):
         self.resize(1000,50)
 
         # 一段说明文字，用来介绍各个功能，位置在最上面的第一行
-        self.cvp_text = QLabel("用于实现指令状态方面的综合型万用结算，目前仅支持触发玩家的指令")
-        self.cvp_text.setFont(self.font)
-        self.layout.addWidget(self.cvp_text)
+        self.cse_text = QLabel("用于实现指令状态方面的综合型万用结算，目前仅支持触发玩家的指令")
+        self.cse_text.setFont(self.font)
+        self.layout.addWidget(self.cse_text)
 
         self.text_label = QLabel("玩家对")
         self.text_label.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.text_label)
 
         # A数值为对象，仅在"角色id为"时出现a2文本框
-        self.cvp_a = QComboBox()
-        # self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
-        self.cvp_a.addItems(["自己", "交互对象"])
-        self.cvp_a.setCurrentIndex(0)
-        self.cvp_a.setFont(self.font)
-        self.ABCD_button_layout.addWidget(self.cvp_a)
-        self.cvp_a2 = QTextEdit("0")
-        self.cvp_a2.setFont(self.font)
-        self.cvp_a2.setFixedHeight(32)
-        self.cvp_a2.setFixedWidth(50)
-        self.cvp_a2.setVisible(False)
-        self.ABCD_button_layout.addWidget(self.cvp_a2)
-        self.cvp_a.currentIndexChanged.connect(self.change_a2)
+        self.cse_a = QComboBox()
+        # self.cse_a.addItems(["自己", "交互对象", "角色id为"])
+        self.cse_a.addItems(["自己", "交互对象"])
+        self.cse_a.setCurrentIndex(0)
+        self.cse_a.setFont(self.font)
+        self.ABCD_button_layout.addWidget(self.cse_a)
+        self.cse_a2 = QTextEdit("0")
+        self.cse_a2.setFont(self.font)
+        self.cse_a2.setFixedHeight(32)
+        self.cse_a2.setFixedWidth(50)
+        self.cse_a2.setVisible(False)
+        self.ABCD_button_layout.addWidget(self.cse_a2)
+        self.cse_a.currentIndexChanged.connect(self.change_a2)
 
         # 在ABCD_button_layout中加入一个文本的空白label，用来占位
         self.text_label = QLabel(" 使用指令 ")
@@ -229,25 +229,25 @@ class CSEMenu(QDialog):
     def ok(self):
         """点击确定按钮"""
         # 获得当前abcd的值
-        cvp_a = self.cvp_a.currentText()
-        if cvp_a == "自己":
-            cvp_a_value = "A1"
-        elif cvp_a == "交互对象":
-            cvp_a_value = "A2"
-        elif cvp_a == "角色id为":
-            cvp_a_value = "A3|" + self.cvp_a2.toPlainText()
-            cvp_a = "角色id为" + self.cvp_a2.toPlainText()
+        cse_a = self.cse_a.currentText()
+        if cse_a == "自己":
+            cse_a_value = "A1"
+        elif cse_a == "交互对象":
+            cse_a_value = "A2"
+        elif cse_a == "角色id为":
+            cse_a_value = "A3|" + self.cse_a2.toPlainText()
+            cse_a = "角色id为" + self.cse_a2.toPlainText()
 
-        # cvp_b为状态的名字，cvp_b_value为状态的cid
-        cvp_b = self.status_menu.title()
+        # cse_b为状态的名字，cse_b_value为状态的cid
+        cse_b = self.status_menu.title()
         for cid in cache_control.status_data:
-            if cache_control.status_data[cid] == cvp_b:
-                cvp_b_value = cid
+            if cache_control.status_data[cid] == cse_b:
+                cse_b_value = cid
                 break
 
         # 拼接结算字符串
-        cse_str = f"综合指令状态结算  {cvp_a}{cvp_b}"
-        cse_value_str = f"CSE_{cvp_a_value}_{cvp_b_value}"
+        cse_str = f"综合指令状态结算  玩家对{cse_a} 进行 {cse_b}"
+        cse_value_str = f"CSE_{cse_a_value}_{cse_b_value}"
         # print(f"debug cse_str: {cse_str}, cse_value_str: {cse_value_str}")
 
         # 更新结算数据
@@ -265,6 +265,6 @@ class CSEMenu(QDialog):
     def change_a2(self, index: int):
         """改变a2的选项"""
         if index == 2:
-            self.cvp_a2.setVisible(True)
+            self.cse_a2.setVisible(True)
         else:
-            self.cvp_a2.setVisible(False)
+            self.cse_a2.setVisible(False)
