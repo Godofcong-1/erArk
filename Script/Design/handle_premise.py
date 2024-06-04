@@ -77,9 +77,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             return 0
         final_character_data = cache.character_data[final_character_id]
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,X信赖,G攻略程度
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1]:
-        type_son_id = int(premise_all_value_list[1][2:])
+        type_son_id = int(premise_all_value_list[1].split("|")[1])
     if premise_all_value_list[1][0] == "A":
         final_value = final_character_data.ability[type_son_id]
     elif premise_all_value_list[1][0] == "T":
@@ -94,7 +94,11 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     elif premise_all_value_list[1][0] == "S":
         final_value = final_character_data.status_data[type_son_id]
     elif premise_all_value_list[1][0] == "F":
-        final_value = final_character_data.favorability[0]
+        if "Flag" in premise_all_value_list[1]:
+            final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
+            final_value = final_character_data.author_flag.chara_int_flag_dict[type_son_id]
+        else:
+            final_value = final_character_data.favorability[0]
     elif premise_all_value_list[1][0] == "X":
         final_value = final_character_data.trust
 

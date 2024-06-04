@@ -283,7 +283,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -363,6 +363,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "G"
         elif cvp_b1 == "时间":
             cvp_b_value = "Time"
+        elif cvp_b1 == "口上用flag":
+            cvp_b_value = "Flag|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -453,4 +455,10 @@ class CVPMenu(QDialog):
         elif index == 9:
             self.cvp_b2.setVisible(False)
             self.cvp_text.setText("时间为一天24小时制，如果要定起止时间的话，可以搭配使用【时间大于等于A】和【时间小于等于B】的两个前提来实现")
+        elif index == 10:
+            self.cvp_b2.clear()
+            # b2提供一个文本框，用来输入flag的编号，最多支持10个flag
+            for i in range(10):
+                self.cvp_b2.addItem(str(i))
+            self.cvp_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持10个flag（即编号为0~9）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
         self.cvp_b = self.cvp_b2

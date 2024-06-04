@@ -927,7 +927,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
 
     # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
     if len(effect_all_value_list[1]) > 1:
-        type_son_id = int(effect_all_value_list[1][2:])
+        type_son_id = int(effect_all_value_list[1].split("|")[1])
 
     # 创建一个字典来映射属性名
     attribute_mapping = {
@@ -937,7 +937,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "E": "experience",
         "S": "status_data",
         "F": "favorability",
-        "X": "trust"
+        "X": "trust",
+        "Flag": "flag"
     }
     
     # 创建一个字典来映射操作
@@ -948,7 +949,10 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     }
     
     # 获取属性名和操作
-    attribute = effect_all_value_list[1][0]
+    if "|" in effect_all_value_list[1]:
+        attribute = effect_all_value_list[1].split("|")[0]
+    else:
+        attribute = effect_all_value_list[1][0]
     operation = effect_all_value_list[2]
     
     # 检查属性名和操作是否在映射字典中
@@ -957,11 +961,13 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         attribute_name = attribute_mapping[attribute]
         operation_func = operation_mapping[operation]
     
-        # 对于好感和信赖，进行特殊处理
+        # 对于好感、信赖和口上用flag，进行特殊处理
         if attribute_name == "favorability":
             final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
         elif attribute_name == "trust":
             final_character_data.trust = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+        elif attribute_name == "flag":
+            final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
         else:
             # 对属性进行操作
             final_character_data[attribute_name][type_son_id] = operation_func(final_character_data[attribute_name][type_son_id], int(effect_all_value_list[3]))

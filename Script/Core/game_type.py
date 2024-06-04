@@ -502,6 +502,19 @@ class ACTION_INFO:
         """ 上次增加射精值的时间 """
 
 
+class AUTHOR_FLAG:
+    """角色作者变量结构体"""
+    def __init__(self):
+        self.chara_int_flag_dict: dict = {}
+        """ 角色的int类型flag字典，最大长度为10，初始化为0 """
+        self.chara_str_flag_dict: dict = {}
+        """ 角色的str类型flag字典 """
+        self.chara_float_flag_dict: dict = {}
+        """ 角色的float类型flag字典 """
+        self.chara_bool_flag_dict: dict = {}
+        """ 角色的bool类型flag字典 """
+
+
 class SPECIAL_FLAG:
     """特殊的flag"""
 
@@ -1016,21 +1029,6 @@ class Character:
         """ 角色口上大小，单位kb """
         self.text_color: str = ""
         """ 角色对话文本颜色 """
-        # self.clothing: Dict[int, Dict[UUID, Clothing]] = {}
-        # """
-        # 角色拥有的服装数据
-        # 服装穿戴位置:服装唯一id:服装数据
-        # """
-        # self.clothing_data: Dict[int, Set] = {}
-        # """
-        # 角色拥有的服装类型数据集合
-        # 服装表id:服装唯一id
-        # """
-        # self.put_on: Dict[int, UUID] = {}
-        # """
-        # 角色已穿戴服装数据
-        # 穿着类型:服装id
-        # """
         # self.item: Set = set()
         # """ 旧：角色拥有的道具id集合 """
         self.item: Dict[int, int] = {}
@@ -1133,6 +1131,8 @@ class Character:
         """ 角色的社会关系 """
         self.hypnosis: HYPNOSIS = HYPNOSIS()
         """ 角色的催眠情况 """
+        self.author_flag: AUTHOR_FLAG = AUTHOR_FLAG()
+        """ 角色口上作者变量 """
 
 
 class Cache:
