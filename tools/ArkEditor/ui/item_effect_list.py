@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout
 from PySide6.QtGui import QFont, QActionGroup
 from PySide6.QtCore import Qt
 import cache_control
-from ui.effect_menu import EffectMenu, CSEMenu
+from ui.effect_menu import EffectMenu, CVEMenu, CSEMenu
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
@@ -35,9 +35,9 @@ class ItemEffectList(QWidget):
         main_layout.addLayout(title_layout)
 
         button_layout2 = QHBoxLayout()
-        # CVE_button = QPushButton("综合型基础数值结算")
-        # CVE_button.clicked.connect(self.CVE)
-        # button_layout2.addWidget(CVE_button)
+        CVE_button = QPushButton("综合型基础数值结算")
+        CVE_button.clicked.connect(self.CVE)
+        button_layout2.addWidget(CVE_button)
         CSE_button = QPushButton("综合指令状态结算")
         CSE_button.clicked.connect(self.CSE)
         button_layout2.addWidget(CSE_button)
@@ -104,6 +104,12 @@ class ItemEffectList(QWidget):
                         break
                 if effect_cid in cache_control.now_event_data[cache_control.now_select_id].effect:
                     del cache_control.now_event_data[cache_control.now_select_id].effect[effect_cid]
+
+    def CVE(self):
+        """展开CVE菜单"""
+        if cache_control.now_select_id != "":
+            menu = CVEMenu()
+            menu.exec()
 
     def CSE(self):
         """展开CSE菜单"""

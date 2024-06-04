@@ -60,6 +60,53 @@ def read_CVP(cvp_value_str: str):
     return cvp_str
 
 
+def read_CVE(cve_value_str: str):
+    """读取CVE字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
+    cve_str_list = cve_value_str.split("_")
+    # print(f"cve_str_list = {cve_str_list}")
+    cve_str_list[0] = cve_str_list[0].replace("CVE", "综合数值结算  ")
+    cve_str_list[1] = cve_str_list[1].replace("A1", "自己")
+    cve_str_list[1] = cve_str_list[1].replace("A2", "交互对象")
+    cve_str_list[2] = cve_str_list[2].replace("F", "好感")
+    cve_str_list[2] = cve_str_list[2].replace("X", "信赖")
+    cve_str_list[3] = cve_str_list[3].replace("G", "增加")
+    cve_str_list[3] = cve_str_list[3].replace("L", "减少")
+    cve_str_list[3] = cve_str_list[3].replace("E", "变为")
+    # 将cve_str_list转为str的cve_str
+    cve_str = ""
+    for i in cve_str_list:
+        cve_str += i
+    # print(f"debug cve_str = {cve_str}, cve_str_list = {cve_str_list}")
+    # 处理A3部分
+    if "A3" in cve_str:
+        a3_value = cve_str.split("A3|")[1].split("_")[0]
+        cve_str = cve_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
+    # 然后处理B属性部分
+    if "A" in cve_str:
+        b2_value = cve_str_list[2].split("A|")[1]
+        b2_name = cache_control.ability_data[b2_value]
+        cve_str = cve_str.replace(f"A|{b2_value}", f"能力{b2_name}")
+    elif "T" in cve_str:
+        b2_value = cve_str_list[2].split("T|")[1]
+        b2_name = cache_control.talent_data[b2_value]
+        cve_str = cve_str.replace(f"T|{b2_value}", f"素质{b2_name}")
+    elif "J" in cve_str:
+        b2_value = cve_str_list[2].split("J|")[1]
+        b2_name = cache_control.juel_data[b2_value]
+        cve_str = cve_str.replace(f"J|{b2_value}", f"宝珠{b2_name}")
+    elif "E" in cve_str:
+        b2_value = cve_str_list[2].split("E|")[1]
+        b2_name = cache_control.experience_data[b2_value]
+        cve_str = cve_str.replace(f"E|{b2_value}", f"经验{b2_name}")
+    elif "S" in cve_str:
+        b2_value = cve_str_list[2].split("S|")[1]
+        b2_name = cache_control.state_data[b2_value]
+        cve_str = cve_str.replace(f"S|{b2_value}", f"状态{b2_name}")
+    # 最后去掉所有的下划线
+    cve_str = cve_str.replace("_", "")
+    return cve_str
+
+
 def read_CSE(cse_value_str: str):
     """读取CSE字符串 """
     cse_str_list = cse_value_str.split("_")

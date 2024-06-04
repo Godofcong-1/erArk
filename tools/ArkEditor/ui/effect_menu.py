@@ -140,6 +140,200 @@ class EffectMenu(QDialog):
                     child.setHidden(False)
 
 
+class CVEMenu(QDialog):
+    """综合型基础数值结算选择对象"""
+
+    def __init__(self):
+        """初始化综合型基础数值结算复选框"""
+        super(CVEMenu, self).__init__()
+        if cache_control.now_edit_type_flag == 1:
+            self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
+        elif cache_control.now_edit_type_flag == 0:
+            self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
+        self.font = font
+        self.layout: QVBoxLayout = QVBoxLayout()
+        self.ABCD_button_layout = QHBoxLayout()
+        self.resize(1000,50)
+
+        # 一段说明文字，用来介绍各个功能，位置在最上面的第一行
+        self.cve_text = QLabel("用于实现数值方面的综合型万用结算")
+        self.cve_text.setFont(self.font)
+        self.layout.addWidget(self.cve_text)
+
+        # A数值为对象，仅在"角色id为"时出现a2文本框
+        self.cve_a = QComboBox()
+        self.cve_a.addItems(["自己", "交互对象", "角色id为"])
+        self.cve_a.setCurrentIndex(0)
+        self.cve_a.setFont(self.font)
+        self.ABCD_button_layout.addWidget(self.cve_a)
+        self.cve_a2 = QTextEdit("0")
+        self.cve_a2.setFont(self.font)
+        self.cve_a2.setFixedHeight(32)
+        self.cve_a2.setFixedWidth(50)
+        self.cve_a2.setVisible(False)
+        self.ABCD_button_layout.addWidget(self.cve_a2)
+        self.cve_a.currentIndexChanged.connect(self.change_a2)
+
+        # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+        self.cve_b1 = QComboBox()
+        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态"])
+        self.cve_b1.setCurrentIndex(0)
+        self.cve_b1.setFont(self.font)
+        self.ABCD_button_layout.addWidget(self.cve_b1)
+
+        # b2根据b1会出现不同的选项
+        self.cve_b2 = QComboBox()
+        self.cve_b2.addItems([""])
+        self.cve_b2.setCurrentIndex(0)
+        self.cve_b2.setFont(self.font)
+        self.cve_b2.setVisible(False)
+        self.cve_b1.currentIndexChanged.connect(self.change_b2)
+        self.ABCD_button_layout.addWidget(self.cve_b2)
+
+        # C数值为判定方式
+        self.cve_c = QComboBox()
+        self.cve_c.addItems(["增加", "减少", "变为"])
+        self.cve_c.setCurrentIndex(0)
+        self.cve_c.setFont(self.font)
+        self.ABCD_button_layout.addWidget(self.cve_c)
+
+        # D数值为判定值
+        self.cve_d = QTextEdit("0")
+        self.cve_d.setFont(self.font)
+        self.cve_d.setFixedHeight(32)
+        self.cve_d.setFixedWidth(50)
+        self.ABCD_button_layout.addWidget(self.cve_d)
+
+        self.layout.addLayout(self.ABCD_button_layout)
+
+        # 添加确定按钮与取消按钮
+        self.button_layout = QHBoxLayout()
+        self.ok_button = QPushButton("确定")
+        self.ok_button.clicked.connect(self.ok)
+        self.ok_button.setFont(self.font)
+        self.button_layout.addWidget(self.ok_button)
+        self.cancel_button = QPushButton("取消")
+        self.cancel_button.clicked.connect(self.cancel)
+        self.cancel_button.setFont(self.font)
+        self.button_layout.addWidget(self.cancel_button)
+        self.layout.addLayout(self.button_layout)
+
+        self.setLayout(self.layout)
+
+    def ok(self):
+        """点击确定按钮"""
+        # 获得当前abcd的值
+        cve_a = self.cve_a.currentText()
+        if cve_a == "自己":
+            cve_a_value = "A1"
+        elif cve_a == "交互对象":
+            cve_a_value = "A2"
+        elif cve_a == "角色id为":
+            cve_a_value = "A3|" + self.cve_a2.toPlainText()
+            cve_a = "角色id为" + self.cve_a2.toPlainText()
+        cve_b1 = self.cve_b1.currentText()
+        if len(self.cve_b2.currentText().split("|")) == 2:
+            cve_b2 = self.cve_b2.currentText().split("|")[1]
+        else:
+            cve_b2 = ""
+        if cve_b1 == "待选择":
+            cve_b_value = ""
+        elif cve_b1 == "好感":
+            cve_b_value = "F"
+        elif cve_b1 == "信赖":
+            cve_b_value = "X"
+        elif cve_b1 == "能力":
+            cve_b_value = "A|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "素质":
+            cve_b_value = "T|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "宝珠":
+            cve_b_value = "J|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "经验":
+            cve_b_value = "E|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "状态":
+            cve_b_value = "S|" + self.cve_b2.currentText().split("|")[0]
+        cve_c = self.cve_c.currentText()
+        if cve_c == "增加":
+            cve_c_value = "G"
+        elif cve_c == "减少":
+            cve_c_value = "L"
+        elif cve_c == "变为":
+            cve_c_value = "E"
+        cve_d = self.cve_d.toPlainText()
+        cve_d_value = cve_d
+
+        # 拼接结算字符串
+        cve_str = f"综合数值结算  {cve_a}{cve_b1}{cve_b2}{cve_c}{cve_d}"
+        cve_value_str = f"CVE_{cve_a_value}_{cve_b_value}_{cve_c_value}_{cve_d_value}"
+        # print(f"debug cve_str: {cve_str}, cve_value_str: {cve_value_str}")
+
+        # 更新结算数据
+        cache_control.effect_data[cve_value_str] = cve_str
+
+        # 更新结算列表
+        if cache_control.now_edit_type_flag == 1:
+            cache_control.now_event_data[cache_control.now_select_id].effect[cve_value_str] = 1
+        elif cache_control.now_edit_type_flag == 0:
+            cache_control.now_talk_data[cache_control.now_select_id].effect[cve_value_str] = 1
+        cache_control.item_effect_list.update()
+        self.close()
+
+    def cancel(self):
+        """点击取消按钮"""
+        self.close()
+
+    def change_a2(self, index: int):
+        """改变a2的选项"""
+        if index == 2:
+            self.cve_a2.setVisible(True)
+        else:
+            self.cve_a2.setVisible(False)
+
+    def change_b2(self, index: int):
+        """改变b2的选项"""
+        self.cve_b2.setVisible(True)
+        if index == 0:
+            self.cve_b2.setVisible(False)
+        elif index == 1:
+            self.cve_b2.setVisible(False)
+            self.cve_text.setText("好感度的-1级和1~8级分别为：负数，100，500，1000，2500，5000，10000，50000，100000，此处使用的为好感的具体数值，不是等级")
+        elif index == 2:
+            self.cve_b2.setVisible(False)
+            self.cve_text.setText("信赖度的-1级和18级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%，此处使用的为信赖度的具体数值，不是等级")
+        elif index == 3:
+            self.cve_b2.clear()
+            for ability_id, ability_name in cache_control.ability_data.items():
+                self.cve_b2.addItem(f"{ability_id}|{ability_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("能力最高为8级")
+        elif index == 4:
+            self.cve_b2.clear()
+            for talent_id, talent_name in cache_control.talent_data.items():
+                self.cve_b2.addItem(f"{talent_id}|{talent_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("1为有该素质，0为无该素质")
+        elif index == 5:
+            self.cve_b2.clear()
+            for juel_id, juel_name in cache_control.juel_data.items():
+                self.cve_b2.addItem(f"{juel_id}|{juel_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("宝珠是用来升级能力或获得素质的")
+        elif index == 6:
+            self.cve_b2.clear()
+            for experience_id, experience_name in cache_control.experience_data.items():
+                self.cve_b2.addItem(f"{experience_id}|{experience_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("每次指令都会获得1对应经验")
+        elif index == 7:
+            self.cve_b2.clear()
+            for state_id, state_name in cache_control.state_data.items():
+                self.cve_b2.addItem(f"{state_id}|{state_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999，此处使用的为状态值的具体数值，不是等级")
+
+        self.cve_b = self.cve_b2
+
+
 class CSEMenu(QDialog):
     """综合指令状态结算选择对象"""
 

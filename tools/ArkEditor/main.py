@@ -75,6 +75,9 @@ def load_event_data():
                 del now_event.premise[premise]
             delete_effect_list = []
             for effect in now_event.effect:
+                if "CVE" in effect:
+                    cve_str = function.read_CVE(effect)
+                    cache_control.effect_data[effect] = cve_str
                 if "CSE" in effect:
                     cse_str = function.read_CSE(effect)
                     cache_control.effect_data[effect] = cse_str

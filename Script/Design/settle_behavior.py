@@ -47,36 +47,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         change_character_talkcount_for_time(character_id, now_time)
 
     if not instruct_flag:
+        # 主事件
         event_id = now_character_data.event.event_id
-        if event_id != "":
-            # 进行事件结算
-            # print(f"debug handle_settle_behavior event_id = {event_id}")
-            event_data: game_type.Event = game_config.config_event[event_id]
-            for effect in event_data.effect:
-                # 综合指令状态结算判定
-                if "CSE" in effect:
-                    effect_all_value_list = effect.split("_")[1:]
-                    handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
-                # 其他正常口上判定
-                else:
-                    constant.settle_behavior_effect_data[int(effect)](
-                        character_id, add_time, change_data, now_time
-                    )
+        handle_event_data(event_id, character_id, add_time, change_data, now_time)
 
         # 子事件
         son_event_id = now_character_data.event.son_event_id
-        if son_event_id != "":
-            # 进行事件结算
-            # print(f"debug handle_settle_behavior son_event_id = {son_event_id}")
-            event_data: game_type.Event = game_config.config_event[son_event_id]
-            for effect in event_data.effect:
-                if "CSE" in effect:
-                    effect_all_value_list = effect.split("_")[1:]
-                    handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
-                else:
-                    constant.settle_behavior_effect_data[int(effect)](
-                        character_id, add_time, change_data, now_time
-                    )
+        handle_event_data(son_event_id, character_id, add_time, change_data, now_time)
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
@@ -286,6 +263,36 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # wait_draw = draw.WaitDraw()
         # wait_draw.draw()
         return now_panel
+
+
+def handle_event_data(event_id, character_id, add_time, change_data, now_time):
+    """
+    处理事件数据
+    Keyword arguments:
+    event_id -- 事件id
+    character_id -- 角色id
+    add_time -- 行动已经过时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算时间
+    """
+    if event_id != "":
+        # 进行事件结算
+        # print(f"debug handle_settle_behavior event_id = {event_id}")
+        event_data: game_type.Event = game_config.config_event[event_id]
+        for effect in event_data.effect:
+            # 综合数值结算判定
+            if "CVE" in effect:
+                effect_all_value_list = effect.split("_")[1:]
+                handle_comprehensive_value_effect(effect_all_value_list, character_id)
+            # 综合指令状态结算判定
+            elif "CSE" in effect:
+                effect_all_value_list = effect.split("_")[1:]
+                handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
+            # 其他正常口上判定
+            else:
+                constant.settle_behavior_effect_data[int(effect)](
+                    character_id, add_time, change_data, now_time
+                )
 
 
 def add_settle_behavior_effect(behavior_effect_id: int):
@@ -889,3 +896,76 @@ def item_effect(character_id: int, pl_to_npc: bool = False):
         for i in range(len(character_data.h_state.body_item)):
             if character_data.h_state.body_item[i][1]:
                 character_data.second_behavior[num + i] = 1
+
+
+def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list) -> int:
+    """
+    综合型基础数值结算
+    Keyword arguments:
+    character_id -- 角色id
+    effect_all_value_list -- 结算的各项数值
+    Return arguments:
+    bool -- 是否结算成功
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"debug character_id = {character_id}, effect_all_value_list = {effect_all_value_list}")
+
+    # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
+    if effect_all_value_list[0] == "A1":
+        final_character_data = character_data
+    elif effect_all_value_list[0] == "A2":
+        # 如果没有交互对象，则返回0
+        if character_data.target_character_id == character_id:
+            return 0
+        final_character_data = cache.character_data[character_data.target_character_id]
+    elif effect_all_value_list[0][:2] == "A3":
+        final_character_id = int(effect_all_value_list[0][3:])
+        # 如果还没拥有该角色，则返回0
+        if final_character_id not in cache.npc_id_got:
+            return 0
+        final_character_data = cache.character_data[final_character_id]
+
+    # 进行数值B的判别,A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
+    if len(effect_all_value_list[1]) > 1:
+        type_son_id = int(effect_all_value_list[1][2:])
+
+    # 创建一个字典来映射属性名
+    attribute_mapping = {
+        "A": "ability",
+        "T": "talent",
+        "J": "juel",
+        "E": "experience",
+        "S": "status_data",
+        "F": "favorability",
+        "X": "trust"
+    }
+    
+    # 创建一个字典来映射操作
+    operation_mapping = {
+        "G": lambda x, y: x + y,
+        "L": lambda x, y: x - y,
+        "E": lambda x, y: y
+    }
+    
+    # 获取属性名和操作
+    attribute = effect_all_value_list[1][0]
+    operation = effect_all_value_list[2]
+    
+    # 检查属性名和操作是否在映射字典中
+    if attribute in attribute_mapping and operation in operation_mapping:
+        # 获取属性和操作
+        attribute_name = attribute_mapping[attribute]
+        operation_func = operation_mapping[operation]
+    
+        # 对于好感和信赖，进行特殊处理
+        if attribute_name == "favorability":
+            final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
+        elif attribute_name == "trust":
+            final_character_data.trust = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+        else:
+            # 对属性进行操作
+            final_character_data[attribute_name][type_son_id] = operation_func(final_character_data[attribute_name][type_son_id], int(effect_all_value_list[3]))
+
+        return 1
+
+    return 0
