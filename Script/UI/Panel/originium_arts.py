@@ -483,7 +483,7 @@ class Down_Negative_Talent_Panel:
 
         title_text = _("降低负面素质")
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        self.ability_id_list = [17,18]
+        self.ability_id_list = [15,17,18]
 
         while 1:
             return_list = []
@@ -491,7 +491,7 @@ class Down_Negative_Talent_Panel:
 
             # 输出提示信息
             info_draw = draw.NormalDraw()
-            info_text = _("\n当前拥有反发刻印或恐怖刻印的角色有：\n\n")
+            info_text = _("\n当前拥有苦痛刻印、反发刻印或恐怖刻印的角色有：\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
@@ -619,7 +619,9 @@ class Down_Negative_Talent_Panel:
             # 降低刻印
             character_data.ability[ability_id] -= 1
             # 也降低刻印对应的主状态值
-            if ability_id == 17:
+            if ability_id == 15:
+                character_data.status_data[17] = 0
+            elif ability_id == 17:
                 character_data.status_data[18] = 0
             elif ability_id == 18:
                 character_data.status_data[20] = 0
