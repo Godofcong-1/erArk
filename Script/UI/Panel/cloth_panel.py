@@ -1,11 +1,14 @@
 from typing import List
-from Script.Core import game_type, cache_control, rich_text
+from types import FunctionType
+from Script.Core import game_type, cache_control, rich_text, get_text
 from Script.Config import game_config
 from Script.Design import attr_calculation
 from Script.UI.Moudle import draw, panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 line_feed = draw.NormalDraw()
 """ 换行绘制对象 """
@@ -42,7 +45,7 @@ class SeeCharacterClothPanel:
         character_data = cache.character_data[0]
         target_character_data = cache.character_data[character_data.target_character_id]
 
-        type_line = draw.LittleTitleLineDraw("服装", width, ":")
+        type_line = draw.LittleTitleLineDraw(_("服装"), width, ":")
         self.draw_list.append(type_line)
 
         # cloth_text_list = []
@@ -84,7 +87,7 @@ class SeeCharacterClothPanel:
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         semen_level = target_character_data.dirty.cloth_semen[clothing_type][2]
-                        dirty_text_cid = f"{type_name}精液污浊{str(semen_level)}"
+                        dirty_text_cid = _("{0}精液污浊{1}").format(type_name, str(semen_level))
                         dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         now_text += f"<semen>({dirty_text_context})</semen>"
             # 当显示到下衣8的时候，换行
@@ -96,7 +99,7 @@ class SeeCharacterClothPanel:
                     # print(f"debug {target_character_data.name}.cloth.cloth_see[clothing_type] = {target_character_data.cloth.cloth_see[clothing_type]}")
                     if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
-                now_text += f"  [{type_name}]: 真空"
+                now_text += _("  [{0}]: 真空").format(type_name)
         now_text += "\n"
         # cloth_text_list.append(now_text)
 
@@ -106,7 +109,7 @@ class SeeCharacterClothPanel:
                 no_cloth_flag = False
                 break
         if no_cloth_flag:
-            now_text = "  全裸\n"
+            now_text = _("  全裸\n")
             # cloth_text_list.append(now_text)
 
         if self.center_status:

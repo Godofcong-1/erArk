@@ -59,7 +59,7 @@ class Dirty_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-        title_text = target_data.name + "污浊情况"
+        title_text = target_data.name + _("污浊情况")
         dirty_type_list = [_("身体"), _("服装")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)

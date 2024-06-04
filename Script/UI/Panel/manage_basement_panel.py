@@ -114,7 +114,7 @@ class Manage_Basement_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {"货币": True,"材料": False, "药剂": False, "乳制品": False, "香水": False}
+        self.show_resource_type_dict: Dict = {_("货币"): True,_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False}
 
     def draw(self):
         """绘制对象"""
@@ -122,13 +122,13 @@ class Manage_Basement_Panel:
         title_text = _("管理罗德岛")
         panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
-            "工程部":"[基建系统]",
-            "制造加工区":"[生产系统]",
-            "图书馆":"[图书馆管理系统]",
-            "贸易区":"[资源交易系统]",
-            "文职部":"[招募系统]",
-            "访客区":"[邀请访客系统]",
-            "疗养庭院":"[农业系统]",
+            _("工程部"):_("[基建系统]"),
+            _("制造加工区"):_("[生产系统]"),
+            _("图书馆"):_("[图书馆管理系统]"),
+            _("贸易区"):_("[资源交易系统]"),
+            _("文职部"):_("[招募系统]"),
+            _("访客区"):_("[邀请访客系统]"),
+            _("疗养庭院"):_("[农业系统]"),
             }
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -167,7 +167,7 @@ class Manage_Basement_Panel:
             # 罗德岛资源总览
             if self.now_panel == _("罗德岛资源总览"):
 
-                self.resouce_list = ["货币", "材料", "药剂", "乳制品", "香水"]
+                self.resouce_list = [_("货币"), _("材料"), _("药剂"), _("乳制品"), _("香水")]
 
                 all_info_draw = draw.NormalDraw()
                 all_info_draw.text = ""
@@ -267,7 +267,7 @@ class Manage_Basement_Panel:
                         work_data = game_config.config_work_type[all_cid]
                         if work_data.department == department:
                             all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
-                    if department == "医疗部":
+                    if department == _("医疗部"):
                         all_info_draw.text += _("  病人 — {0}").format(patient_now)
                     all_info_draw.draw()
                     line_feed.draw()
@@ -333,19 +333,19 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        if "基建系统" in son_panel:
+        if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
-        elif "生产系统" in son_panel:
+        elif _("生产系统") in son_panel:
             now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(self.width)
-        elif "图书馆管理系统" in son_panel:
+        elif _("图书馆管理系统") in son_panel:
             now_panel = manage_library.Manage_Library_Panel(self.width)
-        elif "资源交易系统" in son_panel:
+        elif _("资源交易系统") in son_panel:
             now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
-        elif "招募系统" in son_panel:
+        elif _("招募系统") in son_panel:
                 now_panel =recruit_panel.Recruit_Panel(self.width)
-        elif "邀请访客系统" in son_panel:
+        elif _("邀请访客系统") in son_panel:
             now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
-        elif "农业系统" in son_panel:
+        elif _("农业系统") in son_panel:
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
         now_panel.draw()
 
@@ -372,41 +372,41 @@ class Manage_Basement_Panel:
                             npc_name = cache.character_data[npc_id].name
                             now_text += f" {npc_name}"
                     else:
-                        now_text += " 暂无"
+                        now_text += _(" 暂无")
 
-            if department == "工程部":
-                now_text += f"\n  当前待检修地点："
+            if department == _("工程部"):
+                now_text += _("\n  当前待检修地点：")
                 maintenance_flag = True
                 for chara_id in cache.rhodes_island.maintenance_place:
                     if len(cache.rhodes_island.maintenance_place[chara_id]):
                         now_text += f"{cache.rhodes_island.maintenance_place[chara_id]}"
                         maintenance_flag = False
                 if maintenance_flag:
-                    now_text += " 暂无"
+                    now_text += _(" 暂无")
 
-            elif department == "医疗部":
+            elif department == _("医疗部"):
                 patient_cured,patient_now = str(cache.rhodes_island.patient_cured),str(cache.rhodes_island.patient_now)
-                now_text += f"\n  今日已治疗患者数/排队中患者数：{patient_cured}/{patient_now}"
+                now_text += _("\n  今日已治疗患者数/排队中患者数：{0}/{1}").format(patient_cured, patient_now)
                 cure_income = str(cache.rhodes_island.cure_income)
-                now_text += f"\n  截至目前为止，今日医疗部门龙门币总收入为：{cure_income}\n"
+                now_text += _("\n  截至目前为止，今日医疗部门龙门币总收入为：{0}\n").format(cure_income)
 
-            elif department == "文职部":
+            elif department == _("文职部"):
                 if len(cache.rhodes_island.recruited_id):
-                    now_text += f"\n  当前已招募未确认干员人数为：{len(cache.rhodes_island.recruited_id)}人，请前往博士办公室确认"
+                    now_text += _("\n  当前已招募未确认干员人数为：{0}人，请前往博士办公室确认").format(len(cache.rhodes_island.recruited_id))
                 else:
-                    now_text += f"\n  当前没有已招募干员，请等待招募完成"
+                    now_text += _("\n  当前没有已招募干员，请等待招募完成")
                 for i in {0,1,2,3}:
                     if i in cache.rhodes_island.recruit_line:
-                        now_text += f"\n  {i+1}号招募位进度：{round(cache.rhodes_island.recruit_line[i][0],1)}%/100%"
+                        now_text += _("\n  {0}号招募位进度：{1}%/100%").format(i+1, round(cache.rhodes_island.recruit_line[i][0],1))
 
-            elif department == "图书馆":
+            elif department == _("图书馆"):
                 reader_count = cache.rhodes_island.reader_now
-                now_text += f"\n  当前读者人数：{reader_count} 人"
+                now_text += _("\n  当前读者人数：{0} 人").format(reader_count)
 
-            elif department == "宿舍区":
+            elif department == _("宿舍区"):
                 npc_count = str(len(cache.npc_id_got))
-                now_text += f"\n  干员总数/宿舍容量：{npc_count}/{cache.rhodes_island.people_max}"
-                now_text += f"\n  具体居住情况：\n"
+                now_text += _("\n  干员总数/宿舍容量：{0}/{1}").format(npc_count, cache.rhodes_island.people_max)
+                now_text += _("\n  具体居住情况：\n")
                 live_npc_id_set = cache.npc_id_got.copy()
                 Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
                 # 遍历所有宿舍
@@ -533,10 +533,10 @@ class ChangeWorkButtonList:
             return_list = []
 
             target_data: game_type.Character = cache.character_data[self.NPC_id]
-            info_text = f"{target_data.name}的当前工作为："
+            info_text = _("{0}的当前工作为：").format(target_data.name)
             work_data = game_config.config_work_type[target_data.work.work_type]
             info_text += f"{work_data.name}({work_data.department})"
-            info_text += "\n可指派的工作有：\n"
+            info_text += _("\n可指派的工作有：\n")
             info_draw.text = info_text
             info_draw.draw()
 

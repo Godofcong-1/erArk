@@ -150,10 +150,10 @@ class All_Npc_Position_Panel:
                     now_draw_text = f"[{id}]{name}"
                     # 输出跟随信息
                     if character_data.sp_flag.is_follow == 1:
-                        now_draw_text += "(跟)"
+                        now_draw_text += _("(跟)")
                     # 输出访客信息
                     if npc_id in cache.rhodes_island.visitor_info:
-                        now_draw_text += "(访)"
+                        now_draw_text += _("(访)")
                     # 输出地点信息
                     now_draw_text += f":{scene_position_str}   "
 
@@ -161,10 +161,10 @@ class All_Npc_Position_Panel:
                     # 如果是在移动，则输出目的地
                     # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
                     if status_text == "移动" and len(character_data.behavior.move_final_target):
-                        now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
+                        now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
                     # 否则输出状态
                     else:
-                        now_draw_text += f"正在：{status_text}"
+                        now_draw_text += _("正在：{0}").format(status_text)
 
                     # 输出按钮
                     name_draw = draw.LeftButton(
@@ -215,16 +215,16 @@ class All_Npc_Position_Panel:
         # 召集干员的情况
         if self.move_type != 2:
             if not handle_premise.handle_normal_24567(character_id):
-                now_draw.text = f"***{character_data.name}状态异常，无法召集***\n"
+                now_draw.text = _("***{0}状态异常，无法召集***\n").format(character_data.name)
             elif self.move_type == 0:
                 character_data.sp_flag.is_follow = 3
-                now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
+                now_draw.text = character_data.name + _("收到了博士的信息，接下来会前往博士办公室\n")
             elif self.move_type == 1:
                 character_data.sp_flag.is_follow = 4
-                now_draw.text = character_data.name + "收到了博士的信息，询问了博士的位置之后开始移动\n"
+                now_draw.text = character_data.name + _("收到了博士的信息，询问了博士的位置之后开始移动\n")
             elif self.move_type == 3:
                 character_data.sp_flag.is_follow = 1
-                now_draw.text = character_data.name + "收到了博士的信息，开始智能跟随\n"
+                now_draw.text = character_data.name + _("收到了博士的信息，开始智能跟随\n")
             now_draw.width = 1
             now_draw.draw()
         # 博士前往干员位置的情况
@@ -285,10 +285,10 @@ class FindDraw:
         # 如果是在移动，则输出目的地
         # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
         if status_text == "移动" and len(character_data.behavior.move_final_target):
-            now_draw_text += f"移动目的地:{character_data.behavior.move_final_target[-1]}"
+            now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
         # 否则输出状态
         else:
-            now_draw_text += f"正在：{status_text}"
+            now_draw_text += _("正在：{0}").format(status_text)
 
         name_draw = draw.LeftButton(
             now_draw_text, self.button_return, self.width, cmd_func=self.see_call_list
@@ -312,14 +312,14 @@ class FindDraw:
         character_data: game_type.Character = cache.character_data[self.npc_id]
         now_draw = draw.NormalDraw()
         if not handle_premise.handle_normal_24567(self.npc_id):
-            now_draw.text = f"***{character_data.name}状态异常，无法召集***\n"
+            now_draw.text = _("***{0}状态异常，无法召集***\n").format(character_data.name)
         elif character_data.sp_flag.is_follow == 0:
             if cache.debug_mode:
                 character_data.sp_flag.is_follow = 1
-                now_draw.text = character_data.name + "收到了博士的信息，询问了博士的位置之后开始移动\n"
+                now_draw.text = character_data.name + _("收到了博士的信息，询问了博士的位置之后开始移动\n")
             else:
                 character_data.sp_flag.is_follow = 3
-                now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
+                now_draw.text = character_data.name + _("收到了博士的信息，接下来会前往博士办公室\n")
 
             # 去掉其他NPC的跟随
             # if not cache.debug_mode:
@@ -331,11 +331,11 @@ class FindDraw:
             #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
         elif character_data.sp_flag.is_follow == 1 and cache.debug_mode:
             character_data.sp_flag.is_follow = 3
-            now_draw.text = character_data.name + "收到了博士的信息，接下来会前往博士办公室\n"
+            now_draw.text = character_data.name + _("收到了博士的信息，接下来会前往博士办公室\n")
 
         else:
             character_data.sp_flag.is_follow = 0
-            now_draw.text = character_data.name + "退出跟随模式\n"
+            now_draw.text = character_data.name + _("退出跟随模式\n")
         now_draw.width = 1
         now_draw.draw()
         # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

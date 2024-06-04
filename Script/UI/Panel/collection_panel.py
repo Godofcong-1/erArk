@@ -39,7 +39,7 @@ class Collection_Panel:
 
         character_data: game_type.Character = cache.character_data[0]
 
-        title_text = "收藏品"
+        title_text = _("收藏品")
         collection_type_list = [_("信物"), _("内裤"), _("袜子")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -72,7 +72,7 @@ class Collection_Panel:
 
 
             bonus_draw = draw.NormalDraw()
-            bonus_text = "\n收集解锁要素："
+            bonus_text = _("\n收集解锁要素：")
             bonus_draw.text = bonus_text
             bonus_draw.width = self.width
             bonus_draw.draw()
@@ -91,15 +91,15 @@ class Collection_Panel:
 
                 # 创建一个映射字典
                 bonus_type_text = {
-                    "信物": "个信物后，",
-                    "内裤": "条内裤后，",
-                    "袜子": "双袜子后，"
+                    _("信物"): _("个信物后，"),
+                    _("内裤"): _("条内裤后，"),
+                    _("袜子"): _("双袜子后，")
                 }
 
                 # 使用循环替代多个if语句
                 for bonus_type, text in bonus_type_text.items():
                     if now_bonus.type == bonus_type and self.now_panel == bonus_type:
-                        bonus_text = f"累积获得{str(now_bonus.count).rjust(3,' ')}{text}"
+                        bonus_text = _("累积获得{0}{1}").format(str(now_bonus.count).rjust(3,' '), text)
                         draw_flag = True
                         break
 
@@ -131,7 +131,7 @@ class Collection_Panel:
             collection_draw = draw.NormalDraw()
 
             collection_text = ""
-            if self.now_panel == "信物":
+            if self.now_panel == _("信物"):
                 # 统计当前信物收集数
                 self.token_count = 0
                 for npc_id in cache.npc_id_got:
@@ -142,9 +142,9 @@ class Collection_Panel:
                         npc_token = cache.character_data[npc_id].token_text
                         collection_text += f"\n  {npc_name}：{npc_token}"
                         self.token_count += 1
-                collection_text += f"\n当前共{self.token_count}个\n"
+                collection_text += _("\n当前共{0}个\n").format(self.token_count)
 
-            elif self.now_panel == "内裤":
+            elif self.now_panel == _("内裤"):
 
                 # 统计当前内裤收集数
                 self.pan_count = 0
@@ -177,11 +177,11 @@ class Collection_Panel:
                                     collection_text += f" {pan}({count})"
 
                             collection_text += f"\n"
-                collection_text += f"\n当前共{self.pan_count}条\n"
+                collection_text += _("\n当前共{0}条\n").format(self.pan_count)
 
 
 
-            elif self.now_panel == "袜子":
+            elif self.now_panel == _("袜子"):
 
                 # 统计当前袜子收集数
                 self.sock_count = 0
@@ -210,7 +210,7 @@ class Collection_Panel:
                                     collection_text += f" {sock}({count})"
 
                             collection_text += f"\n"
-                collection_text += f"\n当前共{self.sock_count}双\n"
+                collection_text += _("\n当前共{0}双\n").format(self.sock_count)
 
 
             collection_draw.text = collection_text
@@ -248,15 +248,15 @@ class Collection_Panel:
         bonus_flag = False
 
         # 比对相应的收集物数量，判断是否解锁成功
-        if bonus_data.type == "信物":
+        if bonus_data.type == _("信物"):
             if self.token_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
-        elif bonus_data.type == "内裤":
+        elif bonus_data.type == _("内裤"):
             if self.pan_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
-        elif bonus_data.type == "袜子":
+        elif bonus_data.type == _("袜子"):
             if self.sock_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
                 bonus_flag = True
@@ -285,9 +285,9 @@ class Collection_Panel:
         # 输出提示信息
         info_draw = draw.NormalDraw()
         if bonus_flag:
-            info_draw.text = "\n  解锁成功\n"
+            info_draw.text = _("\n  解锁成功\n")
         else:
-            info_draw.text = "\n  未满足条件，解锁失败\n"
+            info_draw.text = _("\n  未满足条件，解锁失败\n")
         info_draw.width = self.width
         info_draw.draw()
 

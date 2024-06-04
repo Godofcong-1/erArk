@@ -6,7 +6,7 @@ import os
 # 在当前目录及其子目录中查找所有的.py文件
 for dirpath, dirnames, filenames in os.walk('.'):
     for filename in filenames:
-        if filename.endswith('.py') and not filename.startswith('test_'):
+        if filename.endswith('.py') and not filename.startswith('test_') and not filename.startswith('fix_'):
             # 逐行遍历该文件
             with open(os.path.join (dirpath, filename), 'r', encoding='utf-8') as file:
                 lines = file.readlines()
