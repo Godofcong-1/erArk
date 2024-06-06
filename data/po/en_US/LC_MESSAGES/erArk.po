@@ -2913,7 +2913,7 @@ msgid ""
 "{0}获得了[受精]\n"
 msgstr ""
 "\n"
-"{0} obtained [Ferilized]\n"
+"{0} acquired [Ferilized]\n"
 
 msgid ""
 "\n"
@@ -3213,7 +3213,7 @@ msgid "{0}还不懂这是什么意义，被你随口糊弄走了"
 msgstr "{0} doesn't know what happened, and you tricked her away"
 
 msgid "{0}获得了[持有博士把柄]\n"
-msgstr "{0} obtained [Got Hold on Doctor]\n"
+msgstr "{0} acquired [Got Hold on Doctor]\n"
 
 msgid "{0}红着脸跑走了"
 msgstr "{0} running away, blushed"
@@ -4304,6 +4304,604 @@ msgstr "Current Stay: {0}"
 msgid " {0}(  更改{1})"
 msgstr " {0}(  Change{1})"
 
+msgid "震动棒"
+msgstr "Vibrator"
+
+msgid "肛门震动棒"
+msgstr "Anus vibrator"
+
+msgid "二穴插入"
+msgstr "Second insertion"
+
+msgid "继续享受"
+msgstr "Continue to enjoy"
+
+msgid "愉快"
+msgstr "Happy"
+
+msgid "不爽"
+msgstr "Annoyed"
+
+msgid "愤怒"
+msgstr "Angry"
+
+msgid "交给对方"
+msgstr "Let others do it"
+
+msgid "尝试掌握主动权"
+msgstr "Try to take initiative"
+
+msgid ""
+"\n"
+"{0}获得了{1}\n"
+msgstr ""
+"\n"
+"{0} acquired {1}\n"
+
+msgid ""
+"\n"
+"○{0}的催眠深度达到{1}%，获得了[{2}]\n"
+msgstr ""
+"\n"
+"○{0} reached {1}% Hypnosis Depth，and acquired [{2}]\n"
+
+msgid ""
+"\n"
+"○{0}获得了[精液膨腹]\n"
+msgstr ""
+"\n"
+"○{0} acquired [Semen Inflation]\n"
+
+msgid ""
+"\n"
+"○{0}失去了[精液膨腹]\n"
+msgstr ""
+"\n"
+"○{0} lost [Semen Inflation]\n"
+
+msgid ""
+"\n"
+"在对子宫的持续开发下，{0}提前迎来了性成熟，可以受精怀孕了\n"
+msgstr ""
+"\n"
+"With the continuous development on her womb, {0} has her sexual maturity arrived early, she can now be fertilized and impregnated\n"
+
+msgid "○{0}失去了[未初潮]\n"
+msgstr "○{0} lost [No Menarche]\n"
+
+msgid ""
+"\n"
+"{0}的[{1}]成长为了[{2}]\n"
+msgstr ""
+"\n"
+"{0}'s [{1}] grew up to [{2}]\n"
+
+msgid ""
+"\n"
+"给{0}穿上了脱下的衣服，并尽量整理成H前的样子"
+msgstr ""
+"\n"
+"{0} wore her clothes on, and try to tidy herself back to the appearance before H"
+
+msgid "能力"
+msgstr "Abilities"
+
+msgid "需要能力 : "
+msgstr "Needs ability : "
+
+msgid " 至少为"
+msgstr " at least"
+
+msgid "需要宝珠 : "
+msgstr "Needs Juels :"
+
+msgid "需要经验 : "
+msgstr "Needs EXP :"
+
+msgid "已达到最高级\n"
+msgstr "Reached max level\n"
+
+msgid "满足条件，要升级吗？\n"
+msgstr "Condition fulfilled, do you wish to upgrade?\n"
+
+msgid "不满足条件，无法升级\n"
+msgstr "Condition not fulfilled, unable to upgrade\n"
+
+msgid ""
+"陷落系素质\n"
+" 共通基础前提："
+msgstr ""
+"Fallen-type talents\n"
+" Joint base conditions: "
+
+msgid " 好感度500以上"
+msgstr " Affinity >500"
+
+msgid " 信任度50%以上"
+msgstr " Trust >50%"
+
+msgid " 反发刻印0"
+msgstr " Antipathy Engraving Lv0"
+
+msgid " 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n"
+msgstr ""
+" Divided into love relationship and affiliation relationship, only one can "
+"be chosen, the other will disappear, only reset on new walkthrough\n"
+
+msgid "爱情路线前提："
+msgstr "Love relationship: "
+
+msgid " 苦痛刻印0"
+msgstr " Pain Engraving Lv0"
+
+msgid " 恐怖刻印0"
+msgstr " Fear Engraving Lv0"
+
+msgid " 亲密等级至少为2"
+msgstr " Intimate Lv2 or above"
+
+msgid ""
+"\n"
+"已达到最高级-爱侣\n"
+msgstr ""
+"\n"
+"Maximum stage-Lover reached\n"
+
+msgid "隶属路线前提："
+msgstr "Affiliation relationship: "
+
+msgid " 快乐刻印>=1"
+msgstr " Happy Engraving >=1"
+
+msgid " 屈服刻印>=1"
+msgstr " Yield Engraving >=1"
+
+msgid " 顺从等级至少为2"
+msgstr " Obedience Lv2 or above"
+
+msgid ""
+"\n"
+"已达到最高级-奴隶\n"
+msgstr ""
+"\n"
+"Maximum stage-Slave reached\n"
+
+msgid "下一级为：[{0}]\n"
+msgstr "Next stage: [{0}]\n"
+
+msgid "  需要能力[{0}]至少为 {1}\n"
+msgstr "  Needs ability [{0}] at Lv{1}\n"
+
+msgid "  需要素质[{0}]\n"
+msgstr "  Needs talent [{0}]\n"
+
+msgid "  需要宝珠[{0}]至少为 {1}\n"
+msgstr "  Needs Juel [{0}] at {1}\n"
+
+msgid "  需要经验[{0}]至少为 {1}\n"
+msgstr "  Needs EXP [{0}] at {1}\n"
+
+msgid "  需要好感至少为 {0}\n"
+msgstr "  Need Affinity at {0}\n"
+
+msgid "  需要信赖至少为 {0}\n"
+msgstr "  Need Trust at {0}\n"
+
+msgid "满足条件，确定选择此路线吗？\n"
+msgstr "Condition fulfilled, are you sure to go for this relationship?\n"
+
+msgid "不满足条件，无法选择\n"
+msgstr "Condition not fulfilled, unable to select\n"
+
+msgid "满足条件后需要准备【戒指】，然后进行【告白】，成功后即可获得\n"
+msgstr "Prepare [Ring], conduct [Propose], and acquire it on success\n"
+
+msgid "满足条件后需要准备【项圈】，然后进行【戴上项圈】，成功后即可获得\n"
+msgstr "Prepare [Collar], conduct [Put on collar], and acquire it on success\n"
+
+msgid "选择成功\n"
+msgstr "Selection completed\n"
+
+msgid "(跟)"
+msgstr "{Following}"
+
+msgid "(访)"
+msgstr "{Guest}"
+
+msgid "移动目的地:{0}"
+msgstr "Destination:{0}"
+
+msgid "正在：{0}"
+msgstr "Now at: {0}"
+
+msgid "***{0}状态异常，无法召集***\n"
+msgstr "***{0}'s status abnormal, unable to be called***\n"
+
+msgid "收到了博士的信息，接下来会前往博士办公室\n"
+msgstr "Received Doctor's message, now heading towards Doctor's Office\n"
+
+msgid "收到了博士的信息，询问了博士的位置之后开始移动\n"
+msgstr ""
+"Received Doctor's message, now heading towards Doctor's location after "
+"inquiry\n"
+
+msgid "收到了博士的信息，开始智能跟随\n"
+msgstr "Received Doctor's message, enabling Intelligence Following\n"
+
+msgid "退出跟随模式\n"
+msgstr "Exit from Following mode\n"
+
+msgid "  [更改晚安服务预定时间]——当前预定时间：{0}:{1}"
+msgstr "  [Changing night service time]——Current time: {0}:{1}"
+
+msgid ""
+"\n"
+"已借书量/最大借书量：{0}/3\n"
+msgstr ""
+"\n"
+"Borrowed books/Maximum borrowed books: {0}/3\n"
+
+msgid "  (可借阅)"
+msgstr "  (可借阅)"
+
+msgid "  (已被博士借走)"
+msgstr "  (Borrowed by the Doctor)"
+
+msgid "  (已被{0}借走)"
+msgstr "  (Borrowed by {0})"
+
+msgid ""
+"\n"
+"当前藏书情况："
+msgstr ""
+"\n"
+"Current books: "
+
+msgid ""
+"\n"
+"  {0}在馆量/总藏书量：{1}/{2}\n"
+msgstr ""
+"\n"
+"  {0} in the Library/Total books: {1}/{2}\n"
+
+msgid ""
+"\n"
+"已达到最大借书上限，无法继续借阅\n"
+msgstr ""
+"\n"
+"Maximum books borrowed\n"
+
+msgid ""
+"\n"
+"当前资源情况："
+msgstr ""
+"\n"
+"Current resources: "
+
+msgid ""
+"\n"
+"  当前使用电力/当前总供电：{0}/{1}"
+msgstr ""
+"\n"
+"  Current power used/Power supplied: {0}/{1}"
+
+msgid ""
+"\n"
+"  当前龙门币数量    ：{0}\n"
+msgstr ""
+"\n"
+"  Current LMD: {0}\n"
+
+msgid ""
+"\n"
+"当前设施情况："
+msgstr ""
+"\n"
+"Current facility: "
+
+msgid " (供电:{0})"
+msgstr " (Power supply:{0})"
+
+msgid " (耗电:{0})"
+msgstr " (Power consumption:{0})"
+
+msgid ""
+"\n"
+"  当前等级：{0}，当前耗电量:{1}，当前效果：{2}"
+msgstr ""
+"\n"
+"  Current level: {0}, current power consumption: {1}, current effect: {2}"
+
+msgid ""
+"\n"
+"  下一等级：{0}，下一等级耗电量:{1}，下一等级效果：{2}"
+msgstr ""
+"\n"
+"  Next level: {0}, next level consumption: {1}, next level effect: {2}"
+
+msgid ""
+"\n"
+"  升级需要的龙门币：{0}\n"
+msgstr ""
+"\n"
+"  Upgrading requires LMD: {0}\n"
+
+msgid "当前无法升级："
+msgstr "Unable to upgrade: "
+
+msgid ""
+"\n"
+"  升级所需电量不足"
+msgstr ""
+"\n"
+"  Power insufficient"
+
+msgid ""
+"\n"
+"  升级所需龙门币不足"
+msgstr ""
+"\n"
+"  LMD insufficient"
+
+msgid ""
+"\n"
+"  升级需要更高的控制中枢等级"
+msgstr ""
+"\n"
+"  Higher Control Center level required"
+
+msgid "【升级】"
+msgstr " [Upgrade] "
+
+msgid ""
+"\n"
+"【升级】"
+msgstr ""
+"\n"
+" [Upgrade] "
+
+msgid ""
+"\n"
+"  当前建筑已是最高级\n"
+"\n"
+msgstr ""
+"\n"
+"  Already at maximum level\n"
+"\n"
+
+msgid ""
+"\n"
+"{0}提升到{1}级了！\n"
+msgstr ""
+"\n"
+"{0} went to Lv{1}!\n"
+
+msgid "{0}精液污浊{1}"
+msgstr "Semen on {0} {1}"
+
+msgid "  [{0}]: 真空"
+msgstr "  [{0}]: Empty"
+
+msgid "  全裸\n"
+msgstr "  Naked\n"
+
+msgid "收藏品"
+msgstr "Collections"
+
+msgid ""
+"\n"
+"收集解锁要素："
+msgstr ""
+"\n"
+"Collects unlocking elements: "
+
+msgid "个信物后，"
+msgstr " tokens, "
+
+msgid "条内裤后，"
+msgstr " underwears, "
+
+msgid "双袜子后，"
+msgstr " socks, "
+
+msgid "累积获得{0}{1}"
+msgstr "Total having {0}{1}"
+
+msgid ""
+"\n"
+"当前共{0}个\n"
+msgstr ""
+"\n"
+"Currently {0} pieces\n"
+
+msgid ""
+"\n"
+"当前共{0}条\n"
+msgstr ""
+"\n"
+"Currently {0} pieces\n"
+
+msgid ""
+"\n"
+"当前共{0}双\n"
+msgstr ""
+"\n"
+"Currently {0} pairs\n"
+
+msgid ""
+"\n"
+"  解锁成功\n"
+msgstr ""
+"\n"
+"  Unlocking successful\n"
+
+msgid ""
+"\n"
+"  未满足条件，解锁失败\n"
+msgstr ""
+"\n"
+"  Condition unfulfilled, unlocking failed\n"
+
+msgid "污浊情况"
+msgstr "Dirty condition"
+
+msgid "货币"
+msgstr "Currencies"
+
+msgid "材料"
+msgstr "Materials"
+
+msgid "药剂"
+msgstr "Medicines"
+
+msgid "乳制品"
+msgstr "Dairy Products"
+
+msgid "工程部"
+msgstr "Engineering Zone"
+
+msgid "[基建系统]"
+msgstr "[Base system]"
+
+msgid "[生产系统]"
+msgstr "[Production system]"
+
+msgid "图书馆"
+msgstr "Library"
+
+msgid "[图书馆管理系统]"
+msgstr "[Library management system]"
+
+msgid "[资源交易系统]"
+msgstr "[Resource trading system]"
+
+msgid "[招募系统]"
+msgstr "[Recruitment system]"
+
+msgid "[邀请访客系统]"
+msgstr "[Inviting guests system]"
+
+msgid "[农业系统]"
+msgstr "[Farm system]"
+
+msgid "生产系统"
+msgstr "Production system"
+
+msgid "图书馆管理系统"
+msgstr "Library management system"
+
+msgid "资源交易系统"
+msgstr "Resource trading system"
+
+msgid "招募系统"
+msgstr "Recruitment system"
+
+msgid "邀请访客系统"
+msgstr "Inviting guests system"
+
+msgid "农业系统"
+msgstr "Farm system"
+
+msgid " 暂无"
+msgstr " None"
+
+msgid ""
+"\n"
+"  当前待检修地点："
+msgstr ""
+"\n"
+"  Facilities needing maintenance: "
+
+msgid ""
+"\n"
+"  今日已治疗患者数/排队中患者数：{0}/{1}"
+msgstr ""
+"\n"
+"  Patient treated/Patient on queue: {0}/{1}"
+
+msgid ""
+"\n"
+"  截至目前为止，今日医疗部门龙门币总收入为：{0}\n"
+msgstr ""
+"\n"
+"  Until now, the LMD income from Medical Zone: {0}\n"
+
+msgid ""
+"\n"
+"  当前已招募未确认干员人数为：{0}人，请前往博士办公室确认"
+msgstr ""
+"\n"
+"  Number of recruited Operators unconfirmed: {0}, please confirm at Doctor's Office"
+
+msgid ""
+"\n"
+"  当前没有已招募干员，请等待招募完成"
+msgstr ""
+"\n"
+"  No recruited Operators, please wait for recruitment"
+
+msgid ""
+"\n"
+"  {0}号招募位进度：{1}%/100%"
+msgstr ""
+"\n"
+"  Recruitment Slot {0}: {1}%/100%"
+
+msgid ""
+"\n"
+"  当前读者人数：{0} 人"
+msgstr ""
+"\n"
+"  Number of readers: {0}"
+
+msgid ""
+"\n"
+"  干员总数/宿舍容量：{0}/{1}"
+msgstr ""
+"\n"
+"  Total Operators/Dormitory size: {0}/{1}"
+
+msgid ""
+"\n"
+"  具体居住情况：\n"
+msgstr ""
+"\n"
+"  Staying condition: \n"
+
+msgid "{0}的当前工作为："
+msgstr "{0}'s current job: "
+
+msgid ""
+"\n"
+"可指派的工作有：\n"
+msgstr ""
+"\n"
+"Available jobs: \n"
+
+msgid ""
+"\n"
+"当前拥有苦痛刻印、反发刻印或恐怖刻印的角色有：\n"
+"\n"
+msgstr ""
+"\n"
+"Characters with Pain, Hatred or Fear Engraving: \n"
+"\n"
+
+msgid " 愉快"
+msgstr " Happy"
+
+msgid " <监>"
+msgstr " <Imprisoned>"
+
+msgid " <逆>"
+msgstr " <Active>"
+
+msgid "{character_name} {favorability_and_trust}{visitor}"
+msgstr ""
+
+msgid "{character_name}{character_nick_name}{eja}"
+msgstr ""
+
 msgid "Ｎ感觉"
 msgstr "N Feel"
 
@@ -4441,9 +5039,6 @@ msgstr "Dilations"
 
 msgid "刻印"
 msgstr "Engravings"
-
-msgid "能力"
-msgstr "Abilities"
 
 msgid "技能"
 msgstr "Skills"
@@ -6825,9 +7420,6 @@ msgstr ""
 msgid "提供电力，升级可以提高供电量"
 msgstr "Provides electricity, increases the power supply after upgrading"
 
-msgid "工程部"
-msgstr "Engineering Zone"
-
 msgid "进行工程建设的场所，升级可以解锁新的工程设施"
 msgstr ""
 "Location of conducting construction, unlocks new facilities after upgrading"
@@ -6866,9 +7458,6 @@ msgid "供干员们进行锻炼和训练的场所，升级可以解锁更多设�
 msgstr ""
 "Location for Operators to exercise and train, unlocks more facilities and "
 "increases the exercise efficiency after upgrading"
-
-msgid "图书馆"
-msgstr "Library"
 
 msgid "存放和阅读书籍的场所，升级可以提高学习效率"
 msgstr ""
@@ -8058,9 +8647,6 @@ msgstr ""
 msgid "跳蛋的大型棒状版本，更笨重但震动也更强力"
 msgstr ""
 "Larger rod-shaped version of love eggs, heavier but stronger vibration"
-
-msgid "震动棒"
-msgstr "Vibrator"
 
 msgid "加粗震动棒"
 msgstr "Thickening vibrator"
@@ -9268,9 +9854,6 @@ msgstr "Ovulation Period"
 msgid "龙门币"
 msgstr "LMD"
 
-msgid "货币"
-msgstr "Currencies"
-
 msgid "由龙门发行的货币，用途广泛。"
 msgstr "A widely used currency issued by Lungmen."
 
@@ -9302,9 +9885,6 @@ msgstr ""
 
 msgid "普通药材"
 msgstr "Normal Crude Drug"
-
-msgid "材料"
-msgstr "Materials"
 
 msgid "各类常见病和内外伤治疗所用的药材。"
 msgstr ""
@@ -9350,9 +9930,6 @@ msgstr ""
 msgid "常规药物"
 msgstr "Common Medicine"
 
-msgid "药剂"
-msgstr "Medicines"
-
 msgid "治疗非矿石病的其他常规病症，包括外伤或常见疾病。"
 msgstr "Used to treat non-Oripathy like injuries or common diseases."
 
@@ -9377,9 +9954,6 @@ msgid "用于紧急治疗重度矿石病发作的患者，副作用较大，但�
 msgstr ""
 "Used to treat serious Oripathy patients, have huge side effects, but get "
 "effective quickly."
-
-msgid "乳制品"
-msgstr "Dairy Products"
 
 msgid "母乳酸奶"
 msgstr "Breast Milk Yogurt"
