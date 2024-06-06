@@ -124,6 +124,8 @@ def chara_handle_instruct_common_settle(
                 state_id = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
             elif judge == _("严重骚扰"):
                 state_id = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+            elif judge == _("性交"):
+                state_id = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
             elif judge == _("U开发"):
                 state_id = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
             elif judge == _("亲吻"):
@@ -3845,21 +3847,7 @@ def handle_birth_control_pills_after():
 )
 def handle_normal_sex():
     """处理正常位指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("性交"))
-    if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
-        character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
-    elif judge_list[0] == -1:
-        pass
-    else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NORMAL_SEX, judge = _("性交"))
 
 
 @add_instruct(

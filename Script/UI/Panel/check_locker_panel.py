@@ -63,9 +63,9 @@ class Check_locker_Panel:
 
             info_draw = draw.NormalDraw()
             if len(npc_id_list):
-                info_draw.text = "\n发现以下衣柜里有衣服\n\n"
+                info_draw.text = _("\n发现以下衣柜里有衣服\n\n")
             else:
-                info_draw.text = "\n所有衣柜都是空的\n\n"
+                info_draw.text = _("\n所有衣柜都是空的\n\n")
             info_draw.width = self.width
             info_draw.draw()
 
@@ -122,7 +122,7 @@ class FindDraw:
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{self.character_data.name}的衣柜"
+                button_text = _("{0}{1}的衣柜").format(index_text, self.character_data.name)
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.check_cloth
                 )
@@ -143,7 +143,7 @@ class FindDraw:
         while 1:
             line = draw.LineDraw("-", window_width)
             line.draw()
-            cloth_show_text = f"\n{self.character_data.name}的衣柜里放着刚脱下来的：\n"
+            cloth_show_text = _("\n{0}的衣柜里放着刚脱下来的：\n").format(self.character_data.name)
             for clothing_type in game_config.config_clothing_type:
                 cloth_list = self.character_data.cloth.cloth_locker[clothing_type]
                 # 检查是否有该衣服的污浊信息，如果没有的话则补上
@@ -165,14 +165,14 @@ class FindDraw:
                         cloth_show_text += f" {cloth_name}"
                     semen_now_count = self.character_data.dirty.cloth_locker_semen[clothing_type][1]
                     if semen_now_count:
-                        cloth_show_text += f"({semen_now_count}ml精液)"
+                        cloth_show_text += _("({0}ml精液)").format(semen_now_count)
             cloth_show_draw.text = cloth_show_text + "\n\n"
             cloth_show_draw.draw()
 
             # 选项面板
             # button_all_draw = panel.LeftDrawTextListPanel()
 
-            button0_text = f"[001]把内衣拿起来闻一闻味道"
+            button0_text = _("[001]把内衣拿起来闻一闻味道")
             button0_draw = draw.LeftButton(
                 _(button0_text),
                 _("1"),
@@ -185,7 +185,7 @@ class FindDraw:
             return_list.append(button0_draw.return_text)
 
             if len(self.character_data.cloth.cloth_locker[9]):
-                button1_text = f"[002]偷走内裤"
+                button1_text = _("[002]偷走内裤")
                 button1_draw = draw.LeftButton(
                     _(button1_text),
                     _("2"),
@@ -198,7 +198,7 @@ class FindDraw:
                 return_list.append(button1_draw.return_text)
 
             if len(self.character_data.cloth.cloth_locker[10]):
-                button2_text = f"[003]偷走袜子"
+                button2_text = _("[003]偷走袜子")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("3"),
@@ -210,7 +210,7 @@ class FindDraw:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            button3_text = f"[004]用衣服冲，射在上面"
+            button3_text = _("[004]用衣服冲，射在上面")
             button3_draw = draw.LeftButton(
                 _(button3_text),
                 _("4"),
@@ -362,7 +362,7 @@ class Ejaculation_NameDraw:
                 index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text} {self.text}"
                 if target_data.dirty.cloth_locker_semen[self.index][1] != 0:
-                    button_text += f" ({str(target_data.dirty.cloth_locker_semen[self.index][1])}ml精液)"
+                    button_text += _(" ({0}ml精液)").format(str(target_data.dirty.cloth_locker_semen[self.index][1]))
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.shoot_here
                 )
@@ -393,7 +393,7 @@ class Ejaculation_NameDraw:
         target_data.dirty.cloth_locker_semen[self.index][3] += semen_count
         target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1], self.index, 1)
 
-        now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
+        now_text = _("在{0}的{1}{2}").format(target_data.name, self.cloth_text_list[self.index], semen_text)
 
         line_feed.draw()
         now_draw = draw.WaitDraw()
