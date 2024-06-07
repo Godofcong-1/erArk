@@ -90,6 +90,8 @@ def init_attr(character_id: int):
         # 初始收藏地点
         cache.collect_position_list.append([_('中枢'), _('博士房间')])
         cache.collect_position_list.append([_('中枢'), _('博士办公室')])
+        cache.collect_position_list.append([_('贸易'), _('成人用品店')])
+        cache.collect_position_list.append([_('书'), _('藏品馆')])
 
     # 一系列初始化函数
     init_character_behavior_start_time(character_id,cache.game_time)
