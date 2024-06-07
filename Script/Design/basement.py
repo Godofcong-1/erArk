@@ -183,8 +183,8 @@ def get_base_updata():
             # 遍历全部客房
             room_count = 0
             for room_id in cache.rhodes_island.facility_open:
-                # 跳过非客房
-                if room_id <= 1200 or room_id >= 1300:
+                # 跳过非客房和未开放的客房
+                if "客房" not in game_config.config_facility_open[room_id].name:
                     continue
                 # 跳过未开放的客房
                 if not cache.rhodes_island.facility_open[room_id]:
