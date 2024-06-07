@@ -1,10 +1,11 @@
 import random
-import datetime
+from types import FunctionType
 from Script.Core import (
     cache_control,
     value_handle,
     constant,
     game_type,
+    get_text,
 )
 from Script.Design import (
     attr_calculation,
@@ -20,6 +21,8 @@ from Script.Config import game_config, config_def, character_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def init_character_list():
@@ -410,8 +413,8 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
 
     # 初始化新角色位置
     character_position = character_data.position
-    pl_postion = pl_character_data.position
-    map_handle.character_move_scene(character_position, pl_postion, character_id)
+    office_postion = [_('中枢'), _('博士办公室')]
+    map_handle.character_move_scene(character_position, office_postion, character_id)
 
     # 初始化新角色娱乐
     character_behavior.get_chara_entertainment(character_id)
@@ -419,6 +422,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     # 新角色原地等待30分钟
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 30
+    character_data.behavior.start_time = cache.game_time
     character_data.state = constant.CharacterStatus.STATUS_WAIT
 
 
