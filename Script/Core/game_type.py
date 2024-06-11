@@ -1315,7 +1315,7 @@ class Event:
         self.start: bool = 0
         """ 是否是行为开始时的事件 """
         self.type: int = 1
-        """ 事件类型(0不进行指令结算，1正常) """
+        """ 事件类型(0跳过指令，1指令前事件后，2事件前指令后) """
         self.text: str = ""
         """ 事件文本 """
         self.premise: dict = {}

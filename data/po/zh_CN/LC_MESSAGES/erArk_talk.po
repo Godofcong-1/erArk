@@ -16765,7 +16765,7 @@ msgid "\n{Name}触发了B普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:12
-msgid "\n{Name}触发了B绝顶的地文"
+msgid "\n{Name}触发了B强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:13

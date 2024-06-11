@@ -26,8 +26,6 @@ class DataList(QWidget):
         self.text_id_change_button.clicked.connect(self.update_text_id)
         self.info_button = QPushButton("使用说明书")
         self.info_button.clicked.connect(function.show_talk_introduce)
-        self.status_menu: QMenu = None
-        self.type_menu: QMenu = None
         # 新增条目、复制条目、删除条目
         self.new_text_button = QPushButton("新增条目")
         self.new_text_button.clicked.connect(self.buton_add)

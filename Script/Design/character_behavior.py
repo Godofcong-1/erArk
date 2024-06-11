@@ -400,7 +400,7 @@ def judge_character_status(character_id: int) -> int:
 
     # 跳过指令和指令后置类型的事件触发
     # print(f"debug 跳过指令和指令后置类型的事件触发")
-    start_event_draw = event.handle_event(character_id)
+    start_event_draw = event.handle_event(character_id, event_before_instrust_flag = True)
     event_type_now = 1
     if start_event_draw != None:
         event_id = start_event_draw.event_id

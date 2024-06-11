@@ -21,7 +21,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     Keyword arguments:
     character_id -- 角色id
     now_time -- 结算时间
-    event_flag -- 事件结算变量，0只事件不指令，1只指令不事件
+    event_flag -- 事件结算变量，0只事件不指令，1只指令不事件，2均结算
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
@@ -283,12 +283,12 @@ def handle_event_data(event_id, character_id, add_time, change_data, now_time):
             # 综合数值结算判定
             if "CVE" in effect:
                 effect_all_value_list = effect.split("_")[1:]
-                handle_comprehensive_value_effect(effect_all_value_list, character_id)
+                handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
             # 综合指令状态结算判定
             elif "CSE" in effect:
                 effect_all_value_list = effect.split("_")[1:]
                 handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
-            # 其他正常口上判定
+            # 其他结算判定
             else:
                 constant.settle_behavior_effect_data[int(effect)](
                     character_id, add_time, change_data, now_time
@@ -898,12 +898,13 @@ def item_effect(character_id: int, pl_to_npc: bool = False):
                 character_data.second_behavior[num + i] = 1
 
 
-def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list) -> int:
+def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange = None) -> int:
     """
     综合型基础数值结算
     Keyword arguments:
     character_id -- 角色id
     effect_all_value_list -- 结算的各项数值
+    change_data -- 结算信息记录对象
     Return arguments:
     bool -- 是否结算成功
     """
@@ -913,11 +914,14 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
     if effect_all_value_list[0] == "A1":
         final_character_data = character_data
+        final_change_data = change_data
     elif effect_all_value_list[0] == "A2":
         # 如果没有交互对象，则返回0
         if character_data.target_character_id == character_id:
             return 0
         final_character_data = cache.character_data[character_data.target_character_id]
+        target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
+        final_change_data = target_change
     elif effect_all_value_list[0][:2] == "A3":
         final_character_id = int(effect_all_value_list[0][3:])
         # 如果还没拥有该角色，则返回0
@@ -960,6 +964,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         # 获取属性和操作
         attribute_name = attribute_mapping[attribute]
         operation_func = operation_mapping[operation]
+        # print(f"debug attribute_name = {attribute_name}, operation = {operation}")
     
         # 对于好感、信赖和口上用flag，进行特殊处理
         if attribute_name == "favorability":
@@ -971,7 +976,23 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
         else:
             # 对属性进行操作
-            final_character_data[attribute_name][type_son_id] = operation_func(final_character_data[attribute_name][type_son_id], int(effect_all_value_list[3]))
+
+            # 获取属性值
+            attribute_value = getattr(final_character_data, attribute_name)
+            # 对属性值进行操作
+            attribute_value[type_son_id] = operation_func(attribute_value[type_son_id], int(effect_all_value_list[3]))
+            # 将操作后的属性值重新设置到对象上
+            setattr(final_character_data, attribute_name, attribute_value)
+
+            # 记录结算数据
+            if attribute_name not in ["flag", "talent"]:
+                change_data_attribute_value = getattr(final_change_data, attribute_name)
+                # 如果attribute_name没有type_son_id则创建一个
+                change_data_attribute_value.setdefault(type_son_id, 0)
+                change_data_attribute_value[type_son_id] = operation_func(change_data_attribute_value[type_son_id], int(effect_all_value_list[3]))
+                setattr(final_change_data, attribute_name, change_data_attribute_value)
+
+            # final_character_data[attribute_name][type_son_id] = operation_func(final_character_data[attribute_name][type_son_id], int(effect_all_value_list[3]))
 
         return 1
 

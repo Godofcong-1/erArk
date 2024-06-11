@@ -8,11 +8,12 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel, str):
+def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw_event_text_panel.DrawEventTextPanel, str):
     """
     处理状态触发事件
     Keyword arguments:
     character_id -- 角色id
+    event_before_instrust_flag -- 是否是事件在前，指令在后（或跳过指令）
     Return arguments:
     draw.LineFeedWaitDraw -- 事件绘制文本
     str -- 事件id
@@ -36,6 +37,10 @@ def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel
                 # 事件由NPC触发，但自己不是该id，则跳过
                 elif "sys_1" in event_config.premise and int(event_config.adv_id) != character_id:
                     continue
+            # 如果是事件在前，指令在后，判断是否需要跳过
+            if event_before_instrust_flag:
+                if event_config.type == 1:
+                    continue
             if len(event_config.premise):
                 now_weight = 0 
                 for premise in event_config.premise:
@@ -50,7 +55,7 @@ def handle_event(character_id: int) -> (draw_event_text_panel.DrawEventTextPanel
                             premise_all_value_list = premise.split("_")[1:]
                             now_add_weight = handle_premise.handle_comprehensive_value_premise(character_id, premise_all_value_list)
                             now_premise_data[premise] = now_add_weight
-                        # 其他正常口上判定
+                        # 其他正常前提判定
                         else:
                             now_add_weight = constant.handle_premise_data[premise](character_id)
                             now_premise_data[premise] = now_add_weight

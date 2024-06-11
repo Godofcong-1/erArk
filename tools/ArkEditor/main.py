@@ -319,6 +319,9 @@ def change_status_menu(action: QWidgetAction):
     data_list.status_menu.clear()
     status_group = QActionGroup(data_list.status_menu)
     for status_type in cache_control.status_type_data:
+        # 如果是事件编辑模式，则跳过二段结算
+        if cache_control.now_edit_type_flag == 1 and status_type == "二段结算":
+            continue
         status_menu = QMenu(status_type, data_list.status_menu)
         for cid in cache_control.status_type_data[status_type]:
             if cid is cache_control.now_status:
@@ -405,6 +408,9 @@ def font_update():
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 status_group = QActionGroup(data_list.status_menu)
 for status_type in cache_control.status_type_data:
+    # 如果是事件编辑模式，则跳过二段结算
+    if cache_control.now_edit_type_flag == 1 and status_type == "二段结算":
+        continue
     status_menu = QMenu(status_type, data_list.status_menu)
     for cid in cache_control.status_type_data[status_type]:
         if cid is cache_control.now_status:
@@ -437,8 +443,6 @@ if cache_control.now_edit_type_flag == 1:
     action_list = []
     type_group = QActionGroup(data_list.type_menu)
     for v in type_list:
-        if v == cache_control.now_type:
-            continue
         now_action: QWidgetAction = QWidgetAction(data_list)
         now_action.setText(v)
         now_action.setActionGroup(type_group)

@@ -28,7 +28,7 @@ class Event:
         self.start: bool = 0
         """ 是否是状态开始时的事件 """
         self.type: int = 1
-        """ 事件类型(0不进行指令结算，1正常，2结算后置) """
+        """ 事件类型(0跳过指令，1指令前事件后，2事件前指令后) """
         self.text: str = ""
         """ 事件描述文本 """
         self.premise: dict = {}
