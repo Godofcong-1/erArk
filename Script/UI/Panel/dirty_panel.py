@@ -93,6 +93,7 @@ class Dirty_Panel:
             name_draw = draw.NormalDraw()
 
             # 遍历全部位并输出结果
+            now_text = ""
             if self.now_panel == _("身体"):
                 a_clean_list = [_(" <脏污>"), _(" <灌肠中>"), _(" <已灌肠清洁过>"), _(" <精液灌肠中>"), _(" <已精液灌肠过>")]
                 now_text = "\n"
