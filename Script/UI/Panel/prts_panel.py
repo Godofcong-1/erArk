@@ -50,20 +50,20 @@ class Prts_Panel:
             now_draw = panel.LeftDrawTextListPanel()
 
             pl_name = cache.character_data[0].name
-            info_text = f"身份验证通过，最高权限账户——管理员账户\n\n"
-            info_text += f"Dr.{pl_name}，欢迎访问普瑞赛斯终端，请问我可以为您做什么？\n\n"
-            info_text += f"○请注意，本终端内的资料查询功能会直接涉及游戏流程和实际内容的介绍和剧透，如果更倾向于自己体验和摸索的话，请仅在必要时刻再使用本功能。\n\n"
+            info_text = _("身份验证通过，最高权限账户——管理员账户\n\n")
+            info_text += _("Dr.{0}，欢迎访问普瑞赛斯终端，请问我可以为您做什么？\n\n").format(pl_name)
+            info_text += _("○请注意，本终端内的资料查询功能会直接涉及游戏流程和实际内容的介绍和剧透，如果更倾向于自己体验和摸索的话，请仅在必要时刻再使用本功能。\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
             # 要输出的变量名称以及注释
             draw_text_list = []
-            draw_text_list.append(f"[000]查询系统本身的相关资料")
-            draw_text_list.append(f"[001]获得日常生活的建议")
-            draw_text_list.append(f"[002]询问如何与干员相处")
-            draw_text_list.append(f"[003]与干员发生肉体关系时的注意事项")
-            draw_text_list.append(f"[004]怎么样才能更好的经营罗德岛")
-            draw_text_list.append(f"[011]与普瑞赛斯闲聊（未实装）")
+            draw_text_list.append(_("[000]查询系统本身的相关资料"))
+            draw_text_list.append(_("[001]获得日常生活的建议"))
+            draw_text_list.append(_("[002]询问如何与干员相处"))
+            draw_text_list.append(_("[003]与干员发生肉体关系时的注意事项"))
+            draw_text_list.append(_("[004]怎么样才能更好的经营罗德岛"))
+            draw_text_list.append(_("[011]与普瑞赛斯闲聊（未实装）"))
 
             # 循环输出以上各个问题
             for i in range(len(draw_text_list)):

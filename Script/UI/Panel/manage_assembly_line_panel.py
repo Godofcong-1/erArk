@@ -111,7 +111,7 @@ class Manage_Assembly_Line_Panel:
 
                 # 生产效率
                 now_level = cache.rhodes_island.facility_level[12]
-                facility_cid = game_config.config_facility_effect_data["制造加工区"][int(now_level)]
+                facility_cid = game_config.config_facility_effect_data[_("制造加工区")][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 all_effect += facility_effect

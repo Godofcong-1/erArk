@@ -37,7 +37,7 @@ class Invite_Visitor_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "邀请访客"
+        title_text = _("邀请访客")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
@@ -46,16 +46,16 @@ class Invite_Visitor_Panel:
 
             all_info_draw = draw.NormalDraw()
             now_text = ""
-            now_text += f" 当前的访客上限为：{cache.rhodes_island.visitor_max}人\n"
+            now_text += _(" 当前的访客上限为：{0}人\n").format(cache.rhodes_island.visitor_max)
             if len(cache.rhodes_island.visitor_info) == 0:
-                now_text += " 目前没有访客\n"
+                now_text += _(" 目前没有访客\n")
             else:
-                now_text += f" 目前的访客有："
+                now_text += _(" 目前的访客有：")
                 for chara_id in cache.rhodes_island.visitor_info:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     live_room = character_data.dormitory.split("\\")[-1]
                     leav_time = game_time.get_date_until_day(cache.rhodes_island.visitor_info[chara_id])
-                    now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}，居住房间：{live_room}，离开{leav_time}\n"
+                    now_text += _(" [{0}]{1}，居住房间：{2}，离开{3}\n").format(str(character_data.adv).rjust(4,'0'), character_data.name, live_room, leav_time)
                 now_text += f"\n"
 
             all_info_draw.text = now_text
@@ -64,21 +64,21 @@ class Invite_Visitor_Panel:
 
             # 邀请目标
             now_level = cache.rhodes_island.facility_level[13]
-            now_text = f"\n 当前邀请目标："
+            now_text = _("\n 当前邀请目标：")
             if now_level <= 1:
-                now_text += f" 需要访客区至少为2级才可以邀请访客\n"
+                now_text += _(" 需要访客区至少为2级才可以邀请访客\n")
             elif cache.rhodes_island.invite_visitor[0] == 0:
-                now_text += f" 无"
+                now_text += _(" 无")
             else:
                 chara_id = cache.rhodes_island.invite_visitor[0]
                 character_data: game_type.Character = cache.character_data[chara_id]
                 now_text += f" [{chara_id}]{character_data.name}"
 
                 # 邀请进度
-                now_text += f"\n 邀请进度：{cache.rhodes_island.invite_visitor[1]}%"
+                now_text += _("\n 邀请进度：{0}%").format(cache.rhodes_island.invite_visitor[1])
                 # 邀请效率加成
                 all_effect = 0
-                now_text += f"\n 邀请效率加成："
+                now_text += _("\n 邀请效率加成：")
 
                 # 去掉玩家
                 cache.npc_id_got.discard(0)
@@ -92,14 +92,14 @@ class Invite_Visitor_Panel:
                         character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
                         now_text += f" {character_data.name}"
                         # 邀请效率
-                        now_text += f"(话术lv{character_data.ability[40]}:+{round(character_effect, 1)}%)"
+                        now_text += _("(话术lv{0}:+{1}%)").format(character_data.ability[40], round(character_effect, 1))
                         all_effect += character_effect
                 now_text += f" = {round(all_effect, 1)}%"
             all_info_draw.text = now_text
             all_info_draw.draw()
 
             line_feed.draw()
-            button_text = "[001]人员增减"
+            button_text = _("[001]人员增减")
             button_draw = draw.LeftButton(
                 _(button_text),
                 _(button_text),
@@ -111,7 +111,7 @@ class Invite_Visitor_Panel:
             button_draw.draw()
             line_feed.draw()
             if now_level >= 2:
-                button_text = "[002]目标选择"
+                button_text = _("[002]目标选择")
                 button_draw = draw.LeftButton(
                     _(button_text),
                     _(button_text),
@@ -142,9 +142,9 @@ class Invite_Visitor_Panel:
             all_info_draw = draw.NormalDraw()
 
             # 邀请目标
-            now_text = f"\n 当前邀请目标："
+            now_text = _("\n 当前邀请目标：")
             if cache.rhodes_island.invite_visitor[0] == 0:
-                now_text += f" 无\n"
+                now_text += _(" 无\n")
             else:
                 chara_id = cache.rhodes_island.invite_visitor[0]
                 character_data: game_type.Character = cache.character_data[chara_id]
@@ -152,18 +152,18 @@ class Invite_Visitor_Panel:
 
             # 访客区设施信息
             now_level = cache.rhodes_island.facility_level[13]
-            facility_cid = game_config.config_facility_effect_data["访客区"][int(now_level)]
+            facility_cid = game_config.config_facility_effect_data[_("访客区")][int(now_level)]
             facility_effect = game_config.config_facility_effect[facility_cid].effect
-            now_text += f" 访客区等级：{now_level}\n"
-            now_text += f" 访客停留时长：{facility_effect}天\n"
-            now_text += f" 访客数量上限：{cache.rhodes_island.visitor_max}人\n"
+            now_text += _(" 访客区等级：{0}\n").format(now_level)
+            now_text += _(" 访客停留时长：{0}天\n").format(facility_effect)
+            now_text += _(" 访客数量上限：{0}人\n").format(cache.rhodes_island.visitor_max)
 
             # 可邀请范围
             now_country_id = cache.rhodes_island.current_location[0]
             now_country_name = game_config.config_birthplace[now_country_id].name
             if now_level == 2:
                 now_invitation_range = now_country_name
-                now_text += f" 可邀请范围：{now_invitation_range}\n\n"
+                now_text += _(" 可邀请范围：{0}\n\n").format(now_invitation_range)
             elif now_level == 3:
                 # 临近地点
                 map_path_str = map_handle.get_map_system_path_str_for_list(['泰拉'])
@@ -172,7 +172,7 @@ class Invite_Visitor_Panel:
                 near_scene_path = path_edge[now_country_name].copy()
                 # 仅需要keys
                 now_invitation_range = list(near_scene_path.keys())
-                now_text += f" 可邀请范围："
+                now_text += _(" 可邀请范围：")
                 all_country_id_list = []
                 for country_name in now_invitation_range:
                     now_text += f" {country_name}"
@@ -183,8 +183,8 @@ class Invite_Visitor_Panel:
                             break
                 now_text += f"\n\n"
             elif now_level >= 4:
-                now_invitation_range = "全泰拉"
-                now_text += f" 可邀请范围：{now_invitation_range}\n\n"
+                now_invitation_range = _("全泰拉")
+                now_text += _(" 可邀请范围：{0}\n\n").format(now_invitation_range)
 
             # 可邀请目标
             target_id_list = []
@@ -224,7 +224,7 @@ class Invite_Visitor_Panel:
 
             # 可邀请目标绘制
             if len(target_id_list):
-                now_text += f" 当前可邀请目标有（更改后会重置邀请进度）："
+                now_text += _(" 当前可邀请目标有（更改后会重置邀请进度）：")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()
@@ -247,7 +247,7 @@ class Invite_Visitor_Panel:
                     if chara_id_count % 8 == 0:
                         line_feed.draw()
             else:
-                now_text += f" 当前没有可邀请目标\n"
+                now_text += _(" 当前没有可邀请目标\n")
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 

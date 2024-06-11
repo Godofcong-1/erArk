@@ -120,7 +120,7 @@ class SaveInfoDraw:
                 month_text = "秋"
             elif game_time.month == 12:
                 month_text = "冬"
-            game_time_text = ("{year}年{month}月{day}日{hour}点{minute}分").format(
+            game_time_text = (_("{year}年{month}月{day}日{hour}点{minute}分")).format(
                 year=game_time.year,
                 month=month_text,
                 day=game_time.day,
@@ -130,7 +130,9 @@ class SaveInfoDraw:
 
             game_time_text = _("游戏时间:") + game_time_text
             save_time_text = _("存档时间:") + save_time.strftime("%Y-%m-%d %H:%M")
-            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text} {save_head['character_name']}博士 {save_time_text}"
+            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text}"
+            save_name += _(" {0}博士").format(save_head['character_name'])
+            save_name += f" {save_time_text}"
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)

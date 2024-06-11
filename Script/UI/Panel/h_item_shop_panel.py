@@ -34,7 +34,7 @@ class HItemShopPanel:
         scene_position = character_data.position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         # scene_name = cache.scene_data[scene_position_str].scene_name
-        title_draw = draw.TitleLineDraw("成人用品商店", self.width)
+        title_draw = draw.TitleLineDraw(_("成人用品商店"), self.width)
 
         # 按类别统计全部道具
         item_list_all = []
@@ -44,7 +44,7 @@ class HItemShopPanel:
         item_list_H_Drug = []
         item_list_H_Machine = []
         item_list_SM = []
-        item_list_type = ["药品","机器","消耗品","H药品","H用机器","SM器具"]
+        item_list_type = [_("药品"),_("机器"),_("消耗品"),_("H药品"),_("H用机器"),_("SM器具")]
         item_list = [i for i in game_config.config_item]
         for i in item_list:
             if game_config.config_item[i].tag == "Drug":
@@ -73,7 +73,7 @@ class HItemShopPanel:
             title_draw.draw()
 
             # 绘制粉色凭证
-            money_text = f"当前持有粉色凭证：{str(cache.rhodes_island.materials_resouce[4])}"
+            money_text = _("当前持有粉色凭证：{0}").format(str(cache.rhodes_island.materials_resouce[4]))
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
@@ -157,11 +157,11 @@ class BuyItemByItemNameDraw:
                 button_text = f"{index_text}{item_config.name}：{item_config.price}凭证"
                 draw_style = "standard"
                 if flag_consumables:
-                    button_text += "(持有：" + str(self.character_data.item[self.text]) + ")"
+                    button_text += _("(持有：") + str(self.character_data.item[self.text]) + ")"
                     if self.character_data.item[self.text] > 0:
                         draw_style = "dark_green"
                 else:
-                    button_text += "(未持有)"
+                    button_text += _("(未持有)")
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, normal_style = draw_style, cmd_func=self.buy_item
                 )
@@ -170,9 +170,9 @@ class BuyItemByItemNameDraw:
             name_draw = draw.LeftDraw()
             name_draw.text = f"{index_text}{item_config.name}：{item_config.price}凭证"
             if flag_consumables:
-                name_draw.text += "(持有：" + str(self.character_data.item[self.text]) + ")"
+                name_draw.text += _("(持有：") + str(self.character_data.item[self.text]) + ")"
             else:
-                name_draw.text += "(已持有)"
+                name_draw.text += _("(已持有)")
             name_draw.style = "gold_enrod"
             name_draw.width = self.width
             self.draw_text = name_draw.text
@@ -197,9 +197,9 @@ class BuyItemByItemNameDraw:
                 nickname=self.character_data.nick_name, item_name=item_config.name
             )
         elif self.character_data.item[self.text] == 99:
-            now_text = "已达到最高堆叠上限"
+            now_text = _("已达到最高堆叠上限")
         else:
-            now_text = "你没有足够的粉色凭证"
+            now_text = _("你没有足够的粉色凭证")
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width

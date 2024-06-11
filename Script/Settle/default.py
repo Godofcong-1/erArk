@@ -431,7 +431,7 @@ def handle_sub_both_small_hit_point(
                 if character_data.position == cache.character_data[0].position:
                     now_draw = draw.NormalDraw()
                     now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.text = "\n" + character_data.name + _("太累了\n")
                     now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
@@ -460,7 +460,7 @@ def handle_sub_both_small_hit_point(
                     if character_data.position == cache.character_data[0].position:
                         now_draw = draw.NormalDraw()
                         now_draw.width = width
-                        now_draw.text = "\n" + target_data.name + "太累了\n"
+                        now_draw.text = "\n" + target_data.name + _("太累了\n")
                         now_draw.draw()
 
 
@@ -508,7 +508,7 @@ def handle_sub_both_small_mana_point(
                     if character_data.position == cache.character_data[0].position:
                         now_draw = draw.NormalDraw()
                         now_draw.width = width
-                        now_draw.text = "\n" + character_data.name + "太累了\n"
+                        now_draw.text = "\n" + character_data.name + _("太累了\n")
                         now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
@@ -539,7 +539,7 @@ def handle_sub_both_small_mana_point(
                         if character_data.position == cache.character_data[0].position:
                             now_draw = draw.NormalDraw()
                             now_draw.width = width
-                            now_draw.text = "\n" + target_data.name + "太累了\n"
+                            now_draw.text = "\n" + target_data.name + _("太累了\n")
                             now_draw.draw()
 
 
@@ -580,7 +580,7 @@ def handle_sub_self_small_hit_point(
             if character_data.position == cache.character_data[0].position:
                 now_draw = draw.NormalDraw()
                 now_draw.width = width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.text = "\n" + character_data.name + _("太累了\n")
                 now_draw.draw()
 
 
@@ -622,7 +622,7 @@ def handle_sub_self_small_mana_point(
                 if character_data.position == cache.character_data[0].position:
                     now_draw = draw.NormalDraw()
                     now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.text = "\n" + character_data.name + _("太累了\n")
                     now_draw.draw()
 
 
@@ -1173,7 +1173,7 @@ def handle_first_sex(
         if target_data.talent[222] == 1:
             target_data.talent[222] = 0
             now_draw = draw.NormalDraw()
-            now_draw.text = f"\n{target_data.name}失去了【性无知】\n\n"
+            now_draw.text = _("\n{0}失去了【性无知】\n\n").format(target_data.name)
             now_draw.draw()
 
         # 处子血胖次
@@ -1191,13 +1191,13 @@ def handle_first_sex(
         if not no_pan_flag:
             pan_name = game_config.config_clothing_tem[pan_id].name
             target_data.cloth.cloth_wear[9] = []
-            now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n\n"
+            now_draw.text = _("\n获得了{0}穿着的{1}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n\n").format(target_data.name, pan_name)
             now_draw.draw()
-            character_data.pl_collection.first_panties[character_data.target_character_id] = f"{pan_name}(沾有处子血)"
+            character_data.pl_collection.first_panties[character_data.target_character_id] = _("{0}(沾有处子血)").format(pan_name)
         else:
-            now_draw.text = f"\n{target_data.name}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n\n"
+            now_draw.text = _("\n{0}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n\n").format(target_data.name)
             character_data.pl_collection.first_panties[
-                character_data.target_character_id] = f"一滴{target_data.name}的处子血"
+                character_data.target_character_id] = _("一滴{0}的处子血").format(target_data.name)
             now_draw.draw()
 
         # 道具破处
@@ -1467,7 +1467,7 @@ def handle_hypnosis_one(
         if target_character_data.sp_flag.unconscious_h == 5:
             character_data.pl_ability.air_hypnosis_position = ""
         now_draw = draw.NormalDraw()
-        now_draw.text = f"\n{character_data.name}的理智耗尽，催眠结束\n\n"
+        now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
         now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ALL)
@@ -1530,7 +1530,7 @@ def handle_hypnosis_all(
             if target_character_data.sp_flag.unconscious_h == 5:
                 character_data.pl_ability.air_hypnosis_position = ""
             now_draw = draw.NormalDraw()
-            now_draw.text = f"\n{character_data.name}的理智耗尽，催眠结束\n\n"
+            now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
             now_draw.draw()
 
 
@@ -4740,7 +4740,7 @@ def handle_official_work_add_adjust(
         now_draw_text += _("在{0}的帮助下，").format(target_data.name)
     # 根据博士办公室的房间等级来调整
     now_level = cache.rhodes_island.facility_level[22]
-    facility_cid = game_config.config_facility_effect_data["博士办公室"][int(now_level)]
+    facility_cid = game_config.config_facility_effect_data[_("博士办公室")][int(now_level)]
     facility_effect = game_config.config_facility_effect[facility_cid].effect
     adjust *= (1 + facility_effect / 100)
     # 处理工作
@@ -5415,7 +5415,7 @@ def handle_add_hpmp_max(
         return
     # 设施效率
     now_level = cache.rhodes_island.facility_level[9]
-    facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
+    facility_cid = game_config.config_facility_effect_data[_("疗养庭院")][int(now_level)]
     facility_effect = game_config.config_facility_effect[facility_cid].effect
     facility_adjust = 1 + facility_effect / 100
 
@@ -5428,7 +5428,7 @@ def handle_add_hpmp_max(
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = f"\n{character_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
+        now_draw.text = _("\n{0}的体力上限增加{1},气力上限增加{2}").format(character_data.name, str(add_hp), str(add_mp))
         now_draw.width = width
         now_draw.draw()
     # 交互对象也同样#
@@ -5441,7 +5441,7 @@ def handle_add_hpmp_max(
         # 如果和玩家位于同一地点，则输出提示信息
         if character_data.position == cache.character_data[0].position:
             now_draw = draw.NormalDraw()
-            now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
+            now_draw.text = _("\n{0}的体力上限增加{1},气力上限增加{2}\n").format(target_data.name, str(add_hp), str(add_mp))
             now_draw.width = width
             now_draw.draw()
     else:

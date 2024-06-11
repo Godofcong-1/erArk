@@ -625,10 +625,10 @@ class Down_Negative_Talent_Panel:
                 character_data.status_data[18] = 0
             elif ability_id == 18:
                 character_data.status_data[20] = 0
-            info_text = "  随着一阵火焰，5条内裤化为一缕青烟，消散在空中\n"
-            info_text += f"  {character_data.name}感觉心里轻松了很多，对{pl_character_data.name}的印象有些改观了，{game_config.config_ability[ability_id].name}下降到了{character_data.ability[ability_id]}级\n"
+            info_text = _("  随着一阵火焰，5条内裤化为一缕青烟，消散在空中\n")
+            info_text += _("  {0}感觉心里轻松了很多，对{1}的印象有些改观了，{2}下降到了{3}级\n").format(character_data.name, pl_character_data.name, game_config.config_ability[ability_id].name, character_data.ability[ability_id])
         else:
-            info_text = "  内裤数量不足\n"
+            info_text = _("  内裤数量不足\n")
         info_draw.text = info_text
         info_draw.draw()
         line = draw.LineDraw("-", self.width)

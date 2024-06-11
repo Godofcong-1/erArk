@@ -222,7 +222,7 @@ class BuyFoodByFoodNameDraw:
         button_text += f"({food_quality_str})"
         if food_data.maker != "":
             button_text += f"(by {food_data.maker})"
-        button_text += "(食堂自助免费拿取)"
+        button_text += _("(食堂自助免费拿取)")
         button_text += f"：{food_introduce}"
         name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)
         self.now_draw = name_draw

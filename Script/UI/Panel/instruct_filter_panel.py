@@ -32,7 +32,7 @@ class Instruct_filter_Panel:
 
     def draw(self):
         """绘制对象"""
-        title_draw = draw.TitleLineDraw("指令过滤", self.width)
+        title_draw = draw.TitleLineDraw(_("指令过滤"), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, 1, 1, 0)
 

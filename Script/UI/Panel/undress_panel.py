@@ -36,13 +36,13 @@ class Undress_Panel:
 
     def draw(self):
         """绘制对象"""
-        title_draw = draw.TitleLineDraw("脱衣服", self.width)
+        title_draw = draw.TitleLineDraw(_("脱衣服"), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], SeeUndressButtonList, 10, 1, self.width, 1, 1, 0)
         cooking.init_makefood_data()
         while 1:
             py_cmd.clr_cmd()
-            button_text_list = ["脱到只穿内衣      ","脱到只穿袜子手套等","脱到全裸          ","把内裤收走        "]
+            button_text_list = [_("脱到只穿内衣      "),_("脱到只穿袜子手套等"),_("脱到全裸          "),_("把内裤收走        ")]
 
             self.handle_panel.text_list = button_text_list
             self.handle_panel.update()
@@ -107,26 +107,26 @@ class SeeUndressButtonList:
         if self.button_id == 0:
             cloth_count = len(target_data.cloth.cloth_wear[5]) + len(target_data.cloth.cloth_wear[8])
             if cloth_count:
-                button_text += f" ：会脱掉"
+                button_text += _(" ：会脱掉")
                 for i in {5,8}:
                     for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
-                button_text += f" ：无可脱的衣服"
+                button_text += _(" ：无可脱的衣服")
                 text_flag = True
 
         # 1号指令,脱到只穿袜子手套等
         elif self.button_id == 1:
             cloth_count = len(target_data.cloth.cloth_wear[5]) + len(target_data.cloth.cloth_wear[6]) + len(target_data.cloth.cloth_wear[8]) + len(target_data.cloth.cloth_wear[9])
             if cloth_count:
-                button_text += f" ：会脱掉"
+                button_text += _(" ：会脱掉")
                 for i in {5,6,8,9}:
                     for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
-                button_text += f" ：无可脱的衣服"
+                button_text += _(" ：无可脱的衣服")
                 text_flag = True
 
         # 2号指令,脱到全裸
@@ -135,26 +135,26 @@ class SeeUndressButtonList:
             for i in game_config.config_clothing_type:
                 cloth_count += len(target_data.cloth.cloth_wear[i])
             if cloth_count:
-                button_text += f" ：会脱掉"
+                button_text += _(" ：会脱掉")
                 for i in game_config.config_clothing_type:
                     for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
-                button_text += f" ：无可脱的衣服"
+                button_text += _(" ：无可脱的衣服")
                 text_flag = True
 
         # 3号指令,把内裤收走
         if self.button_id == 3:
             cloth_count = len(target_data.cloth.cloth_wear[9])
             if cloth_count:
-                button_text += f" ：会收走"
+                button_text += _(" ：会收走")
                 for i in {9}:
                     for j in target_data.cloth.cloth_wear[i]:
                         cloth_name = game_config.config_clothing_tem[j].name
                         button_text += f" {cloth_name}"
             else:
-                button_text += f" ：无可收的内裤"
+                button_text += _(" ：无可收的内裤")
                 text_flag = True
 
         # 如果按钮不可选则变成文本

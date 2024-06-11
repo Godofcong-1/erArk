@@ -42,7 +42,7 @@ class Make_food_Panel:
     def draw(self):
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
-        title_draw = draw.TitleLineDraw("制作食物", self.width)
+        title_draw = draw.TitleLineDraw(_("制作食物"), self.width)
         food_type_list = [_("主食"), _("零食")]
         if self.make_food_type == 1:
             food_type_list = [_("咖啡")]
@@ -78,7 +78,7 @@ class Make_food_Panel:
             # 加料说明
             now_seasoning_name = game_config.config_seasoning[self.special_seasoning].name
             now_draw = draw.NormalDraw()
-            now_draw.text = f"○当前的调味： {now_seasoning_name}"
+            now_draw.text = _("○当前的调味： {0}").format(now_seasoning_name)
             now_draw.width = 1
             now_draw.draw()
 
@@ -90,20 +90,20 @@ class Make_food_Panel:
                 if seasoning_cid == 0:
                     button_width = self.width/16
                     now_draw = draw.NormalDraw()
-                    now_draw.text = f"\n  基础:    "
+                    now_draw.text = _("\n  基础:    ")
                     now_draw.width = 1
                     now_draw.draw()
                 # 精液或下药则换行并加长文本宽度
                 if seasoning_cid == 11:
                     button_width = self.width/4
                     now_draw = draw.NormalDraw()
-                    now_draw.text = f"\n  精液:    "
+                    now_draw.text = _("\n  精液:    ")
                     now_draw.width = 1
                     now_draw.draw()
                 elif seasoning_cid == 102:
                     button_width = self.width/8
                     now_draw = draw.NormalDraw()
-                    now_draw.text = f"\n  药物:    "
+                    now_draw.text = _("\n  药物:    ")
                     now_draw.width = 1
                     now_draw.draw()
                 # 如果是加药物需要已拥有药物
@@ -127,7 +127,7 @@ class Make_food_Panel:
 
             # 食物面板
             now_draw = draw.NormalDraw()
-            now_draw.text = f"○选择要制作的食物：\n"
+            now_draw.text = _("○选择要制作的食物：\n")
             now_draw.width = 1
             now_draw.draw()
             food_name_list = list(

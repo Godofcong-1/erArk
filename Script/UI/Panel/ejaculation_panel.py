@@ -223,7 +223,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         character_data.h_state.body_item[13][1] = False
 
         # 获取射精文本
-        now_text = "在避孕套里" + semen_text
+        now_text = _("在避孕套里") + semen_text
 
 
     # 绘制射精文本
@@ -268,7 +268,7 @@ class Ejaculation_Panel:
                 self.shoot_here(now_position, 0)
         # 手动选择射精部位
         else:
-            title_name = "射精部位选择"
+            title_name = _("射精部位选择")
             title_draw = draw.TitleLineDraw(title_name, self.width)
 
             while 1:

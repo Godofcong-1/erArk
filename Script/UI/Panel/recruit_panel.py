@@ -85,7 +85,7 @@ class Recruit_Panel:
 
                 # 招募效率
                 now_level = cache.rhodes_island.facility_level[7]
-                facility_cid = game_config.config_facility_effect_data["文职部"][int(now_level)]
+                facility_cid = game_config.config_facility_effect_data[_("文职部")][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 now_text = _("\n    当前效率加成：[")

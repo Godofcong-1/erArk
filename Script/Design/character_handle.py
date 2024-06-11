@@ -395,7 +395,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     if visitor_flag:
         # 根据访客区的等级，赋予对应的停留时间
         now_level = cache.rhodes_island.facility_level[13]
-        facility_cid = game_config.config_facility_effect_data["访客区"][int(now_level)]
+        facility_cid = game_config.config_facility_effect_data[_("访客区")][int(now_level)]
         facility_effect = game_config.config_facility_effect[facility_cid].effect
         stay_days = facility_effect
         end_time = game_time.get_sub_date(day = stay_days,old_date = cache.game_time)

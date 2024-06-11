@@ -85,7 +85,7 @@ class Agriculture_Production_Panel:
 
                 # 生产效率
                 now_level = cache.rhodes_island.facility_level[16]
-                facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
+                facility_cid = game_config.config_facility_effect_data[_("疗养庭院")][int(now_level)]
                 all_effect = 0
                 facility_effect = game_config.config_facility_effect[facility_cid].effect
                 all_effect += facility_effect
@@ -129,7 +129,7 @@ class Agriculture_Production_Panel:
 
                     # 生产效率
                     now_level = cache.rhodes_island.facility_level[16]
-                    facility_cid = game_config.config_facility_effect_data["疗养庭院"][int(now_level)]
+                    facility_cid = game_config.config_facility_effect_data[_("疗养庭院")][int(now_level)]
                     all_effect = 0
                     facility_effect = game_config.config_facility_effect[facility_cid].effect
                     all_effect += facility_effect
