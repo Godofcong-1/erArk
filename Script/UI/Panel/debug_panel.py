@@ -259,7 +259,7 @@ class Debug_Panel:
             draw_text_list.append(f"[003]:当前行为状态")
             draw_text_list.append(f"[004]:当前二段行为状态（已实装）")
             draw_text_list.append(f"[005]:当前事件状态")
-            draw_text_list.append(f"[006]:状态")
+            draw_text_list.append(f"[006]:状态（已实装）")
             draw_text_list.append(f"[007]:能力（已实装）")
             draw_text_list.append(f"[008]:经验（已实装）")
             draw_text_list.append(f"[009]:宝珠（已实装）")
@@ -714,6 +714,40 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
 
                     target_data.second_behavior[value_index] = new_value
+
+                    # 接着刷新一遍显示新内容
+                    change_draw_flag = False
+                    continue
+            # 状态数据
+            elif key_index == 6:
+                draw_text_list = []
+                info_text = f"\n"
+                for cid in game_config.config_character_state:
+                    name = game_config.config_character_state[cid].name
+                    info_text += f"{cid}:{name}={target_data.status_data[cid]} "
+                draw_text_list.append(f"[000]:状态列表：\n{info_text}")
+
+                # 进行显示
+                for i in range(len(draw_text_list)):
+                    info_draw.text = draw_text_list[i]
+                    info_draw.draw()
+                    line_feed.draw()
+
+                # 如果需要输入，则进行两次输入
+                if change_draw_flag:
+                    line_feed.draw()
+                    value_index_panel = panel.AskForOneMessage()
+                    value_index_panel.set(_("输入改变第几项，如果是带子项的项的话，中间用英文小写逗号隔开"), 100)
+                    value_index = value_index_panel.draw()
+                    if "," in value_index: # 转成全int的list
+                        value_index = list(map(int, value_index.split(",")))
+                    else:
+                        value_index = int(value_index)
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+
+                    target_data.status_data[value_index] = new_value
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
