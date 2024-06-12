@@ -920,6 +920,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         if character_data.target_character_id == character_id:
             return 0
         final_character_data = cache.character_data[character_data.target_character_id]
+        change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
         final_change_data = target_change
     elif effect_all_value_list[0][:2] == "A3":
