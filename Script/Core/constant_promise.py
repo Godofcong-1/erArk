@@ -514,6 +514,10 @@ class Premise:
     """ 地点_移动 角色离开宿舍 """
     MOVE_TO_LADIES_ONLY = "move_to_ladies_only"
     """ 地点_移动 角色抵达男士止步的地点 """
+    MOVE_TO_SOMEONE_MASTUREBATE = "move_to_someone_masturebate"
+    """ 地点_移动 角色抵达有人自慰的地点 """
+    NOT_MOVE_TO_SOMEONE_MASTUREBATE = "not_move_to_someone_masturebate"
+    """ 地点_移动 角色抵达的地点没有人自慰 """
     MOVE_NOT_FINISH = "move_not_finish"
     """ 地点_移动 角色移动未完成(权重为10) """
 

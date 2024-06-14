@@ -746,6 +746,9 @@ class BehaviorEffect:
     TARGET_NPC_ACTIVE_H_OFF = 1404
     """ 属性_H 对方关闭主动H """
 
+    TRGET_GET_WEEKNESSS_BY_DR = 1501
+    """ 属性_素质 交互对象获得[被博士持有把柄] """
+
 class SecondEffect:
     """二段结算效果函数"""
 

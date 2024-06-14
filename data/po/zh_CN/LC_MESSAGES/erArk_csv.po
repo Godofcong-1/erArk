@@ -14408,6 +14408,22 @@ msgstr ""
 msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
 msgstr ""
 
+#: Event:b0a52f68-3807-4d75-9dd9-f92fb46a4a65
+msgid "在门外听到{TargetSceneName}里传来了努力压抑着的呻吟声，而且门好像也没有锁，要怎么做呢？"
+msgstr ""
+
+#: Event:742aecae-e027-464a-a6ea-6d8e76648111
+msgid "转身离开|虽然大概猜得到里面是谁，但为了保全对方的形象，决定还是不打扰了"
+msgstr ""
+
+#: Event:0cab87b6-157d-4d3f-9e98-ba36adaeb942
+msgid "拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一道小缝，里面的景象一览无余。\n{TargetName}背对着门，但仍能看到她的衣服解开着，手放在自己的某些部位做着什么。\n就这样，{PlayerName}看完了这场有些特殊的表演，趁演出者还停留在绝顶的余韵时又悄悄地离开了。"
+msgstr ""
+
+#: Event:d136684a-593e-4cfe-86a8-6f217b1c900d
+msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，大胆的发出了H的邀请"
+msgstr ""
+
 #: Event:e7deb39e-4384-4a46-a3fe-dec9bb162b20
 msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
 msgstr ""

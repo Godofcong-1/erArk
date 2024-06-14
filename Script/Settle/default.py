@@ -1909,6 +1909,34 @@ def handle_target_npc_active_h_off(
     target_character_data.h_state.npc_active_h = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
+def handle_target_get_weeknesss_by_dr(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象获得[被博士持有把柄]
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.talent[402] = 1
+    now_draw = draw.NormalDraw()
+    now_draw.width = width
+    now_draw.text = _("\n{0}获得了【被博士持有把柄】\n").format(target_character_data.name)
+    now_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
         character_id: int,

@@ -88,6 +88,7 @@ place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
+place_is_masturebate,SCENE_SOMEONE_IS_MASTUREBATE,地点_角色,该地点有角色在自慰
 place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
 place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
 
@@ -255,6 +256,8 @@ move_to_locker_room,MOVE_TO_LOCKER_ROOM,地点_移动,角色抵达更衣室
 move_to_dormitory,MOVE_TO_DORMITORY,地点_移动,角色抵达宿舍
 move_from_dormitory,MOVE_FROM_DORMITORY,地点_移动,角色离开宿舍
 move_to_ladies_only,MOVE_TO_LADIES_ONLY,地点_移动,角色抵达男士止步的地点
+move_to_someone_masturebate,MOVE_TO_SOMEONE_MASTUREBATE,地点_移动,角色抵达有人自慰的地点
+not_move_to_someone_masturebate,NOT_MOVE_TO_SOMEONE_MASTUREBATE,地点_移动,角色抵达的地点没有人自慰
 move_not_finish,MOVE_NOT_FINISH,地点_移动,角色移动未完成(权重为10)
 
 visitor_zone_ge_2,VISITOR_ZONE_GE_2,设施,访客区等级大于等于2级
@@ -394,6 +397,7 @@ sanity_point_ge_40,SANITY_POINT_GE_40,属性_基础,理智值≥40
 sanity_point_ge_50,SANITY_POINT_GE_50,属性_基础,理智值≥50
 desire_point_ge_80,DESIRE_POINT_GE_80,属性_基础,欲望值≥80
 desire_point_l_80,DESIRE_POINT_L_80,属性_基础,欲望值<80
+desire_point_ge_100,DESIRE_POINT_GE_100,属性_基础,欲望值≥100
 
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）
@@ -462,6 +466,10 @@ sleep_flag_1,SLEEP_FLAG_1,属性_特殊flag,自身要睡觉状态
 rest_flag_1,REST_FLAG_1,属性_特殊flag,自身要休息状态
 pee_flag_1,PEE_FLAG_1,属性_特殊flag,自身要撒尿状态
 milk_flag_1,MILK_FLAG_1,属性_特殊flag,自身要挤奶状态
+masturebate_flag_0,MASTUREBATE_FLAG_0,属性_特殊flag,自身没有要自慰状态
+masturebate_flag_g_0,MASTUREBATE_FLAG_G_0,属性_特殊flag,自身要自慰状态(含两类位置)
+masturebate_flag_1,MASTUREBATE_FLAG_1,属性_特殊flag,自身要自慰状态_洗手间
+masturebate_flag_2,MASTUREBATE_FLAG_2,属性_特殊flag,自身要自慰状态_宿舍
 find_food_weird_flag_0,FIND_FOOD_WEIRD_FLAG_0,属性_特殊flag,自身没有发现食物有问题
 find_food_weird_flag_1,FIND_FOOD_WEIRD_FLAG_1,属性_特殊flag,自身发现食物有问题
 t_find_food_weird_flag_0,T_FIND_FOOD_WEIRD_FLAG_0,属性_特殊flag,交互对象没有发现食物有问题
