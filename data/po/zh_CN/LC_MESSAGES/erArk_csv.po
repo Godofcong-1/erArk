@@ -14404,6 +14404,62 @@ msgstr ""
 msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
 msgstr ""
 
+#: Event:e7deb39e-4384-4a46-a3fe-dec9bb162b20
+msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
+msgstr ""
+
+#: Event:9cbc3906-8899-406e-b657-32c6896504fd
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁"
+msgstr ""
+
+#: Event:7071176a-5689-4d8a-9663-3f455f20d112
+msgid "放任不管|{PlayerName}留在原地，看着{TargetName}胸内的乳汁喷出来"
+msgstr ""
+
+#: Event:36821257-7796-4275-9848-58bb716de6b1
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一点"
+msgstr ""
+
+#: Event:0ccf768f-38f0-41ff-8235-8bcd38bf29ea
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变平了"
+msgstr ""
+
+#: Event:764416eb-09d0-490f-8c24-5686ec70a5d5
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一些"
+msgstr ""
+
+#: Event:8fee32f1-2fbc-47a4-8f02-e7926d525385
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了点"
+msgstr ""
+
+#: Event:6b888f6f-da64-4a42-a7c1-0caaab25a12c
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了好多"
+msgstr ""
+
+#: Event:dc1da320-ae53-406c-aa86-b5691fdb4b4e
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了些"
+msgstr ""
+
+#: Event:ee391b9a-48f4-4f00-aa4a-e2d4c8187d5d
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大得内衣快容不下了"
+msgstr ""
+
+#: Event:0cc68a8b-e1db-496d-a10a-651e110d2751
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了许多"
+msgstr ""
+
+#: Event:68a4a69f-7c6e-480f-9a8f-808150f1651f
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了"
+msgstr ""
+
+#: Event:db9113b7-8970-4f81-b5e7-1e486fd08a13
+msgid "在一天的激战后，{Name}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
+#: Event:b1f2b926-d298-48f5-8e0f-a3c3ad868859
+msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
 #: /'data\map\0\0\Scene.json:2
 msgid "罗德岛出口"
 msgstr ""
