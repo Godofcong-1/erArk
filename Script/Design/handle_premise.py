@@ -4855,6 +4855,69 @@ def handle_milk_flag_1(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.MASTUREBATE_FLAG_0)
+def handle_masturebate_flag_0(character_id: int) -> int:
+    """
+    自身没有要自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_masturebate_flag_g_0(character_id):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_FLAG_G_0)
+def handle_masturebate_flag_g_0(character_id: int) -> int:
+    """
+    自身要自慰状态(含两类位置)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate > 0:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_FLAG_1)
+def handle_masturebate_flag_1(character_id: int) -> int:
+    """
+    自身要自慰状态_洗手间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate == 1:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_FLAG_2)
+def handle_masturebate_flag_2(character_id: int) -> int:
+    """
+    自身要自慰状态_宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate == 2:
+        return 400
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.FIND_FOOD_WEIRD_FLAG_0)
 def handlefind_food_weird_flag_0(character_id: int) -> int:
     """
@@ -8523,6 +8586,32 @@ def handle_scene_someone_is_h(character_id: int) -> int:
                         break
                     if i == 18:
                         return 999
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_IS_MASTUREBATE)
+def handle_scene_someone_is_masturebate(character_id: int) -> int:
+    """
+    该地点有角色在自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于2时进行检测
+    if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非自己且非玩家的角色
+            if chara_id != character_id and chara_id != 0:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                last_state = other_character_data.last_state[-1]
+                # 检测是否在自慰
+                if last_state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                    return 999
     return 0
 
 
@@ -14256,6 +14345,23 @@ def handle_desire_point_l_80(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     if character_data.desire_point < 80:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.DESIRE_POINT_GE_100)
+def handle_desire_point_ge_100(character_id: int) -> int:
+    """
+    欲望值≥100
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    if character_data.desire_point >= 100:
         return 1
     else:
         return 0

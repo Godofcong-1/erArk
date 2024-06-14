@@ -8,13 +8,15 @@ class BehaviorEffect:
     OPTION_FATER = 10001
     """ 系统状态 开启子选项面板 """
     TARGET_TO_PLAYER = 10002
-    """ 系统状态 交互对象设为对玩家交互 """
+    """ 系统状态 将交互对象设为对玩家交互 """
     OPEN_INSTRUCT_FILTER_H = 10003
     """ 系统状态 开启H面板过滤器 """
     CLOSE_INSTRUCT_FILTER_H = 10004
     """ 系统状态 关闭H面板过滤器 """
     PL_TARGET_TO_ME = 10005
     """ 系统状态 将玩家的交互对象设为自己 """
+    TARGET_TO_SELF = 10006
+    """ 系统状态 将交互对象设为对自己交互 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -68,6 +70,8 @@ class BehaviorEffect:
     """ 属性_基础 自己欲望值调为79 """
     TARGET_DESIRE_POINT_TO_79 = 1502
     """ 属性_基础 交互对象欲望值调为79 """
+    DESIRE_POINT_TO_0 = 1503
+    """ 属性_基础 自己欲望值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
@@ -372,6 +376,8 @@ class BehaviorEffect:
     """ 属性_经验 增加1H书阅读经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 属性_经验 双方增加1学识经验 """
+    ADD_1_Masterbate_EXPERIENCE = 351
+    """ 属性_经验 增加1自慰经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
@@ -454,6 +460,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身清零催眠系的flag状态 """
     TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 496
     """ 属性_特殊flag 交互对象清零对玩家的愤怒状态 """
+    MASTUREBATE_FLAG_TO_0 = 497
+    """ 属性_特殊flag 自身清零要自慰状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -502,6 +510,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
     URETHRAL_FINGER_INSERTION_ADD_ADJUST = 523
     """ 指令_专用结算 （尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
+    MASTUREBATE_ADD_ADJUST = 524
+    """ 指令_专用结算 （自慰用）选择自己最高感度的部位，增加该部位快感和经验 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

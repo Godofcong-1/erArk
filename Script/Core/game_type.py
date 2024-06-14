@@ -549,6 +549,8 @@ class SPECIAL_FLAG:
         """ 要撒尿状态 """
         self.milk: bool = 0
         """ 要挤奶状态 """
+        self.masturebate: int = 0
+        """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰]"""
         self.shower: int = 0
         """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
         self.eat_food: int = 0

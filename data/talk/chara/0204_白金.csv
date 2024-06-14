@@ -12,7 +12,7 @@ str,int,int,str,str
 7,1,204,sys_1&place_6,“{PlayerNickName}你在这里啊。”
 8,1,204,sys_1&place_6&love_ge_1,“{PlayerNickName}，真是偶遇呢。”
 9,1,204,sys_1&place_6&love_ge_3&high_2&instruct_judge_high_obscenity,“{PlayerNickName}，过一会有空吗。”\n{TargetName}贴了过来抱住了{Name}的手臂。\n“想要{PlayerName}陪一会。”淡金色的眼睛平静地抬头看着{Name}。
-10,1,204,sys_1&place_8&love_ge_2,{TargetName}沉默地盯了{Name}一会，悄悄地离开了房间。
+10,1,204,sys_1&place_8&love_ge_2,{TargetName}沉默地盯了{PlayerNickName}一会，悄悄地离开了房间。
 11,1,204,sys_1&place_8&love_ge_3&high_1,“过来一下……”{TargetName}拉下{Name}的衣领，踮起脚亲了一下脸颊。\n“等会见。”眨了眨眼睛{TargetName}转身离开了房间。
 12,1,204,sys_1&place_8&not_fall,“有点事情，等会再见吧，{PlayerNickName}。”
 13,1,204,sys_1&place_is_h&love_4&high_10&t_desire_ge_7&technique_ge_3,“这次就算了，下次会把多余的精力全部给{PlayerNickName}挤出来的。”\n眨着眼睛就像是看着猎物一样盯了{Name}一会的{TargetName}淡淡地留下一句话之后便离开了房间。

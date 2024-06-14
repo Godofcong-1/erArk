@@ -3249,7 +3249,7 @@ msgid "“{PlayerNickName}，过一会有空吗。”\n{TargetName}贴了过来�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:15
-msgid "{TargetName}沉默地盯了{Name}一会，悄悄地离开了房间。"
+msgid "{TargetName}沉默地盯了{PlayerNickName}一会，悄悄地离开了房间。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:16
@@ -16538,6 +16538,10 @@ msgstr ""
 
 #: .\data\talk\sex\making_out.csv:6
 msgid "{Name}触发了身体爱抚指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\masturebate.csv:6
+msgid "{Name}触发了自慰的地文"
 msgstr ""
 
 #: .\data\talk\sex\milking_machine_off.csv:6

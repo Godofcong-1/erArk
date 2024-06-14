@@ -1884,6 +1884,36 @@ def character_make_milk(character_id: int):
     character_data.behavior.duration = 30
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.START_MASTUREBATE)
+def character_start_masturebate(character_id: int):
+    """
+    进入要自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 随机等于1或2
+    character_data.sp_flag.masturebate = random.randint(1, 2)
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MASTUREBATE)
+def character_masturebate(character_id: int):
+    """
+    角色自慰
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MASTUREBATE
+    character_data.state = constant.CharacterStatus.STATUS_MASTUREBATE
+    character_data.behavior.duration = 30
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """

@@ -298,6 +298,8 @@ class CharacterStatus:
     """ 诱惑对方 """
     STATUS_ASK_PEE = 417
     """ 命令对方小便 """
+    STATUS_MASTUREBATE = 418
+    """ 自慰(女) """
     STATUS_HANDJOB = 420
     """ 手交 """
     STATUS_BLOWJOB = 421
@@ -798,6 +800,8 @@ class Behavior:
     """ 诱惑对方 """
     ASK_PEE = 417
     """ 命令对方小便 """
+    MASTUREBATE = 418
+    """ 自慰(女) """
     HANDJOB = 420
     """ 手交 """
     BLOWJOB = 421
@@ -1067,6 +1071,10 @@ class StateMachine:
     """ 进入要挤奶状态 """
     MAKE_MILK = 90
     """ 挤奶 """
+    START_MASTUREBATE = 91
+    """ 进入要自慰状态 """
+    MASTUREBATE = 92
+    """ 自慰 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """

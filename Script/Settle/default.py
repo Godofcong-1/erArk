@@ -2108,6 +2108,27 @@ def handle_pl_target_to_me(
     pl_character_data.target_character_id = character_id
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_TO_SELF)
+def handle_target_to_self(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将交互对象设为对自己交互
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
 def handle_not_tired(
         character_id: int,
@@ -4571,6 +4592,26 @@ def handle_target_angry_with_player_flag_to_0(
     target_character.sp_flag.angry_with_player = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_FLAG_TO_0)
+def handle_masturebate_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime, ):
+    """
+    自身清零要自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.masturebate = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
 def handle_help_make_food_flag_to_0(
         character_id: int,
@@ -4997,7 +5038,7 @@ def handle_aromatherapy_add_adjust(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_SWAB_ADD_ADJUST)
-def handle_target_u_adjust_add_pain_not_sex(
+def handle_urethral_swab_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -5037,7 +5078,7 @@ def handle_target_u_adjust_add_pain_not_sex(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_FINGER_INSERTION_ADD_ADJUST)
-def handle_target_u_adjust_add_pain_not_sex(
+def handle_urethral_finger_insertion_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -5074,6 +5115,42 @@ def handle_target_u_adjust_add_pain_not_sex(
         final_adjust = pain_adjust * size_adjust
 
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17,base_value = 400, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_ADD_ADJUST)
+def handle_masturebate_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （自慰用）选择自己最高感度的部位，增加该部位快感和经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 获取最高感度部位，默认选择C
+    max_index = 2
+    max_value = 0
+    # 列表为0~7
+    body_part_list = [0, 1, 2, 3, 4, 5, 6, 7]
+    for index in body_part_list:
+        if character_data.ability[index] > max_value:
+            max_value = character_data.ability[index]
+            max_index = index
+    # 增加快感
+    base_chara_state_common_settle(character_id, add_time, max_index, 50, ability_level = character_data.ability[30], change_data = change_data)
+    # 增加经验
+    character_data.experience.setdefault(max_index, 0)
+    character_data.experience[max_index] += 1
+    change_data.experience.setdefault(max_index, 0)
+    change_data.experience[max_index] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
@@ -5663,9 +5740,9 @@ def handle_tech_add_n_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[0], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[0], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_B_ADJUST)
@@ -5695,9 +5772,9 @@ def handle_tech_add_b_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[1], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[1], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_C_ADJUST)
@@ -5727,9 +5804,9 @@ def handle_tech_add_c_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[2], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[2], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_P_ADJUST)
@@ -5818,9 +5895,9 @@ def handle_tech_add_v_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[4], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[4], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_A_ADJUST)
@@ -5850,9 +5927,9 @@ def handle_tech_add_a_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[5], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[5], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_U_ADJUST)
@@ -5882,9 +5959,9 @@ def handle_tech_add_u_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[6], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[6], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_W_ADJUST)
@@ -5914,9 +5991,9 @@ def handle_tech_add_w_adjust(
         if target_data.dead:
             return
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[7], change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
@@ -6558,6 +6635,27 @@ def handle_target_desire_point_to_79(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.desire_point = 79
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DESIRE_POINT_TO_0)
+def handle_desire_point_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己欲望值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.desire_point = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_TRAINING_TIME)
