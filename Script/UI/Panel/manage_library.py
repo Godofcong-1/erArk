@@ -127,13 +127,15 @@ class Manage_Library_Panel:
 
             # 按类型遍历全图书，寻找已经被借出的书籍
             for book_type_cid in game_config.config_book_type:
+                if book_type_cid == 0:
+                    continue
                 book_type_data = game_config.config_book_type[book_type_cid]
                 for book_cid in game_config.config_book_type_data[book_type_cid]:
                     book_data = game_config.config_book[book_cid]
-                    if cache.base_resouce.book_borrow_dict[book_cid] > 0 :
+                    if cache.rhodes_island.book_borrow_dict[book_cid] > 0 :
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
-                        borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
+                        borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                         borrow_npc_name = cache.character_data[borrow_npc_id].name
                         book_text += f"  (被{borrow_npc_name}借走)"
 
@@ -153,9 +155,10 @@ class Manage_Library_Panel:
             if book_count == 0:
                 now_draw = draw.NormalDraw()
                 now_draw.width = window_width
-                now_draw.text = _(f"\n  目前无人借书，不需要催还\n")
+                now_draw.text = _("\n  目前无人借书，不需要催还\n")
                 now_draw.draw()
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -171,10 +174,10 @@ class Manage_Library_Panel:
 
         character_data = cache.character_data[chara_id]
         character_data.entertainment.book_return_possibility += 100
-        character_data.entertainment.entertainment_type = 101
+        character_data.entertainment.entertainment_type = [101] * len(character_data.entertainment.entertainment_type)
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n{character_data.name}将在空闲时间前往图书馆还书\n")
+        now_draw.text = _("\n{0}将在空闲时间前往图书馆还书\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -183,7 +186,7 @@ class Manage_Library_Panel:
 
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n暂未实装\n")
+        now_draw.text = _("\n暂未实装\n")
         now_draw.draw()
 
 
@@ -198,7 +201,7 @@ class Manage_Library_Panel:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw = draw.NormalDraw()
-            can_recommend_count = 3 - len(cache.base_resouce.recommend_book_type_set)
+            can_recommend_count = 3 - len(cache.rhodes_island.recommend_book_type_set)
             info_draw.text = f"\n 当前剩余可选推荐 {can_recommend_count}\n"
             info_draw.draw()
             line_feed.draw()
@@ -210,6 +213,7 @@ class Manage_Library_Panel:
             self.handle_panel.draw()
             return_list = []
             return_list.extend(self.handle_panel.return_list)
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed.draw()
@@ -231,14 +235,14 @@ class Manage_Library_Panel:
             # 提示信息
             now_draw = draw.NormalDraw()
             now_draw.width = window_width
-            now_draw.text = _(f"\n  要把哪一天定为读书会呢？\n")
+            now_draw.text = _("\n  要把哪一天定为读书会呢？\n")
             now_draw.draw()
 
             # 遍历一周七天
             for i in range(7):
                 week_date_data = game_config.config_week_day[i]
                 button_text = f"  [{i}]:{week_date_data.name}"
-                party_entertain_id = cache.base_resouce.party_day_of_week[i]
+                party_entertain_id = cache.rhodes_island.party_day_of_week[i]
                 if party_entertain_id:
                     button_text += f" ({game_config.config_entertainment[party_entertain_id].name})"
 
@@ -255,6 +259,7 @@ class Manage_Library_Panel:
                 return_list.append(button_draw.return_text)
 
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -267,24 +272,24 @@ class Manage_Library_Panel:
     def choice_read_party(self,week_day):
         """选择读书会之日"""
 
-        party_entertain_id = cache.base_resouce.party_day_of_week[week_day]
+        party_entertain_id = cache.rhodes_island.party_day_of_week[week_day]
 
         if party_entertain_id == 101:
-            cache.base_resouce.party_day_of_week[week_day] = 0
+            cache.rhodes_island.party_day_of_week[week_day] = 0
         elif party_entertain_id:
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
-            now_draw.text = _(f"\n这一天已经被选为其他活动了\n")
+            now_draw.text = _("\n这一天已经被选为其他活动了\n")
             now_draw.draw()
         else:
             # 先取消掉其他日子可能有的读书会
             for i in range(7):
-                party_entertain_all_id = cache.base_resouce.party_day_of_week[i]
+                party_entertain_all_id = cache.rhodes_island.party_day_of_week[i]
                 if party_entertain_all_id == 101:
-                    cache.base_resouce.party_day_of_week[i] = 0
+                    cache.rhodes_island.party_day_of_week[i] = 0
 
             # 再把指定日子变成读书会
-            cache.base_resouce.party_day_of_week[week_day] = 101
+            cache.rhodes_island.party_day_of_week[week_day] = 101
 
 
 class SelectRecommendBookButton:
@@ -319,9 +324,9 @@ class SelectRecommendBookButton:
         type_data = game_config.config_book_type[self.book_type_id]
         button_text = f"[{str(type_data.cid).rjust(2,'0')}]：{type_data.father_type_name}-{type_data.son_type_name}"
         name_draw = draw.LeftDraw()
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
+        if self.book_type_id in cache.rhodes_island.recommend_book_type_set:
             button_text += f" (已推荐)"
-            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "nowmap", cmd_func=self.button_0)
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
 
@@ -330,10 +335,10 @@ class SelectRecommendBookButton:
 
     def button_0(self):
         """选项1"""
-        if self.book_type_id in cache.base_resouce.recommend_book_type_set:
-            cache.base_resouce.recommend_book_type_set.remove(self.book_type_id)
-        elif 3 - len(cache.base_resouce.recommend_book_type_set):
-            cache.base_resouce.recommend_book_type_set.add(self.book_type_id)
+        if self.book_type_id in cache.rhodes_island.recommend_book_type_set:
+            cache.rhodes_island.recommend_book_type_set.remove(self.book_type_id)
+        elif 3 - len(cache.rhodes_island.recommend_book_type_set):
+            cache.rhodes_island.recommend_book_type_set.add(self.book_type_id)
 
     def draw(self):
         """绘制对象"""

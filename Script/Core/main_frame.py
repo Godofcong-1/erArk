@@ -42,6 +42,8 @@ def close_window():
 
 # 显示主框架
 game_name = normal_config.config_normal.game_name
+game_version = normal_config.config_normal.verson
+title_text = game_name + " " + game_version + " -α测"
 root = Tk()
 # normal_config.config_normal.window_width = root.maxsize()[0]
 #读取屏幕长宽
@@ -59,7 +61,7 @@ normal_config.config_normal.order_font_size = now_font_size - 2
 #读取dpi
 dpi = root.winfo_fpixels("1i")
 root.tk.call("tk", "scaling", 1.0)
-root.title(game_name)
+root.title(title_text)
 width = normal_config.config_normal.window_width
 #根窗口左上角x坐标-当前窗口左上角x坐标
 frm_width = root.winfo_rootx() - root.winfo_x()
@@ -70,7 +72,9 @@ titlebar_height = root.winfo_rooty() - root.winfo_y()
 win_height = height + titlebar_height + frm_width
 x = root.winfo_screenwidth() // 2 - win_width // 2
 y = root.winfo_screenheight() // 2 - win_height // 2
-root.geometry("{}x{}+{}+{}".format(width, height, x, y))
+# 从窗口改为最大化
+# root.geometry("{}x{}+{}+{}".format(width, height, x, y))
+root.state('zoomed')
 #隐藏窗口
 root.deiconify()
 root.columnconfigure(0, weight=1)
@@ -90,9 +94,9 @@ textbox = Text(
     bd=0,
     cursor="",
     #123分别是，\n的上行间距，自动换行行间距，\n的下行间距
-    spacing1 = 0,
-    spacing2 = 0,
-    spacing3 = 0
+    spacing1 = 1,
+    spacing2 = 1,
+    spacing3 = 1
 )
 textbox.grid(column=0, row=0, sticky=(N, W, E, S))
 
@@ -489,12 +493,14 @@ def io_clear_cmd(*cmd_numbers: list):
     if cmd_numbers:
         for num in cmd_numbers:
             if num in cmd_tag_map:
-                index_first = textbox.tag_ranges(cmd_tag_map[num])[0]
-                index_last = textbox.tag_ranges(cmd_tag_map[num])[1]
-                for tag_name in textbox.tag_names(index_first):
-                    textbox.tag_remove(tag_name, index_first, index_last)
-                textbox.tag_add("standard", index_first, index_last)
-                textbox.tag_delete(cmd_tag_map[num])
+                tag_ranges = textbox.tag_ranges(cmd_tag_map[num])
+                if len(tag_ranges):
+                    index_first = tag_ranges[0]
+                    index_last = tag_ranges[1]
+                    for tag_name in textbox.tag_names(index_first):
+                        textbox.tag_remove(tag_name, index_first, index_last)
+                    textbox.tag_add("standard", index_first, index_last)
+                    textbox.tag_delete(cmd_tag_map[num])
                 del cmd_tag_map[num]
     else:
         for num in cmd_tag_map.keys():

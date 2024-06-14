@@ -31,8 +31,8 @@ str,int,int,str,str
 44,101,999,sys_0&t_hp_low,博士主动和干员{TargetName}聊天的口上，对方体力低于30%
 45,101,999,sys_0&good_mood,博士主动和干员{TargetName}聊天的口上，对方心情愉快
 46,101,999,sys_0&bad_or_angry_mood,博士主动和干员{TargetName}聊天的口上，对方心情不好或愤怒
-47,101,999,sys_0&t_sleep_ge_75,博士主动和干员{TargetName}聊天的口上，对方困倦条≥75%，部分指令受限
-48,101,999,sys_0&t_sleep_ge_90,博士主动和干员{TargetName}聊天的口上，对方困倦条≥90%，必须回去睡觉
+47,101,999,sys_0&t_tired_ge_75,博士主动和干员{TargetName}聊天的口上，对方疲劳条≥75%，部分指令受限
+48,101,999,sys_0&t_tired_ge_85,博士主动和干员{TargetName}聊天的口上，对方疲劳条≥85%，必须回去睡觉
 49,101,999,sys_0&t_urinate_ge_80,博士主动和干员{TargetName}聊天的口上，对方尿意条≥80%，需要排尿
 50,101,999,sys_0&t_hunger_ge_80,博士主动和干员{TargetName}聊天的口上，对方饥饿值≥80%，需要吃饭
 
@@ -61,9 +61,9 @@ str,int,int,str,str
 
 101,102,999,sys_0,博士主动和干员{TargetName}聊天，但是失败了的口上
 102,103,999,sys_0,博士主动和干员{TargetName}身体接触的口上
-103,104,999,sys_0,博士主动给干员{TargetName}泡咖啡的口上
-104,105,999,sys_0,博士主动给干员{TargetName}泡咖啡（加料）的口上
-105,106,999,sys_0,博士主动对干员{TargetName}让对方泡咖啡的口上
+103,131,999,sys_0,博士主动给干员{TargetName}泡咖啡的口上
+104,132,999,sys_0,博士主动给干员{TargetName}泡咖啡（加料）的口上
+105,133,999,sys_0,博士主动对干员{TargetName}让对方泡咖啡的口上
 106,110,999,sys_0,博士主动和干员{TargetName}一起休息的口上
 107,115,999,sys_0,博士主动向干员{TargetName}请求同行的口上
 108,116,999,sys_0,博士主动向干员{TargetName}结束同行的口上
@@ -96,12 +96,12 @@ str,int,int,str,str
 421,397,999,sys_0,博士主动对干员{TargetName}亲吻失败的口上
 422,398,999,sys_0,博士主动对干员{TargetName}重度猥亵失败的口上
 423,399,999,sys_0,博士主动对干员{TargetName}轻度猥亵失败的口上
-424,121,999,sys_0,博士主动对干员{TargetName}告白的口上
-425,122,999,sys_0,博士主动对干员{TargetName}告白失败的口上
-426,123,999,sys_0,博士主动对干员{TargetName}戴上项圈的口上
-427,124,999,sys_0,博士主动对干员{TargetName}戴上项圈失败的口上
-428,125,999,sys_0,博士主动对干员{TargetName}邀请H的口上
-429,126,999,sys_0,博士主动对干员{TargetName}结束H的口上
+424,371,999,sys_0,博士主动对干员{TargetName}告白的口上
+425,372,999,sys_0,博士主动对干员{TargetName}告白失败的口上
+426,373,999,sys_0,博士主动对干员{TargetName}戴上项圈的口上
+427,374,999,sys_0,博士主动对干员{TargetName}戴上项圈失败的口上
+428,361,999,sys_0,博士主动对干员{TargetName}邀请H的口上
+429,362,999,sys_0,博士主动对干员{TargetName}结束H的口上
 
 501,401,999,sys_0,博士主动对干员{TargetName}身体爱抚(H)的口上
 502,402,999,sys_0,博士主动对干员{TargetName}接吻(H)的口上
@@ -117,7 +117,7 @@ str,int,int,str,str
 512,412,999,sys_0,博士主动对干员{TargetName}手指插入（A）的口上
 513,413,999,sys_0,博士主动对干员{TargetName}命令对方自慰的口上
 514,414,999,sys_0,博士主动对干员{TargetName}命令对方舔自己肛门的口上
-515,415,999,sys_0,博士主动对干员{TargetName}什么也不做的口上
+515,415,999,sys_0,博士主动对干员{TargetName}继续享受的口上
 516,416,999,sys_0,博士主动对干员{TargetName}诱惑对方的口上
 517,420,999,sys_0,博士主动对干员{TargetName}手交的口上
 518,421,999,sys_0,博士主动对干员{TargetName}口交的口上
@@ -138,7 +138,7 @@ str,int,int,str,str
 532,454,999,sys_0,博士主动对干员{TargetName}媚药的口上
 533,456,999,sys_0,博士主动对干员{TargetName}一次性利尿剂的口上
 534,457,999,sys_0,博士主动对干员{TargetName}持续性利尿剂的口上
-535,458,999,sys_0,博士主动对干员{TargetName}睡眠药的口上
+535,458,999,sys_0,博士主动对干员{TargetName}安眠药的口上
 536,459,999,sys_0,博士主动对干员{TargetName}排卵促进药的口上
 
 537,481,999,sys_0,博士主动对干员{TargetName}乳头跳蛋的口上
@@ -170,7 +170,7 @@ str,int,int,str,str
 562,507,999,sys_0,博士主动对干员{TargetName}背面立位的口上
 566,511,999,sys_0,博士主动对干员{TargetName}刺激G点的口上
 567,512,999,sys_0,博士主动对干员{TargetName玩弄子宫口(H)的口上
-568,513,999,sys_0,博士主动对干员{TargetName}插入子宫(H)的口上
+568,513,999,sys_0,博士主动对干员{TargetName}插入子宫口(H)的口上
 
 569,521,999,sys_0,博士主动对干员{TargetName}正常位肛交的口上
 570,522,999,sys_0,博士主动对干员{TargetName}后背位肛交的口上

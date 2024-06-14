@@ -110,9 +110,29 @@ class SaveInfoDraw:
             save_head = save_handle.load_save_info_head(self.text)
             game_time: datetime.datetime = save_head["game_time"]
             save_time: datetime.datetime = save_head["save_time"]
-            game_time_text = _("游戏时间:") + game_time.strftime("%Y-%m-%d %H:%M")
+
+            # 更改月份的输出
+            if game_time.month == 3:
+                month_text = "春"
+            elif game_time.month == 6:
+                month_text = "夏"
+            elif game_time.month == 9:
+                month_text = "秋"
+            elif game_time.month == 12:
+                month_text = "冬"
+            game_time_text = (_("{year}年{month}月{day}日{hour}点{minute}分")).format(
+                year=game_time.year,
+                month=month_text,
+                day=game_time.day,
+                hour=game_time.hour,
+                minute=game_time.minute,
+            )
+
+            game_time_text = _("游戏时间:") + game_time_text
             save_time_text = _("存档时间:") + save_time.strftime("%Y-%m-%d %H:%M")
-            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text} {save_head['character_name']}博士 {save_time_text}"
+            save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text}"
+            save_name += _(" {0}博士").format(save_head['character_name'])
+            save_name += f" {save_time_text}"
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
@@ -157,8 +177,7 @@ class SaveInfoDraw:
                 re_write_save_button = draw.Button(
                     text_handle.id_index(now_id) + _("覆盖"),
                     str(now_id),
-                    cmd_func=save_handle.establish_save,
-                    args=(self.text,),
+                    cmd_func=self.re_write_save,
                 )
                 re_write_save_button.width = self.width
                 re_write_save_button.draw()
@@ -191,4 +210,38 @@ class SaveInfoDraw:
 
     def delete_save(self):
         """删除存档"""
+        # 进行二次确认
+        while 1:
+            line_feed.draw()
+            sure_draw = draw.LeftButton(_("[000]确认删除存档?"), _("0"), self.width)
+            sure_draw.draw()
+            line_feed.draw()
+            back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([sure_draw.return_text, back_draw.return_text])
+            py_cmd.clr_cmd()
+            if yrn == sure_draw.return_text:
+                break
+            elif yrn == back_draw.return_text:
+                return
         save_handle.remove_save(self.text)
+
+    def re_write_save(self):
+        """覆盖存档"""
+        # 进行二次确认
+        while 1:
+            line_feed.draw()
+            sure_draw = draw.LeftButton(_("[000]确认覆盖存档?"), _("0"), self.width)
+            sure_draw.draw()
+            line_feed.draw()
+            back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([sure_draw.return_text, back_draw.return_text])
+            py_cmd.clr_cmd()
+            if yrn == sure_draw.return_text:
+                break
+            elif yrn == back_draw.return_text:
+                return
+        save_handle.establish_save(self.text)

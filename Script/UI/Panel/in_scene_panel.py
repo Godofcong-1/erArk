@@ -1,8 +1,7 @@
-from os import name
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel
 from Script.Core import (
     get_text,
     cache_control,
@@ -13,7 +12,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_instruct, handle_premise
+from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image
 from Script.Config import game_config
 import logging, time
 
@@ -41,23 +40,30 @@ class InScenePanel:
 
     def draw(self):
         """绘制对象"""
-        character_data: game_type.Character = cache.character_data[0]
-        # print("character_data :",character_data)
         title_draw = draw.TitleLineDraw(_("场景"), self.width)
-        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        character_handle_panel = panel.PageHandlePanel(
-            [],
-            see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
-            20,
-            10,
-            self.width,
-            1,
-            0,
-            len(constant.handle_instruct_name_data),
-            null_button_text=character_data.target_character_id,
-        )
         while 1:
+            if cache.now_panel_id != constant.Panel.IN_SCENE:
+                break
+            len_str = game_config.config_system_setting_option[1][cache.system_setting[1]]
+            len_line = int(len_str[:1])
+            for i in range(len_line):
+                line_feed.draw()
+            title_draw.draw()
+
+            character_data: game_type.Character = cache.character_data[0]
+            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+            character_handle_panel = panel.PageHandlePanel(
+                [],
+                see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
+                20,
+                10,
+                self.width,
+                1,
+                0,
+                999,
+                null_button_text=character_data.target_character_id,
+            )
             # 绘制的开始时间
             start_draw = time.time()
 
@@ -80,26 +86,27 @@ class InScenePanel:
                 character_data.target_character_id = 0
             if not character_data.target_character_id and len(character_list):
                 character_data.target_character_id = character_list[0]
+            # 游戏时间
             game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
             game_time_draw.now_draw.width = len(game_time_draw)
+            game_time_draw.draw()
+            # 当前位置
             position_text = attr_text.get_scene_path_text(character_data.position)
             now_position_text = _("当前位置:") + position_text
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
-            now_position_draw.width = self.width - len(game_time_draw)
-            meet_draw = draw.NormalDraw()
-            meet_draw.text = _("当前位置的角色一览:")
-            meet_draw.width = self.width
-            see_instruct_panel = SeeInstructPanel(self.width)
-            cache.wframe_mouse.w_frame_skip_wait_mouse = 0
-            if cache.now_panel_id != constant.Panel.IN_SCENE:
-                break
-            character_handle_panel.null_button_text = character_data.target_character_id
-            line_feed.draw()
-            title_draw.draw()
-            game_time_draw.draw()
             now_position_draw.draw()
             line_feed.draw()
+
+            # 当前位置的角色一览
+            meet_draw = draw.NormalDraw()
+            meet_draw.text = _("当前位置的角色一览:    ")
+            # meet_draw.width = self.width
+            see_instruct_panel = SeeInstructPanel(self.width)
+            cache.wframe_mouse.w_frame_skip_wait_mouse = 0
+            character_handle_panel.null_button_text = character_data.target_character_id
+
+            # 开始绘制主界面标题栏
             ask_list = []
             if len(character_list) and character_data.target_character_id not in character_list:
                 character_data.target_character_id = character_list[0]
@@ -107,12 +114,25 @@ class InScenePanel:
                 character_data.target_character_id = 0
             if len(character_list):
                 meet_draw.draw()
-                line_feed.draw()
                 character_handle_panel.update()
                 character_handle_panel.draw()
                 ask_list.extend(character_handle_panel.return_list)
                 line_draw = draw.LineDraw("-.-", self.width)
                 line_draw.draw()
+
+                # 收起与展开按钮
+                return_text = self.draw_show_and_hide_button(0, "收起状态栏", "展开状态栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(1, "收起服装栏", "展开服装栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(2, "收起身体栏", "展开身体栏")
+                ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(4, "收起图片栏", "展开图片栏")
+                ask_list.append(return_text)
+                line_feed.draw()
+                line_draw = draw.LineDraw(".--", self.width)
+                line_draw.draw()
+
             now_draw_character_list = []
             now_draw_character_list = character_list
             # （已废弃）有bug的人物绘制列表
@@ -128,11 +148,7 @@ class InScenePanel:
                 character_data.target_character_id, self.width
             )
             character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]
-            character_head_draw_list[0].text += " " + character_head_draw_list[2].text
-            del character_head_draw_list[2]
             target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
-            target_head_draw_list[0].text += " " + target_head_draw_list[2].text
-            del target_head_draw_list[2]
             for value_tuple in character_head_draw_list:
                 value_tuple.draw()
             line_feed.draw()
@@ -197,7 +213,7 @@ class InScenePanel:
             #         label.draw()
             # ↓以下为状态栏的内容↓#
             character_status_draw_list = []
-            if character_data.target_character_id:
+            if character_data.target_character_id and cache.scene_panel_show[0]:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
                     character_data.cid, self.width / 2, 9, 0, 0
                 )
@@ -254,78 +270,40 @@ class InScenePanel:
                     label.draw()
 
             # ↓以下为服装栏的内容↓#
-            if character_data.target_character_id:
-                character_cloth_draw = see_character_info_panel.SeeCharacterClothPanel(
+            # 移动至服装文件中
+            if cache.scene_panel_show[1] and character_data.target_character_id:
+                character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
                     character_data.cid, self.width, 20, 0, 0
                 )
                 character_cloth_draw.draw()
 
-            # ↓以下为H状态栏的内容↓#
-            character_H_status_draw_list = []
-            if character_data.target_character_id:
-
-                character_H_status_draw = see_character_info_panel.SeeCharacterHStatePanel(
+            # ↓以下为身体栏的内容↓#
+            if cache.scene_panel_show[2] and character_data.target_character_id:
+                character_cloth_draw = dirty_panel.SeeCharacterBodyPanel(
                     character_data.cid, self.width, 9, 0, 0
                 )
-
-                now_line = len(character_H_status_draw.draw_list)
-
-                for i in range(now_line):
-                    c_draw = None
-                    if i in range(len(character_status_draw.draw_list)):
-                        c_draw = character_status_draw.draw_list[i]
-                    else:
-                        c_draw = draw.NormalDraw()
-                        c_draw.text = " " * int(self.width / 2)
-                        c_draw.width = self.width / 2
-
-                    character_H_status_draw_list = character_H_status_draw.draw_list
-                    # character_status_draw_list.append((t_draw))
-
-                if now_line != 1:
-                    for label in character_H_status_draw_list:
-                        if isinstance(label, tuple):
-                            index = 0
-                            for value in label:
-                                if isinstance(value, list):
-                                    for value_draw in value:
-                                        value_draw.draw()
-                                else:
-                                    value.line_feed = 0
-                                    value.draw()
-                                if not index:
-                                    fix_draw = draw.NormalDraw()
-                                    fix_draw.width = 1
-                                    fix_draw.text = "|"
-                                    fix_draw.draw()
-                                    index = 1
-                            line_feed.draw()
-                        elif isinstance(label, list):
-                            for value in label:
-                                value.draw()
-                            line_feed.draw()
-                        else:
-                            label.draw()
+                character_cloth_draw.draw()
 
             # 以下为图片面板#
-            line_draw = draw.LineDraw("-.-", self.width)
-            line_draw.draw()
-            # fix_draw = draw.CharaDraw()
-            # fix_draw.width = 10
-            # fix_draw.set(1)
-            # fix_draw.draw()
-            # line_feed.draw()
-            character_image_list_draw = CharacterImageListDraw(self.width, now_draw_character_list)
-            character_image_list_draw.draw()
-            ask_list.extend(character_image_list_draw.return_list)
-            """
-            character_image_list=character_list
-            character_image_list.reverse()
-            for image_cid in character_image_list:
-                image_character_data = cache.character_data[image_cid]
-                flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
-            """
-            line_feed.draw()
+            if len(character_list) and cache.scene_panel_show[4]:
+                line_draw = draw.LineDraw("-.-", self.width)
+                line_draw.draw()
+                # fix_draw = draw.CharaDraw()
+                # fix_draw.width = 10
+                # fix_draw.set(1)
+                # fix_draw.draw()
+                # line_feed.draw()
+                character_image_list_draw = CharacterImageListDraw(self.width, now_draw_character_list)
+                character_image_list_draw.draw()
+                ask_list.extend(character_image_list_draw.return_list)
+                """
+                character_image_list=character_list
+                character_image_list.reverse()
+                for image_cid in character_image_list:
+                    image_character_data = cache.character_data[image_cid]
+                    flow_handle.print_image_cmd(image_character_data.name,"立绘按钮")
+                """
+                line_feed.draw()
             # 以下为指令面板#
             mid_draw = time.time()
             logging.debug(f'————————')
@@ -341,6 +319,35 @@ class InScenePanel:
             py_cmd.clr_cmd()
             end_draw = time.time()
             logging.debug(f'指令部分绘制总时间为{end_draw - mid_draw}')
+
+    def draw_show_and_hide_button(self, index, hide_text, show_text):
+        """绘制显示与隐藏按钮"""
+        if cache.scene_panel_show[index]:
+            now_button = draw.CenterButton(
+                f" [{hide_text}] ",
+                hide_text,
+                (len(hide_text) + 4) * 2,
+                cmd_func=self.show_and_hide_panel,
+                args=(index,),
+            )
+        else:
+            now_button = draw.CenterButton(
+                f" [{show_text}] ",
+                show_text,
+                (len(show_text) + 4) * 2,
+                cmd_func=self.show_and_hide_panel,
+                args=(index,),
+            )
+        now_button.draw()
+        return now_button.return_text
+
+    def show_and_hide_panel(self, index):
+        """显示与隐藏面板栏"""
+        if cache.scene_panel_show[index]:
+            cache.scene_panel_show[index] = False
+        else:
+            cache.scene_panel_show[index] = True
+
 
 
 class SeeInstructPanel:
@@ -363,6 +370,7 @@ class SeeInstructPanel:
             cache.instruct_type_filter[1] = 1
             cache.instruct_type_filter[2] = 1
             cache.instruct_type_filter[3] = 1
+            cache.instruct_type_filter[4] = 1
 
         # 初始化命令过滤
         if cache.instruct_index_filter == {}:
@@ -387,13 +395,14 @@ class SeeInstructPanel:
             if now_type == constant.InstructType.SYSTEM:
                 continue
             now_config = game_config.config_instruct_type[now_type]
+            # 已选择的指令类型变成橙黄色
             if cache.instruct_type_filter[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
                     self.width / (len(cache.instruct_type_filter) - 1),
                     " ",
-                    "onbutton",
+                    "gold_enrod",
                     "standard",
                     cmd_func=self.change_filter,
                     args=(now_type,),
@@ -409,6 +418,12 @@ class SeeInstructPanel:
             now_button.width = int(self.width / (len(cache.instruct_type_filter) - 1))
             self.return_list.append(now_button.return_text)
             now_button.draw()
+
+        # 如果交互对象是临盆、产后或婴儿的话，不显示性骚扰和H类指令
+        if not handle_premise.handle_t_normal_2(0):
+            cache.instruct_type_filter[5] = 0
+            cache.instruct_type_filter[6] = 0
+
         line_feed.draw()
         line = draw.LineDraw("~..", self.width)
         line.draw()
@@ -418,6 +433,9 @@ class SeeInstructPanel:
             if cache.instruct_type_filter[
                 now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
+                    # 如果该指令不存在，则置为存在
+                    if instruct not in cache.instruct_index_filter:
+                        cache.instruct_index_filter[instruct] = 1
                     # 如果在过滤列表里，则过滤
                     if not cache.instruct_index_filter[instruct]:
                         continue
@@ -435,7 +453,8 @@ class SeeInstructPanel:
                                 if not now_premise_value:
                                     premise_judge = 1
                                     break
-                    if premise_judge:
+                    # 如果是debug模式，则不满足也显示
+                    if premise_judge and not cache.debug_mode:
                         continue
                     now_instruct_list.append(instruct)
         now_instruct_list.sort()
@@ -522,6 +541,7 @@ class CharacterImageListDraw:
     def draw(self):
         """绘制列表"""
         head_width = len(self.character_list) * 16
+        head_width = min(head_width,160) # 最多修正十个人
         center_fix = text_handle.align("*" * head_width, "center", 1, 1)
         fix_draw = draw.NormalDraw()
         fix_draw.width = self.width
@@ -533,7 +553,7 @@ class CharacterImageListDraw:
         if len(self.character_list):
             text_draw = draw.NormalDraw()
             text_draw.width = 1
-            text_draw.text = "→"
+            text_draw.text = "▷ "
             text_draw.draw()
 
             # 绘制交互对象
@@ -542,9 +562,17 @@ class CharacterImageListDraw:
             now_draw.draw()
             self.return_list.append(now_draw.return_text)
 
+            # H状态下，且玩家开启了腔内透视
+            if handle_premise.handle_is_h(0) and handle_premise.handle_intermediate_penetrating_vision(0) and handle_premise.handle_penetrating_vision_on(0):
+                text_draw.text = "    "
+                text_draw.draw()
+                cross_section_image.draw_cross_section_image()
+                text_draw.text = "  "
+                text_draw.draw()
+
             text_draw = draw.NormalDraw()
             text_draw.width = 1
-            text_draw.text = "←"
+            text_draw.text = " ◁ "
             text_draw.draw()
 
         # 超过10人，则只绘制10个
@@ -564,6 +592,10 @@ class CharacterImageListDraw:
                 continue
             now_draw = CharacterImageButton(now_character, self.width)
             now_draw.draw()
+            space_draw = draw.NormalDraw()
+            space_draw.width = 1
+            space_draw.text = " "
+            space_draw.draw()
             self.return_list.append(now_draw.return_text)
 
         # 绘制下一页按钮
@@ -605,7 +637,12 @@ class CharacterImageButton:
     def draw(self):
         """绘制图片对象"""
         character_data: game_type.Character = cache.character_data[self.character_id]
-        now_draw = draw.ImageButton(character_data.name, character_data.name + "头像", self.width, self.change_target)
+        # print(f"debug {character_data.name} = {character_data.relationship.father_id}")
+        if character_data.relationship.father_id == 0:
+            # print(f"debug 打印女儿头像")
+            now_draw = draw.ImageButton("女儿_1", character_data.name + "头像", self.width, self.change_target)
+        else:
+            now_draw = draw.ImageButton(_(character_data.name, revert_translation=True), character_data.name + "头像", self.width, self.change_target)
         now_draw.draw()
         self.return_text = character_data.name + "头像"
 

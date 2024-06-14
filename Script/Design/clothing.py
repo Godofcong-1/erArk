@@ -21,7 +21,7 @@ def get_npc_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        tem_character = cache.npc_tem_data[character_id]
+        tem_character = cache.npc_tem_data[character_id - 1]
 
         for cloth_id in tem_character.Cloth:
             type = game_config.config_clothing_tem[cloth_id].clothing_type
@@ -29,11 +29,34 @@ def get_npc_cloth(character_id: int):
             character_data.cloth.cloth_wear[type].append(cloth_id)
         get_underwear(character_id)
 
-def get_underwear(character_id: int):
+
+def get_random_underwear():
+    """
+    随机返回一件内衣和一件内裤
+    Keyword arguments:
+    无
+    Return arguments:
+    无
+    """
+    bra_list = []
+    pan_list = []
+    for cloth_id in game_config.config_clothing_tem:
+        cloth = game_config.config_clothing_tem[cloth_id]
+        if cloth.clothing_type == 6:
+            bra_list.append(cloth_id)
+        elif cloth.clothing_type == 9:
+            pan_list.append(cloth_id)
+    bra_id = random.choice(bra_list)
+    pan_id = random.choice(pan_list)
+    return bra_id, pan_id
+
+
+def get_underwear(character_id: int, part_flag = 0):
     """
     随机穿内衣，包括胸罩和内裤
     Keyword arguments:
     character_id -- 角色id
+    part_flag -- 是否只穿某个部件，0都穿，1仅胸罩，2仅内裤
     Return arguments:
     无
     """
@@ -65,8 +88,10 @@ def get_underwear(character_id: int):
                 pan_H_list.append(cloth_id)
 
     # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
-        for i in {11,12,13,16,17,18}:
+        for i in {202,203,204,212,213,214}:
             if character_data.talent[i]:
+                if cache.character_data[0].pl_collection.collection_bonus == {}:
+                    cache.character_data[0].pl_collection = attr_calculation.get_collection_zero()
                 if cache.character_data[0].pl_collection.collection_bonus[102]:
                     bra_nor_list += bra_H_list
                     bra_loli_list += bra_H_list
@@ -74,18 +99,18 @@ def get_underwear(character_id: int):
                     pan_loli_list += pan_H_list
                     break
 
-    # 判断是否当前已经穿了胸衣和内裤
-    if not len(character_data.cloth.cloth_wear[6]):
+    # 判断是否需要穿，包括是否已穿和part_flag限制
+    if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2:
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
-        if character_data.talent[60] or character_data.talent[61]:
+        if character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
         else:
             bra_id = random.choice(bra_nor_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
 
-    if not len(character_data.cloth.cloth_wear[9]):
-        if character_data.talent[60] or character_data.talent[61]:
+    if not len(character_data.cloth.cloth_wear[9]) and part_flag != 1:
+        if character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
         else:
@@ -109,7 +134,7 @@ def get_cloth_off(character_id: int):
 
 def get_shower_cloth(character_id: int):
     """
-    换上浴帽和浴巾
+    清零其他衣服并换上浴帽和浴巾
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -117,16 +142,15 @@ def get_shower_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        get_cloth_wear_zero_except_need(character_id)
         character_data.cloth.cloth_wear[0].append(51)
         character_data.cloth.cloth_wear[5].append(551)
         character_data.cloth.cloth_wear[8].append(851)
-        chara_special_wear_cloth(character_id)
 
 
 def get_sleep_cloth(character_id: int):
     """
-    换上睡衣和内衣
+    换上睡衣和内裤
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -134,7 +158,7 @@ def get_sleep_cloth(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        attr_calculation.get_cloth_wear_zero_except_jewellery(character_id)
+        get_cloth_wear_zero_except_need(character_id)
         choic_flag = random.randint(0,1)
         if choic_flag:
             character_data.cloth.cloth_wear[5].append(552)
@@ -142,7 +166,23 @@ def get_sleep_cloth(character_id: int):
         else:
             character_data.cloth.cloth_wear[5].append(553)
             character_data.cloth.cloth_wear[8].append(853)
-        get_underwear(character_id)
+        get_underwear(character_id, part_flag = 2)
+
+
+def get_swim_cloth(character_id: int):
+    """
+    换上泳衣的胸衣和内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        get_cloth_wear_zero_except_need(character_id)
+        choic_type = random.randint(1,14)
+        character_data.cloth.cloth_wear[6].append(choic_type + 680)
+        character_data.cloth.cloth_wear[9].append(choic_type + 980)
         chara_special_wear_cloth(character_id)
 
 
@@ -163,6 +203,32 @@ def chara_special_wear_cloth(character_id: int):
             if 701 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(701)
                 # print("换上戒指了")
+            return [701]
+    return []
+
+
+def get_cloth_wear_zero_except_need(character_id: int) -> dict:
+    """
+    遍历当前穿着服装类型，将首饰和必要物品以外的设为空
+    """
+    character_data = cache.character_data[character_id]
+    # print(f"debug 脱衣服前 = {character_data.cloth.cloth_wear}")
+    for clothing_type in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_wear[clothing_type]):
+            remove_tem_list = []
+            for cloth_id in character_data.cloth.cloth_wear[clothing_type]:
+                # 只要不是首饰和必须穿着的衣服，就把该服装加入删掉的list里
+                if (
+                    game_config.config_clothing_tem[cloth_id].tag != 6 
+                    and cloth_id not in chara_special_wear_cloth(character_id)
+                ):
+                    remove_tem_list.append(cloth_id)
+            # 获得两个list的差，并赋值给当前服装
+            result = [item for item in  character_data.cloth.cloth_wear[clothing_type] if item not in remove_tem_list]
+            character_data.cloth.cloth_wear[clothing_type] = result
+    # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
+
+
 
 '''
 不用的旧函数

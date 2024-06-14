@@ -1,16 +1,21 @@
 import random
 import bisect
+from types import FunctionType
 from typing import List
 from Script.Core import (
     cache_control,
     constant,
     game_type,
+    get_text,
 )
 from Script.Design import handle_premise, map_handle
 from Script.Config import game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def get_random_name_for_sex(sex_grade: str) -> str:
@@ -80,7 +85,7 @@ def get_stature_text(character_id: int) -> str:
 def get_scene_path_text(scene_path: List[str]) -> str:
     """
     从场景路径获取场景地址描述文本
-    例:主教学楼-1F-101室
+    例:控制中枢-博士办公室
     Keyword arguments:
     scene_path -- 场景路径
     Return arguments:
@@ -93,14 +98,15 @@ def get_scene_path_text(scene_path: List[str]) -> str:
     for now_map in map_list:
         now_map_map_system_str = map_handle.get_map_system_path_str_for_list(now_map)
         map_name = cache.map_data[now_map_map_system_str].map_name
-        scene_path_text += map_name + "-"
-    return scene_path_text + cache.scene_data[scene_path_str].scene_name
+        scene_path_text += _(map_name) + "-"
+    scene_name = cache.scene_data[scene_path_str].scene_name
+    return scene_path_text + _(scene_name)
 
 
 def get_map_path_text(map_path: List[str]) -> str:
     """
     从地图路径获取地图地址描述文本
-    例:主教学楼-1F
+    例:控制中枢
     Keyword arguments:
     map_path -- 地图路径
     Return arguments:

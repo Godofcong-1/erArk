@@ -26,7 +26,9 @@ def title_panel():
     lineFeed = draw.NormalDraw()
     lineFeed.width = 1
     lineFeed.text = "\n"
-    info = _("正在连接至神经中枢……")
+    lineFeed.draw()
+    draw_logo()
+    info = _("正在尝试与Rhodes Island(if_h)取得神经连接")
     lineFeed.draw()
     info_draw = draw.CenterDraw()
     info_draw.text = info
@@ -51,3 +53,32 @@ def title_panel():
         now_panel.draw()
     elif now_key == now_list[2]:
         os._exit(0)
+
+def draw_logo():
+    """绘制logo"""
+    logo_text = []
+    logo_text.append("┌------------------------------┐")
+    logo_text.append("|                              |")
+    logo_text.append(_("|            服务器            |"))
+    logo_text.append(_("|          泰拉(if_h)          |"))
+    logo_text.append("|                              |")
+    logo_text.append("|                              |")
+    logo_text.append("|    #                         |")
+    logo_text.append("|    |¯¯ |¯¯\   /\             |")
+    logo_text.append("|    |-- |__/  /__\  |/¯ |/    |")
+    logo_text.append("60%         |    |__ |  \ /    \ |   |\    |         60%")
+    logo_text.append("------------------------------------------------------------         |                              |         ------------------------------------------------------------")
+    logo_text.append("|                              |")
+    logo_text.append("|                              |")
+    logo_text.append("|                              |")
+    logo_text.append("|                              |")
+    logo_text.append("└------------------------------┘")
+    for i in range(len(logo_text)):
+        info_draw = draw.CenterDraw()
+        info_draw.text = logo_text[i]
+        info_draw.width = config_normal.text_width
+        info_draw.draw()
+        lineFeed = draw.NormalDraw()
+        lineFeed.width = 1
+        lineFeed.text = "\n"
+        lineFeed.draw()

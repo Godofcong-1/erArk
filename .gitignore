@@ -1,5 +1,7 @@
 # 测试文件
 test.py
+test_2.py
+example/口上测试.csv
 
 # 缓存文件
 */*.pyc
@@ -7,32 +9,29 @@ test.py
 */*/*/*.pyc
 */*/*/*/*.pyc
 */*/*/*/*/*.pyc
+
+# 打包相关文件
+build
+dist
+*.spec
+
 # 游戏解包数据
-# data/data_from_game
+data/data_from_game
 
 # AI
 tools/AI
 
-# 没实装的图像
-image/艾雅法拉.png
-image/白雪.png
-image/柏喙.png
-image/鞭刃.png
-image/古米.png
-image/红豆.png
-image/刻刀.png
-image/刻俄柏.png
-image/空.png
-image/砾.png
-image/迷迭香.png
-image/蜜蜡.png
-image/森蚺.png
-image/深靛.png
-image/霜叶.png
-image/四月.png
-image/特米米.png
-image/天火.png
-image/夕.png
-image/锡兰.png
-image/星极.png
-image/浊心斯卡蒂.png
+# 地图数据
+data/MapData
+data/PlaceData
+data/SceneData
+data/ScenePath
+
+# 存档
+save
+
+# 原图
+image/断面图/原图
+
+# 错误log
+error.log

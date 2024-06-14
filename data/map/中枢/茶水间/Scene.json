@@ -2,7 +2,7 @@
   "SceneName":"茶水间",
   "InOutDoor":"In",
   "Exposed":"1",
-  "Have_Furniture":"1",
+  "Have_Furniture":"2",
   "Close_Type":"1",
   "SceneTag":"Room"
 }

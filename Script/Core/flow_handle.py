@@ -168,9 +168,9 @@ def print_image_cmd(
 
 def cmd_clear(*number):
     """
-    清楚绑定命令
+    清除绑定命令
     Keyword arguments:
-    number -- 清楚绑定命令数字
+    number -- 清除绑定命令数字
     """
     set_tail_deal_cmd_func(default_tail_deal_cmd_func)
     if number:

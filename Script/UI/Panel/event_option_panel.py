@@ -1,8 +1,6 @@
-from typing import Tuple, Dict
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import settle_behavior, game_time
+from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, py_cmd
+from Script.Design import talk
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -25,8 +23,10 @@ class Event_option_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
+        self.character_id = character_id
+        """ 绘制的角色id """
         self.width: int = width
         """ 绘制的最大宽度 """
         self.handle_panel: panel.PageHandlePanel = None
@@ -35,7 +35,7 @@ class Event_option_Panel:
     def draw(self):
         """绘制对象"""
         line_feed.draw()
-        character_data: game_type.Character = cache.character_data[0]
+        character_data: game_type.Character = cache.character_data[self.character_id]
         behavior_id = character_data.behavior.behavior_id
         father_event_id = character_data.event.event_id
 
@@ -60,7 +60,7 @@ class Event_option_Panel:
                             break
                     # 加入到子事件的列表中
                     if son_flag:
-                        son_event_list.append(event_id)
+                        son_event_list.append([event_id, self.character_id])
 
         while 1:
             py_cmd.clr_cmd()
@@ -79,7 +79,7 @@ class SonEventDraw:
     """
     显示子事件选项对象
     Keyword arguments:
-    event_id -- 事件id
+    value_list -- 事件id,人物id
     width -- 最大宽度
     is_button -- 绘制按钮
     num_button -- 绘制数字按钮
@@ -87,11 +87,13 @@ class SonEventDraw:
     """
 
     def __init__(
-        self, event_id: str, width: int, is_button: bool, num_button: bool, button_id: int
+        self, value_list: [], width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.event_id = event_id
+        self.event_id = value_list[0]
         """ 事件id """
+        self.character_id = value_list[1]
+        """ 绘制的角色id """
         self.son_event = game_config.config_event[self.event_id]
         """ 子事件 """
         self.draw_text: str = ""
@@ -107,6 +109,7 @@ class SonEventDraw:
         name_draw = draw.NormalDraw()
         # print("text :",text)
         option_text = self.son_event.text.split("|")[0]
+        option_text = talk.code_text_to_draw_text(option_text, self.character_id)
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
@@ -136,6 +139,6 @@ class SonEventDraw:
 
     def run_son_event(self):
         """点击后运行对应的子事件"""
-        character_data: game_type.Character = cache.character_data[0]
+        character_data: game_type.Character = cache.character_data[self.character_id]
         character_data.event.son_event_id = self.event_id
 

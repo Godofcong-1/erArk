@@ -3,4 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,412,0,high_1,触发手指插入（A）指令的地文
+0,412,0,high_1,{Name}将手指插入到了{TargetName}的菊穴中慢慢搅动
+1,412,0,high_1,{Name}的手指在{TargetName}体内戳来戳去
+2,412,0,high_1,{Name}一下子将手指戳到了{TargetName}肠壁，引得{TargetName}一阵惊呼
+3,412,0,t_wear_pan,分开{TargetName}下身穿着的{TagetPanName}，{Name}将手指放在了后庭入口处慢慢磨蹭。
+4,412,0,t_wear_pan,分开{TargetName}下身穿着的{TagetPanName}，{Name}将手指深入进去大概5厘米的深度。

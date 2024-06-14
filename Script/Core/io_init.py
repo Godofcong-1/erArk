@@ -249,7 +249,7 @@ def set_background(color: str):
 
 def clear_order():
     """
-    清楚前端已经设置的命令
+    清除前端已经设置的命令
     """
     json_str = new_json()
     json_str["clearorder_cmd"] = "true"

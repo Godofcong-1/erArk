@@ -9,10 +9,14 @@ data_path = os.path.join("data", "data.json")
 """ 原始json数据文件路径 """
 character_path = os.path.join("data", "Character.json")
 """ 原始角色数据文件路径 """
+ui_text_path = os.path.join("data", "ui_text.json")
+""" 原始ui文本数据文件路径 """
 config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
+ui_text_data = {}
+""" 原始ui文本数据 """
 config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
@@ -52,14 +56,32 @@ config_clothing_tem: Dict[int, config_def.ClothingTem] = {}
 """ 服装模板配置数据 """
 config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
+config_clothing_type_volume: Dict[int, list] = {}
+""" 衣服种类容积配置数据 """
+config_cloth_part_normal_flow: Dict[int, list] = {}
+""" 衣服部位正常流通配置数据 """
+config_cloth_part_full_flow: Dict[int, list] = {}
+""" 衣服部位满溢流通配置数据 """
+config_cloth_part_extra_flow: Dict[int, list] = {}
+""" 衣服部位额外流通配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
 config_work_type: Dict[int, config_def.WorkType] = {}
 """ 工作种类配置数据 """
 config_entertainment: Dict[int, config_def.Entertainment] = {}
 """ 娱乐配置数据 """
+config_reproduction_period: Dict[int, config_def.Reproduction_period] = {}
+""" 生理周期数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
+config_body_part_volume: Dict[int, list] = {}
+""" 身体部位容积数据 """
+config_body_part_normal_flow: Dict[int, list] = {}
+""" 身体部位正常流通数据 """
+config_body_part_full_flow: Dict[int, list] = {}
+""" 身体部位满溢流通数据 """
+config_body_part_extra_flow: Dict[int, list] = {}
+""" 身体部位额外流通数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
 config_facility: Dict[int, config_def.Facility] = {}
@@ -70,6 +92,8 @@ config_facility_effect_data: Dict[str, Set] = {}
 """ 设施效果分类数据 """
 config_facility_open: Dict[int, config_def.Facility_open] = {}
 """ 设施开放数据 """
+config_facility_open_name_set: Set = set()
+""" 设施开放名称集合 """
 config_resouce: Dict[int, config_def.Resouce] = {}
 """ 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
@@ -115,6 +139,14 @@ config_profession: Dict[int, config_def.Profession] = {}
 """ 职业配置 """
 config_race: Dict[int, config_def.Race] = {}
 """ 种族配置 """
+config_birthplace: Dict[int, config_def.Birthplace] = {}
+""" 出生地配置 """
+config_nation: Dict[int, config_def.Nation] = {}
+""" 势力配置 """
+config_city: Dict[int, config_def.City] = {}
+""" 城市配置 """
+config_city_of_country: Dict[int, Set] = {}
+""" 大地点所属的城市配置 """
 config_talent_type: Dict[int, config_def.TalentType] = {}
 """ 素质种类配置 """
 config_talent_type_data: Dict[int, Set] = {}
@@ -128,13 +160,18 @@ config_talent: Dict[int,config_def.Talent] = {}
 # """ 根据能力id和等级来判断升级的前提编号 """
 config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
 """
-载入根据前提编号来判断具体的能力升级的具体前提数据
-需求id:[类型,类型子id,需求值]
+能力升级数据
+能力id:当前等级:需求分项:需求内容
 """
-config_talent_up_data: Dict[int, Dict[int, config_def.TalentUp]] = {}
+config_talent_gain: Dict[int, config_def.TalentGain] = {}
 """
-载入根据前提编号来判断具体的素质升级的具体前提数据
-需求id:[类型,类型子id,需求值]
+获得素质原数据
+条目cid:条目内容
+"""
+config_talent_gain_data: Dict[int, config_def.TalentGain] = {}
+"""
+获得素质_素质排列数据
+素质id:条目内容
 """
 config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
 """ 每个指令的实行值判定数据 """
@@ -169,14 +206,18 @@ config_talk_premise_data: Dict[int, Set] = {}
 """ 口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
 """ 目标配置数据 """
+config_target_premise_data: Dict[int, Set] = {}
+""" 目标前提配置数据 """
+config_target_type_index: Dict[int, List] = {}
+""" 目标配置数据的种类索引 """
+config_target_type: Dict[int, config_def.Target_Type] = {}
+""" 目标类型表 """
 config_target_effect: Dict[int, config_def.TargetEffect] = {}
 """ 目标效果配置 """
 config_target_effect_data: Dict[int, Set] = {}
 """ 目标效果配置数据 """
 config_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
-config_target_premise_data: Dict[int, Set] = {}
-""" 目标前提配置数据 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
 config_event: Dict[str, game_type.Event] = {}
@@ -190,13 +231,65 @@ config_event_target: Dict[int, game_type.Target] = {}
 """ 目标配置数据 """
 config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
-
+config_sleep_level: Dict[int, config_def.Sleep_Level] = {}
+""" 睡眠等级数据 """
+config_favorability_level: Dict[int, config_def.Favorability_Level] = {}
+""" 好感度等级数据 """
+config_trust_level: Dict[int, config_def.Trust_Level] = {}
+""" 信赖等级数据 """
+config_seasoning: Dict[int, config_def.Seasoning] = {}
+""" 调味数据 """
+config_prts: Dict[int, config_def.Prts] = {}
+""" 教程数据 """
+config_food_quality: Dict[int, config_def.Food_Quality] = {}
+""" 食物质量数据 """
+config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
+""" 教程数据的具体整理 父id:子id:0问1答:内容 """
+config_productformula: Dict[int, config_def.ProductFormula] = {}
+""" 产品配方数据 条目cid:条目内容 """
+config_productformula_data: Dict[int, Dict[int, int]] = {}
+""" 产品配方具体数据 条目cid:[原料id:原料数量] """
+config_aromatherapy_recipes: Dict[int, config_def.Aromatherapy_Recipes] = {}
+""" 香薰疗愈配方数据 """
+config_aromatherapy_recipes_data: Dict[int, Dict[int, int]] = {}
+""" 香薰疗愈配方具体数据 配方id:[原料id:原料数量] """
+config_first_bonus: Dict[int, config_def.First_Bouns] = {}
+""" 初始奖励数据 奖励id:奖励内容 """
+config_chara_setting: Dict[int, config_def.CharaSetting] = {}
+""" 角色设置数据 设置id:详细内容 """
+config_chara_setting_option: Dict[int, Dict[int, str]] = {}
+""" 角色设置数据的选项数据 设置id:选项序号:选项内容 """
+config_system_setting: Dict[int, config_def.System_Setting] = {}
+""" 系统设置数据 设置id:详细内容 """
+config_system_setting_option: Dict[int, Dict[int, str]] = {}
+""" 系统设置数据的选项数据 设置id:选项序号:选项内容 """
+config_assistant_services: Dict[int, config_def.AssistantServices] = {}
+""" 助理服务数据 服务id:详细内容 """
+config_assistant_services_option: Dict[int, Dict[int, str]] = {}
+""" 角色设置数据的选项数据 设置id:选项序号:选项内容 """
+config_visitor_stay_attitude: Dict[int, config_def.Visitor_Stay_Attitude] = {}
+""" 访客停留态度 """
+config_recruitment_strategy: Dict[int, config_def.Recruitment_Strategy] = {}
+""" 招募策略 """
+config_world_setting: Dict[int, config_def.World_Setting] = {}
+""" 世界设定 """
+config_hypnosis_type: Dict[int, config_def.Hypnosis_Type] = {}
+""" 催眠类型 """
+config_hypnosis_talent_of_npc: Dict[int, config_def.Hypnosis_Talent_Of_Npc] = {}
+""" 干员获得被催眠素质 """
+config_hypnosis_talent_of_pl: Dict[int, config_def.Hypnosis_Talent_Of_Pl] = {}
+""" 玩家获得催眠素质 """
+config_talent_of_arts: Dict[int, config_def.Talent_Of_Arts] = {}
+""" 源石技艺素质 """
+config_roleplay: Dict[int, config_def.Roleplay] = {}
+""" 角色扮演 """
 
 def load_data_json():
-    """载入data.json与character.json内配置数据"""
-    global config_data,character_data
+    """载入data.json、character.json与ui_text.json内配置数据"""
+    global config_data,character_data,ui_text_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
+    ui_text_data = json_handle.load_json(ui_text_path)
 
 
 def translate_data(data: dict):
@@ -271,16 +364,16 @@ def load_ability_up_data():
         # print("config_ability_up_data[now_tem.ability_id][now_tem.now_level] :",config_ability_up_data[now_tem.ability_id][now_tem.now_level])
         # print()
 
-def load_talent_up_data():
-    """载入根据前提编号来判断具体的素质升级的具体前提数据"""
-    now_data = config_data["TalentUp"]
+def load_talent_gain_data():
+    """载入获得素质数据"""
+    now_data = config_data["TalentGain"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
-        now_tem = config_def.TalentUp()
+        now_tem = config_def.TalentGain()
         now_tem.__dict__ = tem_data
-        config_talent_up_data.setdefault(now_tem.talent_id, {})
-        config_talent_up_data[now_tem.talent_id].setdefault(now_tem.cid, {})
-        config_talent_up_data[now_tem.talent_id][now_tem.cid] = now_tem
+        config_talent_gain[now_tem.cid] = now_tem
+        config_talent_gain_data.setdefault(now_tem.talent_id, {})
+        config_talent_gain_data[now_tem.talent_id] = now_tem
 
 
 def load_instruct_judge_data():
@@ -321,6 +414,7 @@ def load_profession():
         now_tem.__dict__ = tem_data
         config_profession[now_tem.cid] = now_tem
 
+
 def load_race():
     """载入职业数据"""
     now_data = config_data["Race"]
@@ -329,6 +423,39 @@ def load_race():
         now_tem = config_def.Race()
         now_tem.__dict__ = tem_data
         config_race[now_tem.cid] = now_tem
+
+
+def load_birthplace():
+    """载入出生地数据"""
+    now_data = config_data["Birthplace"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Birthplace()
+        now_tem.__dict__ = tem_data
+        config_birthplace[now_tem.cid] = now_tem
+
+
+def load_nation():
+    """载入势力数据"""
+    now_data = config_data["Nation"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Nation()
+        now_tem.__dict__ = tem_data
+        config_nation[now_tem.cid] = now_tem
+
+
+def load_city():
+    """载入城市数据"""
+    now_data = config_data["City"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.City()
+        now_tem.__dict__ = tem_data
+        config_city[now_tem.cid] = now_tem
+        config_city_of_country.setdefault(now_tem.country_id, set())
+        config_city_of_country[now_tem.country_id].add(now_tem.cid)
+
 
 def load_talent_type():
     """载入素质类型具体配置数据（按能力类型分类）"""
@@ -480,6 +607,23 @@ def load_clothing_type():
         now_type = config_def.ClothingType()
         now_type.__dict__ = tem_data
         config_clothing_type[now_type.cid] = now_type
+        # 容积表
+        volume_list = now_type.volume_table.split("-")
+        volume_list = [int(volume) for volume in volume_list]
+        config_clothing_type_volume[now_type.cid] = volume_list
+        # 流通表
+        def update_config_flow(flow_str, config_dict, cid):
+            if flow_str == "无":
+                config_dict[cid] = []
+            elif "+" in flow_str:
+                flow_list = flow_str.split("+")
+                config_dict[cid] = flow_list
+            else:
+                config_dict[cid] = [flow_str]
+        update_config_flow(now_type.normal_flow_table, config_cloth_part_normal_flow, now_type.cid)
+        update_config_flow(now_type.full_flow_table, config_cloth_part_full_flow, now_type.cid)
+        update_config_flow(now_type.extra_flow_table, config_cloth_part_extra_flow, now_type.cid)
+    # print(f"debug config_clothing_type_volume = {config_clothing_type_volume}\n config_cloth_part_normal_flow = {config_cloth_part_normal_flow}\n config_cloth_part_full_flow = {config_cloth_part_full_flow}\n config_cloth_part_extra_flow = {config_cloth_part_extra_flow}")
 
 
 def load_clothing_use_type():
@@ -512,6 +656,16 @@ def load_entertainment():
         config_entertainment[now_type.cid] = now_type
 
 
+def load_reproduction_period():
+    """载入生理周期数据"""
+    now_data = config_data["Reproduction_period"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Reproduction_period()
+        now_type.__dict__ = tem_data
+        config_reproduction_period[now_type.cid] = now_type
+
+
 def load_body_part():
     """载入身体部位配置数据"""
     now_data = config_data["BodyPart"]
@@ -520,6 +674,22 @@ def load_body_part():
         now_type = config_def.BodyPart()
         now_type.__dict__ = tem_data
         config_body_part[now_type.cid] = now_type
+        # 容积表
+        volume_list = now_type.volume_table.split("-")
+        volume_list = [int(volume) for volume in volume_list]
+        config_body_part_volume[now_type.cid] = volume_list
+        # 流通表
+        def update_config_flow(flow_str, config_dict, cid):
+            if flow_str == "无":
+                config_dict[cid] = []
+            elif "+" in flow_str:
+                flow_list = flow_str.split("+")
+                config_dict[cid] = flow_list
+            else:
+                config_dict[cid] = [flow_str]
+        update_config_flow(now_type.normal_flow_table, config_body_part_normal_flow, now_type.cid)
+        update_config_flow(now_type.full_flow_table, config_body_part_full_flow, now_type.cid)
+        update_config_flow(now_type.extra_flow_table, config_body_part_extra_flow, now_type.cid)
 
 
 def load_collection_bonus_data():
@@ -567,6 +737,7 @@ def load_facility_open():
         now_tem = config_def.Facility_open()
         now_tem.__dict__ = tem_data
         config_facility_open[now_tem.cid] = now_tem
+        config_facility_open_name_set.add(now_tem.name)
 
 
 def load_resouce():
@@ -770,6 +941,7 @@ def load_target():
         now_tem.__dict__ = tem_data
         config_target[now_tem.cid] = now_tem
 
+        # 目标前提数据
         config_target_premise_data.setdefault(now_tem.cid, set())
         if len(now_tem.premise_id):
             if "|" not in now_tem.premise_id:
@@ -778,6 +950,20 @@ def load_target():
                 premise_list = now_tem.premise_id.split('|')
                 for premise_id in premise_list:
                     config_target_premise_data[now_tem.cid].add(premise_id)
+
+        # 目标种类数据
+        config_target_type_index.setdefault(now_tem.type, list())
+        config_target_type_index[now_tem.type].append(now_tem.cid)
+
+
+def load_target_type():
+    """载入目标类型配置"""
+    now_data = config_data["Target_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Target_Type()
+        now_tem.__dict__ = tem_data
+        config_target_type[now_tem.cid] = now_tem
 
 
 def load_target_effect():
@@ -829,6 +1015,280 @@ def load_event_target():
             config_event_effect_target_data[effect].add(now_tem.uid)
 
 
+def load_sleep_level():
+    """载入睡眠等级数据"""
+    now_data = config_data["Sleep_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Sleep_Level()
+        now_tem.__dict__ = tem_data
+        config_sleep_level[now_tem.cid] = now_tem
+
+
+def load_food_quality():
+    """载入食物质量数据"""
+    now_data = config_data["Food_Quality"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Food_Quality()
+        now_tem.__dict__ = tem_data
+        config_food_quality[now_tem.cid] = now_tem
+
+
+def load_favorability_level():
+    """载入好感度等级数据"""
+    now_data = config_data["Favorability_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Favorability_Level()
+        now_tem.__dict__ = tem_data
+        config_favorability_level[now_tem.cid] = now_tem
+
+
+def load_trust_level():
+    """载入信赖等级数据"""
+    now_data = config_data["Trust_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Trust_Level()
+        now_tem.__dict__ = tem_data
+        config_trust_level[now_tem.cid] = now_tem
+
+
+def load_seasoning():
+    """载入调味数据"""
+    now_data = config_data["Seasoning"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Seasoning()
+        now_tem.__dict__ = tem_data
+        config_seasoning[now_tem.cid] = now_tem
+
+
+def load_first_bonus():
+    """载入初始奖励数据"""
+    now_data = config_data["First_Bouns"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.First_Bouns()
+        now_tem.__dict__ = tem_data
+        config_first_bonus[now_tem.cid] = now_tem
+
+
+def load_visitor_stay_attitude():
+    """载入访客停留态度数据"""
+    now_data = config_data["Visitor_Stay_Attitude"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Visitor_Stay_Attitude()
+        now_tem.__dict__ = tem_data
+        config_visitor_stay_attitude[now_tem.cid] = now_tem
+
+
+def load_recruitment_strategy():
+    """载入招募策略数据"""
+    now_data = config_data["Recruitment_Strategy"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Recruitment_Strategy()
+        now_tem.__dict__ = tem_data
+        config_recruitment_strategy[now_tem.cid] = now_tem
+
+
+def load_world_setting():
+    """载入世界设定数据"""
+    now_data = config_data["World_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.World_Setting()
+        now_tem.__dict__ = tem_data
+        config_world_setting[now_tem.cid] = now_tem
+
+
+def load_hypnosis_type():
+    """载入催眠类型"""
+    now_data = config_data["Hypnosis_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Type()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_type[now_tem.cid] = now_tem
+
+
+def load_hypnosis_talent_of_npc():
+    """载入催眠npc素质"""
+    now_data = config_data["Hypnosis_Talent_Of_Npc"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Talent_Of_Npc()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_talent_of_npc[now_tem.cid] = now_tem
+
+
+def load_hypnosis_talent_of_player():
+    """载入催眠玩家素质"""
+    now_data = config_data["Hypnosis_Talent_Of_Pl"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Talent_Of_Pl()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_talent_of_pl[now_tem.cid] = now_tem
+
+
+def load_talent_of_arts():
+    """载入源石技艺素质"""
+    now_data = config_data["Talent_Of_Arts"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Talent_Of_Arts()
+        now_tem.__dict__ = tem_data
+        config_talent_of_arts[now_tem.cid] = now_tem
+
+
+def load_roleplay():
+    """载入角色扮演数据"""
+    now_data = config_data["Roleplay"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Roleplay()
+        now_tem.__dict__ = tem_data
+        config_roleplay[now_tem.cid] = now_tem
+
+
+def load_product_formula():
+    """载入产品配方"""
+    now_data = config_data["ProductFormula"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.ProductFormula()
+        now_tem.__dict__ = tem_data
+        config_productformula[now_tem.cid] = now_tem
+
+        formula_text = now_tem.formula
+        # 以&为分割判定是否有多个需求
+        if "&" not in formula_text:
+            need_list = []
+            need_list.append(formula_text)
+        else:
+            need_list = formula_text.split('&')
+        for need_text in need_list:
+            need_type = int(need_text.split('|')[0])
+            need_value = int(need_text.split('|')[1])
+            config_productformula_data.setdefault(now_tem.cid, {})
+            config_productformula_data[now_tem.cid][need_type] = need_value
+
+
+def load_aromatherapy_recipes():
+    """载入香薰疗愈"""
+    now_data = config_data["Aromatherapy_Recipes"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Aromatherapy_Recipes()
+        now_tem.__dict__ = tem_data
+        config_aromatherapy_recipes[now_tem.cid] = now_tem
+
+        formula_text = now_tem.formula
+        # 以&为分割判定是否有多个需求
+        if "&" not in formula_text:
+            need_list = []
+            need_list.append(formula_text)
+        else:
+            need_list = formula_text.split('&')
+        for need_text in need_list:
+            need_type = int(need_text.split('|')[0])
+            need_value = int(need_text.split('|')[1])
+            config_aromatherapy_recipes_data.setdefault(now_tem.cid, {})
+            config_aromatherapy_recipes_data[now_tem.cid][need_type] = need_value
+
+
+def load_chara_setting():
+    """载入角色设置"""
+    now_data = config_data["CharaSetting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.CharaSetting()
+        now_tem.__dict__ = tem_data
+        config_chara_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_chara_setting_option[now_tem.cid] = []
+            config_chara_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_chara_setting_option[now_tem.cid] = option_text.split('|')
+
+
+def load_system_setting():
+    """载入系统设置"""
+    now_data = config_data["System_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.System_Setting()
+        now_tem.__dict__ = tem_data
+        config_system_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_system_setting_option[now_tem.cid] = []
+            config_system_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_system_setting_option[now_tem.cid] = option_text.split('|')
+
+
+def load_assistant_services():
+    """载入助理服务"""
+    now_data = config_data["AssistantServices"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.AssistantServices()
+        now_tem.__dict__ = tem_data
+        config_assistant_services[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        require_text = now_tem.require
+        config_assistant_services_option[now_tem.cid] = {}
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_assistant_services_option[now_tem.cid][0] = [option_text]
+        else:
+            config_assistant_services_option[now_tem.cid][0] = option_text.split('|')
+        # 以#为分割判定是否有多个需求
+        if "#" not in require_text:
+            config_assistant_services_option[now_tem.cid][1] = [require_text]
+        else:
+            config_assistant_services_option[now_tem.cid][1] = require_text.split('#')
+
+
+def load_prts():
+    """载入教程数据"""
+    now_data = config_data["Prts"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Prts()
+        now_tem.__dict__ = tem_data
+        config_prts[now_tem.cid] = now_tem
+
+        config_prts_data.setdefault(now_tem.fater_type, {})
+        config_prts_data[now_tem.fater_type].setdefault(now_tem.son_type, {})
+        if now_tem.qa == "q":
+            config_prts_data[now_tem.fater_type][now_tem.son_type][0] = now_tem
+        else:
+            config_prts_data[now_tem.fater_type][now_tem.son_type][1] = now_tem
+
+    """
+    draw_text_list = []
+    for son_type in config_prts_data[0]:
+        Q_data = config_prts_data[0][son_type][0]
+        draw_text_list.append(Q_data.text)
+    for son_type in config_prts_data[0]:
+        A_data = config_prts_data[0][son_type][1]
+        draw_text_list.append(A_data.text)
+    print(draw_text_list)
+    """
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -849,6 +1309,7 @@ def init():
     load_clothing_use_type()
     load_work_type()
     load_entertainment()
+    load_reproduction_period()
     load_body_part()
     load_collection_bonus_data()
     load_facility()
@@ -866,6 +1327,9 @@ def init():
     load_organ_data()
     load_profession()
     load_race()
+    load_birthplace()
+    load_nation()
+    load_city()
     load_recipes()
     load_season()
     load_sex_tem()
@@ -877,9 +1341,30 @@ def init():
     load_talk()
     load_talent_type()
     load_talent_type_data()
-    load_talent_up_data()
+    load_talent_gain_data()
     load_target()
+    load_target_type()
     load_target_effect()
     load_week_day()
     load_event()
     # load_event_target()
+    load_sleep_level()
+    load_food_quality()
+    load_favorability_level()
+    load_trust_level()
+    load_seasoning()
+    load_product_formula()
+    load_aromatherapy_recipes()
+    load_prts()
+    load_first_bonus()
+    load_chara_setting()
+    load_system_setting()
+    load_assistant_services()
+    load_visitor_stay_attitude()
+    load_recruitment_strategy()
+    load_world_setting()
+    load_hypnosis_type()
+    load_hypnosis_talent_of_npc()
+    load_hypnosis_talent_of_player()
+    load_talent_of_arts()
+    load_roleplay()

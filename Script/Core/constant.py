@@ -1,12 +1,15 @@
 from typing import Dict, List, Set
 from types import FunctionType
+from Script.Core import get_text
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 class CharacterStatus:
     """角色状态id"""
 
     STATUS_ARDER = 0
-    """ 休闲状态 """
+    """ 空闲状态 """
     STATUS_MOVE = 1
     """ 移动状态 """
     STATUS_WAIT = 2
@@ -19,18 +22,8 @@ class CharacterStatus:
     """ 谈话次数过多的状态 """
     STATUS_STROKE = 103
     """ 身体接触 """
-    STATUS_MAKE_COFFEE = 104
-    """ 泡咖啡 """
-    STATUS_MAKE_COFFEE_ADD = 105
-    """ 泡咖啡（加料） """
-    STATUS_ASK_MAKE_COFFEE = 106
-    """ 让对方泡咖啡 """
-    STATUS_MAKE_FOOD = 107
-    """ 做饭 """
-    STATUS_EAT = 108
-    """ 进食状态 """
-    STATUS_BUY_FOOD = 109
-    """ 购买食物 """
+    STATUS_MASSAGE = 104
+    """ 按摩 """
     STATUS_REST = 110
     """ 休息状态 """
     STATUS_SLEEP = 111
@@ -47,26 +40,20 @@ class CharacterStatus:
     """ 道歉失败 """
     STATUS_LISTEN_COMPLAINT = 119
     """ 听牢骚 """
-    STATUS_CONFESSION = 121
-    """ 告白 """
-    STATUS_CONFESSION_FAILED = 122
-    """ 告白失败 """
-    STATUS_GIVE_NECKLACE = 123
-    """ 戴上项圈 """
-    STATUS_GIVE_NECKLACE_FAILED = 124
-    """ 戴上项圈失败 """
-    STATUS_H = 125
-    """ 进入H状态 """
-    STATUS_END_H = 126
-    """ 结束H状态 """
-    STATUS_DO_H_FAIL = 131
-    """ 邀请H失败 """
-    STATUS_H_HP_0 = 132
-    """ H时博士体力为零中断 """
-    STATUS_T_H_HP_0 = 133
-    """ H时交互对象体力为零中断 """
-    STATUS_H_INTERRUPT = 134
-    """ H时被人目击闯入中断 """
+    STATUS_MAKE_COFFEE = 131
+    """ 泡咖啡 """
+    STATUS_MAKE_COFFEE_ADD = 132
+    """ 泡咖啡（加料） """
+    STATUS_ASK_MAKE_COFFEE = 133
+    """ 让对方泡咖啡 """
+    STATUS_MAKE_FOOD = 134
+    """ 做饭 """
+    STATUS_EAT = 135
+    """ 进食状态 """
+    STATUS_REFUSE_EAT = 136
+    """ 拒绝进食 """
+    STATUS_BUY_FOOD = 137
+    """ 购买食物 """
     STATUS_PEE = 140
     """ 解手 """
     STATUS_CLOTH_OFF = 141
@@ -79,18 +66,80 @@ class CharacterStatus:
     """ 身上衣服脱到衣柜 """
     STATUS_LOCKER_TO_WEAR = 145
     """ 衣柜衣服穿回身上 """
+    STATUS_READY_TO_SWIM = 146
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    STATUS_FOOT_CLOTH_TO_LOCKER =147
+    """ 袜子和鞋子转移到衣柜里 """
+    STATUS_WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
+    """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
+    STATUS_CLEAN_WEAR_AND_LOCKER_TO_WEAR = 149
+    """ 清空身上的衣服然后穿回衣柜的衣服 """
     STATUS_SINGING = 151
     """ 唱歌 """
     STATUS_PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
-    STATUS_CHECK_LOCKER = 161
-    """ 检查衣柜 """
-    STATUS_SMELL_UNDERWEAR = 162
-    """ 闻内衣 """
+    STATUS_WATCH_MOVIE = 153
+    """ 看电影 """
+    STATUS_PHOTOGRAPHY = 154
+    """ 摄影 """
+    STATUS_PLAY_WATER = 155
+    """ 玩水 """
+    STATUS_PLAY_CHESS = 156
+    """ 下棋 """
+    STATUS_PLAY_MAHJONG = 157
+    """ 打麻将 """
+    STATUS_PLAY_CARDS = 158
+    """ 打牌 """
+    STATUS_REHEARSE_DANCE = 159
+    """ 排演舞剧 """
+    STATUS_PLAY_ARCADE_GAME = 160
+    """ 玩街机游戏 """
+    STATUS_SWIMMING = 161
+    """ 游泳 """
+    STATUS_TASTE_WINE = 162
+    """ 品酒 """
+    STATUS_TASTE_TEA = 163
+    """ 品茶 """
+    STATUS_TASTE_COFFEE = 164
+    """ 品咖啡 """
+    STATUS_TASTE_DESSERT = 165
+    """ 品尝点心 """
+    STATUS_TASTE_FOOD = 166
+    """ 品尝美食 """
+    STATUS_PLAY_HOUSE = 167
+    """ 过家家 """
+    STATUS_STYLE_HAIR = 168
+    """ 修整发型 """
+    STATUS_FULL_BODY_STYLING = 169
+    """ 全身造型服务 """
+    STATUS_LISTEN_INFLATION = 171
+    """ 听肚子里的动静 """
+    STATUS_PLAY_WITH_CHILD = 172
+    """ 一起玩耍 """
+    STATUS_SOAK_FEET = 181
+    """ 泡脚 """
+    STATUS_STEAM_SAUNA = 182
+    """ 蒸桑拿 """
+    STATUS_HYDROTHERAPY_TREATMENT = 183
+    """ 水疗护理 """
+    STATUS_ONSEN_BATH = 184
+    """ 泡温泉 """
+    STATUS_AROMATHERAPY_1 = 191
+    """ 香薰疗愈_回复 """
+    STATUS_AROMATHERAPY_2 = 192
+    """ 香薰疗愈_习得 """
+    STATUS_AROMATHERAPY_3 = 193
+    """ 香薰疗愈_反感 """
+    STATUS_AROMATHERAPY_4 = 194
+    """ 香薰疗愈_快感 """
+    STATUS_AROMATHERAPY_5 = 195
+    """ 香薰疗愈_好感 """
+    STATUS_AROMATHERAPY_6 = 196
+    """ 香薰疗愈_催眠 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
-    STATUS_APPOINTED_ASSISTANT = 204
-    """ 指派助理 """
+    STATUS_ASSISTANT_ADJUSTMENTS = 204
+    """ 助理相关调整 """
     STATUS_TRAINING = 205
     """ 战斗训练 """
     STATUS_EXERCISE = 206
@@ -99,8 +148,38 @@ class CharacterStatus:
     """ 诊疗病人 """
     STATUS_RECRUIT = 208
     """ 招募干员 """
+    STATUS_INVITE_VISITOR = 209
+    """ 邀请访客 """
     STATUS_READ_BOOK = 210
     """ 读书 """
+    STATUS_TEACH = 213
+    """ 授课 """
+    STATUS_ATTENT_CLASS = 214
+    """ 上学 """
+    STATUS_MAINTENANCE_FACILITIES = 215
+    """ 维护设施 """
+    STATUS_REPAIR_EQUIPMENT = 216
+    """ 维修装备 """
+    STATUS_NPC_WORK_COOK = 217
+    """ 干员工作做饭 """
+    STATUS_PRODUCE = 218
+    """ 制造产品 """
+    STATUS_PLANT_MANAGE_CROP = 219
+    """ 种植与养护作物 """
+    STATUS_MORNING_SALUTATION_1 = 251
+    """ 早安问候：叫起床 """
+    STATUS_MORNING_SALUTATION_2 = 252
+    """ 早安问候：早安吻 """
+    STATUS_MORNING_SALUTATION_3 = 253
+    """ 早安问候：早安咬 """
+    STATUS_NIGHT_SALUTATION_1 = 254
+    """ 晚安问候：催睡觉 """
+    STATUS_NIGHT_SALUTATION_2 = 255
+    """ 晚安问候：晚安吻 """
+    STATUS_NIGHT_SALUTATION_3 = 256
+    """ 晚安问候：晚安咬 """
+    STATUS_NPC_ASSISTANT_COOK = 261
+    """ 干员助理做饭 """
     STATUS_TOUCH_HEAD = 301
     """ 摸头 """
     STATUS_TOUCH_BREAST = 302
@@ -141,6 +220,42 @@ class CharacterStatus:
     """ 手指插入（V） """
     STATUS_TOUCH_ANUS = 333
     """ 手指插入（A） """
+    STATUS_MILK = 336
+    """ 挤奶 """
+    STATUS_SMELL_UNDERWEAR = 341
+    """ 闻内衣 """
+    STATUS_STEAL_PAN = 342
+    """ 偷走内裤 """
+    STATUS_STEAL_SOCKS = 343
+    """ 偷走袜子 """
+    STATUS_BAGGING_AND_MOVING = 351
+    """ 装袋搬走 """
+    STATUS_PUT_INTO_PRISON = 352
+    """ 投入监牢 """
+    STATUS_SET_FREE = 353
+    """ 解除囚禁 """
+    STATUS_H = 361
+    """ 进入H状态 """
+    STATUS_END_H = 362
+    """ 结束H状态 """
+    STATUS_DO_H_FAIL = 363
+    """ 邀请H失败 """
+    STATUS_H_HP_0 = 364
+    """ H时博士体力为零中断 """
+    STATUS_T_H_HP_0 = 365
+    """ H时交互对象体力为零中断 """
+    STATUS_H_INTERRUPT = 366
+    """ H时被人目击闯入中断 """
+    STATUS_NO_CONSCIOUS_H_END = 367
+    """ 结束无意识H """
+    STATUS_CONFESSION = 371
+    """ 告白 """
+    STATUS_CONFESSION_FAILED = 372
+    """ 告白失败 """
+    STATUS_GIVE_NECKLACE = 373
+    """ 戴上项圈 """
+    STATUS_GIVE_NECKLACE_FAILED = 374
+    """ 戴上项圈失败 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -177,10 +292,12 @@ class CharacterStatus:
     """ 命令对方自慰 """
     STATUS_MAKE_LICK_ANAL = 414
     """ 命令对方舔自己肛门 """
-    STATUS_DO_NOTHING = 415
-    """ 什么也不做 """
+    STATUS_KEEP_ENJOY = 415
+    """ 继续享受 """
     STATUS_SEDECU = 416
     """ 诱惑对方 """
+    STATUS_ASK_PEE = 417
+    """ 命令对方小便 """
     STATUS_HANDJOB = 420
     """ 手交 """
     STATUS_BLOWJOB = 421
@@ -230,8 +347,8 @@ class CharacterStatus:
     STATUS_DIURETICS_PERSISTENT = 457
     """ 持续性利尿剂 """
     STATUS_SLEEPING_PILLS = 458
-    """ 睡眠药 """
-    STATUS_SLEEPING_PILLS = 459
+    """ 安眠药 """
+    STATUS_CLOMID = 459
     """ 排卵促进药 """
     STATUS_PUT_CONDOM = 471
     """ 戴上避孕套 """
@@ -239,6 +356,8 @@ class CharacterStatus:
     """ 低温蜡烛 """
     STATUS_URETHRAL_SWAB = 473
     """ 尿道棉棒 """
+    STATUS_TAKE_CONDOM_OUT = 474
+    """ 摘掉避孕套 """
     STATUS_NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     STATUS_NIPPLE_CLAMP_ON = 482
@@ -298,7 +417,9 @@ class CharacterStatus:
     STATUS_WOMB_OS_CARESS = 512
     """ 玩弄子宫口 """
     STATUS_WOMB_INSERTION = 513
-    """ 插入子宫 """
+    """ 插入子宫口 """
+    STATUS_WOMB_SEX = 514
+    """ 子宫姦 """
     STATUS_NORMAL_ANAL_SEX = 521
     """ 正常位肛交 """
     STATUS_BACK_ANAL_SEX = 522
@@ -317,8 +438,12 @@ class CharacterStatus:
     """ 玩弄s状结肠 """
     STATUS_STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
-    STATUS_MILKING_MACHINE = 601
-    """ 搾乳机 """
+    STATUS_URETHRAL_FINGER_INSERTION = 541
+    """ 尿道指姦 """
+    STATUS_URETHRAL_SEX = 542
+    """ 尿道姦 """
+    STATUS_MILKING_MACHINE_ON = 601
+    """ 装上搾乳机 """
     STATUS_URINE_COLLECTOR = 602
     """ 采尿器 """
     STATUS_BONDAGE = 603
@@ -329,8 +454,51 @@ class CharacterStatus:
     """ 鞭子 """
     STATUS_NEEDLE = 606
     """ 针 """
+    STATUS_MILKING_MACHINE_OFF = 631
+    """ 取下搾乳机 """
+    STATUS_URINE_COLLECTOR_OFF = 632
+    """ 取下采尿器 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
+    STATUS_HOLD_CHILD = 801
+    """ 抱小孩 """
+    STATUS_SING_CHILDREN_SONG = 802
+    """ 哼唱儿歌 """
+    STATUS_NUIRSE_CHILD = 803
+    """ 喂奶 """
+    STATUS_CHANGE_DIAPERS = 804
+    """ 换尿布 """
+    STATUS_TEACH_TALK = 805
+    """ 教说话 """
+    STATUS_GIVE_TOY = 806
+    """ 给玩具 """
+
+    STATUS_PENETRATING_VISION_ON = 901
+    """ 开启透视 """
+    STATUS_PENETRATING_VISION_OFF = 902
+    """ 关闭透视 """
+    STATUS_HORMONE_ON = 903
+    """ 开启信息素 """
+    STATUS_HORMONE_OFF = 904
+    """ 关闭信息素 """
+    STATUS_HYPNOSIS_ONE = 911
+    """ 单人催眠 """
+    STATUS_HYPNOSIS_ALL = 912
+    """ 集体催眠 """
+    STATUS_HYPNOSIS_CANCEL = 913
+    """ 解除催眠 """
+    STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY = 921
+    """ 体控-敏感度提升 """
+    STATUS_HYPNOSIS_FORCE_CLIMAX = 922
+    """ 体控-强制高潮 """
+    STATUS_HYPNOSIS_FORCE_OVULATION = 923
+    """ 体控-强制排卵 """
+    STATUS_HYPNOSIS_BLOCKHEAD = 924
+    """ 体控-木头人 """
+    STATUS_HYPNOSIS_ACTIVE_H = 925
+    """ 体控-逆推 """
+    STATUS_HYPNOSIS_ROLEPLAY = 931
+    """ 心控-角色扮演 """
 
 
 class Behavior:
@@ -350,18 +518,8 @@ class Behavior:
     """ 谈话次数过多而失败 """
     STROKE = 103
     """ 身体接触 """
-    MAKE_COFFEE = 104
-    """ 泡咖啡 """
-    MAKE_COFFEE_ADD = 105
-    """ 泡咖啡（加料） """
-    ASK_MAKE_COFFEE = 106
-    """ 让对方泡咖啡 """
-    MAKE_FOOD = 107
-    """ 做饭 """
-    EAT = 108
-    """ 进食 """
-    BUY_FOOD = 109
-    """ 购买食物 """
+    MASSAGE = 104
+    """ 按摩 """
     REST = 110
     """ 休息 """
     SLEEP = 111
@@ -378,26 +536,20 @@ class Behavior:
     """ 道歉失败 """
     LISTEN_COMPLAINT = 119
     """ 听牢骚 """
-    CONFESSION = 121
-    """ 告白 """
-    CONFESSION_FAILED = 122
-    """ 告白失败 """
-    GIVE_NECKLACE = 123
-    """ 戴上项圈 """
-    GIVE_NECKLACE_FAILED = 124
-    """ 戴上项圈失败 """
-    H = 125
-    """ 进入H状态 """
-    END_H = 126
-    """ 结束H """
-    DO_H_FAIL = 131
-    """ 邀请H失败 """
-    H_HP_0 = 132
-    """ H时博士体力为零中断 """
-    T_H_HP_0 = 133
-    """ H时交互对象体力为零中断 """
-    H_INTERRUPT = 134
-    """ H时被人目击闯入中断 """
+    MAKE_COFFEE = 131
+    """ 泡咖啡 """
+    MAKE_COFFEE_ADD = 132
+    """ 泡咖啡（加料） """
+    ASK_MAKE_COFFEE = 133
+    """ 让对方泡咖啡 """
+    MAKE_FOOD = 134
+    """ 做饭 """
+    EAT = 135
+    """ 进食 """
+    REFUSE_EAT = 136
+    """ 拒绝进食 """
+    BUY_FOOD = 137
+    """ 购买食物 """
     PEE = 140
     """ 解手 """
     CLOTH_OFF = 141
@@ -410,20 +562,84 @@ class Behavior:
     """ 身上衣服脱到衣柜 """
     LOCKER_TO_WEAR = 145
     """ 衣柜衣服穿回身上 """
+    READY_TO_SWIM = 146
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    FOOT_CLOTH_TO_LOCKER =147
+    """ 袜子和鞋子转移到衣柜里 """
+    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
+    """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
+    CLEAN_WEAR_AND_LOCKER_TO_WEAR = 149
+    """ 清空身上的衣服然后穿回衣柜的衣服 """
     SINGING = 151
     """ 唱歌 """
     PLAY_INSTRUMENT = 152
     """ 演奏乐器 """
-    CHECK_LOCKER = 161
-    """ 检查衣柜 """
+    WATCH_MOVIE = 153
+    """ 看电影 """
+    PHOTOGRAPHY = 154
+    """ 摄影 """
+    PLAY_WATER = 155
+    """ 玩水 """
+    PLAY_CHESS = 156
+    """ 下棋 """
+    PLAY_MAHJONG = 157
+    """ 打麻将 """
+    PLAY_CARDS = 158
+    """ 打牌 """
+    REHEARSE_DANCE = 159
+    """ 排演舞剧 """
+    PLAY_ARCADE_GAME = 160
+    """ 玩街机游戏 """
+    SWIMMING = 161
+    """ 游泳 """
+    TASTE_WINE = 162
+    """ 品酒 """
+    TASTE_TEA = 163
+    """ 品茶 """
+    TASTE_COFFEE = 164
+    """ 品咖啡 """
+    TASTE_DESSERT = 165
+    """ 品尝点心 """
+    TASTE_FOOD = 166
+    """ 品尝美食 """
+    PLAY_HOUSE = 167
+    """ 过家家 """
+    STYLE_HAIR = 168
+    """ 修整发型 """
+    FULL_BODY_STYLING = 169
+    """ 全身造型服务 """
+    LISTEN_INFLATION = 171
+    """ 听肚子里的动静 """
+    PLAY_WITH_CHILD = 172
+    """ 一起玩耍 """
+    SOAK_FEET = 181
+    """ 泡脚 """
+    STEAM_SAUNA = 182
+    """ 蒸桑拿 """
+    HYDROTHERAPY_TREATMENT = 183
+    """ 水疗护理 """
+    ONSEN_BATH = 184
+    """ 泡温泉 """
+    AROMATHERAPY_1 = 191
+    """ 香薰疗愈_回复 """
+    AROMATHERAPY_2 = 192
+    """ 香薰疗愈_习得 """
+    AROMATHERAPY_3 = 193
+    """ 香薰疗愈_反感 """
+    AROMATHERAPY_4 = 194
+    """ 香薰疗愈_快感 """
+    AROMATHERAPY_5 = 195
+    """ 香薰疗愈_好感 """
+    AROMATHERAPY_6 = 196
+    """ 香薰疗愈_催眠 """
     OFFICIAL_WORK = 201
     """ 处理公务 """
     BATTLE_COMMAND = 202
     """ 指挥作战 """
     LISTEN_MISSION = 203
     """ 听取委托 """
-    APPOINTED_ASSISTANT = 204
-    """ 指派助理 """
+    ASSISTANT_ADJUSTMENTS = 204
+    """ 助理相关调整 """
     TRAINING = 205
     """ 战斗训练 """
     EXERCISE = 206
@@ -432,8 +648,38 @@ class Behavior:
     """ 诊疗病人 """
     RECRUIT = 208
     """ 招募干员 """
+    INVITE_VISITOR = 209
+    """ 邀请访客 """
     READ_BOOK = 210
     """ 读书 """
+    TEACH = 213
+    """ 授课 """
+    ATTENT_CLASS = 214
+    """ 上学 """
+    MAINTENANCE_FACILITIES = 215
+    """ 维护设施 """
+    REPAIR_EQUIPMENT = 216
+    """ 维修装备 """
+    NPC_WORK_COOK = 217
+    """ 干员工作做饭 """
+    PRODUCE = 218
+    """ 制造产品 """
+    PLANT_MANAGE_CROP = 219
+    """ 种植与养护作物 """
+    MORNING_SALUTATION_1 = 251
+    """ 早安问候：叫起床 """
+    MORNING_SALUTATION_2 = 252
+    """ 早安问候：早安吻 """
+    MORNING_SALUTATION_3 = 253
+    """ 早安问候：早安咬 """
+    NIGHT_SALUTATION_1 = 254
+    """ 晚安问候：催睡觉 """
+    NIGHT_SALUTATION_2 = 255
+    """ 晚安问候：晚安吻 """
+    NIGHT_SALUTATION_3 = 256
+    """ 晚安问候：晚安咬 """
+    NPC_ASSISTANT_COOK = 261
+    """ 干员助理做饭 """
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -474,8 +720,42 @@ class Behavior:
     """ 手指插入（V） """
     TOUCH_ANUS = 333
     """ 手指插入（A） """
+    MILK = 336
+    """ 挤奶 """
     SMELL_UNDERWEAR = 341
     """ 闻内衣 """
+    STEAL_PAN = 342
+    """ 偷走内裤 """
+    STEAL_SOCKS = 343
+    """ 偷走袜子 """
+    BAGGING_AND_MOVING = 351
+    """ 装袋搬走 """
+    PUT_INTO_PRISON = 352
+    """ 投入监牢 """
+    SET_FREE = 353
+    """ 解除囚禁 """
+    H = 361
+    """ 进入H状态 """
+    END_H = 362
+    """ 结束H """
+    DO_H_FAIL = 363
+    """ 邀请H失败 """
+    H_HP_0 = 364
+    """ H时博士体力为零中断 """
+    T_H_HP_0 = 365
+    """ H时交互对象体力为零中断 """
+    H_INTERRUPT = 366
+    """ H时被人目击闯入中断 """
+    NO_CONSCIOUS_H_END = 367
+    """ 结束无意识H """
+    CONFESSION = 371
+    """ 告白 """
+    CONFESSION_FAILED = 372
+    """ 告白失败 """
+    GIVE_NECKLACE = 373
+    """ 戴上项圈 """
+    GIVE_NECKLACE_FAILED = 374
+    """ 戴上项圈失败 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -512,10 +792,12 @@ class Behavior:
     """ 命令对方自慰 """
     MAKE_LICK_ANAL = 414
     """ 命令对方舔自己肛门 """
-    DO_NOTHING = 415
-    """ 什么也不做 """
+    KEEP_ENJOY = 415
+    """ 继续享受 """
     SEDECU = 416
     """ 诱惑对方 """
+    ASK_PEE = 417
+    """ 命令对方小便 """
     HANDJOB = 420
     """ 手交 """
     BLOWJOB = 421
@@ -565,8 +847,8 @@ class Behavior:
     DIURETICS_PERSISTENT = 457
     """ 持续性利尿剂 """
     SLEEPING_PILLS = 458
-    """ 睡眠药 """
-    SLEEPING_PILLS = 459
+    """ 安眠药 """
+    CLOMID = 459
     """ 排卵促进药 """
     PUT_CONDOM = 471
     """ 戴上避孕套 """
@@ -574,6 +856,8 @@ class Behavior:
     """ 低温蜡烛 """
     URETHRAL_SWAB = 473
     """ 尿道棉棒 """
+    TAKE_CONDOM_OUT = 474
+    """ 摘掉避孕套 """
     NIPPLES_LOVE_EGG = 481
     """ 乳头跳蛋 """
     NIPPLE_CLAMP_ON = 482
@@ -633,7 +917,9 @@ class Behavior:
     WOMB_OS_CARESS = 512
     """ 玩弄子宫口 """
     WOMB_INSERTION = 513
-    """ 插入子宫 """
+    """ 插入子宫口 """
+    WOMB_SEX = 514
+    """ 子宫姦 """
     NORMAL_ANAL_SEX = 521
     """ 正常位肛交 """
     BACK_ANAL_SEX = 522
@@ -652,11 +938,15 @@ class Behavior:
     """ 玩弄s状结肠 """
     STIMULATE_VAGINA = 531
     """ 隔着刺激阴道 """
+    URETHRAL_FINGER_INSERTION = 541
+    """ 尿道指姦 """
+    URETHRAL_SEX = 542
+    """ 尿道姦 """
 
-    MILKING_MACHINE = 601
-    """ 搾乳机 """
-    URINE_COLLECTOR = 602
-    """ 采尿器 """
+    MILKING_MACHINE_ON = 601
+    """ 装上搾乳机 """
+    URINE_COLLECTOR_ON = 602
+    """ 装上采尿器 """
     BONDAGE = 603
     """ 绳子 """
     PATCH = 604
@@ -666,9 +956,53 @@ class Behavior:
     NEEDLE = 606
     """ 针 """
 
+    MILKING_MACHINE_OFF = 631
+    """ 取下搾乳机 """
+    URINE_COLLECTOR_OFF = 632
+    """ 取下采尿器 """
+
     UNDRESS = 701
     """ 脱衣服 """
 
+    HOLD_CHILD = 801
+    """ 抱小孩 """
+    SING_CHILDREN_SONG = 802
+    """ 哼唱儿歌 """
+    NUIRSE_CHILD = 803
+    """ 喂奶 """
+    CHANGE_DIAPERS = 804
+    """ 换尿布 """
+    TEACH_TALK = 805
+    """ 教说话 """
+    GIVE_TOY = 806
+    """ 给玩具 """
+
+    PENETRATING_VISION_ON = 901
+    """ 开启透视 """
+    PENETRATING_VISION_OFF = 902
+    """ 关闭透视 """
+    HORMONE_ON = 903
+    """ 开启信息素 """
+    HORMONE_OFF = 904
+    """ 关闭信息素 """
+    HYPNOSIS_ONE = 911
+    """ 单人催眠 """
+    HYPNOSIS_ALL = 912
+    """ 集体催眠 """
+    HYPNOSIS_CANCEL = 913
+    """ 解除催眠 """
+    HYPNOSIS_INCREASE_BODY_SENSITIVITY = 921
+    """ 体控-敏感度提升 """
+    HYPNOSIS_FORCE_CLIMAX = 922
+    """ 体控-强制高潮 """
+    HYPNOSIS_FORCE_OVULATION = 923
+    """ 体控-强制排卵 """
+    HYPNOSIS_BLOCKHEAD = 924
+    """ 体控-木头人 """
+    HYPNOSIS_ACTIVE_H = 925
+    """ 体控-逆推 """
+    HYPNOSIS_ROLEPLAY = 931
+    """ 心控-角色扮演 """
 
 class StateMachine:
     """状态机id"""
@@ -681,47 +1015,9 @@ class StateMachine:
     """ 原地待机30分钟，并取消跟随状态 """
     FOLLOW = 6
     """ 跟随玩家 """
-    MOVE_TO_RAND_SCENE = 10
-    """ 移动至随机场景 """
-    MOVE_TO_DORMITORY = 11
-    """ 移动至所属宿舍 """
-    MOVE_TO_TOILET = 12
-    """ 去洗手间 """
-    MOVE_TO_DR_OFFICE = 13
-    """ 移动至博士办公室 """
-    MOVE_TO_MODERN_MUSIC_ROOM = 14
-    """ 移动至现代音乐室 """
-    MOVE_TO_PLAYER = 15
-    """ 移动至玩家位置 """
-    MOVE_TO_FOODSHOP = 16
-    """ 移动至食物商店（取餐区） """
-    MOVE_TO_DINING_HALL = 17
-    """ 移动至食堂 """
-    MOVE_TO_REST_ROOM = 18
-    """ 移动至休息室 """
-    MOVE_TO_CLASSIC_MUSIC_ROOM = 19
-    """ 移动至夕照区音乐室 """
-    MOVE_TO_TRAINING_ROOM = 21
-    """ 根据职业自动移动至对应训练室 """
-    MOVE_TO_CLINIC = 22
-    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
-    MOVE_TO_HR_OFFICE = 23
-    """ 移动到人事部办公室 """
-    MOVE_TO_LIBRARY_OFFICE = 24
-    """ 移动到图书馆办公室 """
-    MOVE_TO_LIBRARY = 25
-    """ 移动到图书馆 """
-    MOVE_TO_BATHZONE_LOCKER_ROOM = 31
-    """ 移动至大浴场的更衣室 """
-    MOVE_TO_BATH_ROOM = 33
-    """ 移动至淋浴室 """
 
     SEE_H_AND_MOVE_TO_DORMITORY = 40
     """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
-    BUY_RAND_FOOD_AT_FOODSHOP = 41
-    """ 在取餐区购买随机食物 """
-    EAT_BAG_RAND_FOOD = 42
-    """ 食用背包内随机食物 """
     REST = 43
     """ 休息一会儿 """
     SLEEP = 44
@@ -730,17 +1026,47 @@ class StateMachine:
     """ 唱歌 """
     PLAY_INSTRUMENT = 46
     """ 演奏乐器 """
-    TRAINING = 47
-    """ 战斗训练 """
     PEE = 50
     """ 解手 """
-    TAKE_SHOWER = 51
-    """ 淋浴 """
 
-    WEAR_TO_LOCKER = 71
+    START_SHOWER = 71
+    """ 进入要脱衣服（洗澡）状态 """
+    WEAR_TO_LOCKER = 72
     """ 当前身上衣服转移到衣柜里 """
-    GET_SHOWER_CLOTH = 72
-    """ 换上浴帽和浴巾 """
+    TAKE_SHOWER = 73
+    """ 淋浴 """
+    GET_SHOWER_CLOTH_AND_CLEAN_LOCKER = 74
+    """ 换上浴帽和浴巾并清空衣柜 """
+    START_EAT_FOOD = 75
+    """ 进入要取餐状态 """
+    BUY_RAND_FOOD_AT_FOODSHOP = 76
+    """ 在取餐区购买随机食物 """
+    EAT_BAG_RAND_FOOD = 77
+    """ 食用背包内随机食物 """
+    START_SLEEP = 78
+    """ 进入要睡眠状态 """
+    START_REST = 79
+    """ 进入要休息状态 """
+    START_PEE = 80
+    """ 进入要撒尿状态 """
+    LOCKER_TO_WEAR = 81
+    """ 衣柜里的衣服穿回身上，如果有浴场flag则置0 """
+    SIWM_1 = 82
+    """ 进入要换泳衣状态 """
+    SIWM_2 = 83
+    """ 脱掉衣服并换上泳衣并进入要游泳状态 """
+    START_BATHHOUSE_ENTERTAINMENT = 85
+    """ 进入要去大浴场娱乐_要更衣状态 """
+    FOOT_CLOTH_TO_LOCKER = 86
+    """ 袜子和鞋子转移到衣柜里 """
+    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 87
+    """ 当前身上衣服转移到衣柜里，并换上浴帽和浴巾 """
+    CLEAN_WEAR_AND_LOCKER_TO_WEAR = 88
+    """ 清空身上的衣服然后穿回衣柜的衣服，如果有浴场或游泳娱乐flag则置0 """
+    START_MILK = 89
+    """ 进入要挤奶状态 """
+    MAKE_MILK = 90
+    """ 挤奶 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -764,71 +1090,219 @@ class StateMachine:
     """ 工作：诊疗病人 """
     WORK_RECRUIT = 302
     """ 工作：招募干员 """
+    WORK_TEACH = 303
+    """ 工作：授课 """
+    WORK_ATTENT_CLASS = 304
+    """ 工作：上学 """
+    WORK_LIBRARY_1 = 305
+    """ 工作：三成去图书馆，七成原地等待30分钟 """
+    WORK_LIBRARY_2 = 306
+    """ 工作：三成去图书馆办公室，七成看书 """
+    WORK_MAINTENANCE_1 = 307
+    """ 工作：进入要检修状态，并随机指定一个检修地点 """
+    WORK_MAINTENANCE_2 = 308
+    """ 工作：维护设施，并清零检修状态 """
+    WORK_REPAIR_EQUIPMENT = 309
+    """ 工作：修理装备 """
+    WORK_COOK = 310
+    """ 工作：做饭 """
+    WORK_PRODUCE = 311
+    """ 工作：制造产品 """
+    WORK_OFFICIAL_WORK = 312
+    """ 工作：处理公务 """
+    WORK_MASSAGE = 313
+    """ 工作：按摩（自动寻找对象） """
+    WORK_INVITE_VISITOR = 314
+    """ 工作：邀请访客 """
+    WORK_PLANT_MANAGE_CROP = 315
+    """ 工作：种植与养护作物 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
+    ENTERTAIN_TRAINING = 402
+    """ 娱乐：训练 """
+    ENTERTAIN_SINGING = 403
+    """ 娱乐：唱歌 """
+    ENTERTAIN_PLAY_CLASSIC_INSTRUMENT = 404
+    """ 娱乐：演奏传统乐器 """
+    ENTERTAIN_PLAY_MODEN_INSTRUMENT = 405
+    """ 娱乐：演奏现代乐器 """
+    ENTERTAIN_WATCH_MOVIE = 406
+    """ 娱乐：看电影 """
+    ENTERTAIN_PHOTOGRAPHY = 407
+    """ 娱乐：摄影 """
+    ENTERTAIN_PLAY_WATER = 408
+    """ 娱乐：玩水 """
+    ENTERTAIN_PLAY_CHESS = 409
+    """ 娱乐：下棋 """
+    ENTERTAIN_PLAY_MAHJONG = 410
+    """ 娱乐：打麻将 """
+    ENTERTAIN_PLAY_CARDS = 411
+    """ 娱乐：打牌 """
+    ENTERTAIN_REHEARSE_DANCE = 412
+    """ 娱乐：排演舞剧 """
+    ENTERTAIN_PLAY_ARCADE_GAME = 413
+    """ 娱乐：玩街机游戏 """
+    ENTERTAIN_SWIMMING = 414
+    """ 娱乐：游泳 """
+    ENTERTAIN_TASTE_WINE = 415
+    """ 娱乐：品酒 """
+    ENTERTAIN_TASTE_TEA = 416
+    """ 娱乐：品茶 """
+    ENTERTAIN_TASTE_COFFEE = 417
+    """ 娱乐：品咖啡 """
+    ENTERTAIN_TASTE_DESSERT = 418
+    """ 娱乐：品尝点心 """
+    ENTERTAIN_TASTE_FOOD = 419
+    """ 娱乐：品尝美食 """
+    ENTERTAIN_PLAY_HOUSE = 420
+    """ 娱乐：过家家 """
+    ENTERTAIN_STYLE_HAIR = 421
+    """ 娱乐：修整发型 """
+    ENTERTAIN_FULL_BODY_STYLING = 422
+    """ 娱乐：全身造型服务 """
+    ENTERTAIN_SOAK_FEET = 423
+    """ 娱乐：泡脚 """
+    ENTERTAIN_STEAM_SAUNA = 424
+    """ 娱乐：蒸桑拿 """
+    ENTERTAIN_HYDROTHERAPY_TREATMENT = 425
+    """ 娱乐：水疗护理 """
+    ENTERTAIN_ONSEN_BATH = 426
+    """ 娱乐：泡温泉 """
 
+    MOVE_TO_RAND_SCENE = 501
+    """ 移动至随机场景 """
+    MOVE_TO_DORMITORY = 502
+    """ 移动至所属宿舍 """
+    MOVE_TO_PLAYER = 503
+    """ 移动至玩家位置 """
+    CONTINUE_MOVE = 504
+    """ 继续移动 """
+    MOVE_TO_TOILET = 511
+    """ 去洗手间 """
+    MOVE_TO_REST_ROOM = 512
+    """ 移动至休息室 """
+    MOVE_TO_CLINIC = 513
+    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_TRAINING_ROOM = 514
+    """ 根据职业自动移动至对应训练室 """
+    MOVE_TO_BATH_ROOM = 515
+    """ 移动至淋浴室 """
+    MOVE_TO_RESTAURANT = 516
+    """ 移动至餐馆（随机某个正餐餐馆） """
+    MOVE_TO_MAINTENANCE_PLACE = 517
+    """ 移动至检修地点 """
+    MOVE_TO_PRODUCTION_WORKSHOP = 518
+    """ 移动至生产车间 """
+    MOVE_TO_KITCHEN = 521
+    """ 移动至厨房 """
+    MOVE_TO_FOODSHOP = 522
+    """ 移动至食物商店（取餐区） """
+    MOVE_TO_DINING_HALL = 523
+    """ 移动至食堂 """
+    MOVE_TO_CLASSIC_MUSIC_ROOM = 524
+    """ 移动至夕照区音乐室 """
+    MOVE_TO_MODEN_MUSIC_ROOM = 525
+    """ 移动至现代音乐排练室 """
+    MOVE_TO_MULTIMEDIA_ROOM = 526
+    """ 移动至多媒体室 """
+    MOVE_TO_PHOTOGRAPHY_STUDIO = 527
+    """ 移动至摄影爱好者影棚 """
+    MOVE_TO_AQUAPIT_EXPERIENTORIUM = 528
+    """ 移动至大水坑快活体验屋 """
+    MOVE_TO_BOARD_GAMES_ROOM = 529
+    """ 移动至棋牌室 """
+    MOVE_TO_FAIRY_BANQUET = 530
+    """ 移动至糖果仙子宴会厅 """
+    MOVE_TO_BAR = 531
+    """ 移动至酒吧 """
+    MOVE_TO_HR_OFFICE = 541
+    """ 移动到人事部办公室 """
+    MOVE_TO_LIBRARY_OFFICE = 551
+    """ 移动到图书馆办公室 """
+    MOVE_TO_LIBRARY = 552
+    """ 移动到图书馆 """
+    MOVE_TO_CLASS_ROOM = 561
+    """ 移动到教室 """
+    MOVE_TO_TEACHER_OFFICE = 562
+    """ 移动到教师办公室 """
+    MOVE_TO_GOLDEN_GAME_ROOM = 563
+    """ 移动到黄澄澄游戏室 """
+    MOVE_TO_DR_OFFICE = 571
+    """ 移动至博士办公室 """
+    MOVE_TO_AVANT_GARDE_ARCADE = 584
+    """ 移动至前卫街机厅 """
+    MOVE_TO_WALYRIA_CAKE_SHOP = 585
+    """ 移动至瓦莱丽蛋糕店 """
+    MOVE_TO_STYLING_STUDIO = 586
+    """ 移动至造型工作室 """
+    MOVE_TO_HAIR_SALON = 587
+    """ 移动至理发店 """
+    MOVE_TO_TEAHOUSE = 588
+    """ 移动至山城茶馆 """
+    MOVE_TO_CAFÉ = 589
+    """ 移动至哥伦比亚咖啡馆 """
+    MOVE_TO_LIGHT_STORE = 590
+    """ 移动至花草灯艺屋 """
+    MOVE_TO_PIZZERIA = 591
+    """ 移动至快捷连锁披萨店 """
+    MOVE_TO_SEVEN_CITIES_RESTAURANT = 592
+    """ 移动至七城风情餐厅 """
+    MOVE_TO_KFC = 593
+    """ 移动至人气快餐开封菜 """
+    MOVE_TO_HEALTHY_DINER = 594
+    """ 移动至健康快餐店 """
+    MOVE_TO_LUNGMEN_EATERY = 595
+    """ 移动至龙门食坊 """
+    MOVE_TO_BATHZONE_LOCKER_ROOM = 601
+    """ 移动至大浴场的更衣室 """
+    MOVE_TO_FOOT_BATH = 602
+    """ 移动至足浴区 """
+    MOVE_TO_SAUNA = 603
+    """ 移动至桑拿房 """
+    MOVE_TO_SPA_ROOM = 604
+    """ 移动至水疗房 """
+    MOVE_TO_ONSEN = 605
+    """ 移动至温泉 """
+    MOVE_TO_BATHZONE_REST_ROOM = 606
+    """ 移动至大浴场的休息室 """
+    MOVE_TO_SWIMMING_POOL = 611
+    """ 移动至游泳池 """
+    MOVE_TO_TRAINING_LOCKER_ROOM = 612
+    """ 移动至训练场的更衣室 """
+    MOVE_TO_MAINTENANCE_DEPARTMENT = 621
+    """ 移动至运维部 """
+    MOVE_TO_BLACKSMITH_SHOP = 622
+    """ 移动至铁匠铺 """
+    MOVE_TO_DIPLOMATIC_OFFICE = 631
+    """ 移动至外交官办公室 """
+    MOVE_TO_HERB_GARDEN = 641
+    """ 移动至药田 """
+    MOVE_TO_GREENHOUSE = 642
+    """ 移动至温室 """
 
-    # MOVE_TO_CLASS = 0
-    # """ 移动到所属教室 """
-    # MOVE_TO_RAND_CAFETERIA = 1
-    # """ 移动到随机取餐区 """
-    # MOVE_TO_RAND_RESTAURANT = 3
-    # """ 移动至随机就餐区 """
-    # WEAR_CLEAN_UNDERWEAR = 6
-    # """ 穿干净的上衣 """
-    # WEAR_CLEAN_UNDERPANTS = 7
-    # """ 穿干净的内裤 """
-    # WEAR_CLEAN_BRA = 8
-    # """ 穿干净的胸罩 """
-    # WEAR_CLEAN_PANTS = 9
-    # """ 穿干净的裤子 """
-    # WEAR_CLEAN_SKIRT = 10
-    # """ 穿干净的短裙 """
-    # WEAR_CLEAN_SHOES = 11
-    # """ 穿干净的鞋子 """
-    # WEAR_CLEAN_SOCKS = 12
-    # """ 穿干净的袜子 """
-    # PLAY_PIANO = 13
-    # """ 弹钢琴 """
-    # SINGING = 15
-    # """ 唱歌 """
-    # SING_RAND_CHARACTER = 16
-    # """ 唱歌给场景里随机对象听 """
-    # PLAY_PIANO_RAND_CHARACTER = 17
-    # """ 弹奏钢琴给场景里随机对象听 """
-    # TOUCH_HEAD_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 18
-    # """ 对场景中抱有超越友谊想法的随机对象摸头 """
-    # EMBRACE_TO_BEYOND_FRIENDSHIP_TARGET_IN_SCENE = 23
-    # """ 对场景中抱有超越友谊想法的随机对象拥抱 """
-    # KISS_TO_LIKE_TARGET_IN_SCENE = 24
-    # """ 和场景中自己喜欢的随机对象接吻 """
-    # MOVE_TO_LIKE_TARGET_SCENE = 25
-    # """ 移动至随机某个自己喜欢的人所在场景 """
-    # HAND_IN_HAND_TO_LIKE_TARGET_IN_SCENE = 26
-    # """ 牵住场景中自己喜欢的随机对象的手 """
-    # KISS_TO_NO_FIRST_KISS_TARGET_IN_SCENE = 27
-    # """ 和场景中自己喜欢的还是初吻的随机对象接吻 """
-    # MOVE_TO_NO_FIRST_KISS_LIKE_TARGET_SCENE = 28
-    # """ 移动至喜欢的还是初吻的人所在的场景 """
-    # DRINK_RAND_DRINKS = 29
-    # """ 饮用背包内随机饮料 """
-    # BUY_RAND_DRINKS_AT_CAFETERIA = 30
-    # """ 在取餐区购买随机饮料 """
-    # ATTEND_CLASS = 31
-    # """ 在教室上课 """
-    # TEACH_A_LESSON = 32
-    # """ 在教室教课 """
-    # MOVE_TO_GROVE = 33
-    # """ 移动至加工站入口场景 """
-    # MOVE_TO_ITEM_SHOP = 34
-    # """ 移动至训练场入口场景 """
-    # BUY_GUITAR = 35
-    # """ 购买吉他 """
-    # PLAY_GUITAR = 36
-    # """ 弹吉他 """
-    # SELF_STUDY = 37
-    # """ 自习 """
+    HELP_BUY_FOOD_1 = 701
+    """ 进入要买饭状态 """
+    HELP_MAKE_FOOD_1 = 702
+    """ 进入要做饭状态 """
+    ASSISTANT_MAKE_FOOD = 703
+    """ 助理：做饭 """
+    MORNING_SALUTATION_FLAG_1 = 704
+    """ 进入要早安问候状态 """
+    MORNING_SALUTATION_1 = 705
+    """ 早安问候：叫起床 """
+    MORNING_SALUTATION_2 = 706
+    """ 早安问候：早安吻 """
+    MORNING_SALUTATION_3 = 707
+    """ 早安问候：早安咬 """
+    NIGHT_SALUTATION_FLAG_1 = 708
+    """ 进入要晚安问候状态 """
+    NIGHT_SALUTATION_1 = 709
+    """ 晚安问候：催睡觉 """
+    NIGHT_SALUTATION_2 = 710
+    """ 晚安问候：晚安吻 """
+    NIGHT_SALUTATION_3 = 711
+    """ 晚安问候：晚安咬 """
 
 
 class Panel:
@@ -846,11 +1320,11 @@ class Panel:
     """ 食物商店面板 """
     FOOD_BAG = 5
     """ 食物背包面板 """
-    ITEM_SHOP = 6
-    """ 道具商店面板 """
+    H_ITEM_SHOP = 6
+    """ 成人用品商店面板 """
     MAKE_FOOD = 7
     """ 做饭面板 """
-    FIND_CALL = 8
+    ALL_NPC_POSITION = 8
     """ 查询与召集面板 """
     EJACULATION = 9
     """ 射精面板 """
@@ -866,8 +1340,8 @@ class Panel:
     """ 脱衣服面板 """
     BUILDING = 15
     """ 基建面板 """
-    DEPARTMENT = 16
-    """ 部门运作情况面板 """
+    MANAGE_BASEMENT = 16
+    """ 管理罗德岛面板 """
     INSTRUCT_FILTER = 17
     """ 指令过滤面板 """
     EVENT_OPTION = 18
@@ -878,6 +1352,24 @@ class Panel:
     """ 借阅书籍面板 """
     MANAGE_LIBRARY = 21
     """ 图书馆管理面板 """
+    DEBUG_ADJUST = 22
+    """ DEBUG面板 """
+    ORIGINIUM_ARTS = 23
+    """ 源石技艺面板 """
+    PRTS = 24
+    """ 普瑞赛斯面板 """
+    NAVIGATION = 25
+    """ 导航面板 """
+    RECRUITMENT = 26
+    """ 招募面板 """
+    VISITOR = 27
+    """ 访客面板 """
+    FRIDGE = 28
+    """ 冰箱面板 """
+    SYSTEM_SETTING = 29
+    """ 系统设置面板 """
+    AROMATHERAPY = 30
+    """ 香薰疗愈面板 """
 
 
 class SecondBehavior:
@@ -973,6 +1465,23 @@ class SecondBehavior:
     """ 结算处女 """
     FIRST_A_SEX = 1052
     """ 结算A处女 """
+    UNCONSCIOUS_MARK_1 = 1061
+    """ 结算无觉刻印1 """
+    UNCONSCIOUS_MARK_2 = 1062
+    """ 结算无觉刻印2 """
+    UNCONSCIOUS_MARK_3 = 1063
+    """ 结算无觉刻印3 """
+    UNCONSCIOUS_MARK_4 = 1064
+    """ 结算无觉刻印4 """
+    UNCONSCIOUS_MARK_5 = 1065
+    """ 结算无觉刻印5 """
+    UNCONSCIOUS_MARK_6 = 1066
+    """ 结算无觉刻印6 """
+
+    B_ORGASM_TO_MILK = 1071
+    """ 结算因B绝顶而被迫喷乳 """
+    U_ORGASM_TO_PEE = 1072
+    """ 结算因U绝顶而被迫漏尿 """
 
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
@@ -993,7 +1502,13 @@ class SecondBehavior:
     DIURETICS = 1108
     """ 结算利尿剂 """
     SLEEPING_PILLS = 1109
-    """ 结算睡眠药 """
+    """ 结算安眠药 """
+    SLEEPING_CLOMID = 1110
+    """ 结算排卵促进药 """
+    SLEEPING_BIRTH_CONTROL_PILLS_BEFORE = 1111
+    """ 结算事前避孕药 """
+    SLEEPING_BIRTH_CONTROL_PILLS_AFTER = 1112
+    """ 结算事后避孕药 """
 
     PENIS_IN_HAIR = 1201
     """ 结算发交中 """
@@ -1028,207 +1543,100 @@ class SecondBehavior:
     PENIS_IN_RUB_BUTTOCK = 1216
     """ 结算素股中 """
 
+    LOVE_1 = 1301
+    """ 结算获得思慕 """
+    LOVE_2 = 1302
+    """ 结算获得恋慕 """
+    LOVE_3 = 1303
+    """ 结算获得恋人(含赠予信物) """
+    LOVE_4 = 1304
+    """ 结算获得爱侣 """
+    OBEY_1 = 1305
+    """ 结算获得屈从 """
+    OBEY_2 = 1306
+    """ 结算获得驯服 """
+    OBEY_3 = 1307
+    """ 结算获得宠物(含赠予信物)  """
+    OBEY_4 = 1308
+    """ 结算获得奴隶 """
 
-class SecondEffect:
-    """二段结算效果函数"""
+    FERTILIZATION = 1311
+    """ 结算获得受精 """
+    FERTILIZATION_FAILD = 1312
+    """ 结算受精失败 """
+    PREGNANCY = 1313
+    """ 结算获得妊娠 """
+    PARTURIENT = 1314
+    """ 结算获得临盆 """
+    BORN = 1315
+    """ 生产前的对话 """
+    POSTPARTUM = 1317
+    """ 生产后的对话+获得产后 """
+    REARING = 1318
+    """ 结算获得育儿 """
+    REARING_COMPLETE = 1319
+    """ 结算育儿完成 """
+    CHILD_TO_LOLI = 1320
+    """ 结算幼女长成萝莉 """
+    LOLI_TO_GIRL = 1321
+    """ 结算萝莉长成少女 """
 
+    FIRST_MEET = 1331
+    """ 初次见面 """
+    DAY_HELLO = 1332
+    """ 每日打招呼 """
 
+    CHOSEN_AS_ASSISTANT = 1401
+    """ 被选为助理 """
+    NOT_AS_ASSISTANT = 1402
+    """ 不再为助理 """
+    AI_FOLLOW_OFF = 1403
+    """ 关闭智能跟随 """
+    AI_FOLLOW_ON = 1404
+    """ 开启智能跟随 """
+    COME_TO_OFFICE = 1405
+    """ 要求前往办公室 """
+    SUPPORT_SERVICE_ON = 1406
+    """ 关闭辅佐服务 """
+    SUPPORT_SERVICE_OFF = 1407
+    """ 开启辅佐服务 """
+    SEND_FOOD_SERVICE_OFF = 1408
+    """ 关闭送饭服务 """
+    BUY_LUNGCH = 1409
+    """ 开启帮忙买午饭服务 """
+    MAKE_LUNGCH = 1410
+    """ 开启亲手做午饭服务 """
+    MAKE_THREE_MEALS = 1411
+    """ 开启亲手做三餐服务 """
+    MORNING_SERVICE_OFF = 1412
+    """ 关闭早安服务 """
+    MORNING_SALUTATION = 1413
+    """ 开启早上叫起床服务 """
+    MORNING_KISS = 1414
+    """ 开启早安吻服务 """
+    MORNING_BLOWJOB = 1415
+    """ 开启早安咬服务 """
+    NIGHT_SERVICE_OFF = 1416
+    """ 关闭晚安服务 """
+    NIGHT_KISS = 1417
+    """ 开启晚安吻服务 """
+    NIGHT_BLOWJOB = 1418
+    """ 开启晚安咬服务 """
+    COHABITATION_ON = 1419
+    """ 关闭同居服务 """
+    COHABITATION_OFF = 1420
+    """ 开启同居服务 """
+    LOVE_SUPPORT_ON = 1421
+    """ 关闭助攻服务 """
+    LOVE_SUPPORT_OFF = 1422
+    """ 开启助攻服务 """
 
-    ADD_1_NClimax_EXPERIENCE = 210
-    """ 增加1N绝顶经验 """
-    ADD_1_BClimax_EXPERIENCE = 211
-    """ 增加1B绝顶经验 """
-    ADD_1_CClimax_EXPERIENCE = 212
-    """ 增加1C绝顶经验 """
-    # ADD_1_PClimax_EXPERIENCE = 213
-    # """ 增加1P绝顶经验 """
-    ADD_1_VClimax_EXPERIENCE = 214
-    """ 增加1V绝顶经验 """
-    ADD_1_AClimax_EXPERIENCE = 215
-    """ 增加1A绝顶经验 """
-    ADD_1_UClimax_EXPERIENCE = 216
-    """ 增加1U绝顶经验 """
-    ADD_1_WClimax_EXPERIENCE = 217
-    """ 增加1W绝顶经验 """
-    # ADD_1_Climax_EXPERIENCE = 220
-    # """ 增加1绝顶经验 """
-    ADD_1_Cumming_EXPERIENCE = 221
-    """ 增加1射精经验 """
-    ADD_1_Milking_EXPERIENCE = 222
-    """ 增加1喷乳经验 """
-    ADD_1_Peeing_EXPERIENCE = 223
-    """ 增加1放尿经验 """
-    TARGET_ADD_1_Cums_EXPERIENCE = 224
-    """ 交互对象增加1精液经验 """
-    TARGET_ADD_SMALL_LUBRICATION = 225
-    """ 交互对象增加少量润滑 """
-    TARGET_ADD_MIDDLE_LUBRICATION = 226
-    """ 交互对象增加中量润滑 """
-    TARGET_ADD_LARGE_LUBRICATION = 227
-    """ 交互对象增加大量润滑 """
-    ADD_SMALL_LUBRICATION = 228
-    """ 增加少量润滑 """
-    ADD_MIDDLE_LUBRICATION = 229
-    """ 增加中量润滑 """
-    ADD_LARGE_LUBRICATION = 230
-    """ 增加大量润滑 """
-    DOWN_SMALL_HIT_POINT = 231
-    """ 减少少量体力 """
-    DOWN_SMALL_MANA_POINT = 232
-    """ 减少少量气力 """
-    DOWN_MIDDLE_HIT_POINT = 233
-    """ 减少中量体力 """
-    DOWN_MIDDLE_MANA_POINT = 234
-    """ 减少中量气力 """
-    DOWN_LARGE_HIT_POINT = 235
-    """ 减少大量体力 """
-    DOWN_LARGE_MANA_POINT = 236
-    """ 减少大量气力 """
-    ADD_SMALL_N_FEEL = 237
-    """ 增加少量Ｎ快（N感补正） """
-    ADD_SMALL_B_FEEL = 238
-    """ 增加少量Ｂ快（B感补正） """
-    ADD_SMALL_C_FEEL = 239
-    """ 增加少量Ｃ快（C感补正） """
-    ADD_SMALL_P_FEEL = 240
-    """ 增加少量射精值（P感补正） """
-    ADD_SMALL_V_FEEL = 241
-    """ 增加少量Ｖ快（V感补正） """
-    ADD_SMALL_A_FEEL = 242
-    """ 增加少量Ａ快（A感补正） """
-    ADD_SMALL_U_FEEL = 243
-    """ 增加少量Ｕ快（U感补正） """
-    ADD_SMALL_W_FEEL = 244
-    """ 增加少量Ｗ快（W感补正） """
-    ADD_MIDDLE_N_FEEL = 245
-    """ 增加中量Ｎ快（N感补正） """
-    ADD_MIDDLE_B_FEEL = 246
-    """ 增加中量Ｂ快（B感补正） """
-    ADD_MIDDLE_C_FEEL = 247
-    """ 增加中量Ｃ快（C感补正） """
-    ADD_MIDDLE_P_FEEL = 248
-    """ 增加中量Ｐ快（P感补正） """
-    ADD_MIDDLE_V_FEEL = 249
-    """ 增加中量Ｖ快（V感补正） """
-    ADD_MIDDLE_A_FEEL = 250
-    """ 增加中量Ａ快（A感补正） """
-    ADD_MIDDLE_U_FEEL = 251
-    """ 增加中量Ｕ快（U感补正） """
-    ADD_MIDDLE_W_FEEL = 252
-    """ 增加中量Ｗ快（W感补正） """
-    ADD_LARGE_N_FEEL = 253
-    """ 增加大量Ｎ快（N感补正） """
-    ADD_LARGE_B_FEEL = 254
-    """ 增加大量Ｂ快（B感补正） """
-    ADD_LARGE_C_FEEL = 255
-    """ 增加大量Ｃ快（C感补正） """
-    ADD_LARGE_P_FEEL = 256
-    """ 增加大量Ｐ快（P感补正） """
-    ADD_LARGE_V_FEEL = 257
-    """ 增加大量Ｖ快（V感补正） """
-    ADD_LARGE_A_FEEL = 258
-    """ 增加大量Ａ快（A感补正） """
-    ADD_LARGE_U_FEEL = 259
-    """ 增加大量Ｕ快（U感补正） """
-    ADD_LARGE_W_FEEL = 260
-    """ 增加大量Ｗ快（W感补正） """
-    ADD_SMALL_LUBRICATION_PLUS = 261
-    """ 增加少量润滑（欲望补正） """
-    ADD_SMALL_LEARN = 262
-    """ 增加少量习得（技巧补正） """
-    ADD_SMALL_RESPECT = 263
-    """ 增加少量恭顺（顺从补正） """
-    ADD_SMALL_FRIENDLY = 264
-    """ 增加少量好意（亲密补正） """
-    ADD_SMALL_DESIRE = 265
-    """ 增加少量欲情（欲望补正） """
-    ADD_SMALL_HAPPY = 266
-    """ 增加少量快乐（快乐刻印补正） """
-    ADD_SMALL_LEAD = 267
-    """ 增加少量先导（施虐补正） """
-    ADD_SMALL_SUBMIT = 268
-    """ 增加少量屈服（屈服刻印补正） """
-    ADD_SMALL_SHY = 269
-    """ 增加少量羞耻（露出补正） """
-    ADD_SMALL_PAIN = 270
-    """ 增加少量苦痛（苦痛刻印补正） """
-    ADD_SMALL_TERROR = 271
-    """ 增加少量恐怖（恐怖刻印补正） """
-    ADD_SMALL_DEPRESSION = 272
-    """ 增加少量抑郁 """
-    ADD_SMALL_DISGUST = 273
-    """ 增加少量反感（反发刻印补正） """
-    ADD_MIDDLE_LUBRICATION_PLUS = 274
-    """ 增加中量润滑（欲望补正） """
-    ADD_MIDDLE_LEARN = 275
-    """ 增加中量习得（技巧补正） """
-    ADD_MIDDLE_RESPECT = 276
-    """ 增加中量恭顺（顺从补正） """
-    ADD_MIDDLE_FRIENDLY = 277
-    """ 增加中量好意（亲密补正） """
-    ADD_MIDDLE_DESIRE = 278
-    """ 增加中量欲情（欲望补正） """
-    ADD_MIDDLE_HAPPY = 279
-    """ 增加中量快乐（快乐刻印补正） """
-    ADD_MIDDLE_LEAD = 280
-    """ 增加中量先导（施虐补正） """
-    ADD_MIDDLE_SUBMIT = 281
-    """ 增加中量屈服（屈服刻印补正） """
-    ADD_MIDDLE_SHY = 282
-    """ 增加中量羞耻（露出补正） """
-    ADD_MIDDLE_PAIN = 283
-    """ 增加中量苦痛（苦痛刻印补正） """
-    ADD_MIDDLE_TERROR = 284
-    """ 增加中量恐怖（恐怖刻印补正） """
-    ADD_MIDDLE_DEPRESSION = 285
-    """ 增加中量抑郁 """
-    ADD_MIDDLE_DISGUST = 286
-    """ 增加中量反感（反发刻印补正） """
-    ADD_LARGE_LUBRICATION_PLUS = 287
-    """ 增加大量润滑（欲望补正） """
-    ADD_LARGE_LEARN = 288
-    """ 增加大量习得（技巧补正） """
-    ADD_LARGE_RESPECT = 289
-    """ 增加大量恭顺（顺从补正） """
-    ADD_LARGE_FRIENDLY = 290
-    """ 增加大量好意（亲密补正） """
-    ADD_LARGE_DESIRE = 291
-    """ 增加大量欲情（欲望补正） """
-    ADD_LARGE_HAPPY = 292
-    """ 增加大量快乐（快乐刻印补正） """
-    ADD_LARGE_LEAD = 293
-    """ 增加大量先导（施虐补正） """
-    ADD_LARGE_SUBMIT = 294
-    """ 增加大量屈服（屈服刻印补正） """
-    ADD_LARGE_SHY = 295
-    """ 增加大量羞耻（露出补正） """
-    ADD_LARGE_PAIN = 296
-    """ 增加大量苦痛（苦痛刻印补正） """
-    ADD_LARGE_TERROR = 297
-    """ 增加大量恐怖（恐怖刻印补正） """
-    ADD_LARGE_DEPRESSION = 298
-    """ 增加大量抑郁 """
-    ADD_LARGE_DISGUST = 299
-    """ 增加大量反感（反发刻印补正） """
-    ADD_LARGE_PAIN_FIRST_SEX = 400
-    """ 增加巨量苦痛（破处修正） """
-    ADD_LARGE_PAIN_FIRST_A_SEX = 401
-    """ 增加巨量苦痛（A破处修正） """
-    ADD_URINATE = 402
-    """ 增加尿意（持续性利尿剂） """
-
-    PENIS_IN_T_RESET = 501
-    """ 当前阴茎位置为交互对象_归零 """
-
-
-
-#旧结算存档#
-    # ADD_SOCIAL_FAVORABILITY = 7
-    # """ 增加社交关系好感 """
-    # ADD_INTIMACY_FAVORABILITY = 8
-    # """ 增加亲密行为好感(关系不足2则增加反感) """
-    # ADD_INTIMATE_FAVORABILITY = 9
-    # """ 增加私密行为好感(关系不足3则增加反感) """
+    HAS_BEEN_PRIMARY_HYPNOSIS = 1501
+    """ 获得被浅层催眠素质 """
+    HAS_BEEN_DEEP_HYPNOSIS = 1502
+    """ 获得被深层催眠素质 """
+    HAS_BEEN_COMPLETE_HYPNOSIS = 1503
+    """ 获得被完全催眠素质 """
 
 
 class InstructType:
@@ -1242,14 +1650,49 @@ class InstructType:
     """ 娱乐 """
     WORK = 3
     """ 工作 """
-    OBSCENITY = 4
+    ARTS = 4
+    """ 技艺 """
+    OBSCENITY = 5
     """ 猥亵 """
-    SEX = 5
+    SEX = 6
     """ 性爱 """
 
 
 class Instruct:
     """指令id"""
+
+    #系统#
+    MOVE = 0
+    """ 移动 """
+    SEE_ATTR = 0
+    """ 查看属性 """
+    ITEM = 0
+    """ 道具 """
+    ORIGINIUM_ARTS = 0
+    """ 源石技艺 """
+    SAVE = 0
+    """ 读写存档 """
+    ABL_UP = 0
+    """ 属性升级 """
+    OWNER_ABL_UP = 0
+    """ 自身属性升级 """
+    SEE_DIRTY = 0
+    """ 查看污浊情况 """
+    INSTRUCT_FILTER = 0
+    """ 指令过滤 """
+    DEBUG_MODE_ON = 0
+    """ 开启debug模式 """
+    DEBUG_MODE_OFF = 0
+    """ 关闭debug模式 """
+    DEBUG_ADJUST = 0
+    """ debug数值调整 """
+    COLLECTION_NOW_PLACE = 0
+    """ 收藏该地点 """
+    CANCEL_COLLECTION_NOW_PLACE = 0
+    """ 取消收藏地点 """
+    SYSTEM_SETTING = 0
+    """ 系统设置 """
+
     #日常#
     WAIT = 0
     """ 等待五分钟 """
@@ -1261,26 +1704,30 @@ class Instruct:
     """ 聊天 """
     STROKE = 0
     """ 身体接触 """
+    MASSAGE = 0
+    """ 按摩 """
     MAKE_COFFEE = 0
     """ 泡咖啡 """
-    MAKE_COFFEE_ADD = 0
-    """ 泡咖啡（加料） """
     ASK_MAKE_COFFEE = 0
     """ 让对方泡咖啡 """
     MAKE_FOOD = 0
     """ 做饭 """
     EAT = 0
     """ 进食 """
+    GIVE_FOOD = 0
+    """ 让对方食用 """
     REST = 0
     """ 休息 """
     SLEEP = 0
     """ 睡觉 """
     TAKE_SHOWER = 0
     """ 淋浴 """
-    BUY_ITEM = 0
-    """ 购买道具 """
+    BUY_H_ITEM = 0
+    """ 购买成人用品 """
     BUY_FOOD = 0
     """ 购买食物 """
+    ALL_NPC_POSITION = 0
+    """ 干员位置一览 """
     FOLLOW = 0
     """ 邀请同行 """
     END_FOLLOW = 0
@@ -1289,10 +1736,6 @@ class Instruct:
     """ 道歉 """
     LISTEN_COMPLAINT = 0
     """ 听牢骚 """
-    PRAY = 0
-    """ 祈愿 """
-    CHECK_LOCKER = 0
-    """ 检查衣柜 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0
@@ -1303,49 +1746,158 @@ class Instruct:
     """ 解手 """
     COLLECT = 0
     """ 摆放藏品 """
+    TAKE_CARE_BABY = 0
+    """ 照顾婴儿 """
 
     #娱乐#
     SINGING = 0
     """ 唱歌 """
     PLAY_INSTRUMENT = 0
     """ 演奏乐器 """
-
+    LISTEN_INFLATION = 0
+    """ 听肚子里的动静 """
+    PLAY_WITH_CHILD = 0
+    """ 一起玩耍 """
+    EXERCISE = 0
+    """ 锻炼身体 """
+    BORROW_BOOK = 0
+    """ 借阅书籍 """
+    READ_BOOK = 0
+    """ 读书 """
+    WATCH_MOVIE = 0
+    """ 看电影 """
+    PHOTOGRAPHY = 0
+    """ 摄影 """
+    PLAY_WATER = 0
+    """ 玩水 """
+    PLAY_CHESS = 0
+    """ 下棋 """
+    PLAY_MAHJONG = 0
+    """ 打麻将 """
+    PLAY_CARDS = 0
+    """ 打牌 """
+    REHEARSE_DANCE = 0
+    """ 排演舞剧 """
+    PLAY_ARCADE_GAME = 0
+    """ 玩街机游戏 """
+    SWIMMING = 0
+    """ 游泳 """
+    TASTE_WINE = 0
+    """ 品酒 """
+    TASTE_TEA = 0
+    """ 品茶 """
+    TASTE_COFFEE = 0
+    """ 品咖啡 """
+    TASTE_DESSERT = 0
+    """ 品尝点心 """
+    TASTE_FOOD = 0
+    """ 品尝美食 """
+    PLAY_HOUSE = 0
+    """ 过家家 """
+    STYLE_HAIR = 0
+    """ 修整发型 """
+    FULL_BODY_STYLING = 0
+    """ 全身造型服务 """
+    SOAK_FEET = 0
+    """ 泡脚 """
+    STEAM_SAUNA = 0
+    """ 蒸桑拿 """
+    HYDROTHERAPY_TREATMENT = 0
+    """ 水疗护理 """
+    ONSEN_BATH = 0
+    """ 泡温泉 """
+    AROMATHERAPY = 0
+    """ 香薰疗愈 """
 
     #工作#
-    BUILDING = 0
-    """ 基建系统 """
     OFFICIAL_WORK = 0
     """ 处理公务 """
     BATTLE_COMMAND = 0
     """ 指挥作战 """
     LISTEN_MISSION = 0
     """ 听取委托 """
-    APPOINTED_ASSISTANT = 0
-    """ 指派助理 """
     TRAINING = 0
     """ 战斗训练 """
-    EXERCISE = 0
-    """ 锻炼身体 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
     RECRUIT = 0
     """ 招募干员 """
     CONFIM_RECRUIT = 0
     """ 确认已招募的干员 """
-    BORROW_BOOK = 0
-    """ 借阅书籍 """
-    READ_BOOK = 0
-    """ 读书 """
+    RECRUITMENT = 0
+    """ 招募情况 """
+    TEACH = 0
+    """ 授课 """
+    MAINTENANCE_FACILITIES = 0
+    """ 维护设施 """
+    REPAIR_EQUIPMENT = 0
+    """ 维修装备 """
+    ASSISTANT_ADJUSTMENTS = 0
+    """ 助理相关调整 """
+    BUILDING = 0
+    """ 基建系统 """
+    VISITOR_SYSTEM = 0
+    """ 访客系统 """
+    INVITE_VISITOR = 0
+    """ 邀请访客 """
+    PRTS = 0
+    """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0
     """ 管理图书馆 """
+    MANAGE_ASSEMBLY_LINE = 0
+    """ 管理流水线 """
+    MANAGE_AGRICULTURE = 0
+    """ 管理农业生产 """
+    RESOURCE_EXCHANGE = 0
+    """ 资源交易 """
+    NAVIGATION = 0
+    """ 导航 """
     SEE_COLLECTION = 0
     """ 查看收藏品 """
-    FIND_AND_CALL_NPC = 0
-    """ 查找与召集干员 """
-    SEE_DEPARTMENT = 0
-    """ 查看部门运作情况 """
+    SEE_FRIDGE = 0
+    """ 查看冰箱 """
+    MANAGE_BASEMENT = 0
+    """ 管理罗德岛 """
+
+    #源石技艺#
+    HYPNOSIS_ONE = 0
+    """ 单人催眠 """
+    HYPNOSIS_ALL = 0
+    """ 集体催眠 """
+    HYPNOSIS_NORMAL = 0
+    """ 平然催眠 """
+    HYPNOSIS_AIR = 0
+    """ 空气催眠 """
+    HYPNOSIS_BODY = 0
+    """ 体控催眠 """
+    HYPNOSIS_HEART = 0
+    """ 心控催眠 """
+    HYPNOSIS_CANCEL = 0
+    """ 解除催眠 """
+    HYPNOSIS_INCREASE_BODY_SENSITIVITY = 0
+    """ 体控-敏感度提升 """
+    HYPNOSIS_FORCE_CLIMAX = 0
+    """ 体控-强制高潮 """
+    HYPNOSIS_FORCE_OVULATION = 0
+    """ 体控-强制排卵 """
+    HYPNOSIS_BLOCKHEAD = 0
+    """ 体控-木头人 """
+    HYPNOSIS_ACTIVE_H = 0
+    """ 体控-逆推 """
+    HYPNOSIS_ROLEPLAY = 0
+    """ 心控-角色扮演 """
+    PENETRATING_VISION_ON = 0
+    """ 开启透视 """
+    PENETRATING_VISION_OFF = 0
+    """ 关闭透视 """
+    HORMONE_ON = 0
+    """ 开启信息素 """
+    HORMONE_OFF = 0
+    """ 关闭信息素 """
 
     #猥亵#
+    MAKE_COFFEE_ADD = 0
+    """ 泡咖啡（加料） """
     TOUCH_HEAD = 0
     """ 摸头 """
     TOUCH_BREAST = 0
@@ -1380,20 +1932,42 @@ class Instruct:
     """ 索要内裤 """
     ASK_FOR_SOCKS = 0
     """ 索要袜子 """
+    STEAL_PAN = 0
+    """ 偷走内裤 """
+    STEAL_SOCKS = 0
+    """ 偷走袜子 """
     TOUCH_CLITORIS = 0
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 0
     """ 手指插入（V） """
     TOUCH_ANUS = 0
     """ 手指插入（A） """
+    MILK = 0
+    """ 挤奶 """
+    BAGGING_AND_MOVING = 0
+    """ 装袋搬走 """
+    PUT_INTO_PRISON = 0
+    """ 投入监牢 """
+    SET_FREE = 0
+    """ 解除囚禁 """
+    CHECK_LOCKER = 0
+    """ 检查衣柜 """
+    SLEEP_OBSCENITY = 0
+    """ 睡眠猥亵 """
+    STOP_SLEEP_OBSCENITY = 0
+    """ 停止睡眠猥亵 """
     DO_H = 0
     """ 邀请H """
+    UNCONSCIOUS_H = 0
+    """ 无意识奸 """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0
     """ 戴上项圈 """
 
     #性爱#
+    WAIT_5_MIN_IN_H = 0
+    """ 等待五分钟(H中) """
     END_H = 0
     """ H结束 """
     MAKING_OUT = 0
@@ -1424,8 +1998,14 @@ class Instruct:
     """ 命令对方自慰 """
     MAKE_LICK_ANAL = 0
     """ 命令对方舔自己肛门 """
-    DO_NOTHING = 0
-    """ 什么也不做 """
+    ASK_PEE = 0
+    """ 命令对方小便 """
+    CHANGE_TOP_AND_BOTTOM = 0
+    """ 交给对方 """
+    KEEP_ENJOY = 0
+    """ 继续享受 """
+    TRY_PL_ACTIVE_H = 0
+    """ 尝试掌握主动权 """
     SEDECU = 0
     """ 诱惑 """
     HANDJOB = 0
@@ -1475,11 +2055,17 @@ class Instruct:
     DIURETICS_PERSISTENT = 0
     """ 持续性利尿剂 """
     SLEEPING_PILLS = 0
-    """ 睡眠药 """
+    """ 安眠药 """
     CLOMID = 0
     """ 排卵促进药 """
+    BIRTH_CONTROL_PILLS_BEFORE = 0
+    """ 事前避孕药 """
+    BIRTH_CONTROL_PILLS_AFTER = 0
+    """ 事后避孕药 """
     PUT_CONDOM = 0
     """ 戴上避孕套 """
+    TAKE_CONDOM_OUT = 0
+    """ 摘掉避孕套 """
     SAFE_CANDLES = 0
     """ 滴蜡 """
     URETHRAL_SWAB = 0
@@ -1488,10 +2074,14 @@ class Instruct:
     """ 乳头跳蛋 """
     NIPPLE_CLAMP_ON = 0
     """ 戴上乳头夹 """
+    NIPPLE_CLAMP_OFF = 0
+    """ 取下乳头夹 """
     CLIT_LOVE_EGG = 0
     """ 阴蒂跳蛋 """
     CLIT_CLAMP_ON = 0
     """ 戴上阴蒂夹 """
+    CLIT_CLAMP_OFF = 0
+    """ 取下阴蒂夹 """
     ELECTRIC_MESSAGE_STICK = 0
     """ 电动按摩棒 """
     VIBRATOR_INSERTION = 0
@@ -1500,34 +2090,34 @@ class Instruct:
     """ 加粗震动棒 """
     HUGE_VIBRATOR_INSERTION = 0
     """ 巨型震动棒 """
+    VIBRATOR_INSERTION_OFF = 0
+    """ 拔出振动棒 """
     VIBRATOR_INSERTION_ANAL = 0
     """ 肛门插入振动棒 """
     BIG_VIBRATOR_INSERTION_ANAL = 0
     """ 加粗肛门震动棒 """
     HUGE_VIBRATOR_INSERTION_ANAL = 0
     """ 巨型肛门震动棒 """
+    VIBRATOR_INSERTION_ANAL_OFF = 0
+    """ 拔出肛门振动棒 """
     CLYSTER = 0
     """ 灌肠 """
     ANAL_PLUG = 0
     """ 肛塞 """
-    ANAL_BEADS = 0
-    """ 塞入肛门拉珠 """
     CLYSTER_END = 0
     """ 拔出肛塞 """
-    NIPPLE_CLAMP_OFF = 0
-    """ 取下乳头夹 """
-    CLIT_CLAMP_OFF = 0
-    """ 取下阴蒂夹 """
-    VIBRATOR_INSERTION_OFF = 0
-    """ 拔出振动棒 """
-    VIBRATOR_INSERTION_ANAL_OFF = 0
-    """ 拔出肛门振动棒 """
+    ANAL_BEADS = 0
+    """ 塞入肛门拉珠 """
     ANAL_BEADS_OFF = 0
     """ 拔出肛门拉珠 """
-    MILKING_MACHINE = 0
-    """ 搾乳机 """
-    URINE_COLLECTOR = 0
-    """ 采尿器 """
+    MILKING_MACHINE_ON = 0
+    """ 装上搾乳机 """
+    MILKING_MACHINE_OFF = 0
+    """ 取下搾乳机 """
+    URINE_COLLECTOR_ON = 0
+    """ 装上采尿器 """
+    URINE_COLLECTOR_OFF = 0
+    """ 取下采尿器 """
     BONDAGE = 0
     """ 绳子 """
     PATCH = 0
@@ -1555,7 +2145,9 @@ class Instruct:
     WOMB_OS_CARESS = 0
     """ 玩弄子宫口 """
     WOMB_INSERTION = 0
-    """ 插入子宫 """
+    """ 插入子宫口 """
+    WOMB_SEX = 0
+    """ 子宫姦 """
     NORMAL_ANAL_SEX = 0
     """ 正常位肛交 """
     BACK_ANAL_SEX = 0
@@ -1576,10 +2168,10 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
-    PISSING_PLAY = 0
-    """ 放尿play """
-    URETHRAL_INSERTION = 0
-    """ 尿道插入 """
+    URETHRAL_FINGER_INSERTION = 0
+    """ 尿道指姦 """
+    URETHRAL_SEX = 0
+    """ 尿道姦 """
     BEAT_BREAST = 0
     """ 打胸部 """
     SPANKING = 0
@@ -1592,33 +2184,10 @@ class Instruct:
     """ 淋浴 """
     BUBBLE_BATH = 0
     """ 泡泡浴 """
-    CHANGE_TOP_AND_BOTTOM = 0
-    """ 交给对方 """
     GIVE_BLOWJOB = 0
     """ 给对方口交 """
     UNDRESS = 0
     """ 脱衣服 """
-    #系统#
-    MOVE = 0
-    """ 移动 """
-    SEE_ATTR = 0
-    """ 查看属性 """
-    ITEM = 0
-    """ 道具 """
-    SAVE = 0
-    """ 读写存档 """
-    ABL_UP = 0
-    """ 属性升级 """
-    OWNER_ABL_UP = 0
-    """ 自身属性升级 """
-    SEE_DIRTY = 0
-    """ 查看污浊情况 """
-    INSTRUCT_FILTER = 0
-    """ 指令过滤 """
-    DEBUG_MODE_ON = 0
-    """ 开启debug模式 """
-    DEBUG_MODE_OFF = 0
-    """ 关闭debug模式 """
 
 
 i = 0
@@ -1666,7 +2235,11 @@ settle_behavior_effect_data: Dict[int, FunctionType] = {}
 settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 """ 角色二段行为结算处理器 处理器id:处理器 """
 
-instruct_en2cn = {"VIBRATOR_INSERTION" : "震动棒","VIBRATOR_INSERTION_ANAL" : "肛门震动棒","NORMAL_SEX" : "正常位","BACK_SEX" : "背后位","RIDING_SEX" : "骑乘位","FACE_SEAT_SEX" : "对面座位","BACK_SEAT_SEX" : "背面座位","FACE_STAND_SEX" : "对面立位","BACK_STAND_SEX" : "背面立位","NORMAL_ANAL_SEX" : "正常位肛交","BACK_ANAL_SEX" : "后背位肛交","RIDING_ANAL_SEX" : "骑乘位肛交","FACE_SEAT_ANAL_SEX" : "对面座位肛交","BACK_SEAT_ANAL_SEX" : "背面座位肛交","FACE_STAND_ANAL_SEX" : "对面立位肛交","BACK_STAND_ANAL_SEX" : "背面立位肛交"}
+first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾西娅"),_("华法琳"),_("杜宾")}
+""" 初始就有的NPC的名字 """
+
+instruct_en2cn = {"VIBRATOR_INSERTION" : _("震动棒"),"VIBRATOR_INSERTION_ANAL" : _("肛门震动棒"),"NORMAL_SEX" : _("正常位"),"BACK_SEX" : _("背后位"),"RIDING_SEX" : _("骑乘位"),"FACE_SEAT_SEX" : _("对面座位"),"BACK_SEAT_SEX" : _("背面座位"),"FACE_STAND_SEX" : _("对面立位"),"BACK_STAND_SEX" : _("背面立位"),"STIMULATE_G_POINT" : _("刺激G点"), "WOMB_OS_CARESS": _("玩弄子宫口"), "WOMB_INSERTION": _("插入子宫口"), "WOMB_SEX" : _("子宫姦"),"NORMAL_ANAL_SEX" : _("正常位肛交"),"BACK_ANAL_SEX" : _("后背位肛交"),"RIDING_ANAL_SEX" : _("骑乘位肛交"),"FACE_SEAT_ANAL_SEX" : _("对面座位肛交"),"BACK_SEAT_ANAL_SEX" : _("背面座位肛交"),"FACE_STAND_ANAL_SEX" : _("对面立位肛交"),"BACK_STAND_ANAL_SEX" : _("背面立位肛交"), "STIMULATE_SIGMOID_COLON": _("玩弄s状结肠"), "STIMULATE_VAGINA" : _("隔着刺激阴道"), "DOUBLE_PENETRATION" : _("二穴插入"), "KEEP_ENJOY" : _("继续享受"), "CHANGE_TOP_AND_BOTTOM" : _("交给对方")}
+""" H指令的中英文对照 """
 
 
-# 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛
+# 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛，诺伊，√，はるか

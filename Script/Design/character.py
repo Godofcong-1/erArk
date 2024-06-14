@@ -1,25 +1,36 @@
 import random
 import datetime
-from typing import List
+from types import FunctionType
 from Script.Core import (
     cache_control,
-    value_handle,
+    get_text,
     constant,
     game_type,
     text_handle,
+    flow_handle,
 )
 from Script.Design import (
     map_handle,
     attr_calculation,
     clothing,
     game_time,
-
+    handle_talent,
+    handle_premise,
 )
-from Script.Config import game_config
+from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+
+_: FunctionType = get_text._
+""" 翻译api """
+line_feed = draw.NormalDraw()
+""" 换行绘制对象 """
+line_feed.text = "\n"
+line_feed.width = 1
+window_width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
 
 
 def init_attr(character_id: int):
@@ -44,13 +55,17 @@ def init_attr(character_id: int):
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
     character_data.dirty = attr_calculation.get_dirty_zero()
     character_data.item = attr_calculation.get_item_zero(character_data.item)
-    character_data.h_state = attr_calculation.get_h_state_zero()
-    character_data.assistant_state = attr_calculation.get_assistant_state_zero()
+    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
     character_data.first_record = attr_calculation.get_first_record_zero()
     character_data.action_info = attr_calculation.get_action_info_state_zero()
     character_data.event = attr_calculation.get_event_zero()
     character_data.work = attr_calculation.get_work_zero()
     character_data.entertainment = attr_calculation.get_entertainment_zero()
+    character_data.pregnancy = attr_calculation.get_pregnancy_zero()
+    character_data.sp_flag = game_type.SPECIAL_FLAG()
+    character_data.chara_setting = attr_calculation.get_chara_setting_zero()
+    character_data.assistant_services = attr_calculation.get_assistant_services_zero()
+    # character_data.relationship = attr_calculation.get_relationship_zero(character_data.relationship)
 
     # 主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
     if character_id == 0:
@@ -59,14 +74,27 @@ def init_attr(character_id: int):
         character_data.mana_point_max = 2000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
+        character_data.sanity_point = 100
+        character_data.sanity_point_max = 100
+        character_data.semen_point = 100
+        character_data.semen_point_max = 100
         character_data.pl_collection.token_list = attr_calculation.get_token_zero(
             character_data.pl_collection.token_list)
-        character_data.sleep_point = 0
+        character_data.tired_point = 0
         character_data.pl_ability = attr_calculation.get_pl_ability_zero()
         character_data.pl_collection = attr_calculation.get_collection_zero()
         character_data.cloth = attr_calculation.get_cloth_zero()
+        character_data.favorability = {0:0}
+        character_data.dormitory = "中枢\博士房间" # 此处不可使用翻译
+        character_data.pre_dormitory = "中枢\博士房间"
+        # 初始收藏地点
+        cache.collect_position_list.append([_('中枢'), _('博士房间')])
+        cache.collect_position_list.append([_('中枢'), _('博士办公室')])
+        cache.collect_position_list.append([_('贸易'), _('成人用品店')])
+        cache.collect_position_list.append([_('书'), _('藏品馆')])
 
     # 一系列初始化函数
+    init_character_behavior_start_time(character_id,cache.game_time)
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     character_data.angry_point = random.randrange(1, 35)
@@ -136,36 +164,36 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 羞耻、苦痛每级-0.1倍#
     for i in {16, 17}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level * 0.2
-    # 恐怖、抑郁、反感每级-0.4倍#
+        fix -= status_level * 0.1
+    # 恐怖、抑郁、反感每级-0.3倍#
     for i in {18, 19, 20}:
         status_level = attr_calculation.get_status_level(target_data.status_data[i])
-        fix -= status_level * 0.4
+        fix -= status_level * 0.3
 
     # 能力相关计算#
     # 亲密、快乐刻印、屈服刻印每级+0.2倍#
     for i in {13, 14, 32}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix += ability_level * 0.2
     # 苦痛刻印、恐怖刻印每级-0.3倍#
     for i in {15, 17}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 0.3
     # 反发刻印每级-1.0倍#
     for i in {18}:
-        ability_level = attr_calculation.get_ability_level(target_data.ability[i])
+        ability_level = target_data.ability[i]
         fix -= ability_level * 1.0
 
     # 素质相关计算#
     # 爱情与隶属系加成0.5~2.0#
-    if target_data.talent[10] or target_data.talent[15]:
+    if target_data.talent[201] or target_data.talent[211]:
+        fix += 0.25
+    if target_data.talent[202] or target_data.talent[212]:
         fix += 0.5
-    if target_data.talent[11] or target_data.talent[16]:
+    if target_data.talent[203] or target_data.talent[213]:
+        fix += 0.75
+    if target_data.talent[204] or target_data.talent[214]:
         fix += 1.0
-    if target_data.talent[12] or target_data.talent[17]:
-        fix += 1.5
-    if target_data.talent[13] or target_data.talent[18]:
-        fix += 2.0
     # 受精、妊娠、育儿均+0.5#
     if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
         fix += 0.5
@@ -175,29 +203,106 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 讨厌男性-0.2#
     if target_data.talent[227]:
         fix -= 0.2
-    # 博士信息素每级+0.5#
+    # 博士信息素每级+0.25#
     if character_data.talent[306]:
-        fix += 1.5
+        fix += 0.75
     elif character_data.talent[305]:
-        fix += 1.0
-    elif character_data.talent[304]:
         fix += 0.5
+    elif character_data.talent[304]:
+        fix += 0.25
+    # 好感香薰修正
+    if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
+        fix += 0.5
+    # 空气催眠置为零
+    if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
+        fix = 0
     favorability *= fix
     return favorability
 
-
-def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str) -> int:
+def calculation_trust(character_id: int, target_character_id: int, add_time: int) -> int:
     """
-    按角色当前状态、素质和能力计算最终该指令是否成功
+    按角色当前状态、素质和能力计算最终增加的信赖度
     Keyword arguments:
     character_id -- 角色id
     target_character_id -- 目标角色id
-    instruct_name -- 指令名字
+    add_time -- 指令的时间
     Return arguments:
-    int -- 最终的好感值
+    int -- 最终的信赖度
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
+    fix = 1.0
+
+    # 能力相关计算#
+    # 亲密、快乐刻印、屈服刻印每级+0.2倍#
+    for i in {13, 14, 32}:
+        ability_level = target_data.ability[i]
+        fix += ability_level * 0.2
+    # 苦痛刻印、恐怖刻印每级-0.3倍#
+    for i in {15, 17}:
+        ability_level = target_data.ability[i]
+        fix -= ability_level * 0.3
+    # 反发刻印每级-1.0倍#
+    for i in {18}:
+        ability_level = target_data.ability[i]
+        fix -= ability_level * 1.0
+
+    # 素质相关计算#
+    # 爱情与隶属系加成0.5~2.0#
+    if target_data.talent[201] or target_data.talent[211]:
+        fix += 0.25
+    if target_data.talent[202] or target_data.talent[212]:
+        fix += 0.5
+    if target_data.talent[203] or target_data.talent[213]:
+        fix += 0.75
+    if target_data.talent[204] or target_data.talent[214]:
+        fix += 1.0
+    # 受精、妊娠、育儿均+0.5#
+    if target_data.talent[20] or target_data.talent[21] or target_data.talent[22]:
+        fix += 0.5
+    # 感情缺乏-0.2#
+    if target_data.talent[223]:
+        fix -= 0.2
+    # 讨厌男性-0.2#
+    if target_data.talent[227]:
+        fix -= 0.2
+    # 博士信息素每级+0.25#
+    if character_data.talent[306]:
+        fix += 0.75
+    elif character_data.talent[305]:
+        fix += 0.5
+    elif character_data.talent[304]:
+        fix += 0.25
+    # 好感香薰修正
+    if character_data.sp_flag.aromatherapy == 5 or target_data.sp_flag.aromatherapy == 5:
+        fix += 0.5
+    # 空气催眠置为零
+    if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
+        fix = 0
+    trust_add = add_time / 60 * fix
+    return trust_add
+
+
+def calculation_instuct_judege(character_id: int, target_character_id: int, instruct_name: str, not_draw_flag = False):
+    """
+    根据角色和目标角色的各属性来计算总实行值\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    target_character_id -- 目标角色id\n
+    instruct_name -- 指令名字\n
+    not_draw_flag -- 是否不输出文本\n
+    Return arguments:\n
+    int -- 1成功,0失败,-1无副作用返回\n
+    int -- 实行值\n
+    float -- 实行值与目标值的比值\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[target_character_id]
+
+    # 对玩家为目标的指令是必定成功的
+    if target_character_id == 0:
+        return [1, 1, 1.0]
+
     for judge_id in game_config.config_instruct_judge_data:
         # 匹配到能力的id与能力等级对应的前提#
         if game_config.config_instruct_judge_data[judge_id].instruct_name == instruct_name:
@@ -206,135 +311,336 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             judge_data_value = judge_data.value
             break
 
+    calculation_text = ""
     if judge_data_type == "D":
-        calculation_text = "需要基础实行值至少为" + str(judge_data_value) + "\n"
+        calculation_text += _("需要基础实行值至少为") + str(judge_data_value) + "\n"
     elif judge_data_type == "S":
-        calculation_text = "需要性爱实行值至少为" + str(judge_data_value) + "\n"
-    calculation_text += "当前值为："
+        calculation_text += _("需要性爱实行值至少为") + str(judge_data_value) + "\n"
+    calculation_text += _("当前值为：")
 
     judge = 0
 
     # 好感判定#
-    favorability = target_data.favorability[0]
-    judge_favorability = 0
-    if favorability < 100:
-        judge_favorability -= 20
-    if favorability < 1000:
-        judge_favorability += 0
-    elif favorability < 3000:
-        judge_favorability += 50
-    elif favorability < 5000:
-        judge_favorability += 75
-    elif favorability < 10000:
-        judge_favorability += 100
-    elif favorability < 30000:
-        judge_favorability += 150
-    else:
-        judge_favorability += 200
-    calculation_text += "好感修正(" + str(judge_favorability) + ")"
+    favorability_level,judge_favorability = attr_calculation.get_favorability_level(target_data.favorability[0])
+    calculation_text += _("好感修正(") + str(judge_favorability) + ")"
     judge += judge_favorability
 
     # 信赖判定#
-    trust = target_data.trust
-    judge_trust = 0
-    if trust < 50:
-        judge_trust -= 50
-    elif trust < 100:
-        judge_trust -= 20
-    elif trust < 150:
-        judge_trust += 0
-    elif trust < 200:
-        judge_trust += 30
-    elif trust < 250:
-        judge_trust += 50
-    else:
-        judge_trust += 100
+    trust_level,judge_trust = attr_calculation.get_trust_level(target_data.trust)
     judge += judge_trust
-    calculation_text += "+信赖修正(" + str(judge_trust) + ")"
+    calculation_text += _("+信赖修正(") + str(judge_trust) + ")"
 
     # 状态修正，好意(11)和欲情(12)修正#
-    judge_status = int((target_data.status_data[11] + target_data.status_data[12]) / 10)
+    status_level_sum =  attr_calculation.get_status_level(target_data.status_data[11]) + attr_calculation.get_status_level(target_data.status_data[12])
+    judge_status = status_level_sum * 10
     judge += judge_status
     if judge_status:
-        calculation_text += "+状态修正(" + str(judge_status) + ")"
+        calculation_text += _("+状态修正(") + str(judge_status) + ")"
 
     # 能力修正，亲密(32)和欲望(33)修正#
     judge_ability = target_data.ability[32] * 10 + target_data.ability[33] * 5
     judge += judge_ability
     if judge_ability:
-        calculation_text += "+能力修正(" + str(judge_ability) + ")"
+        calculation_text += _("+能力修正(") + str(judge_ability) + ")"
 
     # 刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
     judge_mark = target_data.ability[13] * 20 + target_data.ability[14] * 20
     judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18] * 30
     judge += judge_mark
     if judge_mark:
-        calculation_text += "+刻印修正(" + str(judge_mark) + ")"
+        calculation_text += _("+刻印修正(") + str(judge_mark) + ")"
 
     # 心情修正，好心情+10，坏心情-10，愤怒-30
     judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
     judge += judge_angry
     if judge_angry:
-        calculation_text += "+心情修正(" + str(judge_angry) + ")"
+        calculation_text += _("+心情修正(") + str(judge_angry) + ")"
 
     # 陷落素质判定，第一阶段~第四阶段分别为30,50,80,100#
-    judge_fall = target_data.talent[10] * 30 + target_data.talent[11] * 50 + target_data.talent[12] * 80 + \
-                 target_data.talent[13] * 100 + target_data.talent[15] * 30 + target_data.talent[16] * 50 + \
-                 target_data.talent[17] * 80 + target_data.talent[18] * 100
+    judge_fall = target_data.talent[201] * 30 + target_data.talent[202] * 50 + target_data.talent[203] * 80 + \
+                 target_data.talent[204] * 100 + target_data.talent[211] * 30 + target_data.talent[212] * 50 + \
+                 target_data.talent[213] * 80 + target_data.talent[214] * 100
     judge += judge_fall
     if judge_fall:
-        calculation_text += "+陷落修正(" + str(judge_fall) + ")"
+        calculation_text += _("+陷落修正(") + str(judge_fall) + ")"
     # 讨厌男性修正#
     judge_hate = target_data.talent[227] * 30
     judge -= judge_hate
     if judge_hate:
-        calculation_text += "+讨厌男性(-" + str(judge_hate) + ")"
+        calculation_text += _("+讨厌男性(-") + str(judge_hate) + ")"
     # 难以越过的底线修正#
     judge_hardlove = target_data.talent[224] * 30
     judge -= judge_hardlove
     if judge_hardlove:
-        calculation_text += "+难以越过的底线(-" + str(judge_hardlove) + ")"
-    # 博士信息素修正#
-    judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[
-        306] * 50
-    judge += judge_information
-    if judge_information:
-        calculation_text += "+博士信息素(" + str(judge_information) + ")"
+        calculation_text += _("+难以越过的底线(-") + str(judge_hardlove) + ")"
 
-    # 当前场景有人修正
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data = cache.scene_data[scene_path_str]
-    if len(scene_data.character_list) > 2:
+    # 淫乱相关属性修正#
+    # 仅能用在性爱指令上
+    if judge_data_type == "S":
+        if character_data.talent[40]:
+            judge += 30
+            calculation_text += _("+淫乱(+30)")
+
+    # 激素系能力修正#
+    if character_data.pl_ability.hormone:
+        judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[306] * 50
+        judge += judge_information
+        talent_id = handle_talent.have_hormone_talent()
+        talent_name = game_config.config_talent[talent_id].name
+        if judge_information:
+            calculation_text += f"+{talent_name}({str(judge_information)})"
+
+    # 访客不判定的部分
+    if judge_data_type != "V":
+
+        # 当前场景有人修正
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        scene_data = cache.scene_data[scene_path_str]
+        if len(scene_data.character_list) > 2:
+            if judge_data_type == "S":
+                judge_other_people = 100
+            else:
+                judge_other_people = 30
+            # 露出修正
+            adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
+            judge_other_people = int(judge_other_people * (adjust - 1.5))
+            judge += judge_other_people
+            calculation_text += _("+当前场景有其他人在(") + text_handle.number_to_symbol_string(judge_other_people) + ")"
+
+        # 助理助攻修正
+        if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
+            assistant_character_data = cache.character_data[character_data.assistant_character_id]
+            if assistant_character_data.assistant_services[8]:
+                judge += 50
+                calculation_text += _("+助理助攻(+50)")
+
+        # 今天H被打断了修正
         if judge_data_type == "S":
-            judge_other_people = 100
-        else:
-            judge_other_people = 30
-        # 露出修正
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-        judge_other_people = int(judge_other_people * (adjust - 1.5))
-        judge += judge_other_people
-        calculation_text += "+当前场景有其他人在(" + text_handle.number_to_symbol_string(judge_other_people) + ")"
+            judge_h_interrupt = character_data.action_info.h_interrupt * 10
+            judge -= judge_h_interrupt
+            if judge_h_interrupt:
+                calculation_text += _("+今天H被打断过(-") + str(judge_h_interrupt) + ")"
 
-    # 今天H被打断了修正
-    judge_h_interrupt = character_data.action_info.h_interrupt * 10
-    judge -= judge_h_interrupt
-    if judge_h_interrupt:
-        calculation_text += "+今天H被打断过(-" + str(judge_h_interrupt) + ")"
+        # 监禁模式修正
+        if target_data.sp_flag.imprisonment:
+            judge += 400
+            calculation_text += _("+监禁中(+400)")
+
+        # 无意识模式修正
+        if target_data.sp_flag.unconscious_h == 1:
+            judge += 1000
+            calculation_text += _("+睡眠(+1000)")
+
+    # 处女修正
+    if instruct_name == _("性交") and target_data.talent[0]:
+        judge -= 100
+        calculation_text += _("+处女(-100)")
+
+    # A处女修正
+    if instruct_name == _("A性交") and target_data.talent[1]:
+        judge -= 200
+        calculation_text += _("+Ａ处女(-200)")
+
+    # U处女修正
+    if instruct_name == _("U性交") and target_data.talent[2]:
+        judge -= 300
+        calculation_text += _("+Ｕ处女(-300)")
+
+    # 初吻修正
+    if instruct_name == _("亲吻") and target_data.talent[4]:
+        judge -= 50
+        calculation_text += _("+初吻(-50)")
+
+    # 性交的避孕相关修正
+    if instruct_name == _("性交"):
+        # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
+        if (
+            target_data.talent[14] or
+            character_data.h_state.body_item[13][1] or
+            (target_data.talent[13] and target_data.h_state.body_item[11][1]) or
+            target_data.talent[222]
+            ):
+            pass
+        else:
+            if handle_premise.handle_reproduction_period_0(target_character_id):
+                # 避孕中出合意合意
+                if target_data.talent[13]:
+                    pass
+                else:
+                    judge -= 10
+                    calculation_text += _("+安全期(-10)")
+            elif handle_premise.handle_reproduction_period_1(target_character_id):
+                judge -= 50
+                calculation_text += _("+普通期(-50)")
+            elif handle_premise.handle_reproduction_period_2(target_character_id):
+                judge -= 100
+                calculation_text += _("+危险期(-100)")
+            elif handle_premise.handle_reproduction_period_3(target_character_id):
+                judge -= 300
+                calculation_text += _("+排卵期(-300)")
+
+    # 催眠系能力的最后补正，仅在平然/空气催眠、性爱判定、且实行值不足时生效
+    judge_hypnosis = 0 # 初始为零，方便其他修正判断是否进行了催眠
+    if target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
+        # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
+        if (
+            ((_("骚扰") in instruct_name or _("亲吻") in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
+            (character_data.talent[332] and target_data.hypnosis.hypnosis_degree >= 100)
+        ):
+            # 实行值不够的差值为
+            unenough = judge_data_value - judge
+            # 催眠基础补正为100，再不足的部分用理智折算为实行值
+            if unenough <= 100:
+                judge_hypnosis = 100
+                sanity_point_cost = 10
+            else:
+                # 1理智折算为10实行值
+                judge_hypnosis = unenough
+                sanity_point_cost = round(unenough / 10)
+            # 最后的总结算
+            if sanity_point_cost <= character_data.sanity_point:
+                judge += judge_hypnosis
+                calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
+                character_data.sanity_point -= sanity_point_cost
+                character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
+            else:
+                calculation_text += _("+催眠(+0,理智不足,催眠解除)")
+                target_data.sp_flag.unconscious_h = 0
 
     # debug模式修正
     if cache.debug_mode == True:
         judge += 99999
-        calculation_text += "+debug模式(+99999)"
+        calculation_text += _("+debug模式(+99999)")
 
-    calculation_text += " = " + str(judge) + "\n"
-    now_draw = draw.WaitDraw()
-    now_draw.width = 1
-    now_draw.text = calculation_text
-    now_draw.draw()
+    # 是否通过
     if judge >= judge_data_value:
-        return 1
+        final_judge = 1
     else:
-        return 0
+        final_judge = 0
+    judge_rate = judge / judge_data_value
+
+    # 是否进行相关信息的绘制与结算
+    if not not_draw_flag:
+
+        # 询问信息
+        ask_text = ""
+        if instruct_name == _("亲吻") and target_data.talent[4]:
+            ask_text += _("\n\n 是否要夺走{0}的初吻？").format(target_data.name)
+        elif instruct_name == _("性交") and target_data.talent[0]:
+            ask_text += _("\n\n 是否要夺走{0}的处女？").format(target_data.name)
+        elif instruct_name == _("A性交") and target_data.talent[1]:
+            ask_text += _("\n\n 是否要夺走{0}的A处女？").format(target_data.name)
+        # 询问戴套
+        condom_flag = False
+        if instruct_name == _("性交"):
+            # 避孕套、已显示过该信息，以上可直接通过
+            if (
+                character_data.h_state.body_item[13][1] or
+                target_data.h_state.condom_info_show_flag == False
+                ):
+                pass
+            else:
+                condom_flag = True
+                # 无意识
+                if target_data.sp_flag.unconscious_h:
+                    ask_text += _("当前正在对{0}无意识奸，是否不戴套？\n").format(target_data.name)
+                # 妊娠合意
+                elif target_data.talent[14]:
+                    ask_text += _("{0}已经做好了随时都可以怀孕的准备，是否不戴套？\n").format(target_data.name)
+                # 避孕中出合意+事前避孕药
+                elif target_data.talent[13] and target_data.h_state.body_item[11][1]:
+                    ask_text += _("{0}已经吃过事前避孕药了，所以内射也不会怀孕，是否不戴套？\n").format(target_data.name)
+                # 性无知
+                elif target_data.talent[222]:
+                    ask_text += _("{0}似乎对性和避孕都一无所知，是否不戴套？\n").format(target_data.name)
+                elif judge_rate < 0.5:
+                    ask_text += _("{0}坚决地要求你必须戴上避孕套，是否坚持不带套？\n").format(target_data.name)
+                elif judge_rate < 1:
+                    ask_text += _("{0}希望你戴上避孕套，是否坚持不带套？\n").format(target_data.name)
+                else:
+                    ask_text += _("{0}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n").format(target_data.name)
+                target_data.h_state.condom_info_show_flag = False
+        if len(ask_text):
+            # 判断态度
+            ask_text += _(" (对方的态度：")
+            if judge_rate < 0.5:
+                ask_text += _("拒绝)\n")
+            elif judge_rate < 1:
+                ask_text += _("犹豫)\n")
+            else:
+                ask_text += _("接受)\n")
+            while 1:
+                return_list = []
+                ask_draw = draw.WaitDraw()
+                ask_draw.width = 1
+                ask_draw.text = ask_text
+                ask_draw.draw()
+
+                line_feed.draw()
+                line_feed.draw()
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+                back_draw.draw()
+                line_feed.draw()
+                return_list.append(back_draw.return_text)
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn == back_draw.return_text:
+                    return [-1, judge, judge_rate]
+                elif yrn == yes_draw.return_text:
+                    break
+
+        # 正常直接判定，并输出文本
+        if judge_data_type != "V":
+            calculation_text += " = " + str(judge) + "\n"
+            now_draw = draw.WaitDraw()
+            now_draw.width = 1
+            now_draw.text = calculation_text
+            now_draw.draw()
+
+        # 合意获得的结算
+        if final_judge and target_data.sp_flag.unconscious_h == 0:
+            agree_draw = draw.WaitDraw()
+            agree_draw.width = 1
+            draw_text = ""
+            if instruct_name == _("亲吻") and target_data.talent[11] == 0:
+                target_data.talent[11] = 1
+                draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
+            if instruct_name == _("性交") and target_data.talent[12] == 0:
+                target_data.talent[12] = 1
+                draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
+            if instruct_name == _("A性交") and target_data.talent[15] == 0:
+                target_data.talent[15] = 1
+                draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
+            if instruct_name == _("U性交") and target_data.talent[16] == 0:
+                target_data.talent[16] = 1
+                draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+            # 避孕相关合意
+            # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
+            if (
+                instruct_name == _("性交") and
+                target_data.talent[13] == 0 and
+                condom_flag and
+                (handle_premise.handle_reproduction_period_0(target_character_id))
+                ):
+                target_data.talent[13] = 1
+                draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
+            # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
+            if (
+                instruct_name == _("性交") and
+                target_data.talent[14] == 0 and
+                condom_flag and
+                (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
+                ):
+                target_data.talent[14] = 1
+                draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
+            if len(draw_text):
+                agree_draw.text = draw_text
+                agree_draw.draw()
+
+    # 返回判定结果
+    return [final_judge, judge, judge_rate]
 
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
@@ -395,40 +701,3 @@ def judge_character_time_over_24(character_id: int) -> bool:
         return 1
     return 0
 
-
-def update_work_people():
-    """
-    刷新各干员的职位和当前正在工作的干员
-    """
-    from Script.Design import handle_premise
-
-    cache.base_resouce.doctor_now = 0
-    cache.base_resouce.doctor_id_set = set()
-    cache.base_resouce.HR_now = 0
-    cache.base_resouce.HR_id_set = set()
-    cache.base_resouce.library_manager_now = 0
-    cache.base_resouce.library_manager_set = set()
-    cache.base_resouce.work_people_now = 0
-
-    cache.npc_id_got.discard(0)
-    for id in cache.npc_id_got:
-        character_data = cache.character_data[id]
-
-        # 医生统计
-        if character_data.work.work_type == 61:
-            cache.base_resouce.doctor_id_set.add(id)
-            if handle_premise.handle_in_clinic(id):
-                cache.base_resouce.doctor_now += 1
-                cache.base_resouce.work_people_now += 1
-        # HR统计
-        elif character_data.work.work_type == 71:
-            cache.base_resouce.HR_id_set.add(id)
-            if handle_premise.handle_in_hr_office(id):
-                cache.base_resouce.HR_now += 1
-                cache.base_resouce.work_people_now += 1
-        # 图书馆管理员统计
-        elif character_data.work.work_type == 101:
-            cache.base_resouce.library_manager_set.add(id)
-            if handle_premise.handle_in_library_office(id) or handle_premise.handle_in_library(id):
-                cache.base_resouce.library_manager_now += 1
-                cache.base_resouce.work_people_now += 1

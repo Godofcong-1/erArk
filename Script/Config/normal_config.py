@@ -22,6 +22,6 @@ def init_normal_config():
     if os.path.exists(package_path):
         with open(package_path, "r") as package_file:
             version_data = json.load(package_file)
-            config_normal.verson = "Past." + version_data["version"]
+            config_normal.verson = version_data["version"]
     else:
         config_normal.verson = "Orgin"

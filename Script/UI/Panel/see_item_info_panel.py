@@ -74,8 +74,8 @@ class SeeCharacterItemBagPanel:
         item_list_type = ["药品", "机器", "消耗品", "H药品", "H用机器", "SM器具"]
         while 1:
             title_draw.draw()
-            # 绘制色色凭证
-            money_text = f"当前持有色色凭证：{str(cache.base_resouce.pink_certificate)} + "
+            # 绘制粉红凭证
+            money_text = f"当前持有粉红凭证：{str(cache.rhodes_island.materials_resouce[4])}"
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
@@ -145,12 +145,15 @@ class ItemNameDraw:
         item_name = item_config.name
         character_data = cache.character_data[0]
         flag_consumables = item_config.tag in ["Drug", "H_Drug", "Consumables"]
+        self.use_drug_flag = False
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
                 self.draw_text = f"{index_text} {item_name}"
                 if flag_consumables:
                     self.draw_text += "(持有数量:" + str(character_data.item[self.text]) + ")"
+                if item_config.tag == "Drug":
+                    self.use_drug_flag = True
             else:
                 self.draw_text = item_name
         else:
@@ -171,6 +174,36 @@ class ItemNameDraw:
     def draw_item_info(self):
         """绘制道具信息"""
         now_draw = ItemInfoDraw(self.text, window_width)
+        now_draw.draw()
+        if self.use_drug_flag:
+            while 1:
+                line_feed.draw()
+                use_draw = draw.CenterButton(_("使用"), _("使用"), window_width)
+                use_draw.draw()
+                line_feed.draw()
+                return_draw = draw.CenterButton(_("返回"), _("返回"), window_width)
+                return_draw.draw()
+                line_feed.draw()
+                yrn = flow_handle.askfor_all([use_draw.return_text, return_draw.return_text])
+                if yrn == use_draw.return_text:
+                    self.use_drug()
+                    break
+                elif yrn == return_draw.return_text:
+                    break
+
+    def use_drug(self):
+        """使用道具"""
+        pl_character_data = cache.character_data[0]
+        # 道具数量减少1
+        pl_character_data.item[self.text] -= 1
+        # 根据道具id获取道具效果
+        item_effect_dict = {0:10, 1:60, 2:140, 3:300}
+        sanity_point_add = item_effect_dict[self.text]
+        pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
+        # 绘制使用道具信息
+        now_draw = draw.WaitDraw()
+        now_draw.text = f"\n{pl_character_data.name}使用了{game_config.config_item[self.text].name}，理智值增加{sanity_point_add}，现在为{pl_character_data.sanity_point}/{pl_character_data.sanity_point_max}\n\n"
+        now_draw.width = window_width
         now_draw.draw()
 
 

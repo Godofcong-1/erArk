@@ -32,7 +32,7 @@ class Instruct_filter_Panel:
 
     def draw(self):
         """绘制对象"""
-        title_draw = draw.TitleLineDraw("指令过滤", self.width)
+        title_draw = draw.TitleLineDraw(_("指令过滤"), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, 1, 1, 0)
 
@@ -99,7 +99,9 @@ class HandleFilterButtonList:
         instruct_name = constant.handle_instruct_name_data[self.index]
         button_text = f"[{self.index}]{instruct_name}"
 
-        text_style = "standard" if cache.instruct_index_filter[self.index] else "un_open_mapbutton"
+        if self.index not in cache.instruct_index_filter:
+            cache.instruct_index_filter[self.index] = 1
+        text_style = "standard" if cache.instruct_index_filter[self.index] else "deep_gray"
 
         name_draw = draw.LeftButton(
             button_text, self.button_return, self.width, normal_style = text_style, cmd_func=self.chose_button

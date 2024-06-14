@@ -31,6 +31,34 @@ class AbilityUp:
     """ 升级需求 """
 
 
+class Aromatherapy_Recipes:
+    """ 香薰疗愈配方 """
+
+    cid: int
+    """ 编号id """
+    name: str
+    """ 配方名 """
+    formula: str
+    """ 配方(序号为资源序号) """
+    difficulty: int
+    """ 难易度 """
+    info: str
+    """ 配方介绍 """
+
+
+class AssistantServices:
+    """ 助理服务 """
+
+    cid: int
+    """ 服务id """
+    name: str
+    """ 服务名 """
+    require: str
+    """ 服务需求(用#分隔每个选项的需求)(F好感，X信任) """
+    option: str
+    """ 各个选项 """
+
+
 class BarConfig:
     """ 比例条名字对应的状态图片和绘制宽度 """
 
@@ -57,6 +85,17 @@ class BehaviorEffect:
     """ 结算器id """
 
 
+class Birthplace:
+    """ 出生地列表 """
+
+    cid: int
+    """ 出生地id """
+    name: str
+    """ 出生地名 """
+    inmap: int
+    """ 是否出现在大地图中 """
+
+
 class BodyPart:
     """ 身体部位表 """
 
@@ -64,6 +103,14 @@ class BodyPart:
     """ 配表id """
     name: str
     """ 部位名字 """
+    volume_table: str
+    """ 容积表 """
+    normal_flow_table: str
+    """ 正常流通表 """
+    full_flow_table: str
+    """ 满溢流通表 """
+    extra_flow_table: str
+    """ 额外流通表 """
 
 
 class Book:
@@ -112,6 +159,32 @@ class CharacterStateType:
     """ 类型名 """
 
 
+class CharaSetting:
+    """ 角色设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    require: str
+    """ 选项需求(F好感，X信任) """
+    option: str
+    """ 各个选项 """
+
+
+class City:
+    """ 势力列表 """
+
+    cid: int
+    """ 城市id """
+    name: str
+    """ 城市名 """
+    country_id: int
+    """ 所属国家id """
+
+
 class ClothingTem:
     """ 服装模板 """
 
@@ -129,30 +202,21 @@ class ClothingTem:
     """ 描述 """
 
 
-class ClothingTem_back:
-    """ 服装模板 """
-
-    cid: int
-    """ 模板id """
-    name: str
-    """ 服装名字 """
-    clothing_type: int
-    """ 服装类型 """
-    sex: int
-    """ 服装性别限制 """
-    tag: int
-    """ 服装用途标签 """
-    describe: str
-    """ 描述 """
-
-
 class ClothingType:
     """ 衣服种类配置 """
 
     cid: int
-    """ 类型id """
+    """ 配表id """
     name: str
-    """ 类型名字 """
+    """ 部位名字 """
+    volume_table: str
+    """ 容积表 """
+    normal_flow_table: str
+    """ 正常流通表 """
+    full_flow_table: str
+    """ 满溢流通表 """
+    extra_flow_table: str
+    """ 额外流通表 """
 
 
 class ClothingUseType:
@@ -188,6 +252,8 @@ class Entertainment:
     """ 娱乐行动id """
     palce: str
     """ 娱乐地点 """
+    need: str
+    """ 必要条件 """
     tag: int
     """ 标签 """
     describe: str
@@ -252,6 +318,30 @@ class Facility_open:
     """ 介绍信息 """
 
 
+class Favorability_Level:
+    """ 好感等级 """
+
+    cid: int
+    """ 好感等级cid """
+    Favorability_point: int
+    """ 当前等级好感度最大值 """
+    judge_add: int
+    """ 实行值加成 """
+
+
+class First_Bouns:
+    """ 初期奖励 """
+
+    cid: int
+    """ 奖励id """
+    name: str
+    """ 奖励名 """
+    consume: int
+    """ 需要消耗的初期点数 """
+    introduce: str
+    """ 奖励介绍 """
+
+
 class FontConfig:
     """ 字体样式配置数据(富文本用) """
 
@@ -279,6 +369,66 @@ class FontConfig:
     """ 备注 """
 
 
+class Food_Quality:
+    """ 质量等级 """
+
+    cid: int
+    """ 食物质量cid """
+    name: str
+    """ 质量名 """
+    ability_level: int
+    """ 料理技能上限 """
+
+
+class Hypnosis_Talent_Of_Npc:
+    """ 干员获得被催眠素质 """
+
+    cid: int
+    """ cid """
+    hypnosis_talent_id: int
+    """ 该素质id """
+    hypnosis_degree: int
+    """ 催眠深度 """
+    need_talent_id: int
+    """ 前置素质id """
+    second_behavior_id: int
+    """ 二段行为id """
+
+
+class Hypnosis_Talent_Of_Pl:
+    """ 玩家升级催眠素质 """
+
+    cid: int
+    """ cid """
+    hypnosis_talent_id: int
+    """ 该素质id """
+    need_talent_id: int
+    """ 前置素质id """
+    pl_experience: int
+    """ 需要的玩家催眠经验 """
+    max_hypnosis_degree: int
+    """ 最高单角色催眠程度 """
+    npc_hypnosis_degree: int
+    """ 升级需要的NPC总催眠程度 """
+    todo: int
+    """ 未实装 """
+
+
+class Hypnosis_Type:
+    """ 催眠类型 """
+
+    cid: int
+    """ 催眠类型id """
+    name: str
+    """ 名称 """
+    talent_id: int
+    """ 需要的素质id """
+    hypnosis_degree: int
+    """ 需要的催眠程度 """
+    introduce: str
+    """ 介绍 """
+
+
 class InstructJudge:
     """ 每个指令的实行值判定数据 """
 
@@ -287,7 +437,7 @@ class InstructJudge:
     instruct_name: str
     """ 对应的指令名字 """
     need_type: str
-    """ 需求类型（D为日常，S为性爱） """
+    """ 需求类型（D为日常，S为性爱，V为访客） """
     value: int
     """ 需求值 """
 
@@ -358,6 +508,15 @@ class MoveMenuType:
     """ 名字 """
 
 
+class Nation:
+    """ 势力列表 """
+
+    cid: int
+    """ 势力id """
+    name: str
+    """ 势力名 """
+
+
 class Organ:
     """ 器官对应性别限定和文字描述 """
 
@@ -369,6 +528,19 @@ class Organ:
     """ 名字 """
 
 
+class ProductFormula:
+    """ 产品配方 """
+
+    cid: int
+    """ 编号id """
+    product_id: int
+    """ 产品的资源id """
+    formula: str
+    """ 配方(序号为资源序号) """
+    difficulty: int
+    """ 难易度 """
+
+
 class Profession:
     """ 职业类型名称 """
 
@@ -376,6 +548,21 @@ class Profession:
     """ 职业id """
     name: str
     """ 职业名 """
+
+
+class Prts:
+    """ 教程的问题及回答 """
+
+    cid: int
+    """ 编号id """
+    fater_type: int
+    """ 父类id(0系统，1日常，2攻略，3H，4经营) """
+    son_type: int
+    """ 子类id """
+    qa: str
+    """ 问题还是回答 """
+    text: str
+    """ 内容 """
 
 
 class Race:
@@ -394,6 +581,8 @@ class Recipes:
     """ 菜谱id """
     name: str
     """ 菜谱名字 """
+    type: int
+    """ 菜的类型（0正餐1零食2饮品3酒类4乳制品8加料咖啡9其他） """
     time: int
     """ 烹饪时间 """
     difficulty: int
@@ -402,6 +591,28 @@ class Recipes:
     """ 价格 """
     introduce: str
     """ 说明介绍 """
+
+
+class Recruitment_Strategy:
+    """ 招聘策略配置 """
+
+    cid: int
+    """ 招聘策略id """
+    name: str
+    """ 招聘策略名 """
+    introduce: str
+    """ 招聘策略介绍 """
+
+
+class Reproduction_period:
+    """ 生理期周期 """
+
+    cid: int
+    """ 模板id """
+    name: str
+    """ 日期名 """
+    type: int
+    """ 日期类型(0安全1普通2危险3排卵) """
 
 
 class Resouce:
@@ -413,8 +624,23 @@ class Resouce:
     """ 资源名字 """
     type: str
     """ 资源类型 """
+    price: int
+    """ 资源价格 """
+    cant_buy: int
+    """ 是否无法购买 """
     info: str
     """ 介绍信息 """
+
+
+class Roleplay:
+    """ 角色扮演列表 """
+
+    cid: int
+    """ 角色扮演id """
+    name: str
+    """ 角色扮演名 """
+    type: str
+    """ 角色扮演类型 """
 
 
 class Season:
@@ -424,6 +650,15 @@ class Season:
     """ 季节id """
     name: str
     """ 季节名 """
+
+
+class Seasoning:
+    """ 特殊调味表 """
+
+    cid: int
+    """ 配表id """
+    name: str
+    """ 调味名字 """
 
 
 class SecondEffect:
@@ -452,6 +687,17 @@ class SexTem:
     """ 随机npc生成性别权重 """
 
 
+class Sleep_Level:
+    """ 睡眠等级 """
+
+    cid: int
+    """ 睡眠等级cid """
+    name: str
+    """ 等级名 """
+    sleep_point: int
+    """ 当前等级熟睡值上限 """
+
+
 class SolarPeriod:
     """ 节气配置 """
 
@@ -470,6 +716,10 @@ class Status:
     """ 状态id """
     name: str
     """ 描述 """
+    duration: int
+    """ 耗时 """
+    tag: str
+    """ 标签 """
 
 
 class SunTime:
@@ -481,6 +731,19 @@ class SunTime:
     """ 太阳时间名 """
 
 
+class System_Setting:
+    """ 角色设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    option: str
+    """ 各个选项 """
+
+
 class Talent:
     """ 素质对应类型和文字描述 """
 
@@ -490,8 +753,27 @@ class Talent:
     """ 类型(0:性素质,1:身体素质,2:精神素质,3:技术素质,4:其他素质) """
     name: str
     """ 名字 """
+    heredity: int
+    """ 是否可遗传 """
     info: str
     """ 备注说明 """
+
+
+class TalentGain:
+    """ 素质的获得 """
+
+    cid: int
+    """ 编号id """
+    talent_id: int
+    """ 素质id """
+    second_behavior_id: int
+    """ 二段行为结算id """
+    gain_type: int
+    """ 获得类型(0随时自动，1手动，2指令绑定，3睡觉自动) """
+    gain_need: str
+    """ 获得需求(F好感，X信任) """
+    replace_talent_id: int
+    """ 取代的旧素质id """
 
 
 class TalentType:
@@ -503,19 +785,30 @@ class TalentType:
     """ 类型名 """
 
 
-class TalentUp:
-    """ 能力对应类型和文字描述 """
+class Talent_Of_Arts:
+    """ 源石技艺素质 """
 
     cid: int
-    """ 编号id """
+    """ 序号 """
     talent_id: int
-    """ 对应的升级需求id """
-    need_type: str
-    """ 需求类型 """
-    need_type_id: int
-    """ 需求类型的子id """
-    value: int
-    """ 需求值 """
+    """ 素质id """
+    need_id: int
+    """ 前置需求素质id """
+    level: int
+    """ 能力等级 """
+    todo: int
+    """ 未实装 """
+
+
+class Target_Type:
+    """ AI行动目标的类型表 """
+
+    cid: int
+    """ 类型id """
+    father_type: str
+    """ 父类 """
+    name: str
+    """ 名字 """
 
 
 class Tip:
@@ -527,6 +820,28 @@ class Tip:
     """ 提示类型 """
     info: str
     """ 提示内容 """
+
+
+class Trust_Level:
+    """ 信赖等级 """
+
+    cid: int
+    """ 信赖等级cid """
+    Trust_point: int
+    """ 当前等级信赖最大值 """
+    judge_add: int
+    """ 实行值加成 """
+
+
+class Visitor_Stay_Attitude:
+    """ 访客停留态度 """
+
+    cid: int
+    """ 态度id """
+    name: str
+    """ 态度名 """
+    rate: float
+    """ 态度几率 """
 
 
 class WeekDay:
@@ -547,12 +862,27 @@ class WorkType:
     """ 工作名 """
     department: str
     """ 工作部门 """
-    palce: str
+    place: str
     """ 工作地点 """
     tag: int
     """ 标签 """
+    need: str
+    """ 必要条件 """
     describe: str
     """ 描述 """
+
+
+class World_Setting:
+    """ 世界设定 """
+
+    cid: int
+    """ 设定id """
+    name: str
+    """ 设定名 """
+    introduce: str
+    """ 设定介绍 """
+
+
 class Talk:
     """ 口上配置数据 """
 
@@ -566,171 +896,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 class TargetEffect:
@@ -753,5 +918,7 @@ class Target:
     """ 执行的状态机id """
     premise_id: str
     """ 所需前提id """
+    type: int
+    """ 行动类型（见Target_Type） """
     remarks: str
     """ 备注 """

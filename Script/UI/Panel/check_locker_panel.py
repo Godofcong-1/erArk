@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, text_ha
 from Script.Design import map_handle, attr_calculation, update, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-import random
+from Script.UI.Panel import ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -41,7 +41,7 @@ class Check_locker_Panel:
         map_name = attr_text.get_map_path_text(now_map)
         map_path_str = map_handle.get_map_system_path_str_for_list(pl_data.position)
         map_data = cache.scene_data[map_path_str]
-        title_draw = draw.TitleLineDraw(_(f"{map_name}的衣柜"), self.width)
+        title_draw = draw.TitleLineDraw(_("{0}的衣柜").format(map_name), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 20, 8, self.width, 1, 1, 0)
         while 1:
@@ -63,9 +63,9 @@ class Check_locker_Panel:
 
             info_draw = draw.NormalDraw()
             if len(npc_id_list):
-                info_draw.text = "\n发现以下衣柜里有衣服\n\n"
+                info_draw.text = _("\n发现以下衣柜里有衣服\n\n")
             else:
-                info_draw.text = "\n所有衣柜都是空的\n\n"
+                info_draw.text = _("\n所有衣柜都是空的\n\n")
             info_draw.width = self.width
             info_draw.draw()
 
@@ -122,7 +122,7 @@ class FindDraw:
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
-                button_text = f"{index_text}{self.character_data.name}的衣柜"
+                button_text = _("{0}{1}的衣柜").format(index_text, self.character_data.name)
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.check_cloth
                 )
@@ -143,23 +143,36 @@ class FindDraw:
         while 1:
             line = draw.LineDraw("-", window_width)
             line.draw()
-            cloth_show_text = f"\n{self.character_data.name}的衣柜里放着刚脱下来的：\n"
+            cloth_show_text = _("\n{0}的衣柜里放着刚脱下来的：\n").format(self.character_data.name)
             for clothing_type in game_config.config_clothing_type:
                 cloth_list = self.character_data.cloth.cloth_locker[clothing_type]
+                # 检查是否有该衣服的污浊信息，如果没有的话则补上
+                if len(self.character_data.dirty.cloth_locker_semen) <= clothing_type:
+                    # 首先先尝试看角色身上的服装污浊信息是否可以同步过去
+                    if len(self.character_data.dirty.cloth_semen[clothing_type]):
+                        self.character_data.dirty.cloth_locker_semen = self.character_data.dirty.cloth_semen
+                    # 如果角色身上的服装污浊信息为空，则补上
+                    else:
+                        part_name = game_config.config_clothing_type[clothing_type].name
+                        self.character_data.dirty.cloth_locker_semen.append([part_name,0,0,0])
+
                 if len(cloth_list):
                     for cloth_id in cloth_list:
+                        # 跳过序号不存在的服装
+                        if cloth_id not in game_config.config_clothing_tem:
+                            continue
                         cloth_name = game_config.config_clothing_tem[cloth_id].name
                         cloth_show_text += f" {cloth_name}"
                     semen_now_count = self.character_data.dirty.cloth_locker_semen[clothing_type][1]
                     if semen_now_count:
-                        cloth_show_text += f"({semen_now_count}ml精液)"
+                        cloth_show_text += _("({0}ml精液)").format(semen_now_count)
             cloth_show_draw.text = cloth_show_text + "\n\n"
             cloth_show_draw.draw()
 
             # 选项面板
             # button_all_draw = panel.LeftDrawTextListPanel()
 
-            button0_text = f"[001]把内衣拿起来闻一闻味道"
+            button0_text = _("[001]把内衣拿起来闻一闻味道")
             button0_draw = draw.LeftButton(
                 _(button0_text),
                 _("1"),
@@ -172,7 +185,7 @@ class FindDraw:
             return_list.append(button0_draw.return_text)
 
             if len(self.character_data.cloth.cloth_locker[9]):
-                button1_text = f"[002]偷走内裤"
+                button1_text = _("[002]偷走内裤")
                 button1_draw = draw.LeftButton(
                     _(button1_text),
                     _("2"),
@@ -185,7 +198,7 @@ class FindDraw:
                 return_list.append(button1_draw.return_text)
 
             if len(self.character_data.cloth.cloth_locker[10]):
-                button2_text = f"[003]偷走袜子"
+                button2_text = _("[003]偷走袜子")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("3"),
@@ -197,7 +210,7 @@ class FindDraw:
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
-            button3_text = f"[004]用衣服冲，射在上面"
+            button3_text = _("[004]用衣服冲，射在上面")
             button3_draw = draw.LeftButton(
                 _(button3_text),
                 _("4"),
@@ -246,12 +259,12 @@ class FindDraw:
 
         pan_id = self.character_data.cloth.cloth_locker[9][-1]
         pan_name = game_config.config_clothing_tem[pan_id].name
-        self.pl_data.pl_collection.npc_panties_tem[self.pl_data.target_character_id] = []
+        self.pl_data.pl_collection.npc_panties_tem.setdefault(self.pl_data.target_character_id, [])
         self.pl_data.pl_collection.npc_panties_tem[self.pl_data.target_character_id].append(pan_id)
         self.character_data.cloth.cloth_locker[9] = []
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n获得了{ self.character_data.name}的{pan_name}，可在藏品馆里纳入收藏\n")
+        now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format( self.character_data.name, pan_name)
         now_draw.draw()
 
     def get_socks(self):
@@ -259,12 +272,12 @@ class FindDraw:
 
         socks_id = self.character_data.cloth.cloth_locker[10][-1]
         socks_name = game_config.config_clothing_tem[socks_id].name
-        self.pl_data.pl_collection.npc_socks_tem[self.pl_data.target_character_id] = []
+        self.pl_data.pl_collection.npc_socks_tem.setdefault(self.pl_data.target_character_id, [])
         self.pl_data.pl_collection.npc_socks_tem[self.pl_data.target_character_id].append(socks_id)
         self.character_data.cloth.cloth_locker[10] = []
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        now_draw.text = _(f"\n获得了{ self.character_data.name}的{socks_name}，可在藏品馆里纳入收藏\n")
+        now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format( self.character_data.name, socks_name)
         now_draw.draw()
 
     def shoot_in_cloth(self):
@@ -349,7 +362,7 @@ class Ejaculation_NameDraw:
                 index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text} {self.text}"
                 if target_data.dirty.cloth_locker_semen[self.index][1] != 0:
-                    button_text += f" ({str(target_data.dirty.cloth_locker_semen[self.index][1])}ml精液)"
+                    button_text += _(" ({0}ml精液)").format(str(target_data.dirty.cloth_locker_semen[self.index][1]))
                 name_draw = draw.LeftButton(
                     button_text, self.button_return, self.width, cmd_func=self.shoot_here
                 )
@@ -370,36 +383,17 @@ class Ejaculation_NameDraw:
     def shoot_here(self):
         py_cmd.clr_cmd()
 
-        character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[self.npc_id]
-
         cache.shoot_position = self.index
-        # 乘以一个随机数补正
-        random_weight = random.uniform(0.5, 1.5)
 
-        # 基础射精值，小中多射精区分
-        if character_data.h_state.orgasm_level[3] % 3 == 0:
-            semen_count = int(5 * random_weight)
-            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(20 * random_weight)
-            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(100 * random_weight)
-            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
-        character_data.h_state.orgasm_level[3] += 1
-
-        # print("debug semen_count = ",semen_count)
-
-        # 记录射精部位
-        # target_data.h_state.shoot_position_cloth = self.index
+        semen_text, semen_count = ejaculation_panel.common_ejaculation()
 
         # 更新污浊类里的服装部位精液参数
         target_data.dirty.cloth_locker_semen[self.index][1] += semen_count
         target_data.dirty.cloth_locker_semen[self.index][3] += semen_count
-        target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1])
+        target_data.dirty.cloth_locker_semen[self.index][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[self.index][1], self.index, 1)
 
-        now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
+        now_text = _("在{0}的{1}{2}").format(target_data.name, self.cloth_text_list[self.index], semen_text)
 
         line_feed.draw()
         now_draw = draw.WaitDraw()

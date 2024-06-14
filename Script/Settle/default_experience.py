@@ -1172,12 +1172,12 @@ def handle_target_add_1_masterbate_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(46, 0)
-    target_data.experience[46] += 1
+    target_data.experience.setdefault(54, 0)
+    target_data.experience[54] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(46, 0)
-    target_change.experience[46] += 1
+    target_change.experience.setdefault(54, 0)
+    target_change.experience[54] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_bdsmMasterbate_EXPERIENCE)
@@ -1203,12 +1203,12 @@ def handle_target_add_1_bdsmmasterbate_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(47, 0)
-    target_data.experience[47] += 1
+    target_data.experience.setdefault(55, 0)
+    target_data.experience[55] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(47, 0)
-    target_change.experience[47] += 1
+    target_change.experience.setdefault(55, 0)
+    target_change.experience[55] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Toys_EXPERIENCE)
@@ -1234,12 +1234,12 @@ def handle_target_add_1_toys_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(48, 0)
-    target_data.experience[48] += 1
+    target_data.experience.setdefault(51, 0)
+    target_data.experience[51] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(48, 0)
-    target_change.experience[48] += 1
+    target_change.experience.setdefault(51, 0)
+    target_change.experience[51] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Tiedup_EXPERIENCE)
@@ -1265,12 +1265,12 @@ def handle_target_add_1_tiedup_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(49, 0)
-    target_data.experience[49] += 1
+    target_data.experience.setdefault(52, 0)
+    target_data.experience[52] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(49, 0)
-    target_change.experience[49] += 1
+    target_change.experience.setdefault(52, 0)
+    target_change.experience[52] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Insert_EXPERIENCE)
@@ -1296,12 +1296,12 @@ def handle_target_add_1_insert_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(50, 0)
-    target_data.experience[50] += 1
+    target_data.experience.setdefault(60, 0)
+    target_data.experience[60] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(50, 0)
-    target_change.experience[50] += 1
+    target_change.experience.setdefault(60, 0)
+    target_change.experience[60] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexV_EXPERIENCE)
@@ -1327,12 +1327,12 @@ def handle_target_add_1_sexv_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(51, 0)
-    target_data.experience[51] += 1
+    target_data.experience.setdefault(61, 0)
+    target_data.experience[61] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(51, 0)
-    target_change.experience[51] += 1
+    target_change.experience.setdefault(61, 0)
+    target_change.experience[61] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexA_EXPERIENCE)
@@ -1358,12 +1358,12 @@ def handle_target_add_1_sexa_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(52, 0)
-    target_data.experience[52] += 1
+    target_data.experience.setdefault(62, 0)
+    target_data.experience[62] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(52, 0)
-    target_change.experience[52] += 1
+    target_change.experience.setdefault(62, 0)
+    target_change.experience[62] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexU_EXPERIENCE)
@@ -1389,12 +1389,12 @@ def handle_target_add_1_sexu_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(53, 0)
-    target_data.experience[53] += 1
+    target_data.experience.setdefault(63, 0)
+    target_data.experience[63] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(53, 0)
-    target_change.experience[53] += 1
+    target_change.experience.setdefault(63, 0)
+    target_change.experience[63] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_sexW_EXPERIENCE)
@@ -1420,12 +1420,12 @@ def handle_target_add_1_sexw_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(54, 0)
-    target_data.experience[54] += 1
+    target_data.experience.setdefault(64, 0)
+    target_data.experience[64] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(54, 0)
-    target_change.experience[54] += 1
+    target_change.experience.setdefault(64, 0)
+    target_change.experience[64] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandV_EXPERIENCE)
@@ -1451,12 +1451,12 @@ def handle_target_add_1_expandv_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(55, 0)
-    target_data.experience[55] += 1
+    target_data.experience.setdefault(65, 0)
+    target_data.experience[65] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(55, 0)
-    target_change.experience[55] += 1
+    target_change.experience.setdefault(65, 0)
+    target_change.experience[65] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandA_EXPERIENCE)
@@ -1482,12 +1482,12 @@ def handle_target_add_1_expanda_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(56, 0)
-    target_data.experience[56] += 1
+    target_data.experience.setdefault(66, 0)
+    target_data.experience[66] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(56, 0)
-    target_change.experience[56] += 1
+    target_change.experience.setdefault(66, 0)
+    target_change.experience[66] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandU_EXPERIENCE)
@@ -1513,12 +1513,12 @@ def handle_target_add_1_expandu_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(57, 0)
-    target_data.experience[57] += 1
+    target_data.experience.setdefault(67, 0)
+    target_data.experience[67] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(57, 0)
-    target_change.experience[57] += 1
+    target_change.experience.setdefault(67, 0)
+    target_change.experience[67] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_expandW_EXPERIENCE)
@@ -1544,12 +1544,12 @@ def handle_target_add_1_expandw_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(58, 0)
-    target_data.experience[58] += 1
+    target_data.experience.setdefault(68, 0)
+    target_data.experience[68] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(58, 0)
-    target_change.experience[58] += 1
+    target_change.experience.setdefault(68, 0)
+    target_change.experience[68] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_TWRape_EXPERIENCE)
@@ -1575,12 +1575,12 @@ def handle_target_add_1_twrape_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(59, 0)
-    target_data.experience[59] += 1
+    target_data.experience.setdefault(124, 0)
+    target_data.experience[124] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(59, 0)
-    target_change.experience[59] += 1
+    target_change.experience.setdefault(124, 0)
+    target_change.experience[124] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_SlumberRape_EXPERIENCE)
@@ -1606,12 +1606,12 @@ def handle_target_add_1_slumberrape_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(60, 0)
-    target_data.experience[60] += 1
+    target_data.experience.setdefault(120, 0)
+    target_data.experience[120] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(60, 0)
-    target_change.experience[60] += 1
+    target_change.experience.setdefault(120, 0)
+    target_change.experience[120] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Abnormal_EXPERIENCE)
@@ -1637,12 +1637,12 @@ def handle_target_add_1_abnormal_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(61, 0)
-    target_data.experience[61] += 1
+    target_data.experience.setdefault(50, 0)
+    target_data.experience[50] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(61, 0)
-    target_change.experience[61] += 1
+    target_change.experience.setdefault(50, 0)
+    target_change.experience[50] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Axillajob_EXPERIENCE)
@@ -1668,12 +1668,12 @@ def handle_target_add_1_axillajob_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(62, 0)
-    target_data.experience[62] += 1
+    target_data.experience.setdefault(46, 0)
+    target_data.experience[46] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(62, 0)
-    target_change.experience[62] += 1
+    target_change.experience.setdefault(46, 0)
+    target_change.experience[46] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Enema_EXPERIENCE)
@@ -1699,12 +1699,12 @@ def handle_target_add_1_enema_experience(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
         return
-    target_data.experience.setdefault(63, 0)
-    target_data.experience[63] += 1
+    target_data.experience.setdefault(53, 0)
+    target_data.experience[53] += 1
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.experience.setdefault(63, 0)
-    target_change.experience[63] += 1
+    target_change.experience.setdefault(53, 0)
+    target_change.experience[53] += 1
 
 
 """
@@ -1991,9 +1991,35 @@ def handle_target_add_1_unconsciouslyclimax_experience(
     target_change.experience[78] += 1
 
 
-"""
-79留空
-"""
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_UnconsciouslySex_EXPERIENCE)
+def handle_target_add_1_unconsciouslysex_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象增加1无意识性交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_id == character_data.target_character_id:
+        return
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.dead:
+        return
+    target_data.experience.setdefault(79, 0)
+    target_data.experience[79] += 1
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+    target_change.experience.setdefault(79, 0)
+    target_change.experience[79] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_Chat_EXPERIENCE)
@@ -2855,10 +2881,10 @@ def handle_add_1_insert_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(50, 0)
-    character_data.experience[50] += 1
-    change_data.experience.setdefault(50, 0)
-    change_data.experience[50] += 1
+    character_data.experience.setdefault(60, 0)
+    character_data.experience[60] += 1
+    change_data.experience.setdefault(60, 0)
+    change_data.experience[60] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Command_EXPERIENCE)
@@ -2913,6 +2939,411 @@ def handle_add_1_cure_experience(
     change_data.experience[88] += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Cumming_EXPERIENCE)
+def handle_add_1_cumming_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1射精经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(21, 0)
+    character_data.experience[21] += 1
+    change_data.experience.setdefault(21, 0)
+    change_data.experience[21] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Milking_EXPERIENCE)
+def handle_add_1_milking_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1喷乳经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(22, 0)
+    character_data.experience[22] += 1
+    change_data.experience.setdefault(22, 0)
+    change_data.experience[22] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Peeing_EXPERIENCE)
+def handle_add_1_peeing_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1放尿经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(23, 0)
+    character_data.experience[23] += 1
+    change_data.experience.setdefault(23, 0)
+    change_data.experience[23] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Cums_EXPERIENCE)
+def handle_add_1_cums_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1精液经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(24, 0)
+    character_data.experience[24] += 1
+    change_data.experience.setdefault(24, 0)
+    change_data.experience[24] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_CumsDrink_EXPERIENCE)
+def handle_add_1_cumsdrink_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1饮精经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(25, 0)
+    character_data.experience[25] += 1
+    change_data.experience.setdefault(25, 0)
+    change_data.experience[25] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Creampie_EXPERIENCE)
+def handle_add_1_creampie_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1膣射经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(26, 0)
+    character_data.experience[26] += 1
+    change_data.experience.setdefault(26, 0)
+    change_data.experience[26] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_AnalCums_EXPERIENCE)
+def handle_add_1_analcums_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1肛射经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(27, 0)
+    character_data.experience[27] += 1
+    change_data.experience.setdefault(27, 0)
+    change_data.experience[27] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Hypnosis_EXPERIENCE)
+def handle_add_1_hypnosis_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1催眠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(122, 0)
+    character_data.experience[122] += 1
+    change_data.experience.setdefault(122, 0)
+    change_data.experience[122] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_BEEN_Hypnosis_EXPERIENCE)
+def handle_target_add_1_been_hypnosis_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象增加1被催眠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    if character_data.target_character_id != character_id:
+        target_data.experience.setdefault(123, 0)
+        target_data.experience[123] += 1
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.experience.setdefault(123, 0)
+        target_change.experience[123] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE)
+def handle_place_all_chara_add_1_been_hypnosis_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有其他角色均增加1被催眠经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 获取当前场景的全角色名单
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    scene_character_list = scene_data.character_list.copy()
+    # 去掉里的自己
+    if character_id in scene_character_list:
+        scene_character_list.remove(character_id)
+    for target_id in scene_character_list:
+        target_data: game_type.Character = cache.character_data[target_id]
+        target_data.experience.setdefault(123, 0)
+        target_data.experience[123] += 1
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.experience.setdefault(123, 0)
+        target_change.experience[123] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Agriculture_EXPERIENCE)
+def handle_add_1_agriculture_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1农业经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(89, 0)
+    character_data.experience[89] += 1
+    change_data.experience.setdefault(89, 0)
+    change_data.experience[89] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Create_EXPERIENCE)
+def handle_add_1_create_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1制造经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(90, 0)
+    character_data.experience[90] += 1
+    change_data.experience.setdefault(90, 0)
+    change_data.experience[90] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Paint_EXPERIENCE)
+def handle_add_1_paint_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1制造经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(91, 0)
+    character_data.experience[91] += 1
+    change_data.experience.setdefault(91, 0)
+    change_data.experience[91] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Read_EXPERIENCE)
+def handle_add_1_read_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1阅读经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(92, 0)
+    character_data.experience[92] += 1
+    change_data.experience.setdefault(92, 0)
+    change_data.experience[92] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Read_H_EXPERIENCE)
+def handle_add_1_read_h_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1阅读经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(93, 0)
+    character_data.experience[93] += 1
+    change_data.experience.setdefault(93, 0)
+    change_data.experience[93] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.Both_ADD_1_Learn_EXPERIENCE)
 def handle_both_add_1_learn_experience(
         character_id: int,
@@ -2942,7 +3373,7 @@ def handle_both_add_1_learn_experience(
     change_data.experience[82] += 1
 
     # 如果有交互对象的话，对方增加1学识经验
-    if character_data.target_character_id != 0:
+    if character_data.target_character_id != character_id:
         target_data.experience.setdefault(82, 0)
         target_data.experience[82] += 1
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())

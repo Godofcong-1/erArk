@@ -8,8 +8,6 @@ from Script.Design import (
     attr_calculation,
     game_time,
     cooking,
-    update,
-    attr_text,
     handle_instruct,
     character_behavior,
     basement,
@@ -17,9 +15,10 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel
+from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel
+from Script.Settle import default_experience
 
-import random
+import random, math
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -29,6 +28,208 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+
+def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+    """
+    角色状态系数获得的共用函数
+    Keyword arguments:
+    character_id -- 角色id
+    state_id -- 状态id
+    ability_level -- 系数修正用能力等级
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 系数加成
+    final_adjust = 0
+    # 能力修正
+    if state_id in [13,14,15,16,17,18,19]:
+        feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
+    else:
+        feel_adjust = attr_calculation.get_ability_adjust(ability_level)
+    final_adjust += feel_adjust
+    # 攻略进度素质对负面状态的减少
+    if state_id in [17, 18, 19, 20]:
+        if character_data.talent[204] or character_data.talent[214]:
+            final_adjust -= 0.8
+        elif character_data.talent[203] or character_data.talent[213]:
+            final_adjust -= 0.6
+        elif character_data.talent[202] or character_data.talent[212]:
+            final_adjust -= 0.4
+        elif character_data.talent[201] or character_data.talent[211]:
+            final_adjust -= 0.2
+    # 调香
+    if character_data.sp_flag.aromatherapy:
+        if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
+            final_adjust += 1
+        elif character_data.sp_flag.aromatherapy == 3 and state_id in [17, 18, 19, 20]:
+            final_adjust -= 0.5
+        elif character_data.sp_flag.aromatherapy == 4 and state_id == 12:
+            final_adjust += 1
+    # 催眠-敏感
+    if character_data.hypnosis.increase_body_sensitivity and state_id == 12:
+        final_adjust += 2
+    final_adjust = max(0, final_adjust)
+
+    return final_adjust
+
+
+def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+    """
+    角色快感系数获得的共用函数
+    Keyword arguments:
+    character_id -- 角色id
+    state_id -- 状态id
+    ability_level -- 系数修正用能力等级
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 系数加成
+    final_adjust = 0
+    # 部位感觉
+    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
+    final_adjust += feel_adjust
+    # 技巧
+    if ability_level:
+        tech_adjust = attr_calculation.get_ability_adjust(ability_level)
+        final_adjust = math.sqrt(feel_adjust * tech_adjust)
+    # 调香
+    if character_data.sp_flag.aromatherapy == 4:
+        final_adjust += 1
+    # 催眠-敏感
+    if character_data.hypnosis.increase_body_sensitivity:
+        final_adjust += 2
+
+    return final_adjust
+
+
+def base_chara_state_common_settle(
+        character_id: int,
+        add_time: int,
+        state_id: int,
+        base_value: int = 30,
+        ability_level: int = 0,
+        extra_adjust: float = 0,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色状态通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    state_id -- 状态id\n
+    base_value -- 基础固定值\n
+    ability_level -- 系数修正用能力等级\n
+    extra_adjust -- 额外系数\n
+    change_data_to_target_change -- 结算信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    # 基础固定值
+    time_base_value = add_time + base_value
+
+    # 系数加成，区分快感状态和普通状态
+    if state_id <= 7:
+        final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
+    else:
+        final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
+
+    # 最终值
+    final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
+
+    # 结算最终值
+    character_data.status_data[state_id] += final_value
+    character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
+    character_data.status_data[state_id] = max(0, character_data.status_data[state_id])
+
+    # 结算信息记录对象
+    if change_data != None:
+        change_data.status_data.setdefault(state_id, 0)
+        change_data.status_data[state_id] += final_value
+    if change_data_to_target_change != None:
+        change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+        target_change.status_data.setdefault(state_id, 0)
+        target_change.status_data[state_id] += final_value
+
+
+def base_chara_favorability_and_trust_common_settle(
+        character_id: int,
+        add_time: int,
+        favorability_flag: bool,
+        base_value: int = 0,
+        extra_adjust: float = 0,
+        change_data: game_type.CharacterStatusChange = None,
+        target_character_id: int = 0,
+        ):
+    """
+    基础角色状态通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    favorability_flag -- true为好感,false为信赖\n
+    base_value -- 基础固定值\n
+    extra_adjust -- 额外系数\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if target_character_id == 0:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    else:
+        target_data: game_type.Character = cache.character_data[target_character_id]
+    if character_id != target_data.cid and (character_id != 0 or target_data.cid != 0):
+        if character_data.dead:
+            return
+        if character_data.sp_flag.unconscious_h or target_data.sp_flag.unconscious_h:
+            return
+
+        # 结算信息记录对象
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+
+        # 好感
+        if favorability_flag:
+            # 基础固定值
+            add_favorability = base_value + character.calculation_favorability(character_id, target_data.cid, add_time)
+
+            # 结算系数
+            if extra_adjust != 0:
+                add_favorability *= extra_adjust
+                if extra_adjust < 0 and add_favorability > 0:
+                    add_favorability *= -1
+
+            # 结算最终值
+            character_handle.add_favorability(character_id, target_data.cid, add_favorability, change_data, target_change)
+
+        # 信赖
+        else:
+            if character_id == 0 and character_data.target_character_id != 0:
+                add_trust = base_value + character.calculation_trust(character_id, target_data.cid, add_time)
+            else:
+                add_trust = base_value + character.calculation_trust(target_data.cid, character_id, add_time)
+
+            # 结算系数
+            if extra_adjust != 0:
+                add_trust *= extra_adjust
+                if extra_adjust < 0 and add_trust > 0:
+                    add_trust *= -1
+
+            # 结算最终值
+            if character_id == 0 and character_data.target_character_id != 0:
+                target_data.trust += add_trust
+                target_data.trust = min(300, target_data.trust)
+                target_change.trust += add_trust
+            else:
+                character_data.trust += add_trust
+                character_data.trust = min(300, character_data.trust)
+                change_data.trust += add_trust
+
+    else:
+        return
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
@@ -68,12 +269,16 @@ def handle_add_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 40
-    character_data.hit_point += add_hit_point
-    if character_data.hit_point > character_data.hit_point_max:
-        add_hit_point -= character_data.hit_point - character_data.hit_point_max
+    add_hit_point = add_time * 20
+    now_add_hit_point = add_hit_point
+    # 如果气力=0则恢复减半
+    if character_data.mana_point == 0:
+        now_add_hit_point /= 2
+    character_data.hit_point += now_add_hit_point
+    change_data.hit_point += now_add_hit_point
+    # 如果超过最大值则=最大值
+    if character_data.hit_point >= character_data.hit_point_max:
         character_data.hit_point = character_data.hit_point_max
-    change_data.hit_point += add_hit_point
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_MANA_POINT)
@@ -96,12 +301,11 @@ def handle_add_small_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 60
+    add_mana_point = add_time * 30
     character_data.mana_point += add_mana_point
-    if character_data.mana_point > character_data.mana_point_max:
-        add_mana_point -= character_data.mana_point - character_data.mana_point_max
-        character_data.mana_point = character_data.mana_point_max
     change_data.mana_point += add_mana_point
+    if character_data.mana_point > character_data.mana_point_max:
+        character_data.mana_point = character_data.mana_point_max
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_INTERACTION_FAVORABILITY)
@@ -121,18 +325,7 @@ def handle_add_interaction_favoravility(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_INTERACTION_FAVORABILITY)
@@ -152,18 +345,7 @@ def handle_down_interaction_favoravility(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_TRUST)
@@ -183,24 +365,7 @@ def handle_add_small_trust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = 1
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-        now_lust_multiple *= adjust
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, 0, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SMALL_TRUST)
@@ -220,24 +385,7 @@ def handle_down_small_trust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id != character_id and (
-            not character_id or not character_data.target_character_id):
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.dead:
-            return
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
-        now_lust_multiple = -1
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-        now_lust_multiple *= adjust
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+    base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT)
@@ -257,7 +405,7 @@ def handle_sub_both_small_hit_point(
     """
     if not add_time:
         return
-    sub_hit = add_time * 5
+    sub_hit = add_time * 3
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -271,24 +419,26 @@ def handle_sub_both_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
-        if not character_data.tired:
-            character_data.tired = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
             # H时单独结算
             target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            if target_data.is_h:
+            if target_data.sp_flag.is_h:
                 character_behavior.judge_character_tired_sleep(0)
                 handle_instruct.handle_end_h()
             else:
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + character_data.name + _("太累了\n")
+                    now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_hit = add_time * 5
+        sub_hit = add_time * 3
         # 气力为0时体力消耗3倍
         if target_data.mana_point == 0:
             sub_hit *= 3
@@ -299,17 +449,19 @@ def handle_sub_both_small_hit_point(
         else:
             target_change.hit_point -= target_data.hit_point
             target_data.hit_point = 1
-            if not target_data.tired:
-                target_data.tired = 1
+            if not target_data.sp_flag.tired:
+                target_data.sp_flag.tired = 1
                 # H时单独结算
-                if target_data.is_h:
+                if target_data.sp_flag.is_h:
                     character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                     handle_instruct.handle_end_h()
                 else:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + target_data.name + "太累了\n"
-                    now_draw.draw()
+                    # 如果和玩家位于同一地点，则输出提示信息
+                    if character_data.position == cache.character_data[0].position:
+                        now_draw = draw.NormalDraw()
+                        now_draw.width = width
+                        now_draw.text = "\n" + target_data.name + _("太累了\n")
+                        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
@@ -329,7 +481,7 @@ def handle_sub_both_small_mana_point(
     """
     if not add_time:
         return
-    sub_mana = add_time * 7.5
+    sub_mana = add_time * 6
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -344,24 +496,26 @@ def handle_sub_both_small_mana_point(
         change_data.hit_point -= sub_mana
         if character_data.hit_point <= 0:
             character_data.hit_point = 1
-            if not character_data.tired:
-                character_data.tired = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
                 # H时单独结算
                 target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-                if target_data.is_h:
+                if target_data.sp_flag.is_h:
                     character_behavior.judge_character_tired_sleep(0)
                     handle_instruct.handle_end_h()
                 else:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
-                    now_draw.draw()
+                    # 如果和玩家位于同一地点，则输出提示信息
+                    if character_data.position == cache.character_data[0].position:
+                        now_draw = draw.NormalDraw()
+                        now_draw.width = width
+                        now_draw.text = "\n" + character_data.name + _("太累了\n")
+                        now_draw.draw()
     # 交互对象也同样#
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_mana = add_time * 7.5
+        sub_mana = add_time * 6
         if target_data.mana_point >= sub_mana:
             target_data.mana_point -= sub_mana
             target_change.mana_point -= sub_mana
@@ -374,17 +528,19 @@ def handle_sub_both_small_mana_point(
             if target_data.hit_point <= 0:
                 target_data.hit_point = 1
 
-                if not target_data.tired:
-                    target_data.tired = 1
+                if not target_data.sp_flag.tired:
+                    target_data.sp_flag.tired = 1
                     # H时单独结算
-                    if target_data.is_h:
+                    if target_data.sp_flag.is_h:
                         character_behavior.judge_character_tired_sleep(character_data.target_character_id)
                         handle_instruct.handle_end_h()
                     else:
-                        now_draw = draw.NormalDraw()
-                        now_draw.width = width
-                        now_draw.text = "\n" + target_data.name + "太累了\n"
-                        now_draw.draw()
+                        # 如果和玩家位于同一地点，则输出提示信息
+                        if character_data.position == cache.character_data[0].position:
+                            now_draw = draw.NormalDraw()
+                            now_draw.width = width
+                            now_draw.text = "\n" + target_data.name + _("太累了\n")
+                            now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
@@ -404,7 +560,7 @@ def handle_sub_self_small_hit_point(
     """
     if not add_time:
         return
-    sub_hit = add_time * 5
+    sub_hit = add_time * 3
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -418,12 +574,14 @@ def handle_sub_self_small_hit_point(
     else:
         change_data.hit_point -= character_data.hit_point
         character_data.hit_point = 1
-        if not character_data.tired:
-            character_data.tired = 1
-            now_draw = draw.NormalDraw()
-            now_draw.width = width
-            now_draw.text = "\n" + character_data.name + "太累了\n"
-            now_draw.draw()
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = width
+                now_draw.text = "\n" + character_data.name + _("太累了\n")
+                now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
@@ -443,7 +601,7 @@ def handle_sub_self_small_mana_point(
     """
     if not add_time:
         return
-    sub_mana = add_time * 7.5
+    sub_mana = add_time * 6
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -458,12 +616,14 @@ def handle_sub_self_small_mana_point(
         change_data.hit_point -= sub_mana
         if character_data.hit_point <= 0:
             character_data.hit_point = 1
-            if not character_data.tired:
-                character_data.tired = 1
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = width
+                    now_draw.text = "\n" + character_data.name + _("太累了\n")
+                    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
@@ -486,23 +646,27 @@ def handle_add_both_small_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 15
-    character_data.hit_point += add_hit_point
-    if character_data.hit_point > character_data.hit_point_max:
-        add_hit_point -= character_data.hit_point - character_data.hit_point_max
+    add_hit_point = add_time * 20
+    now_add_hit_point = add_hit_point
+    # 如果气力=0则恢复减半
+    if character_data.mana_point == 0:
+        now_add_hit_point /= 2
+    character_data.hit_point += now_add_hit_point
+    change_data.hit_point += now_add_hit_point
+    # 如果超过最大值则=最大值
+    if character_data.hit_point >= character_data.hit_point_max:
         character_data.hit_point = character_data.hit_point_max
-    change_data.hit_point += add_hit_point
     # 交互对象也同样#
-    if character_data.target_character_id:
+    if character_data.target_character_id != character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        add_hit_point = add_time * 15
+        now_add_hit_point = add_hit_point
         # 如果气力=0则恢复减半
         if target_data.mana_point == 0:
-            add_hit_point /= 2
-        target_data.hit_point += add_hit_point
-        target_change.hit_point += add_hit_point
+            now_add_hit_point /= 2
+        target_data.hit_point += now_add_hit_point
+        target_change.hit_point += now_add_hit_point
         # 如果超过最大值则=最大值
         if target_data.hit_point >= target_data.hit_point_max:
             target_data.hit_point = target_data.hit_point_max
@@ -528,21 +692,17 @@ def handle_add_both_small_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 20
+    add_mana_point = add_time * 25
     character_data.mana_point += add_mana_point
-    if character_data.mana_point > character_data.mana_point_max:
-        add_mana_point -= character_data.mana_point - character_data.mana_point_max
-        character_data.mana_point = character_data.mana_point_max
     change_data.mana_point += add_mana_point
+    if character_data.mana_point > character_data.mana_point_max:
+        character_data.mana_point = character_data.mana_point_max
     # 交互对象也同样#
-    if character_data.target_character_id:
+    if character_data.target_character_id != character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         add_mana_point = add_time * 20
-        # 如果气力=0则恢复减半
-        if target_data.mana_point == 0:
-            add_mana_point /= 2
         target_data.mana_point += add_mana_point
         target_change.mana_point += add_mana_point
         # 如果超过最大值则=最大值
@@ -576,15 +736,15 @@ def handle_move_to_target_scene(
         )
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD)
-def handle_eat_food(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_FOOD)
+def handle_delete_food(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    食用指定食物
+    删除当前行动中的对象食物
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -596,22 +756,8 @@ def handle_eat_food(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.eat_food is not None:
-        food: game_type.Food = character_data.behavior.eat_food
-        food_name = ""
-        food_name = cache.recipe_data[food.recipe].name
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.cid:
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change = change_data.target_change[target_data.cid]
-            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-            character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-            )
-        character_data.behavior.food_name = food_name
-        # if character_data.food_bag[food.uid]:
-        # print(f"debug food.uid = {food.uid}")
-        # print(f"debug character_data.food_bag = {character_data.food_bag}")
+    if character_data.behavior.target_food is not None:
+        food: game_type.Food = character_data.behavior.target_food
         if food.uid in character_data.food_bag:
             del character_data.food_bag[food.uid]
 
@@ -624,7 +770,7 @@ def handle_make_food(
         now_time: datetime.datetime,
 ):
     """
-    制作指定食物
+    结算因为制作食物而加好感
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -636,20 +782,101 @@ def handle_make_food(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.eat_food is not None:
-        food: game_type.Food = character_data.behavior.eat_food
+    if character_data.behavior.target_food is not None:
+        food: game_type.Food = character_data.behavior.target_food
         food_name = ""
         make_food_time = 0
         food_name = cache.recipe_data[food.recipe].name
         make_food_time = cache.recipe_data[food.recipe].time
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        if target_data.cid:
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change = change_data.target_change[target_data.cid]
-            add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-            character_handle.add_favorability(
-                character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-            )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_SHOP)
+def handle_npc_make_food_to_shop(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    NPC随机制作一个食物，并补充到当前所在食物商店中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    while 1:
+        recipes_id_list = list(cache.recipe_data.keys())
+        recipes_id = random.choice(recipes_id_list)
+        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
+            break
+    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
+    food_list = {}
+    new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
+    cache.restaurant_data.setdefault(str(recipes_id), {})
+    cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
+    character_data.behavior.food_name = food_recipe.name
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_BAG)
+def handle_npc_make_food_to_bag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    NPC随机制作一个食物，并补充到自己背包中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    while 1:
+        recipes_id_list = list(cache.recipe_data.keys())
+        recipes_id = random.choice(recipes_id_list)
+        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
+            break
+    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
+    food_list = {}
+    new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
+    character_data.food_bag[new_food.uid] = new_food
+    character_data.behavior.food_name = food_recipe.name
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_ALL_FOOD)
+def handle_delete_all_food(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    删除背包内所有食物
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    for food_id in character_data.food_bag.copy():
+        food: game_type.Food = character_data.food_bag[food_id]
+        del character_data.food_bag[food.uid]
 
 
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SOCIAL_FAVORABILITY)
@@ -810,7 +1037,7 @@ def handle_first_kiss(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
+    # target_data.social_contact_data.setdefault(character_id, 0)
 
     if character_data.talent[4] == 1:
         character_data.talent[4] = 0
@@ -844,34 +1071,34 @@ def handle_first_kiss(
             target_data.second_behavior[1050] = 1
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
-def handle_first_hand_in_hand(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    记录初次牵手
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
-    social = 0
-    if character_id in target_data.social_contact_data:
-        social = target_data.social_contact_data[character_id]
-    if social >= 2:
-        if character_data.first_hand_in_hand == -1:
-            character_data.first_kiss = target_data.cid
-        if target_data.first_hand_in_hand == -1:
-            target_data.first_kiss = character_id
+# @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
+# def handle_first_hand_in_hand(
+#         character_id: int,
+#         add_time: int,
+#         change_data: game_type.CharacterStatusChange,
+#         now_time: datetime.datetime,
+# ):
+#     """
+#     记录初次牵手
+#     Keyword arguments:
+#     character_id -- 角色id
+#     add_time -- 结算时间
+#     change_data -- 状态变更信息记录对象
+#     now_time -- 结算的时间
+#     """
+#     if not add_time:
+#         return
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+#     target_data.social_contact_data.setdefault(character_id, 0)
+#     social = 0
+#     if character_id in target_data.social_contact_data:
+#         social = target_data.social_contact_data[character_id]
+#     if social >= 2:
+#         if character_data.first_hand_in_hand == -1:
+#             character_data.first_kiss = target_data.cid
+#         if target_data.first_hand_in_hand == -1:
+#             target_data.first_kiss = character_id
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_SEX)
@@ -893,22 +1120,32 @@ def handle_first_sex(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
 
-    # 判定是否为道具性交
     item_flag = False
-    if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.VIBRATOR_INSERTION):
-        item_flag = True
 
     # 遍历指令列表，获得指令的中文名
-    i = 0
-    for k in constant.Instruct.__dict__:
-        # print(f"debug i = {i}，k = {k}")
-        # print(f"debug 上指令 = {cache.input_cache[len(cache.input_cache)-1]}")
-        if int(cache.input_cache[len(cache.input_cache) - 1]) + 2 == i:
-            instruct_name = constant.instruct_en2cn[k]
-            break
-        i += 1
+    for i in range(len(cache.input_cache)):
+        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
+        # print(f"debug 上指令 = {last_instruct}")
+        if last_instruct == "确定":
+            continue
+
+        # 判定是否为道具性交
+        if cache.input_cache[len(cache.input_cache) - 1 - i] == str(constant.Instruct.VIBRATOR_INSERTION):
+            item_flag = True
+
+        count = 0
+        for instruct_en_name in constant.Instruct.__dict__:
+            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
+            if int(last_instruct) + 2 == count:
+                # 以防没有对应的中文名，直接使用原名
+                if instruct_en_name not in constant.instruct_en2cn:
+                    instruct_name = instruct_en_name
+                else:
+                    instruct_name = constant.instruct_en2cn[instruct_en_name]
+                break
+            count += 1
+        break
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -932,6 +1169,12 @@ def handle_first_sex(
         target_data.first_record.first_sex_place = target_data.position
         target_data.first_record.first_sex_posture = instruct_name
         target_data.second_behavior[1051] = 1
+        # 失去性无知
+        if target_data.talent[222] == 1:
+            target_data.talent[222] = 0
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("\n{0}失去了【性无知】\n\n").format(target_data.name)
+            now_draw.draw()
 
         # 处子血胖次
         no_pan_flag = False
@@ -940,20 +1183,21 @@ def handle_first_sex(
             pan_id = target_data.cloth.cloth_wear[9][-1]
         elif len(target_data.cloth.cloth_off[9]):
             pan_id = target_data.cloth.cloth_off[9][-1]
-        elif len(character_data.pl_collection.npc_panties_tem[character_data.target_character_id]):
+        # BUG 这一块疑似有BUG，但是未能确定来源，所以先多加个限制条件
+        elif character_data.pl_collection.npc_panties_tem.get(character_data.target_character_id):
             pan_id = character_data.pl_collection.npc_panties_tem[character_data.target_character_id][-1]
         else:
             no_pan_flag = True
         if not no_pan_flag:
             pan_name = game_config.config_clothing_tem[pan_id].name
             target_data.cloth.cloth_wear[9] = []
-            now_draw.text = f"\n获得了{target_data.name}穿着的{pan_name}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
+            now_draw.text = _("\n获得了{0}穿着的{1}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n\n").format(target_data.name, pan_name)
             now_draw.draw()
-            character_data.pl_collection.first_panties[character_data.target_character_id] = f"{pan_name}(沾有处子血)"
+            character_data.pl_collection.first_panties[character_data.target_character_id] = _("{0}(沾有处子血)").format(pan_name)
         else:
-            now_draw.text = f"\n{target_data.name}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n"
+            now_draw.text = _("\n{0}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n\n").format(target_data.name)
             character_data.pl_collection.first_panties[
-                character_data.target_character_id] = f"一滴{target_data.name}的处子血"
+                character_data.target_character_id] = _("一滴{0}的处子血").format(target_data.name)
             now_draw.draw()
 
         # 道具破处
@@ -980,7 +1224,6 @@ def handle_first_a_sex(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.social_contact_data.setdefault(character_id, 0)
 
     # 判定是否为道具性交
     item_flag = False
@@ -988,12 +1231,19 @@ def handle_first_a_sex(
         item_flag = True
 
     # 遍历指令列表，获得指令的中文名
-    i = 0
-    for k in constant.Instruct.__dict__:
-        if int(cache.input_cache[len(cache.input_cache) - 1]) + 2 == i:
-            instruct_name = constant.instruct_en2cn[k]
-            break
-        i += 1
+    for i in range(len(cache.input_cache)):
+        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
+        # print(f"debug 上指令 = {last_instruct}")
+        if last_instruct == "确定":
+            continue
+        count = 0
+        for instruct_en_name in constant.Instruct.__dict__:
+            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
+            if int(last_instruct) + 2 == count:
+                instruct_name = constant.instruct_en2cn[instruct_en_name]
+                break
+            count += 1
+        break
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -1031,6 +1281,634 @@ def handle_first_a_sex(
             target_data.second_behavior[1052] = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_0)
+def handle_day_first_meet_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己变为今天已见过面
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.first_record.day_first_meet = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_1)
+def handle_day_first_meet_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己变为今天未见过面
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.first_record.day_first_meet = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
+def handle_penetrating_vision_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启透视（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.visual = True
+    character_data.sanity_point = max(character_data.sanity_point - 5, 0)
+    change_data.sanity_point -= 5
+    character_data.pl_ability.today_sanity_point_cost += 5
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_OFF)
+def handle_penetrating_vision_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭透视
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.visual = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HORMONE_ON)
+def handle_hormone_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启信息素
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.hormone = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HORMONE_OFF)
+def handle_hormone_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭信息素
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.pl_ability.hormone = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ONE)
+def handle_hypnosis_one(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    单人催眠（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
+    if character_data.dead:
+        return
+    # 结算理智消耗
+    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
+    change_data.sanity_point -= 20
+    character_data.pl_ability.today_sanity_point_cost += 20
+    # 结算催眠度增加
+    hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
+    # debug下催眠增加到999
+    if cache.debug_mode:
+        hypnosis_degree_grow = 999
+    new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
+    # 赋予到角色数据
+    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+    target_change.hypnosis_degree += hypnosis_degree_grow
+    # 判断催眠完成
+    originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
+    # 判断是否理智已耗尽导致催眠结束
+    if character_data.sanity_point == 0 and target_character_data.sp_flag.unconscious_h:
+        target_character_data.sp_flag.unconscious_h = 0
+        # 空气催眠则重置催眠地点和解开门锁
+        if target_character_data.sp_flag.unconscious_h == 5:
+            character_data.pl_ability.air_hypnosis_position = ""
+        now_draw = draw.NormalDraw()
+        now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
+        now_draw.draw()
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_ALL)
+def handle_hypnosis_all(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    集体催眠（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 获取当前场景的全角色名单
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    scene_character_list = scene_data.character_list.copy()
+    # 去掉里的自己
+    if character_id in scene_character_list:
+        scene_character_list.remove(character_id)
+    # 结算理智消耗
+    sanity_point_cost = 10 + 10 * len(scene_character_list)
+    character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
+    change_data.sanity_point -= sanity_point_cost
+    character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
+    # 遍历角色列表
+    for target_id in scene_character_list:
+        target_character_data = cache.character_data[target_id]
+        change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
+        if target_character_data.dead:
+            continue
+        # 结算催眠度增加
+        hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(target_id)
+        # debug下催眠增加到999
+        if cache.debug_mode:
+            hypnosis_degree_grow = 999
+        new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
+        # 赋予到角色数据
+        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+        target_change.hypnosis_degree += hypnosis_degree_grow
+        # 判断催眠完成
+        originium_arts.evaluate_hypnosis_completion(target_id)
+    # 判断是否理智已耗尽导致催眠结束
+    if character_data.sanity_point == 0:
+        for target_id in scene_character_list:
+            target_character_data = cache.character_data[target_id]
+            target_character_data.sp_flag.unconscious_h = 0
+            # 空气催眠则重置催眠地点和解开门锁
+            if target_character_data.sp_flag.unconscious_h == 5:
+                character_data.pl_ability.air_hypnosis_position = ""
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
+            now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_CANCEL)
+def handle_hypnosis_cancel(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    解除交互对象的催眠
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    if target_character_data.sp_flag.unconscious_h >= 4:
+        target_character_data.sp_flag.unconscious_h = 0
+    # 空气催眠则重置催眠地点和解开门锁
+    if target_character_data.sp_flag.unconscious_h == 5:
+        character_data.pl_ability.air_hypnosis_position = ""
+    # 去掉大部分的心体催眠状态
+    target_character_data.hypnosis.increase_body_sensitivity = False
+    target_character_data.hypnosis.blockhead = False
+    target_character_data.hypnosis.active_h = False
+    target_character_data.hypnosis.roleplay = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON)
+def handle_target_hypnosis_increase_body_sensitivity_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-敏感度提升（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.increase_body_sensitivity = True
+    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
+    change_data.sanity_point -= 20
+    character_data.pl_ability.today_sanity_point_cost += 20
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF)
+def handle_target_hypnosis_increase_body_sensitivity_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-敏感度提升
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.increase_body_sensitivity = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_CLIMAX)
+def handle_target_hypnosis_force_climax(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-强制高潮（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+    # 增加快感值
+    random_adjust = random.uniform(0.8, 1.2)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 500, extra_adjust = random_adjust, change_data_to_target_change = change_data)
+
+    # 触发高潮结算
+    num = 1012  # 通过num值来判断是二段行为记录的哪个位置
+    pre_data = target_character_data.h_state.orgasm_level[4] # 记录里的前高潮程度
+    if pre_data % 3 == 0:
+        # now_draw.text = _("\n触发小绝顶\n")
+        target_character_data.second_behavior[num] = 1
+    elif pre_data % 3 == 1:
+        # now_draw.text = _("\n触发普绝顶\n")
+        target_character_data.second_behavior[num + 1] = 1
+    elif pre_data % 3 == 2:
+        # now_draw.text = _("\n触发强绝顶\n")
+        target_character_data.second_behavior[num + 2] = 1
+    target_character_data.h_state.orgasm_level[4] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
+def handle_target_hypnosis_force_ovulation_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-强制排卵（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.force_ovulation = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_OFF)
+def handle_target_hypnosis_force_ovulation_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-强制排卵
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+     """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.force_ovulation = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_ON)
+def handle_target_hypnosis_blockhead_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.blockhead = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_OFF)
+def handle_target_hypnosis_blockhead_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-木头人
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.blockhead = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_ON)
+def handle_target_hypnosis_active_h_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.active_h = True
+    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+    change_data.sanity_point -= 50
+    character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_OFF)
+def handle_target_hypnosis_active_h_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭体控-逆推
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.active_h = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_ON)
+def handle_npc_active_h_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己开启主动H
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.h_state.npc_active_h = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_OFF)
+def handle_npc_active_h_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己关闭主动H
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.h_state.npc_active_h = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NPC_ACTIVE_H_ON)
+def handle_target_npc_active_h_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方开启主动H
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.h_state.npc_active_h = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NPC_ACTIVE_H_OFF)
+def handle_target_npc_active_h_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭主动H
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.h_state.npc_active_h = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
         character_id: int,
@@ -1051,7 +1929,7 @@ def handle_add_medium_hit_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hit_point = add_time * 100
+    add_hit_point = add_time * 80
     character_data.hit_point += add_hit_point
     if character_data.hit_point > character_data.hit_point_max:
         add_hit_point -= character_data.hit_point - character_data.hit_point_max
@@ -1079,7 +1957,7 @@ def handle_add_medium_mana_point(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_mana_point = add_time * 150
+    add_mana_point = add_time * 100
     character_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
         add_mana_point -= character_data.mana_point - character_data.mana_point_max
@@ -1107,6 +1985,8 @@ def handle_interrupt_target_activity(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.dead:
+        return
+    if character_data.target_character_id == 0:
         return
     # if target_data.state == constant.CharacterStatus.STATUS_DEAD:
     #     return
@@ -1146,8 +2026,86 @@ def handle_option_fater(
     if not add_time:
         return
     event_option_panel.line_feed.draw()
-    now_draw = event_option_panel.Event_option_Panel(width)
+    now_draw = event_option_panel.Event_option_Panel(character_id, width)
     now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_TO_PLAYER)
+def handle_target_to_player(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象设为对玩家交互
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OPEN_INSTRUCT_FILTER_H)
+def handle_open_instruct_filter_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启H面板过滤器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    handle_instruct.instruct_filter_H_change(True)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLOSE_INSTRUCT_FILTER_H)
+def handle_close_instruct_filter_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭H面板过滤器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    handle_instruct.instruct_filter_H_change(False)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_TARGET_TO_ME)
+def handle_pl_target_to_me(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将玩家的交互对象设为自己
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_character_data.target_character_id = character_id
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
@@ -1168,7 +2126,7 @@ def handle_not_tired(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.tired = 0
+    character_data.sp_flag.tired = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF)
@@ -1238,20 +2196,7 @@ def handle_target_add_small_n_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(0, 0)
-    now_lust = target_data.status_data[0]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[0])
-    now_add_lust *= adjust
-    target_data.status_data[0] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(0, 0)
-    target_change.status_data[0] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_B_FEEL)
@@ -1272,20 +2217,7 @@ def handle_target_add_small_b_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(1, 0)
-    now_lust = target_data.status_data[1]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[1])
-    now_add_lust *= adjust
-    target_data.status_data[1] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(1, 0)
-    target_change.status_data[1] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_C_FEEL)
@@ -1306,20 +2238,7 @@ def handle_target_add_small_c_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(2, 0)
-    now_lust = target_data.status_data[2]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[2])
-    now_add_lust *= adjust
-    target_data.status_data[2] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(2, 0)
-    target_change.status_data[2] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_P_FEEL)
@@ -1345,7 +2264,7 @@ def handle_target_add_small_p_feel(
         return
     target_data.status_data.setdefault(3, 0)
     now_lust = target_data.status_data[3]
-    now_lust_multiple = 100 + now_lust / 10
+    now_lust_multiple = 30
     now_add_lust = add_time + now_lust_multiple
     adjust = attr_calculation.get_ability_adjust(target_data.ability[3])
     now_add_lust *= adjust
@@ -1354,6 +2273,7 @@ def handle_target_add_small_p_feel(
     # target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     # target_change.eja_point.setdefault(3, 0)
     # target_change.eja_point += now_add_lust
+    target_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_V_FEEL)
@@ -1374,20 +2294,7 @@ def handle_target_add_small_v_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(4, 0)
-    now_lust = target_data.status_data[4]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[4])
-    now_add_lust *= adjust
-    target_data.status_data[4] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(4, 0)
-    target_change.status_data[4] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_A_FEEL)
@@ -1408,20 +2315,7 @@ def handle_target_add_small_a_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(5, 0)
-    now_lust = target_data.status_data[5]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[5])
-    now_add_lust *= adjust
-    target_data.status_data[5] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(5, 0)
-    target_change.status_data[5] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_U_FEEL)
@@ -1442,20 +2336,7 @@ def handle_target_add_small_u_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(6, 0)
-    now_lust = target_data.status_data[6]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[6])
-    now_add_lust *= adjust
-    target_data.status_data[6] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(6, 0)
-    target_change.status_data[6] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_W_FEEL)
@@ -1476,20 +2357,7 @@ def handle_target_add_small_w_feel(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(7, 0)
-    now_lust = target_data.status_data[7]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[7])
-    now_add_lust *= adjust
-    target_data.status_data[7] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(7, 0)
-    target_change.status_data[7] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LUBRICATION)
@@ -1511,19 +2379,7 @@ def handle_target_add_small_lubrication(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(8, 0)
-    now_lust = target_data.status_data[8]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[33])
-    now_add_lust *= adjust
-    target_data.status_data[8] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(8, 0)
-    target_change.status_data[8] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 8, ability_level = target_data.ability[33], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BODY_LUBRICANT)
@@ -1570,9 +2426,10 @@ def handle_target_add_huge_lubrication(
         return
     target_data.status_data.setdefault(8, 0)
     now_lust = target_data.status_data[8]
-    now_lust_multiple = 2000 + int(now_lust * 0.5)
+    now_lust_multiple = 10000 - int(now_lust *0.1)
     now_add_lust = now_lust_multiple
     target_data.status_data[8] += now_add_lust
+    target_data.status_data[8] = min(99999, target_data.status_data[8])
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(8, 0)
@@ -1608,7 +2465,7 @@ def handle_target_add_huge_desire_and_submit(
         now_time: datetime.datetime,
 ):
     """
-    交互对象增加大量好意和欲情（媚药）
+    交互对象增加大量欲情和屈服（媚药）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -1625,25 +2482,25 @@ def handle_target_add_huge_desire_and_submit(
     # 欲情
     target_data.status_data.setdefault(12, 0)
     now_lust = target_data.status_data[12]
-    now_lust_multiple = 2000 + int(now_lust * 0.5)
+    now_lust_multiple = 10000 - int(now_lust *0.016) 
     now_add_lust = now_lust_multiple
     target_data.status_data[12] += now_add_lust
+    target_data.status_data[12] = min(99999, target_data.status_data[12])
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(12, 0)
-    target_change.status_data[12] += now_add_lust
     target_change.status_data[12] += now_add_lust
 
     # 屈服
     target_data.status_data.setdefault(15, 0)
     now_lust = target_data.status_data[15]
-    now_lust_multiple = 2000 + int(now_lust * 0.5)
+    now_lust_multiple = 10000 - int(now_lust *0.016) 
     now_add_lust = now_lust_multiple
     target_data.status_data[15] += now_add_lust
+    target_data.status_data[15] = min(99999, target_data.status_data[15])
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(15, 0)
-    target_change.status_data[15] += now_add_lust
     target_change.status_data[15] += now_add_lust
 
 
@@ -1693,9 +2550,10 @@ def handle_target_enema(
     # 增加润滑
     target_data.status_data.setdefault(8, 0)
     now_lust = target_data.status_data[8]
-    now_lust_multiple = 500 + int(now_lust * 0.1)
+    now_lust_multiple = 2500 - int(now_lust *0.04) 
     now_add_lust = now_lust_multiple
     target_data.status_data[8] += now_add_lust
+    target_data.status_data[8] = min(99999, target_data.status_data[8])
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(8, 0)
@@ -1730,9 +2588,10 @@ def handle_target_enema_end(
     # 增加润滑
     target_data.status_data.setdefault(8, 0)
     now_lust = target_data.status_data[8]
-    now_lust_multiple = 500 + int(now_lust * 0.1)
+    now_lust_multiple = 2500 - int(now_lust *0.04) 
     now_add_lust = now_lust_multiple
     target_data.status_data[8] += now_add_lust
+    target_data.status_data[8] = min(99999, target_data.status_data[8])
     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
     target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
     target_change.status_data.setdefault(8, 0)
@@ -1962,6 +2821,94 @@ def handle_target_anal_beads_off(
     target_data.h_state.body_item[7][1] = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MILKING_MACHINE_ON)
+def handle_target_milking_machine_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象戴上搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[4][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MILKING_MACHINE_OFF)
+def handle_target_milking_machine_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象取下搾乳机
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[4][1] = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINE_COLLECTOR_ON)
+def handle_target_urine_collector_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象戴上采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[5][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINE_COLLECTOR_OFF)
+def handle_target_urine_collector_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象取下采尿器
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[5][1] = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_DIURETICS_ONCE)
 def handle_use_diuretics_once(
         character_id: int,
@@ -2002,6 +2949,195 @@ def handle_use_diuretics_persistent(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[106] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_SLEEPING_PILLS)
+def handle_use_sleeping_pills(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个安眠药
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[107] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_OVULATION_PROMOTING_DRUGS)
+def handle_use_ovulation_promoting_drugs(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个排卵促进药
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[108] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_CONTRACEPTIVE_BEFORE)
+def handle_use_contraceptive_before(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个事前避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[101] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_CONTRACEPTIVE_AFTER)
+def handle_use_contraceptive_after(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个事后避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[102] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_RING)
+def handle_use_ring(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个戒指
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[201] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_COLLAR)
+def handle_use_collar(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个项圈
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[202] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_BAG)
+def handle_use_bag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个干员携袋
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[151] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_CONDOM)
+def handle_use_condom(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[120] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_URETHRAL_SWAB)
+def handle_use_urethral_swab(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个尿道棉棒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[139] -= 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_URINATE)
@@ -2051,6 +3187,119 @@ def handle_target_diuretics_on(
     target_data.h_state.body_item[8][2] = end_time
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_TIRED_TO_SLEEP)
+def handle_target_add_tired_tosleep(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象疲劳值全满，进入8h的睡眠
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.tired_point = 160
+    target_data.sleep_point = 100
+    target_data.h_state.body_item[9][1] = True
+    target_data.h_state.body_item[9][2] = now_time + datetime.timedelta(hours=8)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_PREGNANCY_CHANCE)
+def handle_target_add_pregnancy_chance(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    道具_使用效果 交互对象获得排卵促进药状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[10][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NO_PREGNANCY_NEXT_DAY)
+def handle_target_no_pregnancy_next_day(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象获得事前避孕药状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[11][1] = True
+    target_data.h_state.body_item[11][2] = now_time + datetime.timedelta(days=30)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NO_PREGNANCY_FROM_LAST_H)
+def handle_target_no_pregnancy_from_last_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象获得事后避孕药状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[12][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_CONDOM)
+def handle_wear_condom(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己获得戴上避孕套状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.body_item[13][1] = True
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
         character_id: int,
@@ -2070,19 +3319,7 @@ def handle_target_add_small_learn(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
-        return
-    target_data.status_data.setdefault(9, 0)
-    now_lust = target_data.status_data[9]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[30])
-    now_add_lust *= adjust
-    target_data.status_data[9] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(9, 0)
-    target_change.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 9, ability_level = target_data.ability[30], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_RESPECT)
@@ -2104,19 +3341,9 @@ def handle_target_add_small_repect(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(10, 0)
-    now_lust = target_data.status_data[10]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[31])
-    now_add_lust *= adjust
-    target_data.status_data[10] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(10, 0)
-    target_change.status_data[10] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 10, ability_level = target_data.ability[31], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_FRIENDLY)
@@ -2138,19 +3365,9 @@ def handle_target_add_small_friendly(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(11, 0)
-    now_lust = target_data.status_data[11]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-    now_add_lust *= adjust
-    target_data.status_data[11] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(11, 0)
-    target_change.status_data[11] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DESIRE)
@@ -2172,19 +3389,9 @@ def handle_target_add_small_desire(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(12, 0)
-    now_lust = target_data.status_data[12]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[33])
-    now_add_lust *= adjust
-    target_data.status_data[12] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(12, 0)
-    target_change.status_data[12] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 12, ability_level = target_data.ability[33], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_HAPPY)
@@ -2206,19 +3413,9 @@ def handle_target_add_small_happy(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(13, 0)
-    now_lust = target_data.status_data[13]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[13])
-    now_add_lust *= adjust
-    target_data.status_data[13] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(13, 0)
-    target_change.status_data[13] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 13, ability_level = target_data.ability[13], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEAD)
@@ -2240,19 +3437,9 @@ def handle_target_add_small_lead(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(14, 0)
-    now_lust = target_data.status_data[14]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[35])
-    now_add_lust *= adjust
-    target_data.status_data[14] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(14, 0)
-    target_change.status_data[14] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 14, ability_level = target_data.ability[35], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SUBMIT)
@@ -2274,19 +3461,9 @@ def handle_target_add_small_submit(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(15, 0)
-    now_lust = target_data.status_data[15]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[14])
-    now_add_lust *= adjust
-    target_data.status_data[15] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(15, 0)
-    target_change.status_data[15] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 15, ability_level = target_data.ability[14], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_SHY)
@@ -2308,19 +3485,9 @@ def handle_target_add_small_shy(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(16, 0)
-    now_lust = target_data.status_data[16]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-    now_add_lust *= adjust
-    target_data.status_data[16] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(16, 0)
-    target_change.status_data[16] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 16, ability_level = target_data.ability[34], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_PAIN)
@@ -2342,19 +3509,9 @@ def handle_target_add_small_pain(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(17, 0)
-    now_lust = target_data.status_data[17]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    target_data.status_data[17] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(17, 0)
-    target_change.status_data[17] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_TERROR)
@@ -2376,19 +3533,9 @@ def handle_target_add_small_terror(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(18, 0)
-    now_lust = target_data.status_data[18]
-    now_lust_multiple = 10 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    target_data.status_data[18] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(18, 0)
-    target_change.status_data[18] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 18, 10, ability_level = target_data.ability[17], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DEPRESSION)
@@ -2410,17 +3557,9 @@ def handle_target_add_small_depression(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(19, 0)
-    now_lust = target_data.status_data[19]
-    now_lust_multiple = 100 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    target_data.status_data[19] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(19, 0)
-    target_change.status_data[19] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 19, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_DISGUST)
@@ -2442,19 +3581,9 @@ def handle_target_add_small_disgust(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.dead:
+    if character_id != 0 and character_data.target_character_id != 0:
         return
-    target_data.status_data.setdefault(20, 0)
-    now_lust = target_data.status_data[20]
-    now_lust_multiple = 10 + now_lust / 10
-    now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_mark_debuff_adjust(target_data.ability[18])
-    now_add_lust *= adjust
-    target_data.status_data[20] += now_add_lust
-    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-    target_change.status_data.setdefault(20, 0)
-    target_change.status_data[20] += now_add_lust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 20, 5, ability_level = target_data.ability[18], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_P_FEEL)
@@ -2481,6 +3610,7 @@ def handle_add_small_p_feel(
     now_add_lust = add_time + now_lust_multiple + character_data.eja_point * 0.4
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
+    character_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_ADD_SMALL_LEARN)
@@ -2503,18 +3633,10 @@ def handle_both_add_small_learn(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    now_lust_multiple = 10
-    now_add_lust = add_time + now_lust_multiple
-    character_data.status_data[9] += now_add_lust
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_id, add_time, 9, 10, change_data = change_data)
     # 交互对象也同样#
-    if character_data.target_character_id:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(9, 0)
-        target_change.status_data[9] += now_add_lust
+    if character_data.target_character_id != character_id:
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 9, 10, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_LEARN)
@@ -2537,11 +3659,7 @@ def handle_add_small_learn(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    now_lust_multiple = 10
-    now_add_lust = add_time + now_lust_multiple
-    character_data.status_data[9] += now_add_lust
-    change_data.status_data.setdefault(9, 0)
-    change_data.status_data[9] += now_add_lust
+    base_chara_state_common_settle(character_id, add_time, 9, 20, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET)
@@ -2636,7 +3754,7 @@ def handle_move_to_pre_scene(
     if len(character_data.behavior.move_src) and not character_id:
         character_data.behavior.move_target = character_data.behavior.move_src
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
-        character_data.move_stop = 1
+        character_data.sp_flag.move_stop = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
@@ -2647,7 +3765,7 @@ def handle_both_h_state_reset(
         now_time: datetime.datetime,
 ):
     """
-    双方H状态结构体归零
+    双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2658,8 +3776,820 @@ def handle_both_h_state_reset(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.h_state = attr_calculation.get_h_state_zero()
-    target_data.h_state = attr_calculation.get_h_state_zero()
+    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+    target_data.h_state = attr_calculation.get_h_state_zero(target_data.h_state)
+    for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
+        target_data.h_state.orgasm_level[orgasm] = now_data
+    # 清零H相关二段状态
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
+            character_data.second_behavior[second_behavior_id] = 0
+    for second_behavior_id, behavior_data in target_data.second_behavior.items():
+        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
+            target_data.second_behavior[second_behavior_id] = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)
+def handle_t_be_bagged(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象变成被装袋搬走状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.be_bagged = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_IMPRISONMENT)
+def handle_t_be_imprisonment(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象变成被监禁状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.imprisonment = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_1)
+def handle_shower_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要脱衣服（洗澡）状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_2)
+def handle_shower_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_3)
+def handle_shower_flag_to_3(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要披浴巾状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 3
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_4)
+def handle_shower_flag_to_4(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成洗完澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 4
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_0)
+def handle_eat_food_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零吃饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.eat_food = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_1)
+def handle_eat_food_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要取餐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.eat_food = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_2)
+def handle_eat_food_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要进食状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.eat_food = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_FLAG_TO_0)
+def handle_sleep_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零要睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.sleep = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_FLAG_TO_1)
+def handle_sleep_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.sleep = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_0)
+def handle_rest_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零要休息状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.rest = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_1)
+def handle_rest_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要休息状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.rest = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_0)
+def handle_pee_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零要撒尿状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.pee = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_1)
+def handle_pee_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要撒尿状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.pee = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SWIM_FLAG_TO_1)
+def handle_swim_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要换泳衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.swim = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SWIM_FLAG_TO_2)
+def handle_swim_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成要游泳状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.swim = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAINTENANCE_FLAG_TO_0)
+def handle_maintenance_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零要检修状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.work_maintenance = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_0)
+def handle_h_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.is_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_1)
+def handle_h_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.is_h = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_0)
+def handle_t_h_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character = cache.character_data[character_data.target_character_id]
+    target_character.sp_flag.is_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_1)
+def handle_t_h_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character = cache.character_data[character_data.target_character_id]
+    target_character.sp_flag.is_h = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_0)
+def handle_unconscious_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_1)
+def handle_unconscious_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_2)
+def handle_unconscious_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_醉酒状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_3)
+def handle_unconscious_flag_to_3(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_时停状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 3
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_4)
+def handle_unconscious_flag_to_4(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_空气状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 4
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_5)
+def handle_unconscious_flag_to_5(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_平然状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 5
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_6)
+def handle_unconscious_flag_to_6(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_心控状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 6
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_7)
+def handle_unconscious_flag_to_7(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_体控状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 7
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_BUY_FOOD_FLAG_TO_0)
+def handle_help_buy_food_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零要帮忙买午饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.help_buy_food = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_0)
+def handle_bathhouse_entertainment_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零大浴场娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_1)
+def handle_bathhouse_entertainment_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成大浴场娱乐_要更衣状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_2)
+def handle_bathhouse_entertainment_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成大浴场娱乐_要娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.bathhouse_entertainment = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MILK_FLAG_TO_0)
+def handle_milk_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime, ):
+    """
+    自身清零要挤奶状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.milk = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_FLAG_TO_0)
+def handle_hypnosis_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime, ):
+    """
+    自身清零催眠系的flag状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.unconscious_h in [4, 5, 6, 7]:
+        character_data.sp_flag.unconscious_h = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0)
+def handle_target_angry_with_player_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零对玩家的愤怒状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character = cache.character_data[character_data.target_character_id]
+    target_character.sp_flag.angry_with_player = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
+def handle_help_make_food_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零做午饭状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.help_make_food = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TALK_ADD_ADJUST)
@@ -2686,41 +4616,17 @@ def handle_talk_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(40, 0)
         adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[40], change_data_to_target_change = change_data)
         # 快乐变化#
-        target_data.status_data.setdefault(13, 0)
-        now_lust = target_data.status_data[13]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[13] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(13, 0)
-        target_change.status_data[13] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 13, ability_level = character_data.ability[40], change_data_to_target_change = change_data)
         # 记录谈话时间#
         target_data.action_info.talk_time = now_time
         # print("聊天计数器时间变为 ：",target_data.action_info.talk_time)
@@ -2750,41 +4656,17 @@ def handle_coffee_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(43, 0)
         adjust = attr_calculation.get_ability_adjust(character_data.ability[43])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
-        now_lust_multiple *= adjust
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data)
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = character_data.ability[43], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_COFFEE_ADD_ADJUST)
@@ -2811,52 +4693,28 @@ def handle_target_coffee_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         target_data.ability.setdefault(43, 0)
         adjust = attr_calculation.get_ability_adjust(target_data.ability[43])
         # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        add_favorability *= adjust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
-        now_lust_multiple *= adjust
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data)
         # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[43], change_data_to_target_change = change_data)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.KONWLEDGE_ADD_PINK_MONEY)
-def handle_knowledge_add_pink_money(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_WORK_ADD_ADJUST)
+def handle_official_work_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    根据自己（再加上交互对象的）学识获得少量粉色凭证
+    （处理公务用）根据自己（如果有的话再加上交互对象）的学识以及办公室等级来处理当前的剩余工作量
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2872,21 +4730,33 @@ def handle_knowledge_add_pink_money(
         return
     if target_data.dead:
         return
+    now_draw_text = ""
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
-    # 获得粉色凭证 #
-    now_add_lust = add_time * adjust
-    now_add_lust = int(now_add_lust)
-
     # 如果有交互对象，则算上对方的学识加成
-    if character_data.target_character_id != 0:
+    if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
-        now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.pink_certificate += now_add_lust
-    now_draw = draw.NormalDraw()
-    now_draw.text = f"\n  获得{str(now_add_lust)}粉色凭证\n"
-    now_draw.width = width
-    now_draw.draw()
+        adjust += adjust_target
+        now_draw_text += _("在{0}的帮助下，").format(target_data.name)
+    # 根据博士办公室的房间等级来调整
+    now_level = cache.rhodes_island.facility_level[22]
+    facility_cid = game_config.config_facility_effect_data[_("博士办公室")][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_cid].effect
+    adjust *= (1 + facility_effect / 100)
+    # 处理工作
+    finish_work = int(add_time * adjust)
+    cache.rhodes_island.office_work = int(max(cache.rhodes_island.office_work - finish_work, 0))
+    # 输出处理结果
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw_text += _("共处理了{0}公务，").format(finish_work)
+        if cache.rhodes_island.office_work > 0:
+            now_draw_text += _("还有{0}需要处理\n").format(cache.rhodes_island.office_work)
+        else:
+            now_draw_text += _("已经全部处理完毕\n\n")
+        now_draw.text = now_draw_text
+        now_draw.width = width
+        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
@@ -2916,18 +4786,23 @@ def handle_cure_patient_add_just(
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[46])
     # 获得加成 #
-    now_add_lust = add_time * adjust * 1000
+    now_add_lust = add_time * adjust * 200
     now_add_lust = int(now_add_lust * random.uniform(0.5, 1.5))
 
     # 如果有交互对象，则算上对方的医疗加成
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
         now_add_lust += int(add_time * adjust_target)
-    cache.base_resouce.money += now_add_lust
-    cache.base_resouce.cure_income += now_add_lust
-    cache.base_resouce.all_income += now_add_lust
-    cache.base_resouce.patient_now -= 1
-    cache.base_resouce.patient_cured += 1
+    cache.rhodes_island.cure_income += now_add_lust
+    cache.rhodes_island.patient_now -= 1
+    cache.rhodes_island.patient_cured += 1
+
+    # 如果是玩家在诊疗或玩家与诊疗者在同一位置的话，显示诊疗情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _("\n在{0}的努力下，医治了一名病人，支付了{1}龙门币的医疗费。（今日剩余病人数：{2}人）\n").format(character_data.name, now_add_lust, cache.rhodes_island.patient_now)
+        now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)
@@ -2938,7 +4813,7 @@ def handle_recruit_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽
+    （招募干员用）根据发起者的话术技能增加招募槽
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2957,29 +4832,248 @@ def handle_recruit_add_just(
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 获得加成 #
-    now_add_lust = adjust * random.uniform(0.5, 1.5)
+    now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
+    # debug下直接拉满
     if cache.debug_mode:
         now_add_lust += 100
 
-    # 如果有交互对象，则算上对方的医疗加成
-    if character_data.target_character_id != character_id:
-        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[40])
-        now_add_lust += adjust_target
+    select_index = -1
+    # 如果角色已经确定招募栏位，则直接使用
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+        if character_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
+            select_index = recruit_line_id
+            break
+    # 如果角色没有确定招募栏位或是玩家来招募，则随机一个指派过去
+    if select_index == -1 or character_id == 0:
+        line_id_list = list(cache.rhodes_island.recruit_line.keys())
+        select_index = random.choice(line_id_list)
 
-    # 如果角色没有确定招募栏位，则选一个当前空的指派过去
-    if character_data.work.recruit_index == -1:
-        select_index = 0
-        for key in cache.base_resouce.recruit_now.keys():
-            if cache.base_resouce.recruit_now[key] == 0:
-                select_index = key
-                break
-        character_data.work.recruit_index = key
-    else:
-        select_index = character_data.work.recruit_index
+    # 如果是玩家在招募或玩家与招募者在同一位置的话，显示招募进度的增加情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _("\n在{0}的努力下，{1}号招募位进度+{2}%，现在为{3}%\n").format(character_data.name, select_index, round(now_add_lust,1), round(cache.rhodes_island.recruit_line[select_index][0] + now_add_lust,1))
+        now_draw.draw()
 
     # 增加对应槽的招募值，并进行结算
-    cache.base_resouce.recruit_now[select_index] += now_add_lust
-    character_behavior.update_recruit()
+    cache.rhodes_island.recruit_line[select_index][0] += now_add_lust
+    basement.update_recruit()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.INVITE_VISITOR_ADD_ADJUST)
+def handle_invite_visitor_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （邀请访客用）根据发起者(如果有的话再加上交互对象)的话术技能增加邀请槽
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    if character_data.dead:
+        return
+    if target_data.dead:
+        return
+
+    # 如果没有选择目标则直接返回
+    if cache.rhodes_island.invite_visitor[0] == 0:
+        # 玩家使用时显示提示
+        if character_id == 0:
+            now_draw = draw.NormalDraw()
+            now_draw.width = width
+            now_draw.text = _("\n请先使用邀请系统选择邀请的对象，再进行邀请\n")
+            now_draw.draw()
+        return
+
+    # 获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 获得加成 #
+    now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
+    # debug下直接拉满
+    if cache.debug_mode:
+        now_add_lust += 100
+
+    # 如果是玩家在邀请或玩家与邀请者在同一位置的话，显示进度的增加情况
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.width = width
+        now_draw.text = _("\n在{0}的努力下，邀请进度+{1}%，现在为{2}%\n").format(character_data.name, round(now_add_lust,1), round(cache.rhodes_island.invite_visitor[1] + now_add_lust,1))
+        now_draw.draw()
+
+    # 增加对应槽的邀请值，并进行结算
+    cache.rhodes_island.invite_visitor[1] += now_add_lust
+    basement.update_invite_visitor()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MILK_ADD_ADJUST)
+def handle_milk_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （挤奶用）把交互对象的乳汁转移到厨房的冰箱里
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+
+    now_milk = target_data.pregnancy.milk
+    character_data.behavior.milk_ml += now_milk
+    cache.rhodes_island.milk_in_fridge.setdefault(character_data.target_character_id, 0)
+    cache.rhodes_island.milk_in_fridge[character_data.target_character_id] += now_milk
+    pl_character_data.pl_collection.milk_total.setdefault(character_data.target_character_id, 0)
+    pl_character_data.pl_collection.milk_total[character_data.target_character_id] += now_milk
+    target_data.pregnancy.milk = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SALUTATION_3_ADD_ADJUST)
+def handle_salutation_3_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    ejaculation_panel.ejaculation_flow(2, 0, character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.AROMATHERAPY_ADD_ADJUST)
+def handle_aromatherapy_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （香薰疗愈用）对各配方结算各效果
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+
+    # 如果没有选择配方则直接返回
+    if target_character_data.sp_flag.aromatherapy == 0:
+        return
+
+    # 回复
+    if target_character_data.sp_flag.aromatherapy == 1:
+        target_character_data.hit_point = target_character_data.hit_point_max
+        target_character_data.mana_point = target_character_data.mana_point_max
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_SWAB_ADD_ADJUST)
+def handle_target_u_adjust_add_pain_not_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于插入等级的调整，棉棒默认为无影响
+        dilate_level = target_data.ability[11]
+        size_adjust = attr_calculation.get_pain_adjust(dilate_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17,base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URETHRAL_FINGER_INSERTION_ADD_ADJUST)
+def handle_target_u_adjust_add_pain_not_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于插入等级的调整，手指为-2级扩张
+        dilate_level = target_data.ability[11] - 2
+        size_adjust = attr_calculation.get_pain_adjust(dilate_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17,base_value = 400, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
@@ -3053,6 +5147,252 @@ def handle_read_add_adjust(
         character_data.entertainment.book_return_possibility += return_rate
         basement.check_return_book(character_id)
 
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)
+def handle_teach_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （教学用）自己增加习得和学识经验，所有当前场景里状态是上课的角色增加习得和学识经验，如果玩家是老师则再加好感和信赖，最后结束
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 获取调整值#
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
+    # 获得加成 #
+    now_add_lust = adjust * add_time * random.uniform(0.5, 1.5)
+
+    # 增加自己的习得和学识经验
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], change_data = change_data)
+    default_experience.handle_add_1_learn_experience(character_id, add_time, change_data, now_time)
+
+    # 遍历当前场景的其他角色
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 跳过自己
+            if chara_id == character_id:
+                continue
+            else:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                # 如果对方在听课
+                if other_character_data.state == constant.CharacterStatus.STATUS_ATTENT_CLASS:
+
+                    # 增加习得和学识经验
+                    base_chara_state_common_settle(chara_id, add_time, 9, ability_level = character_data.ability[45], change_data_to_target_change = change_data)
+                    default_experience.handle_add_1_learn_experience(chara_id, add_time, change_data, now_time)
+
+                    # 如果老师是玩家
+                    if character_id == 0:
+                        # 加好感
+                        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, other_character_data.ability[32], change_data, other_character_data.cid)
+                        # 加信赖
+                        base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, other_character_data.ability[32], change_data, other_character_data.cid)
+
+                    # 手动结算该状态
+                    character_behavior.judge_character_status(chara_id)
+                    # other_character_data.state = constant.CharacterStatus.STATUS_ARDER
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BAGGING_AND_MOVING_ADD_ADJUST)
+def handle_bagging_and_moving_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （装袋搬走用）交互对象获得装袋搬走flag，清除跟随和助理状态。并从当前场景移除角色id，玩家增加搬运人id
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    # 玩家数据结算
+    character_data.sp_flag.bagging_chara_id = character_data.target_character_id
+    if character_data.assistant_character_id == character_data.target_character_id:
+        character_data.assistant_character_id = 0
+    # 对方数据结算
+    target_data.sp_flag.be_bagged = 1
+    target_data.sp_flag.is_follow = 0
+    cache.npc_id_got.remove(character_data.target_character_id)
+    # 地图数据结算
+    old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
+    if character_data.target_character_id in cache.scene_data[old_scene_path_str].character_list:
+        cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
+    target_data.position = ["0", "0"]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PUT_INTO_PRISON_ADD_ADJUST)
+def handle_put_into_prison_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id，清零各特殊状态flag
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[0]
+    target_id = character_data.sp_flag.bagging_chara_id
+    target_data: game_type.Character = cache.character_data[target_id]
+    # 玩家数据结算
+    character_data.sp_flag.bagging_chara_id = 0
+    # 对方数据结算
+    target_data.sp_flag.be_bagged = 0
+    target_data.sp_flag.imprisonment = 1
+    cache.npc_id_got.add(target_id)
+    # 屈服1，恐怖1，反发2
+    if target_data.ability[14] <= 0:
+        target_data.ability[14] = 1
+        target_data.second_behavior[1033] = 1
+    if target_data.ability[17] <= 0:
+        target_data.ability[17] = 1
+        target_data.second_behavior[1042] = 1
+    if target_data.ability[18] <= 1:
+        target_data.ability[18] = 2
+        target_data.second_behavior[1046] = 1
+    # 对方位置结算
+    target_data.position = character_data.position
+    target_data.behavior.move_src = character_data.position
+    target_data.behavior.move_target = character_data.position
+    # 清零各特殊状态flag
+    target_data.sp_flag.is_follow = 0
+    target_data.sp_flag.sleep = 0
+    target_data.sp_flag.rest = 0
+    target_data.sp_flag.pee = 0
+    target_data.sp_flag.milk = 0
+    target_data.sp_flag.shower = 0
+    target_data.sp_flag.eat_food = 0
+    # 地图数据结算
+    old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if target_id not in cache.scene_data[old_scene_path_str].character_list:
+        cache.scene_data[old_scene_path_str].character_list.add(target_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)
+def handle_set_free_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （解除囚禁）交互对象失去监禁flag
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sp_flag.imprisonment = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_ADD_ADJUST)
+def handle_eat_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （进食）根据当前场景的有无目标，以及食物的调味来区分进行食用人的判断和相应的结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 判断是谁要吃食物
+    eat_food_chara_id_list = []
+    if character_data.behavior.food_seasoning == 0:
+        eat_food_chara_id_list.append(character_id)
+        if character_data.target_character_id != character_id:
+            eat_food_chara_id_list.append(character_data.target_character_id)
+    else:
+        eat_food_chara_id_list.append(character_data.target_character_id)
+
+    # 吃掉该食物
+    handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
+    # 对要吃食物的人进行结算
+    for chara_id in eat_food_chara_id_list:
+        target_data: game_type.Character = cache.character_data[chara_id]
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+
+        # 加好感
+        if chara_id:
+            base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data, chara_id)
+
+        # 加体力气力，清零饥饿值和进食状态
+        handle_add_small_hit_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_add_small_mana_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+
+        # 精液食物则将精液加到口腔污浊，并加精液经验
+        if character_data.behavior.food_seasoning in {11,12}:
+            # 加精液经验
+            default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            default_experience.handle_target_add_1_cums_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            # 获取精液量
+            now_food = character_data.behavior.target_food
+            semen_ml = now_food.special_seasoning_amount
+            # 加精液到口腔
+            cache.shoot_position = 2    # 口腔
+            ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml)
+        # 药物食物则获得对应药物效果
+        elif character_data.behavior.food_seasoning == 102: # 事后避孕药
+            handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif character_data.behavior.food_seasoning == 103: # 媚药
+            handle_target_add_huge_desire_and_submit(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif character_data.behavior.food_seasoning == 105: # 一次性利尿剂
+            handle_target_add_urinate(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif character_data.behavior.food_seasoning == 106: # 持续性利尿剂
+            handle_target_diuretics_on(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif character_data.behavior.food_seasoning == 107: # 安眠药
+            handle_target_add_tired_tosleep(0,add_time=add_time,change_data=change_data,now_time=now_time)
+        elif character_data.behavior.food_seasoning == 108: # 排卵促进药
+            handle_target_add_pregnancy_chance(0,add_time=add_time,change_data=change_data,now_time=now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_HPMP_MAX)
 def handle_add_hpmp_max(
         character_id: int,
@@ -3073,25 +5413,37 @@ def handle_add_hpmp_max(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    add_hp = int(10 * random.uniform(0.75, 1.25))
-    add_mp = int(20 * random.uniform(0.75, 1.25))
+    # 设施效率
+    now_level = cache.rhodes_island.facility_level[9]
+    facility_cid = game_config.config_facility_effect_data[_("疗养庭院")][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_cid].effect
+    facility_adjust = 1 + facility_effect / 100
+
+    # 最终增加值
+    add_hp = int(character_data.hit_point_max * 0.005 * facility_adjust * random.uniform(0.8, 1.2))
+    add_mp = int(character_data.mana_point_max * 0.01 * facility_adjust * random.uniform(0.5, 1.2))
+    # 增加上限
     character_data.hit_point_max += add_hp
     character_data.mana_point_max += add_mp
-    now_draw = draw.NormalDraw()
-    now_draw.text = f"\n{character_data.name}博士的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}"
-    now_draw.width = width
-    now_draw.draw()
-    # 交互对象也同样#
-    if character_data.target_character_id:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        add_hp = 10 * random.uniform(0.75, 1.25)
-        add_mp = 20 * random.uniform(0.75, 1.25)
-        target_data.hit_point_max += add_hp
-        target_data.mana_point_max += add_mp
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = f"\n{target_data.name}的体力上限增加{str(add_hp)},气力上限增加{str(add_mp)}\n"
+        now_draw.text = _("\n{0}的体力上限增加{1},气力上限增加{2}").format(character_data.name, str(add_hp), str(add_mp))
         now_draw.width = width
         now_draw.draw()
+    # 交互对象也同样#
+    if character_data.target_character_id != character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        add_hp = int(target_data.hit_point_max * 0.005 * random.uniform(0.8, 1.2))
+        add_mp = int(target_data.mana_point_max * 0.01 * random.uniform(0.5, 1.2))
+        target_data.hit_point_max += add_hp
+        target_data.mana_point_max += add_mp
+        # 如果和玩家位于同一地点，则输出提示信息
+        if character_data.position == cache.character_data[0].position:
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("\n{0}的体力上限增加{1},气力上限增加{2}\n").format(target_data.name, str(add_hp), str(add_mp))
+            now_draw.width = width
+            now_draw.draw()
     else:
         now_draw = draw.NormalDraw()
         now_draw.text = "\n"
@@ -3125,74 +5477,69 @@ def handle_sing_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(44, 0)
-        # 如果水平在3级及以下则扣好感信赖，如果是NPC执行则跳过
+        # 如果水平在2级及以下则扣好感信赖，如果是NPC执行则跳过
         good_flag = True
-        if character_data.ability[44] <= 3 and character_id == 0:
+        if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
-        # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        if good_flag:
-            add_favorability *= adjust
-        else:
-            add_favorability *= (adjust - 1)
 
-        # print(f"debug 唱歌，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
+        # print(f"debug 唱歌，adjust = {adjust}，add_favorability = {add_favorability}")
 
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
-        # 信赖变化#
-        now_lust_multiple = 1
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
-        if good_flag:
-            now_lust_multiple *= adjust
-        else:
-            now_lust_multiple *= (adjust - 1)
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        # 对在场的全部角色起效
+        for chara_id in cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)].character_list:
+            # 跳过玩家自己
+            if chara_id == character_id:
+                continue
+            target_data: game_type.Character = cache.character_data[chara_id]
 
-        # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        if good_flag:
-            now_add_lust *= adjust
-        else:
-            now_add_lust *= (adjust - 1)
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            # 好感与信赖变化#
+            if good_flag:
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data, chara_id)
+            else:
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust - 1, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust - 1, change_data, chara_id)
 
-        # 恐怖、抑郁、反感变化
-        if not good_flag:
-            for i in {18, 19, 20}:
-                now_lust = target_data.status_data[i]
-                now_lust_multiple = 100 + now_lust / 10
-                now_add_lust = add_time + now_lust_multiple
-                if good_flag:
-                    now_add_lust *= adjust
-                else:
-                    now_add_lust *= 10
-                target_data.status_data[i] += now_add_lust
-                change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-                target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-                target_change.status_data.setdefault(i, 0)
-                target_change.status_data[i] += now_add_lust
+            # 好意变化#
+            target_data.status_data.setdefault(11, 0)
+            now_lust = target_data.status_data[11]
+            now_lust_multiple = 30
+            now_add_lust = add_time + now_lust_multiple
+            if good_flag:
+                now_add_lust *= adjust
+                now_add_lust += now_lust / 10
+            else:
+                now_add_lust *= (adjust - 1)
+            target_data.status_data[11] += now_add_lust
+            target_data.status_data[11] = min(99999, target_data.status_data[11])
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.status_data.setdefault(11, 0)
+            target_change.status_data[11] += now_add_lust
+
+            # 恐怖、抑郁、反感变化
+            if not good_flag:
+                for i in {18, 19, 20}:
+                    now_lust = target_data.status_data[i]
+                    now_lust_multiple = 100
+                    now_add_lust = add_time + now_lust_multiple
+                    if good_flag:
+                        now_add_lust *= (1.5 - adjust)
+                    else:
+                        now_add_lust *= (5 - adjust)
+                        now_add_lust += now_lust / 10
+                    target_data.status_data[i] += now_add_lust
+                    target_data.status_data[i] = min(99999, target_data.status_data[i])
+                    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+                    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+                    target_change.status_data.setdefault(i, 0)
+                    target_change.status_data[i] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLAY_INSTRUMENT_ADD_ADJUST)
@@ -3223,74 +5570,70 @@ def handle_play_instrument_add_adjust(
 
         if character_data.dead:
             return
-        if target_data.dead:
+        if character_id != 0 and character_data.target_character_id != 0:
             return
         # 获取调整值#
         character_data.ability.setdefault(44, 0)
-        # 如果水平在3级及以下则扣好感信赖，如果是NPC执行则跳过
+        # 如果水平在2级及以下则扣好感信赖，如果是NPC执行则跳过
         good_flag = True
-        if character_data.ability[44] <= 3 and character_id == 0:
+        if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
         adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
-        # 好感度变化#
-        add_favorability = character.calculation_favorability(character_id, target_data.cid, add_time)
-        if good_flag:
-            add_favorability *= adjust
-        else:
-            add_favorability *= (adjust - 1)
 
         # print(f"debug 乐器，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
 
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        character_handle.add_favorability(
-            character_id, target_data.cid, add_favorability, change_data, target_change, now_time
-        )
-        # 信赖变化#
-        now_lust_multiple = 2
-        # adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
-        if good_flag:
-            now_lust_multiple *= adjust
-        else:
-            now_lust_multiple *= (adjust - 1)
-        target_data.trust += now_lust_multiple
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.trust += now_lust_multiple
-        if (character_id != 0) and (character_data.target_character_id == 0):
-            character_data.trust += now_lust_multiple
-            change_data.trust += now_lust_multiple
+        # 对在场的全部角色起效
+        for chara_id in cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)].character_list:
+            # 跳过玩家自己
+            if chara_id == character_id:
+                continue
+            target_data: game_type.Character = cache.character_data[chara_id]
 
-        # 好意变化#
-        target_data.status_data.setdefault(11, 0)
-        now_lust = target_data.status_data[11]
-        now_lust_multiple = 150 + now_lust / 8
-        now_add_lust = add_time + now_lust_multiple
-        if good_flag:
-            now_add_lust *= adjust
-        else:
-            now_add_lust *= (adjust - 1)
-        target_data.status_data[11] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(11, 0)
-        target_change.status_data[11] += now_add_lust
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
 
-        # 恐怖、抑郁、反感变化
-        if not good_flag:
-            for i in {18, 19, 20}:
-                now_lust = target_data.status_data[i]
-                now_lust_multiple = 150 + now_lust / 8
-                now_add_lust = add_time + now_lust_multiple
-                if good_flag:
-                    now_add_lust *= adjust
-                else:
-                    now_add_lust *= 10
-                target_data.status_data[i] += now_add_lust
-                change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-                target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-                target_change.status_data.setdefault(i, 0)
-                target_change.status_data[i] += now_add_lust
+            # 好感与信赖变化#
+            if good_flag:
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust * 2, change_data, chara_id)
+            else:
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, (adjust - 1) * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, (adjust - 1) * 2, change_data, chara_id)
+
+            # 好意变化#
+            target_data.status_data.setdefault(11, 0)
+            now_lust = target_data.status_data[11]
+            now_lust_multiple = 30
+            now_add_lust = add_time + now_lust_multiple
+            if good_flag:
+                now_add_lust *= adjust
+                now_add_lust += now_lust / 8
+            else:
+                now_add_lust *= (adjust - 1)
+            target_data.status_data[11] += now_add_lust
+            target_data.status_data[11] = min(99999, target_data.status_data[11])
+            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+            target_change.status_data.setdefault(11, 0)
+            target_change.status_data[11] += now_add_lust
+
+            # 恐怖、抑郁、反感变化
+            if not good_flag:
+                for i in {18, 19, 20}:
+                    now_lust = target_data.status_data[i]
+                    now_lust_multiple = 150
+                    now_add_lust = add_time + now_lust_multiple
+                    if good_flag:
+                        now_add_lust *= (1.5 - adjust)
+                    else:
+                        now_add_lust *= (5 - adjust)
+                        now_add_lust += now_lust / 8
+                    target_data.status_data[i] += now_add_lust
+                    target_data.status_data[i] = min(99999, target_data.status_data[i])
+                    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+                    target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+                    target_change.status_data.setdefault(i, 0)
+                    target_change.status_data[i] += now_add_lust
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_N_ADJUST)
@@ -3301,7 +5644,7 @@ def handle_tech_add_n_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行N快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，和交互对象的感度，对交互对象进行N快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3319,31 +5662,10 @@ def handle_tech_add_n_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # B快变化#
-        target_data.status_data.setdefault(0, 0)
-        now_lust = target_data.status_data[0]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[0] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(0, 0)
-        target_change.status_data[0] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[0], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_B_ADJUST)
@@ -3354,7 +5676,7 @@ def handle_tech_add_b_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行B快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行B快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3372,31 +5694,10 @@ def handle_tech_add_b_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # B快变化#
-        target_data.status_data.setdefault(1, 0)
-        now_lust = target_data.status_data[1]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[1] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(1, 0)
-        target_change.status_data[1] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 1, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[1], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_C_ADJUST)
@@ -3407,7 +5708,7 @@ def handle_tech_add_c_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行C快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行C快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3425,31 +5726,10 @@ def handle_tech_add_c_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # C快变化#
-        target_data.status_data.setdefault(2, 0)
-        now_lust = target_data.status_data[2]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[2] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(2, 0)
-        target_change.status_data[2] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 2, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[2], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_P_ADJUST)
@@ -3460,7 +5740,7 @@ def handle_tech_add_p_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行P快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行P快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3480,25 +5760,31 @@ def handle_tech_add_p_adjust(
             return
         # 获取调整值#
         character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
+        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
+        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
+        adjust = math.sqrt(abi_adjust * feel_adjust)
         # P快变化#
         target_data.status_data.setdefault(3, 0)
         now_lust = target_data.status_data[3]
-        now_lust_multiple = 100 + now_lust / 10
+        now_lust_multiple = 50
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
+        now_add_lust += now_lust / 8
         target_data.eja_point += now_add_lust
         # change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         # target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         # target_change.status_data.setdefault(3, 0)
         # target_change.status_data[3] += now_add_lust
+        target_data.action_info.last_eaj_add_time = now_time
         # 欲情变化#
         target_data.status_data.setdefault(12, 0)
         now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
+        now_lust_multiple = 50
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
+        now_add_lust += now_lust / 6
         target_data.status_data[12] += now_add_lust
+        target_data.status_data[12] = min(99999, target_data.status_data[12])
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.status_data.setdefault(12, 0)
@@ -3513,7 +5799,7 @@ def handle_tech_add_v_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行V快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行V快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3531,31 +5817,10 @@ def handle_tech_add_v_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # V快变化#
-        target_data.status_data.setdefault(4, 0)
-        now_lust = target_data.status_data[4]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[4] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(4, 0)
-        target_change.status_data[4] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[4], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_A_ADJUST)
@@ -3566,7 +5831,7 @@ def handle_tech_add_a_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行A快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行A快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3584,31 +5849,10 @@ def handle_tech_add_a_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # A快变化#
-        target_data.status_data.setdefault(5, 0)
-        now_lust = target_data.status_data[5]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[5] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(5, 0)
-        target_change.status_data[5] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[5], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_U_ADJUST)
@@ -3619,7 +5863,7 @@ def handle_tech_add_u_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行U快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行U快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3637,31 +5881,10 @@ def handle_tech_add_u_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # U快变化#
-        target_data.status_data.setdefault(6, 0)
-        now_lust = target_data.status_data[6]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[6] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(6, 0)
-        target_change.status_data[6] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[6], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_W_ADJUST)
@@ -3672,7 +5895,7 @@ def handle_tech_add_w_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能对交互对象进行W快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行W快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3690,31 +5913,10 @@ def handle_tech_add_w_adjust(
             return
         if target_data.dead:
             return
-        # 获取调整值#
-        character_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        # W快变化#
-        target_data.status_data.setdefault(7, 0)
-        now_lust = target_data.status_data[7]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[7] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(7, 0)
-        target_change.status_data[7] += now_add_lust
-        # 欲情变化#
-        target_data.status_data.setdefault(12, 0)
-        now_lust = target_data.status_data[12]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[12] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(12, 0)
-        target_change.status_data[12] += now_add_lust
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = character_data.ability[7], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
@@ -3749,11 +5951,13 @@ def handle_tech_add_pl_p_adjust(
         # P快变化#
         character_data.status_data.setdefault(3, 0)
         now_lust = character_data.status_data[3]
-        now_lust_multiple = 100 + now_lust / 10
+        now_lust_multiple = 50
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
+        now_add_lust += now_lust / 8
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_LUBRICATION_ADJUST_ADD_PAIN)
@@ -3784,18 +5988,176 @@ def handle_target_lubrication_adjust_add_pain(
             return
         # 获取调整值#
         target_data.status_data.setdefault(8, 0)
-        adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
-        # 苦痛变化#
-        target_data.status_data.setdefault(17, 0)
-        now_lust = target_data.status_data[17]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        now_add_lust *= adjust
-        target_data.status_data[17] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        target_change.status_data.setdefault(17, 0)
-        target_change.status_data[17] += now_add_lust
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = pain_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_V_ADJUST_ADD_PAIN)
+def handle_target_v_adjust_add_pain(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的V属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        dilate_level = target_data.ability[9]
+        final_level = dilate_level - jj_size + 1
+        size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_A_ADJUST_ADD_PAIN)
+def handle_target_a_adjust_add_pain(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        dilate_level = target_data.ability[10]
+        final_level = dilate_level - jj_size + 1
+        size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_U_ADJUST_ADD_PAIN)
+def handle_target_u_adjust_add_pain(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于阴茎等级的调整，因为尿道非常小，所以相对于V和A，初始+1-4 = -3
+        jj_size = character_data.pl_ability.jj_size
+        dilate_level = target_data.ability[11]
+        final_level = dilate_level - jj_size - 3
+        size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 1000, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_W_ADJUST_ADD_PAIN)
+def handle_target_w_adjust_add_pain(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 润滑调整
+        target_data.status_data.setdefault(8, 0)
+        pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+
+        # 扩长等级相对于阴茎等级的调整，因为子宫较小，所以相对于V和A，初始+1-2=-1
+        jj_size = character_data.pl_ability.jj_size
+        dilate_level = target_data.ability[12]
+        final_level = dilate_level - jj_size - 1
+        size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
+
+        # 最终调整值
+        final_adjust = pain_adjust * size_adjust
+
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
@@ -3823,26 +6185,13 @@ def handle_low_obscenity_failed_adjust(
         # if not character.calculation_instuct_judege(0,character_data.target_character_id,"初级骚扰"):
 
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
         # 加反感
-        target_data.status_data.setdefault(20, 0)
-        now_lust = target_data.status_data[20]
-        now_lust_multiple = 100 + now_lust / 10
-        now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
-        now_add_lust *= adjust
-        target_data.status_data[20] += now_add_lust
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change.status_data.setdefault(20, 0)
-        target_change.status_data[20] += now_add_lust
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 20, 200, ability_level = target_data.ability[18], change_data_to_target_change = change_data)
         # 加愤怒
-        target_data.angry_point += 20
-        target_data.angry_with_player = True
+        target_data.angry_point += 50
+        target_data.sp_flag.angry_with_player = True
         # 降好感
-        minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -1, change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HIGH_OBSCENITY_FAILED_ADJUST)
@@ -3874,42 +6223,40 @@ def handle_high_obscenity_failed_adjust(
         # 加反感
         target_data.status_data.setdefault(20, 0)
         now_lust = target_data.status_data[20]
-        now_lust_multiple = 500 + now_lust / 10
+        now_lust_multiple = 10000
         now_add_lust = add_time + now_lust_multiple
         adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
+        now_add_lust += now_lust / 2
         target_data.status_data[20] += now_add_lust
+        target_data.status_data[20] = min(99999, target_data.status_data[20])
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change.status_data.setdefault(20, 0)
         target_change.status_data[20] = now_add_lust
         # 加愤怒
-        target_data.angry_point += 50
-        target_data.angry_with_player = True
+        target_data.angry_point += 100
+        target_data.sp_flag.angry_with_player = True
         # 降好感
-        minus_favorability = character.calculation_favorability(character_id, target_data.cid, add_time) * -1
-        minus_favorability *= 5
-        character_handle.add_favorability(
-            character_id, target_data.cid, minus_favorability, change_data, target_change, now_time
-        )
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -3, change_data)
         # 降信赖
-        now_lust_multiple = 10
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[32])
-        now_lust_multiple *= adjust
+        now_lust_multiple = target_data.trust * 0.2 + 2
+        if now_lust_multiple < 0:
+            now_lust_multiple *= -1
         target_data.trust -= now_lust_multiple
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.trust -= now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_POINT_DOWN)
-def handle_sleep_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DO_H_FAILED_ADJUST)
+def handle_do_h_failed_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    睡觉时降低困倦值
+    邀请H失败的加反感、加愤怒、降好感度、降信赖修正
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3919,13 +6266,65 @@ def handle_sleep_point_down(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-    value = int(add_time / 3)
-    character_data.sleep_point -= value
+        # 不需要再进行该判断
+        # if not character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change = change_data.target_change[target_data.cid]
+        # 加反感
+        target_data.status_data.setdefault(20, 0)
+        now_lust = target_data.status_data[20]
+        now_lust_multiple = 20000
+        now_add_lust = add_time + now_lust_multiple
+        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 2
+        target_data.status_data[20] += now_add_lust
+        target_data.status_data[20] = min(99999, target_data.status_data[20])
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change.status_data.setdefault(20, 0)
+        target_change.status_data[20] = now_add_lust
+        # 加愤怒
+        target_data.angry_point += 100
+        target_data.sp_flag.angry_with_player = True
+        # 降好感
+        base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, -15, change_data)
+        # 降信赖
+        now_lust_multiple = target_data.trust * 0.4 + 5
+        if now_lust_multiple < 0:
+            now_lust_multiple *= -1
+        target_data.trust -= now_lust_multiple
+        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
+        target_change.trust -= now_lust_multiple
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_DOWN)
-def handle_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_ADD_ADJUST)
+def handle_sleep_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （睡觉用）清零熟睡值
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sleep_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_ZERO)
+def handle_urinate_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -3945,8 +6344,8 @@ def handle_urinate_point_down(
     character_data.urinate_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_DOWN)
-def handle_target_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_ZERO)
+def handle_target_urinate_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -3967,8 +6366,8 @@ def handle_target_urinate_point_down(
     target_data.urinate_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_DOWN)
-def handle_hunger_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_ZERO)
+def handle_hunger_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -3988,8 +6387,8 @@ def handle_hunger_point_down(
     character_data.hunger_point = 0
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HUNGER_POINT_DOWN)
-def handle_target_urinate_point_down(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HUNGER_POINT_ZERO)
+def handle_target_hunger_point_zero(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -4008,6 +6407,157 @@ def handle_target_urinate_point_down(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.hunger_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_POINT_ZERO)
+def handle_sleep_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    熟睡值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sleep_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_SLEEP_POINT_ZERO)
+def handle_target_sleep_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象熟睡值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.sleep_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_URINATE_POINT)
+def handle_add_small_urinate_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己增加少量尿意值
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.urinate_point += 60
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_URINATE_POINT)
+def handle_target_add_small_urinate_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象增加少量尿意值
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.urinate_point += 60
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_DESIRE_POINT_ZERO)
+def handle_target_desire_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象欲望值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.desire_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DESIRE_POINT_TO_79)
+def handle_desire_point_to_79(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己欲望值调为79
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.desire_point = 79
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_DESIRE_POINT_TO_79)
+def handle_target_desire_point_to_79(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象欲望值调为79
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.desire_point = 79
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_TRAINING_TIME)
@@ -4060,7 +6610,7 @@ def handle_penis_in_t_reset(
         now_time: datetime.datetime,
 ):
     """
-    当前阴茎位置为交互对象_归零
+    当前阴茎位置为交互对象_双方归零
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -4072,6 +6622,7 @@ def handle_penis_in_t_reset(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = -1
+    character_data.h_state.insert_position = -1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAIR)

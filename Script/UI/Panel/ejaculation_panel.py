@@ -19,6 +19,226 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def common_ejaculation():
+    """
+    通用射精结算，进行一次射精，并返回射精文本和射精量
+    return
+    semen_text 射精文本
+    semen_count 射精量
+    """
+    character_data: game_type.Character = cache.character_data[0]
+
+    # 乘以一个随机数补正
+    random_weight = random.uniform(0.8, 1.2)
+
+    # 如果已经没有精液了，则不射精
+    if character_data.semen_point + character_data.tem_extra_semen_point <= 0:
+        return _("只流出了些许前列腺液，已经射不出精液了"),0
+    else:
+        # 基础射精值，小中多射精区分
+        if character_data.h_state.orgasm_level[3] % 3 == 0:
+            semen_count = int(10 * random_weight)
+            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 1:
+            semen_count = int(25 * random_weight)
+            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
+        if character_data.h_state.orgasm_level[3] % 3 == 2:
+            semen_count = int(45 * random_weight)
+            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+
+        # 射精量不高于剩余精液值
+        semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
+
+        # 更新射精计数和总精液量
+        character_data.h_state.orgasm_level[3] += 1
+        cache.rhodes_island.total_semen_count += semen_count
+
+        # # 更新精液值，目前弃用
+        # if semen_count > character_data.semen_point:
+        #     semen_count = character_data.semen_point
+
+        # 优先扣除临时额外精液值，不够的再扣除基础精液值
+        if character_data.tem_extra_semen_point > semen_count:
+            character_data.tem_extra_semen_point -= semen_count
+        else:
+            semen_count -= character_data.tem_extra_semen_point
+            character_data.tem_extra_semen_point = 0
+            character_data.semen_point -= semen_count
+        character_data.semen_point = max(0, character_data.semen_point)
+
+        return semen_text,semen_count
+
+
+def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_count: int, update_shoot_position_flag: bool = True):
+    """
+    更新部位的被射精污浊数据
+    Keyword arguments:
+    character_id -- 角色id
+    part_cid -- 部位cid
+    part_type -- 部位类型
+    semen_count -- 精液量
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 判断部位类型，0为身体部位，1为服装部位
+    if part_type == 0:
+        # 检查是否有该部位
+        if part_cid == 12 and not character_data.talent[113]:
+            return
+        elif part_cid == 13 and not character_data.talent[112]:
+            return
+        elif part_cid == 14 and not character_data.talent[111]:
+            return
+        # 更新身体部位被射精污浊数据
+        character_data.dirty.body_semen[part_cid][1] += semen_count
+        character_data.dirty.body_semen[part_cid][1] = max(character_data.dirty.body_semen[part_cid][1], 0)
+        if semen_count > 0:
+            character_data.dirty.body_semen[part_cid][3] += semen_count
+        character_data.dirty.body_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.body_semen[part_cid][1], part_cid, 0)
+        # 记录射精部位
+        if update_shoot_position_flag:
+            character_data.h_state.shoot_position_body = part_cid
+    elif part_type == 1:
+        # 检查该部位是否有服装
+        if not len(character_data.cloth.cloth_wear[part_cid]):
+            return
+        character_data.dirty.cloth_semen[part_cid][1] += semen_count
+        character_data.dirty.cloth_semen[part_cid][1] = max(character_data.dirty.cloth_semen[part_cid][1], 0)
+        if semen_count > 0:
+            character_data.dirty.cloth_semen[part_cid][3] += semen_count
+        character_data.dirty.cloth_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.cloth_semen[part_cid][1], part_cid, 1)
+        if update_shoot_position_flag:
+            character_data.h_state.shoot_position_cloth = part_cid
+    # print(f"debug update_semen_dirty name = {character_data.name}, part_cid = {part_cid}, part_type = {part_type}, semen_count = {semen_count}")
+
+
+def calculate_semen_flow(character_id: int, part_cid: int, part_type: int, semen_count: int):
+    """
+    计算精液流动
+    Keyword arguments:
+    character_id -- 角色id
+    part_cid -- 部位cid
+    part_type -- 部位类型
+    semen_count -- 精液量
+    """
+    if character_id != 0:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 创建精液流通情况字典
+        all_flow_dict = {}
+        all_flow_dict["source"] = {"type": part_type, "id": part_cid}
+        all_flow_dict["targets"] = []
+
+        # 判断部位类型，0为身体部位，1为服装部位
+        if part_type == 0:
+            # 判断是否满溢
+            voluem_data_list = game_config.config_body_part_volume[part_cid]
+            # 满溢时使用满溢流动表，且仅计算额外溢出来的部分
+            if character_data.dirty.body_semen[part_cid][1] > voluem_data_list[-1]:
+                flow_list = game_config.config_body_part_full_flow[part_cid]
+                semen_count = character_data.dirty.body_semen[part_cid][1] - voluem_data_list[-1]
+            # 未满溢时使用正常流动表
+            else:
+                flow_list = game_config.config_body_part_normal_flow[part_cid]
+        elif part_type == 1:
+            # 判断是否满溢
+            voluem_data_list = game_config.config_clothing_type_volume[part_cid]
+            # 满溢时使用满溢流动表，且仅计算额外溢出来的部分
+            if character_data.dirty.cloth_semen[part_cid][1] > voluem_data_list[-1]:
+                flow_list = game_config.config_cloth_part_full_flow[part_cid]
+                semen_count = character_data.dirty.cloth_semen[part_cid][1] - voluem_data_list[-1]
+            # 未满溢时使用正常流动表
+            else:
+                flow_list = game_config.config_cloth_part_normal_flow[part_cid]
+
+        # 遍历流动表，计算应该向各部位流动多少，添加到精液流通情况字典中
+        for flow_str in flow_list:
+            # 获取流动类型，部位cid，流动比例
+            flow_type = flow_str[0]
+            flow_cid = int(flow_str[1:].split("-")[0])
+            flow_rate = int(flow_str[1:].split("-")[1])
+            # 创建流动情况字典
+            now_flow_dict = {}
+            # 判断流动类型，0为身体部位，1为服装部位，2为环境滴落
+            if flow_type == "B":
+                now_flow_dict["type"] = 0
+            elif flow_type == "C":
+                now_flow_dict["type"] = 1
+            elif flow_type == "E":
+                now_flow_dict["type"] = 2
+            # 添加流动目标部位cid和流动量
+            now_flow_dict["id"] = flow_cid
+            now_flow_dict["remaining_volume"] = max(1, int(semen_count * flow_rate / 100))
+            # 添加到精液流通情况字典中
+            all_flow_dict["targets"].append(now_flow_dict)
+
+        # 添加到目标角色的精液流通情况列表中
+        character_data.dirty.semen_flow.append(all_flow_dict)
+        # print(f"debug calculate_semen_flow name = {character_data.name},all_flow_dict = {all_flow_dict}")
+
+
+def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0, draw_flag: bool = True):
+    """
+    射精流程的总函数
+    Keyword arguments:
+    part_cid -- 部位cid
+    part_type -- 部位类型
+    target_character_id -- 目标角色id
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    # 如果没有赋值目标角色id，则默认为当前目标角色
+    if target_character_id == 0:
+        target_character_id = character_data.target_character_id
+    target_data: game_type.Character = cache.character_data[target_character_id]
+
+
+    semen_text, semen_count = common_ejaculation()
+
+    # 正常射精时
+    if character_data.h_state.body_item[13][1] == False:
+
+        cache.shoot_position = part_cid
+
+        # 更新被射精污浊数据
+        update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
+
+        # 计算精液流动
+        calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
+
+        # 获取射精文本
+        if part_type == 0:
+            part_name = game_config.config_body_part[part_cid].name
+            now_text = "在" + target_data.name + "的" + part_name+ semen_text
+        elif part_type == 1:
+            cloth_text = game_config.config_clothing_type[part_cid].name
+            now_text = "在" + target_data.name + "的" + cloth_text + semen_text
+    
+    # 戴着避孕套射精时
+    else:
+
+        cache.shoot_position = 0
+
+        # 将射精量转化为避孕套中的精液量
+        character_data.h_state.condom_count[0] += 1
+        character_data.h_state.condom_count[1] += semen_count
+        # 去掉避孕套状态
+        character_data.h_state.body_item[13][1] = False
+
+        # 获取射精文本
+        now_text = _("在避孕套里") + semen_text
+
+
+    # 绘制射精文本
+    if draw_flag:
+        line_feed.draw()
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        line_feed.draw()
+        now_draw = draw.WaitDraw()
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
+
 
 class Ejaculation_Panel:
     """
@@ -40,285 +260,100 @@ class Ejaculation_Panel:
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        title_name = "射精部位选择"
-        title_draw = draw.TitleLineDraw(title_name, self.width)
-        eja_type_list = [_("身体"), _("服装")]
-        position_list = []
-        self.handle_panel = panel.PageHandlePanel([], Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0)
-        # 输入全身体部位
-        for body_part in game_config.config_body_part:
-            position_list.append(target_data.dirty.body_semen[body_part][0])
-        self.handle_panel.text_list = position_list
-        self.handle_panel.update()
 
-        while 1:
-            return_list = []
-            title_draw.draw()
-
-            # 绘制射精主面板
-            for eja_type in eja_type_list:
-                if eja_type == self.now_panel:
-                    now_draw = draw.CenterDraw()
-                    now_draw.text = f"[{eja_type}]"
-                    now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(eja_type_list)
-                    now_draw.draw()
-                else:
-                    now_draw = draw.CenterButton(
-                        f"[{eja_type}]",
-                        eja_type,
-                        self.width / len(eja_type_list),
-                        cmd_func=self.change_panel,
-                        args=(eja_type,),
-                    )
-                    now_draw.draw()
-                    return_list.append(now_draw.return_text)
-            line_feed.draw()
-            line = draw.LineDraw("+", self.width)
-            line.draw()
-
-            # 绘制面板本体
-            self.handle_panel.update()
-            self.handle_panel.draw()
-            return_list.extend(self.handle_panel.return_list)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-
-            # 在非页面切换时退出面板
-            if yrn not in ['身体', '服装']:
-                cache.now_panel_id = constant.Panel.IN_SCENE
-                break
-
-    def change_panel(self, eja_type: str):
-        """
-        切换当前面板显示的射精位置类型
-        Keyword arguments:
-        eja_type -- 要切换的射精位置类型
-        """
-        self.now_panel = eja_type
-        character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        position_list = []
-        clothing = {}
-
-        for clothing_type in game_config.config_clothing_type:
-            if len(target_data.cloth.cloth_wear[clothing_type]):
-                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
-
-        # 输入全身体部位
-        if eja_type == "身体":
-            for body_part in game_config.config_body_part:
-                position_list.append(target_data.dirty.body_semen[body_part][0])
-            self.handle_panel = panel.PageHandlePanel(
-                position_list, Ejaculation_NameDraw, 20, 6, self.width, 1, 1, 0
-            )
-
-        # 输入有衣服的部位
-        elif eja_type == "服装":
-            for clothing_type in game_config.config_clothing_type:
-                if len(target_data.cloth.cloth_wear[clothing_type]):
-                    position_list.append(target_data.dirty.cloth_semen[clothing_type][0])
-
-            # 如果是服装的话，则换成每行只输出一个
-            self.handle_panel = panel.PageHandlePanel(
-                position_list, Ejaculation_NameDraw, 20, 1, self.width, 1, 1, 0
-            )
-        self.handle_panel.text_list = position_list
-        self.handle_panel.update()
-
-
-class Ejaculation_NameDraw:
-    """
-    点击后可选择射精部位按钮对象
-    Keyword arguments:
-    text -- 部位名
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
-
-    def __init__(self, text: str, width: int, is_button: bool, num_button: bool, button_id: int):
-        """初始化绘制对象"""
-        self.text = text
-        """ 部位名 """
-        self.draw_text: str = ""
-        """ 部位名字绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-
-        self.panel_type = 0
-        name_draw = draw.NormalDraw()
-        character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-
-        # 区分是位置还是衣服
-        """ 位置文本列表 """
-        self.position_text_list = []
-        for body_part in game_config.config_body_part:
-            position_text = game_config.config_body_part[body_part].name
-            self.position_text_list.append(position_text)
-            # 遍历获得部位序号以及是否为按钮
-            if self.text == position_text:
-                self.panel_type = 1
-                self.index = body_part
-                is_button = self.part_can_choose()
-                break
-
-        """ 衣服文本列表 """
-        self.cloth_text_list = []
-        for clothing_type in game_config.config_clothing_type:
-            cloth_text = game_config.config_clothing_type[clothing_type].name
-            self.cloth_text_list.append(cloth_text)
-            # 遍历获得部位序号以及是否为按钮
-            if self.text == cloth_text:
-                self.panel_type = 2
-                self.index = clothing_type
-                is_button = self.part_can_choose()
-                # 遍历获得该部位的全部服装名
-                cloth_name_text = ":"
-                for cloth_id in target_data.cloth.cloth_wear[clothing_type]:
-                    cloth_name_text += f" {game_config.config_clothing_tem[cloth_id].name}"
-                self.text += cloth_name_text
-                break
-
-        # print("debug self.text = ",self.text," panel_type = ",panel_type)
-
-        index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text} {self.text}"
-        # 如果是按钮则正常绘制为按钮，否则绘制为文本
-        if is_button:
-            name_draw = draw.LeftButton(
-                button_text, self.button_return, self.width, cmd_func=self.shoot_here
-            )
+        # 如果没有选择射精部位，则直接在当前阴茎位置射精
+        if not cache.system_setting[4]:
+            now_position = target_data.h_state.insert_position
+            if now_position != -1:
+                self.shoot_here(now_position, 0)
+        # 手动选择射精部位
         else:
-            name_draw = draw.LeftDraw()
-            name_draw.text = button_text
-            name_draw.width = self.width
-            name_draw.style = "un_open_mapbutton"
-        self.draw_text = button_text
-        self.now_draw = name_draw
-        """ 绘制的对象 """
+            title_name = _("射精部位选择")
+            title_draw = draw.TitleLineDraw(title_name, self.width)
 
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
+            while 1:
+                return_list = []
+                title_draw.draw()
 
-    def part_can_choose(self):
+                # 绘制身体部位按钮
+                for body_part_cid in game_config.config_body_part:
+                    part_name = game_config.config_body_part[body_part_cid].name
+                    draw_text = f"[{body_part_cid}]{part_name}"
+                    # print("debug draw_text = ",draw_text)
+                    show_flag = self.part_can_choose(body_part_cid)
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+
+                line_feed.draw()
+
+                # 绘制服装部位按钮
+                for clothing_type in game_config.config_clothing_type:
+                    cloth_name = game_config.config_clothing_type[clothing_type].name
+                    draw_text = f"[{clothing_type}]{cloth_name}"
+                    show_flag = len(target_data.cloth.cloth_wear[clothing_type])
+                    if show_flag:
+                        name_draw = draw.CenterButton(
+                            draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+
+                yrn = flow_handle.askfor_all(return_list)
+
+                # 在非页面切换时退出面板
+                if yrn not in ['身体', '服装']:
+                    cache.now_panel_id = constant.Panel.IN_SCENE
+                    break
+
+    def part_can_choose(self, body_part_cid: int):
         """判断该部位是否可以绘制"""
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1]
+        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
         clothing = {}
 
         for clothing_type in game_config.config_clothing_type:
             if len(target_data.cloth.cloth_wear[clothing_type]):
                 clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
 
-        if self.panel_type == 1:
-            body_part = self.index
-            # 不插在对应部位，则无法射在对应部位
-            if body_part == 6 and not handle_premise.handle_last_cmd_sex(0):
-                return False
-            elif body_part == 7 and not handle_premise.handle_last_cmd_w_sex(0):
-                return False
-            elif body_part == 8 and not handle_premise.handle_last_cmd_a_sex(0):
-                return False
-            elif body_part == 9 and not handle_premise.handle_last_cmd_u_sex(0):
-                return False
-            # 没有长对应器官，则无法射在对应部位
-            elif body_part == 12 and not target_data.talent[72]:
-                return False
-            elif body_part == 13 and not target_data.talent[71]:
-                return False
-            elif body_part == 14 and not target_data.talent[70]:
-                return False
-            # 对应部位有衣服，则无法射在对应部位
-            if isinstance(body_cloth[body_part], list):
-                def cloth_list(bbc):
-                    for bc in bbc:
-                        if bc in clothing.keys():
-                            return False
-                    return True
-                if not cloth_list(body_cloth[body_part]):
-                    return False
-            else:
-                if body_cloth[body_part] in clothing.keys():
-                    return False
-
-        elif self.panel_type == 2:
-            clothing_type = self.index
-            if len(target_data.cloth.cloth_wear[clothing_type]):
+        # 不插在对应部位，则无法射在对应部位
+        if body_part_cid == 6 and not handle_premise.handle_last_cmd_sex(0):
+            return False
+        elif body_part_cid == 7 and not handle_premise.handle_last_cmd_w_sex(0):
+            return False
+        elif body_part_cid == 8 and not handle_premise.handle_last_cmd_a_sex(0):
+            return False
+        elif body_part_cid == 9 and not handle_premise.handle_last_cmd_u_sex(0):
+            return False
+        elif body_part_cid == 15:
+            return False
+        # 没有长对应器官，则无法射在对应部位
+        elif body_part_cid == 12 and not target_data.talent[113]:
+            return False
+        elif body_part_cid == 13 and not target_data.talent[112]:
+            return False
+        elif body_part_cid == 14 and not target_data.talent[111]:
+            return False
+        # 对应部位有衣服，则无法射在对应部位
+        if isinstance(body_cloth[body_part_cid], list):
+            def cloth_list(bbc):
+                for bc in bbc:
+                    if bc in clothing.keys():
+                        return False
                 return True
-            else:
+            if not cloth_list(body_cloth[body_part_cid]):
+                return False
+        else:
+            if body_cloth[body_part_cid] in clothing.keys():
                 return False
         return True
 
-    def shoot_here(self):
+    def shoot_here(self, part_cid: int, part_type: int):
         py_cmd.clr_cmd()
-
-        character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-
-        cache.shoot_position = self.index
-        # 乘以一个随机数补正
-        random_weight = random.uniform(0.5, 1.5)
-
-        # 基础射精值，小中多射精区分
-        if character_data.h_state.orgasm_level[3] % 3 == 0:
-            semen_count = int(5 * random_weight)
-            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(20 * random_weight)
-            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
-        if character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(100 * random_weight)
-            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
-        character_data.h_state.orgasm_level[3] += 1
-
-        # print("debug semen_count = ",semen_count)
-
-        if self.panel_type == 1:
-
-            now_text = "在" + target_data.name + "的" + self.position_text_list[self.index] + semen_text
-
-            # 记录射精部位
-            target_data.h_state.shoot_position_body = self.index
-
-            # 更新污浊类里的身体部位精液参数
-            if self.index == 6:
-                target_data.dirty.body_semen[self.index][1] += 1
-                self.index = 7
-            target_data.dirty.body_semen[self.index][1] += semen_count
-            target_data.dirty.body_semen[self.index][3] += semen_count
-            target_data.dirty.body_semen[self.index][2] = attr_calculation.get_semen_now_level(
-                target_data.dirty.body_semen[self.index][1])
-
-        elif self.panel_type == 2:
-
-            # 记录射精部位
-            target_data.h_state.shoot_position_cloth = self.index
-
-            # 更新污浊类里的服装部位精液参数
-            target_data.dirty.cloth_semen[self.index][1] += semen_count
-            target_data.dirty.cloth_semen[self.index][3] += semen_count
-            target_data.dirty.cloth_semen[self.index][2] = attr_calculation.get_semen_now_level(
-                target_data.dirty.cloth_semen[self.index][1])
-
-            now_text = "在" + target_data.name + "的" + self.cloth_text_list[self.index] + semen_text
-
-        line_feed.draw()
-        now_draw = draw.WaitDraw()
-        now_draw.text = now_text
-        now_draw.width = window_width
-        now_draw.draw()
-        line_feed.draw()
-        line_feed.draw()
+        ejaculation_flow(part_cid, part_type)

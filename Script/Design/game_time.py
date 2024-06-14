@@ -12,6 +12,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import normal_config, game_config
+from Script.Design import character
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -46,9 +47,89 @@ def get_date_text(game_time_data: datetime.datetime = None) -> str:
     """
     if game_time_data is None:
         game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
     return _("时间:{year}年{month}月{day}日{hour}点{minute}分").format(
         year=game_time_data.year,
-        month=game_time_data.month,
+        month=month_text,
+        day=game_time_data.day,
+        hour=game_time_data.hour,
+        minute=game_time_data.minute,
+    )
+
+
+def get_date_until_day(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取到日为止的时间信息描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
+    return _("时间:{year}年{month}月{day}日").format(
+        year=game_time_data.year,
+        month=month_text,
+        day=game_time_data.day,
+    )
+
+
+def get_year_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取年份描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    return _("时间:{year}年").format(
+        year=game_time_data.year,
+    )
+
+
+def get_month_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取月份描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    if game_time_data.month == 3:
+        month_text = "春"
+    elif game_time_data.month == 6:
+        month_text = "夏"
+    elif game_time_data.month == 9:
+        month_text = "秋"
+    elif game_time_data.month == 12:
+        month_text = "冬"
+    return _("{month}").format(
+        month=month_text,
+    )
+
+
+def get_day_and_time_text(game_time_data: datetime.datetime = None) -> str:
+    """
+    获取日和时间描述文本
+    Keyword arguments:
+    game_timeData -- 时间数据，若为None，则获取当前游戏时间
+    """
+    if game_time_data is None:
+        game_time_data = cache.game_time
+    return _("{day}日 {hour}点{minute}分").format(
         day=game_time_data.day,
         hour=game_time_data.hour,
         minute=game_time_data.minute,
@@ -75,6 +156,13 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     year -- 增加的年数
     """
     new_date = get_sub_date(minute, hour, day, month, year)
+
+    # 切月时对全角色的行为开始时间进行重置
+    if new_date.month > cache.game_time.month:
+        new_date = new_date.replace(day = 1)
+        for character_id in cache.npc_id_got:
+            character.init_character_behavior_start_time(character_id, new_date)
+
     cache.game_time = new_date
 
 
@@ -101,6 +189,15 @@ def get_sub_date(
     new_date = old_date + relativedelta.relativedelta(
         years=year, months=month, days=day, hours=hour, minutes=minute
     )
+    # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
+    if new_date.month in {1,2}:
+        new_date = new_date.replace(month = 3)
+    elif new_date.month in {4,5}:
+        new_date = new_date.replace(month = 6)
+    elif new_date.month in {7,8}:
+        new_date = new_date.replace(month = 9)
+    elif new_date.month in {10,11}:
+        new_date = new_date.replace(month = 12)
     return new_date
 
 
@@ -154,24 +251,24 @@ def count_day_for_datetime(
     Return arguments:
     int -- 经过天数
     """
-    return (start_date - end_date).days
+    return (end_date - start_date).days
 
 
 def judge_date_big_or_small(time_a: datetime.datetime, time_b: datetime.datetime) -> int:
     """
-    比较当前时间是否大于或等于旧时间
-    Keyword arguments:
-    time_a -- 当前时间
-    time_b -- 旧时间
-    Return arguments:
-    0 -- 小于
-    1 -- 大于
+    比较a时间是否大于或等于b时间\n
+    Keyword arguments:\n
+    time_a -- 当前时间\n
+    time_b -- 旧时间\n
+    Return arguments:\n
+    0 -- 小于\n
+    1 -- 大于\n
     2 -- 等于
     """
     if time_a == time_b:
         return 2
     else:
-        return time_b < time_a
+        return time_a > time_b
 
 
 def ecliptic_lon(now_time: datetime.datetime) -> float:
@@ -274,45 +371,10 @@ def get_sun_time(old_time: datetime.datetime) -> int:
     """
     if "sun_phase" not in cache.__dict__:
         cache.__dict__["sun_phase"] = {}
-    now_date_str = f"{old_time.year}/{old_time.month}/{old_time.day}"
-    now_time = old_time.astimezone(time_zone)
-    if now_time.hour > old_time.hour:
-        now_time = datetime.datetime(year=old_time.year,
-                                     month=old_time.month,
-                                     day=old_time.day,
-                                     minute=old_time.minute,
-                                     tzinfo=time_zone)
-    gatech.long, gatech.lat = str(cache.school_longitude), str(cache.school_latitude)
-    if (
-            (now_date_str not in cache.sun_phase)
-            or (now_time.hour not in cache.sun_phase[now_date_str])
-            or (now_time.minute not in cache.sun_phase[now_date_str][now_time.hour])
-    ):
-        now_unix = now_time.timestamp()
-        now_unix -= 60
-        for i in range(0, 1439):
-            now_unix += 60
-            now_unix_date = datetime.datetime.fromtimestamp(now_unix)
-            now_unix_date = now_unix_date.replace(tzinfo=time_zone)
-            now_unix_date = now_unix_date.astimezone(time_zone.utc)
-            gatech.date = now_unix_date
-            sun.compute(gatech)
-            now_az = sun.az * 57.2957795
-            new_date: datetime.datetime = gatech.date.datetime()
-            new_date_unix = new_date.timestamp()
-            new_date_unix = round(new_date_unix, 0)
-            new_date = datetime.datetime.fromtimestamp(new_date_unix)
-            new_date = new_date.replace(tzinfo=time_zone.utc)
-            new_date = new_date.astimezone(time_zone)
-            new_date_str = f"{new_date.year}/{new_date.month}/{new_date.day}"
-            cache.sun_phase.setdefault(new_date_str, {})
-            cache.sun_phase[new_date_str].setdefault(new_date.hour, {})
-            cache.sun_phase[new_date_str][new_date.hour][new_date.minute] = get_sun_phase_for_sun_az(now_az)
-        if len(cache.sun_phase) > 1:
-            del_date = sorted(list(cache.sun_phase.keys()))[0]
-            if del_date != now_date_str:
-                del cache.sun_phase[del_date]
-    return cache.sun_phase[now_date_str][now_time.hour][now_time.minute]
+    now_sun_time = (old_time.hour + 3) // 2
+    now_sun_time += 12 if now_sun_time < 0 else 0
+    now_sun_time -= 12 if now_sun_time > 11 else 0
+    return now_sun_time
 
 
 def get_sun_phase_for_sun_az(now_az: float) -> int:
@@ -386,7 +448,7 @@ def judge_work_today(character_id: int) -> bool:
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
-    int -- 权重
+    int -- 周一到周五为1，周末为0
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
@@ -397,6 +459,29 @@ def judge_work_today(character_id: int) -> bool:
         return 1
     else:
         return 0
+
+
+def judge_entertainment_time(character_id: int) -> int:
+    """
+    校验当前娱乐时间段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 0为不在娱乐时间段，1为早上，2为下午，3为晚上
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time is None:
+        now_time = cache.game_time
+    now_hour = now_time.hour
+    if 9 <= now_hour < 12:
+        return 1
+    elif 14 <= now_hour < 18:
+        return 2
+    elif 19 <= now_hour < 22:
+        return 3
+    return 0
+
 
 # def judge_attend_class_today(character_id: int) -> bool:
 #     """

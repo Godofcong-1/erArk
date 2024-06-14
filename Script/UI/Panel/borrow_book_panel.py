@@ -37,7 +37,7 @@ class Borrow_Book_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "借阅书籍"
+        title_text = _("借阅书籍")
         book_father_type_list = [_("技能类书籍"), _("娱乐类书籍"), _("色情类书籍")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -69,11 +69,11 @@ class Borrow_Book_Panel:
 
             # 当前借书数量限制信息
             borrow_count = 0
-            for book_id in cache.base_resouce.book_borrow_dict:
-                if cache.base_resouce.book_borrow_dict[book_id] == 0:
+            for book_id in cache.rhodes_island.book_borrow_dict:
+                if cache.rhodes_island.book_borrow_dict[book_id] == 0:
                     borrow_count += 1
             borrow_limit_draw = draw.NormalDraw()
-            borrow_limit_text = f"\n已借书量/最大借书量：{borrow_count}/3\n"
+            borrow_limit_text = _("\n已借书量/最大借书量：{0}/3\n").format(borrow_count)
             borrow_limit_draw.text = borrow_limit_text
             borrow_limit_draw.width = self.width
             borrow_limit_draw.draw()
@@ -98,17 +98,17 @@ class Borrow_Book_Panel:
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
                         button_flag = True
-                        if cache.base_resouce.book_borrow_dict[book_cid] == -1:
-                            book_text += "  (可借阅)"
+                        if cache.rhodes_island.book_borrow_dict[book_cid] == -1:
+                            book_text += _("  (可借阅)")
                             book_style = "standard"
                             book_can_borrow_count += 1
-                        elif cache.base_resouce.book_borrow_dict[book_cid] == 0:
-                            book_text += f"  (已被博士借走)"
-                            book_style = "nowmap"
+                        elif cache.rhodes_island.book_borrow_dict[book_cid] == 0:
+                            book_text += _("  (已被博士借走)")
+                            book_style = "gold_enrod"
                         else:
-                            borrow_npc_id = cache.base_resouce.book_borrow_dict[book_cid]
+                            borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                             borrow_npc_name = cache.character_data[borrow_npc_id].name
-                            book_text += f"  (已被{borrow_npc_name}借走)"
+                            book_text += _("  (已被{0}借走)").format(borrow_npc_name)
                             book_style = "nullcmd"
                             button_flag = False
 
@@ -135,8 +135,8 @@ class Borrow_Book_Panel:
                         now_draw.width += 1
 
             resouce_draw = draw.NormalDraw()
-            resouce_text = "\n当前藏书情况："
-            resouce_text += f"\n  {self.now_panel}在馆量/总藏书量：{book_can_borrow_count}/{book_count}\n"
+            resouce_text = _("\n当前藏书情况：")
+            resouce_text += _("\n  {0}在馆量/总藏书量：{1}/{2}\n").format(self.now_panel, book_can_borrow_count, book_count)
             resouce_draw.text = resouce_text
             resouce_draw.width = self.width
             resouce_draw.draw()
@@ -183,17 +183,17 @@ class Borrow_Book_Panel:
         borrow_count = len(character_data.entertainment.borrow_book_id_set)
 
         # 如果已借该书，则还书
-        if cache.base_resouce.book_borrow_dict[book_cid] == 0:
-            cache.base_resouce.book_borrow_dict[book_cid] = -1
+        if cache.rhodes_island.book_borrow_dict[book_cid] == 0:
+            cache.rhodes_island.book_borrow_dict[book_cid] = -1
             character_data.entertainment.borrow_book_id_set.discard(book_cid)
         # 未借该书，且借书数量不到上限，则借书
         elif borrow_count < 3:
-            cache.base_resouce.book_borrow_dict[book_cid] = 0
+            cache.rhodes_island.book_borrow_dict[book_cid] = 0
             character_data.entertainment.borrow_book_id_set.add(book_cid)
         # 未借该书，且借书数量已达上限，则输出错误信息
         else:
             borrow_limit_draw = draw.WaitDraw()
-            borrow_limit_text = f"\n已达到最大借书上限，无法继续借阅\n"
+            borrow_limit_text = _("\n已达到最大借书上限，无法继续借阅\n")
             borrow_limit_draw.text = borrow_limit_text
             borrow_limit_draw.width = self.width
             borrow_limit_draw.draw()

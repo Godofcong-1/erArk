@@ -24,10 +24,10 @@ jobs:
       - name: Run PyInstaller
         run: |
           pyinstaller -F game.py
-      - name: Buildi Game Config
+      - name: Build Game Config
         run: |
           python buildconfig.py
-      - name: Buildi Game Cache
+      - name: Build Game Cache
         run: |
           python init_data.py
       - name: Copy Game Files
@@ -39,12 +39,39 @@ jobs:
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
           Copy-Item package.json dist/
-          Copy-Item 特别说明.txt dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
       - name: Pack Game Files
         run: |
-          Compress-Archive -Path erArk -DestinationPath erArk.zip
+          Compress-Archive -Path erArk\* -DestinationPath erArk.zip
+      - name: Run PyInstaller_ArkEditor
+        run: |
+          pyinstaller -F tools/ArkEditor/main.py
+      - name: Copy ArkEditor Files
+        run: |
+          New-Item -ItemType Directory -Force dist_ArkEditor
+          New-Item -ItemType Directory -Force dist_ArkEditor/csv
+          Copy-Item dist/main.exe dist_ArkEditor/ -Force
+          Copy-Item tools/ArkEditor/csv/Premise.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Ability.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/CharacterState.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Juel.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Race.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Profession.csv dist_ArkEditor/csv/
+          Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
+          Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
+          Copy-Item example/模板事件.json dist_ArkEditor/
+      - name: Pack ArkEditor Files
+        run: |
+          Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
       - uses: actions/upload-artifact@master
         with:
           name: Windows
@@ -61,8 +88,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: Past.${{steps.version.outputs.value}}
-          release_name: Past ${{steps.version.outputs.value}}
+          tag_name: ${{steps.version.outputs.value}}
+          release_name: ${{steps.version.outputs.value}}
+          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
           draft: false
           prerelease: false
       - name: Upload Release Asset
@@ -75,3 +103,24 @@ jobs:
           asset_path: ${{ github.workspace }}/erArk.zip
           asset_name: erArk_${{steps.version.outputs.value}}.zip
           asset_content_type: application/zip
+      - name: Upload Font Asset
+        id: upload-font-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/游戏字体包.zip
+          asset_name: font.zip
+          asset_content_type: application/zip
+      - name: Upload ArkEditor Asset
+        id: upload-ArkEditor-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/erArkEditor.zip
+          asset_name: erArkEditor.zip
+          asset_content_type: application/zip
+  
