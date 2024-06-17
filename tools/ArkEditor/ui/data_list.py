@@ -20,7 +20,6 @@ class DataList(QWidget):
         self.layout = QGridLayout(self)
         self.top_layout = QHBoxLayout()
         self.chara_id_text_edit = QTextEdit("0")
-        self.menu_bar: QMenuBar = None
         self.text_id_text_edit = QTextEdit("0")
         self.text_id_change_button = QPushButton("修改序号")
         self.text_id_change_button.clicked.connect(self.update_text_id)
@@ -75,14 +74,16 @@ class DataList(QWidget):
         # 说明文本
         label1_text = QLabel("角色id")
         label2_text = QLabel("触发指令与状态")
-        label3_text = QLabel("条目序号")
+        self.label3_text = QLabel("指令信息")
+        label4_text = QLabel("条目序号")
 
         # 上方布局
         self.top_layout.addWidget(label1_text)
         self.top_layout.addWidget(self.chara_id_text_edit)
         self.top_layout.addWidget(label2_text)
         self.top_layout.addWidget(self.menu_bar)
-        self.top_layout.addWidget(label3_text)
+        self.top_layout.addWidget(self.label3_text)
+        self.top_layout.addWidget(label4_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
         self.top_layout.addWidget(self.info_button)
@@ -471,11 +472,26 @@ class DataList(QWidget):
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
                 status_text = cache_control.status_data[status_cid]
+                status_duration = int(cache_control.status_all_data[status_cid]["duration"])
+                status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+                info_text = "耗时"
+                if status_duration >= 0:
+                    info_text += f"{status_duration}分"
+                else:
+                    info_text += "不定"
+                info_text += ",触发人:"
+                if status_trigger == "pl":
+                    info_text += "仅玩家"
+                elif status_trigger == "npc":
+                    info_text += "仅npc"
+                elif status_trigger == "both":
+                    info_text += "玩家和npc均可"
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.chara_id_text_edit.setText(chara_id)
                 self.text_id_text_edit.setText(cache_control.now_select_id)
+                self.label3_text.setText(info_text)
                 # self.text_id_text_edit.setText(cache_control.now_talk_data[cache_control.now_select_id].cid)
 
                 # 遍历 list_widget 中的所有 item

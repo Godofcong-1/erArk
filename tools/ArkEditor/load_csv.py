@@ -37,6 +37,7 @@ def load_config():
         now_read = csv.DictReader(now_file)
         for i in now_read:
             cache_control.status_data[i["cid"]] = i["status"]
+            cache_control.status_all_data[i["cid"]] = i
             # print(f"debug i[cid] = {i['cid']}, type = {type(i['cid'])}, status = {i['status']}, type = {type(i['status'])}")
             cache_control.status_type_data.setdefault(i["type"], [])
             cache_control.status_type_data[i["type"]].append(i["cid"])
