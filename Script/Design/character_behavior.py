@@ -228,7 +228,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
     # 非链中的需求
-    if judge == 0 and not handle_premise.handle_unnormal_27(character_id):
+    if judge == 0 and handle_premise.handle_unnormal_27(character_id):
         now_target_list = game_config.config_target_type_index[13]
         target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
@@ -410,10 +410,12 @@ def judge_character_status(character_id: int) -> int:
         # 如果是父事件的话，则先输出文本
         if "10001" in event_config.effect:
             start_event_draw.draw()
+            # now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
 
     # if not character_id:
     #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
-    now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+    first_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+    second_settle_panel = None
     # if not character_id:
     #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
@@ -425,16 +427,15 @@ def judge_character_status(character_id: int) -> int:
         # 指令前置类型的事件触发
         if end_event_type == 1:
             # print(f"debug 指令前置类型的事件触发")
+            character_data.event.event_id = end_event_id
 
             # 先绘制指令文本
             talk.handle_talk(character_id)
 
-            # 如果是父事件的话，则先输出文本
+            # 如果是父事件的话，则先结算父事件
             if "10001" in event_config.effect:
                 end_event_draw.draw()
-
-            character_data.event.event_id = end_event_id
-            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
+            second_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
 
     # if not character_id:
     #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
@@ -452,15 +453,18 @@ def judge_character_status(character_id: int) -> int:
     # 如果有事件则显示事件，否则显示口上
     if start_event_draw != None:
         start_event_draw.draw()
-    elif end_event_draw != None:
+    # 防止父事件二次绘制
+    elif end_event_draw != None and "10001" not in event_config.effect:
         end_event_draw.draw()
     else:
         talk.handle_talk(character_id)
     # 指令后置类型的事件，在最后输出指令的口上
     if event_type_now == 2:
         talk.handle_talk(character_id)
-    if now_panel != None:
-        now_panel.draw()
+    if first_settle_panel != None:
+        first_settle_panel.draw()
+        if second_settle_panel != None:
+            second_settle_panel.draw()
         #进行一次暂停以便玩家看输出信息
         if character_id == 0:
             wait_draw = draw.LineFeedWaitDraw()

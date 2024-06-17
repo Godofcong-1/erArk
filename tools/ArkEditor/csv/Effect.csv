@@ -1,14 +1,16 @@
 cid,effect_name,effect_type,effect
 二段结算,行为结算效果函数
 
-9999,NOTHING,系统状态,什么都没有的空结算
-10000,INTERRUPT_TARGET_ACTIVITY,系统状态,打断交互对象活动
-10001,OPTION_FATER,系统状态,开启子选项面板
-10002,TARGET_TO_PLAYER,系统状态,将交互对象设为对玩家交互
-10003,OPEN_INSTRUCT_FILTER_H,系统状态,开启H面板过滤器
-10004,CLOSE_INSTRUCT_FILTER_H,系统状态,关闭H面板过滤器
-10005,PL_TARGET_TO_ME,系统状态,将玩家的交互对象设为自己
-10006,TARGET_TO_SELF,系统状态,将交互对象设为对自己交互
+9999,NOTHING,系统量_基础,什么都没有的空结算
+10001,OPTION_FATER,系统量_基础,开启子选项面板
+10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器
+10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器
+
+10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
+10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
+10005,PL_TARGET_TO_ME,系统量_交互,将玩家的交互对象设为自己
+10006,TARGET_TO_SELF,系统量_交互,将交互对象设为对自己交互
+10007,TARGET_TO_MASTUREBATE,系统量_交互,将交互对象设为对当前场景中的首位自慰角色
 
 0,ADD_SMALL_HIT_POINT,属性_基础,增加少量体力
 1,ADD_SMALL_MANA_POINT,属性_基础,增加少量气力
@@ -381,5 +383,8 @@ cid,effect_name,effect_type,effect
 1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
 1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H
 
-1501,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
+1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
+
+1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
+
 

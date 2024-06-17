@@ -1937,6 +1937,39 @@ def handle_target_get_weeknesss_by_dr(
     now_draw.draw()
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAIT_UNITL_TRAGET_ACTION_END)
+def handle_wait_unitl_traget_action_end(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    玩家等待至交互对象行动结束
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.Design import update
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_start_time = target_character_data.behavior.start_time
+    target_end_time = game_time.get_sub_date(target_character_data.behavior.duration, old_date=target_start_time)
+    # 到结束时间还有多少分钟
+    add_time = (target_end_time.timestamp() - now_time.timestamp()) / 60
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = add_time
+    update.game_update_flow(add_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
         character_id: int,
@@ -2155,6 +2188,39 @@ def handle_target_to_self(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_TO_MASTUREBATE)
+def handle_target_to_masturebate(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将交互对象设为对当前场景中的首位自慰角色
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if len(now_scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in now_scene_data.character_list:
+            # 遍历非自己且非玩家的角色
+            if chara_id != character_id and chara_id != 0:
+                other_character_data: game_type.Character = cache.character_data[chara_id]
+                # 检测是否在自慰
+                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                    character_data.target_character_id = chara_id
+                    break
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)

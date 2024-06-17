@@ -35,7 +35,7 @@ class ItemTextEdit(QWidget):
         # 加入一行文本提示
         self.max_length = 0
         self.info_label = QLabel()
-        self.info_label.setText(f"右键菜单可插入更多文本，当前最长行字符总长度为{self.max_length}，建议不要超过100")
+        self.info_label.setText(f"右键可浏览全部代码文本进行插入，当前最长行字符总长度为{self.max_length}，建议不要超过100")
         # 上述三个按钮的布局变成横向
         button_layout = QHBoxLayout()
         button_layout.addWidget(self.save_button)

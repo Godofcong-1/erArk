@@ -2,21 +2,24 @@ class BehaviorEffect:
     """行为结算效果函数"""
 
     NOTHING = 9999
-    """ 系统状态 什么都没有的空结算 """
-    INTERRUPT_TARGET_ACTIVITY = 10000
-    """ 系统状态 打断交互对象活动 """
+    """ 系统量_基础 什么都没有的空结算 """
     OPTION_FATER = 10001
-    """ 系统状态 开启子选项面板 """
-    TARGET_TO_PLAYER = 10002
-    """ 系统状态 将交互对象设为对玩家交互 """
+    """ 系统量_基础 开启子选项面板 """
     OPEN_INSTRUCT_FILTER_H = 10003
-    """ 系统状态 开启H面板过滤器 """
+    """ 系统量_基础 开启H面板过滤器 """
     CLOSE_INSTRUCT_FILTER_H = 10004
-    """ 系统状态 关闭H面板过滤器 """
+    """ 系统量_基础 关闭H面板过滤器 """
+
+    INTERRUPT_TARGET_ACTIVITY = 10000
+    """ 系统量_交互 打断交互对象活动 """
+    TARGET_TO_PLAYER = 10002
+    """ 系统量_交互 将交互对象设为对玩家交互 """
     PL_TARGET_TO_ME = 10005
-    """ 系统状态 将玩家的交互对象设为自己 """
+    """ 系统量_交互 将玩家的交互对象设为自己 """
     TARGET_TO_SELF = 10006
-    """ 系统状态 将交互对象设为对自己交互 """
+    """ 系统量_交互 将交互对象设为对自己交互 """
+    TARGET_TO_MASTUREBATE = 10007
+    """ 系统量_交互 将交互对象设为对当前场景中的首位自慰角色 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -746,8 +749,12 @@ class BehaviorEffect:
     TARGET_NPC_ACTIVE_H_OFF = 1404
     """ 属性_H 对方关闭主动H """
 
-    TRGET_GET_WEEKNESSS_BY_DR = 1501
+    TRGET_GET_WEEKNESSS_BY_DR = 1601
     """ 属性_素质 交互对象获得[被博士持有把柄] """
+
+    WAIT_UNITL_TRAGET_ACTION_END = 1701
+    """ 行动 玩家等待至交互对象行动结束 """
+
 
 class SecondEffect:
     """二段结算效果函数"""

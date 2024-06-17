@@ -1284,16 +1284,15 @@ def handle_move_to_someone_masturebate(character_id: int) -> int:
     now_scene_data = cache.scene_data[now_scene_str]
     if (
         character_data.behavior.move_target == character_data.position and
-        len(now_scene_data.character_list) > 2
+        len(now_scene_data.character_list) >= 2
     ):
         # 遍历当前角色列表
         for chara_id in now_scene_data.character_list:
             # 遍历非自己且非玩家的角色
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
-                last_state = other_character_data.last_state[-1]
                 # 检测是否在自慰
-                if last_state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
                     return 1
     return 0
 
@@ -3831,7 +3830,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -3875,7 +3874,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
 def handle_normal_1(character_id: int) -> int:
     """
     1正常的普通状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3888,6 +3887,7 @@ def handle_normal_1(character_id: int) -> int:
         or handle_eat_food_flag_ge_1(character_id)
         or handle_shower_flag_123(character_id)
         or handle_milk_flag_1(character_id)
+        or handle_masturebate_flag_g_0(character_id)
     ):
         return 0
     else:
@@ -4205,7 +4205,7 @@ def handle_t_normal_24567(character_id: int) -> int:
 def handle_normal_124567(character_id: int) -> int:
     """
     124567正常（可能基础异常、AI跟随）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:妊娠限制：临盆、产后、婴儿
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
@@ -4233,7 +4233,7 @@ def handle_normal_124567(character_id: int) -> int:
 def handle_normal_1267(character_id: int) -> int:
     """
     1267正常（可能AI跟随、服装异常或意识模糊）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:妊娠限制：临盆、产后、婴儿
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:监禁：装袋搬走、监禁
@@ -4257,7 +4257,7 @@ def handle_normal_1267(character_id: int) -> int:
 def handle_normal_123467(character_id: int) -> int:
     """
     123467正常（可能意识模糊）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:妊娠限制：临盆、产后、婴儿
     \n3:AI行动受限：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
@@ -4302,7 +4302,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶
+    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n包括2:临盆、产后、婴儿
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
@@ -8644,17 +8644,16 @@ def handle_scene_someone_is_masturebate(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 场景角色数大于2时进行检测
-    if len(scene_data.character_list) > 2:
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
             # 遍历非自己且非玩家的角色
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
-                last_state = other_character_data.last_state[-1]
                 # 检测是否在自慰
-                if last_state == constant.CharacterStatus.STATUS_MASTUREBATE:
-                    return 999
+                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                    return 1
     return 0
 
 
@@ -14405,7 +14404,7 @@ def handle_desire_point_ge_100(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     if character_data.desire_point >= 100:
-        return 1
+        return character_data.desire_point * 2
     else:
         return 0
 

@@ -30,7 +30,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     add_time = int((now_time - start_time).seconds / 60)
 
     behavior_id = now_character_data.behavior.behavior_id
-    if instruct_flag:
+    if instruct_flag > 0:
         # 进行一段结算
         if behavior_id in game_config.config_behavior_effect_data:
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
@@ -46,7 +46,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # 结算上次进行聊天的时间，以重置聊天计数器#
         change_character_talkcount_for_time(character_id, now_time)
 
-    if not instruct_flag:
+    if instruct_flag != 1:
         # 主事件
         event_id = now_character_data.event.event_id
         handle_event_data(event_id, character_id, add_time, change_data, now_time)

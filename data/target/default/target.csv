@@ -60,10 +60,10 @@ ai的目标,,,,
 83,90,milk_flag_1|in_restroom,12,要挤奶状态，且在休息室，则挤奶
 
 86,91,normal_1267|desire_point_ge_100,11,1267正常（可能AI跟随、服装异常或意识模糊），欲望值到100%，则进入要自慰状态
-87,511,masturbation_flag_1|not_in_toilet_female,12,当前要自慰_洗手间，且不在女洗手间里，则去洗手间
-88,92,masturbation_flag_1|in_toilet_female,12,当前要自慰_洗手间，且在女洗手间里，则自慰
-89,502,masturbation_flag_2|not_in_dor,12,当前要自慰_宿舍，不在宿舍，则回宿舍
-90,92,masturbation_flag_2|in_dor,12,当前要自慰_宿舍，已在宿舍，则自慰
+87,511,masturebate_flag_1|not_in_toilet_female,12,当前要自慰_洗手间，且不在女洗手间里，则去洗手间
+88,92,masturebate_flag_1|in_toilet_female,12,当前要自慰_洗手间，且在女洗手间里，则自慰
+89,502,masturebate_flag_2|not_in_dor,12,当前要自慰_宿舍，不在宿舍，则回宿舍
+90,92,masturebate_flag_2|in_dor,12,当前要自慰_宿舍，已在宿舍，则自慰
 
 100,100,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
 101,101,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触
