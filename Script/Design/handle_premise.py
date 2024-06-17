@@ -7808,8 +7808,8 @@ def handle_target_love_le_2(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
     for i in {201, 202}:
         if target_data.talent[i]:
-            return 0
-    return 1
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_OBEY_1)
