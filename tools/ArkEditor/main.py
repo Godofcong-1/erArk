@@ -238,7 +238,7 @@ def load_talk_data_to_cache():
             for k in now_type_data:
                 now_type = now_type_data[k]
                 # print(f"debug row = {row}, k = {k}, now_type = {now_type}")
-                if not len(row[k]):
+                if row[k] is None or not len(row[k]):
                     del row[k]
                     continue
                 if now_type == "int":
@@ -336,12 +336,30 @@ def change_status_menu(action: QWidgetAction):
             status_menu.setFont(font)
         data_list.status_menu.addMenu(status_menu)
     status_group.triggered.connect(change_status_menu)
-    data_list.status_menu.addActions(action_list)
+    # 如果有选中的条目，则更新该条目的状态
     if cache_control.now_select_id != '':
+        status_cid = cache_control.now_status
+        # 更新状态id
         if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].status_id = cache_control.now_status
+            cache_control.now_event_data[cache_control.now_select_id].status_id = status_cid
         elif cache_control.now_edit_type_flag == 0:
-            cache_control.now_talk_data[cache_control.now_select_id].status_id = cache_control.now_status
+            cache_control.now_talk_data[cache_control.now_select_id].status_id = status_cid
+        # 更新状态的触发人和持续时间
+        status_duration = int(cache_control.status_all_data[status_cid]["duration"])
+        status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+        info_text = "耗时"
+        if status_duration >= 0:
+            info_text += f"{status_duration}分"
+        else:
+            info_text += "不定"
+        info_text += ",触发人:"
+        if status_trigger == "pl":
+            info_text += "仅玩家"
+        elif status_trigger == "npc":
+            info_text += "仅npc"
+        elif status_trigger == "both":
+            info_text += "玩家和npc均可"
+        data_list.label3_text.setText(info_text)
 
 
 def change_type_menu(action: QWidgetAction):

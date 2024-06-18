@@ -95,7 +95,7 @@ class DataList(QWidget):
         self.text_id_text_edit.setFixedWidth(100)
 
         # 总布局
-        self.layout.addLayout(self.top_layout, 0, 0)
+        self.layout.addLayout(self.top_layout, 0, 0, 1, -1)
         self.layout.addWidget(self.new_text_button, 1, 0)
         self.layout.addWidget(self.copy_text_button, 1, 1)
         self.layout.addWidget(self.delete_text_button, 1, 2)
@@ -449,6 +449,7 @@ class DataList(QWidget):
         self.edited_item = None
         self.list_widget.clear()
         self.update_clear = 0
+        status_cid = cache_control.now_status
 
         if cache_control.now_edit_type_flag == 0:
             # 按cid排序整个cache_control.now_talk_data
@@ -472,26 +473,11 @@ class DataList(QWidget):
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
                 status_text = cache_control.status_data[status_cid]
-                status_duration = int(cache_control.status_all_data[status_cid]["duration"])
-                status_trigger = cache_control.status_all_data[status_cid]["trigger"]
-                info_text = "耗时"
-                if status_duration >= 0:
-                    info_text += f"{status_duration}分"
-                else:
-                    info_text += "不定"
-                info_text += ",触发人:"
-                if status_trigger == "pl":
-                    info_text += "仅玩家"
-                elif status_trigger == "npc":
-                    info_text += "仅npc"
-                elif status_trigger == "both":
-                    info_text += "玩家和npc均可"
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
                 cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.chara_id_text_edit.setText(chara_id)
                 self.text_id_text_edit.setText(cache_control.now_select_id)
-                self.label3_text.setText(info_text)
                 # self.text_id_text_edit.setText(cache_control.now_talk_data[cache_control.now_select_id].cid)
 
                 # 遍历 list_widget 中的所有 item
@@ -529,12 +515,12 @@ class DataList(QWidget):
                 item.uid = uid
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
-                now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
-                status_text = cache_control.status_data[now_cid]
+                status_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
+                status_text = cache_control.status_data[status_cid]
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
-                cache_control.now_status = now_cid
+                cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
                 self.chara_id_text_edit.setText(chara_id)
@@ -550,3 +536,20 @@ class DataList(QWidget):
                         # 将其设定为当前行
                         self.list_widget.setCurrentItem(item)
                         break
+
+        # 更新状态耗时与触发人信息
+        status_duration = int(cache_control.status_all_data[status_cid]["duration"])
+        status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+        info_text = "耗时"
+        if status_duration >= 0:
+            info_text += f"{status_duration}分"
+        else:
+            info_text += "不定"
+        info_text += ",触发人:"
+        if status_trigger == "pl":
+            info_text += "仅玩家"
+        elif status_trigger == "npc":
+            info_text += "仅npc"
+        elif status_trigger == "both":
+            info_text += "玩家和npc均可"
+        self.label3_text.setText(info_text)
