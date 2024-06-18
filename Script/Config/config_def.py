@@ -718,6 +718,8 @@ class Status:
     """ 描述 """
     duration: int
     """ 耗时 """
+    trigger: str
+    """ 触发人 """
     tag: str
     """ 标签 """
 
