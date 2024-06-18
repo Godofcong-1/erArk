@@ -4896,11 +4896,431 @@ msgstr " <Imprisoned>"
 msgid " <逆>"
 msgstr " <Active>"
 
-msgid "{character_name} {favorability_and_trust}{visitor}"
+msgid "贸易"
+msgstr "Trade"
+
+msgid "成人用品店"
+msgstr "Adult Items' Shop"
+
+msgid "书"
+msgstr "Library"
+
+msgid "藏品馆"
+msgstr "Collection Hall"
+
+msgid "太累了\n"
+msgstr "too tired\n"
+
+msgid ""
+"\n"
+"{0}失去了【性无知】\n"
+"\n"
+msgstr ""
+"\n"
+"{0} lost [Sexual Ignorance]\n"
+"\n"
+
+msgid ""
+"\n"
+"获得了{0}穿着的{1}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
+"\n"
+msgstr ""
+"\n"
+"Obtained {0}'s {1} (with virgin blood), added into collection automatically, can be checked in Collection Hall\n"
+"\n"
+
+msgid "{0}(沾有处子血)"
+msgstr "{0} (with virgin blood)"
+
+msgid ""
+"\n"
+"{0}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n"
+"\n"
+msgstr ""
+"\n"
+"{0}'s virgin blood dropped, and you collected a drop with tube, added into collection automatically, can be checked in Collection Hall\n"
+"\n"
+
+msgid "一滴{0}的处子血"
+msgstr "A drop of {0}'s virgin blood"
+
+msgid ""
+"\n"
+"{0}的理智耗尽，催眠结束\n"
+"\n"
+msgstr ""
+"\n"
+"{0}'s Sanity is exhausted, hypnosis ends\n"
+"\n"
+
+msgid ""
+"\n"
+"{0}的体力上限增加{1},气力上限增加{2}"
+msgstr ""
+"\n"
+"{0}'s Stamina limit +{1}, Energy limit +{2}"
+
+msgid ""
+"\n"
+"{0}的体力上限增加{1},气力上限增加{2}\n"
+msgstr ""
+"\n"
+"{0}'s Stamina limit +{1}, Energy limit +{2}\n"
+
+msgid ""
+"\n"
+"发现以下衣柜里有衣服\n"
+"\n"
+msgstr ""
+"\n"
+"Clothes found inside this closet\n"
+"\n"
+
+msgid ""
+"\n"
+"所有衣柜都是空的\n"
+"\n"
+msgstr ""
+"\n"
+"All closets are empty\n"
+"\n"
+
+msgid "{0}{1}的衣柜"
+msgstr "{0}{1}'s closet"
+
+msgid ""
+"\n"
+"{0}的衣柜里放着刚脱下来的：\n"
+msgstr ""
+"\n"
+"{0}'s closet has the clothes that just took off: \n"
+
+msgid "({0}ml精液)"
+msgstr "({0}ml semen)"
+
+msgid "[001]把内衣拿起来闻一闻味道"
+msgstr "[001]Takes the bra and smells"
+
+msgid "[002]偷走内裤"
+msgstr "[002]Steal underwear"
+
+msgid "[003]偷走袜子"
+msgstr "[003]Steal socks"
+
+msgid "[004]用衣服冲，射在上面"
+msgstr "[004]Use clothes to ejaculate"
+
+msgid " ({0}ml精液)"
+msgstr " ({0}ml semen) "
+
+msgid "在{0}的{1}{2}"
+msgstr "On {0}'s {1}{2}"
+
+msgid " <脏污>"
+msgstr " <Dirty>"
+
+msgid " <灌肠中>"
+msgstr " <Lavaging>"
+
+msgid " <已灌肠清洁过>"
+msgstr " <Lavaged>"
+
+msgid " <精液灌肠中>"
+msgstr " <Lavaging with semen>"
+
+msgid " <已精液灌肠过>"
+msgstr " <Semen lavaged>"
+
+msgid "<未知>（需要腔内透视）\n"
+msgstr "<Unknown> (needs Cavity Perspective)\n"
+
+msgid " <破处血>"
+msgstr " <Virgin blood>"
+
+msgid " <些许爱液>"
+msgstr " <Some love juice>"
+
+msgid " <充分湿润>"
+msgstr " <Very wet>"
+
+msgid " <泛滥的一塌糊涂>"
+msgstr " <Overflowed>"
+
+msgid " <残留的尿渍>"
+msgstr " <Urine leftover>"
+
+msgid " <洁净>"
+msgstr " <Clean>"
+
+msgid " <些许尿意>"
+msgstr " <Slight urge to pee>"
+
+msgid " <充盈的尿意>"
+msgstr " <Very urged to pee>"
+
+msgid " <{0}ml精液>"
+msgstr " <{0}ml semen>"
+
+msgid " 未知（需要内衣透视）\n"
+msgstr " Unknown (needs Bra Perspective)\n"
+
+msgid " 乳汁量为{0}ml"
+msgstr " breast milk {0}ml"
+
+msgid "受精概率{0}%"
+msgstr "Fertilize rate {0}%"
+
+msgid " 当前为{0},{1}"
+msgstr " currently {0}, {1}"
+
+msgid " 用掉了{0}个避孕套，总精液量{1}ml"
+msgstr " {0} condoms used, total semen {1}ml"
+
+msgid "只流出了些许前列腺液，已经射不出精液了"
+msgstr "Only some prostatic fluid is flowing out, as semen stored has ran out"
+
+msgid "在避孕套里"
+msgstr "In the condom"
+
+msgid "射精部位选择"
+msgstr "Choose body part for ejaculation"
+
+msgid "◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n"
+msgstr ""
+"◆Normal food is being ate alone if no one is around, or shared if there's "
+"others, while special food is only for the target. \n"
+
+msgid "○正常调味食物\n"
+msgstr "○Normal food\n"
+
+msgid "○特殊调味食物\n"
+msgstr "○Special food\n"
+
+msgid "(食堂自助免费拿取)"
+msgstr "(Canteen free pick-up)"
+
+msgid "成人用品商店"
+msgstr "Adult items shop"
+
+msgid "药品"
+msgstr "Medicines"
+
+msgid "机器"
+msgstr "Machines"
+
+msgid "消耗品"
+msgstr "Consumables"
+
+msgid "H药品"
+msgstr "H medicines"
+
+msgid "H用机器"
+msgstr "H machines"
+
+msgid "SM器具"
+msgstr "SM tools"
+
+msgid "当前持有粉色凭证：{0}"
+msgstr "Current Pink Certificates: {0}"
+
+msgid "(持有："
+msgstr "(Having: "
+
+msgid "(未持有)"
+msgstr "{Not held}"
+
+msgid "(已持有)"
+msgstr "(Held)"
+
+msgid "已达到最高堆叠上限"
+msgstr "Maximum limit reached"
+
+msgid "你没有足够的粉色凭证"
+msgstr "Pink Certificates insufficient"
+
+msgid " 当前的访客上限为：{0}人\n"
+msgstr " Current guest limit: {0}\n"
+
+msgid " 目前没有访客\n"
+msgstr " no guests currently\n"
+
+msgid " 目前的访客有："
+msgstr " current guests: "
+
+msgid " [{0}]{1}，居住房间：{2}，离开{3}\n"
+msgstr " [{0}]{1}, lives at: {2}, leaves {3}\n"
+
+msgid ""
+"\n"
+" 当前邀请目标："
+msgstr ""
+"\n"
+" Current invite target: "
+
+msgid " 需要访客区至少为2级才可以邀请访客\n"
+msgstr " needs Guest Zone Lv2 to invite guests\n"
+
+msgid " 无"
+msgstr " none"
+
+msgid ""
+"\n"
+" 邀请进度：{0}%"
+msgstr ""
+"\n"
+" Invite progress: {0}%"
+
+msgid ""
+"\n"
+" 邀请效率加成："
+msgstr ""
+"\n"
+" Invite efficiency boost: "
+
+msgid "(话术lv{0}:+{1}%)"
+msgstr "(Speech lv{0}: +{1}%)"
+
+msgid "[002]目标选择"
+msgstr "[002]Target selection"
+
+msgid " 无\n"
+msgstr " none\n"
+
+msgid " 访客区等级：{0}\n"
+msgstr " Guest Zone level: {0}\n"
+
+msgid " 访客停留时长：{0}天\n"
+msgstr " guest staying duration: {0} days\n"
+
+msgid " 访客数量上限：{0}人\n"
+msgstr " guest limit: {0}\n"
+
+msgid ""
+" 可邀请范围：{0}\n"
+"\n"
+msgstr ""
+" Invite range: {0}\n"
+"\n"
+
+msgid " 可邀请范围："
+msgstr " Invite range: "
+
+msgid "全泰拉"
+msgstr "The whole Terra"
+
+msgid " 当前可邀请目标有（更改后会重置邀请进度）："
+msgstr " Current available target (reset progress on change): "
+
+msgid " 当前没有可邀请目标\n"
+msgstr " no invite target\n"
+
+msgid "制作食物"
+msgstr "Make food"
+
+msgid "○当前的调味： {0}"
+msgstr "○Current taste: {0}"
+
+msgid ""
+"\n"
+"  基础:    "
+msgstr ""
+"\n"
+"  Basic:    "
+
+msgid ""
+"\n"
+"  精液:    "
+msgstr ""
+"\n"
+"  Semen:    "
+
+msgid ""
+"\n"
+"  药物:    "
+msgstr ""
+"\n"
+"  Medicine:    "
+
+msgid "○选择要制作的食物：\n"
+msgstr "○Choose food to make: \n"
+
+msgid "  随着一阵火焰，5条内裤化为一缕青烟，消散在空中\n"
+msgstr "  After a fire, 5 underwears became smoke and vanished in the sky\n"
+
+msgid "  {0}感觉心里轻松了很多，对{1}的印象有些改观了，{2}下降到了{3}级\n"
+msgstr "  {0} feels better towards {1}, {2} decreased to Lv{3}\n"
+
+msgid "  内裤数量不足\n"
+msgstr " Insufficient underwears\n"
+
+msgid ""
+"身份验证通过，最高权限账户——管理员账户\n"
+"\n"
+msgstr ""
+"Identity verification passed, highest authority account——Administrator\n"
+"\n"
+
+msgid ""
+"Dr.{0}，欢迎访问普瑞赛斯终端，请问我可以为您做什么？\n"
+"\n"
+msgstr ""
+"Dr.{0}，welcomes to P.R.T.S., what can I do for you?\n"
+"\n"
+
+msgid ""
+"○请注意，本终端内的资料查询功能会直接涉及游戏流程和实际内容的介绍和剧透，如果更倾向于自己体验和摸索的话，请仅在必要时刻再使用本功能。\n"
+"\n"
+msgstr ""
+"○Beware, the terminal will directly introduce and spoil the gameplay and content, if you wish to feel and search yourselves, only use this when necessary. \n"
+"\n"
+
+msgid "[000]查询系统本身的相关资料"
+msgstr "[000]Checks system's information"
+
+msgid "[001]获得日常生活的建议"
+msgstr "[001]Gets advices for daily life"
+
+msgid "[002]询问如何与干员相处"
+msgstr "[002]Asks how to interact with Operators"
+
+msgid "[003]与干员发生肉体关系时的注意事项"
+msgstr "[003]Precautions when having body contact"
+
+msgid "[004]怎么样才能更好的经营罗德岛"
+msgstr "[004]How to manage Rhodes Island better"
+
+msgid "[011]与普瑞赛斯闲聊（未实装）"
 msgstr ""
 
-msgid "{character_name}{character_nick_name}{eja}"
-msgstr ""
+msgid "{year}年{month}月{day}日{hour}点{minute}分"
+msgstr "{year}/{month}/{day} {hour}:{minute}"
+
+msgid " {0}博士"
+msgstr " Dr. {0}"
+
+msgid "脱到只穿内衣      "
+msgstr "Strip down till bra left"
+
+msgid "脱到只穿袜子手套等"
+msgstr "Strip down till socks and gloves left"
+
+msgid "脱到全裸          "
+msgstr "Strip down till nakes"
+
+msgid "把内裤收走        "
+msgstr "Take off underwear"
+
+msgid " ：会脱掉"
+msgstr " : Will strip down"
+
+msgid " ：无可脱的衣服"
+msgstr " : No available clothes"
+
+msgid " ：会收走"
+msgstr " : Will take off"
+
+msgid " ：无可收的内裤"
+msgstr " : No available underwear"
 
 msgid "Ｎ感觉"
 msgstr "N Feel"
@@ -15717,9 +16137,6 @@ msgstr "Library"
 msgid "图书馆办公室"
 msgstr "Office"
 
-msgid "藏品馆"
-msgstr "Collection Hall"
-
 msgid "仓储区入口"
 msgstr "Storage Room"
 
@@ -16229,9 +16646,6 @@ msgstr "Shan-Ch'eng Teahouse"
 
 msgid "快捷连锁披萨店"
 msgstr "Express Pizzeria"
-
-msgid "成人用品店"
-msgstr "Adult Items' Shop"
 
 msgid "理发店"
 msgstr "Hair Salon"

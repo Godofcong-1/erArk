@@ -18,27 +18,27 @@ msgstr ""
 
 #: .\data\talk\arts\active_h.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-逆推的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body control hypnosis - active H towards {TargetName}"
 
 #: .\data\talk\arts\blockhead.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-木头人的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body control hypnosis - blockhead towards {TargetName}"
 
 #: .\data\talk\arts\force_climax.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-强制高潮的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body control hypnosis - climax command towards {TargetName}"
 
 #: .\data\talk\arts\force_ovulation.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-强制排卵的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body control hypnosis - force ovulation towards {TargetName}"
 
 #: .\data\talk\arts\hormone_off.csv:6
 msgid "{Name}关闭了信息素"
-msgstr ""
+msgstr "{Name} turned off the pheromones"
 
 #: .\data\talk\arts\hormone_on.csv:6
 msgid "{Name}开启了信息素"
-msgstr ""
+msgstr "{Name} turned on the pheromones"
 
 #: .\data\talk\arts\hypnosis_all.csv:6
 msgid "{Name}发动源石技艺，将在场所有人都催眠了"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: .\data\talk\arts\increase_body_sensitivity.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-敏感度提升的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body control hypnosis - increase sensitivity towards {TargetName}"
 
 #: .\data\talk\arts\penetrating_vision_off.csv:6
 msgid "{Name}短暂的闭上眼睛，等到再次睁眼时已经没了源石技艺带来的透视效果"
@@ -66,7 +66,7 @@ msgstr ""
 
 #: .\data\talk\arts\roleplay.csv:6
 msgid "{Name}触发了对{TargetName}使用心控催眠-角色扮演的地文"
-msgstr ""
+msgstr "{Name} triggered the event of mind control hypnosis - roleplay towards {TargetName}"
 
 #: .\data\talk\chara\0001_阿米娅.csv:6
 msgid "和{TargetName}一起聊了一下最近新加入的干员的情况"
@@ -9542,7 +9542,7 @@ msgstr ""
 
 #: .\data\talk\daily\ask_date.csv:6
 msgid "{Name}触发了邀请约会指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of asking for date"
 
 #: .\data\talk\daily\ask_make_coffee.csv:6
 msgid "在{Name}的请求下，{TargetName}撕开了一包速溶咖啡倒进热水。"
@@ -9818,11 +9818,11 @@ msgstr ""
 
 #: .\data\talk\daily\buy_item.csv:6
 msgid "{Name}触发了购买道具指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of purchasing item"
 
 #: .\data\talk\daily\change_diapers.csv:6
 msgid "{Name}触发了换尿布指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of changing diapers"
 
 #: .\data\talk\daily\chat.csv:6
 msgid "{Name}与{TargetName}聊了一会儿天"
@@ -10294,7 +10294,7 @@ msgstr ""
 
 #: .\data\talk\daily\chat_failed.csv:6
 msgid "{Name}触发了聊天失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing to chat"
 
 #: .\data\talk\daily\chat_failed.csv:8
 msgid "{Name}和{TargetName}尝试聊天，但是由于彼此不熟悉，气氛很尴尬。"
@@ -10410,11 +10410,11 @@ msgstr ""
 
 #: .\data\talk\daily\collcet_panty.csv:6
 msgid "{Name}触发了收起内裤指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of taking underwear"
 
 #: .\data\talk\daily\drink_alcohol.csv:6
 msgid "触发劝酒指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of persuading to stop drinking"
 
 #: .\data\talk\daily\eat.csv:6
 msgid "{TargetName}食用了{FoodName}"
@@ -10622,15 +10622,15 @@ msgstr ""
 
 #: .\data\talk\daily\give_toy.csv:6
 msgid "{Name}触发了给玩具指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of giving toys"
 
 #: .\data\talk\daily\hold_child.csv:6
 msgid "{Name}触发了抱小孩指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hugging"
 
 #: .\data\talk\daily\listen_complaint.csv:6
 msgid "{Name}触发了听牢骚指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of listening to complaints"
 
 #: .\data\talk\daily\listen_complaint.csv:7
 msgid "{TargetName}向{Name}倾诉了最近的烦心事"
@@ -10638,7 +10638,7 @@ msgstr ""
 
 #: .\data\talk\daily\listen_inflation.csv:6
 msgid "{Name}触发了听肚子里的动静指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hearing on stomach"
 
 #: .\data\talk\daily\make_coffee.csv:6
 msgid "{Name}为{TargetName}冲泡了速溶咖啡"
@@ -10810,7 +10810,7 @@ msgstr ""
 
 #: .\data\talk\daily\make_coffee_add.csv:6
 msgid "{Name}触发了泡咖啡（加料）指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of making coffee (with add ons)"
 
 #: .\data\talk\daily\make_coffee_add.csv:7
 msgid "{Name}为{TargetName}冲泡了不明来源的速溶咖啡"
@@ -10858,11 +10858,11 @@ msgstr ""
 
 #: .\data\talk\daily\massage.csv:6
 msgid "{Name}触发了按摩指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of massaging"
 
 #: .\data\talk\daily\nuirse_child.csv:6
 msgid "{Name}触发了喂奶指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of feeding"
 
 #: .\data\talk\daily\pee.csv:6
 msgid "{Name}开始排泄了。"
@@ -10882,7 +10882,7 @@ msgstr ""
 
 #: .\data\talk\daily\play_with_child.csv:6
 msgid "{Name}触发了一起玩耍指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing together"
 
 #: .\data\talk\daily\refuse_eat.csv:6
 msgid "{TargetName}刚尝了一口{FoodName}就酸得她咬住了下嘴唇，生气地看向{Name}并拒绝再试第二口"
@@ -11030,7 +11030,7 @@ msgstr ""
 
 #: .\data\talk\daily\sing_children_song.csv:6
 msgid "{Name}触发了哼唱儿歌指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of singing"
 
 #: .\data\talk\daily\sleep.csv:6
 msgid "{Name}躺在床上，闭上眼睛，感觉身体逐渐放松，呼吸变得平稳而深沉，眼皮也渐渐沉重，慢慢睡着了。"
@@ -11586,7 +11586,7 @@ msgstr ""
 
 #: .\data\talk\daily\teach_talk.csv:6
 msgid "{Name}触发了教说话指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of teaching to speak"
 
 #: .\data\talk\obscenity\ask_for_pan.csv:6
 msgid "{Name}向{TargetName}索要内裤。"
@@ -11818,15 +11818,15 @@ msgstr ""
 
 #: .\data\talk\obscenity\bagging_and_moving.csv:6
 msgid "{Name}触发了将{TargetName}装袋搬走指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of bagging {TargetName} and move"
 
 #: .\data\talk\obscenity\confession.csv:6
 msgid "{Name}触发了告白指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of proposing"
 
 #: .\data\talk\obscenity\confession_failed.csv:6
 msgid "{Name}触发了告白失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing to propose"
 
 #: .\data\talk\obscenity\do_h.csv:6
 msgid "{Name}邀请{TargetName}和自己H。"
@@ -12142,23 +12142,23 @@ msgstr ""
 
 #: .\data\talk\obscenity\embrace.csv:6
 msgid "{Name}触发了拥抱指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hugging"
 
 #: .\data\talk\obscenity\give_necklace.csv:6
 msgid "{Name}触发了戴上项圈指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on collar"
 
 #: .\data\talk\obscenity\give_necklace_failed.csv:6
 msgid "{Name}触发了戴上项圈失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing to put on collar"
 
 #: .\data\talk\obscenity\hand_in_hand.csv:6
 msgid "{Name}触发了牵手指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of holding hands"
 
 #: .\data\talk\obscenity\high_obscenity_anus.csv:6
 msgid "{Name}触发了对{TargetName}重度猥亵失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing serious indecency towards {TargetName}"
 
 #: .\data\talk\obscenity\kiss.csv:6
 msgid "当{Name}的唇触碰{TargetName}的唇，{TargetName}感到所有的烦恼都烟消云散。"
@@ -12282,79 +12282,79 @@ msgstr ""
 
 #: .\data\talk\obscenity\kiss_fail.csv:6
 msgid "{Name}触发了对{TargetName}亲吻失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing to kiss towards {TargetName}"
 
 #: .\data\talk\obscenity\lap_pillow.csv:6
 msgid "{Name}触发了膝枕指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of laying on lap"
 
 #: .\data\talk\obscenity\low_obscenity_anus.csv:6
 msgid "{Name}触发了对{TargetName}轻度猥亵失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failing mild indecency towards {TargetName}"
 
 #: .\data\talk\obscenity\milk.csv:6
 msgid "{Name}触发了挤奶指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of milking"
 
 #: .\data\talk\obscenity\morning_salutation.csv:6
 msgid "{Name}触发了早安问候：叫起床的地文"
-msgstr ""
+msgstr "{Name} triggered the event of morning greeting: waking up"
 
 #: .\data\talk\obscenity\morning_salutation.csv:7
 msgid "{Name}触发了早安问候：早安吻的地文"
-msgstr ""
+msgstr "{Name} triggered the event of morning greeting: morning kiss"
 
 #: .\data\talk\obscenity\morning_salutation.csv:8
 msgid "{Name}触发了早安问候：早安咬的地文"
-msgstr ""
+msgstr "{Name} triggered the event of morning greeting: morning bite"
 
 #: .\data\talk\obscenity\night_salutation.csv:6
 msgid "{Name}触发了晚安问候：催睡觉的地文"
-msgstr ""
+msgstr "{Name} triggered the event of night greeting: inducing to sleep"
 
 #: .\data\talk\obscenity\night_salutation.csv:7
 msgid "{Name}触发了晚安问候：晚安吻的地文"
-msgstr ""
+msgstr "{Name} triggered the event of night greeting: night kiss"
 
 #: .\data\talk\obscenity\night_salutation.csv:8
 msgid "{Name}触发了晚安问候：晚安咬的地文"
-msgstr ""
+msgstr "{Name} triggered the event of night greeting: night bite"
 
 #: .\data\talk\obscenity\put_into_prison.csv:6
 msgid "{Name}触发了将{TargetName}投入监牢指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting {TargetName} into prison"
 
 #: .\data\talk\obscenity\raise_skirt.csv:6
 msgid "{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}"
-msgstr ""
+msgstr "{Name} triggered the event of lifting up skirt, lifting {TargetName}'s {TagetSkiName} up and revealing the {TagetPanName} inside"
 
 #: .\data\talk\obscenity\see_h.csv:6
 msgid "{Name}触发了目睹玩家与其他角色H的地文"
-msgstr ""
+msgstr "{Name} triggered the event of seeing player doing H with others"
 
 #: .\data\talk\obscenity\set_free.csv:6
 msgid "{Name}触发了将{TargetName}解除囚禁指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of freeing {TargetName} from captivity"
 
 #: .\data\talk\obscenity\smell_underwear.csv:6
 msgid "{Name}触发了闻内衣指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of smelling bra"
 
 #: .\data\talk\obscenity\steal_pan.csv:6
 msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetName}穿着的{TagetPanName}脱下来偷走了"
-msgstr ""
+msgstr "{Name} {PlayerNickName} triggered the event of stealing underwear, took off and stole {TargetName}'s {TagetPanName}"
 
 #: .\data\talk\obscenity\steal_socks.csv:6
 msgid "{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TagetSocName}脱下来偷走了"
-msgstr ""
+msgstr "{Name} {PlayerNickName} triggered the event of stealing underwear, took off and stole {TargetName}'s {TagetSocName}"
 
 #: .\data\talk\obscenity\touch_anus.csv:6
 msgid "{Name}触发了手指插入（A）指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of inserting fingers (A)"
 
 #: .\data\talk\obscenity\touch_breast.csv:6
 msgid "{Name}触发了摸胸指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching breasts"
 
 #: .\data\talk\obscenity\touch_breast.csv:7
 msgid "{Name}借检查身体的由头触碰了{TargetName}的胸部\n绝壁\n是有些可怜的家伙呢"
@@ -12398,23 +12398,23 @@ msgstr ""
 
 #: .\data\talk\obscenity\touch_buttocks.csv:6
 msgid "{Name}触发了摸屁股指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching butt"
 
 #: .\data\talk\obscenity\touch_car.csv:6
 msgid "{Name}触发了摸小车指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching little car"
 
 #: .\data\talk\obscenity\touch_clitoris.csv:6
 msgid "{Name}触发了阴蒂爱抚指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching breasts"
 
 #: .\data\talk\obscenity\touch_ears.csv:6
 msgid "{Name}触发了摸耳朵指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching ears"
 
 #: .\data\talk\obscenity\touch_head.csv:6
 msgid "{Name}触发了摸头指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching head"
 
 #: .\data\talk\obscenity\touch_head.csv:7
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}好像不太高兴"
@@ -12466,103 +12466,103 @@ msgstr ""
 
 #: .\data\talk\obscenity\touch_horn.csv:6
 msgid "{Name}触发了摸角指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching horns"
 
 #: .\data\talk\obscenity\touch_ring.csv:6
 msgid "{Name}触发了摸光环指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching halo"
 
 #: .\data\talk\obscenity\touch_tail.csv:6
 msgid "{Name}触发了摸尾巴指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching tail"
 
 #: .\data\talk\obscenity\touch_tentacle.csv:6
 msgid "{Name}触发了摸触手指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching tentacles"
 
 #: .\data\talk\obscenity\touch_vagina.csv:6
 msgid "{Name}触发了手指插入（V）指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of inserting fingers (V)"
 
 #: .\data\talk\obscenity\touch_wing.csv:6
 msgid "{Name}触发了摸光翼指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of touching wings"
 
 #: .\data\talk\play\aromatherapy.csv:6
 msgid "{Name}对{TargetName}触发了香薰疗愈_回复的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Recovery towards {TargetName}"
 
 #: .\data\talk\play\aromatherapy.csv:7
 msgid "{Name}对{TargetName}触发了香薰疗愈_习得的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Acquirement towards {TargetName}"
 
 #: .\data\talk\play\aromatherapy.csv:8
 msgid "{Name}对{TargetName}触发了香薰疗愈_反感的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Antipathy towards {TargetName}"
 
 #: .\data\talk\play\aromatherapy.csv:9
 msgid "{Name}对{TargetName}触发了香薰疗愈_快感的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Happiness towards {TargetName}"
 
 #: .\data\talk\play\aromatherapy.csv:10
 msgid "{Name}对{TargetName}触发了香薰疗愈_好感的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Affinity towards {TargetName}"
 
 #: .\data\talk\play\aromatherapy.csv:11
 msgid "{Name}对{TargetName}触发了香薰疗愈_催眠的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Aromatherapy-Hypnosis towards {TargetName}"
 
 #: .\data\talk\play\full_body_styling.csv:6
 msgid "{Name}触发了全身造型服务的地文"
-msgstr ""
+msgstr "{Name} triggered the event of full body styling"
 
 #: .\data\talk\play\hydrotherapy_treatment.csv:6
 msgid "{Name}触发了水疗护理的地文"
-msgstr ""
+msgstr "{Name} triggered the event of spa treatment"
 
 #: .\data\talk\play\onsen_bath.csv:6
 msgid "{Name}触发了泡温泉的地文"
-msgstr ""
+msgstr "{Name} triggered the event of into hot springs"
 
 #: .\data\talk\play\photography.csv:6
 msgid "{Name}触发了摄影的地文"
-msgstr ""
+msgstr "{Name} triggered the event of photographing"
 
 #: .\data\talk\play\play_arcade_game.csv:6
 msgid "{Name}触发了玩街机游戏的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing arcade games"
 
 #: .\data\talk\play\play_cards.csv:6
 msgid "{Name}触发了打牌的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing cards"
 
 #: .\data\talk\play\play_chess.csv:6
 msgid "{Name}触发了下棋的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing chess"
 
 #: .\data\talk\play\play_house.csv:6
 msgid "{Name}触发了过家家的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playhouse"
 
 #: .\data\talk\play\play_instrument.csv:6
 msgid "{Name}对{TargetName}触发了演奏乐器指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing instruments towards {TargetName}"
 
 #: .\data\talk\play\play_mahjong.csv:6
 msgid "{Name}触发了打麻将的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing mahjong"
 
 #: .\data\talk\play\play_water.csv:6
 msgid "{Name}触发了玩水的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing water"
 
 #: .\data\talk\play\rehearse_dance.csv:6
 msgid "{Name}触发了排演舞剧的地文"
-msgstr ""
+msgstr "{Name} triggered the event of rehearsing"
 
 #: .\data\talk\play\singing.csv:6
 msgid "{Name}对{TargetName}触发了唱歌指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of singing towards {TargetName}"
 
 #: .\data\talk\play\singing.csv:8
 msgid "{Name}开始唱歌了，{TargetName}坐在旁边认真聆听。"
@@ -13334,43 +13334,43 @@ msgstr ""
 
 #: .\data\talk\play\soak_feet.csv:6
 msgid "{Name}触发了泡脚的地文"
-msgstr ""
+msgstr "{Name} triggered the event of soaking"
 
 #: .\data\talk\play\steam_sauna.csv:6
 msgid "{Name}触发了蒸桑拿的地文"
-msgstr ""
+msgstr "{Name} triggered the event of sauna"
 
 #: .\data\talk\play\style_hair.csv:6
 msgid "{Name}触发了修整发型的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hair fixing"
 
 #: .\data\talk\play\swimming.csv:6
 msgid "{Name}触发了游泳的地文"
-msgstr ""
+msgstr "{Name} triggered the event of swimming"
 
 #: .\data\talk\play\taste_coffee.csv:6
 msgid "{Name}触发了品咖啡的地文"
-msgstr ""
+msgstr "{Name} triggered the event of drinking coffee"
 
 #: .\data\talk\play\taste_dessert.csv:6
 msgid "{Name}触发了品尝点心的地文"
-msgstr ""
+msgstr "{Name} triggered the event of trying on desserts"
 
 #: .\data\talk\play\taste_food.csv:6
 msgid "{Name}触发了品尝美食的地文"
-msgstr ""
+msgstr "{Name} triggered the event of trying on gourmets"
 
 #: .\data\talk\play\taste_tea.csv:6
 msgid "{Name}触发了品茶的地文"
-msgstr ""
+msgstr "{Name} triggered the event of drinking tea"
 
 #: .\data\talk\play\taste_wine.csv:6
 msgid "{Name}触发了品酒的地文"
-msgstr ""
+msgstr "{Name} triggered the event of drinking alcohol"
 
 #: .\data\talk\play\watch_movie.csv:6
 msgid "{Name}触发了看电影指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of watching movies"
 
 #: .\data\talk\sex\anal_caress.csv:6
 msgid "{Name}将手指插入到了{TargetName}的菊穴中慢慢搅动"
@@ -13394,7 +13394,7 @@ msgstr ""
 
 #: .\data\talk\sex\ask_pee.csv:6
 msgid "{Name}触发了命令对方小便指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of ordering to pee"
 
 #: .\data\talk\sex\axillajob.csv:6
 msgid "{Name}将阴茎凑到了{TargetName}的腋窝处，不是性器的部位似乎也能激起{Name}的兽欲。"
@@ -13486,11 +13486,11 @@ msgstr ""
 
 #: .\data\talk\sex\back_seat_anal_sex.csv:6
 msgid "{Name}触发了背面座位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of back sitting anal sex"
 
 #: .\data\talk\sex\back_seat_sex.csv:6
 msgid "{Name}触发了背面座位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of back sitting sex"
 
 #: .\data\talk\sex\back_sex.csv:6
 msgid "{Name}按住{TargetName}的后背，让{TargetName}以狗爬的姿势露出私处。\n随后，{Name}毫不客气的将肉根塞了进去。"
@@ -13570,11 +13570,11 @@ msgstr ""
 
 #: .\data\talk\sex\back_stand_anal_sex.csv:6
 msgid "{Name}触发了背面立位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of back standing anal sex"
 
 #: .\data\talk\sex\back_stand_sex.csv:6
 msgid "{Name}触发了背面立位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of back standing sex"
 
 #: .\data\talk\sex\beat_breast.csv:6
 msgid "{Name}触发了打胸部指令的地文"
@@ -13582,31 +13582,31 @@ msgstr ""
 
 #: .\data\talk\sex\birth_control_pills_after.csv:6
 msgid "{Name}触发了事后避孕药指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying post-event birth control pills"
 
 #: .\data\talk\sex\birth_control_pills_before.csv:6
 msgid "{Name}触发了事前避孕药指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying pre-event birth control pills"
 
 #: .\data\talk\sex\blowjob.csv:6
 msgid "{Name}触发了口交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of fellatio"
 
 #: .\data\talk\sex\body_lubricant.csv:6
 msgid "{Name}触发了润滑液指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying lubricating fluid"
 
 #: .\data\talk\sex\bondage.csv:6
 msgid "{Name}触发了绳子指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using rope"
 
 #: .\data\talk\sex\breast_caress.csv:6
 msgid "{Name}触发了胸爱抚指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of breast caressing"
 
 #: .\data\talk\sex\breast_sucking.csv:6
 msgid "{Name}触发了舔吸乳头指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of licking nipples"
 
 #: .\data\talk\sex\bubble_bath.csv:6
 msgid "{Name}触发了泡泡浴指令的地文"
@@ -13618,203 +13618,203 @@ msgstr ""
 
 #: .\data\talk\sex\change_top_and_bottom.csv:6
 msgid "{Name}触发了交给对方指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of letting others to do it"
 
 #: .\data\talk\sex\clit_clamp.csv:6
 msgid "{Name}触发了阴蒂夹指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using clitoral clamp"
 
 #: .\data\talk\sex\clit_love_egg.csv:6
 msgid "{Name}触发了阴蒂跳蛋指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using clitoral love egg"
 
 #: .\data\talk\sex\clomid.csv:6
 msgid "{Name}触发了排卵促进药指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying ovulation drugs"
 
 #: .\data\talk\sex\cunnilingus.csv:6
 msgid "{Name}触发了舔阴指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of cunnilingus"
 
 #: .\data\talk\sex\deep_throat.csv:6
 msgid "{Name}触发了深喉插入指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of deepthroat penetration"
 
 #: .\data\talk\sex\diuretics.csv:6
 msgid "{Name}触发了利尿剂指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying diuretics"
 
 #: .\data\talk\sex\double_penetration.csv:6
 msgid "{Name}触发了二穴插入指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of second insertion"
 
 #: .\data\talk\sex\do_h_fail.csv:6
 msgid "{Name}触发了邀请H失败指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of failed to invite for H"
 
 #: .\data\talk\sex\do_nothing.csv:6
 msgid "{Name}触发了什么也不做指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of do nothing"
 
 #: .\data\talk\sex\electric_message_stick.csv:6
 msgid "{Name}触发了电动按摩棒指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using electric massage stick"
 
 #: .\data\talk\sex\end_h.csv:6
 msgid "{Name}触发了停止H指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of stopping to H"
 
 #: .\data\talk\sex\enemas.csv:6
 msgid "{Name}触发了灌肠液指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying enema"
 
 #: .\data\talk\sex\eras_rub.csv:6
 msgid "{Name}触发了阴茎蹭耳朵指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of rubbing ears with penis"
 
 #: .\data\talk\sex\face_rub.csv:6
 msgid "{Name}触发了阴茎蹭脸指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of rubbing face with penis"
 
 #: .\data\talk\sex\face_seat_anal_sex.csv:6
 msgid "{Name}触发了对面座位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of face sitting anal sex"
 
 #: .\data\talk\sex\face_seat_sex.csv:6
 msgid "{Name}触发了对面座位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of face sitting sex"
 
 #: .\data\talk\sex\face_stand_anal_sex.csv:6
 msgid "{Name}触发了对面立位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of face standing anal sex"
 
 #: .\data\talk\sex\face_stand_sex.csv:6
 msgid "{Name}触发了对面立位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of face standing sex"
 
 #: .\data\talk\sex\focus_blowjob.csv:6
 msgid "{Name}触发了真空口交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of vacuum blowjob"
 
 #: .\data\talk\sex\footjob.csv:6
 msgid "{Name}触发了足交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of footjob"
 
 #: .\data\talk\sex\give_blowjob.csv:6
 msgid "{Name}触发了给对方口交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of doing fellatio on him"
 
 #: .\data\talk\sex\hairjob.csv:6
 msgid "{Name}触发了发交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hairjob"
 
 #: .\data\talk\sex\handjob.csv:6
 msgid "{Name}触发了手交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of handjob"
 
 #: .\data\talk\sex\hand_blowjob.csv:6
 msgid "{Name}触发了手交口交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of hands blowjob"
 
 #: .\data\talk\sex\horn_rub.csv:6
 msgid "{Name}触发了阴茎蹭角指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of rubbing horns with penis"
 
 #: .\data\talk\sex\h_hp_0.csv:6
 msgid "{Name}触发了H时博士体力为零中断的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Doctor's Stamina reached 0 during H"
 
 #: .\data\talk\sex\h_interrupt.csv:6
 msgid "{Name}触发了H时被人目击闯入中断的地文"
-msgstr ""
+msgstr "{Name} triggered the event of interrupted during H"
 
 #: .\data\talk\sex\kiss_h.csv:6
 msgid "{Name}触发了接吻（h）指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of kissing (h)"
 
 #: .\data\talk\sex\legjob.csv:6
 msgid "{Name}触发了腿交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of legjob"
 
 #: .\data\talk\sex\lick_anal.csv:6
 msgid "{Name}触发了舔肛指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of rimming"
 
 #: .\data\talk\sex\make_lick_anal.csv:6
 msgid "{Name}触发了命令对方舔自己肛门指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of ordering her to lick anus"
 
 #: .\data\talk\sex\make_masturebate.csv:6
 msgid "{Name}触发了命令对方自慰指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of ordering her to masturbate"
 
 #: .\data\talk\sex\making_out.csv:6
 msgid "{Name}触发了身体爱抚指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of body caressing"
 
 #: .\data\talk\sex\milking_machine_off.csv:6
 msgid "{Name}触发了取下搾乳机指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on milking machine"
 
 #: .\data\talk\sex\milking_machine_on.csv:6
 msgid "{Name}触发了装上搾乳机指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of taking off milking machine"
 
 #: .\data\talk\sex\nipples_love_egg.csv:6
 msgid "{Name}触发了乳头跳蛋指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using nipple love eggs"
 
 #: .\data\talk\sex\nipple_clamp.csv:6
 msgid "{Name}触发了乳头夹指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on nipple clamps"
 
 #: .\data\talk\sex\normal_anal_sex.csv:6
 msgid "{Name}触发了正常位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of missionary anal sex"
 
 #: .\data\talk\sex\normal_sex.csv:6
 msgid "{Name}触发了正常位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of missionary position"
 
 #: .\data\talk\sex\open_anus.csv:6
 msgid "{Name}触发了掰开肛门观察指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of observing anus"
 
 #: .\data\talk\sex\open_labia.csv:6
 msgid "{Name}触发了掰开阴唇观察指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of observing labia"
 
 #: .\data\talk\sex\paizuri.csv:6
 msgid "{Name}触发了乳交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of paizuri"
 
 #: .\data\talk\sex\patch.csv:6
 msgid "{Name}触发了眼罩指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on eye mask"
 
 #: .\data\talk\sex\philter.csv:6
 msgid "{Name}触发了媚药指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of love potion"
 
 #: .\data\talk\sex\put_condom.csv:6
 msgid "{Name}触发了避孕套指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on condom"
 
 #: .\data\talk\sex\riding_anal_sex.csv:6
 msgid "{Name}触发了骑乘位肛交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of doggy anal sex"
 
 #: .\data\talk\sex\riding_sex.csv:6
 msgid "{Name}触发了骑乘位指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of doggy style"
 
 #: .\data\talk\sex\rub_buttock.csv:6
 msgid "{Name}触发了素股指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of intercrural sex"
 
 #: .\data\talk\sex\sedecu.csv:6
 msgid "{Name}触发了诱惑对方指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of seducing"
 
 #: .\data\talk\sex\shame_play.csv:6
 msgid "{Name}触发了羞耻play指令的地文"
@@ -13822,659 +13822,659 @@ msgstr ""
 
 #: .\data\talk\sex\sixty_nine.csv:6
 msgid "{Name}触发了六九式指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of sixty-nine style"
 
 #: .\data\talk\sex\sleeping_pills.csv:6
 msgid "{Name}触发了安眠药指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of applying sleeping pills"
 
 #: .\data\talk\sex\spanking.csv:6
 msgid "{Name}触发了打屁股指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of spanking"
 
 #: .\data\talk\sex\stimulate_g_point.csv:6
 msgid "{Name}触发了刺激G点指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of stimulating G spot"
 
 #: .\data\talk\sex\stimulate_sigmoid_colon.csv:6
 msgid "{Name}触发了玩弄s状结肠指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing with sigmoid colon"
 
 #: .\data\talk\sex\stimulate_vagina.csv:6
 msgid "{Name}触发了隔着刺激阴道指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of stimulating vagina"
 
 #: .\data\talk\sex\tailjob.csv:6
 msgid "{Name}触发了尾交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of tailjob"
 
 #: .\data\talk\sex\take_shower.csv:6
 msgid "{Name}触发了淋浴指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of showering"
 
 #: .\data\talk\sex\tits_blowjob.csv:6
 msgid "{Name}触发了乳交口交指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of tits blowjob"
 
 #: .\data\talk\sex\twiddle_nipples.csv:6
 msgid "{Name}触发了玩弄乳头指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing with nipples"
 
 #: .\data\talk\sex\t_h_hp_0.csv:6
 msgid "{Name}触发了H时{TargetName}体力为零中断的地文"
-msgstr ""
+msgstr "{Name} triggered the event of her stamina reached 0 during H"
 
 #: .\data\talk\sex\urethral_finger_insertion.csv:6
 msgid "{Name}对{TargetName}触发了尿道指姦指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of urethral finger rape"
 
 #: .\data\talk\sex\urethral_sex.csv:6
 msgid "{Name}对{TargetName}触发了尿道姦指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of urethral rape"
 
 #: .\data\talk\sex\urethral_swab.csv:6
 msgid "{Name}对{TargetName}触发了尿道棉棒指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of using urethral swabs"
 
 #: .\data\talk\sex\urine_collector_off.csv:6
 msgid "{Name}触发了取下采尿器指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of taking off urine collector"
 
 #: .\data\talk\sex\urine_collector_on.csv:6
 msgid "{Name}触发了装上采尿器指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of putting on urine collector"
 
 #: .\data\talk\sex\vibrator_insertion.csv:6
 msgid "{Name}触发了震动棒指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of inserting vibrator"
 
 #: .\data\talk\sex\vibrator_insertion_anal.csv:6
 msgid "{Name}触发了肛门振动棒指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of inserting vibrator into anus"
 
 #: .\data\talk\sex\womb_insertion.csv:6
 msgid "{Name}触发了插入子宫口指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of inserting into womb"
 
 #: .\data\talk\sex\womb_os_caress.csv:6
 msgid "{Name}触发了玩弄子宫口指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of playing with cervix"
 
 #: .\data\talk\sex\womb_sex.csv:6
 msgid "{Name}触发了子宫姦指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of womb rape"
 
 #: .\data\talk\system\abl_up.csv:6
 msgid "{Name}触发了属性升级指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of ability upgraded"
 
 #: .\data\talk\system\all_npc_position.csv:6
 msgid "{Name}触发了干员位置一览指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of finding Operators"
 
 #: .\data\talk\system\item.csv:6
 msgid "触发道具指令的地文"
-msgstr ""
+msgstr "Triggered the event of using item"
 
 #: .\data\talk\system\move.csv:6
 msgid "{NickName}来到了{SceneName}"
-msgstr ""
+msgstr "{NickName} arrived at {SceneName}"
 
 #: .\data\talk\system\move.csv:7
 msgid "{NickName}移动到了{SceneName}"
-msgstr ""
+msgstr "{NickName} moved to {SceneName}"
 
 #: .\data\talk\system\move.csv:8
 msgid "{NickName}走到了{SceneName}"
-msgstr ""
+msgstr "{NickName} walked to {SceneName}"
 
 #: .\data\talk\system\move.csv:9
 msgid "{Name}来到了{SceneName}"
-msgstr ""
+msgstr "{Name} reached {SceneName}"
 
 #: .\data\talk\system\move.csv:10
 msgid "{Name}走了过来"
-msgstr ""
+msgstr "{Name} walked here"
 
 #: .\data\talk\system\move.csv:11
 msgid "{Name}朝着{SceneName}离开了"
-msgstr ""
+msgstr "{Name} left to {SceneName}"
 
 #: .\data\talk\system\move.csv:12
 msgid "{Name}去了{SceneName}"
-msgstr ""
+msgstr "{Name} went to {SceneName}"
 
 #: .\data\talk\system\move.csv:13
 msgid "{Name}前往了{SceneName}"
-msgstr ""
+msgstr "{Name} head to {SceneName}"
 
 #: .\data\talk\system\save.csv:6
 msgid "触发读写存档指令的地文"
-msgstr ""
+msgstr "Triggered the event of loading save file"
 
 #: .\data\talk\system\second.csv:7
 msgid "\n{Name}触发了N小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small N climax"
 
 #: .\data\talk\system\second.csv:8
 msgid "\n{Name}触发了N普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium N climax"
 
 #: .\data\talk\system\second.csv:9
 msgid "\n{Name}触发了N强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong N climax"
 
 #: .\data\talk\system\second.csv:10
 msgid "\n{Name}触发了B小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small B climax"
 
 #: .\data\talk\system\second.csv:11
 msgid "\n{Name}触发了B普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium B climax"
 
 #: .\data\talk\system\second.csv:12
 msgid "\n{Name}触发了B绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong B climax"
 
 #: .\data\talk\system\second.csv:13
 msgid "\n{Name}触发了C小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small C climax"
 
 #: .\data\talk\system\second.csv:14
 msgid "\n{Name}触发了C普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium C climax"
 
 #: .\data\talk\system\second.csv:15
 msgid "\n{Name}触发了C强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong C climax"
 
 #: .\data\talk\system\second.csv:16
 msgid "\n{Name}触发了射精的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of ejaculation"
 
 #: .\data\talk\system\second.csv:17
 msgid "\n{Name}触发了大量射精的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of big ejaculation"
 
 #: .\data\talk\system\second.csv:18
 msgid "\n{Name}触发了超大量射精的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of huge ejaculation"
 
 #: .\data\talk\system\second.csv:19
 msgid "\n{Name}触发了V小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small V climax"
 
 #: .\data\talk\system\second.csv:20
 msgid "\n{Name}触发了V普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium V climax"
 
 #: .\data\talk\system\second.csv:21
 msgid "\n{Name}触发了V强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong V climax"
 
 #: .\data\talk\system\second.csv:22
 msgid "\n{Name}触发了A小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small A climax"
 
 #: .\data\talk\system\second.csv:23
 msgid "\n{Name}触发了A普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium A climax"
 
 #: .\data\talk\system\second.csv:24
 msgid "\n{Name}触发了A强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong A climax"
 
 #: .\data\talk\system\second.csv:25
 msgid "\n{Name}触发了U小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small U climax"
 
 #: .\data\talk\system\second.csv:26
 msgid "\n{Name}触发了U普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium U climax"
 
 #: .\data\talk\system\second.csv:27
 msgid "\n{Name}触发了U强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong U climax"
 
 #: .\data\talk\system\second.csv:28
 msgid "\n{Name}触发了W小绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of small W climax"
 
 #: .\data\talk\system\second.csv:29
 msgid "\n{Name}触发了W普绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of medium W climax"
 
 #: .\data\talk\system\second.csv:30
 msgid "\n{Name}触发了W强绝顶的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of strong W climax"
 
 #: .\data\talk\system\second.csv:31
 msgid "\n{Name}触发了快乐刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Happy Engraving 1"
 
 #: .\data\talk\system\second.csv:32
 msgid "\n{Name}触发了快乐刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Happy Engraving 2"
 
 #: .\data\talk\system\second.csv:33
 msgid "\n{Name}触发了快乐刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Happy Engraving 3"
 
 #: .\data\talk\system\second.csv:34
 msgid "\n{Name}触发了屈服刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Yield Engraving 1"
 
 #: .\data\talk\system\second.csv:35
 msgid "\n{Name}触发了屈服刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Yield Engraving 2"
 
 #: .\data\talk\system\second.csv:36
 msgid "\n{Name}触发了屈服刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Yield Engraving 3"
 
 #: .\data\talk\system\second.csv:37
 msgid "\n{Name}触发了苦痛刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Pain Engraving 1"
 
 #: .\data\talk\system\second.csv:38
 msgid "\n{Name}触发了苦痛刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Pain Engraving 2"
 
 #: .\data\talk\system\second.csv:39
 msgid "\n{Name}触发了苦痛刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Pain Engraving 3"
 
 #: .\data\talk\system\second.csv:40
 msgid "\n{Name}触发了时姦刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Rape Engraving 1"
 
 #: .\data\talk\system\second.csv:41
 msgid "\n{Name}触发了时姦刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Rape Engraving 2"
 
 #: .\data\talk\system\second.csv:42
 msgid "\n{Name}触发了时姦刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Rape Engraving 3"
 
 #: .\data\talk\system\second.csv:43
 msgid "\n{Name}触发了恐怖刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Fear Engraving 1"
 
 #: .\data\talk\system\second.csv:44
 msgid "\n{Name}触发了恐怖刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Fear Engraving 2"
 
 #: .\data\talk\system\second.csv:45
 msgid "\n{Name}触发了恐怖刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Fear Engraving 3"
 
 #: .\data\talk\system\second.csv:46
 msgid "\n{Name}触发了反发刻印1的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Hatred Engraving 1"
 
 #: .\data\talk\system\second.csv:47
 msgid "\n{Name}触发了反发刻印2的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Hatred Engraving 2"
 
 #: .\data\talk\system\second.csv:48
 msgid "\n{Name}触发了反发刻印3的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of Hatred Engraving 3"
 
 #: .\data\talk\system\second.csv:49
 msgid "\n{Name}触发了失去初吻的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of losing first kiss"
 
 #: .\data\talk\system\second.csv:50
 msgid "\n{Name}触发了失去处女的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of losing virginity"
 
 #: .\data\talk\system\second.csv:51
 msgid "\n{Name}触发了失去A处女的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of losing A virginity"
 
 #: .\data\talk\system\second.csv:52
 msgid "干员{TargetName}获得无觉刻印1的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 1"
 
 #: .\data\talk\system\second.csv:53
 msgid "干员{TargetName}获得无觉刻印2的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 2"
 
 #: .\data\talk\system\second.csv:54
 msgid "干员{TargetName}获得无觉刻印3的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 3"
 
 #: .\data\talk\system\second.csv:55
 msgid "干员{TargetName}获得无觉刻印4的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 4"
 
 #: .\data\talk\system\second.csv:56
 msgid "干员{TargetName}获得无觉刻印5的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 5"
 
 #: .\data\talk\system\second.csv:57
 msgid "干员{TargetName}获得无觉刻印6的口上"
-msgstr ""
+msgstr "{Name} triggered the event of Unconscious Engraving 6"
 
 #: .\data\talk\system\second.csv:59
 msgid "\n{Name}触发了因B绝顶而被迫喷乳的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of lactating due to B climax"
 
 #: .\data\talk\system\second.csv:60
 msgid "\n{Name}触发了因U绝顶而被迫漏尿的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of urine leaking due to B climax"
 
 #: .\data\talk\system\second.csv:62
 msgid "\n{Name}触发了乳头夹持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of nipple clamps on effect"
 
 #: .\data\talk\system\second.csv:63
 msgid "\n{Name}触发了阴蒂夹持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of clitoral clamp on effect"
 
 #: .\data\talk\system\second.csv:64
 msgid "\n{Name}触发了震动棒持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of vibrator on effect"
 
 #: .\data\talk\system\second.csv:65
 msgid "\n{Name}触发了肛门振动棒持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of vibrator in anus on effect"
 
 #: .\data\talk\system\second.csv:66
 msgid "\n{Name}触发了搾乳机持续使用中的地文，共榨出了{MilkMl}毫升母乳"
-msgstr ""
+msgstr "\n{Name} triggered the event of milking machine on effect, {MilkMl} ml breast milk was squeezed out"
 
 #: .\data\talk\system\second.csv:67
 msgid "\n{Name}触发了采尿器持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of urine collector on effect"
 
 #: .\data\talk\system\second.csv:68
 msgid "\n{Name}触发了眼罩持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of eye mask on effect"
 
 #: .\data\talk\system\second.csv:69
 msgid "\n{Name}触发了肛门拉珠持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of anal beads on effect"
 
 #: .\data\talk\system\second.csv:70
 msgid "\n{Name}触发了利尿剂持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of diuretics on effect"
 
 #: .\data\talk\system\second.csv:71
 msgid "\n{Name}触发了安眠药持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of anal beads on effect"
 
 #: .\data\talk\system\second.csv:72
 msgid "\n{Name}触发了排卵促进药持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of sleeping pills on effect"
 
 #: .\data\talk\system\second.csv:73
 msgid "\n{Name}触发了事前避孕药持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of pre-event birth control pills on effect"
 
 #: .\data\talk\system\second.csv:74
 msgid "\n{Name}触发了事后避孕药持续使用中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of post-event birth control pills on effect"
 
 #: .\data\talk\system\second.csv:76
 msgid "\n{Name}触发了发交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing hairjob"
 
 #: .\data\talk\system\second.csv:77
 msgid "\n{Name}触发了阴茎蹭脸中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of rubbing face with penis"
 
 #: .\data\talk\system\second.csv:78
 msgid "\n{Name}触发了口交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing fellatio"
 
 #: .\data\talk\system\second.csv:79
 msgid "\n{Name}触发了乳交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing paizuri"
 
 #: .\data\talk\system\second.csv:80
 msgid "\n{Name}触发了腋交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing axillajob"
 
 #: .\data\talk\system\second.csv:81
 msgid "\n{Name}触发了手交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing handjob"
 
 #: .\data\talk\system\second.csv:82
 msgid "\n{Name}触发了抽插阴道中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of thrusting vagina"
 
 #: .\data\talk\system\second.csv:83
 msgid "\n{Name}触发了抽插子宫中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of thrusting womb"
 
 #: .\data\talk\system\second.csv:84
 msgid "\n{Name}触发了抽插后穴中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of thrusting butt hole"
 
 #: .\data\talk\system\second.csv:85
 msgid "\n{Name}触发了抽插尿道中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of thrusting urethra"
 
 #: .\data\talk\system\second.csv:86
 msgid "\n{Name}触发了腿交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing legjob"
 
 #: .\data\talk\system\second.csv:87
 msgid "\n{Name}触发了足交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing footjob"
 
 #: .\data\talk\system\second.csv:88
 msgid "\n{Name}触发了尾交中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing tailjob"
 
 #: .\data\talk\system\second.csv:89
 msgid "\n{Name}触发了阴茎蹭角中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of rubbing horns with penis"
 
 #: .\data\talk\system\second.csv:90
 msgid "\n{Name}触发了阴茎蹭耳朵中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of rubbing ears with penis"
 
 #: .\data\talk\system\second.csv:91
 msgid "\n{Name}触发了素股中的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of doing intercrural sex"
 
 #: .\data\talk\system\second.csv:93
 msgid "\n{Name}触发了获得[思慕]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Longing]"
 
 #: .\data\talk\system\second.csv:94
 msgid "\n{Name}触发了获得[恋慕]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Envy]"
 
 #: .\data\talk\system\second.csv:95
 msgid "\n{Name}触发了获得[恋人]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Lover]"
 
 #: .\data\talk\system\second.csv:96
 msgid "\n{Name}触发了获得[爱侣]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Couple]"
 
 #: .\data\talk\system\second.csv:97
 msgid "\n{Name}触发了获得[屈从]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Yield]"
 
 #: .\data\talk\system\second.csv:98
 msgid "\n{Name}触发了获得[驯服]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Tamed]"
 
 #: .\data\talk\system\second.csv:99
 msgid "\n{Name}触发了获得[宠物]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Pet]"
 
 #: .\data\talk\system\second.csv:100
 msgid "\n{Name}触发了获得[奴隶]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Slave]"
 
 #: .\data\talk\system\second.csv:102
 msgid "\n{Name}触发了获得[受精]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Fertilized]"
 
 #: .\data\talk\system\second.csv:103
 msgid "\n{Name}触发了受精失败的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of failed to be fertilized"
 
 #: .\data\talk\system\second.csv:104
 msgid "\n{Name}触发了获得[妊娠]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Pregnancy]"
 
 #: .\data\talk\system\second.csv:105
 msgid "\n{Name}触发了获得[临盆]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Confined]"
 
 #: .\data\talk\system\second.csv:106
 msgid "\n{Name}触发了生产前的对话的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of dialogue before giving birth"
 
 #: .\data\talk\system\second.csv:107
 msgid "\n{Name}触发了生产后的对话的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of dialogue after giving birth"
 
 #: .\data\talk\system\second.csv:108
 msgid "\n{Name}触发了生产后的对话+获得[产后]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of dialogue after giving birth + acquiring [After Birth]"
 
 #: .\data\talk\system\second.csv:109
 msgid "\n{Name}触发了获得[育儿]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Parenting]"
 
 #: .\data\talk\system\second.csv:110
 msgid "\n{Name}触发了育儿完成的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of finished parenting"
 
 #: .\data\talk\system\second.csv:111
 msgid "\n{Name}触发了幼女长成萝莉的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of growing to loli from young girl"
 
 #: .\data\talk\system\second.csv:112
 msgid "\n{Name}触发了萝莉长成少女的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of growing to girl from loli"
 
 #: .\data\talk\system\second.csv:114
 msgid "\n{Name}触发了初次见面的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of first met"
 
 #: .\data\talk\system\second.csv:115
 msgid "\n{Name}触发了每日打招呼的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of daily greeting"
 
 #: .\data\talk\system\second.csv:117
 msgid "\n{Name}触发了被选为助理的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of selected as assistant"
 
 #: .\data\talk\system\second.csv:118
 msgid "\n{Name}触发了不再为助理的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of swapped out from being an assistant"
 
 #: .\data\talk\system\second.csv:119
 msgid "\n{Name}触发了关闭智能跟随的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Intelligence Following"
 
 #: .\data\talk\system\second.csv:120
 msgid "\n{Name}触发了开启智能跟随的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling Intelligence Following"
 
 #: .\data\talk\system\second.csv:121
 msgid "\n{Name}触发了要求前往办公室的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of heading to Doctor's Office"
 
 #: .\data\talk\system\second.csv:122
 msgid "\n{Name}触发了关闭辅佐服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Help Service"
 
 #: .\data\talk\system\second.csv:123
 msgid "\n{Name}触发了开启辅佐服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling Help Service"
 
 #: .\data\talk\system\second.csv:124
 msgid "\n{Name}触发了关闭送饭服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Meal Delivery Service"
 
 #: .\data\talk\system\second.csv:125
 msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling assistance to buy lunch"
 
 #: .\data\talk\system\second.csv:126
 msgid "\n{Name}触发了开启亲手做午饭服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling assistance to make lunch"
 
 #: .\data\talk\system\second.csv:127
 msgid "\n{Name}触发了开启亲手做三餐服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling assistance to make meals"
 
 #: .\data\talk\system\second.csv:128
 msgid "\n{Name}触发了关闭早安服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Morning Service"
 
 #: .\data\talk\system\second.csv:129
 msgid "\n{Name}触发了开启早上叫起床服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling assistance to wake the Doctor up"
 
 #: .\data\talk\system\second.csv:130
 msgid "\n{Name}触发了开启早安吻服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling morning kiss"
 
 #: .\data\talk\system\second.csv:131
 msgid "\n{Name}触发了开启早安咬服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling morning bite"
 
 #: .\data\talk\system\second.csv:132
 msgid "\n{Name}触发了关闭晚安服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Night Service"
 
 #: .\data\talk\system\second.csv:133
 msgid "\n{Name}触发了开启晚安吻服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling night kiss"
 
 #: .\data\talk\system\second.csv:134
 msgid "\n{Name}触发了开启晚安咬服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling night bite"
 
 #: .\data\talk\system\second.csv:135
 msgid "\n{Name}触发了关闭同居服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Living Together Service"
 
 #: .\data\talk\system\second.csv:136
 msgid "\n{Name}触发了开启同居服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling Living Together Service"
 
 #: .\data\talk\system\second.csv:137
 msgid "\n{Name}触发了关闭助攻服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of disabling Assist Service"
 
 #: .\data\talk\system\second.csv:138
 msgid "\n{Name}触发了开启助攻服务的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of enabling Assist Service"
 
 #: .\data\talk\system\second.csv:140
 msgid "\n{Name}触发了获得[已催眠·浅]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Hypnotized - Mild]"
 
 #: .\data\talk\system\second.csv:141
 msgid "\n{Name}触发了获得[已催眠·深]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Hypnotized - Deep]"
 
 #: .\data\talk\system\second.csv:142
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
-msgstr ""
+msgstr "\n{Name} triggered the event of acquiring [Hypnotized - Full]"
 
 #: .\data\talk\system\see_attr.csv:6
 msgid "{Name}触发了查看属性指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of checking attributes"
 
 #: .\data\talk\system\see_owner_attr.csv:6
 msgid "{Name}触发了查看自身属性指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of checking self attributes"
 
 #: .\data\talk\work\attent_class.csv:6
 msgid "{Name}触发了上课指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of learning"
 
 #: .\data\talk\work\battle_command.csv:6
 msgid "{Name}触发了指挥作战指令的地文"
@@ -14482,11 +14482,11 @@ msgstr ""
 
 #: .\data\talk\work\cure_patient.csv:6
 msgid "{Name}触发了诊疗病人指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of diagnosis"
 
 #: .\data\talk\work\exercise.csv:6
 msgid "{Name}触发了锻炼身体指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of exercising"
 
 #: .\data\talk\work\listen_mission.csv:6
 msgid "{Name}触发了听取委托指令的地文"
@@ -14494,33 +14494,33 @@ msgstr ""
 
 #: .\data\talk\work\maintenance_facilities.csv:6
 msgid "{Name}触发了维护设施的地文"
-msgstr ""
+msgstr "{Name} triggered the event of maintaining facilities"
 
 #: .\data\talk\work\npc_cook.csv:6
 msgid "{Name}触发了干员做饭的地文"
-msgstr ""
+msgstr "{Name} triggered the event of Operators cooking"
 
 #: .\data\talk\work\official_work.csv:6
 msgid "{Name}触发了处理公务指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of working"
 
 #: .\data\talk\work\read_book.csv:6
 msgid "{Name}触发了读{BookName}指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of reading {BookName}"
 
 #: .\data\talk\work\recruit.csv:6
 msgid "{Name}触发了招募干员指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of recruiting"
 
 #: .\data\talk\work\repair_equipment.csv:6
 msgid "{Name}触发了维修装备的地文"
-msgstr ""
+msgstr "{Name} triggered the event of maintaining equipments"
 
 #: .\data\talk\work\teach.csv:6
 msgid "{Name}触发了授课指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of teaching"
 
 #: .\data\talk\work\training.csv:6
 msgid "{Name}触发了战斗训练指令的地文"
-msgstr ""
+msgstr "{Name} triggered the event of combat training"
 
