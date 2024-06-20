@@ -17035,7 +17035,7 @@ msgstr ""
 msgid "如何提升博士或干员的体力与气力上限？"
 msgstr "How to increase Doctor's or Operators' Stamina and Energy limit?"
 
-msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可是用"
+msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用"
 msgstr ""
 "[Exercise] in [Fitness Zone] of [Training Room], but be reminded this is "
 "notavailable until base upgrade"
