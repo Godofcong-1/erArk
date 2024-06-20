@@ -8037,6 +8037,18 @@ def handle_no_a_virgin(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_NO_FIRST_KISS)
 def handle_target_no_first_kiss(character_id: int) -> int:
     """
+    校验交互对象是否初吻不在了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_have_first_kiss(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)
+def handle_target_have_first_kiss(character_id: int) -> int:
+    """
     校验交互对象是否初吻还在
     Keyword arguments:
     character_id -- 角色id
@@ -8048,20 +8060,6 @@ def handle_target_no_first_kiss(character_id: int) -> int:
     return target_data.talent[4] == 1
 
 
-@add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)
-def handle_target_have_first_kiss(character_id: int) -> int:
-    """
-    校验交互对象是否初吻不在了
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not target_data.talent[4] == 1
-
-
 @add_premise(constant_promise.Premise.TARGET_NO_VIRGIN)
 def handle_target_no_virgin(character_id: int) -> int:
     """
@@ -8071,9 +8069,7 @@ def handle_target_no_virgin(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[0] == 1
+    return not handle_target_have_virgin(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_VIRGIN)
@@ -8087,7 +8083,7 @@ def handle_target_have_virgin(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not target_data.talent[0] == 1
+    return target_data.talent[0] == 1
 
 
 @add_premise(constant_promise.Premise.TARGET_NO_A_VIRGIN)
@@ -8099,9 +8095,7 @@ def handle_target_no_a_virgin(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[1] == 1
+    return not handle_target_have_a_virgin(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_A_VIRGIN)
@@ -8115,7 +8109,7 @@ def handle_target_have_a_virgin(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return not target_data.talent[1] == 1
+    return target_data.talent[1] == 1
 
 
 @add_premise(constant_promise.Premise.IS_MEDICAL)
