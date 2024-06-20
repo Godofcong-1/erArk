@@ -7145,3 +7145,27 @@ def handle_penis_in_t_ears(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = 14
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_PENIS_IN_FACE_OR_MOUSE)
+def handle_cancel_penis_in_face_or_mouse(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    取消为阴茎位置交互对象_阴茎蹭脸中和口交中
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.insert_position in {1,2}:
+        target_data.h_state.insert_position = -1
+

@@ -599,6 +599,8 @@ class BehaviorEffect:
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭角中 """
     PENIS_IN_T_EARS = 816
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
+    CANCEL_PENIS_IN_FACE_OR_MOUSE = 831
+    """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
 
     ITEM_OFF = 901
     """ 道具_增减 去掉身上所有的道具 """
