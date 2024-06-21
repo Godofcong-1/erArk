@@ -440,7 +440,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "\n"
-"今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n"
+"今日全角色总好感度上升为：{0}，折合为 {1} 粉红凭证\n"
 msgstr ""
 
 #: .\Script\Design\character.py:91 .\Script\Design\character.py:92

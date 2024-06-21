@@ -920,6 +920,8 @@ class Rhodes_Island:
 
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
+        self.today_fall_chara_pink_certificate_add: int = 0
+        """ 今日陷落干员提供的粉红凭证总数 """
         self.total_semen_count: int = 0
         """ 每日总射精量 """
 

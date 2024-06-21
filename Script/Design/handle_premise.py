@@ -8600,7 +8600,7 @@ def handle_scene_someone_is_h(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_NO_FALL)
-def handle_scene_someone_is_h(character_id: int) -> int:
+def handle_scene_someone_no_fall(character_id: int) -> int:
     """
     该地点有未拥有陷落素质的角色
     Keyword arguments:

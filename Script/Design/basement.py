@@ -860,13 +860,18 @@ def settle_pink_certificate():
     结算粉红凭证
     """
 
-    # 输出好感度合计与粉红凭证增加
+    # 根据好感度结算粉红凭证增加
     pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
     pink_certificate_add = max(pink_certificate_add, 0)
     cache.rhodes_island.materials_resouce[4] += pink_certificate_add
+    # 结算陷落角色提供的的粉红凭证
+    cache.rhodes_island.materials_resouce[4] += cache.rhodes_island.today_fall_chara_pink_certificate_add
+    # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _("\n今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n").format(int(cache.rhodes_island.total_favorability_increased), pink_certificate_add)
+    now_draw.text = _("\n今日全角色总好感度上升为：{0}，折合为 {1} 粉红凭证\n").format(int(cache.rhodes_island.total_favorability_increased), pink_certificate_add)
+    now_draw.text += _("今日全陷落角色提供的粉红凭证为：{0}\n").format(cache.rhodes_island.today_fall_chara_pink_certificate_add)
     now_draw.draw()
-    # 清零好感度合计计数
+    # 清零计数
     cache.rhodes_island.total_favorability_increased = 0
+    cache.rhodes_island.today_fall_chara_pink_certificate_add = 0

@@ -2452,7 +2452,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n"
+"今日全角色总好感度上升为：{0}，折合为 {1} 粉红凭证\n"
 msgstr ""
 "\n"
 "Total Affinity increase： {0}，exchanged to {1} Pink Certificates\n"
