@@ -3304,7 +3304,7 @@ msgid "|            服务器            |"
 msgstr "|            Server            |"
 
 msgid "|          泰拉(if_h)          |"
-msgstr "|          Terra(if_h)          |"
+msgstr "|          Terra(if_h)         |"
 
 msgid " 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n"
 msgstr " Current storage level:{0}, storage (limit per resource):{1}\n"

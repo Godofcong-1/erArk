@@ -12723,7 +12723,7 @@ msgid "亮铜色高跟鞋"
 msgstr "Light bronze heels"
 
 msgid "炎狱炎熔"
-msgstr "Lava the Purgatory"
+msgstr "Purgatory"
 
 msgid "布满伤痕的匕首套。曾经亲自雕琢的特色花纹，在使用过程中已被磨损得看不见纹路。"
 msgstr "A sheath covered in scars. The once distinctive patterns she'd engraved herself "
@@ -12747,7 +12747,7 @@ msgid "濒毁的匕首"
 msgstr "Near broken dagger"
 
 msgid "浊心斯卡蒂"
-msgstr "Skadi Corrupting Heart"
+msgstr "Corrupting Heart"
 
 msgid "一根软骨形成的弯曲尖刺。随着淡蓝色的液体自刺尖滴滴坠落，实验生物的生理结构剧烈地转化了。"
 msgstr "A curved quill formed of cartilage. A light blue liquid drips from the quill's "
@@ -12783,7 +12783,7 @@ msgid "腿部绑带"
 msgstr "Leg straps"
 
 msgid "假日威龙陈"
-msgstr "Ch'en the Holungday"
+msgstr "Holungday"
 
 msgid "一本笔记本，上面密密麻麻记载了陈在多索雷斯的调查记录，还有她的一些想法。她看起来有征求你意见的意思，当然，她没有明说。"
 msgstr "A notebook, densely packed with Ch'en's records of her investigation in Dossoles, "
@@ -12816,7 +12816,7 @@ msgid "在沙滩上行走需要这种东西吗"
 msgstr "Why you need this on beaches"
 
 msgid "耀骑士临光"
-msgstr "Nearl Radiant Knight"
+msgstr "Radiant Knight"
 
 msgid "恢复光彩的卡西米尔骑士纹章。被精心擦拭过，天马的金羽射出凛然辉光。"
 msgstr "A Kazimierzian knightly coat of arms, restored to splendor. "
@@ -12848,7 +12848,7 @@ msgid "皮质长筒靴"
 msgstr "Leather platform boots"
 
 msgid "纯烬艾雅法拉"
-msgstr "Eyjafjalla Hvit Aska"
+msgstr "Hvit Aska"
 
 msgid "一块又小又轻的火山石，投入水中后会上下翻滚，嗞嗞的气泡声轻响不绝。这即是生命之歌。"
 msgstr "A small and light piece of volcanic rock that tumbles about floating and "
@@ -12873,7 +12873,7 @@ msgid "粉色高跟鞋"
 msgstr "Pink heels"
 
 msgid "焰影苇草"
-msgstr "Reed the Flame Shadow"
+msgstr "Flame Shadow"
 
 msgid "一本用陌生语言抄下的诗歌集。她不求所有人都读懂，只希望想读这些诗歌的人有可以栖身的一隅。"
 msgstr "A poetry anthology transcribed in an unfamiliar language. She does not seek "
@@ -12898,7 +12898,7 @@ msgid "黑色茉莉纹连裤袜"
 msgstr "Black jasmine pattern pantyhose"
 
 msgid "寒芒克洛丝"
-msgstr "Kroos the Keen Glint"
+msgstr "Keen Glint"
 
 msgid "支吸盘箭，箭羽上系着个铃铛。 有了这支箭，你可以报个名字，只要罗德岛上有且可以射击的，她都能把箭钉在目标上。"
 msgstr "A sucker arrow, several small bells tied to the fletching. With this arrow, you can "
@@ -12923,7 +12923,7 @@ msgid "黑色热裤"
 msgstr "Black hot pants"
 
 msgid "濯尘芙蓉"
-msgstr "Hibiscus the Purifier"
+msgstr "Purifier"
 
 msgid "一朵用纸折成的小花。在每一位即将出院的病人的床边留下这样一个小小的纪念品，已经成了芙蓉的习惯。"
 msgstr "A small flower folded from paper. It has become Hibiscus's habit to leave a "
@@ -12951,7 +12951,7 @@ msgid "皮质黑色长筒靴"
 msgstr "Black leather platform boots"
 
 msgid "百炼嘉维尔"
-msgstr "Gavial the Invincible"
+msgstr "Invincible"
 
 msgid "一个密度超高的合金哑铃，看起来非常便携。嘉维尔把它送给你时忘了告诉你哑铃的重量，不得不额外花半个小时处理你闪到的腰。"
 msgstr "An excessively dense alloy dumbbell, while appearing deceptively liftable. "
@@ -12976,7 +12976,7 @@ msgid "凉鞋"
 msgstr "Sandals"
 
 msgid "淬羽赫默"
-msgstr "Silence Paradigmatic"
+msgstr "Paradigmatic"
 
 msgid "一副稍显古旧的圆眼镜。有人说戴上眼镜的她会少几分锐气，她于是将眼镜交给你来保管。在罗德岛上，她希望自己还是过去的自己。"
 msgstr "A pair of somewhat antiquated-looking round glasses. Some have told her that "
@@ -13003,7 +13003,7 @@ msgid "淡绿色防护靴"
 msgstr "Light green protection boots"
 
 msgid "琳琅诗怀雅"
-msgstr "Swire the Elegant Wit"
+msgstr "Elegant Wit"
 
 msgid "一枚金光闪闪的金币。沉重，光泽逼人，成色极好，放在手中欣赏，还会从中掉出......闪着寒光的暗器！是她送予你防身的礼物。"
 msgstr "A glinting, glittering gold coin. Heavy, oppressively lustrous, fabulously pure. "
@@ -13025,7 +13025,7 @@ msgid "全覆盖式大号遮阳帽"
 msgstr "Full-covered big sun-covering hat"
 
 msgid "涤火杰西卡"
-msgstr "Jessica the Liberated"
+msgstr "Liberated"
 
 msgid "一副定制激光瞄准镜，适用于夜间精确观瞄。她一直紧盯着前方，从未将视线移开。"
 msgstr "A custom-ordered laser scope, used for precision nighttime aiming. "
