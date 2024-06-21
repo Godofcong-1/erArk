@@ -530,14 +530,14 @@ class CharacterInfoHead:
         active_h_draw.text = active_h_text
 
         if character_id:
-            message = _(
+            message = (
                 "{character_name} {favorability_and_trust}{visitor}").format(
                 character_name=character_data.name,
                 favorability_and_trust=favorability_and_trust_text,
                 visitor=visitor_text,
             )
         else:
-            message = _(
+            message = (
                 "{character_name}{character_nick_name}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,

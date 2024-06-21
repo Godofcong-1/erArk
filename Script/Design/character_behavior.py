@@ -963,7 +963,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     if true_add_time == 5:
         tired_change = 1
     # 仅计算在不睡觉时的正常行动结算疲劳值
-    if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
+    if now_character_data.state not in {constant.CharacterStatus.STATUS_REST, constant.CharacterStatus.STATUS_SLEEP}:
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 

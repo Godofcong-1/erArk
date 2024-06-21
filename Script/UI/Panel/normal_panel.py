@@ -394,7 +394,7 @@ class Sleep_Panel:
         need_time = max(hpmp_need_time, tired_recover_time)
         self.sleep_time = need_time
 
-        title_text = "睡眠"
+        title_text = _("睡眠")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
