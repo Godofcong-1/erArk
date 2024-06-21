@@ -408,9 +408,10 @@ class CharacterInfoHead:
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == _(" <清醒>" ) else sleep_text
-        if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
-            tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
-            sleep_text = f" <{sleep_name}>"
+        if character_id > 0:
+            if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
+                tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
+                sleep_text = f" <{sleep_name}>"
         sleep_draw.text = sleep_text
 
         # 非普通时输出当前心情
