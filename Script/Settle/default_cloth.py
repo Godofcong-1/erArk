@@ -280,9 +280,9 @@ def handle_t_cloth_back(
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         if target_data.sp_flag.unconscious_h:
-            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子").format(target_data.name)
+            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n").format(target_data.name)
         else:
-            now_draw.text = _("\n{0}穿回了脱下的衣服").format(target_data.name)
+            now_draw.text = _("\n{0}穿回了脱下的衣服\n").format(target_data.name)
         now_draw.draw()
 
 

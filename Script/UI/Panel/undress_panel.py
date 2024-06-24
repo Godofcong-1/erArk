@@ -186,22 +186,24 @@ class SeeUndressButtonList:
         if self.button_id == 0:
 
             for i in {5,8}:
-                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
+                target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
+                target_data.cloth.cloth_wear[i] = []
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
-
 
         # 1号指令,脱到只穿袜子手套等
         elif self.button_id == 1:
             for i in {5,6,8,9}:
-                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
+                target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
+                target_data.cloth.cloth_wear[i] = []
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
         # 2号指令,脱到全裸
         elif self.button_id == 2:
             for i in game_config.config_clothing_type:
-                target_data.cloth.cloth_off[i],target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i],[]
+                target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
+                target_data.cloth.cloth_wear[i] = []
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
