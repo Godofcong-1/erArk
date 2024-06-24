@@ -602,6 +602,9 @@ class BehaviorEffect:
     CANCEL_PENIS_IN_FACE_OR_MOUSE = 831
     """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
 
+    H_IN_LOVE_HOTEL_TO_FALSE = 841
+    """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """
+
     ITEM_OFF = 901
     """ 道具_增减 去掉身上所有的道具 """
     TARGET_ITEM_OFF = 902

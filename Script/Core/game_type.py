@@ -428,6 +428,8 @@ class BODY_H_STATE:
         """ 已使用的避孕套计数，[0总个数，1总精液量] """
         self.npc_active_h: bool = False
         """ NPC主动H """
+        self.h_in_love_hotel: bool = False
+        """ 当前正在爱情旅馆中H """
 
 
 class FIRST_RECORD:
@@ -876,6 +878,10 @@ class Rhodes_Island:
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
 
+        # 贸易区
+        self.love_hotel_room_lv: int = 0
+        """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
+
         # 制造加工区
         self.assembly_line: Dict[int, Tuple[int, set, int ,int]] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
@@ -921,7 +927,7 @@ class Rhodes_Island:
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
         self.week_fall_chara_pink_certificate_add: int = 0
-        """ 今日陷落干员提供的粉红凭证总数 """
+        """ 本周陷落干员提供的粉红凭证总数 """
         self.total_semen_count: int = 0
         """ 每日总射精量 """
 

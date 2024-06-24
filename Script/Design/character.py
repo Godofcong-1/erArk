@@ -384,12 +384,23 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_weakness:
         calculation_text += _("+持有对方把柄(+") + str(judge_weakness) + ")"
 
-    # 淫乱相关属性修正#
-    # 仅能用在性爱指令上
+    # 仅性爱指令
     if judge_data_type == "S":
+        # 淫乱相关属性修正#
         if character_data.talent[40]:
             judge += 30
             calculation_text += _("+淫乱(+30)")
+        # 爱情旅馆修正
+        if character_data.h_state.h_in_love_hotel:
+            if cache.rhodes_island.love_hotel_room_lv == 1:
+                judge += 10
+                calculation_text += _("+标间(+10)")
+            elif cache.rhodes_island.love_hotel_room_lv == 2:
+                judge += 50
+                calculation_text += _("+情趣主题房(+50)")
+            elif cache.rhodes_island.love_hotel_room_lv == 3:
+                judge += 100
+                calculation_text += _("+顶级套房(+100)")
 
     # 激素系能力修正#
     if character_data.pl_ability.hormone:

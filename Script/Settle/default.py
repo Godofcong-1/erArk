@@ -7169,3 +7169,25 @@ def handle_cancel_penis_in_face_or_mouse(
     if target_data.h_state.insert_position in {1,2}:
         target_data.h_state.insert_position = -1
 
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_IN_LOVE_HOTEL_TO_FALSE)
+def handle_h_in_love_hotel_to_false(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    取消自己和交互对象正在爱情旅馆中H的状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    character_data.h_state.h_in_love_hotel = False
+    target_data.h_state.h_in_love_hotel = False

@@ -1404,6 +1404,21 @@ def handle_take_care_baby():
 
 
 @add_instruct(
+    constant.Instruct.ORDER_HOTEL_ROOM,
+    constant.InstructType.DAILY,
+    _("预定房间"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_LOVE_HOTEL,
+     constant_promise.Premise.NOT_LIVE_IN_LOVE_HOTEL,
+     constant_promise.Premise.TIRED_LE_84},
+)
+def handle_order_hotel_room():
+    """处理预定房间指令"""
+    now_draw = normal_panel.Order_Hotel_Room_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.LISTEN_MISSION,
     constant.InstructType.WORK,
     _("听取委托_未实装"),
@@ -1773,6 +1788,26 @@ def handle_unconscious_h():
 
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.DO_H_IN_LOVE_HOTEL,
+    constant.InstructType.OBSCENITY,
+    _("邀请在爱情旅馆H"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_LOVE_HOTEL,
+     constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_do_h_in_love_hotel():
+    """处理邀请在爱情旅馆H指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.h_state.h_in_love_hotel = True
+    handle_do_h()
 
 
 @add_instruct(

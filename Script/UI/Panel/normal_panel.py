@@ -615,3 +615,81 @@ class Fridge_Panel:
 
         # 删除冰箱里的母乳
         del cache.rhodes_island.milk_in_fridge[character_id]
+
+
+class Order_Hotel_Room_Panel:
+    """
+    用于预订房间的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.now_panel = _("预订房间")
+        """ 当前绘制的页面 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("预订房间")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            now_draw_text = ""
+            now_draw_text += _(f"\n酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n")
+            now_draw_text += _(f"情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n")
+            now_draw_text += _(f"请问要入住哪种房间呢？\n")
+            info_draw.text = now_draw_text
+            info_draw.draw()
+
+            room_text_list = [_("标间(2粉红凭证)"),_("情趣主题房(10粉红凭证)"),_("顶级套房(100粉红凭证)")]
+
+            # 遍历房间类型并输出按钮
+            for i in range(len(room_text_list)):
+                room_text = room_text_list[i]
+                button_draw = draw.LeftButton(
+                    _(room_text),
+                    _(str(i)),
+                    self.width,
+                    cmd_func=self.order_room,
+                    args=(i,),
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def order_room(self, room_id):
+        """预订房间"""
+        room_price = [2, 10, 100]
+        room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
+        if cache.rhodes_island.materials_resouce[4] < room_price[room_id]:
+            now_draw = draw.WaitDraw()
+            draw_text = _("你的粉红凭证不足，无法预订{0}\n").format(room_name[room_id])
+            now_draw.text = draw_text
+            now_draw.draw()
+            return
+        cache.rhodes_island.materials_resouce[4] -= room_price[room_id]
+        cache.rhodes_island.love_hotel_room_lv = room_id
+        now_draw = draw.WaitDraw()
+        draw_text = _("你成功预订了{0}\n").format(room_name[room_id])
+        now_draw.text = draw_text
+        now_draw.draw()

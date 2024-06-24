@@ -1756,6 +1756,8 @@ class Instruct:
     """ 摆放藏品 """
     TAKE_CARE_BABY = 0
     """ 照顾婴儿 """
+    ORDER_HOTEL_ROOM = 0
+    """ 预定房间 """
 
     #娱乐#
     SINGING = 0
@@ -1968,6 +1970,8 @@ class Instruct:
     """ 邀请H """
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
+    DO_H_IN_LOVE_HOTEL = 0
+    """ 邀请在爱情旅馆H """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0

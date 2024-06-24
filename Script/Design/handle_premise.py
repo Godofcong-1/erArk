@@ -889,11 +889,7 @@ def handle_not_in_kitchen(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Kitchen" in now_scene_data.scene_tag:
+    if handle_in_kitchen(character_id):
         return 0
     return 1
 
@@ -925,11 +921,7 @@ def handle_not_in_dining_hall(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dining_hall" in now_scene_data.scene_tag:
+    if handle_in_dining_hall(character_id):
         return 0
     return 1
 
@@ -961,11 +953,7 @@ def handle_not_in_food_shop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Food_Shop" in now_scene_data.scene_tag:
+    if handle_in_food_shop(character_id):
         return 0
     return 1
 
@@ -1016,11 +1004,7 @@ def handle_not_in_dr_office(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_Office" in now_scene_data.scene_tag:
+    if handle_in_dr_office(character_id):
         return 0
     return 1
 
@@ -1034,11 +1018,7 @@ def handle_in_dr_office_or_debug(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_Office" in now_scene_data.scene_tag or cache.debug_mode:
+    if handle_in_dr_office(character_id) or cache.debug_mode:
         return 1
     return 0
 
@@ -1088,9 +1068,9 @@ def handle_not_in_dormitory(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
-    return now_position != character_data.dormitory
+    if handle_in_dormitory(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.IN_BATHROOM)
@@ -1156,11 +1136,7 @@ def handle_not_in_toilet_female(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Toilet_Female" in now_scene_data.scene_tag:
+    if handle_not_in_toilet_female(character_id):
         return 0
     return 1
 
@@ -1373,11 +1349,7 @@ def handle_not_in_rest_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Rest_Room" in now_scene_data.scene_tag:
+    if handle_in_rest_room(character_id):
         return 0
     return 1
 
@@ -1429,11 +1401,7 @@ def handle_not_in_classic_music_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Classic_Musicroom" in now_scene_data.scene_tag:
+    if handle_in_classic_music_room(character_id):
         return 0
     return 1
 
@@ -1465,11 +1433,7 @@ def handle_not_in_moden_music_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Modern_Musicroom" in now_scene_data.scene_tag:
+    if handle_in_moden_music_room(character_id):
         return 0
     return 1
 
@@ -1499,11 +1463,7 @@ def handle_not_in_multimedia_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Multimedia_Room" in now_scene_data.scene_tag:
+    if handle_in_multimedia_room(character_id):
         return 0
     return 1
 
@@ -1533,11 +1493,7 @@ def handle_not_in_photography_studio(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Photography_Studio" in now_scene_data.scene_tag:
+    if handle_in_photography_studio(character_id):
         return 0
     return 1
 
@@ -1567,11 +1523,7 @@ def handle_not_in_aquapit_experientorium(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Aquapit_Experientorium" in now_scene_data.scene_tag:
+    if handle_in_aquapit_experientorium(character_id):
         return 0
     return 1
 
@@ -1601,11 +1553,7 @@ def handle_not_in_board_games_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Board_Games_Room" in now_scene_data.scene_tag:
+    if handle_in_board_games_room(character_id):
         return 0
     return 1
 
@@ -1635,11 +1583,7 @@ def handle_not_in_fairy_banquet(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Fairy_Banquet" in now_scene_data.scene_tag:
+    if handle_in_fairy_banquet(character_id):
         return 0
     return 1
 
@@ -1671,11 +1615,7 @@ def handle_not_in_broadcast_center(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Broadcast_Center" in now_scene_data.scene_tag:
+    if handle_in_broadcast_center(character_id):
         return 0
     return 1
 
@@ -1706,11 +1646,7 @@ def handle_not_in_avant_garde_arcade(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Avant_Garde_Arcade" in now_scene_data.scene_tag:
+    if handle_in_avant_garde_arcade(character_id):
         return 0
     return 1
 
@@ -1740,11 +1676,7 @@ def handle_not_in_swimming_pool(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Swimming_Pool" in now_scene_data.scene_tag:
+    if handle_in_swimming_pool(character_id):
         return 0
     return 1
 
@@ -1775,11 +1707,7 @@ def handle_not_in_bar(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Bar" in now_scene_data.scene_tag:
+    if handle_in_bar(character_id):
         return 0
     return 1
 
@@ -1810,11 +1738,7 @@ def handle_not_in_hair_salon(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Hair_Salon" in now_scene_data.scene_tag:
+    if handle_in_hair_salon(character_id):
         return 0
     return 1
 
@@ -1845,11 +1769,7 @@ def handle_not_in_styling_studio(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Styling_Studio" in now_scene_data.scene_tag:
+    if handle_in_styling_studio(character_id):
         return 0
     return 1
 
@@ -1880,11 +1800,7 @@ def handle_not_in_walyria_cake_shop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Walyria_Cake_Shop" in now_scene_data.scene_tag:
+    if handle_in_walyria_cake_shop(character_id):
         return 0
     return 1
 
@@ -1916,11 +1832,7 @@ def handle_not_in_restaurant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Restaurant" in now_scene_data.scene_tag:
+    if handle_in_restaurant(character_id):
         return 0
     return 1
 
@@ -1951,11 +1863,7 @@ def handle_not_in_seven_cities_restaurant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Seven_Cities_Restaurant" in now_scene_data.scene_tag:
+    if handle_in_seven_cities_restaurant(character_id):
         return 0
     return 1
 
@@ -1986,17 +1894,13 @@ def handle_not_in_golden_game_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Golden_Game_Room" in now_scene_data.scene_tag:
+    if handle_in_golden_game_room(character_id):
         return 0
     return 1
 
 
 @add_premise(constant_promise.Premise.IN_TEAHOUSE)
-def handle_in_teashop(character_id: int) -> int:
+def handle_in_teahouse(character_id: int) -> int:
     """
     校验角色是否在山城茶馆中
     Keyword arguments:
@@ -2021,11 +1925,7 @@ def handle_not_in_teahouse(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Teahouse" in now_scene_data.scene_tag:
+    if handle_in_teahouse(character_id):
         return 0
     return 1
 
@@ -2056,11 +1956,7 @@ def handle_not_in_kfc(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "KFC" in now_scene_data.scene_tag:
+    if handle_in_kfc(character_id):
         return 0
     return 1
 
@@ -2091,11 +1987,7 @@ def handle_not_in_healthy_diner(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Healthy_Diner" in now_scene_data.scene_tag:
+    if handle_in_healthy_diner(character_id):
         return 0
     return 1
 
@@ -2126,11 +2018,7 @@ def handle_not_in_lungmen_eatery(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Lungmen_Eatery" in now_scene_data.scene_tag:
+    if handle_in_lungmen_eatery(character_id):
         return 0
     return 1
 
@@ -2932,11 +2820,7 @@ def handle_not_in_h_shop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "H_Shop" in now_scene_data.scene_tag:
+    if handle_in_h_shop(character_id):
         return 0
     return 1
 
@@ -2968,11 +2852,39 @@ def handle_not_in_resource_exchange(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if handle_in_resource_exchange(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_LOVE_HOTEL)
+def handle_in_love_hotel(character_id: int) -> int:
+    """
+    校验角色是否在爱情旅馆
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Resource_Exchange" in now_scene_data.scene_tag:
+    if "Love_Hotel" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_LOVE_HOTEL)
+def handle_not_in_love_hotel(character_id: int) -> int:
+    """
+    校验角色是否不在爱情旅馆
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_love_hotel(character_id):
         return 0
     return 1
 
@@ -3004,11 +2916,7 @@ def handle_not_in_production_workshop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Production_Workshop" in now_scene_data.scene_tag:
+    if handle_in_production_workshop(character_id):
         return 0
     return 1
 
@@ -8181,6 +8089,20 @@ def handle_have_office_work_need_to_do(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PINK_CERTIFICATE_G_10)
+def handle_pink_certificate_g_10(character_id: int) -> int:
+    """
+    拥有粉红凭证数量大于10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.materials_resouce[4] > 10:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FLAG_BABY_EXIST)
 def handle_flag_baby_exist(character_id: int) -> int:
     """
@@ -11831,6 +11753,105 @@ def handle_last_cmd_paizuri_type(character_id: int) -> int:
     if len_input:
         if last_cmd in sex:
             return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.H_IN_LOVE_HOTEL)
+def handle_h_in_love_hotel(character_id: int) -> int:
+    """
+    当前正在爱情旅馆中H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.h_in_love_hotel:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.H_NOT_IN_LOVE_HOTEL)
+def handle_h_not_in_love_hotel(character_id: int) -> int:
+    """
+    当前不在爱情旅馆中H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_h_in_love_hotel(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.NOT_LIVE_IN_LOVE_HOTEL)
+def handle_not_live_inlove_hotel(character_id: int) -> int:
+    """
+    还未在爱情旅馆中入住
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.love_hotel_room_lv == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LIVE_IN_LOVE_HOTEL)
+def handle_live_inlove_hotel(character_id: int) -> int:
+    """
+    已在爱情旅馆中入住
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.love_hotel_room_lv > 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LOVE_HOTEL_ROOM_V1)
+def handle_love_hotel_room_v1(character_id: int) -> int:
+    """
+    在爱情旅馆中入住房间为标间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.love_hotel_room_lv == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LOVE_HOTEL_ROOM_V2)
+def handle_love_hotel_room_v2(character_id: int) -> int:
+    """
+    在爱情旅馆中入住房间为情趣主题房
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.love_hotel_room_lv == 2:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.LOVE_HOTEL_ROOM_V3)
+def handle_love_hotel_room_v3(character_id: int) -> int:
+    """
+    在爱情旅馆中入住房间为顶级套房
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.love_hotel_room_lv == 3:
+        return 1
     return 0
 
 
