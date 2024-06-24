@@ -1,6 +1,7 @@
-from Script.Core import cache_control, constant, game_type
+from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import map_handle, update
 from Script.UI.Moudle import draw
+from types import FunctionType
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -9,6 +10,9 @@ line_feed = draw.NormalDraw()
 """ 换行绘制对象 """
 line_feed.text = "\n"
 line_feed.width = 1
+
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def own_charcter_move(target_scene: list):
@@ -119,7 +123,7 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
             if character_data.action_info.follow_wait_time >= 30:
                 character_data.sp_flag.is_follow = 0
                 now_draw = draw.NormalDraw()
-                now_draw.text = f"因为等待时间过长，所以{character_data.name}不再继续跟随\n"
+                now_draw.text = _("因为等待时间过长，所以{0}不再继续跟随\n").format(character_data.name)
                 now_draw.draw()
             else:
                 wait_flag = True
@@ -135,7 +139,7 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
                 wait_flag = True
             else:
                 now_draw = draw.NormalDraw()
-                now_draw.text = f"{character_data.name}等不下去了，决定直接进来\n"
+                now_draw.text = _("{0}等不下去了，决定直接进来\n").format(character_data.name)
                 now_draw.draw()
         # 一直跟随，无视私密地点
         elif character_data.chara_setting[0] == 3:
@@ -144,7 +148,7 @@ def judge_character_move_to_private(character_id: int, move_path: []) -> int:
         # 等待时输出提示信息
         if wait_flag:
             now_draw = draw.NormalDraw()
-            now_draw.text = f"因为不方便进来，所以{character_data.name}正在外面等待\n"
+            now_draw.text = _("因为不方便进来，所以{0}正在外面等待\n").format(character_data.name)
             now_draw.draw()
 
     return move_flag, wait_flag

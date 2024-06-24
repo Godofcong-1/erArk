@@ -33,7 +33,7 @@ class Manage_Assembly_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {"药剂": False, "乳制品": False, "香水": False}
+        self.show_resource_type_dict: Dict = {_("药剂"): False, _("乳制品"): False, _("香水"): False}
 
     def draw(self):
         """绘制对象"""
@@ -51,7 +51,7 @@ class Manage_Assembly_Line_Panel:
             now_text += _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
 
             # 遍历全资源类型
-            self.resouce_list = ["材料", "药剂", "乳制品", "香水"]
+            self.resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水")]
             for resouce in self.resouce_list:
                 now_text += f"\n {resouce}："
                 # 遍历该类型的资源
@@ -200,7 +200,7 @@ class Manage_Assembly_Line_Panel:
                 info_draw.text = info_text
                 info_draw.draw()
 
-                resouce_list = ["药剂", "乳制品", "香水"]
+                resouce_list = [_("药剂"), _("乳制品"), _("香水")]
 
                 # 遍历全资源类型
                 for resouce in resouce_list:

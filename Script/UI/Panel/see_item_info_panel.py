@@ -71,11 +71,11 @@ class SeeCharacterItemBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
-        item_list_type = ["药品", "机器", "消耗品", "H药品", "H用机器", "SM器具"]
+        item_list_type = [_("药品"), _("机器"), _("消耗品"), _("H药品"), _("H用机器"), _("SM器具")]
         while 1:
             title_draw.draw()
             # 绘制粉红凭证
-            money_text = f"当前持有粉红凭证：{str(cache.rhodes_island.materials_resouce[4])}"
+            money_text = _("当前持有粉红凭证：{0}").format(str(cache.rhodes_island.materials_resouce[4]))
             now_draw = draw.NormalDraw()
             now_draw.text = money_text
             now_draw.width = self.width
@@ -151,7 +151,7 @@ class ItemNameDraw:
                 index_text = text_handle.id_index(button_id)
                 self.draw_text = f"{index_text} {item_name}"
                 if flag_consumables:
-                    self.draw_text += "(持有数量:" + str(character_data.item[self.text]) + ")"
+                    self.draw_text += _("(持有数量:") + str(character_data.item[self.text]) + ")"
                 if item_config.tag == "Drug":
                     self.use_drug_flag = True
             else:
@@ -192,7 +192,7 @@ class ItemNameDraw:
                     break
 
     def use_drug(self):
-        """使用道具"""
+        """使用理智药"""
         pl_character_data = cache.character_data[0]
         # 道具数量减少1
         pl_character_data.item[self.text] -= 1
@@ -202,7 +202,7 @@ class ItemNameDraw:
         pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
         # 绘制使用道具信息
         now_draw = draw.WaitDraw()
-        now_draw.text = f"\n{pl_character_data.name}使用了{game_config.config_item[self.text].name}，理智值增加{sanity_point_add}，现在为{pl_character_data.sanity_point}/{pl_character_data.sanity_point_max}\n\n"
+        now_draw.text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, game_config.config_item[self.text].name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
         now_draw.width = window_width
         now_draw.draw()
 

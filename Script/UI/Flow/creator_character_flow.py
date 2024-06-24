@@ -752,6 +752,7 @@ class SelectFirstNPCButton:
         else:
             # 如果有口上颜色的话，输出颜色
             if target_data.text_color:
+                # print(f"debug name = {target_data.name}, color = {target_data.text_color}")
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style=target_data.name, cmd_func=self.button_0)
             else:
                 name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)

@@ -413,7 +413,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
 
     # 初始化新角色位置
     character_position = character_data.position
-    office_postion = [_('中枢'), _('博士办公室')]
+    office_postion = ['中枢', '博士办公室']
     map_handle.character_move_scene(character_position, office_postion, character_id)
 
     # 初始化新角色娱乐

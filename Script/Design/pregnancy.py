@@ -118,7 +118,7 @@ def check_fertilization(character_id: int):
             else:
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
                     draw_text += _("\n在避孕药的影响下——")
-                draw_text += f"\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
+                draw_text += _("\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
                 character_data.second_behavior[1312] = 1
 
         character_data.pregnancy.fertilization_rate = 0
@@ -129,7 +129,7 @@ def check_fertilization(character_id: int):
         now_draw.draw()
     else:
         if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
-            draw_text += f"\n在避孕药的影响下——\n精子在{character_data.name}的阴道中游荡，但未能成功受精\n"
+            draw_text += _("\n在避孕药的影响下——\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
 
 
 def check_pregnancy(character_id: int):
@@ -152,11 +152,11 @@ def check_pregnancy(character_id: int):
             character_data.second_behavior[1313] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
-            draw_text += f"\n随着怀孕的进程，{character_data.name}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
-            draw_text += f"\n{character_data.name}有孕在身，将会暂停工作和部分娱乐\n"
-            draw_text += f"\n{character_data.name}从[受精]转变为[妊娠]\n"
-            draw_text += f"\n{character_data.name}获得了[孕肚]\n"
-            draw_text += f"\n{character_data.name}获得了[泌乳]\n"
+            draw_text += _("\n随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n").format(character_data.name)
+            draw_text += _("\n{0}有孕在身，将会暂停工作和部分娱乐\n").format(character_data.name)
+            draw_text += _("\n{0}从[受精]转变为[妊娠]\n").format(character_data.name)
+            draw_text += _("\n{0}获得了[孕肚]\n").format(character_data.name)
+            draw_text += _("\n{0}获得了[泌乳]\n").format(character_data.name)
             draw_text += "\n※※※※※※※※※\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width

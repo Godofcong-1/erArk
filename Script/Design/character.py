@@ -616,16 +616,16 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             draw_text = ""
             if instruct_name == _("亲吻") and target_data.talent[11] == 0:
                 target_data.talent[11] = 1
-                draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
+                draw_text += _("\n 获得了{0}的【亲吻合意】\n").format(target_data.name)
             if instruct_name == _("性交") and target_data.talent[12] == 0:
                 target_data.talent[12] = 1
-                draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
+                draw_text += _("\n 获得了{0}的【本番合意】\n").format(target_data.name)
             if instruct_name == _("A性交") and target_data.talent[15] == 0:
                 target_data.talent[15] = 1
-                draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
+                draw_text += _("\n 获得了{0}的【Ａ性交合意】\n").format(target_data.name)
             if instruct_name == _("U性交") and target_data.talent[16] == 0:
                 target_data.talent[16] = 1
-                draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+                draw_text += _("\n 获得了{0}的【Ｕ性交合意】\n").format(target_data.name)
             # 避孕相关合意
             # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
             if (
@@ -635,7 +635,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 (handle_premise.handle_reproduction_period_0(target_character_id))
                 ):
                 target_data.talent[13] = 1
-                draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
+                draw_text += _("\n 获得了{0}的【避孕中出合意】\n").format(target_data.name)
             # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
             if (
                 instruct_name == _("性交") and
@@ -644,7 +644,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
                 ):
                 target_data.talent[14] = 1
-                draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
+                draw_text += _("\n 获得了{0}的【妊娠合意】\n").format(target_data.name)
             if len(draw_text):
                 agree_draw.text = draw_text
                 agree_draw.draw()

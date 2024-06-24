@@ -550,7 +550,7 @@ class ChangeWorkButtonList:
                 # 判断是否开放，未开放则跳过
                 flag_open = True
                 # 必要条件判断
-                if game_config.config_work_type[cid].need != "无":
+                if game_config.config_work_type[cid].need != _("无"):
                     need_data_all = game_config.config_work_type[cid].need
                     # 整理需要的条件
                     if "&" not in need_data_all:

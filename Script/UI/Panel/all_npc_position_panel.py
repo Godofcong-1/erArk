@@ -65,7 +65,7 @@ class All_Npc_Position_Panel:
 
             # 全跟随按钮
             if cache.debug_mode:
-                text = "  [debug用一键全跟随]"
+                text = _("  [debug用一键全跟随]")
                 name_draw = draw.LeftButton(text, text, self.width, cmd_func=self.call_all)
                 name_draw.draw()
                 line_feed.draw()
@@ -142,8 +142,9 @@ class All_Npc_Position_Panel:
                     id = str(character_data.adv).rjust(4,'0')
                     scene_position = character_data.position
                     scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
+                    # 对于入口的特殊处理
                     if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
-                        scene_position_str = scene_position_str[:-2] + "入口"
+                        scene_position_str = scene_position_str[:-2] + _("入口")
                     chara_count += 1
 
                     # 输出干员名字
@@ -160,7 +161,7 @@ class All_Npc_Position_Panel:
                     status_text = game_config.config_status[character_data.state].name
                     # 如果是在移动，则输出目的地
                     # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
-                    if status_text == "移动" and len(character_data.behavior.move_final_target):
+                    if status_text == _("移动") and len(character_data.behavior.move_final_target):
                         now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
                     # 否则输出状态
                     else:
@@ -284,7 +285,7 @@ class FindDraw:
         status_text = game_config.config_status[character_data.state].name
         # 如果是在移动，则输出目的地
         # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
-        if status_text == "移动" and len(character_data.behavior.move_final_target):
+        if status_text == _("移动") and len(character_data.behavior.move_final_target):
             now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
         # 否则输出状态
         else:
