@@ -899,8 +899,9 @@ def update_new_day():
                 character_data.sp_flag.aromatherapy = 0
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
-            # 如果已陷落则提供粉红凭证
-            fall_chara_give_pink_voucher(character_id)
+            # 每周一次，如果已陷落则提供粉红凭证
+            if cache.game_time.weekday() == 6:
+                fall_chara_give_pink_voucher(character_id)
 
     # 非角色部分
     basement.update_base_resouce_newday()
@@ -1233,13 +1234,13 @@ def fall_chara_give_pink_voucher(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 如果已陷落则给予粉红凭证
     if character_data.talent[201] or character_data.talent[211]:
-        cache.rhodes_island.today_fall_chara_pink_certificate_add += 5
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 20
     elif character_data.talent[202] or character_data.talent[212]:
-        cache.rhodes_island.today_fall_chara_pink_certificate_add += 10
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 40
     elif character_data.talent[203] or character_data.talent[213]:
-        cache.rhodes_island.today_fall_chara_pink_certificate_add += 15
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 60
     elif character_data.talent[204] or character_data.talent[214]:
-        cache.rhodes_island.today_fall_chara_pink_certificate_add += 20
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 100
 
 
 def sanity_point_grow():
