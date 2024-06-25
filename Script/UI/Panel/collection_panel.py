@@ -266,11 +266,11 @@ class Collection_Panel:
             if bonus_id == 1:
                 cache.rhodes_island.materials_resouce[3] += 1
             elif bonus_id == 2:
-                cache.rhodes_island.materials_resouce[3] += 1
+                cache.rhodes_island.materials_resouce[3] += 3
             elif bonus_id == 3:
-                cache.rhodes_island.materials_resouce[3] += 1
+                cache.rhodes_island.materials_resouce[3] += 5
             elif bonus_id == 4:
-                cache.rhodes_island.materials_resouce[3] += 1
+                cache.rhodes_island.materials_resouce[3] += 5
             elif bonus_id == 5:
                 cache.rhodes_island.materials_resouce[3] += 10
             elif bonus_id == 6:
