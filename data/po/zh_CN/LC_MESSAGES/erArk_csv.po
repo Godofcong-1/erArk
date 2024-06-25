@@ -2972,6 +2972,14 @@ msgstr ""
 msgid "获得1至纯源石，可以用来获得或升级源石技艺"
 msgstr ""
 
+#: .\data\csv\Collection_bouns.csv:8
+msgid "获得3至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+#: .\data\csv\Collection_bouns.csv:9
+msgid "获得5至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
 #: .\data\csv\Collection_bouns.csv:11
 msgid "获得10至纯源石，可以用来获得或升级源石技艺"
 msgstr ""

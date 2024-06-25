@@ -394,6 +394,26 @@ class Character_FirstNPC:
         """ 监听的按钮列表 """
         self.npc_select_now = 3
         """ 当前还可以选择的NPC数量 """
+        self.normal_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 0, 0)
+        """ 一般干员选择面板 """
+        self.talk_chara_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 5, self.width, 1, 0, 0)
+        """ 口上干员选择面板 """
+        self.show_normal_handle_panel = False
+        """ 是否显示一般干员选择面板 """
+        self.show_talk_chara_handle_panel = True
+        """ 是否显示口上干员选择面板 """
+        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        """ 当前显示的NPC列表 """
+        self.talk_character_list = []
+        """ 口上干员列表 """
+        self.name_filter_flag = False
+        """ 姓名筛选标记 """
+        self.chest_filter_flag, self.chest_filter_id_dict = 0, {}
+        """ 胸围筛选标记与ID字典 """
+        self.age_filter_flag, self.age_filter_id_dict = 0, {}
+        """ 年龄筛选标记与ID字典 """
+        self.race_filter_flag, self.race_filter_id_dict = 0, {}
+        """ 种族筛选标记与ID字典 """
 
         now_draw = panel.LeftDrawTextListPanel()
         now_draw.draw_list.append(line_feed_draw)
@@ -483,15 +503,18 @@ class Character_FirstNPC:
     def select_npc(self):
         """选择初期干员"""
 
-        self.handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 1, 0)
-        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
-        self.name_filter_flag = False
-        chest_filter_list = ["无","绝壁", "贫乳", "普乳", "巨乳", "爆乳"]
-        self.chest_filter_flag, self.chest_filter_id_dict = 0, {"绝壁": [], "贫乳": [], "普乳": [], "巨乳": [], "爆乳": []}
-        age_filter_list = ["无","幼女", "萝莉", "少女", "大姐姐", "熟女", "人妻"]
-        self.age_filter_flag, self.age_filter_id_dict = 0, {"幼女": [], "萝莉": [], "少女": [], "大姐姐": [], "熟女": [], "人妻": []}
-        self.race_filter_flag, self.race_filter_id_dict = 0, {}
+        # 过滤器相关变量定义
+        chest_filter_list = [_("无")]
+        age_filter_list = [_("无")]
         race_filter_list = []
+        for cid in [121, 122, 123, 124, 125]:
+            chest_name = game_config.config_talent[cid].name
+            chest_filter_list.append(chest_name)
+            self.chest_filter_id_dict[chest_name] = []
+        for cid in [102, 103, 104, 105, 106, 107]:
+            age_name = game_config.config_talent[cid].name
+            age_filter_list.append(age_name)
+            self.age_filter_id_dict[age_name] = []
         for cid in game_config.config_race:
             if cid == 0:
                 continue
@@ -499,39 +522,8 @@ class Character_FirstNPC:
             race_filter_list.append(race_name)
             self.race_filter_id_dict[race_name] = []
 
-        for NPC_id in self.id_list:
-            target_data: game_type.Character = cache.character_data[NPC_id]
-
-            # 胸部过滤
-            if target_data.talent[121]:
-                self.chest_filter_id_dict["绝壁"].append(NPC_id)
-            elif target_data.talent[122]:
-                self.chest_filter_id_dict["贫乳"].append(NPC_id)
-            elif target_data.talent[123]:
-                self.chest_filter_id_dict["普乳"].append(NPC_id)
-            elif target_data.talent[124]:
-                self.chest_filter_id_dict["巨乳"].append(NPC_id)
-            elif target_data.talent[125]:
-                self.chest_filter_id_dict["爆乳"].append(NPC_id)
-
-            # 年龄过滤
-            if target_data.talent[102]:
-                self.age_filter_id_dict["幼女"].append(NPC_id)
-            elif target_data.talent[103]:
-                self.age_filter_id_dict["萝莉"].append(NPC_id)
-            elif target_data.talent[104]:
-                self.age_filter_id_dict["少女"].append(NPC_id)
-            elif target_data.talent[105]:
-                self.age_filter_id_dict["大姐姐"].append(NPC_id)
-            elif target_data.talent[106]:
-                self.age_filter_id_dict["熟女"].append(NPC_id)
-            elif target_data.talent[107]:
-                self.age_filter_id_dict["人妻"].append(NPC_id)
-
-            # 种族过滤
-            race_cid = target_data.race
-            race_name = game_config.config_race[race_cid].name
-            self.race_filter_id_dict[race_name].append(NPC_id)
+        # 调用过滤准备函数
+        self.prepare_filter()
 
         while 1:
             return_list = []
@@ -564,6 +556,11 @@ class Character_FirstNPC:
             button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.random_select)
             button_draw.draw()
             return_list.append(button_draw.return_text)
+            if len(self.talk_character_list) <= 0:
+                button_text = _(" [口上筛选] ")
+                button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.talk_filter)
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
             if self.name_filter_flag:
                 button_text = _(" [姓名筛选中] ")
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, normal_style="gold_enrod", cmd_func=self.name_filter)
@@ -601,12 +598,45 @@ class Character_FirstNPC:
             line_feed_draw.draw()
             line_feed_draw.draw()
 
-            # 遍历所有NPC
-            self.handle_panel.text_list = self.id_list
-            self.handle_panel.update()
-            self.handle_panel.draw()
-            return_list.extend(self.handle_panel.return_list)
+            # 面板绘制
+            if self.show_normal_handle_panel:
+                draw_text = _(" ▼一般干员")
+            else:
+                draw_text = _(" ▶一般干员")
+            button_draw = draw.LeftButton(draw_text, draw_text, len(draw_text) * 2, cmd_func=self.show_handle_panel, args=(0))
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
             line_feed_draw.draw()
+            if not self.show_normal_handle_panel:
+                line_feed_draw.draw()
+
+            if self.show_normal_handle_panel:
+                now_list = list(set(self.id_list) - set(self.talk_character_list))
+                self.normal_handle_panel.text_list = now_list
+                self.normal_handle_panel.update()
+                self.normal_handle_panel.draw()
+                return_list.extend(self.normal_handle_panel.return_list)
+                line_feed_draw.draw()
+            
+            # 口上面板
+            if len(self.talk_character_list) > 0:
+                if self.show_talk_chara_handle_panel:
+                    draw_text = _(" ▼口上干员")
+                else:
+                    draw_text = _(" ▶口上干员")
+                button_draw = draw.LeftButton(draw_text, draw_text, len(draw_text) * 2, cmd_func=self.show_handle_panel, args=(1))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed_draw.draw()
+                if not self.show_talk_chara_handle_panel:
+                    line_feed_draw.draw()
+                if self.show_talk_chara_handle_panel:
+                    self.talk_chara_handle_panel.text_list = self.talk_character_list
+                    self.talk_chara_handle_panel.update()
+                    self.talk_chara_handle_panel.draw()
+                    return_list.extend(self.talk_chara_handle_panel.return_list)
+                    line_feed_draw.draw()
+            # 返回按钮
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
             line_feed_draw.draw()
@@ -614,6 +644,40 @@ class Character_FirstNPC:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+
+    def show_handle_panel(self, panel_id):
+        """切换面板显示"""
+        if panel_id == 0:
+            self.show_normal_handle_panel = not self.show_normal_handle_panel
+        elif panel_id == 1:
+            self.show_talk_chara_handle_panel = not self.show_talk_chara_handle_panel
+
+    def prepare_filter(self):
+        """完善各种过滤器"""
+
+        for NPC_id in self.id_list:
+            target_data: game_type.Character = cache.character_data[NPC_id]
+
+            # 口上过滤
+            if target_data.talk_size:
+                self.talk_character_list.append(NPC_id)
+
+            # 胸部过滤
+            for cid in [121, 122, 123, 124, 125]:
+                if target_data.talent[cid]:
+                    self.chest_filter_id_dict[game_config.config_talent[cid].name].append(NPC_id)
+                    break
+
+            # 年龄过滤
+            for cid in [102, 103, 104, 105, 106, 107]:
+                if target_data.talent[cid]:
+                    self.age_filter_id_dict[game_config.config_talent[cid].name].append(NPC_id)
+                    break
+
+            # 种族过滤
+            race_cid = target_data.race
+            race_name = game_config.config_race[race_cid].name
+            self.race_filter_id_dict[race_name].append(NPC_id)
 
     def select_all(self):
         """一键全选"""
@@ -632,6 +696,16 @@ class Character_FirstNPC:
         for npc_id in random_npc:
             cache.npc_id_got.add(npc_id)
 
+    def talk_filter(self):
+        """口上过滤"""
+        self.age_filter_flag = 0
+        self.chest_filter_flag = 0
+        self.race_filter_flag = 0
+        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.prepare_filter()
+        self.show_normal_handle_panel = False
+        self.show_talk_chara_handle_panel = True
+
     def name_filter(self):
         """姓名筛选"""
         # 进入筛选模式
@@ -645,10 +719,12 @@ class Character_FirstNPC:
                 if npc_character_data.name not in constant.first_NPC_name_set and user_input in npc_character_data.name:
                     npc_name_filter_id.append(character_id)
             self.id_list = npc_name_filter_id
+            self.talk_character_list = []
         # 退出筛选模式
         else:
             self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         self.name_filter_flag = not self.name_filter_flag
+        self.show_normal_handle_panel = True
 
     def chest_filter(self):
         """胸围筛选"""
@@ -666,7 +742,9 @@ class Character_FirstNPC:
         elif self.chest_filter_flag == 5:
             self.id_list = self.chest_filter_id_dict[_("爆乳")]
         self.age_filter_flag = 0
-    
+        self.talk_character_list = []
+        self.show_normal_handle_panel = True
+
     def age_filter(self):
         """外表年龄筛选"""
         self.age_filter_flag = (self.age_filter_flag + 1) % 7
@@ -685,16 +763,20 @@ class Character_FirstNPC:
         elif self.age_filter_flag == 6:
             self.id_list = self.age_filter_id_dict[_("人妻")]
         self.chest_filter_flag = 0
+        self.talk_character_list = []
+        self.show_normal_handle_panel = True
 
     def race_filter(self):
         """种族筛选"""
-        self.race_filter_flag = (self.race_filter_flag + 1) % 41
+        self.race_filter_flag = (self.race_filter_flag + 1) % len(game_config.config_race)
         if self.race_filter_flag == 0:
             self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         else:
             now_cid = self.race_filter_flag
             race_name = game_config.config_race[now_cid].name
             self.id_list = self.race_filter_id_dict[race_name]
+        self.talk_character_list = []
+        self.show_normal_handle_panel = True
 
     def reset_select(self):
         """重置选择"""
@@ -703,6 +785,12 @@ class Character_FirstNPC:
         # 从列表中移除
         for character_id in now_select_npc_ld_list:
             cache.npc_id_got.remove(character_id)
+        # 重置过滤器
+        self.age_filter_flag = 0
+        self.chest_filter_flag = 0
+        self.race_filter_flag = 0
+        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.prepare_filter()
 
 
 class SelectFirstNPCButton:
@@ -731,7 +819,7 @@ class SelectFirstNPCButton:
         """ 绘制数字按钮 """
         self.button_id: int = button_id
         """ 数字按钮的id """
-        self.button_return: str = str(button_id)
+        self.button_return: str = str(NPC_id)
         """ 按钮返回值 """
 
         target_data: game_type.Character = cache.character_data[NPC_id]
@@ -739,23 +827,29 @@ class SelectFirstNPCButton:
         # 如果有口上的话，输出大小
         if target_data.talk_size:
             button_text += f"({target_data.talk_size}kb)"
+        # 获得绘制颜色
+        # 如果有口上颜色的话，使用口上颜色
+        if target_data.text_color:
+            now_style = target_data.name
+        # 如果是已选择的干员，使用金色
+        elif self.NPC_id in cache.npc_id_got:
+            now_style = "gold_enrod"
+        # 否则使用标准颜色
+        else:
+            now_style = "standard"
+
         name_draw = draw.LeftDraw()
         if self.NPC_id in cache.npc_id_got:
             if target_data.name in constant.first_NPC_name_set:
                 button_text += _("(基础)")
                 name_draw.text = button_text
                 name_draw.width = self.width
-                name_draw.style = "gold_enrod"
+                name_draw.style = now_style
             else:
                 button_text += _("(自选)")
-                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
+                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = now_style, cmd_func=self.button_0)
         else:
-            # 如果有口上颜色的话，输出颜色
-            if target_data.text_color:
-                # print(f"debug name = {target_data.name}, color = {target_data.text_color}")
-                name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style=target_data.name, cmd_func=self.button_0)
-            else:
-                name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)
+            name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = now_style, cmd_func=self.button_0)
 
         # 按钮绘制
         # self.button_return = NPC_id
