@@ -1136,7 +1136,7 @@ def handle_not_in_toilet_female(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_not_in_toilet_female(character_id):
+    if handle_in_toilet_female(character_id):
         return 0
     return 1
 
