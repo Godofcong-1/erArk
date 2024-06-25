@@ -502,6 +502,8 @@ class ACTION_INFO:
         """ 无法进入私密场所的等待时间 """
         self.last_eaj_add_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 上次增加射精值的时间 """
+        self.check_out_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色退房时间 """
 
 
 class AUTHOR_FLAG:

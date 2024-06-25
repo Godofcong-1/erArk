@@ -249,6 +249,8 @@ class Premise:
     """ 地点_定位 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 地点_定位 不在自己宿舍中 """
+    IN_DORMITORY_OR_HOTEL = "in_dor_or_hotel"
+    """ 地点_定位 在自己宿舍中或在已经入住的旅馆中 """
     IN_BATHROOM = "in_bathroom"
     """ 地点_定位 在浴室中 """
     IN_TOILET_MAN = "in_toilet_man"

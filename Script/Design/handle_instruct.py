@@ -877,7 +877,7 @@ def handle_hormone_off():
 
 @add_instruct(
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
-    {constant_promise.Premise.IN_DORMITORY,
+    {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME}
 )
@@ -1408,9 +1408,7 @@ def handle_take_care_baby():
     constant.InstructType.DAILY,
     _("预定房间"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_LOVE_HOTEL,
-     constant_promise.Premise.NOT_LIVE_IN_LOVE_HOTEL,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.IN_LOVE_HOTEL},
 )
 def handle_order_hotel_room():
     """处理预定房间指令"""
@@ -1805,6 +1803,7 @@ def handle_unconscious_h():
 def handle_do_h_in_love_hotel():
     """处理邀请在爱情旅馆H指令"""
     character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.h_in_love_hotel = True
     target_data = cache.character_data[character_data.target_character_id]
     target_data.h_state.h_in_love_hotel = True
     handle_do_h()

@@ -11,6 +11,7 @@ from Script.Design import (
     handle_instruct,
     character_behavior,
     basement,
+    handle_premise
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -2514,6 +2515,9 @@ def handle_use_body_lubricant(
     """
     if not add_time:
         return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[100] -= 1
 
@@ -2567,6 +2571,9 @@ def handle_use_philter(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[103] -= 1
@@ -2635,6 +2642,9 @@ def handle_use_enemas(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[104] -= 1
@@ -3041,6 +3051,9 @@ def handle_use_diuretics_once(
     """
     if not add_time:
         return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[105] -= 1
 
@@ -3061,6 +3074,9 @@ def handle_use_diuretics_persistent(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[106] -= 1
@@ -3083,6 +3099,9 @@ def handle_use_sleeping_pills(
     """
     if not add_time:
         return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[107] -= 1
 
@@ -3103,6 +3122,9 @@ def handle_use_ovulation_promoting_drugs(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[108] -= 1
@@ -3125,6 +3147,9 @@ def handle_use_contraceptive_before(
     """
     if not add_time:
         return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[101] -= 1
 
@@ -3145,6 +3170,9 @@ def handle_use_contraceptive_after(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[102] -= 1
@@ -3230,6 +3258,9 @@ def handle_use_condom(
     """
     if not add_time:
         return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[120] -= 1
 
@@ -3250,6 +3281,9 @@ def handle_use_urethral_swab(
     now_time -- 结算的时间
     """
     if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[139] -= 1
@@ -3894,6 +3928,8 @@ def handle_both_h_state_reset(
     character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
     target_data.h_state = attr_calculation.get_h_state_zero(target_data.h_state)
     for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
+        character_data.h_state.orgasm_level[orgasm] = now_data
         now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
         target_data.h_state.orgasm_level[orgasm] = now_data
     # 清零H相关二段状态
@@ -3903,6 +3939,32 @@ def handle_both_h_state_reset(
     for second_behavior_id, behavior_data in target_data.second_behavior.items():
         if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
             target_data.second_behavior[second_behavior_id] = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UPDATE_ORGASM_LEVEL)
+def handle_update_orgasm_level(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方同步高潮程度记录
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
+        character_data.h_state.orgasm_level[orgasm] = now_data
+        now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
+        target_data.h_state.orgasm_level[orgasm] = now_data
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)

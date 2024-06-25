@@ -160,6 +160,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         #         print(f"debug time_judge")
         judge_character_tired_sleep(character_id) # 结算疲劳
         judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
+        judge_pl_real_time_data() # 玩家实时数据结算
         # print(f"debug 玩家结算完毕")
 
     # 再处理NPC部分
@@ -798,6 +799,30 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
     return 1
+
+
+def judge_pl_real_time_data() -> int:
+    """
+    玩家实时数据结算\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+
+    # 酒店退房时间到了则退房
+    if cache.rhodes_island.love_hotel_room_lv > 0:
+        if game_time.judge_date_big_or_small(cache.game_time, pl_character_data.action_info.check_out_time) > 0:
+            # 输出提示信息
+            room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("\n您入住的{0}到退房时间了，已自动退房\n").format(room_name[cache.rhodes_island.love_hotel_room_lv - 1])
+            now_draw.draw()
+            # 结算
+            cache.rhodes_island.love_hotel_room_lv = 0
+            pl_character_data.action_info.check_out_time = datetime.datetime(1, 1, 1)
 
 
 def update_sleep():

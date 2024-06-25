@@ -387,11 +387,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     # 仅性爱指令
     if judge_data_type == "S":
         # 淫乱相关属性修正#
-        if character_data.talent[40]:
+        if target_data.talent[40]:
             judge += 30
             calculation_text += _("+淫乱(+30)")
         # 爱情旅馆修正
-        if character_data.h_state.h_in_love_hotel:
+        if target_data.h_state.h_in_love_hotel:
             if cache.rhodes_island.love_hotel_room_lv == 1:
                 judge += 10
                 calculation_text += _("+标间(+10)")
