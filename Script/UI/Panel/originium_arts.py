@@ -393,9 +393,90 @@ class Originium_Arts_Panel:
                     return_list.append(now_draw.return_text)
                     now_draw.draw()
                     line_feed.draw()
-                # 每个技能树单独的获得方式
+                # 内衣透视
+                if talent_id == 307:
+                    # 总内裤数量
+                    now_pan_count = 0
+                    for chara_cid in self.pl_character_data.pl_collection.npc_panties:
+                        now_pan_count += len(self.pl_character_data.pl_collection.npc_panties[chara_cid])
+                    # 绘制
+                    draw_text = f"  {talent_name}"
+                    draw_text += _("：需要全干员内裤收藏总数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_pan_count)
+                    # 可以解锁则绘制按钮
+                    if now_pan_count >= talent_of_arts_data.lv_up_value1:
+                        now_draw = draw.LeftButton(
+                            _(draw_text),
+                            _(str(cid) + "1"),
+                            window_width,
+                            cmd_func=self.gain_and_upgrade_ability_which,
+                            args=(cid,True),
+                            )
+                        return_list.append(now_draw.return_text)
+                        now_draw.draw()
+                    # 不可解锁则绘制灰色文本
+                    else:
+                        now_draw = draw.NormalDraw()
+                        now_draw.text = _(draw_text)
+                        now_draw.style = "deep_gray"
+                        now_draw.draw()
+                    line_feed.draw()
+                # 腔内透视
+                elif talent_id == 308:
+                    # 计算体内被射精总量和总绝顶经验
+                    now_semen_count, now_exp_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        for part_id in [2,3,6,7,8,9,15]:
+                            now_semen_count += character_data.dirty.body_semen[part_id][3]
+                        now_exp_count += character_data.experience[20]
+                    # 绘制
+                    draw_text = f"  {talent_name}"
+                    draw_text += _("：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_semen_count, talent_of_arts_data.lv_up_value2, now_exp_count)
+                    # 可以解锁则绘制按钮
+                    if now_semen_count >= talent_of_arts_data.lv_up_value1 and now_exp_count >= talent_of_arts_data.lv_up_value2:
+                        now_draw = draw.LeftButton(
+                            _(draw_text),
+                            _(str(cid) + "1"),
+                            window_width,
+                            cmd_func=self.gain_and_upgrade_ability_which,
+                            args=(cid,True),
+                            )
+                        return_list.append(now_draw.return_text)
+                        now_draw.draw()
+                    # 不可解锁则绘制灰色文本
+                    else:
+                        now_draw = draw.NormalDraw()
+                        now_draw.text = _(draw_text)
+                        now_draw.style = "deep_gray"
+                        now_draw.draw()
+                    line_feed.draw()
+                # 生理透视
+                elif talent_id == 309:
+                    # 计算体内被射精总量和总绝顶经验
+                    now_child_count = len(cache.character_data[0].relationship.child_id_list)
+                    # 绘制
+                    draw_text = f"  {talent_name}"
+                    draw_text += _("：需要生育孩子数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_child_count)
+                    # 可以解锁则绘制按钮
+                    if now_child_count >= talent_of_arts_data.lv_up_value1:
+                        now_draw = draw.LeftButton(
+                            _(draw_text),
+                            _(str(cid) + "1"),
+                            window_width,
+                            cmd_func=self.gain_and_upgrade_ability_which,
+                            args=(cid,True),
+                            )
+                        return_list.append(now_draw.return_text)
+                        now_draw.draw()
+                    # 不可解锁则绘制灰色文本
+                    else:
+                        now_draw = draw.NormalDraw()
+                        now_draw.text = _(draw_text)
+                        now_draw.style = "deep_gray"
+                        now_draw.draw()
+                    line_feed.draw()
                 # 催眠系
-                if talent_id in game_config.config_hypnosis_talent_of_pl:
+                elif talent_id in game_config.config_hypnosis_talent_of_pl:
                     up_data = game_config.config_hypnosis_talent_of_pl[talent_id]
                     need_exp = up_data.pl_experience
                     now_exp = self.pl_character_data.experience[122]
@@ -407,11 +488,9 @@ class Originium_Arts_Panel:
                         now_degree += character_data.hypnosis.hypnosis_degree
                     # 绘制
                     draw_text = f"  {talent_name}"
-                    if up_data.todo:
-                        draw_text += _("(未实装)")
                     draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
                     # 可以解锁则绘制按钮
-                    if not up_data.todo and now_exp >= need_exp and now_degree >= need_degree:
+                    if now_exp >= need_exp and now_degree >= need_degree:
                         now_draw = draw.LeftButton(
                             _(draw_text),
                             _(str(cid) + "1"),

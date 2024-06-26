@@ -798,6 +798,10 @@ class Talent_Of_Arts:
     """ 前置需求素质id """
     level: int
     """ 能力等级 """
+    lv_up_value1: int
+    """ 升级用数值1 """
+    lv_up_value2: int
+    """ 升级用数值2 """
     todo: int
     """ 未实装 """
 
