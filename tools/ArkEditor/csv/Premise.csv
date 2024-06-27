@@ -123,6 +123,7 @@ in_dr_off_or_debug,IN_DR_OFFICE_OR_DEBUG,地点_定位,在博士办公室或处�
 in_command_room,IN_COMMAND_ROOM,地点_定位,在指挥室
 in_dor,IN_DORMITORY,地点_定位,在自己宿舍中
 not_in_dor,NOT_IN_DORMITORY,地点_定位,不在自己宿舍中
+in_dor_or_hotel,IN_DORMITORY_OR_HOTEL,地点_定位,在自己宿舍中或在已经入住的旅馆中
 in_bathroom,IN_BATHROOM,地点_定位,在浴室中
 in_toilet_man,IN_TOILET_MAN,地点_定位,在男士洗手间
 in_toilet_female,IN_TOILET_FEMALE,地点_定位,在女士洗手间
@@ -230,6 +231,8 @@ in_h_shop,IN_H_SHOP,地点_定位,在成人用品商店
 not_in_h_shop,NOT_IN_H_SHOP,地点_定位,不在成人用品商店
 in_resource_exchange,IN_RESOURCE_EXCHANGE,地点_定位,在资源交易所
 not_in_resource_exchange,NOT_IN_RESOURCE_EXCHANGE,地点_定位,不在资源交易所
+in_love_hotel,IN_LOVE_HOTEL,地点_定位,在爱情旅馆
+not_in_love_hotel,NOT_IN_LOVE_HOTEL,地点_定位,不在爱情旅馆
 in_production_workshop,IN_PRODUCTION_WORKSHOP,地点_定位,在生产车间
 not_in_production_workshop,NOT_IN_PRODUCTION_WORKSHOP,地点_定位,不在生产车间
 in_diplomatic_office,IN_DIPLOMATIC_OFFICE,地点_定位,在外交办公室
@@ -1034,6 +1037,14 @@ t_weapon_semen,T_WEAPON_SEMEN,污浊_服装,交互对象当前武器有精液
 extras_semen,EXTRAS_SEMEN,污浊_服装,自身当前附属物有精液
 t_extras_semen,T_EXTRAS_SEMEN,污浊_服装,交互对象当前附属物有精液
 
+h_in_love_hotel,H_IN_LOVE_HOTEL,H_地点,正在爱情旅馆中H
+h_not_in_love_hotel,H_NOT_IN_LOVE_HOTEL,H_地点,不在爱情旅馆中H
+not_live_in_love_hotel,NOT_LIVE_IN_LOVE_HOTEL,H_地点,还未在爱情旅馆中入住
+live_inlove_hotel,LIVE_IN_LOVE_HOTEL,H_地点,已在爱情旅馆中入住
+love_hotel_room_v1,LOVE_HOTEL_ROOM_V1,H_地点,在爱情旅馆中入住房间为标间
+love_hotel_room_v2,LOVE_HOTEL_ROOM_V2,H_地点,在爱情旅馆中入住房间为情趣主题房
+love_hotel_room_v3,LOVE_HOTEL_ROOM_V3,H_地点,在爱情旅馆中入住房间为顶级套房
+
 penis_in_t_hair,PENIS_IN_T_HAIR,H_射精与绝顶,当前阴茎位置为交互对象_发交中
 penis_in_t_face,PENIS_IN_T_FACE,H_射精与绝顶,当前阴茎位置为交互对象_阴茎蹭脸中
 penis_in_t_mouse,PENIS_IN_T_MOUSE,H_射精与绝顶,当前阴茎位置为交互对象_口交中
@@ -1147,6 +1158,7 @@ c_bonus_203,COLLECT_BONUS_202,收集,收藏奖励_202_解锁索要袜子
 patient_wait,PATIENT_WAIT,经营,有患者正等待就诊
 new_npc_wait,NEW_NPC_WAIT,经营,有已招募待确认的干员
 have_office_work_need_to_do,HAVE_OFFICE_WORK_NEED_TO_DO,经营,有需要处理的公务
+pink_certificate_g_10,PINK_CERTIFICATE_G_10,经营,拥有粉红凭证数量大于10
 
 pl_action_sleep,PL_ACTION_SLEEP,行动,玩家正在睡觉
 pl_action_not_sleep,PL_ACTION_NOT_SLEEP,行动,玩家没有在睡觉

@@ -197,6 +197,7 @@ cid,effect_name,effect_type,effect
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
+405,UPDATE_ORGASM_LEVEL,属性_结构体,双方同步高潮程度记录
 
 451,T_BE_BAGGED,属性_特殊flag,交互对象变成被装袋搬走状态
 452,T_BE_IMPRISONMENT,属性_特殊flag,交互对象变成被监禁状态
@@ -305,6 +306,9 @@ cid,effect_name,effect_type,effect
 814,PENIS_IN_T_TAIL,H_阴茎位置,当前阴茎位置为交互对象_尾交中
 815,PENIS_IN_T_HORN,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭角中
 816,PENIS_IN_T_EARS,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭耳朵中
+831,CANCEL_PENIS_IN_FACE_OR_MOUSE,H_阴茎位置,取消为阴茎位置交互对象_阴茎蹭脸中和口交中
+
+841,H_IN_LOVE_HOTEL_TO_FALSE,H_地点,取消自己和交互对象正在爱情旅馆中H的状态
 
 901,ITEM_OFF,道具_增减,去掉身上所有的道具
 902,TARGET_ITEM_OFF,道具_增减,交互对象去掉身上所有的道具

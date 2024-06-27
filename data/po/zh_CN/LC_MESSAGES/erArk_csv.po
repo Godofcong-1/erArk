@@ -13304,6 +13304,30 @@ msgstr ""
 msgid "花了好长时间才叠出来的短刀纸模。歪歪扭扭，满是折痕，不怎么精致。收到的人会喜欢吗？"
 msgstr ""
 
+#: .\data\character\2013_刻俄柏.csv:14
+msgid "流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:30
+msgid "战术冲锋衣"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:31
+msgid "高领战术直筒连衣短裙"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:33
+msgid "超高筒系带运动靴"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:34
+msgid "很重的枪"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:35
+msgid "裝滿武器的帆布包"
+msgstr ""
+
 #: .\data\character\2014_年.csv:4
 msgid "年"
 msgstr ""
