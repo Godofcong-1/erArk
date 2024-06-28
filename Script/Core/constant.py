@@ -1726,6 +1726,8 @@ class Instruct:
     """ 让对方食用 """
     REST = 0
     """ 休息 """
+    DIRAY = 0
+    """ 日记 """
     SLEEP = 0
     """ 睡觉 """
     TAKE_SHOWER = 0

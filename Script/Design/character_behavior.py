@@ -127,16 +127,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
 
     # 先处理玩家部分
     if character_id == 0:
-        # 判断玩家的开始事件
-        # now_event = event.handle_event(0,1)
-        # if now_event != None:
-        #     now_event.draw()
-        #     character_data.event.event_id = now_event.event_id
-        #     start_time = character_data.behavior.start_time
-        #     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-        #     now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
-        #     if now_panel != None:
-        #         now_panel.draw()
+        # 记录玩家的指令文本
+        cache.daily_intsruce += character_instruct_record(0)
 
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(character_id)
@@ -688,6 +680,43 @@ def settle_character_juel(character_id: int) -> int:
     return 1
 
 
+def character_instruct_record(character_id: int) -> str:
+    """
+    角色的指令记录\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    Return arguments:
+    str -- 指令记录文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    name = character_data.name
+    instruct_text = ""
+    # 记录时间的小时数和分钟数
+    now_time = character_data.behavior.start_time.strftime("%H:%M")
+    instruct_text += _("{0}在{1}，").format(name, now_time)
+    # 移动指令则记录移动路径
+    if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+        move_src = character_data.behavior.move_src[-1]
+        if move_src == "0":
+            move_src =  character_data.behavior.move_src[-2] + "出口"
+        move_target = character_data.behavior.move_target[-1]
+        if move_target == "0":
+            move_target =  character_data.behavior.move_target[-2] + "出口"
+        if move_target:
+            instruct_text += _("从{0}移动至{1}\n").format(move_src, move_target)
+    # 其他指令则记录状态
+    else:
+        now_chara_state = game_config.config_status[character_data.state].name
+        # 如果是交互指令则记录交互对象
+        if character_data.target_character_id != character_id:
+            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            target_name = target_character_data.name
+            instruct_text += _("对{0}进行了{1}\n").format(target_name, now_chara_state)
+        else:
+            instruct_text += _("进行了{0}\n").format(now_chara_state)
+    return instruct_text
+
+
 def judge_character_cant_move(character_id: int) -> int:
     """
     无法自由移动的角色\n
@@ -931,6 +960,7 @@ def update_new_day():
     # 非角色部分
     basement.update_base_resouce_newday()
     cache.pre_game_time = cache.game_time
+    cache.daily_intsruce.append(game_time.get_date_until_day())
     # update_save()
 
 

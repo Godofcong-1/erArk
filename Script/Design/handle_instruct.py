@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts, diary_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -873,6 +873,17 @@ def handle_hormone_on():
 def handle_hormone_off():
     """处理关闭信息素"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HORMONE_OFF)
+
+
+@add_instruct(
+    constant.Instruct.DIRAY, constant.InstructType.DAILY, _("日记"),
+    {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
+     constant_promise.Premise.NOT_H}
+)
+def handle_diary():
+    """处理日记指令"""
+    now_draw = diary_panel.Diary_Panel(width)
+    now_draw.draw()
 
 
 @add_instruct(
