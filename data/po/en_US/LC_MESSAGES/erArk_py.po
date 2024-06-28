@@ -5592,3 +5592,145 @@ msgid ""
 "\n"
 "{0}的Ｗ扩张上升至5级\n"
 msgstr ""
+
+msgid "+标间(+10)"
+msgstr ""
+
+msgid "+情趣主题房(+50)"
+msgstr ""
+
+msgid "+顶级套房(+100)"
+msgstr ""
+
+msgid "{0}在{1}，"
+msgstr ""
+
+msgid "从{0}移动至{1}\n"
+msgstr ""
+
+msgid "对{0}进行了{1}\n"
+msgstr ""
+
+msgid "进行了{0}\n"
+msgstr ""
+
+msgid "标间"
+msgstr ""
+
+msgid "情趣主题房"
+msgstr ""
+
+msgid "顶级套房"
+msgstr ""
+
+msgid ""
+"\n"
+"您入住的{0}到退房时间了，已自动退房\n"
+msgstr ""
+
+msgid "日记"
+msgstr ""
+
+msgid "预定房间"
+msgstr ""
+
+msgid "邀请在爱情旅馆H"
+msgstr ""
+
+msgid " [口上筛选] "
+msgstr ""
+
+msgid " ▼一般干员"
+msgstr ""
+
+msgid " ▶一般干员"
+msgstr ""
+
+msgid " ▼口上干员"
+msgstr ""
+
+msgid " ▶口上干员"
+msgstr ""
+
+msgid "日记(实装中)"
+msgstr ""
+
+msgid ""
+"{0}\n"
+"\n"
+msgstr ""
+
+msgid " 插入的文本为"
+msgstr ""
+
+msgid ""
+"\n"
+"日记已保存至{0}\n"
+msgstr ""
+
+msgid "[日记]"
+msgstr ""
+
+msgid ""
+"日记\n"
+"\n"
+msgstr ""
+
+msgid "预订房间"
+msgstr ""
+
+msgid ""
+"\n"
+"○（实装中）酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n"
+msgstr ""
+
+msgid "  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n"
+msgstr ""
+
+msgid ""
+"  请问要入住哪种房间呢？\n"
+"\n"
+msgstr ""
+
+msgid "标间(2粉红凭证)"
+msgstr ""
+
+msgid "情趣主题房(10粉红凭证)"
+msgstr ""
+
+msgid "顶级套房(100粉红凭证)"
+msgstr ""
+
+msgid "[{i}]"
+msgstr ""
+
+msgid "当前已预订{0}，退房时间为{1}日12点\n"
+msgstr ""
+
+msgid ""
+"\n"
+"粉红凭证不足，无法预订{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"成功预订了{0}，退房时间为{1}\n"
+msgstr ""
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），全干员总信赖度≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），陷落程度为[爱侣]或[奴隶]的干员人数≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要全干员内裤收藏总数量≥{0}（当前{1}）"
+msgstr ""
+
+msgid "：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要生育孩子数量≥{0}（当前{1}）"
+msgstr ""
