@@ -317,7 +317,7 @@ class SeeCharacterBodyPanel:
                 lactation_text = _(" 乳汁量为{0}ml").format(target_character_data.pregnancy.milk)
                 all_part_text_list.append(lactation_text)
 
-        # 如果有生理透视，则显示当前生理周期与受精概率
+        # 如果有生理透视，则显示当前生理周期、受精概率、欲望值
         if character_data.pl_ability.visual and character_data.talent[309]:
             # 生理周期文本
             reproduction_period = target_character_data.pregnancy.reproduction_period
@@ -326,11 +326,13 @@ class SeeCharacterBodyPanel:
             reproduction_text = game_config.ui_text_data['h_state'][period_cid]
             # 受精概率文本
             fertilization_text = _("受精概率{0}%").format(target_character_data.pregnancy.fertilization_rate)
+            # 欲望值文本
+            desire_text = _("欲望值{0}%").format(target_character_data.desire_point)
             # 组合文本
-            now_text = _(" 当前为{0},{1}").format(reproduction_text, fertilization_text)
+            now_text = _(" 当前为{0},{1},{2}").format(reproduction_text, fertilization_text, desire_text)
             all_part_text_list.append(now_text)
 
-        # 阴茎位置文本
+        # 阴茎位置文本，因为是直接调用ui文本，所以不需要调用翻译组件，下同
         if target_character_data.h_state.insert_position != -1:
             now_position_index = target_character_data.h_state.insert_position
             position_text_cid = f"阴茎位置{str(now_position_index)}"
