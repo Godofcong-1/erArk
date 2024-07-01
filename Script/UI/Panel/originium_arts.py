@@ -390,15 +390,15 @@ class Originium_Arts_Panel:
                 talent_info = game_config.config_talent[talent_id].info
                 # 通用的源石获得方式，花费为10的cost次方
                 money_cost = 10 ** (talent_of_arts_data.level - 1)
-                if cache.rhodes_island.materials_resouce[3] < money_cost:
+                if talent_of_arts_data.todo:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}({1}至纯源石-当前源石不足)：{2}\n").format(talent_name, money_cost, talent_info)
+                    draw_text = _("  {0}(未实装)：{1}\n").format(talent_name, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
-                elif talent_of_arts_data.todo:
+                elif cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}(未实装)：{1}\n").format(talent_name, talent_info)
+                    draw_text = _("  {0}({1}至纯源石-当前源石不足)：{2}\n").format(talent_name, money_cost, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
@@ -416,15 +416,17 @@ class Originium_Arts_Panel:
                     line_feed.draw()
                 # 博士信息素
                 if talent_id == 304:
-                    # 总好感度与总信赖度
+                    # 好感度与信赖度
                     now_favorability_count, now_trust_count = 0, 0
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
-                        now_favorability_count += character_data.favorability[0]
-                        now_trust_count += character_data.trust
+                        if character_data.favorability[0] > now_favorability_count:
+                            now_favorability_count = character_data.favorability[0]
+                        if character_data.trust > now_trust_count:
+                            now_trust_count = character_data.trust
                     # 绘制
                     draw_text = f"  {talent_name}"
-                    draw_text += _("：需要全干员总好感度≥{0}（当前{1}），全干员总信赖度≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_trust_count)
+                    draw_text += _("：需要单干员最高好感度≥{0}（当前{1}），最高信赖度≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_trust_count)
                     now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_trust_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
                 # 博士信息素集组
