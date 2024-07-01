@@ -960,7 +960,7 @@ def update_new_day():
     # 非角色部分
     basement.update_base_resouce_newday()
     cache.pre_game_time = cache.game_time
-    cache.daily_intsruce.append(game_time.get_date_until_day())
+    cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()
 
 

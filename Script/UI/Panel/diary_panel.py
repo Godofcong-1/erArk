@@ -39,7 +39,7 @@ class Diary_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = _("日记(实装中)")
+        title_text = _("日记")
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -55,7 +55,8 @@ class Diary_Panel:
             for i in cache.daily_intsruce:
                 info_text += i
             info_text += "\n\n"
-            info_text += _("{0}\n\n").format(self.all_insert_text)
+            if len(self.all_insert_text) > 0:
+                info_text += _("{0}\n\n").format(self.all_insert_text)
             info_draw.text = info_text
             info_draw.draw()
 

@@ -1,6 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
+from Script.UI.Panel import diary_panel
 from Script.Core import (
     cache_control,
     get_text,
@@ -443,8 +444,16 @@ class Sleep_Panel:
             button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大8小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
             button_draw.draw()
             return_list.append(button_draw.return_text)
-
             line_feed.draw()
+            now_draw_text = _("\n 睡前日记：")
+            now_draw.text = now_draw_text
+            now_draw.draw()
+            button_text = _(" [记日记] ")
+            diary_draw = draw.CenterButton(button_text, button_text + '\n', len(button_text)*2, cmd_func = self.show_diary)
+            diary_draw.draw()
+            line_feed.draw()
+            return_list.append(diary_draw.return_text)
+
             line_feed.draw()
             line_feed.draw()
             yes_draw = draw.CenterButton(_("[确定]"), _("确定\n\n"), window_width/2)
@@ -501,6 +510,11 @@ class Sleep_Panel:
     def close_door_switch(self):
         """关门开关"""
         self.close_door_flag = not self.close_door_flag
+
+    def show_diary(self):
+        """显示日记"""
+        now_draw = diary_panel.Diary_Panel(window_width)
+        now_draw.draw()
 
 
 class Fridge_Panel:
@@ -646,9 +660,9 @@ class Order_Hotel_Room_Panel:
             # 输出提示信息
             info_draw = draw.NormalDraw()
             now_draw_text = ""
-            now_draw_text += _(f"\n○（实装中）酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n")
-            now_draw_text += _(f"  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n")
-            now_draw_text += _(f"  请问要入住哪种房间呢？\n\n")
+            now_draw_text += _("\n○酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n")
+            now_draw_text += _("  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n")
+            now_draw_text += _("  请问要入住哪种房间呢？\n\n")
             info_draw.text = now_draw_text
             info_draw.draw()
 

@@ -10153,31 +10153,27 @@ msgid "萨卡兹佣兵头目，W。曾参与卡兹戴尔漫长的内战，其小
 msgstr ""
 
 #: .\data\character\0113_W.csv:15
-msgid "#ce0000"
+msgid "#CE0000"
+msgstr ""
+
+#: .\data\character\0113_W.csv:31
+msgid "黑色皮外套"
 msgstr ""
 
 #: .\data\character\0113_W.csv:32
-msgid "灰色围巾"
+msgid "銀白色羊絨衫"
 msgstr ""
 
 #: .\data\character\0113_W.csv:33
-msgid "短休闲服"
+msgid "露指黑色皮手套"
 msgstr ""
 
 #: .\data\character\0113_W.csv:34
-msgid "白色T恤"
+msgid "黑色百褶短裙配红衬底"
 msgstr ""
 
-#: .\data\character\0113_W.csv:36
-msgid "黑色短褶裙"
-msgstr ""
-
-#: .\data\character\0113_W.csv:37
-msgid "厚连身裤"
-msgstr ""
-
-#: .\data\character\0113_W.csv:38
-msgid "黑色加固运动鞋"
+#: .\data\character\0113_W.csv:35
+msgid "黑色油光厚连裤袜"
 msgstr ""
 
 #: .\data\character\0115_凛冬.csv:4
@@ -11485,7 +11481,7 @@ msgid "格拉尼，维多利亚骑警，在突袭战，机动作战，纵深作�
 msgstr ""
 
 #: .\data\character\0220_格拉尼.csv:15
-msgid "#415567"
+msgid "#556971"
 msgstr ""
 
 #: .\data\character\0220_格拉尼.csv:29
@@ -11541,7 +11537,7 @@ msgid "暴行，原雷姆必拓矿业公司安保人员。任职期间表现优�
 msgstr ""
 
 #: .\data\character\0230_暴行.csv:15
-msgid "#616161"
+msgid "#6B6B6B"
 msgstr ""
 
 #: .\data\character\0230_暴行.csv:29
