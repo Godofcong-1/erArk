@@ -1328,6 +1328,40 @@ def handle_day_first_meet_1(
     character_data.first_record.day_first_meet = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_KISS_TO_PENIS)
+def handle_first_kiss_to_penis(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    记录阴茎初吻
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    # target_data.social_contact_data.setdefault(character_id, 0)
+    if character_data.target_character_id == character_id:
+        return
+
+    if target_data.talent[4] == 1:
+        target_data.talent[4] = 0
+        target_data.first_record.first_kiss_id = character_id
+        target_data.first_record.first_kiss_time = cache.game_time
+        target_data.first_record.first_kiss_place = target_data.position
+        target_data.first_record.first_kiss_body_part = 1
+        if (not character_id) or (not target_data.cid):
+            # 初吻的二段结算
+            target_data.second_behavior[1050] = 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
 def handle_penetrating_vision_on(
         character_id: int,

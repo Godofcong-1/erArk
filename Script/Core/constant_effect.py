@@ -713,6 +713,8 @@ class BehaviorEffect:
     """ 初次 自己变为今天已见过面 """
     DAY_FIRST_MEET_1 = 1106
     """ 初次 自己变为今天未见过面 """
+    FIRST_KISS_TO_PENIS = 1107
+    """ 初次 记录阴茎初吻 """
 
     PENETRATING_VISION_ON = 1201
     """ 源石技艺 开启透视（含理智消耗） """

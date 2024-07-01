@@ -448,6 +448,8 @@ class FIRST_RECORD:
         """ 初次牵手对象 -1为无 """
         self.first_kiss_id: int = -1
         """ 初吻对象 -1为无 """
+        self.first_kiss_body_part: int = -1
+        """ 初吻部位位置 -1为无，1为阴茎 """
         self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 初吻时间 """
         self.first_kiss_place: List[str] = ["0"]
