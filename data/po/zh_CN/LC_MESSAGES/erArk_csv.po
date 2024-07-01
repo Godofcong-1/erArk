@@ -9628,6 +9628,10 @@ msgstr ""
 msgid "凯尔希"
 msgstr ""
 
+#: .\data\character\0003_凯尔希.csv:14
+msgid "#dfe86c"
+msgstr ""
+
 #: .\data\character\0007_可露希尔.csv:4
 msgid "可露希尔"
 msgstr ""
@@ -11886,6 +11890,38 @@ msgstr ""
 
 #: .\data\character\0282_空爆.csv:14
 msgid "作为患者被罗德岛接收，因能力出众，在征求本人意见后，接受并通过测试，成为罗德岛的一员，被分配到预备行动组A6。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:4
+msgid "Lancet-2"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:13
+msgid "一盒治療噴霧。外盒上标注着“一喷起效”的医疗喷雾套组。可以插入医用器械，也可以直接使用。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:14
+msgid "Lancet-2是可露希尔客制化后的雷神存在者™S Typer 62六轮作业平台， 圆形的外观让人觉得很可爱所以成为了某种意义上的吉祥物。虽然她说话有时候很消极，但是大家都很喜欢她。\n\nLancet-2在经过可露希尔的改造后，得以满足更多罗德岛内的医疗需求，其器械设备也更注重于消毒和应对源石污染。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:15
+msgid "#99988f"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:23
+msgid "白色塑鋼外殼"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:24
+msgid "六連橡膠動輪"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:25
+msgid "急救噴霧噴嘴"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:26
+msgid "置物架"
 msgstr ""
 
 #: .\data\character\0289_缠丸.csv:4

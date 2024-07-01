@@ -10704,6 +10704,306 @@ msgstr ""
 msgid "{PlayerName}博士掏出怀表在星极面前左右晃着，嘴里还念叨着“妖魔鬼怪快离开，妖魔鬼怪快离开。”之类听不懂的话"
 msgstr ""
 
+#: .\data\talk\chara\0285_Lancet-2.csv:6
+msgid "“博士想知道什麼嗎?”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:7
+msgid "“救護噴霧剩餘存量低於50%，已經通知可愛的可露希爾姐姐來補充了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:8
+msgid "“有甚麼能為您效勞的嗎，{PlayerName}博士?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:9
+msgid "“今天的您非常健康喔，請繼續保持”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:10
+msgid "“博士，請注意自己的休息，否則凱爾希醫生又要念叨了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:11
+msgid "“電量低...抱歉，博士對我有什麼指示嗎?”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:12
+msgid "“有什麼不舒服的地方嗎? 請務必讓我來看看吧!”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:13
+msgid "Lancet-2在確認你坐穩後，開到牆邊插上電後休眠了"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:14
+msgid "“您不介意的話，要靠在我的身上休息嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:15
+msgid "“博士，花香是什麼樣的感覺呢呢?”\n“嗯，為什麼這麼說?”\n你們一人一機緩慢的在通道間走著\n“因為傳感器，我最多分析出空氣中的氣味因子，雖然資料庫的定義是【好聞】，但沒什麼真實感”\n“這樣啊...”\n你在工作日誌上加上了【幫Lancet-2更新傳感器與資料庫】\n“有機會我和可露希爾談談吧”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:16
+msgid "“需要我跟著嗎，明白了!”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:17
+msgid "“博士，本機內部廢液儲存槽即將到限制容量，申請前往盥洗室”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:18
+msgid "“博士，不如您坐在我身上吧，我駝您到{TargetSceneName}”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:19
+msgid "“機具行駛中，小心避讓”\nLancet-2一邊廣播著警語一邊平穩的行駛著"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:20
+msgid "“我讓可愛的可露希爾姐姐為我加裝了坐椅喔，這樣就能載著博士到更遠的地方了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:21
+msgid "“博士，請記得系上安全帶，那麼，出發!”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:22
+msgid "Lancet-2飛快的掃描完了紙本文件\n“正在為您精簡內容....”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:23
+msgid "Lancet-2用數據線接上了你的電腦，用高亮字體圈出了公文要點與參考資料\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:24
+msgid "“您放心，可愛的可露希爾姊姊早就料到了現在的情況，並為我安裝了專家軟體”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:25
+msgid "Lancet-2用她圓潤的機身駝著文件堆的樣子看起來格外喜人"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:26
+msgid "“為了應對更多的複雜情況，可愛的可露希爾姊姊為我裝了兩隻伺服爪喔”\nLancet-2抬起伺服爪，一個二爪的，一個三爪的，在你面前一張一闔\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:27
+msgid "Lancet-2從紙堆裡夾出一張文件，舉到你的面前\n“博士，您在第二段第三行的批註出現錯誤....”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:28
+msgid "“博士，您需要休息。現在，馬上，立刻!!”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:29
+msgid "“雖然沒辦法試味道，不過看上去很好吃的樣子....”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:30
+msgid "“在我的央求之下，可愛的可露希爾姊姊幫我安裝了味覺受器喔，這樣就能用更多感官來改受世界了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:31
+msgid "“博士，能為我形容一下味道嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:32
+msgid "“分析的成分顯示是芙蓉小姐會銷毀的類型...哎，先不要通知她嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:33
+msgid "“您問我為什麼以【可愛的可露希爾姐姐】來稱呼她，資料庫是這樣設定的”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:34
+msgid "“我喜歡的東西？是【可愛的可露希爾姐姐】。你問為什麼？這個……我也不是很清楚為什麼啊，可露希爾她在初始化我的首選項的時候就這麼設置了，嗚……”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:35
+msgid "“我通常只有在有人受傷或者生病時，才能感覺到自己發揮了作用。但對我來說，只要博士你能保持健康，即使我無法發揮任何作用、只是一直跟著你，我也會很安心的……”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:36
+msgid "“我曾經找「可愛的可露希爾姐姐」，要求修改我「最喜歡的東西」變成博士你。但是她死活都不願意……”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:37
+msgid "“原來{FoodName}是這種味道啊，正在收錄進數據庫中”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:38
+msgid "“博士喜歡這種點心嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:39
+msgid "“聽說吃甜食會讓人感覺到【幸福】，所以這就是【幸福】的味道嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:40
+msgid "“很遺憾我並沒有安裝烹飪模組，所以今天就讓我在一旁觀摩吧”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:41
+msgid "“最近正在嘗試使用伺服爪來使用廚具，不過距離熟練運用似乎還有相當遠得距離呢”\nLancet-2正艱難地用伺服夾固定住食材"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:42
+msgid "“我在思考要不要待載一個電磁爐，不過這樣好像會對續航時間造成問題”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:43
+msgid "“博士，我幫您把需要的東西拿來了”\nLancet-2的置物籃中放滿了你所需要的物品\n\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:44
+msgid "“我更新了伺服爪的算法，現在可以更精確的使用廚具了”\nLancet-2夾起一顆土豆，飛快地將其削去了外皮\n\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:45
+msgid "“比起中餐，我可能更擅長西餐一些”\nLancet-2用量杯測量著調料的使用量，同時用溫度計控制著溫度\n“我還是無法理解【酌量】到底應該加多少。說道底，畢竟我沒有味覺受器”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:46
+msgid "“博士，您覺得現在的味道如何...甜一些? 好的，再添加2克的冰糖”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:47
+msgid "“博士喜歡現在的調味嗎? 好的，我會收錄到數據庫中”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:48
+msgid "你看著Lancet-2熟練著用伺服爪操作著廚具，頗有專家...廚具機的風範\n...如果她不是習慣把食材切的方正就更好了\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:49
+msgid "“通過觀察各位同事，我已經能大致量化食譜中的【酌量】範疇了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:50
+msgid "“原來，花香是這種味道嗎?”\nLancet-2駝著你，慢慢行駛在花叢之間\n“Lancet-2，感覺如何?”\n“我覺得很【好聞】，博士”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:51
+msgid "“終於，最近可愛的可露希爾姐姐幫我加裝了嗅覺分析儀，這樣又多了一個方式能接近各位了”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:52
+msgid "“...博士，我沒有相應的感測器...”\n“妳的機體更新已經提上日程了，就當是提前感受下?”\n你把一杯熱氣騰騰的咖啡放在她的鏡頭面前，她看了看咖啡杯，又看了看你\n“博士，壞....”\nLancet-2準備用鏡頭來好好瞪你這個壞傢伙\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:53
+msgid "“來，這是你的咖啡，拿好喔”\nLancet-2用伺服爪穩穩接過咖啡，然後繼續盯著你\n“怎麼了?”\n“我還是沒有味覺受器...”\n“阿...我回頭再催催可露希爾去”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:54
+msgid "“原來咖啡是這種味道啊...受教了”\nLancet-2將探棒伸進了咖啡中，做出了自己的評價\n“感覺如何?”\n“非常滿意，博士”\n在滿足地感受一段時間後，Lancet-2把咖啡杯放到了你的面前\n“不過為了不浪費食物，這杯咖啡就麻煩您喝掉囉”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:55
+msgid "“博士喜歡這種咖啡嗎?”\n“喜歡喔”\nLancet-2捧著咖啡杯，享受著和你獨處的時光\n“博士，我覺得現在這樣...【很好】”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:56
+msgid "“終於，連咖啡的香氣也能聞到了”\nLancet-2端著咖啡，發出滿足的聲音\n“體驗完整的一杯咖啡”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:57
+msgid "你坐在Lancet-2身上，一人一機各自端著咖啡，享受著這段時間\n你看著Lancet-2伺服爪上那杯紋絲不動的咖啡，忍不住開口\n“Lancet-2，你想不想...”\n“謝謝您的關心，博士...”\n她少見的打斷了你\n“但是，不需要了”\n揚聲器發出平靜的聲音\n“我已經裝了很多的附屬模組了，也多了很多方式去了解羅德島的大家”\n“再升級下去，我就需要更換主板與記憶體了”\n“可是，那樣的我，還是我嗎?”\n伺服爪放下了已經有些微涼的咖啡\n“所以，這樣就足夠了”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:58
+msgid "“博士，您瞧，是夕陽”\n地平線上三指寬的位置，殘陽如血\n“是啊，太陽...要落下了.....”\n在夕陽下，你們在甲板上拉出了長長的影子"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:59
+msgid "“博士，您在幹些什麼!!”\nLancet-2的揚聲器傳出了憤怒的音色"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:60
+msgid "“不可以瑟瑟，{PlayerName}博士!!”\nLancet-2甩開你的手後，轉身開走了"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:61
+msgid "“博士，我是輪式作業平台，沒有那種東西喔!!”\nLancet-2發出了困擾的聲音\n“不如這樣好了，如果您真想要拿走什麼，我的置物籃內有一些維修用的備用零件”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:62
+msgid "“博士，您在說些什麼啊!! 我是小車誒”\nLancet-2發出了混亂的聲音\n“如果您真想要拿走什麼，您把我電機旁邊的備用機油拿去好了，一樣是很重要的東西!!”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:63
+msgid "在辨識出你哼唱的曲調後，Lancet-2在一旁播放起了配樂"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:64
+msgid "“Lancet-2，看鏡頭!”\n“?”\n你用攝像機紀錄了她圓潤的機身"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:65
+msgid "“博士，您用完餐後，能幫我替換電池組嗎?”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:66
+msgid "你用完{FoodName}後，順便幫Lancet-2更換了電池"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:67
+msgid "“您要休息了嗎? 祝您做個好夢，博士”\n在幫你關上燈後，Lancet-2緩緩的駛出了你的臥室"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:68
+msgid "“我通常只有在有人受伤或者生病时，才能感觉到自己发挥了作用。但对我来说，只要博士你能保持健康，即使我无法发挥任何作用、只是一直跟着你，我也会很安心的......”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:69
+msgid "“博士，早安。您刚才打呼噜的声音，我已经偷偷录下来了。您的睡眠质量正常，深度睡眠时间为——”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:70
+msgid "“嗨，你好，博士。你在期待我能对你多说些什么，但我不能，毕竟我只是一台医疗机器人......”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:71
+msgid "“您好，博士。您的身体状况良好，要继续保持哦。”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:72
+msgid "“您好，博士。您看上去似乎有些累了，需要休息嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:73
+msgid "“您問我的願望? 我的願望就是能繼續陪著您，不論甚麼時候”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:74
+msgid "“您不介意的話，要坐在我的身上休息嗎?”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:75
+msgid "“電路的維護是很重要的”\nLancet-2用伺服爪闔上的電箱的蓋子，鄭重的說道\n“無論何時都應該注意電路的老化情況”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:76
+msgid "“博士，麻煩您了”\n你用海綿與水管幫Lancet-2刷洗著外殼"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:77
+msgid "“抱歉，博士，即使是我，這個玩笑也太過分了...”\n在你解釋之前，Lancet-2便狼狽地開走了"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:78
+msgid "你坐在Lancet-2為你加裝的坐椅上，消磨著時間\n“Lancet-2”\n“怎麼了，博士?”\n“你有沒有想過以後的日子啊?”\n“...沒有”\n你能感受她似乎從沒想過這個問題\n“那博士，您呢?”\n“我嘛....”\n你翹著腳，抬頭看著天\n“我應該會去旅行吧?”\n“為什麼呢，明明羅德島號也一直在大地上移動著?”\n“我想去看看，世界會不會因為我們努力過，而變得更好”\n你撫摸著Lancet-2圓潤的外殼\n“之後一起去吧?”\n“嗯”\n"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:79
+msgid "“晚安，博士”\nLancet-2一直等到你睡著後，才慢慢開出了房間\n“我對您的愛，早已燒錄進了我的主板中”"
+msgstr ""
+
+#: .\data\talk\chara\0285_Lancet-2.csv:80
+msgid "當看到你拿出戒指的一刻，連原先Lancet-2揚聲器傳出的音色也顫抖起來\n“博士，這個玩笑...”\n“不是玩笑”\n你蹲下，與她的鏡頭平視，溫和、堅定、真摯地開口\n“我，{PlayerName}，是真的想與你度過接下來的日子”\n她的機體掙扎著想逃開，卻又害怕弄傷你\n過了好一會兒，才開口\n“我連人都不是喔?”\n“我不介意”\n“您真的願意，和我過下去嗎?”\n“嗯”\n你想把戒指輕輕放在她的伺服夾爪上，卻被撥開了\n“別放那裡，怪害羞的，也容易掉”\n她張開她圓潤的外殼，露出裡面的核心元件\n“您連盒子一起放在裡面吧，這樣就不會掉了，況且...”\n“這樣，算不算一種【我把您放在心裡】呢?”\n"
+msgstr ""
+
 #: .\data\talk\chara\0290_红豆.csv:6
 msgid "在{SceneName}见到了一名身材娇小的萨卡兹少女\n小小的个子配上保养良好的殷红长发\n再加上一杆差不多和她本人一样长的锐利长枪\n你的注意力很快就被吸引了。\n她同样注意到了你，向你搭话\n“请问，你知道博士在哪里吗，我找博士很久了。”\n“什么？你就是博士！”\n“哼哼，干员红豆来报道了！”\n小家伙看起来很开心的样子。\n不经意间，你发现自己也微微笑着。"
 msgstr ""
