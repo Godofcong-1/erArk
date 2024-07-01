@@ -10405,7 +10405,79 @@ msgid "没等你反应过来，原本在你身边站着的{Name}突然就倒了�
 msgstr ""
 
 #: .\data\talk\chara\0249_缪尔赛思.csv:288
-msgid "“不行...太困了...还是...”\n过于疲劳的{TargetName}最终还是没能抗住疲劳的压力，她摇摇晃晃的走到了最近的一处干净的地方，就地躺下，随后光速睡着了\n而你就在一边看的清清楚楚，，，"
+msgid "“不行...太困了...还是...”\n过于疲劳的{TargetName}最终还是没能抗住疲劳的压力，她摇摇晃晃的走到了最近的一处干净的地方，就地躺下，随后光速睡着了\n而你就在一边看的清清楚楚，怎么办呢？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:289
+msgid "“当然可以了~有事情要一起去做吗？”\n{TargetName}说着跟在你的身边，笑着"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:290
+msgid "“想一起去逛逛？还是？”\n{TargetName}说着走到了{PlayerName}的身边，看起来她对你一起走的决定并无反对的样子"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:291
+msgid "“要我跟着你嘛？{PlayerName}你打算带我去哪呢？”\n{TargetName}说着挽住你的手臂，笑看着你"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:292
+msgid "“那好吧，晚点见呢{PlayerName}~”\n{TargetName}听着你的话，对你摇了摇手，随后走到一边忙自己的事情去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:293
+msgid "“有什么私密的事情不能跟我说呢？”\n{TargetName}笑着做出了一个狡猾的表情，但很快就收了回去，尊重了你的决定"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:294
+msgid "{TargetName}点了点头，向你道别后，抱了你一下后便走到一边去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:295
+msgid "“到早饭时间了{PlayerName}，我先去吃早饭哦，晚点回来~”\n{TargetName}轻柔的对你说着，随后便转头走向食堂去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:296
+msgid "“要吃早饭了呢{PlayerName}，要跟我一起去嘛？想来的话...就看看谁先到~”\n{TargetName}说完便直接冲去食堂了...要跟着去嘛？"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:297
+msgid "{TargetName}看了看时间，点了点头，随后没多久，一位流形就不知道从哪来到了{TargetName}的身边，给了她什么东西，然后消失了\n之后，{TargetName}便拿着那份东西来到了你的身边\n“呐，早饭，就知道你不喜欢吃早饭，所以我委托流形到其他地方买来了”\n“不过嘛...我还是要去食堂的呢，晚点见~”"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:298
+msgid "“到饭点了哦{PlayerName}，我先去吃午饭了，要一起来哦~”\n{TargetName}如此说着，随后便挥挥手走向食堂去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:299
+msgid "“要一起去吃午饭吗？”\n“还需要再等等啊...那我先去了哦，记得一起来”\n说罢，{TargetName}便转头向着食堂走去"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:300
+msgid "“时间到了要吃午饭的时候了{PlayerName}，我先去食堂等你~”\n{TargetName}说完后便笑着走去食堂了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:301
+msgid "“到晚饭时间了，{PlayerName}，记得吃晚饭，我先去吃了哦~”\n{TargetName}如此说着，快步走向食堂的方向去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:302
+msgid "“记得吃晚饭{PlayerName}，我就先去了，等你来呢”\n{TargetName}握住你的手如此说着，随后便走向食堂的方向去了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:303
+msgid "“{PlayerName}，晚饭时间到了，我先去帮你占个座，记得一起~”\n{TargetName}如此说着，笑着朝你道别，随后走去食堂了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:304
+msgid "”要洗澡了{PlayerName}，我先去了，你也记得洗澡，清洁好自己看起来才能精神呢”\n{TargetName}说完，便准备带上衣物去洗澡了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:305
+msgid "“呼~啊~”\n{TargetName}打了一个小小的哈欠\n“{PlayerName}，我先去洗澡了哦，晚点要睡觉了，记得早点洗澡早点睡，别累着自己”\n说罢，{TargetName}带着衣服就走去洗澡了"
+msgstr ""
+
+#: .\data\talk\chara\0249_缪尔赛思.csv:306
+msgid "“到洗澡时间了{PlayerName}，今天过得怎么样？要记得早点睡迎接第二天”\n{TargetName}如此说着，临走前抱了你一下，随后便拿着衣物去洗澡了"
 msgstr ""
 
 #: .\data\talk\chara\0274_星极.csv:6
