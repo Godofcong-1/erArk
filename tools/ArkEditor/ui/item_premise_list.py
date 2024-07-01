@@ -88,7 +88,7 @@ class ItemPremiseList(QWidget):
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
-        draw_text = f"右键删除该前提，双击替换该前提，当前该文本的出现权重=1"
+        draw_text = f"右键删除该前提，双击替换该前提\n当前该文本的出现权重=1"
         if add_now_talk_weight:
             draw_text += f" + {add_now_talk_weight}"
             final_weight += add_now_talk_weight

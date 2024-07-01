@@ -52,6 +52,7 @@ class DataList(QWidget):
         self.setFont(self.font)
         self.list_widget.setFont(self.font)
         self.close_flag = 1
+        self.delet_text_id_flag = 1 # 是否删除条目序号相关的控件
         self.edited_item = self.list_widget.currentItem()
         self.list_widget.setSelectionMode(QAbstractItemView.SingleSelection)
         self.list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -75,7 +76,7 @@ class DataList(QWidget):
         label1_text = QLabel("角色id")
         label2_text = QLabel("触发指令与状态")
         self.label3_text = QLabel("指令信息")
-        label4_text = QLabel("条目序号")
+        self.label4_text = QLabel("条目序号")
 
         # 上方布局
         self.top_layout.addWidget(label1_text)
@@ -83,7 +84,7 @@ class DataList(QWidget):
         self.top_layout.addWidget(label2_text)
         self.top_layout.addWidget(self.menu_bar)
         self.top_layout.addWidget(self.label3_text)
-        self.top_layout.addWidget(label4_text)
+        self.top_layout.addWidget(self.label4_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
         self.top_layout.addWidget(self.info_button)
@@ -497,6 +498,13 @@ class DataList(QWidget):
             # 清除self.info_button的连接
             self.info_button.clicked.disconnect()
             self.info_button.clicked.connect(function.show_event_introduce)
+
+            # 如果还没有删除，则删除self.label4_text和self.text_id_text_edit和self.text_id_change_button
+            if self.delet_text_id_flag:
+                self.delet_text_id_flag = 0
+                self.label4_text.deleteLater()
+                self.text_id_text_edit.deleteLater()
+                self.text_id_change_button.deleteLater()
 
             type_text_list = ["跳过指令", "指令前置", "指令后置"]
             for uid in cache_control.now_event_data:
