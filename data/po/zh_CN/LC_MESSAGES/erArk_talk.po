@@ -2488,6 +2488,110 @@ msgstr ""
 msgid "“重装干员雷蛇，待命中。”\n“我曾参与数次要人保全、据点攻坚、人质解救、威胁肃清的特种行动。”\n“在此次派遣行动期间，我会严格保障您的人身安全。”"
 msgstr ""
 
+#: .\data\talk\chara\0113_W.csv:6
+msgid "{TargetName}打趣的看着{Name}\n\"哦?往我走过来了吗?\n没有逃跑，反而主动接近我吗?\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:7
+msgid "当{Name}进入房间时，就被{TargetName}叫住\n\"又见面了{Name}，我想这就是缘份吧。\"\n{TargetName}不时瞄向{Name}，像是在期待什麽"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:8
+msgid "{TargetName}偷偷摸摸的走到{Name}背后，紧紧的抱住{Name}。\n\"你终于来找我了，留在这裡就别走了，好吗?\"\n{TargetName}把口鼻埋入{Name}的脖颈，呼吸着{Name}的气味。"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:9
+msgid "快跑吧，在你还能离开的时候\n{TargetName}随意的向{Name}发出无意义的威胁"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:10
+msgid "嗯?这麽快就要离开了吗?随便你，反正我也留不住。\n{TargetName}没有多说甚麽，只是盯着{Name}离去的背影。"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:11
+msgid "要走就走吧，肯定那是老女人又有什麽差事要使唤你\n{TargetName}挥一挥衣袖，沉默是今晚的{SrcSceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:12
+msgid "哟~这不{TargetName}吗?遇到我算你运气不好\n{Name}找了个离你最远的角落，便忽略了你的存在"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:13
+msgid "{Name}故意走到{TargetName}面前\n\"我到处在找你，没想到你会出现在{SceneName}\"\n{TargetName}告诉{Name}有事叫人事部广播就好\n\"这样就不好玩了，不是吗?\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:14
+msgid "{TargetName}在处理事情时，突然被{Name}从背后抱住\n\"我太无聊了，于是就过来找你了\"\n{TargetName}问{Name}怎麽找到他的\n\"依我对你的了解，还有防卫科同仁的小小配合下......放心，她什麽都不会记得的\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:15
+msgid "再见啦~\n{Name}向你眨了眨眼便离开了{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:16
+msgid "{Name}朝{TargetName}耳语了几句\n\"我要走了，想我的话就来{TargetSceneName}吧\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:17
+msgid "不知何时，{Name}已经离开了{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:18
+msgid "{Name}突然把身体贴在你的背后\n\"做舒服的事也不叫上我，真是自私\"\n说罢，便咬了你的脖子\n\"听说血魔会这样标记自己的爱人，虽然我不介意分享玩具，但被排除在外也太奇怪了\"\n\"下次我会把你搾到连下床都办不到\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:19
+msgid "明明是我先來的......"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:20
+msgid "用完给我洗乾淨\n{Name}离开了{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:21
+msgid "{Name}在门外偷看着交欢的二人，一隻手不安分的搅弄着自己的蜜穴，一条水痕沿着大腿根部流下\n\"天哪，居然还有这种玩法\"\n{Name}喃喃自语，另一隻手捏着早已硬的通红的蓓蕾，丝毫不掩饰着那甜蜜的娇喘\n\"看起来......好舒~呜!\"\n{Name}被自己的双手推向高潮，脚下的地板早已被满溢出的淫蜜沁溼\n{Name}双腿颤抖着离开{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:22
+msgid "妈的，你们这对狗男女，发情也不分时间地点的\n{Name}恶狠狠的骂了你这隻种马，便逃离了{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:23
+msgid "啧，又把我排除在外"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:24
+msgid "哼，你果然24小时都在发情。\n{Name}拿完东西便离开了{SceneName}"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:25
+msgid "W总是挂着一副微笑，她笑起来总没好事。\n\"哦?你终于注意到我了？有什麽好奇的吗？\""
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:26
+msgid "能失忆真是件好事呢，什麽都不用记得，什麽都不必担负。"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:27
+msgid "你这傢伙，真的失忆了吗?"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:28
+msgid "嘿，博士，今天怎麽这麽悠閒？你不觉得自己有时候太过轻鬆了吗？"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:29
+msgid "什麽都记不得可真是幸福，是吧？"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:30
+msgid "在外面游荡一段时间后，我曾想回来亲手把你捏死，但如今你连我是谁都忘了，这一切还有意义吗?"
+msgstr ""
+
+#: .\data\talk\chara\0113_W.csv:31
+msgid "我的名字?没有那种东西。\nW只是个死人堆捡到的代号，赫德雷倒是想让我自己取一个，不过太麻烦了。"
+msgstr ""
+
 #: .\data\talk\chara\0179_夜莺.csv:6
 msgid "你很轻松的注意到了那道纯白色的身影。\n纤细的、有着透明般虚幻感的萨卡兹少女与罗德岛沉稳的深色调走廊形成了鲜明的对比，让你如同在远足时瞥见林地间弥漫的晨雾的孩童般驻足停留，被那份迷幻的神秘感所深深吸引。\n“您好，{PlayerName}博士。我是刚刚加入罗德岛的夜莺。”少女向你走来，声音清脆舒缓，确如夜莺引吭。\n你自那无数积压的公务文件中回忆起那份来自凯尔希的报告，的确，有一位资深干员今天要来报道，但是你却完全忘得一干二净。\n于是你急忙做了简短的自我介绍，并礼节性的向{Name}伸出手去。\n“……”{Name}呆呆的注视着你的手臂，看起来没有料到你会主动提出握手的邀请。\n“抱歉，{PlayerName}博士。我没想到……”但她很快便理解了你的想法，用那纤柔的手指握了过来。\n真是个奇怪的孩子。\n你一边感受着手间传来的微凉触感，一边如此想到。"
 msgstr ""

@@ -10152,27 +10152,31 @@ msgstr ""
 msgid "萨卡兹佣兵头目，W。曾参与卡兹戴尔漫长的内战，其小队以残暴而高效的作战手段闻名。在切尔诺伯格事件中与罗德岛发生冲突，后因为某些原因叛出整合运动，在凯尔希医生亲自进行了充分交涉后，与罗德岛签订战略合作条款。"
 msgstr ""
 
-#: .\data\character\0113_W.csv:31
-msgid "灰色围巾"
+#: .\data\character\0113_W.csv:15
+msgid "#ce0000"
 msgstr ""
 
 #: .\data\character\0113_W.csv:32
-msgid "短休闲服"
+msgid "灰色围巾"
 msgstr ""
 
 #: .\data\character\0113_W.csv:33
+msgid "短休闲服"
+msgstr ""
+
+#: .\data\character\0113_W.csv:34
 msgid "白色T恤"
 msgstr ""
 
-#: .\data\character\0113_W.csv:35
+#: .\data\character\0113_W.csv:36
 msgid "黑色短褶裙"
 msgstr ""
 
-#: .\data\character\0113_W.csv:36
+#: .\data\character\0113_W.csv:37
 msgid "厚连身裤"
 msgstr ""
 
-#: .\data\character\0113_W.csv:37
+#: .\data\character\0113_W.csv:38
 msgid "黑色加固运动鞋"
 msgstr ""
 
