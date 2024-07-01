@@ -975,6 +975,8 @@ class SecondEffect:
     """ 结算因B绝顶而被迫喷乳 """
     U_ORGASM_TO_PEE = 407
     """ 结算因U绝顶而被迫漏尿 """
+    EXTRA_ORGASM = 408
+    """ 结算额外绝顶 """
 
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_双方归零 """

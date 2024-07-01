@@ -1431,6 +1431,8 @@ class SecondBehavior:
     """ 结算W普绝顶 """
     W_orgasm_strong = 1023
     """ 结算W强绝顶 """
+    EXTRA_ORGASM = 1026
+    """ 结算额外绝顶 """
     HAPPY_MARK_1 = 1030
     """ 结算快乐刻印1 """
     HAPPY_MARK_2 = 1031

@@ -212,12 +212,14 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     for body_part in game_config.config_body_part:
         h_state_data.orgasm_level[body_part] = 0
         h_state_data.orgasm_count[body_part] = [0,0]
+        h_state_data.extra_orgasm_feel[body_part] = 0
 
     h_state_data.insert_position = -1
     h_state_data.bondage = 0
     h_state_data.condom_count = [0, 0]
     h_state_data.npc_active_h = False
     h_state_data.h_in_love_hotel = False
+    h_state_data.extra_orgasm_count = 0
 
     return h_state_data
 

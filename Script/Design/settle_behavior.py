@@ -490,7 +490,7 @@ def check_second_effect(
     if character_id == 0:
         character_data = cache.character_data[0]
         # 高潮结算
-        orgasm_effect(character_id)
+        orgasm_effect(character_id, change_data)
         # 道具结算
         item_effect(character_id)
         # 进行结算
@@ -514,7 +514,7 @@ def check_second_effect(
         # 单独遍历道具
         second_behavior_effect(character_id, change_data, item_list)
         # 高潮结算
-        orgasm_effect(character_id)
+        orgasm_effect(character_id, change_data)
         # 素质结算
 
         # 进行结算
@@ -637,11 +637,12 @@ def insert_position_effect(character_id: int):
         character_data.second_behavior[position_index] = 1
 
 
-def orgasm_effect(character_id: int):
+def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
     处理第二结算中的高潮结算
     Keyword arguments:
     character_id -- 角色id
+    change_data -- 状态变更信息记录对象
     """
 
     # print()
@@ -665,14 +666,29 @@ def orgasm_effect(character_id: int):
     else:
         # 检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
+            # 跳过射精槽
+            if orgasm == 3:
+                continue
             # now_data -- 当前高潮程度
             # pre_data -- 记录里的前高潮程度
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
             pre_data = character_data.h_state.orgasm_level[orgasm]
-            # 跳过射精槽
-            if orgasm == 3:
-                continue
-            if now_data > pre_data:
+            extra_add = 0
+            # 如果已经到了10级，则进行额外高潮结算
+            if pre_data >= 10:
+                character_data.h_state.extra_orgasm_feel.setdefault(orgasm, 0)
+                change_data.status_data.setdefault(orgasm, 0)
+                character_data.h_state.extra_orgasm_feel[orgasm] += int(change_data.status_data[orgasm])
+                # 额外高潮次数
+                extra_count = pre_data - 10
+                character_data.h_state.extra_orgasm_count += extra_count
+                # 基础阈值为2w，每次高潮则乘以0.9的若干次方
+                now_threshold = 20000 * (0.9 ** extra_count)
+                # 如果超过阈值，则进行额外高潮结算
+                extra_add = int(character_data.h_state.extra_orgasm_feel[orgasm] // now_threshold)
+                now_data = pre_data + extra_add
+                character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
+            if now_data > pre_data or extra_add > 0:
                 # 判定触发哪些绝顶
                 num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
                 # now_draw = draw.WaitDraw()
@@ -712,6 +728,10 @@ def orgasm_effect(character_id: int):
                 if orgasm == 6 and handle_premise.handle_urinate_ge_80(character_id):
                     # now_draw.text += _("\n触发U绝顶排尿\n")
                     character_data.second_behavior[1072] = 1
+                # 如果发生了额外高潮，则进行额外高潮结算
+                if extra_add > 0:
+                    # now_draw.text += _("\n触发额外高潮\n")
+                    character_data.second_behavior[1026] = 1
                 # now_draw.draw()
 
                 # 刷新记录
@@ -722,9 +742,8 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     """
     处理第二结算中的刻印结算
     Keyword arguments:
-    now_data -- 当前高潮程度
-    pre_data -- 记录里的前高潮程度
     character_id -- 角色id
+    change_data -- 状态变更信息记录对象
     """
 
     # print()

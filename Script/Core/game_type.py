@@ -420,6 +420,10 @@ class BODY_H_STATE:
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
         self.orgasm_level: Dict[int, int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        self.extra_orgasm_feel: Dict[int, int] = {}
+        """ 额外高潮快感记录，用于在10级快感后的额外高潮 """
+        self.extra_orgasm_count: int = 0
+        """ 额外高潮次数，用于在10级快感后的额外高潮 """
         self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
         self.condom_info_show_flag: bool = False

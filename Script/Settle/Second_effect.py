@@ -2728,6 +2728,53 @@ def handle_u_orgasm_to_pee(
         now_draw.draw()
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXTRA_ORGASM)
+def handle_extra_orgasm(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算额外绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    # 额外高潮次数
+    all_extra_count = character_data.h_state.extra_orgasm_count
+    # 如果有额外高潮次数，则进行苦痛和恐怖结算
+    if all_extra_count > 0:
+        # 额外高潮次数的苦痛和恐怖
+        extra_pain = 1000 * (1.2 ** all_extra_count)
+        extra_terror = 1000 * (1.2 ** all_extra_count)
+        # 痛苦刻印修正
+        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+        extra_pain *= adjust
+        # 恐怖刻印修正
+        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
+        extra_terror *= adjust
+        # 结算苦痛和恐怖
+        character_data.status_data[17] += extra_pain
+        character_data.status_data[17] = min(99999, character_data.status_data[17])
+        change_data.status_data.setdefault(17, 0)
+        change_data.status_data[17] += extra_pain
+        character_data.status_data[18] += extra_terror
+        character_data.status_data[18] = min(99999, character_data.status_data[18])
+        change_data.status_data.setdefault(18, 0)
+        change_data.status_data[18] += extra_terror
+        # 绘制信息
+        now_draw = draw.NormalDraw()
+        now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+        # 额外高潮次数清零
+        character_data.h_state.extra_orgasm_count = 0
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)
 def handle_penis_in_t_reset(
     character_id: int,

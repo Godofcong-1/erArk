@@ -38,7 +38,7 @@ class Debug_Panel:
         """绘制对象"""
 
         title_text = "debug面板"
-        department_type_list = [_("全局变量"),_("玩家属性"),_("NPC角色")]
+        department_type_list = [_("全局变量"),_("常用更改"),_("NPC角色")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
@@ -120,7 +120,7 @@ class Debug_Panel:
                     now_draw.draw_list.append(line_feed)
                     return_list.append(button_draw.return_text)
 
-            elif self.now_panel == "玩家属性":
+            elif self.now_panel == "常用更改":
 
                 all_info_draw = draw.NormalDraw()
                 all_info_text = "玩家的各项属性"
@@ -149,6 +149,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[012]:重置全角色服装")
                 draw_text_list.append(f"[013]:重置全角色位置至宿舍")
                 draw_text_list.append(f"[014]:重置文职部的招募数据")
+                draw_text_list.append(f"[015]:交互对象全部位快感增加")
 
 
                 for i in range(len(draw_text_list)):
@@ -452,7 +453,7 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     cache.rhodes_island.recruited_id = new_value
 
-            elif self.now_panel == "玩家属性":
+            elif self.now_panel == "常用更改":
 
                 # 当前HP
                 if key_index == 0:
@@ -575,6 +576,16 @@ class Debug_Panel:
                     for i in range(len(cache.rhodes_island.recruit_line)):
                         cache.rhodes_island.recruit_line[i] = [0,0,set(),0]
                     cache.rhodes_island.recruited_id = set()
+                # 交互对象全部位快感增加
+                elif key_index == 15:
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入改变后的值"), 100)
+                    new_value = int(change_value_panel.draw())
+                    target_id = cache.character_data[0].target_character_id
+                    target_character_data = cache.character_data[target_id]
+                    for i in range(8):
+                        target_character_data.status_data[i] += new_value
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
