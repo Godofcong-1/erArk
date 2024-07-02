@@ -1,8 +1,6 @@
-from typing import Tuple, Dict
 from types import FunctionType
-from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update, character
+from Script.Design import clothing, cooking, update, character
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -187,7 +185,7 @@ class SeeUndressButtonList:
 
             for i in {5,8}:
                 target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
-                target_data.cloth.cloth_wear[i] = []
+            clothing.undress_out_cloth(character_data.target_character_id)
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
@@ -195,7 +193,7 @@ class SeeUndressButtonList:
         elif self.button_id == 1:
             for i in {5,6,8,9}:
                 target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
-                target_data.cloth.cloth_wear[i] = []
+            clothing.strip_down_till_socks_and_gloves_left(character_data.target_character_id)
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
@@ -203,24 +201,14 @@ class SeeUndressButtonList:
         elif self.button_id == 2:
             for i in game_config.config_clothing_type:
                 target_data.cloth.cloth_off[i].extend(target_data.cloth.cloth_wear[i])
-                target_data.cloth.cloth_wear[i] = []
+            clothing.get_all_cloth_off(character_data.target_character_id)
             # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
             # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
 
         # 3号指令,把内裤收走
         elif self.button_id == 3:
-            for i in {9}:
-                pan_id = target_data.cloth.cloth_wear[i][-1]
-                pan_name = game_config.config_clothing_tem[pan_id].name
-                character_data.pl_collection.npc_panties_tem.setdefault(character_data.target_character_id, [])
-                character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(pan_id)
-                target_data.cloth.cloth_wear[i] = []
-            now_draw = draw.WaitDraw()
-            now_draw.width = window_width
-            now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, pan_name)
-            now_draw.draw()
-            # character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
-            # character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+            clothing.pl_get_chara_pan(character_data.target_character_id)
+
 
     def draw(self):
         """绘制对象"""

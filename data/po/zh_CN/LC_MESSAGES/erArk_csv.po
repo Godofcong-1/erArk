@@ -1640,1243 +1640,1251 @@ msgstr ""
 msgid "暂无描述"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:49
-msgid "罗德岛制服夹克"
+#: .\data\csv\ClothingTem.csv:48
+msgid "隶属项圈"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:50
+msgid "罗德岛制服夹克"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:51
 msgid "白色羊绒衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:51
+#: .\data\csv\ClothingTem.csv:52
 msgid "白大褂"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:51
+#: .\data\csv\ClothingTem.csv:52
 msgid "凯尔希服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:52
+#: .\data\csv\ClothingTem.csv:53
 msgid "绿色抹胸裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:53
+#: .\data\csv\ClothingTem.csv:54
 msgid "登山服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:53
+#: .\data\csv\ClothingTem.csv:54
 msgid "白金服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:54
+#: .\data\csv\ClothingTem.csv:55
 msgid "白色连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:55
+#: .\data\csv\ClothingTem.csv:56
 msgid "白色羊绒衫（露肩）"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:56
+#: .\data\csv\ClothingTem.csv:57
 msgid "防寒服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:57
+#: .\data\csv\ClothingTem.csv:58
 msgid "莱茵生命极地防护服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:58
+#: .\data\csv\ClothingTem.csv:59
 msgid "长袖保暖毛衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:59
+#: .\data\csv\ClothingTem.csv:60
 msgid "无袖高领连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:60
+#: .\data\csv\ClothingTem.csv:61
 msgid "荷叶边系带分体披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:61
+#: .\data\csv\ClothingTem.csv:62
 msgid "白色左单肩瓣裂大袖护肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:62
+#: .\data\csv\ClothingTem.csv:63
 msgid "白色右单肩羽裂塑制斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:63
+#: .\data\csv\ClothingTem.csv:64
 msgid "白色三片式短斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:64
+#: .\data\csv\ClothingTem.csv:65
 msgid "罗德岛战术披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:65
+#: .\data\csv\ClothingTem.csv:66
 msgid "棕色夹克"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:66
+#: .\data\csv\ClothingTem.csv:67
 msgid "黑色背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:67
+#: .\data\csv\ClothingTem.csv:68
 msgid "武装带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:68
+#: .\data\csv\ClothingTem.csv:69
 msgid "粉黑双色夹克"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:69
+#: .\data\csv\ClothingTem.csv:70
 msgid "V领T恤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:70
+#: .\data\csv\ClothingTem.csv:71
 msgid "浅灰色无袖护肩风衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:71
+#: .\data\csv\ClothingTem.csv:72
 msgid "白色抹胸衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:72
+#: .\data\csv\ClothingTem.csv:73
 msgid "黑色毛领防寒外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:73
+#: .\data\csv\ClothingTem.csv:74
 msgid "黑色无袖运动紧身衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:74
+#: .\data\csv\ClothingTem.csv:75
 msgid "棕灰色斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:75
+#: .\data\csv\ClothingTem.csv:76
 msgid "战术马甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:76
+#: .\data\csv\ClothingTem.csv:77
 msgid "深灰色侦探外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:77
+#: .\data\csv\ClothingTem.csv:78
 msgid "水色荷叶边连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:78
+#: .\data\csv\ClothingTem.csv:79
 msgid "棕色束腰背带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:79
+#: .\data\csv\ClothingTem.csv:80
 msgid "V领背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:80
+#: .\data\csv\ClothingTem.csv:81
 msgid "白色流苏斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:81
+#: .\data\csv\ClothingTem.csv:82
 msgid "黑色高叉套裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:82
+#: .\data\csv\ClothingTem.csv:83
 msgid "白色百褶裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:83
+#: .\data\csv\ClothingTem.csv:84
 msgid "露肩双开叉连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:84
+#: .\data\csv\ClothingTem.csv:85
 msgid "连帽披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:85
+#: .\data\csv\ClothingTem.csv:86
 msgid "假两件前拉链无袖直筒超短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:86
+#: .\data\csv\ClothingTem.csv:87
 msgid "泡泡袖立领长上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:86
+#: .\data\csv\ClothingTem.csv:87
 msgid "普罗旺斯服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:87
+#: .\data\csv\ClothingTem.csv:88
 msgid "哥特风黑色无袖连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:88
+#: .\data\csv\ClothingTem.csv:89
 msgid "白色吊带连衣褶裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:89
+#: .\data\csv\ClothingTem.csv:90
 msgid "黑色冲锋衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:89
+#: .\data\csv\ClothingTem.csv:90
 msgid "可露希尔服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:90
+#: .\data\csv\ClothingTem.csv:91
 msgid "大号宽松T恤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:91
+#: .\data\csv\ClothingTem.csv:92
 msgid "连帽透明风超短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:92
+#: .\data\csv\ClothingTem.csv:93
 msgid "透明雪纺高领长袖衬衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:92
+#: .\data\csv\ClothingTem.csv:93
 msgid "特蕾西娅服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:93
+#: .\data\csv\ClothingTem.csv:94
 msgid "一字领白色大摆连衣长裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:94
+#: .\data\csv\ClothingTem.csv:95
 msgid "拉链毛领外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:95
+#: .\data\csv\ClothingTem.csv:96
 msgid "抹胸吊带连衣长裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:96
+#: .\data\csv\ClothingTem.csv:97
 msgid "拉链长摆外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:96
+#: .\data\csv\ClothingTem.csv:97
 msgid "白面鸮服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:97
+#: .\data\csv\ClothingTem.csv:98
 msgid "交叉绑带短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:98
+#: .\data\csv\ClothingTem.csv:99
 msgid "橘色连帽外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:98
+#: .\data\csv\ClothingTem.csv:99
 msgid "梅尔服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:99
+#: .\data\csv\ClothingTem.csv:100
 msgid "黑色高领短款毛衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:100
+#: .\data\csv\ClothingTem.csv:101
 msgid "白色连帽衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:100
+#: .\data\csv\ClothingTem.csv:101
 msgid "火神服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:101
+#: .\data\csv\ClothingTem.csv:102
 msgid "黑色风衣外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:102
+#: .\data\csv\ClothingTem.csv:103
 msgid "黑色吊带背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:103
+#: .\data\csv\ClothingTem.csv:104
 msgid "喇叭袖卡腰外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:104
+#: .\data\csv\ClothingTem.csv:105
 msgid "七分袖短打底紧身上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:105
+#: .\data\csv\ClothingTem.csv:106
 msgid "深灰色斜纹针织大衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:106
+#: .\data\csv\ClothingTem.csv:107
 msgid "黑色收腰马甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:107
+#: .\data\csv\ClothingTem.csv:108
 msgid "灰白色衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:108
+#: .\data\csv\ClothingTem.csv:109
 msgid "黑白拼色高领带扣披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:108
+#: .\data\csv\ClothingTem.csv:109
 msgid "风笛服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:109
+#: .\data\csv\ClothingTem.csv:110
 msgid "深绿色长袖外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:110
+#: .\data\csv\ClothingTem.csv:111
 msgid "喇叭袖提花暗纹风衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:111
+#: .\data\csv\ClothingTem.csv:112
 msgid "白色褶边女士衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:112
+#: .\data\csv\ClothingTem.csv:113
 msgid "收腰西装裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:113
+#: .\data\csv\ClothingTem.csv:114
 msgid "深绿色带兜围裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:114
+#: .\data\csv\ClothingTem.csv:115
 msgid "白色竖纹衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:115
+#: .\data\csv\ClothingTem.csv:116
 msgid "连帽白色风衣外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:116
+#: .\data\csv\ClothingTem.csv:117
 msgid "浅褐色小西装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:117
+#: .\data\csv\ClothingTem.csv:118
 msgid "白色大号宽松外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:117
+#: .\data\csv\ClothingTem.csv:118
 msgid "桃金娘服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:118
+#: .\data\csv\ClothingTem.csv:119
 msgid "白色露脐背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:119
+#: .\data\csv\ClothingTem.csv:120
 msgid "白色高腰长袖半截衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:120
+#: .\data\csv\ClothingTem.csv:121
 msgid "酒红色半透荷叶边超短背心裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:121
+#: .\data\csv\ClothingTem.csv:122
 msgid "灰色羊绒衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:122
+#: .\data\csv\ClothingTem.csv:123
 msgid "大号宽松外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:123
+#: .\data\csv\ClothingTem.csv:124
 msgid "白色水手服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:124
+#: .\data\csv\ClothingTem.csv:125
 msgid "墨绿色高腰连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:124
+#: .\data\csv\ClothingTem.csv:125
 msgid "芬服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:125
+#: .\data\csv\ClothingTem.csv:126
 msgid "灰色镂花灯笼袖露背长袖衬衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:125
+#: .\data\csv\ClothingTem.csv:126
 msgid "星极服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:126
+#: .\data\csv\ClothingTem.csv:127
 msgid "塑胶白大褂"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:126
+#: .\data\csv\ClothingTem.csv:127
 msgid "缪尔赛思服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:127
+#: .\data\csv\ClothingTem.csv:128
 msgid "棕色一字肩扣带长袖毛衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:128
+#: .\data\csv\ClothingTem.csv:129
 msgid "浴巾"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:129
+#: .\data\csv\ClothingTem.csv:130
 msgid "睡衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:129
+#: .\data\csv\ClothingTem.csv:130
 msgid "睡觉前换上"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:130
+#: .\data\csv\ClothingTem.csv:131
 msgid "睡裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:131
+#: .\data\csv\ClothingTem.csv:132
 msgid "白色女士衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:131
+#: .\data\csv\ClothingTem.csv:132
 msgid "通用"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:132
+#: .\data\csv\ClothingTem.csv:133
 msgid "通用上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:134
+#: .\data\csv\ClothingTem.csv:135
 msgid "连颈胸带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:135
+#: .\data\csv\ClothingTem.csv:136
 msgid "棕色束胸内衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:136
+#: .\data\csv\ClothingTem.csv:137
 msgid "黑色运动背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:137
+#: .\data\csv\ClothingTem.csv:138
 msgid "白色绷带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:138
+#: .\data\csv\ClothingTem.csv:139
 msgid "黑色抹胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:139
+#: .\data\csv\ClothingTem.csv:140
 msgid "纯白色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:140
+#: .\data\csv\ClothingTem.csv:141
 msgid "纯黑色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:141
+#: .\data\csv\ClothingTem.csv:142
 msgid "深蓝色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:142
+#: .\data\csv\ClothingTem.csv:143
 msgid "深红色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:143
+#: .\data\csv\ClothingTem.csv:144
 msgid "粉红色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:144
+#: .\data\csv\ClothingTem.csv:145
 msgid "白色运动文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:145
+#: .\data\csv\ClothingTem.csv:146
 msgid "黑色运动文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:146
+#: .\data\csv\ClothingTem.csv:147
 msgid "动物图案文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:147
+#: .\data\csv\ClothingTem.csv:148
 msgid "草莓图案文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:148
+#: .\data\csv\ClothingTem.csv:149
 msgid "白色背心文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:149
+#: .\data\csv\ClothingTem.csv:150
 msgid "白色蕾丝胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:150
+#: .\data\csv\ClothingTem.csv:151
 msgid "黑色蕾丝胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:151
+#: .\data\csv\ClothingTem.csv:152
 msgid "白色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:152
+#: .\data\csv\ClothingTem.csv:153
 msgid "黑色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:153
+#: .\data\csv\ClothingTem.csv:154
 msgid "粉色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:154
+#: .\data\csv\ClothingTem.csv:155
 msgid "浅蓝色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:155
+#: .\data\csv\ClothingTem.csv:156
 msgid "白色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:156
+#: .\data\csv\ClothingTem.csv:157
 msgid "黑色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:157
+#: .\data\csv\ClothingTem.csv:158
 msgid "粉色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:158
+#: .\data\csv\ClothingTem.csv:159
 msgid "浅蓝色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:159
+#: .\data\csv\ClothingTem.csv:160
 msgid "白色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:160
+#: .\data\csv\ClothingTem.csv:161
 msgid "黑色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:161
+#: .\data\csv\ClothingTem.csv:162
 msgid "粉色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:162
+#: .\data\csv\ClothingTem.csv:163
 msgid "浅蓝色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:163
+#: .\data\csv\ClothingTem.csv:164
 msgid "白色运动型泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:164
+#: .\data\csv\ClothingTem.csv:165
 msgid "黑色运动型泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:165
+#: .\data\csv\ClothingTem.csv:166
 msgid "学校泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:167
+#: .\data\csv\ClothingTem.csv:168
 msgid "抑制戒指"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:168
+#: .\data\csv\ClothingTem.csv:169
 msgid "黑丝长手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:169
+#: .\data\csv\ClothingTem.csv:170
 msgid "收束式保温手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:170
+#: .\data\csv\ClothingTem.csv:171
 msgid "露指臂甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:171
+#: .\data\csv\ClothingTem.csv:172
 msgid "露指单边手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:172
+#: .\data\csv\ClothingTem.csv:173
 msgid "扇子"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:173
+#: .\data\csv\ClothingTem.csv:174
 msgid "黄色橡胶手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:174
+#: .\data\csv\ClothingTem.csv:175
 msgid "过肘黑色丝质手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:175
+#: .\data\csv\ClothingTem.csv:176
 msgid "黑色分指手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:176
+#: .\data\csv\ClothingTem.csv:177
 msgid "袖套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:177
+#: .\data\csv\ClothingTem.csv:178
 msgid "可拆式袖套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:178
+#: .\data\csv\ClothingTem.csv:179
 msgid "单边黑色手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:179
+#: .\data\csv\ClothingTem.csv:180
 msgid "黑白色防护手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:180
+#: .\data\csv\ClothingTem.csv:181
 msgid "皮革手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:181
+#: .\data\csv\ClothingTem.csv:182
 msgid "群青色露指手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:182
+#: .\data\csv\ClothingTem.csv:183
 msgid "单边黄色橡胶手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:183
+#: .\data\csv\ClothingTem.csv:184
 msgid "蓝色手套"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:185
-msgid "苏格兰风短格子裙"
+msgid "恋人戒指"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:187
+msgid "苏格兰风短格子裙"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:189
 msgid "白色运动短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:191
+#: .\data\csv\ClothingTem.csv:193
 msgid "罗德岛制服夹克(袖子对绑)"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:192
+#: .\data\csv\ClothingTem.csv:194
 msgid "黑色安全裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:193
+#: .\data\csv\ClothingTem.csv:195
 msgid "荷叶边短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:194
+#: .\data\csv\ClothingTem.csv:196
 msgid "黑色皮短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:195
+#: .\data\csv\ClothingTem.csv:197
 msgid "黑色低腰运动热裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:196
+#: .\data\csv\ClothingTem.csv:198
 msgid "高腰紧身短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:197
+#: .\data\csv\ClothingTem.csv:199
 msgid "白色荷叶边衬裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:204
+#: .\data\csv\ClothingTem.csv:206
 msgid "超低腰三角热裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:213
+#: .\data\csv\ClothingTem.csv:215
 msgid "黑色百褶短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:214
+#: .\data\csv\ClothingTem.csv:216
 msgid "深蓝色九分阔腿裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:215
+#: .\data\csv\ClothingTem.csv:217
 msgid "群青色一分短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:216
+#: .\data\csv\ClothingTem.csv:218
 msgid "格子百褶短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:218
+#: .\data\csv\ClothingTem.csv:220
 msgid "黑色背带短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:219
+#: .\data\csv\ClothingTem.csv:221
 msgid "浅灰色双开叉直筒裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:221
+#: .\data\csv\ClothingTem.csv:223
 msgid "黑色燕尾摆扣带腰封"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:222
+#: .\data\csv\ClothingTem.csv:224
 msgid "黑色高腰¾圆开叉半身裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:223
+#: .\data\csv\ClothingTem.csv:225
 msgid "白色高腰¾圆半身衬裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:224
+#: .\data\csv\ClothingTem.csv:226
 msgid "黑色直筒裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:226
+#: .\data\csv\ClothingTem.csv:228
 msgid "睡裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:228
+#: .\data\csv\ClothingTem.csv:230
 msgid "通用下衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:230
+#: .\data\csv\ClothingTem.csv:232
 msgid "酒红色超低腰内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:231
+#: .\data\csv\ClothingTem.csv:233
 msgid "深棕色内裤(白色衬里)"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:232
+#: .\data\csv\ClothingTem.csv:234
 msgid "纯白色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:233
+#: .\data\csv\ClothingTem.csv:235
 msgid "纯黑色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:234
+#: .\data\csv\ClothingTem.csv:236
 msgid "深蓝色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:235
+#: .\data\csv\ClothingTem.csv:237
 msgid "深红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:236
+#: .\data\csv\ClothingTem.csv:238
 msgid "粉红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:237
+#: .\data\csv\ClothingTem.csv:239
 msgid "天蓝色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:238
+#: .\data\csv\ClothingTem.csv:240
 msgid "洋红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:239
+#: .\data\csv\ClothingTem.csv:241
 msgid "淡灰色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:240
+#: .\data\csv\ClothingTem.csv:242
 msgid "浅黄色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:241
+#: .\data\csv\ClothingTem.csv:243
 msgid "米黄色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:242
+#: .\data\csv\ClothingTem.csv:244
 msgid "蓝白条纹内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:243
+#: .\data\csv\ClothingTem.csv:245
 msgid "蓝绿条纹内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:244
+#: .\data\csv\ClothingTem.csv:246
 msgid "小鸭图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:245
+#: .\data\csv\ClothingTem.csv:247
 msgid "水果图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:246
+#: .\data\csv\ClothingTem.csv:248
 msgid "花瓣图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:247
+#: .\data\csv\ClothingTem.csv:249
 msgid "水滴图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:248
+#: .\data\csv\ClothingTem.csv:250
 msgid "波浪图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:249
+#: .\data\csv\ClothingTem.csv:251
 msgid "海豚图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:250
+#: .\data\csv\ClothingTem.csv:252
 msgid "小鸟图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:251
+#: .\data\csv\ClothingTem.csv:253
 msgid "云朵图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:252
+#: .\data\csv\ClothingTem.csv:254
 msgid "白色蕾丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:253
+#: .\data\csv\ClothingTem.csv:255
 msgid "黑色蕾丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:254
+#: .\data\csv\ClothingTem.csv:256
 msgid "系绳内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:255
+#: .\data\csv\ClothingTem.csv:257
 msgid "丁字裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:256
+#: .\data\csv\ClothingTem.csv:258
 msgid "C字裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:257
+#: .\data\csv\ClothingTem.csv:259
 msgid "创可贴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:258
+#: .\data\csv\ClothingTem.csv:260
 msgid "开档内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:259
+#: .\data\csv\ClothingTem.csv:261
 msgid "真丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:260
+#: .\data\csv\ClothingTem.csv:262
 msgid "薄纱内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:261
+#: .\data\csv\ClothingTem.csv:263
 msgid "镂空内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:278
+#: .\data\csv\ClothingTem.csv:280
 msgid "黑衬口长筒袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:279
+#: .\data\csv\ClothingTem.csv:281
 msgid "白色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:280
+#: .\data\csv\ClothingTem.csv:282
 msgid "白色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:281
+#: .\data\csv\ClothingTem.csv:283
 msgid "深棕色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:282
+#: .\data\csv\ClothingTem.csv:284
 msgid "白色吊带袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:283
+#: .\data\csv\ClothingTem.csv:285
 msgid "白色过膝踩脚袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:284
+#: .\data\csv\ClothingTem.csv:286
 msgid "黑色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:285
+#: .\data\csv\ClothingTem.csv:287
 msgid "黑色绑腿带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:286
+#: .\data\csv\ClothingTem.csv:288
 msgid "黑色半透连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:287
+#: .\data\csv\ClothingTem.csv:289
 msgid "战术护膝"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:288
+#: .\data\csv\ClothingTem.csv:290
 msgid "腿环"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:289
+#: .\data\csv\ClothingTem.csv:291
 msgid "黄色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:290
+#: .\data\csv\ClothingTem.csv:292
 msgid "黑色小腿袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:291
+#: .\data\csv\ClothingTem.csv:293
 msgid "黄色泡泡袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:292
+#: .\data\csv\ClothingTem.csv:294
 msgid "单边黑色过膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:293
+#: .\data\csv\ClothingTem.csv:295
 msgid "单边绿色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:294
+#: .\data\csv\ClothingTem.csv:296
 msgid "浅灰色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:295
+#: .\data\csv\ClothingTem.csv:297
 msgid "白色渐变透肉超低腰连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:296
+#: .\data\csv\ClothingTem.csv:298
 msgid "黑色过膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:296
+#: .\data\csv\ClothingTem.csv:298
 msgid "基础服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:297
+#: .\data\csv\ClothingTem.csv:299
 msgid "黑色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:298
+#: .\data\csv\ClothingTem.csv:300
 msgid "黑色大腿袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:299
+#: .\data\csv\ClothingTem.csv:301
 msgid "黑色及膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:300
+#: .\data\csv\ClothingTem.csv:302
 msgid "战术绑腿包"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:301
+#: .\data\csv\ClothingTem.csv:303
 msgid "战术腿带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:303
+#: .\data\csv\ClothingTem.csv:305
 msgid "深蓝色小皮鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:304
+#: .\data\csv\ClothingTem.csv:306
 msgid "高跟皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:305
+#: .\data\csv\ClothingTem.csv:307
 msgid "黑色圆头皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:306
+#: .\data\csv\ClothingTem.csv:308
 msgid "白色厚底长筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:307
+#: .\data\csv\ClothingTem.csv:309
 msgid "冰刀鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:308
+#: .\data\csv\ClothingTem.csv:310
 msgid "黑色中筒运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:309
+#: .\data\csv\ClothingTem.csv:311
 msgid "黑色防水靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:310
+#: .\data\csv\ClothingTem.csv:312
 msgid "粉色翻领高帮滑板鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:311
+#: .\data\csv\ClothingTem.csv:313
 msgid "浅灰色低筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:312
+#: .\data\csv\ClothingTem.csv:314
 msgid "厚底凉鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:313
+#: .\data\csv\ClothingTem.csv:315
 msgid "过膝战靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:314
+#: .\data\csv\ClothingTem.csv:316
 msgid "黑色小皮鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:315
+#: .\data\csv\ClothingTem.csv:317
 msgid "黑色过膝高筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:316
+#: .\data\csv\ClothingTem.csv:318
 msgid "黑色高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:317
+#: .\data\csv\ClothingTem.csv:319
 msgid "黑色绑带中筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:318
+#: .\data\csv\ClothingTem.csv:320
 msgid "白色高帮运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:319
+#: .\data\csv\ClothingTem.csv:321
 msgid "绑带中筒靴（带爪）"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:320
+#: .\data\csv\ClothingTem.csv:322
 msgid "黑红间色低跟短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:321
+#: .\data\csv\ClothingTem.csv:323
 msgid "黑色运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:322
+#: .\data\csv\ClothingTem.csv:324
 msgid "黑色无跟低筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:323
+#: .\data\csv\ClothingTem.csv:325
 msgid "芭蕾舞鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:324
+#: .\data\csv\ClothingTem.csv:326
 msgid "脚环高跟单鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:325
+#: .\data\csv\ClothingTem.csv:327
 msgid "橘色高帮运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:326
+#: .\data\csv\ClothingTem.csv:328
 msgid "黑色尖头乐福鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:327
+#: .\data\csv\ClothingTem.csv:329
 msgid "棕色中跟低筒皮短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:328
+#: .\data\csv\ClothingTem.csv:330
 msgid "白色翻边中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:329
+#: .\data\csv\ClothingTem.csv:331
 msgid "防滑翻折中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:330
+#: .\data\csv\ClothingTem.csv:332
 msgid "金色尖头配花高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:331
+#: .\data\csv\ClothingTem.csv:333
 msgid "灰绿色防滑运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:332
+#: .\data\csv\ClothingTem.csv:334
 msgid "黑色厚底短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:333
+#: .\data\csv\ClothingTem.csv:335
 msgid "白色运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:334
+#: .\data\csv\ClothingTem.csv:336
 msgid "黑色带蝴蝶结高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:335
+#: .\data\csv\ClothingTem.csv:337
 msgid "黑色扣带中筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:336
+#: .\data\csv\ClothingTem.csv:338
 msgid "黑色圆头乐福鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:337
+#: .\data\csv\ClothingTem.csv:339
 msgid "棕色翻折中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:338
+#: .\data\csv\ClothingTem.csv:340
 msgid "黑色尖头绑带高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:339
+#: .\data\csv\ClothingTem.csv:341
 msgid "黑色尖头中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:341
+#: .\data\csv\ClothingTem.csv:343
 msgid "无胄盟源石复合弓"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:342
+#: .\data\csv\ClothingTem.csv:344
 msgid "“提灯天使”法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:343
+#: .\data\csv\ClothingTem.csv:345
 msgid "龙腾无人机控制器"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:344
+#: .\data\csv\ClothingTem.csv:346
 msgid "切城警用防暴左轮"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:345
+#: .\data\csv\ClothingTem.csv:347
 msgid "“浮标”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:346
+#: .\data\csv\ClothingTem.csv:348
 msgid "维多利亚军旗"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:347
+#: .\data\csv\ClothingTem.csv:349
 msgid "仪仗剑"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:348
+#: .\data\csv\ClothingTem.csv:350
 msgid "长柄镰刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:349
+#: .\data\csv\ClothingTem.csv:351
 msgid "“光羽箭”骑士弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:350
+#: .\data\csv\ClothingTem.csv:352
 msgid "共振装置手提箱"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:351
+#: .\data\csv\ClothingTem.csv:353
 msgid "口琴型匕首"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:352
+#: .\data\csv\ClothingTem.csv:354
 msgid "深海猎人长柄圆锯"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:353
+#: .\data\csv\ClothingTem.csv:355
 msgid "工程蓄水炮"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:354
+#: .\data\csv\ClothingTem.csv:356
 msgid "咪波控制终端XP"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:355
+#: .\data\csv\ClothingTem.csv:357
 msgid "锻锤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:356
+#: .\data\csv\ClothingTem.csv:358
 msgid "皮鞭"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:357
+#: .\data\csv\ClothingTem.csv:359
 msgid "“蓝莓与黑巧”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:358
+#: .\data\csv\ClothingTem.csv:360
 msgid "维多利亚破城矛"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:359
+#: .\data\csv\ClothingTem.csv:361
 msgid "荆棘审判锤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:360
+#: .\data\csv\ClothingTem.csv:362
 msgid "专业级改良镜头"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:361
+#: .\data\csv\ClothingTem.csv:363
 msgid "杜林桌布旗"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:362
+#: .\data\csv\ClothingTem.csv:364
 msgid "天球仪与源石剑"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:363
+#: .\data\csv\ClothingTem.csv:365
 msgid "源石法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:363
+#: .\data\csv\ClothingTem.csv:365
 msgid "法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:364
+#: .\data\csv\ClothingTem.csv:366
 msgid "源石弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:364
+#: .\data\csv\ClothingTem.csv:366
 msgid "弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:365
+#: .\data\csv\ClothingTem.csv:367
 msgid "罗德岛制式刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:365
+#: .\data\csv\ClothingTem.csv:367
 msgid "刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:366
+#: .\data\csv\ClothingTem.csv:368
 msgid "罗德岛制式长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:366
+#: .\data\csv\ClothingTem.csv:368
 msgid "长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:368
+#: .\data\csv\ClothingTem.csv:370
 msgid "源石检测抑制环"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:369
+#: .\data\csv\ClothingTem.csv:371
 msgid "肩背式箭袋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:370
+#: .\data\csv\ClothingTem.csv:372
 msgid "“笼中青鸟”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:371
+#: .\data\csv\ClothingTem.csv:373
 msgid "大帝的坠饰"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:372
+#: .\data\csv\ClothingTem.csv:374
 msgid "警徽"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:373
+#: .\data\csv\ClothingTem.csv:375
 msgid "剪刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:374
+#: .\data\csv\ClothingTem.csv:376
 msgid "战术挎包"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:375
+#: .\data\csv\ClothingTem.csv:377
 msgid "电工工具套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:376
+#: .\data\csv\ClothingTem.csv:378
 msgid "仿生海龙小叶"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:377
+#: .\data\csv\ClothingTem.csv:379
 msgid "机械水獭咪波"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:378
+#: .\data\csv\ClothingTem.csv:380
 msgid "叙拉古法典"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:379
+#: .\data\csv\ClothingTem.csv:381
 msgid "磐蟹饲养箱"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:380
+#: .\data\csv\ClothingTem.csv:382
 msgid "摄影辅助机器人“镜头”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:381
+#: .\data\csv\ClothingTem.csv:383
 msgid "“金苹果”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:382
+#: .\data\csv\ClothingTem.csv:384
 msgid "诅咒娃娃“小莫提”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:383
+#: .\data\csv\ClothingTem.csv:385
 msgid "绿叶伞"
 msgstr ""
 
