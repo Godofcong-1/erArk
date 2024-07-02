@@ -31,6 +31,93 @@ width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 
+def base_chara_state_common_settle(
+        character_id: int,
+        add_time: int,
+        state_id: int,
+        base_value: int = 30,
+        ability_level: int = 0,
+        extra_adjust: float = 0,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色状态通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    state_id -- 状态id\n
+    base_value -- 基础固定值\n
+    ability_level -- 系数修正用能力等级\n
+    extra_adjust -- 额外系数\n
+    change_data_to_target_change -- 结算信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    # 基础固定值
+    time_base_value = add_time + base_value
+
+    # 系数加成，区分快感状态和普通状态
+    if state_id <= 7:
+        final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
+    else:
+        final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
+
+    # 最终值
+    final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
+
+    # 结算最终值
+    character_data.status_data[state_id] += final_value
+    character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
+    character_data.status_data[state_id] = max(0, character_data.status_data[state_id])
+
+    # 露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
+    if state_id in [14, 16, 17]:
+        extra_feel_settle(character_id, state_id, final_value, change_data, change_data_to_target_change)
+
+    # 结算信息记录对象
+    if change_data != None:
+        change_data.status_data.setdefault(state_id, 0)
+        change_data.status_data[state_id] += final_value
+    if change_data_to_target_change != None:
+        change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+        target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+        target_change.status_data.setdefault(state_id, 0)
+        target_change.status_data[state_id] += final_value
+
+
+def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+    """
+    角色快感系数获得的共用函数
+    Keyword arguments:
+    character_id -- 角色id
+    state_id -- 状态id
+    ability_level -- 系数修正用能力等级
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 系数加成
+    final_adjust = 0
+    # 部位感觉
+    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
+    final_adjust += feel_adjust
+    # 技巧
+    if ability_level:
+        tech_adjust = attr_calculation.get_ability_adjust(ability_level)
+        final_adjust = math.sqrt(feel_adjust * tech_adjust)
+    # 调香
+    if character_data.sp_flag.aromatherapy == 4:
+        final_adjust += 1
+    # 催眠-敏感
+    if character_data.hypnosis.increase_body_sensitivity:
+        final_adjust += 2
+
+    return final_adjust
+
+
 def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
     """
     角色状态系数获得的共用函数
@@ -76,87 +163,31 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     return final_adjust
 
 
-def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+def extra_feel_settle(character_id: int, state_id: int, final_value: float, change_data: game_type.CharacterStatusChange, change_data_to_target_change: game_type.CharacterStatusChange):
     """
-    角色快感系数获得的共用函数
+    露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
     Keyword arguments:
     character_id -- 角色id
     state_id -- 状态id
-    ability_level -- 系数修正用能力等级
-    """
-
-    character_data: game_type.Character = cache.character_data[character_id]
-
-    # 系数加成
-    final_adjust = 0
-    # 部位感觉
-    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
-    final_adjust += feel_adjust
-    # 技巧
-    if ability_level:
-        tech_adjust = attr_calculation.get_ability_adjust(ability_level)
-        final_adjust = math.sqrt(feel_adjust * tech_adjust)
-    # 调香
-    if character_data.sp_flag.aromatherapy == 4:
-        final_adjust += 1
-    # 催眠-敏感
-    if character_data.hypnosis.increase_body_sensitivity:
-        final_adjust += 2
-
-    return final_adjust
-
-
-def base_chara_state_common_settle(
-        character_id: int,
-        add_time: int,
-        state_id: int,
-        base_value: int = 30,
-        ability_level: int = 0,
-        extra_adjust: float = 0,
-        change_data: game_type.CharacterStatusChange = None,
-        change_data_to_target_change: game_type.CharacterStatusChange = None,
-        ):
-    """
-    基础角色状态通用结算函数\n
-    Keyword arguments:\n
-    character_id -- 角色id\n
-    add_time -- 结算时间\n
-    state_id -- 状态id\n
-    base_value -- 基础固定值\n
-    ability_level -- 系数修正用能力等级\n
-    extra_adjust -- 额外系数\n
-    change_data_to_target_change -- 结算信息记录对象
+    final_value -- 最终值
+    change_data -- 状态变更信息记录对象
+    change_data_to_target_change -- 状态变更信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
+    final_value = max(10, final_value / 10)
+    final_value = int(final_value)
 
-    # 基础固定值
-    time_base_value = add_time + base_value
-
-    # 系数加成，区分快感状态和普通状态
-    if state_id <= 7:
-        final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
-    else:
-        final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
-
-    # 最终值
-    final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
-
-    # 结算最终值
-    character_data.status_data[state_id] += final_value
-    character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
-    character_data.status_data[state_id] = max(0, character_data.status_data[state_id])
-
-    # 结算信息记录对象
-    if change_data != None:
-        change_data.status_data.setdefault(state_id, 0)
-        change_data.status_data[state_id] += final_value
-    if change_data_to_target_change != None:
-        change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
-        target_change.status_data.setdefault(state_id, 0)
-        target_change.status_data[state_id] += final_value
+    # 施虐对先导
+    if state_id == 14:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[35], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    # 露出对羞耻
+    elif state_id == 16:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[34], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    # 受虐对苦痛
+    elif state_id == 17:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
 
 def base_chara_favorability_and_trust_common_settle(
@@ -169,7 +200,7 @@ def base_chara_favorability_and_trust_common_settle(
         target_character_id: int = 0,
         ):
     """
-    基础角色状态通用结算函数\n
+    基础角色好感与信赖通用结算函数\n
     Keyword arguments:\n
     character_id -- 角色id\n
     add_time -- 结算时间\n
