@@ -590,6 +590,152 @@ def handle_down_small_mana_point(
                     now_draw.draw()
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_HIT_POINT)
+def handle_down_middle_hit_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量体力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_hit = 30
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit *= 3
+    #体力不足0时锁为1#
+    if character_data.hit_point >= sub_hit:
+        character_data.hit_point -= sub_hit
+        change_data.hit_point -= sub_hit
+    else:
+        change_data.hit_point -= character_data.hit_point
+        character_data.hit_point = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_MANA_POINT)
+def handle_down_middle_mana_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量气力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_mana = 50
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.mana_point >= sub_mana:
+        character_data.mana_point -= sub_mana
+        change_data.mana_point -= sub_mana
+    else:
+        change_data.mana_point -= character_data.mana_point
+        sub_mana -= character_data.mana_point
+        character_data.mana_point = 0
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = window_width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_HIT_POINT)
+def handle_down_large_hit_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量体力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_hit = 100
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit *= 3
+    #体力不足0时锁为1#
+    if character_data.hit_point >= sub_hit:
+        character_data.hit_point -= sub_hit
+        change_data.hit_point -= sub_hit
+    else:
+        change_data.hit_point -= character_data.hit_point
+        character_data.hit_point = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_MANA_POINT)
+def handle_down_large_mana_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量气力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_mana = 150
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.mana_point >= sub_mana:
+        character_data.mana_point -= sub_mana
+        change_data.mana_point -= sub_mana
+    else:
+        change_data.mana_point -= character_data.mana_point
+        sub_mana -= character_data.mana_point
+        character_data.mana_point = 0
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = window_width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
 def handle_add_small_n_feel(
     character_id: int,
