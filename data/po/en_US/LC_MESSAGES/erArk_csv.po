@@ -12600,8 +12600,7 @@ msgid "宴"
 msgstr "Utage"
 
 msgid "一个漆黑的盒子。里面是漆黑的盒子，漆黑的盒子，以及......美甲套装？！"
-msgstr "A black box. Inside it is another black box. Inside that is another black box. 
-"Inside that is... a manicure set?!"
+msgstr "A black box. Inside it is another black box. Inside that is another black box. Inside that is... a manicure set?!"
 
 msgid ""
 "从东国前来龙门游学的普通学生，被卷入感染者事件后患上了矿石病，后听从医师的建议来到罗德岛，经过评审成为了干员。\n"
@@ -13531,9 +13530,6 @@ msgstr "Dark hot pants"
 
 msgid "黑色登山靴"
 msgstr "Black mountaineering boots"
-
-msgid "小满"
-msgstr "Grain Buds"
 
 msgid "一支手工制作的竹笛，声音清亮，但音准稍稍有些问题。"
 msgstr ""

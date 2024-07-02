@@ -5717,9 +5717,6 @@ msgstr " ▼Operators with Dialogues"
 msgid " ▶口上干员"
 msgstr " ▶Operators with Dialogues"
 
-msgid "日记"
-msgstr "Diary"
-
 msgid " 插入的文本为"
 msgstr " Text inserted was"
 
