@@ -295,26 +295,33 @@ def chara_special_wear_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         # print(f"debug name = {character_data.name}")
+        return_list = []
 
         # 阿米娅必须戴抑制戒指
         if character_data.adv == 1:
             if 701 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(701)
                 # print("换上戒指了")
-            return [701]
+            return_list.append(701)
+        # 源石病感染者必须戴监测环
+        if character_data.talent[150]:
+            if 1301 not in character_data.cloth.cloth_wear[13]:
+                character_data.cloth.cloth_wear[13].append(1301)
+                # print("换上监测环了")
+            return_list.append(1301)
         # 有戒指素质的必须戴戒指
         if character_data.talent[205]:
             if 751 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(751)
                 # print("换上戒指了")
-            return [751]
+            return_list.append(751)
         # 项圈同理
         elif character_data.talent[215]:
             if 352 not in character_data.cloth.cloth_wear[3]:
                 character_data.cloth.cloth_wear[3].append(352)
                 # print("换上项圈了")
-            return [352]
-    return []
+            return_list.append(352)
+    return return_list
 
 
 def get_cloth_wear_zero_except_need(character_id: int) -> dict:
