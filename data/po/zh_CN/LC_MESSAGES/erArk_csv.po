@@ -5437,7 +5437,7 @@ msgid "精力剂"
 msgstr ""
 
 #: .\data\csv\Item.csv:10
-msgid "使用后回复100精液量。暂未实装。"
+msgid "使用后回复20ml精液量。"
 msgstr ""
 
 #: .\data\csv\Item.csv:11
@@ -5461,7 +5461,7 @@ msgid "全乐器套装"
 msgstr ""
 
 #: .\data\csv\Item.csv:13
-msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖"
+msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
 msgstr ""
 
 #: .\data\csv\Item.csv:14
@@ -5541,7 +5541,7 @@ msgid "避孕套"
 msgstr ""
 
 #: .\data\csv\Item.csv:23
-msgid "说明暂无"
+msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
 msgstr ""
 
 #: .\data\csv\Item.csv:24
@@ -5578,6 +5578,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:28
 msgid "震动棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:28
+msgid "说明暂无"
 msgstr ""
 
 #: .\data\csv\Item.csv:29
@@ -5618,6 +5622,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:36
 msgid "采尿器"
+msgstr ""
+
+#: .\data\csv\Item.csv:36
+msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
 msgstr ""
 
 #: .\data\csv\Item.csv:37

@@ -178,10 +178,9 @@ class ItemNameDraw:
         if self.use_drug_flag:
             while 1:
                 line_feed.draw()
-                use_draw = draw.CenterButton(_("使用"), _("使用"), window_width)
+                use_draw = draw.CenterButton(_("[使用]"), _("[使用]"), window_width / 2)
                 use_draw.draw()
-                line_feed.draw()
-                return_draw = draw.CenterButton(_("返回"), _("返回"), window_width)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
                 return_draw.draw()
                 line_feed.draw()
                 yrn = flow_handle.askfor_all([use_draw.return_text, return_draw.return_text])
@@ -192,17 +191,23 @@ class ItemNameDraw:
                     break
 
     def use_drug(self):
-        """使用理智药"""
+        """使用药剂"""
         pl_character_data = cache.character_data[0]
         # 道具数量减少1
         pl_character_data.item[self.text] -= 1
         # 根据道具id获取道具效果
-        item_effect_dict = {0:10, 1:60, 2:140, 3:300}
-        sanity_point_add = item_effect_dict[self.text]
-        pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
-        # 绘制使用道具信息
+        sanity_point_add = game_config.config_item[self.text].effect
+        # 药剂效果
         now_draw = draw.WaitDraw()
-        now_draw.text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, game_config.config_item[self.text].name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
+        # 理智恢复剂
+        if self.text <= 3:
+            pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
+            now_draw.text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, game_config.config_item[self.text].name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
+        # 精力恢复剂
+        elif self.text == 11:
+            pl_character_data.semen_point = min(pl_character_data.semen_point + sanity_point_add, pl_character_data.semen_point_max)
+            now_draw.text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, game_config.config_item[self.text].name, sanity_point_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
+        # 绘制使用道具信息
         now_draw.width = window_width
         now_draw.draw()
 
