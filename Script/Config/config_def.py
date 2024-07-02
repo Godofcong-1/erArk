@@ -462,6 +462,8 @@ class Item:
     """ 标签 """
     price: int
     """ 价格 """
+    effect: int
+    """ 效果 """
     info: str
     """ 描述 """
 
