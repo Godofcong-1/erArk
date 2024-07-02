@@ -15668,6 +15668,20 @@ def  handle_is_unconscious_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOT_UNCONSCIOUS_H)
+def  handle_not_unconscious_h(character_id: int) -> int:
+    """
+    当前不是无意识奸模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_is_unconscious_h(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.OPTION_SON)
 def handle_option_son(character_id: int) -> int:
     """
