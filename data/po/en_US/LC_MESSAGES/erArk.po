@@ -3951,8 +3951,8 @@ msgstr "(Not implemented)"
 
 msgid "：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）"
 msgstr ""
-": Hypnosis EXP≥{0} (Currently {1}) , total Hypnosis Depth ≥{2}% (Currently "
-"{3}%) "
+": Need Hypnosis EXP≥{0} (Currently {1}) , total Hypnosis Depth ≥{2}% "
+"(Currently {3}%) "
 
 msgid ""
 "\n"
@@ -5321,6 +5321,493 @@ msgstr " : Will take off"
 
 msgid " ：无可收的内裤"
 msgstr " : No available underwear"
+
+msgid "今日全陷落角色提供的粉红凭证为：{0}\n"
+msgstr "Total Pink Certificates produced from Operators today: {0}\n"
+
+msgid "+被对方持有把柄(-"
+msgstr "+ Got hold by(-"
+
+msgid "+持有对方把柄(+"
+msgstr "+ Get hold on(+"
+
+msgid ""
+"\n"
+"{0}获得了【被博士持有把柄】\n"
+msgstr ""
+"\n"
+"{0} acquired [Get Hold by Doctor]\n"
+
+msgid "{0}打算去洗手间\n"
+msgstr "{0} wanted to go to the toilet\n"
+
+msgid "{0}打算去吃饭\n"
+msgstr "{0} wanted to go have meal\n"
+
+msgid "{0}打算去运维部\n"
+msgstr "{0} wanted to go to O&M Department\n"
+
+msgid "{0}打算去铁匠铺\n"
+msgstr "{0} wanted to go to Smithing Shop\n"
+
+msgid "{0}打算去外交官办公室\n"
+msgstr "{0} wanted to go to Civil Service Office\n"
+
+msgid "{0}打算去药田\n"
+msgstr "{0} wanted to go to the farmland\n"
+
+msgid "{0}打算去温室\n"
+msgstr "{0} wanted to go to the conservatory\n"
+
+msgid "{0}打算去休息\n"
+msgstr "{0} wanted to go rest\n"
+
+msgid "{0}打算去检修地点\n"
+msgstr "{0} wanted to go maintaining\n"
+
+msgid "{0}打算去生产车间\n"
+msgstr "{0} wanted to go to the production line\n"
+
+msgid "{0}打算去大浴场的更衣室\n"
+msgstr "{0} wanted to go to the fitting room in Bathing Spot\n"
+
+msgid "{0}打算去训练场的更衣室\n"
+msgstr "{0} wanted to go to the fitting room in Training Room\n"
+
+msgid "{0}打算去淋浴\n"
+msgstr "{0} wanted to go shower\n"
+
+msgid "{0}打算去进行战斗训练\n"
+msgstr "{0} wanted to go combat training\n"
+
+msgid "{0}打算去买饭\n"
+msgstr "{0} wanted to go buy food\n"
+
+msgid "{0}打算去做饭\n"
+msgstr "{0} wanted to go cook\n"
+
+msgid "{0}脱成全裸了\n"
+msgstr "{0} was naked\n"
+
+msgid "{0}穿上了衣服\n"
+msgstr "{0} wore her clothes back\n"
+
+msgid "{0}换上了浴帽和浴巾\n"
+msgstr "{0} changed to showering cap and towel\n"
+
+msgid "{0}的{1}提升到{2}级\n"
+msgstr "{0}'s {1} upgraded to Lv{2}\n"
+
+msgid "本周全陷落角色提供的粉红凭证为：{0}\n"
+msgstr "Total Pink Certificates produced from Operators this week: {0}\n"
+
+msgid ""
+"\n"
+" 获得了{0}的【亲吻合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Kiss Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【本番合意】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 获得了{0}的【Ａ性交合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [A Sex Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【Ｕ性交合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [U Sex Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【避孕中出合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Creampie Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【妊娠合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Pregnancy Agreement] \n"
+
+msgid "因为等待时间过长，所以{0}不再继续跟随\n"
+msgstr "{0} stopped following, as the waiting became too long\n"
+
+msgid "{0}等不下去了，决定直接进来\n"
+msgstr "{0} broke in as they couldn't wait any longer\n"
+
+msgid "因为不方便进来，所以{0}正在外面等待\n"
+msgstr "{0} was waiting outside as it's inconvenient to come in\n"
+
+msgid ""
+"\n"
+"精子在{0}的阴道中游荡，但未能成功受精\n"
+msgstr ""
+"\n"
+"Sperm was swimming in {0}'s vagina, but failed to fertilize\n"
+
+msgid ""
+"\n"
+"在避孕药的影响下——\n"
+"精子在{0}的阴道中游荡，但未能成功受精\n"
+msgstr ""
+"\n"
+"Under the effect of birth-control pills——\n"
+"Sperm was swimming in {0}'s vagina, but failed to fertilize\n"
+
+msgid ""
+"\n"
+"随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
+msgstr ""
+"\n"
+"As the pregnancy progressed, {0} stood up her big belly, under the upheaved curve is the new life she's gestating\n"
+
+msgid ""
+"\n"
+"{0}有孕在身，将会暂停工作和部分娱乐\n"
+msgstr ""
+"\n"
+"{0} was pregnant, hence work and some entertainment will be halted\n"
+
+msgid ""
+"\n"
+"{0}从[受精]转变为[妊娠]\n"
+msgstr ""
+"\n"
+"{0} changed from [Fertilized] to [Pregnancy]\n"
+
+msgid ""
+"\n"
+"{0}获得了[孕肚]\n"
+msgstr ""
+"\n"
+"{0} acquired [Pregnant Belly]\n"
+
+msgid ""
+"\n"
+"{0}获得了[泌乳]\n"
+msgstr ""
+"\n"
+"{0} acquired [Lactation]\n"
+
+msgid ""
+"\n"
+"\n"
+" {0}分钟过去了\n"
+msgstr ""
+"\n"
+"\n"
+" {0} minutes passed\n"
+
+msgid ""
+"\n"
+"\n"
+" 该行动将持续{0}分钟\n"
+msgstr ""
+"\n"
+"\n"
+" This action will last for {0} minutes\n"
+
+msgid ""
+"\n"
+"给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n"
+msgstr ""
+"\n"
+"Doctor helped {0} to wear her clothes back, and tidied back to the condition before H\n"
+
+msgid ""
+"\n"
+"{0}穿回了脱下的衣服\n"
+msgstr ""
+"\n"
+"{0} wore her clothes back\n"
+
+msgid "  [debug用一键全跟随]"
+msgstr ""
+
+msgid "入口"
+msgstr "Entrance"
+
+msgid ""
+"\n"
+"要进行哪方面的管理呢？\n"
+msgstr ""
+"\n"
+"Which part of management you wish to conduct?\n"
+
+msgid "[001]催还书"
+msgstr "[001]Prompt to return"
+
+msgid "[002]图书进货(未实装)"
+msgstr ""
+
+msgid "[003]阅读推荐"
+msgstr "[003]Read suggestion"
+
+msgid "[004]读书会"
+msgstr "[004]Reading Day"
+
+msgid "  (被{0}借走)"
+msgstr "  (Borrowed by {0})"
+
+msgid ""
+"\n"
+" 当前剩余可选推荐 {0}\n"
+msgstr ""
+"\n"
+" Available suggestions {0}\n"
+
+msgid " (已推荐)"
+msgstr " (Suggested)"
+
+msgid "当前持有粉红凭证：{0}"
+msgstr "Pink Certificates: {0}"
+
+msgid "(持有数量:"
+msgstr "(Current amount:"
+
+msgid ""
+"\n"
+"{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n"
+"\n"
+msgstr ""
+"\n"
+"{0} used {1}, Sanity +{2}, currently {3}/{4}\n"
+"\n"
+
+msgid ""
+"\n"
+" 得知了{0}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n"
+msgstr ""
+"\n"
+" Upon receiving the notice of {0} is about to give birth, you rushed to the maternity room, and after a short accompany, you looked at her being pushed into the delivery room\n"
+
+msgid " 焦急等待"
+msgstr " Wait anxiously"
+
+msgid " 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n"
+msgstr ""
+" After a long wait, followed by a loud cry, {0} opened the door, and told "
+"you that {1} have gave birth to a cute daughter, both of them are safe\n"
+
+msgid " {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n"
+msgstr ""
+" {0} was on the bed, with the baby in her arms, she smiled towards you and "
+"urged you to name her\n"
+
+msgid ""
+"\n"
+"孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n"
+msgstr ""
+"\n"
+"The baby's name is {0}, she's {1}'s {2}th children, as well as {3}'s {4}th children, please raise her up\n"
+
+msgid ""
+"\n"
+"{0}的生产结束了，但她仍需要在住院部休息几天\n"
+msgstr ""
+"\n"
+"{0} finished giving birth, but she still need to rest at Inpatient Department\n"
+
+msgid ""
+"\n"
+"{0}从[临盆]转变为[产后]\n"
+msgstr ""
+"\n"
+"{0} changed from [Confined] to [After Birth]\n"
+
+msgid ""
+"\n"
+"{0}失去了[孕肚]\n"
+msgstr ""
+"\n"
+"{0} lost [Pregnant Belly]\n"
+
+msgid ""
+"\n"
+"{0}的Ｖ扩张经验+10，Ｗ扩张经验+10，妊娠经验+1\n"
+msgstr ""
+"\n"
+"{0}'s Ｖ Dilation EXP +10, Ｗ Dilation EXP +10, Pregnancy EXP +1\n"
+
+msgid ""
+"\n"
+"{0}的Ｖ扩张上升至5级\n"
+msgstr ""
+"\n"
+"{0}'s Ｖ Dilate upgraded to Lv5\n"
+
+msgid ""
+"\n"
+"{0}的Ｗ扩张上升至5级\n"
+msgstr ""
+"\n"
+"{0}'s Ｗ Dilate upgraded to Lv5\n"
+
+msgid "+标间(+10)"
+msgstr "+ Basic Room(+10)"
+
+msgid "+情趣主题房(+50)"
+msgstr "+ Sexual Theme Room(+50)"
+
+msgid "+顶级套房(+100)"
+msgstr "+ Premium Suite(+100)"
+
+msgid "{0}在{1}，"
+msgstr "{0} was at {1}, "
+
+msgid "从{0}移动至{1}\n"
+msgstr "moved from {0} to {1}\n"
+
+msgid "对{0}进行了{1}\n"
+msgstr "and towards {0}, they did {1}\n"
+
+msgid "进行了{0}\n"
+msgstr "did {0}\n"
+
+msgid "标间"
+msgstr "Basic Room"
+
+msgid "情趣主题房"
+msgstr "Sexual Theme Room"
+
+msgid "顶级套房"
+msgstr "Premium Suite"
+
+msgid ""
+"\n"
+"您入住的{0}到退房时间了，已自动退房\n"
+msgstr ""
+"\n"
+"{0} that you're in had reached the check out time, automatically checked out\n"
+
+msgid "日记"
+msgstr "Diary"
+
+msgid "预定房间"
+msgstr "Order for a room"
+
+msgid "邀请在爱情旅馆H"
+msgstr "Invite H in hotel"
+
+msgid " [口上筛选] "
+msgstr " [Dialogue filter]"
+
+msgid " ▼一般干员"
+msgstr " ▼Normal Operators"
+
+msgid " ▶一般干员"
+msgstr " ▶Normal Operators"
+
+msgid " ▼口上干员"
+msgstr " ▼Operators with Dialogues"
+
+msgid " ▶口上干员"
+msgstr " ▶Operators with Dialogues"
+
+msgid " 插入的文本为"
+msgstr " Text inserted was"
+
+msgid ""
+"\n"
+"日记已保存至{0}\n"
+msgstr ""
+"\n"
+"Diary saved to {0}\n"
+
+msgid "[日记]"
+msgstr "[Diary]"
+
+msgid ""
+"日记\n"
+"\n"
+msgstr ""
+"Diary\n"
+"\n"
+
+msgid "预订房间"
+msgstr "Order for a room"
+
+msgid ""
+"\n"
+"○酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n"
+msgstr ""
+"\n"
+"○There's Basic Room, Sexual Theme Room or Premium Suite, where the more premium room can provide a better scene, all four hotels can be selected, check out time: 12:0 of the next day\n"
+
+msgid "  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n"
+msgstr ""
+"  Sexual Theme Room will have one Lubricating Fluid and five Condoms for "
+"free, while Premium Suite will provide all H items infinitely for free.\n"
+
+msgid ""
+"  请问要入住哪种房间呢？\n"
+"\n"
+msgstr ""
+"  Which room do you wish to pick?\n"
+"\n"
+
+msgid "标间(2粉红凭证)"
+msgstr "Basic Room (2 Pink Certificates)"
+
+msgid "情趣主题房(10粉红凭证)"
+msgstr "Sexual Theme Room (10 Pink Certificates)"
+
+msgid "顶级套房(100粉红凭证)"
+msgstr "Premium Suite (100 Pink Certificates)"
+
+msgid "当前已预订{0}，退房时间为{1}日12点\n"
+msgstr "Ordered {0}, check out time: {1} 12pm\n"
+
+msgid ""
+"\n"
+"粉红凭证不足，无法预订{0}\n"
+msgstr ""
+"\n"
+"Insufficient Pink Certificates, unable to order for {0}\n"
+
+msgid ""
+"\n"
+"成功预订了{0}，退房时间为{1}\n"
+msgstr ""
+"\n"
+"Ordered {0}, check out time: {1}\n"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），全干员总信赖度≥{2}（当前{3}）"
+msgstr ""
+": Need total Affinity ≥{0} (Currently {1}), total Trust ≥{2} (Currently {3})"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）"
+msgstr ""
+": Need total Affinity ≥{0} (Currently {1}), total Operators in relationship "
+"≥{2} (Currently {3})"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），陷落程度为[爱侣]或[奴隶]的干员人数≥{2}（当前{3}）"
+msgstr ""
+": Need total Affinity ≥{0} (Currently {1}), total Operators as [Couple] or "
+"[Slave] ≥{2} (Currently {3})"
+
+msgid "：需要全干员内裤收藏总数量≥{0}（当前{1}）"
+msgstr ": Need total underwear count ≥{0} (Currently {1})"
+
+msgid "：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）"
+msgstr ""
+": Need total semen ejaculated inside ≥{0}ml (Currently {1}ml), total Climax "
+"EXP ≥{2} (Currently {3})"
+
+msgid "：需要生育孩子数量≥{0}（当前{1}）"
+msgstr ": Need total children ≥{0} (Currently {1})"
 
 msgid "Ｎ感觉"
 msgstr "N Feel"
@@ -11404,7 +11891,7 @@ msgid "实行值减少"
 msgstr "Decreases Command Execution Value"
 
 msgid "被博士持有把柄"
-msgstr "Get Hold on Doctor"
+msgstr "Get Hold by Doctor"
 
 msgid "实行值增加"
 msgstr "Increases Command Execution Value"

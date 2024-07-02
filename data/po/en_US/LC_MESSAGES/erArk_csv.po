@@ -6250,7 +6250,7 @@ msgid "实行值减少"
 msgstr "Decreases Command Execution Value"
 
 msgid "被博士持有把柄"
-msgstr "Get Hold on Doctor"
+msgstr "Get Hold by Doctor"
 
 msgid "实行值增加"
 msgstr "Increases Command Execution Value"
