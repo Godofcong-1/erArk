@@ -164,7 +164,7 @@ class Originium_Arts_Panel:
             if handle_talent.have_hormone_talent():
                 button5_text = _("[005]激素系能力：")
                 # 输出当前开启的视觉系能力
-                talent_id_list = [304,305,309]
+                talent_id_list = [304,305,306]
                 count = 0
                 for talent_id in talent_id_list:
                     if not self.pl_character_data.talent[talent_id]:
@@ -388,22 +388,23 @@ class Originium_Arts_Panel:
                 talent_id = talent_of_arts_data.talent_id
                 talent_name = game_config.config_talent[talent_id].name
                 talent_info = game_config.config_talent[talent_id].info
+                draw_text = f"  [{talent_name}]"
                 # 通用的源石获得方式，花费为10的cost次方
                 money_cost = 10 ** (talent_of_arts_data.level - 1)
                 if talent_of_arts_data.todo:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}(未实装)：{1}\n").format(talent_name, talent_info)
+                    draw_text += _("(未实装)：{0}\n").format(talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 elif cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}({1}至纯源石-当前源石不足)：{2}\n").format(talent_name, money_cost, talent_info)
+                    draw_text += _("({0}至纯源石-当前源石不足)：{1}\n").format(money_cost, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 else:
-                    draw_text = _("  {0}( {1} 至纯源石)：{2}").format(talent_name, money_cost, talent_info)
+                    draw_text += _("( {0} 至纯源石)：{1}").format(money_cost, talent_info)
                     now_draw = draw.LeftButton(
                         _(draw_text),
                         _(str(cid)),
@@ -414,6 +415,9 @@ class Originium_Arts_Panel:
                     return_list.append(now_draw.return_text)
                     now_draw.draw()
                     line_feed.draw()
+
+                # 其他方式获得
+                draw_text = f"  [{talent_name}]"
                 # 博士信息素
                 if talent_id == 304:
                     # 好感度与信赖度
@@ -425,7 +429,6 @@ class Originium_Arts_Panel:
                         if character_data.trust > now_trust_count:
                             now_trust_count = character_data.trust
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要单干员最高好感度≥{0}（当前{1}），最高信赖度≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_trust_count)
                     now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_trust_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -439,7 +442,6 @@ class Originium_Arts_Panel:
                         if character_data.talent in [201, 202, 203, 204 ,211, 212, 213, 214]:
                             now_fall_count += 1
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_fall_count)
                     now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_fall_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -453,7 +455,6 @@ class Originium_Arts_Panel:
                         if character_data.talent in [204, 214]:
                             now_fall_count += 1
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要全干员总好感度≥{0}（当前{1}），陷落程度为[爱侣]或[奴隶]的干员人数≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_fall_count)
                     now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_fall_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -464,7 +465,6 @@ class Originium_Arts_Panel:
                     for chara_cid in self.pl_character_data.pl_collection.npc_panties:
                         now_pan_count += len(self.pl_character_data.pl_collection.npc_panties[chara_cid])
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要全干员内裤收藏总数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_pan_count)
                     now_contion = now_pan_count >= talent_of_arts_data.lv_up_value1
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -478,7 +478,6 @@ class Originium_Arts_Panel:
                             now_semen_count += character_data.dirty.body_semen[part_id][3]
                         now_exp_count += character_data.experience[20]
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_semen_count, talent_of_arts_data.lv_up_value2, now_exp_count)
                     now_contion = now_semen_count >= talent_of_arts_data.lv_up_value1 and now_exp_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -487,7 +486,6 @@ class Originium_Arts_Panel:
                     # 计算体内被射精总量和总绝顶经验
                     now_child_count = len(cache.character_data[0].relationship.child_id_list)
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要生育孩子数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_child_count)
                     now_contion = now_child_count >= talent_of_arts_data.lv_up_value1
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
@@ -503,7 +501,6 @@ class Originium_Arts_Panel:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
                     # 绘制
-                    draw_text = f"  {talent_name}"
                     draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
                     now_contion = now_exp >= need_exp and now_degree >= need_degree
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
