@@ -2682,13 +2682,13 @@ def handle_add_urinate(
             character_data.urinate_point = 240
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_TIRED)
-def handle_add_tired(
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SLEEP_POINT)
+def handle_add_sleep_point(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    维持疲劳和熟睡值（安眠药）
+    维持熟睡值（安眠药）
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -2698,7 +2698,6 @@ def handle_add_tired(
         return
 
     if character_data.h_state.body_item[9][1]:
-        character_data.tired_point = 160
         character_data.sleep_point = 100
 
 

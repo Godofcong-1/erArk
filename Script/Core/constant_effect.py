@@ -967,8 +967,8 @@ class SecondEffect:
     """ 增加巨量苦痛（A破处修正） """
     ADD_URINATE = 402
     """ 增加尿意（持续性利尿剂） """
-    ADD_TIRED = 403
-    """ 维持疲劳和熟睡值（安眠药） """
+    ADD_SLEEP_POINT = 403
+    """ 维持熟睡值（安眠药） """
     MILKING_MACHINE = 404
     """ 角色的奶量转化为乳汁（搾乳机） """
     URINE_COLLECTOR = 405
