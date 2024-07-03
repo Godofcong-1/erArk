@@ -2,8 +2,7 @@ import os
 import polib
 
 po_dir = os.path.join("data", "po", "en_US", "LC_MESSAGES")
-po_path = os.path.join(po_dir, "erArk.po")
-mo_path = os.path.join(po_dir, "erArk.mo")
+file_name_list = ["erArk_talk", "erArk_csv", "erArk_py"]
 
 def build_po_text(po):
     po = "\n"
@@ -56,4 +55,7 @@ for msgid, msgstr in msgid_msgstr_dict.items():
 new_po.save(po_path)
 """
 # 将PO文件编译成MO文件
-os.system("msgfmt " + po_path + " -o " + mo_path)
+for file_name in file_name_list:
+    po_path = os.path.join(po_dir, file_name + ".po")
+    mo_path = os.path.join(po_dir, file_name + ".mo")
+    os.system("msgfmt " + po_path + " -o " + mo_path)
