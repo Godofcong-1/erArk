@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
 import time
+import os
+import psutil
+import signal
 from types import FunctionType
 from Script.Core import (
     text_handle,
@@ -9,7 +12,6 @@ from Script.Core import (
     cache_control,
     constant,
 )
-
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -272,6 +274,16 @@ def askfor_all(input_list: list, print_order=False):
             io_init.era_print(order + "\n")
             if _cmd_valid(order):
                 _cmd_deal(order)
+            elif order == "999":
+                from Script.Core import save_handle
+                # 保存到自动存档
+                save_handle.establish_save("auto")
+                # 退出游戏
+                parent = psutil.Process(os.getpid())
+                children = parent.children(recursive=True)
+                for process in children:
+                    process.send_signal(signal.SIGTERM)
+                os._exit(0)
             return order
         elif order == "":
             continue
