@@ -1119,8 +1119,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if target_data.sp_flag.unconscious_h:
             # 睡奸判定
             if target_data.state == constant.CharacterStatus.STATUS_SLEEP and target_data.sp_flag.unconscious_h == 1:
-                # 如果是等待指令则无事发生
-                if now_character_data.state == constant.CharacterStatus.STATUS_WAIT:
+                # 如果是等待指令或安眠药中则无事发生
+                if (
+                    now_character_data.state == constant.CharacterStatus.STATUS_WAIT or
+                    now_character_data.h_state.body_item[9][1] == 1
+                ):
                     # 赋值为2来规避吵醒判定
                     sleep_level = 2
                 # 如果是其他行动则判定是否吵醒
