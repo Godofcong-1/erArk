@@ -1218,8 +1218,10 @@ def change_character_persistent_state(character_id: int):
     character_id -- 角色id\n
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
-    start_time = now_character_data.behavior.start_time
-    now_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=start_time)
+    # 因为睡眠时间很长，会导致持续状态的时间超过了当前时间，所以改为使用当前时间
+    # start_time = now_character_data.behavior.start_time
+    # now_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=start_time)
+    now_time = cache.game_time
 
     # 结算H状态的持续时间
     for i in range(len(now_character_data.h_state.body_item)):
