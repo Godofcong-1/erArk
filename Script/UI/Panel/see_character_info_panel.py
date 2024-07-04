@@ -988,9 +988,9 @@ class CharacterImage:
         self.title_list.append(type_line)
 
         # 正常的立绘图片名为角色名，但女儿的情况下单独使用女儿图片
-        self.image_name = character_data.name
+        self.image_name = _(character_data.name, revert_translation=True)
         if character_data.relationship.father_id == 0:
-            self.image_name = _("女儿_1")
+            self.image_name = "女儿_1"
 
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
