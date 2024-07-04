@@ -344,10 +344,8 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
-                # H时
-                # 去掉了不在无意识H模式下的限制
-                # elif character_data.sp_flag.is_h and not character_data.sp_flag.unconscious_h:
-                elif character_data.sp_flag.is_h:
+                # H时，在无意识模式下则不检测疲劳，只检测HP
+                elif character_data.sp_flag.is_h and (not character_data.sp_flag.unconscious_h or (character_data.sp_flag.unconscious_h and character_data.hit_point <= 1)):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
