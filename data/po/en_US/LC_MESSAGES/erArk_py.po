@@ -5473,8 +5473,7 @@ msgid ""
 "随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
 msgstr ""
 "\n"
-"As the pregnancy progressed, {0} stood up her big belly, under the upheaved curve is the "
-"new life she's gestating\n"
+"As the pregnancy progressed, {0} stood up her big belly, under the upheaved curve is the new life she's gestating\n"
 
 msgid ""
 "\n"
@@ -5594,15 +5593,13 @@ msgid ""
 " 得知了{0}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n"
 msgstr ""
 "\n"
-" Upon receiving the notice of {0} is about to give birth, you rushed to the maternity room, and after a "
-"short accompany, you looked at her being pushed into the delivery room\n"
+" Upon receiving the notice of {0} is about to give birth, you rushed to the maternity room, and after a short accompany, you looked at her being pushed into the delivery room\n"
 
 msgid " 焦急等待"
 msgstr " Wait anxiously"
 
 msgid " 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n"
-msgstr " After a long wait, followed by a loud cry, {0} opened the door, and told you that {1} have gave "
-"birth to a cute daughter, both of them are safe\n"
+msgstr " After a long wait, followed by a loud cry, {0} opened the door, and told you that {1} have gave birth to a cute daughter, both of them are safe\n"
 
 msgid " {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n"
 msgstr " {0} was on the bed, with the baby in her arms, she smiled towards you and urged you to name her\n"
@@ -5745,8 +5742,7 @@ msgid ""
 "○酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n"
 msgstr ""
 "\n"
-"○There's Basic Room, Sexual Theme Room or Premium Suite, where the more premium room can "
-"provide a better scene, all four hotels can be selected, check out time: 12:0 of the next day\n"
+"○There's Basic Room, Sexual Theme Room or Premium Suite, where the more premium room can provide a better scene, all four hotels can be selected, check out time: 12:0 of the next day\n"
 
 msgid "  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n"
 msgstr "  Sexual Theme Room will have one Lubricating Fluid and five Condoms for free, while Premium Suite "
@@ -5802,3 +5798,199 @@ msgstr ": Need total semen ejaculated inside ≥{0}ml (Currently {1}ml), total C
 
 msgid "：需要生育孩子数量≥{0}（当前{1}）"
 msgstr ": Need total children ≥{0} (Currently {1})"
+
+msgid ""
+"\n"
+"{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n"
+msgstr ""
+
+msgid "常用更改"
+msgstr ""
+
+msgid "欲望值{0}%"
+msgstr ""
+
+msgid " 当前为{0},{1},{2}"
+msgstr ""
+
+msgid "[购买]"
+msgstr ""
+
+msgid ""
+"\n"
+" 睡前日记："
+msgstr ""
+
+msgid " [记日记] "
+msgstr ""
+
+msgid "(未实装)：{0}\n"
+msgstr ""
+
+msgid "({0}至纯源石-当前源石不足)：{1}\n"
+msgstr ""
+
+msgid "( {0} 至纯源石)：{1}"
+msgstr ""
+
+msgid "：需要单干员最高好感度≥{0}（当前{1}），最高信赖度≥{2}（当前{3}）"
+msgstr ""
+
+msgid "经验"
+msgstr ""
+
+msgid "访客"
+msgstr ""
+
+msgid "宝珠"
+msgstr ""
+
+msgid " 已拥有{0}的信物:{1}"
+msgstr ""
+
+msgid ""
+"\n"
+" 【总】\n"
+msgstr ""
+
+msgid "  未接触过精液\n"
+msgstr ""
+
+msgid "  全身总共被射上过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【口】\n"
+msgstr ""
+
+msgid "  初吻情况："
+msgstr ""
+
+msgid "保有初吻\n"
+msgstr ""
+
+msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士\n"
+msgstr ""
+
+msgid "的阴茎"
+msgstr ""
+
+msgid "献上了初吻\n"
+msgstr ""
+
+msgid "  普普通通的舌头\n"
+msgstr ""
+
+msgid "  未品尝过精液\n"
+msgstr ""
+
+msgid "  总共喝过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【胸】\n"
+msgstr ""
+
+msgid "  未淋上过精液\n"
+msgstr ""
+
+msgid "  总共被淋上过{0}ml精液\n"
+msgstr ""
+
+msgid "  总共收集了{0}ml乳汁\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【指】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【足】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【膣】\n"
+msgstr ""
+
+msgid "  处女情况："
+msgstr ""
+
+msgid "保有处女\n"
+msgstr ""
+
+msgid "  未射入过精液\n"
+msgstr ""
+
+msgid "  总共被射入过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【肛】\n"
+msgstr ""
+
+msgid "保有后庭处女\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【宫】\n"
+msgstr ""
+
+msgid "  未怀孕过\n"
+msgstr ""
+
+msgid "  为博士生下了  "
+msgstr ""
+
+msgid "共{0}个孩子\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【尿】\n"
+msgstr ""
+
+msgid "  总共收集了{0}ml圣水\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【视觉系】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【触觉系】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【激素系】\n"
+msgstr ""
+
+msgid "[使用]"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n"
+"\n"
+msgstr ""
+
+msgid "射精，射出了"
+msgstr ""
+
+msgid "ml精液"
+msgstr ""
+
+msgid "大量射精，射出了"
+msgstr ""
+
+msgid "超大量射精，射出了"
+msgstr ""
