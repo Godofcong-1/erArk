@@ -3894,7 +3894,7 @@ def handle_dirty_reset(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.dirty = attr_calculation.get_dirty_zero()
+    character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOOR_CLOSE)

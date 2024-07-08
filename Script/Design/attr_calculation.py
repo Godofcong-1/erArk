@@ -171,21 +171,31 @@ def get_token_zero(token_dict) -> dict:
     return token_list
 
 
-def get_dirty_zero() -> dict:
+def get_dirty_zero(old_dirty_data: game_type.DIRTY) -> dict:
     """
     直接将初始污浊情况归0
     """
-    dirty_data = game_type.DIRTY()
+    dirty_data = old_dirty_data
 
     for body_part in game_config.config_body_part:
         body_text = game_config.config_body_part[body_part].name
-        now_list = [body_text,0,0,0]
-        dirty_data.body_semen.append(now_list)
+        # 如果已经有数据，则将当前数据归0
+        if len(dirty_data.body_semen) > body_part:
+            dirty_data.body_semen[body_part][1] = 0
+            dirty_data.body_semen[body_part][2] = 0
+        else:
+            now_list = [body_text,0,0,0]
+            dirty_data.body_semen.append(now_list)
 
     for clothing_type in game_config.config_clothing_type:
         cloth_text = game_config.config_clothing_type[clothing_type].name
-        now_list = [cloth_text,0,0,0]
-        dirty_data.cloth_semen.append(now_list)
+        # 如果已经有数据，则将当前数据归0
+        if len(dirty_data.cloth_semen) > clothing_type:
+            dirty_data.cloth_semen[clothing_type][1] = 0
+            dirty_data.cloth_semen[clothing_type][2] = 0
+        else:
+            now_list = [cloth_text,0,0,0]
+            dirty_data.cloth_semen.append(now_list)
 
     dirty_data.a_clean = 0
 
