@@ -251,6 +251,7 @@ def init_food_shop_data():
             if recipes.type in {4,8,9}:
                 continue
             new_food = cook(food_list, recipes_id, 5, "")
+            cache.rhodes_island.restaurant_data.setdefault(restaurant_id, {})
             cache.rhodes_island.restaurant_data[restaurant_id].setdefault(str(recipes_id), {})
             cache.rhodes_island.restaurant_data[restaurant_id][str(recipes_id)][new_food.uid] = new_food
             cook_index += 1
