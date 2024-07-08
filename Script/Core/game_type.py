@@ -510,6 +510,8 @@ class ACTION_INFO:
         """ 上次增加射精值的时间 """
         self.check_out_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色退房时间 """
+        self.eat_food_restaurant: int = 0
+        """ 要去吃饭的餐厅，见Restaurant.csv """
 
 
 class AUTHOR_FLAG:
@@ -889,6 +891,11 @@ class Rhodes_Island:
         # 贸易区
         self.love_hotel_room_lv: int = 0
         """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
+        self.restaurant_data: Dict[int, Tuple[str, Dict[UUID, Food]]] = {}
+        """
+        餐馆内贩卖的食物数据
+        餐馆id:食物名字:食物唯一id:食物对象
+        """
 
         # 制造加工区
         self.assembly_line: Dict[int, Tuple[int, set, int ,int]] = {}
@@ -1223,7 +1230,7 @@ class Cache:
         """ 本次update中已结束结算的npc """
         self.recipe_data: Dict[int, Recipes] = {}
         """ 菜谱数据 """
-        self.restaurant_data: Dict[str, Dict[UUID, Food]] = {}
+        self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
         """
         食堂内贩卖的食物数据
         食物名字:食物唯一id:食物对象

@@ -1256,8 +1256,8 @@ class StateMachine:
     """ 移动至快捷连锁披萨店 """
     MOVE_TO_SEVEN_CITIES_RESTAURANT = 592
     """ 移动至七城风情餐厅 """
-    MOVE_TO_KFC = 593
-    """ 移动至人气快餐开封菜 """
+    MOVE_TO_BURGER = 593
+    """ 移动至约翰老妈汉堡店 """
     MOVE_TO_HEALTHY_DINER = 594
     """ 移动至健康快餐店 """
     MOVE_TO_LUNGMEN_EATERY = 595

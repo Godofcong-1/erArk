@@ -46,7 +46,7 @@ class FoodShopPanel:
         while 1:
             py_cmd.clr_cmd()
             food_name_list = list(
-                cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items()
+                cooking.get_food_list_from_food_shop(self.now_panel).items()
             )
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
@@ -91,7 +91,7 @@ class FoodShopPanel:
         food_type -- 要切换的食物类型
         """
         self.now_panel = food_type
-        food_name_list = list(cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items())
+        food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel).items())
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
@@ -156,7 +156,7 @@ class SeeFoodListByFoodNameDraw:
     def see_food_shop_food_list(self):
         """按食物名字显示食物商店的食物列表"""
         title_draw = draw.TitleLineDraw(self.text, window_width)
-        now_food_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
+        now_food_list = [(self.cid, x) for x in cache.dining_hall_data[self.cid]]
         page_handle = panel.PageHandlePanel(
             now_food_list, BuyFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
         )
@@ -174,8 +174,8 @@ class SeeFoodListByFoodNameDraw:
         yrn = flow_handle.askfor_all(return_list)
         # if yrn == back_draw.return_text:
         #     break
-        cache.restaurant_data.setdefault(self.cid, {})
-        page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
+        cache.dining_hall_data.setdefault(self.cid, {})
+        page_handle.text_list = [(self.cid, x) for x in cache.dining_hall_data[self.cid]]
 
 
 class BuyFoodByFoodNameDraw:
@@ -209,7 +209,7 @@ class BuyFoodByFoodNameDraw:
         """ 按钮返回值 """
         # print(f"debug text = {text}")
         name_draw = draw.NormalDraw()
-        food_data: game_type.Food = cache.restaurant_data[self.cid][self.text]
+        food_data: game_type.Food = cache.dining_hall_data[self.cid][self.text]
         self.food_name = ""
         if isinstance(self.cid, str):
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
@@ -234,8 +234,8 @@ class BuyFoodByFoodNameDraw:
 
     def buy_food(self):
         """玩家购买食物"""
-        cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
-        del cache.restaurant_data[self.cid][self.text]
+        cache.character_data[0].food_bag[self.text] = cache.dining_hall_data[self.cid][self.text]
+        del cache.dining_hall_data[self.cid][self.text]
         character_data: game_type.Character = cache.character_data[0]
         character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
         character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD

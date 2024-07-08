@@ -591,6 +591,8 @@ class Recipes:
     """ 烹饪难度 """
     money: int
     """ 价格 """
+    restaurant: int
+    """ 餐馆id """
     introduce: str
     """ 说明介绍 """
 
@@ -632,6 +634,15 @@ class Resouce:
     """ 是否无法购买 """
     info: str
     """ 介绍信息 """
+
+
+class Restaurant:
+    """ 餐馆名字 """
+
+    cid: int
+    """ 餐馆id """
+    name: str
+    """ 餐馆名 """
 
 
 class Roleplay:

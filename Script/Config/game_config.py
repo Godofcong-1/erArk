@@ -143,6 +143,8 @@ config_birthplace: Dict[int, config_def.Birthplace] = {}
 """ 出生地配置 """
 config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
+config_restaurant: Dict[int, config_def.Restaurant] = {}
+""" 餐馆配置 """
 config_city: Dict[int, config_def.City] = {}
 """ 城市配置 """
 config_city_of_country: Dict[int, Set] = {}
@@ -443,6 +445,16 @@ def load_nation():
         now_tem = config_def.Nation()
         now_tem.__dict__ = tem_data
         config_nation[now_tem.cid] = now_tem
+
+
+def load_restaurant():
+    """载入餐馆数据"""
+    now_data = config_data["Restaurant"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Restaurant()
+        now_tem.__dict__ = tem_data
+        config_restaurant[now_tem.cid] = now_tem
 
 
 def load_city():
@@ -1329,6 +1341,7 @@ def init():
     load_race()
     load_birthplace()
     load_nation()
+    load_restaurant()
     load_city()
     load_recipes()
     load_season()

@@ -1,8 +1,8 @@
 {
-  "SceneName":"人气快餐开封菜",
+  "SceneName":"约翰老妈汉堡店",
   "InOutDoor":"In",
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"1",
-  "SceneTag":"KFC|Restaurant"
+  "SceneTag":"BURGER|Restaurant"
 }

@@ -850,8 +850,8 @@ def handle_npc_make_food_to_shop(
     food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
     food_list = {}
     new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
-    cache.restaurant_data.setdefault(str(recipes_id), {})
-    cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
+    cache.dining_hall_data.setdefault(str(recipes_id), {})
+    cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
     character_data.behavior.food_name = food_recipe.name
 
 

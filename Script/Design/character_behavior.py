@@ -85,8 +85,8 @@ def update_cafeteria():
     max_people = len(cache.npc_id_got)
     # food_judge = 1
     food_count = 0
-    for food_type in cache.restaurant_data:
-        food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
+    for food_type in cache.dining_hall_data:
+        food_list: Dict[UUID, game_type.Food] = cache.dining_hall_data[food_type]
         food_count += len(food_list)
     #     for food_id in food_list:
     #         food: game_type.Food = food_list[food_id]
@@ -99,7 +99,7 @@ def update_cafeteria():
     # if food_judge:
     # 食物数量不足且当前时间在饭点时，刷新食物
     if food_count <= max_people * 3 and handle_premise.handle_eat_time(0):
-        cooking.init_restaurant_data()
+        cooking.init_food_shop_data()
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
@@ -957,6 +957,7 @@ def update_new_day():
 
     # 非角色部分
     basement.update_base_resouce_newday()
+    cooking.init_food_shop_data() # 初始化餐厅数据
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()

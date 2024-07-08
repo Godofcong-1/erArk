@@ -219,8 +219,8 @@ in_restaurant,IN_RESTAURANT,地点_定位,在餐馆（含所有正餐餐馆）
 not_in_restaurant,NOT_IN_RESTAURANT,地点_定位,不在餐馆（含所有正餐餐馆）
 in_seven_cities_restaurant,IN_SEVEN_CITIES_RESTAURANT,地点_定位,在七城风情餐厅
 not_in_seven_cities_restaurant,NOT_IN_SEVEN_CITIES_RESTAURANT,地点_定位,不在七城风情餐厅
-in_kfc,IN_KFC,地点_定位,在人气快餐开封菜
-not_in_kfc,NOT_IN_KFC,地点_定位,不在人气快餐开封菜
+in_burger_joint,IN_BURGER,地点_定位,在约翰老妈汉堡店
+not_in_burger_joint,NOT_IN_BURGER,地点_定位,不在约翰老妈汉堡店
 in_healthy_diner,IN_HEALTHY_DINER,地点_定位,在健康快餐店
 not_in_healthy_diner,NOT_IN_HEALTHY_DINER,地点_定位,不在健康快餐店
 in_lungmen_eatery,IN_LUNGMEN_EATERY,地点_定位,在龙门食坊

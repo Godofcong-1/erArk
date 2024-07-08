@@ -1946,10 +1946,10 @@ def handle_not_in_teahouse(character_id: int) -> int:
     return 1
 
 
-@add_premise(constant_promise.Premise.IN_KFC)
-def handle_in_kfc(character_id: int) -> int:
+@add_premise(constant_promise.Premise.IN_BURGER)
+def handle_in_burger_joint(character_id: int) -> int:
     """
-    校验角色是否在人气快餐开封菜中
+    校验角色是否在约翰老妈汉堡店中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1959,20 +1959,20 @@ def handle_in_kfc(character_id: int) -> int:
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "KFC" in now_scene_data.scene_tag:
+    if "BURGER" in now_scene_data.scene_tag:
         return 1
     return 0
 
-@add_premise(constant_promise.Premise.NOT_IN_KFC)
-def handle_not_in_kfc(character_id: int) -> int:
+@add_premise(constant_promise.Premise.NOT_IN_BURGER)
+def handle_not_in_burger_joint(character_id: int) -> int:
     """
-    校验角色是否不在人气快餐开封菜中
+    校验角色是否不在约翰老妈汉堡店中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if handle_in_kfc(character_id):
+    if handle_in_burger_joint(character_id):
         return 0
     return 1
 
