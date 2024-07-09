@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QDialog, QTextEdit, QVBoxLayout, QSizePolicy, QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QLabel, QGridLayout, QMenu, QCheckBox, QComboBox
+from PySide6.QtWidgets import QDialog, QTextEdit, QVBoxLayout, QSizePolicy, QScrollArea, QPushButton, QLabel, QComboBox
 from PySide6.QtGui import QFontMetrics, QFont, QFontDatabase
 import cache_control, game_type
 import json
@@ -199,8 +199,9 @@ def show_talk_introduce():
     text += "  例，【玩家】对【1000好感以上的】【阿米娅】使用【聊天】时文本为【你好】。\n"
     text += "  此时，指令=[聊天]、角色id=[1]（阿米娅id）、前提=[玩家触发+交互对象好感＞1000]、文本内容=[你好]。\n\n"
     text += "\n常见问题：\n"
-    text += "\n①笔记本的系统缩放设置导致编辑器的窗口或UI错误时，右键点击→属性→兼容性→更改高DPI设置→勾选替代高DPI缩放行为\n"
-    text += "\n②前提之间是[逻辑和]关系，即一个条目中有两条前提AB时，是既要满足A又要满足B。\n   目前因为技术问题，暂时无法直接实现其他的逻辑关系。比如若想实现[逻辑或]，即满足前提A或满足前提B，则只能建立两条不同的条目，分别为前提A和前提B。\n"
+    text += "\n①触发者和交互对象是什么意思？\n  因为有AI的存在，所以指令除了玩家会使用外，AI也可以用，此时的触发者就不是玩家而是NPC。\n  同理，交互对象就是指令的对象，比如玩家对NPC使用指令，那么玩家就是触发者，NPC就是交互对象。NPC对玩家使用指令，NPC就是触发者，玩家就是交互对象。\n  除此之外，也有交互对象就是触发者本身的情况，常见的比如移动、解手、睡觉、自慰、高潮等，以及没有对象时的独自工作、独自娱乐等。\n\n  综合来说，可以排列组合为以下五种情况：\n  1.玩家对玩家自己触发  2.玩家对NPC触发  3.NPC对玩家触发  4.NPC对NPC自己触发  5.NPC对其他NPC触发\n  对于普通角色口上来说，1和5两种情况比较少见，所以只用考虑其他三种情况即可。\n"
+    text += "\n②笔记本的系统缩放设置导致编辑器的窗口或UI错误时，右键点击→属性→兼容性→更改高DPI设置→勾选替代高DPI缩放行为\n"
+    text += "\n③前提之间是[逻辑和]关系，即一个条目中有两条前提AB时，是既要满足A又要满足B。\n   目前因为技术问题，暂时无法直接实现其他的逻辑关系。比如若想实现[逻辑或]，即满足前提A或满足前提B，则只能建立两条不同的条目，分别为前提A和前提B。\n"
     text += "\n\n\n（如果你真的需要理解的话，再来看下面这段）\n\n详细的口上逻辑：\n"
     text += "  ①在玩家/NPC使用一个指令时，会搜寻【本角色和通用角色的】【本指令下的】所有口上（如果是对他人使用，则还会搜索【对象角色的】），这里将搜到的所有口上定义为A。\n"
     text += "  ②遍历A里每个口上的前提，查看是否满足条件。如果某一条口上的所有前提都被满足，则根据前提量计一个权重大小，该口上进入选择池。这里将选择池里的所有口上定义为B，显然，B是A的一个子集。\n"
@@ -211,10 +212,15 @@ def show_talk_introduce():
     font_metrics = QFontMetrics(text_edit.font())
     text_edit.setFixedWidth(1000)
     line_count = text.count('\n') + 1
-    text_edit.setFixedHeight(font_metrics.lineSpacing() * line_count * 1.5)
+    text_edit.setFixedHeight(font_metrics.lineSpacing() * line_count * 1.2)
+
+    scroll_area = QScrollArea()  # 创建滚动区域
+    scroll_area.setFixedWidth(1020)
+    scroll_area.setFixedHeight(600)
+    scroll_area.setWidget(text_edit)  # 将text_edit设置为滚动区域的子部件
 
     layout = QVBoxLayout(dialog)
-    layout.addWidget(text_edit)
+    layout.addWidget(scroll_area)
     dialog.exec_()
 
 
