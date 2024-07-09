@@ -27,6 +27,7 @@ def init_recipes():
             recipe_data.type,
         )
         cache.recipe_data[recipe_id] = recipe
+    return cache.recipe_data
 
 
 def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str, type: int) -> Recipes:

@@ -14,7 +14,7 @@ from Script.Core import (
     io_init,
 )
 from Script.Config import normal_config, game_config, character_config
-from Script.Design import attr_calculation, clothing, character_handle, basement
+from Script.Design import attr_calculation, character_handle
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -130,6 +130,7 @@ def input_load_save(save_id: str):
     Keyword arguments:
     save_id -- 存档id
     """
+    from Script.Design import basement, cooking
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
     new_cache.rhodes_island = basement.get_base_zero()
@@ -200,6 +201,8 @@ def input_load_save(save_id: str):
         # 没有记录的设施改为初始关闭
         if all_cid not in loaded_dict["rhodes_island"].facility_open:
             loaded_dict["rhodes_island"].facility_open[all_cid] = False
+    # 更新食谱
+    loaded_dict["recipe_data"] = cooking.init_recipes()
 
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()
@@ -386,6 +389,8 @@ def update_chara_cloth(value, tem_character):
     Keyword arguments:
     value -- 角色数据
     """
+    from Script.Design import clothing
+
     # 跳过玩家
     if value.cid == 0:
         return 0
