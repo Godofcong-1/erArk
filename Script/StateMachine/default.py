@@ -570,7 +570,7 @@ def character_move_to_burger_joint(character_id: int):
     character_id -- 角色id
     """
     to_target = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["BURGER"])
+        random.choice(constant.place_data["Burger"])
     )
     general_movement_module(character_id, to_target)
 

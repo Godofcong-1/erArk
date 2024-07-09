@@ -6392,8 +6392,16 @@ msgstr ""
 msgid "生菜汉堡（芙蓉健康餐）"
 msgstr ""
 
+#: .\data\csv\Recipes.csv:12
+msgid "不加肉类、芝士、酸黄瓜的生菜汉堡"
+msgstr ""
+
 #: .\data\csv\Recipes.csv:13
 msgid "混合沙拉（芙蓉健康餐）"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:13
+msgid "用十二种蔬菜混合制成的沙拉"
 msgstr ""
 
 #: .\data\csv\Recipes.csv:14
@@ -6414,6 +6422,10 @@ msgstr ""
 
 #: .\data\csv\Recipes.csv:16
 msgid "干蒸兽肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:16
+msgid "肉质鲜嫩，肥而不腻，香气四溢，入口即化。"
 msgstr ""
 
 #: .\data\csv\Recipes.csv:17
@@ -7040,19 +7052,411 @@ msgstr ""
 msgid "让人丧失贪吃欲望的盒饭。"
 msgstr ""
 
+#: .\data\csv\Recipes.csv:109
+msgid "汉堡甜甜圈套餐"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:109
+msgid "甜甜圈的甜蜜与汉堡的咸香，是一种奇妙的搭配。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:110
+msgid "玻利瓦尔咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:110
+msgid "少数被冠以产地名的特级咖啡，咖啡豆是许多玻利瓦尔大城市里畅销的伴手礼，内销和出口的需求量极大。"
+msgstr ""
+
 #: .\data\csv\Recipes.csv:111
+msgid "黑咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:111
+msgid "无糖咖啡，是咖啡的原始味道，也是最纯粹的味道。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:112
+msgid "火山咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:112
+msgid "火山咖啡的独特风味来自于汐斯塔火山灰土壤的独特气候，是一种稀有的咖啡，口感浓郁，香味浓烈。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:113
+msgid "过萃咖啡液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:113
+msgid "过萃的地底黑咖啡。提神效果极佳。可以代替糖浆。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:114
+msgid "奶霜华夫饼塔"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:114
+msgid "华夫饼的香甜与奶霜的绵蜜，是一种奇妙的搭配。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:116
+msgid "蟹肉碎拌饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:116
+msgid "热腾腾的杂粮中加入了岩壳蟹肉，吃起来朴素中略带鲜味。好吃是好吃，但......究竟是谁第一个决定尝试食用岩壳蟹的呢？"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:117
+msgid "调味干粮"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:117
+msgid "较朴素的速食食品，经过了调味，吃起来还挺适口。据说未经调味的初版十分难以下咽，曾有人评价为不是“食用”，而是“服用”。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:118
+msgid "松枝熏肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:118
+msgid "经过松枝熏烤，整块肉带上了浓郁的松香滋味，表皮油润，内里香醇。只需切下几块放在热腾腾的饭上，熏肉的香气就能充满整间屋子，令人陶醉。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:119
+msgid "鲜切蟹生"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:119
+msgid "制作过程似乎只是切了几刀，过了下水，就这样端了出来。评价两极分化的一道菜肴，有人吃完之后感觉自已仿佛长出了和岩壳蟹一样坚硬的外壳。可能是过敏反应。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:120
+msgid "真空冷制肉脍"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:120
+msgid "已经预制好的兽肉和杂粮，制作流程均在低温下完成，极大限度地保证了食材的新鲜。只需要简单加热，就是一道美味。感谢科技！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:121
+msgid "炭烤兽肉卷饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:121
+msgid "每个国家的人都有他们喜欢的独特吃法，可以随意搭配尝试。但如果做出类似在炎国人眼前往饼里卷小笼包这种行为，可能会被追着打。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:122
+msgid "猎人饭包"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:122
+msgid "捕捉到什么猎物，就使用什么肉炙烤所得，简单方便，自由度高。谁的饭包最大，谁的捕猎技巧就最高。不过为了面子，往里面多塞一点谷物也是可以的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:123
+msgid "超级厚馅饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:123
+msgid "萨尔贡当地传统主食之一，馅料是浓厚香醇的兽肉，深受当地人喜爱。大，大，大！越大越好！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:124
+msgid "鲜萃凝方体"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:124
+msgid "由肉类提纯出各类人体所需的成分后精制的凝方体，营养丰富。但它的外表和名字一样，难以让人产生食欲。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:125
+msgid "香煎杂肉饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:125
+msgid "不同种类的肉混合成独特的美味，颜色丰富，让人难以忘怀。一勺挖下去，热气蒸腾，从里面翻找出最喜欢的肉是这道菜的一大乐趣。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:126
+msgid "脱水增味肉干"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:126
+msgid "将食材脱水处理，是人们保存食物最原始也最简单方便的方法。虽然只是薄薄的几片，看起来很没有满足感，但实际上热量很高，完全可以轻松地吃饱。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:127
+msgid "低温鲜烹炙肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:127
+msgid "低温慢煮而成的食物，为了增香，外表还经过了微微的炙烤。很难从外表看出它来自何种动物，不过加热之后味道令人满意，这就足够了，毕竟填饱肚子才是最重要的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:128
+msgid "蟹壳蒸饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:128
+msgid "直接在蟹壳中铺满杂粮蒸熟制成的盖饭，萨尔贡部落民餐桌上最常见的食物。移动城市中的居民偶尔也会尝试这道菜，并为萨尔贡帝国的饮食文化而感到自豪。但很少有部落民会认同这一点。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:129
+msgid "提取脂凝晶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:129
+msgid "食品科技的智慧结晶，食品现代化的代表，营养丰富。短时间内增加进食满足感和提供足量热量都离不开这种食品科技产品。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:130
+msgid "浓缩羹原液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:130
+msgid "提取肉类鲜味和营养物质后高温浓缩而成的原液，营养丰富。本品为浓缩液，不可直接食用。住所离医院较近的人也不要尝试。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:131
+msgid "高压复焗浓汤"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:131
+msgid "经超长时间高压烹制的极鲜浓汤，被料理机固化重组后制成的汤酥。一口下去，仿佛吃进去了一片云朵，一阵热风。汤鲜浓郁，入口即化。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:132
+msgid "生制代餐粗粉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:132
+msgid "为了保证食材中最佳原料风味的体现，制作者只使用了杂粮来搭配它。低纤维、高热量、易饱腹，从不会出现在现代移动城市中的商场的货架上，在荒野的小商店中则十分抢手。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:133
+msgid "脆肉薯条转醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:133
+msgid "选取荒地上随处可见的肉作为原料，和粗细不一的薯条一起在油锅中煎炸而成。移动城市的居民们会抱怨它过于油腻，而需要干体力活的荒地人则十分享受这种美食。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:134
+msgid "蟹醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:134
+msgid "为了展现出岩壳蟹的鲜味和营养，其中还加入了很少见的高级肉类。据说它还努力地模仿了岩壳蟹肉的口感，但似乎没人发现。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:135
+msgid "鲜味汤凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:135
+msgid "可直接食用的凝胶，室温下不会融化，口感软弹，营养丰富。有些科技食物会为了追求高级感而失去食物的本味，它就是一个很好的例子。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:136
+msgid "转质壳酯块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:136
+msgid "顶级食材的威力在这里发挥完全，只需小小一块，登山者也可以获得一整天运动的能量。小心区分它和糖块。虽然吃错了不会造成任何危及生命的后果，但毕竟它的热量很高，非常高。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:137
+msgid "复合精制肉酱"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:137
+msgid "将多种肉类复合制成的肉酱，在添加完相应的营养剂后，不论是口感还是色香味，都有了明显的提升。任何时候都能食用，科技使它永远不会过期。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:138
+msgid "碳水脂肪聚块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:138
+msgid "将人体所需的蛋白质、脂肪、碳水按照比例调配而成，也可以根据食用者所需自由搭配，制作简单，方便易携。探险者的背包中常见的食物。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:139
+msgid "味纯聚素粒"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:139
+msgid "研究者在食品科技中剑走偏锋，做出了外形异常好看的素粒，据说是为了食用者心情愉悦。但面对饥饿和快速补充能量的需求，似乎很少有食用者真的注意到了这一点。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:140
+msgid "莱塔尼亚浓汤鲜萃"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:140
+msgid "由当下最时兴的鲜萃技术制作而成，只有小小一口，但浓香醉人。莱塔尼亚人执着于为不同口味的浓汤搭配不同的音乐，据说曾有诗人专门为此创作诗歌。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:141
+msgid "鲜能剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:141
+msgid "做出鲜能剂的老先生是一位味觉失灵的大厨，他说自己幸福的秘诀是观察食客的微笑，从而确认自己的食物能够满足他们。温暖的故事。但他新品研究所的学生们不这么觉得。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:142
+msgid "极温速烹兽肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:142
+msgid "刚刚做好就会被送入机器迅速降温，表皮结满冰晶，内里仍旧炙热，带来极限口感体验。似乎不降温直接吃也是一种美妙的体验。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:143
+msgid "东国纳米割烹"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:143
+msgid "选用当季的新鲜食材，配合季节变换，通过菜肴传达禅意，给人绝对的视觉享受。如果制作这席菜肴的是专业东国厨师的话，或许美丽和美味还是可以兼得的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:144
+msgid "维多利亚皇家凝方"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:144
+msgid "食用时请遵守绅士淑女进餐礼仪，好保证你在此刻对于食物的享受。维多利亚人为他们的文化而自豪，任何时候都不愿低头。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:145
+msgid "炎国山水原液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:145
+msgid "云山衔一梦。呼......酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:146
+msgid "卡西米尔骑士补充剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:146
+msgid "喝下去以后感觉精神百倍。之前有商家说这就是耀骑士赛前喝的东西，人们蜂拥而上。酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:147
+msgid "哥伦比亚分子胶囊"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:147
+msgid "莱茵生命产品，改变食材分子结构再重新组合而成，外壳滋味丰富，食用后可获得极强的饱腹感，在获得满足的同时降低食物的摄取量。非常利于身体健康，但不利于心灵健康。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:148
+msgid "拉特兰圣音汤醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:148
+msgid "纯净的外表让人安静下来，但里面的味道让人脑袋在一瞬间出现了有些奇怪的画面——是爆炸？！而且很甜，非常甜！不应该是汤吗？"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:149
+msgid "低压干制精肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:149
+msgid "撕开包装，里面就是咸香适口的干肉。肉干制作的工艺十分复杂，合适的温度湿度缺一不可，制作成功后能保存数年之久。就是……有点太硬了！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:150
+msgid "米诺斯诗歌凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:150
+msgid "据说最开始是某位祭司在听完一首长篇叙事诗后突发灵感所作，品尝后让人能够真切感悟到她当时的心情。不好，里面似乎加了酒，已经开始头晕了！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:151
+msgid "固态源溏心蛋补剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:151
+msgid "从混杂着胡椒、肉糜还有酒的溏心蛋中萃取的液体，是当地最常见菜肴的便携版。在野外，这道菜都是在被太阳直射的固态源上烹制的。为了还原这一工艺，移动城市的许多店家配备了专业的阳光聚焦设备。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:152
+msgid "河鳞水果凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:152
+msgid "烟熏的河鳞和清爽的水果在这里相逢，简简单单。对于移动城市的居民来说，无论新鲜的河鳞还是清爽的水果都是昂贵的食材。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:153
+msgid "炎国荒地菜肉酮"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:153
+msgid "切成薄片的兽肉与各种生长在荒地上的野菜一起翻炒，是炎国人家中常见的菜肴。菜肉酮是从中提取的精华。这道菜里应该用什么样的肉、什么样的菜，甜的还是咸的，在炎国都是极具争议性的话题。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:154
+msgid "音乐速烤萃取酯"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:154
+msgid "使用音乐源石技艺对肉类进行烹饪而得到的酯类。在紧急状态下，驱动源石技艺处理食材也是一种可行的方法。但精益求精的莱塔尼亚人把烹饪过程发展成了一门表演艺术。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:155
+msgid "哥伦比亚炮灰羽"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:155
+msgid "哥伦比亚雇佣兵中流传的菜肴，制作方式非常粗暴——将羽兽肉塞进“安全”的源石堆里炙烤而成。刚入口时有些微妙，但羽兽肉的味道会在喉舌之间久久萦绕。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:156
+msgid "香肠豆泥聚块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:156
+msgid "丝滑的豆泥和香气四溢的香肠在口味上相得益彰，让人百吃不厌，美中不足的是，这只是聚块。因为便于携带和贮藏，广受荒地旅者好评。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:157
+msgid "部族狂欢晚宴"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:157
+msgid "篝火！舞蹈！烤得金黄渗出油脂的整只猎物！雨林部族最高级别的款待！一人吃完一整头，你就是今天的部族英雄！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:158
+msgid "中央谷地混合烤肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:158
+msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制后在专门的塔中晾干，不同部位分开处理，经过多次刷油烧烤而成，入口毫无焦煳味，平时也难得一见。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:161
 msgid "加料咖啡"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:111
+#: .\data\csv\Recipes.csv:161
 msgid "一杯刚刚冲泡好的咖啡，带着些许的香气，只是里面好像加了一些东西"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:113
+#: .\data\csv\Recipes.csv:163
 msgid "鲜母乳"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:113
+#: .\data\csv\Recipes.csv:163
 msgid "新鲜的母乳，味道醇美，营养丰富，可以直接饮用或用来制作各种乳制品。"
 msgstr ""
 

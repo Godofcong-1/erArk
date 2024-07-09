@@ -4658,7 +4658,7 @@ msgstr ""
 
 #: .\Script\UI\Panel\food_bag_panel.py:121
 msgid ""
-"  你现在不饿，无法吃东西。\n"
+"  现在不饿，无法吃东西。\n"
 "\n"
 msgstr ""
 

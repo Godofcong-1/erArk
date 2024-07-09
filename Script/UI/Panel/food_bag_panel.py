@@ -118,7 +118,7 @@ class FoodBagPanel:
             now_draw = draw.NormalDraw()
             now_draw.text = _("○正常调味食物\n")
             if handle_premise.handle_hunger_le_79(0):
-                now_draw.text += _("  你现在不饿，无法吃东西。\n\n")
+                now_draw.text += _("  现在不饿，无法吃东西。\n\n")
             now_draw.width = 1
             now_draw.draw()
             self.handle_panel_normal.draw()

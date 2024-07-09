@@ -643,6 +643,8 @@ class Restaurant:
     """ 餐馆id """
     name: str
     """ 餐馆名 """
+    tag_name: str
+    """ 餐馆标签 """
 
 
 class Roleplay:
