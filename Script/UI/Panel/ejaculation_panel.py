@@ -314,22 +314,15 @@ class Ejaculation_Panel:
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
-        clothing = {}
-
-        for clothing_type in game_config.config_clothing_type:
-            if len(target_data.cloth.cloth_wear[clothing_type]):
-                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
 
         # 不插在对应部位，则无法射在对应部位
-        if body_part_cid == 6 and not handle_premise.handle_last_cmd_sex(0):
+        if body_part_cid == 6 and not (handle_premise.handle_penis_in_t_vagina(0) or handle_premise.handle_penis_in_t_womb(0)):
             return False
-        elif body_part_cid == 7 and not handle_premise.handle_last_cmd_w_sex(0):
+        elif body_part_cid == 7 and not handle_premise.handle_penis_in_t_womb(0):
             return False
-        elif body_part_cid == 8 and not handle_premise.handle_last_cmd_a_sex(0):
+        elif body_part_cid == 8 and not handle_premise.handle_penis_in_t_anal(0):
             return False
-        elif body_part_cid == 9 and not handle_premise.handle_last_cmd_u_sex(0):
+        elif body_part_cid == 9 and not handle_premise.handle_penis_in_t_nrethral(0):
             return False
         elif body_part_cid == 15:
             return False
@@ -340,6 +333,15 @@ class Ejaculation_Panel:
             return False
         elif body_part_cid == 14 and not target_data.talent[111]:
             return False
+
+        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
+        clothing = {}
+
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
+
         # 对应部位有衣服，则无法射在对应部位
         if isinstance(body_cloth[body_part_cid], list):
             def cloth_list(bbc):
