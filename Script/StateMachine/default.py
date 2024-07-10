@@ -2,7 +2,7 @@ from types import FunctionType
 import random
 from Script.Settle import default
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise, game_time
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -212,14 +212,22 @@ def character_move_to_kitchen(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOODSHOP)
 def character_move_to_foodshop(character_id: int):
     """
-    移动至食物商店（取餐区）
+    移动至食物商店
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    to_foodshop = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Food_Shop"])
-    )
+    # 没有指定餐厅id的就去食堂，有指定餐厅id的就去指定的餐厅
+    if character_data.action_info.eat_food_restaurant == -1:
+        to_foodshop = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Take_Food_Area"])
+        )
+    else:
+        restaurant_id = character_data.action_info.eat_food_restaurant
+        place_tag = game_config.config_restaurant[restaurant_id].tag_name
+        to_foodshop = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data[place_tag])
+        )
     general_movement_module(character_id, to_foodshop)
 
     # 如果和玩家位于同一地点，则输出提示信息
@@ -1992,40 +2000,87 @@ def character_start_eat_food(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import cooking
+
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.eat_food = 1
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.sp_flag.eat_food = 1
+    # 随机三分之一的几率去食堂，其他几率去美食街
+    if random.randint(1, 3) == 1:
+        character_data.action_info.eat_food_restaurant = -1
+    else:
+        # 一半几率去自己出身地的餐厅
+        if random.randint(1, 2) == 1:
+            restaurant_id = cooking.find_character_birthplace_restaurant(character_id)
+            if restaurant_id != -1:
+                character_data.action_info.eat_food_restaurant = restaurant_id
+        else:
+            # 随机选一个餐厅
+            restaurant_dict = game_config.config_restaurant
+            restaurant_id = random.choice(list(restaurant_dict.keys()))
+            character_data.action_info.eat_food_restaurant = restaurant_id
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)
 def character_buy_rand_food_at_foodshop(character_id: int):
     """
-    在取餐区购买随机食物
+    在食物商店购买随机食物
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import cooking
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     new_food_list = []
-    for food_id in cache.dining_hall_data:
-        if not len(cache.dining_hall_data[food_id]):
-            continue
-        for food_uid in cache.dining_hall_data[food_id]:
-            now_food: game_type.Food = cache.dining_hall_data[food_id][food_uid]
-            # if now_food.eat:
-            new_food_list.append(food_id)
-            break
-    if not len(new_food_list):
-        return
-    now_food_id = random.choice(new_food_list)
-    now_food = cache.dining_hall_data[now_food_id][
-        random.choice(list(cache.dining_hall_data[now_food_id].keys()))
-    ]
-    character_data.food_bag[now_food.uid] = now_food
-    del cache.dining_hall_data[now_food_id][now_food.uid]
+    # 在食堂购买
+    if character_data.action_info.eat_food_restaurant == -1:
+        # 获取所有食物id
+        for food_id in cache.dining_hall_data:
+            if not len(cache.dining_hall_data[food_id]):
+                continue
+            for food_uid in cache.dining_hall_data[food_id]:
+                now_food: game_type.Food = cache.dining_hall_data[food_id][food_uid]
+                # if now_food.eat:
+                new_food_list.append(food_id)
+                break
+        # 如果没有食物则刷新食物并返回，等待下次购买
+        if not len(new_food_list):
+            cooking.init_food_shop_data(-1)
+            return
+        # 随机选一个食物id
+        now_food_id = random.choice(new_food_list)
+        now_food = cache.dining_hall_data[now_food_id][
+            random.choice(list(cache.dining_hall_data[now_food_id].keys()))
+        ]
+        # 加入背包
+        character_data.food_bag[now_food.uid] = now_food
+        # 删除食堂中的食物
+        del cache.dining_hall_data[now_food_id][now_food.uid]
+    # 在指定餐厅购买
+    else:
+        restaurant_id = character_data.action_info.eat_food_restaurant
+        for food_id in cache.rhodes_island.restaurant_data[restaurant_id]:
+            if not len(cache.rhodes_island.restaurant_data[restaurant_id][food_id]):
+                continue
+            for food_uid in cache.rhodes_island.restaurant_data[restaurant_id][food_id]:
+                now_food: game_type.Food = cache.rhodes_island.restaurant_data[restaurant_id][food_id][food_uid]
+                # if now_food.eat:
+                new_food_list.append(food_id)
+                break
+        if not len(new_food_list):
+            cooking.init_food_shop_data(restaurant_id)
+            return
+        now_food_id = random.choice(new_food_list)
+        now_food = cache.rhodes_island.restaurant_data[restaurant_id][now_food_id][
+            random.choice(list(cache.rhodes_island.restaurant_data[restaurant_id][now_food_id].keys()))
+        ]
+        character_data.food_bag[now_food.uid] = now_food
+        del cache.rhodes_island.restaurant_data[restaurant_id][now_food_id][now_food.uid]
+
 
     # 记录食物名字
     food_recipe: game_type.Recipes = cache.recipe_data[now_food.recipe]
@@ -2065,6 +2120,7 @@ def character_eat_rand_food(character_id: int):
     choice_food_id = random.choice(now_food_list)
     character_data.behavior.target_food = character_data.food_bag[choice_food_id]
     character_data.state = constant.CharacterStatus.STATUS_EAT
+    character_data.action_info.eat_food_restaurant = -1
 
     # 记录食物名字
     food_data: game_type.Food = character_data.food_bag[choice_food_id]

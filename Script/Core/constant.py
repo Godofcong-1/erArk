@@ -1044,7 +1044,7 @@ class StateMachine:
     START_EAT_FOOD = 75
     """ 进入要取餐状态 """
     BUY_RAND_FOOD_AT_FOODSHOP = 76
-    """ 在取餐区购买随机食物 """
+    """ 在食物商店购买随机食物 """
     EAT_BAG_RAND_FOOD = 77
     """ 食用背包内随机食物 """
     START_SLEEP = 78
@@ -1205,7 +1205,7 @@ class StateMachine:
     MOVE_TO_KITCHEN = 521
     """ 移动至厨房 """
     MOVE_TO_FOODSHOP = 522
-    """ 移动至食物商店（取餐区） """
+    """ 移动至食物商店 """
     MOVE_TO_DINING_HALL = 523
     """ 移动至食堂 """
     MOVE_TO_CLASSIC_MUSIC_ROOM = 524

@@ -926,10 +926,42 @@ def handle_not_in_dining_hall(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_TAKE_FOOD)
+def handle_in_take_food(character_id: int) -> int:
+    """
+    校验角色是否在取餐区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Take_Food_Area" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_FOOD_SHOP)
+def handle_not_in_food_shop(character_id: int) -> int:
+    """
+    校验角色是否不在取餐区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_take_food(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_FOOD_SHOP)
 def handle_in_food_shop(character_id: int) -> int:
     """
-    校验角色是否在食物商店（取餐区）
+    校验角色是否在食物商店
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -947,13 +979,53 @@ def handle_in_food_shop(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_IN_FOOD_SHOP)
 def handle_not_in_food_shop(character_id: int) -> int:
     """
-    校验角色是否不在食物商店（取餐区）
+    校验角色是否不在食物商店
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     if handle_in_food_shop(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_AI_FOOD_SHOP)
+def handle_in_ai_food_shop(character_id: int) -> int:
+    """
+    在AI要去吃饭的食物商店
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    # 去食堂的
+    if character_data.action_info.eat_food_restaurant == -1:
+        if handle_in_take_food(character_id):
+            return 1
+    # 去指定餐厅的
+    else:
+        restaurant_id = character_data.action_info.eat_food_restaurant
+        place_tag = game_config.config_restaurant[restaurant_id].tag_name
+        if place_tag in now_scene_data.scene_tag:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_AI_FOOD_SHOP)
+def handle_not_in_food_shop(character_id: int) -> int:
+    """
+    校验角色是否不在食物商店
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_ai_food_shop(character_id):
         return 0
     return 1
 
@@ -19113,6 +19185,35 @@ def handle_pl_action_food_medicine(character_id: int) -> int:
     if character_data.behavior.food_seasoning >= 100:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.AI_EAT_IN_RESTAURANT)
+def handle_ai_eat_in_restaurant(character_id: int) -> int:
+    """
+    AI要在餐厅吃饭
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.action_info.eat_food_restaurant >= 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.AI_NOT_EAT_IN_RESTAURANT)
+def ai_not_eat_in_restaurant(character_id: int) -> int:
+    """
+    AI不在餐厅吃饭(即在食堂吃)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_ai_eat_in_restaurant(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.T_BABY_1)

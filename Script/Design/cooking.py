@@ -213,33 +213,42 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
     return create_food("", recipe_id, cook_level, maker)
 
 
-def init_food_shop_data():
-    """初始化食物商店内的食物数据"""
+def init_food_shop_data(update_restaurant_id: int = -2):
+    """
+    初始化食物商店内的食物数据\n
+    Keyword arguments:\n
+    update_restaurant_id -- 餐馆id，默认为-2，如果不是-2则仅刷新对应id的餐馆的食物\n
+    """
     cache.dining_hall_data = {}
     max_people = len(cache.npc_id_got)
     # 初始化食堂内的食物
-    cook_index = 0
-    while 1:
-        recipes_id_list = list(cache.recipe_data.keys())
-        recipes_id = random.choice(recipes_id_list)
-        food_list = {}
-        recipes = cache.recipe_data[recipes_id]
-        # 难度上无法制作的菜谱直接跳过
-        if recipes.difficulty == 999:
-            continue
-        # 无法制作的种类的菜谱直接跳过
-        if recipes.type in {4,8,9}:
-            continue
-        # 随机3~7的烹饪技能等级
-        cook_level = random.randint(3, 7)
-        new_food = cook(food_list, recipes_id, cook_level, "")
-        cache.dining_hall_data.setdefault(str(recipes_id), {})
-        cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
-        cook_index += 1
-        if cook_index >= max_people*3:
-            break
+    if update_restaurant_id in [-1,-2]:
+        cook_index = 0
+        while 1:
+            recipes_id_list = list(cache.recipe_data.keys())
+            recipes_id = random.choice(recipes_id_list)
+            food_list = {}
+            recipes = cache.recipe_data[recipes_id]
+            # 难度上无法制作的菜谱直接跳过
+            if recipes.difficulty == 999:
+                continue
+            # 无法制作的种类的菜谱直接跳过
+            if recipes.type in {4,8,9}:
+                continue
+            # 随机3~7的烹饪技能等级
+            cook_level = random.randint(3, 7)
+            new_food = cook(food_list, recipes_id, cook_level, "")
+            cache.dining_hall_data.setdefault(str(recipes_id), {})
+            cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
+            cook_index += 1
+            if cook_index >= max_people*3:
+                break
     # 初始化餐馆内的食物
     for restaurant_id in game_config.config_restaurant:
+        # 仅刷新指定id的餐馆
+        if update_restaurant_id >= 0:
+            if restaurant_id != update_restaurant_id:
+                continue
         food_list = {}
         cook_index = 0
         while 1:
@@ -489,3 +498,34 @@ def judge_accept_special_seasoning_food(character_id: int):
                 return 0
 
     return 0
+
+
+def find_character_birthplace_restaurant(character_id: int) -> int:
+    """
+    寻找干员出身地的餐厅
+    Keyword arguments:
+    character_id -- 干员id
+    Return arguments:
+    int -- 餐厅id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 莱茵生命的选哥伦比亚咖啡馆，其他哥伦比亚的选约翰老妈汉堡店
+    if character_data.relationship.birthplace == 4:
+        if character_data.relationship.nation == 42:
+            return 2
+        return 4
+    # 维多利亚的选七城风情餐厅
+    elif character_data.relationship.birthplace == 13:
+        return 3
+    # 龙门的选龙门食坊，其他炎国的选山城茶馆
+    elif character_data.relationship.birthplace == 17:
+        if character_data.relationship.nation in [13,14,15]:
+            return 6
+        return 1
+    # 拉特兰的选瓦莱丽蛋糕店
+    elif character_data.relationship.birthplace == 7:
+        return 0
+    # 叙拉古的选快捷连锁披萨店
+    elif character_data.relationship.birthplace == 16:
+        return 7
+    return -1
