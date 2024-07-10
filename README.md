@@ -3,6 +3,8 @@ erArk
 era-明日方舟（目前）
 ====
 
+Read this in [English](README_en.md)
+
 介绍
 ----
 R18游戏，艹干员，纯爱向，无牛无G。\
