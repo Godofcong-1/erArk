@@ -86,7 +86,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 elif now_type == "float":
                     row[k] = float(row[k])
                 if k == "cid" and talk:
-                    row[k] = file_id.split("-")[0] + row[k]
+                    row[k] = file_id + row[k]
                 if k == "talk_id" and talk:
                     row[k] = file_id.split("-")[0] + row[k]
                 if k == "cid" and target:
