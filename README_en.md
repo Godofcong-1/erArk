@@ -70,7 +70,7 @@ Font
 ----
 The game interface heavily relied on Sarasa Mono SC font, attached at Releases \
 The system will fallback to default font if the font above is absent, which might not reach the target design effect \
-Git link of the font[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
+Git link of the font [Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
 Can change the font via config.ini-> font, lso might not reach the target design effect \
 
 Localization

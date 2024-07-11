@@ -212,70 +212,82 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
 
     # 首先判定是否有高优先级的行动
     type_0_target_list = game_config.config_target_type_index[0]
-    target, weight, judge = search_target(character_id, type_0_target_list, null_target_set, premise_data, target_weight_data)
-    # 将行动列表加到null_target中
+    target, weight, judge, new_premise_data = search_target(character_id, type_0_target_list, null_target_set, premise_data, target_weight_data)
+    # 将行动列表加到null_target中，将新的前提数据加到premise_data中
     null_target_set.update(type_0_target_list)
+    premise_data = new_premise_data
     # 然后判断需求，先判断需求链中的需求，再判断非链中的需求，最后判断是否需要进入需求链
     if judge == 0 and not handle_premise.handle_normal_1(character_id):
         now_target_list = game_config.config_target_type_index[12]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 非链中的需求
     if judge == 0 and handle_premise.handle_unnormal_27(character_id):
         now_target_list = game_config.config_target_type_index[13]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 进入需求链
     if judge == 0:
         now_target_list = game_config.config_target_type_index[11]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 然后判断助理，先判断助理服务链，再判断非链中的助理服务，最后判断是否要进入助理服务链
     if judge == 0 and handle_premise.handle_is_assistant(character_id):
         # 是否正在助理服务链中
         if judge == 0 and handle_premise.handle_assistant_salutation_of_ai_disable(character_id):
             now_target_list = game_config.config_target_type_index[42]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 是否进行非链的助理服务
         if judge == 0:
             now_target_list = game_config.config_target_type_index[43]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 是否进入助理服务链
         if judge == 0:
             now_target_list = game_config.config_target_type_index[41]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
     if judge == 0 and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
         # 进行工作
         if judge == 0:
             now_target_list = game_config.config_target_type_index[22]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 工作准备
         if judge == 0:
             now_target_list = game_config.config_target_type_index[21]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
     # 然后判断娱乐，需要在娱乐时间
     if judge == 0 and handle_premise.handle_all_entertainment_time(character_id):
         # 进行娱乐
         if judge == 0:
             now_target_list = game_config.config_target_type_index[32]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 娱乐后处理
         if judge == 0:
             now_target_list = game_config.config_target_type_index[33]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 娱乐准备
         if judge == 0:
             now_target_list = game_config.config_target_type_index[31]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
 
     # 如果以上都没有，则开始遍历各大类的目标行动
     if judge == 0:
@@ -293,7 +305,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         else:
             now_target_list = all_target_list
 
-        target, weight, judge = search_target(
+        target, weight, judge, new_premise_data = search_target(
             character_id,
             now_target_list,
             null_target_set,
@@ -621,8 +633,8 @@ def search_target(
         #     if final_target == "531":
         #         print(f"debug value_weight = {value_weight}")
         #     print(f"debug value_weight = {value_weight}")
-        return final_target, value_weight, 1
-    return "", 0, 0
+        return final_target, value_weight, 1, premise_data
+    return "", 0, 0, premise_data
 
 def settle_character_juel(character_id: int) -> int:
     """
