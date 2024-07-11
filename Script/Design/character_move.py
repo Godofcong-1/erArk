@@ -27,9 +27,7 @@ def own_charcter_move(target_scene: list):
             character_data.sp_flag.move_stop = 0
             break
         # 如果当前场景已锁，离开时会把锁解开
-        now_scene_data = cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)]
-        if now_scene_data.close_flag == 1:
-            now_scene_data.close_flag = 0
+        # 已弃用，改为在 Script/Design/map_handle.py#character_move_scene() 中处理
         if character_data.position != target_scene:
             (
                 move_now,

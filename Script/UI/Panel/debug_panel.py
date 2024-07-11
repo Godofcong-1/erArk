@@ -708,10 +708,10 @@ class Debug_Panel:
                     now_draw.text = draw_text
                     now_draw.draw()
                     # 进行一个暂停
-                    wait_draw = draw.LineFeedWaitDraw()
-                    wait_draw.text = "\n"
-                    wait_draw.width = normal_config.config_normal.text_width
-                    wait_draw.draw()
+                    # wait_draw = draw.LineFeedWaitDraw()
+                    # wait_draw.text = "\n"
+                    # wait_draw.width = normal_config.config_normal.text_width
+                    # wait_draw.draw()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

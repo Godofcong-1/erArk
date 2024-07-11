@@ -3890,7 +3890,7 @@ msgid "干员携袋"
 msgstr "Operator-carrying bag"
 
 msgid ""
-"印有罗德岛logo的黑色桶装袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
+"印有罗德岛logo的黑色桶状袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
 msgstr ""
 "Black barrel bags with Rhodes Island's logo, capable of fitting a whole "
 "person inside. Can be used to [Bag and move] unconscious Operators, and [Put"

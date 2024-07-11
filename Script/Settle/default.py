@@ -6608,7 +6608,7 @@ def handle_sleep_add_adjust(
         now_time: datetime.datetime,
 ):
     """
-    （睡觉用）清零熟睡值
+    （睡觉用）如果在自己宿舍，则有一定几率关门
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -6617,8 +6617,12 @@ def handle_sleep_add_adjust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sleep_point = 0
+    if handle_premise.handle_in_dormitory(character_id):
+        if random.random() < 0.5:
+            handle_door_close(character_id, add_time, change_data, now_time)
+            # print(F"debug : {cache.character_data[character_id].name} 在{cache.character_data[character_id].dormitory}关门睡觉")
+        # else:
+            # print(F"debug : {cache.character_data[character_id].name} 在{cache.character_data[character_id].dormitory}不关门睡觉")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.URINATE_POINT_ZERO)

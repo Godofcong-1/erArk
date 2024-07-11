@@ -1,8 +1,9 @@
 import os
 import json
-from Script.Core import cache_control, value_handle, game_type
+from Script.Core import cache_control, value_handle, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
+from types import FunctionType
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -12,6 +13,9 @@ scene_path_edge = {}
 """ 寻路路径 """
 width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def get_map_draw_for_map_path(map_path_str: str) -> str:
@@ -98,6 +102,9 @@ def character_move_scene(old_scene_path: list, new_scene_path: list, character_i
     # 从旧场景移除角色
     if character_id in cache.scene_data[old_scene_path_str].character_list:
         cache.scene_data[old_scene_path_str].character_list.remove(character_id)
+    # 如果旧场景上锁了，则将其解锁
+    if cache.scene_data[old_scene_path_str].close_flag >= 1:
+        cache.scene_data[old_scene_path_str].close_flag = 0
     # 在新场景添加角色
     if character_id not in cache.scene_data[new_scene_path_str].character_list:
         character_data.position = new_scene_path
@@ -453,13 +460,13 @@ def init_scene_edge_path_data():
     for now_position_str in cache.scene_data:
         scene_path_edge[now_position_str] = {}
         # 忽略大地图
-        if "泰拉" in now_position_str:
+        if _("泰拉") in now_position_str:
             continue
         for target_scene_str in cache.scene_data:
             if target_scene_str == now_position_str:
                 continue
             # 忽略大地图
-            if "泰拉" in target_scene_str:
+            if _("泰拉") in target_scene_str:
                 continue
             now_position = get_map_system_path_for_str(now_position_str)
             target_scene = get_map_system_path_for_str(target_scene_str)
@@ -550,6 +557,7 @@ def identical_map_move(
         now_target_position = get_scene_path_for_map_scene_id(now_map, now_target_scene_id)
     return move_end, move_path, now_target_position, now_need_time
 
+
 def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
     """
     判断目标地点是否可以进入
@@ -573,7 +581,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
 
                 # 如果该设施已开放，则正常通过
                 if cache.rhodes_island.facility_open[open_cid]:
-                    return "open"
+                    break
                 # 是玩家的话输出提示信息
                 elif character_id == 0:
                     # 获取设施的解锁条件数据
@@ -585,13 +593,13 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
                     if facility_effect_cid:
                         zone_data = game_config.config_facility_effect[facility_effect_cid]
                         zone_name,zone_lv = zone_data.name,str(zone_data.level)
-                        info_text += f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前尚未解锁，解锁需要将{zone_name}升到{zone_lv}级\n"
+                        info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n").format(now_scene_data.scene_name, zone_name, zone_lv)
                     # 也可能需要NPC才能解锁
                     if facility_npc_cid:
                         for character_id in cache.character_data:
                             character_data = cache.character_data[character_id]
                             if character_data.adv == facility_npc_cid:
-                                info_text += f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前尚未解锁，解锁需要获得干员{character_data.name}\n"
+                                info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要获得干员{1}\n").format(now_scene_data.scene_name, character_data.name)
                                 break
 
                     line = draw.LineDraw("-", width)
@@ -620,10 +628,17 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
                 line = draw.LineDraw("-", width)
                 line.draw()
                 info_draw = draw.WaitDraw()
-                info_draw.text = f"\n  ●目标移动房间——{now_scene_data.scene_name}，当前门是锁着的，需要钥匙或其他方法进入\n"
                 info_draw.width = width
-                info_draw.draw()
-            return "door_lock"
+                info_draw.text = _("\n  ●目标移动房间——{0}，当前门是锁着的，需要钥匙或其他方法进入\n").format(now_scene_data.scene_name)
+                # 如果这是宿舍，且玩家持有宿舍钥匙则消耗钥匙并解锁
+                if "Dormitory" in now_scene_data.scene_tag and character_data.item[152] >= 1:
+                    info_draw.text += _("  ●你拿出了一次性万能钥匙，悄悄打开了门\n\n")
+                    character_data.item[152] -= 1
+                    now_scene_data.close_flag = 0
+                    info_draw.draw()
+                else:
+                    info_draw.draw()
+                    return "door_lock"
 
     # 私密场所判断，仅限干员
     if character_id:
@@ -643,6 +658,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
 
     return "open"
 
+
 def judge_scene_name_open(full_scene_str : str) -> int :
     """
     通过地点名判断目标地点是否可以进入
@@ -653,6 +669,7 @@ def judge_scene_name_open(full_scene_str : str) -> int :
     """
     from Script.Config import game_config
     now_scene_data = cache.scene_data[full_scene_str]
+    enter_flag = True   # 是否可以进入
 
     # print(f"debug scene_name = {now_scene_data.scene_name}")
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
@@ -660,13 +677,15 @@ def judge_scene_name_open(full_scene_str : str) -> int :
         for open_cid in game_config.config_facility_open:
             # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
             if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
-                if cache.rhodes_island.facility_open[open_cid]:
-                    return 1
-                else:
-                    return 0
+                if cache.rhodes_island.facility_open[open_cid] == False:
+                    enter_flag = False
+                    break
 
     # 关了门的房间进不去
     if now_scene_data.close_flag == 1:
-        return 0
+        enter_flag = False
 
-    return 1
+    if enter_flag:
+        return 1
+    else:
+        return 0

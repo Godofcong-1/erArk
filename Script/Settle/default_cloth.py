@@ -165,20 +165,11 @@ def handle_reset_cloth(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    
     if not add_time:
         return
     if character_id:
-        character_data: game_type.Character = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        character_tem = cache.npc_tem_data[character_id-1]
-        # print(f"debug character_data.name = {character_data.name},character_tem.name = {character_tem.Name}, cloth = {character_tem.Cloth}")
-        for cloth_id in character_tem.Cloth:
-            type = game_config.config_clothing_tem[cloth_id].clothing_type
-            # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-            if type in {6,9}:
-                continue
-            if cloth_id not in character_data.cloth.cloth_wear[type]:
-                character_data.cloth.cloth_wear[type].append(cloth_id)
+        clothing.get_npc_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_PAN)
@@ -317,6 +308,26 @@ def handle_get_shower_cloth(
     if not add_time:
         return
     clothing.get_shower_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_CLOTH)
+def handle_get_sleep_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    清零其他衣服并换上睡衣
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    clothing.get_sleep_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SWIM_CLOTH)

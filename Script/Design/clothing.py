@@ -343,6 +343,7 @@ def get_cloth_wear_zero_except_need(character_id: int) -> dict:
             # 获得两个list的差，并赋值给当前服装
             result = [item for item in  character_data.cloth.cloth_wear[clothing_type] if item not in remove_tem_list]
             character_data.cloth.cloth_wear[clothing_type] = result
+    chara_special_wear_cloth(character_id)
     # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
 
 

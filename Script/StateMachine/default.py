@@ -98,9 +98,6 @@ def character_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
-    if handle_premise.handle_in_dormitory(character_id):
-        clothing.get_sleep_cloth(character_id)
-        default.handle_door_close(character_id,add_time=1,change_data=game_type.CharacterStatusChange(),now_time=cache.game_time)
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP

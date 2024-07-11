@@ -5994,3 +5994,43 @@ msgstr ""
 
 msgid "超大量射精，射出了"
 msgstr ""
+
+msgid "泰拉"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前尚未解锁，解锁需要获得干员{1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前门是锁着的，需要钥匙或其他方法进入\n"
+msgstr ""
+
+msgid ""
+"  ●你拿出了一次性万能钥匙，悄悄打开了门\n"
+"\n"
+msgstr ""
+
+msgid "请输入角色id"
+msgstr ""
+
+msgid "请输入口上id"
+msgstr ""
+
+msgid ""
+"{0}\n"
+"\n"
+msgstr ""
+
+msgid "(博士免费)"
+msgstr ""
+
+msgid "[{i}]"
+msgstr ""

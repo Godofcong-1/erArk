@@ -485,7 +485,7 @@ class BehaviorEffect:
     ADD_HPMP_MAX = 508
     """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
     SLEEP_ADD_ADJUST = 509
-    """ 指令_专用结算 （睡觉用）清零熟睡值（暂弃用） """
+    """ 指令_专用结算 （睡觉用）如果在自己宿舍，则有一定几率关门 """
     RECRUIT_ADD_ADJUST = 510
     """ 指令_专用结算 （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽 """
     READ_ADD_ADJUST = 511
@@ -542,6 +542,8 @@ class BehaviorEffect:
     """ 属性_服装 脱掉全部衣服 """
     GET_SHOWER_CLOTH = 633
     """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
+    GET_SLEEP_CLOTH = 634
+    """ 属性_服装 清零其他衣服并换上睡衣 """
     LOCKER_CLOTH_RESET = 641
     """ 属性_服装 衣柜里的衣服清零 """
     WEAR_TO_LOCKER = 642
