@@ -1075,6 +1075,8 @@ class StateMachine:
     """ 进入要自慰状态 """
     MASTUREBATE = 92
     """ 自慰 """
+    GET_CHARA_NORMAL_CLOTH = 93
+    """ 换上角色标准衣服 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """

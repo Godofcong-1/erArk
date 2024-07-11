@@ -1919,6 +1919,16 @@ def character_masturebate(character_id: int):
     character_data.behavior.duration = 30
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_CHARA_NORMAL_CLOTH)
+def character_get_chara_normal_cloth(character_id: int):
+    """
+    换上角色标准衣服
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    clothing.get_npc_cloth(character_id)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """

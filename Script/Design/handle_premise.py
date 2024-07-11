@@ -4830,6 +4830,22 @@ def handle_eat_food_flag_2(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SLEEP_FLAG_0)
+def handle_sleep_flag_0(character_id: int) -> int:
+    """
+    自身无要睡觉状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.sleep == 0:
+        return 400
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.SLEEP_FLAG_1)
 def handle_sleep_flag_1(character_id: int) -> int:
     """
@@ -15150,11 +15166,9 @@ def handle_not_cloth_off(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    for clothing_type in game_config.config_clothing_type:
-        if len(character_data.cloth.cloth_wear[clothing_type]):
-            return 1
-    return 0
+    if handle_cloth_off(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.CLOTH_MOST_OFF)
@@ -15182,11 +15196,9 @@ def handle_not_cloth_most_off(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    for clothing_type in [5, 6, 8, 9]:
-        if len(character_data.cloth.cloth_wear[clothing_type]):
-            return 1
-    return 0
+    if handle_cloth_most_off(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SHOWER_CLOTH)
@@ -15199,7 +15211,7 @@ def handle_shower_cloth(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth.cloth_wear[5]:
+    if 551 in character_data.cloth.cloth_wear[5] and 851 in character_data.cloth.cloth_wear[8]:
         return 1
     return 0
 
@@ -15213,10 +15225,44 @@ def handle_not_shower_cloth(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    if 551 in character_data.cloth.cloth_wear[5]:
+    if handle_shower_cloth(character_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.SLEEP_CLOTH)
+def handle_sleep_cloth(character_id: int) -> int:
+    """
+    穿着睡衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if 552 in character_data.cloth.cloth_wear[5] and 852 in character_data.cloth.cloth_wear[8]:
+        return 1
+    elif 553 in character_data.cloth.cloth_wear[5] and 853 in character_data.cloth.cloth_wear[8]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SLEEP_CLOTH_OR_NOT_NORMAL_4)
+def handle_sleep_cloth_or_not_normal_4(character_id: int) -> int:
+    """
+    穿着睡衣或服装异常
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_sleep_cloth(character_id):
+        return 1
+    elif handle_normal_4(character_id) == 0:
+        return 1
+    return 0
+
 
 @add_premise(constant_promise.Premise.HAT_SEMEN)
 def handle_hat_semen(character_id: int) -> int:
