@@ -558,11 +558,13 @@ def identical_map_move(
     return move_end, move_path, now_target_position, now_need_time
 
 
-def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
+def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag = True) -> int :
     """
     判断目标地点是否可以进入
     Keyword arguments:
     target_scene_str -- 目标场景位置（例：A\B\C）
+    character_id -- 角色id
+    draw_flag -- 是否输出提示信息 (default True)
     Return arguments:
     str -- open:可以进入,wait_open:未解锁,door_lock:门上锁,private:私密场所
     """
@@ -575,41 +577,38 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
 
     # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
     if now_scene_data.scene_name in game_config.config_facility_open_name_set:
-        for open_cid in game_config.config_facility_open:
-            # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
-            if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
+        open_cid = game_config.config_facility_open_name_to_cid[now_scene_data.scene_name]
 
-                # 如果该设施已开放，则正常通过
-                if cache.rhodes_island.facility_open[open_cid]:
-                    break
-                # 是玩家的话输出提示信息
-                elif character_id == 0:
-                    # 获取设施的解锁条件数据
-                    facility_effect_cid = game_config.config_facility_open[open_cid].zone_cid
-                    facility_npc_cid = game_config.config_facility_open[open_cid].NPC_id
+        # 如果该设施已开放，则正常通过，否则进入条件判断
+        if cache.rhodes_island.facility_open[open_cid] == False:
+            # 是玩家的话输出提示信息
+            if character_id == 0 and draw_flag:
+                # 获取设施的解锁条件数据
+                facility_effect_cid = game_config.config_facility_open[open_cid].zone_cid
+                facility_npc_cid = game_config.config_facility_open[open_cid].NPC_id
 
-                    # 如果是需要设施等级解锁的话
-                    info_text = ""
-                    if facility_effect_cid:
-                        zone_data = game_config.config_facility_effect[facility_effect_cid]
-                        zone_name,zone_lv = zone_data.name,str(zone_data.level)
-                        info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n").format(now_scene_data.scene_name, zone_name, zone_lv)
-                    # 也可能需要NPC才能解锁
-                    if facility_npc_cid:
-                        for character_id in cache.character_data:
-                            character_data = cache.character_data[character_id]
-                            if character_data.adv == facility_npc_cid:
-                                info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要获得干员{1}\n").format(now_scene_data.scene_name, character_data.name)
-                                break
+                # 如果是需要设施等级解锁的话
+                info_text = ""
+                if facility_effect_cid:
+                    zone_data = game_config.config_facility_effect[facility_effect_cid]
+                    zone_name,zone_lv = zone_data.name,str(zone_data.level)
+                    info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n").format(now_scene_data.scene_name, zone_name, zone_lv)
+                # 也可能需要NPC才能解锁
+                if facility_npc_cid:
+                    for character_id in cache.character_data:
+                        character_data = cache.character_data[character_id]
+                        if character_data.adv == facility_npc_cid:
+                            info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要获得干员{1}\n").format(now_scene_data.scene_name, character_data.name)
+                            break
 
-                    line = draw.LineDraw("-", width)
-                    line.draw()
-                    info_draw = draw.WaitDraw()
-                    info_draw.text = info_text
-                    info_draw.width = width
-                    info_draw.draw()
+                line = draw.LineDraw("-", width)
+                line.draw()
+                info_draw = draw.WaitDraw()
+                info_draw.text = info_text
+                info_draw.width = width
+                info_draw.draw()
 
-                return "wait_open"
+            return "wait_open"
 
     # 锁门判断
     if now_scene_data.close_flag == 1:
@@ -626,7 +625,6 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
             # 如果是玩家的话输出提示信息
             if character_id == 0:
                 line = draw.LineDraw("-", width)
-                line.draw()
                 info_draw = draw.WaitDraw()
                 info_draw.width = width
                 info_draw.text = _("\n  ●目标移动房间——{0}，当前门是锁着的，需要钥匙或其他方法进入\n").format(now_scene_data.scene_name)
@@ -635,9 +633,13 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
                     info_draw.text += _("  ●你拿出了一次性万能钥匙，悄悄打开了门\n\n")
                     character_data.item[152] -= 1
                     now_scene_data.close_flag = 0
-                    info_draw.draw()
+                    if draw_flag:
+                        line.draw()
+                        info_draw.draw()
                 else:
-                    info_draw.draw()
+                    if draw_flag:
+                        line.draw()
+                        info_draw.draw()
                     return "door_lock"
 
     # 私密场所判断，仅限干员
@@ -657,35 +659,3 @@ def judge_scene_accessible(target_scene_str : str, character_id : int) -> int :
             return "private"
 
     return "open"
-
-
-def judge_scene_name_open(full_scene_str : str) -> int :
-    """
-    通过地点名判断目标地点是否可以进入
-    Keyword arguments:
-    full_scene_str -- 目标场景位置（例：A\B\C）
-    Return arguments:
-    int -- 是否可以进入
-    """
-    from Script.Config import game_config
-    now_scene_data = cache.scene_data[full_scene_str]
-    enter_flag = True   # 是否可以进入
-
-    # print(f"debug scene_name = {now_scene_data.scene_name}")
-    # 遍历设施开放清单，如果名称和地图名称一样的话，则进行判断
-    if now_scene_data.scene_name in game_config.config_facility_open_name_set:
-        for open_cid in game_config.config_facility_open:
-            # print(f"debug game_config.config_facility_open[open_cid].name = {game_config.config_facility_open[open_cid].name}")
-            if game_config.config_facility_open[open_cid].name == now_scene_data.scene_name:
-                if cache.rhodes_island.facility_open[open_cid] == False:
-                    enter_flag = False
-                    break
-
-    # 关了门的房间进不去
-    if now_scene_data.close_flag == 1:
-        enter_flag = False
-
-    if enter_flag:
-        return 1
-    else:
-        return 0

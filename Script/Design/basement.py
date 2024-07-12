@@ -603,10 +603,8 @@ def check_facility_open():
     判断是否有空闲客房，暂时没有用
     """
     # 遍历全部客房
-    for room_id in cache.rhodes_island.facility_open:
-        # 跳过非客房
-        if room_id <= 1200 or room_id >= 1300:
-            continue
+    guest_rooms = [room_id for room_id in cache.rhodes_island.facility_open if 1200 < room_id < 1300]
+    for room_id in guest_rooms:
         # 跳过未开放的客房
         if not cache.rhodes_island.facility_open[room_id]:
             continue

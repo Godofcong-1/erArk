@@ -563,11 +563,10 @@ class ChangeWorkButtonList:
                 # 当前工作的地点名字判断
                 # （应该已经被上面的必要条件判断所取代了，姑且还是保留一下）
                 if flag_open:
-                    for open_cid in game_config.config_facility_open:
-                        if game_config.config_facility_open[open_cid].name == work_place:
-                            if not cache.rhodes_island.facility_open[open_cid]:
-                                flag_open = False
-                            break
+                    if work_place in game_config.config_facility_open_name_set:
+                        open_cid = game_config.config_facility_open_name_to_cid[work_place]
+                        if not cache.rhodes_island.facility_open[open_cid]:
+                            flag_open = False
 
                 if flag_open:
                     work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
