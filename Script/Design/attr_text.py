@@ -119,7 +119,7 @@ def get_map_path_text(map_path: List[str]) -> str:
     for now_map in map_list:
         now_map_map_system_str = map_handle.get_map_system_path_str_for_list(now_map)
         map_name = cache.map_data[now_map_map_system_str].map_name
-        now_path_text += map_name + "-"
+        now_path_text += _(map_name) + "-"
     return now_path_text.rstrip("-")
 
 
