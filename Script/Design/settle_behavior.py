@@ -664,16 +664,19 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
             line = draw.LineDraw("-", width)
             line.draw()
     else:
-        # 检测人物的各感度数据是否等于该人物的高潮记录程度数据
         for orgasm in range(8):
             # 跳过射精槽
             if orgasm == 3:
                 continue
+            # 10级前检测人物的各感度数据是否等于该人物的高潮记录程度数据
             # now_data -- 当前高潮程度
             # pre_data -- 记录里的前高潮程度
+            # extra_add -- 额外高潮次数
+            # part_count -- 部位高潮计数
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
             pre_data = character_data.h_state.orgasm_level[orgasm]
             extra_add = 0
+            part_count = 0
             # 如果已经到了10级，则进行额外高潮结算
             if pre_data >= 10:
                 character_data.h_state.extra_orgasm_feel.setdefault(orgasm, 0)
@@ -689,7 +692,10 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 extra_add = int(character_data.h_state.extra_orgasm_feel[orgasm] // now_threshold)
                 now_data = pre_data + extra_add
                 character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
+            # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
             if now_data > pre_data or extra_add > 0:
+                # 该部位高潮计数+1
+                part_count += 1
                 # 判定触发哪些绝顶
                 num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
                 # now_draw = draw.WaitDraw()
@@ -737,7 +743,10 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
 
                 # 刷新记录
                 character_data.h_state.orgasm_level[orgasm] = now_data
-
+            # 如果部位高潮计数大于等于2，则结算多重绝顶
+            if part_count >= 2:
+                second_behavior_index = 1079 + part_count
+                character_data.second_behavior[second_behavior_index] = 1
 
 def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """

@@ -1495,6 +1495,19 @@ class SecondBehavior:
     U_ORGASM_TO_PEE = 1072
     """ 结算因U绝顶而被迫漏尿 """
 
+    DOUBLE_ORGASM = 1081
+    """ 结算双重绝顶 """
+    TRIPLE_ORGASM = 1082
+    """ 结算三重绝顶 """
+    QUADRUPLE_ORGASM = 1083
+    """ 结算四重绝顶 """
+    QUINTUPLE_ORGASM = 1084
+    """ 结算五重绝顶 """
+    SEXTUPLE_ORGASM = 1085
+    """ 结算六重绝顶 """
+    SEPTUPLE_ORGASM = 1086
+    """ 结算七重绝顶 """
+
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
     CLIT_CLAMP = 1101
