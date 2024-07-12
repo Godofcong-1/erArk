@@ -1159,7 +1159,7 @@ def handle_first_sex(
     for i in range(len(cache.input_cache)):
         last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
         # print(f"debug 上指令 = {last_instruct}")
-        if last_instruct == "确定":
+        if last_instruct == _("确定"):
             continue
 
         # 判定是否为道具性交
@@ -1266,7 +1266,7 @@ def handle_first_a_sex(
     for i in range(len(cache.input_cache)):
         last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
         # print(f"debug 上指令 = {last_instruct}")
-        if last_instruct == "确定":
+        if last_instruct == _("确定"):
             continue
         count = 0
         for instruct_en_name in constant.Instruct.__dict__:
