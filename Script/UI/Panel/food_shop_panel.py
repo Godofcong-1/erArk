@@ -186,6 +186,10 @@ class SeeFoodListByFoodNameDraw:
         else:
             now_food_list = [(self.cid, x) for x in cache.rhodes_island.restaurant_data[now_restaurant_id][self.cid]]
 
+        # 如果食物超过了十个，则只显示十个
+        if len(now_food_list) > 10:
+            now_food_list = now_food_list[:10]
+
         while 1:
 
             for now_cid, now_uid in now_food_list:
