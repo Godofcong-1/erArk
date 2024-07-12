@@ -478,7 +478,15 @@ def update_map(loaded_dict):
     # 如果地图数据有变化，将地图路径也更新，同时删除不存在的地图数据
     if change_map_flag:
         loaded_dict["map_data"] = cache.map_data
+        # 在2024.7月的版本中将人气快餐开封菜改为了约翰老妈汉堡店
+        if '贸易\人气快餐开封菜' in loaded_dict["scene_data"]:
+            # print("发现存档存在人气快餐开封菜")
+            for key, value in loaded_dict["character_data"].items():
+                if value.position[-1] == '人气快餐开封菜':
+                    value.position[-1] = '约翰老妈汉堡店'
+                    # print(f"已将{value.name}的位置从人气开封菜改为约翰老妈汉堡店")
         for key, value in loaded_dict["scene_data"].copy().items():
+            # print(f"debug 地图数据: key = {key}, value = {value.scene_tag}")
             if key not in cache.scene_data:
                 del loaded_dict["scene_data"][key]
                 update_count += 1
@@ -486,6 +494,7 @@ def update_map(loaded_dict):
         draw_text = _("\n游戏地图已更新\n")
         now_draw.text = draw_text
         now_draw.draw()
+
 
     return update_count
 
