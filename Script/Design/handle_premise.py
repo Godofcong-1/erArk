@@ -8218,8 +8218,32 @@ def handle_flag_baby_exist(character_id: int) -> int:
     """
     for i in range(len(cache.npc_tem_data)):
         chara_id = i + 1
-        if cache.character_data[chara_id].talent[101]:
-            return 1
+        if chara_id in cache.character_data:
+            if cache.character_data[chara_id].talent[101]:
+                return 1
+
+    return 0
+
+
+@add_premise(constant_promise.Premise.POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST)
+def handle_position_in_nursery_and_flag_baby_exist(character_id: int) -> int:
+    """
+    特殊flag 当前自己在育儿室且育儿室有婴儿存在
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Nursery" in now_scene_data.scene_tag:
+        for chara_id in now_scene_data.character_list:
+            if cache.character_data[chara_id].talent[101]:
+                return 1
+
     return 0
 
 

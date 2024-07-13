@@ -2364,6 +2364,8 @@ class Premise:
 
     FLAG_BABY_EXIST = "flag_baby_exist"
     """ 生育 当前有婴儿存在 """
+    POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST = "position_in_nursery_and_flag_baby_exist"
+    """ 生育 当前自己在育儿室且育儿室有婴儿存在 """
     REPRODUCTION_PERIOD_0 = "reproduction_period_0"
     """ 生育 自己当前是安全期 """
     REPRODUCTION_PERIOD_1 = "reproduction_period_1"

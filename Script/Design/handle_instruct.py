@@ -1404,8 +1404,7 @@ def handle_play_with_child():
     constant.InstructType.DAILY,
     _("照顾婴儿"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_NURSERY,
-     constant_promise.Premise.FLAG_BABY_EXIST,
+     constant_promise.Premise.POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST,
      constant_promise.Premise.TIRED_LE_84},
 )
 def handle_take_care_baby():
@@ -3051,6 +3050,7 @@ def handle_make_lick_anal():
     constant.InstructType.SEX,
     _("交给对方"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )
