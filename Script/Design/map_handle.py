@@ -460,13 +460,13 @@ def init_scene_edge_path_data():
     for now_position_str in cache.scene_data:
         scene_path_edge[now_position_str] = {}
         # 忽略大地图
-        if _("泰拉") in now_position_str:
+        if "泰拉" in now_position_str or _("泰拉") in now_position_str:
             continue
         for target_scene_str in cache.scene_data:
             if target_scene_str == now_position_str:
                 continue
             # 忽略大地图
-            if _("泰拉") in target_scene_str:
+            if "泰拉" in target_scene_str or _("泰拉") in target_scene_str:
                 continue
             now_position = get_map_system_path_for_str(now_position_str)
             target_scene = get_map_system_path_for_str(target_scene_str)

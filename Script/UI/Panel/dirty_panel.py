@@ -296,7 +296,7 @@ class SeeCharacterBodyPanel:
             # 污浊判定
             if target_character_data.dirty.body_semen[i][2]:
                 semen_level = target_character_data.dirty.body_semen[i][2]
-                dirty_text_cid = f"{part_name}精液污浊{str(semen_level)}"
+                dirty_text_cid = f"{_(part_name, revert_translation = True)}精液污浊{str(semen_level)}"
                 dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                 now_part_text = f" {part_name}{dirty_text_context}"
                 all_part_text_list.append(now_part_text)

@@ -6034,3 +6034,39 @@ msgstr ""
 
 msgid "[{i}]"
 msgstr ""
+
+msgid "春"
+msgstr ""
+
+msgid "夏"
+msgstr ""
+
+msgid "秋"
+msgstr ""
+
+msgid "冬"
+msgstr ""
+
+msgid "收起状态栏"
+msgstr ""
+
+msgid "展开状态栏"
+msgstr ""
+
+msgid "收起服装栏"
+msgstr ""
+
+msgid "展开服装栏"
+msgstr ""
+
+msgid "收起身体栏"
+msgstr ""
+
+msgid "展开身体栏"
+msgstr ""
+
+msgid "收起图片栏"
+msgstr ""
+
+msgid "展开图片栏"
+msgstr ""
