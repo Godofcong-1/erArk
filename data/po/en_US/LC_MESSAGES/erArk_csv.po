@@ -109,13 +109,13 @@ msgid "音乐技能"
 msgstr "Musical Skill"
 
 msgid "学识技能"
-msgstr "Knowledge Skill"
+msgstr "Wisdom Skill"
 
 msgid "医术技能"
 msgstr "Medical Skill"
 
 msgid "农业技能"
-msgstr "Agriculture Skill"
+msgstr "Farming Skill"
 
 msgid "制造技能"
 msgstr "Crafting Skill"
@@ -124,25 +124,25 @@ msgid "绘画技能"
 msgstr "Drawing Skill"
 
 msgid "指技"
-msgstr "Finger Technique"
+msgstr "Finger Skill"
 
 msgid "舌技"
-msgstr "Tongue Technique"
+msgstr "Tongue Skill"
 
 msgid "足技"
-msgstr "Feet Technique"
+msgstr "Feet Skill"
 
 msgid "胸技"
-msgstr "Breast Technique"
+msgstr "Breast Skill"
 
 msgid "膣技"
-msgstr "Penis Technique"
+msgstr "Penis Skill"
 
 msgid "肛技"
-msgstr "Anus Technique"
+msgstr "Anus Skill"
 
 msgid "腰技"
-msgstr "Waist Technique"
+msgstr "Waist Skill"
 
 msgid "感觉"
 msgstr "Feelings"
@@ -10731,49 +10731,49 @@ msgid "未捆绑"
 msgstr "Not tied"
 
 msgid "被绳子捆成了后高手缚"
-msgstr "Being backhand tied with rope"
+msgstr "Being backhand tied with ropes"
 
 msgid "被绳子捆成了直立缚"
-msgstr "Being upright tied with rope"
+msgstr "Being upright tied with ropes"
 
 msgid "被绳子捆成了驷马捆绑"
-msgstr "Being hogtie tied with rope"
+msgstr "Being hogtie tied with ropes"
 
 msgid "被绳子捆成了直臂缚"
-msgstr "Straight arms being tied with rope"
+msgstr "Straight arms being tied with ropes"
 
 msgid "被绳子捆成了双手缚"
-msgstr "Both hands being tied with rope"
+msgstr "Both hands being tied with ropes"
 
 msgid "被绳子捆成了菱绳缚"
-msgstr "Being rhombus tied with rope"
+msgstr "Being rhombus tied with ropes"
 
 msgid "被绳子捆成了龟甲缚"
-msgstr "Being turtleshell tied with rope"
+msgstr "Being turtleshell tied with ropes"
 
 msgid "被绳子捆成了团缚"
-msgstr "Being fully tied with rope"
+msgstr "Being fully tied with ropes"
 
 msgid "被绳子捆成了逆团缚"
-msgstr "Being reverse fully tied with rope"
+msgstr "Being reverse fully tied with ropes"
 
 msgid "被绳子捆成了吊缚"
-msgstr "Being hanged with rope"
+msgstr "Being hanged with ropes"
 
 msgid "被绳子捆成了后手吊缚"
-msgstr "Being backhand hanged with rope"
+msgstr "Being backhand hanged with ropes"
 
 msgid "被绳子捆成了单足吊缚"
-msgstr "Single leg being hanged with rope"
+msgstr "Single leg being hanged with ropes"
 
 msgid "被绳子捆成了后手观音"
-msgstr "Being tied into Avalokitesvara  with rope"
+msgstr "Being tied into Avalokitesvara with ropes"
 
 msgid "被绳子捆成了苏秦背剑"
-msgstr "Being tied into iron cannon with rope"
+msgstr "Being tied into iron cannon with ropes"
 
 msgid "被绳子捆成了五花大绑"
-msgstr "Being truss tied with rope"
+msgstr "Being truss tied with ropes"
 
 msgid "{TargetSceneName}里现在好像有人，要进去吗"
 msgstr ""
