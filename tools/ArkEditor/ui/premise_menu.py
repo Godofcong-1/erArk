@@ -231,7 +231,7 @@ class PremiseMenu(QDialog):
         """删除前提组"""
         # 找到前提群cid
         premise_group_cid = ""
-        print(f"debug premise_group_cid: {premise_group_cid}")
+        # print(f"debug premise_group_cid: {premise_group_cid}")
         # 根据cid在cache_control.premise_group_data中删掉该前提群
         if premise_group_cid in cache_control.premise_group_data:
             del cache_control.premise_group_data[premise_group_cid]
