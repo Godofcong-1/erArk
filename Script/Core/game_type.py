@@ -426,6 +426,8 @@ class BODY_H_STATE:
         """ 额外高潮次数，用于在10级快感后的额外高潮 """
         self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
+        self.plural_orgasm_count: int = 0
+        """ 多重高潮次数 """
         self.condom_info_show_flag: bool = False
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]

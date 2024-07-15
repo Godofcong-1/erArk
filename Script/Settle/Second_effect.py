@@ -1165,7 +1165,7 @@ def handle_add_small_submit(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_lust = character_data.status_data[15]
-    now_add_lust = 20
+    now_add_lust = 1000
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
@@ -1737,7 +1737,7 @@ def handle_add_middle_submit(
     character_data: game_type.Character = cache.character_data[character_id]
 
     now_lust = character_data.status_data[15]
-    now_add_lust = 100
+    now_add_lust = 5000
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
@@ -2294,7 +2294,7 @@ def handle_add_middle_submit(
 
     character_data: game_type.Character = cache.character_data[character_id]
 
-    now_add_lust = 1000
+    now_add_lust = 10000
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
 
@@ -2879,7 +2879,7 @@ def handle_extra_orgasm(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    结算额外绝顶
+    结算额外绝顶(痛苦+恐怖)
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -2918,6 +2918,35 @@ def handle_extra_orgasm(
         now_draw.draw()
         # 额外高潮次数清零
         character_data.h_state.extra_orgasm_count = 0
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PLURAL_ORGASM)
+def handle_plural_orgasm(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算多重绝顶(快乐+屈服)
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.Settle.default import base_chara_state_common_settle
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    # 多重高潮次数
+    plural_orgasm_count = character_data.h_state.plural_orgasm_count - 1
+    # 如果有多重高潮次数，则进行结算
+    if plural_orgasm_count > 0:
+        base_value = 1000 * plural_orgasm_count
+        extral_adjust = 1.4 ** plural_orgasm_count
+        base_chara_state_common_settle(character_id, 0, 13, base_value = base_value, extra_adjust = extral_adjust, change_data = change_data)
+        base_chara_state_common_settle(character_id, 0, 15, base_value = base_value, extra_adjust = extral_adjust, change_data = change_data)
+
+        # 多重绝顶次数清零
+        character_data.h_state.plural_orgasm_count = 0
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)

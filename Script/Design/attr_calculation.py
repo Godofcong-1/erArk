@@ -230,6 +230,7 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     h_state_data.npc_active_h = False
     h_state_data.h_in_love_hotel = False
     h_state_data.extra_orgasm_count = 0
+    h_state_data.plural_orgasm_count = 0
 
     return h_state_data
 
