@@ -86,13 +86,13 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
         or target_scene_str not in map_handle.scene_path_edge[now_position_str]
     ):
         return "null", [], [], 0
-    # 判断目标场景是否可进入，不可进入则输出原因
-    access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
-    # if not character_id:
-    #     print(f"debug close_type = {close_type}")
-    if access_type not in ["open","private"]:
-        return access_type, [], [], 0
     now_path_data = map_handle.scene_path_edge[now_position_str][target_scene_str]
+    access_type = "open"
+    # 如果已经到门前了，则判断目标场景是否可进入，不可进入则输出原因
+    if now_path_data[0] == target_scene:
+        access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
+        if access_type not in ["open","private"]:
+            return access_type, [], [], 0
     return access_type, [], now_path_data[0], now_path_data[1]
 
 
