@@ -251,6 +251,7 @@ def init_food_shop_data(update_restaurant_id: int = -2):
                 continue
         food_list = {}
         cook_index = 0
+        cache.rhodes_island.restaurant_data[restaurant_id] = {}
         while 1:
             # 只能选择该餐馆自己的食谱
             recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].restaurant == restaurant_id ]
