@@ -833,7 +833,10 @@ class Debug_Panel:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.second_behavior:
-                    info_text += f"{cid}:{target_data.second_behavior[cid]} "
+                    name = game_config.config_status[cid].name
+                    info_text += f"({cid}){name}:{target_data.second_behavior[cid]}  "
+                    if cid % 5 == 0:
+                        info_text += "\n"
                 draw_text_list.append(f"[000]:二段行为列表：\n{info_text}")
 
                 # 进行显示

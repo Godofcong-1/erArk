@@ -147,12 +147,12 @@ def get_assistant_services_zero() -> dict:
 
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
-    将二段行为全项归零，暂时为前200项
+    将二段行为全项归零，读取配置文件中的二段行为，将其归零
     """
-    second_behavior_list = second_behavior_dict
-    for second_behavior in range(1000,1200):
-        second_behavior_list[second_behavior] = 0
-    return second_behavior_list
+    for status_cid in game_config.config_status:
+        if "二段结算" in game_config.config_status[status_cid].tag:
+            second_behavior_dict[status_cid] = 0
+    return second_behavior_dict
 
 
 def get_time_zero() -> dict:
