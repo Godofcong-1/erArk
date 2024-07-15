@@ -280,6 +280,7 @@ class Character_talent_show_Text:
 
         # 爱情路线
         if next_love_id or not next_obey_id:
+            love_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_love = draw.NormalDraw()
@@ -290,19 +291,19 @@ class Character_talent_show_Text:
             text_draw_love_text += _(" 苦痛刻印0")
             if self.character_data.ability[15] != 0:
                 text_draw_love_text += "(X)"
-                judge = 0
+                love_judge = 0
             else:
                 text_draw_love_text += "(√)"
             text_draw_love_text += _(" 恐怖刻印0")
             if self.character_data.ability[17] != 0:
                 text_draw_love_text += "(X)"
-                judge = 0
+                love_judge = 0
             else:
                 text_draw_love_text += "(√)"
             text_draw_love_text += _(" 亲密等级至少为2")
             if self.character_data.ability[32] < 2:
                 text_draw_love_text += "(X)"
-                judge = 0
+                love_judge = 0
             else:
                 text_draw_love_text += "(√)"
             text_draw_love_text += "\n"
@@ -317,12 +318,13 @@ class Character_talent_show_Text:
                 info_draw_love.text = text_draw_love_text
                 info_draw_love.draw()
                 if next_love_id == 0:
-                    self.show_gain_need(201, judge)
+                    self.show_gain_need(201, love_judge)
                 else:
-                    self.show_gain_need(next_love_id, judge)
+                    self.show_gain_need(next_love_id, love_judge)
 
         # 隶属路线
         if next_obey_id or not next_love_id:
+            obey_judge = 1 if judge == 1 else 0
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_obey = draw.NormalDraw()
@@ -333,19 +335,19 @@ class Character_talent_show_Text:
             text_draw_obey_text += _(" 快乐刻印>=1")
             if self.character_data.ability[13] == 0:
                 text_draw_obey_text += "(X)"
-                judge = 0
+                obey_judge = 0
             else:
                 text_draw_obey_text += "(√)"
             text_draw_obey_text += _(" 屈服刻印>=1")
             if self.character_data.ability[14] == 0:
                 text_draw_obey_text += "(X)"
-                judge = 0
+                obey_judge = 0
             else:
                 text_draw_obey_text += "(√)"
             text_draw_obey_text += _(" 顺从等级至少为2")
             if self.character_data.ability[31] <= 1:
                 text_draw_obey_text += "(X)"
-                judge = 0
+                obey_judge = 0
             else:
                 text_draw_obey_text += "(√)"
             text_draw_obey_text += "\n"
@@ -360,9 +362,9 @@ class Character_talent_show_Text:
                 info_draw_obey.text = text_draw_obey_text
                 info_draw_obey.draw()
                 if next_obey_id == 0:
-                    self.show_gain_need(211, judge)
+                    self.show_gain_need(211, obey_judge)
                 else:
-                    self.show_gain_need(next_obey_id, judge)
+                    self.show_gain_need(next_obey_id, obey_judge)
 
 
     def show_gain_need(self, talent_id, judge):

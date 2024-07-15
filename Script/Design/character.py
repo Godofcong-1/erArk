@@ -53,7 +53,7 @@ def init_attr(character_id: int):
     character_data.experience = attr_calculation.get_experience_zero(character_data.experience)
     character_data.juel = attr_calculation.get_juel_zero(character_data.juel)
     character_data.second_behavior = attr_calculation.get_second_behavior_zero(character_data.second_behavior)
-    character_data.dirty = attr_calculation.get_dirty_zero()
+    character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
     character_data.item = attr_calculation.get_item_zero(character_data.item)
     character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
     character_data.first_record = attr_calculation.get_first_record_zero()
@@ -373,13 +373,34 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge -= judge_hardlove
     if judge_hardlove:
         calculation_text += _("+难以越过的底线(-") + str(judge_hardlove) + ")"
+    # 被对方持有把柄修正
+    judge_weakness = target_data.talent[401] * 20
+    judge -= judge_weakness
+    if judge_weakness:
+        calculation_text += _("+被对方持有把柄(-") + str(judge_weakness) + ")"
+    # 持有对方把柄修正
+    judge_weakness = target_data.talent[402] * 50
+    judge += judge_weakness
+    if judge_weakness:
+        calculation_text += _("+持有对方把柄(+") + str(judge_weakness) + ")"
 
-    # 淫乱相关属性修正#
-    # 仅能用在性爱指令上
+    # 仅性爱指令
     if judge_data_type == "S":
-        if character_data.talent[40]:
+        # 淫乱相关属性修正#
+        if target_data.talent[40]:
             judge += 30
             calculation_text += _("+淫乱(+30)")
+        # 爱情旅馆修正
+        if target_data.h_state.h_in_love_hotel:
+            if cache.rhodes_island.love_hotel_room_lv == 1:
+                judge += 10
+                calculation_text += _("+标间(+10)")
+            elif cache.rhodes_island.love_hotel_room_lv == 2:
+                judge += 50
+                calculation_text += _("+情趣主题房(+50)")
+            elif cache.rhodes_island.love_hotel_room_lv == 3:
+                judge += 100
+                calculation_text += _("+顶级套房(+100)")
 
     # 激素系能力修正#
     if character_data.pl_ability.hormone:
@@ -606,16 +627,16 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             draw_text = ""
             if instruct_name == _("亲吻") and target_data.talent[11] == 0:
                 target_data.talent[11] = 1
-                draw_text += f"\n 获得了{target_data.name}的【亲吻合意】\n"
+                draw_text += _("\n 获得了{0}的【亲吻合意】\n").format(target_data.name)
             if instruct_name == _("性交") and target_data.talent[12] == 0:
                 target_data.talent[12] = 1
-                draw_text += f"\n 获得了{target_data.name}的【本番合意】\n"
+                draw_text += _("\n 获得了{0}的【本番合意】\n").format(target_data.name)
             if instruct_name == _("A性交") and target_data.talent[15] == 0:
                 target_data.talent[15] = 1
-                draw_text += f"\n 获得了{target_data.name}的【Ａ性交合意】\n"
+                draw_text += _("\n 获得了{0}的【Ａ性交合意】\n").format(target_data.name)
             if instruct_name == _("U性交") and target_data.talent[16] == 0:
                 target_data.talent[16] = 1
-                draw_text += f"\n 获得了{target_data.name}的【Ｕ性交合意】\n"
+                draw_text += _("\n 获得了{0}的【Ｕ性交合意】\n").format(target_data.name)
             # 避孕相关合意
             # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
             if (
@@ -625,7 +646,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 (handle_premise.handle_reproduction_period_0(target_character_id))
                 ):
                 target_data.talent[13] = 1
-                draw_text += f"\n 获得了{target_data.name}的【避孕中出合意】\n"
+                draw_text += _("\n 获得了{0}的【避孕中出合意】\n").format(target_data.name)
             # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
             if (
                 instruct_name == _("性交") and
@@ -634,7 +655,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
                 ):
                 target_data.talent[14] = 1
-                draw_text += f"\n 获得了{target_data.name}的【妊娠合意】\n"
+                draw_text += _("\n 获得了{0}的【妊娠合意】\n").format(target_data.name)
             if len(draw_text):
                 agree_draw.text = draw_text
                 agree_draw.draw()

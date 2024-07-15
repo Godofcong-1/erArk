@@ -1640,1243 +1640,1251 @@ msgstr ""
 msgid "暂无描述"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:49
-msgid "罗德岛制服夹克"
+#: .\data\csv\ClothingTem.csv:48
+msgid "隶属项圈"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:50
+msgid "罗德岛制服夹克"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:51
 msgid "白色羊绒衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:51
+#: .\data\csv\ClothingTem.csv:52
 msgid "白大褂"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:51
+#: .\data\csv\ClothingTem.csv:52
 msgid "凯尔希服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:52
+#: .\data\csv\ClothingTem.csv:53
 msgid "绿色抹胸裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:53
+#: .\data\csv\ClothingTem.csv:54
 msgid "登山服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:53
+#: .\data\csv\ClothingTem.csv:54
 msgid "白金服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:54
+#: .\data\csv\ClothingTem.csv:55
 msgid "白色连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:55
+#: .\data\csv\ClothingTem.csv:56
 msgid "白色羊绒衫（露肩）"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:56
+#: .\data\csv\ClothingTem.csv:57
 msgid "防寒服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:57
+#: .\data\csv\ClothingTem.csv:58
 msgid "莱茵生命极地防护服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:58
+#: .\data\csv\ClothingTem.csv:59
 msgid "长袖保暖毛衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:59
+#: .\data\csv\ClothingTem.csv:60
 msgid "无袖高领连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:60
+#: .\data\csv\ClothingTem.csv:61
 msgid "荷叶边系带分体披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:61
+#: .\data\csv\ClothingTem.csv:62
 msgid "白色左单肩瓣裂大袖护肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:62
+#: .\data\csv\ClothingTem.csv:63
 msgid "白色右单肩羽裂塑制斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:63
+#: .\data\csv\ClothingTem.csv:64
 msgid "白色三片式短斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:64
+#: .\data\csv\ClothingTem.csv:65
 msgid "罗德岛战术披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:65
+#: .\data\csv\ClothingTem.csv:66
 msgid "棕色夹克"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:66
+#: .\data\csv\ClothingTem.csv:67
 msgid "黑色背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:67
+#: .\data\csv\ClothingTem.csv:68
 msgid "武装带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:68
+#: .\data\csv\ClothingTem.csv:69
 msgid "粉黑双色夹克"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:69
+#: .\data\csv\ClothingTem.csv:70
 msgid "V领T恤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:70
+#: .\data\csv\ClothingTem.csv:71
 msgid "浅灰色无袖护肩风衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:71
+#: .\data\csv\ClothingTem.csv:72
 msgid "白色抹胸衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:72
+#: .\data\csv\ClothingTem.csv:73
 msgid "黑色毛领防寒外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:73
+#: .\data\csv\ClothingTem.csv:74
 msgid "黑色无袖运动紧身衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:74
+#: .\data\csv\ClothingTem.csv:75
 msgid "棕灰色斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:75
+#: .\data\csv\ClothingTem.csv:76
 msgid "战术马甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:76
+#: .\data\csv\ClothingTem.csv:77
 msgid "深灰色侦探外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:77
+#: .\data\csv\ClothingTem.csv:78
 msgid "水色荷叶边连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:78
+#: .\data\csv\ClothingTem.csv:79
 msgid "棕色束腰背带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:79
+#: .\data\csv\ClothingTem.csv:80
 msgid "V领背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:80
+#: .\data\csv\ClothingTem.csv:81
 msgid "白色流苏斗篷"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:81
+#: .\data\csv\ClothingTem.csv:82
 msgid "黑色高叉套裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:82
+#: .\data\csv\ClothingTem.csv:83
 msgid "白色百褶裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:83
+#: .\data\csv\ClothingTem.csv:84
 msgid "露肩双开叉连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:84
+#: .\data\csv\ClothingTem.csv:85
 msgid "连帽披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:85
+#: .\data\csv\ClothingTem.csv:86
 msgid "假两件前拉链无袖直筒超短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:86
+#: .\data\csv\ClothingTem.csv:87
 msgid "泡泡袖立领长上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:86
+#: .\data\csv\ClothingTem.csv:87
 msgid "普罗旺斯服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:87
+#: .\data\csv\ClothingTem.csv:88
 msgid "哥特风黑色无袖连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:88
+#: .\data\csv\ClothingTem.csv:89
 msgid "白色吊带连衣褶裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:89
+#: .\data\csv\ClothingTem.csv:90
 msgid "黑色冲锋衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:89
+#: .\data\csv\ClothingTem.csv:90
 msgid "可露希尔服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:90
+#: .\data\csv\ClothingTem.csv:91
 msgid "大号宽松T恤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:91
+#: .\data\csv\ClothingTem.csv:92
 msgid "连帽透明风超短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:92
+#: .\data\csv\ClothingTem.csv:93
 msgid "透明雪纺高领长袖衬衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:92
+#: .\data\csv\ClothingTem.csv:93
 msgid "特蕾西娅服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:93
+#: .\data\csv\ClothingTem.csv:94
 msgid "一字领白色大摆连衣长裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:94
+#: .\data\csv\ClothingTem.csv:95
 msgid "拉链毛领外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:95
+#: .\data\csv\ClothingTem.csv:96
 msgid "抹胸吊带连衣长裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:96
+#: .\data\csv\ClothingTem.csv:97
 msgid "拉链长摆外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:96
+#: .\data\csv\ClothingTem.csv:97
 msgid "白面鸮服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:97
+#: .\data\csv\ClothingTem.csv:98
 msgid "交叉绑带短连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:98
+#: .\data\csv\ClothingTem.csv:99
 msgid "橘色连帽外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:98
+#: .\data\csv\ClothingTem.csv:99
 msgid "梅尔服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:99
+#: .\data\csv\ClothingTem.csv:100
 msgid "黑色高领短款毛衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:100
+#: .\data\csv\ClothingTem.csv:101
 msgid "白色连帽衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:100
+#: .\data\csv\ClothingTem.csv:101
 msgid "火神服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:101
+#: .\data\csv\ClothingTem.csv:102
 msgid "黑色风衣外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:102
+#: .\data\csv\ClothingTem.csv:103
 msgid "黑色吊带背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:103
+#: .\data\csv\ClothingTem.csv:104
 msgid "喇叭袖卡腰外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:104
+#: .\data\csv\ClothingTem.csv:105
 msgid "七分袖短打底紧身上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:105
+#: .\data\csv\ClothingTem.csv:106
 msgid "深灰色斜纹针织大衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:106
+#: .\data\csv\ClothingTem.csv:107
 msgid "黑色收腰马甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:107
+#: .\data\csv\ClothingTem.csv:108
 msgid "灰白色衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:108
+#: .\data\csv\ClothingTem.csv:109
 msgid "黑白拼色高领带扣披肩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:108
+#: .\data\csv\ClothingTem.csv:109
 msgid "风笛服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:109
+#: .\data\csv\ClothingTem.csv:110
 msgid "深绿色长袖外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:110
+#: .\data\csv\ClothingTem.csv:111
 msgid "喇叭袖提花暗纹风衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:111
+#: .\data\csv\ClothingTem.csv:112
 msgid "白色褶边女士衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:112
+#: .\data\csv\ClothingTem.csv:113
 msgid "收腰西装裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:113
+#: .\data\csv\ClothingTem.csv:114
 msgid "深绿色带兜围裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:114
+#: .\data\csv\ClothingTem.csv:115
 msgid "白色竖纹衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:115
+#: .\data\csv\ClothingTem.csv:116
 msgid "连帽白色风衣外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:116
+#: .\data\csv\ClothingTem.csv:117
 msgid "浅褐色小西装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:117
+#: .\data\csv\ClothingTem.csv:118
 msgid "白色大号宽松外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:117
+#: .\data\csv\ClothingTem.csv:118
 msgid "桃金娘服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:118
+#: .\data\csv\ClothingTem.csv:119
 msgid "白色露脐背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:119
+#: .\data\csv\ClothingTem.csv:120
 msgid "白色高腰长袖半截衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:120
+#: .\data\csv\ClothingTem.csv:121
 msgid "酒红色半透荷叶边超短背心裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:121
+#: .\data\csv\ClothingTem.csv:122
 msgid "灰色羊绒衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:122
+#: .\data\csv\ClothingTem.csv:123
 msgid "大号宽松外套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:123
+#: .\data\csv\ClothingTem.csv:124
 msgid "白色水手服"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:124
+#: .\data\csv\ClothingTem.csv:125
 msgid "墨绿色高腰连衣裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:124
+#: .\data\csv\ClothingTem.csv:125
 msgid "芬服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:125
+#: .\data\csv\ClothingTem.csv:126
 msgid "灰色镂花灯笼袖露背长袖衬衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:125
+#: .\data\csv\ClothingTem.csv:126
 msgid "星极服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:126
+#: .\data\csv\ClothingTem.csv:127
 msgid "塑胶白大褂"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:126
+#: .\data\csv\ClothingTem.csv:127
 msgid "缪尔赛思服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:127
+#: .\data\csv\ClothingTem.csv:128
 msgid "棕色一字肩扣带长袖毛衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:128
+#: .\data\csv\ClothingTem.csv:129
 msgid "浴巾"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:129
+#: .\data\csv\ClothingTem.csv:130
 msgid "睡衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:129
+#: .\data\csv\ClothingTem.csv:130
 msgid "睡觉前换上"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:130
+#: .\data\csv\ClothingTem.csv:131
 msgid "睡裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:131
+#: .\data\csv\ClothingTem.csv:132
 msgid "白色女士衬衫"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:131
+#: .\data\csv\ClothingTem.csv:132
 msgid "通用"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:132
+#: .\data\csv\ClothingTem.csv:133
 msgid "通用上衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:134
+#: .\data\csv\ClothingTem.csv:135
 msgid "连颈胸带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:135
+#: .\data\csv\ClothingTem.csv:136
 msgid "棕色束胸内衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:136
+#: .\data\csv\ClothingTem.csv:137
 msgid "黑色运动背心"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:137
+#: .\data\csv\ClothingTem.csv:138
 msgid "白色绷带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:138
+#: .\data\csv\ClothingTem.csv:139
 msgid "黑色抹胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:139
+#: .\data\csv\ClothingTem.csv:140
 msgid "纯白色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:140
+#: .\data\csv\ClothingTem.csv:141
 msgid "纯黑色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:141
+#: .\data\csv\ClothingTem.csv:142
 msgid "深蓝色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:142
+#: .\data\csv\ClothingTem.csv:143
 msgid "深红色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:143
+#: .\data\csv\ClothingTem.csv:144
 msgid "粉红色胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:144
+#: .\data\csv\ClothingTem.csv:145
 msgid "白色运动文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:145
+#: .\data\csv\ClothingTem.csv:146
 msgid "黑色运动文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:146
+#: .\data\csv\ClothingTem.csv:147
 msgid "动物图案文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:147
+#: .\data\csv\ClothingTem.csv:148
 msgid "草莓图案文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:148
+#: .\data\csv\ClothingTem.csv:149
 msgid "白色背心文胸"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:149
+#: .\data\csv\ClothingTem.csv:150
 msgid "白色蕾丝胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:150
+#: .\data\csv\ClothingTem.csv:151
 msgid "黑色蕾丝胸罩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:151
+#: .\data\csv\ClothingTem.csv:152
 msgid "白色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:152
+#: .\data\csv\ClothingTem.csv:153
 msgid "黑色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:153
+#: .\data\csv\ClothingTem.csv:154
 msgid "粉色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:154
+#: .\data\csv\ClothingTem.csv:155
 msgid "浅蓝色连体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:155
+#: .\data\csv\ClothingTem.csv:156
 msgid "白色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:156
+#: .\data\csv\ClothingTem.csv:157
 msgid "黑色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:157
+#: .\data\csv\ClothingTem.csv:158
 msgid "粉色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:158
+#: .\data\csv\ClothingTem.csv:159
 msgid "浅蓝色分体泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:159
+#: .\data\csv\ClothingTem.csv:160
 msgid "白色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:160
+#: .\data\csv\ClothingTem.csv:161
 msgid "黑色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:161
+#: .\data\csv\ClothingTem.csv:162
 msgid "粉色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:162
+#: .\data\csv\ClothingTem.csv:163
 msgid "浅蓝色比基尼"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:163
+#: .\data\csv\ClothingTem.csv:164
 msgid "白色运动型泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:164
+#: .\data\csv\ClothingTem.csv:165
 msgid "黑色运动型泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:165
+#: .\data\csv\ClothingTem.csv:166
 msgid "学校泳衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:167
+#: .\data\csv\ClothingTem.csv:168
 msgid "抑制戒指"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:168
+#: .\data\csv\ClothingTem.csv:169
 msgid "黑丝长手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:169
+#: .\data\csv\ClothingTem.csv:170
 msgid "收束式保温手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:170
+#: .\data\csv\ClothingTem.csv:171
 msgid "露指臂甲"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:171
+#: .\data\csv\ClothingTem.csv:172
 msgid "露指单边手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:172
+#: .\data\csv\ClothingTem.csv:173
 msgid "扇子"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:173
+#: .\data\csv\ClothingTem.csv:174
 msgid "黄色橡胶手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:174
+#: .\data\csv\ClothingTem.csv:175
 msgid "过肘黑色丝质手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:175
+#: .\data\csv\ClothingTem.csv:176
 msgid "黑色分指手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:176
+#: .\data\csv\ClothingTem.csv:177
 msgid "袖套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:177
+#: .\data\csv\ClothingTem.csv:178
 msgid "可拆式袖套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:178
+#: .\data\csv\ClothingTem.csv:179
 msgid "单边黑色手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:179
+#: .\data\csv\ClothingTem.csv:180
 msgid "黑白色防护手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:180
+#: .\data\csv\ClothingTem.csv:181
 msgid "皮革手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:181
+#: .\data\csv\ClothingTem.csv:182
 msgid "群青色露指手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:182
+#: .\data\csv\ClothingTem.csv:183
 msgid "单边黄色橡胶手套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:183
+#: .\data\csv\ClothingTem.csv:184
 msgid "蓝色手套"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:185
-msgid "苏格兰风短格子裙"
+msgid "恋人戒指"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:187
+msgid "苏格兰风短格子裙"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:189
 msgid "白色运动短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:191
+#: .\data\csv\ClothingTem.csv:193
 msgid "罗德岛制服夹克(袖子对绑)"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:192
+#: .\data\csv\ClothingTem.csv:194
 msgid "黑色安全裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:193
+#: .\data\csv\ClothingTem.csv:195
 msgid "荷叶边短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:194
+#: .\data\csv\ClothingTem.csv:196
 msgid "黑色皮短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:195
+#: .\data\csv\ClothingTem.csv:197
 msgid "黑色低腰运动热裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:196
+#: .\data\csv\ClothingTem.csv:198
 msgid "高腰紧身短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:197
+#: .\data\csv\ClothingTem.csv:199
 msgid "白色荷叶边衬裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:204
+#: .\data\csv\ClothingTem.csv:206
 msgid "超低腰三角热裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:213
+#: .\data\csv\ClothingTem.csv:215
 msgid "黑色百褶短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:214
+#: .\data\csv\ClothingTem.csv:216
 msgid "深蓝色九分阔腿裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:215
+#: .\data\csv\ClothingTem.csv:217
 msgid "群青色一分短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:216
+#: .\data\csv\ClothingTem.csv:218
 msgid "格子百褶短裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:218
+#: .\data\csv\ClothingTem.csv:220
 msgid "黑色背带短裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:219
+#: .\data\csv\ClothingTem.csv:221
 msgid "浅灰色双开叉直筒裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:221
+#: .\data\csv\ClothingTem.csv:223
 msgid "黑色燕尾摆扣带腰封"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:222
+#: .\data\csv\ClothingTem.csv:224
 msgid "黑色高腰¾圆开叉半身裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:223
+#: .\data\csv\ClothingTem.csv:225
 msgid "白色高腰¾圆半身衬裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:224
+#: .\data\csv\ClothingTem.csv:226
 msgid "黑色直筒裙"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:226
+#: .\data\csv\ClothingTem.csv:228
 msgid "睡裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:228
+#: .\data\csv\ClothingTem.csv:230
 msgid "通用下衣"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:230
+#: .\data\csv\ClothingTem.csv:232
 msgid "酒红色超低腰内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:231
+#: .\data\csv\ClothingTem.csv:233
 msgid "深棕色内裤(白色衬里)"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:232
+#: .\data\csv\ClothingTem.csv:234
 msgid "纯白色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:233
+#: .\data\csv\ClothingTem.csv:235
 msgid "纯黑色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:234
+#: .\data\csv\ClothingTem.csv:236
 msgid "深蓝色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:235
+#: .\data\csv\ClothingTem.csv:237
 msgid "深红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:236
+#: .\data\csv\ClothingTem.csv:238
 msgid "粉红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:237
+#: .\data\csv\ClothingTem.csv:239
 msgid "天蓝色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:238
+#: .\data\csv\ClothingTem.csv:240
 msgid "洋红色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:239
+#: .\data\csv\ClothingTem.csv:241
 msgid "淡灰色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:240
+#: .\data\csv\ClothingTem.csv:242
 msgid "浅黄色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:241
+#: .\data\csv\ClothingTem.csv:243
 msgid "米黄色内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:242
+#: .\data\csv\ClothingTem.csv:244
 msgid "蓝白条纹内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:243
+#: .\data\csv\ClothingTem.csv:245
 msgid "蓝绿条纹内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:244
+#: .\data\csv\ClothingTem.csv:246
 msgid "小鸭图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:245
+#: .\data\csv\ClothingTem.csv:247
 msgid "水果图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:246
+#: .\data\csv\ClothingTem.csv:248
 msgid "花瓣图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:247
+#: .\data\csv\ClothingTem.csv:249
 msgid "水滴图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:248
+#: .\data\csv\ClothingTem.csv:250
 msgid "波浪图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:249
+#: .\data\csv\ClothingTem.csv:251
 msgid "海豚图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:250
+#: .\data\csv\ClothingTem.csv:252
 msgid "小鸟图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:251
+#: .\data\csv\ClothingTem.csv:253
 msgid "云朵图案内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:252
+#: .\data\csv\ClothingTem.csv:254
 msgid "白色蕾丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:253
+#: .\data\csv\ClothingTem.csv:255
 msgid "黑色蕾丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:254
+#: .\data\csv\ClothingTem.csv:256
 msgid "系绳内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:255
+#: .\data\csv\ClothingTem.csv:257
 msgid "丁字裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:256
+#: .\data\csv\ClothingTem.csv:258
 msgid "C字裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:257
+#: .\data\csv\ClothingTem.csv:259
 msgid "创可贴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:258
+#: .\data\csv\ClothingTem.csv:260
 msgid "开档内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:259
+#: .\data\csv\ClothingTem.csv:261
 msgid "真丝内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:260
+#: .\data\csv\ClothingTem.csv:262
 msgid "薄纱内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:261
+#: .\data\csv\ClothingTem.csv:263
 msgid "镂空内裤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:278
+#: .\data\csv\ClothingTem.csv:280
 msgid "黑衬口长筒袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:279
+#: .\data\csv\ClothingTem.csv:281
 msgid "白色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:280
+#: .\data\csv\ClothingTem.csv:282
 msgid "白色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:281
+#: .\data\csv\ClothingTem.csv:283
 msgid "深棕色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:282
+#: .\data\csv\ClothingTem.csv:284
 msgid "白色吊带袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:283
+#: .\data\csv\ClothingTem.csv:285
 msgid "白色过膝踩脚袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:284
+#: .\data\csv\ClothingTem.csv:286
 msgid "黑色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:285
+#: .\data\csv\ClothingTem.csv:287
 msgid "黑色绑腿带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:286
+#: .\data\csv\ClothingTem.csv:288
 msgid "黑色半透连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:287
+#: .\data\csv\ClothingTem.csv:289
 msgid "战术护膝"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:288
+#: .\data\csv\ClothingTem.csv:290
 msgid "腿环"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:289
+#: .\data\csv\ClothingTem.csv:291
 msgid "黄色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:290
+#: .\data\csv\ClothingTem.csv:292
 msgid "黑色小腿袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:291
+#: .\data\csv\ClothingTem.csv:293
 msgid "黄色泡泡袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:292
+#: .\data\csv\ClothingTem.csv:294
 msgid "单边黑色过膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:293
+#: .\data\csv\ClothingTem.csv:295
 msgid "单边绿色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:294
+#: .\data\csv\ClothingTem.csv:296
 msgid "浅灰色短袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:295
+#: .\data\csv\ClothingTem.csv:297
 msgid "白色渐变透肉超低腰连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:296
+#: .\data\csv\ClothingTem.csv:298
 msgid "黑色过膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:296
+#: .\data\csv\ClothingTem.csv:298
 msgid "基础服装"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:297
+#: .\data\csv\ClothingTem.csv:299
 msgid "黑色连裤袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:298
+#: .\data\csv\ClothingTem.csv:300
 msgid "黑色大腿袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:299
+#: .\data\csv\ClothingTem.csv:301
 msgid "黑色及膝袜"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:300
+#: .\data\csv\ClothingTem.csv:302
 msgid "战术绑腿包"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:301
+#: .\data\csv\ClothingTem.csv:303
 msgid "战术腿带"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:303
+#: .\data\csv\ClothingTem.csv:305
 msgid "深蓝色小皮鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:304
+#: .\data\csv\ClothingTem.csv:306
 msgid "高跟皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:305
+#: .\data\csv\ClothingTem.csv:307
 msgid "黑色圆头皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:306
+#: .\data\csv\ClothingTem.csv:308
 msgid "白色厚底长筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:307
+#: .\data\csv\ClothingTem.csv:309
 msgid "冰刀鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:308
+#: .\data\csv\ClothingTem.csv:310
 msgid "黑色中筒运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:309
+#: .\data\csv\ClothingTem.csv:311
 msgid "黑色防水靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:310
+#: .\data\csv\ClothingTem.csv:312
 msgid "粉色翻领高帮滑板鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:311
+#: .\data\csv\ClothingTem.csv:313
 msgid "浅灰色低筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:312
+#: .\data\csv\ClothingTem.csv:314
 msgid "厚底凉鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:313
+#: .\data\csv\ClothingTem.csv:315
 msgid "过膝战靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:314
+#: .\data\csv\ClothingTem.csv:316
 msgid "黑色小皮鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:315
+#: .\data\csv\ClothingTem.csv:317
 msgid "黑色过膝高筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:316
+#: .\data\csv\ClothingTem.csv:318
 msgid "黑色高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:317
+#: .\data\csv\ClothingTem.csv:319
 msgid "黑色绑带中筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:318
+#: .\data\csv\ClothingTem.csv:320
 msgid "白色高帮运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:319
+#: .\data\csv\ClothingTem.csv:321
 msgid "绑带中筒靴（带爪）"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:320
+#: .\data\csv\ClothingTem.csv:322
 msgid "黑红间色低跟短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:321
+#: .\data\csv\ClothingTem.csv:323
 msgid "黑色运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:322
+#: .\data\csv\ClothingTem.csv:324
 msgid "黑色无跟低筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:323
+#: .\data\csv\ClothingTem.csv:325
 msgid "芭蕾舞鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:324
+#: .\data\csv\ClothingTem.csv:326
 msgid "脚环高跟单鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:325
+#: .\data\csv\ClothingTem.csv:327
 msgid "橘色高帮运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:326
+#: .\data\csv\ClothingTem.csv:328
 msgid "黑色尖头乐福鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:327
+#: .\data\csv\ClothingTem.csv:329
 msgid "棕色中跟低筒皮短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:328
+#: .\data\csv\ClothingTem.csv:330
 msgid "白色翻边中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:329
+#: .\data\csv\ClothingTem.csv:331
 msgid "防滑翻折中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:330
+#: .\data\csv\ClothingTem.csv:332
 msgid "金色尖头配花高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:331
+#: .\data\csv\ClothingTem.csv:333
 msgid "灰绿色防滑运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:332
+#: .\data\csv\ClothingTem.csv:334
 msgid "黑色厚底短靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:333
+#: .\data\csv\ClothingTem.csv:335
 msgid "白色运动鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:334
+#: .\data\csv\ClothingTem.csv:336
 msgid "黑色带蝴蝶结高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:335
+#: .\data\csv\ClothingTem.csv:337
 msgid "黑色扣带中筒皮靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:336
+#: .\data\csv\ClothingTem.csv:338
 msgid "黑色圆头乐福鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:337
+#: .\data\csv\ClothingTem.csv:339
 msgid "棕色翻折中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:338
+#: .\data\csv\ClothingTem.csv:340
 msgid "黑色尖头绑带高跟鞋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:339
+#: .\data\csv\ClothingTem.csv:341
 msgid "黑色尖头中筒靴"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:341
+#: .\data\csv\ClothingTem.csv:343
 msgid "无胄盟源石复合弓"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:342
+#: .\data\csv\ClothingTem.csv:344
 msgid "“提灯天使”法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:343
+#: .\data\csv\ClothingTem.csv:345
 msgid "龙腾无人机控制器"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:344
+#: .\data\csv\ClothingTem.csv:346
 msgid "切城警用防暴左轮"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:345
+#: .\data\csv\ClothingTem.csv:347
 msgid "“浮标”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:346
+#: .\data\csv\ClothingTem.csv:348
 msgid "维多利亚军旗"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:347
+#: .\data\csv\ClothingTem.csv:349
 msgid "仪仗剑"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:348
+#: .\data\csv\ClothingTem.csv:350
 msgid "长柄镰刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:349
+#: .\data\csv\ClothingTem.csv:351
 msgid "“光羽箭”骑士弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:350
+#: .\data\csv\ClothingTem.csv:352
 msgid "共振装置手提箱"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:351
+#: .\data\csv\ClothingTem.csv:353
 msgid "口琴型匕首"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:352
+#: .\data\csv\ClothingTem.csv:354
 msgid "深海猎人长柄圆锯"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:353
+#: .\data\csv\ClothingTem.csv:355
 msgid "工程蓄水炮"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:354
+#: .\data\csv\ClothingTem.csv:356
 msgid "咪波控制终端XP"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:355
+#: .\data\csv\ClothingTem.csv:357
 msgid "锻锤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:356
+#: .\data\csv\ClothingTem.csv:358
 msgid "皮鞭"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:357
+#: .\data\csv\ClothingTem.csv:359
 msgid "“蓝莓与黑巧”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:358
+#: .\data\csv\ClothingTem.csv:360
 msgid "维多利亚破城矛"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:359
+#: .\data\csv\ClothingTem.csv:361
 msgid "荆棘审判锤"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:360
+#: .\data\csv\ClothingTem.csv:362
 msgid "专业级改良镜头"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:361
+#: .\data\csv\ClothingTem.csv:363
 msgid "杜林桌布旗"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:362
+#: .\data\csv\ClothingTem.csv:364
 msgid "天球仪与源石剑"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:363
+#: .\data\csv\ClothingTem.csv:365
 msgid "源石法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:363
+#: .\data\csv\ClothingTem.csv:365
 msgid "法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:364
+#: .\data\csv\ClothingTem.csv:366
 msgid "源石弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:364
+#: .\data\csv\ClothingTem.csv:366
 msgid "弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:365
+#: .\data\csv\ClothingTem.csv:367
 msgid "罗德岛制式刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:365
+#: .\data\csv\ClothingTem.csv:367
 msgid "刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:366
+#: .\data\csv\ClothingTem.csv:368
 msgid "罗德岛制式长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:366
+#: .\data\csv\ClothingTem.csv:368
 msgid "长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:368
+#: .\data\csv\ClothingTem.csv:370
 msgid "源石检测抑制环"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:369
+#: .\data\csv\ClothingTem.csv:371
 msgid "肩背式箭袋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:370
+#: .\data\csv\ClothingTem.csv:372
 msgid "“笼中青鸟”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:371
+#: .\data\csv\ClothingTem.csv:373
 msgid "大帝的坠饰"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:372
+#: .\data\csv\ClothingTem.csv:374
 msgid "警徽"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:373
+#: .\data\csv\ClothingTem.csv:375
 msgid "剪刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:374
+#: .\data\csv\ClothingTem.csv:376
 msgid "战术挎包"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:375
+#: .\data\csv\ClothingTem.csv:377
 msgid "电工工具套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:376
+#: .\data\csv\ClothingTem.csv:378
 msgid "仿生海龙小叶"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:377
+#: .\data\csv\ClothingTem.csv:379
 msgid "机械水獭咪波"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:378
+#: .\data\csv\ClothingTem.csv:380
 msgid "叙拉古法典"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:379
+#: .\data\csv\ClothingTem.csv:381
 msgid "磐蟹饲养箱"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:380
+#: .\data\csv\ClothingTem.csv:382
 msgid "摄影辅助机器人“镜头”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:381
+#: .\data\csv\ClothingTem.csv:383
 msgid "“金苹果”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:382
+#: .\data\csv\ClothingTem.csv:384
 msgid "诅咒娃娃“小莫提”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:383
+#: .\data\csv\ClothingTem.csv:385
 msgid "绿叶伞"
 msgstr ""
 
@@ -2970,6 +2978,14 @@ msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:7
 msgid "获得1至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+#: .\data\csv\Collection_bouns.csv:8
+msgid "获得3至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+#: .\data\csv\Collection_bouns.csv:9
+msgid "获得5至纯源石，可以用来获得或升级源石技艺"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:11
@@ -5421,7 +5437,7 @@ msgid "精力剂"
 msgstr ""
 
 #: .\data\csv\Item.csv:10
-msgid "使用后回复100精液量。暂未实装。"
+msgid "使用后回复20ml精液量。"
 msgstr ""
 
 #: .\data\csv\Item.csv:11
@@ -5445,7 +5461,7 @@ msgid "全乐器套装"
 msgstr ""
 
 #: .\data\csv\Item.csv:13
-msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖"
+msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
 msgstr ""
 
 #: .\data\csv\Item.csv:14
@@ -5525,7 +5541,7 @@ msgid "避孕套"
 msgstr ""
 
 #: .\data\csv\Item.csv:23
-msgid "说明暂无"
+msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
 msgstr ""
 
 #: .\data\csv\Item.csv:24
@@ -5562,6 +5578,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:28
 msgid "震动棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:28
+msgid "说明暂无"
 msgstr ""
 
 #: .\data\csv\Item.csv:29
@@ -5604,6 +5624,10 @@ msgstr ""
 msgid "采尿器"
 msgstr ""
 
+#: .\data\csv\Item.csv:36
+msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
+msgstr ""
+
 #: .\data\csv\Item.csv:37
 msgid "鞭子"
 msgstr ""
@@ -5633,18 +5657,26 @@ msgid "干员携袋"
 msgstr ""
 
 #: .\data\csv\Item.csv:42
-msgid "印有罗德岛logo的黑色桶装袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
+msgid "印有罗德岛logo的黑色桶状袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
 msgstr ""
 
 #: .\data\csv\Item.csv:43
-msgid "戒指"
+msgid "干员宿舍万能钥匙(一次性)"
 msgstr ""
 
 #: .\data\csv\Item.csv:43
-msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
+msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
 msgstr ""
 
 #: .\data\csv\Item.csv:44
+msgid "戒指"
+msgstr ""
+
+#: .\data\csv\Item.csv:44
+msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
+msgstr ""
+
+#: .\data\csv\Item.csv:45
 msgid "用来戴在已经被【驯服】的干员脖子上，同意后将作为你的【宠物】"
 msgstr ""
 
@@ -6009,7 +6041,7 @@ msgid "刻印是什么东西？有什么用？如何获得或消除？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:9
-msgid "刻印是干员的一种特殊属性，在干员经历对她影响足够大的事件时才会获得/升级，除无觉刻印外为最高六级以外，其他刻印最高为三级\n目前共实装了6个刻印，分别是快乐刻印、屈服刻印、无觉刻印、苦痛刻印、恐怖刻印、反发刻印\n其中负面刻印（恐怖刻印和反发刻印），可以使用博士的源石技艺来降低刻印等级，降低到零级即为消除\n\n快乐刻印：在干员体验到足够强烈的性快感时会获得/升级该刻印\n          一旦体验过性的快乐，就会发自内心的想要更多品尝这份快感，不停地堕落下去\n          能够在博士对干员进行性骚扰/H指令时增加实行值，关系到部位敏感度提升与淫乱系素质获得\n\n屈服刻印：在干员做了足够卑微或耻辱的事时会获得/升级该刻印\n          逐渐放弃不需要的自尊和骄傲，开始服从于你的每个命令，以满足你的意志为人生的全部目的\n          能够在博士对干员进行所有指令时增加实行值，并且是隶属系攻略路线的前置条件\n\n无觉刻印：干员在意识薄弱或无意识中体验到足够强烈的性快感时会获得/升级该刻印\n          尽管脑海里没有印象，但身体依旧会忠实地记住并习惯于这美好的感觉，直到为时已晚的那一刻的到来\n          能够在博士对干员进行性骚扰/H指令时增加实行值，并显著增强无意识奸下的快感\n\n苦痛刻印：在干员受到了足够多的物理疼痛时会获得/升级该刻印\n          适度的鞭打作为教育的一环，能够让身体一点点理解疼痛也是一种快感\n          能够在博士对干员进行SM指令时增加实行值，但在进行爱情指令时减少实行值\n\n恐怖刻印：在干员遭受了足够大的精神打击时会获得/升级该刻印\n          不断累积的精神创伤会逐渐封闭人的心灵，并最终把人格推向无底的深渊\n          负面刻印，在博士对干员进行所有指令时减少实行值，刻印等级的提高会使干员的AI无法正常行动直至完全错乱\n\n反发刻印：在干员对博士产生了足够大的愤怒、怀疑和仇恨时会获得/升级该刻印\n          信任的裂隙逐渐扩大，其反面就是刻骨的仇恨\n          非常严重的负面刻印，在博士对干员进行所有指令时极大的减少实行值，一级会拒绝大部分互动指令，二级会有意避免与博士接触，三级会伺机攻击博士"
+msgid "刻印是干员的一种特殊属性，在干员经历对她影响足够大的事件时才会获得/升级，除无觉刻印外为最高六级以外，其他刻印最高为三级\n目前共实装了6个刻印，分别是快乐刻印、屈服刻印、无觉刻印、苦痛刻印、恐怖刻印、反发刻印\n其中负面刻印（恐怖刻印和反发刻印），可以使用博士的源石技艺来降低刻印等级，降低到零级即为消除\n\n快乐刻印：在干员体验到足够强烈的性快感时会获得/升级该刻印\n          一旦体验过性的快乐，就会发自内心的想要更多品尝这份快感，不停地堕落下去\n          能够在博士对干员进行性骚扰/H指令时增加实行值，关系到部位敏感度提升与淫乱系素质获得\n\n屈服刻印：在干员做了足够卑微或耻辱的事时会获得/升级该刻印\n          逐渐放弃不需要的自尊和骄傲，开始服从于你的每个命令，以满足你的意志为人生的全部目的\n          能够在博士对干员进行所有指令时增加实行值，并且是隶属系攻略路线的前置条件\n\n无觉刻印：干员在意识薄弱或无意识中体验到足够强烈的性快感时会获得/升级该刻印\n          尽管脑海里没有印象，但身体依旧会忠实地记住并习惯于这美好的感觉，直到为时已晚的那一刻的到来\n          能够在博士对干员进行性骚扰/H指令时增加实行值，并显著增强无意识奸下的快感\n\n苦痛刻印：在干员受到了足够多的物理疼痛时会获得/升级该刻印\n          适度的鞭打作为教育的一环，能够让身体一点点理解疼痛也是一种快感\n          能够在博士对干员进行SM指令时增加实行值，但在进行爱情指令时减少实行值\n\n恐怖刻印：在干员遭受了足够大的精神打击时会获得/升级该刻印\n          不断累积的精神创伤会逐渐封闭人的心灵，并最终把人格推向无底的深渊\n          负面刻印，在博士对干员进行所有指令时减少实行值，刻印等级的提高会使干员的AI无法正常行动直至完全错乱\n\n反发刻印：在干员对博士产生了足够大的愤怒、怀疑和仇恨时会获得/升级该刻印\n          信任的裂隙逐渐扩大，其反面就是刻骨的仇恨\n          非常严重的负面刻印，在博士对干员进行所有指令时极大的减少实行值，一级会拒绝大部分互动指令，二级会有意避免与博士接触，三级会伺机攻击博士\n\n*目前恐怖刻印和反发刻印的负面效果暂未实装"
 msgstr ""
 
 #: .\data\csv\Prts.csv:10
@@ -6041,7 +6073,7 @@ msgid "如何提升博士或干员的体力与气力上限？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:18
-msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可是用"
+msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用"
 msgstr ""
 
 #: .\data\csv\Prts.csv:19
@@ -6052,115 +6084,139 @@ msgstr ""
 msgid "每日多多使用源石技艺，将理智尽量消耗光，会根据消耗的量来缓慢提升理智上限"
 msgstr ""
 
-#: .\data\csv\Prts.csv:22
-msgid "如何和干员处好关系？"
+#: .\data\csv\Prts.csv:21
+msgid "博士每天都需要做什么？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:23
-msgid "正常的和干员相处就会自然而然的关系要好起来了，最简单的方式就是把要攻略的目标设为助理，这样平常就一直在一起行动了\n一开始还是陌生的状态下，就不要急于进行性骚扰甚至做更过分的事情，日常系的指令都是不会出问题的，等到熟悉起来了再逐步尝试吧"
+#: .\data\csv\Prts.csv:22
+msgid "没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\n可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
 msgstr ""
 
 #: .\data\csv\Prts.csv:24
-msgid "惹干员生气了怎么办？"
+msgid "如何和干员处好关系？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:25
-msgid "去诚恳的道歉，不行的话就多道几次歉，总会原谅你的。\n如果生气很严重，获得反发刻印或者恐怖刻印了的话，可以用源石技艺进行消除，然后再去道歉。"
+msgid "正常的和干员相处就会自然而然的关系要好起来了，最简单的方式就是把要攻略的目标设为助理，这样平常就一直在一起行动了\n一开始还是陌生的状态下，就不要急于进行性骚扰甚至做更过分的事情，日常系的指令都是不会出问题的，等到熟悉起来了再逐步尝试吧"
 msgstr ""
 
 #: .\data\csv\Prts.csv:26
-msgid "攻略路线是怎么样的？"
+msgid "惹干员生气了怎么办？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:27
-msgid "攻略分为【爱情系】和【隶属系】两条路线，只能二选其一，两条路线在抵达第三阶段时均可获得该干员的【信物】。\n\n爱情系：以和干员相亲相爱为主要目标，通过日常中的点点滴滴拉近感情，最终坠入爱河，从低到高共有[思慕]、[恋慕]、[恋人]、[爱侣]四个阶段\n隶属系：以博士的意志为主要目标，通过强迫性指令和肉体快感调教等方式等方式，最终达到干员对博士的绝对服从，从低到高共有[屈从]、[驯服]、[宠物]、[奴隶]四个阶段\n\n最开始路线的选择是博士在属性提升中手动选择的，之后当前周目内就不能再更改了，请慎重选择"
+msgid "去诚恳的道歉，不行的话就多道几次歉，总会原谅你的。\n如果生气很严重，获得反发刻印或者恐怖刻印了的话，可以用源石技艺进行消除，然后再去道歉。"
+msgstr ""
+
+#: .\data\csv\Prts.csv:28
+msgid "攻略路线是怎么样的？如何获得信物？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:29
-msgid "如何才能与干员H？"
+msgid "攻略分为【爱情系】和【隶属系】两条路线，只能二选其一，两条路线在抵达第三阶段时均可获得该干员的【信物】。\n\n爱情系：以和干员相亲相爱为主要目标，通过日常中的点点滴滴拉近感情，最终坠入爱河，从低到高共有[思慕]、[恋慕]、[恋人]、[爱侣]四个阶段\n隶属系：以博士的意志为主要目标，通过强迫性指令和肉体快感调教等方式等方式，最终达到干员对博士的绝对服从，从低到高共有[屈从]、[驯服]、[宠物]、[奴隶]四个阶段\n\n最开始路线的选择是博士在属性提升中手动选择的，之后当前周目内就不能再更改了，请慎重选择"
 msgstr ""
 
 #: .\data\csv\Prts.csv:30
-msgid "首先，需要关系足够亲密，当随便性骚扰都没关系的时候，就可以尝试性地邀请与干员H了。\n如果邀请失败了，说明还需要再努努力，比如在当天多一起互动互动，或者营造一下比较好的氛围，或者干脆使用药物等辅助工具\n邀请成功了的话，H时也要一步一步慢慢来，前戏做好、润滑足够，这样干员才会同意插入，如果润滑不足的话，即使同意了，也会极大的增加苦痛值\n以及要插入的话，需要提前准备好避孕措施，如果不想避孕的话，可能需要极大的努力才能说服干员同意"
+msgid "拿到的干员的内裤/袜子有什么用？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:31
-msgid "如何用道具来H？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:32
-msgid "在贸易区里有一个成人用品商店，消耗粉红凭证就可以购买对应道具\n大部分道具购买后即可在H中使用，部分特殊道具（如搾乳机等）需要对应部位已经开发到满足条件才可以使用"
+msgid "内裤和袜子属于收集品，获得后可以在[图书馆]的[藏品馆]中使用【摆放藏品】，每收集一定数量后可以获得特定的解锁奖励。"
 msgstr ""
 
 #: .\data\csv\Prts.csv:33
-msgid "干员会怀孕吗？可以真的生出小孩吗？"
+msgid "如何才能与干员H？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:34
-msgid "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\n\n干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n\n在[受精]后，过一个月左右的时间会变成[妊娠]状态，获得[孕肚]和[泌乳]\n再过两个月左右，会[临盆]，接着过不了几天就会[生产]\n生出孩子后，母亲会进入[育儿]状态，养育需要一个月左右，孩子就会从[婴儿]成长为可以初步自理的[幼女]\n结束了[育儿]后，母亲会恢复孕前状态，也会失去[泌乳]，而孩子还会依次成长为[萝莉]再到[少女]，每次成长会耗时两个月左右\n\n孩子的性别仅为女性，在成长到[少女]后即完全成为一名正常的干员\n女儿会继承母亲包括种族在内大部分生理特征，也会在[育儿]期间学到部分来自母亲的后天知识和技能"
+msgid "首先，需要关系足够亲密，当随便性骚扰都没关系的时候，就可以尝试性地邀请与干员H了。\n如果邀请失败了，说明还需要再努努力，比如在当天多一起互动互动，或者营造一下比较好的氛围，或者干脆使用药物等辅助工具\n邀请成功了的话，H时也要一步一步慢慢来，前戏做好、润滑足够，这样干员才会同意插入，如果润滑不足的话，即使同意了，也会极大的增加苦痛值\n以及要插入的话，需要提前准备好避孕措施，如果不想避孕的话，可能需要极大的努力才能说服干员同意"
 msgstr ""
 
 #: .\data\csv\Prts.csv:35
-msgid "我在射精时选定了指定部位，但发现还射到了其他部位上，这是怎么回事？"
+msgid "如何用道具来H？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:36
-msgid "精液的容积系统中有液体流通计算，射上去的精液会有一部分流向联通的其他部位，还会有一部分向环境中滴落，是正常现象\n如果不想让出现该计算，可以在设置中关闭液体流通功能，这样射出的精液就只会停留在指定部位上了"
+msgid "在贸易区里有一个成人用品商店，消耗粉红凭证就可以购买对应道具\n大部分道具购买后即可在H中使用，部分特殊道具（如搾乳机等）需要对应部位已经开发到满足条件才可以使用"
+msgstr ""
+
+#: .\data\csv\Prts.csv:37
+msgid "干员会怀孕吗？可以真的生出小孩吗？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:38
-msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
+msgid "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\n\n干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n\n在[受精]后，过一个月左右的时间会变成[妊娠]状态，获得[孕肚]和[泌乳]\n再过两个月左右，会[临盆]，接着过不了几天就会[生产]\n生出孩子后，母亲会进入[育儿]状态，养育需要一个月左右，孩子就会从[婴儿]成长为可以初步自理的[幼女]\n结束了[育儿]后，母亲会恢复孕前状态，也会失去[泌乳]，而孩子还会依次成长为[萝莉]再到[少女]，每次成长会耗时两个月左右\n\n孩子的性别仅为女性，在成长到[少女]后即完全成为一名正常的干员\n女儿会继承母亲包括种族在内大部分生理特征，也会在[育儿]期间学到部分来自母亲的后天知识和技能"
 msgstr ""
 
 #: .\data\csv\Prts.csv:39
-msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
+msgid "我在射精时选定了指定部位，但发现还射到了其他部位上，这是怎么回事？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:40
-msgid "如何招募新的干员？"
+msgid "精液的容积系统中有液体流通计算，射上去的精液会有一部分流向联通的其他部位，还会有一部分向环境中滴落，是正常现象\n如果不想让出现该计算，可以在设置中关闭液体流通功能，这样射出的精液就只会停留在指定部位上了"
 msgstr ""
 
 #: .\data\csv\Prts.csv:41
-msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
+msgid "在H中该如何让干员获得更多的快感和快乐，并减少苦痛反发等负面数值？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:42
-msgid "如何建造/升级设施？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:43
-msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
+msgid "在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\n在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\n在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\n\n在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
 msgstr ""
 
 #: .\data\csv\Prts.csv:44
-msgid "都有哪些获得龙门币的方法？"
+msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:45
-msgid "目前主要的获取途径有两个。\n①，医疗部每天治疗病人，能够获得稳定的龙门币收入\n②，将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润"
+msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
 msgstr ""
 
 #: .\data\csv\Prts.csv:46
-msgid "都有哪些获得粉红凭证的方法？"
+msgid "如何招募新的干员？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:47
-msgid "①，每日的干员好感度提升会换算为一定的粉红凭证\n②，已攻略的干员会根据攻略程度每日提供固定的粉红凭证"
+msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
 msgstr ""
 
 #: .\data\csv\Prts.csv:48
-msgid "都有哪些获得至纯源石的方法？"
+msgid "如何建造/升级设施？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:49
-msgid "目前的主要获得办法是在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励"
+msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
 msgstr ""
 
 #: .\data\csv\Prts.csv:50
-msgid "种植相关的基建系统是如何运作的？"
+msgid "都有哪些获得龙门币的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:51
+msgid "目前主要的获取途径有两个。\n①，医疗部每天治疗病人，能够获得稳定的龙门币收入\n②，将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润"
+msgstr ""
+
+#: .\data\csv\Prts.csv:52
+msgid "都有哪些获得粉红凭证的方法？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:53
+msgid "①，每日的干员好感度提升会换算为一定的粉红凭证\n②，已攻略的干员会根据攻略程度每日提供固定的粉红凭证"
+msgstr ""
+
+#: .\data\csv\Prts.csv:54
+msgid "都有哪些获得至纯源石的方法？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:55
+msgid "目前的主要获得办法是在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励"
+msgstr ""
+
+#: .\data\csv\Prts.csv:56
+msgid "种植相关的基建系统是如何运作的？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:57
 msgid "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
 msgstr ""
 
@@ -6368,8 +6424,16 @@ msgstr ""
 msgid "生菜汉堡（芙蓉健康餐）"
 msgstr ""
 
+#: .\data\csv\Recipes.csv:12
+msgid "不加肉类、芝士、酸黄瓜的生菜汉堡"
+msgstr ""
+
 #: .\data\csv\Recipes.csv:13
 msgid "混合沙拉（芙蓉健康餐）"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:13
+msgid "用十二种蔬菜混合制成的沙拉"
 msgstr ""
 
 #: .\data\csv\Recipes.csv:14
@@ -6390,6 +6454,10 @@ msgstr ""
 
 #: .\data\csv\Recipes.csv:16
 msgid "干蒸兽肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:16
+msgid "肉质鲜嫩，肥而不腻，香气四溢，入口即化。"
 msgstr ""
 
 #: .\data\csv\Recipes.csv:17
@@ -6748,19 +6816,695 @@ msgstr ""
 msgid "用浓郁的巧克力酱与源石虫肝作为配料的叙拉古面，有着浓郁的高卢风味，会引起叙拉古出身干员的愤怒。"
 msgstr ""
 
+#: .\data\csv\Recipes.csv:62
+msgid "汐斯塔风情水果披萨"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:62
+msgid "汐斯塔的特色披萨，上面铺满了各种水果，看起来就像一块大蛋糕。"
+msgstr ""
+
 #: .\data\csv\Recipes.csv:63
+msgid "深盘厚底魔鬼辣椒披萨"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:63
+msgid "来自多索雷斯的特色披萨，辣椒的味道很重，吃完之后会让你感觉到一种前所未有的辣。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:64
+msgid "羔岩羊腿肉披萨"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:64
+msgid "来自维多利亚的特色披萨，只选用最好的岩羊羔羊腿肉，口感鲜嫩，味道鲜美。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:65
+msgid "京城烤鸭披萨"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:65
+msgid "来自炎国的特色披萨，将京城烤鸭与披萨完美结合，能同时品尝到两者的美味。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:66
+msgid "壳虾岩蟹披萨"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:66
+msgid "来自伊比利亚的特色披萨，大胆的将蒜香壳虾与岩蟹肉放在了披萨上，味道鲜美。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:67
+msgid "罐装晌午茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:67
+msgid "尚蜀常见的特色罐装饮料，听说各地客栈茶馆都供不应求。勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:68
+msgid "酱兽肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:69
+msgid "尚蜀岩茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:70
+msgid "勾吴花茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:71
+msgid "姜齐白茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:72
+msgid "大荒粗叶子"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:73
+msgid "罐装晌午茶(柠檬折耳根味)"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:74
+msgid "菊花茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:75
+msgid "盐花生"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:76
+msgid "黑豆茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:77
+msgid "甜司康饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:78
+msgid "汐斯塔冰茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:79
+msgid "红椒茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:80
+msgid "驮兽奶茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:81
+msgid "米诺斯之雾"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:82
+msgid "黑曜石柑茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:83
+msgid "新酿烈刀子"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:83
+msgid "玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:84
+msgid "高脚羽兽烤串"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:85
+msgid "松饼早餐卷"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:86
+msgid "山水兜"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:87
+msgid "香草冰淇淋"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:88
+msgid "乌萨斯饺子"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:89
+msgid "黄油羽兽"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:90
+msgid "仿蒲烧鳝鳞饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:91
+msgid "面包碗佐奶油汤"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:92
+msgid "玻利瓦尔风卷饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:93
+msgid "蒜香壳虾塔帕斯"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:94
+msgid "辣味酸橙派"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:95
+msgid "加糖黑曜石柑茶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:96
+msgid "多伦乡村拼盘"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:96
+msgid "即使是偏远乡村，你仍能在宴会上见到维多利亚人特有的矜持。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:97
+msgid "格里布熏鳞色拉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:97
+msgid "精心熏制的好菜只为今日待客，还有解腻的红茶，以及佐餐的豪言笑语。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:98
+msgid "斯沃玛三分钟浓汤"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:98
+msgid "“大厨三小时，在家三分钟！”斯沃玛商务们如是吹嘘着自家公司的商品。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:99
+msgid "多索雷斯风情塔可"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:99
+msgid "精心搭配的馅料让食客在餐桌前巡游半个泰拉，可真正属于多索雷斯的只有那张表面金黄的薄饼。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:100
+msgid "提亚卡乌式炸蕉果"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:100
+msgid "宴会从正午开到夕阳西下，提亚卡乌们还在大快朵颐，但你已经吃不下了。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:101
+msgid "约翰老妈厚切汉堡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:101
+msgid "即使是用来答谢的加料加厚汉堡，吃完后留在脑海中的也只有半片生菜和薄薄的肉排，让人“意犹未尽”。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:102
+msgid "雷神工业火炙巨羽兽"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:102
+msgid "用火微微一烤就可以端上来享用，焦脆的皮和多汁的肉，香肥量大，几口就能吃饱，员工喜欢它的味道，主管也很满意它的效率。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:103
+msgid "阿尔斯特华夫冰淇淋"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:103
+msgid "冰淇淋球的形状像是从墙上铲下来的，华夫饼的边缘沾上了来路不明的糖霜。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:104
+msgid "审判庭特制火腿薄片"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:104
+msgid "薄厚不均的肉片铺在礁石上。肌肉纹理泛着锃亮的油光，凑近能闻到些许坚果香气。挣脱海水的束缚后，才发觉陆地的馈赠是如此甜美。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:105
+msgid "塔山炸沙虫腿"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:105
+msgid "炸得恰到好处的沙虫腿在唇齿间迸出汁水，传言在如此美味面前显得无足轻重。餐后才得知“二十条腿的沙虫”是一派胡言，用培养罐培养沙虫腿根本用不着沙虫。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:106
+msgid "杜林十号烈酒"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:106
+msgid "酒过数巡，酩酊的杜林们进入梦乡，烈酒协会成员倒在蜜酿协会成员的身上，醇厚的酒香萦绕此间。十号烈酒，名叫“友谊”。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:107
+msgid "欢乐之歌年轮蛋糕"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:107
+msgid "蛋糕甜蜜松软，纹路像悠久的年轮，也像那些能让人沉浸于欢乐之中的旋律。听说，蛋糕师是乐团的退休乐手，在烤制时演奏欢乐的小调，是让蛋糕变得轻盈绵密的秘诀。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:108
+msgid "盒牌商务健康盒饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:108
+msgid "让人丧失贪吃欲望的盒饭。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:109
+msgid "汉堡甜甜圈套餐"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:109
+msgid "甜甜圈的甜蜜与汉堡的咸香，是一种奇妙的搭配。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:110
+msgid "玻利瓦尔咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:110
+msgid "少数被冠以产地名的特级咖啡，咖啡豆是许多玻利瓦尔大城市里畅销的伴手礼，内销和出口的需求量极大。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:111
+msgid "黑咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:111
+msgid "无糖咖啡，是咖啡的原始味道，也是最纯粹的味道。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:112
+msgid "火山咖啡"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:112
+msgid "火山咖啡的独特风味来自于汐斯塔火山灰土壤的独特气候，是一种稀有的咖啡，口感浓郁，香味浓烈。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:113
+msgid "过萃咖啡液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:113
+msgid "过萃的地底黑咖啡。提神效果极佳。可以代替糖浆。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:114
+msgid "奶霜华夫饼塔"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:114
+msgid "华夫饼的香甜与奶霜的绵蜜，是一种奇妙的搭配。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:115
+msgid "德荣单人餐"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:115
+msgid "来自德荣的单人餐，是一种简单的餐饮，适合快节奏的生活。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:116
+msgid "杨森兄弟双人餐"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:116
+msgid "杨森到底有几个兄弟？这个双人餐是不是只有他一个人吃？"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:118
+msgid "蟹肉碎拌饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:118
+msgid "热腾腾的杂粮中加入了岩壳蟹肉，吃起来朴素中略带鲜味。好吃是好吃，但......究竟是谁第一个决定尝试食用岩壳蟹的呢？"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:119
+msgid "调味干粮"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:119
+msgid "较朴素的速食食品，经过了调味，吃起来还挺适口。据说未经调味的初版十分难以下咽，曾有人评价为不是“食用”，而是“服用”。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:120
+msgid "松枝熏肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:120
+msgid "经过松枝熏烤，整块肉带上了浓郁的松香滋味，表皮油润，内里香醇。只需切下几块放在热腾腾的饭上，熏肉的香气就能充满整间屋子，令人陶醉。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:121
+msgid "鲜切蟹生"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:121
+msgid "制作过程似乎只是切了几刀，过了下水，就这样端了出来。评价两极分化的一道菜肴，有人吃完之后感觉自已仿佛长出了和岩壳蟹一样坚硬的外壳。可能是过敏反应。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:122
+msgid "真空冷制肉脍"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:122
+msgid "已经预制好的兽肉和杂粮，制作流程均在低温下完成，极大限度地保证了食材的新鲜。只需要简单加热，就是一道美味。感谢科技！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:123
+msgid "炭烤兽肉卷饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:123
+msgid "每个国家的人都有他们喜欢的独特吃法，可以随意搭配尝试。但如果做出类似在炎国人眼前往饼里卷小笼包这种行为，可能会被追着打。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:124
+msgid "猎人饭包"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:124
+msgid "捕捉到什么猎物，就使用什么肉炙烤所得，简单方便，自由度高。谁的饭包最大，谁的捕猎技巧就最高。不过为了面子，往里面多塞一点谷物也是可以的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:125
+msgid "超级厚馅饼"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:125
+msgid "萨尔贡当地传统主食之一，馅料是浓厚香醇的兽肉，深受当地人喜爱。大，大，大！越大越好！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:126
+msgid "鲜萃凝方体"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:126
+msgid "由肉类提纯出各类人体所需的成分后精制的凝方体，营养丰富。但它的外表和名字一样，难以让人产生食欲。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:127
+msgid "香煎杂肉饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:127
+msgid "不同种类的肉混合成独特的美味，颜色丰富，让人难以忘怀。一勺挖下去，热气蒸腾，从里面翻找出最喜欢的肉是这道菜的一大乐趣。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:128
+msgid "脱水增味肉干"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:128
+msgid "将食材脱水处理，是人们保存食物最原始也最简单方便的方法。虽然只是薄薄的几片，看起来很没有满足感，但实际上热量很高，完全可以轻松地吃饱。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:129
+msgid "低温鲜烹炙肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:129
+msgid "低温慢煮而成的食物，为了增香，外表还经过了微微的炙烤。很难从外表看出它来自何种动物，不过加热之后味道令人满意，这就足够了，毕竟填饱肚子才是最重要的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:130
+msgid "蟹壳蒸饭"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:130
+msgid "直接在蟹壳中铺满杂粮蒸熟制成的盖饭，萨尔贡部落民餐桌上最常见的食物。移动城市中的居民偶尔也会尝试这道菜，并为萨尔贡帝国的饮食文化而感到自豪。但很少有部落民会认同这一点。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:131
+msgid "提取脂凝晶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:131
+msgid "食品科技的智慧结晶，食品现代化的代表，营养丰富。短时间内增加进食满足感和提供足量热量都离不开这种食品科技产品。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:132
+msgid "浓缩羹原液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:132
+msgid "提取肉类鲜味和营养物质后高温浓缩而成的原液，营养丰富。本品为浓缩液，不可直接食用。住所离医院较近的人也不要尝试。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:133
+msgid "高压复焗浓汤"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:133
+msgid "经超长时间高压烹制的极鲜浓汤，被料理机固化重组后制成的汤酥。一口下去，仿佛吃进去了一片云朵，一阵热风。汤鲜浓郁，入口即化。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:134
+msgid "生制代餐粗粉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:134
+msgid "为了保证食材中最佳原料风味的体现，制作者只使用了杂粮来搭配它。低纤维、高热量、易饱腹，从不会出现在现代移动城市中的商场的货架上，在荒野的小商店中则十分抢手。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:135
+msgid "脆肉薯条转醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:135
+msgid "选取荒地上随处可见的肉作为原料，和粗细不一的薯条一起在油锅中煎炸而成。移动城市的居民们会抱怨它过于油腻，而需要干体力活的荒地人则十分享受这种美食。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:136
+msgid "蟹醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:136
+msgid "为了展现出岩壳蟹的鲜味和营养，其中还加入了很少见的高级肉类。据说它还努力地模仿了岩壳蟹肉的口感，但似乎没人发现。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:137
+msgid "鲜味汤凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:137
+msgid "可直接食用的凝胶，室温下不会融化，口感软弹，营养丰富。有些科技食物会为了追求高级感而失去食物的本味，它就是一个很好的例子。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:138
+msgid "转质壳酯块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:138
+msgid "顶级食材的威力在这里发挥完全，只需小小一块，登山者也可以获得一整天运动的能量。小心区分它和糖块。虽然吃错了不会造成任何危及生命的后果，但毕竟它的热量很高，非常高。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:139
+msgid "复合精制肉酱"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:139
+msgid "将多种肉类复合制成的肉酱，在添加完相应的营养剂后，不论是口感还是色香味，都有了明显的提升。任何时候都能食用，科技使它永远不会过期。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:140
+msgid "碳水脂肪聚块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:140
+msgid "将人体所需的蛋白质、脂肪、碳水按照比例调配而成，也可以根据食用者所需自由搭配，制作简单，方便易携。探险者的背包中常见的食物。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:141
+msgid "味纯聚素粒"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:141
+msgid "研究者在食品科技中剑走偏锋，做出了外形异常好看的素粒，据说是为了食用者心情愉悦。但面对饥饿和快速补充能量的需求，似乎很少有食用者真的注意到了这一点。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:142
+msgid "莱塔尼亚浓汤鲜萃"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:142
+msgid "由当下最时兴的鲜萃技术制作而成，只有小小一口，但浓香醉人。莱塔尼亚人执着于为不同口味的浓汤搭配不同的音乐，据说曾有诗人专门为此创作诗歌。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:143
+msgid "鲜能剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:143
+msgid "做出鲜能剂的老先生是一位味觉失灵的大厨，他说自己幸福的秘诀是观察食客的微笑，从而确认自己的食物能够满足他们。温暖的故事。但他新品研究所的学生们不这么觉得。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:144
+msgid "极温速烹兽肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:144
+msgid "刚刚做好就会被送入机器迅速降温，表皮结满冰晶，内里仍旧炙热，带来极限口感体验。似乎不降温直接吃也是一种美妙的体验。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:145
+msgid "东国纳米割烹"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:145
+msgid "选用当季的新鲜食材，配合季节变换，通过菜肴传达禅意，给人绝对的视觉享受。如果制作这席菜肴的是专业东国厨师的话，或许美丽和美味还是可以兼得的。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:146
+msgid "维多利亚皇家凝方"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:146
+msgid "食用时请遵守绅士淑女进餐礼仪，好保证你在此刻对于食物的享受。维多利亚人为他们的文化而自豪，任何时候都不愿低头。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:147
+msgid "炎国山水原液"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:147
+msgid "云山衔一梦。呼......酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:148
+msgid "卡西米尔骑士补充剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:148
+msgid "喝下去以后感觉精神百倍。之前有商家说这就是耀骑士赛前喝的东西，人们蜂拥而上。酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:149
+msgid "哥伦比亚分子胶囊"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:149
+msgid "莱茵生命产品，改变食材分子结构再重新组合而成，外壳滋味丰富，食用后可获得极强的饱腹感，在获得满足的同时降低食物的摄取量。非常利于身体健康，但不利于心灵健康。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:150
+msgid "拉特兰圣音汤醇"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:150
+msgid "纯净的外表让人安静下来，但里面的味道让人脑袋在一瞬间出现了有些奇怪的画面——是爆炸？！而且很甜，非常甜！不应该是汤吗？"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:151
+msgid "低压干制精肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:151
+msgid "撕开包装，里面就是咸香适口的干肉。肉干制作的工艺十分复杂，合适的温度湿度缺一不可，制作成功后能保存数年之久。就是……有点太硬了！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:152
+msgid "米诺斯诗歌凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:152
+msgid "据说最开始是某位祭司在听完一首长篇叙事诗后突发灵感所作，品尝后让人能够真切感悟到她当时的心情。不好，里面似乎加了酒，已经开始头晕了！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:153
+msgid "固态源溏心蛋补剂"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:153
+msgid "从混杂着胡椒、肉糜还有酒的溏心蛋中萃取的液体，是当地最常见菜肴的便携版。在野外，这道菜都是在被太阳直射的固态源上烹制的。为了还原这一工艺，移动城市的许多店家配备了专业的阳光聚焦设备。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:154
+msgid "河鳞水果凝胶"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:154
+msgid "烟熏的河鳞和清爽的水果在这里相逢，简简单单。对于移动城市的居民来说，无论新鲜的河鳞还是清爽的水果都是昂贵的食材。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:155
+msgid "炎国荒地菜肉酮"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:155
+msgid "切成薄片的兽肉与各种生长在荒地上的野菜一起翻炒，是炎国人家中常见的菜肴。菜肉酮是从中提取的精华。这道菜里应该用什么样的肉、什么样的菜，甜的还是咸的，在炎国都是极具争议性的话题。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:156
+msgid "音乐速烤萃取酯"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:156
+msgid "使用音乐源石技艺对肉类进行烹饪而得到的酯类。在紧急状态下，驱动源石技艺处理食材也是一种可行的方法。但精益求精的莱塔尼亚人把烹饪过程发展成了一门表演艺术。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:157
+msgid "哥伦比亚炮灰羽"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:157
+msgid "哥伦比亚雇佣兵中流传的菜肴，制作方式非常粗暴——将羽兽肉塞进“安全”的源石堆里炙烤而成。刚入口时有些微妙，但羽兽肉的味道会在喉舌之间久久萦绕。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:158
+msgid "香肠豆泥聚块"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:158
+msgid "丝滑的豆泥和香气四溢的香肠在口味上相得益彰，让人百吃不厌，美中不足的是，这只是聚块。因为便于携带和贮藏，广受荒地旅者好评。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:159
+msgid "部族狂欢晚宴"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:159
+msgid "篝火！舞蹈！烤得金黄渗出油脂的整只猎物！雨林部族最高级别的款待！一人吃完一整头，你就是今天的部族英雄！"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:160
+msgid "中央谷地混合烤肉"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:160
+msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制后在专门的塔中晾干，不同部位分开处理，经过多次刷油烧烤而成，入口毫无焦煳味，平时也难得一见。"
+msgstr ""
+
+#: .\data\csv\Recipes.csv:163
 msgid "加料咖啡"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:63
+#: .\data\csv\Recipes.csv:163
 msgid "一杯刚刚冲泡好的咖啡，带着些许的香气，只是里面好像加了一些东西"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:65
+#: .\data\csv\Recipes.csv:165
 msgid "鲜母乳"
 msgstr ""
 
-#: .\data\csv\Recipes.csv:65
+#: .\data\csv\Recipes.csv:165
 msgid "新鲜的母乳，味道醇美，营养丰富，可以直接饮用或用来制作各种乳制品。"
 msgstr ""
 
@@ -7022,6 +7766,38 @@ msgstr ""
 
 #: .\data\csv\Resouce.csv:36
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:6
+msgid "瓦莱丽蛋糕店"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:7
+msgid "山城茶馆"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:8
+msgid "哥伦比亚咖啡馆"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:9
+msgid "七城风情餐厅"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:10
+msgid "约翰老妈汉堡店"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:11
+msgid "健康快餐店"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:12
+msgid "龙门食坊"
+msgstr ""
+
+#: .\data\csv\Restaurant.csv:13
+msgid "快捷连锁披萨店"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:7
@@ -7768,340 +8544,780 @@ msgstr ""
 msgid "命令对方小便"
 msgstr ""
 
-#: .\data\csv\Status.csv:157
-msgid "发交"
+#: .\data\csv\Status.csv:153
+msgid "自慰(女)"
 msgstr ""
 
 #: .\data\csv\Status.csv:158
-msgid "腋交"
+msgid "发交"
 msgstr ""
 
 #: .\data\csv\Status.csv:159
-msgid "素股"
+msgid "腋交"
 msgstr ""
 
 #: .\data\csv\Status.csv:160
-msgid "手交口交"
+msgid "素股"
 msgstr ""
 
 #: .\data\csv\Status.csv:161
-msgid "乳交口交"
+msgid "手交口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:162
-msgid "真空口交"
+msgid "乳交口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:163
-msgid "深喉插入"
+msgid "真空口交"
 msgstr ""
 
 #: .\data\csv\Status.csv:164
-msgid "六九式"
+msgid "深喉插入"
 msgstr ""
 
 #: .\data\csv\Status.csv:165
-msgid "腿交"
+msgid "六九式"
 msgstr ""
 
 #: .\data\csv\Status.csv:166
-msgid "尾交"
+msgid "腿交"
 msgstr ""
 
 #: .\data\csv\Status.csv:167
-msgid "阴茎蹭脸"
+msgid "尾交"
 msgstr ""
 
 #: .\data\csv\Status.csv:168
-msgid "阴茎蹭角"
+msgid "阴茎蹭脸"
 msgstr ""
 
 #: .\data\csv\Status.csv:169
+msgid "阴茎蹭角"
+msgstr ""
+
+#: .\data\csv\Status.csv:170
 msgid "阴茎蹭耳朵"
 msgstr ""
 
-#: .\data\csv\Status.csv:171
+#: .\data\csv\Status.csv:172
 msgid "事前避孕药"
 msgstr ""
 
-#: .\data\csv\Status.csv:179
+#: .\data\csv\Status.csv:180
 msgid "戴上避孕套"
 msgstr ""
 
-#: .\data\csv\Status.csv:181
+#: .\data\csv\Status.csv:182
 msgid "尿道棉棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:182
+#: .\data\csv\Status.csv:183
 msgid "摘掉避孕套"
 msgstr ""
 
-#: .\data\csv\Status.csv:183
+#: .\data\csv\Status.csv:184
 msgid "乳头跳蛋"
 msgstr ""
 
-#: .\data\csv\Status.csv:184
+#: .\data\csv\Status.csv:185
 msgid "戴上乳头夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:185
+#: .\data\csv\Status.csv:186
 msgid "阴蒂跳蛋"
 msgstr ""
 
-#: .\data\csv\Status.csv:186
+#: .\data\csv\Status.csv:187
 msgid "戴上阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:188
+#: .\data\csv\Status.csv:189
 msgid "V插入震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:191
+#: .\data\csv\Status.csv:192
 msgid "A插入震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:192
+#: .\data\csv\Status.csv:193
 msgid "加粗肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:193
+#: .\data\csv\Status.csv:194
 msgid "巨型肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:194
+#: .\data\csv\Status.csv:195
 msgid "灌肠"
 msgstr ""
 
-#: .\data\csv\Status.csv:195
+#: .\data\csv\Status.csv:196
 msgid "肛塞"
 msgstr ""
 
-#: .\data\csv\Status.csv:196
+#: .\data\csv\Status.csv:197
 msgid "塞入肛门拉珠"
 msgstr ""
 
-#: .\data\csv\Status.csv:197
+#: .\data\csv\Status.csv:198
 msgid "拔出肛塞"
 msgstr ""
 
-#: .\data\csv\Status.csv:198
+#: .\data\csv\Status.csv:199
 msgid "取下乳头夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:199
+#: .\data\csv\Status.csv:200
 msgid "取下阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:200
+#: .\data\csv\Status.csv:201
 msgid "拔出震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:201
+#: .\data\csv\Status.csv:202
 msgid "拔出肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:202
+#: .\data\csv\Status.csv:203
 msgid "拔出肛门拉珠"
 msgstr ""
 
-#: .\data\csv\Status.csv:203
+#: .\data\csv\Status.csv:204
 msgid "正常位"
 msgstr ""
 
-#: .\data\csv\Status.csv:204
+#: .\data\csv\Status.csv:205
 msgid "背后位"
 msgstr ""
 
-#: .\data\csv\Status.csv:205
+#: .\data\csv\Status.csv:206
 msgid "骑乘位"
 msgstr ""
 
-#: .\data\csv\Status.csv:206
+#: .\data\csv\Status.csv:207
 msgid "对面座位"
 msgstr ""
 
-#: .\data\csv\Status.csv:207
+#: .\data\csv\Status.csv:208
 msgid "背面座位"
 msgstr ""
 
-#: .\data\csv\Status.csv:208
+#: .\data\csv\Status.csv:209
 msgid "对面立位"
 msgstr ""
 
-#: .\data\csv\Status.csv:209
+#: .\data\csv\Status.csv:210
 msgid "背面立位"
 msgstr ""
 
-#: .\data\csv\Status.csv:210
+#: .\data\csv\Status.csv:211
 msgid "刺激G点"
 msgstr ""
 
-#: .\data\csv\Status.csv:211
+#: .\data\csv\Status.csv:212
 msgid "玩弄子宫口"
 msgstr ""
 
-#: .\data\csv\Status.csv:212
+#: .\data\csv\Status.csv:213
 msgid "插入子宫口"
 msgstr ""
 
-#: .\data\csv\Status.csv:213
+#: .\data\csv\Status.csv:214
 msgid "子宫姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:214
+#: .\data\csv\Status.csv:215
 msgid "正常位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:215
+#: .\data\csv\Status.csv:216
 msgid "后背位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:216
+#: .\data\csv\Status.csv:217
 msgid "骑乘位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:217
+#: .\data\csv\Status.csv:218
 msgid "对面座位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:218
+#: .\data\csv\Status.csv:219
 msgid "背面座位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:219
+#: .\data\csv\Status.csv:220
 msgid "对面立位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:220
+#: .\data\csv\Status.csv:221
 msgid "背面立位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:221
+#: .\data\csv\Status.csv:222
 msgid "玩弄s状结肠"
 msgstr ""
 
-#: .\data\csv\Status.csv:222
+#: .\data\csv\Status.csv:223
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\data\csv\Status.csv:223
+#: .\data\csv\Status.csv:224
 msgid "尿道指姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:224
+#: .\data\csv\Status.csv:225
 msgid "尿道姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:226
+#: .\data\csv\Status.csv:227
 msgid "装上搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:227
+#: .\data\csv\Status.csv:228
 msgid "装上采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:232
+#: .\data\csv\Status.csv:233
 msgid "取下搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:233
+#: .\data\csv\Status.csv:234
 msgid "取下采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:235
+#: .\data\csv\Status.csv:236
 msgid "脱衣服"
 msgstr ""
 
-#: .\data\csv\Status.csv:236
+#: .\data\csv\Status.csv:237
 msgid "脱到只穿内衣(即只脱上下外衣)"
 msgstr ""
 
-#: .\data\csv\Status.csv:237
+#: .\data\csv\Status.csv:238
 msgid "脱到只穿袜子手套等(即再脱掉内衣)"
 msgstr ""
 
-#: .\data\csv\Status.csv:238
+#: .\data\csv\Status.csv:239
 msgid "脱到全裸(即身上没有任何衣物)"
 msgstr ""
 
-#: .\data\csv\Status.csv:239
+#: .\data\csv\Status.csv:240
 msgid "收起内裤"
 msgstr ""
 
-#: .\data\csv\Status.csv:241
+#: .\data\csv\Status.csv:242
 msgid "抱小孩"
 msgstr ""
 
-#: .\data\csv\Status.csv:242
+#: .\data\csv\Status.csv:243
 msgid "哼唱儿歌"
 msgstr ""
 
-#: .\data\csv\Status.csv:243
+#: .\data\csv\Status.csv:244
 msgid "喂奶"
 msgstr ""
 
-#: .\data\csv\Status.csv:244
+#: .\data\csv\Status.csv:245
 msgid "换尿布"
 msgstr ""
 
-#: .\data\csv\Status.csv:245
+#: .\data\csv\Status.csv:246
 msgid "教说话"
 msgstr ""
 
-#: .\data\csv\Status.csv:246
+#: .\data\csv\Status.csv:247
 msgid "给玩具"
 msgstr ""
 
-#: .\data\csv\Status.csv:248
+#: .\data\csv\Status.csv:249
 msgid "开启透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:249
+#: .\data\csv\Status.csv:250
 msgid "关闭透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:250
+#: .\data\csv\Status.csv:251
 msgid "开启信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:251
+#: .\data\csv\Status.csv:252
 msgid "关闭信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:252
+#: .\data\csv\Status.csv:253
 msgid "单人催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:253
+#: .\data\csv\Status.csv:254
 msgid "集体催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:254
+#: .\data\csv\Status.csv:255
 msgid "解除催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:255
+#: .\data\csv\Status.csv:256
 msgid "体控-敏感度提升"
 msgstr ""
 
-#: .\data\csv\Status.csv:256
+#: .\data\csv\Status.csv:257
 msgid "体控-强制高潮"
 msgstr ""
 
-#: .\data\csv\Status.csv:257
+#: .\data\csv\Status.csv:258
 msgid "体控-强制排卵"
 msgstr ""
 
-#: .\data\csv\Status.csv:258
+#: .\data\csv\Status.csv:259
 msgid "体控-木头人"
 msgstr ""
 
-#: .\data\csv\Status.csv:259
+#: .\data\csv\Status.csv:260
 msgid "体控-逆推"
 msgstr ""
 
-#: .\data\csv\Status.csv:260
+#: .\data\csv\Status.csv:261
 msgid "心控-角色扮演"
+msgstr ""
+
+#: .\data\csv\Status.csv:263
+msgid "结算N小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:264
+msgid "结算N普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:265
+msgid "结算N强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:266
+msgid "结算B小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:267
+msgid "结算B普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:268
+msgid "结算B强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:269
+msgid "结算C小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:270
+msgid "结算C普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:271
+msgid "结算C强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:272
+msgid "结算射精"
+msgstr ""
+
+#: .\data\csv\Status.csv:273
+msgid "结算大量射精"
+msgstr ""
+
+#: .\data\csv\Status.csv:274
+msgid "结算超大量射精"
+msgstr ""
+
+#: .\data\csv\Status.csv:275
+msgid "结算V小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:276
+msgid "结算V普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:277
+msgid "结算V强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:278
+msgid "结算A小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:279
+msgid "结算A普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:280
+msgid "结算A强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:281
+msgid "结算U小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:282
+msgid "结算U普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:283
+msgid "结算U强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:284
+msgid "结算W小绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:285
+msgid "结算W普绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:286
+msgid "结算W强绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:287
+msgid "结算额外绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:288
+msgid "结算快乐刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:289
+msgid "结算快乐刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:290
+msgid "结算快乐刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:291
+msgid "结算屈服刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:292
+msgid "结算屈服刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:293
+msgid "结算屈服刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:294
+msgid "结算苦痛刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:295
+msgid "结算苦痛刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:296
+msgid "结算苦痛刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:297
+msgid "结算时姦刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:298
+msgid "结算时姦刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:299
+msgid "结算时姦刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:300
+msgid "结算恐怖刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:301
+msgid "结算恐怖刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:302
+msgid "结算恐怖刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:303
+msgid "结算反发刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:304
+msgid "结算反发刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:305
+msgid "结算反发刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:306
+msgid "结算初吻"
+msgstr ""
+
+#: .\data\csv\Status.csv:307
+msgid "结算处女"
+msgstr ""
+
+#: .\data\csv\Status.csv:308
+msgid "结算A处女"
+msgstr ""
+
+#: .\data\csv\Status.csv:309
+msgid "结算无觉刻印1"
+msgstr ""
+
+#: .\data\csv\Status.csv:310
+msgid "结算无觉刻印2"
+msgstr ""
+
+#: .\data\csv\Status.csv:311
+msgid "结算无觉刻印3"
+msgstr ""
+
+#: .\data\csv\Status.csv:312
+msgid "结算无觉刻印4"
+msgstr ""
+
+#: .\data\csv\Status.csv:313
+msgid "结算无觉刻印5"
+msgstr ""
+
+#: .\data\csv\Status.csv:314
+msgid "结算无觉刻印6"
+msgstr ""
+
+#: .\data\csv\Status.csv:316
+msgid "结算因B绝顶而被迫喷乳"
+msgstr ""
+
+#: .\data\csv\Status.csv:317
+msgid "结算因U绝顶而被迫漏尿"
+msgstr ""
+
+#: .\data\csv\Status.csv:319
+msgid "结算双重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:320
+msgid "结算三重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:321
+msgid "结算四重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:322
+msgid "结算五重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:323
+msgid "结算六重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:324
+msgid "结算七重绝顶"
+msgstr ""
+
+#: .\data\csv\Status.csv:326
+msgid "结算乳头夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:327
+msgid "结算阴蒂夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:328
+msgid "结算震动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:329
+msgid "结算肛门振动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:330
+msgid "结算搾乳机"
+msgstr ""
+
+#: .\data\csv\Status.csv:331
+msgid "结算采尿器"
+msgstr ""
+
+#: .\data\csv\Status.csv:332
+msgid "结算眼罩"
+msgstr ""
+
+#: .\data\csv\Status.csv:333
+msgid "结算肛门拉珠"
+msgstr ""
+
+#: .\data\csv\Status.csv:334
+msgid "结算利尿剂"
+msgstr ""
+
+#: .\data\csv\Status.csv:335
+msgid "结算安眠药"
+msgstr ""
+
+#: .\data\csv\Status.csv:336
+msgid "结算排卵促进药"
+msgstr ""
+
+#: .\data\csv\Status.csv:337
+msgid "结算事前避孕药"
+msgstr ""
+
+#: .\data\csv\Status.csv:338
+msgid "结算事后避孕药"
+msgstr ""
+
+#: .\data\csv\Status.csv:340
+msgid "结算发交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:341
+msgid "结算阴茎蹭脸中"
+msgstr ""
+
+#: .\data\csv\Status.csv:342
+msgid "结算口交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:343
+msgid "结算乳交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:344
+msgid "结算腋交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:345
+msgid "结算手交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:346
+msgid "结算V插入中"
+msgstr ""
+
+#: .\data\csv\Status.csv:347
+msgid "结算W插入中"
+msgstr ""
+
+#: .\data\csv\Status.csv:348
+msgid "结算A插入中"
+msgstr ""
+
+#: .\data\csv\Status.csv:349
+msgid "结算U插入中"
+msgstr ""
+
+#: .\data\csv\Status.csv:350
+msgid "结算腿交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:351
+msgid "结算足交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:352
+msgid "结算尾交中"
+msgstr ""
+
+#: .\data\csv\Status.csv:353
+msgid "结算阴茎蹭角中"
+msgstr ""
+
+#: .\data\csv\Status.csv:354
+msgid "结算阴茎蹭耳朵中"
+msgstr ""
+
+#: .\data\csv\Status.csv:355
+msgid "结算素股中"
+msgstr ""
+
+#: .\data\csv\Status.csv:357
+msgid "结算获得思慕"
+msgstr ""
+
+#: .\data\csv\Status.csv:358
+msgid "结算获得恋慕"
+msgstr ""
+
+#: .\data\csv\Status.csv:359
+msgid "结算获得恋人(含赠予信物)"
+msgstr ""
+
+#: .\data\csv\Status.csv:360
+msgid "结算获得爱侣"
+msgstr ""
+
+#: .\data\csv\Status.csv:361
+msgid "结算获得屈从"
+msgstr ""
+
+#: .\data\csv\Status.csv:362
+msgid "结算获得驯服"
+msgstr ""
+
+#: .\data\csv\Status.csv:363
+msgid "结算获得宠物(含赠予信物)"
+msgstr ""
+
+#: .\data\csv\Status.csv:364
+msgid "结算获得奴隶"
+msgstr ""
+
+#: .\data\csv\Status.csv:366
+msgid "结算获得受精"
+msgstr ""
+
+#: .\data\csv\Status.csv:367
+msgid "结算受精失败"
+msgstr ""
+
+#: .\data\csv\Status.csv:368
+msgid "结算获得妊娠"
+msgstr ""
+
+#: .\data\csv\Status.csv:369
+msgid "结算获得临盆"
+msgstr ""
+
+#: .\data\csv\Status.csv:370
+msgid "生产前的对话"
+msgstr ""
+
+#: .\data\csv\Status.csv:371
+msgid "生产后的对话+获得产后"
+msgstr ""
+
+#: .\data\csv\Status.csv:372
+msgid "结算获得育儿"
+msgstr ""
+
+#: .\data\csv\Status.csv:373
+msgid "结算育儿完成"
+msgstr ""
+
+#: .\data\csv\Status.csv:374
+msgid "结算幼女长成萝莉"
+msgstr ""
+
+#: .\data\csv\Status.csv:375
+msgid "结算萝莉长成少女"
+msgstr ""
+
+#: .\data\csv\Status.csv:377
+msgid "初次见面"
+msgstr ""
+
+#: .\data\csv\Status.csv:378
+msgid "每日打招呼"
 msgstr ""
 
 #: .\data\csv\SunTime.csv:6
@@ -9616,6 +10832,10 @@ msgstr ""
 msgid "凯尔希"
 msgstr ""
 
+#: .\data\character\0003_凯尔希.csv:14
+msgid "#dfe86c"
+msgstr ""
+
 #: .\data\character\0007_可露希尔.csv:4
 msgid "可露希尔"
 msgstr ""
@@ -10136,28 +11356,28 @@ msgstr ""
 msgid "萨卡兹佣兵头目，W。曾参与卡兹戴尔漫长的内战，其小队以残暴而高效的作战手段闻名。在切尔诺伯格事件中与罗德岛发生冲突，后因为某些原因叛出整合运动，在凯尔希医生亲自进行了充分交涉后，与罗德岛签订战略合作条款。"
 msgstr ""
 
+#: .\data\character\0113_W.csv:15
+msgid "#CE0000"
+msgstr ""
+
 #: .\data\character\0113_W.csv:31
-msgid "灰色围巾"
+msgid "黑色皮外套"
 msgstr ""
 
 #: .\data\character\0113_W.csv:32
-msgid "短休闲服"
+msgid "銀白色羊絨衫"
 msgstr ""
 
 #: .\data\character\0113_W.csv:33
-msgid "白色T恤"
+msgid "露指黑色皮手套"
+msgstr ""
+
+#: .\data\character\0113_W.csv:34
+msgid "黑色百褶短裙配红衬底"
 msgstr ""
 
 #: .\data\character\0113_W.csv:35
-msgid "黑色短褶裙"
-msgstr ""
-
-#: .\data\character\0113_W.csv:36
-msgid "厚连身裤"
-msgstr ""
-
-#: .\data\character\0113_W.csv:37
-msgid "黑色加固运动鞋"
+msgid "黑色油光厚连裤袜"
 msgstr ""
 
 #: .\data\character\0115_凛冬.csv:4
@@ -11465,7 +12685,7 @@ msgid "格拉尼，维多利亚骑警，在突袭战，机动作战，纵深作�
 msgstr ""
 
 #: .\data\character\0220_格拉尼.csv:15
-msgid "#415567"
+msgid "#556971"
 msgstr ""
 
 #: .\data\character\0220_格拉尼.csv:29
@@ -11521,7 +12741,7 @@ msgid "暴行，原雷姆必拓矿业公司安保人员。任职期间表现优�
 msgstr ""
 
 #: .\data\character\0230_暴行.csv:15
-msgid "#616161"
+msgid "#6B6B6B"
 msgstr ""
 
 #: .\data\character\0230_暴行.csv:29
@@ -11874,6 +13094,38 @@ msgstr ""
 
 #: .\data\character\0282_空爆.csv:14
 msgid "作为患者被罗德岛接收，因能力出众，在征求本人意见后，接受并通过测试，成为罗德岛的一员，被分配到预备行动组A6。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:4
+msgid "Lancet-2"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:13
+msgid "一盒治療噴霧。外盒上标注着“一喷起效”的医疗喷雾套组。可以插入医用器械，也可以直接使用。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:14
+msgid "Lancet-2是可露希尔客制化后的雷神存在者™S Typer 62六轮作业平台， 圆形的外观让人觉得很可爱所以成为了某种意义上的吉祥物。虽然她说话有时候很消极，但是大家都很喜欢她。\n\nLancet-2在经过可露希尔的改造后，得以满足更多罗德岛内的医疗需求，其器械设备也更注重于消毒和应对源石污染。"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:15
+msgid "#99988f"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:23
+msgid "白色塑鋼外殼"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:24
+msgid "六連橡膠動輪"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:25
+msgid "急救噴霧噴嘴"
+msgstr ""
+
+#: .\data\character\0285_Lancet-2.csv:26
+msgid "置物架"
 msgstr ""
 
 #: .\data\character\0289_缠丸.csv:4
@@ -13292,6 +14544,30 @@ msgstr ""
 msgid "花了好长时间才叠出来的短刀纸模。歪歪扭扭，满是折痕，不怎么精致。收到的人会喜欢吗？"
 msgstr ""
 
+#: .\data\character\2013_刻俄柏.csv:14
+msgid "流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:30
+msgid "战术冲锋衣"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:31
+msgid "高领战术直筒连衣短裙"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:33
+msgid "超高筒系带运动靴"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:34
+msgid "很重的枪"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:35
+msgid "裝滿武器的帆布包"
+msgstr ""
+
 #: .\data\character\2014_年.csv:4
 msgid "年"
 msgstr ""
@@ -14404,6 +15680,78 @@ msgstr ""
 msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
 msgstr ""
 
+#: Event:b0a52f68-3807-4d75-9dd9-f92fb46a4a65
+msgid "在门外听到{TargetSceneName}里传来了努力压抑着的呻吟声，而且门好像也没有锁，要怎么做呢？"
+msgstr ""
+
+#: Event:742aecae-e027-464a-a6ea-6d8e76648111
+msgid "转身离开|虽然大概猜得到里面是谁，但为了保全对方的形象，决定还是不打扰了"
+msgstr ""
+
+#: Event:0cab87b6-157d-4d3f-9e98-ba36adaeb942
+msgid "拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一道小缝，里面的景象一览无余。\n{TargetName}背对着门，但仍能看到她的衣服解开着，手放在自己的某些部位做着什么。\n就这样，{PlayerName}看完了这场有些特殊的表演，趁演出者还停留在绝顶的余韵时掩上门悄悄地离开了。"
+msgstr ""
+
+#: Event:d136684a-593e-4cfe-86a8-6f217b1c900d
+msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
+msgstr ""
+
+#: Event:e7deb39e-4384-4a46-a3fe-dec9bb162b20
+msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
+msgstr ""
+
+#: Event:9cbc3906-8899-406e-b657-32c6896504fd
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁"
+msgstr ""
+
+#: Event:7071176a-5689-4d8a-9663-3f455f20d112
+msgid "放任不管|{PlayerName}留在原地，看着{TargetName}胸内的乳汁喷出来"
+msgstr ""
+
+#: Event:36821257-7796-4275-9848-58bb716de6b1
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一点"
+msgstr ""
+
+#: Event:0ccf768f-38f0-41ff-8235-8bcd38bf29ea
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变平了"
+msgstr ""
+
+#: Event:764416eb-09d0-490f-8c24-5686ec70a5d5
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一些"
+msgstr ""
+
+#: Event:8fee32f1-2fbc-47a4-8f02-e7926d525385
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了点"
+msgstr ""
+
+#: Event:6b888f6f-da64-4a42-a7c1-0caaab25a12c
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大了好多"
+msgstr ""
+
+#: Event:dc1da320-ae53-406c-aa86-b5691fdb4b4e
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了些"
+msgstr ""
+
+#: Event:ee391b9a-48f4-4f00-aa4a-e2d4c8187d5d
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n貌似有些乳汁被吸收掉了，{TargetName}的胸部大得内衣快容不下了"
+msgstr ""
+
+#: Event:0cc68a8b-e1db-496d-a10a-651e110d2751
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n貌似是用力过猛，{TargetName}的胸部变小了许多"
+msgstr ""
+
+#: Event:68a4a69f-7c6e-480f-9a8f-808150f1651f
+msgid "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了"
+msgstr ""
+
+#: Event:db9113b7-8970-4f81-b5e7-1e486fd08a13
+msgid "在一天的激战后，{Name}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
+#: Event:b1f2b926-d298-48f5-8e0f-a3c3ad868859
+msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
 #: /'data\map\0\0\Scene.json:2
 msgid "罗德岛出口"
 msgstr ""
@@ -15092,32 +16440,16 @@ msgstr ""
 msgid "贸易区入口"
 msgstr ""
 
-#: /'data\map\贸易\七城风情餐厅\Scene.json:2
-msgid "七城风情餐厅"
-msgstr ""
-
 #: /'data\map\贸易\乐器维修工坊\Scene.json:2
 msgid "乐器维修工坊"
-msgstr ""
-
-#: /'data\map\贸易\人气快餐开封菜\Scene.json:2
-msgid "人气快餐开封菜"
 msgstr ""
 
 #: /'data\map\贸易\伊比利亚度假村\Scene.json:2
 msgid "伊比利亚度假村"
 msgstr ""
 
-#: /'data\map\贸易\健康快餐店\Scene.json:2
-msgid "健康快餐店"
-msgstr ""
-
 #: /'data\map\贸易\前卫街机厅\Scene.json:2
 msgid "前卫街机厅"
-msgstr ""
-
-#: /'data\map\贸易\哥伦比亚咖啡馆\Scene.json:2
-msgid "哥伦比亚咖啡馆"
 msgstr ""
 
 #: /'data\map\贸易\哥伦比亚酒店\Scene.json:2
@@ -15136,24 +16468,12 @@ msgstr ""
 msgid "小广场"
 msgstr ""
 
-#: /'data\map\贸易\山城茶馆\Scene.json:2
-msgid "山城茶馆"
-msgstr ""
-
-#: /'data\map\贸易\快捷连锁披萨店\Scene.json:2
-msgid "快捷连锁披萨店"
-msgstr ""
-
 #: /'data\map\贸易\成人用品店\Scene.json:2
 msgid "成人用品店"
 msgstr ""
 
 #: /'data\map\贸易\理发店\Scene.json:2
 msgid "理发店"
-msgstr ""
-
-#: /'data\map\贸易\瓦莱丽蛋糕店\Scene.json:2
-msgid "瓦莱丽蛋糕店"
 msgstr ""
 
 #: /'data\map\贸易\美食街\Scene.json:2
@@ -15178,9 +16498,5 @@ msgstr ""
 
 #: /'data\map\贸易\部落风情旅舍\Scene.json:2
 msgid "部落风情旅舍"
-msgstr ""
-
-#: /'data\map\贸易\龙门食坊\Scene.json:2
-msgid "龙门食坊"
 msgstr ""
 

@@ -39,15 +39,25 @@ class FoodShopPanel:
         scene_position = cache.character_data[0].position
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         scene_name = cache.scene_data[scene_position_str].scene_name
+        scene_tag = cache.scene_data[scene_position_str].scene_tag
         title_draw = draw.TitleLineDraw(scene_name, self.width)
         food_type_list = [_("当前提供的食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 30, 5, self.width, 1, 1, 0)
+        food_name_list = []
+
         while 1:
             py_cmd.clr_cmd()
-            food_name_list = list(
-                cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items()
-            )
+
+            # 根据场景标签查找对应的食物商店
+            for restaurant_id in game_config.config_restaurant:
+                if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
+                    food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id=restaurant_id).items())
+                    break
+            # 如果都没有找到，则默认为食堂
+            if not len(food_name_list):
+                food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel).items())
+
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
             title_draw.draw()
@@ -91,7 +101,7 @@ class FoodShopPanel:
         food_type -- 要切换的食物类型
         """
         self.now_panel = food_type
-        food_name_list = list(cooking.get_restaurant_food_type_list_buy_food_type(self.now_panel).items())
+        food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel).items())
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 10, 5, self.width, 1, 1, 0
         )
@@ -156,86 +166,75 @@ class SeeFoodListByFoodNameDraw:
     def see_food_shop_food_list(self):
         """按食物名字显示食物商店的食物列表"""
         title_draw = draw.TitleLineDraw(self.text, window_width)
-        now_food_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
-        page_handle = panel.PageHandlePanel(
-            now_food_list, BuyFoodByFoodNameDraw, 10, 1, window_width, 1, 1, 0
-        )
-        # while 1:
-        return_list = []
         title_draw.draw()
-        page_handle.update()
-        page_handle.draw()
-        return_list.extend(page_handle.return_list)
-        line_feed.draw()
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        back_draw.draw()
-        line_feed.draw()
-        return_list.append(back_draw.return_text)
-        yrn = flow_handle.askfor_all(return_list)
-        # if yrn == back_draw.return_text:
-        #     break
-        cache.restaurant_data.setdefault(self.cid, {})
-        page_handle.text_list = [(self.cid, x) for x in cache.restaurant_data[self.cid]]
+        return_list = []
 
+        scene_position = cache.character_data[0].position
+        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
+        scene_tag = cache.scene_data[scene_position_str].scene_tag
+        now_restaurant_id = None
 
-class BuyFoodByFoodNameDraw:
-    """
-    点击后可购买食物的食物名字按钮对象
-    Keyword arguments:
-    text -- 食物id
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
+        # 找到当前场景对应的食物商店
+        for restaurant_id in game_config.config_restaurant:
+            if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
+                now_restaurant_id = restaurant_id
+                break
 
-    def __init__(
-        self, text: Tuple[str, UUID], width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
-        self.text: UUID = text[1]
-        """ 食物uid """
-        self.cid: str = text[0]
-        """ 食物商店索引id """
-        self.draw_text: str = ""
-        """ 食物名字绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = str(button_id)
-        """ 按钮返回值 """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-        # print(f"debug text = {text}")
-        name_draw = draw.NormalDraw()
-        food_data: game_type.Food = cache.restaurant_data[self.cid][self.text]
-        self.food_name = ""
-        if isinstance(self.cid, str):
-            food_recipe: game_type.Recipes = cache.recipe_data[int(self.cid)]
-            self.food_name = food_recipe.name
-            food_money = food_recipe.money
-            food_introduce = food_recipe.introduce
-        food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
-        index_text = text_handle.id_index(button_id)
-        button_text = f"{index_text}{self.food_name}"
-        button_text += f"({food_quality_str})"
-        if food_data.maker != "":
-            button_text += f"(by {food_data.maker})"
-        button_text += _("(食堂自助免费拿取)")
-        button_text += f"：{food_introduce}"
-        name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.buy_food)
-        self.now_draw = name_draw
-        """ 绘制的对象 """
+        # 根据食物商店id获取食物列表
+        if now_restaurant_id is None:
+            now_food_list = [(self.cid, x) for x in cache.dining_hall_data[self.cid]]
+        else:
+            now_food_list = [(self.cid, x) for x in cache.rhodes_island.restaurant_data[now_restaurant_id][self.cid]]
 
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
+        # 如果食物超过了十个，则只显示十个
+        if len(now_food_list) > 10:
+            now_food_list = now_food_list[:10]
 
-    def buy_food(self):
+        while 1:
+
+            for now_cid, now_uid in now_food_list:
+
+                if now_restaurant_id is None:
+                    food_data: game_type.Food = cache.dining_hall_data[now_cid][now_uid]
+                else:
+                    food_data: game_type.Food = cache.rhodes_island.restaurant_data[now_restaurant_id][now_cid][now_uid]
+                self.food_name = ""
+                if isinstance(now_cid, str):
+                    food_recipe: game_type.Recipes = cache.recipe_data[int(now_cid)]
+                    self.food_name = food_recipe.name
+                    food_money = food_recipe.money
+                    food_introduce = food_recipe.introduce
+                food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
+                button_text = f"[{now_cid}]{self.food_name}"
+                button_text += f"({food_quality_str})"
+                if food_data.maker != "":
+                    button_text += f"(by {food_data.maker})"
+                button_text += _("(博士免费)")
+                button_text += f"：{food_introduce}"
+                button_return = f"{now_cid}_{str(now_uid)[:3]}"
+                name_draw = draw.LeftButton(button_text, button_return, window_width, cmd_func=self.buy_food, args=(now_cid, now_uid, now_restaurant_id))
+                name_draw.draw()
+                return_list.append(name_draw.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+            cache.dining_hall_data.setdefault(self.cid, {})
+
+    def buy_food(self, cid: str, uid: UUID, restaurant_id: int = None):
         """玩家购买食物"""
-        cache.character_data[0].food_bag[self.text] = cache.restaurant_data[self.cid][self.text]
-        del cache.restaurant_data[self.cid][self.text]
+        if restaurant_id is None:
+            cache.character_data[0].food_bag[uid] = cache.dining_hall_data[cid][uid]
+            del cache.dining_hall_data[cid][uid]
+        else:
+            cache.character_data[0].food_bag[uid] = cache.rhodes_island.restaurant_data[restaurant_id][cid][uid]
+            del cache.rhodes_island.restaurant_data[restaurant_id][cid][uid]
         character_data: game_type.Character = cache.character_data[0]
         character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
         character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD

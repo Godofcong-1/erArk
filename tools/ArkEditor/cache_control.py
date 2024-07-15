@@ -31,6 +31,8 @@ premise_group_data: Dict[str, List] = {}
 """ 前提组数据 """
 status_data: dict = {}
 """ 当前状态数据 """
+status_all_data: dict = {}
+""" 当前状态全部数据 """
 status_type_data: Dict[str, List] = {}
 """ 状态类型数据 """
 now_status: str = "1"

@@ -38,7 +38,7 @@ class Manage_Library_Panel:
         """绘制对象"""
 
 
-        title_text = "管理图书馆"
+        title_text = _("管理图书馆")
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
             return_list = []
@@ -46,14 +46,14 @@ class Manage_Library_Panel:
             # line = draw.LineDraw("-", window_width)
             # line.draw()
             cinfo_draw = draw.NormalDraw()
-            info_text = f"\n要进行哪方面的管理呢？\n"
+            info_text = _("\n要进行哪方面的管理呢？\n")
             cinfo_draw.text = info_text
             cinfo_draw.draw()
 
             # 选项面板
             # button_all_draw = panel.LeftDrawTextListPanel()
 
-            button0_text = f"[001]催还书"
+            button0_text = _("[001]催还书")
             button0_draw = draw.LeftButton(
                 _(button0_text),
                 _("1"),
@@ -66,7 +66,7 @@ class Manage_Library_Panel:
             return_list.append(button0_draw.return_text)
 
             if 1:
-                button1_text = f"[002]图书进货(未实装)"
+                button1_text = _("[002]图书进货(未实装)")
                 button1_draw = draw.LeftButton(
                     _(button1_text),
                     _("2"),
@@ -79,7 +79,7 @@ class Manage_Library_Panel:
                 return_list.append(button1_draw.return_text)
 
             if 1:
-                button2_text = f"[003]阅读推荐"
+                button2_text = _("[003]阅读推荐")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("3"),
@@ -92,7 +92,7 @@ class Manage_Library_Panel:
                 return_list.append(button2_draw.return_text)
 
             if 1:
-                button3_text = f"[004]读书会"
+                button3_text = _("[004]读书会")
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("4"),
@@ -137,7 +137,7 @@ class Manage_Library_Panel:
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
                         borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                         borrow_npc_name = cache.character_data[borrow_npc_id].name
-                        book_text += f"  (被{borrow_npc_name}借走)"
+                        book_text += _("  (被{0}借走)").format(borrow_npc_name)
 
                         button_draw = draw.LeftButton(
                             _(book_text),
@@ -202,7 +202,7 @@ class Manage_Library_Panel:
             line.draw()
             info_draw = draw.NormalDraw()
             can_recommend_count = 3 - len(cache.rhodes_island.recommend_book_type_set)
-            info_draw.text = f"\n 当前剩余可选推荐 {can_recommend_count}\n"
+            info_draw.text = _("\n 当前剩余可选推荐 {0}\n").format(can_recommend_count)
             info_draw.draw()
             line_feed.draw()
 
@@ -325,7 +325,7 @@ class SelectRecommendBookButton:
         button_text = f"[{str(type_data.cid).rjust(2,'0')}]：{type_data.father_type_name}-{type_data.son_type_name}"
         name_draw = draw.LeftDraw()
         if self.book_type_id in cache.rhodes_island.recommend_book_type_set:
-            button_text += f" (已推荐)"
+            button_text += _(" (已推荐)")
             name_draw = draw.LeftButton(button_text, self.button_return, self.width,normal_style = "gold_enrod", cmd_func=self.button_0)
         else:
             name_draw = draw.LeftButton(button_text, self.button_return, self.width, cmd_func=self.button_0)

@@ -38,13 +38,13 @@ def common_ejaculation():
         # 基础射精值，小中多射精区分
         if character_data.h_state.orgasm_level[3] % 3 == 0:
             semen_count = int(10 * random_weight)
-            semen_text = "射精，射出了" + str(semen_count) + "ml精液"
+            semen_text = _("射精，射出了") + str(semen_count) + _("ml精液")
         if character_data.h_state.orgasm_level[3] % 3 == 1:
             semen_count = int(25 * random_weight)
-            semen_text = "大量射精，射出了" + str(semen_count) + "ml精液"
+            semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
         if character_data.h_state.orgasm_level[3] % 3 == 2:
             semen_count = int(45 * random_weight)
-            semen_text = "超大量射精，射出了" + str(semen_count) + "ml精液"
+            semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
 
         # 射精量不高于剩余精液值
         semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
@@ -206,10 +206,10 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         # 获取射精文本
         if part_type == 0:
             part_name = game_config.config_body_part[part_cid].name
-            now_text = "在" + target_data.name + "的" + part_name+ semen_text
+            now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
         elif part_type == 1:
             cloth_text = game_config.config_clothing_type[part_cid].name
-            now_text = "在" + target_data.name + "的" + cloth_text + semen_text
+            now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
     
     # 戴着避孕套射精时
     else:
@@ -305,7 +305,7 @@ class Ejaculation_Panel:
                 yrn = flow_handle.askfor_all(return_list)
 
                 # 在非页面切换时退出面板
-                if yrn not in ['身体', '服装']:
+                if yrn not in [_('身体'), _('服装')]:
                     cache.now_panel_id = constant.Panel.IN_SCENE
                     break
 
@@ -314,22 +314,15 @@ class Ejaculation_Panel:
 
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
-        clothing = {}
-
-        for clothing_type in game_config.config_clothing_type:
-            if len(target_data.cloth.cloth_wear[clothing_type]):
-                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
 
         # 不插在对应部位，则无法射在对应部位
-        if body_part_cid == 6 and not handle_premise.handle_last_cmd_sex(0):
+        if body_part_cid == 6 and not (handle_premise.handle_penis_in_t_vagina(0) or handle_premise.handle_penis_in_t_womb(0)):
             return False
-        elif body_part_cid == 7 and not handle_premise.handle_last_cmd_w_sex(0):
+        elif body_part_cid == 7 and not handle_premise.handle_penis_in_t_womb(0):
             return False
-        elif body_part_cid == 8 and not handle_premise.handle_last_cmd_a_sex(0):
+        elif body_part_cid == 8 and not handle_premise.handle_penis_in_t_anal(0):
             return False
-        elif body_part_cid == 9 and not handle_premise.handle_last_cmd_u_sex(0):
+        elif body_part_cid == 9 and not handle_premise.handle_penis_in_t_nrethral(0):
             return False
         elif body_part_cid == 15:
             return False
@@ -340,6 +333,15 @@ class Ejaculation_Panel:
             return False
         elif body_part_cid == 14 and not target_data.talent[111]:
             return False
+
+        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
+        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
+        clothing = {}
+
+        for clothing_type in game_config.config_clothing_type:
+            if len(target_data.cloth.cloth_wear[clothing_type]):
+                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
+
         # 对应部位有衣服，则无法射在对应部位
         if isinstance(body_cloth[body_part_cid], list):
             def cloth_list(bbc):

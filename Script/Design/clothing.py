@@ -1,13 +1,20 @@
 import random
-import math
-import uuid
-from typing import Dict
-from Script.Core import game_type,cache_control
-from Script.Config import game_config
+from types import FunctionType
+from Script.Core import (
+    cache_control,
+    game_type,
+    get_text,
+)
+from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
+from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+window_width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def get_npc_cloth(character_id: int):
@@ -28,6 +35,7 @@ def get_npc_cloth(character_id: int):
             # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
             character_data.cloth.cloth_wear[type].append(cloth_id)
         get_underwear(character_id)
+        chara_special_wear_cloth(character_id)
 
 
 def get_random_underwear():
@@ -118,7 +126,97 @@ def get_underwear(character_id: int, part_flag = 0):
             character_data.cloth.cloth_wear[9].append(pan_id)
 
 
-def get_cloth_off(character_id: int):
+def undress_out_cloth(character_id: int):
+    """
+    脱掉外衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        for i in {5,8}:
+            character_data.cloth.cloth_wear[i] = []
+        chara_special_wear_cloth(character_id)
+
+
+def strip_down_till_socks_and_gloves_left(character_id: int):
+    """
+    脱到只穿袜子手套等
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        for i in {5,6,8,9}:
+            character_data.cloth.cloth_wear[i] = []
+        chara_special_wear_cloth(character_id)
+
+
+def pl_get_chara_pan(character_id: int):
+    """
+    玩家获得该角色的内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    pl_character_data = cache.character_data[0]
+    if character_id > 0:
+        character_data = cache.character_data[character_id]
+        # 如果角色穿了内裤
+        if len(character_data.cloth.cloth_wear[9]):
+            TagetPanId = character_data.cloth.cloth_wear[9][-1]
+            # 加到玩家的内裤收藏里
+            pl_character_data.pl_collection.npc_panties_tem.setdefault(character_id, [])
+            pl_character_data.pl_collection.npc_panties_tem[character_id].append(TagetPanId)
+            # 加到玩家的行动记录里
+            TPanName = game_config.config_clothing_tem[TagetPanId].name
+            pl_character_data.behavior.pan_name = TPanName
+            # 脱掉内裤
+            character_data.cloth.cloth_wear[9] = []
+            character_data.cloth.cloth_see[9] = True
+            # 绘制信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(character_data.name, TPanName)
+            now_draw.draw()
+
+
+def pl_get_chara_socks(character_id: int):
+    """
+    玩家获得该角色的袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    pl_character_data = cache.character_data[0]
+    if character_id > 0:
+        character_data = cache.character_data[character_id]
+        # 如果角色穿了袜子
+        if len(character_data.cloth.cloth_wear[10]):
+            TagetSocId = character_data.cloth.cloth_wear[10][-1]
+            # 加到玩家的袜子收藏里
+            pl_character_data.pl_collection.npc_socks_tem.setdefault(character_id, [])
+            pl_character_data.pl_collection.npc_socks_tem[character_id].append(TagetSocId)
+            # 加到玩家的行动记录里
+            TSocName = game_config.config_clothing_tem[TagetSocId].name
+            pl_character_data.behavior.socks_name = TSocName
+            # 脱掉袜子
+            character_data.cloth.cloth_wear[10] = []
+            character_data.cloth.cloth_see[10] = True
+            # 绘制信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(character_data.name, TSocName)
+            now_draw.draw()
+
+
+def get_all_cloth_off(character_id: int):
     """
     脱成全裸
     Keyword arguments:
@@ -188,7 +286,7 @@ def get_swim_cloth(character_id: int):
 
 def chara_special_wear_cloth(character_id: int):
     """
-    根据角色设定而穿上必须穿的衣物
+    角色穿上必须穿的衣物
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -197,14 +295,33 @@ def chara_special_wear_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         # print(f"debug name = {character_data.name}")
+        return_list = []
 
-        # 阿米娅必须戴戒指
+        # 阿米娅必须戴抑制戒指
         if character_data.adv == 1:
             if 701 not in character_data.cloth.cloth_wear[7]:
                 character_data.cloth.cloth_wear[7].append(701)
                 # print("换上戒指了")
-            return [701]
-    return []
+            return_list.append(701)
+        # 源石病感染者必须戴监测环
+        if character_data.talent[150]:
+            if 1301 not in character_data.cloth.cloth_wear[13]:
+                character_data.cloth.cloth_wear[13].append(1301)
+                # print("换上监测环了")
+            return_list.append(1301)
+        # 有戒指素质的必须戴戒指
+        if character_data.talent[205]:
+            if 751 not in character_data.cloth.cloth_wear[7]:
+                character_data.cloth.cloth_wear[7].append(751)
+                # print("换上戒指了")
+            return_list.append(751)
+        # 项圈同理
+        elif character_data.talent[215]:
+            if 352 not in character_data.cloth.cloth_wear[3]:
+                character_data.cloth.cloth_wear[3].append(352)
+                # print("换上项圈了")
+            return_list.append(352)
+    return return_list
 
 
 def get_cloth_wear_zero_except_need(character_id: int) -> dict:
@@ -226,6 +343,7 @@ def get_cloth_wear_zero_except_need(character_id: int) -> dict:
             # 获得两个list的差，并赋值给当前服装
             result = [item for item in  character_data.cloth.cloth_wear[clothing_type] if item not in remove_tem_list]
             character_data.cloth.cloth_wear[clothing_type] = result
+    chara_special_wear_cloth(character_id)
     # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
 
 

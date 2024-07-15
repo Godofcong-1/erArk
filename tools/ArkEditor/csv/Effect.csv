@@ -1,13 +1,16 @@
 cid,effect_name,effect_type,effect
 二段结算,行为结算效果函数
 
-9999,NOTHING,系统状态,什么都没有的空结算
-10000,INTERRUPT_TARGET_ACTIVITY,系统状态,打断交互对象活动
-10001,OPTION_FATER,系统状态,开启子选项面板
-10002,TARGET_TO_PLAYER,系统状态,交互对象设为对玩家交互
-10003,OPEN_INSTRUCT_FILTER_H,系统状态,开启H面板过滤器
-10004,CLOSE_INSTRUCT_FILTER_H,系统状态,关闭H面板过滤器
-10005,PL_TARGET_TO_ME,系统状态,将玩家的交互对象设为自己
+9999,NOTHING,系统量_基础,什么都没有的空结算
+10001,OPTION_FATER,系统量_基础,开启子选项面板
+10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器
+10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器
+
+10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
+10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
+10005,PL_TARGET_TO_ME,系统量_交互,将玩家的交互对象设为自己
+10006,TARGET_TO_SELF,系统量_交互,将交互对象设为对自己交互
+10007,TARGET_TO_MASTUREBATE,系统量_交互,将交互对象设为对当前场景中的首位自慰角色
 
 0,ADD_SMALL_HIT_POINT,属性_基础,增加少量体力
 1,ADD_SMALL_MANA_POINT,属性_基础,增加少量气力
@@ -35,6 +38,7 @@ cid,effect_name,effect_type,effect
 40,TARGET_DESIRE_POINT_ZERO,属性_基础,交互对象欲望值归零
 1501,DESIRE_POINT_TO_79,属性_基础,自己欲望值调为79
 1502,TARGET_DESIRE_POINT_TO_79,属性_基础,交互对象欲望值调为79
+1503,DESIRE_POINT_TO_0,属性_基础,自己欲望值归零
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
@@ -189,9 +193,11 @@ cid,effect_name,effect_type,effect
 344,ADD_1_Read_EXPERIENCE,属性_经验,增加1阅读经验
 345,ADD_1_Read_H_EXPERIENCE,属性_经验,增加1H书阅读经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
+351,ADD_1_Masterbate_EXPERIENCE,属性_经验,增加1自慰经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
+405,UPDATE_ORGASM_LEVEL,属性_结构体,双方同步高潮程度记录
 
 451,T_BE_BAGGED,属性_特殊flag,交互对象变成被装袋搬走状态
 452,T_BE_IMPRISONMENT,属性_特殊flag,交互对象变成被监禁状态
@@ -230,6 +236,8 @@ cid,effect_name,effect_type,effect
 493,BATHHOUSE_ENTERTAINMENT_FLAG_TO_2,属性_特殊flag,自身变成大浴场娱乐_要娱乐状态
 494,MILK_FLAG_TO_0,属性_特殊flag,自身清零要挤奶状态
 495,HYPNOSIS_FLAG_TO_0,属性_特殊flag,自身清零催眠系的flag状态
+496,TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0,属性_特殊flag,交互对象清零对玩家的愤怒状态
+497,MASTUREBATE_FLAG_TO_0,属性_特殊flag,自身清零要自慰状态
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整
@@ -253,6 +261,7 @@ cid,effect_name,effect_type,effect
 521,AROMATHERAPY_ADD_ADJUST,指令_专用结算,（香薰疗愈用）对各配方结算各效果
 522,URETHRAL_SWAB_ADD_ADJUST,指令_专用结算,（尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
 523,URETHRAL_FINGER_INSERTION_ADD_ADJUST,指令_专用结算,（尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
+524,MASTUREBATE_ADD_ADJUST,指令_专用结算,（自慰用）选择自己最高感度的部位，增加该部位快感和经验
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -297,6 +306,9 @@ cid,effect_name,effect_type,effect
 814,PENIS_IN_T_TAIL,H_阴茎位置,当前阴茎位置为交互对象_尾交中
 815,PENIS_IN_T_HORN,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭角中
 816,PENIS_IN_T_EARS,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭耳朵中
+831,CANCEL_PENIS_IN_FACE_OR_MOUSE,H_阴茎位置,取消为阴茎位置交互对象_阴茎蹭脸中和口交中
+
+841,H_IN_LOVE_HOTEL_TO_FALSE,H_地点,取消自己和交互对象正在爱情旅馆中H的状态
 
 901,ITEM_OFF,道具_增减,去掉身上所有的道具
 902,TARGET_ITEM_OFF,道具_增减,交互对象去掉身上所有的道具
@@ -374,4 +386,9 @@ cid,effect_name,effect_type,effect
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
 1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
 1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H
+
+1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
+
+1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
+
 

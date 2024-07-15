@@ -2,11 +2,7 @@ import datetime
 from types import FunctionType
 from Script.Design import (
     settle_behavior,
-    character,
-    character_handle,
-    map_handle,
     attr_calculation,
-    game_time,
     clothing,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
@@ -169,20 +165,11 @@ def handle_reset_cloth(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    
     if not add_time:
         return
     if character_id:
-        character_data: game_type.Character = cache.character_data[character_id]
-        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        character_tem = cache.npc_tem_data[character_id-1]
-        # print(f"debug character_data.name = {character_data.name},character_tem.name = {character_tem.Name}, cloth = {character_tem.Cloth}")
-        for cloth_id in character_tem.Cloth:
-            type = game_config.config_clothing_tem[cloth_id].clothing_type
-            # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-            if type in {6,9}:
-                continue
-            if cloth_id not in character_data.cloth.cloth_wear[type]:
-                character_data.cloth.cloth_wear[type].append(cloth_id)
+        clothing.get_npc_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_PAN)
@@ -203,19 +190,7 @@ def handle_get_t_pan(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_collection.npc_panties_tem.setdefault(character_data.target_character_id, [])
-    character_data.pl_collection.npc_panties_tem[character_data.target_character_id].append(target_data.cloth.cloth_wear[9][0])
-    TagetPanId = target_data.cloth.cloth_wear[9][0]
-    TPanName = game_config.config_clothing_tem[TagetPanId].name
-    character_data.behavior.pan_name = TPanName
-    target_data.cloth.cloth_wear[9] = []
-    target_data.cloth.cloth_see[9] = True
-    # 绘制信息
-    now_draw = draw.WaitDraw()
-    now_draw.width = window_width
-    now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, TPanName)
-    now_draw.draw()
+    clothing.pl_get_chara_pan(character_data.target_character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_SOCKS)
@@ -236,18 +211,7 @@ def handle_get_t_sock(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_collection.npc_socks_tem.setdefault(character_data.target_character_id, [])
-    character_data.pl_collection.npc_socks_tem[character_data.target_character_id].append(target_data.cloth.cloth_wear[10][0])
-    TagetSocId = target_data.cloth.cloth_wear[10][0]
-    TSocName = game_config.config_clothing_tem[TagetSocId].name
-    character_data.behavior.socks_name = TSocName
-    target_data.cloth.cloth_wear[10] = []
-    # 绘制信息
-    now_draw = draw.WaitDraw()
-    now_draw.width = window_width
-    now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(target_data.name, TSocName)
-    now_draw.draw()
+    clothing.pl_get_chara_socks(character_data.target_character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_CLOTH_BACK)
@@ -280,9 +244,9 @@ def handle_t_cloth_back(
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         if target_data.sp_flag.unconscious_h:
-            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子").format(target_data.name)
+            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n").format(target_data.name)
         else:
-            now_draw.text = _("\n{0}穿回了脱下的衣服").format(target_data.name)
+            now_draw.text = _("\n{0}穿回了脱下的衣服\n").format(target_data.name)
         now_draw.draw()
 
 
@@ -303,7 +267,7 @@ def handle_wear_cloth_off(
     """
     if not add_time:
         return
-    clothing.get_cloth_off(character_id)
+    clothing.get_all_cloth_off(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_CLOTH_OFF_MOST)
@@ -344,6 +308,26 @@ def handle_get_shower_cloth(
     if not add_time:
         return
     clothing.get_shower_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_CLOTH)
+def handle_get_sleep_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    清零其他衣服并换上睡衣
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    clothing.get_sleep_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SWIM_CLOTH)
@@ -461,7 +445,7 @@ def handle_locker_to_wear(
     if len(character_data.dirty.cloth_locker_semen):
         character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
     else:
-        empty_dirty_data = attr_calculation.get_dirty_zero()
+        empty_dirty_data = attr_calculation.get_dirty_zero(character_data.dirty)
         character_data.dirty.cloth_semen = empty_dirty_data.cloth_semen
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)

@@ -2,19 +2,24 @@ class BehaviorEffect:
     """行为结算效果函数"""
 
     NOTHING = 9999
-    """ 系统状态 什么都没有的空结算 """
-    INTERRUPT_TARGET_ACTIVITY = 10000
-    """ 系统状态 打断交互对象活动 """
+    """ 系统量_基础 什么都没有的空结算 """
     OPTION_FATER = 10001
-    """ 系统状态 开启子选项面板 """
-    TARGET_TO_PLAYER = 10002
-    """ 系统状态 交互对象设为对玩家交互 """
+    """ 系统量_基础 开启子选项面板 """
     OPEN_INSTRUCT_FILTER_H = 10003
-    """ 系统状态 开启H面板过滤器 """
+    """ 系统量_基础 开启H面板过滤器 """
     CLOSE_INSTRUCT_FILTER_H = 10004
-    """ 系统状态 关闭H面板过滤器 """
+    """ 系统量_基础 关闭H面板过滤器 """
+
+    INTERRUPT_TARGET_ACTIVITY = 10000
+    """ 系统量_交互 打断交互对象活动 """
+    TARGET_TO_PLAYER = 10002
+    """ 系统量_交互 将交互对象设为对玩家交互 """
     PL_TARGET_TO_ME = 10005
-    """ 系统状态 将玩家的交互对象设为自己 """
+    """ 系统量_交互 将玩家的交互对象设为自己 """
+    TARGET_TO_SELF = 10006
+    """ 系统量_交互 将交互对象设为对自己交互 """
+    TARGET_TO_MASTUREBATE = 10007
+    """ 系统量_交互 将交互对象设为对当前场景中的首位自慰角色 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -68,6 +73,8 @@ class BehaviorEffect:
     """ 属性_基础 自己欲望值调为79 """
     TARGET_DESIRE_POINT_TO_79 = 1502
     """ 属性_基础 交互对象欲望值调为79 """
+    DESIRE_POINT_TO_0 = 1503
+    """ 属性_基础 自己欲望值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
@@ -372,11 +379,15 @@ class BehaviorEffect:
     """ 属性_经验 增加1H书阅读经验 """
     Both_ADD_1_Learn_EXPERIENCE = 350
     """ 属性_经验 双方增加1学识经验 """
+    ADD_1_Masterbate_EXPERIENCE = 351
+    """ 属性_经验 增加1自慰经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
     BOTH_H_STATE_RESET = 404
     """ 属性_结构体 双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态 """
+    UPDATE_ORGASM_LEVEL = 405
+    """ 属性_结构体 双方同步高潮程度记录 """
 
     T_BE_BAGGED = 451
     """ 属性_特殊flag 交互对象变成被装袋搬走状态 """
@@ -454,6 +465,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身清零催眠系的flag状态 """
     TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 496
     """ 属性_特殊flag 交互对象清零对玩家的愤怒状态 """
+    MASTUREBATE_FLAG_TO_0 = 497
+    """ 属性_特殊flag 自身清零要自慰状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """
@@ -472,7 +485,7 @@ class BehaviorEffect:
     ADD_HPMP_MAX = 508
     """ 指令_专用结算 （锻炼身体用）增加体力气力上限 """
     SLEEP_ADD_ADJUST = 509
-    """ 指令_专用结算 （睡觉用）清零熟睡值（暂弃用） """
+    """ 指令_专用结算 （睡觉用）如果在自己宿舍，则有一定几率关门 """
     RECRUIT_ADD_ADJUST = 510
     """ 指令_专用结算 （招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽 """
     READ_ADD_ADJUST = 511
@@ -502,6 +515,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
     URETHRAL_FINGER_INSERTION_ADD_ADJUST = 523
     """ 指令_专用结算 （尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整 """
+    MASTUREBATE_ADD_ADJUST = 524
+    """ 指令_专用结算 （自慰用）选择自己最高感度的部位，增加该部位快感和经验 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -527,6 +542,8 @@ class BehaviorEffect:
     """ 属性_服装 脱掉全部衣服 """
     GET_SHOWER_CLOTH = 633
     """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
+    GET_SLEEP_CLOTH = 634
+    """ 属性_服装 清零其他衣服并换上睡衣 """
     LOCKER_CLOTH_RESET = 641
     """ 属性_服装 衣柜里的衣服清零 """
     WEAR_TO_LOCKER = 642
@@ -586,6 +603,11 @@ class BehaviorEffect:
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭角中 """
     PENIS_IN_T_EARS = 816
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
+    CANCEL_PENIS_IN_FACE_OR_MOUSE = 831
+    """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
+
+    H_IN_LOVE_HOTEL_TO_FALSE = 841
+    """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """
 
     ITEM_OFF = 901
     """ 道具_增减 去掉身上所有的道具 """
@@ -693,6 +715,8 @@ class BehaviorEffect:
     """ 初次 自己变为今天已见过面 """
     DAY_FIRST_MEET_1 = 1106
     """ 初次 自己变为今天未见过面 """
+    FIRST_KISS_TO_PENIS = 1107
+    """ 初次 记录阴茎初吻 """
 
     PENETRATING_VISION_ON = 1201
     """ 源石技艺 开启透视（含理智消耗） """
@@ -735,6 +759,13 @@ class BehaviorEffect:
     """ 属性_H 对方开启主动H """
     TARGET_NPC_ACTIVE_H_OFF = 1404
     """ 属性_H 对方关闭主动H """
+
+    TRGET_GET_WEEKNESSS_BY_DR = 1601
+    """ 属性_素质 交互对象获得[被博士持有把柄] """
+
+    WAIT_UNITL_TRAGET_ACTION_END = 1701
+    """ 行动 玩家等待至交互对象行动结束 """
+
 
 class SecondEffect:
     """二段结算效果函数"""
@@ -938,8 +969,8 @@ class SecondEffect:
     """ 增加巨量苦痛（A破处修正） """
     ADD_URINATE = 402
     """ 增加尿意（持续性利尿剂） """
-    ADD_TIRED = 403
-    """ 维持疲劳和熟睡值（安眠药） """
+    ADD_SLEEP_POINT = 403
+    """ 维持熟睡值（安眠药） """
     MILKING_MACHINE = 404
     """ 角色的奶量转化为乳汁（搾乳机） """
     URINE_COLLECTOR = 405
@@ -948,6 +979,8 @@ class SecondEffect:
     """ 结算因B绝顶而被迫喷乳 """
     U_ORGASM_TO_PEE = 407
     """ 结算因U绝顶而被迫漏尿 """
+    EXTRA_ORGASM = 408
+    """ 结算额外绝顶 """
 
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_双方归零 """

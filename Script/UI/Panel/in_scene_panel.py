@@ -121,13 +121,13 @@ class InScenePanel:
                 line_draw.draw()
 
                 # 收起与展开按钮
-                return_text = self.draw_show_and_hide_button(0, "收起状态栏", "展开状态栏")
+                return_text = self.draw_show_and_hide_button(0, _("收起状态栏"), _("展开状态栏"))
                 ask_list.append(return_text)
-                return_text = self.draw_show_and_hide_button(1, "收起服装栏", "展开服装栏")
+                return_text = self.draw_show_and_hide_button(1, _("收起服装栏"), _("展开服装栏"))
                 ask_list.append(return_text)
-                return_text = self.draw_show_and_hide_button(2, "收起身体栏", "展开身体栏")
+                return_text = self.draw_show_and_hide_button(2, _("收起身体栏"), _("展开身体栏"))
                 ask_list.append(return_text)
-                return_text = self.draw_show_and_hide_button(4, "收起图片栏", "展开图片栏")
+                return_text = self.draw_show_and_hide_button(4, _("收起图片栏"), _("展开图片栏"))
                 ask_list.append(return_text)
                 line_feed.draw()
                 line_draw = draw.LineDraw(".--", self.width)

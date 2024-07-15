@@ -603,10 +603,8 @@ def check_facility_open():
     判断是否有空闲客房，暂时没有用
     """
     # 遍历全部客房
-    for room_id in cache.rhodes_island.facility_open:
-        # 跳过非客房
-        if room_id <= 1200 or room_id >= 1300:
-            continue
+    guest_rooms = [room_id for room_id in cache.rhodes_island.facility_open if 1200 < room_id < 1300]
+    for room_id in guest_rooms:
         # 跳过未开放的客房
         if not cache.rhodes_island.facility_open[room_id]:
             continue
@@ -860,13 +858,19 @@ def settle_pink_certificate():
     结算粉红凭证
     """
 
-    # 输出好感度合计与粉红凭证增加
+    # 根据好感度结算粉红凭证增加
     pink_certificate_add = int(cache.rhodes_island.total_favorability_increased / 100)
     pink_certificate_add = max(pink_certificate_add, 0)
     cache.rhodes_island.materials_resouce[4] += pink_certificate_add
+    # 结算陷落角色提供的的粉红凭证
+    cache.rhodes_island.materials_resouce[4] += cache.rhodes_island.week_fall_chara_pink_certificate_add
+    # 输出提示信息
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _("\n今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n").format(int(cache.rhodes_island.total_favorability_increased), pink_certificate_add)
+    now_draw.text = _("\n今日全角色总好感度上升为：{0}，折合为 {1} 粉红凭证\n").format(int(cache.rhodes_island.total_favorability_increased), pink_certificate_add)
+    if cache.rhodes_island.week_fall_chara_pink_certificate_add:
+        now_draw.text += _("本周全陷落角色提供的粉红凭证为：{0}\n").format(cache.rhodes_island.week_fall_chara_pink_certificate_add)
     now_draw.draw()
-    # 清零好感度合计计数
+    # 清零计数
     cache.rhodes_island.total_favorability_increased = 0
+    cache.rhodes_island.week_fall_chara_pink_certificate_add = 0

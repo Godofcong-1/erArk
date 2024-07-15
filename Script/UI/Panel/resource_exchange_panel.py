@@ -31,7 +31,7 @@ class Resource_Exchange_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {"材料": False, "药剂": False, "乳制品": False, "香水": False}
+        self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False}
         """ 显示的资源类型 """
 
     def draw(self):
@@ -195,7 +195,7 @@ class Resource_Exchange_Line_Panel:
                 line_feed.draw()
 
                 # 遍历全资源类型
-                resouce_list = ["材料", "药剂", "乳制品", "香水"]
+                resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水")]
                 for resouce_type in resouce_list:
 
                     # 判断是否显示该类型的资源

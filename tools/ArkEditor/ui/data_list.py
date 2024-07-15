@@ -20,7 +20,6 @@ class DataList(QWidget):
         self.layout = QGridLayout(self)
         self.top_layout = QHBoxLayout()
         self.chara_id_text_edit = QTextEdit("0")
-        self.menu_bar: QMenuBar = None
         self.text_id_text_edit = QTextEdit("0")
         self.text_id_change_button = QPushButton("修改序号")
         self.text_id_change_button.clicked.connect(self.update_text_id)
@@ -53,6 +52,7 @@ class DataList(QWidget):
         self.setFont(self.font)
         self.list_widget.setFont(self.font)
         self.close_flag = 1
+        self.delet_text_id_flag = 1 # 是否删除条目序号相关的控件
         self.edited_item = self.list_widget.currentItem()
         self.list_widget.setSelectionMode(QAbstractItemView.SingleSelection)
         self.list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -75,14 +75,16 @@ class DataList(QWidget):
         # 说明文本
         label1_text = QLabel("角色id")
         label2_text = QLabel("触发指令与状态")
-        label3_text = QLabel("条目序号")
+        self.label3_text = QLabel("指令信息")
+        self.label4_text = QLabel("条目序号")
 
         # 上方布局
         self.top_layout.addWidget(label1_text)
         self.top_layout.addWidget(self.chara_id_text_edit)
         self.top_layout.addWidget(label2_text)
         self.top_layout.addWidget(self.menu_bar)
-        self.top_layout.addWidget(label3_text)
+        self.top_layout.addWidget(self.label3_text)
+        self.top_layout.addWidget(self.label4_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
         self.top_layout.addWidget(self.info_button)
@@ -94,7 +96,7 @@ class DataList(QWidget):
         self.text_id_text_edit.setFixedWidth(100)
 
         # 总布局
-        self.layout.addLayout(self.top_layout, 0, 0)
+        self.layout.addLayout(self.top_layout, 0, 0, 1, -1)
         self.layout.addWidget(self.new_text_button, 1, 0)
         self.layout.addWidget(self.copy_text_button, 1, 1)
         self.layout.addWidget(self.delete_text_button, 1, 2)
@@ -448,6 +450,7 @@ class DataList(QWidget):
         self.edited_item = None
         self.list_widget.clear()
         self.update_clear = 0
+        status_cid = cache_control.now_status
 
         if cache_control.now_edit_type_flag == 0:
             # 按cid排序整个cache_control.now_talk_data
@@ -496,6 +499,13 @@ class DataList(QWidget):
             self.info_button.clicked.disconnect()
             self.info_button.clicked.connect(function.show_event_introduce)
 
+            # 如果还没有删除，则删除self.label4_text和self.text_id_text_edit和self.text_id_change_button
+            if self.delet_text_id_flag:
+                self.delet_text_id_flag = 0
+                self.label4_text.deleteLater()
+                self.text_id_text_edit.deleteLater()
+                self.text_id_change_button.deleteLater()
+
             type_text_list = ["跳过指令", "指令前置", "指令后置"]
             for uid in cache_control.now_event_data:
                 now_event: game_type.Event = cache_control.now_event_data[uid]
@@ -513,12 +523,12 @@ class DataList(QWidget):
                 item.uid = uid
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
-                now_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
-                status_text = cache_control.status_data[now_cid]
+                status_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
+                status_text = cache_control.status_data[status_cid]
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
-                cache_control.now_status = now_cid
+                cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
                 self.chara_id_text_edit.setText(chara_id)
@@ -534,3 +544,20 @@ class DataList(QWidget):
                         # 将其设定为当前行
                         self.list_widget.setCurrentItem(item)
                         break
+
+        # 更新状态耗时与触发人信息
+        status_duration = int(cache_control.status_all_data[status_cid]["duration"])
+        status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+        info_text = "耗时"
+        if status_duration >= 0:
+            info_text += f"{status_duration}分"
+        else:
+            info_text += "不定"
+        info_text += ",触发人:"
+        if status_trigger == "pl":
+            info_text += "仅玩家"
+        elif status_trigger == "npc":
+            info_text += "仅npc"
+        elif status_trigger == "both":
+            info_text += "玩家和npc均可"
+        self.label3_text.setText(info_text)

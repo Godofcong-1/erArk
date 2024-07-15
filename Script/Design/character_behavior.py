@@ -85,8 +85,8 @@ def update_cafeteria():
     max_people = len(cache.npc_id_got)
     # food_judge = 1
     food_count = 0
-    for food_type in cache.restaurant_data:
-        food_list: Dict[UUID, game_type.Food] = cache.restaurant_data[food_type]
+    for food_type in cache.dining_hall_data:
+        food_list: Dict[UUID, game_type.Food] = cache.dining_hall_data[food_type]
         food_count += len(food_list)
     #     for food_id in food_list:
     #         food: game_type.Food = food_list[food_id]
@@ -99,7 +99,7 @@ def update_cafeteria():
     # if food_judge:
     # 食物数量不足且当前时间在饭点时，刷新食物
     if food_count <= max_people * 3 and handle_premise.handle_eat_time(0):
-        cooking.init_restaurant_data()
+        cooking.init_food_shop_data()
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
@@ -127,16 +127,8 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
 
     # 先处理玩家部分
     if character_id == 0:
-        # 判断玩家的开始事件
-        # now_event = event.handle_event(0,1)
-        # if now_event != None:
-        #     now_event.draw()
-        #     character_data.event.event_id = now_event.event_id
-        #     start_time = character_data.behavior.start_time
-        #     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-        #     now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, start_flag = True)
-        #     if now_panel != None:
-        #         now_panel.draw()
+        # 记录玩家的指令文本
+        cache.daily_intsruce += character_instruct_record(0)
 
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(character_id)
@@ -160,6 +152,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         #         print(f"debug time_judge")
         judge_character_tired_sleep(character_id) # 结算疲劳
         judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
+        judge_pl_real_time_data() # 玩家实时数据结算
         # print(f"debug 玩家结算完毕")
 
     # 再处理NPC部分
@@ -219,70 +212,82 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
 
     # 首先判定是否有高优先级的行动
     type_0_target_list = game_config.config_target_type_index[0]
-    target, weight, judge = search_target(character_id, type_0_target_list, null_target_set, premise_data, target_weight_data)
-    # 将行动列表加到null_target中
+    target, weight, judge, new_premise_data = search_target(character_id, type_0_target_list, null_target_set, premise_data, target_weight_data)
+    # 将行动列表加到null_target中，将新的前提数据加到premise_data中
     null_target_set.update(type_0_target_list)
+    premise_data = new_premise_data
     # 然后判断需求，先判断需求链中的需求，再判断非链中的需求，最后判断是否需要进入需求链
     if judge == 0 and not handle_premise.handle_normal_1(character_id):
         now_target_list = game_config.config_target_type_index[12]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 非链中的需求
-    if judge == 0 and not handle_premise.handle_unnormal_27(character_id):
+    if judge == 0 and handle_premise.handle_unnormal_27(character_id):
         now_target_list = game_config.config_target_type_index[13]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 进入需求链
     if judge == 0:
         now_target_list = game_config.config_target_type_index[11]
-        target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+        target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
         null_target_set.update(now_target_list)
+        premise_data = new_premise_data
     # 然后判断助理，先判断助理服务链，再判断非链中的助理服务，最后判断是否要进入助理服务链
     if judge == 0 and handle_premise.handle_is_assistant(character_id):
         # 是否正在助理服务链中
         if judge == 0 and handle_premise.handle_assistant_salutation_of_ai_disable(character_id):
             now_target_list = game_config.config_target_type_index[42]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 是否进行非链的助理服务
         if judge == 0:
             now_target_list = game_config.config_target_type_index[43]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 是否进入助理服务链
         if judge == 0:
             now_target_list = game_config.config_target_type_index[41]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
     if judge == 0 and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
         # 进行工作
         if judge == 0:
             now_target_list = game_config.config_target_type_index[22]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 工作准备
         if judge == 0:
             now_target_list = game_config.config_target_type_index[21]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
     # 然后判断娱乐，需要在娱乐时间
     if judge == 0 and handle_premise.handle_all_entertainment_time(character_id):
         # 进行娱乐
         if judge == 0:
             now_target_list = game_config.config_target_type_index[32]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 娱乐后处理
         if judge == 0:
             now_target_list = game_config.config_target_type_index[33]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
         # 娱乐准备
         if judge == 0:
             now_target_list = game_config.config_target_type_index[31]
-            target, weight, judge = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
             null_target_set.update(now_target_list)
+            premise_data = new_premise_data
 
     # 如果以上都没有，则开始遍历各大类的目标行动
     if judge == 0:
@@ -300,7 +305,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         else:
             now_target_list = all_target_list
 
-        target, weight, judge = search_target(
+        target, weight, judge, new_premise_data = search_target(
             character_id,
             now_target_list,
             null_target_set,
@@ -351,10 +356,8 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
-                # H时
-                # 去掉了不在无意识H模式下的限制
-                # elif character_data.sp_flag.is_h and not character_data.sp_flag.unconscious_h:
-                elif character_data.sp_flag.is_h:
+                # H时，在无意识模式下则不检测疲劳，只检测HP
+                elif character_data.sp_flag.is_h and (not character_data.sp_flag.unconscious_h or (character_data.sp_flag.unconscious_h and character_data.hit_point <= 1)):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
@@ -410,10 +413,12 @@ def judge_character_status(character_id: int) -> int:
         # 如果是父事件的话，则先输出文本
         if "10001" in event_config.effect:
             start_event_draw.draw()
+            # now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
 
     # if not character_id:
     #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
-    now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+    first_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
+    second_settle_panel = None
     # if not character_id:
     #     print(f"debug 2 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
@@ -425,16 +430,15 @@ def judge_character_status(character_id: int) -> int:
         # 指令前置类型的事件触发
         if end_event_type == 1:
             # print(f"debug 指令前置类型的事件触发")
+            character_data.event.event_id = end_event_id
 
             # 先绘制指令文本
             talk.handle_talk(character_id)
 
-            # 如果是父事件的话，则先输出文本
+            # 如果是父事件的话，则先结算父事件
             if "10001" in event_config.effect:
                 end_event_draw.draw()
-
-            character_data.event.event_id = end_event_id
-            now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
+            second_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
 
     # if not character_id:
     #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
@@ -452,15 +456,18 @@ def judge_character_status(character_id: int) -> int:
     # 如果有事件则显示事件，否则显示口上
     if start_event_draw != None:
         start_event_draw.draw()
-    elif end_event_draw != None:
+    # 防止父事件二次绘制
+    elif end_event_draw != None and "10001" not in event_config.effect:
         end_event_draw.draw()
     else:
         talk.handle_talk(character_id)
     # 指令后置类型的事件，在最后输出指令的口上
     if event_type_now == 2:
         talk.handle_talk(character_id)
-    if now_panel != None:
-        now_panel.draw()
+    if first_settle_panel != None:
+        first_settle_panel.draw()
+        if second_settle_panel != None:
+            second_settle_panel.draw()
         #进行一次暂停以便玩家看输出信息
         if character_id == 0:
             wait_draw = draw.LineFeedWaitDraw()
@@ -626,8 +633,8 @@ def search_target(
         #     if final_target == "531":
         #         print(f"debug value_weight = {value_weight}")
         #     print(f"debug value_weight = {value_weight}")
-        return final_target, value_weight, 1
-    return "", 0, 0
+        return final_target, value_weight, 1, premise_data
+    return "", 0, 0, premise_data
 
 def settle_character_juel(character_id: int) -> int:
     """
@@ -681,6 +688,43 @@ def settle_character_juel(character_id: int) -> int:
         now_draw.text = draw_text
         # now_draw.draw()
     return 1
+
+
+def character_instruct_record(character_id: int) -> str:
+    """
+    角色的指令记录\n
+    Keyword arguments:
+    character_id -- 角色id\n
+    Return arguments:
+    str -- 指令记录文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    name = character_data.name
+    instruct_text = ""
+    # 记录时间的小时数和分钟数
+    now_time = character_data.behavior.start_time.strftime("%H:%M")
+    instruct_text += _("{0}在{1}，").format(name, now_time)
+    # 移动指令则记录移动路径
+    if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+        move_src = character_data.behavior.move_src[-1]
+        if move_src == "0":
+            move_src =  character_data.behavior.move_src[-2] + "出口"
+        move_target = character_data.behavior.move_target[-1]
+        if move_target == "0":
+            move_target =  character_data.behavior.move_target[-2] + "出口"
+        if move_target:
+            instruct_text += _("从{0}移动至{1}\n").format(move_src, move_target)
+    # 其他指令则记录状态
+    else:
+        now_chara_state = game_config.config_status[character_data.state].name
+        # 如果是交互指令则记录交互对象
+        if character_data.target_character_id != character_id:
+            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            target_name = target_character_data.name
+            instruct_text += _("对{0}进行了{1}\n").format(target_name, now_chara_state)
+        else:
+            instruct_text += _("进行了{0}\n").format(now_chara_state)
+    return instruct_text
 
 
 def judge_character_cant_move(character_id: int) -> int:
@@ -796,6 +840,30 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     return 1
 
 
+def judge_pl_real_time_data() -> int:
+    """
+    玩家实时数据结算\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+
+    # 酒店退房时间到了则退房
+    if cache.rhodes_island.love_hotel_room_lv > 0:
+        if game_time.judge_date_big_or_small(cache.game_time, pl_character_data.action_info.check_out_time) > 0:
+            # 输出提示信息
+            room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("\n您入住的{0}到退房时间了，已自动退房\n").format(room_name[cache.rhodes_island.love_hotel_room_lv - 1])
+            now_draw.draw()
+            # 结算
+            cache.rhodes_island.love_hotel_room_lv = 0
+            pl_character_data.action_info.check_out_time = datetime.datetime(1, 1, 1)
+
+
 def update_sleep():
     """
     玩家睡觉时的刷新\n
@@ -895,10 +963,15 @@ def update_new_day():
                 character_data.sp_flag.aromatherapy = 0
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
+            # 每周一次，如果已陷落则提供粉红凭证
+            if cache.game_time.weekday() == 6:
+                fall_chara_give_pink_voucher(character_id)
 
     # 非角色部分
     basement.update_base_resouce_newday()
+    cooking.init_food_shop_data() # 初始化餐厅数据
     cache.pre_game_time = cache.game_time
+    cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()
 
 
@@ -957,7 +1030,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     if true_add_time == 5:
         tired_change = 1
     # 仅计算在不睡觉时的正常行动结算疲劳值
-    if game_config.config_status[now_character_data.state].name not in {"睡觉","休息"}:
+    if now_character_data.state not in {constant.CharacterStatus.STATUS_REST, constant.CharacterStatus.STATUS_SLEEP}:
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
@@ -1057,8 +1130,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if target_data.sp_flag.unconscious_h:
             # 睡奸判定
             if target_data.state == constant.CharacterStatus.STATUS_SLEEP and target_data.sp_flag.unconscious_h == 1:
-                # 如果是等待指令则无事发生
-                if now_character_data.state == constant.CharacterStatus.STATUS_WAIT:
+                # 如果是等待指令或安眠药中则无事发生
+                if (
+                    now_character_data.state == constant.CharacterStatus.STATUS_WAIT or
+                    now_character_data.h_state.body_item[9][1] == 1
+                ):
                     # 赋值为2来规避吵醒判定
                     sleep_level = 2
                 # 如果是其他行动则判定是否吵醒
@@ -1153,8 +1229,10 @@ def change_character_persistent_state(character_id: int):
     character_id -- 角色id\n
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
-    start_time = now_character_data.behavior.start_time
-    now_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=start_time)
+    # 因为睡眠时间很长，会导致持续状态的时间超过了当前时间，所以改为使用当前时间
+    # start_time = now_character_data.behavior.start_time
+    # now_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=start_time)
+    now_time = cache.game_time
 
     # 结算H状态的持续时间
     for i in range(len(now_character_data.h_state.body_item)):
@@ -1216,6 +1294,24 @@ def get_chara_entertainment(character_id: int):
                 # 跳出循环后，将该娱乐活动赋值给角色
                 character_data.entertainment.entertainment_type[i] = choice_entertainment_id
                 entertainment_list.remove(choice_entertainment_id) # 从列表中去掉该娱乐活动，防止重复
+
+
+def fall_chara_give_pink_voucher(character_id: int):
+    """
+    陷落角色给予粉红凭证\n
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 如果已陷落则给予粉红凭证
+    if character_data.talent[201] or character_data.talent[211]:
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 20
+    elif character_data.talent[202] or character_data.talent[212]:
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 40
+    elif character_data.talent[203] or character_data.talent[213]:
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 60
+    elif character_data.talent[204] or character_data.talent[214]:
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += 100
 
 
 def sanity_point_grow():

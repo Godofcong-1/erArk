@@ -164,7 +164,7 @@ class Originium_Arts_Panel:
             if handle_talent.have_hormone_talent():
                 button5_text = _("[005]激素系能力：")
                 # 输出当前开启的视觉系能力
-                talent_id_list = [304,305,309]
+                talent_id_list = [304,305,306]
                 count = 0
                 for talent_id in talent_id_list:
                     if not self.pl_character_data.talent[talent_id]:
@@ -342,6 +342,27 @@ class Originium_Arts_Panel:
             if yrn in return_list:
                 break
 
+    def draw_lv_up_button(self, condition, draw_text, cid, return_list):
+        """绘制升级按钮"""
+        # 如果满足条件则绘制按钮，否则绘制灰色文本
+        if condition:
+            now_draw = draw.LeftButton(
+                _(draw_text),
+                _(str(cid) + "1"),
+                window_width,
+                cmd_func=self.gain_and_upgrade_ability_which,
+                args=(cid, True),
+            )
+            return_list.append(now_draw.return_text)
+            now_draw.draw()
+        else:
+            now_draw = draw.NormalDraw()
+            now_draw.text = _(draw_text)
+            now_draw.style = "deep_gray"
+            now_draw.draw()
+        line_feed.draw()
+        return return_list
+
     def gain_and_upgrade_ability(self):
         """能力获得与升级"""
         while 1:
@@ -367,22 +388,23 @@ class Originium_Arts_Panel:
                 talent_id = talent_of_arts_data.talent_id
                 talent_name = game_config.config_talent[talent_id].name
                 talent_info = game_config.config_talent[talent_id].info
+                draw_text = f"  [{talent_name}]"
                 # 通用的源石获得方式，花费为10的cost次方
                 money_cost = 10 ** (talent_of_arts_data.level - 1)
-                if cache.rhodes_island.materials_resouce[3] < money_cost:
+                if talent_of_arts_data.todo:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}({1}至纯源石-当前源石不足)：{2}\n").format(talent_name, money_cost, talent_info)
+                    draw_text += _("(未实装)：{0}\n").format(talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
-                elif talent_of_arts_data.todo:
+                elif cache.rhodes_island.materials_resouce[3] < money_cost:
                     now_draw = draw.NormalDraw()
-                    draw_text = _("  {0}(未实装)：{1}\n").format(talent_name, talent_info)
+                    draw_text += _("({0}至纯源石-当前源石不足)：{1}\n").format(money_cost, talent_info)
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
                 else:
-                    draw_text = _("  {0}( {1} 至纯源石)：{2}").format(talent_name, money_cost, talent_info)
+                    draw_text += _("( {0} 至纯源石)：{1}").format(money_cost, talent_info)
                     now_draw = draw.LeftButton(
                         _(draw_text),
                         _(str(cid)),
@@ -393,9 +415,86 @@ class Originium_Arts_Panel:
                     return_list.append(now_draw.return_text)
                     now_draw.draw()
                     line_feed.draw()
-                # 每个技能树单独的获得方式
+
+                # 其他方式获得
+                draw_text = f"  [{talent_name}]"
+                # 博士信息素
+                if talent_id == 304:
+                    # 好感度与信赖度
+                    now_favorability_count, now_trust_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        if character_data.favorability[0] > now_favorability_count:
+                            now_favorability_count = int(character_data.favorability[0])
+                        if character_data.trust > now_trust_count:
+                            now_trust_count = int(character_data.trust)
+                    # 绘制
+                    draw_text += _("：需要单干员最高好感度≥{0}（当前{1}），最高信赖度≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_trust_count)
+                    now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_trust_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 博士信息素集组
+                elif talent_id == 305:
+                    # 总好感度与总陷落角色
+                    now_favorability_count, now_fall_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        now_favorability_count += int(character_data.favorability[0])
+                        for talent_id in [201, 202, 203, 204 ,211, 212, 213, 214]:
+                            if character_data.talent[talent_id]:
+                                now_fall_count += 1
+                                break
+                    # 绘制
+                    draw_text += _("：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_fall_count)
+                    now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_fall_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 博士信息素阵列
+                elif talent_id == 306:
+                    # 总好感度与总陷落角色
+                    now_favorability_count, now_fall_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        now_favorability_count += int(character_data.favorability[0])
+                        for talent_id in [204, 214]:
+                            if character_data.talent[talent_id]:
+                                now_fall_count += 1
+                                break
+                    # 绘制
+                    draw_text += _("：需要全干员总好感度≥{0}（当前{1}），陷落程度为[爱侣]或[奴隶]的干员人数≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_fall_count)
+                    now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_fall_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 内衣透视
+                elif talent_id == 307:
+                    # 总内裤数量
+                    now_pan_count = 0
+                    for chara_cid in self.pl_character_data.pl_collection.npc_panties:
+                        now_pan_count += len(self.pl_character_data.pl_collection.npc_panties[chara_cid])
+                    # 绘制
+                    draw_text += _("：需要全干员内裤收藏总数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_pan_count)
+                    now_contion = now_pan_count >= talent_of_arts_data.lv_up_value1
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 腔内透视
+                elif talent_id == 308:
+                    # 计算体内被射精总量和总绝顶经验
+                    now_semen_count, now_exp_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        for part_id in [2,3,6,7,8,9,15]:
+                            now_semen_count += character_data.dirty.body_semen[part_id][3]
+                        now_exp_count += character_data.experience[20]
+                    # 绘制
+                    draw_text += _("：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_semen_count, talent_of_arts_data.lv_up_value2, now_exp_count)
+                    now_contion = now_semen_count >= talent_of_arts_data.lv_up_value1 and now_exp_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 生理透视
+                elif talent_id == 309:
+                    # 计算体内被射精总量和总绝顶经验
+                    now_child_count = len(cache.character_data[0].relationship.child_id_list)
+                    # 绘制
+                    draw_text += _("：需要生育孩子数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_child_count)
+                    now_contion = now_child_count >= talent_of_arts_data.lv_up_value1
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
                 # 催眠系
-                if talent_id in game_config.config_hypnosis_talent_of_pl:
+                elif talent_id in game_config.config_hypnosis_talent_of_pl:
                     up_data = game_config.config_hypnosis_talent_of_pl[talent_id]
                     need_exp = up_data.pl_experience
                     now_exp = self.pl_character_data.experience[122]
@@ -406,28 +505,9 @@ class Originium_Arts_Panel:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
                     # 绘制
-                    draw_text = f"  {talent_name}"
-                    if up_data.todo:
-                        draw_text += _("(未实装)")
                     draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
-                    # 可以解锁则绘制按钮
-                    if not up_data.todo and now_exp >= need_exp and now_degree >= need_degree:
-                        now_draw = draw.LeftButton(
-                            _(draw_text),
-                            _(str(cid) + "1"),
-                            window_width,
-                            cmd_func=self.gain_and_upgrade_ability_which,
-                            args=(cid,True),
-                            )
-                        return_list.append(now_draw.return_text)
-                        now_draw.draw()
-                    # 不可解锁则绘制灰色文本
-                    else:
-                        now_draw = draw.NormalDraw()
-                        now_draw.text = _(draw_text)
-                        now_draw.style = "deep_gray"
-                        now_draw.draw()
-                    line_feed.draw()
+                    now_contion = now_exp >= need_exp and now_degree >= need_degree
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()

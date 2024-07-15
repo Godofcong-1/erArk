@@ -408,9 +408,10 @@ class CharacterInfoHead:
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == _(" <清醒>" ) else sleep_text
-        if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
-            tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
-            sleep_text = f" <{sleep_name}>"
+        if character_id > 0:
+            if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
+                tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
+                sleep_text = f" <{sleep_name}>"
         sleep_draw.text = sleep_text
 
         # 非普通时输出当前心情
@@ -529,14 +530,14 @@ class CharacterInfoHead:
         active_h_draw.text = active_h_text
 
         if character_id:
-            message = _(
+            message = (
                 "{character_name} {favorability_and_trust}{visitor}").format(
                 character_name=character_data.name,
                 favorability_and_trust=favorability_and_trust_text,
                 visitor=visitor_text,
             )
         else:
-            message = _(
+            message = (
                 "{character_name}{character_nick_name}{eja}").format(
                 # character_id=character_id,
                 character_name=character_data.name,
@@ -894,7 +895,7 @@ class CharacterabiText:
         self.title_list: List[draw.NormalDraw] = []
         """ 绘制标题列表 """
         ability_list = game_config.config_ability_type_data
-        title_text = "能力"
+        title_text = _("能力")
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.draw_list.append(type_line)
         # 进入能力大类#
@@ -987,9 +988,9 @@ class CharacterImage:
         self.title_list.append(type_line)
 
         # 正常的立绘图片名为角色名，但女儿的情况下单独使用女儿图片
-        self.image_name = character_data.name
+        self.image_name = _(character_data.name, revert_translation=True)
         if character_data.relationship.father_id == 0:
-            self.image_name = _("女儿_1")
+            self.image_name = "女儿_1"
 
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
@@ -1035,7 +1036,7 @@ class CharacterExperienceText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
-        type_data = "经验"
+        type_data = _("经验")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         experience_text_list = []
@@ -1264,7 +1265,7 @@ class CharacterVisitorText:
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
 
-        type_data = "访客"
+        type_data = _("访客")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
 
@@ -1330,7 +1331,7 @@ class CharacterJuelText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
-        type_data = "宝珠"
+        type_data = _("宝珠")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         juel_text_list = []
@@ -1391,7 +1392,7 @@ class CharacterTokenText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
-        type_data = "信物"
+        type_data = _("信物")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         token_text_list = []
@@ -1402,7 +1403,7 @@ class CharacterTokenText:
                 target_character_data = cache.character_data[token_id]
                 character_name = target_character_data.name
                 token_text = target_character_data.token_text
-                now_text = f" 已拥有{character_name}的信物:{token_text}"
+                now_text = _(" 已拥有{0}的信物:{1}").format(character_name, token_text)
                 token_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
@@ -1449,78 +1450,88 @@ class CharacterBodyText:
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
         pl_character_data = cache.character_data[0]
-        type_data = "肉体情况"
+        type_data = _("肉体情况")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         body_text_list = []
         if character_id != 0:
             # 尿道信息#
-            now_text = f"\n 【总】\n"
+            now_text = _("\n 【总】\n")
             semen_count = 0
             for body_part in game_config.config_body_part:
                 semen_count += character_data.dirty.body_semen[body_part][3]
             if semen_count == 0:
-                now_text += "  未接触过精液\n"
+                now_text += _("  未接触过精液\n")
             else:
-                now_text += f"  全身总共被射上过{semen_count}ml精液\n"
+                now_text += _("  全身总共被射上过{0}ml精液\n").format(semen_count)
             body_text_list.append(now_text)
             # 口部信息#
-            now_text = f"\n 【口】\n"
-            now_text += "  初吻情况："
+            now_text = _("\n 【口】\n")
+            now_text += _("  初吻情况：")
             if character_data.talent[4]:
-                now_text += "保有初吻\n"
+                now_text += _("保有初吻\n")
             elif character_data.first_record.first_kiss_id != -1:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
-                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
+                if character_data.first_record.first_kiss_body_part == -1:
+                    now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
                     character_name=cache.character_data[kiss_id].name,
                     kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
                     kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
                 )
+                elif character_data.first_record.first_kiss_body_part == 1:
+                    now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士\n").format(
+                    character_name=cache.character_data[kiss_id].name,
+                    kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
+                    kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
+                )
+                    if character_data.first_record.first_kiss_body_part == 1:
+                        now_text += _("的阴茎")
+                    now_text += _("献上了初吻\n")
             if character_data.ability[71] == 0:
-                now_text += "  普普通通的舌头\n"
+                now_text += _("  普普通通的舌头\n")
             if character_data.dirty.body_semen[2][3] == 0:
-                now_text += "  未品尝过精液\n"
+                now_text += _("  未品尝过精液\n")
             else:
-                now_text += f"  总共喝过{character_data.dirty.body_semen[2][3]}ml精液\n"
+                now_text += _("  总共喝过{0}ml精液\n").format(character_data.dirty.body_semen[2][3])
             body_text_list.append(now_text)
             # 胸部信息#
-            now_text = f"\n 【胸】\n"
+            now_text = _("\n 【胸】\n")
             # 根据胸部大小的素质来显示信息
             for bust_cid in [121,122,123,124,125]:
                 if character_data.talent[bust_cid]:
                     info_text = game_config.config_talent[bust_cid].info
                     now_text += f"  {info_text}\n"
             if character_data.dirty.body_semen[3][3] == 0:
-                now_text += "  未淋上过精液\n"
+                now_text += _("  未淋上过精液\n")
             else:
-                now_text += f"  总共被淋上过{character_data.dirty.body_semen[3][3]}ml精液\n"
+                now_text += _("  总共被淋上过{0}ml精液\n").format(character_data.dirty.body_semen[3][3])
             # 收集的乳汁
             if character_id in pl_character_data.pl_collection.milk_total:
                 milk_total = pl_character_data.pl_collection.milk_total[character_id]
                 if milk_total > 0:
-                    now_text += f"  总共收集了{milk_total}ml乳汁\n"
+                    now_text += _("  总共收集了{0}ml乳汁\n").format(milk_total)
             body_text_list.append(now_text)
             # 指部信息#
-            now_text = f"\n 【指】\n"
+            now_text = _("\n 【指】\n")
             if character_data.dirty.body_semen[5][3] == 0:
-                now_text += "  未淋上过精液\n"
+                now_text += _("  未淋上过精液\n")
             else:
-                now_text += f"  总共被淋上过{character_data.dirty.body_semen[5][3]}ml精液\n"
+                now_text += _("  总共被淋上过{0}ml精液\n").format(character_data.dirty.body_semen[5][3])
             body_text_list.append(now_text)
             # 足部信息#
-            now_text = f"\n 【足】\n"
+            now_text = _("\n 【足】\n")
             if character_data.dirty.body_semen[11][3] == 0:
-                now_text += "  未淋上过精液\n"
+                now_text += _("  未淋上过精液\n")
             else:
-                now_text += f"  总共被淋上过{character_data.dirty.body_semen[11][3]}ml精液\n"
+                now_text += _("  总共被淋上过{0}ml精液\n").format(character_data.dirty.body_semen[11][3])
             body_text_list.append(now_text)
             # 膣部信息#
-            now_text = f"\n 【膣】\n"
-            now_text += "  处女情况："
+            now_text = _("\n 【膣】\n")
+            now_text += _("  处女情况：")
             ui_text = ""
             if character_data.talent[0]:
-                now_text += "保有处女\n"
+                now_text += _("保有处女\n")
                 ui_text = game_config.ui_text_data['ability']['V感觉0']
             elif character_data.first_record.first_sex_id != -1:
                 sex_id = character_data.first_record.first_sex_id
@@ -1541,16 +1552,16 @@ class CharacterBodyText:
             # V感觉描述
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[7][3] == 0:
-                now_text += "  未射入过精液\n"
+                now_text += _("  未射入过精液\n")
             else:
-                now_text += f"  总共被射入过{character_data.dirty.body_semen[7][3]}ml精液\n"
+                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[7][3])
             body_text_list.append(now_text)
             # 肛部信息#
-            now_text = f"\n 【肛】\n"
+            now_text = _("\n 【肛】\n")
             now_text += "  后庭处女情况："
             ui_text = ""
             if character_data.talent[1]:
-                now_text += "保有后庭处女\n"
+                now_text += _("保有后庭处女\n")
                 ui_text = game_config.ui_text_data['ability']['A感觉0']
             elif character_data.first_record.first_a_sex_id != -1:
                 a_sex_id = character_data.first_record.first_a_sex_id
@@ -1571,12 +1582,12 @@ class CharacterBodyText:
             # A感觉描述
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[8][3] == 0:
-                now_text += "  未射入过精液\n"
+                now_text += _("  未射入过精液\n")
             else:
-                now_text += f"  总共被射入过{character_data.dirty.body_semen[8][3]}ml精液\n"
+                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[8][3])
             body_text_list.append(now_text)
             # 子宫信息#
-            now_text = f"\n 【宫】\n"
+            now_text = _("\n 【宫】\n")
             # W感觉描述
             ui_text_lv = (character_data.ability[7] + 1 ) // 2
             ui_text_cid = f"W感觉{ui_text_lv}"
@@ -1584,24 +1595,24 @@ class CharacterBodyText:
             now_text += f"  {ui_text}\n"
             # 怀孕情况
             if character_data.experience[86] == 0:
-                now_text += "  未怀孕过\n"
+                now_text += _("  未怀孕过\n")
             else:
-                now_text += f"  为博士生下了  "
+                now_text += _("  为博士生下了  ")
                 for chara_id in character_data.relationship.child_id_list:
                     now_text += f"{cache.character_data[chara_id].name}  "
-                now_text += f"共{len(character_data.relationship.child_id_list)}个孩子\n"
+                now_text += _("共{0}个孩子\n").format(len(character_data.relationship.child_id_list))
             body_text_list.append(now_text)
             # 尿道信息#
-            now_text = f"\n 【尿】\n"
+            now_text = _("\n 【尿】\n")
             if character_data.dirty.body_semen[9][3] == 0:
-                now_text += "  未射入过精液\n"
+                now_text += _("  未射入过精液\n")
             else:
-                now_text += f"  总共被射入过{character_data.dirty.body_semen[9][3]}ml精液\n"
+                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[9][3])
             # 圣水情况
             if character_id in pl_character_data.pl_collection.urine_total:
                 urine_total = pl_character_data.pl_collection.urine_total[character_id]
                 if urine_total > 0:
-                    now_text += f"  总共收集了{urine_total}ml圣水\n"
+                    now_text += _("  总共收集了{0}ml圣水\n").format(urine_total)
             body_text_list.append(now_text)
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
@@ -1647,13 +1658,13 @@ class PlayerAbilityText:
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
         character_data = cache.character_data[character_id]
-        type_data = "玩家能力"
+        type_data = _("玩家能力")
         type_line = draw.LittleTitleLineDraw(type_data, width, ":")
         self.draw_list.append(type_line)
         ability_text_list = []
 
         # 视觉能力#
-        now_text = f"\n 【视觉系】\n"
+        now_text = _("\n 【视觉系】\n")
         for i in {307, 308, 309}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
@@ -1662,7 +1673,7 @@ class PlayerAbilityText:
         ability_text_list.append(now_text)
 
         # 触觉能力#
-        now_text = f"\n 【触觉系】\n"
+        now_text = _("\n 【触觉系】\n")
         for i in {310, 311, 312}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
@@ -1671,7 +1682,7 @@ class PlayerAbilityText:
         ability_text_list.append(now_text)
 
         # 激素能力#
-        now_text = f"\n 【激素系】\n"
+        now_text = _("\n 【激素系】\n")
         for i in {304, 305, 306}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name

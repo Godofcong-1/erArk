@@ -3,6 +3,7 @@ from Script.Core import cache_control, game_type, text_handle, get_text, flow_ha
 from Script.Design import map_handle
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import panel, draw
+from Script.UI.Panel import see_item_info_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -163,7 +164,7 @@ class BuyItemByItemNameDraw:
                 else:
                     button_text += _("(未持有)")
                 name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, normal_style = draw_style, cmd_func=self.buy_item
+                    button_text, self.button_return, self.width, normal_style = draw_style, cmd_func=self.show_item_info
                 )
             self.draw_text = button_text
         else:
@@ -184,6 +185,27 @@ class BuyItemByItemNameDraw:
     def draw(self):
         """绘制对象"""
         self.now_draw.draw()
+
+    def show_item_info(self):
+        """显示道具信息"""
+        line_feed.draw()
+        line_draw = draw.LineDraw("-", window_width)
+        line_draw.draw()
+        now_draw = see_item_info_panel.ItemInfoDraw(self.text, window_width)
+        now_draw.draw()
+        while 1:
+            line_feed.draw()
+            yes_draw = draw.CenterButton(_("[购买]"), _("[购买]"), window_width / 2)
+            yes_draw.draw()
+            return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
+            return_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([yes_draw.return_text, return_draw.return_text])
+            if yrn == yes_draw.return_text:
+                self.buy_item()
+                break
+            elif yrn == return_draw.return_text:
+                break
 
     def buy_item(self):
         py_cmd.clr_cmd()

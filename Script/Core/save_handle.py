@@ -14,7 +14,7 @@ from Script.Core import (
     io_init,
 )
 from Script.Config import normal_config, game_config, character_config
-from Script.Design import attr_calculation, clothing, character_handle, basement
+from Script.Design import attr_calculation, character_handle
 from Script.UI.Moudle import draw
 
 game_path = game_path_config.game_path
@@ -130,6 +130,7 @@ def input_load_save(save_id: str):
     Keyword arguments:
     save_id -- 存档id
     """
+    from Script.Design import basement, cooking
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
     new_cache.rhodes_island = basement.get_base_zero()
@@ -200,6 +201,8 @@ def input_load_save(save_id: str):
         # 没有记录的设施改为初始关闭
         if all_cid not in loaded_dict["rhodes_island"].facility_open:
             loaded_dict["rhodes_island"].facility_open[all_cid] = False
+    # 更新食谱
+    loaded_dict["recipe_data"] = cooking.init_recipes()
 
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()
@@ -386,6 +389,8 @@ def update_chara_cloth(value, tem_character):
     Keyword arguments:
     value -- 角色数据
     """
+    from Script.Design import clothing
+
     # 跳过玩家
     if value.cid == 0:
         return 0
@@ -473,7 +478,15 @@ def update_map(loaded_dict):
     # 如果地图数据有变化，将地图路径也更新，同时删除不存在的地图数据
     if change_map_flag:
         loaded_dict["map_data"] = cache.map_data
+        # 在2024.7月的版本中将人气快餐开封菜改为了约翰老妈汉堡店
+        if '贸易\人气快餐开封菜' in loaded_dict["scene_data"]:
+            # print("发现存档存在人气快餐开封菜")
+            for key, value in loaded_dict["character_data"].items():
+                if value.position[-1] == '人气快餐开封菜':
+                    value.position[-1] = '约翰老妈汉堡店'
+                    # print(f"已将{value.name}的位置从人气开封菜改为约翰老妈汉堡店")
         for key, value in loaded_dict["scene_data"].copy().items():
+            # print(f"debug 地图数据: key = {key}, value = {value.scene_tag}")
             if key not in cache.scene_data:
                 del loaded_dict["scene_data"][key]
                 update_count += 1
@@ -481,6 +494,7 @@ def update_map(loaded_dict):
         draw_text = _("\n游戏地图已更新\n")
         now_draw.text = draw_text
         now_draw.draw()
+
 
     return update_count
 

@@ -94,6 +94,8 @@ config_facility_open: Dict[int, config_def.Facility_open] = {}
 """ 设施开放数据 """
 config_facility_open_name_set: Set = set()
 """ 设施开放名称集合 """
+config_facility_open_name_to_cid: Dict[str, int] = {}
+""" 设施开放名称对应编号 """
 config_resouce: Dict[int, config_def.Resouce] = {}
 """ 资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
@@ -143,6 +145,8 @@ config_birthplace: Dict[int, config_def.Birthplace] = {}
 """ 出生地配置 """
 config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
+config_restaurant: Dict[int, config_def.Restaurant] = {}
+""" 餐馆配置 """
 config_city: Dict[int, config_def.City] = {}
 """ 城市配置 """
 config_city_of_country: Dict[int, Set] = {}
@@ -445,6 +449,16 @@ def load_nation():
         config_nation[now_tem.cid] = now_tem
 
 
+def load_restaurant():
+    """载入餐馆数据"""
+    now_data = config_data["Restaurant"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Restaurant()
+        now_tem.__dict__ = tem_data
+        config_restaurant[now_tem.cid] = now_tem
+
+
 def load_city():
     """载入城市数据"""
     now_data = config_data["City"]
@@ -738,6 +752,7 @@ def load_facility_open():
         now_tem.__dict__ = tem_data
         config_facility_open[now_tem.cid] = now_tem
         config_facility_open_name_set.add(now_tem.name)
+        config_facility_open_name_to_cid[now_tem.name] = now_tem.cid
 
 
 def load_resouce():
@@ -906,7 +921,8 @@ def load_talk():
         now_tem = config_def.Talk()
         now_tem.__dict__ = tem_data
         config_talk[now_tem.cid] = now_tem
-        # print(f"debug now_tem.context = {now_tem.context}")
+        # if now_tem.adv_id != 0:
+        #     print(f"debug cid = {now_tem.cid}，now_tem.context = {now_tem.context}")
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
@@ -1329,6 +1345,7 @@ def init():
     load_race()
     load_birthplace()
     load_nation()
+    load_restaurant()
     load_city()
     load_recipes()
     load_season()

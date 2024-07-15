@@ -3380,3 +3380,30 @@ def handle_both_add_1_learn_experience(
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         target_change.experience.setdefault(82, 0)
         target_change.experience[82] += 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_Masterbate_EXPERIENCE)
+def handle_add_1_masterbate_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1自慰经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(54, 0)
+    character_data.experience[54] += 1
+    change_data.experience.setdefault(54, 0)
+    change_data.experience[54] += 1
+

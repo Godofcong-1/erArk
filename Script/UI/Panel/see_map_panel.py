@@ -91,7 +91,7 @@ class SeeMapPanel:
                         # 如果不是玩家所在的地点，则绘制按钮
                         if draw_text.text != character_scene_name:
                             # 如果当前地点可以进入则正常绘制
-                            if map_handle.judge_scene_name_open(full_scene_str):
+                            if map_handle.judge_scene_accessible(full_scene_str, 0, False) == "open":
                                 now_draw = draw.Button(
                                     draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
                                 )

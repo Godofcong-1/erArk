@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts
+from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts, diary_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -876,8 +876,19 @@ def handle_hormone_off():
 
 
 @add_instruct(
+    constant.Instruct.DIRAY, constant.InstructType.DAILY, _("日记"),
+    {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
+     constant_promise.Premise.NOT_H}
+)
+def handle_diary():
+    """处理日记指令"""
+    now_draw = diary_panel.Diary_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
-    {constant_promise.Premise.IN_DORMITORY,
+    {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME}
 )
@@ -1393,13 +1404,25 @@ def handle_play_with_child():
     constant.InstructType.DAILY,
     _("照顾婴儿"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_NURSERY,
-     constant_promise.Premise.FLAG_BABY_EXIST,
+     constant_promise.Premise.POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST,
      constant_promise.Premise.TIRED_LE_84},
 )
 def handle_take_care_baby():
     """处理照顾婴儿指令"""
     now_draw = normal_panel.Take_Care_Baby_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
+    constant.Instruct.ORDER_HOTEL_ROOM,
+    constant.InstructType.DAILY,
+    _("预定房间"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_LOVE_HOTEL},
+)
+def handle_order_hotel_room():
+    """处理预定房间指令"""
+    now_draw = normal_panel.Order_Hotel_Room_Panel(width)
     now_draw.draw()
 
 
@@ -1773,6 +1796,27 @@ def handle_unconscious_h():
 
     character_data.behavior.duration = 5
     update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.DO_H_IN_LOVE_HOTEL,
+    constant.InstructType.OBSCENITY,
+    _("邀请在爱情旅馆H"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_LOVE_HOTEL,
+     constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_do_h_in_love_hotel():
+    """处理邀请在爱情旅馆H指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.h_in_love_hotel = True
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.h_state.h_in_love_hotel = True
+    handle_do_h()
 
 
 @add_instruct(
@@ -3006,6 +3050,7 @@ def handle_make_lick_anal():
     constant.InstructType.SEX,
     _("交给对方"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
 )

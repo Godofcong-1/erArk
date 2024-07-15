@@ -1,6 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
+from Script.UI.Panel import diary_panel
 from Script.Core import (
     cache_control,
     get_text,
@@ -394,7 +395,7 @@ class Sleep_Panel:
         need_time = max(hpmp_need_time, tired_recover_time)
         self.sleep_time = need_time
 
-        title_text = "睡眠"
+        title_text = _("睡眠")
         title_draw = draw.TitleLineDraw(title_text, self.width)
 
         while 1:
@@ -443,8 +444,16 @@ class Sleep_Panel:
             button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大8小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
             button_draw.draw()
             return_list.append(button_draw.return_text)
-
             line_feed.draw()
+            now_draw_text = _("\n 睡前日记：")
+            now_draw.text = now_draw_text
+            now_draw.draw()
+            button_text = _(" [记日记] ")
+            diary_draw = draw.CenterButton(button_text, button_text + '\n', len(button_text)*2, cmd_func = self.show_diary)
+            diary_draw.draw()
+            line_feed.draw()
+            return_list.append(diary_draw.return_text)
+
             line_feed.draw()
             line_feed.draw()
             yes_draw = draw.CenterButton(_("[确定]"), _("确定\n\n"), window_width/2)
@@ -501,6 +510,11 @@ class Sleep_Panel:
     def close_door_switch(self):
         """关门开关"""
         self.close_door_flag = not self.close_door_flag
+
+    def show_diary(self):
+        """显示日记"""
+        now_draw = diary_panel.Diary_Panel(window_width)
+        now_draw.draw()
 
 
 class Fridge_Panel:
@@ -615,3 +629,99 @@ class Fridge_Panel:
 
         # 删除冰箱里的母乳
         del cache.rhodes_island.milk_in_fridge[character_id]
+
+
+class Order_Hotel_Room_Panel:
+    """
+    用于预订房间的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.now_panel = _("预订房间")
+        """ 当前绘制的页面 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("预订房间")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            now_draw_text = ""
+            now_draw_text += _("\n○酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n")
+            now_draw_text += _("  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n")
+            now_draw_text += _("  请问要入住哪种房间呢？\n\n")
+            info_draw.text = now_draw_text
+            info_draw.draw()
+
+            # 如果未预订房间的话直接输出按钮
+            if cache.rhodes_island.love_hotel_room_lv == 0:
+                room_text_list = [_("标间(2粉红凭证)"),_("情趣主题房(10粉红凭证)"),_("顶级套房(100粉红凭证)")]
+                # 遍历房间类型并输出按钮
+                for i in range(len(room_text_list)):
+                    room_text = room_text_list[i]
+                    button_draw = draw.LeftButton(
+                        _(f"[{i}]" + room_text),
+                        _(str(i)),
+                        self.width,
+                        cmd_func=self.order_room,
+                        args=(i,),
+                        )
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                    line_feed.draw()
+            # 已预订房间则输出提示信息
+            else:
+                room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
+                draw_text = _("当前已预订{0}，退房时间为{1}日12点\n").format(room_name[cache.rhodes_island.love_hotel_room_lv - 1], cache.character_data[0].action_info.check_out_time.day)
+                info_draw.text = draw_text
+                info_draw.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def order_room(self, room_id):
+        """预订房间"""
+        room_price = [2, 10, 100]
+        room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
+        # 判断粉红凭证是否足够
+        if cache.rhodes_island.materials_resouce[4] < room_price[room_id]:
+            now_draw = draw.WaitDraw()
+            draw_text = _("\n粉红凭证不足，无法预订{0}\n").format(room_name[room_id])
+            now_draw.text = draw_text
+            now_draw.draw()
+            return
+        # 进行结算
+        cache.rhodes_island.materials_resouce[4] -= room_price[room_id]
+        cache.rhodes_island.love_hotel_room_lv = room_id + 1
+        pl_character_data: game_type.Character = cache.character_data[0]
+        pl_character_data.action_info.check_out_time = game_time.get_sub_date(day=1, old_date=cache.game_time)
+        pl_character_data.action_info.check_out_time = pl_character_data.action_info.check_out_time.replace(hour=12)
+        # 情趣房的赠送
+        if room_id == 1:
+            pl_character_data.item[100] += 1
+            pl_character_data.item[120] += 5
+        # 输出预订成功信息
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n成功预订了{0}，退房时间为{1}\n").format(room_name[room_id], pl_character_data.action_info.check_out_time)
+        now_draw.text = draw_text
+        now_draw.draw()

@@ -420,6 +420,10 @@ class BODY_H_STATE:
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
         self.orgasm_level: Dict[int, int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        self.extra_orgasm_feel: Dict[int, int] = {}
+        """ 额外高潮快感记录，用于在10级快感后的额外高潮 """
+        self.extra_orgasm_count: int = 0
+        """ 额外高潮次数，用于在10级快感后的额外高潮 """
         self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
         self.condom_info_show_flag: bool = False
@@ -428,6 +432,8 @@ class BODY_H_STATE:
         """ 已使用的避孕套计数，[0总个数，1总精液量] """
         self.npc_active_h: bool = False
         """ NPC主动H """
+        self.h_in_love_hotel: bool = False
+        """ 当前正在爱情旅馆中H """
 
 
 class FIRST_RECORD:
@@ -442,6 +448,8 @@ class FIRST_RECORD:
         """ 初次牵手对象 -1为无 """
         self.first_kiss_id: int = -1
         """ 初吻对象 -1为无 """
+        self.first_kiss_body_part: int = -1
+        """ 初吻部位位置 -1为无，1为阴茎 """
         self.first_kiss_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 初吻时间 """
         self.first_kiss_place: List[str] = ["0"]
@@ -500,6 +508,10 @@ class ACTION_INFO:
         """ 无法进入私密场所的等待时间 """
         self.last_eaj_add_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 上次增加射精值的时间 """
+        self.check_out_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色退房时间 """
+        self.eat_food_restaurant: int = 0
+        """ 要去吃饭的餐厅，见Restaurant.csv """
 
 
 class AUTHOR_FLAG:
@@ -549,6 +561,8 @@ class SPECIAL_FLAG:
         """ 要撒尿状态 """
         self.milk: bool = 0
         """ 要挤奶状态 """
+        self.masturebate: int = 0
+        """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰]"""
         self.shower: int = 0
         """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
         self.eat_food: int = 0
@@ -874,6 +888,15 @@ class Rhodes_Island:
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
 
+        # 贸易区
+        self.love_hotel_room_lv: int = 0
+        """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
+        self.restaurant_data: Dict[int, Tuple[str, Dict[UUID, Food]]] = {}
+        """
+        餐馆内贩卖的食物数据
+        餐馆id:食物名字:食物唯一id:食物对象
+        """
+
         # 制造加工区
         self.assembly_line: Dict[int, Tuple[int, set, int ,int]] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
@@ -918,6 +941,8 @@ class Rhodes_Island:
 
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
+        self.week_fall_chara_pink_certificate_add: int = 0
+        """ 本周陷落干员提供的粉红凭证总数 """
         self.total_semen_count: int = 0
         """ 每日总射精量 """
 
@@ -1151,6 +1176,8 @@ class Cache:
         """ 已拥有的干员id数据 """
         self.input_cache: List[str] = []
         """ 玩家指令输入记录（最大20）"""
+        self.daily_intsruce: List[str] = []
+        """ 每日指令输入记录 """
         self.now_init_map_id: str = ""
         """ 寻路算法用,当前节点所属的地图的id """
         self.collect_position_list: List = []
@@ -1203,7 +1230,7 @@ class Cache:
         """ 本次update中已结束结算的npc """
         self.recipe_data: Dict[int, Recipes] = {}
         """ 菜谱数据 """
-        self.restaurant_data: Dict[str, Dict[UUID, Food]] = {}
+        self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
         """
         食堂内贩卖的食物数据
         食物名字:食物唯一id:食物对象

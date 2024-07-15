@@ -27,6 +27,7 @@ def init_recipes():
             recipe_data.type,
         )
         cache.recipe_data[recipe_id] = recipe
+    return cache.recipe_data
 
 
 def create_recipe(name: str, time: int, difficulty: int, money: int, introduce: str, type: int) -> Recipes:
@@ -212,55 +213,63 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
     return create_food("", recipe_id, cook_level, maker)
 
 
-def init_restaurant_data():
-    """初始化餐馆内的食物数据"""
-    cache.restaurant_data = {}
+def init_food_shop_data(update_restaurant_id: int = -2):
+    """
+    初始化食物商店内的食物数据\n
+    Keyword arguments:\n
+    update_restaurant_id -- 餐馆id，默认为-2，如果不是-2则仅刷新对应id的餐馆的食物\n
+    """
+    cache.dining_hall_data = {}
     max_people = len(cache.npc_id_got)
-    cook_index = 0
-    while 1:
-        recipes_id_list = list(cache.recipe_data.keys())
-        recipes_id = random.choice(recipes_id_list)
+    # 初始化食堂内的食物
+    if update_restaurant_id in [-1,-2]:
+        cook_index = 0
+        while 1:
+            recipes_id_list = list(cache.recipe_data.keys())
+            recipes_id = random.choice(recipes_id_list)
+            food_list = {}
+            recipes = cache.recipe_data[recipes_id]
+            # 难度上无法制作的菜谱直接跳过
+            if recipes.difficulty == 999:
+                continue
+            # 无法制作的种类的菜谱直接跳过
+            if recipes.type in {4,8,9}:
+                continue
+            # 随机3~7的烹饪技能等级
+            cook_level = random.randint(3, 7)
+            new_food = cook(food_list, recipes_id, cook_level, "")
+            cache.dining_hall_data.setdefault(str(recipes_id), {})
+            cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
+            cook_index += 1
+            if cook_index >= max_people*3:
+                break
+    # 初始化餐馆内的食物
+    for restaurant_id in game_config.config_restaurant:
+        # 仅刷新指定id的餐馆
+        if update_restaurant_id >= 0:
+            if restaurant_id != update_restaurant_id:
+                continue
         food_list = {}
-        recipes = cache.recipe_data[recipes_id]
-        # 难度上无法制作的菜谱直接跳过
-        if recipes.difficulty == 999:
-            continue
-        # 无法制作的种类的菜谱直接跳过
-        if recipes.type in {4,8,9}:
-            continue
-        # for food_id in recipes.ingredients:
-        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-        #         food_judge = False
-        #         break
-        #     food_id_list = list(cache.restaurant_data[food_id].keys())
-        #     now_food_id = food_id_list[0]
-        #     now_food = cache.restaurant_data[food_id][now_food_id]
-        #     food_list[now_food.id] = now_food
-        # if not food_judge:
-        #     continue
-        # for food_id in recipes.seasoning:
-        #     if food_id not in cache.restaurant_data or not len(cache.restaurant_data[food_id]):
-        #         food_judge = False
-        #         break
-        #     food_id_list = list(cache.restaurant_data[food_id].keys())
-        #     now_food_id = food_id_list[0]
-        #     now_food = cache.restaurant_data[food_id][now_food_id]
-        #     food_list[now_food.id] = now_food
-        # if not food_judge:
-        #     continue
-        new_food = cook(food_list, recipes_id, 5, "")
-        cache.restaurant_data.setdefault(str(recipes_id), {})
-        cache.restaurant_data[str(recipes_id)][new_food.uid] = new_food
-        # for food_id in food_list:
-        #     now_food = food_list[food_id]
-        #     if now_food.weight <= 0:
-        #         del cache.restaurant_data[now_food.id][now_food.uid]
-        #     else:
-        #         cache.restaurant_data[now_food.id][now_food.uid] = now_food
-        cook_index += 1
-        if cook_index == max_people*3:
-            break
-
+        cook_index = 0
+        while 1:
+            # 只能选择该餐馆自己的食谱
+            recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].restaurant == restaurant_id ]
+            recipes_id = random.choice(recipes_id_list)
+            recipes = cache.recipe_data[recipes_id]
+            # 难度上无法制作的菜谱直接跳过
+            if recipes.difficulty == 999:
+                continue
+            # 无法制作的种类的菜谱直接跳过
+            if recipes.type in {4,8,9}:
+                continue
+            cook_level = random.randint(3, 7)
+            new_food = cook(food_list, recipes_id, cook_level, "")
+            cache.rhodes_island.restaurant_data.setdefault(restaurant_id, {})
+            cache.rhodes_island.restaurant_data[restaurant_id].setdefault(str(recipes_id), {})
+            cache.rhodes_island.restaurant_data[restaurant_id][str(recipes_id)][new_food.uid] = new_food
+            cook_index += 1
+            if cook_index >= max_people:
+                break
 
 def init_makefood_data():
     """初始化做饭区内的食物数据"""
@@ -343,7 +352,7 @@ def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type:
     return food_list
 
 
-def get_restaurant_food_type_list_buy_food_type(food_type: str) -> Dict[uuid.UUID, str]:
+def get_food_list_from_food_shop(food_type: str, restaurant_id:int = -1) -> Dict[uuid.UUID, str]:
     """
     获取餐馆内指定类型的食物种类
     Keyword arguments:
@@ -351,65 +360,28 @@ def get_restaurant_food_type_list_buy_food_type(food_type: str) -> Dict[uuid.UUI
     Return arguments:
     dict -- 食物列表 食物id:食物名字
     """
+    # print(f"debug food_type = {food_type}, restaurant_id = {restaurant_id}")
     food_list = {}
-    for food_id in cache.restaurant_data:
-        if not len(cache.restaurant_data[food_id]):
-            continue
-        if food_type == _("主食"):
-            now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
+    # 食堂内的食物
+    if restaurant_id == -1:
+        for food_id in cache.dining_hall_data:
+            if not len(cache.dining_hall_data[food_id]):
+                continue
+            now_food_uid = list(cache.dining_hall_data[food_id].keys())[0]
+            now_food: game_type.Food = cache.dining_hall_data[food_id][now_food_uid]
             if now_food.recipe != -1:
                 food_list[food_id] = cache.recipe_data[int(food_id)].name
-        # elif food_type == _("零食"):
-        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-        #     if now_food.recipe == -1:
-        #         food_config = game_config.config_food[food_id]
-        #         if food_config.eat:
-        #             food_list[food_id] = food_config.name
-        # elif food_type == _("饮品"):
-        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-        #     if now_food.recipe == -1:
-        #         food_config = game_config.config_food[food_id]
-        #         if food_id in game_config.config_food_feel_data:
-        #             food_feel_data = game_config.config_food_feel_data[food_id]
-        #             if (
-        #                 28 in food_feel_data
-        #                 and (not food_config.fruit)
-        #                 and food_config.eat
-        #                 and ((27 not in food_feel_data) or (food_feel_data[28] > food_feel_data[27]))
-        #             ):
-        #                 food_list[food_id] = food_config.name
-        #     else:
-        #         now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #         now_food = cache.restaurant_data[food_id][now_food_uid]
-        #         if 28 in now_food.feel and (
-        #             27 not in now_food.feel or now_food.feel[28] > now_food.feel[27]
-        #         ):
-        #             food_list[food_id] = cache.recipe_data[int(food_id)].name
-        # elif food_type == _("水果"):
-        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-        #     if now_food.recipe == -1:
-        #         food_config = game_config.config_food[now_food.id]
-        #         if food_config.fruit:
-        #             food_list[food_id] = food_config.name
-        # elif food_type == "食材":
-        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-        #     if now_food.recipe == -1:
-        #         food_config = game_config.config_food[now_food.id]
-        #         if food_config.cook:
-        #             food_list[food_id] = food_config.name
-        # elif food_type == "调料":
-        #     now_food_uid = list(cache.restaurant_data[food_id].keys())[0]
-        #     now_food: game_type.Food = cache.restaurant_data[food_id][now_food_uid]
-        #     if now_food.recipe == -1:
-        #         food_config = game_config.config_food[now_food.id]
-        #         if food_config.seasoning:
-        #             food_list[food_id] = food_config.name
+    # 餐馆的食物
+    else:
+        for food_id in cache.rhodes_island.restaurant_data[restaurant_id]:
+            if not len(cache.rhodes_island.restaurant_data[restaurant_id][food_id]):
+                continue
+            now_food_uid = list(cache.rhodes_island.restaurant_data[restaurant_id][food_id].keys())[0]
+            now_food: game_type.Food = cache.rhodes_island.restaurant_data[restaurant_id][food_id][now_food_uid]
+            if now_food.recipe != -1:
+                food_list[food_id] = cache.recipe_data[int(food_id)].name
     return food_list
+
 
 def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
     """
@@ -526,3 +498,34 @@ def judge_accept_special_seasoning_food(character_id: int):
                 return 0
 
     return 0
+
+
+def find_character_birthplace_restaurant(character_id: int) -> int:
+    """
+    寻找干员出身地的餐厅
+    Keyword arguments:
+    character_id -- 干员id
+    Return arguments:
+    int -- 餐厅id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 莱茵生命的选哥伦比亚咖啡馆，其他哥伦比亚的选约翰老妈汉堡店
+    if character_data.relationship.birthplace == 4:
+        if character_data.relationship.nation == 42:
+            return 2
+        return 4
+    # 维多利亚的选七城风情餐厅
+    elif character_data.relationship.birthplace == 13:
+        return 3
+    # 龙门的选龙门食坊，其他炎国的选山城茶馆
+    elif character_data.relationship.birthplace == 17:
+        if character_data.relationship.nation in [13,14,15]:
+            return 6
+        return 1
+    # 拉特兰的选瓦莱丽蛋糕店
+    elif character_data.relationship.birthplace == 7:
+        return 0
+    # 叙拉古的选快捷连锁披萨店
+    elif character_data.relationship.birthplace == 16:
+        return 7
+    return -1

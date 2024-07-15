@@ -590,6 +590,152 @@ def handle_down_small_mana_point(
                     now_draw.draw()
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_HIT_POINT)
+def handle_down_middle_hit_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量体力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_hit = 30
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit *= 3
+    #体力不足0时锁为1#
+    if character_data.hit_point >= sub_hit:
+        character_data.hit_point -= sub_hit
+        change_data.hit_point -= sub_hit
+    else:
+        change_data.hit_point -= character_data.hit_point
+        character_data.hit_point = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_MANA_POINT)
+def handle_down_middle_mana_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少中量气力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_mana = 50
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.mana_point >= sub_mana:
+        character_data.mana_point -= sub_mana
+        change_data.mana_point -= sub_mana
+    else:
+        change_data.mana_point -= character_data.mana_point
+        sub_mana -= character_data.mana_point
+        character_data.mana_point = 0
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = window_width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_HIT_POINT)
+def handle_down_large_hit_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量体力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_hit = 100
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    #气力为0时体力消耗3倍#
+    if character_data.mana_point == 0:
+        sub_hit *= 3
+    #体力不足0时锁为1#
+    if character_data.hit_point >= sub_hit:
+        character_data.hit_point -= sub_hit
+        change_data.hit_point -= sub_hit
+    else:
+        change_data.hit_point -= character_data.hit_point
+        character_data.hit_point = 1
+        if not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = 1
+            # 如果和玩家位于同一地点，则输出提示信息
+            if character_data.position == cache.character_data[0].position:
+                now_draw = draw.NormalDraw()
+                now_draw.width = window_width
+                now_draw.text = "\n" + character_data.name + "太累了\n"
+                now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_MANA_POINT)
+def handle_down_large_mana_point(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    减少大量气力
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    sub_mana = 150
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    if character_data.mana_point >= sub_mana:
+        character_data.mana_point -= sub_mana
+        change_data.mana_point -= sub_mana
+    else:
+        change_data.mana_point -= character_data.mana_point
+        sub_mana -= character_data.mana_point
+        character_data.mana_point = 0
+        character_data.hit_point -= sub_mana
+        change_data.hit_point -= sub_mana
+        if character_data.hit_point <= 0:
+            character_data.hit_point = 1
+            if not character_data.sp_flag.tired:
+                character_data.sp_flag.tired = 1
+                # 如果和玩家位于同一地点，则输出提示信息
+                if character_data.position == cache.character_data[0].position:
+                    now_draw = draw.NormalDraw()
+                    now_draw.width = window_width
+                    now_draw.text = "\n" + character_data.name + "太累了\n"
+                    now_draw.draw()
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
 def handle_add_small_n_feel(
     character_id: int,
@@ -2536,13 +2682,13 @@ def handle_add_urinate(
             character_data.urinate_point = 240
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_TIRED)
-def handle_add_tired(
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SLEEP_POINT)
+def handle_add_sleep_point(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    维持疲劳和熟睡值（安眠药）
+    维持熟睡值（安眠药）
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -2552,7 +2698,6 @@ def handle_add_tired(
         return
 
     if character_data.h_state.body_item[9][1]:
-        character_data.tired_point = 160
         character_data.sleep_point = 100
 
 
@@ -2726,6 +2871,53 @@ def handle_u_orgasm_to_pee(
         now_draw.text = now_text
         now_draw.width = window_width
         now_draw.draw()
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXTRA_ORGASM)
+def handle_extra_orgasm(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算额外绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+
+    # 额外高潮次数
+    all_extra_count = character_data.h_state.extra_orgasm_count
+    # 如果有额外高潮次数，则进行苦痛和恐怖结算
+    if all_extra_count > 0:
+        # 额外高潮次数的苦痛和恐怖
+        extra_pain = 1000 * (1.2 ** all_extra_count)
+        extra_terror = 1000 * (1.2 ** all_extra_count)
+        # 痛苦刻印修正
+        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
+        extra_pain *= adjust
+        # 恐怖刻印修正
+        adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
+        extra_terror *= adjust
+        # 结算苦痛和恐怖
+        character_data.status_data[17] += extra_pain
+        character_data.status_data[17] = min(99999, character_data.status_data[17])
+        change_data.status_data.setdefault(17, 0)
+        change_data.status_data[17] += extra_pain
+        character_data.status_data[18] += extra_terror
+        character_data.status_data[18] = min(99999, character_data.status_data[18])
+        change_data.status_data.setdefault(18, 0)
+        change_data.status_data[18] += extra_terror
+        # 绘制信息
+        now_draw = draw.NormalDraw()
+        now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
+        now_draw.text = now_text
+        now_draw.width = window_width
+        now_draw.draw()
+        # 额外高潮次数清零
+        character_data.h_state.extra_orgasm_count = 0
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)

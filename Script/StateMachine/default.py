@@ -2,7 +2,7 @@ from types import FunctionType
 import random
 from Script.Settle import default
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise, game_time
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -98,9 +98,6 @@ def character_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
-    if handle_premise.handle_in_dormitory(character_id):
-        clothing.get_sleep_cloth(character_id)
-        default.handle_door_close(character_id,add_time=1,change_data=game_type.CharacterStatusChange(),now_time=cache.game_time)
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
@@ -192,7 +189,7 @@ def character_move_to_toilet(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去洗手间\n")
+        now_draw.text = _("{0}打算去洗手间\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -212,20 +209,28 @@ def character_move_to_kitchen(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOODSHOP)
 def character_move_to_foodshop(character_id: int):
     """
-    移动至食物商店（取餐区）
+    移动至食物商店
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    to_foodshop = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["Food_Shop"])
-    )
+    # 没有指定餐厅id的就去食堂，有指定餐厅id的就去指定的餐厅
+    if character_data.action_info.eat_food_restaurant == -1:
+        to_foodshop = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Take_Food_Area"])
+        )
+    else:
+        restaurant_id = character_data.action_info.eat_food_restaurant
+        place_tag = game_config.config_restaurant[restaurant_id].tag_name
+        to_foodshop = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data[place_tag])
+        )
     general_movement_module(character_id, to_foodshop)
 
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去吃饭\n")
+        now_draw.text = _("{0}打算去吃饭\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -562,15 +567,15 @@ def character_move_to_seven_cities_restaurant(character_id: int):
     general_movement_module(character_id, to_target)
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KFC)
-def character_move_to_kfc(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BURGER)
+def character_move_to_burger_joint(character_id: int):
     """
-    移动至人气快餐开封菜
+    移动至约翰老妈汉堡店
     Keyword arguments:
     character_id -- 角色id
     """
     to_target = map_handle.get_map_system_path_for_str(
-        random.choice(constant.place_data["KFC"])
+        random.choice(constant.place_data["Burger"])
     )
     general_movement_module(character_id, to_target)
 
@@ -682,7 +687,7 @@ def character_move_to_maintenance_department(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去运维部\n")
+        now_draw.text = _("{0}打算去运维部\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -702,7 +707,7 @@ def character_move_to_blacksmith_shop(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去铁匠铺\n")
+        now_draw.text = _("{0}打算去铁匠铺\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -722,7 +727,7 @@ def character_move_to_diplomatic_office(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去外交官办公室\n")
+        now_draw.text = _("{0}打算去外交官办公室\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -742,7 +747,7 @@ def character_move_to_herb_garden(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去药田\n")
+        now_draw.text = _("{0}打算去药田\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -762,7 +767,7 @@ def character_move_to_greenhouse(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去温室\n")
+        now_draw.text = _("{0}打算去温室\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -793,7 +798,7 @@ def character_move_to_rest_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去休息\n")
+        now_draw.text = _("{0}打算去休息\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -836,7 +841,7 @@ def character_move_to_maintenance_place(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去检修地点\n")
+        now_draw.text = _("{0}打算去检修地点\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -880,7 +885,7 @@ def character_move_to_production_workshop(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去生产车间\n")
+        now_draw.text = _("{0}打算去生产车间\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -909,7 +914,7 @@ def character_move_to_bathzone_locker_room(character_id: int):
         # 如果和玩家位于同一地点，则输出提示信息
         if character_data.position == cache.character_data[0].position:
             now_draw = draw.NormalDraw()
-            now_draw.text = _(f"{character_data.name}打算去大浴场的更衣室\n")
+            now_draw.text = _("{0}打算去大浴场的更衣室\n").format(character_data.name)
             now_draw.draw()
 
 
@@ -959,7 +964,7 @@ def character_move_to_training_locker_room(character_id: int):
         # 如果和玩家位于同一地点，则输出提示信息
         if character_data.position == cache.character_data[0].position:
             now_draw = draw.NormalDraw()
-            now_draw.text = _(f"{character_data.name}打算去训练场的更衣室\n")
+            now_draw.text = _("{0}打算去训练场的更衣室\n").format(character_data.name)
             now_draw.draw()
 
 
@@ -990,7 +995,7 @@ def character_move_to_bath_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去淋浴\n")
+        now_draw.text = _("{0}打算去淋浴\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1016,7 +1021,7 @@ def character_move_to_training_room(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去进行战斗训练\n")
+        now_draw.text = _("{0}打算去进行战斗训练\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1798,7 +1803,7 @@ def character_help_buy_food(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去买饭\n")
+        now_draw.text = _("{0}打算去买饭\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1819,7 +1824,7 @@ def character_help_make_food(character_id: int):
     # 如果和玩家位于同一地点，则输出提示信息
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}打算去做饭\n")
+        now_draw.text = _("{0}打算去做饭\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1884,6 +1889,46 @@ def character_make_milk(character_id: int):
     character_data.behavior.duration = 30
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.START_MASTUREBATE)
+def character_start_masturebate(character_id: int):
+    """
+    进入要自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 随机等于1或2
+    character_data.sp_flag.masturebate = random.randint(1, 2)
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.MASTUREBATE)
+def character_masturebate(character_id: int):
+    """
+    角色自慰
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MASTUREBATE
+    character_data.state = constant.CharacterStatus.STATUS_MASTUREBATE
+    character_data.behavior.duration = 30
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_CHARA_NORMAL_CLOTH)
+def character_get_chara_normal_cloth(character_id: int):
+    """
+    换上角色标准衣服
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    clothing.get_npc_cloth(character_id)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """
@@ -1898,7 +1943,7 @@ def character_wear_to_locker(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}脱成全裸了\n")
+        now_draw.text = _("{0}脱成全裸了\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1916,7 +1961,7 @@ def character_locker_to_wear(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}穿上了衣服\n")
+        now_draw.text = _("{0}穿上了衣服\n").format(character_data.name)
         now_draw.draw()
     # 如果有浴场或游泳娱乐flag则置0
     if character_data.sp_flag.bathhouse_entertainment:
@@ -1951,7 +1996,7 @@ def character_get_shower_cloth_and_clean_locker(character_id: int):
     character_data.behavior.duration = 10
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
-        now_draw.text = _(f"{character_data.name}换上了浴帽和浴巾\n")
+        now_draw.text = _("{0}换上了浴帽和浴巾\n").format(character_data.name)
         now_draw.draw()
 
 
@@ -1962,40 +2007,87 @@ def character_start_eat_food(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import cooking
+
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.eat_food = 1
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.sp_flag.eat_food = 1
+    # 随机三分之一的几率去食堂，其他几率去美食街
+    if random.randint(1, 3) == 1:
+        character_data.action_info.eat_food_restaurant = -1
+    else:
+        # 一半几率去自己出身地的餐厅
+        if random.randint(1, 2) == 1:
+            restaurant_id = cooking.find_character_birthplace_restaurant(character_id)
+            if restaurant_id != -1:
+                character_data.action_info.eat_food_restaurant = restaurant_id
+        else:
+            # 随机选一个餐厅
+            restaurant_dict = game_config.config_restaurant
+            restaurant_id = random.choice(list(restaurant_dict.keys()))
+            character_data.action_info.eat_food_restaurant = restaurant_id
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)
 def character_buy_rand_food_at_foodshop(character_id: int):
     """
-    在取餐区购买随机食物
+    在食物商店购买随机食物
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import cooking
+
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     new_food_list = []
-    for food_id in cache.restaurant_data:
-        if not len(cache.restaurant_data[food_id]):
-            continue
-        for food_uid in cache.restaurant_data[food_id]:
-            now_food: game_type.Food = cache.restaurant_data[food_id][food_uid]
-            # if now_food.eat:
-            new_food_list.append(food_id)
-            break
-    if not len(new_food_list):
-        return
-    now_food_id = random.choice(new_food_list)
-    now_food = cache.restaurant_data[now_food_id][
-        random.choice(list(cache.restaurant_data[now_food_id].keys()))
-    ]
-    character_data.food_bag[now_food.uid] = now_food
-    del cache.restaurant_data[now_food_id][now_food.uid]
+    # 在食堂购买
+    if character_data.action_info.eat_food_restaurant == -1:
+        # 获取所有食物id
+        for food_id in cache.dining_hall_data:
+            if not len(cache.dining_hall_data[food_id]):
+                continue
+            for food_uid in cache.dining_hall_data[food_id]:
+                now_food: game_type.Food = cache.dining_hall_data[food_id][food_uid]
+                # if now_food.eat:
+                new_food_list.append(food_id)
+                break
+        # 如果没有食物则刷新食物并返回，等待下次购买
+        if not len(new_food_list):
+            cooking.init_food_shop_data(-1)
+            return
+        # 随机选一个食物id
+        now_food_id = random.choice(new_food_list)
+        now_food = cache.dining_hall_data[now_food_id][
+            random.choice(list(cache.dining_hall_data[now_food_id].keys()))
+        ]
+        # 加入背包
+        character_data.food_bag[now_food.uid] = now_food
+        # 删除食堂中的食物
+        del cache.dining_hall_data[now_food_id][now_food.uid]
+    # 在指定餐厅购买
+    else:
+        restaurant_id = character_data.action_info.eat_food_restaurant
+        for food_id in cache.rhodes_island.restaurant_data[restaurant_id]:
+            if not len(cache.rhodes_island.restaurant_data[restaurant_id][food_id]):
+                continue
+            for food_uid in cache.rhodes_island.restaurant_data[restaurant_id][food_id]:
+                now_food: game_type.Food = cache.rhodes_island.restaurant_data[restaurant_id][food_id][food_uid]
+                # if now_food.eat:
+                new_food_list.append(food_id)
+                break
+        if not len(new_food_list):
+            cooking.init_food_shop_data(restaurant_id)
+            return
+        now_food_id = random.choice(new_food_list)
+        now_food = cache.rhodes_island.restaurant_data[restaurant_id][now_food_id][
+            random.choice(list(cache.rhodes_island.restaurant_data[restaurant_id][now_food_id].keys()))
+        ]
+        character_data.food_bag[now_food.uid] = now_food
+        del cache.rhodes_island.restaurant_data[restaurant_id][now_food_id][now_food.uid]
+
 
     # 记录食物名字
     food_recipe: game_type.Recipes = cache.recipe_data[now_food.recipe]
@@ -2035,6 +2127,7 @@ def character_eat_rand_food(character_id: int):
     choice_food_id = random.choice(now_food_list)
     character_data.behavior.target_food = character_data.food_bag[choice_food_id]
     character_data.state = constant.CharacterStatus.STATUS_EAT
+    character_data.action_info.eat_food_restaurant = -1
 
     # 记录食物名字
     food_data: game_type.Food = character_data.food_bag[choice_food_id]

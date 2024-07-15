@@ -12,6 +12,9 @@ if os.path.exists(po_path):
 # 在当前目录及其子目录中查找所有的.py文件，并将这些文件的路径写入到一个名为POTFILES的文件中
 with open('POTFILES', 'w') as f:
     for dirpath, dirnames, filenames in os.walk('.'):
+        # 跳过.\.conda目录
+        if '.conda' in dirpath:
+            continue
         for filename in filenames:
             if filename.endswith('.py'):
                 f.write(os.path.join(dirpath, filename) + '\n')

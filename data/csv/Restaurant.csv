@@ -1,0 +1,13 @@
+cid,name,tag_name
+餐馆id,餐馆名,餐馆标签
+int,str,str
+0,1,0
+餐馆名字,,
+0,瓦莱丽蛋糕店,Walyria_Cake_Shop
+1,山城茶馆,Teahouse
+2,哥伦比亚咖啡馆,Café
+3,七城风情餐厅,Seven_Cities_Restaurant
+4,约翰老妈汉堡店,Burger
+5,健康快餐店,Healthy_Diner
+6,龙门食坊,Lungmen_Eatery
+7,快捷连锁披萨店,Pizzeria

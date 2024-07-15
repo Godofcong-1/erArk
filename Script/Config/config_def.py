@@ -462,6 +462,8 @@ class Item:
     """ 标签 """
     price: int
     """ 价格 """
+    effect: int
+    """ 效果 """
     info: str
     """ 描述 """
 
@@ -589,6 +591,8 @@ class Recipes:
     """ 烹饪难度 """
     money: int
     """ 价格 """
+    restaurant: int
+    """ 餐馆id """
     introduce: str
     """ 说明介绍 """
 
@@ -630,6 +634,17 @@ class Resouce:
     """ 是否无法购买 """
     info: str
     """ 介绍信息 """
+
+
+class Restaurant:
+    """ 餐馆名字 """
+
+    cid: int
+    """ 餐馆id """
+    name: str
+    """ 餐馆名 """
+    tag_name: str
+    """ 餐馆标签 """
 
 
 class Roleplay:
@@ -718,6 +733,8 @@ class Status:
     """ 描述 """
     duration: int
     """ 耗时 """
+    trigger: str
+    """ 触发人 """
     tag: str
     """ 标签 """
 
@@ -796,6 +813,10 @@ class Talent_Of_Arts:
     """ 前置需求素质id """
     level: int
     """ 能力等级 """
+    lv_up_value1: int
+    """ 升级用数值1 """
+    lv_up_value2: int
+    """ 升级用数值2 """
     todo: int
     """ 未实装 """
 
@@ -896,6 +917,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:

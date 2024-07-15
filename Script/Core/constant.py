@@ -298,6 +298,8 @@ class CharacterStatus:
     """ 诱惑对方 """
     STATUS_ASK_PEE = 417
     """ 命令对方小便 """
+    STATUS_MASTUREBATE = 418
+    """ 自慰(女) """
     STATUS_HANDJOB = 420
     """ 手交 """
     STATUS_BLOWJOB = 421
@@ -798,6 +800,8 @@ class Behavior:
     """ 诱惑对方 """
     ASK_PEE = 417
     """ 命令对方小便 """
+    MASTUREBATE = 418
+    """ 自慰(女) """
     HANDJOB = 420
     """ 手交 """
     BLOWJOB = 421
@@ -1040,7 +1044,7 @@ class StateMachine:
     START_EAT_FOOD = 75
     """ 进入要取餐状态 """
     BUY_RAND_FOOD_AT_FOODSHOP = 76
-    """ 在取餐区购买随机食物 """
+    """ 在食物商店购买随机食物 """
     EAT_BAG_RAND_FOOD = 77
     """ 食用背包内随机食物 """
     START_SLEEP = 78
@@ -1067,6 +1071,12 @@ class StateMachine:
     """ 进入要挤奶状态 """
     MAKE_MILK = 90
     """ 挤奶 """
+    START_MASTUREBATE = 91
+    """ 进入要自慰状态 """
+    MASTUREBATE = 92
+    """ 自慰 """
+    GET_CHARA_NORMAL_CLOTH = 93
+    """ 换上角色标准衣服 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -1197,7 +1207,7 @@ class StateMachine:
     MOVE_TO_KITCHEN = 521
     """ 移动至厨房 """
     MOVE_TO_FOODSHOP = 522
-    """ 移动至食物商店（取餐区） """
+    """ 移动至食物商店 """
     MOVE_TO_DINING_HALL = 523
     """ 移动至食堂 """
     MOVE_TO_CLASSIC_MUSIC_ROOM = 524
@@ -1248,8 +1258,8 @@ class StateMachine:
     """ 移动至快捷连锁披萨店 """
     MOVE_TO_SEVEN_CITIES_RESTAURANT = 592
     """ 移动至七城风情餐厅 """
-    MOVE_TO_KFC = 593
-    """ 移动至人气快餐开封菜 """
+    MOVE_TO_BURGER = 593
+    """ 移动至约翰老妈汉堡店 """
     MOVE_TO_HEALTHY_DINER = 594
     """ 移动至健康快餐店 """
     MOVE_TO_LUNGMEN_EATERY = 595
@@ -1423,6 +1433,8 @@ class SecondBehavior:
     """ 结算W普绝顶 """
     W_orgasm_strong = 1023
     """ 结算W强绝顶 """
+    EXTRA_ORGASM = 1026
+    """ 结算额外绝顶 """
     HAPPY_MARK_1 = 1030
     """ 结算快乐刻印1 """
     HAPPY_MARK_2 = 1031
@@ -1482,6 +1494,19 @@ class SecondBehavior:
     """ 结算因B绝顶而被迫喷乳 """
     U_ORGASM_TO_PEE = 1072
     """ 结算因U绝顶而被迫漏尿 """
+
+    DOUBLE_ORGASM = 1081
+    """ 结算双重绝顶 """
+    TRIPLE_ORGASM = 1082
+    """ 结算三重绝顶 """
+    QUADRUPLE_ORGASM = 1083
+    """ 结算四重绝顶 """
+    QUINTUPLE_ORGASM = 1084
+    """ 结算五重绝顶 """
+    SEXTUPLE_ORGASM = 1085
+    """ 结算六重绝顶 """
+    SEPTUPLE_ORGASM = 1086
+    """ 结算七重绝顶 """
 
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
@@ -1718,6 +1743,8 @@ class Instruct:
     """ 让对方食用 """
     REST = 0
     """ 休息 """
+    DIRAY = 0
+    """ 日记 """
     SLEEP = 0
     """ 睡觉 """
     TAKE_SHOWER = 0
@@ -1748,6 +1775,8 @@ class Instruct:
     """ 摆放藏品 """
     TAKE_CARE_BABY = 0
     """ 照顾婴儿 """
+    ORDER_HOTEL_ROOM = 0
+    """ 预定房间 """
 
     #娱乐#
     SINGING = 0
@@ -1960,6 +1989,8 @@ class Instruct:
     """ 邀请H """
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
+    DO_H_IN_LOVE_HOTEL = 0
+    """ 邀请在爱情旅馆H """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0

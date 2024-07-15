@@ -37,7 +37,7 @@ class Prts_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = "普瑞赛斯"
+        title_text = _("普瑞赛斯")
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
 

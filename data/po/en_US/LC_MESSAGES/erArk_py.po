@@ -821,7 +821,7 @@ msgid "采尿器"
 msgstr "Urine collector"
 
 msgid "绳子"
-msgstr "Rope"
+msgstr "Ropes"
 
 msgid "眼罩"
 msgstr "Eye mask"
@@ -1523,8 +1523,7 @@ msgid ""
 "检测到因版本变更导致的食物数据异常，已删除部分异常食物，并重置了部分食物的数据，请保存并覆盖原存档。\n"
 msgstr ""
 "\n"
-"Detected data abnormalities for food due to version change, abnormal food is deleted and some food data is reset, "
-"please save and override the original save file.\n"
+"Detected data abnormalities for food due to version change, abnormal food is deleted and some food data is reset, please save and override the original save file.\n"
 
 msgid ""
 "  你已经吃饱了，无法再吃东西了。\n"
@@ -1696,16 +1695,14 @@ msgid ""
 "当前地点可以关门，关上之后里面的人可以出去，但外面的人将不能进来，要关门吗："
 msgstr ""
 "\n"
-"You can close the door at current location, afterwards the people inside can go out but people outside can't go in, "
-"do you wish to close the door:"
+"You can close the door at current location, afterwards the people inside can go out but people outside can't go in, do you wish to close the door:"
 
 msgid ""
 "\n"
 "你正在一个可以关门的小隔间内，关上后别人仍可以进入该地点，但无法发现隔间内的人，要关门吗："
 msgstr ""
 "\n"
-"You are now in a small compartment, after closing the door, others can enter the location but unable to find"
-"the people inside, do you wish to close the door:"
+"You are now in a small compartment, after closing the door, others can enter the location but unable to findthe people inside, do you wish to close the door:"
 
 msgid ""
 "\n"
@@ -1778,8 +1775,7 @@ msgid ""
 " 当前地点有可以关门的小隔间，关上后别人无法发现隔间内的人，但仍可以进入该地点，"
 msgstr ""
 "\n"
-" Current location have small compartments, after closing the door, others can enter the location but unable to"
-"find the people inside,"
+" Current location have small compartments, after closing the door, others can enter the location but unable tofind the people inside,"
 
 msgid "当前：   "
 msgstr "Current:   "
@@ -1877,8 +1873,7 @@ msgid ""
 "  你将{character_data.name}的母乳（{cache.rhodes_island.milk_in_fridge[character_id]}ml）转化为了【鲜母乳】\n"
 msgstr ""
 "\n"
-"  You changed {character_data.name}'s breast milk({cache.rhodes_island.milk_in_fridge[character_id]}ml)"
-"to [Fresh Breast Milk]\n"
+"  You changed {character_data.name}'s breast milk({cache.rhodes_island.milk_in_fridge[character_id]}ml)to [Fresh Breast Milk]\n"
 
 msgid "5"
 msgstr ""
@@ -2282,11 +2277,14 @@ msgid "存档跨版本更新: key {0}, not found，已设为默认值 {1}\n"
 msgstr "Cross-version save file update: key {0}, not found，set to default {1}\n"
 
 msgid "存档跨版本更新: key {0}, type not match，原type {1}，新type {2}, 已设为默认值 {3}\n"
-msgstr "Cross-version save file update: key {0}, type not match，original type {1}，new type {2}, "
-"set to default {3}\n"
+msgstr ""
+"Cross-version save file update: key {0}, type not match，original type "
+"{1}，new type {2}, set to default {3}\n"
 
 msgid "存档跨版本更新: 角色 {0} 的序号不一致，已修正\n"
-msgstr "Cross-version save file update: Operator {0} have different serial number, fixed now\n"
+msgstr ""
+"Cross-version save file update: Operator {0} have different serial number, "
+"fixed now\n"
 
 msgid ""
 "\n"
@@ -2342,7 +2340,9 @@ msgid "上次结算是{0}时，到现在已过{1}小时，"
 msgstr "Last settlement: Hour {0}, {1} hours have passed since,"
 
 msgid "由于原料不足，最大可以生产{0}个，实际"
-msgstr "Due to insufficient raw materials, only {0} products can be produced, currently"
+msgstr ""
+"Due to insufficient raw materials, only {0} products can be produced, "
+"currently"
 
 msgid "共生产了{0}个{1}"
 msgstr "{0} (1) have been produced"
@@ -2454,7 +2454,7 @@ msgstr ""
 
 msgid ""
 "\n"
-"今日全角色总好感度上升为： {0}，折合为{1}粉红凭证\n"
+"今日全角色总好感度上升为：{0}，折合为 {1} 粉红凭证\n"
 msgstr ""
 "\n"
 "Total Affinity increase： {0}，exchanged to {1} Pink Certificates\n"
@@ -2601,15 +2601,18 @@ msgid "当前正在对{0}无意识奸，是否不戴套？\n"
 msgstr "Doing unconscious rape on {0}, do you wish to not put on condom?\n"
 
 msgid "{0}已经做好了随时都可以怀孕的准备，是否不戴套？\n"
-msgstr "{0} is ready to be pregnant at any time, do you wish to not put on condom?\n"
+msgstr ""
+"{0} is ready to be pregnant at any time, do you wish to not put on condom?\n"
 
 msgid "{0}已经吃过事前避孕药了，所以内射也不会怀孕，是否不戴套？\n"
-msgstr "{0} has taken birth-control pills, so she won't be pregnant after ejaculation, "
-"do you wish to not put on condom?\n"
+msgstr ""
+"{0} has taken birth-control pills, so she won't be pregnant after "
+"ejaculation, do you wish to not put on condom?\n"
 
 msgid "{0}似乎对性和避孕都一无所知，是否不戴套？\n"
-msgstr "{0} seems to have no knowledge on sex and pregnancy prevention, do you wish to"
-"not put on condom?\n"
+msgstr ""
+"{0} seems to have no knowledge on sex and pregnancy prevention, do you wish "
+"tonot put on condom?\n"
 
 msgid "{0}坚决地要求你必须戴上避孕套，是否坚持不带套？\n"
 msgstr "{0} wanted you to put on condom, do you insist to not put it on?\n"
@@ -2618,8 +2621,9 @@ msgid "{0}希望你戴上避孕套，是否坚持不带套？\n"
 msgstr "{0} hoped that you put on condom, do you insist to not put it on?\n"
 
 msgid "{0}提醒你还没有戴避孕套，但也表示可以不戴就这样继续，是否不带套？\n"
-msgstr "{0} reminded you that you didn't put on condom, but she can continue without so, "
-"do you wish to not put on condom?\n"
+msgstr ""
+"{0} reminded you that you didn't put on condom, but she can continue without"
+" so, do you wish to not put on condom?\n"
 
 msgid " (对方的态度："
 msgstr "(The target's attitude:"
@@ -2719,7 +2723,8 @@ msgstr ""
 "Unused {0}ml semen is exchanged into {1}ml temporary semen"
 
 msgid "，额外精液量已达上限，并获得了为期一天的[浓厚精液]"
-msgstr ", temporary semen reached the limit, one day of [Concentrated Semen] granted"
+msgstr ""
+", temporary semen reached the limit, one day of [Concentrated Semen] granted"
 
 msgid "管理农业生产"
 msgstr "Manage farm production"
@@ -2896,8 +2901,7 @@ msgid ""
 "因为{0}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n"
 msgstr ""
 "\n"
-"{0} hasn't have her menarche yet, hence the sperms can only search the inexistent ovum in vagina, "
-"unable to fertilize\n"
+"{0} hasn't have her menarche yet, hence the sperms can only search the inexistent ovum in vagina, unable to fertilize\n"
 
 msgid ""
 "\n"
@@ -2932,8 +2936,7 @@ msgid ""
 "{0}在临盆期内会一直躺在医疗部住院区的病床上，多去陪陪她，静候生产的来临吧\n"
 msgstr ""
 "\n"
-"{0} will stay at the Impatient Department of Medical Zone during the confining period, try to accompany"
-"her often and wait for the day of giving birth\n"
+"{0} will stay at the Impatient Department of Medical Zone during the confining period, try to accompanyher often and wait for the day of giving birth\n"
 
 msgid ""
 "\n"
@@ -3024,8 +3027,7 @@ msgid ""
 "{0}的身体渐渐成长，开始进入青春期，在第二性征发育的同时，也迎来了第一次的初潮\n"
 msgstr ""
 "\n"
-"{0}'s body gradually grew up, entering puberty, and have her first menarche while secondary"
-"characteristics are growing\n"
+"{0}'s body gradually grew up, entering puberty, and have her first menarche while secondarycharacteristics are growing\n"
 
 msgid ""
 "\n"
@@ -3219,8 +3221,9 @@ msgid "{0}红着脸跑走了"
 msgstr "{0} running away, blushed"
 
 msgid "尿意达到了极限的{0}实在无法继续憋下去，被迫当场尿了出来\n"
-msgstr "{0} with the urge to urinate reaching the limit can no longer hold in, "
-"peed out right on spot\n"
+msgstr ""
+"{0} with the urge to urinate reaching the limit can no longer hold in, peed "
+"out right on spot\n"
 
 msgid "博士"
 msgstr "Doctor"
@@ -3304,7 +3307,7 @@ msgid "|            服务器            |"
 msgstr "|            Server            |"
 
 msgid "|          泰拉(if_h)          |"
-msgstr "|          Terra(if_h)          |"
+msgstr "|          Terra(if_h)         |"
 
 msgid " 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n"
 msgstr " Current storage level:{0}, storage (limit per resource):{1}\n"
@@ -3465,16 +3468,21 @@ msgid "[002]跟随服务"
 msgstr "[002]Following service"
 
 msgid "    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）"
-msgstr "    Intelligence follow (follows the player on all time besides physical needs)"
+msgstr ""
+"    Intelligence follow (follows the player on all time besides physical "
+"needs)"
 
 msgid "    强制跟随（测试用，会影响一部分游戏机能）"
 msgstr "    Force follow (for testing, might affect a part of game mechanics)"
 
 msgid "    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）"
-msgstr "    Comes to Doctor's Office (wait for at most half an hour if Doctor is absent)"
+msgstr ""
+"    Comes to Doctor's Office (wait for at most half an hour if Doctor is "
+"absent)"
 
 msgid "    前往博士当前位置（抵达后会最多等待半小时）"
-msgstr "    Comes to Doctor's Location (wait for at most half an hour after arrival)"
+msgstr ""
+"    Comes to Doctor's Location (wait for at most half an hour after arrival)"
 
 msgid "  [更改早安服务预定时间]——当前预定时间：{0}:{1}"
 msgstr "  [Changing morning service time]——Current time: {0}:{1}"
@@ -3497,11 +3505,14 @@ msgstr ""
 "\n"
 
 msgid "如果这个时间博士还没醒来，助理干员会来到博士床前，悄悄进行早安问候，然后一直等待到博士醒来为止\n"
-msgstr "If the Doctor hasn't woke up, the assistant will carry out the service secretly"
-"and then wait for the Doctor to wake up\n"
+msgstr ""
+"If the Doctor hasn't woke up, the assistant will carry out the service "
+"secretlyand then wait for the Doctor to wake up\n"
 
 msgid "如果这个时间博士已经醒来，助理干员会直接前往博士身边，进行早安服务后离开\n"
-msgstr "If the Doctor has woke up, the assistant will carry out the service and leave\n"
+msgstr ""
+"If the Doctor has woke up, the assistant will carry out the service and "
+"leave\n"
 
 msgid "更改小时，需至晚为9时"
 msgstr "Change time, at latest 9"
@@ -3514,11 +3525,14 @@ msgstr ""
 "\n"
 
 msgid "如果这个时间博士还没有入睡，助理干员会前来催促睡觉，一直到博士睡前进行晚安服务后再离开\n"
-msgstr "If the Doctor hasn't slept, the assistant will ask to sleep until the Doctor slept, "
-"then carry out the service and leave\n"
+msgstr ""
+"If the Doctor hasn't slept, the assistant will ask to sleep until the Doctor"
+" slept, then carry out the service and leave\n"
 
 msgid "如果这个时间博士已经入睡，助理干员会来到博士床前，悄悄进行晚安服务后离开\n"
-msgstr "If the Doctor has slept, the assistant will carry out the service secretly and leave\n"
+msgstr ""
+"If the Doctor has slept, the assistant will carry out the service secretly "
+"and leave\n"
 
 msgid ""
 "\n"
@@ -3570,7 +3584,7 @@ msgid "避孕套"
 msgstr "Condom"
 
 msgid ""
-"  你现在不饿，无法吃东西。\n"
+"  现在不饿，无法吃东西。\n"
 "\n"
 msgstr ""
 "  You aren't hungry, unable to eat.\n"
@@ -3780,8 +3794,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-" {0} hours for fully recovering Stamina and Energy，{1} hours for fully recovering Tiredness，"
-"sleep duration set：{2} hours (default on the higher from the two)"
+" {0} hours for fully recovering Stamina and Energy，{1} hours for fully recovering Tiredness，sleep duration set：{2} hours (default on the higher from the two)"
 
 msgid " [{0}小时] "
 msgstr " [{0} hours]"
@@ -3871,8 +3884,7 @@ msgid ""
 "○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n"
 msgstr ""
 "\n"
-"○Conducting hypnosis will consume Sanity, and will validate the memory during the process after hypnosis ended, "
-"while others that are not hypnotised wouldn't be suspecting on actions during hypnosis\n"
+"○Conducting hypnosis will consume Sanity, and will validate the memory during the process after hypnosis ended, while others that are not hypnotised wouldn't be suspecting on actions during hypnosis\n"
 
 msgid ""
 "\n"
@@ -3916,8 +3928,7 @@ msgid ""
 "能力可以直接消耗至纯源石或满足特定条件解锁，当前至纯源石：{0}\n"
 msgstr ""
 "\n"
-"Reaching certain conditions or using Originium Primes can unlock the abilities, "
-"current Originium Prime: {0}\n"
+"Reaching certain conditions or using Originium Primes can unlock the abilities, current Originium Prime: {0}\n"
 
 msgid ""
 "\n"
@@ -3941,7 +3952,9 @@ msgid "(未实装)"
 msgstr "(Not implemented)"
 
 msgid "：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）"
-msgstr ": Hypnosis EXP≥{0} (Currently {1}) , total Hypnosis Depth ≥{2}% (Currently {3}%) "
+msgstr ""
+": Need Hypnosis EXP≥{0} (Currently {1}) , total Hypnosis Depth ≥{2}% (Currently "
+"{3}%) "
 
 msgid ""
 "\n"
@@ -3971,8 +3984,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Which Engraving of [{0}] to reduce? (5 underwears in Collection Hall required to be consumed, "
-"currently {1}, repeated style as priority)\n"
+"Which Engraving of [{0}] to reduce? (5 underwears in Collection Hall required to be consumed, currently {1}, repeated style as priority)\n"
 "\n"
 
 msgid ""
@@ -3998,8 +4010,7 @@ msgid ""
 "○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n"
 msgstr ""
 "\n"
-"○Fully embrace the corresponding character/environment after being hypnotised, "
-"lasting till the hypnosis ends\n"
+"○Fully embrace the corresponding character/environment after being hypnotised, lasting till the hypnosis ends\n"
 
 msgid ""
 "\n"
@@ -4355,8 +4366,7 @@ msgid ""
 "在对子宫的持续开发下，{0}提前迎来了性成熟，可以受精怀孕了\n"
 msgstr ""
 "\n"
-"With the continuous development on her womb, {0} has her sexual maturity arrived early, "
-"she can now be fertilized and impregnated\n"
+"With the continuous development on her womb, {0} has her sexual maturity arrived early, she can now be fertilized and impregnated\n"
 
 msgid "○{0}失去了[未初潮]\n"
 msgstr "○{0} lost [No Menarche]\n"
@@ -4416,8 +4426,9 @@ msgid " 反发刻印0"
 msgstr " Antipathy Engraving Lv0"
 
 msgid " 分为爱情系与隶属系两条路线，只能任选其一，选择后另一路线消失，仅在新周目时可以重置\n"
-msgstr " Divided into love relationship and affiliation relationship, only one can be chosen, "
-"the other will disappear, only reset on new walkthrough\n"
+msgstr ""
+" Divided into love relationship and affiliation relationship, only one can "
+"be chosen, the other will disappear, only reset on new walkthrough\n"
 
 msgid "爱情路线前提："
 msgstr "Love relationship: "
@@ -4512,7 +4523,9 @@ msgid "收到了博士的信息，接下来会前往博士办公室\n"
 msgstr "Received Doctor's message, now heading towards Doctor's Office\n"
 
 msgid "收到了博士的信息，询问了博士的位置之后开始移动\n"
-msgstr "Received Doctor's message, now heading towards Doctor's location after inquiry\n"
+msgstr ""
+"Received Doctor's message, now heading towards Doctor's location after "
+"inquiry\n"
 
 msgid "收到了博士的信息，开始智能跟随\n"
 msgstr "Received Doctor's message, enabling Intelligence Following\n"
@@ -4886,381 +4899,1174 @@ msgid " <逆>"
 msgstr " <Active>"
 
 msgid "贸易"
-msgstr ""
+msgstr "Trade"
 
 msgid "成人用品店"
-msgstr ""
+msgstr "Adult Items Shop"
 
 msgid "书"
-msgstr ""
+msgstr "Library"
 
 msgid "藏品馆"
-msgstr ""
+msgstr "Collection Hall"
 
 msgid "太累了\n"
-msgstr ""
+msgstr "too tired\n"
 
 msgid ""
 "\n"
 "{0}失去了【性无知】\n"
 "\n"
 msgstr ""
+"\n"
+"{0} lost [Sexual Ignorance]\n"
+"\n"
 
 msgid ""
 "\n"
 "获得了{0}穿着的{1}(沾有处子血)，已自动存入收藏品列表，可在藏物馆查看\n"
 "\n"
 msgstr ""
+"\n"
+"Obtained {0}'s {1} (with virgin blood), added into collection automatically, can be checked in Collection Hall\n"
+"\n"
 
 msgid "{0}(沾有处子血)"
-msgstr ""
+msgstr "{0} (with virgin blood)"
 
 msgid ""
 "\n"
 "{0}的处子血滴了下去，被你谨慎地用试管接了一滴，已自动存入收藏品列表，可在藏物馆查看\n"
 "\n"
 msgstr ""
+"\n"
+"{0}'s virgin blood dropped, and you collected a drop with tube, added into collection automatically, can be checked in Collection Hall\n"
+"\n"
 
 msgid "一滴{0}的处子血"
-msgstr ""
+msgstr "A drop of {0}'s virgin blood"
 
 msgid ""
 "\n"
 "{0}的理智耗尽，催眠结束\n"
 "\n"
 msgstr ""
+"\n"
+"{0}'s Sanity is exhausted, hypnosis ends\n"
+"\n"
 
 msgid ""
 "\n"
 "{0}的体力上限增加{1},气力上限增加{2}"
 msgstr ""
+"\n"
+"{0}'s Stamina limit +{1}, Energy limit +{2}"
 
 msgid ""
 "\n"
 "{0}的体力上限增加{1},气力上限增加{2}\n"
 msgstr ""
+"\n"
+"{0}'s Stamina limit +{1}, Energy limit +{2}\n"
 
 msgid ""
 "\n"
 "发现以下衣柜里有衣服\n"
 "\n"
 msgstr ""
+"\n"
+"Clothes found inside this closet\n"
+"\n"
 
 msgid ""
 "\n"
 "所有衣柜都是空的\n"
 "\n"
 msgstr ""
+"\n"
+"All closets are empty\n"
+"\n"
 
 msgid "{0}{1}的衣柜"
-msgstr ""
+msgstr "{0}{1}'s closet"
 
 msgid ""
 "\n"
 "{0}的衣柜里放着刚脱下来的：\n"
 msgstr ""
+"\n"
+"{0}'s closet has the clothes that just took off: \n"
 
 msgid "({0}ml精液)"
-msgstr ""
+msgstr "({0}ml semen)"
 
 msgid "[001]把内衣拿起来闻一闻味道"
-msgstr ""
+msgstr "[001]Takes the bra and smells"
 
 msgid "[002]偷走内裤"
-msgstr ""
+msgstr "[002]Steal underwear"
 
 msgid "[003]偷走袜子"
-msgstr ""
+msgstr "[003]Steal socks"
 
 msgid "[004]用衣服冲，射在上面"
-msgstr ""
+msgstr "[004]Use clothes to ejaculate"
 
 msgid " ({0}ml精液)"
-msgstr ""
+msgstr " ({0}ml semen) "
 
 msgid "在{0}的{1}{2}"
-msgstr ""
+msgstr "On {0}'s {1}{2}"
 
 msgid " <脏污>"
-msgstr ""
+msgstr " <Dirty>"
 
 msgid " <灌肠中>"
-msgstr ""
+msgstr " <Lavaging>"
 
 msgid " <已灌肠清洁过>"
-msgstr ""
+msgstr " <Lavaged>"
 
 msgid " <精液灌肠中>"
-msgstr ""
+msgstr " <Lavaging with semen>"
 
 msgid " <已精液灌肠过>"
-msgstr ""
+msgstr " <Semen lavaged>"
 
 msgid "<未知>（需要腔内透视）\n"
-msgstr ""
+msgstr "<Unknown> (needs Cavity Perspective)\n"
 
 msgid " <破处血>"
-msgstr ""
+msgstr " <Virgin blood>"
 
 msgid " <些许爱液>"
-msgstr ""
+msgstr " <Some love juice>"
 
 msgid " <充分湿润>"
-msgstr ""
+msgstr " <Very wet>"
 
 msgid " <泛滥的一塌糊涂>"
-msgstr ""
+msgstr " <Overflowed>"
 
 msgid " <残留的尿渍>"
-msgstr ""
+msgstr " <Urine leftover>"
 
 msgid " <洁净>"
-msgstr ""
+msgstr " <Clean>"
 
 msgid " <些许尿意>"
-msgstr ""
+msgstr " <Slight urge to pee>"
 
 msgid " <充盈的尿意>"
-msgstr ""
+msgstr " <Very urged to pee>"
 
 msgid " <{0}ml精液>"
-msgstr ""
+msgstr " <{0}ml semen>"
 
 msgid " 未知（需要内衣透视）\n"
-msgstr ""
+msgstr " Unknown (needs Bra Perspective)\n"
 
 msgid " 乳汁量为{0}ml"
-msgstr ""
+msgstr " breast milk {0}ml"
 
 msgid "受精概率{0}%"
-msgstr ""
+msgstr "Fertilize rate {0}%"
 
 msgid " 当前为{0},{1}"
-msgstr ""
+msgstr " currently {0}, {1}"
 
 msgid " 用掉了{0}个避孕套，总精液量{1}ml"
-msgstr ""
+msgstr " {0} condoms used, total semen {1}ml"
 
 msgid "只流出了些许前列腺液，已经射不出精液了"
-msgstr ""
+msgstr "Only some prostatic fluid is flowing out, as semen stored has ran out"
 
 msgid "在避孕套里"
-msgstr ""
+msgstr "In the condom"
 
 msgid "射精部位选择"
-msgstr ""
+msgstr "Choose body part for ejaculation"
 
 msgid "◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n"
 msgstr ""
+"◆Normal food is being ate alone if no one is around, or shared if there's "
+"others, while special food is only for the target. \n"
 
 msgid "○正常调味食物\n"
-msgstr ""
+msgstr "○Normal food\n"
 
 msgid "○特殊调味食物\n"
-msgstr ""
+msgstr "○Special food\n"
 
 msgid "(食堂自助免费拿取)"
-msgstr ""
+msgstr "(Canteen free pick-up)"
 
 msgid "成人用品商店"
-msgstr ""
+msgstr "Adult items shop"
 
 msgid "药品"
-msgstr ""
+msgstr "Medicines"
 
 msgid "机器"
-msgstr ""
+msgstr "Machines"
 
 msgid "消耗品"
-msgstr ""
+msgstr "Consumables"
 
 msgid "H药品"
-msgstr ""
+msgstr "H medicines"
 
 msgid "H用机器"
-msgstr ""
+msgstr "H machines"
 
 msgid "SM器具"
-msgstr ""
+msgstr "SM tools"
 
 msgid "当前持有粉色凭证：{0}"
-msgstr ""
+msgstr "Current Pink Certificates: {0}"
 
 msgid "(持有："
-msgstr ""
+msgstr "(Having: "
 
 msgid "(未持有)"
-msgstr ""
+msgstr "{Not held}"
 
 msgid "(已持有)"
-msgstr ""
+msgstr "(Held)"
 
 msgid "已达到最高堆叠上限"
-msgstr ""
+msgstr "Maximum limit reached"
 
 msgid "你没有足够的粉色凭证"
-msgstr ""
+msgstr "Pink Certificates insufficient"
 
 msgid " 当前的访客上限为：{0}人\n"
-msgstr ""
+msgstr " Current guest limit: {0}\n"
 
 msgid " 目前没有访客\n"
-msgstr ""
+msgstr " no guests currently\n"
 
 msgid " 目前的访客有："
-msgstr ""
+msgstr " current guests: "
 
 msgid " [{0}]{1}，居住房间：{2}，离开{3}\n"
-msgstr ""
+msgstr " [{0}]{1}, lives at: {2}, leaves {3}\n"
 
 msgid ""
 "\n"
 " 当前邀请目标："
 msgstr ""
+"\n"
+" Current invite target: "
 
 msgid " 需要访客区至少为2级才可以邀请访客\n"
-msgstr ""
+msgstr " needs Guest Zone Lv2 to invite guests\n"
 
 msgid " 无"
-msgstr ""
+msgstr " none"
 
 msgid ""
 "\n"
 " 邀请进度：{0}%"
 msgstr ""
+"\n"
+" Invite progress: {0}%"
 
 msgid ""
 "\n"
 " 邀请效率加成："
 msgstr ""
+"\n"
+" Invite efficiency boost: "
 
 msgid "(话术lv{0}:+{1}%)"
-msgstr ""
+msgstr "(Speech lv{0}: +{1}%)"
 
 msgid "[002]目标选择"
-msgstr ""
+msgstr "[002]Target selection"
 
 msgid " 无\n"
-msgstr ""
+msgstr " none\n"
 
 msgid " 访客区等级：{0}\n"
-msgstr ""
+msgstr " Guest Zone level: {0}\n"
 
 msgid " 访客停留时长：{0}天\n"
-msgstr ""
+msgstr " guest staying duration: {0} days\n"
 
 msgid " 访客数量上限：{0}人\n"
-msgstr ""
+msgstr " guest limit: {0}\n"
 
 msgid ""
 " 可邀请范围：{0}\n"
 "\n"
 msgstr ""
+" Invite range: {0}\n"
+"\n"
 
 msgid " 可邀请范围："
-msgstr ""
+msgstr " Invite range: "
 
 msgid "全泰拉"
-msgstr ""
+msgstr "The whole Terra"
 
 msgid " 当前可邀请目标有（更改后会重置邀请进度）："
-msgstr ""
+msgstr " Current available target (reset progress on change): "
 
 msgid " 当前没有可邀请目标\n"
-msgstr ""
+msgstr " no invite target\n"
 
 msgid "制作食物"
-msgstr ""
+msgstr "Make food"
 
 msgid "○当前的调味： {0}"
-msgstr ""
+msgstr "○Current taste: {0}"
 
 msgid ""
 "\n"
 "  基础:    "
 msgstr ""
+"\n"
+"  Basic:    "
 
 msgid ""
 "\n"
 "  精液:    "
 msgstr ""
+"\n"
+"  Semen:    "
 
 msgid ""
 "\n"
 "  药物:    "
 msgstr ""
+"\n"
+"  Medicine:    "
 
 msgid "○选择要制作的食物：\n"
-msgstr ""
+msgstr "○Choose food to make: \n"
 
 msgid "  随着一阵火焰，5条内裤化为一缕青烟，消散在空中\n"
-msgstr ""
+msgstr "  After a fire, 5 underwears became smoke and vanished in the sky\n"
 
 msgid "  {0}感觉心里轻松了很多，对{1}的印象有些改观了，{2}下降到了{3}级\n"
-msgstr ""
+msgstr "  {0} feels better towards {1}, {2} decreased to Lv{3}\n"
 
 msgid "  内裤数量不足\n"
-msgstr ""
+msgstr " Insufficient underwears\n"
 
 msgid ""
 "身份验证通过，最高权限账户——管理员账户\n"
 "\n"
 msgstr ""
+"Identity verification passed, highest authority account——Administrator\n"
+"\n"
 
 msgid ""
 "Dr.{0}，欢迎访问普瑞赛斯终端，请问我可以为您做什么？\n"
 "\n"
 msgstr ""
+"Dr.{0}，welcomes to P.R.T.S., what can I do for you?\n"
+"\n"
 
 msgid ""
 "○请注意，本终端内的资料查询功能会直接涉及游戏流程和实际内容的介绍和剧透，如果更倾向于自己体验和摸索的话，请仅在必要时刻再使用本功能。\n"
 "\n"
 msgstr ""
+"○Beware, the terminal will directly introduce and spoil the gameplay and content, if you wish to feel and search yourselves, only use this when necessary. \n"
+"\n"
 
 msgid "[000]查询系统本身的相关资料"
-msgstr ""
+msgstr "[000]Checks system's information"
 
 msgid "[001]获得日常生活的建议"
-msgstr ""
+msgstr "[001]Gets advices for daily life"
 
 msgid "[002]询问如何与干员相处"
-msgstr ""
+msgstr "[002]Asks how to interact with Operators"
 
 msgid "[003]与干员发生肉体关系时的注意事项"
-msgstr ""
+msgstr "[003]Precautions when having body contact"
 
 msgid "[004]怎么样才能更好的经营罗德岛"
-msgstr ""
+msgstr "[004]How to manage Rhodes Island better"
 
 msgid "[011]与普瑞赛斯闲聊（未实装）"
 msgstr ""
 
 msgid "{year}年{month}月{day}日{hour}点{minute}分"
-msgstr ""
+msgstr "{year}/{month}/{day} {hour}:{minute}"
 
 msgid " {0}博士"
-msgstr ""
+msgstr " Dr. {0}"
 
 msgid "脱到只穿内衣      "
-msgstr ""
+msgstr "Strip down till bra left"
 
 msgid "脱到只穿袜子手套等"
-msgstr ""
+msgstr "Strip down till socks and gloves left"
 
 msgid "脱到全裸          "
-msgstr ""
+msgstr "Strip down till nakes"
 
 msgid "把内裤收走        "
-msgstr ""
+msgstr "Take off underwear"
 
 msgid " ：会脱掉"
-msgstr ""
+msgstr " : Will strip down"
 
 msgid " ：无可脱的衣服"
-msgstr ""
+msgstr " : No available clothes"
 
 msgid " ：会收走"
-msgstr ""
+msgstr " : Will take off"
 
 msgid " ：无可收的内裤"
+msgstr " : No available underwear"
+
+msgid "今日全陷落角色提供的粉红凭证为：{0}\n"
+msgstr "Total Pink Certificates produced from Operators today: {0}\n"
+
+msgid "+被对方持有把柄(-"
+msgstr "+ Got hold by(-"
+
+msgid "+持有对方把柄(+"
+msgstr "+ Get hold on(+"
+
+msgid ""
+"\n"
+"{0}获得了【被博士持有把柄】\n"
+msgstr ""
+"\n"
+"{0} acquired [Get Hold by Doctor]\n"
+
+msgid "{0}打算去洗手间\n"
+msgstr "{0} wanted to go to the toilet\n"
+
+msgid "{0}打算去吃饭\n"
+msgstr "{0} wanted to go have meal\n"
+
+msgid "{0}打算去运维部\n"
+msgstr "{0} wanted to go to O&M Department\n"
+
+msgid "{0}打算去铁匠铺\n"
+msgstr "{0} wanted to go to Smithing Shop\n"
+
+msgid "{0}打算去外交官办公室\n"
+msgstr "{0} wanted to go to Civil Service Office\n"
+
+msgid "{0}打算去药田\n"
+msgstr "{0} wanted to go to the farmland\n"
+
+msgid "{0}打算去温室\n"
+msgstr "{0} wanted to go to the conservatory\n"
+
+msgid "{0}打算去休息\n"
+msgstr "{0} wanted to go rest\n"
+
+msgid "{0}打算去检修地点\n"
+msgstr "{0} wanted to go maintaining\n"
+
+msgid "{0}打算去生产车间\n"
+msgstr "{0} wanted to go to the production line\n"
+
+msgid "{0}打算去大浴场的更衣室\n"
+msgstr "{0} wanted to go to the fitting room in Bathing Spot\n"
+
+msgid "{0}打算去训练场的更衣室\n"
+msgstr "{0} wanted to go to the fitting room in Training Room\n"
+
+msgid "{0}打算去淋浴\n"
+msgstr "{0} wanted to go shower\n"
+
+msgid "{0}打算去进行战斗训练\n"
+msgstr "{0} wanted to go combat training\n"
+
+msgid "{0}打算去买饭\n"
+msgstr "{0} wanted to go buy food\n"
+
+msgid "{0}打算去做饭\n"
+msgstr "{0} wanted to go cook\n"
+
+msgid "{0}脱成全裸了\n"
+msgstr "{0} was naked\n"
+
+msgid "{0}穿上了衣服\n"
+msgstr "{0} wore her clothes back\n"
+
+msgid "{0}换上了浴帽和浴巾\n"
+msgstr "{0} changed to showering cap and towel\n"
+
+msgid "{0}的{1}提升到{2}级\n"
+msgstr "{0}'s {1} upgraded to Lv{2}\n"
+
+msgid "本周全陷落角色提供的粉红凭证为：{0}\n"
+msgstr "Total Pink Certificates produced from Operators this week: {0}\n"
+
+msgid ""
+"\n"
+" 获得了{0}的【亲吻合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Kiss Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【本番合意】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 获得了{0}的【Ａ性交合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [A Sex Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【Ｕ性交合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [U Sex Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【避孕中出合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Creampie Agreement] \n"
+
+msgid ""
+"\n"
+" 获得了{0}的【妊娠合意】\n"
+msgstr ""
+"\n"
+" Acquired {0}'s [Pregnancy Agreement] \n"
+
+msgid "因为等待时间过长，所以{0}不再继续跟随\n"
+msgstr "{0} stopped following, as the waiting became too long\n"
+
+msgid "{0}等不下去了，决定直接进来\n"
+msgstr "{0} broke in as they couldn't wait any longer\n"
+
+msgid "因为不方便进来，所以{0}正在外面等待\n"
+msgstr "{0} was waiting outside as it's inconvenient to come in\n"
+
+msgid ""
+"\n"
+"精子在{0}的阴道中游荡，但未能成功受精\n"
+msgstr ""
+"\n"
+"Sperm was swimming in {0}'s vagina, but failed to fertilize\n"
+
+msgid ""
+"\n"
+"在避孕药的影响下——\n"
+"精子在{0}的阴道中游荡，但未能成功受精\n"
+msgstr ""
+"\n"
+"Under the effect of birth-control pills——\n"
+"Sperm was swimming in {0}'s vagina, but failed to fertilize\n"
+
+msgid ""
+"\n"
+"随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n"
+msgstr ""
+"\n"
+"As the pregnancy progressed, {0} stood up her big belly, under the upheaved curve is the new life she's gestating\n"
+
+msgid ""
+"\n"
+"{0}有孕在身，将会暂停工作和部分娱乐\n"
+msgstr ""
+"\n"
+"{0} was pregnant, hence work and some entertainment will be halted\n"
+
+msgid ""
+"\n"
+"{0}从[受精]转变为[妊娠]\n"
+msgstr ""
+"\n"
+"{0} changed from [Fertilized] to [Pregnancy]\n"
+
+msgid ""
+"\n"
+"{0}获得了[孕肚]\n"
+msgstr ""
+"\n"
+"{0} acquired [Pregnant Belly]\n"
+
+msgid ""
+"\n"
+"{0}获得了[泌乳]\n"
+msgstr ""
+"\n"
+"{0} acquired [Lactation]\n"
+
+msgid ""
+"\n"
+"\n"
+" {0}分钟过去了\n"
+msgstr ""
+"\n"
+"\n"
+" {0} minutes passed\n"
+
+msgid ""
+"\n"
+"\n"
+" 该行动将持续{0}分钟\n"
+msgstr ""
+"\n"
+"\n"
+" This action will last for {0} minutes\n"
+
+msgid ""
+"\n"
+"给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n"
+msgstr ""
+"\n"
+"Doctor helped {0} to wear her clothes back, and tidied back to the condition before H\n"
+
+msgid ""
+"\n"
+"{0}穿回了脱下的衣服\n"
+msgstr ""
+"\n"
+"{0} wore her clothes back\n"
+
+msgid "  [debug用一键全跟随]"
+msgstr ""
+
+msgid "入口"
+msgstr "Entrance"
+
+msgid ""
+"\n"
+"要进行哪方面的管理呢？\n"
+msgstr ""
+"\n"
+"Which part of management you wish to conduct?\n"
+
+msgid "[001]催还书"
+msgstr "[001]Prompt to return"
+
+msgid "[002]图书进货(未实装)"
+msgstr ""
+
+msgid "[003]阅读推荐"
+msgstr "[003]Read suggestion"
+
+msgid "[004]读书会"
+msgstr "[004]Reading Day"
+
+msgid "  (被{0}借走)"
+msgstr "  (Borrowed by {0})"
+
+msgid ""
+"\n"
+" 当前剩余可选推荐 {0}\n"
+msgstr ""
+"\n"
+" Available suggestions {0}\n"
+
+msgid " (已推荐)"
+msgstr " (Suggested)"
+
+msgid "当前持有粉红凭证：{0}"
+msgstr "Pink Certificates: {0}"
+
+msgid "(持有数量:"
+msgstr "(Current amount:"
+
+msgid ""
+"\n"
+"{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n"
+"\n"
+msgstr ""
+"\n"
+"{0} used {1}, Sanity +{2}, currently {3}/{4}\n"
+"\n"
+
+msgid ""
+"\n"
+" 得知了{0}即将生产的消息后，你第一时间来到了待产室，在短暂的陪伴后，目送着她被推入产房\n"
+msgstr ""
+"\n"
+" Upon receiving the notice of {0} is about to give birth, you rushed to the maternity room, and after a short accompany, you looked at her being pushed into the delivery room\n"
+
+msgid " 焦急等待"
+msgstr " Wait anxiously"
+
+msgid " 经过了漫长的等待之后，随着响亮的哭声，{0}推开产房的门，告诉你{1}生了一个可爱的女儿，母女平安\n"
+msgstr " After a long wait, followed by a loud cry, {0} opened the door, and told you that {1} have gave birth to a cute daughter, both of them are safe\n"
+
+msgid " {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n"
+msgstr " {0} was on the bed, with the baby in her arms, she smiled towards you and urged you to name her\n"
+
+msgid ""
+"\n"
+"孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n"
+msgstr ""
+"\n"
+"The baby's name is {0}, she's {1}'s {2}th children, as well as {3}'s {4}th children, please raise her up\n"
+
+msgid ""
+"\n"
+"{0}的生产结束了，但她仍需要在住院部休息几天\n"
+msgstr ""
+"\n"
+"{0} finished giving birth, but she still need to rest at Inpatient Department\n"
+
+msgid ""
+"\n"
+"{0}从[临盆]转变为[产后]\n"
+msgstr ""
+"\n"
+"{0} changed from [Confined] to [After Birth]\n"
+
+msgid ""
+"\n"
+"{0}失去了[孕肚]\n"
+msgstr ""
+"\n"
+"{0} lost [Pregnant Belly]\n"
+
+msgid ""
+"\n"
+"{0}的Ｖ扩张经验+10，Ｗ扩张经验+10，妊娠经验+1\n"
+msgstr ""
+"\n"
+"{0}'s Ｖ Dilation EXP +10, Ｗ Dilation EXP +10, Pregnancy EXP +1\n"
+
+msgid ""
+"\n"
+"{0}的Ｖ扩张上升至5级\n"
+msgstr ""
+"\n"
+"{0}'s Ｖ Dilate upgraded to Lv5\n"
+
+msgid ""
+"\n"
+"{0}的Ｗ扩张上升至5级\n"
+msgstr ""
+"\n"
+"{0}'s Ｗ Dilate upgraded to Lv5\n"
+
+msgid "+标间(+10)"
+msgstr "+ Basic Room(+10)"
+
+msgid "+情趣主题房(+50)"
+msgstr "+ Sexual Theme Room(+50)"
+
+msgid "+顶级套房(+100)"
+msgstr "+ Premium Suite(+100)"
+
+msgid "{0}在{1}，"
+msgstr "{0} was at {1}, "
+
+msgid "从{0}移动至{1}\n"
+msgstr "moved from {0} to {1}\n"
+
+msgid "对{0}进行了{1}\n"
+msgstr "and towards {0}, they did {1}\n"
+
+msgid "进行了{0}\n"
+msgstr "did {0}\n"
+
+msgid "标间"
+msgstr "Basic Room"
+
+msgid "情趣主题房"
+msgstr "Sexual Theme Room"
+
+msgid "顶级套房"
+msgstr "Premium Suite"
+
+msgid ""
+"\n"
+"您入住的{0}到退房时间了，已自动退房\n"
+msgstr ""
+"\n"
+"{0} that you're in had reached the check out time, automatically checked out\n"
+
+msgid "日记"
+msgstr "Diary"
+
+msgid "预定房间"
+msgstr "Order for a room"
+
+msgid "邀请在爱情旅馆H"
+msgstr "Invite H in hotel"
+
+msgid " [口上筛选] "
+msgstr " [Dialogue filter]"
+
+msgid " ▼一般干员"
+msgstr " ▼Normal Operators"
+
+msgid " ▶一般干员"
+msgstr " ▶Normal Operators"
+
+msgid " ▼口上干员"
+msgstr " ▼Operators with Dialogues"
+
+msgid " ▶口上干员"
+msgstr " ▶Operators with Dialogues"
+
+msgid " 插入的文本为"
+msgstr " Text inserted was"
+
+msgid ""
+"\n"
+"日记已保存至{0}\n"
+msgstr ""
+"\n"
+"Diary saved to {0}\n"
+
+msgid "[日记]"
+msgstr "[Diary]"
+
+msgid ""
+"日记\n"
+"\n"
+msgstr ""
+"Diary\n"
+"\n"
+
+msgid "预订房间"
+msgstr "Order for a room"
+
+msgid ""
+"\n"
+"○酒店有标间、情趣主题房和顶级套房三种选择，高级的房间能够提供更好的氛围，本区的四家酒店可任意选择入住，退房时间均为次日中午12点\n"
+msgstr ""
+"\n"
+"○There's Basic Room, Sexual Theme Room or Premium Suite, where the more premium room can provide a better scene, all four hotels can be selected, check out time: 12:0 of the next day\n"
+
+msgid "  情趣主题房会免费赠送一瓶润滑液和五个避孕套，顶级套房则在时限内无限量供应所有H消耗品，并免费提供所有H道具的租用服务\n"
+msgstr "  Sexual Theme Room will have one Lubricating Fluid and five Condoms for free, while Premium Suite "
+"will provide all H items infinitely for free.\n"
+
+msgid ""
+"  请问要入住哪种房间呢？\n"
+"\n"
+msgstr ""
+"  Which room do you wish to pick?\n"
+"\n"
+
+msgid "标间(2粉红凭证)"
+msgstr "Basic Room (2 Pink Certificates)"
+
+msgid "情趣主题房(10粉红凭证)"
+msgstr "Sexual Theme Room (10 Pink Certificates)"
+
+msgid "顶级套房(100粉红凭证)"
+msgstr "Premium Suite (100 Pink Certificates)"
+
+msgid "当前已预订{0}，退房时间为{1}日12点\n"
+msgstr "Ordered {0}, check out time: {1} 12pm\n"
+
+msgid ""
+"\n"
+"粉红凭证不足，无法预订{0}\n"
+msgstr ""
+"\n"
+"Insufficient Pink Certificates, unable to order for {0}\n"
+
+msgid ""
+"\n"
+"成功预订了{0}，退房时间为{1}\n"
+msgstr ""
+"\n"
+"Ordered {0}, check out time: {1}\n"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），全干员总信赖度≥{2}（当前{3}）"
+msgstr ": Need total Affinity ≥{0} (Currently {1}), total Trust ≥{2} (Currently {3})"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）"
+msgstr ": Need total Affinity ≥{0} (Currently {1}), total Operators in relationship ≥{2} (Currently {3})"
+
+msgid "：需要全干员总好感度≥{0}（当前{1}），陷落程度为[爱侣]或[奴隶]的干员人数≥{2}（当前{3}）"
+msgstr ": Need total Affinity ≥{0} (Currently {1}), total Operators as [Couple] or [Slave] ≥{2} (Currently {3})"
+
+msgid "：需要全干员内裤收藏总数量≥{0}（当前{1}）"
+msgstr ": Need total underwear count ≥{0} (Currently {1})"
+
+msgid "：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）"
+msgstr ": Need total semen ejaculated inside ≥{0}ml (Currently {1}ml), total Climax EXP ≥{2} (Currently {3})"
+
+msgid "：需要生育孩子数量≥{0}（当前{1}）"
+msgstr ": Need total children ≥{0} (Currently {1})"
+
+msgid ""
+"\n"
+"{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n"
+msgstr ""
+
+msgid "常用更改"
+msgstr ""
+
+msgid "欲望值{0}%"
+msgstr ""
+
+msgid " 当前为{0},{1},{2}"
+msgstr ""
+
+msgid "[购买]"
+msgstr ""
+
+msgid ""
+"\n"
+" 睡前日记："
+msgstr ""
+
+msgid " [记日记] "
+msgstr ""
+
+msgid "(未实装)：{0}\n"
+msgstr ""
+
+msgid "({0}至纯源石-当前源石不足)：{1}\n"
+msgstr ""
+
+msgid "( {0} 至纯源石)：{1}"
+msgstr ""
+
+msgid "：需要单干员最高好感度≥{0}（当前{1}），最高信赖度≥{2}（当前{3}）"
+msgstr ""
+
+msgid "经验"
+msgstr ""
+
+msgid "访客"
+msgstr ""
+
+msgid "宝珠"
+msgstr ""
+
+msgid " 已拥有{0}的信物:{1}"
+msgstr ""
+
+msgid ""
+"\n"
+" 【总】\n"
+msgstr ""
+
+msgid "  未接触过精液\n"
+msgstr ""
+
+msgid "  全身总共被射上过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【口】\n"
+msgstr ""
+
+msgid "  初吻情况："
+msgstr ""
+
+msgid "保有初吻\n"
+msgstr ""
+
+msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士\n"
+msgstr ""
+
+msgid "的阴茎"
+msgstr ""
+
+msgid "献上了初吻\n"
+msgstr ""
+
+msgid "  普普通通的舌头\n"
+msgstr ""
+
+msgid "  未品尝过精液\n"
+msgstr ""
+
+msgid "  总共喝过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【胸】\n"
+msgstr ""
+
+msgid "  未淋上过精液\n"
+msgstr ""
+
+msgid "  总共被淋上过{0}ml精液\n"
+msgstr ""
+
+msgid "  总共收集了{0}ml乳汁\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【指】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【足】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【膣】\n"
+msgstr ""
+
+msgid "  处女情况："
+msgstr ""
+
+msgid "保有处女\n"
+msgstr ""
+
+msgid "  未射入过精液\n"
+msgstr ""
+
+msgid "  总共被射入过{0}ml精液\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【肛】\n"
+msgstr ""
+
+msgid "保有后庭处女\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【宫】\n"
+msgstr ""
+
+msgid "  未怀孕过\n"
+msgstr ""
+
+msgid "  为博士生下了  "
+msgstr ""
+
+msgid "共{0}个孩子\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【尿】\n"
+msgstr ""
+
+msgid "  总共收集了{0}ml圣水\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【视觉系】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【触觉系】\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【激素系】\n"
+msgstr ""
+
+msgid "[使用]"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n"
+"\n"
+msgstr ""
+
+msgid "射精，射出了"
+msgstr ""
+
+msgid "ml精液"
+msgstr ""
+
+msgid "大量射精，射出了"
+msgstr ""
+
+msgid "超大量射精，射出了"
+msgstr ""
+
+msgid "泰拉"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前尚未解锁，解锁需要获得干员{1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前门是锁着的，需要钥匙或其他方法进入\n"
+msgstr ""
+
+msgid ""
+"  ●你拿出了一次性万能钥匙，悄悄打开了门\n"
+"\n"
+msgstr ""
+
+msgid "请输入角色id"
+msgstr ""
+
+msgid "请输入口上id"
+msgstr ""
+
+msgid ""
+"{0}\n"
+"\n"
+msgstr ""
+
+msgid "(博士免费)"
+msgstr ""
+
+msgid "[{i}]"
+msgstr ""
+
+msgid "春"
+msgstr ""
+
+msgid "夏"
+msgstr ""
+
+msgid "秋"
+msgstr ""
+
+msgid "冬"
+msgstr ""
+
+msgid "收起状态栏"
+msgstr ""
+
+msgid "展开状态栏"
+msgstr ""
+
+msgid "收起服装栏"
+msgstr ""
+
+msgid "展开服装栏"
+msgstr ""
+
+msgid "收起身体栏"
+msgstr ""
+
+msgid "展开身体栏"
+msgstr ""
+
+msgid "收起图片栏"
+msgstr ""
+
+msgid "展开图片栏"
 msgstr ""

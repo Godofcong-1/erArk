@@ -18,7 +18,7 @@ str,int,int,str,str
 13,103,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,你试着不着痕迹的满足一下自己的小心思\n于是你装作脚滑，身子往{TargetName}那里靠了一下——当然，只是点到为止\n不过女孩那迷人的幽香与微热的体温让你不由得想要就这么一直靠下去。\n“{PlayerName}博士，您、没事吧？”
 14,103,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,“……”\n你碰了碰{TargetName}的身体，但{TargetName}却像是没有感觉到似的毫无反应。
 15,103,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,你摸了摸{TargetName}那被轻纱围胸覆盖的背脊。\n“……”\n{TargetName}垂着眼，没什么反应。
-16,103,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,你试着去戳了戳{TargetName}手指间的幻影。\当然，你并没有戳到任何东西，令{TargetName}着迷的东西不过只是幻象而已。
+16,103,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,你试着去戳了戳{TargetName}手指间的幻影。\n当然，你并没有戳到任何东西，令{TargetName}着迷的东西不过只是幻象而已。
 17,110,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,“请保重身体，{PlayerName}博士。”\n见到你那稍显疲倦的模样，{TargetName}如此说道。\n“请永远也不要习惯‘伤痛’。”
 18,110,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,“……祝您好梦，{PlayerName}博士。”
 19,110,179,CVP_A2_F_LE_1000&CVP_A2_X_LE_50&sys_0,“现在已经是即使松懈也不会导致灾厄的时代了呢。”\n{TargetName}的呢喃声流入了你的耳中。
