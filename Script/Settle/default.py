@@ -6608,16 +6608,20 @@ def handle_sleep_add_adjust(
         now_time: datetime.datetime,
 ):
     """
-    （睡觉用）如果在自己宿舍，则有一定几率关门
+    （睡觉用）如果在自己宿舍，则换睡衣并有一定几率关门
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.Design import clothing
     if not add_time:
         return
     if handle_premise.handle_in_dormitory(character_id):
+        # 换睡衣
+        clothing.get_shower_cloth(character_id)
+        # 关门
         if random.random() < 0.5:
             handle_door_close(character_id, add_time, change_data, now_time)
             # print(F"debug : {cache.character_data[character_id].name} 在{cache.character_data[character_id].dormitory}关门睡觉")
