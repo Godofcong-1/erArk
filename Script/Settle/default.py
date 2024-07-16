@@ -6620,7 +6620,7 @@ def handle_sleep_add_adjust(
         return
     if handle_premise.handle_in_dormitory(character_id):
         # 换睡衣
-        clothing.get_shower_cloth(character_id)
+        clothing.get_sleep_cloth(character_id)
         # 关门
         if random.random() < 0.5:
             handle_door_close(character_id, add_time, change_data, now_time)
