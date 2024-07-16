@@ -184,6 +184,8 @@ class Debug_Panel:
                 npc_count = 0
 
                 for NPC_id in id_list:
+                    # if NPC_id not in cache.character_data:
+                    #     continue
                     target_data: game_type.Character = cache.character_data[NPC_id]
                     button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
 

@@ -23,8 +23,17 @@ def general_movement_module(character_id: int, target_scene: list):
     character_id -- 角色id\n
     target_scene -- 寻路目标场景(在地图系统下的绝对坐标)
     """
+    from Script.Config import normal_config
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
+    if normal_config.config_normal.language != "zh_CN":
+        target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+        if target_scene_str not in map_handle.scene_path_edge:
+            for i in range(len(target_scene)):
+                if target_scene[i] == _("中枢") or target_scene[i] == _("控制中枢"):
+                    target_scene[i] = "中枢"
+                else:
+                    target_scene[i] = _(target_scene[i], revert_translation = True)
     tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, target_scene)
     character_data.behavior.move_final_target = target_scene
     character_data.behavior.behavior_id = constant.Behavior.MOVE

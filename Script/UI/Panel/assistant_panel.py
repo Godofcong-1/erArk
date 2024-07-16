@@ -243,11 +243,12 @@ class Assistant_Panel:
                 target_data.second_behavior[now_index] = 1
 
             # 同居服务的宿舍改变
+            # 此处不可以用翻译地点
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
                     target_data.pre_dormitory = target_data.dormitory
-                    target_data.dormitory = _("中枢\博士房间")
-                elif target_data.dormitory == _("中枢\博士房间"):
+                    target_data.dormitory = "中枢\博士房间"
+                elif target_data.dormitory == "中枢\博士房间":
                     target_data.dormitory = target_data.pre_dormitory
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
 
