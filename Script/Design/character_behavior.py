@@ -42,8 +42,6 @@ _: FunctionType = get_text._
 """ 翻译api """
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-width = normal_config.config_normal.text_width
-""" 屏幕宽度 """
 line_feed = draw.NormalDraw()
 """ 换行绘制对象 """
 line_feed.text = "\n"
@@ -64,7 +62,10 @@ def init_character_behavior():
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
         # 后结算其他NPC部分
+        now_time = datetime.datetime.now()
+        print(f"开始循环NPC部分: {now_time}")
         while len(cache.over_behavior_character) <= len(id_list):
+            print(f"debug 还差{len(id_list) - len(cache.over_behavior_character)}个NPC结算")
             for character_id in id_list:
                 if character_id in cache.over_behavior_character:
                     continue
@@ -123,7 +124,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
 
     # 处理公共资源
-    update_cafeteria() # 刷新食堂的饭
+    # update_cafeteria() # 刷新食堂的饭，不需要了，改为NPC在没有饭的时候自动刷新
 
     # 先处理玩家部分
     if character_id == 0:
@@ -204,7 +205,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         return
 
     # 如果玩家在对该NPC交互，则等待flag=1，此操作暂时不进行
-    safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
+    # safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
     # if PC_character_data.target_character_id == character_id:
     #     # print(f"debug character_id = {character_data.name}，state = {PC_character_data.state}")
     #     if character_data.state not in safe_instruct:
@@ -317,6 +318,9 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         #     if 5 <= int(target) <= 30:
         #         print(f"debug position = {character_data.position},move_final_target = {character_data.behavior.move_final_target}")
     if judge:
+        # print(f"debug {character_data.name}")
+        # print(f"debug null_target_set = {null_target_set}")
+        # print(f"debug premise_data = {premise_data}")
         # print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
@@ -349,7 +353,7 @@ def judge_character_tired_sleep(character_id : int):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.NormalDraw()
-                now_draw.width = width
+                now_draw.width = window_width
                 # 跟随和H的分歧，忽略H后停留的情况
                 if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
                     draw_text = _("太累了，无法继续跟随\n") if character_data.sp_flag.tired else _("太困了，无法继续跟随\n")
@@ -472,7 +476,7 @@ def judge_character_status(character_id: int) -> int:
         if character_id == 0:
             wait_draw = draw.LineFeedWaitDraw()
             wait_draw.text = "\n"
-            wait_draw.width = normal_config.config_normal.text_width
+            wait_draw.width = window_width
             wait_draw.draw()
 
     return 1
@@ -618,9 +622,10 @@ def search_target(
             target_data.setdefault(now_weight, set())
             target_data[now_weight].add(target)
             target_weight_data[target] = now_weight
-            # 如果权重已经大于100，则跳出
-            # if now_weight >= 100:
-            #     break
+            # 如果权重已经大于100，则直接返回
+            if now_weight >= 100:
+                # print(f"debug now_weight = {now_weight}")
+                return target, now_weight, 1, premise_data
         else:
             now_value_weight = value_handle.get_rand_value_for_value_region(list(now_target_data.keys()))
             target_data.setdefault(now_weight, set())
@@ -809,24 +814,6 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     if character_id == 0:
         return 1
 
-    # 如果不在同一位置，则结束空气催眠
-    if character_data.sp_flag.unconscious_h == 5 and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
-        character_data.sp_flag.unconscious_h = 0
-
-    # 如果不在同一位置，则结束H状态和无意识状态
-    if character_data.sp_flag.is_h and character_data.position != pl_character_data.position:
-        character_data.sp_flag.is_h = False
-        character_data.sp_flag.unconscious_h = 0
-        character_data.behavior.behavior_id = constant.Behavior.END_H
-        character_data.state = constant.CharacterStatus.STATUS_END_H
-        character_data.behavior.start_time = pl_character_data.behavior.start_time
-        character_data.behavior.duration = pl_character_data.behavior.duration
-        character_data.target_character_id = character_id
-
-    # 如果不在同一位置，则结束睡眠猥亵状态
-    if character_data.sp_flag.unconscious_h == 1 and character_data.position != pl_character_data.position:
-        character_data.sp_flag.unconscious_h = 0
-
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外
@@ -837,6 +824,28 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         character_data.behavior.start_time = pl_character_data.behavior.start_time
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
+
+    # 如果不在同一位置
+    if character_data.position != pl_character_data.position:
+
+        # 如果不在同一位置，则结束H状态和无意识状态
+        if character_data.sp_flag.is_h:
+            character_data.sp_flag.is_h = False
+            character_data.sp_flag.unconscious_h = 0
+            character_data.behavior.behavior_id = constant.Behavior.END_H
+            character_data.state = constant.CharacterStatus.STATUS_END_H
+            character_data.behavior.start_time = pl_character_data.behavior.start_time
+            character_data.behavior.duration = pl_character_data.behavior.duration
+            character_data.target_character_id = character_id
+
+        # 如果不在同一位置，则结束睡眠猥亵状态
+        elif character_data.sp_flag.unconscious_h == 1:
+            character_data.sp_flag.unconscious_h = 0
+
+        # 如果不在同一位置，则结束空气催眠
+        elif character_data.sp_flag.unconscious_h == 5 and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
+            character_data.sp_flag.unconscious_h = 0
+
     return 1
 
 
@@ -1234,13 +1243,23 @@ def change_character_persistent_state(character_id: int):
     # now_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=start_time)
     now_time = cache.game_time
 
-    # 结算H状态的持续时间
-    for i in range(len(now_character_data.h_state.body_item)):
-        if now_character_data.h_state.body_item[i][1]:
-            end_time = now_character_data.h_state.body_item[i][2]
-            if end_time != None and game_time.judge_date_big_or_small(now_time,end_time):
-                now_character_data.h_state.body_item[i][1] = False
-                now_character_data.h_state.body_item[i][2] = None
+    # H下结算全部持续状态
+    if now_character_data.sp_flag.is_h:
+        # 结算H状态的持续时间
+        for i in range(len(now_character_data.h_state.body_item)):
+            if now_character_data.h_state.body_item[i][1]:
+                end_time = now_character_data.h_state.body_item[i][2]
+                if end_time != None and game_time.judge_date_big_or_small(now_time,end_time):
+                    now_character_data.h_state.body_item[i][1] = False
+                    now_character_data.h_state.body_item[i][2] = None
+    # 非H下结算部分药物
+    else:
+        for i in [8, 9]:
+            if now_character_data.h_state.body_item[i][1]:
+                end_time = now_character_data.h_state.body_item[i][2]
+                if end_time != None and game_time.judge_date_big_or_small(now_time,end_time):
+                    now_character_data.h_state.body_item[i][1] = False
+                    now_character_data.h_state.body_item[i][2] = None
 
 
 def get_chara_entertainment(character_id: int):
@@ -1410,36 +1429,35 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
-    if (
-        handle_premise.handle_action_sleep(character_id) and
-        handle_premise.handle_tired_le_0(character_id) and
-        handle_premise.handle_hp_max(character_id) and
-        handle_premise.handle_mp_max(character_id) and
-        not handle_premise.handle_game_time_is_sleep_time(character_id)
-    ):
-        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-        # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
-        return 1
+    # 睡觉中的相关判断
+    if handle_premise.handle_action_sleep(character_id):
+        # ①睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
+        if (
+            handle_premise.handle_assistant_morning_salutation_on(character_id) and
+            handle_premise.handle_morning_salutation_flag_0(character_id)
+        ):
+            # 玩家醒来时间
+            pl_character_data = cache.character_data[0]
+            judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time)
+            # 角色醒来时间
+            start_time = character_data.behavior.start_time
+            end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+            # 如果角色的行动结束时间在玩家醒来时间之后，则将行动结束时间设为玩家醒来时间
+            # 通过判定行动时间来限制只触发一次
+            if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and character_data.behavior.duration == 480:
+                new_duration = int((judge_wake_up_time - start_time).seconds / 60)
+                # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
+                character_data.behavior.duration = new_duration
 
-    # 睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
-    if (
-        handle_premise.handle_action_sleep(character_id) and
-        handle_premise.handle_assistant_morning_salutation_on(character_id) and
-        handle_premise.handle_morning_salutation_flag_0(character_id)
-    ):
-        # 玩家醒来时间
-        pl_character_data = cache.character_data[0]
-        judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time)
-        # 角色醒来时间
-        start_time = character_data.behavior.start_time
-        end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
-        # 如果角色的行动结束时间在玩家醒来时间之后，则将行动结束时间设为玩家醒来时间
-        # 通过判定行动时间来限制只触发一次
-        if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and character_data.behavior.duration == 480:
-            new_duration = int((judge_wake_up_time - start_time).seconds / 60)
-            # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
-            character_data.behavior.duration = new_duration
+        # ②睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
+        if (
+            handle_premise.handle_tired_le_0(character_id) and
+            handle_premise.handle_hp_max(character_id) and
+            handle_premise.handle_mp_max(character_id) and
+            not handle_premise.handle_game_time_is_sleep_time(character_id)
+        ):
+            judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+            # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
             return 1
 
     # 工作或娱乐中，今日未洗澡，到了淋浴时间，距离行动结束时间还有至少30分钟，正常状态下，则立刻结束工作或娱乐
