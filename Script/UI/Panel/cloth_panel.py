@@ -87,7 +87,7 @@ class SeeCharacterClothPanel:
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
                         semen_level = target_character_data.dirty.cloth_semen[clothing_type][2]
-                        dirty_text_cid = _("{0}精液污浊{1}").format(_(type_name, revert_translation = True), str(semen_level))
+                        dirty_text_cid = "{0}精液污浊{1}".format(_(type_name, revert_translation = True), str(semen_level))
                         dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         now_text += f"<semen>({dirty_text_context})</semen>"
             # 当显示到下衣8的时候，换行
