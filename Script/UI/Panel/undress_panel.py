@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import clothing, cooking, update, character
+from Script.Design import clothing, update, character
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -37,7 +37,6 @@ class Undress_Panel:
         title_draw = draw.TitleLineDraw(_("脱衣服"), self.width)
 
         self.handle_panel = panel.PageHandlePanel([], SeeUndressButtonList, 10, 1, self.width, 1, 1, 0)
-        cooking.init_makefood_data()
         while 1:
             py_cmd.clr_cmd()
             button_text_list = [_("脱到只穿内衣      "),_("脱到只穿袜子手套等"),_("脱到全裸          "),_("把内裤收走        ")]
