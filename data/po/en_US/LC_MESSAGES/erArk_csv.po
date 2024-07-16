@@ -3462,6 +3462,9 @@ msgstr "Room 812"
 msgid "宿舍813房"
 msgstr "Room 813"
 
+msgid "客房"
+msgstr "Guest Room"
+
 msgid "客房1"
 msgstr "Guest Room 1"
 
