@@ -62,10 +62,10 @@ def init_character_behavior():
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
         # 后结算其他NPC部分
-        now_time = datetime.datetime.now()
-        print(f"开始循环NPC部分: {now_time}")
+        # now_time = datetime.datetime.now()
+        # print(f"开始循环NPC部分: {now_time}")
         while len(cache.over_behavior_character) <= len(id_list):
-            print(f"debug 还差{len(id_list) - len(cache.over_behavior_character)}个NPC结算")
+            # print(f"debug 还差{len(id_list) - len(cache.over_behavior_character)}个NPC结算")
             for character_id in id_list:
                 if character_id in cache.over_behavior_character:
                     continue
