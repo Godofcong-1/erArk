@@ -889,7 +889,6 @@ class Rhodes_Island:
         """ 当前图书馆中的读者数量 """
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
-
         # 贸易区
         self.love_hotel_room_lv: int = 0
         """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
@@ -897,6 +896,11 @@ class Rhodes_Island:
         """
         餐馆内贩卖的食物数据
         餐馆id:食物名字:食物唯一id:食物对象
+        """
+        self.stall_vendor_data: Dict[int, Tuple[Dict]] = {}
+        """
+        地摊小贩的货物数据
+        货物类型id（0为食物）:货物字典
         """
 
         # 制造加工区

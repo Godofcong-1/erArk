@@ -235,13 +235,16 @@ def init_food_shop_data(update_restaurant_id: int = -2):
             # 无法制作的种类的菜谱直接跳过
             if recipes.type in {4,8,9}:
                 continue
+            # 跳过非主食的菜谱
+            if recipes.type != 0:
+                continue
             # 随机3~7的烹饪技能等级
             cook_level = random.randint(3, 7)
             new_food = cook(food_list, recipes_id, cook_level, "")
             cache.dining_hall_data.setdefault(str(recipes_id), {})
             cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
             cook_index += 1
-            if cook_index >= max_people*3:
+            if cook_index >= max_people * 3:
                 break
     # 初始化餐馆内的食物
     for restaurant_id in game_config.config_restaurant:
@@ -249,12 +252,12 @@ def init_food_shop_data(update_restaurant_id: int = -2):
         if update_restaurant_id >= 0:
             if restaurant_id != update_restaurant_id:
                 continue
-        food_list = {}
         cook_index = 0
         cache.rhodes_island.restaurant_data[restaurant_id] = {}
         while 1:
+            food_list = {}
             # 只能选择该餐馆自己的食谱
-            recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].restaurant == restaurant_id ]
+            recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].restaurant == restaurant_id]
             recipes_id = random.choice(recipes_id_list)
             recipes = cache.recipe_data[recipes_id]
             # 难度上无法制作的菜谱直接跳过
@@ -271,6 +274,22 @@ def init_food_shop_data(update_restaurant_id: int = -2):
             cook_index += 1
             if cook_index >= max_people:
                 break
+    # 初始化地摊小贩的食物
+    cook_index = 0
+    cache.rhodes_island.stall_vendor_data[0] = {}
+    while 1:
+        food_list = {}
+        # 选择零食和饮料类型的食谱
+        recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].type in [1, 2]]
+        recipes_id = random.choice(recipes_id_list)
+        recipes = cache.recipe_data[recipes_id]
+        cook_level = random.randint(2, 8)
+        new_food = cook(food_list, recipes_id, cook_level, "")
+        cache.rhodes_island.stall_vendor_data[0].setdefault(str(recipes_id), {})
+        cache.rhodes_island.stall_vendor_data[0][str(recipes_id)][new_food.uid] = new_food
+        cook_index += 1
+        if cook_index >= max_people or cook_index >= 10:
+            break
 
 def init_makefood_data():
     """初始化做饭区内的食物数据"""
@@ -280,7 +299,7 @@ def init_makefood_data():
     cache.makefood_data = {}
     for recipes_id in recipe_data:
         if character_data.ability[43] >= recipe_data[recipes_id].difficulty:
-            new_food = cook(food_list, recipes_id, 5, "")
+            new_food = cook(food_list, recipes_id, character_data.ability[43], "")
             cache.makefood_data.setdefault(str(recipes_id), {})
             cache.makefood_data[str(recipes_id)][new_food.uid] = new_food
 
@@ -373,12 +392,21 @@ def get_food_list_from_food_shop(food_type: str, restaurant_id:int = -1) -> Dict
             if now_food.recipe != -1:
                 food_list[food_id] = cache.recipe_data[int(food_id)].name
     # 餐馆的食物
-    else:
+    elif restaurant_id in cache.rhodes_island.restaurant_data:
         for food_id in cache.rhodes_island.restaurant_data[restaurant_id]:
             if not len(cache.rhodes_island.restaurant_data[restaurant_id][food_id]):
                 continue
             now_food_uid = list(cache.rhodes_island.restaurant_data[restaurant_id][food_id].keys())[0]
             now_food: game_type.Food = cache.rhodes_island.restaurant_data[restaurant_id][food_id][now_food_uid]
+            if now_food.recipe != -1:
+                food_list[food_id] = cache.recipe_data[int(food_id)].name
+    # 地摊小贩的食物
+    elif restaurant_id == "Stall_Vendor":
+        for food_id in cache.rhodes_island.stall_vendor_data[0]:
+            if not len(cache.rhodes_island.stall_vendor_data[0][food_id]):
+                continue
+            now_food_uid = list(cache.rhodes_island.stall_vendor_data[0][food_id].keys())[0]
+            now_food: game_type.Food = cache.rhodes_island.stall_vendor_data[0][food_id][now_food_uid]
             if now_food.recipe != -1:
                 food_list[food_id] = cache.recipe_data[int(food_id)].name
     return food_list

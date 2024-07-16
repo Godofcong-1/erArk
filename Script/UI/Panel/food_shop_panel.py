@@ -49,11 +49,16 @@ class FoodShopPanel:
         while 1:
             py_cmd.clr_cmd()
 
+            # 地摊小贩
+            if "Stall_Vendor" in scene_tag:
+                food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id="Stall_Vendor").items())
+
             # 根据场景标签查找对应的食物商店
-            for restaurant_id in game_config.config_restaurant:
-                if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
-                    food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id=restaurant_id).items())
-                    break
+            if not len(food_name_list):
+                for restaurant_id in game_config.config_restaurant:
+                    if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
+                        food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id=restaurant_id).items())
+                        break
             # 如果都没有找到，则默认为食堂
             if not len(food_name_list):
                 food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel).items())
@@ -179,10 +184,14 @@ class SeeFoodListByFoodNameDraw:
             if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
                 now_restaurant_id = restaurant_id
                 break
+        if "Stall_Vendor" in scene_tag:
+            now_restaurant_id = "Stall_Vendor"
 
         # 根据食物商店id获取食物列表
         if now_restaurant_id is None:
             now_food_list = [(self.cid, x) for x in cache.dining_hall_data[self.cid]]
+        elif now_restaurant_id == "Stall_Vendor":
+            now_food_list = [(self.cid, x) for x in cache.rhodes_island.stall_vendor_data[0][self.cid]]
         else:
             now_food_list = [(self.cid, x) for x in cache.rhodes_island.restaurant_data[now_restaurant_id][self.cid]]
 
@@ -196,6 +205,8 @@ class SeeFoodListByFoodNameDraw:
 
                 if now_restaurant_id is None:
                     food_data: game_type.Food = cache.dining_hall_data[now_cid][now_uid]
+                elif now_restaurant_id == "Stall_Vendor":
+                    food_data: game_type.Food = cache.rhodes_island.stall_vendor_data[0][now_cid][now_uid]
                 else:
                     food_data: game_type.Food = cache.rhodes_island.restaurant_data[now_restaurant_id][now_cid][now_uid]
                 self.food_name = ""
@@ -232,6 +243,9 @@ class SeeFoodListByFoodNameDraw:
         if restaurant_id is None:
             cache.character_data[0].food_bag[uid] = cache.dining_hall_data[cid][uid]
             del cache.dining_hall_data[cid][uid]
+        elif restaurant_id == "Stall_Vendor":
+            cache.character_data[0].food_bag[uid] = cache.rhodes_island.stall_vendor_data[0][cid][uid]
+            del cache.rhodes_island.stall_vendor_data[0][cid][uid]
         else:
             cache.character_data[0].food_bag[uid] = cache.rhodes_island.restaurant_data[restaurant_id][cid][uid]
             del cache.rhodes_island.restaurant_data[restaurant_id][cid][uid]
