@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_talent, map_handle
+from Script.Design import handle_talent, map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 import random
@@ -119,7 +119,7 @@ class Originium_Arts_Panel:
             button1_draw.draw()
             return_list.append(button1_draw.return_text)
 
-            if 0:
+            if cache.debug_mode:
                 button2_text = _("[002]时间停止(未实装)")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -148,7 +148,7 @@ class Originium_Arts_Panel:
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
 
-            if 0:
+            if cache.debug_mode:
                 button4_text = _("[004]自我强化(未实装)")
                 button4_draw = draw.LeftButton(
                     _(button4_text),
@@ -236,6 +236,19 @@ class Originium_Arts_Panel:
                 line_feed.draw()
                 button11_draw.draw()
                 return_list.append(button11_draw.return_text)
+
+            if cache.debug_mode:
+                button12_text = _("[012]Re:败者食尘")
+                button12_draw = draw.LeftButton(
+                    _(button12_text),
+                    _("12"),
+                    window_width,
+                    cmd_func=self.new_round,
+                    args=(),
+                    )
+                line_feed.draw()
+                button12_draw.draw()
+                return_list.append(button12_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -543,6 +556,17 @@ class Originium_Arts_Panel:
         info_draw = draw.WaitDraw()
         info_draw.text = _(info_text)
         info_draw.draw()
+
+    def new_round(self):
+        """新周目"""
+        pl_character_data = cache.character_data[0]
+        # 统计所有干员中已经陷落的
+        all_fall_chara_list = []
+        for chara_id in cache.npc_id_got:
+            if handle_premise.handle_self_fall(chara_id):
+                all_fall_chara_list.append(chara_id)
+        # 直接继承的数据
+        pl_collection_data = pl_character_data.pl_collection # 玩家收藏品
 
 
 class Down_Negative_Talent_Panel:

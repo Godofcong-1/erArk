@@ -7679,21 +7679,50 @@ def handle_t_kiss_ge_10(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_NOT_FALL)
-def handle_target_not_fall(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_FALL)
+def handle_self_fall(character_id: int) -> int:
     """
-    角色无陷落素质
+    自己有陷落素质
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
     for i in {201, 202, 203, 204, 211, 212, 213, 214}:
-        if target_data.talent[i]:
-            return 0
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_FALL)
+def handle_target_not_fall(character_id: int) -> int:
+    """
+    交互对象无陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_fall(character_data.target_character_id):
+        return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_FALL)
+def handle_target_fall(character_id: int) -> int:
+    """
+    交互对象有陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_fall(character_data.target_character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_LOVE_1)

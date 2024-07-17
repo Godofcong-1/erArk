@@ -233,10 +233,11 @@ class All_Npc_Position_Panel:
             now_draw.draw()
         # 博士前往干员位置的情况
         else:
-            target_position = character_data.position
-            # target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
-            character_move.own_charcter_move(target_position)
-            self.break_flag = True
+            while character_data.position != cache.character_data[0].position:
+                target_position = character_data.position
+                # target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+                character_move.own_charcter_move(target_position)
+                self.break_flag = True
 
 
 class FindDraw:

@@ -1465,8 +1465,12 @@ class Premise:
     TARGET_KISS_GE_10 = "t_kiss_ge_10"
     """ 属性_经验 交互对象亲吻经验>=10 """
 
+    SELF_FALL = "self_fall"
+    """ 属性_素质 自己有陷落素质 """
     TARGET_NOT_FALL = "not_fall"
     """ 属性_素质 交互对象无陷落素质 """
+    TARGET_FALL = "target_fall"
+    """ 属性_素质 交互对象有陷落素质 """
     TARGET_LOVE_1 = "love_1"
     """ 属性_素质 交互对象拥有思慕（爱情系第一阶段） """
     TARGET_LOVE_2 = "love_2"
