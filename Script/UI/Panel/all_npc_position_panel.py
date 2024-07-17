@@ -140,7 +140,7 @@ class All_Npc_Position_Panel:
                     # 角色属性与信息
                     name = character_data.name
                     id = str(character_data.adv).rjust(4,'0')
-                    scene_position = character_data.position
+                    scene_position = character_data.position.copy()
                     if normal_config.config_normal.language != "zh_CN":
                         for i in range(len(scene_position)):
                             scene_position[i] = _(scene_position[i])
