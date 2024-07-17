@@ -233,10 +233,16 @@ class All_Npc_Position_Panel:
             now_draw.draw()
         # 博士前往干员位置的情况
         else:
+            pre_position = cache.character_data[0].position
             while character_data.position != cache.character_data[0].position:
                 target_position = character_data.position
                 # target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
                 character_move.own_charcter_move(target_position)
+                # 防止博士因某些原因无法移动，导致死循环，如果博士位置不变则跳出
+                if pre_position == cache.character_data[0].position:
+                    break
+                else:
+                    pre_position = cache.character_data[0].position
                 self.break_flag = True
 
 
