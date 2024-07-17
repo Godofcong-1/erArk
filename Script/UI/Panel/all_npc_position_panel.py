@@ -141,6 +141,9 @@ class All_Npc_Position_Panel:
                     name = character_data.name
                     id = str(character_data.adv).rjust(4,'0')
                     scene_position = character_data.position
+                    if normal_config.config_normal.language != "zh_CN":
+                        for i in range(len(scene_position)):
+                            scene_position[i] = _(scene_position[i])
                     scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
                     # 对于入口的特殊处理
                     if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
