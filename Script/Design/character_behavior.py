@@ -1176,11 +1176,32 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         target_data.sp_flag.is_h = False
                         # 对方获得睡奸醒来状态
                         target_data.sp_flag.sleep_h_awake = True
-                        # 玩家的行动设为H失败
-                        now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-                        now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+                        # 检测是否满足高级性骚扰的实行值需求
+                        if handle_premise.handle_instruct_judge_high_obscenity(0):
+                            # 如果已经陷落的话
+                            if handle_premise.handle_target_not_fall(now_character_data.target_character_id) == False:
+                            # 爱情线会变成轻度性骚扰
+                                if handle_premise.handle_target_love_ge_1(now_character_data.target_character_id):
+                                    now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+                                    now_character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+                                # 隶属线会愤怒生气
+                                elif handle_premise.handle_target_obey_ge_1(now_character_data.target_character_id):
+                                    target_data.angry_point += 100
+                                    target_data.sp_flag.angry_with_player = True
+                                # 如果没有陷落的话，会变成高级性骚扰
+                                else:
+                                    now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                                    now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                            # 如果没有陷落的话，会变成高级性骚扰
+                            else:
+                                now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                                now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                        # 不满足的话，设为H失败
+                        else:
+                            now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+                            now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
                         now_character_data.behavior.duration = 10
-                        # TODO 测试惊醒是否正常运作，是否需要时间推进十分钟
+                        # 为了让惊醒正常运作，需要时间推进十分钟
                         update.game_update_flow(10)
 
     # 结算非玩家部分
