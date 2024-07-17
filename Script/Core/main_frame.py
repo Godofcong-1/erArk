@@ -73,8 +73,8 @@ win_height = height + titlebar_height + frm_width
 x = root.winfo_screenwidth() // 2 - win_width // 2
 y = root.winfo_screenheight() // 2 - win_height // 2
 # 从窗口改为最大化
-root.geometry("{}x{}+{}+{}".format(width, height, x, y))
-#root.state('zoomed')
+#root.geometry("{}x{}+{}+{}".format(width, height, x, y))
+root.state('zoomed')
 #隐藏窗口
 root.deiconify()
 root.columnconfigure(0, weight=1)
