@@ -5835,7 +5835,7 @@ msgid " [记日记] "
 msgstr " [Write diary]"
 
 msgid "(未实装)：{0}\n"
-msgstr "{Not implemented}: {0}\n"
+msgstr "Not implemented: {0}\n"
 
 msgid "({0}至纯源石-当前源石不足)：{1}\n"
 msgstr "({0} Originium Primes - Insufficient Originium Prime): {1}\n"

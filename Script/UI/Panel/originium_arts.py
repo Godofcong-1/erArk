@@ -504,6 +504,7 @@ class Originium_Arts_Panel:
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
+                    now_degree = int(now_degree)
                     # 绘制
                     draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
                     now_contion = now_exp >= need_exp and now_degree >= need_degree
