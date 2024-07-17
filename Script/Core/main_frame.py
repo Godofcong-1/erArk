@@ -73,7 +73,7 @@ win_height = height + titlebar_height + frm_width
 x = root.winfo_screenwidth() // 2 - win_width // 2
 y = root.winfo_screenheight() // 2 - win_height // 2
 # 从窗口改为最大化
-# root.geometry("{}x{}+{}+{}".format(width, height, x, y))
+#root.geometry("{}x{}+{}+{}".format(width, height, x, y))
 root.state('zoomed')
 #隐藏窗口
 root.deiconify()
@@ -223,8 +223,11 @@ def read_queue():
 
         for c in json_data["content"]:
             if c["type"] == "text":
+                c["style"][0] = c["style"][0].replace(" ","")
                 now_print(c["text"], style=tuple(c["style"]))
             if c["type"] == "cmd":
+                c["normal_style"][0] = c["normal_style"][0].replace(" ", "")
+                c["on_style"][0] = c["on_style"][0].replace(" ", "")
                 io_print_cmd(c["text"], c["num"], c["normal_style"], c["on_style"])
             if c["type"] == "image_cmd":
                 io_print_image_cmd(c["text"], c["num"])
@@ -345,6 +348,7 @@ def frame_style_def(
     underline -- 下划线
     italic -- 斜体
     """
+    style_name = style_name.replace(" ", "")
     font_list = []
     font_list.append(font)
     font_list.append(font_size)
