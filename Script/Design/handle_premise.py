@@ -1124,9 +1124,13 @@ def handle_in_dormitory(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
     # 因为在这里出现过BUG，所以加一个额外的修正判定，强制将博士的宿舍定为中枢\博士房间
     if character_id == 0 and character_data.dormitory == "":
-        character_data.dormitory = _("中枢\博士房间")
+        character_data.dormitory = "中枢\博士房间"
+    # 在其他语言中将被翻译的宿舍名进行修正
+    elif scene_list[0] == _("中枢") or scene_list[0] == _("控制中枢"):
+        character_data.dormitory = "中枢\博士房间"
     # print(f"debug {character_data.name}的宿舍前提判定，当前位置为{now_position}，宿舍位置为{character_data.dormitory}")
     return now_position == character_data.dormitory
 
