@@ -426,6 +426,8 @@ class BODY_H_STATE:
         """ 额外高潮次数，用于在10级快感后的额外高潮 """
         self.orgasm_count: Dict[int, list] = {}
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
+        self.plural_orgasm_count: int = 0
+        """ 多重高潮次数 """
         self.condom_info_show_flag: bool = False
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
@@ -887,7 +889,6 @@ class Rhodes_Island:
         """ 当前图书馆中的读者数量 """
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
-
         # 贸易区
         self.love_hotel_room_lv: int = 0
         """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
@@ -895,6 +896,11 @@ class Rhodes_Island:
         """
         餐馆内贩卖的食物数据
         餐馆id:食物名字:食物唯一id:食物对象
+        """
+        self.stall_vendor_data: Dict[int, Tuple[Dict]] = {}
+        """
+        地摊小贩的货物数据
+        货物类型id（0为食物）:货物字典
         """
 
         # 制造加工区

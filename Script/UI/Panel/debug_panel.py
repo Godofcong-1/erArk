@@ -184,6 +184,8 @@ class Debug_Panel:
                 npc_count = 0
 
                 for NPC_id in id_list:
+                    # if NPC_id not in cache.character_data:
+                    #     continue
                     target_data: game_type.Character = cache.character_data[NPC_id]
                     button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
 
@@ -833,7 +835,10 @@ class Debug_Panel:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.second_behavior:
-                    info_text += f"{cid}:{target_data.second_behavior[cid]} "
+                    name = game_config.config_status[cid].name
+                    info_text += f"({cid}){name}:{target_data.second_behavior[cid]}  "
+                    if cid % 5 == 0:
+                        info_text += "\n"
                 draw_text_list.append(f"[000]:二段行为列表：\n{info_text}")
 
                 # 进行显示

@@ -1,8 +1,7 @@
 import os
 import pickle
 from typing import Dict, List
-from dijkstar import Graph, find_path
-from Script.Core import game_type, json_handle, get_text, text_handle, cache_control, constant, rich_text
+from Script.Core import game_type, json_handle, get_text, text_handle, cache_control, constant, rich_text, dijkstra
 from Script.Design import map_handle
 
 cache: game_type.Cache = cache_control.cache
@@ -55,8 +54,7 @@ def load_dir_now(data_path: str):
         now_path = os.path.join(data_path, i)
         if os.path.isfile(now_path):
             now_file = i.split(".")
-            if len(now_file) > 1:
-                if now_file[1] == "json":
+            if len(now_file) > 1 and now_file[1] == "json":
                     if now_file[0] == "Scene":
                         now_scene_data = game_type.Scene()
                         now_scene_data.scene_path = get_map_system_path_str(
@@ -135,7 +133,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
     """
     map_y_list = map_draw.split("\n")
     map_draw_data = game_type.MapDraw()
-    for map_x_list_id in range(len(map_y_list)):
+    for map_x_list_id, _unused in enumerate(map_y_list):
         set_map_button = False
         map_x_list = map_y_list[map_x_list_id]
         now_draw_list = game_type.MapDrawLine()
@@ -146,31 +144,38 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
             if not set_map_button and map_x_list[i : i + 11] != "<mapbutton>":
                 new_x_list += map_x_list[i]
             elif not set_map_button and map_x_list[i : i + 11] == "<mapbutton>":
-                i += 10
-                set_map_button = 1
+                # 如果当前不在设置地图按钮状态，并且检测到"<mapbutton>"标签
+                i += 10  # 跳过"<mapbutton>"标签
+                set_map_button = 1  # 标记为开始设置地图按钮
                 if len(new_x_list):
-                    now_rich_draw_list:List[game_type.MapDraw] = []
-                    now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")
-                    new_x_list = rich_text.remove_rich_cache(new_x_list)
+                    # 如果new_x_list不为空
+                    # now_rich_draw_list: List[game_type.MapDraw] = []  # 初始化富文本绘制列表
+                    now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")  # 获取富文本样式列表
+                    new_x_list = rich_text.remove_rich_cache(new_x_list)  # 清除富文本缓存
                     while 1:
+                        # 循环处理每个字符和对应的样式
                         if not len(new_x_list):
+                            # 如果new_x_list为空，则跳出循环
                             break
-                        now_rich_draw = game_type.MapDrawText()
-                        now_rich_draw.text = new_x_list[0]
-                        now_rich_draw.style = now_style_list[0]
-                        now_style_list = now_style_list[1:]
-                        new_x_list = new_x_list[1:]
+                        now_rich_draw = game_type.MapDrawText()  # 创建一个新的富文本绘制对象
+                        now_rich_draw.text = new_x_list[0]  # 设置绘制文本为new_x_list的第一个字符
+                        now_rich_draw.style = now_style_list[0]  # 设置绘制样式为now_style_list的第一个样式
+                        now_style_list = now_style_list[1:]  # 移除已处理的样式
+                        new_x_list = new_x_list[1:]  # 移除已处理的字符
                         while 1:
+                            # 循环添加相同样式的字符到now_rich_draw.text
                             if not len(new_x_list):
+                                # 如果new_x_list为空，则跳出循环
                                 break
                             if now_style_list[0] != now_rich_draw.style:
+                                # 如果下一个字符的样式与当前不同，则跳出循环
                                 break
-                            now_rich_draw.text += new_x_list[0]
-                            now_style_list = now_style_list[1:]
-                            new_x_list = new_x_list[1:]
-                        now_draw_list.draw_list.append(now_rich_draw)
-                        now_draw_list.width += len(now_rich_draw.text)
-                    new_x_list = ""
+                            now_rich_draw.text += new_x_list[0]  # 添加字符到now_rich_draw.text
+                            now_style_list = now_style_list[1:]  # 移除已处理的样式
+                            new_x_list = new_x_list[1:]  # 移除已处理的字符
+                        now_draw_list.draw_list.append(now_rich_draw)  # 将now_rich_draw添加到绘制列表中
+                        now_draw_list.width += len(now_rich_draw.text)  # 更新绘制列表的宽度
+                    new_x_list = ""  # 清空new_x_list
             elif set_map_button and map_x_list[i : i + 12] != "</mapbutton>":
                 now_cmd += map_x_list[i]
             else:
@@ -230,20 +235,14 @@ def get_sorted_map_path_data(
     Return arguments:
     Dict[int,Dict[int,game_type.TargetPath]] -- 最短路径数据 当前节点:目标节点:路径对象
     """
-    graph = Graph()
     sorted_path_data = {}
-    for node in map_data.keys():
-        for target in map_data[node]:
-            graph.add_edge(node, target, {"cost": map_data[node][target]})
-    cost_func = lambda u, v, e, prev_e: e["cost"]
-    for node in map_data.keys():
-        new_data = {node: {}}
-        for target in map_data.keys():
-            if target != node:
-                find_path_data = find_path(graph, node, target, cost_func=cost_func)
-                target_path = game_type.TargetPath()
-                target_path.path = find_path_data.nodes[1:]
-                target_path.time = find_path_data.costs
-                new_data[node][target] = target_path
-        sorted_path_data.update(new_data)
+    for node in map_data:
+        node_path = dijkstra.dijkstra(map_data, node)
+        sorted_path_data.setdefault(node,{})
+        for target_id in node_path:
+            target = node_path[target_id]
+            target_path = game_type.TargetPath()
+            target_path.path = target.path[1:]
+            target_path.time = target.path_times[1:]
+            sorted_path_data[node][target.node_id] = target_path
     return sorted_path_data

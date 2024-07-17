@@ -19,6 +19,7 @@ class DataList(QWidget):
         super(DataList, self).__init__()
         self.layout = QGridLayout(self)
         self.top_layout = QHBoxLayout()
+        self.second_layout = QHBoxLayout()
         self.chara_id_text_edit = QTextEdit("0")
         self.text_id_text_edit = QTextEdit("0")
         self.text_id_change_button = QPushButton("修改序号")
@@ -36,16 +37,18 @@ class DataList(QWidget):
         self.select_now_instruct_check_box = QCheckBox("只显示当前指令")
         self.select_now_instruct_check_box.stateChanged.connect(self.select_now_instruct)
         self.select_now_instruct_flag = 0
-        # 搜索框
-        self.search_edit = QTextEdit()
-        self.search_edit.setFixedHeight(32)
+        # 文本搜索框
+        self.text_search_edit = QTextEdit()
+        self.text_search_edit.setFixedHeight(32)
         # self.search_edit.setFixedWidth(400)
-        self.search_edit.setPlaceholderText("内容搜索")
-        self.search_button = QPushButton("搜索")
-        self.search_button.clicked.connect(self.search)
-        self.search_reset_button = QPushButton("重置")
-        self.search_reset_button.clicked.connect(self.search_reset)
-        self.search_flag = 0
+        self.text_search_edit.setPlaceholderText("搜索带有特定关键字的条目")
+        self.text_search_button = QPushButton("搜索")
+        self.text_search_button.clicked.connect(self.text_search)
+        self.text_search_reset_button = QPushButton("重置")
+        self.text_search_reset_button.clicked.connect(self.text_search_reset)
+        self.text_search_flag = 0
+        # TODO 前提搜索按钮
+        # self.premise_search_button = QPushButton("根据前提进行搜索")
         # 条目列表
         self.list_widget = QListWidget()
         self.font = font
@@ -62,7 +65,6 @@ class DataList(QWidget):
 
         # 连接 self.text_edit 的 textChanged 信号到 update_adv_id 方法
         self.chara_id_text_edit.textChanged.connect(self.update_adv_id)
-
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
         self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
@@ -71,6 +73,12 @@ class DataList(QWidget):
         self.menu_bar.addMenu(self.type_menu)
         self.status_menu.setFont(self.font)
         self.type_menu.setFont(self.font)
+
+        # 根据文字长度设置菜单栏宽度
+        status_menu_width = self.status_menu.fontMetrics().boundingRect(cache_control.status_data[cache_control.now_status]).width()
+        type_menu_width = self.type_menu.fontMetrics().boundingRect(cache_control.now_type).width()
+        menu_bar_width = max(status_menu_width, type_menu_width) * 2
+        self.menu_bar.setFixedWidth(menu_bar_width)
 
         # 说明文本
         label1_text = QLabel("角色id")
@@ -81,30 +89,33 @@ class DataList(QWidget):
         # 上方布局
         self.top_layout.addWidget(label1_text)
         self.top_layout.addWidget(self.chara_id_text_edit)
-        self.top_layout.addWidget(label2_text)
-        self.top_layout.addWidget(self.menu_bar)
-        self.top_layout.addWidget(self.label3_text)
         self.top_layout.addWidget(self.label4_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
         self.top_layout.addWidget(self.info_button)
 
+        self.second_layout.addWidget(self.text_search_edit)
+        self.second_layout.addWidget(label2_text)
+        self.second_layout.addWidget(self.menu_bar)
+        self.second_layout.addWidget(self.label3_text)
+        self.second_layout.addWidget(self.select_now_instruct_check_box)
+
         # 设置编辑框的高度和宽度
         self.chara_id_text_edit.setFixedHeight(32)
-        self.chara_id_text_edit.setFixedWidth(40)
+        self.chara_id_text_edit.setFixedWidth(100)
         self.text_id_text_edit.setFixedHeight(32)
         self.text_id_text_edit.setFixedWidth(100)
 
         # 总布局
         self.layout.addLayout(self.top_layout, 0, 0, 1, -1)
-        self.layout.addWidget(self.new_text_button, 1, 0)
-        self.layout.addWidget(self.copy_text_button, 1, 1)
-        self.layout.addWidget(self.delete_text_button, 1, 2)
-        self.layout.addWidget(self.select_now_instruct_check_box, 1, 3)
-        self.layout.addWidget(self.search_edit, 2, 0)
-        self.layout.addWidget(self.search_button, 2, 1)
-        self.layout.addWidget(self.search_reset_button, 2, 2)
-        self.layout.addWidget(self.list_widget, 3, 0, 1, 6)
+        self.layout.addLayout(self.second_layout, 1, 0, 1, -1)
+        self.layout.addWidget(self.new_text_button, 2, 0)
+        self.layout.addWidget(self.copy_text_button, 2, 1)
+        self.layout.addWidget(self.delete_text_button, 2, 2)
+        self.layout.addWidget(self.text_search_edit, 3, 0)
+        self.layout.addWidget(self.text_search_button, 3, 1)
+        self.layout.addWidget(self.text_search_reset_button, 3, 2)
+        self.layout.addWidget(self.list_widget, 4, 0, 1, 6)
 
         # 设置拉伸因子，保证新建条目、复制条目、搜索框的宽度相等
         self.layout.setColumnStretch(0, 1)
@@ -205,19 +216,19 @@ class DataList(QWidget):
         elif cache_control.now_edit_type_flag == 0:
             self.delete_talk()
 
-    def search(self):
-        """搜索"""
-        search_text = self.search_edit.toPlainText()
+    def text_search(self):
+        """文本搜索"""
+        search_text = self.text_search_edit.toPlainText()
         if not search_text:
             self.update()
             return
-        self.search_flag = 1
+        self.text_search_flag = 1
         self.update()
 
-    def search_reset(self):
-        """重置搜索"""
-        self.search_edit.setText("")
-        self.search_flag = 0
+    def text_search_reset(self):
+        """重置文本搜索"""
+        self.text_search_edit.setText("")
+        self.text_search_flag = 0
         self.update()
 
     def select_now_instruct(self):
@@ -467,8 +478,8 @@ class DataList(QWidget):
                     if now_talk.status_id != cache_control.now_status:
                         continue
                 # 搜索
-                if self.search_flag:
-                    if self.search_edit.toPlainText() not in item.text():
+                if self.text_search_flag:
+                    if self.text_search_edit.toPlainText() not in item.text():
                         continue
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
@@ -506,6 +517,12 @@ class DataList(QWidget):
                 self.text_id_text_edit.deleteLater()
                 self.text_id_change_button.deleteLater()
 
+                if self.second_layout.parent() is not None:
+                    # 如果有父级，尝试将其从父级中移除
+                    self.second_layout.setParent(None)
+
+                self.layout.addLayout(self.second_layout, 1, 1, 1, -1)
+
             type_text_list = ["跳过指令", "指令前置", "指令后置"]
             for uid in cache_control.now_event_data:
                 now_event: game_type.Event = cache_control.now_event_data[uid]
@@ -516,8 +533,8 @@ class DataList(QWidget):
                 if self.select_now_instruct_flag:
                     if now_event.status_id != cache_control.now_status:
                         continue
-                if self.search_flag:
-                    if self.search_edit.toPlainText() not in now_event.text:
+                if self.text_search_flag:
+                    if self.text_search_edit.toPlainText() not in now_event.text:
                         continue
                 item = ListItem(now_event.text)
                 item.uid = uid

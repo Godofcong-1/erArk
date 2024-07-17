@@ -641,6 +641,8 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
                         line.draw()
                         info_draw.draw()
                     return "door_lock"
+            else:
+                return "door_lock"
 
     # 私密场所判断，仅限干员
     if character_id:

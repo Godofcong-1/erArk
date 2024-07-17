@@ -324,8 +324,6 @@ def change_status_menu(action: QWidgetAction):
             continue
         status_menu = QMenu(status_type, data_list.status_menu)
         for cid in cache_control.status_type_data[status_type]:
-            if cid is cache_control.now_status:
-                continue
             if cid == "0":
                 continue
             now_action: QWidgetAction = QWidgetAction(data_list)
@@ -360,6 +358,11 @@ def change_status_menu(action: QWidgetAction):
         elif status_trigger == "both":
             info_text += "玩家和npc均可"
         data_list.label3_text.setText(info_text)
+
+        # 根据文字长度设置菜单栏宽度
+        status_menu_width = data_list.status_menu.fontMetrics().boundingRect(cache_control.status_data[cache_control.now_status]).width()
+        status_menu_width = max(status_menu_width * 1.5, 100)
+        data_list.menu_bar.setFixedWidth(status_menu_width)
 
 
 def change_type_menu(action: QWidgetAction):
@@ -426,13 +429,8 @@ def font_update():
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 status_group = QActionGroup(data_list.status_menu)
 for status_type in cache_control.status_type_data:
-    # 如果是事件编辑模式，则跳过二段结算
-    if cache_control.now_edit_type_flag == 1 and status_type == "二段结算":
-        continue
     status_menu = QMenu(status_type, data_list.status_menu)
     for cid in cache_control.status_type_data[status_type]:
-        if cid is cache_control.now_status:
-            continue
         if cid == "0":
             continue
         now_action: QWidgetAction = QWidgetAction(data_list)

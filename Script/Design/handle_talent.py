@@ -30,12 +30,16 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
         gain_type = gain_talent_data.gain_type
         talent_id = gain_talent_data.talent_id
 
+        # 大前提是NPC没有该素质
+        if character_data.talent[talent_id]:
+            continue
+
         # 手动结算的话跳过判断直接获得对应素质
         judge = 0
         if now_gain_type == 1 and traget_talent_id == talent_id:
             judge = 1
-        # 需要为对应的结算时机，而且NPC没有该素质
-        elif gain_type != 1 and gain_type == now_gain_type and character_data.talent[talent_id] == 0:
+        # 需要为对应的结算时机
+        elif gain_type != 1 and gain_type == now_gain_type:
 
             # 以&为分割判定是否有多个需求
             if "&" not in gain_talent_data.gain_need:
@@ -155,7 +159,7 @@ def npc_gain_and_lost_cumflation(character_id: int):
     abdomen_all_semen = 0
     for i in [5,7,8,15]:
         # 如果没有第[i]个，则补上
-        if len(character_data.dirty.body_semen) <= i:
+        while len(character_data.dirty.body_semen) <= i:
             part_name = game_config.config_body_part[i].name
             character_data.dirty.body_semen.append([part_name,0,0,0])
         abdomen_all_semen += character_data.dirty.body_semen[i][1]

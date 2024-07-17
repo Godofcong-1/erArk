@@ -114,8 +114,12 @@ in_kitchen,IN_KITCHEN,地点_定位,在厨房
 not_in_kitchen,NOT_IN_KITCHEN,地点_定位,不在厨房
 in_din,IN_DINING_HALL,地点_定位,在食堂
 not_in_din,NOT_IN_DINING_HALL,地点_定位,不在食堂
-in_food_shop,IN_FOOD_SHOP,地点_定位,在食物商店（取餐区）
-not_in_food_shop,NOT_IN_FOOD_SHOP,地点_定位,不在食物商店（取餐区）
+in_take_food,IN_TAKE_FOOD,地点_定位,在取餐区
+not_in_take_food,NOT_IN_TAKE_FOOD,地点_定位,不在取餐区
+in_food_shop,IN_FOOD_SHOP,地点_定位,在食物商店
+not_in_food_shop,NOT_IN_FOOD_SHOP,地点_定位,不在食物商店
+in_ai_food_shop,IN_AI_FOOD_SHOP,地点_定位,在AI要去吃饭的食物商店
+not_in_ai_food_shop,NOT_IN_AI_FOOD_SHOP,地点_定位,不在AI要去吃饭的食物商店
 in_office,IN_OFFICE,地点_定位,在办公室（含全部办公室）
 in_dr_off,IN_DR_OFFICE,地点_定位,在博士办公室
 not_in_dr_off,NOT_IN_DR_OFFICE,地点_定位,不在博士办公室
@@ -465,6 +469,7 @@ shower_flag_4,SHOWER_FLAG_4,属性_特殊flag,自身已洗澡状态
 eat_food_flag_ge_1,EAT_FOOD_FLAG_GE_1,属性_特殊flag,自身有某一种吃饭状态
 eat_food_flag_1,EAT_FOOD_FLAG_1,属性_特殊flag,自身要取餐状态
 eat_food_flag_2,EAT_FOOD_FLAG_2,属性_特殊flag,自身要进食状态
+sleep_flag_0,SLEEP_FLAG_0,属性_特殊flag,自身无要睡觉状态
 sleep_flag_1,SLEEP_FLAG_1,属性_特殊flag,自身要睡觉状态
 rest_flag_1,REST_FLAG_1,属性_特殊flag,自身要休息状态
 pee_flag_1,PEE_FLAG_1,属性_特殊flag,自身要撒尿状态
@@ -978,6 +983,8 @@ cloth_most_off,CLOTH_MOST_OFF,属性_服装,当前大致全裸（没穿上下外
 not_cloth_most_off,NOT_CLOTH_MOST_OFF,属性_服装,当前不是大致全裸（没穿上下外衣内衣）
 shower_cloth,SHOWER_CLOTH,属性_服装,围着浴巾
 not_shower_cloth,NOT_SHOWER_CLOTH,属性_服装,没有围着浴巾
+sleep_cloth,SLEEP_CLOTH,属性_服装,穿着睡衣
+sleep_cloth_or_not_normal_4,SLEEP_CLOTH_OR_NOT_NORMAL_4,属性_服装,穿着睡衣或服装异常
 
 a_shit,A_SHIT,污浊_身体,肠内脏污
 t_a_shit,T_A_SHIT,污浊_身体,交互对象肠内脏污
@@ -1181,8 +1188,11 @@ pl_action_food_spicy,PL_ACTION_FOOD_SPICY,行动,食物调味_辣
 pl_action_food_sement_hidden,PL_ACTION_FOOD_SEMEN_HIDDEN,行动,食物调味_巧妙加精液
 pl_action_food_sement_direct,PL_ACTION_FOOD_SEMEN_DIRECT,行动,食物调味_直接加精液
 pl_action_food_medicine,PL_ACTION_FOOD_MEDICINE,行动,食物调味_加药
+ai_eat_in_restaurant,AI_EAT_IN_RESTAURANT,行动,AI要在餐厅吃饭
+ai_not_eat_in_restaurant,AI_NOT_EAT_IN_RESTAURANT,行动,AI不在餐厅吃饭(即在食堂吃)
 
 flag_baby_exist,FLAG_BABY_EXIST,生育,当前有婴儿存在
+position_in_nursery_and_flag_baby_exist,POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST,生育,当前自己在育儿室且育儿室有婴儿存在
 reproduction_period_0,REPRODUCTION_PERIOD_0,生育,自己当前是安全期
 reproduction_period_1,REPRODUCTION_PERIOD_1,生育,自己当前是普通期
 reproduction_period_2,REPRODUCTION_PERIOD_2,生育,自己当前是危险期

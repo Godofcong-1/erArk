@@ -184,7 +184,7 @@ def get_base_updata():
             room_count = 0
             for room_id in  game_config.config_facility_open:
                 # 跳过非客房和未开放的客房
-                if "客房" not in game_config.config_facility_open[room_id].name:
+                if _("客房") not in game_config.config_facility_open[room_id].name:
                     continue
                 # 跳过未开放的客房
                 cache.rhodes_island.facility_open.setdefault(room_id,False)

@@ -247,7 +247,7 @@ cid,effect_name,effect_type,effect
 506,OFFICIAL_WORK_ADD_ADJUST,指令_专用结算,（处理公务用）根据自己（如果有的话再加上交互对象）的学识以及办公室等级来处理当前的剩余工作量
 507,CURE_PATIENT_ADD_ADJUST,指令_专用结算,（诊疗病人用）根据发起者(如果有的话再加上交互对象)的医疗技能治愈了一名病人，并获得一定的龙门币
 508,ADD_HPMP_MAX,指令_专用结算,（锻炼身体用）增加体力气力上限
-509,SLEEP_ADD_ADJUST,指令_专用结算,（睡觉用）清零熟睡值（暂弃用）
+509,SLEEP_ADD_ADJUST,指令_专用结算,（睡觉用）如果在自己宿舍，则换睡衣并有一定几率关门
 510,RECRUIT_ADD_ADJUST,指令_专用结算,（招募干员用）根据发起者(如果有的话再加上交互对象)的话术技能增加招募槽
 511,READ_ADD_ADJUST,指令_专用结算,（读书用）根据书的不同对发起者(如果有的话再加上交互对象)获得对应的知识，并进行NPC的还书判定
 512,TEACH_ADD_ADJUST,指令_专用结算,（教学用）自己增加习得和学识经验，所有当前场景里状态是上课的角色增加习得和学识经验，如果玩家是老师则再加好感和信赖，最后结束
@@ -275,6 +275,7 @@ cid,effect_name,effect_type,effect
 631,T_CLOTH_BACK,属性_服装,交互对象穿回H时脱掉的衣服
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
+634,GET_SLEEP_CLOTH,属性_服装,清零其他衣服并换上睡衣
 641,LOCKER_CLOTH_RESET,属性_服装,衣柜里的衣服清零
 642,WEAR_TO_LOCKER,属性_服装,身上首饰以外的衣服转移到柜子里
 643,LOCKER_TO_WEAR,属性_服装,衣柜里的衣服转移到身上
@@ -364,6 +365,7 @@ cid,effect_name,effect_type,effect
 1104,FIRST_A_SEX,初次,记录A处女
 1105,DAY_FIRST_MEET_0,初次,自己变为今天已见过面
 1106,DAY_FIRST_MEET_1,初次,自己变为今天未见过面
+1107,FIRST_KISS_TO_PENIS,初次,记录阴茎初吻
 
 1201,PENETRATING_VISION_ON,源石技艺,开启透视（含理智消耗）
 1202,PENETRATING_VISION_OFF,源石技艺,关闭透视

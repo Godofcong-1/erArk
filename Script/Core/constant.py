@@ -1621,9 +1621,9 @@ class SecondBehavior:
     """ 开启智能跟随 """
     COME_TO_OFFICE = 1405
     """ 要求前往办公室 """
-    SUPPORT_SERVICE_ON = 1406
+    SUPPORT_SERVICE_OFF = 1406
     """ 关闭辅佐服务 """
-    SUPPORT_SERVICE_OFF = 1407
+    SUPPORT_SERVICE_ON = 1407
     """ 开启辅佐服务 """
     SEND_FOOD_SERVICE_OFF = 1408
     """ 关闭送饭服务 """
@@ -1647,13 +1647,13 @@ class SecondBehavior:
     """ 开启晚安吻服务 """
     NIGHT_BLOWJOB = 1418
     """ 开启晚安咬服务 """
-    COHABITATION_ON = 1419
+    COHABITATION_OFF = 1419
     """ 关闭同居服务 """
-    COHABITATION_OFF = 1420
+    COHABITATION_ON = 1420
     """ 开启同居服务 """
-    LOVE_SUPPORT_ON = 1421
+    LOVE_SUPPORT_OFF = 1421
     """ 关闭助攻服务 """
-    LOVE_SUPPORT_OFF = 1422
+    LOVE_SUPPORT_ON = 1422
     """ 开启助攻服务 """
 
     HAS_BEEN_PRIMARY_HYPNOSIS = 1501

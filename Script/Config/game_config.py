@@ -311,6 +311,13 @@ def translate_data(data: dict):
                 now_data[key] = get_text._(now_data[key])
 
 
+def translate_ui_text():
+    """翻译ui文本数据"""
+    for file in ui_text_data:
+        for key in ui_text_data[file]:
+            ui_text_data[file][key] = get_text._(ui_text_data[file][key])
+
+
 def load_ability_type():
     """载入能力类型具体配置数据（按能力类型分类）"""
     now_data = config_data["AbilityType"]
@@ -1308,6 +1315,7 @@ def load_prts():
 def init():
     """初始化游戏配置数据"""
     load_data_json()
+    translate_ui_text()
     load_ability_type()
     load_ability_type_data()
     # load_ability_up_type()
