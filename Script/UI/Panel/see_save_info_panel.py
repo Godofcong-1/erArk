@@ -113,13 +113,13 @@ class SaveInfoDraw:
 
             # 更改月份的输出
             if game_time.month == 3:
-                month_text = "春"
+                month_text = _("春")
             elif game_time.month == 6:
-                month_text = "夏"
+                month_text = _("夏")
             elif game_time.month == 9:
-                month_text = "秋"
+                month_text = _("秋")
             elif game_time.month == 12:
-                month_text = "冬"
+                month_text = _("冬")
             game_time_text = (_("{year}年{month}月{day}日{hour}点{minute}分")).format(
                 year=game_time.year,
                 month=month_text,
