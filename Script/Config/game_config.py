@@ -287,6 +287,10 @@ config_talent_of_arts: Dict[int, config_def.Talent_Of_Arts] = {}
 """ 源石技艺素质 """
 config_roleplay: Dict[int, config_def.Roleplay] = {}
 """ 角色扮演 """
+config_new_round_inherit: Dict[int, config_def.New_Round_Inherit] = {}
+""" 新周目继承 """
+config_new_round_inherit_type_data: Dict[int, Dict] = {}
+""" 新周目继承按类型和等级划分的数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1300,6 +1304,20 @@ def load_prts():
         else:
             config_prts_data[now_tem.fater_type][now_tem.son_type][1] = now_tem
 
+
+def load_new_round_inherit():
+    """ 新周目继承 """
+    now_data = config_data["New_Round_Inherit"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.New_Round_Inherit()
+        now_tem.__dict__ = tem_data
+        config_new_round_inherit[now_tem.cid] = now_tem
+        # 按类型划分，再按等级划分
+        config_new_round_inherit_type_data.setdefault(now_tem.inherit_type, dict())
+        config_new_round_inherit_type_data[now_tem.inherit_type][now_tem.inherit_lv] = now_tem.cid
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1393,3 +1411,4 @@ def init():
     load_hypnosis_talent_of_player()
     load_talent_of_arts()
     load_roleplay()
+    load_new_round_inherit()

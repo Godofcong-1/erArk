@@ -115,6 +115,16 @@ def have_tactile_talent():
             return talent_id
     return 0
 
+def have_fall_talent(character_id: int):
+    """
+    验证是否有陷落素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [201,202,203,204,211,212,213,214]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
 def npc_gain_hypnosis_talent(character_id: int):
     """
     干员获得被催眠素质\n

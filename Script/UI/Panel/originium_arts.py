@@ -1,10 +1,9 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_talent, map_handle, handle_premise
+from Script.Design import handle_talent, map_handle
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -238,12 +237,12 @@ class Originium_Arts_Panel:
                 return_list.append(button11_draw.return_text)
 
             if cache.debug_mode:
-                button12_text = _("[012]Re:败者食尘")
+                button12_text = _("[012]Re:败者食尘(未实装)")
                 button12_draw = draw.LeftButton(
                     _(button12_text),
                     _("12"),
                     window_width,
-                    cmd_func=self.new_round,
+                    cmd_func=self.new_round_for_sure,
                     args=(),
                     )
                 line_feed.draw()
@@ -557,16 +556,32 @@ class Originium_Arts_Panel:
         info_draw.text = _(info_text)
         info_draw.draw()
 
-    def new_round(self):
-        """新周目"""
-        pl_character_data = cache.character_data[0]
-        # 统计所有干员中已经陷落的
-        all_fall_chara_list = []
-        for chara_id in cache.npc_id_got:
-            if handle_premise.handle_self_fall(chara_id):
-                all_fall_chara_list.append(chara_id)
-        # 直接继承的数据
-        pl_collection_data = pl_character_data.pl_collection # 玩家收藏品
+    def new_round_for_sure(self):
+        """确认开始新的周目"""
+        from Script.UI.Panel import new_round
+        while 1:
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = _("\n你可以继承目前的部分数据，从头开始一个全新的周目，重新做出不一样的抉择，体验不一样的风景\n")
+            now_draw.text += _("此选择不可撤销，请谨慎决定\n")
+            now_draw.text += _("\n\n\n确定开始新的周目吗？\n\n\n\n")
+            now_draw.draw()
+            return_list = []
+            yes_draw = draw.CenterButton(_("[是]"), _("是"), window_width / 2)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            no_draw = draw.CenterButton(_("[否]"), _("否"), window_width / 2)
+            no_draw.draw()
+            return_list.append(no_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == yes_draw.return_text:
+                now_panel = new_round.New_Round_Handle()
+                now_panel.draw()
+                break
+            elif yrn == no_draw.return_text:
+                break
 
 
 class Down_Negative_Talent_Panel:
