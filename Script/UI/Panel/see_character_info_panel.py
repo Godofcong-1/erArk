@@ -909,7 +909,7 @@ class CharacterabiText:
             for ability_id in type_set:
                 # 去掉与性别不符的能力#
                 if character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 33, 34, 39}:
+                    if ability_id in {73, 74, 75}:
                         continue
                 elif character_data.sex == 1:
                     if ability_id == 3:
@@ -1684,6 +1684,15 @@ class PlayerAbilityText:
         # 激素能力#
         now_text = _("\n 【激素系】\n")
         for i in {304, 305, 306}:
+            if character_data.talent[i]:
+                ability_name = game_config.config_talent[i].name
+                ability_info = game_config.config_talent[i].info
+                now_text += f"  {ability_name}：{ability_info}\n"
+        ability_text_list.append(now_text)
+
+        # 催眠能力
+        now_text = _("\n 【催眠系】\n")
+        for i in {331, 332, 333, 334}:
             if character_data.talent[i]:
                 ability_name = game_config.config_talent[i].name
                 ability_info = game_config.config_talent[i].info
