@@ -760,6 +760,14 @@ def settle_milk():
         now_draw.text = _("\n今日共有{0}ml母乳未使用，已全部转化为【鲜母乳】\n").format(all_milk)
         now_draw.draw()
 
+    # 检测是否超出仓库容量上限
+    if cache.rhodes_island.materials_resouce[31] > cache.rhodes_island.warehouse_capacity:
+        cache.rhodes_island.materials_resouce[31] = cache.rhodes_island.warehouse_capacity
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _("\n由于仓库容量不足，【鲜母乳】已达上限数量{0}\n").format(cache.rhodes_island.warehouse_capacity)
+        now_draw.draw()
+
 
 def settle_semen():
     """
@@ -775,6 +783,14 @@ def settle_semen():
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
         now_draw.text = _("\n今日共射出{0}ml精液，已全部转化为【矿石病药材】\n").format(today_semen)
+        now_draw.draw()
+
+    # 检测是否超出仓库容量上限
+    if cache.rhodes_island.materials_resouce[12] > cache.rhodes_island.warehouse_capacity:
+        cache.rhodes_island.materials_resouce[12] = cache.rhodes_island.warehouse_capacity
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _("\n由于仓库容量不足，【矿石病药材】已达上限数量{0}\n").format(cache.rhodes_island.warehouse_capacity)
         now_draw.draw()
 
 
