@@ -276,10 +276,12 @@ class Ejaculation_Panel:
                 title_draw.draw()
 
                 # 绘制身体部位按钮
+                body_count = 0
                 for body_part_cid in game_config.config_body_part:
                     part_name = game_config.config_body_part[body_part_cid].name
                     draw_text = f"[{body_part_cid}]{part_name}"
                     # print("debug draw_text = ",draw_text)
+                    body_count += 1
                     show_flag = self.part_can_choose(body_part_cid)
                     if show_flag:
                         name_draw = draw.CenterButton(
@@ -287,13 +289,17 @@ class Ejaculation_Panel:
                         )
                         name_draw.draw()
                         return_list.append(name_draw.return_text)
+                        if body_count > 0 and body_count % 8 == 0:
+                            line_feed.draw()
 
                 line_feed.draw()
 
                 # 绘制服装部位按钮
+                cloth_count = 0
                 for clothing_type in game_config.config_clothing_type:
                     cloth_name = game_config.config_clothing_type[clothing_type].name
                     draw_text = f"[{clothing_type}]{cloth_name}"
+                    cloth_count += 1
                     show_flag = len(target_data.cloth.cloth_wear[clothing_type])
                     if show_flag:
                         name_draw = draw.CenterButton(
@@ -301,6 +307,8 @@ class Ejaculation_Panel:
                         )
                         name_draw.draw()
                         return_list.append(name_draw.return_text)
+                        if cloth_count > 0 and cloth_count % 8 == 0:
+                            line_feed.draw()
 
                 yrn = flow_handle.askfor_all(return_list)
 
