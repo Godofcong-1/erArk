@@ -1,11 +1,13 @@
 from typing import List
 from types import FunctionType
-from Script.Core import get_text, flow_handle, game_type, cache_control
+from Script.Core import get_text, flow_handle, game_type, cache_control, constant
 
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import see_character_info_panel
 from Script.Config import normal_config, game_config
 from Script.Design import handle_talent
+
+import copy
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -59,6 +61,8 @@ class New_Round_Handle:
             title_draw.draw()
             pl_character_data = cache.character_data[0]
             self.round_point_all = 0
+            self.round_point_cost = 0
+            self.return_list = []
             info_text = "\n"
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
@@ -71,7 +75,7 @@ class New_Round_Handle:
             info_draw.draw()
             # 统计所有干员中已经陷落的
             all_fall_chara_list = []
-            button_text = _(" 全陷落干员")
+            button_text = _("○全陷落干员")
             if self.show_npc_flag:
                 button_text += "▼"
             else:
@@ -90,6 +94,7 @@ class New_Round_Handle:
                     now_character_data = cache.character_data[chara_id]
                     talent_name = game_config.config_talent[talent_id].name
                     point_add = talent_id % 10 # 取个位数字
+                    point_add *= 2
                     chara_point_all += point_add
                     chara_count += 1
                     if self.show_npc_flag:
@@ -104,13 +109,13 @@ class New_Round_Handle:
             info_draw.draw()
 
             # 收藏品
-            info_text = _(" 收藏品统计：")
+            info_text = _("○全收藏品")
             now_pan_count, now_socks_count = 0, 0
             for chara_cid in pl_character_data.pl_collection.npc_panties:
                 now_pan_count += len(pl_character_data.pl_collection.npc_panties[chara_cid])
             for chara_cid in pl_character_data.pl_collection.npc_socks:
                 now_socks_count += len(pl_character_data.pl_collection.npc_socks[chara_cid])
-            collection_point = int(now_pan_count / 10 + now_socks_count / 10)
+            collection_point = now_pan_count + now_socks_count
             self.round_point_all += collection_point
             info_text += _("全干员内裤共{0}条，全干员袜子共{1}双，总点数{2}\n\n").format(now_pan_count, now_socks_count, collection_point)
             info_draw.text = info_text
@@ -135,17 +140,18 @@ class New_Round_Handle:
             now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
             now_rate = now_inherit_data.inherit_rate
             now_cost = now_inherit_data.point_cost
+            self.round_point_cost += now_cost
             info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_abi_and_exp_count, now_rate, now_cost)
             info_draw.text = info_text
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
             add_button = draw.CenterButton(add_button_text, add_button_text + "_0", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,0))
-            self.return_list.append(add_button_text)
+            self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
             reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_0", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,0))
-            self.return_list.append(reduce_button_text)
+            self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
             # 绘制玩家能力与经验
@@ -169,18 +175,19 @@ class New_Round_Handle:
             now_inherit_data_cid = game_config.config_new_round_inherit_type_data[0][self.pl_originium_arts_count]
             now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
             now_rate = now_inherit_data.inherit_rate
-            now_cost = now_inherit_data.point_cost
-            info_text += _("   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_originium_arts_count, now_rate, now_cost)
+            now_cost = self.calculate_originium_arts_cost()
+            self.round_point_cost += now_cost
+            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_originium_arts_count, now_rate, now_cost)
             info_draw.text = info_text
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
             add_button = draw.CenterButton(add_button_text, add_button_text + "_1", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,1))
-            self.return_list.append(add_button_text)
+            self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
             reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_1", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,1))
-            self.return_list.append(reduce_button_text)
+            self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
             # 绘制玩家源石技艺
@@ -192,21 +199,22 @@ class New_Round_Handle:
             # 玩家收藏品
             info_text = _("[2]博士的收藏品")
             # 继承选项
-            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[2][self.pl_collection_count]
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[3][self.pl_collection_count]
             now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
             now_rate = now_inherit_data.inherit_rate
             now_cost = now_inherit_data.point_cost
-            info_text += _("   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_collection_count, now_rate, now_cost)
+            self.round_point_cost += now_cost
+            info_text += _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_collection_count, now_rate, now_cost)
             info_draw.text = info_text
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
             add_button = draw.CenterButton(add_button_text, add_button_text + "_2", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,2))
-            self.return_list.append(add_button_text)
+            self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
             reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_2", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,2))
-            self.return_list.append(reduce_button_text)
+            self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
             # 绘制玩家收藏品
@@ -216,13 +224,71 @@ class New_Round_Handle:
             info_draw.text = info_text
             info_draw.draw()
 
+            # 干员好感与信任
+            info_text = _("已陷落干员将直接继承至新的周目，无需重新招募\n")
+            info_text += _("耗费点数可以进一步继承这些干员一定比例的好感、信赖、能力、经验\n")
+            info_text += _("\n[3]干员的好感与信任")
+            info_draw.text = info_text
+            info_draw.draw()
+            # 继承选项
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[4][self.chara_fon_and_trust_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            now_cost = now_inherit_data.point_cost
+            self.round_point_cost += now_cost
+            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.chara_fon_and_trust_count, now_rate, now_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 提高和降低按钮
+            add_button_text = _(" [提高] ")
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_3", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,3))
+            self.return_list.append(add_button.return_text)
+            add_button.draw()
+            reduce_button_text = _(" [降低] ")
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_3", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,3))
+            self.return_list.append(reduce_button.return_text)
+            reduce_button.draw()
             line_feed_draw.draw()
-            yes_draw = draw.CenterButton(_("[是]"), _("是"), self.width)
-            yes_draw.draw()
-            self.return_list.append(yes_draw.return_text)
+
+            # 干员能力与经验
+            info_text = _("\n[4]干员的能力与经验")
+            info_draw.text = info_text
+            info_draw.draw()
+            # 继承选项
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[5][self.chara_abi_and_exp_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            now_cost = now_inherit_data.point_cost
+            self.round_point_cost += now_cost
+            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.chara_abi_and_exp_count, now_rate, now_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 提高和降低按钮
+            add_button_text = _(" [提高] ")
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_4", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,4))
+            self.return_list.append(add_button.return_text)
+            add_button.draw()
+            reduce_button_text = _(" [降低] ")
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_4", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,4))
+            self.return_list.append(reduce_button.return_text)
+            reduce_button.draw()
             line_feed_draw.draw()
+
+            # 输出总点数的花费与剩余
+            info_text = _("\n总点数消耗：{0}，剩余：{1}\n\n").format(self.round_point_cost, self.round_point_all - self.round_point_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+
+            line_feed_draw.draw()
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width)
+            if self.round_point_all >= self.round_point_cost:
+                yes_draw.draw()
+                self.return_list.append(yes_draw.return_text)
+                line_feed_draw.draw()
             yrn = flow_handle.askfor_all(self.return_list)
             if yrn == yes_draw.return_text:
+                self.start_new_round()
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def show_npc_change(self):
@@ -239,6 +305,33 @@ class New_Round_Handle:
         """
         self.show_panel_flag_list[type] = not self.show_panel_flag_list[type]
 
+    def calculate_originium_arts_cost(self):
+        """
+        计算源石技艺消耗
+        """
+        if self.pl_originium_arts_count == 0:
+            return 0
+        else:
+            all_cost = 0
+            pl_character_data = cache.character_data[0]
+            # 初级源石技艺
+            for i in [304, 307, 310, 331]:
+                if pl_character_data.talent[i]:
+                    all_cost += 10
+            # 中级源石技艺
+            for i in [305, 308, 311, 332]:
+                if pl_character_data.talent[i]:
+                    all_cost += 30
+            # 高级源石技艺
+            for i in [306, 309, 312, 333]:
+                if pl_character_data.talent[i]:
+                    all_cost += 60
+            # 特级源石技艺
+            for i in [334]:
+                if pl_character_data.talent[i]:
+                    all_cost += 120
+            return all_cost
+
     def value_change_buton(self, value: int, type: int):
         """
         提高或降低继承等级
@@ -250,32 +343,180 @@ class New_Round_Handle:
             self.pl_abi_and_exp_count += value
             if self.pl_abi_and_exp_count < 0:
                 self.pl_abi_and_exp_count = 0
-            elif self.pl_abi_and_exp_count > 3:
-                self.pl_abi_and_exp_count = 3
+            elif self.pl_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[1]) - 1:
+                self.pl_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[1]) - 1
         elif type == 1:
             self.pl_originium_arts_count += value
             if self.pl_originium_arts_count < 0:
                 self.pl_originium_arts_count = 0
-            elif self.pl_originium_arts_count > 1:
-                self.pl_originium_arts_count = 1
+            elif self.pl_originium_arts_count > len(game_config.config_new_round_inherit_type_data[0]) - 1:
+                self.pl_originium_arts_count = len(game_config.config_new_round_inherit_type_data[2]) - 1
         elif type == 2:
             self.pl_collection_count += value
             if self.pl_collection_count < 0:
                 self.pl_collection_count = 0
-            elif self.pl_collection_count > 3:
-                self.pl_collection_count = 3
+            elif self.pl_collection_count > len(game_config.config_new_round_inherit_type_data[3]) - 1:
+                self.pl_collection_count = len(game_config.config_new_round_inherit_type_data[3]) - 1
         elif type == 3:
             self.chara_fon_and_trust_count += value
             if self.chara_fon_and_trust_count < 0:
                 self.chara_fon_and_trust_count = 0
-            elif self.chara_fon_and_trust_count > 3:
-                self.chara_fon_and_trust_count = 3
+            elif self.chara_fon_and_trust_count > len(game_config.config_new_round_inherit_type_data[4]) - 1:
+                self.chara_fon_and_trust_count = len(game_config.config_new_round_inherit_type_data[4]) - 1
         elif type == 4:
             self.chara_abi_and_exp_count += value
             if self.chara_abi_and_exp_count < 0:
                 self.chara_abi_and_exp_count = 0
-            elif self.chara_abi_and_exp_count > 3:
-                self.chara_abi_and_exp_count = 3
+            elif self.chara_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[5]) - 1:
+                self.chara_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[5]) - 1
+
+
+    def start_new_round(self):
+        """
+        开始新的周目
+        """
+        # 继承玩家数据
+        self.inherit_player_data()
+        # 继承干员数据
+        self.inherit_npc_data()
+        # 重置游戏数据
+        self.reset_game_data()
+
+    def build_new_character_data(self, character_id: int):
+        """
+        构建新的角色数据
+        Keyword arguments:
+        character_id -- 角色id
+        """
+        from Script.Design import character_handle
+        character_handle.init_character(character_id, cache.npc_tem_data[character_id])
+
+    def inherit_player_data(self):
+        """
+        继承玩家数据
+        """
+        from Script.Design import character
+        # 记录旧的玩家数据
+        old_pl_character_data = copy.deepcopy(cache.character_data[0])
+        # 构建新的玩家数据
+        cache.character_data[0] = game_type.Character()
+        character.init_attr(0)
+        new_pl_character_data = cache.character_data[0]
+        new_pl_character_data.name = old_pl_character_data.name
+
+        # 玩家能力与经验
+        now_inherit_data_cid = game_config.config_new_round_inherit_type_data[1][self.pl_abi_and_exp_count]
+        now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+        now_rate = now_inherit_data.inherit_rate
+        for i in old_pl_character_data.ability:
+            new_pl_character_data.ability[i] = int(old_pl_character_data.ability[i] * now_rate / 100)
+        for i in old_pl_character_data.experience:
+            new_pl_character_data.experience[i] = int(old_pl_character_data.experience[i] * now_rate / 100)
+
+        # 玩家源石技艺
+        if self.pl_originium_arts_count > 0:
+            for i in [304, 305, 306, 307, 308, 309, 310, 311, 312, 331, 332, 333, 334]:
+                if old_pl_character_data.talent[i]:
+                    new_pl_character_data.talent[i] = old_pl_character_data.talent[i]
+
+        # 玩家收藏品
+        now_inherit_data_cid = game_config.config_new_round_inherit_type_data[3][self.pl_collection_count]
+        now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+        now_rate = now_inherit_data.inherit_rate
+        # 首先计算旧的收藏品数量和新的收藏品数量
+        old_pan_count, old_socks_count = 0, 0
+        for chara_cid in old_pl_character_data.pl_collection.npc_panties:
+            old_pan_count += len(old_pl_character_data.pl_collection.npc_panties[chara_cid])
+        for chara_cid in old_pl_character_data.pl_collection.npc_socks:
+            old_socks_count += len(old_pl_character_data.pl_collection.npc_socks[chara_cid])
+        new_pan_count = int(old_pan_count * now_rate / 100)
+        new_socks_count = int(old_socks_count * now_rate / 100)
+
+        # 在当前计数收藏品不超过新的数量的情况下，进行收藏品继承
+        now_pan_count, now_socks_count = 0, 0
+        for chara_cid in old_pl_character_data.pl_collection.npc_panties:
+            pan_count = len(old_pl_character_data.pl_collection.npc_panties[chara_cid])
+            now_pan_count += pan_count
+            new_pl_character_data.pl_collection.npc_panties[chara_cid] = old_pl_character_data.pl_collection.npc_panties[chara_cid]
+            if now_pan_count > new_pan_count:
+                break
+        for chara_cid in old_pl_character_data.pl_collection.npc_socks:
+            socks_count = len(old_pl_character_data.pl_collection.npc_socks[chara_cid])
+            now_socks_count += socks_count
+            new_pl_character_data.pl_collection.npc_socks[chara_cid] = old_pl_character_data.pl_collection.npc_socks[chara_cid]
+            if now_socks_count > new_socks_count:
+                break
+
+    def inherit_npc_data(self):
+        """
+        继承干员数据
+        """
+        from Script.Design import character_handle
+
+        # 记录旧的干员数据
+        old_npc_data = copy.deepcopy(cache.character_data)
+        old_npc_id_got = cache.npc_id_got.copy()
+        cache.npc_id_got = set()
+
+        id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
+        npc_data_iter = iter(cache.npc_tem_data)
+        for now_id, now_npc_data in zip(id_list, npc_data_iter):
+
+            # 仅继承陷落干员
+            if not handle_talent.have_fall_talent(now_id):
+                character_handle.init_character(now_id, now_npc_data)
+            else:
+                character_handle.init_character(now_id, now_npc_data)
+                new_npc_data = cache.character_data[now_id]
+                cache.npc_id_got.add(now_id)
+
+                # 干员好感与信任
+                now_inherit_data_cid = game_config.config_new_round_inherit_type_data[4][self.chara_fon_and_trust_count]
+                now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+                now_rate = now_inherit_data.inherit_rate
+                new_npc_data.trust = int(old_npc_data[now_id].trust * now_rate / 100)
+                new_npc_data.favorability[0] = int(old_npc_data[now_id].favorability[0] * now_rate / 100)
+
+                # 干员能力与经验
+                now_inherit_data_cid = game_config.config_new_round_inherit_type_data[5][self.chara_abi_and_exp_count]
+                now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+                now_rate = now_inherit_data.inherit_rate
+                for i in old_npc_data[now_id].ability:
+                    new_npc_data.ability[i] = int(old_npc_data[now_id].ability[i] * now_rate / 100)
+                for i in old_npc_data[now_id].experience:
+                    new_npc_data.experience[i] = int(old_npc_data[now_id].experience[i] * now_rate / 100)
+
+
+    def reset_game_data(self):
+        """
+        重置游戏数据
+        """
+        from Script.Design import attr_calculation, basement, game_time
+        from Script.UI.Flow import creator_character_flow
+        from Script.Config import map_config
+
+        # 要保留的数据
+        new_game_round = cache.game_round + 1
+        new_character_data = cache.character_data
+        new_npc_id_got = cache.npc_id_got
+
+        # 开始重置
+        cache_control.cache = game_type.Cache()
+        map_config.init_map_data()
+        game_time.init_time()
+        cache.rhodes_island = basement.get_base_zero()
+        cache.system_setting = attr_calculation.get_system_setting_zero()
+        creator_character_flow.game_start()
+
+        # 覆盖要保留的数据
+        cache.game_round = new_game_round
+        cache.character_data = new_character_data
+        cache.npc_id_got = new_npc_id_got
+
+        # TODO 根据继承的角色，将有人住的宿舍设为开放
+        for now_id in cache.npc_id_got:
+            now_character_data = cache.character_data[now_id]
+            now_dormitory = now_character_data.dormitory
 
 
 class CharacterabiText:
