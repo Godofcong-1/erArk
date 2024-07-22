@@ -1576,6 +1576,7 @@ def handle_hypnosis_all(
         scene_character_list.remove(character_id)
     # 结算理智消耗
     sanity_point_cost = 10 + 10 * len(scene_character_list)
+    sanity_point_cost = min(sanity_point_cost, character_data.sanity_point)
     character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
     change_data.sanity_point -= sanity_point_cost
     character_data.pl_ability.today_sanity_point_cost += sanity_point_cost

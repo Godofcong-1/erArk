@@ -1120,10 +1120,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 倍率计算
             multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
             down_sp *= max(multiple, 1)
+            # 用于消耗的理智值不得超过当前理智值
+            down_sp = min(down_sp, now_character_data.sanity_point)
             now_character_data.sanity_point -= down_sp
             now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 理智值不足则归零并中断所有开启中的源石技艺
-        if now_character_data.sanity_point < 0:
+        if now_character_data.sanity_point <= 0:
             now_character_data.sanity_point = 0
             now_character_data.pl_ability.visual = False
             # 解除目标的催眠
