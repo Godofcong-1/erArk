@@ -2893,8 +2893,8 @@ def handle_extra_orgasm(
     # 如果有额外高潮次数，则进行苦痛和恐怖结算
     if all_extra_count > 0:
         # 额外高潮次数的苦痛和恐怖
-        extra_pain = 1000 * (1.2 ** all_extra_count)
-        extra_terror = 1000 * (1.2 ** all_extra_count)
+        extra_pain = 100 * (1.2 ** all_extra_count)
+        extra_terror = 100 * (1.2 ** all_extra_count)
         # 痛苦刻印修正
         adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
         extra_pain *= adjust
