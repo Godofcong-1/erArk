@@ -1546,8 +1546,8 @@ def handle_give_necklace():
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
-        target_data.talent[211] = 0
-        target_data.talent[212] = 1
+        target_data.talent[212] = 0
+        target_data.talent[213] = 1
         target_data.talent[215] = 1
         target_data.talent[411] = 1
         character_data.pl_collection.token_list[character_data.target_character_id] = 1
