@@ -525,7 +525,7 @@ class New_Round_Inherit:
     cid: int
     """ 继承cid """
     inherit_type: int
-    """ 继承类型id(1玩家能力经验，2源石技艺，3收集品，4好感信赖，5干员能力经验) """
+    """ 继承类型id(0源石技艺，1玩家能力经验，3收集品，4好感信赖，5干员能力经验) """
     inherit_lv: int
     """ 继承等级 """
     inherit_rate: int
