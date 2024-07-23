@@ -370,9 +370,9 @@ class Assistant_Panel:
                 user_input = int(user_input)
             except:
                 continue
-            if user_input <= 0:
+            if user_input < 0:
                 continue
-            elif user_input > 0:
+            elif user_input >= 0:
                 if user_input > 59:
                     user_input = 59
                 if morning_flag:
