@@ -255,7 +255,7 @@ class Originium_Arts_Panel:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or yrn == button12_draw.return_text:
+            if yrn == back_draw.return_text or yrn == "12":
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
