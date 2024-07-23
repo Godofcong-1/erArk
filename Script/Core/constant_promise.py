@@ -613,6 +613,8 @@ class Premise:
     """ 时间_当前 当前不是晚安问候时间（计划睡觉时间之后） """
     STILL_30_MINUTES_BEFORE_END = "still_30_minutes_before_end"
     """ 时间_当前 距离行动结束时间还有至少30分钟 """
+    TIME_OVER_A_YEAR = "time_over_a_year"
+    """ 时间_当前 游戏时间超过一年 """
 
     #"""
     #异常状态类型：\n

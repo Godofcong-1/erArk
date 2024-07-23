@@ -625,6 +625,23 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TIME_OVER_A_YEAR)
+def handle_time_over_a_year(character_id: int) -> int:
+    """
+    游戏时间超过一年
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.year >= 2021:
+        return 1
+    elif now_time.year == 2020 and now_time.month >= 3:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """

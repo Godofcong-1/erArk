@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_talent, map_handle
+from Script.Design import handle_talent, map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
@@ -236,8 +236,8 @@ class Originium_Arts_Panel:
                 button11_draw.draw()
                 return_list.append(button11_draw.return_text)
 
-            if cache.debug_mode:
-                button12_text = _("[012]Re:败者食尘(未实装)")
+            if cache.debug_mode or handle_premise.handle_time_over_a_year(0):
+                button12_text = _("[012]Re:败者食尘")
                 button12_draw = draw.LeftButton(
                     _(button12_text),
                     _("12"),
@@ -255,7 +255,7 @@ class Originium_Arts_Panel:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == back_draw.return_text or yrn == button12_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -565,7 +565,7 @@ class Originium_Arts_Panel:
             now_draw = draw.NormalDraw()
             now_draw.width = window_width
             now_draw.text = _("\n你可以继承目前的部分数据，从头开始一个全新的周目，重新做出不一样的抉择，体验不一样的风景\n")
-            now_draw.text += _("此选择不可撤销，请谨慎决定\n")
+            now_draw.text += _("此选择不可撤销，请备份好存档，谨慎决定\n")
             now_draw.text += _("\n\n\n确定开始新的周目吗？\n\n\n\n")
             now_draw.draw()
             return_list = []

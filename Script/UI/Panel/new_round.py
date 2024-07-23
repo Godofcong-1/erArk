@@ -375,12 +375,36 @@ class New_Round_Handle:
         """
         开始新的周目
         """
+
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+
         # 继承玩家数据
         self.inherit_player_data()
         # 继承干员数据
         self.inherit_npc_data()
         # 重置游戏数据
         self.reset_game_data()
+
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw_text = "\n\n\n\n\n\n\n\n\n"
+        info_draw.text = info_draw_text
+        info_draw.draw()
+
+        while 1:
+
+            return_list = []
+            button_draw = draw.CenterButton(
+                _("[醒来]"),
+                _("醒来\n"),
+                self.width
+            )
+            return_list.append(button_draw.return_text)
+            button_draw.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
 
     def build_new_character_data(self, character_id: int):
         """
@@ -396,6 +420,11 @@ class New_Round_Handle:
         继承玩家数据
         """
         from Script.Design import character
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw_text = "\n\n"
+        info_draw_text += _("开始继承玩家数据\n")
+
         # 记录旧的玩家数据
         old_pl_character_data = copy.deepcopy(cache.character_data[0])
         # 构建新的玩家数据
@@ -412,12 +441,14 @@ class New_Round_Handle:
             new_pl_character_data.ability[i] = int(old_pl_character_data.ability[i] * now_rate / 100)
         for i in old_pl_character_data.experience:
             new_pl_character_data.experience[i] = int(old_pl_character_data.experience[i] * now_rate / 100)
+        info_draw_text += _("玩家能力与经验继承完毕\n")
 
         # 玩家源石技艺
         if self.pl_originium_arts_count > 0:
             for i in [304, 305, 306, 307, 308, 309, 310, 311, 312, 331, 332, 333, 334]:
                 if old_pl_character_data.talent[i]:
                     new_pl_character_data.talent[i] = old_pl_character_data.talent[i]
+        info_draw_text += _("玩家源石技艺继承完毕\n")
 
         # 玩家收藏品
         now_inherit_data_cid = game_config.config_new_round_inherit_type_data[3][self.pl_collection_count]
@@ -446,16 +477,22 @@ class New_Round_Handle:
             new_pl_character_data.pl_collection.npc_socks[chara_cid] = old_pl_character_data.pl_collection.npc_socks[chara_cid]
             if now_socks_count > new_socks_count:
                 break
+        info_draw_text += _("玩家收藏品继承完毕\n")
+        info_draw.text = info_draw_text
+        info_draw.draw()
 
     def inherit_npc_data(self):
         """
         继承干员数据
         """
         from Script.Design import character_handle
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw_text = "\n"
+        info_draw_text += _("开始继承干员数据\n")
 
         # 记录旧的干员数据
         old_npc_data = copy.deepcopy(cache.character_data)
-        old_npc_id_got = cache.npc_id_got.copy()
         cache.npc_id_got = set()
 
         id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
@@ -485,6 +522,10 @@ class New_Round_Handle:
                     new_npc_data.ability[i] = int(old_npc_data[now_id].ability[i] * now_rate / 100)
                 for i in old_npc_data[now_id].experience:
                     new_npc_data.experience[i] = int(old_npc_data[now_id].experience[i] * now_rate / 100)
+        info_draw_text += _("干员好感与信任继承完毕\n")
+        info_draw_text += _("干员能力与经验继承完毕\n")
+        info_draw.text = info_draw_text
+        info_draw.draw()
 
 
     def reset_game_data(self):
@@ -494,6 +535,10 @@ class New_Round_Handle:
         from Script.Design import attr_calculation, basement, game_time
         from Script.UI.Flow import creator_character_flow
         from Script.Config import map_config
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw_text = "\n"
+        info_draw_text += _("开始重置游戏数据\n")
 
         # 要保留的数据
         new_game_round = cache.game_round + 1
@@ -507,17 +552,29 @@ class New_Round_Handle:
         cache.rhodes_island = basement.get_base_zero()
         cache.system_setting = attr_calculation.get_system_setting_zero()
         creator_character_flow.game_start()
+        info_draw_text += _("游戏数据重置完毕\n")
 
         # 覆盖要保留的数据
         cache.game_round = new_game_round
         cache.character_data = new_character_data
         cache.npc_id_got = new_npc_id_got
+        info_draw_text += _("继承数据覆盖完毕\n")
 
-        # TODO 根据继承的角色，将有人住的宿舍设为开放
+        # 根据继承的角色，将有人住的宿舍设为开放
         for now_id in cache.npc_id_got:
+            # 获取地点数据
             now_character_data = cache.character_data[now_id]
             now_dormitory = now_character_data.dormitory
+            now_scene_data = cache.scene_data[now_dormitory]
+            # 如果该地点在设施开放列表中
+            if now_scene_data.scene_name in game_config.config_facility_open_name_set:
+                open_cid = game_config.config_facility_open_name_to_cid[now_scene_data.scene_name]
+                # 如果未开放，则开放
+                if cache.rhodes_island.facility_open[open_cid] == False:
+                    cache.rhodes_island.facility_open[open_cid] = True
 
+        info_draw.text = info_draw_text
+        info_draw.draw()
 
 class CharacterabiText:
     """
