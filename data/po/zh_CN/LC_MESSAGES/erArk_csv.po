@@ -5265,7 +5265,7 @@ msgid "春天的绿色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:52
-msgid "	猩红"
+msgid "猩红"
 msgstr ""
 
 #: .\data\csv\Food_Quality.csv:6

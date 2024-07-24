@@ -6115,3 +6115,167 @@ msgstr "Hide Image"
 
 msgid "展开图片栏"
 msgstr "Show Image"
+
+msgid "客房"
+msgstr ""
+
+msgid ""
+"\n"
+"由于仓库容量不足，【鲜母乳】已达上限数量{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"由于仓库容量不足，【矿石病药材】已达上限数量{0}\n"
+msgstr ""
+
+msgid "控制中枢"
+msgstr ""
+
+msgid "周目点数结算"
+msgstr ""
+
+msgid ""
+"当前周目数：{0}(+{1})\n"
+"\n"
+msgstr ""
+
+msgid "○全陷落干员"
+msgstr ""
+
+msgid ""
+"  陷落干员总数：{0}，总点数：{1}\n"
+"\n"
+msgstr ""
+
+msgid "○全收藏品"
+msgstr ""
+
+msgid ""
+"全干员内裤共{0}条，全干员袜子共{1}双，总点数{2}\n"
+"\n"
+msgstr ""
+
+msgid ""
+"总周目点数：{0}\n"
+"\n"
+msgstr ""
+
+msgid "[0]博士的能力与经验"
+msgstr ""
+
+msgid ""
+"\n"
+"   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n"
+"  "
+msgstr ""
+
+msgid " [提高] "
+msgstr ""
+
+msgid " [降低] "
+msgstr ""
+
+msgid "[1]博士的源石技艺"
+msgstr ""
+
+msgid "[2]博士的收藏品"
+msgstr ""
+
+msgid ""
+"  收藏品统计：当前内裤{0}(→{1})条，袜子{2}(→{3})双\n"
+"\n"
+msgstr ""
+
+msgid "已陷落干员将直接继承至新的周目，无需重新招募\n"
+msgstr ""
+
+msgid "耗费点数可以进一步继承这些干员一定比例的好感、信赖、能力、经验\n"
+msgstr ""
+
+msgid ""
+"\n"
+"[3]干员的好感与信任"
+msgstr ""
+
+msgid ""
+"\n"
+"[4]干员的能力与经验"
+msgstr ""
+
+msgid ""
+"\n"
+"总点数消耗：{0}，剩余：{1}\n"
+"\n"
+msgstr ""
+
+msgid "[醒来]"
+msgstr ""
+
+msgid "醒来\n"
+msgstr ""
+
+msgid "开始继承玩家数据\n"
+msgstr ""
+
+msgid "玩家能力与经验继承完毕\n"
+msgstr ""
+
+msgid "玩家源石技艺继承完毕\n"
+msgstr ""
+
+msgid "玩家收藏品继承完毕\n"
+msgstr ""
+
+msgid "开始继承干员数据\n"
+msgstr ""
+
+msgid "干员好感与信任继承完毕\n"
+msgstr ""
+
+msgid "干员能力与经验继承完毕\n"
+msgstr ""
+
+msgid "开始重置游戏数据\n"
+msgstr ""
+
+msgid "游戏数据重置完毕\n"
+msgstr ""
+
+msgid "继承数据覆盖完毕\n"
+msgstr ""
+
+msgid "[012]Re:败者食尘"
+msgstr ""
+
+msgid "12"
+msgstr ""
+
+msgid ""
+"\n"
+"你可以继承目前的部分数据，从头开始一个全新的周目，重新做出不一样的抉择，体验不一样的风景\n"
+msgstr ""
+
+msgid "此选择不可撤销，请备份好存档，谨慎决定\n"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"\n"
+"确定开始新的周目吗？\n"
+"\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "[是]"
+msgstr ""
+
+msgid "[否]"
+msgstr ""
+
+msgid ""
+"\n"
+" 【催眠系】\n"
+msgstr ""

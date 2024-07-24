@@ -13474,3 +13474,1453 @@ msgstr "Manager's Room"
 
 msgid "源石技艺"
 msgstr "Originium Arts"
+
+msgid "林间夜话"
+msgstr ""
+
+msgid "提炼十五种植物成分，尝试一百七十二种组合。风踏进山林，万物低语，人可好眠。能够将体力与气力全部回满"
+msgstr ""
+
+msgid "迷梦香精"
+msgstr ""
+
+msgid "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。今日习得的获得速度+1倍"
+msgstr ""
+
+msgid "自嘲弄的橙色转化成青色，感到安心，得到治愈。今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgstr ""
+
+msgid "蔷薇啊，你的笑靥倾倒芸芸众生，你的藤蔓将散落的诗句拾捡，似不从大地中来，却漫出院墙，摇曳芬芳。今日全部位快感与欲情的获得速度+1倍"
+msgstr ""
+
+msgid "隐藏于内心深处，潜伏于恐惧之下，与我共鸣，打开心扉，感受他人。今日好感与信赖的获得速度变为+0.5倍"
+msgstr ""
+
+msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。催眠进度的增长速度+5倍"
+msgstr ""
+
+msgid "隶属项圈"
+msgstr ""
+
+msgid "恋人戒指"
+msgstr ""
+
+msgid "获得3至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+msgid "获得5至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+msgid "宿舍开放至3区全部，干员最大人数提升至172人"
+msgstr ""
+
+msgid "宿舍开放至6区全部，干员最大人数提升至282人"
+msgstr ""
+
+msgid "宿舍开放至9区全部，干员最大人数提升至360人"
+msgstr ""
+
+msgid "固定为浊心斯卡蒂宿舍"
+msgstr ""
+
+msgid "宿舍314房"
+msgstr ""
+
+msgid "宿舍315房"
+msgstr ""
+
+msgid "宿舍316房"
+msgstr ""
+
+msgid "宿舍317房"
+msgstr ""
+
+msgid "宿舍318房"
+msgstr ""
+
+msgid "宿舍319房"
+msgstr ""
+
+msgid "宿舍320房"
+msgstr ""
+
+msgid "宿舍321房"
+msgstr ""
+
+msgid "宿舍322房"
+msgstr ""
+
+msgid "宿舍323房"
+msgstr ""
+
+msgid "宿舍324房"
+msgstr ""
+
+msgid "宿舍325房"
+msgstr ""
+
+msgid "宿舍326房"
+msgstr ""
+
+msgid "宿舍327房"
+msgstr ""
+
+msgid "宿舍328房"
+msgstr ""
+
+msgid "宿舍329房"
+msgstr ""
+
+msgid "宿舍414房"
+msgstr ""
+
+msgid "宿舍415房"
+msgstr ""
+
+msgid "宿舍416房"
+msgstr ""
+
+msgid "宿舍417房"
+msgstr ""
+
+msgid "宿舍418房"
+msgstr ""
+
+msgid "宿舍419房"
+msgstr ""
+
+msgid "宿舍420房"
+msgstr ""
+
+msgid "宿舍421房"
+msgstr ""
+
+msgid "宿舍422房"
+msgstr ""
+
+msgid "宿舍423房"
+msgstr ""
+
+msgid "宿舍424房"
+msgstr ""
+
+msgid "宿舍425房"
+msgstr ""
+
+msgid "宿舍426房"
+msgstr ""
+
+msgid "宿舍427房"
+msgstr ""
+
+msgid "宿舍428房"
+msgstr ""
+
+msgid "宿舍429房"
+msgstr ""
+
+msgid "亮粉"
+msgstr ""
+
+msgid "深粉"
+msgstr ""
+
+msgid "深岩暗蓝灰色"
+msgstr ""
+
+msgid "比深岩暗蓝灰色亮一点"
+msgstr ""
+
+msgid "岩暗蓝灰色"
+msgstr ""
+
+msgid "小麦色"
+msgstr ""
+
+msgid "浅青色"
+msgstr ""
+
+msgid "红色"
+msgstr ""
+
+msgid "珊瑚色"
+msgstr ""
+
+msgid "粉红"
+msgstr ""
+
+msgid "浅粉红"
+msgstr ""
+
+msgid "紫色"
+msgstr ""
+
+msgid "黄褐色（卡其布）"
+msgstr ""
+
+msgid "米色"
+msgstr ""
+
+msgid "适中的春天的绿色"
+msgstr ""
+
+msgid "春天的绿色"
+msgstr ""
+
+msgid "猩红"
+msgstr ""
+
+msgid "使用后回复20ml精液量。"
+msgstr ""
+
+msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
+msgstr ""
+
+msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
+msgstr ""
+
+msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
+msgstr ""
+
+msgid "干员宿舍万能钥匙(一次性)"
+msgstr ""
+
+msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
+msgstr ""
+
+
+msgid "博士每天都需要做什么？"
+msgstr ""
+
+msgid ""
+"没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\\n可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
+msgstr ""
+
+msgid "攻略路线是怎么样的？如何获得信物？"
+msgstr ""
+
+msgid "拿到的干员的内裤/袜子有什么用？"
+msgstr ""
+
+msgid "内裤和袜子属于收集品，获得后可以在[图书馆]的[藏品馆]中使用【摆放藏品】，每收集一定数量后可以获得特定的解锁奖励。"
+msgstr ""
+
+msgid ""
+"除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\\n\\n在【受精】后，过一个月左右的时间会变成【妊娠】状态，获得【孕肚】和【泌乳】\\n再过两个月左右，会【临盆】，接着过不了几天就会【生产】\\n生出孩子后，母亲会进入【育儿】状态，养育需要一个月左右，孩子就会从【婴儿】成长为可以初步自理的【幼女】\\n结束了【育儿】后，母亲会恢复孕前状态，也会失去【泌乳】，而孩子还会依次成长为【萝莉】再到【少女】，每次成长会耗时两个月左右\\n\\n孩子的性别仅为女性，在成长到【少女】后即完全成为一名正常的干员\\n女儿会继承母亲包括种族在内大部分生理特征，也会在【育儿】期间学到部分来自母亲的后天知识和技能"
+msgstr ""
+
+msgid "在H中该如何让干员获得更多的快感和快乐，并减少苦痛反发等负面数值？"
+msgstr ""
+
+msgid ""
+"①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\\n②在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\\n  在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\\n\\n③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
+msgstr ""
+
+msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
+msgstr ""
+
+msgid ""
+"干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\\n\\n\\n目前已实装的提高概率的手段有（可叠加）：\\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\\n③在干员的排卵日里，如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\\n\\n\\n其他相关功能：\\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\\n在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
+msgstr ""
+
+msgid "该如何让拥有【未初潮】素质的干员怀孕？"
+msgstr ""
+
+msgid ""
+"【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\\n需要先对阴道和子宫进行一段时间的开发，让【V感度】和【W感度】升级到足够的等级后，即可提前迎来性成熟，失去该素质\\n\\n除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
+msgstr ""
+
+
+msgid "种植相关的基建系统是如何运作的？"
+msgstr ""
+
+msgid ""
+"在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
+msgstr ""
+
+msgid "不加肉类、芝士、酸黄瓜的生菜汉堡"
+msgstr ""
+
+msgid "用十二种蔬菜混合制成的沙拉"
+msgstr ""
+
+msgid "肉质鲜嫩，肥而不腻，香气四溢，入口即化。"
+msgstr ""
+
+msgid "汐斯塔风情水果披萨"
+msgstr ""
+
+msgid "汐斯塔的特色披萨，上面铺满了各种水果，看起来就像一块大蛋糕。"
+msgstr ""
+
+msgid "深盘厚底魔鬼辣椒披萨"
+msgstr ""
+
+msgid "来自多索雷斯的特色披萨，辣椒的味道很重，吃完之后会让你感觉到一种前所未有的辣。"
+msgstr ""
+
+msgid "羔岩羊腿肉披萨"
+msgstr ""
+
+msgid "来自维多利亚的特色披萨，只选用最好的岩羊羔羊腿肉，口感鲜嫩，味道鲜美。"
+msgstr ""
+
+msgid "京城烤鸭披萨"
+msgstr ""
+
+msgid "来自炎国的特色披萨，将京城烤鸭与披萨完美结合，能同时品尝到两者的美味。"
+msgstr ""
+
+msgid "壳虾岩蟹披萨"
+msgstr ""
+
+msgid "来自伊比利亚的特色披萨，大胆的将蒜香壳虾与岩蟹肉放在了披萨上，味道鲜美。"
+msgstr ""
+
+msgid "罐装晌午茶"
+msgstr ""
+
+msgid ""
+"尚蜀常见的特色罐装饮料，听说各地客栈茶馆都供不应求。勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
+msgstr ""
+
+msgid "酱兽肉"
+msgstr ""
+
+msgid "尚蜀岩茶"
+msgstr ""
+
+msgid "勾吴花茶"
+msgstr ""
+
+msgid "姜齐白茶"
+msgstr ""
+
+msgid "大荒粗叶子"
+msgstr ""
+
+msgid "罐装晌午茶(柠檬折耳根味)"
+msgstr ""
+
+msgid "菊花茶"
+msgstr ""
+
+msgid "盐花生"
+msgstr ""
+
+msgid "黑豆茶"
+msgstr ""
+
+msgid "甜司康饼"
+msgstr ""
+
+msgid "汐斯塔冰茶"
+msgstr ""
+
+msgid "红椒茶"
+msgstr ""
+
+msgid "驮兽奶茶"
+msgstr ""
+
+msgid "米诺斯之雾"
+msgstr ""
+
+msgid "黑曜石柑茶"
+msgstr ""
+
+msgid "新酿烈刀子"
+msgstr ""
+
+msgid "玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
+msgstr ""
+
+msgid "高脚羽兽烤串"
+msgstr ""
+
+msgid "松饼早餐卷"
+msgstr ""
+
+msgid "山水兜"
+msgstr ""
+
+msgid "香草冰淇淋"
+msgstr ""
+
+msgid "乌萨斯饺子"
+msgstr ""
+
+msgid "黄油羽兽"
+msgstr ""
+
+msgid "仿蒲烧鳝鳞饭"
+msgstr ""
+
+msgid "面包碗佐奶油汤"
+msgstr ""
+
+msgid "玻利瓦尔风卷饼"
+msgstr ""
+
+msgid "蒜香壳虾塔帕斯"
+msgstr ""
+
+msgid "辣味酸橙派"
+msgstr ""
+
+msgid "加糖黑曜石柑茶"
+msgstr ""
+
+msgid "多伦乡村拼盘"
+msgstr ""
+
+msgid "即使是偏远乡村，你仍能在宴会上见到维多利亚人特有的矜持。"
+msgstr ""
+
+msgid "格里布熏鳞色拉"
+msgstr ""
+
+msgid "精心熏制的好菜只为今日待客，还有解腻的红茶，以及佐餐的豪言笑语。"
+msgstr ""
+
+msgid "斯沃玛三分钟浓汤"
+msgstr ""
+
+msgid "“大厨三小时，在家三分钟！”斯沃玛商务们如是吹嘘着自家公司的商品。"
+msgstr ""
+
+msgid "多索雷斯风情塔可"
+msgstr ""
+
+msgid "精心搭配的馅料让食客在餐桌前巡游半个泰拉，可真正属于多索雷斯的只有那张表面金黄的薄饼。"
+msgstr ""
+
+msgid "提亚卡乌式炸蕉果"
+msgstr ""
+
+msgid "宴会从正午开到夕阳西下，提亚卡乌们还在大快朵颐，但你已经吃不下了。"
+msgstr ""
+
+msgid "约翰老妈厚切汉堡"
+msgstr ""
+
+msgid "即使是用来答谢的加料加厚汉堡，吃完后留在脑海中的也只有半片生菜和薄薄的肉排，让人“意犹未尽”。"
+msgstr ""
+
+msgid "雷神工业火炙巨羽兽"
+msgstr ""
+
+msgid "用火微微一烤就可以端上来享用，焦脆的皮和多汁的肉，香肥量大，几口就能吃饱，员工喜欢它的味道，主管也很满意它的效率。"
+msgstr ""
+
+msgid "阿尔斯特华夫冰淇淋"
+msgstr ""
+
+msgid "冰淇淋球的形状像是从墙上铲下来的，华夫饼的边缘沾上了来路不明的糖霜。"
+msgstr ""
+
+msgid "审判庭特制火腿薄片"
+msgstr ""
+
+msgid "薄厚不均的肉片铺在礁石上。肌肉纹理泛着锃亮的油光，凑近能闻到些许坚果香气。挣脱海水的束缚后，才发觉陆地的馈赠是如此甜美。"
+msgstr ""
+
+msgid "塔山炸沙虫腿"
+msgstr ""
+
+msgid ""
+"炸得恰到好处的沙虫腿在唇齿间迸出汁水，传言在如此美味面前显得无足轻重。餐后才得知“二十条腿的沙虫”是一派胡言，用培养罐培养沙虫腿根本用不着沙虫。"
+msgstr ""
+
+msgid "杜林十号烈酒"
+msgstr ""
+
+msgid "酒过数巡，酩酊的杜林们进入梦乡，烈酒协会成员倒在蜜酿协会成员的身上，醇厚的酒香萦绕此间。十号烈酒，名叫“友谊”。"
+msgstr ""
+
+msgid "欢乐之歌年轮蛋糕"
+msgstr ""
+
+msgid ""
+"蛋糕甜蜜松软，纹路像悠久的年轮，也像那些能让人沉浸于欢乐之中的旋律。听说，蛋糕师是乐团的退休乐手，在烤制时演奏欢乐的小调，是让蛋糕变得轻盈绵密的秘诀。"
+msgstr ""
+
+msgid "盒牌商务健康盒饭"
+msgstr ""
+
+msgid "让人丧失贪吃欲望的盒饭。"
+msgstr ""
+
+msgid "汉堡甜甜圈套餐"
+msgstr ""
+
+msgid "甜甜圈的甜蜜与汉堡的咸香，是一种奇妙的搭配。"
+msgstr ""
+
+msgid "玻利瓦尔咖啡"
+msgstr ""
+
+msgid "少数被冠以产地名的特级咖啡，咖啡豆是许多玻利瓦尔大城市里畅销的伴手礼，内销和出口的需求量极大。"
+msgstr ""
+
+msgid "黑咖啡"
+msgstr ""
+
+msgid "无糖咖啡，是咖啡的原始味道，也是最纯粹的味道。"
+msgstr ""
+
+msgid "火山咖啡"
+msgstr ""
+
+msgid "火山咖啡的独特风味来自于汐斯塔火山灰土壤的独特气候，是一种稀有的咖啡，口感浓郁，香味浓烈。"
+msgstr ""
+
+msgid "过萃咖啡液"
+msgstr ""
+
+msgid "过萃的地底黑咖啡。提神效果极佳。可以代替糖浆。"
+msgstr ""
+
+msgid "奶霜华夫饼塔"
+msgstr ""
+
+msgid "华夫饼的香甜与奶霜的绵蜜，是一种奇妙的搭配。"
+msgstr ""
+
+msgid "德荣单人餐"
+msgstr ""
+
+msgid "来自德荣的单人餐，是一种简单的餐饮，适合快节奏的生活。"
+msgstr ""
+
+msgid "杨森兄弟双人餐"
+msgstr ""
+
+msgid "杨森到底有几个兄弟？这个双人餐是不是只有他一个人吃？"
+msgstr ""
+
+msgid "蟹肉碎拌饭"
+msgstr ""
+
+msgid "热腾腾的杂粮中加入了岩壳蟹肉，吃起来朴素中略带鲜味。好吃是好吃，但......究竟是谁第一个决定尝试食用岩壳蟹的呢？"
+msgstr ""
+
+msgid "调味干粮"
+msgstr ""
+
+msgid "较朴素的速食食品，经过了调味，吃起来还挺适口。据说未经调味的初版十分难以下咽，曾有人评价为不是“食用”，而是“服用”。"
+msgstr ""
+
+msgid "松枝熏肉"
+msgstr ""
+
+msgid "经过松枝熏烤，整块肉带上了浓郁的松香滋味，表皮油润，内里香醇。只需切下几块放在热腾腾的饭上，熏肉的香气就能充满整间屋子，令人陶醉。"
+msgstr ""
+
+msgid "鲜切蟹生"
+msgstr ""
+
+msgid ""
+"制作过程似乎只是切了几刀，过了下水，就这样端了出来。评价两极分化的一道菜肴，有人吃完之后感觉自已仿佛长出了和岩壳蟹一样坚硬的外壳。可能是过敏反应。"
+msgstr ""
+
+msgid "真空冷制肉脍"
+msgstr ""
+
+msgid "已经预制好的兽肉和杂粮，制作流程均在低温下完成，极大限度地保证了食材的新鲜。只需要简单加热，就是一道美味。感谢科技！"
+msgstr ""
+
+msgid "炭烤兽肉卷饼"
+msgstr ""
+
+msgid "每个国家的人都有他们喜欢的独特吃法，可以随意搭配尝试。但如果做出类似在炎国人眼前往饼里卷小笼包这种行为，可能会被追着打。"
+msgstr ""
+
+msgid "猎人饭包"
+msgstr ""
+
+msgid "捕捉到什么猎物，就使用什么肉炙烤所得，简单方便，自由度高。谁的饭包最大，谁的捕猎技巧就最高。不过为了面子，往里面多塞一点谷物也是可以的。"
+msgstr ""
+
+msgid "超级厚馅饼"
+msgstr ""
+
+msgid "萨尔贡当地传统主食之一，馅料是浓厚香醇的兽肉，深受当地人喜爱。大，大，大！越大越好！"
+msgstr ""
+
+msgid "鲜萃凝方体"
+msgstr ""
+
+msgid "由肉类提纯出各类人体所需的成分后精制的凝方体，营养丰富。但它的外表和名字一样，难以让人产生食欲。"
+msgstr ""
+
+msgid "香煎杂肉饭"
+msgstr ""
+
+msgid "不同种类的肉混合成独特的美味，颜色丰富，让人难以忘怀。一勺挖下去，热气蒸腾，从里面翻找出最喜欢的肉是这道菜的一大乐趣。"
+msgstr ""
+
+msgid "脱水增味肉干"
+msgstr ""
+
+msgid "将食材脱水处理，是人们保存食物最原始也最简单方便的方法。虽然只是薄薄的几片，看起来很没有满足感，但实际上热量很高，完全可以轻松地吃饱。"
+msgstr ""
+
+msgid "低温鲜烹炙肉"
+msgstr ""
+
+msgid ""
+"低温慢煮而成的食物，为了增香，外表还经过了微微的炙烤。很难从外表看出它来自何种动物，不过加热之后味道令人满意，这就足够了，毕竟填饱肚子才是最重要的。"
+msgstr ""
+
+msgid "蟹壳蒸饭"
+msgstr ""
+
+msgid ""
+"直接在蟹壳中铺满杂粮蒸熟制成的盖饭，萨尔贡部落民餐桌上最常见的食物。移动城市中的居民偶尔也会尝试这道菜，并为萨尔贡帝国的饮食文化而感到自豪。但很少有部落民会认同这一点。"
+msgstr ""
+
+msgid "提取脂凝晶"
+msgstr ""
+
+msgid "食品科技的智慧结晶，食品现代化的代表，营养丰富。短时间内增加进食满足感和提供足量热量都离不开这种食品科技产品。"
+msgstr ""
+
+msgid "浓缩羹原液"
+msgstr ""
+
+msgid "提取肉类鲜味和营养物质后高温浓缩而成的原液，营养丰富。本品为浓缩液，不可直接食用。住所离医院较近的人也不要尝试。"
+msgstr ""
+
+msgid "高压复焗浓汤"
+msgstr ""
+
+msgid "经超长时间高压烹制的极鲜浓汤，被料理机固化重组后制成的汤酥。一口下去，仿佛吃进去了一片云朵，一阵热风。汤鲜浓郁，入口即化。"
+msgstr ""
+
+msgid "生制代餐粗粉"
+msgstr ""
+
+msgid ""
+"为了保证食材中最佳原料风味的体现，制作者只使用了杂粮来搭配它。低纤维、高热量、易饱腹，从不会出现在现代移动城市中的商场的货架上，在荒野的小商店中则十分抢手。"
+msgstr ""
+
+msgid "脆肉薯条转醇"
+msgstr ""
+
+msgid ""
+"选取荒地上随处可见的肉作为原料，和粗细不一的薯条一起在油锅中煎炸而成。移动城市的居民们会抱怨它过于油腻，而需要干体力活的荒地人则十分享受这种美食。"
+msgstr ""
+
+msgid "蟹醇"
+msgstr ""
+
+msgid "为了展现出岩壳蟹的鲜味和营养，其中还加入了很少见的高级肉类。据说它还努力地模仿了岩壳蟹肉的口感，但似乎没人发现。"
+msgstr ""
+
+msgid "鲜味汤凝胶"
+msgstr ""
+
+msgid "可直接食用的凝胶，室温下不会融化，口感软弹，营养丰富。有些科技食物会为了追求高级感而失去食物的本味，它就是一个很好的例子。"
+msgstr ""
+
+msgid "转质壳酯块"
+msgstr ""
+
+msgid ""
+"顶级食材的威力在这里发挥完全，只需小小一块，登山者也可以获得一整天运动的能量。小心区分它和糖块。虽然吃错了不会造成任何危及生命的后果，但毕竟它的热量很高，非常高。"
+msgstr ""
+
+msgid "复合精制肉酱"
+msgstr ""
+
+msgid "将多种肉类复合制成的肉酱，在添加完相应的营养剂后，不论是口感还是色香味，都有了明显的提升。任何时候都能食用，科技使它永远不会过期。"
+msgstr ""
+
+msgid "碳水脂肪聚块"
+msgstr ""
+
+msgid "将人体所需的蛋白质、脂肪、碳水按照比例调配而成，也可以根据食用者所需自由搭配，制作简单，方便易携。探险者的背包中常见的食物。"
+msgstr ""
+
+msgid "味纯聚素粒"
+msgstr ""
+
+msgid ""
+"研究者在食品科技中剑走偏锋，做出了外形异常好看的素粒，据说是为了食用者心情愉悦。但面对饥饿和快速补充能量的需求，似乎很少有食用者真的注意到了这一点。"
+msgstr ""
+
+msgid "莱塔尼亚浓汤鲜萃"
+msgstr ""
+
+msgid "由当下最时兴的鲜萃技术制作而成，只有小小一口，但浓香醉人。莱塔尼亚人执着于为不同口味的浓汤搭配不同的音乐，据说曾有诗人专门为此创作诗歌。"
+msgstr ""
+
+msgid "鲜能剂"
+msgstr ""
+
+msgid ""
+"做出鲜能剂的老先生是一位味觉失灵的大厨，他说自己幸福的秘诀是观察食客的微笑，从而确认自己的食物能够满足他们。温暖的故事。但他新品研究所的学生们不这么觉得。"
+msgstr ""
+
+msgid "极温速烹兽肉"
+msgstr ""
+
+msgid "刚刚做好就会被送入机器迅速降温，表皮结满冰晶，内里仍旧炙热，带来极限口感体验。似乎不降温直接吃也是一种美妙的体验。"
+msgstr ""
+
+msgid "东国纳米割烹"
+msgstr ""
+
+msgid "选用当季的新鲜食材，配合季节变换，通过菜肴传达禅意，给人绝对的视觉享受。如果制作这席菜肴的是专业东国厨师的话，或许美丽和美味还是可以兼得的。"
+msgstr ""
+
+msgid "维多利亚皇家凝方"
+msgstr ""
+
+msgid "食用时请遵守绅士淑女进餐礼仪，好保证你在此刻对于食物的享受。维多利亚人为他们的文化而自豪，任何时候都不愿低头。"
+msgstr ""
+
+msgid "炎国山水原液"
+msgstr ""
+
+msgid "云山衔一梦。呼......酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+msgid "卡西米尔骑士补充剂"
+msgstr ""
+
+msgid "喝下去以后感觉精神百倍。之前有商家说这就是耀骑士赛前喝的东西，人们蜂拥而上。酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+msgid "哥伦比亚分子胶囊"
+msgstr ""
+
+msgid ""
+"莱茵生命产品，改变食材分子结构再重新组合而成，外壳滋味丰富，食用后可获得极强的饱腹感，在获得满足的同时降低食物的摄取量。非常利于身体健康，但不利于心灵健康。"
+msgstr ""
+
+msgid "拉特兰圣音汤醇"
+msgstr ""
+
+msgid "纯净的外表让人安静下来，但里面的味道让人脑袋在一瞬间出现了有些奇怪的画面——是爆炸？！而且很甜，非常甜！不应该是汤吗？"
+msgstr ""
+
+msgid "低压干制精肉"
+msgstr ""
+
+msgid "撕开包装，里面就是咸香适口的干肉。肉干制作的工艺十分复杂，合适的温度湿度缺一不可，制作成功后能保存数年之久。就是……有点太硬了！"
+msgstr ""
+
+msgid "米诺斯诗歌凝胶"
+msgstr ""
+
+msgid "据说最开始是某位祭司在听完一首长篇叙事诗后突发灵感所作，品尝后让人能够真切感悟到她当时的心情。不好，里面似乎加了酒，已经开始头晕了！"
+msgstr ""
+
+msgid "固态源溏心蛋补剂"
+msgstr ""
+
+msgid ""
+"从混杂着胡椒、肉糜还有酒的溏心蛋中萃取的液体，是当地最常见菜肴的便携版。在野外，这道菜都是在被太阳直射的固态源上烹制的。为了还原这一工艺，移动城市的许多店家配备了专业的阳光聚焦设备。"
+msgstr ""
+
+msgid "河鳞水果凝胶"
+msgstr ""
+
+msgid "烟熏的河鳞和清爽的水果在这里相逢，简简单单。对于移动城市的居民来说，无论新鲜的河鳞还是清爽的水果都是昂贵的食材。"
+msgstr ""
+
+msgid "炎国荒地菜肉酮"
+msgstr ""
+
+msgid ""
+"切成薄片的兽肉与各种生长在荒地上的野菜一起翻炒，是炎国人家中常见的菜肴。菜肉酮是从中提取的精华。这道菜里应该用什么样的肉、什么样的菜，甜的还是咸的，在炎国都是极具争议性的话题。"
+msgstr ""
+
+msgid "音乐速烤萃取酯"
+msgstr ""
+
+msgid ""
+"使用音乐源石技艺对肉类进行烹饪而得到的酯类。在紧急状态下，驱动源石技艺处理食材也是一种可行的方法。但精益求精的莱塔尼亚人把烹饪过程发展成了一门表演艺术。"
+msgstr ""
+
+msgid "哥伦比亚炮灰羽"
+msgstr ""
+
+msgid ""
+"哥伦比亚雇佣兵中流传的菜肴，制作方式非常粗暴——将羽兽肉塞进“安全”的源石堆里炙烤而成。刚入口时有些微妙，但羽兽肉的味道会在喉舌之间久久萦绕。"
+msgstr ""
+
+msgid "香肠豆泥聚块"
+msgstr ""
+
+msgid "丝滑的豆泥和香气四溢的香肠在口味上相得益彰，让人百吃不厌，美中不足的是，这只是聚块。因为便于携带和贮藏，广受荒地旅者好评。"
+msgstr ""
+
+msgid "部族狂欢晚宴"
+msgstr ""
+
+msgid "篝火！舞蹈！烤得金黄渗出油脂的整只猎物！雨林部族最高级别的款待！一人吃完一整头，你就是今天的部族英雄！"
+msgstr ""
+
+msgid "中央谷地混合烤肉"
+msgstr ""
+
+msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制后在专门的塔中晾干，不同部位分开处理，经过多次刷油烧烤而成，入口毫无焦煳味，平时也难得一见。"
+msgstr ""
+
+msgid "约翰老妈汉堡店"
+msgstr ""
+
+msgid "干员做饭"
+msgstr ""
+
+msgid "结束无意识H"
+msgstr ""
+
+msgid "继续享受"
+msgstr ""
+
+msgid "自慰(女)"
+msgstr ""
+
+msgid "脱到只穿内衣(即只脱上下外衣)"
+msgstr ""
+
+msgid "脱到只穿袜子手套等(即再脱掉内衣)"
+msgstr ""
+
+msgid "脱到全裸(即身上没有任何衣物)"
+msgstr ""
+
+msgid "收起内裤"
+msgstr ""
+
+msgid "结算N小绝顶"
+msgstr ""
+
+msgid "结算N普绝顶"
+msgstr ""
+
+msgid "结算N强绝顶"
+msgstr ""
+
+msgid "结算B小绝顶"
+msgstr ""
+
+msgid "结算B普绝顶"
+msgstr ""
+
+msgid "结算B强绝顶"
+msgstr ""
+
+msgid "结算C小绝顶"
+msgstr ""
+
+msgid "结算C普绝顶"
+msgstr ""
+
+msgid "结算C强绝顶"
+msgstr ""
+
+msgid "结算射精"
+msgstr ""
+
+msgid "结算大量射精"
+msgstr ""
+
+msgid "结算超大量射精"
+msgstr ""
+
+msgid "结算V小绝顶"
+msgstr ""
+
+msgid "结算V普绝顶"
+msgstr ""
+
+msgid "结算V强绝顶"
+msgstr ""
+
+msgid "结算A小绝顶"
+msgstr ""
+
+msgid "结算A普绝顶"
+msgstr ""
+
+msgid "结算A强绝顶"
+msgstr ""
+
+msgid "结算U小绝顶"
+msgstr ""
+
+msgid "结算U普绝顶"
+msgstr ""
+
+msgid "结算U强绝顶"
+msgstr ""
+
+msgid "结算W小绝顶"
+msgstr ""
+
+msgid "结算W普绝顶"
+msgstr ""
+
+msgid "结算W强绝顶"
+msgstr ""
+
+msgid "结算额外绝顶"
+msgstr ""
+
+msgid "结算快乐刻印1"
+msgstr ""
+
+msgid "结算快乐刻印2"
+msgstr ""
+
+msgid "结算快乐刻印3"
+msgstr ""
+
+msgid "结算屈服刻印1"
+msgstr ""
+
+msgid "结算屈服刻印2"
+msgstr ""
+
+msgid "结算屈服刻印3"
+msgstr ""
+
+msgid "结算苦痛刻印1"
+msgstr ""
+
+msgid "结算苦痛刻印2"
+msgstr ""
+
+msgid "结算苦痛刻印3"
+msgstr ""
+
+msgid "结算时姦刻印1"
+msgstr ""
+
+msgid "结算时姦刻印2"
+msgstr ""
+
+msgid "结算时姦刻印3"
+msgstr ""
+
+msgid "结算恐怖刻印1"
+msgstr ""
+
+msgid "结算恐怖刻印2"
+msgstr ""
+
+msgid "结算恐怖刻印3"
+msgstr ""
+
+msgid "结算反发刻印1"
+msgstr ""
+
+msgid "结算反发刻印2"
+msgstr ""
+
+msgid "结算反发刻印3"
+msgstr ""
+
+msgid "结算初吻"
+msgstr ""
+
+msgid "结算处女"
+msgstr ""
+
+msgid "结算A处女"
+msgstr ""
+
+msgid "结算无觉刻印1"
+msgstr ""
+
+msgid "结算无觉刻印2"
+msgstr ""
+
+msgid "结算无觉刻印3"
+msgstr ""
+
+msgid "结算无觉刻印4"
+msgstr ""
+
+msgid "结算无觉刻印5"
+msgstr ""
+
+msgid "结算无觉刻印6"
+msgstr ""
+
+msgid "结算因B绝顶而被迫喷乳"
+msgstr ""
+
+msgid "结算因U绝顶而被迫漏尿"
+msgstr ""
+
+msgid "结算双重绝顶"
+msgstr ""
+
+msgid "结算三重绝顶"
+msgstr ""
+
+msgid "结算四重绝顶"
+msgstr ""
+
+msgid "结算五重绝顶"
+msgstr ""
+
+msgid "结算六重绝顶"
+msgstr ""
+
+msgid "结算七重绝顶"
+msgstr ""
+
+msgid "结算乳头夹"
+msgstr ""
+
+msgid "结算阴蒂夹"
+msgstr ""
+
+msgid "结算震动棒"
+msgstr ""
+
+msgid "结算肛门振动棒"
+msgstr ""
+
+msgid "结算搾乳机"
+msgstr ""
+
+msgid "结算采尿器"
+msgstr ""
+
+msgid "结算眼罩"
+msgstr ""
+
+msgid "结算肛门拉珠"
+msgstr ""
+
+msgid "结算利尿剂"
+msgstr ""
+
+msgid "结算安眠药"
+msgstr ""
+
+msgid "结算排卵促进药"
+msgstr ""
+
+msgid "结算事前避孕药"
+msgstr ""
+
+msgid "结算事后避孕药"
+msgstr ""
+
+msgid "结算发交中"
+msgstr ""
+
+msgid "结算阴茎蹭脸中"
+msgstr ""
+
+msgid "结算口交中"
+msgstr ""
+
+msgid "结算乳交中"
+msgstr ""
+
+msgid "结算腋交中"
+msgstr ""
+
+msgid "结算手交中"
+msgstr ""
+
+msgid "结算V插入中"
+msgstr ""
+
+msgid "结算W插入中"
+msgstr ""
+
+msgid "结算A插入中"
+msgstr ""
+
+msgid "结算U插入中"
+msgstr ""
+
+msgid "结算腿交中"
+msgstr ""
+
+msgid "结算足交中"
+msgstr ""
+
+msgid "结算尾交中"
+msgstr ""
+
+msgid "结算阴茎蹭角中"
+msgstr ""
+
+msgid "结算阴茎蹭耳朵中"
+msgstr ""
+
+msgid "结算素股中"
+msgstr ""
+
+msgid "结算获得思慕"
+msgstr ""
+
+msgid "结算获得恋慕"
+msgstr ""
+
+msgid "结算获得恋人(含赠予信物)"
+msgstr ""
+
+msgid "结算获得爱侣"
+msgstr ""
+
+msgid "结算获得屈从"
+msgstr ""
+
+msgid "结算获得驯服"
+msgstr ""
+
+msgid "结算获得宠物(含赠予信物)"
+msgstr ""
+
+msgid "结算获得奴隶"
+msgstr ""
+
+msgid "结算获得受精"
+msgstr ""
+
+msgid "结算受精失败"
+msgstr ""
+
+msgid "结算获得妊娠"
+msgstr ""
+
+msgid "结算获得临盆"
+msgstr ""
+
+msgid "生产前的对话"
+msgstr ""
+
+msgid "生产后的对话+获得产后"
+msgstr ""
+
+msgid "结算获得育儿"
+msgstr ""
+
+msgid "结算育儿完成"
+msgstr ""
+
+msgid "结算幼女长成萝莉"
+msgstr ""
+
+msgid "结算萝莉长成少女"
+msgstr ""
+
+msgid "初次见面"
+msgstr ""
+
+msgid "每日打招呼"
+msgstr ""
+
+msgid "被选为助理"
+msgstr ""
+
+msgid "不再为助理"
+msgstr ""
+
+msgid "关闭智能跟随"
+msgstr ""
+
+msgid "开启智能跟随"
+msgstr ""
+
+msgid "要求前往办公室"
+msgstr ""
+
+msgid "关闭辅佐服务"
+msgstr ""
+
+msgid "开启辅佐服务"
+msgstr ""
+
+msgid "关闭送饭服务"
+msgstr ""
+
+msgid "开启帮忙买午饭服务"
+msgstr ""
+
+msgid "开启亲手做午饭服务"
+msgstr ""
+
+msgid "开启亲手做三餐服务"
+msgstr ""
+
+msgid "关闭早安服务"
+msgstr ""
+
+msgid "开启早上叫起床服务"
+msgstr ""
+
+msgid "开启早安吻服务"
+msgstr ""
+
+msgid "开启早安咬服务"
+msgstr ""
+
+msgid "关闭晚安服务"
+msgstr ""
+
+msgid "开启晚安吻服务"
+msgstr ""
+
+msgid "开启晚安咬服务"
+msgstr ""
+
+msgid "关闭同居服务"
+msgstr ""
+
+msgid "开启同居服务"
+msgstr ""
+
+msgid "关闭助攻服务"
+msgstr ""
+
+msgid "开启助攻服务"
+msgstr ""
+
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+msgid "获得被深层催眠素质"
+msgstr ""
+
+msgid "获得被完全催眠素质"
+msgstr ""
+
+msgid "#dfe86c"
+msgstr ""
+
+msgid "巴别塔的创立者，特蕾西娅。一段来自过去的回响，承载着通往未来的爱与希望。"
+msgstr ""
+
+msgid ""
+"特蕾西娅，卡兹戴尔移动城市的建立者，卡兹戴尔军事委员会创始人之一，巴别塔组织的创立者，曾是卡兹戴尔的最高领袖。执政期间，她致力于推进医疗、教育、城市基础建设等事业，多次带领萨卡兹击退了外敌的入侵，并且在外交工作中颇有建树。"
+msgstr ""
+
+msgid "#FBCED7"
+msgstr ""
+
+msgid "文明的存续"
+msgstr ""
+
+msgid "#CE0000"
+msgstr ""
+
+msgid "黑色皮外套"
+msgstr ""
+
+msgid "銀白色羊絨衫"
+msgstr ""
+
+msgid "露指黑色皮手套"
+msgstr ""
+
+msgid "黑色百褶短裙配红衬底"
+msgstr ""
+
+msgid "黑色油光厚连裤袜"
+msgstr ""
+
+msgid "富有米诺斯古典时代气息的双耳花瓶。需赠送者本人定期更换新鲜花卉。"
+msgstr ""
+
+msgid "#e3b9a1"
+msgstr ""
+
+msgid "#556971"
+msgstr ""
+
+msgid "#6B6B6B"
+msgstr ""
+
+msgid "Lancet-2"
+msgstr ""
+
+msgid "一盒治療噴霧。外盒上标注着“一喷起效”的医疗喷雾套组。可以插入医用器械，也可以直接使用。"
+msgstr ""
+
+msgid ""
+"Lancet-2是可露希尔客制化后的雷神存在者™S Typer 62六轮作业平台， 圆形的外观让人觉得很可爱所以成为了某种意义上的吉祥物。虽然她说话有时候很消极，但是大家都很喜欢她。\n"
+"\n"
+"Lancet-2在经过可露希尔的改造后，得以满足更多罗德岛内的医疗需求，其器械设备也更注重于消毒和应对源石污染。"
+msgstr ""
+
+msgid "#99988f"
+msgstr ""
+
+msgid "白色塑鋼外殼"
+msgstr ""
+
+msgid "六連橡膠動輪"
+msgstr ""
+
+msgid "急救噴霧噴嘴"
+msgstr ""
+
+msgid "置物架"
+msgstr ""
+
+msgid "浊心斯卡蒂，一位让你熟悉又陌生的访客。——你愿意接纳她吗？"
+msgstr ""
+
+msgid "#C70C0C"
+msgstr ""
+
+msgid "青绿色尖顶猎人帽"
+msgstr ""
+
+msgid "红色颈带与黑色蓬松领结"
+msgstr ""
+
+msgid "暗红色连衣裙"
+msgstr ""
+
+msgid "青绿色吃豆人手套"
+msgstr ""
+
+msgid "黑色蕾丝边内裤"
+msgstr ""
+
+msgid "白色防水短袜"
+msgstr ""
+
+msgid "高筒高跟鞋"
+msgstr ""
+
+msgid "升华法杖"
+msgstr ""
+
+msgid "固定用黑色背带"
+msgstr ""
+
+msgid "后腰装饰蝴蝶结"
+msgstr ""
+
+msgid "绑扣式黑色腿带"
+msgstr ""
+
+msgid "鱼形装饰发带"
+msgstr ""
+
+msgid ""
+"流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
+msgstr ""
+
+msgid "战术冲锋衣"
+msgstr ""
+
+msgid "高领战术直筒连衣短裙"
+msgstr ""
+
+msgid "超高筒系带运动靴"
+msgstr ""
+
+msgid "很重的枪"
+msgstr ""
+
+msgid "裝滿武器的帆布包"
+msgstr ""
+
+msgid "{Name}最近有些欲求不满，看到房间里四下无人，终于抑制不住自己的冲动，一边解开衣服一边向{PlayerName}扑了过来"
+msgstr ""
+
+msgid "逆来顺受|毫不反抗的{PlayerName}被{Name}推倒了"
+msgstr ""
+
+msgid "反身欺上|经过一番激烈的博弈，终于反过来将{Name}推倒了"
+msgstr ""
+
+msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
+msgstr ""
+
+msgid "在门外听到{TargetSceneName}里传来了努力压抑着的呻吟声，而且门好像也没有锁，要怎么做呢？"
+msgstr ""
+
+msgid "转身离开|虽然大概猜得到里面是谁，但为了保全对方的形象，决定还是不打扰了"
+msgstr ""
+
+msgid ""
+"拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一道小缝，里面的景象一览无余。\n"
+"{TargetName}背对着门，但仍能看到她的衣服解开着，手放在自己的某些部位做着什么。\n"
+"就这样，{PlayerName}看完了这场有些特殊的表演，趁演出者还停留在绝顶的余韵时掩上门悄悄地离开了。"
+msgstr ""
+
+msgid ""
+"推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
+msgstr ""
+
+msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
+msgstr ""
+
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁"
+msgstr ""
+
+msgid "放任不管|{PlayerName}留在原地，看着{TargetName}胸内的乳汁喷出来"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一点"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变平了"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一些"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了点"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了好多"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了些"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大得内衣快容不下了"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了许多"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了"
+msgstr ""
+
+msgid "在一天的激战后，{Name}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
+msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
