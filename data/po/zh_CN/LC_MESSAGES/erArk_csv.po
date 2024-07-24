@@ -217,19 +217,19 @@ msgid "无"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:7
-msgid "宁静时光"
+msgid "林间夜话"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:7
-msgid "放松身心，舒缓紧张，能够将体力与气力全部回满"
+msgid "提炼十五种植物成分，尝试一百七十二种组合。风踏进山林，万物低语，人可好眠。能够将体力与气力全部回满"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:8
-msgid "灵感烛光"
+msgid "迷梦香精"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:8
-msgid "提高认知功能与精神专注，今日习得的获得速度+1倍"
+msgid "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。今日习得的获得速度+1倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:9
@@ -237,7 +237,7 @@ msgid "橙色心灵"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:9
-msgid "振奋精神，积极向上，今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgid "自嘲弄的橙色转化成青色，感到安心，得到治愈。今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:10
@@ -245,7 +245,7 @@ msgid "迷乱情梦"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:10
-msgid "提升感官敏感度，促进荷尔蒙分泌，今日全部位快感与欲情的获得速度+1倍"
+msgid "蔷薇啊，你的笑靥倾倒芸芸众生，你的藤蔓将散落的诗句拾捡，似不从大地中来，却漫出院墙，摇曳芬芳。今日全部位快感与欲情的获得速度+1倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:11
@@ -253,7 +253,7 @@ msgid "情感共鸣"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:11
-msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
+msgid "隐藏于内心深处，潜伏于恐惧之下，与我共鸣，打开心扉，感受他人。今日好感与信赖的获得速度变为+0.5倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:12
@@ -261,7 +261,7 @@ msgid "下坠天空"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:12
-msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
+msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。催眠进度的增长速度+5倍"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:6

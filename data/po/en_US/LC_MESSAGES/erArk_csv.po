@@ -11754,7 +11754,7 @@ msgid "电动按摩棒"
 msgstr "Electric massage stick"
 
 msgid "绳子"
-msgstr "Rope"
+msgstr "Ropes"
 
 msgid "暂未实装"
 msgstr "Not implemented"
