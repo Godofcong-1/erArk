@@ -4592,6 +4592,7 @@ def handle_beat_breast():
     _("打屁股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IS_H},
 )
 def handle_spanking():
