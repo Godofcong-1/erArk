@@ -79,7 +79,6 @@ last_cmd_paizuri_type,LAST_CMD_PAIZURI_TYPE,指令_前指令,前一指令为乳�
 
 place_0,IN_PLAYER_SCENE,地点_角色,与玩家处于相同地点
 place_1,NOT_IN_PLAYER_SCENE,地点_角色,与玩家不处于相同地点
-place_2,PLAYER_COME_SCENE,地点_角色,玩家来到该角色所在的地点
 place_4,PLAYER_LEAVE_SCENE,地点_角色,玩家离开该角色所在的地点
 place_6,TATGET_COME_SCENE,地点_角色,该角色来到玩家所在的地点
 place_8,TATGET_LEAVE_SCENE,地点_角色,该角色离开玩家所在的地点

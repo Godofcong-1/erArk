@@ -8855,13 +8855,17 @@ def handle_player_come_scene(character_id: int) -> int:
     int -- 权重
     """
     pl_character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
     if (
-            pl_character_data.behavior.move_src != target_data.position
-            and pl_character_data.behavior.move_target == target_data.position
-            and pl_character_data.position == target_data.position
+        len(pl_character_data.behavior.move_src) and
+        len(pl_character_data.behavior.move_target) and
+        pl_character_data.behavior.move_src != pl_character_data.behavior.move_target
     ):
-        return 1
+        scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        for chara_id in scene_data.character_list:
+            if chara_id == 0:
+                continue
+            return 1
     return 0
 
 
