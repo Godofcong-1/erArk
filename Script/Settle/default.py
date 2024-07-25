@@ -36,7 +36,7 @@ def base_chara_state_common_settle(
         add_time: int,
         state_id: int,
         base_value: int = 30,
-        ability_level: int = 0,
+        ability_level: int = -1,
         extra_adjust: float = 0,
         change_data: game_type.CharacterStatusChange = None,
         change_data_to_target_change: game_type.CharacterStatusChange = None,
@@ -88,7 +88,7 @@ def base_chara_state_common_settle(
         target_change.status_data[state_id] += final_value
 
 
-def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = -1):
     """
     角色快感系数获得的共用函数
     Keyword arguments:
@@ -105,7 +105,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
     final_adjust += feel_adjust
     # 技巧
-    if ability_level:
+    if ability_level >= 0:
         tech_adjust = attr_calculation.get_ability_adjust(ability_level)
         final_adjust = math.sqrt(feel_adjust * tech_adjust)
     # 调香
@@ -118,7 +118,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     return final_adjust
 
 
-def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = -1):
     """
     角色状态系数获得的共用函数
     Keyword arguments:
@@ -128,6 +128,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    ability_level = max(0, ability_level)
 
     # 系数加成
     final_adjust = 0
