@@ -462,8 +462,8 @@ def judge_accept_special_seasoning_food(character_id: int):
     accept_rate = max(accept_rate,5) # 保底5%几率
 
     # debug模式直接过
-    if cache.debug_mode:
-        return 1
+    # if cache.debug_mode:
+        # return 1
     # 567异常则直接通过
     if handle_premise.handle_unnormal_567(character_id):
         return 1
@@ -479,13 +479,17 @@ def judge_accept_special_seasoning_food(character_id: int):
     else:
         # 精液判定
         if pl_character_data.behavior.food_seasoning in {11,12}:
-            # 性无知则直接接受精液食物
-            if target_data.talent[222]:
-                target_data.sp_flag.find_food_weird = 0
-                return 1
-            # 精爱味觉或淫乱则直接通过
+            # 精爱味觉或淫乱可以通过
             if target_data.talent[31] or target_data.talent[40]:
                 target_data.sp_flag.find_food_weird = 1
+                # 精爱味觉触发一次绝顶
+                if target_data.talent[31]:
+                    from Script.Settle.default import base_chara_climix_common_settle
+                    base_chara_climix_common_settle(character_id, 0)
+                return 1
+            # 性无知会直接接受精液食物
+            if target_data.talent[222]:
+                target_data.sp_flag.find_food_weird = 0
                 return 1
 
             # 精液_巧妙混合

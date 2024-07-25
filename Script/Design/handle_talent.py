@@ -72,6 +72,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     # 特殊素质获得
     if now_gain_type == 0:
         npc_gain_and_lost_cumflation(character_id)
+        npc_gain_semen_drinking_climax_talent(character_id)
     if now_gain_type == 3:
         npc_lost_no_menarche_talent(character_id)
 
@@ -185,6 +186,21 @@ def npc_gain_and_lost_cumflation(character_id: int):
 
     # 绘制获得素质提示
     if now_draw_text != "" and character_data.position == pl_character_data.position:
+        now_draw_succed = draw.WaitDraw()
+        now_draw_succed.text = now_draw_text
+        now_draw_succed.draw()
+
+def npc_gain_semen_drinking_climax_talent(character_id: int):
+    """
+    干员获得饮精绝顶素质\n
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[31]:
+        return
+    if character_data.experience[111] >= 50:
+        character_data.talent[31] = 1
+        now_draw_text = _("\n{0}因为经常性地在绝顶的同时被口内射精，因此以后尝到精液的味道就会条件反射性地绝顶了\n").format(character_data.name)
+        now_draw_text += _("{0}获得了[饮精绝顶]\n").format(character_data.name)
         now_draw_succed = draw.WaitDraw()
         now_draw_succed.text = now_draw_text
         now_draw_succed.draw()

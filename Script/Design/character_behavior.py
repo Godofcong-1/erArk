@@ -139,6 +139,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             # 结算玩家在移动时同场景里的NPC的跟随情况
             if character_data.state == constant.CharacterStatus.STATUS_MOVE:
                 judge_same_position_npc_follow()
+            # 在玩家行动前的前置结算
+            judge_before_pl_behavior()
+            # 结算状态与事件
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
             character_aotu_change_value(character_id, now_time, pl_start_time)
@@ -873,6 +876,24 @@ def judge_pl_real_time_data() -> int:
             pl_character_data.action_info.check_out_time = datetime.datetime(1, 1, 1)
 
 
+def judge_before_pl_behavior():
+    """
+    玩家角色行动前的判断\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.target_character_id != 0:
+        target_character_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        # 重置交互对象的射精部位
+        if target_character_data.h_state.shoot_position_body != -1:
+            target_character_data.h_state.shoot_position_body = -1
+        if target_character_data.h_state.shoot_position_cloth != -1:
+            target_character_data.h_state.shoot_position_cloth = -1
+
+
 def update_sleep():
     """
     玩家睡觉时的刷新\n
@@ -1109,33 +1130,34 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
-        # 激素系，改为不消耗理智
-        # if now_character_data.pl_ability.hormone:
-        #     down_sp = max(int(true_add_time / 6),1)
-        #     now_character_data.sanity_point -= down_sp
-        #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
-        # 视觉系
-        if now_character_data.pl_ability.visual:
-            down_sp = max(int(true_add_time / 12),1)
-            # 倍率计算
-            multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
-            down_sp *= max(multiple, 1)
-            # 用于消耗的理智值不得超过当前理智值
-            down_sp = min(down_sp, now_character_data.sanity_point)
-            now_character_data.sanity_point -= down_sp
-            now_character_data.pl_ability.today_sanity_point_cost += down_sp
-        # 理智值不足则归零并中断所有开启中的源石技艺
-        if now_character_data.sanity_point <= 0:
-            now_character_data.sanity_point = 0
-            now_character_data.pl_ability.visual = False
-            # 解除目标的催眠
-            if target_data.sp_flag.unconscious_h >= 4:
-                default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
-            # 输出提示信息
-            now_draw = draw.WaitDraw()
-            now_draw.width = window_width
-            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
-            now_draw.draw()
+        if now_character_data.sanity_point > 0:
+            # 激素系，改为不消耗理智
+            # if now_character_data.pl_ability.hormone:
+            #     down_sp = max(int(true_add_time / 6),1)
+            #     now_character_data.sanity_point -= down_sp
+            #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
+            # 视觉系
+            if now_character_data.pl_ability.visual:
+                down_sp = max(int(true_add_time / 12),1)
+                # 倍率计算
+                multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
+                down_sp *= max(multiple, 1)
+                # 用于消耗的理智值不得超过当前理智值
+                down_sp = min(down_sp, now_character_data.sanity_point)
+                now_character_data.sanity_point -= down_sp
+                now_character_data.pl_ability.today_sanity_point_cost += down_sp
+            # 理智值不足则归零并中断所有开启中的源石技艺
+            if now_character_data.sanity_point <= 0:
+                now_character_data.sanity_point = 0
+                now_character_data.pl_ability.visual = False
+                # 解除目标的催眠
+                if target_data.sp_flag.unconscious_h >= 4:
+                    default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
+                # 输出提示信息
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
+                now_draw.draw()
 
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:

@@ -3545,26 +3545,30 @@ msgid "背面立位绝顶经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:98
-msgid "睡姦经验"
-msgstr ""
-
-#: .\data\csv\Experience.csv:99
-msgid "被睡姦经验"
+msgid "饮精绝顶经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:100
-msgid "催眠经验"
+msgid "睡姦经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:101
-msgid "被催眠经验"
+msgid "被睡姦经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:102
-msgid "时姦经验"
+msgid "催眠经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:103
+msgid "被催眠经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:104
+msgid "时姦经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:105
 msgid "被时姦经验"
 msgstr ""
 
@@ -6257,7 +6261,7 @@ msgid "麒麟"
 msgstr ""
 
 #: .\data\csv\Race.csv:13
-msgid "阿达纳克斯"
+msgid "阿达克利斯"
 msgstr ""
 
 #: .\data\csv\Race.csv:14

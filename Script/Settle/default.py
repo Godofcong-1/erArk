@@ -265,6 +265,58 @@ def base_chara_favorability_and_trust_common_settle(
         return
 
 
+def base_chara_climix_common_settle(
+        character_id: int,
+        part_id: int = 0,
+        base_value: int = 500,
+        adjust: int = -1,
+        degree: int = -1,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色绝顶通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    part_id -- 部位id，即性器官id\n
+    base_value -- 基础固定值\n
+    adjust -- 系数\n
+    degree -- 绝顶程度，默认-1，0小1普中强\n
+    change_data -- 结算信息记录对象
+    change_data_to_target_change -- 结算信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 只能选择正确部位
+    if part_id < 0 or part_id > 7:
+        return
+
+    # 部位快感
+    random_adjust = random.uniform(0.8, 1.2)
+    if adjust >= 0:
+        adjust *= random_adjust
+    else:
+        adjust = random_adjust
+    base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+
+    # 触发绝顶
+    num = part_id * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
+    # 如果指定了程度，则直接使用指定的程度
+    if degree >= 0:
+        character_data.second_behavior[num + degree] = 1
+    # 否则根据之前的高潮程度来判断
+    else:
+        pre_data = character_data.h_state.orgasm_level[part_id] # 记录里的前高潮程度
+        if pre_data % 3 == 0:
+            character_data.second_behavior[num] = 1
+        elif pre_data % 3 == 1:
+            character_data.second_behavior[num + 1] = 1
+        elif pre_data % 3 == 2:
+            character_data.second_behavior[num + 2] = 1
+    character_data.h_state.orgasm_level[4] += 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
 def handle_nothing(
         character_id: int,
@@ -1721,23 +1773,7 @@ def handle_target_hypnosis_force_climax(
     change_data.sanity_point -= 50
     character_data.pl_ability.today_sanity_point_cost += 50
 
-    # 增加快感值
-    random_adjust = random.uniform(0.8, 1.2)
-    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 500, extra_adjust = random_adjust, change_data_to_target_change = change_data)
-
-    # 触发高潮结算
-    num = 1012  # 通过num值来判断是二段行为记录的哪个位置
-    pre_data = target_character_data.h_state.orgasm_level[4] # 记录里的前高潮程度
-    if pre_data % 3 == 0:
-        # now_draw.text = _("\n触发小绝顶\n")
-        target_character_data.second_behavior[num] = 1
-    elif pre_data % 3 == 1:
-        # now_draw.text = _("\n触发普绝顶\n")
-        target_character_data.second_behavior[num + 1] = 1
-    elif pre_data % 3 == 2:
-        # now_draw.text = _("\n触发强绝顶\n")
-        target_character_data.second_behavior[num + 2] = 1
-    target_character_data.h_state.orgasm_level[4] += 1
+    base_chara_climix_common_settle(character_data.target_character_id, 4, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
