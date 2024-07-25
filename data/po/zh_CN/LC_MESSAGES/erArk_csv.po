@@ -9341,102 +9341,106 @@ msgid "每日打招呼"
 msgstr ""
 
 #: .\data\csv\Status.csv:380
-msgid "被选为助理"
-msgstr ""
-
-#: .\data\csv\Status.csv:381
-msgid "不再为助理"
+msgid "新周目告别"
 msgstr ""
 
 #: .\data\csv\Status.csv:382
-msgid "关闭智能跟随"
+msgid "被选为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:383
-msgid "开启智能跟随"
+msgid "不再为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:384
-msgid "要求前往办公室"
+msgid "关闭智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:385
-msgid "关闭辅佐服务"
+msgid "开启智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:386
-msgid "开启辅佐服务"
+msgid "要求前往办公室"
 msgstr ""
 
 #: .\data\csv\Status.csv:387
-msgid "关闭送饭服务"
+msgid "关闭辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:388
-msgid "开启帮忙买午饭服务"
+msgid "开启辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:389
-msgid "开启亲手做午饭服务"
+msgid "关闭送饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:390
-msgid "开启亲手做三餐服务"
+msgid "开启帮忙买午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:391
-msgid "关闭早安服务"
+msgid "开启亲手做午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:392
-msgid "开启早上叫起床服务"
+msgid "开启亲手做三餐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:393
-msgid "开启早安吻服务"
+msgid "关闭早安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:394
-msgid "开启早安咬服务"
+msgid "开启早上叫起床服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:395
-msgid "关闭晚安服务"
+msgid "开启早安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:396
-msgid "开启晚安吻服务"
+msgid "开启早安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:397
-msgid "开启晚安咬服务"
+msgid "关闭晚安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:398
-msgid "关闭同居服务"
+msgid "开启晚安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:399
-msgid "开启同居服务"
+msgid "开启晚安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:400
-msgid "关闭助攻服务"
+msgid "关闭同居服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:401
-msgid "开启助攻服务"
+msgid "开启同居服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:402
+msgid "关闭助攻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:403
-msgid "获得被浅层催眠素质"
-msgstr ""
-
-#: .\data\csv\Status.csv:404
-msgid "获得被深层催眠素质"
+msgid "开启助攻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:405
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:406
+msgid "获得被深层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:407
 msgid "获得被完全催眠素质"
 msgstr ""
 

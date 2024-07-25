@@ -51,6 +51,10 @@ class New_Round_Handle:
         """ 干员显示 """
         self.show_panel_flag_list = [False, False, False, False, False]
         """ 面板显示列表 """
+        self.all_fall_chara_list = []
+        """ 所有陷落干员列表 """
+        self.farewell_npc_id = 0
+        """ 送别干员id """
 
 
     def draw(self):
@@ -74,7 +78,7 @@ class New_Round_Handle:
             info_draw.text = info_text
             info_draw.draw()
             # 统计所有干员中已经陷落的
-            all_fall_chara_list = []
+            self.all_fall_chara_list = []
             button_text = _("○全陷落干员")
             if self.show_npc_flag:
                 button_text += "▼"
@@ -90,7 +94,7 @@ class New_Round_Handle:
                 talent_id = handle_talent.have_fall_talent(chara_id)
                 # 如果已经陷落
                 if talent_id:
-                    all_fall_chara_list.append(chara_id)
+                    self.all_fall_chara_list.append(chara_id)
                     now_character_data = cache.character_data[chara_id]
                     talent_name = game_config.config_talent[talent_id].name
                     point_add = talent_id % 10 # 取个位数字
@@ -275,9 +279,26 @@ class New_Round_Handle:
             line_feed_draw.draw()
 
             # 输出总点数的花费与剩余
-            info_text = _("\n总点数消耗：{0}，剩余：{1}\n\n").format(self.round_point_cost, self.round_point_all - self.round_point_cost)
+            info_text = _("\n总点数消耗：{0}，剩余：{1}\n").format(self.round_point_cost, self.round_point_all - self.round_point_cost)
             info_draw.text = info_text
             info_draw.draw()
+
+            # 选择送别干员
+            info_text = _("\n○送别干员：")
+            if self.farewell_npc_id:
+                info_text += "{0}".format(cache.character_data[self.farewell_npc_id].name)
+            else:
+                info_text += _("未选择")
+            info_text += "        "
+            info_draw.text = info_text
+            info_draw.draw()
+            # 更改送别干员按钮
+            button_text = _(" [更改送别干员] ")
+            button = draw.CenterButton(button_text, button_text, len(button_text) * 2, cmd_func=self.farewell_npc_change)
+            self.return_list.append(button_text)
+            button.draw()
+            line_feed_draw.draw()
+            line_feed_draw.draw()
 
             line_feed_draw.draw()
             yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width)
@@ -370,11 +391,69 @@ class New_Round_Handle:
             elif self.chara_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[5]) - 1:
                 self.chara_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[5]) - 1
 
+    def farewell_npc_change(self):
+        """
+        更改送别干员
+        """
+        while 1:
+            title_text = _("送别干员")
+            title_draw = draw.TitleLineDraw(title_text, self.width)
+            title_draw.draw()
+            return_list = []
+            info_text = ""
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_text += _("选择送别干员\n")
+            info_draw.text = info_text
+            info_draw.draw()
+            chara_count = 0
+            for chara_id in self.all_fall_chara_list:
+                now_character_data = cache.character_data[chara_id]
+                button_text = f"[{now_character_data.adv}]{now_character_data.name}"
+                button_len = max(len(button_text), 24)
+                button = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.farewell_npc_change_confirm, args=(chara_id,))
+                if chara_id == self.farewell_npc_id:
+                    button = draw.LeftButton(button_text, button_text, button_len, normal_style = "gold_enrod", cmd_func=self.farewell_npc_change_confirm, args=(chara_id,))
+                return_list.append(button_text)
+                button.draw()
+                chara_count += 1
+                if chara_count % 8 == 0:
+                    line_feed_draw.draw()
+            line_feed_draw.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def farewell_npc_change_confirm(self, chara_id: int):
+        """
+        确认送别干员
+        Keyword arguments:
+        chara_id -- 干员id
+        """
+        self.farewell_npc_id = chara_id
 
     def start_new_round(self):
         """
         开始新的周目
         """
+        from Script.Design import talk
+
+        # 输出送别干员的送别口上
+        if self.farewell_npc_id:
+            now_character_data = cache.character_data[self.farewell_npc_id]
+            now_character_data.second_behavior[1351] = 1
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed_draw.draw()
+            line_feed_draw.draw()
+            talk.must_show_talk_check(self.farewell_npc_id)
+            line_feed_draw.draw()
+            line_feed_draw.draw()
+            line_feed_draw.draw()
+
 
         line_draw = draw.LineDraw("-", self.width)
         line_draw.draw()
@@ -500,7 +579,7 @@ class New_Round_Handle:
         for now_id, now_npc_data in zip(id_list, npc_data_iter):
 
             # 仅继承陷落干员
-            if not handle_talent.have_fall_talent(now_id):
+            if now_id not in self.all_fall_chara_list:
                 character_handle.init_character(now_id, now_npc_data)
             else:
                 character_handle.init_character(now_id, now_npc_data)
