@@ -962,6 +962,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     if effect_all_value_list[0] == "A1":
         final_character_data = character_data
         final_change_data = change_data
+        final_character_id = character_id
     elif effect_all_value_list[0] == "A2":
         # 如果没有交互对象，则返回0
         if character_data.target_character_id == character_id:
@@ -970,6 +971,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
         final_change_data = target_change
+        final_character_id = character_data.target_character_id
     elif effect_all_value_list[0][:2] == "A3":
         final_character_id = int(effect_all_value_list[0][3:])
         # 如果还没拥有该角色，则返回0
@@ -990,7 +992,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "S": "status_data",
         "F": "favorability",
         "X": "trust",
-        "Flag": "flag"
+        "Flag": "flag",
+        "Climax": "climax"
     }
     
     # 创建一个字典来映射操作
@@ -1014,7 +1017,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         operation_func = operation_mapping[operation]
         # print(f"debug attribute_name = {attribute_name}, operation = {operation}")
     
-        # 对于好感、信赖和口上用flag，进行特殊处理
+        # 对于好感、信赖、口上用flag、绝顶，进行特殊处理
         if attribute_name == "favorability":
             final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
         elif attribute_name == "trust":
@@ -1022,6 +1025,13 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         elif attribute_name == "flag":
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
             final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+        elif attribute_name == "climax":
+            from Script.Settle.default import base_chara_climix_common_settle
+            if operation == "E":
+                base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
+            elif operation == "G":
+                for i in range(int(effect_all_value_list[3]) + 1):
+                    base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
         else:
             # 对属性进行操作
 

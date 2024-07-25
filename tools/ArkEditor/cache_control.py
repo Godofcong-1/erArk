@@ -58,7 +58,7 @@ effect_type_data: Dict[str, Set] = {}
 ability_data: dict = {}
 """ 能力数据 """
 state_data: dict = {}
-""" 当日子状态数据 """
+""" 角色状态数据 """
 experience_data: dict = {}
 """ 经验数据 """
 juel_data: dict = {}
@@ -75,3 +75,5 @@ race_data: dict = {}
 """ 种族数据 """
 clothing_data: dict = {}
 """ 服装数据 """
+organ_data: dict = {}
+""" 性器官数据 """

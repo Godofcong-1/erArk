@@ -176,7 +176,7 @@ class CVEMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cve_b1 = QComboBox()
-        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag"])
+        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶"])
         self.cve_b1.setCurrentIndex(0)
         self.cve_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cve_b1)
@@ -254,6 +254,8 @@ class CVEMenu(QDialog):
             cve_b_value = "S|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "口上用flag":
             cve_b_value = "Flag|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "绝顶":
+            cve_b_value = "Climax|" + self.cve_b2.currentText().split("|")[0]
         cve_c = self.cve_c.currentText()
         if cve_c == "增加":
             cve_c_value = "G"
@@ -338,6 +340,12 @@ class CVEMenu(QDialog):
             for i in range(10):
                 self.cve_b2.addItem(str(i))
             self.cve_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持10个flag（即编号为0~9）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
+        elif index == 9:
+            self.cve_b2.clear()
+            for organ_id, organ_name in cache_control.organ_data.items():
+                self.cve_b2.addItem(f"{organ_id}|{organ_name}")
+            self.cve_b2.setCurrentIndex(0)
+            self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶\n选择[减少]则无效")
 
         self.cve_b = self.cve_b2
 
