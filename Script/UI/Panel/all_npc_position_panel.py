@@ -42,7 +42,10 @@ class All_Npc_Position_Panel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw("干员位置一览", self.width)
 
-        draw_width = self.width / 3
+        if normal_config.config_normal.language == "zh_CN":
+            draw_width = self.width / 3
+        else:
+            draw_width = self.width / 2
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 60, 3, self.width, 1, 1, 0)
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
@@ -84,7 +87,7 @@ class All_Npc_Position_Panel:
                     now_draw = draw.NormalDraw()
                     now_draw.text = select_type_text
                     now_draw.style = "gold_enrod"
-                    now_draw.width = draw_width
+                    now_draw.width = self.width / 3
                     now_draw.draw()
                 else:
                     draw_text = f"  {select_type_list[select_type_id]}     "
@@ -111,7 +114,7 @@ class All_Npc_Position_Panel:
                     now_draw = draw.NormalDraw()
                     now_draw.text = move_type_text
                     now_draw.style = "gold_enrod"
-                    now_draw.width = draw_width
+                    now_draw.width = self.width / 3
                     now_draw.draw()
                 else:
                     draw_text = f"  {move_type_text}     "
@@ -177,9 +180,14 @@ class All_Npc_Position_Panel:
                     name_draw.draw()
                     return_list.append(name_draw.return_text)
 
-                    # 每行三个，如果是第三个，且当前不是最后一个则换行
-                    if chara_count % 3 == 0 and chara_count != len(cache.npc_id_got):
-                        line_feed.draw()
+                    if normal_config.config_normal.language == "zh_CN":
+                        # 每行三个，如果是第三个，且当前不是最后一个则换行
+                        if chara_count % 3 == 0 and chara_count != len(cache.npc_id_got):
+                            line_feed.draw()
+                    else:
+                        # 每行两个，如果是第二个，且当前不是最后一个则换行
+                        if chara_count % 2 == 0 and chara_count != len(cache.npc_id_got):
+                            line_feed.draw()
 
             return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
