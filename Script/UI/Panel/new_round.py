@@ -5,7 +5,7 @@ from Script.Core import get_text, flow_handle, game_type, cache_control, constan
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import see_character_info_panel
 from Script.Config import normal_config, game_config
-from Script.Design import handle_talent
+from Script.Design import handle_talent, character_handle
 
 import copy
 
@@ -491,7 +491,6 @@ class New_Round_Handle:
         Keyword arguments:
         character_id -- 角色id
         """
-        from Script.Design import character_handle
         character_handle.init_character(character_id, cache.npc_tem_data[character_id])
 
     def inherit_player_data(self):
@@ -564,7 +563,6 @@ class New_Round_Handle:
         """
         继承干员数据
         """
-        from Script.Design import character_handle
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
         info_draw_text = "\n"

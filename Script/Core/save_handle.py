@@ -272,15 +272,17 @@ def update_tem_character(loaded_dict):
     update_count = 0
 
     # 将cache.npc_tem_data转换为字典，以便快速查找
-    cache_dict = {npc.Name: npc for npc in cache.npc_tem_data}
+    cache_dict = {npc.AdvNpc: npc for npc in cache.npc_tem_data}
 
     # 更新loaded_dict["npc_tem_data"]，用新的角色预设属性代替旧的属性
     for i, now_npc_tem_data in enumerate(loaded_dict["npc_tem_data"]):
-        if now_npc_tem_data.Name in cache_dict:
-            # print(f"debug 更新了{now_npc_tem_data.Name}的角色预设 ")
-            loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.Name]
+        if now_npc_tem_data.AdvNpc in cache_dict:
+            # print(f"debug 准备更新{now_npc_tem_data.Name}的角色预设 ")
+            loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.AdvNpc]
+            # name = loaded_dict["npc_tem_data"][i].Name
+            # print(f"debug 更新{name}的角色预设成功 ")
             # 从cache_dict中移除已经使用的元素
-            del cache_dict[now_npc_tem_data.Name]
+            del cache_dict[now_npc_tem_data.AdvNpc]
 
     # 将剩余的元素添加到loaded_dict["npc_tem_data"]的末尾
     # print(f"debug cache_dict = {cache_dict}")
@@ -307,8 +309,8 @@ def update_tem_character(loaded_dict):
                 i = 0
                 break
             tem_character = loaded_dict["npc_tem_data"][tem_cid]
-            # 循环的终止条件为找到名字相同的角色
-            if value.name == tem_character.Name:
+            # 循环的终止条件为找到干员编号相同的角色
+            if value.adv == tem_character.AdvNpc:
                 break
             i += 1
             # print(f"debug i = {i}")
