@@ -586,10 +586,15 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
                 # 获取设施的解锁条件数据
                 facility_effect_cid = game_config.config_facility_open[open_cid].zone_cid
                 facility_npc_cid = game_config.config_facility_open[open_cid].NPC_id
+                facility_info = game_config.config_facility_open[open_cid].info
 
-                # 如果是需要设施等级解锁的话
                 info_text = ""
-                if facility_effect_cid:
+                # 如果需要在基建系统中手动建设的话
+                if facility_info in {_("餐馆"), _("娱乐设施"), _("酒店")}:
+                    zone_data = game_config.config_facility_effect[facility_effect_cid]
+                    info_text += _("\n  ●目标移动房间——{0}，当前尚未建设，需要在基建-{1}中建设该地点\n").format(now_scene_data.scene_name, zone_data.name)
+                # 如果是需要设施等级解锁的话
+                elif facility_effect_cid:
                     zone_data = game_config.config_facility_effect[facility_effect_cid]
                     zone_name,zone_lv = zone_data.name,str(zone_data.level)
                     info_text += _("\n  ●目标移动房间——{0}，当前尚未解锁，解锁需要将{1}升到{2}级\n").format(now_scene_data.scene_name, zone_name, zone_lv)

@@ -253,12 +253,51 @@ class Building_Panel:
                 info_draw.width = self.width
                 info_draw.draw()
 
+            # 区块子建筑建设
+            # 贸易区
+            if facility_cid in [111, 112, 113, 114, 115]:
+                trade_draw = draw.NormalDraw()
+                # 可修建的设施类型
+                trade_draw_text = _("\n当前可修建的设施类型：")
+                if facility_cid >= 111:
+                    trade_draw_text += _("餐馆")
+                if facility_cid >= 113:
+                    trade_draw_text += _("、娱乐设施")
+                if facility_cid >= 114:
+                    trade_draw_text += _("、酒店")
+                trade_draw_text += "\n"
+                # 如果已经是最高级
+                if facility_cid == 115:
+                    trade_draw_text += _("区块已是最高级，已自动修建所有设施")
+                else:
+                    # 已修建的设施
+                    trade_draw_text += _("已修建的设施：")
+                    trade_draw_text += "({0}/{1})：".format(len(cache.rhodes_island.shop_open_list), facility_data_now.effect)
+                    for name in cache.rhodes_island.shop_open_list:
+                        trade_draw_text += f"  {name}"
+                trade_draw.text = trade_draw_text
+                trade_draw.width = self.width
+                trade_draw.draw()
+                line_feed.draw()
+                # 增加要修建的设施
+                if facility_cid <= 114 and len(cache.rhodes_island.shop_open_list) < facility_data_now.effect:
+                    button_draw = draw.CenterButton(
+                        _("【修建】"),
+                        _("\n【修建】"),
+                        self.width / 5,
+                        cmd_func=self.build_trade_sub_panel,
+                        args=(facility_cid,),
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                line_feed.draw()
+
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or yrn in return_list:
+            if yrn == back_draw.return_text:
                 break
 
 
@@ -287,3 +326,111 @@ class Building_Panel:
                 info_draw.width = self.width
                 info_draw.draw()
                 break
+
+
+    def build_trade_sub_panel(self, facility_cid: int):
+        """
+        显示建筑升级的详细信息
+        Keyword arguments:
+        facility_cid -- 建筑效果编号
+        """
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            draw_count = 0
+            for facility_open_cid in range(150,170):
+                if facility_open_cid in game_config.config_facility_open:
+                    open_data = game_config.config_facility_open[facility_open_cid]
+                    # 跳过已经开放的设施
+                    if cache.rhodes_island.facility_open[facility_open_cid] == 1:
+                        continue
+                    elif open_data.name in cache.rhodes_island.shop_open_list:
+                        continue
+                    # 跳过与当前可修建的类型不符的设施
+                    if facility_cid < 114 and open_data.info == _("酒店"):
+                        continue
+                    if facility_cid < 113 and open_data.info == _("娱乐设施"):
+                        continue
+                    # 绘制按钮
+                    draw_text = f"[{facility_cid}]{open_data.name}"
+                    now_draw = draw.LeftButton(
+                        draw_text,
+                        _("\n{0}").format(open_data.name),
+                        self.width / 6,
+                        cmd_func=self.sure_build_trade,
+                        args=(facility_open_cid),
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+                    draw_count += 1
+                    if draw_count % 6 == 0:
+                        line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
+
+
+    def sure_build_trade(self, facility_open_cid: int):
+        """
+        确定是否要升级设施
+        Keyword arguments:
+        facility_cid -- 建筑效果编号
+        """
+        open_data = game_config.config_facility_open[facility_open_cid]
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("\n是否要修建{0}？").format(open_data.name)
+            info_draw.width = self.width
+            info_draw.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+
+            button_draw = draw.CenterButton(
+                _("【确定】"),
+                _("\n【确定】"),
+                self.width / 5,
+                cmd_func=self.build_trade,
+                args=(facility_open_cid,),
+            )
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
+
+
+    def build_trade(self, facility_open_cid: int):
+        """
+        确定是否要升级设施
+        Keyword arguments:
+        facility_cid -- 建筑效果编号
+        """
+        open_data = game_config.config_facility_open[facility_open_cid]
+        cache.rhodes_island.facility_open[facility_open_cid] = 1
+        cache.rhodes_island.shop_open_list.append(open_data.name)
+        basement.get_base_updata()
+
+        # 输出提示信息
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        info_draw = draw.WaitDraw()
+        info_draw.text = _("\n{0}修建完成！\n").format(open_data.name)
+        info_draw.width = self.width
+        info_draw.draw()
