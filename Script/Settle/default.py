@@ -4460,6 +4460,29 @@ def handle_maintenance_flag_to_0(
     character_data.sp_flag.work_maintenance = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG)
+def handle_cancel_all_work_and_entertainment_flag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身取消所有工作和娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.swim = 0
+    character_data.sp_flag.bathhouse_entertainment = 0
+    character_data.sp_flag.work_maintenance = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_0)
 def handle_h_flag_to_0(
         character_id: int,

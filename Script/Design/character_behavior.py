@@ -773,7 +773,7 @@ def judge_character_cant_move(character_id: int) -> int:
 
 def judge_character_follow(character_id: int) -> int:
     """
-    维持强制跟随状态
+    处理跟随模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -781,7 +781,12 @@ def judge_character_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 维持跟随的状态
+    # 智能跟随
+    if character_data.sp_flag.is_follow == 1:
+        # 取消所有工作和娱乐状态
+        default.handle_cancel_all_work_and_entertainment_flag(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
+
+    # 维持强制跟随的状态
     if character_data.sp_flag.is_follow == 2:
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW

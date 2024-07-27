@@ -425,6 +425,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 自身变成要游泳状态 """
     MAINTENANCE_FLAG_TO_0 = 468
     """ 属性_特殊flag 自身清零要检修状态 """
+    CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG = 469
+    """ 属性_特殊flag 自身取消所有工作和娱乐状态 """
     H_FLAG_TO_0 = 475
     """ 属性_特殊flag 自身清零H状态 """
     H_FLAG_TO_1 = 476
