@@ -693,7 +693,6 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 character_data.h_state.extra_orgasm_feel[orgasm] += int(change_data.status_data[orgasm])
                 # 额外高潮次数
                 extra_count = pre_data - 10
-                character_data.h_state.extra_orgasm_count += extra_count
                 # 基础阈值为2w，每次高潮则乘以0.9的若干次方
                 now_threshold = 20000 * (0.9 ** extra_count)
                 now_threshold = max(1000, now_threshold)
@@ -701,6 +700,7 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 extra_add = int(character_data.h_state.extra_orgasm_feel[orgasm] // now_threshold)
                 now_data = pre_data + extra_add
                 character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
+                character_data.h_state.extra_orgasm_count += extra_add
             # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
             if now_data > pre_data or extra_add > 0 or un_count_data > 0:
                 # 该部位高潮计数+1
