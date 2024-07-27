@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-27 21:21+0800\n"
+"POT-Creation-Date: 2024-07-27 23:18+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,17 +146,22 @@ msgstr ""
 msgid "您输入的选项无效，请重试\n"
 msgstr ""
 
-#: .\Script\Core\game_init.py:67
+#: .\Script\Core\game_init.py:69
 #, python-brace-format
 msgid "版本信息：{0}\n"
 msgstr ""
 
-#: .\Script\Core\game_init.py:68
+#: .\Script\Core\game_init.py:70
 #, python-brace-format
 msgid "最近输入指令：{0}\n"
 msgstr ""
 
-#: .\Script\Core\game_init.py:70
+#: .\Script\Core\game_init.py:71
+#, python-brace-format
+msgid "当前游戏内时间：{0}\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:73
 msgid ""
 "\n"
 "\n"
@@ -165,10 +170,17 @@ msgid ""
 msgstr ""
 
 #: .\Script\Core\game_init.py:74
+msgid ""
+"报错数据文件已保存至99号档位，请将error.log和存档发送给游戏作者以帮助解决问"
+"题\n"
+"\n"
+msgstr ""
+
+#: .\Script\Core\game_init.py:79
 msgid "回到标题画面"
 msgstr ""
 
-#: .\Script\Core\game_init.py:74
+#: .\Script\Core\game_init.py:79
 msgid "退出游戏"
 msgstr ""
 

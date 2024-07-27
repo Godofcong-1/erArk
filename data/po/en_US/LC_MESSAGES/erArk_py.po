@@ -6416,3 +6416,11 @@ msgstr ""
 
 msgid "选择送别干员\n"
 msgstr ""
+
+msgid "当前游戏内时间：{0}\n"
+msgstr ""
+
+msgid ""
+"报错数据文件已保存至99号档位，请将error.log和存档发送给游戏作者以帮助解决问题\n"
+"\n"
+msgstr ""
