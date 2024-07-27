@@ -6314,6 +6314,25 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_AND_TARGET_HP_GE_70)
+def handle_self_and_target_hp_ge_70(character_id: int) -> int:
+    """
+    自身和交互对象体力都高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value1 = character_data.hit_point / character_data.hit_point_max
+    value2 = target_data.hit_point / target_data.hit_point_max
+    if value1 > 0.7 and value2 > 0.7:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TIRED_LE_0)
 def handle_tired_le_0(character_id: int) -> int:
     """

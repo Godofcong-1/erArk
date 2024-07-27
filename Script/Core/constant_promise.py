@@ -720,6 +720,8 @@ class Premise:
     """ 属性_基础 交互对象气力低于30% """
     TARGET_MP_HIGH = "t_mp_high"
     """ 属性_基础 交互对象气力高于70% """
+    SELF_AND_TARGET_HP_GE_70 = "self_and_target_hp_ge_70"
+    """ 属性_基础 自身和交互对象体力都高于70% """
     TIRED_LE_0 = "tired_le_0"
     """ 属性_基础 疲劳条≤0% """
     TIRED_GE_50 = "tired_ge_50"
