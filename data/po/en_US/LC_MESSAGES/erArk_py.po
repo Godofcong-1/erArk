@@ -6314,3 +6314,105 @@ msgid ""
 msgstr ""
 "\n"
 " [Hypnosis-type] \n"
+
+msgid ""
+"\n"
+"{0}进入智能跟随模式\n"
+msgstr ""
+
+msgid "当前最大跟随数量：1人，{0}退出跟随模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}因为经常性地在绝顶的同时被口内射精，因此以后尝到精液的味道就会条件反射性地绝顶了\n"
+msgstr ""
+
+msgid "{0}获得了[饮精绝顶]\n"
+msgstr ""
+
+msgid "餐馆"
+msgstr ""
+
+msgid "娱乐设施"
+msgstr ""
+
+msgid "酒店"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●目标移动房间——{0}，当前尚未建设，需要在基建-{1}中建设该地点\n"
+msgstr ""
+
+msgid ""
+"\n"
+"当前可修建的设施类型："
+msgstr ""
+
+msgid "、娱乐设施"
+msgstr ""
+
+msgid "、酒店"
+msgstr ""
+
+msgid "区块已是最高级，已自动修建所有设施"
+msgstr ""
+
+msgid "已修建的设施："
+msgstr ""
+
+msgid "【修建】"
+msgstr ""
+
+msgid ""
+"\n"
+"【修建】"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"是否要修建{0}？"
+msgstr ""
+
+msgid "【确定】"
+msgstr ""
+
+msgid ""
+"\n"
+"【确定】"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}修建完成！\n"
+msgstr ""
+
+msgid ""
+"debug模式+9999\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"总点数消耗：{0}，剩余：{1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○送别干员："
+msgstr ""
+
+msgid " [更改送别干员] "
+msgstr ""
+
+msgid "送别干员"
+msgstr ""
+
+msgid "选择送别干员\n"
+msgstr ""

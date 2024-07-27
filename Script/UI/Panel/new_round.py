@@ -125,6 +125,13 @@ class New_Round_Handle:
             info_draw.text = info_text
             info_draw.draw()
 
+            # debug模式下补满
+            if cache.debug_mode:
+                self.round_point_all += 9999
+                info_text = _("debug模式+9999\n\n").format(self.round_point_all)
+                info_draw.text = info_text
+                info_draw.draw()
+
             # 总点数
             info_text = _("总周目点数：{0}\n\n").format(self.round_point_all)
             info_draw.text = info_text

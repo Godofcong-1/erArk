@@ -1267,7 +1267,7 @@ def handle_followed():
     # print("跟随指令交互目标的NPC编号为：",character_data.target_character_id)
 
     now_draw = draw.NormalDraw()
-    now_draw.text = f"\n{target_data.name}进入智能跟随模式\n"
+    now_draw.text = _("\n{0}进入智能跟随模式\n").format(target_data.name)
 
     # 去掉其他NPC的跟随
     if not cache.debug_mode:
@@ -1276,7 +1276,7 @@ def handle_followed():
                 other_character_data = cache.character_data[npc_id]
                 if other_character_data.sp_flag.is_follow:
                     other_character_data.sp_flag.is_follow = 0
-                    now_draw.text += f"当前最大跟随数量：1人，{other_character_data.name}退出跟随模式\n"
+                    now_draw.text += _("当前最大跟随数量：1人，{0}退出跟随模式\n").format(other_character_data.name)
     now_draw.width = 1
     now_draw.draw()
 
