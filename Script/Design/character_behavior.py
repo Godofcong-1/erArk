@@ -1356,7 +1356,7 @@ def get_chara_entertainment(character_id: int):
                         judge, reason = attr_calculation.judge_require(need_data_list, character_id)
                         # 需要娱乐地点的场所是开放的
                         if entertainment_data.palce in game_config.config_facility_open_name_set:
-                            facility_open_cid = game_config.config_facility_open_name_set[entertainment_data.palce]
+                            facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.palce]
                             if cache.rhodes_island.facility_open[facility_open_cid] == 0:
                                 judge = False
                         # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
