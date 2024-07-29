@@ -38,6 +38,7 @@ def base_chara_state_common_settle(
         base_value: int = 30,
         ability_level: int = -1,
         extra_adjust: float = 0,
+        tenths_add: bool = True,
         change_data: game_type.CharacterStatusChange = None,
         change_data_to_target_change: game_type.CharacterStatusChange = None,
         ):
@@ -66,7 +67,10 @@ def base_chara_state_common_settle(
         final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
 
     # 最终值
-    final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
+    if tenths_add:
+        final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
+    else:
+        final_value = time_base_value * final_adjust
 
     # 结算最终值
     character_data.status_data[state_id] += final_value
@@ -177,18 +181,18 @@ def extra_feel_settle(character_id: int, state_id: int, final_value: float, chan
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    final_value = max(10, final_value / 10)
+    final_value = max(10, final_value / 20)
     final_value = int(final_value)
 
     # 施虐对先导
-    if state_id == 14:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[35], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    if state_id == 14 and character_data.ability[35] >= 5:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 露出对羞耻
-    elif state_id == 16:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[34], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    elif state_id == 16 and character_data.ability[34] >= 5:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[34], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 受虐对苦痛
-    elif state_id == 17:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    elif state_id == 17 and character_data.ability[36] >= 5:
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
 
 def base_chara_favorability_and_trust_common_settle(
