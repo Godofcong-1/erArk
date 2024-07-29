@@ -4330,7 +4330,7 @@ msgid "鲁珀"
 msgstr "Lupo"
 
 msgid "曼提柯"
-msgstr "Manticore"
+msgstr "Manticore (race)"
 
 msgid "佩洛"
 msgstr "Perro"
