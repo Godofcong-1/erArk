@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import handle_premise, attr_calculation, update, character_handle
+from Script.Design import handle_premise, attr_calculation, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -247,8 +247,8 @@ class Assistant_Panel:
             if service_cid == 7:
                 if target_data.assistant_services[service_cid] == 1:
                     target_data.pre_dormitory = target_data.dormitory
-                    target_data.dormitory = "中枢\博士房间"
-                elif target_data.dormitory == "中枢\博士房间":
+                    target_data.dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"])
+                elif target_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
                     target_data.dormitory = target_data.pre_dormitory
                 # print(f"debug target_data.dormitory = {target_data.dormitory}")
 
@@ -435,7 +435,7 @@ class SeeNPCButtonList:
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         old_assistant_data.sp_flag.is_follow = 0
         # 去掉旧助理的同居状态
-        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == _("中枢\博士房间"):
+        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
             old_assistant_data.dormitory = old_assistant_data.pre_dormitory
         # 重置旧助理的助理服务数据体
         old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
