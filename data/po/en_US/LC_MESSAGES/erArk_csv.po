@@ -61,7 +61,7 @@ msgid "苦痛刻印"
 msgstr "Pain Engraving"
 
 msgid "时姦刻印"
-msgstr "Rape Engraving"
+msgstr "Timerape Engraving"
 
 msgid "恐怖刻印"
 msgstr "Fear Engraving"
@@ -2522,7 +2522,7 @@ msgid "催眠经验"
 msgstr "Hypnosis EXP"
 
 msgid "被催眠经验"
-msgstr "Hypnotised EXP"
+msgstr "Hypnotized EXP"
 
 msgid "时姦经验"
 msgstr "Timed Rape EXP"
@@ -5317,10 +5317,10 @@ msgid "A插入震动棒"
 msgstr "Inserting vibrator into anus"
 
 msgid "加粗肛门震动棒"
-msgstr "Thickening anus vibrator"
+msgstr "Thickening anal vibrator"
 
 msgid "巨型肛门震动棒"
-msgstr "Enlarging anus vibrator"
+msgstr "Enlarging anal vibrator"
 
 msgid "肛塞"
 msgstr "Putting on anal plug"
@@ -10697,8 +10697,7 @@ msgstr "Being truss tied with ropes"
 
 msgid "{TargetSceneName}里现在好像有人，要进去吗"
 msgstr ""
-"There seems to be someone inside {TargetSceneName}, do you really want to "
-"enter"
+"There seems to be someone inside {TargetSceneName}, do you really want to enter"
 
 msgid "进去|{NickName}被{SrcOneCharaName}很生气地赶出来了"
 msgstr "Enter|{NickName} got chased out by {SrcOneCharaName} angrily"
@@ -10708,28 +10707,26 @@ msgstr "Nope|{NickName} refused the thought"
 
 msgid "{Name}从食堂带了{AllFoodName}回来，向{PlayerName}打了个招呼"
 msgstr ""
-"{Name} brought {AllFoodName} from the Canteen, and said hello to "
-"{PlayerName}"
+"{Name} brought {AllFoodName} from the Canteen, and said hello to {PlayerName}"
 
 msgid "自己边刷视频边吃|{PlayerName}表示感谢并接过了食物，点开了常看的视频网站，看着视频开始吃饭"
 msgstr ""
-"Eat alone while watching videos|{PlayerName} said thanks and took the food, "
+"Eat alone while watching videos|{PlayerName} said thanks and took the food, \\n"
 "and afterwards clicked on the video site and eat while watching videos"
 
 msgid "自己边工作边吃|{PlayerName}表示感谢并接过了食物，拿出了还没处理完的文件，一边浏览一边吃饭"
 msgstr ""
-"Eat alone while working|{PlayerName} said thanks and took the food, and "
-"afterwards took out the documents and eat while browsing"
+"Eat alone while working|{PlayerName} said thanks and took the food, \\n"
+"and afterwards took out the documents and eat while browsing"
 
 msgid "邀请{Name}一起吃|{PlayerName}和{Name}一起坐在桌前，一边聊天一边吃了饭"
 msgstr ""
-"Invite {Name} to eat together|{PlayerName} and {Name} sat on the table "
-"together, and eat while chatting"
+"Invite {Name} to eat together|{PlayerName} and {Name} sat on the table together, \\n"
+"and eat while chatting"
 
 msgid "{Name}带着自己从厨房做的{AllFoodName}回来，向{PlayerName}打了个招呼"
 msgstr ""
-"{Name} brought {AllFoodName} from the Kitchen, and said hello to "
-"{PlayerName}"
+"{Name} brought {AllFoodName} from the Kitchen, and said hello to {PlayerName}"
 
 msgid "罗德岛出口"
 msgstr "Exit"
@@ -11329,7 +11326,7 @@ msgid "情感共鸣"
 msgstr "Emotion Resonance"
 
 msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
-msgstr "Open your heart, encouraging emotion interflow, granting a 50% boost on Affinity anf Trust gain"
+msgstr "Open your heart, encouraging emotion interflow, granting a 50% boost on Affinity and Trust gain"
 
 msgid "下坠天空"
 msgstr "Falling Sky"
@@ -11754,7 +11751,7 @@ msgid "电动按摩棒"
 msgstr "Electric massage stick"
 
 msgid "绳子"
-msgstr "Ropes"
+msgstr "String"
 
 msgid "暂未实装"
 msgstr "Not implemented"
@@ -12155,7 +12152,7 @@ msgid "拔出震动棒"
 msgstr "Pull out vibrator"
 
 msgid "拔出肛门震动棒"
-msgstr "Pull out anus vibrator"
+msgstr "Pull out anal vibrator"
 
 msgid "拔出肛门拉珠"
 msgstr "Pull out anal beads"
@@ -12317,10 +12314,10 @@ msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
 msgstr "Don't display|Display Hypnosis type|Display Hypnosis type and progress"
 
 msgid "本番合意"
-msgstr ""
+msgstr "Sex Agreement"
 
 msgid "同意避孕套下的本番行为"
-msgstr ""
+msgstr "Allows sex with condom"
 
 msgid "避孕中出合意"
 msgstr "Birth Controlled Creampie Agreement"
@@ -13230,11 +13227,17 @@ msgid "温米"
 msgstr "Warmy"
 
 msgid "一辆用糖纸叠成的小小运载车。你在旅途中给了温米几颗雷姆必拓奶糖，她变了个样子回赠与你。"
-msgstr ""
+msgstr "A tiny little freight truck, made out of a candy wrapper. "
+"For each Rim Billy sweet you've given Warmy in your journey, "
+"she's transformed it and gifted it back to you."
 
 msgid ""
 "温米，出生于雷姆必拓的一座矿业小镇，虽年纪尚小，却在烹饪、机械修理等技术领域展露出了出色的天分。经干员暴行推荐，在监护人阿兰娜的陪同下来到罗德岛接受治疗，同时在舰上学习源石技艺基础课程。"
 msgstr ""
+"Warmy was born in a small Rim Billitonian mining town. Though still young in years, \\n"
+"she demonstrates extraordinary talent in areas such as culinary arts and machine repair. \\n"
+"Recommended by Operator Savage and accompanied by her guardian, Alanna, \\n"
+"she is currently receiving treatment in Rhodes Island and basic Arts education aboard the landship."
 
 msgid "白色绿饰点缀连衣裙"
 msgstr "White green-adorned dress"
@@ -13402,7 +13405,8 @@ msgid "锏"
 msgstr "Degenbrecher"
 
 msgid "一个只能拨通她的号码的通讯终端。和普通的通讯终端在外表上明明没什么区别，却能给人无上的安心感。"
-msgstr ""
+msgstr "A comms terminal that can only reach her number. "
+"Doesn't look any different to a regular comms terminal, but provides infinitely more relief."
 
 msgid ""
 "前卡西米尔骑士竞赛三届冠军，喀兰贸易总裁恩希欧迪斯的贴身保镖。基于博士与恩希欧迪斯签订的合同，无限期作为干员加入罗德岛。\n"
@@ -13410,6 +13414,15 @@ msgid ""
 "\n"
 "我收到一些反馈，说大部分任务有她在的话，和野营没什么区别。这确实不怪博士，她主动去的，而且看起来她还挺乐在其中的。呃，那我也没什么理由反对，不是吗？"
 msgstr ""
+"Former three-time champion of the Kazimierz Major and personal bodyguard to Enciodes, "
+"the president of Karlan Trade. Joined Rhodes Island indefinitely as an operator, "
+"as per a contract between the Doctor and Enciodes.\n"
+"Currently active in various missions as a Guard, "
+"clearing paths for her team with her incomparable battle prowess.\n"
+"\n"
+"I've received some feedback that most missions with her feel more like camping trips. "
+"This is not the Doctor's fault—she does this on her own, and seems to quite enjoy it, too. "
+"Then there's no reason I should stop her, yes?"
 
 msgid "深色莱塔尼亚军装"
 msgstr "Dark Leithanien military uniform"
@@ -13424,11 +13437,17 @@ msgid "莱伊"
 msgstr "Ray"
 
 msgid "一本看不出制作者意图的剪贴册。里面的“奇异生物照片”似乎也是拼贴合成的图像，要不要告诉她呢？"
-msgstr ""
+msgstr "A scrapbook, author's intent indiscernible. "
+"The \"cryptid photo\" inside seems like a collaged stitch job—should somebody tell her?"
 
 msgid ""
 "莱伊，雷姆必拓人，无稳定职业，较常从事在雷姆必拓被称为“探井人”的矿井安保工作。偶遇故地重游的阿米娅、博士与暴行后，主动申请加入罗德岛。现作为罗德岛驻舰干员参与各类安保、战斗及勘探任务。"
 msgstr ""
+"Ray, a Rim Billitonian without stable employment who often works in mine safety and security, "
+"or as a \"pitsinker\" in the local parlance. After running into Amiya, the Doctor, "
+"and Savage while they were revisiting old memories, she took the initiative to apply to Rhodes Island. "
+"As an operator aboard the landship, she participates in a variety of security, combat, "
+"and exploration missions."
 
 msgid "露脐黑色短衬衫"
 msgstr "Revealing black short shirt"
@@ -13476,282 +13495,301 @@ msgid "源石技艺"
 msgstr "Originium Arts"
 
 msgid "林间夜话"
-msgstr ""
+msgstr "Night-Whispers in the Forest"
 
 msgid "提炼十五种植物成分，尝试一百七十二种组合。风踏进山林，万物低语，人可好眠。能够将体力与气力全部回满"
-msgstr ""
+msgstr "Consisting of fifteen herbal extracts in 172 different combinations. \\n"
+"When the wind wends into wooded vales, all creatures lower their voices, \\n"
+"and one can find respite.\\n"
+"Recovers Stamina and Energy to max"
 
 msgid "迷梦香精"
-msgstr ""
+msgstr "Dreaming Essence"
 
 msgid "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。今日习得的获得速度+1倍"
-msgstr ""
+msgstr "Supposedly the Banshees make their aromatics only for their beloved. \\n"
+"A single drop is enough to enchant just about anyone, \\n"
+"bringing out any artist's inspiration and creativity.\\n"
+"Acquirement gain is doubled"
 
 msgid "自嘲弄的橙色转化成青色，感到安心，得到治愈。今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
-msgstr ""
+msgstr "The self-tricking orange changed to green, feeling calm and cured.\\n"
+"Gain of Terror, Pain, Depression and Antipathy is halved"
 
 msgid "蔷薇啊，你的笑靥倾倒芸芸众生，你的藤蔓将散落的诗句拾捡，似不从大地中来，却漫出院墙，摇曳芬芳。今日全部位快感与欲情的获得速度+1倍"
-msgstr ""
+msgstr "Rose, your smile captivates all beings. \\n"
+"Your tendrils embrace the scattered verses and trace them into petals.\\n"
+"It does not seem to come from the earth, but teems from the courtyard walls,\\n"
+"swaying in all its fragrance."
+"Gain of Happiness and Lust is doubled"
 
 msgid "隐藏于内心深处，潜伏于恐惧之下，与我共鸣，打开心扉，感受他人。今日好感与信赖的获得速度变为+0.5倍"
-msgstr ""
+msgstr "Hidden in the heart, lurking below the fear, resonate with me, open your heart and feel others.\\n"
+"Affinity and Trust gain increased by 50%"
 
 msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。催眠进度的增长速度+5倍"
-msgstr ""
+msgstr "The rich smell makes people dizzy, and the weightless dizziness rushed in, \\n"
+"bringing your consciousness into the abyss.\\n"
+"Gain of Hypnosis Depth is sextupled"
 
 msgid "隶属项圈"
-msgstr ""
+msgstr "Affiliated collar"
 
 msgid "恋人戒指"
-msgstr ""
+msgstr "Lover ring"
 
 msgid "获得3至纯源石，可以用来获得或升级源石技艺"
-msgstr ""
+msgstr "Gains 3 Originite Prime, can be used to obtain or upgrade Originium Arts"
 
 msgid "获得5至纯源石，可以用来获得或升级源石技艺"
-msgstr ""
+msgstr "Gains 5 Originite Prime, can be used to obtain or upgrade Originium Arts"
 
 msgid "宿舍开放至3区全部，干员最大人数提升至172人"
-msgstr ""
+msgstr "Dormitory opens to the whole Zone 3, maximum number of Operators increases to 172"
 
 msgid "宿舍开放至6区全部，干员最大人数提升至282人"
-msgstr ""
+msgstr "Dormitory opens to the whole Zone 6, maximum number of Operators increases to 282"
 
 msgid "宿舍开放至9区全部，干员最大人数提升至360人"
-msgstr ""
+msgstr "Dormitory opens to the whole Zone 9, maximum number of Operators increases to 360"
 
 msgid "固定为浊心斯卡蒂宿舍"
-msgstr ""
+msgstr "Always as the Dormitory for Corrupting Heart"
 
 msgid "宿舍314房"
-msgstr ""
+msgstr "Room 314"
 
 msgid "宿舍315房"
-msgstr ""
+msgstr "Room 315"
 
 msgid "宿舍316房"
-msgstr ""
+msgstr "Room 316"
 
 msgid "宿舍317房"
-msgstr ""
+msgstr "Room 317"
 
 msgid "宿舍318房"
-msgstr ""
+msgstr "Room 318"
 
 msgid "宿舍319房"
-msgstr ""
+msgstr "Room 319"
 
 msgid "宿舍320房"
-msgstr ""
+msgstr "Room 320"
 
 msgid "宿舍321房"
-msgstr ""
+msgstr "Room 321"
 
 msgid "宿舍322房"
-msgstr ""
+msgstr "Room 322"
 
 msgid "宿舍323房"
-msgstr ""
+msgstr "Room 323"
 
 msgid "宿舍324房"
-msgstr ""
+msgstr "Room 324"
 
 msgid "宿舍325房"
-msgstr ""
+msgstr "Room 325"
 
 msgid "宿舍326房"
-msgstr ""
+msgstr "Room 326"
 
 msgid "宿舍327房"
-msgstr ""
+msgstr "Room 327"
 
 msgid "宿舍328房"
-msgstr ""
+msgstr "Room 328"
 
 msgid "宿舍329房"
-msgstr ""
+msgstr "Room 329"
 
 msgid "宿舍414房"
-msgstr ""
+msgstr "Room 414"
 
 msgid "宿舍415房"
-msgstr ""
+msgstr "Room 415"
 
 msgid "宿舍416房"
-msgstr ""
+msgstr "Room 416"
 
 msgid "宿舍417房"
-msgstr ""
+msgstr "Room 417"
 
 msgid "宿舍418房"
-msgstr ""
+msgstr "Room 418"
 
 msgid "宿舍419房"
-msgstr ""
+msgstr "Room 419"
 
 msgid "宿舍420房"
-msgstr ""
+msgstr "Room 420"
 
 msgid "宿舍421房"
-msgstr ""
+msgstr "Room 421"
 
 msgid "宿舍422房"
-msgstr ""
+msgstr "Room 422"
 
 msgid "宿舍423房"
-msgstr ""
+msgstr "Room 423"
 
 msgid "宿舍424房"
-msgstr ""
+msgstr "Room 424"
 
 msgid "宿舍425房"
-msgstr ""
+msgstr "Room 425"
 
 msgid "宿舍426房"
-msgstr ""
+msgstr "Room 426"
 
 msgid "宿舍427房"
-msgstr ""
+msgstr "Room 427"
 
 msgid "宿舍428房"
-msgstr ""
+msgstr "Room 428"
 
 msgid "宿舍429房"
-msgstr ""
+msgstr "Room 429"
 
 msgid "亮粉"
-msgstr ""
+msgstr "Light pink"
 
 msgid "深粉"
-msgstr ""
+msgstr "Dark pink"
 
 msgid "深岩暗蓝灰色"
-msgstr ""
+msgstr "Deep rock blue gray"
 
 msgid "比深岩暗蓝灰色亮一点"
-msgstr ""
+msgstr "Slightly brighter than deep rock blue gray"
 
 msgid "岩暗蓝灰色"
-msgstr ""
+msgstr "Rock blue gray"
 
 msgid "小麦色"
-msgstr ""
+msgstr "Wheat yellow"
 
 msgid "浅青色"
-msgstr ""
+msgstr "Light green"
 
 msgid "红色"
-msgstr ""
+msgstr "Red"
 
 msgid "珊瑚色"
-msgstr ""
+msgstr "Coral pink"
 
 msgid "粉红"
-msgstr ""
+msgstr "Pink"
 
 msgid "浅粉红"
-msgstr ""
+msgstr "Light pink"
 
 msgid "紫色"
-msgstr ""
+msgstr "Purple"
 
 msgid "黄褐色（卡其布）"
-msgstr ""
+msgstr "Khaki"
 
 msgid "米色"
-msgstr ""
+msgstr "Beige"
 
 msgid "适中的春天的绿色"
-msgstr ""
+msgstr "Summer green"
 
 msgid "春天的绿色"
-msgstr ""
+msgstr "Spring green"
 
 msgid "猩红"
-msgstr ""
+msgstr "Crimson red"
 
 msgid "使用后回复20ml精液量。"
-msgstr ""
+msgstr "Recovers 20ml of semen"
 
 msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
-msgstr ""
+msgstr "Having all types of instruments, not sold separately because hard to categorize,\\n"
+"has better effect than singing"
 
 msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
-msgstr ""
+msgstr "Consumables to prevent getting pregnant, consuming one per ejaculation. If she haven't get ready to be pregnant and not in Safe Period, then do sex while wearing it"
 
 msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
-msgstr ""
+msgstr "When U Development reached a certain point, you can equip urine collector, and the product will be collection - holy water"
 
 msgid "干员宿舍万能钥匙(一次性)"
-msgstr ""
+msgstr "Dormitory multi-purpose key (One time)"
 
 msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
-msgstr ""
-
+msgstr "A special magnetic card made by Closure following the backdoor in her system, allowing the opening of any door in dormitory, and will be unusable after usage"
 
 msgid "博士每天都需要做什么？"
-msgstr ""
+msgstr "What does the Doctor need to do?"
 
 msgid ""
 "没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\\n可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
 msgstr ""
+"No specific requirement, but normally building relationship is the main target while developing Rhodes Island is the side target.\\n"
+"Arrange your actions according to own preferences, such as work, train Arts, interact, train, etc."
 
 msgid "攻略路线是怎么样的？如何获得信物？"
-msgstr ""
+msgstr "How's the relationship pathway? How to obtain Tokens?"
 
 msgid "拿到的干员的内裤/袜子有什么用？"
-msgstr ""
+msgstr "What's the purpose of getting underwears/socks?"
 
 msgid "内裤和袜子属于收集品，获得后可以在[图书馆]的[藏品馆]中使用【摆放藏品】，每收集一定数量后可以获得特定的解锁奖励。"
-msgstr ""
+msgstr "Underwears and socks belong to collections, using [Place collectibles] in [Collection Hall] of [Library] will grant special rewards on certain amount."
 
 msgid ""
 "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\\n\\n在【受精】后，过一个月左右的时间会变成【妊娠】状态，获得【孕肚】和【泌乳】\\n再过两个月左右，会【临盆】，接着过不了几天就会【生产】\\n生出孩子后，母亲会进入【育儿】状态，养育需要一个月左右，孩子就会从【婴儿】成长为可以初步自理的【幼女】\\n结束了【育儿】后，母亲会恢复孕前状态，也会失去【泌乳】，而孩子还会依次成长为【萝莉】再到【少女】，每次成长会耗时两个月左右\\n\\n孩子的性别仅为女性，在成长到【少女】后即完全成为一名正常的干员\\n女儿会继承母亲包括种族在内大部分生理特征，也会在【育儿】期间学到部分来自母亲的后天知识和技能"
 msgstr ""
+"Besides those that haven't had their menarche, all other Operators can be pregnant. While the time taken is long, the children will also be new Operators\\n\\nAfter [Fertilized], the Operator will enter [Pregnancy] status after a month and gains [Pregnant Belly] and [Lactation]\\nAfter two more months, the Operator will have [Confined], and afterwards, [Giving Birth]\\nAfter the process, the mother will enter [Parenting] status, which takes a month, and the child will grow from [Baby] to [Young Girl]\\nAfter [Parenting] ends, the mother will lose [Lactation] and returns to before pregnancy, and the child will grow to [Loli] and then to [Girl], which takes two months per phase\\n\\nThe child will always be female, and will be a normal Operator on [Girl]\\nThe daughter will inherit most physical appearance from the mother, and will learn part of the mother's knowledge and skills during [Parenting]"
 
 msgid "在H中该如何让干员获得更多的快感和快乐，并减少苦痛反发等负面数值？"
-msgstr ""
+msgstr "How to increase Happiness and reduce negative stats during H?"
 
 msgid ""
 "①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\\n②在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\\n  在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\\n\\n③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
-msgstr ""
+msgstr "①Before H, prepare aromatherapy or love potions to get into condition quickly\\n\\n②During H, do other actions before insertion, such as other non-insertion commands or items to increase Happiness, Lust and Lubrication, and the Happiness will increase on insertion as these go higher, vice versa for Pain\\n  When triggering climax, they will gain high Happiness and reduce Pain\\n\\n③Upgrading Desire, Feels, Dilations and positive Engravings while avoiding negative Engravings outside H"
 
 msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
-msgstr ""
+msgstr "I want to make my Operators pregnant, is there ways to increase chance of fertilization?"
 
 msgid ""
 "干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\\n\\n\\n目前已实装的提高概率的手段有（可叠加）：\\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\\n③在干员的排卵日里，如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\\n\\n\\n其他相关功能：\\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\\n在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
 msgstr ""
+"Operator's menstrual cycle takes 7 days, including Safe Period, Normal Period, Danger Period and Ovulation Period\\nOn the Ovulation Period (6th day), the total amount of semen ejaculated into the Operator during non-Safe Period will be considered for rate of [Fertilized]\\nChance according to period: Ovulation > Danger > Normal > Safe Period\\n\\n\\nMany ways of increasing fertilization rate (can stack): \\n①Buy [Ovulation Drugs] and feed to Operators\\n②If not ejaculating, a part of the current limit will be inherited on next day, up to 4 times, which [Concentrated Semen] can be acquired\\n③At Ovulation Period, use [Body Control-Ovulation]\\n\\\n\\nRelated functions: \\nUse [Physiological Perspective] will show the menstrual cycle and fertilization rate\\nEjaculating in the vagina will only have small amount of it flow into the womb.\\nEjaculating in the womb will only have small amount of it flow into the vagina.\\nWhen enough semen was in the womb, their stomach will bulge up, and if [Cavity Perspective] is active, you can see the cross-section, which allows you to judge based on the semen amount in the womb and the stretching of the womb."
 
 msgid "该如何让拥有【未初潮】素质的干员怀孕？"
-msgstr ""
+msgstr "How to make Operators with [No Menarche] pregnant?"
 
 msgid ""
 "【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\\n需要先对阴道和子宫进行一段时间的开发，让【V感度】和【W感度】升级到足够的等级后，即可提前迎来性成熟，失去该素质\\n\\n除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
 msgstr ""
-
+" [No Menarche] is the special talent for young Operators, which prohibit them to be pregnant\\nWhen [V Feel] and [W Feel] reached a certain point, early sexual maturity can be reached and remove the talent\\n\\nFor daughters, the talent will be removed on growing to [Loli]"
 
 msgid "种植相关的基建系统是如何运作的？"
-msgstr ""
+msgstr "How does the systems related to planting works?"
 
 msgid ""
 "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
 msgstr ""
+"In base system, [Farmland] and [Conservatory] are for planting, the former for herbs and latter for perfumes.\\nOn unlocking, you can assign Operators to there, and choose your crops for automatic planting and collecting.\\nProducts can be used for medicines in [Production Zone] or aromatherapy in [Aromatherapy Treatment Room]."
 
 msgid "不加肉类、芝士、酸黄瓜的生菜汉堡"
-msgstr ""
+msgstr "A hamburger without meat, cheese, pickles, or lettuce"
 
 msgid "用十二种蔬菜混合制成的沙拉"
-msgstr ""
+msgstr "A mixed salad made of 12 different vegetables"
 
 msgid "肉质鲜嫩，肥而不腻，香气四溢，入口即化。"
-msgstr ""
+msgstr "Fresh and tender, fat but not greasy, fragrance spreading, and easy to digest."
 
 msgid "汐斯塔风情水果披萨"
-msgstr ""
+msgstr "Siesta-style Fruit Pizza"
 
 msgid "汐斯塔的特色披萨，上面铺满了各种水果，看起来就像一块大蛋糕。"
-msgstr ""
+msgstr "Siesta's specialty pizza, having many types of fruit on top as if it's a big cake"
 
 msgid "深盘厚底魔鬼辣椒披萨"
 msgstr ""
@@ -13778,165 +13816,168 @@ msgid "来自伊比利亚的特色披萨，大胆的将蒜香壳虾与岩蟹肉�
 msgstr ""
 
 msgid "罐装晌午茶"
-msgstr ""
+msgstr "Canned Tea"
 
 msgid ""
 "尚蜀常见的特色罐装饮料，听说各地客栈茶馆都供不应求。勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
 msgstr ""
+"A specialty jarred beverage common in Shangshu.\\n They say it always sells out at inns and teahouses.\\n"
+"Diligent workers step hurriedly, easy-to-carry jarred tea there in times of need. \\nThe tea is chosen with care, pure in color and scent, \\nflavor sweet and light and long-lasting, aftertaste melodious."
 
 msgid "酱兽肉"
-msgstr ""
+msgstr "Sauteed Meat"
 
 msgid "尚蜀岩茶"
-msgstr ""
+msgstr "Shangshu Rock Tea"
 
 msgid "勾吴花茶"
-msgstr ""
+msgstr "Kou-wu Flower Tea"
 
 msgid "姜齐白茶"
-msgstr ""
+msgstr "Jiangqi White Tea"
 
 msgid "大荒粗叶子"
-msgstr ""
+msgstr "Dahuang Raw Leaves"
 
 msgid "罐装晌午茶(柠檬折耳根味)"
-msgstr ""
+msgstr "Canned Tea (Lemon Root)"
 
 msgid "菊花茶"
-msgstr ""
+msgstr "Chrysanthemum Tea"
 
 msgid "盐花生"
-msgstr ""
+msgstr "Salted Peanuts"
 
 msgid "黑豆茶"
-msgstr ""
+msgstr "Black Bean Tea"
 
 msgid "甜司康饼"
-msgstr ""
+msgstr "Scones"
 
 msgid "汐斯塔冰茶"
-msgstr ""
+msgstr "Siestan Iced Tea"
 
 msgid "红椒茶"
-msgstr ""
+msgstr "Red Pepper Tea"
 
 msgid "驮兽奶茶"
-msgstr ""
+msgstr "Burdenbeast Milk Tea"
 
 msgid "米诺斯之雾"
-msgstr ""
+msgstr "Minoan Mist"
 
 msgid "黑曜石柑茶"
-msgstr ""
+msgstr "Obsidian Citrus Tea"
 
 msgid "新酿烈刀子"
-msgstr ""
+msgstr "Freshly-Brewed Liedaozi"
 
 msgid "玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
-msgstr ""
+msgstr "A Yumen specialty product, high-purity spirit. Beloved by all drinkers, brewed by all brewers. \\nA brew mixed of sandstorms on the border, and sun beating down in the sky and wind on the poplars, \\none gulp is a throat of blades and a drink of fire, \\nand even the chilliest nights need no longer be feared."
 
 msgid "高脚羽兽烤串"
-msgstr ""
+msgstr "Lankleg Fowlbeast Kebabs"
 
 msgid "松饼早餐卷"
-msgstr ""
+msgstr "Breakfast Pancake Tacos"
 
 msgid "山水兜"
-msgstr ""
+msgstr "Shanshui Pocket"
 
 msgid "香草冰淇淋"
-msgstr ""
+msgstr "Vanilla Ice Cream"
 
 msgid "乌萨斯饺子"
-msgstr ""
+msgstr "Pelmeni"
 
 msgid "黄油羽兽"
-msgstr ""
+msgstr "Butter Fowlbeast"
 
 msgid "仿蒲烧鳝鳞饭"
-msgstr ""
+msgstr "Imitation Slitherfin Kabayakidon"
 
 msgid "面包碗佐奶油汤"
-msgstr ""
+msgstr "Bread Bowl Stew"
 
 msgid "玻利瓦尔风卷饼"
-msgstr ""
+msgstr "Bolivarian Burritos"
 
 msgid "蒜香壳虾塔帕斯"
-msgstr ""
+msgstr "Garlic Shellshrimp Tapas"
 
 msgid "辣味酸橙派"
-msgstr ""
+msgstr "Spicy Sour Orange Pie"
 
 msgid "加糖黑曜石柑茶"
-msgstr ""
+msgstr "Obsidian Citrus Tea with Sugar"
 
 msgid "多伦乡村拼盘"
-msgstr ""
+msgstr "Toron Rural Platter"
 
 msgid "即使是偏远乡村，你仍能在宴会上见到维多利亚人特有的矜持。"
-msgstr ""
+msgstr "Even in a remote rural village, you can still experience Victorian hospitality."
 
 msgid "格里布熏鳞色拉"
-msgstr ""
+msgstr "Glebe Smoked Fin Salad"
 
 msgid "精心熏制的好菜只为今日待客，还有解腻的红茶，以及佐餐的豪言笑语。"
-msgstr ""
+msgstr "Finely smoked delicacies made just for today's guests, \\ntogether with black tea to sluice away the fat, and a healthy side of laughter and bluster."
 
 msgid "斯沃玛三分钟浓汤"
-msgstr ""
+msgstr "Sloma 3-Minute Barszcz"
 
 msgid "“大厨三小时，在家三分钟！”斯沃玛商务们如是吹嘘着自家公司的商品。"
-msgstr ""
+msgstr "\"Three hours for a chef, three minutes at home!\" \\nbrag the Słoma suits about their own firm's products."
 
 msgid "多索雷斯风情塔可"
-msgstr ""
+msgstr "Dossoles-style Tacos"
 
 msgid "精心搭配的馅料让食客在餐桌前巡游半个泰拉，可真正属于多索雷斯的只有那张表面金黄的薄饼。"
-msgstr ""
+msgstr "The artfully selected fillings had diners embark on a journey across half of Terra, \\nyet the only thing that truly belongs to Dossoles is that golden-fried tortilla."
 
 msgid "提亚卡乌式炸蕉果"
-msgstr ""
+msgstr "Tiacauh-style Fried Plantains"
 
 msgid "宴会从正午开到夕阳西下，提亚卡乌们还在大快朵颐，但你已经吃不下了。"
-msgstr ""
+msgstr "The celebrations lasted from noon until sundown. \\nEven though the Tiacauh are still gorging themselves, you have already reached your limit."
 
 msgid "约翰老妈厚切汉堡"
-msgstr ""
+msgstr "Mama John's Thick-Cut Burger"
 
 msgid "即使是用来答谢的加料加厚汉堡，吃完后留在脑海中的也只有半片生菜和薄薄的肉排，让人“意犹未尽”。"
-msgstr ""
+msgstr "Only half a piece of lettuce and a thin meat patty remain in memory of the eaten extra large burger."
 
 msgid "雷神工业火炙巨羽兽"
-msgstr ""
+msgstr "Raythean Roast Fowlbeast"
 
 msgid "用火微微一烤就可以端上来享用，焦脆的皮和多汁的肉，香肥量大，几口就能吃饱，员工喜欢它的味道，主管也很满意它的效率。"
-msgstr ""
+msgstr "Ready to eat after a little bit of roasting. \\nThe crispy skin and juicy meat is wholesome and filling, popular among the workers for its taste, \\nand the managers for its cost-effectiveness."
 
 msgid "阿尔斯特华夫冰淇淋"
-msgstr ""
+msgstr "Alsterii Waffle Ice Cream"
 
 msgid "冰淇淋球的形状像是从墙上铲下来的，华夫饼的边缘沾上了来路不明的糖霜。"
-msgstr ""
+msgstr "The ice cream balls are shaped as if they were shaved off the walls, \\nand the edges of the waffles are smeared with an icing of inexplicable origin."
 
 msgid "审判庭特制火腿薄片"
-msgstr ""
+msgstr "Inquisition Special Sliced Ham"
 
 msgid "薄厚不均的肉片铺在礁石上。肌肉纹理泛着锃亮的油光，凑近能闻到些许坚果香气。挣脱海水的束缚后，才发觉陆地的馈赠是如此甜美。"
-msgstr ""
+msgstr "Slices of meat with uneven textures are spread across the reef. \\nThe meat's textures shimmer with oil, and you can smell a slight nutty aroma when you get closer. \\nOnly after breaking free from the shackles of the ocean's grasp \\ndoes one realize how sweet the gift of land is."
 
 msgid "塔山炸沙虫腿"
-msgstr ""
+msgstr "Tower Mountains Fried Sandworm Leg"
 
 msgid ""
 "炸得恰到好处的沙虫腿在唇齿间迸出汁水，传言在如此美味面前显得无足轻重。餐后才得知“二十条腿的沙虫”是一派胡言，用培养罐培养沙虫腿根本用不着沙虫。"
 msgstr ""
+"The sandworm legs, deep-fried to perfection, \\nare packed full of juices that ooze out as you bite into the meat. \\nThe rumors about this delicacy are the least of anyone's concerns when confronted with this flavor. \\nIt was only after your meal that you learned the \"twenty-legged sandworm\" was a pack of lies. \\nThere's no need for sandworms when their legs can be grown in vats."
 
 msgid "杜林十号烈酒"
-msgstr ""
+msgstr "Durin No. 10 Whiskey"
 
 msgid "酒过数巡，酩酊的杜林们进入梦乡，烈酒协会成员倒在蜜酿协会成员的身上，醇厚的酒香萦绕此间。十号烈酒，名叫“友谊”。"
-msgstr ""
+msgstr "After more rounds of drinks that anyone can possibly count, \\nthe inebriated Durin drift into slumber. \\nMembers of the Liquor Association lean on members of the Mead Fan Club, blending the rich aromas. \\nThe No. 10 Whiskey, also known as \"friendship.\""
 
 msgid "欢乐之歌年轮蛋糕"
 msgstr ""
@@ -13952,52 +13993,52 @@ msgid "让人丧失贪吃欲望的盒饭。"
 msgstr ""
 
 msgid "汉堡甜甜圈套餐"
-msgstr ""
+msgstr "Donut Hamburger Combo Meal"
 
 msgid "甜甜圈的甜蜜与汉堡的咸香，是一种奇妙的搭配。"
-msgstr ""
+msgstr "Sweetness of donuts and savory of hamburger, a marvelous combination."
 
 msgid "玻利瓦尔咖啡"
-msgstr ""
+msgstr "Bolivarian coffee"
 
 msgid "少数被冠以产地名的特级咖啡，咖啡豆是许多玻利瓦尔大城市里畅销的伴手礼，内销和出口的需求量极大。"
-msgstr ""
+msgstr "Not just any bean can lay claim to a whole country's name. \\nThe largest cities sell it as a popular souvenir, and the demand is endless for domestic and abroad."
 
 msgid "黑咖啡"
-msgstr ""
+msgstr "Black coffee"
 
 msgid "无糖咖啡，是咖啡的原始味道，也是最纯粹的味道。"
-msgstr ""
+msgstr "Coffee without sugar, the most original and pure taste of coffee."
 
 msgid "火山咖啡"
-msgstr ""
+msgstr "Volcanic Coffee"
 
 msgid "火山咖啡的独特风味来自于汐斯塔火山灰土壤的独特气候，是一种稀有的咖啡，口感浓郁，香味浓烈。"
-msgstr ""
+msgstr "The unique taste comes from the unique weather of the volcano's dirt, it's a rare coffee, \\nwith rich tastes and strong aroma."
 
 msgid "过萃咖啡液"
-msgstr ""
+msgstr "Filter Coffee"
 
 msgid "过萃的地底黑咖啡。提神效果极佳。可以代替糖浆。"
-msgstr ""
+msgstr "Filtered underground black coffee. Excellent stimulant. Replacement for sugar syrup."
 
 msgid "奶霜华夫饼塔"
-msgstr ""
+msgstr "Cream-Topped Waffle Tower"
 
 msgid "华夫饼的香甜与奶霜的绵蜜，是一种奇妙的搭配。"
-msgstr ""
+msgstr "Sweetness of waffle and softness of cream, a marvelous combination."
 
 msgid "德荣单人餐"
-msgstr ""
+msgstr "De Jong Deluxe Meal"
 
 msgid "来自德荣的单人餐，是一种简单的餐饮，适合快节奏的生活。"
-msgstr ""
+msgstr "A simple food for quick pacing lives."
 
 msgid "杨森兄弟双人餐"
-msgstr ""
+msgstr "Janssen Brothers Meal for Two"
 
 msgid "杨森到底有几个兄弟？这个双人餐是不是只有他一个人吃？"
-msgstr ""
+msgstr "How many brothers does Janssen have? And was this meal only eaten by himself?"
 
 msgid "蟹肉碎拌饭"
 msgstr ""
@@ -14271,470 +14312,472 @@ msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制�
 msgstr ""
 
 msgid "约翰老妈汉堡店"
-msgstr ""
+msgstr "Mama John's Burger Shop"
 
 msgid "干员做饭"
-msgstr ""
+msgstr "Operators cooking"
 
 msgid "结束无意识H"
-msgstr ""
+msgstr "Ends unconscious H"
 
 msgid "继续享受"
-msgstr ""
+msgstr "Continue to enjoy"
 
 msgid "自慰(女)"
-msgstr ""
+msgstr "Masturbate (F)"
 
 msgid "脱到只穿内衣(即只脱上下外衣)"
-msgstr ""
+msgstr "Strip down till bra left"
 
 msgid "脱到只穿袜子手套等(即再脱掉内衣)"
-msgstr ""
+msgstr "Strip down till socks and gloves left"
 
 msgid "脱到全裸(即身上没有任何衣物)"
-msgstr ""
+msgstr "Strip down till nakes"
 
 msgid "收起内裤"
-msgstr ""
+msgstr "Take off underwear"
 
 msgid "结算N小绝顶"
-msgstr ""
+msgstr "Settling N small climax"
 
 msgid "结算N普绝顶"
-msgstr ""
+msgstr "Settling N medium climax"
 
 msgid "结算N强绝顶"
-msgstr ""
+msgstr "Settling N strong climax"
 
 msgid "结算B小绝顶"
-msgstr ""
+msgstr "Settling B small climax"
 
 msgid "结算B普绝顶"
-msgstr ""
+msgstr "Settling B medium climax"
 
 msgid "结算B强绝顶"
-msgstr ""
+msgstr "Settling B strong climax"
 
 msgid "结算C小绝顶"
-msgstr ""
+msgstr "Settling C small climax"
 
 msgid "结算C普绝顶"
-msgstr ""
+msgstr "Settling C medium climax"
 
 msgid "结算C强绝顶"
-msgstr ""
+msgstr "Settling C strong climax"
 
 msgid "结算射精"
-msgstr ""
+msgstr "Settling ejaculation"
 
 msgid "结算大量射精"
-msgstr ""
+msgstr "Settling large ejaculation"
 
 msgid "结算超大量射精"
-msgstr ""
+msgstr "Settling huge ejaculation"
 
 msgid "结算V小绝顶"
-msgstr ""
+msgstr "Settling V small climax"
 
 msgid "结算V普绝顶"
-msgstr ""
+msgstr "Settling V medium climax"
 
 msgid "结算V强绝顶"
-msgstr ""
+msgstr "Settling V strong climax"
 
 msgid "结算A小绝顶"
-msgstr ""
+msgstr "Settling A small climax"
 
 msgid "结算A普绝顶"
-msgstr ""
+msgstr "Settling A medium climax"
 
 msgid "结算A强绝顶"
-msgstr ""
+msgstr "Settling A strong climax"
 
 msgid "结算U小绝顶"
-msgstr ""
+msgstr "Settling U small climax"
 
 msgid "结算U普绝顶"
-msgstr ""
+msgstr "Settling U medium climax"
 
 msgid "结算U强绝顶"
-msgstr ""
+msgstr "Settling U strong climax"
 
 msgid "结算W小绝顶"
-msgstr ""
+msgstr "Settling W small climax"
 
 msgid "结算W普绝顶"
-msgstr ""
+msgstr "Settling W medium climax"
 
 msgid "结算W强绝顶"
-msgstr ""
+msgstr "Settling W strong climax"
 
 msgid "结算额外绝顶"
-msgstr ""
+msgstr "Settling extra climax"
 
 msgid "结算快乐刻印1"
-msgstr ""
+msgstr "Settling Happy Engraving 1"
 
 msgid "结算快乐刻印2"
-msgstr ""
+msgstr "Settling Happy Engraving 2"
 
 msgid "结算快乐刻印3"
-msgstr ""
+msgstr "Settling Happy Engraving 3"
 
 msgid "结算屈服刻印1"
-msgstr ""
+msgstr "Settling Yield Engraving 1"
 
 msgid "结算屈服刻印2"
-msgstr ""
+msgstr "Settling Yield Engraving 2"
 
 msgid "结算屈服刻印3"
-msgstr ""
+msgstr "Settling Yield Engraving 3"
 
 msgid "结算苦痛刻印1"
-msgstr ""
+msgstr "Settling Pain Engraving 1"
 
 msgid "结算苦痛刻印2"
-msgstr ""
+msgstr "Settling Pain Engraving 2"
 
 msgid "结算苦痛刻印3"
-msgstr ""
+msgstr "Settling Pain Engraving 3"
 
 msgid "结算时姦刻印1"
-msgstr ""
+msgstr "Settling Timerape Engraving 1"
 
 msgid "结算时姦刻印2"
-msgstr ""
+msgstr "Settling Timerape Engraving 2"
 
 msgid "结算时姦刻印3"
-msgstr ""
+msgstr "Settling Timerape Engraving 3"
 
 msgid "结算恐怖刻印1"
-msgstr ""
+msgstr "Settling Fear Engraving 1"
 
 msgid "结算恐怖刻印2"
-msgstr ""
+msgstr "Settling Fear Engraving 2"
 
 msgid "结算恐怖刻印3"
-msgstr ""
+msgstr "Settling Fear Engraving 3"
 
 msgid "结算反发刻印1"
-msgstr ""
+msgstr "Settling Hatred Engraving 1"
 
 msgid "结算反发刻印2"
-msgstr ""
+msgstr "Settling Hatred Engraving 2"
 
 msgid "结算反发刻印3"
-msgstr ""
+msgstr "Settling Hatred Engraving 3"
 
 msgid "结算初吻"
-msgstr ""
+msgstr "Settling First Kiss"
 
 msgid "结算处女"
-msgstr ""
+msgstr "Settling Virgin"
 
 msgid "结算A处女"
-msgstr ""
+msgstr "Settling A Virgin"
 
 msgid "结算无觉刻印1"
-msgstr ""
+msgstr "Settling Unconscious Engraving 1"
 
 msgid "结算无觉刻印2"
-msgstr ""
+msgstr "Settling Unconscious Engraving 2"
 
 msgid "结算无觉刻印3"
-msgstr ""
+msgstr "Settling Unconscious Engraving 3"
 
 msgid "结算无觉刻印4"
-msgstr ""
+msgstr "Settling Unconscious Engraving 4"
 
 msgid "结算无觉刻印5"
-msgstr ""
+msgstr "Settling Unconscious Engraving 5"
 
 msgid "结算无觉刻印6"
-msgstr ""
+msgstr "Settling Unconscious Engraving 6"
 
 msgid "结算因B绝顶而被迫喷乳"
-msgstr ""
+msgstr "Settling spilling milk due to B Climax"
 
 msgid "结算因U绝顶而被迫漏尿"
-msgstr ""
+msgstr "Settling leaking urine due to U Climax"
 
 msgid "结算双重绝顶"
-msgstr ""
+msgstr "Settling double Climax"
 
 msgid "结算三重绝顶"
-msgstr ""
+msgstr "Settling triple Climax"
 
 msgid "结算四重绝顶"
-msgstr ""
+msgstr "Settling quadruple Climax"
 
 msgid "结算五重绝顶"
-msgstr ""
+msgstr "Settling quintuple Climax"
 
 msgid "结算六重绝顶"
-msgstr ""
+msgstr "Settling sextuple Climax"
 
 msgid "结算七重绝顶"
-msgstr ""
+msgstr "Settling septuple Climax"
 
 msgid "结算乳头夹"
-msgstr ""
+msgstr "Settling nipple clamps"
 
 msgid "结算阴蒂夹"
-msgstr ""
+msgstr "Settling clitoral clamp"
 
 msgid "结算震动棒"
-msgstr ""
+msgstr "Settling vibrator"
 
 msgid "结算肛门振动棒"
-msgstr ""
+msgstr "Settling anal vibrator"
 
 msgid "结算搾乳机"
-msgstr ""
+msgstr "Settling milking machine"
 
 msgid "结算采尿器"
-msgstr ""
+msgstr "Settling urine collector"
 
 msgid "结算眼罩"
-msgstr ""
+msgstr "Settling eye mask"
 
 msgid "结算肛门拉珠"
-msgstr ""
+msgstr "Settling anal beads"
 
 msgid "结算利尿剂"
-msgstr ""
+msgstr "Settling diuretics"
 
 msgid "结算安眠药"
-msgstr ""
+msgstr "Settling sleeping pills"
 
 msgid "结算排卵促进药"
-msgstr ""
+msgstr "Settling ovulation drugs"
 
 msgid "结算事前避孕药"
-msgstr ""
+msgstr "Settling pre-event birth control pills"
 
 msgid "结算事后避孕药"
-msgstr ""
+msgstr "Settling post-event birth control pills"
 
 msgid "结算发交中"
-msgstr ""
+msgstr "Settling on hairjob"
 
 msgid "结算阴茎蹭脸中"
-msgstr ""
+msgstr "Settling rubbing face with penis"
 
 msgid "结算口交中"
-msgstr ""
+msgstr "Settling on fellatio"
 
 msgid "结算乳交中"
-msgstr ""
+msgstr "Settling on paizuri"
 
 msgid "结算腋交中"
-msgstr ""
+msgstr "Settling on axillajob"
 
 msgid "结算手交中"
-msgstr ""
+msgstr "Settling on handjob"
 
 msgid "结算V插入中"
-msgstr ""
+msgstr "Settling V inserted"
 
 msgid "结算W插入中"
-msgstr ""
+msgstr "Settling W inserted"
 
 msgid "结算A插入中"
-msgstr ""
+msgstr "Settling A inserted"
 
 msgid "结算U插入中"
-msgstr ""
+msgstr "Settling U inserted"
 
 msgid "结算腿交中"
-msgstr ""
+msgstr "Settling on legjob"
 
 msgid "结算足交中"
-msgstr ""
+msgstr "Settling on footjob"
 
 msgid "结算尾交中"
-msgstr ""
+msgstr "Settling on tailjob"
 
 msgid "结算阴茎蹭角中"
-msgstr ""
+msgstr "Settling rubbing horns with penis"
 
 msgid "结算阴茎蹭耳朵中"
-msgstr ""
+msgstr "Settling rubbing ears with penis"
 
 msgid "结算素股中"
-msgstr ""
+msgstr "Settling on intercrural sex"
 
 msgid "结算获得思慕"
-msgstr ""
+msgstr "Settling becoming Longing"
 
 msgid "结算获得恋慕"
-msgstr ""
+msgstr "Settling becoming Envy"
 
 msgid "结算获得恋人(含赠予信物)"
-msgstr ""
+msgstr "Settling becoming Lover"
 
 msgid "结算获得爱侣"
-msgstr ""
+msgstr "Settling becoming Couple"
 
 msgid "结算获得屈从"
-msgstr ""
+msgstr "Settling becoming Yielded"
 
 msgid "结算获得驯服"
-msgstr ""
+msgstr "Settling becoming Tamed"
 
 msgid "结算获得宠物(含赠予信物)"
-msgstr ""
+msgstr "Settling becoming Pet"
 
 msgid "结算获得奴隶"
-msgstr ""
+msgstr "Settling becoming Slave"
 
 msgid "结算获得受精"
-msgstr ""
+msgstr "Settling becoming Fertilized"
 
 msgid "结算受精失败"
-msgstr ""
+msgstr "Settling Fertilize failed"
 
 msgid "结算获得妊娠"
-msgstr ""
+msgstr "Settling entering Pregnancy"
 
 msgid "结算获得临盆"
-msgstr ""
+msgstr "Settling becoming Confined"
 
 msgid "生产前的对话"
-msgstr ""
+msgstr "Dialogue before giving birth"
 
 msgid "生产后的对话+获得产后"
-msgstr ""
+msgstr "Dialogue after giving birth"
 
 msgid "结算获得育儿"
-msgstr ""
+msgstr "Settling on Parenting"
 
 msgid "结算育儿完成"
-msgstr ""
+msgstr "Settling Parenting completed"
 
 msgid "结算幼女长成萝莉"
-msgstr ""
+msgstr "Settling growing to Loli"
 
 msgid "结算萝莉长成少女"
-msgstr ""
+msgstr "Settling growing to Girl"
 
 msgid "初次见面"
-msgstr ""
+msgstr "First Met"
 
 msgid "每日打招呼"
-msgstr ""
+msgstr "Daily Greeting"
 
 msgid "被选为助理"
-msgstr ""
+msgstr "Chosen as Assistant"
 
 msgid "不再为助理"
-msgstr ""
+msgstr "No Longer Assistant"
 
 msgid "关闭智能跟随"
-msgstr ""
+msgstr "Disabled Following"
 
 msgid "开启智能跟随"
-msgstr ""
+msgstr "Enabled Following"
 
 msgid "要求前往办公室"
-msgstr ""
+msgstr "Asked to Office"
 
 msgid "关闭辅佐服务"
-msgstr ""
+msgstr "Disabled Help Service"
 
 msgid "开启辅佐服务"
-msgstr ""
+msgstr "Enabled Help Service"
 
 msgid "关闭送饭服务"
-msgstr ""
+msgstr "Disabled Meal Delivery"
 
 msgid "开启帮忙买午饭服务"
-msgstr ""
+msgstr "Enabled Lunch Buying"
 
 msgid "开启亲手做午饭服务"
-msgstr ""
+msgstr "Enabled Lunch Making"
 
 msgid "开启亲手做三餐服务"
-msgstr ""
+msgstr "Enabled Meal Making"
 
 msgid "关闭早安服务"
-msgstr ""
+msgstr "Disabled Morning Service"
 
 msgid "开启早上叫起床服务"
-msgstr ""
+msgstr "Enabled Waking up"
 
 msgid "开启早安吻服务"
-msgstr ""
+msgstr "Enabled Morning Kiss"
 
 msgid "开启早安咬服务"
-msgstr ""
+msgstr "Enabled Morning Bite"
 
 msgid "关闭晚安服务"
-msgstr ""
+msgstr "Disabled Night Service"
 
 msgid "开启晚安吻服务"
-msgstr ""
+msgstr "Enabled Night Kiss"
 
 msgid "开启晚安咬服务"
-msgstr ""
+msgstr "Enabled Night Bite"
 
 msgid "关闭同居服务"
-msgstr ""
+msgstr "Disabled Living Together"
 
 msgid "开启同居服务"
-msgstr ""
+msgstr "Enabled Living Together"
 
 msgid "关闭助攻服务"
-msgstr ""
+msgstr "Disabled Assist"
 
 msgid "开启助攻服务"
-msgstr ""
+msgstr "Enable Assist"
 
 msgid "获得被浅层催眠素质"
-msgstr ""
+msgstr "Mildly Hypnotized"
 
 msgid "获得被深层催眠素质"
-msgstr ""
+msgstr "Deeply Hypnotized"
 
 msgid "获得被完全催眠素质"
-msgstr ""
+msgstr "Fully Hypnotized"
 
 msgid "#dfe86c"
 msgstr ""
 
 msgid "巴别塔的创立者，特蕾西娅。一段来自过去的回响，承载着通往未来的爱与希望。"
-msgstr ""
+msgstr "Theresa, founder of Babel. An echo of the past, carrying the love and hope for the future."
 
 msgid ""
 "特蕾西娅，卡兹戴尔移动城市的建立者，卡兹戴尔军事委员会创始人之一，巴别塔组织的创立者，曾是卡兹戴尔的最高领袖。执政期间，她致力于推进医疗、教育、城市基础建设等事业，多次带领萨卡兹击退了外敌的入侵，并且在外交工作中颇有建树。"
 msgstr ""
+"Theresa, founder of the nomadic city of Kazdel, one of the founders of the Military Commission of Kazdel, founder of the Babel organization, and once the supreme leader of Kazdel. During her reign, she devoted herself to implementing projects in fields such as medicare, education, and urban infrastructure, led the Sarkaz in repelling numerous alien invasions, and also made achievements in diplomatic work."
 
 msgid "#FBCED7"
 msgstr ""
 
 msgid "文明的存续"
-msgstr ""
+msgstr "Continuation of Civilization"
 
 msgid "#CE0000"
 msgstr ""
 
 msgid "黑色皮外套"
-msgstr ""
+msgstr "Black leather coat"
 
 msgid "銀白色羊絨衫"
-msgstr ""
+msgstr "Silver cashmere sweater"
 
 msgid "露指黑色皮手套"
-msgstr ""
+msgstr "Fingerless black leather gloves"
 
 msgid "黑色百褶短裙配红衬底"
-msgstr ""
+msgstr "Black pleated short skirt with red substrate"
 
 msgid "黑色油光厚连裤袜"
-msgstr ""
+msgstr "Black smooth thick pantyhose"
 
 msgid "富有米诺斯古典时代气息的双耳花瓶。需赠送者本人定期更换新鲜花卉。"
-msgstr ""
+msgstr "A double ear vase in the style of the Minos civilization. "
+"The owner must regularly replace the old flowers with new ones."
 
 msgid "#e3b9a1"
 msgstr ""
@@ -14749,178 +14792,225 @@ msgid "Lancet-2"
 msgstr ""
 
 msgid "一盒治療噴霧。外盒上标注着“一喷起效”的医疗喷雾套组。可以插入医用器械，也可以直接使用。"
-msgstr ""
+msgstr "A first aid spray kit whose box has a label \"Effective Immediately.\" "
+"It can be added to medical equipment or used directly."
 
 msgid ""
 "Lancet-2是可露希尔客制化后的雷神存在者™S Typer 62六轮作业平台， 圆形的外观让人觉得很可爱所以成为了某种意义上的吉祥物。虽然她说话有时候很消极，但是大家都很喜欢她。\n"
 "\n"
 "Lancet-2在经过可露希尔的改造后，得以满足更多罗德岛内的医疗需求，其器械设备也更注重于消毒和应对源石污染。"
 msgstr ""
+"Lancet-2 is a custom Raythean-S62 Model six-wheeled operations platform. "
+"Its rounded design has led Lancet-2 to be perceived as cute, making her something of a mascot. "
+"Although she has a rather pessimistic dispensation, she is still well-liked."
+"\n"
+"After being modified by Closure, Lancet-2 is able to perform more medical duties around the island, "
+"and her equipment is geared towards disinfecting and cleaning Originium contamination."
 
 msgid "#99988f"
 msgstr ""
 
 msgid "白色塑鋼外殼"
-msgstr ""
+msgstr "White plastic shell"
 
 msgid "六連橡膠動輪"
-msgstr ""
+msgstr "Six rubber wheels"
 
 msgid "急救噴霧噴嘴"
-msgstr ""
+msgstr "Emergency spray"
 
 msgid "置物架"
-msgstr ""
+msgstr "Storage rack"
 
 msgid "浊心斯卡蒂，一位让你熟悉又陌生的访客。——你愿意接纳她吗？"
-msgstr ""
+msgstr "Skadi the Corrupting Heart, a visitor familiar yet unbeknownst to you. Are you willing to welcome it?"
 
 msgid "#C70C0C"
 msgstr ""
 
 msgid "青绿色尖顶猎人帽"
-msgstr ""
+msgstr "Green top hunter hat"
 
 msgid "红色颈带与黑色蓬松领结"
-msgstr ""
+msgstr "Red neck strap and black tie"
 
 msgid "暗红色连衣裙"
-msgstr ""
+msgstr "Dark red dress"
 
 msgid "青绿色吃豆人手套"
-msgstr ""
+msgstr "Green Pac-man gloves"
 
 msgid "黑色蕾丝边内裤"
-msgstr ""
+msgstr "Black lace-edged underwear"
 
 msgid "白色防水短袜"
-msgstr ""
+msgstr "White waterproof socks"
 
 msgid "高筒高跟鞋"
-msgstr ""
+msgstr "High heels"
 
 msgid "升华法杖"
-msgstr ""
+msgstr "Sublimiting staff"
 
 msgid "固定用黑色背带"
-msgstr ""
+msgstr "Stabilizing black backbelt"
 
 msgid "后腰装饰蝴蝶结"
-msgstr ""
+msgstr "Back decorative ribbon"
 
 msgid "绑扣式黑色腿带"
-msgstr ""
+msgstr "Buckle-type black leg straps"
 
 msgid "鱼形装饰发带"
-msgstr ""
+msgstr "Fish-shaped decorative hair strap"
 
 msgid ""
 "流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
 msgstr ""
+"A wanderer from birth, Ceobe was infected through her prolonged treks through the harsh wilderness. "
+"After being rescued by Rhodes Island and successfully passing the Operator exam, "
+"she became a member of Rhodes Island."
 
 msgid "战术冲锋衣"
-msgstr ""
+msgstr "Tactical jacket"
 
 msgid "高领战术直筒连衣短裙"
-msgstr ""
+msgstr "Turtleneck tactical straight short dress"
 
 msgid "超高筒系带运动靴"
-msgstr ""
+msgstr "Ultrahigh lace-up sneakers"
 
 msgid "很重的枪"
-msgstr ""
+msgstr "Really Heavy Spear"
 
 msgid "裝滿武器的帆布包"
-msgstr ""
+msgstr "Canvas bag filled with weapons"
 
 msgid "{Name}最近有些欲求不满，看到房间里四下无人，终于抑制不住自己的冲动，一边解开衣服一边向{PlayerName}扑了过来"
-msgstr ""
+msgstr "{Name} seems unsatisfied, and she couldn't hold anymore after seeing no one else in the room, \\n"
+"she's taking off her clothes while rushing towards {PlayerName}"
 
 msgid "逆来顺受|毫不反抗的{PlayerName}被{Name}推倒了"
-msgstr ""
+msgstr "Embrace|{PlayerName} who wasn't resisting got pushed over by {Name}"
 
 msgid "反身欺上|经过一番激烈的博弈，终于反过来将{Name}推倒了"
-msgstr ""
+msgstr "Counter|After a fierce action, {Name} got pushed over instead"
 
 msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
-msgstr ""
+msgstr "Convince|Due to other things, after a long persuasion, {Name} gave up, {PlayerName} is safe for now"
 
 msgid "在门外听到{TargetSceneName}里传来了努力压抑着的呻吟声，而且门好像也没有锁，要怎么做呢？"
-msgstr ""
+msgstr "You heard constrained moaning from {TargetSceneName} outside, and the door wasn't locked, \\n"
+"what do you wish to do?"
 
 msgid "转身离开|虽然大概猜得到里面是谁，但为了保全对方的形象，决定还是不打扰了"
-msgstr ""
+msgstr "Leave|Even though you can guess who was it, but to protect her image, you chose not to disturb"
 
 msgid ""
 "拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一道小缝，里面的景象一览无余。\n"
 "{TargetName}背对着门，但仍能看到她的衣服解开着，手放在自己的某些部位做着什么。\n"
 "就这样，{PlayerName}看完了这场有些特殊的表演，趁演出者还停留在绝顶的余韵时掩上门悄悄地离开了。"
 msgstr ""
+"Peep|{PlayerName} held his breath and opened a small gap, seeing everything inside.\\n"
+"{TargetName} was facing opposite to the door, but you can still see her clothes opened \\n"
+"and she's doing something with her hand on her body part. \\n"
+"Hence, {PlayerName} watched this interesting performance, and left \\n"
+"when she's still at the aftertaste of the climax."
 
 msgid ""
 "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
 msgstr ""
+"Rush in|{PlayerName} pushed the door, and saw {TargetName} who's masturbating with her clothes off, \\n"
+"and while she's still stuck in place, you asked to join her"
 
 msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
-msgstr ""
+msgstr "{TargetName}'s breast milk is about to leak out, what do you want to do"
 
 msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁"
-msgstr ""
+msgstr "Squish breasts|{PlayerName} squishes {TargetName}'s breasts, \\n"
+"which caused breast milk to burst out onto the floor"
 
 msgid "放任不管|{PlayerName}留在原地，看着{TargetName}胸内的乳汁喷出来"
-msgstr ""
+msgstr "Let it be|{PlayerName} stands still and watches breast milk in {TargetName}'s breasts squirts out"
 
 msgid ""
 "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
 "一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
 "貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一点"
 msgstr ""
+"Block nipples|{PlayerName} covers {TargetName}'s nipples, which blocked breast milk from leaking out\\n"
+"After a while, breast milk fires out like a cannon, sending {PlayerName} flying\\n"
+"Some breast milk might be absorbed, as {TargetName}'s breasts grew slightly"
 
 msgid ""
 "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
 "貌似是用力过猛，{TargetName}的胸部变平了"
 msgstr ""
+"Squish breasts|{PlayerName} squishes {TargetName}'s breasts, \\n"
+"which caused breast milk to burst out onto the floor \\n"
+"{TargetName}'s breasts became flat, likely due to excessive force"
 
 msgid ""
 "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
 "一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
 "貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一些"
 msgstr ""
+"Block nipples|{PlayerName} covers {TargetName}'s nipples, which blocked breast milk from leaking out\\n"
+"After a while, breast milk fires out like a cannon, sending {PlayerName} flying\\n"
+"Some breast milk might be absorbed, as {TargetName}'s breasts grew bigger"
 
 msgid ""
 "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
 "貌似是用力过猛，{TargetName}的胸部变小了点"
 msgstr ""
+"Squish breasts|{PlayerName} squishes {TargetName}'s breasts, \\n"
+"which caused breast milk to burst out onto the floor \\n"
+"{TargetName}'s breasts became small, likely due to excessive force"
 
 msgid ""
 "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
 "一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
 "貌似有些乳汁被吸收掉了，{TargetName}的胸部大了好多"
 msgstr ""
+"Block nipples|{PlayerName} covers {TargetName}'s nipples, which blocked breast milk from leaking out\\n"
+"After a while, breast milk fires out like a cannon, sending {PlayerName} flying\\n"
+"Some breast milk might be absorbed, as {TargetName}'s breasts grew large"
 
 msgid ""
 "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
 "貌似是用力过猛，{TargetName}的胸部变小了些"
 msgstr ""
+"Squish breasts|{PlayerName} squishes {TargetName}'s breasts, \\n"
+"which caused breast milk to burst out onto the floor \\n"
+"{TargetName}'s breasts became smaller, likely due to excessive force"
 
 msgid ""
 "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
 "一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
 "貌似有些乳汁被吸收掉了，{TargetName}的胸部大得内衣快容不下了"
 msgstr ""
+"Block nipples|{PlayerName} covers {TargetName}'s nipples, which blocked breast milk from leaking out\\n"
+"After a while, breast milk fires out like a cannon, sending {PlayerName} flying\\n"
+"Some breast milk might be absorbed, as {TargetName}'s breasts grew huge \\n"
+"till her bra couldn't hold them"
 
 msgid ""
 "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
 "貌似是用力过猛，{TargetName}的胸部变小了许多"
 msgstr ""
+"Squish breasts|{PlayerName} squishes {TargetName}'s breasts, \\n"
+"which caused breast milk to burst out onto the floor \\n"
+"{TargetName}'s breasts became much smaller, likely due to excessive force"
 
 msgid ""
 "堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
 "一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了"
 msgstr ""
+"Block nipples|{PlayerName} covers {TargetName}'s nipples, which blocked breast milk from leaking out\\n"
+"After a while, breast milk fires out like a cannon, sending {PlayerName} flying\\n"
 
 msgid "在一天的激战后，{Name}的胸部所感受过的快感在睡梦中一觉而散"
-msgstr ""
+msgstr "After a long day, the pleasure {Name} felt from her breasts faded with sleep"
 
 msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
-msgstr ""
+msgstr "After a long day, the pleasure {TargetName} felt from her breasts faded with sleep"

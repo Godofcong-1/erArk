@@ -822,7 +822,7 @@ msgid "采尿器"
 msgstr "Urine collector"
 
 msgid "绳子"
-msgstr "Ropes"
+msgstr "String"
 
 msgid "眼罩"
 msgstr "Eye mask"
