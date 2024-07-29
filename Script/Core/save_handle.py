@@ -216,7 +216,7 @@ def input_load_save(save_id: str):
 
     # 更新游戏地图
     update_count += update_map(loaded_dict)
-    now_draw = draw.LeftDraw()
+    now_draw = draw.WaitDraw()
     draw_text = _("\n检测完毕，共有{0}条数据完成了更新\n").format(update_count)
     now_draw.text = draw_text
     now_draw.draw()

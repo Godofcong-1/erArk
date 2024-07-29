@@ -760,6 +760,32 @@ class TALK_QUICK_TEST:
             info_draw.text = info_text
             info_draw.draw()
 
+            button_text = _("[001]刷新口上文件")
+            button1_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.refresh_talk_file)
+            button1_draw.draw()
+            return_list.append(button1_draw.return_text)
+            line_feed.draw()
+
+            button_text = _("[002]开始测试")
+            button2_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.refresh_talk_file)
+            button2_draw.draw()
+            return_list.append(button2_draw.return_text)
+            line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn == button2_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+            elif yrn == button2_draw.return_text:
+                break
+
+        while 1:
+            return_list = []
             # 获取角色id
             change_value_panel = panel.AskForOneMessage()
             change_value_panel.set(_("请输入角色id"), 100)
@@ -887,3 +913,13 @@ class TALK_QUICK_TEST:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
+
+    def refresh_talk_file(self):
+        """刷新口上文件"""
+        import auto_build_config
+        game_config.init()
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n口上文件刷新完毕\n")
+        now_draw.text = draw_text
+        now_draw.draw()

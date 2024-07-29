@@ -2796,6 +2796,834 @@ msgstr ""
 msgid "我的名字?没有那种东西。\nW只是个死人堆捡到的代号，赫德雷倒是想让我自己取一个，不过太麻烦了。"
 msgstr ""
 
+#: .\data\talk\chara\0129_蓝毒.csv:6
+msgid "抬起頭，一名帶著淡淡微笑的粉髮安努拉少女對你點了點頭\n''初次見面，我是藍毒，想必您已經聽凱爾希醫生提起过我，那麼，''\n''該如何運用我這“毒物”的能力，就交由{TargetName}博士，您，来决定了。''"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:7
+msgid "{PlayerName}博士，你是說凱爾希醫生為何常常找我嗎?\n面對{PlayerName}的提問，{Name}想了想說\n\"因為我身體中的毒素也是一種優質的藥品原料，所以凱爾希醫生經常把我叫去她的實驗室......\""
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:8
+msgid "博士主动和干员{TargetName}聊天的口上3"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:9
+msgid "嗯?你是說我的眼睛嗎?聽到{PlayerName}的疑問，{Name}眨了眨雙眼\n\"是很罕見沒錯呢.....\"{Name}微微笑了笑\"這算是在稱讚我嗎?{PlayerName}博士\""
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:10
+msgid "干员{Name}主动和博士聊天的口上1"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:11
+msgid "干员{Name}主动和博士聊天的口上2"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:12
+msgid "干员{Name}主动和博士聊天的口上3"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:13
+msgid "干员{Name}和另一名干员{TargetName}聊天的口上1"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:14
+msgid "博士主动和干员{TargetName}聊天的口上，触发权重+5"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:15
+msgid "博士主动和干员{TargetName}聊天的口上，时间：白天"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:16
+msgid "博士主动和干员{TargetName}聊天的口上，时间：晚上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:17
+msgid "博士主动和干员{TargetName}聊天的口上，时间：三餐饭点"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:18
+msgid "博士主动和干员{TargetName}聊天的口上，该地点仅有玩家和该角色"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:19
+msgid "博士主动和干员{TargetName}聊天的口上，地点：博士办公室"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:20
+msgid "博士主动和干员{TargetName}聊天的口上，地点：食堂"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:21
+msgid "博士主动和干员{TargetName}聊天的口上，地点：训练室（包括木桩房和射击房）"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:22
+msgid "博士主动和干员{TargetName}聊天的口上，地点：门诊室（含急诊室）"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:23
+msgid "博士主动和干员{TargetName}聊天的口上，对方当前正跟随玩家"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:24
+msgid "博士主动和干员{TargetName}聊天的口上，对方是当前的助理干员"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:25
+msgid "博士主动和干员{TargetName}聊天的口上，博士体力低于30%"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:26
+msgid "博士主动和干员{TargetName}聊天的口上，对方体力低于30%"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:27
+msgid "博士主动和干员{TargetName}聊天的口上，对方心情愉快"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:28
+msgid "博士主动和干员{TargetName}聊天的口上，对方心情不好或愤怒"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:29
+msgid "博士主动和干员{TargetName}聊天的口上，对方疲劳条≥75%，部分指令受限"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:30
+msgid "博士主动和干员{TargetName}聊天的口上，对方疲劳条≥85%，必须回去睡觉"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:31
+msgid "博士主动和干员{TargetName}聊天的口上，对方尿意条≥80%，需要排尿"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:32
+msgid "博士主动和干员{TargetName}聊天的口上，对方饥饿值≥80%，需要吃饭"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:33
+msgid "博士主动和干员{TargetName}聊天的口上，对方的亲密>=3"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:34
+msgid "博士主动和干员{TargetName}聊天的口上，对方的欲望>=5"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:35
+msgid "博士主动和干员{TargetName}聊天的口上，博士的话术技能<=1"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:36
+msgid "博士主动和干员{TargetName}聊天的口上，博士的话术技能>=5"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:37
+msgid "博士主动和干员{TargetName}聊天的口上，对方的话术技能<=1"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:38
+msgid "博士主动和干员{TargetName}聊天的口上，对方的话术技能>=5"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:39
+msgid "博士主动和干员{TargetName}聊天的口上，对方无陷落素质"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:40
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为思慕"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:41
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系<=恋慕(2级)"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:42
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为爱情系>=恋人(3级)"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:43
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为屈从"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:44
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系<=驯服(2级)"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:45
+msgid "博士主动和干员{TargetName}聊天的口上，对方的陷落状态为隶属系>=妄信(3级)"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:46
+msgid "博士主动和干员{TargetName}聊天的口上，对方已没有初吻"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:47
+msgid "博士主动和干员{TargetName}聊天的口上，对方还有初吻"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:48
+msgid "博士主动和干员{TargetName}聊天的口上，对方非处女"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:49
+msgid "博士主动和干员{TargetName}聊天的口上，对方还是处女"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:50
+msgid "博士主动和干员{TargetName}聊天的口上，对方非A处女"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:51
+msgid "博士主动和干员{TargetName}聊天的口上，对方还是A处女"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:52
+msgid "博士主动和干员{TargetName}聊天，但是失败了的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:53
+msgid "博士主动和干员{TargetName}身体接触的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:54
+msgid "嗯?咖啡嗎?{Name}接過了你遞過去的咖啡杯\"多謝你了，不過要是味道能在好些就不錯了呢\""
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:55
+msgid "博士主动给干员{TargetName}泡咖啡（加料）的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:56
+msgid "適當的休息，也是为了工作更有狀態哦。\n說罷，{Name}將手中剛泡好，還冒著熱氣的咖啡遞到了{PlayerName}的面前"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:57
+msgid "博士主动和干员{TargetName}一起休息的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:58
+msgid "博士主动向干员{TargetName}请求同行的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:59
+msgid "博士主动向干员{TargetName}结束同行的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:60
+msgid "博士主动对干员{TargetName}唱歌的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:61
+msgid "博士主动对干员{TargetName}演奏乐器的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:62
+msgid "博士主动和干员{TargetName}一起处理公务的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:63
+msgid "博士主动对干员{TargetName}摸头的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:64
+msgid "博士主动对干员{TargetName}摸胸的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:65
+msgid "博士主动对干员{TargetName}摸屁股的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:66
+msgid "博士主动对干员{TargetName}摸耳朵的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:67
+msgid "博士主动对干员{TargetName}摸角的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:68
+msgid "博士主动对干员{TargetName}摸尾巴的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:69
+msgid "博士主动对干员{TargetName}摸光环的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:70
+msgid "博士主动对干员{TargetName}摸光翼的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:71
+msgid "博士主动对干员{TargetName}摸触手的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:72
+msgid "博士主动对干员{TargetName}摸小车的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:73
+msgid "博士主动对干员{TargetName}牵手的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:74
+msgid "博士主动对干员{TargetName}拥抱的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:75
+msgid "博士主动对干员{TargetName}亲吻的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:76
+msgid "博士主动对干员{TargetName}膝枕的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:77
+msgid "博士主动对干员{TargetName}掀起裙子的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:78
+msgid "博士主动对干员{TargetName}索要内裤的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:79
+msgid "博士主动对干员{TargetName}索要袜子的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:80
+msgid "博士主动对干员{TargetName}阴蒂爱抚的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:81
+msgid "博士主动对干员{TargetName}手指插入（V）的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:82
+msgid "博士主动对干员{TargetName}手指插入（A）的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:83
+msgid "博士主动对干员{TargetName}亲吻失败的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:84
+msgid "博士主动对干员{TargetName}重度猥亵失败的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:85
+msgid "博士主动对干员{TargetName}轻度猥亵失败的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:86
+msgid "博士主动对干员{TargetName}告白的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:87
+msgid "博士主动对干员{TargetName}告白失败的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:88
+msgid "博士主动对干员{TargetName}戴上项圈的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:89
+msgid "博士主动对干员{TargetName}戴上项圈失败的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:90
+msgid "博士主动对干员{TargetName}邀请H的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:91
+msgid "博士主动对干员{TargetName}结束H的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:92
+msgid "博士主动对干员{TargetName}身体爱抚(H)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:93
+msgid "博士主动对干员{TargetName}接吻(H)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:94
+msgid "博士主动对干员{TargetName}胸爱抚的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:95
+msgid "博士主动对干员{TargetName}玩弄乳头的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:96
+msgid "博士主动对干员{TargetName}舔吸乳头的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:98
+msgid "博士主动对干员{TargetName}掰开阴唇观察的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:99
+msgid "博士主动对干员{TargetName}掰开肛门观察的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:100
+msgid "博士主动对干员{TargetName}舔阴的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:101
+msgid "博士主动对干员{TargetName}舔肛的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:104
+msgid "博士主动对干员{TargetName}命令对方自慰的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:105
+msgid "博士主动对干员{TargetName}命令对方舔自己肛门的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:106
+msgid "博士主动对干员{TargetName}继续享受的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:107
+msgid "博士主动对干员{TargetName}诱惑对方的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:108
+msgid "博士主动对干员{TargetName}手交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:109
+msgid "博士主动对干员{TargetName}口交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:110
+msgid "博士主动对干员{TargetName}乳交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:111
+msgid "博士主动对干员{TargetName}足交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:112
+msgid "博士主动对干员{TargetName}发交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:113
+msgid "博士主动对干员{TargetName}腋交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:114
+msgid "博士主动对干员{TargetName}素股的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:115
+msgid "博士主动对干员{TargetName}手交口交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:116
+msgid "博士主动对干员{TargetName}乳交口交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:117
+msgid "博士主动对干员{TargetName}真空口交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:118
+msgid "博士主动对干员{TargetName}深喉插入的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:119
+msgid "博士主动对干员{TargetName}六九式的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:120
+msgid "博士主动对干员{TargetName}润滑液的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:121
+msgid "博士主动对干员{TargetName}事前避孕药的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:122
+msgid "博士主动对干员{TargetName}事后避孕药的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:123
+msgid "博士主动对干员{TargetName}媚药的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:124
+msgid "博士主动对干员{TargetName}一次性利尿剂的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:125
+msgid "博士主动对干员{TargetName}持续性利尿剂的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:126
+msgid "博士主动对干员{TargetName}安眠药的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:127
+msgid "博士主动对干员{TargetName}排卵促进药的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:128
+msgid "博士主动对干员{TargetName}乳头跳蛋的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:129
+msgid "博士主动对干员{TargetName}乳头夹的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:130
+msgid "博士主动对干员{TargetName}阴蒂跳蛋的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:131
+msgid "博士主动对干员{TargetName}阴蒂夹的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:132
+msgid "博士主动对干员{TargetName}电动按摩棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:133
+msgid "博士主动对干员{TargetName}震动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:134
+msgid "博士主动对干员{TargetName}加粗震动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:135
+msgid "博士主动对干员{TargetName}巨型震动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:136
+msgid "博士主动对干员{TargetName}肛门振动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:137
+msgid "博士主动对干员{TargetName}加粗肛门震动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:138
+msgid "博士主动对干员{TargetName}巨型肛门震动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:139
+msgid "博士主动对干员{TargetName}灌肠的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:140
+msgid "博士主动对干员{TargetName}肛门拉珠的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:141
+msgid "博士主动对干员{TargetName}拔出肛塞的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:142
+msgid "博士主动对干员{TargetName}取下乳头夹的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:143
+msgid "博士主动对干员{TargetName}取下阴蒂夹的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:144
+msgid "博士主动对干员{TargetName}拔出振动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:145
+msgid "博士主动对干员{TargetName}拔出肛门振动棒的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:146
+msgid "博士主动对干员{TargetName}拔出肛门拉珠的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:147
+msgid "博士主动对干员{TargetName}正常位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:148
+msgid "博士主动对干员{TargetName}背后位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:149
+msgid "博士主动对干员{TargetName}骑乘位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:150
+msgid "博士主动对干员{TargetName}对面座位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:151
+msgid "博士主动对干员{TargetName}背面座位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:152
+msgid "博士主动对干员{TargetName}对面立位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:153
+msgid "博士主动对干员{TargetName}背面立位的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:154
+msgid "博士主动对干员{TargetName}刺激G点的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:155
+msgid "博士主动对干员{TargetName玩弄子宫口(H)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:156
+msgid "博士主动对干员{TargetName}插入子宫口(H)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:157
+msgid "博士主动对干员{TargetName}正常位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:158
+msgid "博士主动对干员{TargetName}后背位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:159
+msgid "博士主动对干员{TargetName}骑乘位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:160
+msgid "博士主动对干员{TargetName}对面座位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:161
+msgid "博士主动对干员{TargetName}背面座位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:162
+msgid "博士主动对干员{TargetName}对面立位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:163
+msgid "博士主动对干员{TargetName}背面立位肛交的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:164
+msgid "博士主动对干员{TargetName}玩弄s状结肠的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:165
+msgid "博士主动对干员{TargetName}隔着刺激阴道的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:166
+msgid "博士主动把干员{TargetName}脱到只穿内衣(即只脱上下外衣)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:167
+msgid "博士主动把干员{TargetName}脱到只穿袜子手套等(即再脱掉内衣)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:168
+msgid "博士主动把干员{TargetName}脱到全裸(即身上没有任何衣物)的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:169
+msgid "博士主动对干员{TargetName}收起内裤的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:170
+msgid "{PlayerName}......今天可是會懷上的日子喔....懷中的{Name}貼在{PlayerName}的耳邊輕輕說道\n\"喔?變大了呢?是下定決心想讓我懷上嗎?\"{Name}嬌喘著\n"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:171
+msgid "干员{TargetName}N小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:172
+msgid "干员{TargetName}N普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:173
+msgid "干员{TargetName}N强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:174
+msgid "干员{TargetName}B小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:175
+msgid "干员{TargetName}B普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:176
+msgid "干员{TargetName}B强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:177
+msgid "干员{TargetName}C小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:178
+msgid "干员{TargetName}C普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:179
+msgid "干员{TargetName}C强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:180
+msgid "博士射精的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:181
+msgid "博士大量射精的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:182
+msgid "博士超大量射精的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:183
+msgid "干员{TargetName}V小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:184
+msgid "干员{TargetName}V普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:185
+msgid "干员{TargetName}V强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:186
+msgid "干员{TargetName}A小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:187
+msgid "干员{TargetName}A普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:188
+msgid "干员{TargetName}A强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:189
+msgid "干员{TargetName}U小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:190
+msgid "干员{TargetName}U普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:191
+msgid "干员{TargetName}U强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:192
+msgid "干员{TargetName}W小绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:193
+msgid "干员{TargetName}W普绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:194
+msgid "干员{TargetName}W强绝顶的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:195
+msgid "干员{TargetName}获得快乐刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:196
+msgid "干员{TargetName}获得快乐刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:197
+msgid "干员{TargetName}获得快乐刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:198
+msgid "干员{TargetName}获得屈服刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:199
+msgid "干员{TargetName}获得屈服刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:200
+msgid "干员{TargetName}获得屈服刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:201
+msgid "干员{TargetName}获得苦痛刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:202
+msgid "干员{TargetName}获得苦痛刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:203
+msgid "干员{TargetName}获得苦痛刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:204
+msgid "干员{TargetName}获得时姦刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:205
+msgid "干员{TargetName}获得时姦刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:206
+msgid "干员{TargetName}获得时姦刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:207
+msgid "干员{TargetName}获得恐怖刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:208
+msgid "干员{TargetName}获得恐怖刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:209
+msgid "干员{TargetName}获得恐怖刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:210
+msgid "干员{TargetName}获得反发刻印1的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:211
+msgid "干员{TargetName}获得反发刻印2的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:212
+msgid "干员{TargetName}获得反发刻印3的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:213
+msgid "干员{TargetName}失去初吻的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:214
+msgid "干员{TargetName}失去处女的口上"
+msgstr ""
+
+#: .\data\talk\chara\0129_蓝毒.csv:215
+msgid "干员{TargetName}失去A处女的口上"
+msgstr ""
+
 #: .\data\talk\chara\0179_夜莺.csv:6
 msgid "你很轻松的注意到了那道纯白色的身影。\n纤细的、有着透明般虚幻感的萨卡兹少女与罗德岛沉稳的深色调走廊形成了鲜明的对比，让你如同在远足时瞥见林地间弥漫的晨雾的孩童般驻足停留，被那份迷幻的神秘感所深深吸引。\n“您好，{PlayerName}博士。我是刚刚加入罗德岛的夜莺。”少女向你走来，声音清脆舒缓，确如夜莺引吭。\n你自那无数积压的公务文件中回忆起那份来自凯尔希的报告，的确，有一位资深干员今天要来报道，但是你却完全忘得一干二净。\n于是你急忙做了简短的自我介绍，并礼节性的向{Name}伸出手去。\n“……”{Name}呆呆的注视着你的手臂，看起来没有料到你会主动提出握手的邀请。\n“抱歉，{PlayerName}博士。我没想到……”但她很快便理解了你的想法，用那纤柔的手指握了过来。\n真是个奇怪的孩子。\n你一边感受着手间传来的微凉触感，一边如此想到。"
 msgstr ""

@@ -11876,27 +11876,31 @@ msgstr ""
 msgid "蓝毒，身份不明，履历缺失。在以有毒制剂作为清除手段的特别行动中展现出过人威力。现作为狙击干员于罗德岛干员组任职，并定期为医疗组提供毒理学相关研究的协助。"
 msgstr ""
 
-#: .\data\character\0129_蓝毒.csv:27
-msgid "蓝色带兜帽棒球服"
-msgstr ""
-
-#: .\data\character\0129_蓝毒.csv:28
-msgid "蓝黑色纽扣衬衫"
-msgstr ""
-
-#: .\data\character\0129_蓝毒.csv:29
-msgid "蓝黑色阔口休闲短裤"
-msgstr ""
-
-#: .\data\character\0129_蓝毒.csv:30
-msgid "蓝黑色厚连身裤"
+#: .\data\character\0129_蓝毒.csv:15
+msgid "#da70d6"
 msgstr ""
 
 #: .\data\character\0129_蓝毒.csv:31
-msgid "绑带战术腿包（左）"
+msgid "蓝色带兜帽棒球服"
 msgstr ""
 
 #: .\data\character\0129_蓝毒.csv:32
+msgid "蓝黑色纽扣衬衫"
+msgstr ""
+
+#: .\data\character\0129_蓝毒.csv:33
+msgid "蓝黑色阔口休闲短裤"
+msgstr ""
+
+#: .\data\character\0129_蓝毒.csv:34
+msgid "蓝黑色厚连身裤"
+msgstr ""
+
+#: .\data\character\0129_蓝毒.csv:35
+msgid "绑带战术腿包（左）"
+msgstr ""
+
+#: .\data\character\0129_蓝毒.csv:36
 msgid "蓝色运动鞋"
 msgstr ""
 
