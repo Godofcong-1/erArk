@@ -371,6 +371,7 @@ def handle_system_setting():
     constant.InstructType.SYSTEM,
     _("快速测试口上"),
     {
+        constant_promise.Premise.DEBUG_MODE_ON,
     })
 def handle_talk_quick_test():
     """快速测试口上"""
@@ -435,6 +436,7 @@ def handle_see_fridge():
     {constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLASS_ROOM,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_teach():
@@ -2285,6 +2287,7 @@ def handle_aromatherapy():
     _("处理公务"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.HAVE_OFFICE_WORK_NEED_TO_DO,
      constant_promise.Premise.TIRED_LE_74}
 )
@@ -2391,6 +2394,7 @@ def handle_training():
     _("锻炼身体"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_GYM_ROOM,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_exercise():
@@ -2405,6 +2409,7 @@ def handle_exercise():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
      constant_promise.Premise.PATIENT_WAIT,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_cure_patient():
@@ -2418,6 +2423,7 @@ def handle_cure_patient():
     _("招募干员"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_HR_OFFICE,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_recruit():
@@ -2464,6 +2470,7 @@ def handle_confim_recruit():
     _("维护设施"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_ANY_MAINTENANCE_PLACE,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_maintenance_facilities():
@@ -2477,6 +2484,7 @@ def handle_maintenance_facilities():
     _("维修装备"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_BLACKSMITH_SHOP,
+     constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_repair_equipment():
