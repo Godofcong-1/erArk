@@ -225,6 +225,8 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
         h_state_data.extra_orgasm_feel[body_part] = 0
 
     h_state_data.insert_position = -1
+    h_state_data.shoot_position_body = -1
+    h_state_data.shoot_position_cloth = -1
     h_state_data.bondage = 0
     h_state_data.condom_count = [0, 0]
     h_state_data.npc_active_h = False

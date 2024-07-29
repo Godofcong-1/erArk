@@ -66,6 +66,10 @@ def init_character_tem_data():
                 text_color_list = [chara_id, chara_name, v]
                 add_text_color_data_to_config_data(text_color_list)
                 now_tem.__dict__[k] = v
+            # TODO 为了解决部分角色的初始宿舍是特殊地点的问题，在处理完路径之前，先将宿舍翻译回中文
+            elif k == "Dormitory":
+                v = _(v, revert_translation=True)
+                now_tem.__dict__[k] = v
             else:
                 now_tem.__dict__[k] = v
         # print(f"debug now_tem.Cloth = {now_tem.Cloth}")

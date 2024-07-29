@@ -1611,6 +1611,9 @@ class SecondBehavior:
     DAY_HELLO = 1332
     """ 每日打招呼 """
 
+    NEW_ROUND_FAREWELL = 1351
+    """ 新周目告别 """
+
     CHOSEN_AS_ASSISTANT = 1401
     """ 被选为助理 """
     NOT_AS_ASSISTANT = 1402

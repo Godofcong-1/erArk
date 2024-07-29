@@ -625,6 +625,23 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TIME_OVER_A_YEAR)
+def handle_time_over_a_year(character_id: int) -> int:
+    """
+    游戏时间超过一年
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.year >= 2021:
+        return 1
+    elif now_time.year == 2020 and now_time.month >= 3:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
@@ -1124,9 +1141,13 @@ def handle_in_dormitory(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_position = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
     # 因为在这里出现过BUG，所以加一个额外的修正判定，强制将博士的宿舍定为中枢\博士房间
     if character_id == 0 and character_data.dormitory == "":
-        character_data.dormitory = _("中枢\博士房间")
+        character_data.dormitory = "中枢\博士房间"
+    # 在其他语言中将被翻译的宿舍名进行修正
+    elif scene_list[0] == _("中枢") or scene_list[0] == _("控制中枢"):
+        character_data.dormitory = "中枢\博士房间"
     # print(f"debug {character_data.name}的宿舍前提判定，当前位置为{now_position}，宿舍位置为{character_data.dormitory}")
     return now_position == character_data.dormitory
 
@@ -6293,6 +6314,25 @@ def handle_target_mp_high(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_AND_TARGET_HP_GE_70)
+def handle_self_and_target_hp_ge_70(character_id: int) -> int:
+    """
+    自身和交互对象体力都高于70%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value1 = character_data.hit_point / character_data.hit_point_max
+    value2 = target_data.hit_point / target_data.hit_point_max
+    if value1 > 0.7 and value2 > 0.7:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TIRED_LE_0)
 def handle_tired_le_0(character_id: int) -> int:
     """
@@ -7675,21 +7715,50 @@ def handle_t_kiss_ge_10(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_NOT_FALL)
-def handle_target_not_fall(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_FALL)
+def handle_self_fall(character_id: int) -> int:
     """
-    角色无陷落素质
+    自己有陷落素质
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
     for i in {201, 202, 203, 204, 211, 212, 213, 214}:
-        if target_data.talent[i]:
-            return 0
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_FALL)
+def handle_target_not_fall(character_id: int) -> int:
+    """
+    交互对象无陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_fall(character_data.target_character_id):
+        return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_FALL)
+def handle_target_fall(character_id: int) -> int:
+    """
+    交互对象有陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_fall(character_data.target_character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_LOVE_1)
@@ -8805,13 +8874,17 @@ def handle_player_come_scene(character_id: int) -> int:
     int -- 权重
     """
     pl_character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
     if (
-            pl_character_data.behavior.move_src != target_data.position
-            and pl_character_data.behavior.move_target == target_data.position
-            and pl_character_data.position == target_data.position
+        len(pl_character_data.behavior.move_src) and
+        len(pl_character_data.behavior.move_target) and
+        pl_character_data.behavior.move_src != pl_character_data.behavior.move_target
     ):
-        return 1
+        scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        for chara_id in scene_data.character_list:
+            if chara_id == 0:
+                continue
+            return 1
     return 0
 
 
@@ -11460,12 +11533,14 @@ def handle_last_cmd_normal_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.NORMAL_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.NORMAL_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BACK_SEX)
@@ -11477,12 +11552,14 @@ def handle_last_cmd_back_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.BACK_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.BACK_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_RIDING_SEX)
@@ -11494,12 +11571,14 @@ def handle_last_cmd_riding_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.RIDING_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.RIDING_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_FACE_SEAT_SEX)
@@ -11511,12 +11590,14 @@ def handle_last_cmd_face_seat_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.FACE_SEAT_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.FACE_SEAT_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BACK_SEAT_SEX)
@@ -11528,12 +11609,14 @@ def handle_last_cmd_back_seat_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.BACK_SEAT_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.BACK_SEAT_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_FACE_STAND_SEX)
@@ -11545,12 +11628,14 @@ def handle_last_cmd_face_stand_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.FACE_STAND_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.FACE_STAND_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BACK_STAND_SEX)
@@ -11562,12 +11647,14 @@ def handle_last_cmd_back_stand_sex(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
-    last_cmd = cache.input_cache[len(cache.input_cache) - 2]
-    if len_input and (last_cmd == str(constant.Instruct.BACK_STAND_SEX)):
-        return 1
-    return 0
+    len_input = len(cache.input_cache)
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
+        if last_cmd == str(constant.Instruct.BACK_STAND_SEX):
+            return 1
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_STIMULATE_G_POINT)
@@ -11613,8 +11700,7 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
@@ -11638,7 +11724,11 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
         str(constant.Instruct.FACE_RUB), str(constant.Instruct.HORN_RUB),
         str(constant.Instruct.EARS_RUB),
     }
-    if len_input:
+
+    for i in range(len_input):
+        last_cmd = cache.input_cache[len_input - 1 - i]
+        if last_cmd == _("确定"):
+            continue
         if last_cmd in sex:
             return 1
     return 0

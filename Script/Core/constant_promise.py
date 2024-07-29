@@ -613,6 +613,8 @@ class Premise:
     """ 时间_当前 当前不是晚安问候时间（计划睡觉时间之后） """
     STILL_30_MINUTES_BEFORE_END = "still_30_minutes_before_end"
     """ 时间_当前 距离行动结束时间还有至少30分钟 """
+    TIME_OVER_A_YEAR = "time_over_a_year"
+    """ 时间_当前 游戏时间超过一年 """
 
     #"""
     #异常状态类型：\n
@@ -718,6 +720,8 @@ class Premise:
     """ 属性_基础 交互对象气力低于30% """
     TARGET_MP_HIGH = "t_mp_high"
     """ 属性_基础 交互对象气力高于70% """
+    SELF_AND_TARGET_HP_GE_70 = "self_and_target_hp_ge_70"
+    """ 属性_基础 自身和交互对象体力都高于70% """
     TIRED_LE_0 = "tired_le_0"
     """ 属性_基础 疲劳条≤0% """
     TIRED_GE_50 = "tired_ge_50"
@@ -1465,8 +1469,12 @@ class Premise:
     TARGET_KISS_GE_10 = "t_kiss_ge_10"
     """ 属性_经验 交互对象亲吻经验>=10 """
 
+    SELF_FALL = "self_fall"
+    """ 属性_素质 自己有陷落素质 """
     TARGET_NOT_FALL = "not_fall"
     """ 属性_素质 交互对象无陷落素质 """
+    TARGET_FALL = "target_fall"
+    """ 属性_素质 交互对象有陷落素质 """
     TARGET_LOVE_1 = "love_1"
     """ 属性_素质 交互对象拥有思慕（爱情系第一阶段） """
     TARGET_LOVE_2 = "love_2"

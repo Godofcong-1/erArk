@@ -1,10 +1,9 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_talent, map_handle
+from Script.Design import handle_talent, map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -119,7 +118,7 @@ class Originium_Arts_Panel:
             button1_draw.draw()
             return_list.append(button1_draw.return_text)
 
-            if 0:
+            if cache.debug_mode:
                 button2_text = _("[002]时间停止(未实装)")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -148,7 +147,7 @@ class Originium_Arts_Panel:
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
 
-            if 0:
+            if cache.debug_mode:
                 button4_text = _("[004]自我强化(未实装)")
                 button4_draw = draw.LeftButton(
                     _(button4_text),
@@ -237,13 +236,26 @@ class Originium_Arts_Panel:
                 button11_draw.draw()
                 return_list.append(button11_draw.return_text)
 
+            if cache.debug_mode or handle_premise.handle_time_over_a_year(0):
+                button12_text = _("[012]Re:败者食尘")
+                button12_draw = draw.LeftButton(
+                    _(button12_text),
+                    _("12"),
+                    window_width,
+                    cmd_func=self.new_round_for_sure,
+                    args=(),
+                    )
+                line_feed.draw()
+                button12_draw.draw()
+                return_list.append(button12_draw.return_text)
+
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == back_draw.return_text or yrn == "12":
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -504,6 +516,7 @@ class Originium_Arts_Panel:
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
                         now_degree += character_data.hypnosis.hypnosis_degree
+                    now_degree = int(now_degree)
                     # 绘制
                     draw_text += _("：需要博士催眠经验≥{0}（当前{1}），需要全干员总催眠深度≥{2}%（当前{3}%）").format(need_exp, now_exp, need_degree, now_degree)
                     now_contion = now_exp >= need_exp and now_degree >= need_degree
@@ -542,6 +555,33 @@ class Originium_Arts_Panel:
         info_draw = draw.WaitDraw()
         info_draw.text = _(info_text)
         info_draw.draw()
+
+    def new_round_for_sure(self):
+        """确认开始新的周目"""
+        from Script.UI.Panel import new_round
+        while 1:
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            now_draw = draw.NormalDraw()
+            now_draw.width = window_width
+            now_draw.text = _("\n你可以继承目前的部分数据，从头开始一个全新的周目，重新做出不一样的抉择，体验不一样的风景\n")
+            now_draw.text += _("此选择不可撤销，请备份好存档，谨慎决定\n")
+            now_draw.text += _("\n\n\n确定开始新的周目吗？\n\n\n\n")
+            now_draw.draw()
+            return_list = []
+            yes_draw = draw.CenterButton(_("[是]"), _("是"), window_width / 2)
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            no_draw = draw.CenterButton(_("[否]"), _("否"), window_width / 2)
+            no_draw.draw()
+            return_list.append(no_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == yes_draw.return_text:
+                now_panel = new_round.New_Round_Handle()
+                now_panel.draw()
+                break
+            elif yrn == no_draw.return_text:
+                break
 
 
 class Down_Negative_Talent_Panel:

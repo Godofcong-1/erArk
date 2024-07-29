@@ -519,6 +519,21 @@ class Nation:
     """ 势力名 """
 
 
+class New_Round_Inherit:
+    """ 新周目继承时的各类数据计算 """
+
+    cid: int
+    """ 继承cid """
+    inherit_type: int
+    """ 继承类型id(0源石技艺，1玩家能力经验，3收集品，4好感信赖，5干员能力经验) """
+    inherit_lv: int
+    """ 继承等级 """
+    inherit_rate: int
+    """ 继承比例 """
+    point_cost: int
+    """ 周目点数消耗 """
+
+
 class Organ:
     """ 器官对应性别限定和文字描述 """
 

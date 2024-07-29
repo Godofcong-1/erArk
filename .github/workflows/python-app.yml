@@ -56,6 +56,7 @@ jobs:
           Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Organ.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Ability.csv dist_ArkEditor/csv/
           Copy-Item data/csv/CharacterState.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/

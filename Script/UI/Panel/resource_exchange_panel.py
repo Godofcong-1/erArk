@@ -264,6 +264,9 @@ class Resource_Exchange_Line_Panel:
         # 保证卖出的不超过仓库容量
         if not self.buy_or_sell_flag and self.quantity_of_resouce > cache.rhodes_island.materials_resouce[self.now_select_resouce_id]:
             self.quantity_of_resouce = cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
+        # 保证买入的不超过仓库容量
+        if self.buy_or_sell_flag and (self.quantity_of_resouce + cache.rhodes_island.materials_resouce[self.now_select_resouce_id]) > cache.rhodes_island.warehouse_capacity:
+            self.quantity_of_resouce = cache.rhodes_island.warehouse_capacity - cache.rhodes_island.materials_resouce[self.now_select_resouce_id]
         # 保证不为负数
         if self.quantity_of_resouce < 0:
             self.quantity_of_resouce = 0

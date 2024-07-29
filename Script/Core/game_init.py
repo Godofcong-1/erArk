@@ -2,9 +2,10 @@
 import os
 import traceback
 from types import FunctionType
-from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd, get_text
+from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd, get_text, save_handle
 from Script.Config import normal_config
 from Script.UI.Moudle import panel
+from Script.Design import game_time
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -61,13 +62,17 @@ def init(main_flow: object):
             with open(error_path, "a", encoding="utf-8") as e:
                 e.write(f"\n版本信息：{normal_config.config_normal.verson}\n")
                 e.write(f"最近输入指令：{cache.input_cache}\n")
+                e.write(f"当前游戏内时间：{game_time.get_date_text(cache.game_time)}\n")
             traceback.print_exc(file=open(error_path, "a"))
             # 向游戏内写入错误信息
             error_text = "\n"
             error_text += _("版本信息：{0}\n").format(normal_config.config_normal.verson)
             error_text += _("最近输入指令：{0}\n").format(cache.input_cache)
+            error_text += _("当前游戏内时间：{0}\n").format(game_time.get_date_text(cache.game_time))
             error_text += traceback.format_exc()
             error_text += _("\n\n游戏发生错误，已将上述错误信息写入error.log\n\n")
+            error_text += _("报错数据文件已保存至99号档位，请将error.log和存档发送给游戏作者以帮助解决问题\n\n")
+            save_handle.establish_save("99")
             # 输出选择面板
             ask_list = []
             askfor_panel = panel.OneMessageAndSingleColumnButton()

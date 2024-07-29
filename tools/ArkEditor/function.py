@@ -104,6 +104,10 @@ def read_CVE(cve_value_str: str):
         b2_value = cve_str_list[2].split("S|")[1]
         b2_name = cache_control.state_data[b2_value]
         cve_str = cve_str.replace(f"S|{b2_value}", f"状态{b2_name}")
+    elif "Climax" in cve_str:
+        b2_value = cve_str_list[2].split("Climax|")[1]
+        b2_name = cache_control.organ_data[b2_value]
+        cve_str = cve_str.replace(f"Climax|{b2_value}", f"绝顶{b2_name}")
     # 最后去掉所有的下划线
     cve_str = cve_str.replace("_", "")
     return cve_str

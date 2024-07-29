@@ -36,7 +36,7 @@ def base_chara_state_common_settle(
         add_time: int,
         state_id: int,
         base_value: int = 30,
-        ability_level: int = 0,
+        ability_level: int = -1,
         extra_adjust: float = 0,
         change_data: game_type.CharacterStatusChange = None,
         change_data_to_target_change: game_type.CharacterStatusChange = None,
@@ -88,7 +88,7 @@ def base_chara_state_common_settle(
         target_change.status_data[state_id] += final_value
 
 
-def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int = -1):
     """
     角色快感系数获得的共用函数
     Keyword arguments:
@@ -105,7 +105,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
     final_adjust += feel_adjust
     # 技巧
-    if ability_level:
+    if ability_level >= 0:
         tech_adjust = attr_calculation.get_ability_adjust(ability_level)
         final_adjust = math.sqrt(feel_adjust * tech_adjust)
     # 调香
@@ -118,7 +118,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     return final_adjust
 
 
-def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = 0):
+def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int = -1):
     """
     角色状态系数获得的共用函数
     Keyword arguments:
@@ -128,6 +128,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    ability_level = max(0, ability_level)
 
     # 系数加成
     final_adjust = 0
@@ -262,6 +263,58 @@ def base_chara_favorability_and_trust_common_settle(
 
     else:
         return
+
+
+def base_chara_climix_common_settle(
+        character_id: int,
+        part_id: int = 0,
+        base_value: int = 500,
+        adjust: int = -1,
+        degree: int = -1,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色绝顶通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    part_id -- 部位id，即性器官id\n
+    base_value -- 基础固定值\n
+    adjust -- 系数\n
+    degree -- 绝顶程度，默认-1，0小1普中强\n
+    change_data -- 结算信息记录对象
+    change_data_to_target_change -- 结算信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 只能选择正确部位
+    if part_id < 0 or part_id > 7:
+        return
+
+    # 部位快感
+    random_adjust = random.uniform(0.8, 1.2)
+    if adjust >= 0:
+        adjust *= random_adjust
+    else:
+        adjust = random_adjust
+    base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+
+    # 触发绝顶
+    num = part_id * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
+    # 如果指定了程度，则直接使用指定的程度
+    if degree >= 0:
+        character_data.second_behavior[num + degree] = 1
+    # 否则根据之前的高潮程度来判断
+    else:
+        pre_data = character_data.h_state.orgasm_level[part_id] # 记录里的前高潮程度
+        if pre_data % 3 == 0:
+            character_data.second_behavior[num] = 1
+        elif pre_data % 3 == 1:
+            character_data.second_behavior[num + 1] = 1
+        elif pre_data % 3 == 2:
+            character_data.second_behavior[num + 2] = 1
+    character_data.h_state.orgasm_level[4] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
@@ -1161,6 +1214,9 @@ def handle_first_sex(
         # print(f"debug 上指令 = {last_instruct}")
         if last_instruct == _("确定"):
             continue
+        # 如果不是int也continue
+        if not last_instruct.isdigit():
+            continue
 
         # 判定是否为道具性交
         if cache.input_cache[len(cache.input_cache) - 1 - i] == str(constant.Instruct.VIBRATOR_INSERTION):
@@ -1268,11 +1324,18 @@ def handle_first_a_sex(
         # print(f"debug 上指令 = {last_instruct}")
         if last_instruct == _("确定"):
             continue
+        # 如果不是int也continue
+        if not last_instruct.isdigit():
+            continue
         count = 0
         for instruct_en_name in constant.Instruct.__dict__:
             # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
             if int(last_instruct) + 2 == count:
-                instruct_name = constant.instruct_en2cn[instruct_en_name]
+                # 以防没有对应的中文名，直接使用原名
+                if instruct_en_name not in constant.instruct_en2cn:
+                    instruct_name = instruct_en_name
+                else:
+                    instruct_name = constant.instruct_en2cn[instruct_en_name]
                 break
             count += 1
         break
@@ -1566,6 +1629,7 @@ def handle_hypnosis_all(
         scene_character_list.remove(character_id)
     # 结算理智消耗
     sanity_point_cost = 10 + 10 * len(scene_character_list)
+    sanity_point_cost = min(sanity_point_cost, character_data.sanity_point)
     character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
     change_data.sanity_point -= sanity_point_cost
     character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
@@ -1709,23 +1773,7 @@ def handle_target_hypnosis_force_climax(
     change_data.sanity_point -= 50
     character_data.pl_ability.today_sanity_point_cost += 50
 
-    # 增加快感值
-    random_adjust = random.uniform(0.8, 1.2)
-    base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 500, extra_adjust = random_adjust, change_data_to_target_change = change_data)
-
-    # 触发高潮结算
-    num = 1012  # 通过num值来判断是二段行为记录的哪个位置
-    pre_data = target_character_data.h_state.orgasm_level[4] # 记录里的前高潮程度
-    if pre_data % 3 == 0:
-        # now_draw.text = _("\n触发小绝顶\n")
-        target_character_data.second_behavior[num] = 1
-    elif pre_data % 3 == 1:
-        # now_draw.text = _("\n触发普绝顶\n")
-        target_character_data.second_behavior[num + 1] = 1
-    elif pre_data % 3 == 2:
-        # now_draw.text = _("\n触发强绝顶\n")
-        target_character_data.second_behavior[num + 2] = 1
-    target_character_data.h_state.orgasm_level[4] += 1
+    base_chara_climix_common_settle(character_data.target_character_id, 4, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
@@ -4409,6 +4457,29 @@ def handle_maintenance_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.work_maintenance = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG)
+def handle_cancel_all_work_and_entertainment_flag(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身取消所有工作和娱乐状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.swim = 0
+    character_data.sp_flag.bathhouse_entertainment = 0
     character_data.sp_flag.work_maintenance = 0
 
 

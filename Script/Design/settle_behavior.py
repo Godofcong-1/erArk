@@ -632,7 +632,11 @@ def insert_position_effect(character_id: int):
 
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
-    if character_data.h_state.insert_position != -1 and not handle_premise.handle_last_cmd_penis_position(0) and character_data.position == pl_character_data.position:
+    # 需要当前身体内有阴茎插入、当前位置为玩家位置
+    if (
+        character_data.h_state.insert_position != -1 and
+        character_data.position == pl_character_data.position
+        ):
         position_index = 1201 + character_data.h_state.insert_position
         character_data.second_behavior[position_index] = 1
 
@@ -672,10 +676,16 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
             # 10级前检测人物的各感度数据是否等于该人物的高潮记录程度数据
             # now_data -- 当前高潮程度
             # pre_data -- 记录里的前高潮程度
+            # un_count_data -- 不计数的本次临时高潮数
             # extra_add -- 额外高潮次数
             now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
             pre_data = character_data.h_state.orgasm_level[orgasm]
+            un_count_data = 0
             extra_add = 0
+            # 饮精绝顶
+            if orgasm == 0 and character_data.talent[31]:
+                if character_data.h_state.shoot_position_body in [2, 15]:
+                    un_count_data += 1
             # 如果已经到了10级，则进行额外高潮结算
             if pre_data >= 10:
                 character_data.h_state.extra_orgasm_feel.setdefault(orgasm, 0)
@@ -683,7 +693,6 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 character_data.h_state.extra_orgasm_feel[orgasm] += int(change_data.status_data[orgasm])
                 # 额外高潮次数
                 extra_count = pre_data - 10
-                character_data.h_state.extra_orgasm_count += extra_count
                 # 基础阈值为2w，每次高潮则乘以0.9的若干次方
                 now_threshold = 20000 * (0.9 ** extra_count)
                 now_threshold = max(1000, now_threshold)
@@ -691,20 +700,23 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 extra_add = int(character_data.h_state.extra_orgasm_feel[orgasm] // now_threshold)
                 now_data = pre_data + extra_add
                 character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
+                character_data.h_state.extra_orgasm_count += extra_add
             # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
-            if now_data > pre_data or extra_add > 0:
+            if now_data > pre_data or extra_add > 0 or un_count_data > 0:
                 # 该部位高潮计数+1
                 part_count += 1
                 # 判定触发哪些绝顶
                 num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
+                # 高潮次数统计
+                climax_count = now_data - pre_data + un_count_data
                 # now_draw = draw.WaitDraw()
                 # now_draw.width = width
-                if (now_data - pre_data) >= 3:
+                if climax_count >= 3:
                     # now_draw.text = _("\n触发小、普、强绝顶\n")
                     character_data.second_behavior[num] = 1
                     character_data.second_behavior[num + 1] = 1
                     character_data.second_behavior[num + 2] = 1
-                elif (now_data - pre_data) == 2:
+                elif climax_count == 2:
                     if pre_data % 3 == 0:
                         # now_draw.text = _("\n触发小、普绝顶\n")
                         character_data.second_behavior[num] = 1
@@ -742,6 +754,12 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
 
                 # 刷新记录
                 character_data.h_state.orgasm_level[orgasm] = now_data
+        if part_count >= 1:
+            # 饮精绝顶经验
+            if character_data.h_state.shoot_position_body in [2, 15]:
+                character_data.experience[111] += 1
+                change_data.experience.setdefault(111, 0)
+                change_data.experience[111] += 1
         # 如果部位高潮计数大于等于2，则结算多重绝顶
         if part_count >= 2:
             second_behavior_index = 1079 + part_count
@@ -944,6 +962,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     if effect_all_value_list[0] == "A1":
         final_character_data = character_data
         final_change_data = change_data
+        final_character_id = character_id
     elif effect_all_value_list[0] == "A2":
         # 如果没有交互对象，则返回0
         if character_data.target_character_id == character_id:
@@ -952,6 +971,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
         final_change_data = target_change
+        final_character_id = character_data.target_character_id
     elif effect_all_value_list[0][:2] == "A3":
         final_character_id = int(effect_all_value_list[0][3:])
         # 如果还没拥有该角色，则返回0
@@ -972,7 +992,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "S": "status_data",
         "F": "favorability",
         "X": "trust",
-        "Flag": "flag"
+        "Flag": "flag",
+        "Climax": "climax"
     }
     
     # 创建一个字典来映射操作
@@ -996,7 +1017,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         operation_func = operation_mapping[operation]
         # print(f"debug attribute_name = {attribute_name}, operation = {operation}")
     
-        # 对于好感、信赖和口上用flag，进行特殊处理
+        # 对于好感、信赖、口上用flag、绝顶，进行特殊处理
         if attribute_name == "favorability":
             final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
         elif attribute_name == "trust":
@@ -1004,6 +1025,13 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         elif attribute_name == "flag":
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
             final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+        elif attribute_name == "climax":
+            from Script.Settle.default import base_chara_climix_common_settle
+            if operation == "E":
+                base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
+            elif operation == "G":
+                for i in range(int(effect_all_value_list[3]) + 1):
+                    base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
         else:
             # 对属性进行操作
 

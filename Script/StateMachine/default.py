@@ -2034,16 +2034,32 @@ def character_start_eat_food(character_id: int):
     if random.randint(1, 3) == 1:
         character_data.action_info.eat_food_restaurant = -1
     else:
-        # 一半几率去自己出身地的餐厅
-        if random.randint(1, 2) == 1:
-            restaurant_id = cooking.find_character_birthplace_restaurant(character_id)
-            if restaurant_id != -1:
-                character_data.action_info.eat_food_restaurant = restaurant_id
+        # 首先获取所有开放的餐厅id
+        all_restaurant_id_list = []
+        if len(cache.rhodes_island.shop_open_list):
+            for shop_name in cache.rhodes_island.shop_open_list:
+                for restaurant_id in game_config.config_restaurant:
+                    if game_config.config_restaurant[restaurant_id].name == shop_name:
+                        all_restaurant_id_list.append(restaurant_id)
+                        break
+        # 如果没有开放的餐厅则去食堂
+        if not len(all_restaurant_id_list):
+            character_data.action_info.eat_food_restaurant = -1
         else:
-            # 随机选一个餐厅
-            restaurant_dict = game_config.config_restaurant
-            restaurant_id = random.choice(list(restaurant_dict.keys()))
-            character_data.action_info.eat_food_restaurant = restaurant_id
+            character_data.action_info.eat_food_restaurant = random.choice(all_restaurant_id_list)
+            # 一半几率去自己出身地的餐厅
+            if random.randint(1, 2) == 1:
+                restaurant_id = cooking.find_character_birthplace_restaurant(character_id)
+                if restaurant_id != -1 and restaurant_id in all_restaurant_id_list:
+                    character_data.action_info.eat_food_restaurant = restaurant_id
+                else:
+                    # 随机选一个餐厅
+                    restaurant_id = random.choice(all_restaurant_id_list)
+                    character_data.action_info.eat_food_restaurant = restaurant_id
+            else:
+                # 随机选一个餐厅
+                restaurant_id = random.choice(all_restaurant_id_list)
+                character_data.action_info.eat_food_restaurant = restaurant_id
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.BUY_RAND_FOOD_AT_FOODSHOP)

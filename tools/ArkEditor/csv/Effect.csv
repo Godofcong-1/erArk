@@ -217,6 +217,7 @@ cid,effect_name,effect_type,effect
 466,SWIM_FLAG_TO_1,属性_特殊flag,自身变成要换泳衣状态
 467,SWIM_FLAG_TO_2,属性_特殊flag,自身变成要游泳状态
 468,MAINTENANCE_FLAG_TO_0,属性_特殊flag,自身清零要检修状态
+469,CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG,属性_特殊flag,自身取消所有工作和娱乐状态
 475,H_FLAG_TO_0,属性_特殊flag,自身清零H状态
 476,H_FLAG_TO_1,属性_特殊flag,自身变成H状态
 477,T_H_FLAG_TO_0,属性_特殊flag,交互对象清零H状态

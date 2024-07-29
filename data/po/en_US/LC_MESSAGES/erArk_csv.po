@@ -197,8 +197,7 @@ msgstr "Assist service"
 
 msgid "否|是，助理在场时对其他干员的指令实行值+50"
 msgstr ""
-"No|Yes, when the assistant is there, Command Execution Value +50 for other "
-"operators"
+"No|Yes, when the assistant is there, Command Execution Value +50 for other operators"
 
 msgid "性处理服务(未实装)"
 msgstr ""
@@ -352,8 +351,7 @@ msgstr "Catastrophe Explanations"
 
 msgid "详细介绍了各种天灾以及相应的影响"
 msgstr ""
-"Introduce in detail types of Catastrophes alongside their corresponding "
-"impact."
+"Introduce in detail types of Catastrophes alongside their corresponding impact."
 
 msgid "急救说明"
 msgstr "First Aid Instructions"
@@ -366,8 +364,8 @@ msgstr "\"Self-defense Manual\""
 
 msgid "全名是《拉特兰周边他国城邦及中间地带出行防身手册》，看的来，学不来。"
 msgstr ""
-"Full name is \"Laterano's Self-defense Manual for Surrounding Countries' "
-"Cities and Center Areas\", watchable, unlearnable."
+"Full name is \"Laterano's Self-defense Manual for Surrounding Countries' Cities and Center Areas\","
+" watchable, unlearnable."
 
 msgid "《打架手册》"
 msgstr "\"Combat Manual\""
@@ -380,24 +378,23 @@ msgstr "\"One Armed Chainsaw\""
 
 msgid "一本炎国武侠小说，讲述了独臂电锯客的复仇故事。似乎有十几部后续作品。"
 msgstr ""
-"A Yan martial arts novel, describing the revenge story of an one armed "
-"chainsaw guy. Seems like there's more than ten sequels."
+"A Yan martial arts novel, describing the revenge story of an one armed chainsaw guy."
+" Seems like there's more than ten sequels."
 
 msgid "《杜林地上环游记》"
 msgstr "\"Durin's Travelling Notes\""
 
 msgid "从这本游记中，我们可以一窥地底人对于地表人的奇异见解。"
 msgstr ""
-"From this note, we can learn about the strange insights of underworlders "
-"towards surface people."
+"From this note, we can learn about the strange insights of underworlders towards surface people."
 
 msgid "《旧高卢地名源流考》"
 msgstr "\"Old Gaul's Name Origin Study\""
 
 msgid "薄绿从博士办公室里翻出来的古地名历史书，里面记载有克莱布拉松。"
 msgstr ""
-"An history book of ancient place names that was found by Mint in the "
-"Doctor's office, there's records of Calais-Biason."
+"An history book of ancient place names that was found by Mint in the Doctor's office,"
+" there's records of Calais-Biason."
 
 msgid "《第二经济改革法》"
 msgstr "\"Second Financial Revolution\""
@@ -2145,7 +2142,7 @@ msgid "裙子"
 msgstr "Skirts"
 
 msgid "饰品"
-msgstr "Accessories"
+msgstr "Adornment"
 
 msgid "获得1至纯源石，可以用来获得或升级源石技艺"
 msgstr ""
@@ -2165,13 +2162,13 @@ msgstr ""
 
 msgid "解锁猥亵指令：【索要内裤】，可以在日常生活中让干员把内裤脱下来给你"
 msgstr ""
-"Unlock lewd command: [Ask for underwear], allowing Operators to take their "
-"underwear off for you in daily life"
+"Unlock lewd command: [Ask for underwear], allowing Operators to take their"
+" underwear off for you in daily life"
 
 msgid "解锁服装类型：【情趣内衣】（未实装），攻略阶段达到二级及以上的干员会开始尝试穿情趣内衣"
 msgstr ""
-"Unlock clothing type: [Sexy bra] (not implemented), Operators will start "
-"trying on sexy bra at second stage of relationship or higher"
+"Unlock clothing type: [Sexy bra] (not implemented), Operators will start"
+" trying on sexy bra at second stage of relationship or higher"
 
 msgid "解锁猥亵类型：【索要袜子】，可以在日常生活中让干员把袜子脱下来给你"
 msgstr ""
@@ -2180,8 +2177,8 @@ msgstr ""
 
 msgid "解锁服装类型：【袜子风潮】（未实装），所有不穿袜子的干员也会开始穿起袜子（类型随机）"
 msgstr ""
-"Unlock clothing type: [Socks trend] (not implemented), all Operators will "
-"start wearing socks (random types)"
+"Unlock clothing type: [Socks trend] (not implemented), all Operators will"
+" start wearing socks (random types)"
 
 msgid "去现代音乐排练室唱歌。"
 msgstr "Sings at Modern Music Rehearsal Room."
@@ -2227,9 +2224,8 @@ msgstr "Swims in Swimming Pool."
 
 msgid "在图书馆借书读书。如果没有已经借的书会先随机借一本，否则直接看。每次看完之后有一定几率还回当前这本书。"
 msgstr ""
-"Borrows and reads books at Library. If no book was borrowed before, borrow "
-"one randomly, otherwise, read the borrowed books. After reading, have a "
-"chance to return the book."
+"Borrows and reads books at Library. If no book was borrowed before, borrow one randomly, otherwise,"
+" read the borrowed books. After reading, have a chance to return the book."
 
 msgid "去前卫街机厅打街机。"
 msgstr "Plays arcade games at Avant-Garde Arcade Hall."
@@ -2539,8 +2535,7 @@ msgstr "Control Center"
 
 msgid "罗德岛的核心，升级可以提高其他所有区块的等级上限"
 msgstr ""
-"Rhodes Island's core, increases of level limit of all other areas after "
-"upgrading"
+"Rhodes Island's core, increases of level limit of all other areas after upgrading"
 
 msgid "动力区"
 msgstr "Power Zone"
@@ -2566,8 +2561,7 @@ msgstr "Dormitory Zone"
 
 msgid "干员们睡觉的场所，升级可以提高最大人数和提高恢复效率"
 msgstr ""
-"Location for Operators to sleep, increases the maximum number of Operators "
-"and recovery speed after upgrading"
+"Location for Operators to sleep, increases the Operator limit and recovery speed after upgrading"
 
 msgid "生活娱乐区"
 msgstr "Entertainment Zone"
@@ -2581,17 +2575,14 @@ msgstr "Medical Department"
 
 msgid "治疗源石病患者的场所，升级可以解锁新的治疗设施，提高可收治患者数量上限"
 msgstr ""
-"Location of curing Oripathy patients, unlocks more facilities and increases "
-"the maximum number of admissible patients after upgrading"
+"Location of curing Oripathy patients,\\n unlocks more facilities and increases patient limit after upgrading"
 
 msgid "文职部"
 msgstr "Civil Service Zone"
 
 msgid "人事部、后勤部等文职人员办公的场所，升级可以解锁新的招募方式，降低招募成本"
 msgstr ""
-"Location for members of Personnel Department, Logistics Department and "
-"others to work, unlocks more ways of recruitment and reduces the cost of "
-"recruitment after upgrading"
+"Location for personnels to work,\\n unlocks more ways and reduces the cost of recruitment after upgrading"
 
 msgid "科研部"
 msgstr "Research Department"
@@ -2605,72 +2596,63 @@ msgstr "Training Room"
 
 msgid "供干员们进行锻炼和训练的场所，升级可以解锁更多设施和提高锻炼效率"
 msgstr ""
-"Location for Operators to exercise and train, unlocks more facilities and "
-"increases the exercise efficiency after upgrading"
+"Location for exercising and training,\\n unlocks more facilities and increases efficiency after upgrading"
 
 msgid "图书馆"
 msgstr "Library"
 
 msgid "存放和阅读书籍的场所，升级可以提高学习效率"
 msgstr ""
-"Location for storing and reading books, increases the learning speed after "
-"upgrading"
+"Location for storing and reading books, increases the learning speed after upgrading"
 
 msgid "贸易区"
 msgstr "Commerce Zone"
 
 msgid "开设商店街和贸易站的场所，升级可以解锁更多的商店，降低买入价格，提升卖出价格"
 msgstr ""
-"Location for opening store streets and trading posts, unlocks more shops, "
-"reduces the purchase price and increases the selling price after upgrading"
+"Location for opening store streets and trading posts,\\n unlocks more shops and changes prices after upgrading"
 
 msgid "制造加工区"
 msgstr "Production Zone"
 
 msgid "生产和加工药品、装备的场所，升级可以解锁更多的设施和提高生产效率"
 msgstr ""
-"Location for production of medicines and equipments, upgrading unlocks more "
-"facilities and increases the production speed"
+"Location for production, unlocks more facilities and increases speed after upgrading"
 
 msgid "访客区"
 msgstr "Guest Zone"
 
 msgid "和其他势力进行外交事宜的场所，升级可以解锁更多的外交指令"
 msgstr ""
-"Location for conducting foreign affairs with other factions, unlocks more "
-"diplomatic commands after upgrading"
+"Location for conducting foreign affairs with other factions, unlocks more commands after upgrading"
 
 msgid "机库"
 msgstr "Garage"
 
 msgid "停放、修理和派出载具的场所，升级可以扩大容纳空间和解锁新的载具"
 msgstr ""
-"Location for parking, repairing and dispatching vehicles, expands the "
-"accommodation space for storing and unlocks new vehicles after upgrading"
+"Location for vehicle park, repair and dispatch,\\n expands the space and unlocks new vehicles after upgrading"
 
 msgid "教育区"
 msgstr "Education Zone"
 
 msgid "培养、教育学生，以及学生们游玩的场所，升级可以解锁更多的设施"
 msgstr ""
-"Location for students to play, be brought up and educated, unlocks more "
-"facilities after upgrading"
+"Location for students to play, be brought up and educated, unlocks more facilities after upgrading"
 
 msgid "疗养庭院"
 msgstr "Convalescence Garden"
 
 msgid "农业的相关场所，升级可以解锁更多的农业设施和提高生产效率"
 msgstr ""
-"Location for agriculture, unlocks more facilities and increases the "
-"production speed after upgrading"
+"Location for agriculture, unlocks more facilities and increases the production speed after upgrading"
 
 msgid "大浴场"
 msgstr "Bathing Spot"
 
 msgid "干员们洗浴放松的场所，升级可以解锁更多的洗浴设施"
 msgstr ""
-"Location for Operators to relax and shower, unlocks more facilities after "
-"upgrading"
+"Location for Operators to relax and shower, unlocks more facilities after upgrading"
 
 msgid "甲板"
 msgstr "Deck"
@@ -2683,25 +2665,21 @@ msgstr "Detention Zone"
 
 msgid "囚禁、惩罚和调教干员的地方，升级可以提高关押人数和解锁新的惩罚功能"
 msgstr ""
-"Location to imprison, punish and humiliate Operators, increases maximum "
-"number of people in custody and unlocks more punishment functions after "
-"upgrading"
+"Location to imprison and punish Operators,\\n increases limit and unlocks more functions after upgrading"
 
 msgid "保卫科"
 msgstr "Guard Zone"
 
 msgid "监视岛内的安全情况，并在出现意外时进行处理，升级可以解锁更多的意外事件"
 msgstr ""
-"Monitor the security of Rhodes Island, and deal with the emergencies, "
-"unlocks more possible emergencies after upgrading"
+"Monitor the security of Rhodes Island and deal with emergencies,\\n unlocks more emergencies after upgrading"
 
 msgid "指挥室"
 msgstr "Command Room"
 
 msgid "指挥干员进行作战的场所，升级可增加同时派出的干员数量"
 msgstr ""
-"Location to direct Operators for battle, increases the number of "
-"dispatchable Operators after upgrading"
+"Location to direct Operators for battle,\\n increases the number of dispatchable Operators after upgrading"
 
 msgid "博士办公室"
 msgstr "Doctor's Office"
@@ -2722,8 +2700,7 @@ msgstr "Restroom"
 
 msgid "遍布岛内各处的休息室，升级可以提升在这里休息时的恢复效率"
 msgstr ""
-"Restroom that can be found everywhere in Rhodes Island, increases the "
-"recovery speed after upgrading"
+"Restroom that can be found everywhere in Rhodes Island, increases the recovery speed after upgrading"
 
 msgid "设施最高等级为二级"
 msgstr "Maximum level 2 for facilities"
@@ -2757,8 +2734,7 @@ msgstr "Power supply increases to 5000"
 
 msgid "开放基础设施：【基建部】、【运维部】"
 msgstr ""
-"Opens basic facilities: [Base Building Department], [Operation and "
-"Maintenance Department]"
+"Opens basic facilities: [Base Building Department], [Operation and Maintenance Department]"
 
 msgid "开放新设施：【铁匠铺】"
 msgstr "Opens new facility: [Smithing Shop]"
@@ -2786,74 +2762,66 @@ msgstr "Dormitory opens to Room 106 of Zone 1, 12 maximum number of Operators"
 
 msgid "宿舍开放至1区全部，干员最大人数提升至28人"
 msgstr ""
-"Dormitory opens to the whole Zone 1, maximum number of Operators increases "
-"to 28"
+"Dormitory opens to the whole Zone 1, maximum number of Operators increases to 28"
 
 msgid "宿舍开放至2区全部，干员最大人数提升至44人"
 msgstr ""
-"Dormitory opens to the whole Zone 2, maximum number of Operators increases "
-"to 44"
+"Dormitory opens to the whole Zone 2, maximum number of Operators increases to 44"
 
 msgid "宿舍开放至4区全部，干员最大人数提升至106人"
 msgstr ""
-"Dormitory opens to the whole Zone 4, maximum number of Operators increases "
-"to 106"
+"Dormitory opens to the whole Zone 4, maximum number of Operators increases to 106"
 
 msgid "宿舍开放至8区全部，干员最大人数提升至210人"
 msgstr ""
-"Dormitory opens to the whole Zone 8, maximum number of Operators increases "
-"to 210"
+"Dormitory opens to the whole Zone 8, maximum number of Operators increases to 210"
 
 msgid "娱乐室和休息室修建上限为各三个（未实装）"
 msgstr "Maximum 3 entertainment rooms and restrooms each (not implemented)"
 
 msgid "娱乐室和休息室修建上限提升至各六个（未实装），开放新设施:【酒吧】"
 msgstr ""
-"Maximum amount of entertainment rooms and restrooms increases to 6 each (not"
-" implemented), opens new facility [Bar]"
+"Maximum amount of entertainment rooms and restrooms increases to 6 each (not implemented),\\n"
+" opens new facility [Bar]"
 
 msgid "娱乐室和休息室修建上限提升至各九个（未实装）"
 msgstr ""
-"Maximum amount of entertainment rooms and restrooms increases to 9 each (not"
-" implemented)"
+"Maximum amount of entertainment rooms and restrooms increases to 9 each (not implemented)"
 
 msgid "娱乐室和休息室修建上限提升至各十二个（未实装）"
 msgstr ""
-"Maximum amount of entertainment rooms and restrooms increases to 12 each "
-"(not implemented)"
+"Maximum amount of entertainment rooms and restrooms increases to 12 each (not implemented)"
 
 msgid "娱乐室和休息室修建数量不设上限（未实装）"
 msgstr ""
-"Maximum amount of entertainment rooms and restrooms increases to infinite "
-"(not implemented)"
+"Maximum amount of entertainment rooms and restrooms increases to infinite (not implemented)"
 
 msgid "开放基础设施：【门诊部】、【急诊部】、【住院部】，可收治患者为50人"
 msgstr ""
-"Opens basic facilities: [Outpatient Department], [Emergency Room], "
-"[Inpatient Department], 50 maximum number of admissible patients"
+"Opens basic facilities: [Outpatient Department], [Emergency Room], [Inpatient Department],\\n"
+" 50 maximum number of admissible patients"
 
 msgid "开放新设施：【手术室】（未实装）、【血库】（未实装），可收治患者数量提升至100人"
 msgstr ""
-"Opens new facilities: [Surgery Room] (not implemented), [Blood Storage Room]"
-" (not implemented), maximum number of admissible patients increases to 100"
+"Opens new facilities: [Surgery Room] (not implemented), [Blood Storage Room] (not implemented),\\n"
+" maximum number of admissible patients increases to 100"
 
 msgid "开放新功能：【招募病人干员】（未实装），可收治患者数量提升至200人"
 msgstr ""
-"Opens new function: [Recruit patient Operator] (not implemented), maximum "
-"number of admissible patients increases to 200"
+"Opens new function: [Recruit patient Operator] (not implemented),"
+" maximum number of admissible patients increases to 200"
 
 msgid "开放新设施：【体检科】（未实装），可收治患者数量提升至500人"
 msgstr ""
-"Opens new facility: [Body Check Department] (not implemented), maximum "
-"number of admissible patients increases to 500"
+"Opens new facility: [Body Check Department] (not implemented),"
+" maximum number of admissible patients increases to 500"
 
 msgid "可收治患者数量提升至1000人"
 msgstr "Maximum number of admissible patients increases to 1000"
 
 msgid "开放基础设施：【人事办公室】、开放基础功能：【随机招募当地干员】"
 msgstr ""
-"Opens basic facility: [Office], opens basic function: [Random recruiting "
-"local Operators]"
+"Opens basic facility: [Office], opens basic function: [Random recruiting local Operators]"
 
 msgid "开放新功能：【招募全泰拉干员】，招募效率+5%"
 msgstr ""
@@ -2873,28 +2841,27 @@ msgstr ""
 
 msgid "源石部和医疗部的附属研究室各可修建一个（未实装）"
 msgstr ""
-"Maximum one research room for Originium Department and Medical Department "
-"each (not implemented)"
+"Maximum one research room for Originium Department and Medical Department each (not implemented)"
 
 msgid "源石部和医疗部的附属研究室修建上限提升至各两个（未实装）"
 msgstr ""
-"Maximum number of research rooms for Originium Department and Medical "
-"Department increases to two each (not implemented)"
+"Maximum number of research rooms for Originium Department and Medical Department increases to\\n two each"
+" (not implemented)"
 
 msgid "源石部和医疗部的附属研究室修建上限提升至各三个（未实装）"
 msgstr ""
-"Maximum number of research rooms for Originium Department and Medical "
-"Department increases to three each (not implemented)"
+"Maximum number of research rooms for Originium Department and Medical Department increases to\\n three each"
+" (not implemented)"
 
 msgid "源石部和医疗部的附属研究室修建上限提升至各四个（未实装）"
 msgstr ""
-"Maximum number of research rooms for Originium Department and Medical "
-"Department increases to four each (not implemented)"
+"Maximum number of research rooms for Originium Department and Medical Department increases to\\n four each"
+" (not implemented)"
 
 msgid "源石部和医疗部的附属研究室修建数量不设上限（未实装）"
 msgstr ""
-"Maximum number of research rooms for Originium Department and Medical "
-"Department increases to infinite (not implemented)"
+"Maximum number of research rooms for Originium Department and Medical Department increases to\\n infinite"
+" (not implemented)"
 
 msgid "开放基础设施：【木桩房】、【射击房】"
 msgstr "Opens basic facilities: [Stake Room], [Shooting Room]"
@@ -2932,23 +2899,21 @@ msgstr "Maximum three built shops (not implemented)"
 
 msgid "商店的修建上限提升至六个，价格优惠提升至5%，开放新设施:【对外贸易站】（未实装）"
 msgstr ""
-"Maximum number of built shops increases to six, price discount +5%, opens "
-"new facility: [Foreign Trading Post] (not implemented)"
+"Maximum number of built shops increases to six, price discount +5%, opens new facility:\\n"
+" [Foreign Trading Post] (not implemented)"
 
 msgid "商店的修建上限提升至九个，价格优惠提升至10%，开放新设施:【流动小摊】（未实装）"
 msgstr ""
-"Maximum number of built shops increases to nine, price discount +10%, opens "
-"new facility: [Mobile Stall] (not implemented)"
+"Maximum number of built shops increases to nine, price discount +10%, opens new facility:\\n"
+" [Mobile Stall] (not implemented)"
 
 msgid "商店的修建上限提升至十二个，价格优惠提升至20%（未实装）"
 msgstr ""
-"Maximum number of built shops increases to twelve, price discount +20% (not "
-"implemented)"
+"Maximum number of built shops increases to twelve, price discount +20% (not implemented)"
 
 msgid "商店的修建数量不设上限，价格优惠提升至30%（未实装）"
 msgstr ""
-"Maximum number of built shops increases to infinite, price discount +30% "
-"(not implemented)"
+"Maximum number of built shops increases to infinite, price discount +30% (not implemented)"
 
 msgid "生产效率加成提升至5%"
 msgstr "Production speed +5%"
@@ -2964,23 +2929,21 @@ msgstr "Production speed +50%"
 
 msgid "开放基础设施:【客房】，仅能被动接受访客，访客数量上限为1名，访客停留时长为一天"
 msgstr ""
-"Opens basic facility: [Guest Room], can only accept guests passively, "
-"maximum 1 guest, stays for one day"
+"Opens basic facility: [Guest Room], can only accept guests passively, maximum 1 guest,\\n stays for one day"
 
 msgid "开放新设施:【外交办公室】，开放新功能：【邀请访客】，访客数量上限提升为2名，访客停留时长延长至三天"
 msgstr ""
-"Opens new facility: [Diplomacy Office], opens new function: [Invite Guests],"
+"Opens new facility: [Diplomacy Office], opens new function: [Invite Guests],\\n"
 " maximum number of guests increases to 2, stays for three days instead"
 
 msgid "访客范围提升至临近国度，访客数量上限提升为4名，访客停留时长延长至一周"
 msgstr ""
-"Guest range expands to whole nation, maximum number of guests increases to "
-"4, stays for a week instead"
+"Guest range expands to whole nation, maximum number of guests increases to 4,\\n stays for a week instead"
 
 msgid "访客范围提升至全泰拉，访客数量上限提升为8名，访客停留时长延长至半个月"
 msgstr ""
-"Guest range expands to whole Terra, maximum number of guests increases to 8,"
-" stays for half a month instead"
+"Guest range expands to whole Terra, maximum number of guests increases to 8,\\n"
+"stays for half a month instead"
 
 msgid "访客数量上限提升为12名，访客停留时长延长至一个月"
 msgstr "Maximum number of guests increases to 12, stays for a month instead"
@@ -3036,8 +2999,7 @@ msgstr "Increases number of dispatchable Operators to 5"
 
 msgid "开放新功能：【挂机扫荡】，同时派出的干员数量提升至10人"
 msgstr ""
-"Opens new function: [Idle Sweep], increases number of dispatchable Operators"
-" to 10"
+"Opens new function: [Idle Sweep], increases number of dispatchable Operators to 10"
 
 msgid "同时派出的干员数量提升至20人"
 msgstr "Increases number of dispatchable Operators to 20"
@@ -3506,8 +3468,7 @@ msgstr "Doctor's Pheromones"
 
 msgid "初级激素系能力，散发出令人产生些许好感的气味，可以略微地增加指令的实行值"
 msgstr ""
-"Primary hormone-type ability, releases odors that gives better impression to"
-" others, can slightly increases Command Execution Value"
+"Primary hormone-type ability, releases odors that gives better impression to others,\\n can slightly increases Command Execution Value"
 
 msgid "内衣透视"
 msgstr "Bra Perspective"
@@ -3521,8 +3482,7 @@ msgstr "Indecency Hypnosis"
 
 msgid "初级催眠系能力，可以让对方陷入浅层催眠状态，不会抵抗性骚扰等级的行为"
 msgstr ""
-"Primary hypnosis-type ability, can let the target falls into mild hypnotized"
-" status, and won't resist sexual harassment actions"
+"Primary hypnosis-type ability, can let the target falls into mild hypnotized status,\\n and won't resist sexual harassment actions"
 
 msgid "启动资金"
 msgstr "Start-up Capital"
@@ -3541,8 +3501,7 @@ msgstr "Assistant Operator"
 
 msgid "选择一名已招募的干员成为助理干员，且该干员会拥有1000点初始好感和50%初始信赖度"
 msgstr ""
-"Choose a recruited Operator as assistant, and that Operator gains 1000 "
-"initial Affinity and 50% initial Trust"
+"Choose a recruited Operator as assistant, and that Operator gains 1000 initial Affinity\\n and 50% initial Trust"
 
 msgid "默认样式"
 msgstr ""
@@ -3651,17 +3610,16 @@ msgstr "None"
 
 msgid "不默认催眠类型，每次催眠时手动选择"
 msgstr ""
-"No default hypnosis type, manually chooses the type on every hypnosis "
-"attempt"
+"No default hypnosis type, manually chooses the type on every hypnosis attempt"
 
 msgid "平然"
 msgstr "Calming"
 
 msgid "被催眠的干员会正常与博士交互，但会很普通的接受博士的各种行为，不会认为被做了不该做的事，效果持续到干员睡着或者博士主动解除为止。"
 msgstr ""
-"Hypnotized Operators will interact with the Doctor naturally, but will "
+"Hypnotized Operators will interact with the Doctor naturally,\\n but will "
 "accept all sorts of actions, and won't think that they did what they "
-"shouldn't, effect lasts until sleeping or manual removal."
+"shouldn't,\\n effect lasts until sleeping or manual removal."
 
 msgid "空气"
 msgstr "Air"
@@ -3669,9 +3627,9 @@ msgstr "Air"
 msgid ""
 "被催眠的干员将会把博士视为空气，无论博士做什么都不会引起干员的注意，对自身和周围发生的任何事情也不会觉得奇怪，效果持续到干员离开当前场所或者博士主动解除为止。"
 msgstr ""
-"Hypnotized Operators will see the Doctor as thin air, and won't pay "
-"attention to what the Doctor is doing, and won't feel strange on anything on"
-" and around self, effect lasts until leaving or manual removal."
+"Hypnotized Operators will see the Doctor as thin air,\\n and won't pay "
+"attention to what the Doctor is doing,\\n and won't feel strange on anything on"
+" and around self,\\n effect lasts until leaving or manual removal."
 
 msgid "体控"
 msgstr "Body Control"
@@ -3679,16 +3637,16 @@ msgstr "Body Control"
 msgid "被催眠的干员会在精神正常的情况下，只有身体听从博士的命令，无论思想如何反抗也无法控制自己的身体，效果持续到猥亵或H结束为止。"
 msgstr ""
 "Hypnotized Operators will have their body listen to the Doctor's command "
-"even if they're conscious, and can't control their own body even if their "
-"heart is resisting, effect lasts until indecency ends or H ends."
+"even if they're conscious,\\n and can't control their own body even if their "
+"heart is resisting,\\n effect lasts until indecency ends or H ends."
 
 msgid "心控"
 msgstr "Mind Control"
 
 msgid "被催眠的干员会在精神上完全服从，无条件地接受所有被灌输的指令并坚定不移地执行，效果会永远持续到博士主动解除为止。"
 msgstr ""
-"Hypnotized Operators will fully obey mentally and unconditionally accept all"
-" commands with no other thoughts, effect lasts forever until manual removal."
+"Hypnotized Operators will fully obey mentally and\\n unconditionally accept all"
+" commands with no other thoughts,\\n effect lasts forever until manual removal."
 
 msgid "H模式"
 msgstr "H mode"
@@ -3738,15 +3696,14 @@ msgstr "Emergency Sanity Sampler"
 msgid "使用后回复10理智。用以临时维持理智的应急合剂，方便携带的试用小样。"
 msgstr ""
 "Restores 10 Sanity after usage. A portable, easy-to-carry sampler that is "
-"good for maintaining a level of Sanity during emergencies."
+"good for\\n maintaining a level of Sanity during emergencies."
 
 msgid "应急理智合剂"
 msgstr "Emergency Sanity Potion"
 
 msgid "使用后回复60理智。用以临时维持理智的应急合剂，可以让头脑保持清醒。"
 msgstr ""
-"Restores 60 Sanity after usage. An emergency supplement used to maintain "
-"Sanity and keep your mind clear."
+"Restores 60 Sanity after usage. An emergency supplement used to maintain Sanity\\n and keep your mind clear."
 
 msgid "应急理智加强剂"
 msgstr "Emergency Sanity Booster"
@@ -3754,16 +3711,16 @@ msgstr "Emergency Sanity Booster"
 msgid "使用后回复140理智。用以临时维持理智的应急合剂，可以让头脑保持清醒。"
 msgstr ""
 "Restores 140 Sanity after usage. An emergency supplement used to maintain "
-"Sanity and keep your mind clear."
+"Sanity\\n and keep your mind clear."
 
 msgid "应急理智浓缩液"
 msgstr "Emergency Sanity Concentrate"
 
 msgid "使用后回复300理智。用于临时维持理智的大剂量浓缩应急合剂，配方中新增活性成分，效果立竿见影，可能会造成生物钟紊乱，服用前请仔细阅读说明。"
 msgstr ""
-"Restores 300 Sanity after usage. A large dose of concentrated emergency "
-"supplement used to maintain Sanity. New active ingredients, same instant "
-"results. Possible side effect: disruption of biological clock. Please read "
+"Restores 300 Sanity after usage. A large dose of\\n concentrated emergency "
+"supplement used to maintain Sanity.\\n New active ingredients, same instant "
+"results. Possible side effect: disruption of biological clock.\\n Please read "
 "carefully before administering."
 
 msgid "相机"
@@ -3783,8 +3740,7 @@ msgstr "Full instrument set"
 
 msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖"
 msgstr ""
-"Having all types of instruments, not sold separately because hard to "
-"categorize"
+"Having all types of instruments, not sold separately because hard to categorize"
 
 msgid "增加润滑"
 msgstr "Increases Lubrication"
@@ -3794,13 +3750,11 @@ msgstr "Pre-event birth control pills (1 month's worth)"
 
 msgid "可以持续防止怀孕的药物，需要每天服用一次，共一个月的量。"
 msgstr ""
-"Medicine that can prevent pregnancy continuously, needs to be consumed once "
-"per day, total a month's worth."
+"Medicine that can prevent pregnancy continuously, needs to be consumed once per day,\\n total a month's worth."
 
 msgid "用于临时紧急防止怀孕的药物，服用后当天内的性生活不会怀孕。"
 msgstr ""
-"Medicine that can be used to temporarily prevent pregnancy, the user won't "
-"get pregnant on the day of sex life after consumption."
+"Medicine that can be used to temporarily prevent pregnancy, the user won't get pregnant\\n on the day of sex life after consumption."
 
 msgid "增加好意和欲情"
 msgstr "Increases Kindness and Lust"
@@ -3816,8 +3770,7 @@ msgstr "Accelerates urination, instantly fully recovers Urinary Value"
 
 msgid "促进排尿，每半小时回满尿意值，持续3小时"
 msgstr ""
-"Accelerates urination, fully recovers Urinary Value every half an hour, "
-"lasts for 3 hours"
+"Accelerates urination, fully recovers Urinary Value every half an hour, lasts for 3 hours"
 
 msgid "使用后会进入8h的睡眠，中间不会醒"
 msgstr "Enter 8 hours of sleeping after usage, and won't wake up midway"
@@ -3836,8 +3789,7 @@ msgstr "Love eggs"
 
 msgid "最常见也是最基础的电动情趣小玩具，放在性器官上即可通过震动带来快感"
 msgstr ""
-"Most common and basic electric sex toys, can produce pleasure through "
-"vibration on placement of sexual organs"
+"Most common and basic electric sex toys, can produce pleasure through vibration on placement\\n of sexual organs"
 
 msgid "乳头夹"
 msgstr "Nipple clamps"
@@ -3877,8 +3829,7 @@ msgstr "Milking machine"
 
 msgid "用来榨出母乳的机器，只能对【泌乳】且当前有奶水的干员使用"
 msgstr ""
-"Machine to squeeze out breast milk, only usable to Operators with "
-"[Lactation] status and have breast milk currently"
+"Machine to squeeze out breast milk, only usable to Operators with [Lactation] status\\n and have breast milk currently"
 
 msgid "低温蜡烛"
 msgstr "Putting low-temperature candle"
@@ -3895,22 +3846,22 @@ msgstr "Operator-carrying bag"
 msgid ""
 "印有罗德岛logo的黑色桶状袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
 msgstr ""
-"Black barrel bags with Rhodes Island's logo, capable of fitting a whole "
-"person inside. Can be used to [Bag and move] unconscious Operators, and [Put"
-" in prison] in the Detention Zone to imprison them."
+"Black barrel bags with Rhodes Island's logo, capable of fitting a whole person inside.\\n"
+" Can be used to [Bag and move] unconscious Operators,\\n"
+" and [Put in prison] in the Detention Zone to imprison them."
 
 msgid "戒指"
 msgstr "Ring"
 
 msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
 msgstr ""
-"Can be used to propose to Operators in [Envy] status, and if succeed, "
-"becomes [Lover] of each other"
+"Can be used to propose to Operators in [Envy] status, and if succeed,\\n"
+" becomes [Lover] of each other"
 
 msgid "用来戴在已经被【驯服】的干员脖子上，同意后将作为你的【宠物】"
 msgstr ""
-"Can be put on the neck of Operators in [Tamed] status, and if succeed, "
-"becomes your [Pet]"
+"Can be put on the neck of Operators in [Tamed] status, and if succeed,\\n"
+" becomes your [Pet]"
 
 msgid "短小"
 msgstr "Short"
@@ -4473,7 +4424,7 @@ msgstr "Crystal Dumplings"
 
 msgid "皮白入雪，薄入纸，半透明，内陷隐约可见，吃起来爽滑鲜甜，美味诱人。"
 msgstr ""
-"White as snow, thin as paper, half transparent, the invagination is visible,"
+"White as snow, thin as paper, half transparent, the invagination is visible,\\n"
 " tastes smooth and sweet, and temptingly delicious."
 
 msgid "豉汁羽爪"
@@ -4499,7 +4450,7 @@ msgstr "Dried Cactus Chips"
 
 msgid "这种干缩的奇怪植物看起来并不好吃，而玻利瓦尔人则拿它来泡水喝。"
 msgstr ""
-"This strange, dessicated plant doesn't look tasty at all, but the people of "
+"This strange, dessicated plant doesn't look tasty at all,\\n but the people of "
 "Bolivar often immerse it in water before drinking."
 
 msgid "风干大蕉果"
@@ -4507,7 +4458,7 @@ msgstr "Dried Yucca Fruit"
 
 msgid "蕉兰果是一种生长在干旱地区的水果，口味极佳，风干后更容易保存。"
 msgstr ""
-"The banana yucca is a fruit that grows in arid environments. It has an "
+"The banana yucca is a fruit that grows in arid environments.\\n It has an "
 "excellent taste and is easier to preserve after drying."
 
 msgid "沙虫罐头"
@@ -4516,7 +4467,7 @@ msgstr "Half Can of Sandworms"
 msgid "“切碎的沙虫用橄榄油浸泡，散发着自然的清香！”广告是这么说的，别当真。恶......"
 msgstr ""
 "\"These chopped sandworms are soaked in olive oil and exude a natural "
-"fragrance!\" That's just what the ads say, so don't take it at face value. "
+"fragrance!\"\\n That's just what the ads say, so don't take it at face value. "
 "Urgh..."
 
 msgid "香草沙士汽水"
@@ -4524,7 +4475,7 @@ msgstr "Vanilla Soda"
 
 msgid "玻利瓦尔本地的廉价饮料，拥有上百年历史，混合多种香料，特点是不好喝。"
 msgstr ""
-"Bolivar's cheap specialty drink dates back hundreds of years. It is mixed "
+"Bolivar's cheap specialty drink dates back hundreds of years.\\n It is mixed "
 "with a variety of spices, and is known for not being very good."
 
 msgid "丰蹄能量饮料"
@@ -4532,8 +4483,7 @@ msgstr "Forte Energy Drink"
 
 msgid "“你以为拜松凭什么能骑自行车追上德克萨斯？”"
 msgstr ""
-"\"What do you think is the reason why Bison can catch up to Texas on a "
-"bicycle?\""
+"\"What do you think is the reason why Bison can catch up to Texas on a bicycle?\""
 
 msgid "辣椒老妈"
 msgstr "Pepper Mom"
@@ -4541,14 +4491,14 @@ msgstr "Pepper Mom"
 msgid "来自炎国某个西南移动城邦的特色饮料，口味辛辣，据说也是一种调料。"
 msgstr ""
 "A special beverage that comes from a city-state located to the southwest of "
-"Yan. It is spicy and pungent, and said to double as a condiment."
+"Yan.\\n It is spicy and pungent, and said to double as a condiment."
 
 msgid "荒地龙舌兰"
 msgstr "Barrens Tequila"
 
 msgid "原产自玻利瓦尔的廉价蒸馏酒，味道很冲，广受哥伦比亚拓荒者的好评。"
 msgstr ""
-"A cheap distilled spirit originally produced in Bolivar. It has a strong "
+"A cheap distilled spirit originally produced in Bolivar.\\n It has a strong "
 "taste and is widely praised by Columbia's explorers."
 
 msgid "摩根队长佳酿"
@@ -4556,15 +4506,15 @@ msgstr "Captain Morgan's Wine"
 
 msgid "一种产自伊比利亚地区的酒，在维多利亚中部城市大受欢迎，现已停产。"
 msgstr ""
-"A wine produced in the Iberian region. Despite having gained popularity in "
-"the heart of Victoria's bustling cities, it is now discontinued."
+"A wine produced in the Iberian region.\\n Despite having gained popularity in "
+"the heart of Victoria's bustling cities,\\n it is now discontinued."
 
 msgid "生命之水"
 msgstr "Water of Life"
 
 msgid "度数奇高的乌萨斯烈酒，上头，据说一个健康的乌萨斯人能干掉好几瓶。"
 msgstr ""
-"The strongest Ursus liquors go straight to one's head, but it's said that a "
+"The strongest Ursus liquors go straight to one's head,\\n but it's said that a "
 "healthy Ursusian adult can down several bottles."
 
 msgid "皇家利口酒"
@@ -4572,9 +4522,9 @@ msgstr "Royal Liqueur"
 
 msgid "已灭亡国家“高卢”的好酒，现在成为了收藏家手中的珍惜奇货，价格不菲。产地现处莱塔尼亚境内，工艺则已经失传。"
 msgstr ""
-"The fine wines of the extinct country, Gaul, have now become expensive, "
+"The fine wines of the extinct country, Gaul, have now become expensive,\\n "
 "prime treasures for collectors. The place of production is now a part of "
-"Leithanien, but the technique has been lost."
+"Leithanien,\\n but the technique has been lost."
 
 msgid "彼得海姆热销饼干"
 msgstr "Best-selling Peterheim Cookies"
@@ -4582,8 +4532,8 @@ msgstr "Best-selling Peterheim Cookies"
 msgid "因保存不善而多有碎裂的袋装零食，虽有残缺，但外表依旧可爱，好味道也不受任何影响。"
 msgstr ""
 "Snack bags usually are not a very effective way to preserve the integrity of"
-" their contents, so it's hard to find one with a complete cookie inside. "
-"Though a bit fragmented, the overall appearance is cute enough, and the "
+" their contents,\\n so it's hard to find one with a complete cookie inside. "
+"Though a bit fragmented,\\n the overall appearance is cute enough, and the "
 "flavor is still uncompromised."
 
 msgid "美味的蜜饼"
@@ -4592,14 +4542,14 @@ msgstr "Delicious Honey Biscuit"
 msgid "以淀粉与果糖制成的米诺斯传统美食，同时也是干员刻俄柏最喜爱的食物，她愿意拿任何东西交换它。"
 msgstr ""
 "A traditional Minoan food made from starch and fructose, as well as Ceobe's "
-"favorite food. She is willing to part with anything in exchange for these."
+"favorite food.\\n She is willing to part with anything in exchange for these."
 
 msgid "好看的蘑菇"
 msgstr "Magnificent Mushroom"
 
 msgid "散发着迷幻绚丽色彩的蘑菇，可以让你模糊现实与虚幻的差别，吃掉之后你将见到前所未见的东西。"
 msgstr ""
-"These psychedelic-looking mushrooms exuding brilliant colors allows you to "
+"These psychedelic-looking mushrooms exuding brilliant colors allows you to\\n "
 "blur the boundary between fact and fiction, seeing things that you could not"
 " see before."
 
@@ -4608,23 +4558,21 @@ msgstr "Grilled Flavor Biscuit"
 
 msgid "因天灾而诞生出的食品。饱含着令人无法拒绝的碳水化合物。"
 msgstr ""
-"Full of carbohydrates, this food is said to appear after a tsunami, making "
-"it a product of a Catastrophe."
+"Full of carbohydrates, this food is said to appear after a tsunami,\\n making it a product of a Catastrophe."
 
 msgid "桂子落"
 msgstr "Osmanthus"
 
 msgid "口口绵润的糖皮月饼，色泽油亮，引人口水四溢。"
 msgstr ""
-"A tender, sugary mooncake with a glossy sheen, prone to making anyone drool "
-"at the mouth."
+"A tender, sugary mooncake with a glossy sheen, prone to making anyone drool at the mouth."
 
 msgid "喀兰炭烤肉排佐松露酱"
 msgstr "Karlan Chargrill Barbecue Ribs with Truffle Paste"
 
 msgid "维多利亚佐料配以谢拉格古法，肉排的滋味妙不可言。"
 msgstr ""
-"Victorian condiments paired with immortalized Kjerag ways. The taste of the "
+"Victorian condiments paired with immortalized Kjerag ways.\\n The taste of the "
 "ribs is fine beyond words."
 
 msgid "可食用立方体"
@@ -4632,7 +4580,7 @@ msgstr "Edible Cubes"
 
 msgid "凯尔希让你面前这个固体同时兼备了营养与美味，但你还是没法确定它是怎么做出来的。"
 msgstr ""
-"Kal'tsit saw to it the cubes before you have both nutrition and flavor, but "
+"Kal'tsit saw to it the cubes before you have both nutrition and flavor,\\n but "
 "you still can't tell how these were made."
 
 msgid "雷姆必拓西瓜蛋糕"
@@ -4640,7 +4588,7 @@ msgstr "Rim Billiton Watermelon Cake"
 
 msgid "一份阿米娅家乡的菜肴，团聚的时候，就是应该围在一起，吃些甜蜜蜜的东西。需要她喂你吃吗？"
 msgstr ""
-"A dish from Amiya's hometown. Times of reunion call for getting together and"
+"A dish from Amiya's hometown.\\n Times of reunion call for getting together and"
 " eating sweet, sweet stuff. Do you need her to feed you?"
 
 msgid "满颜色"
@@ -4648,7 +4596,7 @@ msgstr "Full Color"
 
 msgid "一份鲜甜肉馅口口松脆的酥皮月饼，颜色焦黄，让人食指大动。"
 msgstr ""
-"A crisp, flaky mooncake filled with perky sweet ground meat in golden brown,"
+"A crisp, flaky mooncake filled with perky sweet ground meat in golden brown,\\n"
 " liable to stir anyone's appetite."
 
 msgid "青菜萝卜罐头"
@@ -4657,7 +4605,7 @@ msgstr "Vegetable Radish Tin"
 msgid "克洛丝出勤时常吃的罐头，怕你不适应，特意在里面撒了些盐。"
 msgstr ""
 "The tinned food Kroos often eats on field missions. Worried it won't suit "
-"you, she's sprinkled some salt in it just for you."
+"you,\\n she's sprinkled some salt in it just for you."
 
 msgid "双人汉堡餐"
 msgstr "Burger Set For Two"
@@ -4665,7 +4613,7 @@ msgstr "Burger Set For Two"
 msgid "从风靡多个城市的连锁快餐店中买来的双人套餐。汉堡的味道与大小都令人感到饱足，缺点是附带的冰饮肉桂医生®只有一杯。"
 msgstr ""
 "A burger meal for two bought at a chain fast food restaurant popular in many"
-" cities. The taste and size of the burgers is perfect, just that the set "
+" cities.\\n The taste and size of the burgers is perfect,\\n just that the set "
 "only includes 1 cup of Dr. Cinnamon."
 
 msgid "速冻宫保羽兽丁"
@@ -4673,7 +4621,7 @@ msgstr "Frozen Kung Pao Diced Fowlbeast"
 
 msgid "干员槐琥家乡的菜肴，虽然她并不擅长料理，但加热一份速冻食品还是没问题的。"
 msgstr ""
-"A dish from Waai Fu's hometown. While she is hardly good at cooking, she can"
+"A dish from Waai Fu's hometown. While she is hardly good at cooking,\\n she can"
 " handle heating up some frozen food."
 
 msgid "笑靥开"
@@ -4682,14 +4630,14 @@ msgstr "Smiley Face"
 msgid "一份玫瑰豆沙的糖皮月饼，口口绵润的糖皮月饼，色泽油亮，引人口水四溢。"
 msgstr ""
 "A tender, sugary mooncake filled with rose red bean paste with a glossy "
-"sheen, prone to making anyone drool at the mouth."
+"sheen,\\n prone to making anyone drool at the mouth."
 
 msgid "正圆月"
 msgstr "Full Moon"
 
 msgid "一份乳香云腿的酥皮月饼，口口松脆的酥皮月饼，颜色焦黄，让人食指大动。"
 msgstr ""
-"A crisp, flaky mooncake filled with frankincense Yunnan ham in golden brown,"
+"A crisp, flaky mooncake filled with frankincense Yunnan ham in golden brown,\\n"
 " liable to stir anyone's appetite."
 
 msgid "咸蛋黄味巧克力"
@@ -4697,7 +4645,7 @@ msgstr "Salted Egg Yolk Flavor Chocolate"
 
 msgid "不知道为什么，自某个时间开始疯狂流行咸蛋黄味的食品。"
 msgstr ""
-"Not sure why it first started, but ever since that time, the salted egg "
+"Not sure why it first started, but ever since that time,\\n the salted egg "
 "yolk-flavored food craze has swept the world."
 
 msgid "商队盒饭"
@@ -4705,7 +4653,7 @@ msgstr "Caravan Boxed Meal"
 
 msgid "哥伦比亚城际商队内部发放的方便食品，油炸，热量很高，味道很好，不太健康。"
 msgstr ""
-"This convenient meal sold by intercity Columbian caravans is deep-fried, "
+"This convenient meal sold by intercity Columbian caravans is deep-fried,\\n "
 "loaded with calories, and tastes great... but it isn't very healthy."
 
 msgid "维多利亚军粮"
@@ -4713,7 +4661,7 @@ msgstr "Victorian Rations"
 
 msgid "前维多利亚士官这么描述：“量大管饱，难以下咽，吃不死人。”"
 msgstr ""
-"A former Victorian sergeant described this as such: \"Huge portions, hard to"
+"A former Victorian sergeant described this as such:\\n \"Huge portions, hard to"
 " wash down, but won't kill you.\""
 
 msgid "炭化烤肉棒"
@@ -4722,15 +4670,15 @@ msgstr "Charred Meat Skewer"
 msgid "因为某人糟糕的厨艺而被烤到整个焦黑的大块带骨肉，足以成为凶器。"
 msgstr ""
 "A mass of flesh and bone charred beyond repair due to someone's woefully "
-"inadequate cooking. Pretty much looks like a murder weapon."
+"inadequate cooking.\\n Pretty much looks like a murder weapon."
 
 msgid "压缩糖砖"
 msgstr "Compressed Sugar Cube"
 
 msgid "这种压缩食品的制作工艺不明，坚硬无比，甚至可以砌墙。比普通的烹饪失败产物更具杀伤力。"
 msgstr ""
-"Nobody knows just how this supercompressed foodstuff is produced. It is "
-"extremely hard and can even be used as a building material. More lethal than"
+"Nobody knows just how this supercompressed foodstuff is produced.\\n It is "
+"extremely hard and can even be used as a building material.\\n More lethal than"
 " your typical failed cooking."
 
 msgid "珠宝水果拼盘"
@@ -4751,7 +4699,7 @@ msgstr "Cup of Black Tea"
 
 msgid "锡兰小姐的手艺颇受欢迎，训练结束后来一顿精致的下午茶也不是不可以。"
 msgstr ""
-"Miss Ceylon's craftsmanship is quite popular, and having some exquisite "
+"Miss Ceylon's craftsmanship is quite popular,\\n and having some exquisite "
 "afternoon tea after training is not out of the question."
 
 msgid "芙蓉的健康餐"
@@ -4759,7 +4707,7 @@ msgstr "Hibiscus's Healthy Meal"
 
 msgid "身体健康但是心理不太健康，只吃这样的东西就没心思作战了。"
 msgstr ""
-"Physically healthy, but mentally unhealthy. Eating something like this takes"
+"Physically healthy, but mentally unhealthy.\\n Eating something like this takes"
 " the fight right out of you."
 
 msgid "无限续杯气泡快乐水"
@@ -4768,7 +4716,7 @@ msgstr "Fizzy Soda of Unlimited Refills"
 msgid "只要把水倒进去，这个杯子就会产生无限的气泡快乐水，这简直是天才般的发明！你从来没有见过这种东西。"
 msgstr ""
 "Just pour in water, and this cup will produce an infinite supply of fizzy "
-"soda! What an ingenious invention! You've never seen anything like it "
+"soda!\\n What an ingenious invention! You've never seen anything like it "
 "before."
 
 msgid "苦行者泡芙"
@@ -4776,15 +4724,14 @@ msgstr "Crucible Cream Puff"
 
 msgid "行在苦路上的人们常常用这甘甜来抚慰心灵。"
 msgstr ""
-"Those who walk treacherous paths feast on this dessert to soothe their "
-"souls."
+"Those who walk treacherous paths feast on this dessert to soothe their souls."
 
 msgid "铁棍面包"
 msgstr "Iron Baguette"
 
 msgid "坚硬的棍状面包，随身带上一根，既可以饱腹，又能够防身。"
 msgstr ""
-"A hard, rod-shaped bread. Always keep one on you. Not only does it fill you "
+"A hard, rod-shaped bread. Always keep one on you.\\n Not only does it fill you "
 "up, you can use it as a weapon to defend yourself."
 
 msgid "试制巧克力"
@@ -4793,15 +4740,15 @@ msgstr "Test Run Chocolate"
 msgid "只是将研发员个人偏爱的咸蛋黄与巧克力进行简单混合后的试制品，尚未达到能作为商品面世的水准。“还缺少酥脆的灵魂……”"
 msgstr ""
 "Just a test product a researcher threw together by tossing together their "
-"personal favorites, salted egg yolks and chocolate. Not yet suitable for the"
-" mass market. \"Still don't have that crispiness to them...\""
+"personal favorites,\\n salted egg yolks and chocolate. Not yet suitable for the"
+" mass market.\\n \"Still don't have that crispiness to them...\""
 
 msgid "高卢小圆饼"
 msgstr "Gaulish Macarons"
 
 msgid "由于高卢圆饼的糖分高得吓人，部分店家推出了微缩版本以供顾客享用。"
 msgstr ""
-"With how much sugar there is in Gaulish macarons, some bakeries concocted "
+"With how much sugar there is in Gaulish macarons,\\n some bakeries concocted "
 "these miniature treats for their customers' guilt-free enjoyment."
 
 msgid "维多利亚蛋糕"
@@ -4815,8 +4762,8 @@ msgstr "Ball Juice"
 
 msgid "说是果汁其实是酒，瓶身上标注未成年禁止饮用。原产地曾在高卢版图内，现属于维多利亚。"
 msgstr ""
-"They call it fruit juice, but it's actually alcohol. The bottle itself "
-"states that minors are forbidden from drinking it. Its Victorian place of "
+"They call it fruit juice, but it's actually alcohol.\\n The bottle itself "
+"states that minors are forbidden from drinking it.\\n Its Victorian place of "
 "origin once fell within Gaul's territory."
 
 msgid "羽兽肝酱"
@@ -4824,16 +4771,15 @@ msgstr "Fowlbeast Liver Pate"
 
 msgid "小瓶高档羽兽肝酱，颜色鲜艳，贵族特供。"
 msgstr ""
-"A small jar of fowlbeast liver pâté. Bright and vividly colorful, it is "
-"eaten only by nobles."
+"A small jar of fowlbeast liver pâté. Bright and vividly colorful, it is eaten only by nobles."
 
 msgid "绿叶菜罐头"
 msgstr "Spinach Pack"
 
 msgid "很多卡特斯相信吃下这盒罐头，他们就会变得力大无穷。出色的广告效果，业界经典成功案例。"
 msgstr ""
-"Many Cautus out there believe that popping the contents of this can into "
-"their mouths will grant them immense strength. The marketing's effectiveness"
+"Many Cautus out there believe that popping the contents of this can\\n into "
+"their mouths will grant them immense strength.\\n The marketing's effectiveness"
 " is a classic success story in the industry."
 
 msgid "叙拉古人的愤怒!"
@@ -4842,14 +4788,14 @@ msgstr "Wrath of Siracusans!"
 msgid "用浓郁的巧克力酱与源石虫肝作为配料的叙拉古面，有着浓郁的高卢风味，会引起叙拉古出身干员的愤怒。"
 msgstr ""
 "The Siracusan pasta with a blend of thick chocolate sauce and Originium Slug"
-" liver, which nearly caused a diplomatic crisis between Siracusa and Gaul."
+" liver,\\n which nearly caused a diplomatic crisis between Siracusa and Gaul."
 
 msgid "加料咖啡"
 msgstr "Added-on Coffee"
 
 msgid "一杯刚刚冲泡好的咖啡，带着些许的香气，只是里面好像加了一些东西"
 msgstr ""
-"A coffee that was brewed just now, with a decent fragrant smell, just that "
+"A coffee that was brewed just now, with a decent fragrant smell,\\n just that "
 "there's something added into it"
 
 msgid "鲜母乳"
@@ -4857,7 +4803,7 @@ msgstr "Fresh Breast Milk"
 
 msgid "新鲜的母乳，味道醇美，营养丰富，可以直接饮用或用来制作各种乳制品。"
 msgstr ""
-"Fresh breast milk, tastes mellow and nutritious, can be drunk directly or "
+"Fresh breast milk, tastes mellow and nutritious,\\n can be drunk directly or "
 "used to produce dairy products."
 
 msgid "随机招募当地干员"
@@ -4865,7 +4811,7 @@ msgstr "Random recruiting local Operators"
 
 msgid "最基础的招聘策略，仅能招募罗德岛当前驻所在地的干员"
 msgstr ""
-"The most basic recruitment strategy, only capable of recruiting Operators "
+"The most basic recruitment strategy,\\n only capable of recruiting Operators "
 "from the current location of Rhodes Island"
 
 msgid "招募全泰拉干员"
@@ -4880,7 +4826,7 @@ msgstr "Recruit related Operators"
 
 msgid "指定一名正在进行招聘工作的干员，招募目标会限定为与该干员同势力的未招募干员（未实装）"
 msgstr ""
-"Targets an Operator that is doing the recruitment work, and have the "
+"Targets an Operator that is doing the recruitment work,\\n and have the "
 "recruitment target be from the same Nation of that Operator (not "
 "implemented)"
 
@@ -4889,8 +4835,7 @@ msgstr "Recruit specific Operator"
 
 msgid "指定一名未招募的干员，招募目标会限定为该干员（未实装）"
 msgstr ""
-"Targets an unrecruited Operator, and have the recruitment target be that "
-"Operator (not implemented)"
+"Targets an unrecruited Operator, and have the recruitment target be that Operator (not implemented)"
 
 msgid "招募路人干员"
 msgstr "Recruit passerby Operators"
@@ -4924,8 +4869,8 @@ msgstr "Orundum"
 
 msgid "由至纯源石加工而来，混合了其他矿物以后的源石产物。以前仅能当作一些传导元件使用，现在却逐渐成为人事交互关系中令人信服的象征物。"
 msgstr ""
-"Made from Originite Primes, it also contains other minerals. In the past, it"
-" was used only as a conductive element, but it has since become a store of "
+"Made from Originite Primes, it also contains other minerals.\\n In the past, it"
+" was used only as a conductive element,\\n but it has since become a store of "
 "credit value."
 
 msgid "至纯源石"
@@ -4933,8 +4878,8 @@ msgstr "Originium Prime"
 
 msgid "在工业中用量巨大的源石结晶，但有着较高的提取难度。是世界的主要能源类精加工产物，同时也是几乎所有源石技艺得以施展的根本。"
 msgstr ""
-"Widely used in industry, this Originium crystal is difficult to extract. Its"
-" production requires very fine processing, but it remains the major energy "
+"Widely used in industry, this Originium crystal is difficult to extract.\\n Its"
+" production requires very fine processing,\\n but it remains the major energy "
 "source of the world and the foundation of Originium Arts. "
 
 msgid "粉红凭证"
@@ -4942,8 +4887,7 @@ msgstr "Pink Certificates"
 
 msgid "代表可以色色的秘密凭证，可用于在成人商店兑换色情道具。"
 msgstr ""
-"Secret certificates that symbolize sex, can be used on Adult Items' Shop for"
-" pornographic props."
+"Secret certificates that symbolize sex, can be used on Adult Items' Shop for pornographic props."
 
 msgid "普通药材"
 msgstr "Normal Crude Drug"
@@ -4960,31 +4904,28 @@ msgstr "Oripathy Crude Drug"
 
 msgid "能用来制作感染抑制剂的罕见药材，来源保密。"
 msgstr ""
-"Rare crude drugs that can be used to produce infection inhibitors, source "
-"remained a secret."
+"Rare crude drugs that can be used to produce infection inhibitors, source remained a secret."
 
 msgid "工业材料"
 msgstr "Industrial Material"
 
 msgid "各类木材、土石、金属、纤维、皮革、塑料、源石矿等原材料，可以用来进一步加工。"
 msgstr ""
-"Various types of wood, stone, metal, silk, leather, plastic, Originium Ore, "
-"etc."
+"Various types of wood, stone, metal, silk, leather, plastic, Originium Ore, etc."
 
 msgid "科研材料"
 msgstr "Research Material"
 
 msgid "各类研究样本、耗材、高精设备等科研所需要的一切。"
 msgstr ""
-"Various types of research samples, consumables, devices, etc. that were "
-"needed for research purposes."
+"Various types of research samples, consumables, devices, etc.\\n that were needed for research purposes."
 
 msgid "燃料"
 msgstr "Fuel"
 
 msgid "各类燃料，包括化石燃料与液化源石，用来驱动罗德岛及其他载具的航行。"
 msgstr ""
-"Various types of fuel, including fossil fuel and Originium liquid, used to "
+"Various types of fuel, including fossil fuel and Originium liquid,\\n used to "
 "fuel on Rhodes Island and other vehicles."
 
 msgid "香料"
@@ -4992,8 +4933,7 @@ msgstr "Spices"
 
 msgid "各类香料，用以调制香精的原料，可以用来制作各种香水。"
 msgstr ""
-"Various types of spices for essense modulation, can be used to create "
-"perfumes."
+"Various types of spices for essense modulation, can be used to create perfumes."
 
 msgid "常规药物"
 msgstr "Common Medicine"
@@ -5015,16 +4955,14 @@ msgstr "Infection Inhibitor Mixture"
 
 msgid "常规治疗药剂，可有效降低血液源石结晶密度。"
 msgstr ""
-"Common healing potion that can be used to reduce Blood Originium-Crystal "
-"Density."
+"Common healing potion that can be used to reduce Blood Originium-Crystal Density."
 
 msgid "感染抑制剂浓缩液"
 msgstr "Infection Inhibitor Concentrate"
 
 msgid "用于紧急治疗重度矿石病发作的患者，副作用较大，但见效极快。"
 msgstr ""
-"Used to treat serious Oripathy patients, have huge side effects, but get "
-"effective quickly."
+"Used to treat serious Oripathy patients, have huge side effects, but get effective quickly."
 
 msgid "乳制品"
 msgstr "Dairy Products"
@@ -5034,23 +4972,21 @@ msgstr "Breast Milk Yogurt"
 
 msgid "鲜母乳发酵而成的酸奶，味道酸甜可口，含有丰富的益生菌。"
 msgstr ""
-"Yogurt made with fermented breast milk, tastes sweet and sour, and contains "
-"plenty of probiotics."
+"Yogurt made with fermented breast milk, tastes sweet and sour, and contains plenty of probiotics."
 
 msgid "母乳奶片"
 msgstr "Breast Milk Slices"
 
 msgid "鲜母乳制成的奶片，粉粉干脆的口感，嚼起来有浓浓的奶香。"
 msgstr ""
-"Milk slices made from breast milk, crispy and powdery, have a strong milky "
-"aroma on chewing."
+"Milk slices made from breast milk, crispy and powdery, have a strong milky aroma on chewing."
 
 msgid "母乳奶酪"
 msgstr "Breast Milk Cheese"
 
 msgid "鲜母乳发酵而成的奶酪，味道醇厚，营养丰富，是一种高级乳制品。"
 msgstr ""
-"Cheese made from fermented breast milk, tastes mellow, rich in nutrients, it"
+"Cheese made from fermented breast milk, tastes mellow, rich in nutrients,\\n it"
 " is a high class dairy product."
 
 msgid "母乳奶粉"
@@ -5058,7 +4994,7 @@ msgstr "Breast Milk Powder"
 
 msgid "用鲜母乳制成的奶粉，便于携带和储存，冲泡后有着接近鲜母乳的口感。"
 msgstr ""
-"Milk powders made from breast milk, convenient to be brought and stored, and"
+"Milk powders made from breast milk, convenient to be brought and stored,\\n and"
 " have near equivalent taste as breast milk after brewing."
 
 msgid "母乳冰激凌"
@@ -5066,7 +5002,7 @@ msgstr "Breast Milk Ice Cream"
 
 msgid "用鲜母乳和其他配料制成的各口味冰激凌，口感顺滑，甜而不腻，每一口都能感受到浓郁的奶香。"
 msgstr ""
-"Various tastes of ice creams made from breast milk and other materials, "
+"Various tastes of ice creams made from breast milk and other materials,\\n "
 "tastes smooth and sweet, to the point every bite on them can feel the rich "
 "milky aroma."
 
@@ -5078,15 +5014,14 @@ msgstr "Perfumes"
 
 msgid "用各类香料提炼而成的浓缩香精，在众多领域都有着广泛的应用。"
 msgstr ""
-"Concentrated essences refined from various spices, having wide application "
-"on many regions."
+"Concentrated essences refined from various spices, having wide application on many regions."
 
 msgid "普通香水"
 msgstr "Normal Perfume"
 
 msgid "用浓缩香精调制而成的香水，香味过于浓郁，持久性较差。"
 msgstr ""
-"Perfume refined from various essences, with a fragrance that is way too "
+"Perfume refined from various essences,\\n with a fragrance that is way too "
 "strong and has low sustainability."
 
 msgid "高级香水"
@@ -5094,7 +5029,7 @@ msgstr "Advanced Perfume"
 
 msgid "用精选香料和高级香精调制而成的香水，香气适中，香味持久，是一种高级香水。"
 msgstr ""
-"Perfume refined from selected spices and high-class essences, with moderate "
+"Perfume refined from selected spices and high-class essences,\\n with moderate "
 "fragrance and long sustainability."
 
 msgid "药用香水"
@@ -5102,7 +5037,7 @@ msgstr "Medicinal Perfume"
 
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
 msgstr ""
-"Perfume refined from medicinal spices and essences, with a fragrance that "
+"Perfume refined from medicinal spices and essences,\\n with a fragrance that "
 "nearly rivals advanced perfumes while having high medicinal value."
 
 msgid "春"
@@ -5440,8 +5375,7 @@ msgstr "Auto upgrade player's abilities on sleep"
 
 msgid "会依次遍历全能力，符合升级条件则进行升级。对自己的升级路线有特定规划的话，建议自己手动升级"
 msgstr ""
-"Will upgrade abilities automatically, recommended doing manually if having "
-"plans on upgrades"
+"Will upgrade abilities automatically, recommended doing manually if having plans on upgrades"
 
 msgid "是否在博士入睡结算时自动升级干员的能力"
 msgstr "Auto upgrade Operators' abilities on sleep"
@@ -5454,8 +5388,7 @@ msgstr "Choose spot of ejaculation"
 
 msgid "手动选择时会弹出选择框，可自由选择所有可选的部位，比如乳交时可以射在脸上或者衣服上。自动射精时则阴茎在哪里就会射在哪里"
 msgstr ""
-"Can choose on any suitable spots if enabled, and ejaculate on the spot of "
-"penis if disabled"
+"Can choose on any suitable spots if enabled, and ejaculate on the spot of penis if disabled"
 
 msgid "否，自动射在当前阴茎所在的位置|是"
 msgstr "No|Yes"
@@ -5474,7 +5407,7 @@ msgstr "Urinary Value generates naturally for everyone"
 
 msgid "尿意值会随着时间流逝自然增加，当涨到上限的80%以上时会开始有尿意，越高则会越想去解手，解手后尿意值清零"
 msgstr ""
-"Naturally increases Urinary Value, which will give urge to urinate at 80%, "
+"Naturally increases Urinary Value, which will give urge to urinate at 80%,\\n "
 "and be cleared on relieving"
 
 msgid "不自然增加|慢，8h回满|中，4h回满|快，2h回满"
@@ -5495,9 +5428,9 @@ msgstr "General text"
 msgid ""
 "指令文本分为通用文本和角色专属文本，通用文本可以被所有角色使用，角色专属文本只能被指定角色使用。注意，改变该项将会覆盖全角色的该个人选项，如需个别调整请手动调整对应角色"
 msgstr ""
-"Command test is separated into general and specific, where general can be "
-"used by all characters and specific can only be used on specific characters."
-" Note that changing this setting will change on all characters, please "
+"Command test is separated into general and specific,\\n where general can be "
+"used by all characters and specific can only be used on specific characters.\\n"
+" Note that changing this setting will change on all characters,\\n please "
 "manually change the settings for personal reasons"
 
 msgid "处女"
@@ -5523,8 +5456,7 @@ msgstr "No Menarche"
 
 msgid "还没有迎来初潮，因此就算被射入精液无法受精或怀孕"
 msgstr ""
-"Haven't faced menarche yet, hence unable to be [Fertilized] or entering "
-"[Pregnancy]"
+"Haven't faced menarche yet, hence unable to be [Fertilized] or entering [Pregnancy]"
 
 msgid "未成年"
 msgstr "Underage"
@@ -5593,14 +5525,14 @@ msgstr "Semen Taste Loving"
 msgid "经常性地在绝顶的同时被口内射精而获得的素质，尝到精液的味道就会条件反射性地绝顶"
 msgstr ""
 "Talent obtained after frequently have semen ejaculated into mouth while on "
-"climax, now will conditionally enter climax after tasting semen"
+"climax,\\n now will conditionally enter climax after tasting semen"
 
 msgid "精液膨腹"
 msgstr "Semen Inflation"
 
 msgid "在子宫内被射入了极其大量的精液，导致腹部宛如孕妇一般高高地隆起"
 msgstr ""
-"Huge amount of semen was being ejaculated into the womb, resulted in belly "
+"Huge amount of semen was being ejaculated into the womb,\\n resulted in belly "
 "swelled up like pregnant"
 
 msgid "浓厚精液"
@@ -5608,7 +5540,7 @@ msgstr "Concentrated Semen"
 
 msgid "积攒了多天的精液导致精子浓度变高了，此时进行内射会大幅度提高对方的受精率"
 msgstr ""
-"Semen's concentration increased after storing for several days, which will "
+"Semen's concentration increased after storing for several days,\\n which will "
 "greatly increase chance of fertilization if ejaculated inside"
 
 msgid "漏尿"
@@ -5616,7 +5548,7 @@ msgstr "Urine Leaking"
 
 msgid "经常性地在绝顶的同时被迫尿出来而获得的素质，感受到性快感就会条件反射性地漏尿"
 msgstr ""
-"Talent obtained after frequently pee out while on climax, now will leak "
+"Talent obtained after frequently pee out while on climax,\\n now will leak "
 "urine out after experiencing sexual pleasure"
 
 msgid "淫乱"
@@ -5714,7 +5646,7 @@ msgstr "Hypnotized - Mild"
 
 msgid "被施加了浅层的催眠状态，意识有些模糊，会下意识地同意有些不合理的要求"
 msgstr ""
-"Was being casted with mild hypnosis, have blurred consciousness, and will "
+"Was being casted with mild hypnosis, have blurred consciousness,\\n and will "
 "agree on some unreasonable actions"
 
 msgid "已催眠·深"
@@ -5722,16 +5654,14 @@ msgstr "Hypnotized - Deep"
 
 msgid "被施加了深层的催眠状态，意识飘在空中，会毫无抵抗地接受对方的任何行为"
 msgstr ""
-"Was being casted with deep hypnosis, lost consciousness, and will not resist"
-" on any actions"
+"Was being casted with deep hypnosis, lost consciousness, and will not resist on any actions"
 
 msgid "已催眠·极"
 msgstr "Hypnotized - Full"
 
 msgid "抵达了完全的催眠状态，身体和意识被随意控制和摆弄，只能沦为一具人偶"
 msgstr ""
-"Entered full hypnosis, and body and mind were being played and fiddled like "
-"a doll"
+"Entered full hypnosis, and body and mind were being played and fiddled like a doll"
 
 msgid "Ｎ钝感"
 msgstr "N Insensitive"
@@ -5829,8 +5759,8 @@ msgstr "Flat Board"
 msgid "两片小巧的乳房仅形成一个微弱的突起，乳房的边缘轮廓模糊，和胸口没有明显的分界线，两点浅色的乳头几乎隐没在乳晕之中。手掌可以轻易地整个盖住。"
 msgstr ""
 "Two small breasts showing natural drop shape, with gentle lines and no "
-"obvious fullness, The edge contour of the breasts are vague, and two light "
-"nipples are nearly missing in the areola. Two small breasts only forming a "
+"obvious fullness,\\n The edge contour of the breasts are vague, and two light "
+"nipples are nearly missing in the areola.\\n Two small breasts only forming a "
 "small bulge, and hands can easily hold onto them as a whole."
 
 msgid "贫乳"
@@ -5839,7 +5769,7 @@ msgstr "Small Breasts"
 msgid "两片微微隆起的乳房，线条柔和，呈现出自然突出的形状，乳头的形状若隐若现，蕴含着朦胧的性感。乳房突起也不明显，手掌可以整个握住。"
 msgstr ""
 "Two slightly swollen breasts, shape of nipples are looming, containing hazy "
-"sexiness. Breasts showed a bulge but not obvious, and hands can hold onto "
+"sexiness.\\n Breasts showed a bulge but not obvious, and hands can hold onto "
 "most of them."
 
 msgid "普乳"
@@ -5848,7 +5778,7 @@ msgstr "Normal Breasts"
 msgid "丰满而不过分的乳房，蕴含着成熟女性的魅力，既健康又迷人。乳房有一个自然的弧度，手掌可以包裹住，但很难整个握住。"
 msgstr ""
 "Full but not excessive breasts, containing the charm of ladies, healthy and "
-"attractive. Breasts have a natural curve, and hands can cover all of them "
+"attractive.\\n Breasts have a natural curve,\\n and hands can cover all of them "
 "but no longer be able to hold onto them."
 
 msgid "巨乳"
@@ -5856,8 +5786,8 @@ msgstr "Large Breasts"
 
 msgid "过分丰满的乳房高高耸立，乳房呈现出饱满高耸的弧度，线条丰腴流畅。手掌无法整个握住，从指缝间会有乳肉溢出。"
 msgstr ""
-"Excessively full towering breasts, showing a full and towering curve, and "
-"the lines are plump and smooth. Hands can't hold onto them fully, and breast"
+"Excessively full towering breasts, showing a full and towering curve,\\n and "
+"the lines are plump and smooth. Hands can't hold onto them fully,\\n and breast"
 " meat will leak out from fingertips."
 
 msgid "爆乳"
@@ -5866,9 +5796,9 @@ msgstr "Huge Breasts"
 msgid ""
 "乳房高高隆起，饱满程度近乎极致，服装近乎完全无法束缚这一切。达到了令人视线完全无法离开的程度，有着手掌完全无法握住的大小，整张脸也肯定可以埋得进去。"
 msgstr ""
-"Breasts swelled up highly, and having near extreme fullness, to the point "
-"clothes can't fully cover them up. The breasts have reached the size where "
-"people can't move their sight, and hands can't hold onto them at all."
+"Breasts swelled up highly, and having near extreme fullness,\\n to the point "
+"clothes can't fully cover them up.\\n The breasts have reached the size where "
+"people can't move their sight,\\n and hands can't hold onto them at all."
 
 msgid "小臀"
 msgstr "Small Butt"
@@ -5882,7 +5812,7 @@ msgstr "Normal Butt"
 msgid "双手难以覆盖。臀型明显丰满上翘，有弧度感。看上去完全能够诞下非常健康的孩子，臀肉较为饱满有力。"
 msgstr ""
 "Hands can't cover easily, and butt shape is plump and upturned with a sense "
-"of curvature. Looks capable of giving birth to healthy children, and butt "
+"of curvature.\\n Looks capable of giving birth to healthy children, and butt "
 "meat is fully strengthened."
 
 msgid "巨臀"
@@ -5890,8 +5820,8 @@ msgstr "Huge Butt"
 
 msgid "臀部高度丰满，双手无法覆盖大部分区域。臀型极为饱满翘挺，雄性近乎于无法抗拒的程度，非常吸引人的眼球。亦可以称之为成熟雌性的典范"
 msgstr ""
-"Butts are full and high, hands can't cover most areas. Shape of the butts "
-"represents plumpness, to the point it's inresistable to males, and can be "
+"Butts are full and high, hands can't cover most areas.\\n Shape of the butts "
+"represents plumpness, to the point it's inresistable to males,\\n and can be "
 "called as the model for mature females"
 
 msgid "细腿"
@@ -6055,24 +5985,21 @@ msgstr "Unpassable Borderline"
 
 msgid "全abl上升难，实行值降低"
 msgstr ""
-"Reduces rate of all abilities' increases, and Command Execution Value "
-"decreases"
+"Reduces rate of all abilities' increases, and Command Execution Value decreases"
 
 msgid "献身"
 msgstr "Body Sacrificing"
 
 msgid "abl_受虐上升易，恭顺、屈服上升易"
 msgstr ""
-"Increased rate of Masochism increase, and increased rate of Humbleness "
-"increase and Yield increase"
+"Increased rate of Masochism increase, and increased rate of Humbleness increase and Yield increase"
 
 msgid "倒错"
 msgstr "Perversion"
 
 msgid "苦痛系、SM系实行值上升、效果上升"
 msgstr ""
-"Command Execution Value and effect of pain-type and SM-type commands "
-"increase"
+"Command Execution Value and effect of pain-type and SM-type commands increase"
 
 msgid "讨厌男性"
 msgstr "Male Hatred"
@@ -6142,7 +6069,7 @@ msgstr "Doctor's Pheromone Groups"
 
 msgid "中级激素系能力，散发出令人着迷的气味，可以较多地增加指令的实行值"
 msgstr ""
-"Secondary hormone-type ability, releases odors that attracts people, can "
+"Secondary hormone-type ability, releases odors that attracts people,\\n can "
 "significantly increases Command Execution Value"
 
 msgid "博士信息素阵列"
@@ -6151,22 +6078,21 @@ msgstr "Doctor's Pheromone Arrays"
 msgid "高级激素系能力，散发出近乎媚药等级的气味，可以极大地增加指令的实行值"
 msgstr ""
 "Tertiary hormone-type ability, releases odors that nearly represents love "
-"potions, can greatly increases Command Execution Value"
+"potions,\\n can greatly increases Command Execution Value"
 
 msgid "腔内透视"
 msgstr "Cavity Perspective"
 
 msgid "中级视觉系能力，可以看到对方腔内的情况"
 msgstr ""
-"Secondary vision-type ability, can directly see the contents in target's "
-"cavity"
+"Secondary vision-type ability, can directly see the contents in target's cavity"
 
 msgid "生理透视"
 msgstr "Physiological Perspective"
 
 msgid "高级视觉系能力，可以看到对方的生理周期与受精概率"
 msgstr ""
-"Tertiary vision-type ability, can directly see the menstrual cycle and "
+"Tertiary vision-type ability,\\n can directly see the menstrual cycle and "
 "fertilization rate of the target"
 
 msgid "隔空触摸"
@@ -6195,19 +6121,18 @@ msgstr "Sex Hypnosis"
 msgid "中级催眠系能力，可以让对方陷入深层催眠状态，不会抵抗任何性行为"
 msgstr ""
 "Secondary hypnosis-type ability, can let the target falls into deep "
-"hypnotized status, and won't resist any sex actions"
+"hypnotized status,\\n and won't resist any sex actions"
 
 msgid "高级催眠系能力，可以同时催眠复数对象，对同房间的所有人共同施加催眠"
 msgstr ""
-"Tertiary hypnosis-type ability, can hypnotize multiple targets "
-"simultaneously"
+"Tertiary hypnosis-type ability, can hypnotize multiple targets simultaneously"
 
 msgid "心体催眠"
 msgstr "Mind-body Hypnosis"
 
 msgid "特级催眠系能力，可以使用体控和心控的催眠，单独操控被催眠的对象的身体或向心灵灌输特定的命令"
 msgstr ""
-"Ultimate hypnosis-type ability, can control body and mind simultaneously to "
+"Ultimate hypnosis-type ability,\\n can control body and mind simultaneously to "
 "control the target's body or mind"
 
 msgid "回复慢"
@@ -6287,12 +6212,12 @@ msgstr "Maximum chat attempts is related to Doctor's Speech Skill"
 
 msgid "不要急着对关系不深的干员进行性骚扰甚至邀请H之类的举动，要慢慢的培养感情，提高好感度、信赖度和其他属性"
 msgstr ""
-"Don't harass or H invite Operators with stale relationship, you need to "
+"Don't harass or H invite Operators with stale relationship,\\n you need to "
 "develop it slowly and increases their Affinity, Trust and others"
 
 msgid "如果想要攻略某个干员，可以把她设为助理，会有智能跟随等很多方便的功能"
 msgstr ""
-"If you're aiming on one Operator, you may set her as assistant, which will "
+"If you're aiming on one Operator, you may set her as assistant,\\n which will "
 "provide many useful functions such as Intelligence Following"
 
 msgid "AI"
@@ -6300,23 +6225,20 @@ msgstr "AI"
 
 msgid "除了博士主动与干员交互之外，干员也会主动对博士或者其他干员进行一些交互"
 msgstr ""
-"Besides actively interact with Operators, they will also interact with "
-"Doctor or other Operators"
+"Besides actively interact with Operators, they will also interact with Doctor or other Operators"
 
 msgid "早上7~8点、中午12~13点、晚上17~18点是饭点，干员们会去食堂买饭、用餐"
 msgstr ""
-"7-8, 12-13, 17-18 is dining time, where Operators will head to Canteen for "
-"buying and eating"
+"7-8, 12-13, 17-18 is dining time, where Operators will head to Canteen for buying and eating"
 
 msgid "晚上10点之后是就寝时间，干员们会陆续回到自己的宿舍里睡觉"
 msgstr ""
-"After 22 is sleep time, where Operators will head to their Dormitory to "
-"sleep"
+"After 22 is sleep time, where Operators will head to their Dormitory to sleep"
 
 msgid "尿意值每隔3、4个小时就会攒满，干员们在尿意值到80%时会去洗手间解手，当解锁【腔内透视】后可以在污浊页面看到干员们的尿意状态"
 msgstr ""
-"Urinary Value will be full after 3 to 4 hours, and Operators will head to "
-"toilet and relieve themselves at 80%, which you can see on their Urinary "
+"Urinary Value will be full after 3 to 4 hours,\\n and Operators will head to "
+"toilet and relieve themselves at 80%,\\n which you can see on their Urinary "
 "Value after unlocking [Cavity Perspective]"
 
 msgid "气力值降到0之后，干员会找个休息室休息一下，之后再回到正常行动中来"
@@ -6324,7 +6246,7 @@ msgstr "When Energy reached 0, Operators will rest at Restrooms"
 
 msgid "当干员的体力值降到0之后，会进入疲劳状态，此时会强制结束H或跟随状态，回宿舍大睡一觉"
 msgstr ""
-"When Stamina reached 0, Operators will enter Fatigue, which will forcefully "
+"When Stamina reached 0, Operators will enter Fatigue,\\n which will forcefully "
 "stops H or following and head to Dormitory for sleep"
 
 msgid "收集"
@@ -6332,38 +6254,38 @@ msgstr "Collection"
 
 msgid "图书馆区域的藏品馆是用来展示收藏品的，把获得的收藏品摆在这里，可以解锁一些特殊奖励"
 msgstr ""
-"The Collection Hall of Library is used to exhibit collectibles, place those "
+"The Collection Hall of Library is used to exhibit collectibles,\\n place those "
 "that you have collected and you'll unlock some rewards"
 
 msgid "收集齐一定数量的内衣后，可以解锁【内衣透视】，能够直接看到干员们当前穿的内衣"
 msgstr ""
-"After collecting enough number of bras, [Bra Perspective] will be unlocked, "
+"After collecting enough number of bras, [Bra Perspective] will be unlocked,\\n "
 "which allows you to see the bra that Operators are wearing now"
 
 msgid "收集齐一定数量的内衣后，可以解锁更多内衣种类，已经被攻略的干员在早上换衣服的时候，有一定概率会换上某种已解锁的情趣内衣"
 msgstr ""
-"After collecting enough number of bras, more types will be unlocked, and "
+"After collecting enough number of bras, more types will be unlocked,\\n and "
 "completed Operators may change into sexy bra on morning"
 
 msgid "收集齐一定数量的袜子后，可以解锁更多袜子种类，原本不穿袜子的干员在早上换衣服的时候，有一定概率也会穿上某种已解锁的袜子"
 msgstr ""
-"After collecting enough number of socks, more types will be unlocked, and "
+"After collecting enough number of socks, more types will be unlocked,\\n and "
 "Operators may change into one of the types"
 
 msgid "收集齐一定数量的内衣后，可以解锁【索要内裤】，能直接让干员把当前穿着的内衣脱下来给你"
 msgstr ""
 "After collecting enough number of bras, [Ask for underwear] will be "
-"unlocked, which can be used to have Operators take off their bras for you"
+"unlocked,\\n which can be used to have Operators take off their bras for you"
 
 msgid "收集齐一定数量的袜子后，可以解锁【索要袜子】，能直接让干员把当前穿着的袜子脱下来给你"
 msgstr ""
-"After collecting enough number of bras, [Ask for socks] will be unlocked, "
+"After collecting enough number of bras, [Ask for socks] will be unlocked,\\n "
 "which can be used to have Operators take off their socks for you"
 
 msgid "收集齐一定数量的信物后，可以解锁【博士信息素】，能增加指令的实行值"
 msgstr ""
 "After collecting enough number of tokens, [Doctor's Pheromones] will be "
-"unlocked, which can increase Command Execution Value"
+"unlocked,\\n which can increase Command Execution Value"
 
 msgid "设施"
 msgstr "Facilities"
@@ -6371,105 +6293,103 @@ msgstr "Facilities"
 msgid "地点Tip：【控制中枢】-【博士房间】。博士醒来后会逐渐变得困倦，很困的时候会限制可以用的指令，需要回博士房间【睡觉】"
 msgstr ""
 "Location Tip: [Control Center] - [Doctor's Room]. Doctor will get tired "
-"gradually, which will limit the commands that are usable, and you must "
+"gradually,\\n which will limit the commands that are usable, and you must "
 "return to [Sleep]"
 
 msgid "地点Tip：【控制中枢】-【博士办公室】。博士进行办公的主要场所，在这里使用【管理罗德岛】指令可以一览整个罗德岛的情况，并且对各部门进行管理"
 msgstr ""
 "Location Tip: [Control Center] - [Doctor's Office]. The main place of "
-"Doctor's work, where [Manage Rhodes Island] can be used to monitor and "
+"Doctor's work,\\n where [Manage Rhodes Island] can be used to monitor and "
 "manage each department"
 
 msgid ""
 "地点Tip：【生活娱乐区】-【取餐区】。早上7~8点、中午12~13点、晚上17~18点是饭点，取餐区会在此时供应免费饭菜，博士可以到这里【购买食物】"
 msgstr ""
-"Location Tip: [Entertainment Zone] - [Meal Taking Zone]. 7-8, 12-13, 17-18 "
+"Location Tip: [Entertainment Zone] - [Meal Taking Zone].\\n 7-8, 12-13, 17-18 "
 "is dining time, where you can [Purchase food] for free"
 
 msgid "地点Tip：【工程部】-【基建部】。博士可以在这里的【基建系统】中消耗资源来兴建新的设施、或者升级已有的设施"
 msgstr ""
-"Location Tip: [Engineering Zone] - [Base Building Department]. [Base system]"
+"Location Tip: [Engineering Zone] - [Base Building Department].\\n [Base system]"
 " can be used to consume resources for building or upgrading facilities"
 
 msgid "地点Tip：【关押区】-【监牢】。博士可以在这里使用【投入监牢】来监禁干员，或使用【解除囚禁】来释放干员"
 msgstr ""
-"Location Tip: [Detention Zone] - [Prison]. [Put in prison] can be used to "
+"Location Tip: [Detention Zone] - [Prison].\\n [Put in prison] can be used to "
 "imprison Operators, or [Free from captivity] to release Operators"
 
 msgid "地点Tip：【贸易区】-【资源交易所】。博士可以在这里进行【资源交易】，买卖各种资源"
 msgstr ""
-"Location Tip: [Commerce Zone] - [Resource Exchange]. [Trade resources] can "
+"Location Tip: [Commerce Zone] - [Resource Exchange].\\n [Trade resources] can "
 "be conducted to buy or sell resources"
 
 msgid "地点Tip：【训练场】-【健身房】。博士可以在这里【锻炼身体】，从而提高体力和气力的上限"
 msgstr ""
-"Location Tip: [Training Room] - [Fitness Zone]. [Exercise] can be conducted "
+"Location Tip: [Training Room] - [Fitness Zone].\\n [Exercise] can be conducted "
 "to increase maximum Stamina and Energy"
 
 msgid "在训练场的模拟对战房可以邀请和其他干员切磋，从而获得战斗经验，提高战斗技能"
 msgstr ""
-"You can invite Operators for a friendly duel in Combat Simulation Room to "
+"You can invite Operators for a friendly duel in Combat Simulation Room\\n to "
 "obtain Combat EXP and upgrade Combat Skill"
 
 msgid "地点Tip：【生活娱乐区】-【厨房】。博士可以在这里【做饭】，获得料理经验，料理技能的等级关系到可以做的饭的种类和质量"
 msgstr ""
-"Location Tip: [Entertainment Zone] - [Kitchen]. [Cook] can be conducted to "
-"obtain Cuisine EXP, and the types and quality of food will be affected by "
+"Location Tip: [Entertainment Zone] - [Kitchen].\\n [Cook] can be conducted to "
+"obtain Cuisine EXP,\\n and the types and quality of food will be affected by "
 "level of Cuisine Skill"
 
 msgid ""
 "地点Tip：【图书馆】-【图书馆】。博士可以在这里【借阅书籍】，选择自己想看的书借走后，可以在任何[有办公级家具]的地点进行【读书】，获得的经验与借阅的书籍有关"
 msgstr ""
-"Location Tip: [Library] - [Library]. [Borrow books] can be conducted to "
-"borrow books and [Read books] on any location with office furnitures, which "
+"Location Tip: [Library] - [Library].\\n [Borrow books] can be conducted to "
+"borrow books\\n and [Read books] on any location with office furnitures,\\n which "
 "the Experience obtained will be related to the book borrowed"
 
 msgid "在生活娱乐区的多媒体室可以和电影兴趣小组的干员一起观看影片，加深感情"
 msgstr ""
 "You can watch movies with Operators that enjoy movies in Multimedia Room of "
-"Entertainment Zone to deepen feelings"
+"Entertainment Zone\\n to deepen feelings"
 
 msgid "在生活娱乐区的现代音乐排练室可以和喜欢流行乐的干员一起唱歌和演奏乐器，加深感情"
 msgstr ""
-"You can sing and play instruments with Operators that enjoy modern music at "
+"You can sing and play instruments with Operators that enjoy modern music\\n at "
 "Modern Music Rehearsal Room of Entertainment Zone to deepen feelings"
 
 msgid "在生活娱乐区的夕照区音乐室可以和喜欢古典乐的干员一起唱歌和演奏乐器，加深感情"
 msgstr ""
 "You can sing and play instruments with Operators that enjoy traditional "
-"music at Afterglow-styled Music Room of Entertainment Zone to deepen "
+"music\\n at Afterglow-styled Music Room of Entertainment Zone to deepen "
 "feelings"
 
 msgid "在生活娱乐区的棋牌室可以和喜欢棋牌的干员一起下棋或打牌，加深感情"
 msgstr ""
-"You can play chess or cards with Operators that enjoy chess in Chess Room of"
+"You can play chess or cards with Operators that enjoy chess\\n in Chess Room of"
 " Entertainment Zone to deepen feelings"
 
 msgid "在生活娱乐区的酒吧可以和喜欢喝酒的干员一起饮酒，加深感情"
 msgstr ""
 "You can drink alcohol with Operators that enjoy alcohol in Bar of "
-"Entertainment Room to deepen feelings"
+"Entertainment Room\\n to deepen feelings"
 
 msgid "在训练场的木桩房和射击房可以自己独自训练，从而获得战斗经验，提高战斗技能"
 msgstr ""
-"You can train alone in Stake Room and Shooting Room of Training Room to "
+"You can train alone in Stake Room and Shooting Room of Training Room\\n to "
 "obtain Combat EXP and upgrade Combat Skill"
 
 msgid "地点Tip：【控制中枢】-【指挥室】。博士可以在这里使用【导航】，消耗燃料，使罗德岛前往其他地点"
 msgstr ""
-"Location Tip: [Control Center] - [Command Room]. [Navigate] can be used to "
+"Location Tip: [Control Center] - [Command Room].\\n [Navigate] can be used to "
 "consume fuel to head to other locations"
 
 msgid "疗养庭院的香熏治疗室需要在获得调香师干员后才能开放"
 msgstr ""
-"Aromatherapy Treatment Room of Convalescence Garden will only open after "
-"obtaining Operator Perfumer"
+"Aromatherapy Treatment Room of Convalescence Garden will only open after obtaining Operator Perfumer"
 
 msgid "疗养庭院的香熏治疗室可以舒缓心情，邀请心情不好的干员来这里休息，可以让她们变得开心起来"
 msgstr ""
-"Aromatherapy Treatment Room of Convalescence Garden can soothe feelings, "
-"invite Operators that are feeling unhappy to there can help them to feel "
-"better"
+"Aromatherapy Treatment Room of Convalescence Garden can soothe feelings,\\n "
+"invite Operators that are feeling unhappy to there can help them to feel better"
 
 msgid "工程部的鲁特拉工作室需要在获得梅尔干员后才能开放"
 msgstr ""
@@ -6477,7 +6397,7 @@ msgstr ""
 
 msgid "工程部的鲁特拉工作室可以提供无人机方面的支援，可以给博士提供一台咪波，并进行功能的升级"
 msgstr ""
-"Lutra in Engineering Zone can provide drone support, which is done by "
+"Lutra in Engineering Zone can provide drone support,\\n which is done by "
 "providing a Meeboo and conducting function upgrades"
 
 msgid "仓储区的裁缝铺需要在获得柏喙干员后才能开放"
@@ -6486,9 +6406,8 @@ msgstr ""
 
 msgid "仓储区的裁缝铺可以提供服装定制服务，在这里给干员购买新衣服或者手动指定干员穿某些衣服"
 msgstr ""
-"Tailor Shop of Storage Zone can provide clothing customization service, "
-"which allows purchasing clothes for Operators or asking them to wear certain"
-" clothes"
+"Tailor Shop of Storage Zone can provide clothing customization service,\\n "
+"which allows purchasing clothes for Operators or asking them to wear certain clothes"
 
 msgid "毫无兴趣"
 msgstr "Not interested"
@@ -6573,8 +6492,7 @@ msgstr "Trainer"
 
 msgid "去训练场训练，会根据职业自动到近战的木桩房或远程的射击房进行训练"
 msgstr ""
-"Trains at Training Room, and will head to Stake Room for melee or Shooting "
-"Room for ranged according to Profession"
+"Trains at Training Room, and will head to Stake Room for melee or Shooting Room for ranged\\n according to Profession"
 
 msgid "图书馆管理员"
 msgstr "Library Manager"
@@ -6596,8 +6514,7 @@ msgstr "Diplomatist"
 
 msgid "处理与各国之间的关系，邀请各界人士来罗德岛访问"
 msgstr ""
-"Managing the relationship with other countries, as well as inviting others "
-"to Rhodes Island for visit"
+"Manages the relationship with other countries, as well as inviting others to Rhodes Island for visit"
 
 msgid "教师"
 msgstr "Teacher"
@@ -11388,8 +11305,7 @@ msgid "宁静时光"
 msgstr "Calm Moment"
 
 msgid "放松身心，舒缓紧张，能够将体力与气力全部回满"
-msgstr "Loose body and mind, relieve the tension, and recovers Stamina and Energy"
-"to max"
+msgstr "Loose body and mind, relieve the tension, and recovers Stamina and Energy to max"
 
 msgid "灵感烛光"
 msgstr "Inspiring Candlelight"
@@ -11401,29 +11317,25 @@ msgid "橙色心灵"
 msgstr "Orange Soul"
 
 msgid "振奋精神，积极向上，今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
-msgstr "Hardens the will, be motivated, and halved the gain of Terror, Pain, "
-"Depression and Antipathy"
+msgstr "Hardens the will, be motivated, and halved the gain of Terror, Pain, Depression and Antipathy"
 
 msgid "迷乱情梦"
 msgstr "Chaotic Dream"
 
 msgid "提升感官敏感度，促进荷尔蒙分泌，今日全部位快感与欲情的获得速度+1倍"
-msgstr "Increases sensitivity and stimulate hormone secretion, doubling the gain "
-"of Happiness and Lust"
+msgstr "Increases sensitivity and stimulate hormone secretion, doubling the gain of Happiness and Lust"
 
 msgid "情感共鸣"
 msgstr "Emotion Resonance"
 
 msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
-msgstr "Open your heart, encouraging emotion interflow, granting a 50% boost on"
-"Affinity anf Trust gain"
+msgstr "Open your heart, encouraging emotion interflow, granting a 50% boost on Affinity anf Trust gain"
 
 msgid "下坠天空"
 msgstr "Falling Sky"
 
 msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
-msgstr "Dropping consciousness to the abyss, delaying the thoughts, sextupling"
-"the gain of Hypnosis Depth"
+msgstr "Dropping consciousness to the abyss, delaying the thoughts, sextupling the gain of Hypnosis Depth"
 
 msgid "否|晚安吻|晚安咬"
 msgstr "No|Night Kiss|Night Bite"
@@ -11438,9 +11350,9 @@ msgid "《无名诗集》"
 msgstr "\"Nameless Poetry\""
 
 msgid "“酒杯的碎屑在我皮肉里欢唱，鲜血自指缝间攀上脊索。饮下尖锐的晶莹光彩，脏腑随之璨烂流落。”"
-msgstr "\"The shards of the wine glass sung within my flesh, and fresh blood climbed"
-"between my fingers towards my spine. As I lapped up the sharp, "
-"crystalline brilliance, light began to flow from my viscera."
+msgstr "\"The shards of the wine glass sung within my flesh,\\n and fresh blood climbed"
+"between my fingers towards my spine.\\n As I lapped up the sharp, "
+"crystalline brilliance,\\n light began to flow from my viscera."
 
 msgid "手交"
 msgstr "Handjob"
@@ -11458,7 +11370,7 @@ msgid "是否设为收藏角色"
 msgstr "Set as Favourites?"
 
 msgid "当招募的干员数量过多时，可以将心仪的角色设为收藏角色，方便在干员位置等面板进行快速筛选"
-msgstr "When there is too many Operators recruited, you may set your favourite" 
+msgstr "When there is too many Operators recruited,\\n you may set your favourite" 
 "Operators on Favourites, so that it's easier to filter"
 
 msgid "天蓝色内裤"
@@ -11591,24 +11503,19 @@ msgid "开放新设施：【生物工程部】（未实装）"
 msgstr "Opens new facility: [Bioengineering Department] (not implemented)"
 
 msgid "宿舍开放至1区全部，干员最大人数提升至56人"
-msgstr "Dormitory opens to the whole Zone 1, maximum number of Operators increases"
-"to 56"
+msgstr "Dormitory opens to the whole Zone 1, maximum number of Operators increases to 56"
 
 msgid "宿舍开放至3区全部，干员最大人数提升至140人"
-msgstr "Dormitory opens to the whole Zone 3, maximum number of Operators increases"
-"to 140"
+msgstr "Dormitory opens to the whole Zone 3, maximum number of Operators increases to 140"
 
 msgid "宿舍开放至6区全部，干员最大人数提升至218人"
-msgstr "Dormitory opens to the whole Zone 6, maximum number of Operators increases"
-"to 218"
+msgstr "Dormitory opens to the whole Zone 6, maximum number of Operators increases to 218"
 
 msgid "宿舍开放至9区全部，干员最大人数提升至296人"
-msgstr "Dormitory opens to the whole Zone 9, maximum number of Operators increases"
-"to 296"
+msgstr "Dormitory opens to the whole Zone 9, maximum number of Operators increases to 296"
 
 msgid "开放新功能：【招募路人干员】（未实装），可同时招募4名干员，招募效率+50%"
-msgstr "Opens new function: [Recruit passerby Operators] (not implemented), "
-"recruitment speed +50%"
+msgstr "Opens new function: [Recruit passerby Operators] (not implemented), recruitment speed +50%"
 
 msgid "开放新设施:【影像厅】（未实装），学习效率加成提升至20%"
 msgstr "Opens new facility: [Video Hall] (not implemented), learning speed +20%"
@@ -11623,15 +11530,15 @@ msgid "开放新设施:【温室】，生产效率加成提升至5%"
 msgstr "Opens new facility: [Conservatory], production speed +5%"
 
 msgid "开放新设施:【香熏治疗室】，生产效率加成提升至20%，每日可进行一次香薰疗愈"
-msgstr "Opens new facilities: [Aromatherapy Treatment Room], production speed +20%, "
+msgstr "Opens new facilities: [Aromatherapy Treatment Room], production speed +20%,\\n "
 "gains 1 aromatherapy attempt daily"
 
 msgid "开放新设施:【磐蟹养殖场】（未实装），生产效率加成提升至50%，每日可进行两次香薰疗愈"
-msgstr "Opens new facility: [Metal Crab Breeding Farm] (not implemented), production"
+msgstr "Opens new facility: [Metal Crab Breeding Farm] (not implemented),\\n production"
 "speed +50%, gains 2 aromatherapy attempts daily"
 
 msgid "开放新设施:【小树林】（未实装），生产效率加成提升至100%，每日可进行三次香薰疗愈"
-msgstr "Opens new facility: [Grove] (not implemented), production speed +100%, "
+msgstr "Opens new facility: [Grove] (not implemented), production speed +100%,\\n "
 "gains 3 aromatherapy attempts daily"
 
 msgid "开放新设施:【秘密通道】（未实装）"
@@ -11794,8 +11701,8 @@ msgid "精液"
 msgstr "Semen"
 
 msgid "被催眠的干员会把博士视为空气，无论博士做什么都不会引起干员的注意，对自身和周围发生的任何事情也不会觉得奇怪，效果持续到离开当前场所为止。"
-msgstr "Hypnotized Operators will see the Doctor as thin air, and won't pay attention"
-"to what the Doctor is doing, and won't feel strange on anything on and around self, "
+msgstr "Hypnotized Operators will see the Doctor as thin air,\\n and won't pay attention"
+"to what the Doctor is doing,\\n and won't feel strange on anything on and around self,\\n "
 "effect lasts until leaving or manual removal."
 
 msgid "告白"
@@ -11847,7 +11754,7 @@ msgid "电动按摩棒"
 msgstr "Electric massage stick"
 
 msgid "绳子"
-msgstr "Rope"
+msgstr "Ropes"
 
 msgid "暂未实装"
 msgstr "Not implemented"
@@ -11865,14 +11772,14 @@ msgid "针"
 msgstr "Needle"
 
 msgid "用于进行尿道的开发，需要【技巧】至少为5级才能使用，每次使用消耗一个"
-msgstr "Used for development of urethra, can only be used at Technique Lv5 or above, "
+msgstr "Used for development of urethra, can only be used at Technique Lv5 or above,\\n "
 "consuming one per use"
 
 msgid "如何提升博士或干员的体力与气力上限？"
 msgstr "How to increase Doctor's or Operators' Stamina and Energy limit?"
 
 msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用"
-msgstr "[Exercise] in [Fitness Zone] of [Training Room], but be reminded this is not"
+msgstr "[Exercise] in [Fitness Zone] of [Training Room],\\n but be reminded this is not"
 "available until base upgrade"
 
 msgid "如何提升博士的理智上限？"
@@ -12314,7 +12221,7 @@ msgid "隔着刺激阴道"
 msgstr "Stimulate vagina"
 
 msgid "尿道指姦"
-msgstr "Urethra finger rape"
+msgstr "U finger rape"
 
 msgid "尿道姦"
 msgstr "Urethra rape"
@@ -12398,8 +12305,7 @@ msgid "是否在主界面的角色信息中显示好感与信赖的情况，以�
 msgstr "Do you want to display Affinity and Trust for Operators, and by how detailed"
 
 msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
-msgstr "Don't display|Display Affinity and Trust level|Display Affinity and Trust"
-"level and value"
+msgstr "Don't display|Display Affinity and Trust level|Display Affinity and Trust level and value"
 
 msgid "主界面中干员催眠情况的显示"
 msgstr "Display of Hypnosis state"
@@ -12420,8 +12326,7 @@ msgid "避孕中出合意"
 msgstr "Birth Controlled Creampie Agreement"
 
 msgid "同意在安全期或已经服用避孕药的情况下内射"
-msgstr "Allows being ejaculated inside while at Safe Period or after consuming"
-"birth control pills"
+msgstr "Allows being ejaculated inside while at Safe Period or after consuming birth control pills"
 
 msgid "同意在任何时候内射"
 msgstr "Allows being ejaculated inside at any time"
@@ -13569,3 +13474,1453 @@ msgstr "Manager's Room"
 
 msgid "源石技艺"
 msgstr "Originium Arts"
+
+msgid "林间夜话"
+msgstr ""
+
+msgid "提炼十五种植物成分，尝试一百七十二种组合。风踏进山林，万物低语，人可好眠。能够将体力与气力全部回满"
+msgstr ""
+
+msgid "迷梦香精"
+msgstr ""
+
+msgid "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。今日习得的获得速度+1倍"
+msgstr ""
+
+msgid "自嘲弄的橙色转化成青色，感到安心，得到治愈。今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgstr ""
+
+msgid "蔷薇啊，你的笑靥倾倒芸芸众生，你的藤蔓将散落的诗句拾捡，似不从大地中来，却漫出院墙，摇曳芬芳。今日全部位快感与欲情的获得速度+1倍"
+msgstr ""
+
+msgid "隐藏于内心深处，潜伏于恐惧之下，与我共鸣，打开心扉，感受他人。今日好感与信赖的获得速度变为+0.5倍"
+msgstr ""
+
+msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。催眠进度的增长速度+5倍"
+msgstr ""
+
+msgid "隶属项圈"
+msgstr ""
+
+msgid "恋人戒指"
+msgstr ""
+
+msgid "获得3至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+msgid "获得5至纯源石，可以用来获得或升级源石技艺"
+msgstr ""
+
+msgid "宿舍开放至3区全部，干员最大人数提升至172人"
+msgstr ""
+
+msgid "宿舍开放至6区全部，干员最大人数提升至282人"
+msgstr ""
+
+msgid "宿舍开放至9区全部，干员最大人数提升至360人"
+msgstr ""
+
+msgid "固定为浊心斯卡蒂宿舍"
+msgstr ""
+
+msgid "宿舍314房"
+msgstr ""
+
+msgid "宿舍315房"
+msgstr ""
+
+msgid "宿舍316房"
+msgstr ""
+
+msgid "宿舍317房"
+msgstr ""
+
+msgid "宿舍318房"
+msgstr ""
+
+msgid "宿舍319房"
+msgstr ""
+
+msgid "宿舍320房"
+msgstr ""
+
+msgid "宿舍321房"
+msgstr ""
+
+msgid "宿舍322房"
+msgstr ""
+
+msgid "宿舍323房"
+msgstr ""
+
+msgid "宿舍324房"
+msgstr ""
+
+msgid "宿舍325房"
+msgstr ""
+
+msgid "宿舍326房"
+msgstr ""
+
+msgid "宿舍327房"
+msgstr ""
+
+msgid "宿舍328房"
+msgstr ""
+
+msgid "宿舍329房"
+msgstr ""
+
+msgid "宿舍414房"
+msgstr ""
+
+msgid "宿舍415房"
+msgstr ""
+
+msgid "宿舍416房"
+msgstr ""
+
+msgid "宿舍417房"
+msgstr ""
+
+msgid "宿舍418房"
+msgstr ""
+
+msgid "宿舍419房"
+msgstr ""
+
+msgid "宿舍420房"
+msgstr ""
+
+msgid "宿舍421房"
+msgstr ""
+
+msgid "宿舍422房"
+msgstr ""
+
+msgid "宿舍423房"
+msgstr ""
+
+msgid "宿舍424房"
+msgstr ""
+
+msgid "宿舍425房"
+msgstr ""
+
+msgid "宿舍426房"
+msgstr ""
+
+msgid "宿舍427房"
+msgstr ""
+
+msgid "宿舍428房"
+msgstr ""
+
+msgid "宿舍429房"
+msgstr ""
+
+msgid "亮粉"
+msgstr ""
+
+msgid "深粉"
+msgstr ""
+
+msgid "深岩暗蓝灰色"
+msgstr ""
+
+msgid "比深岩暗蓝灰色亮一点"
+msgstr ""
+
+msgid "岩暗蓝灰色"
+msgstr ""
+
+msgid "小麦色"
+msgstr ""
+
+msgid "浅青色"
+msgstr ""
+
+msgid "红色"
+msgstr ""
+
+msgid "珊瑚色"
+msgstr ""
+
+msgid "粉红"
+msgstr ""
+
+msgid "浅粉红"
+msgstr ""
+
+msgid "紫色"
+msgstr ""
+
+msgid "黄褐色（卡其布）"
+msgstr ""
+
+msgid "米色"
+msgstr ""
+
+msgid "适中的春天的绿色"
+msgstr ""
+
+msgid "春天的绿色"
+msgstr ""
+
+msgid "猩红"
+msgstr ""
+
+msgid "使用后回复20ml精液量。"
+msgstr ""
+
+msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
+msgstr ""
+
+msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
+msgstr ""
+
+msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
+msgstr ""
+
+msgid "干员宿舍万能钥匙(一次性)"
+msgstr ""
+
+msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
+msgstr ""
+
+
+msgid "博士每天都需要做什么？"
+msgstr ""
+
+msgid ""
+"没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\\n可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
+msgstr ""
+
+msgid "攻略路线是怎么样的？如何获得信物？"
+msgstr ""
+
+msgid "拿到的干员的内裤/袜子有什么用？"
+msgstr ""
+
+msgid "内裤和袜子属于收集品，获得后可以在[图书馆]的[藏品馆]中使用【摆放藏品】，每收集一定数量后可以获得特定的解锁奖励。"
+msgstr ""
+
+msgid ""
+"除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\\n\\n在【受精】后，过一个月左右的时间会变成【妊娠】状态，获得【孕肚】和【泌乳】\\n再过两个月左右，会【临盆】，接着过不了几天就会【生产】\\n生出孩子后，母亲会进入【育儿】状态，养育需要一个月左右，孩子就会从【婴儿】成长为可以初步自理的【幼女】\\n结束了【育儿】后，母亲会恢复孕前状态，也会失去【泌乳】，而孩子还会依次成长为【萝莉】再到【少女】，每次成长会耗时两个月左右\\n\\n孩子的性别仅为女性，在成长到【少女】后即完全成为一名正常的干员\\n女儿会继承母亲包括种族在内大部分生理特征，也会在【育儿】期间学到部分来自母亲的后天知识和技能"
+msgstr ""
+
+msgid "在H中该如何让干员获得更多的快感和快乐，并减少苦痛反发等负面数值？"
+msgstr ""
+
+msgid ""
+"①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\\n②在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\\n  在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\\n\\n③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
+msgstr ""
+
+msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
+msgstr ""
+
+msgid ""
+"干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\\n\\n\\n目前已实装的提高概率的手段有（可叠加）：\\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\\n③在干员的排卵日里，如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\\n\\n\\n其他相关功能：\\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\\n在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
+msgstr ""
+
+msgid "该如何让拥有【未初潮】素质的干员怀孕？"
+msgstr ""
+
+msgid ""
+"【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\\n需要先对阴道和子宫进行一段时间的开发，让【V感度】和【W感度】升级到足够的等级后，即可提前迎来性成熟，失去该素质\\n\\n除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
+msgstr ""
+
+
+msgid "种植相关的基建系统是如何运作的？"
+msgstr ""
+
+msgid ""
+"在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
+msgstr ""
+
+msgid "不加肉类、芝士、酸黄瓜的生菜汉堡"
+msgstr ""
+
+msgid "用十二种蔬菜混合制成的沙拉"
+msgstr ""
+
+msgid "肉质鲜嫩，肥而不腻，香气四溢，入口即化。"
+msgstr ""
+
+msgid "汐斯塔风情水果披萨"
+msgstr ""
+
+msgid "汐斯塔的特色披萨，上面铺满了各种水果，看起来就像一块大蛋糕。"
+msgstr ""
+
+msgid "深盘厚底魔鬼辣椒披萨"
+msgstr ""
+
+msgid "来自多索雷斯的特色披萨，辣椒的味道很重，吃完之后会让你感觉到一种前所未有的辣。"
+msgstr ""
+
+msgid "羔岩羊腿肉披萨"
+msgstr ""
+
+msgid "来自维多利亚的特色披萨，只选用最好的岩羊羔羊腿肉，口感鲜嫩，味道鲜美。"
+msgstr ""
+
+msgid "京城烤鸭披萨"
+msgstr ""
+
+msgid "来自炎国的特色披萨，将京城烤鸭与披萨完美结合，能同时品尝到两者的美味。"
+msgstr ""
+
+msgid "壳虾岩蟹披萨"
+msgstr ""
+
+msgid "来自伊比利亚的特色披萨，大胆的将蒜香壳虾与岩蟹肉放在了披萨上，味道鲜美。"
+msgstr ""
+
+msgid "罐装晌午茶"
+msgstr ""
+
+msgid ""
+"尚蜀常见的特色罐装饮料，听说各地客栈茶馆都供不应求。勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
+msgstr ""
+
+msgid "酱兽肉"
+msgstr ""
+
+msgid "尚蜀岩茶"
+msgstr ""
+
+msgid "勾吴花茶"
+msgstr ""
+
+msgid "姜齐白茶"
+msgstr ""
+
+msgid "大荒粗叶子"
+msgstr ""
+
+msgid "罐装晌午茶(柠檬折耳根味)"
+msgstr ""
+
+msgid "菊花茶"
+msgstr ""
+
+msgid "盐花生"
+msgstr ""
+
+msgid "黑豆茶"
+msgstr ""
+
+msgid "甜司康饼"
+msgstr ""
+
+msgid "汐斯塔冰茶"
+msgstr ""
+
+msgid "红椒茶"
+msgstr ""
+
+msgid "驮兽奶茶"
+msgstr ""
+
+msgid "米诺斯之雾"
+msgstr ""
+
+msgid "黑曜石柑茶"
+msgstr ""
+
+msgid "新酿烈刀子"
+msgstr ""
+
+msgid "玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
+msgstr ""
+
+msgid "高脚羽兽烤串"
+msgstr ""
+
+msgid "松饼早餐卷"
+msgstr ""
+
+msgid "山水兜"
+msgstr ""
+
+msgid "香草冰淇淋"
+msgstr ""
+
+msgid "乌萨斯饺子"
+msgstr ""
+
+msgid "黄油羽兽"
+msgstr ""
+
+msgid "仿蒲烧鳝鳞饭"
+msgstr ""
+
+msgid "面包碗佐奶油汤"
+msgstr ""
+
+msgid "玻利瓦尔风卷饼"
+msgstr ""
+
+msgid "蒜香壳虾塔帕斯"
+msgstr ""
+
+msgid "辣味酸橙派"
+msgstr ""
+
+msgid "加糖黑曜石柑茶"
+msgstr ""
+
+msgid "多伦乡村拼盘"
+msgstr ""
+
+msgid "即使是偏远乡村，你仍能在宴会上见到维多利亚人特有的矜持。"
+msgstr ""
+
+msgid "格里布熏鳞色拉"
+msgstr ""
+
+msgid "精心熏制的好菜只为今日待客，还有解腻的红茶，以及佐餐的豪言笑语。"
+msgstr ""
+
+msgid "斯沃玛三分钟浓汤"
+msgstr ""
+
+msgid "“大厨三小时，在家三分钟！”斯沃玛商务们如是吹嘘着自家公司的商品。"
+msgstr ""
+
+msgid "多索雷斯风情塔可"
+msgstr ""
+
+msgid "精心搭配的馅料让食客在餐桌前巡游半个泰拉，可真正属于多索雷斯的只有那张表面金黄的薄饼。"
+msgstr ""
+
+msgid "提亚卡乌式炸蕉果"
+msgstr ""
+
+msgid "宴会从正午开到夕阳西下，提亚卡乌们还在大快朵颐，但你已经吃不下了。"
+msgstr ""
+
+msgid "约翰老妈厚切汉堡"
+msgstr ""
+
+msgid "即使是用来答谢的加料加厚汉堡，吃完后留在脑海中的也只有半片生菜和薄薄的肉排，让人“意犹未尽”。"
+msgstr ""
+
+msgid "雷神工业火炙巨羽兽"
+msgstr ""
+
+msgid "用火微微一烤就可以端上来享用，焦脆的皮和多汁的肉，香肥量大，几口就能吃饱，员工喜欢它的味道，主管也很满意它的效率。"
+msgstr ""
+
+msgid "阿尔斯特华夫冰淇淋"
+msgstr ""
+
+msgid "冰淇淋球的形状像是从墙上铲下来的，华夫饼的边缘沾上了来路不明的糖霜。"
+msgstr ""
+
+msgid "审判庭特制火腿薄片"
+msgstr ""
+
+msgid "薄厚不均的肉片铺在礁石上。肌肉纹理泛着锃亮的油光，凑近能闻到些许坚果香气。挣脱海水的束缚后，才发觉陆地的馈赠是如此甜美。"
+msgstr ""
+
+msgid "塔山炸沙虫腿"
+msgstr ""
+
+msgid ""
+"炸得恰到好处的沙虫腿在唇齿间迸出汁水，传言在如此美味面前显得无足轻重。餐后才得知“二十条腿的沙虫”是一派胡言，用培养罐培养沙虫腿根本用不着沙虫。"
+msgstr ""
+
+msgid "杜林十号烈酒"
+msgstr ""
+
+msgid "酒过数巡，酩酊的杜林们进入梦乡，烈酒协会成员倒在蜜酿协会成员的身上，醇厚的酒香萦绕此间。十号烈酒，名叫“友谊”。"
+msgstr ""
+
+msgid "欢乐之歌年轮蛋糕"
+msgstr ""
+
+msgid ""
+"蛋糕甜蜜松软，纹路像悠久的年轮，也像那些能让人沉浸于欢乐之中的旋律。听说，蛋糕师是乐团的退休乐手，在烤制时演奏欢乐的小调，是让蛋糕变得轻盈绵密的秘诀。"
+msgstr ""
+
+msgid "盒牌商务健康盒饭"
+msgstr ""
+
+msgid "让人丧失贪吃欲望的盒饭。"
+msgstr ""
+
+msgid "汉堡甜甜圈套餐"
+msgstr ""
+
+msgid "甜甜圈的甜蜜与汉堡的咸香，是一种奇妙的搭配。"
+msgstr ""
+
+msgid "玻利瓦尔咖啡"
+msgstr ""
+
+msgid "少数被冠以产地名的特级咖啡，咖啡豆是许多玻利瓦尔大城市里畅销的伴手礼，内销和出口的需求量极大。"
+msgstr ""
+
+msgid "黑咖啡"
+msgstr ""
+
+msgid "无糖咖啡，是咖啡的原始味道，也是最纯粹的味道。"
+msgstr ""
+
+msgid "火山咖啡"
+msgstr ""
+
+msgid "火山咖啡的独特风味来自于汐斯塔火山灰土壤的独特气候，是一种稀有的咖啡，口感浓郁，香味浓烈。"
+msgstr ""
+
+msgid "过萃咖啡液"
+msgstr ""
+
+msgid "过萃的地底黑咖啡。提神效果极佳。可以代替糖浆。"
+msgstr ""
+
+msgid "奶霜华夫饼塔"
+msgstr ""
+
+msgid "华夫饼的香甜与奶霜的绵蜜，是一种奇妙的搭配。"
+msgstr ""
+
+msgid "德荣单人餐"
+msgstr ""
+
+msgid "来自德荣的单人餐，是一种简单的餐饮，适合快节奏的生活。"
+msgstr ""
+
+msgid "杨森兄弟双人餐"
+msgstr ""
+
+msgid "杨森到底有几个兄弟？这个双人餐是不是只有他一个人吃？"
+msgstr ""
+
+msgid "蟹肉碎拌饭"
+msgstr ""
+
+msgid "热腾腾的杂粮中加入了岩壳蟹肉，吃起来朴素中略带鲜味。好吃是好吃，但......究竟是谁第一个决定尝试食用岩壳蟹的呢？"
+msgstr ""
+
+msgid "调味干粮"
+msgstr ""
+
+msgid "较朴素的速食食品，经过了调味，吃起来还挺适口。据说未经调味的初版十分难以下咽，曾有人评价为不是“食用”，而是“服用”。"
+msgstr ""
+
+msgid "松枝熏肉"
+msgstr ""
+
+msgid "经过松枝熏烤，整块肉带上了浓郁的松香滋味，表皮油润，内里香醇。只需切下几块放在热腾腾的饭上，熏肉的香气就能充满整间屋子，令人陶醉。"
+msgstr ""
+
+msgid "鲜切蟹生"
+msgstr ""
+
+msgid ""
+"制作过程似乎只是切了几刀，过了下水，就这样端了出来。评价两极分化的一道菜肴，有人吃完之后感觉自已仿佛长出了和岩壳蟹一样坚硬的外壳。可能是过敏反应。"
+msgstr ""
+
+msgid "真空冷制肉脍"
+msgstr ""
+
+msgid "已经预制好的兽肉和杂粮，制作流程均在低温下完成，极大限度地保证了食材的新鲜。只需要简单加热，就是一道美味。感谢科技！"
+msgstr ""
+
+msgid "炭烤兽肉卷饼"
+msgstr ""
+
+msgid "每个国家的人都有他们喜欢的独特吃法，可以随意搭配尝试。但如果做出类似在炎国人眼前往饼里卷小笼包这种行为，可能会被追着打。"
+msgstr ""
+
+msgid "猎人饭包"
+msgstr ""
+
+msgid "捕捉到什么猎物，就使用什么肉炙烤所得，简单方便，自由度高。谁的饭包最大，谁的捕猎技巧就最高。不过为了面子，往里面多塞一点谷物也是可以的。"
+msgstr ""
+
+msgid "超级厚馅饼"
+msgstr ""
+
+msgid "萨尔贡当地传统主食之一，馅料是浓厚香醇的兽肉，深受当地人喜爱。大，大，大！越大越好！"
+msgstr ""
+
+msgid "鲜萃凝方体"
+msgstr ""
+
+msgid "由肉类提纯出各类人体所需的成分后精制的凝方体，营养丰富。但它的外表和名字一样，难以让人产生食欲。"
+msgstr ""
+
+msgid "香煎杂肉饭"
+msgstr ""
+
+msgid "不同种类的肉混合成独特的美味，颜色丰富，让人难以忘怀。一勺挖下去，热气蒸腾，从里面翻找出最喜欢的肉是这道菜的一大乐趣。"
+msgstr ""
+
+msgid "脱水增味肉干"
+msgstr ""
+
+msgid "将食材脱水处理，是人们保存食物最原始也最简单方便的方法。虽然只是薄薄的几片，看起来很没有满足感，但实际上热量很高，完全可以轻松地吃饱。"
+msgstr ""
+
+msgid "低温鲜烹炙肉"
+msgstr ""
+
+msgid ""
+"低温慢煮而成的食物，为了增香，外表还经过了微微的炙烤。很难从外表看出它来自何种动物，不过加热之后味道令人满意，这就足够了，毕竟填饱肚子才是最重要的。"
+msgstr ""
+
+msgid "蟹壳蒸饭"
+msgstr ""
+
+msgid ""
+"直接在蟹壳中铺满杂粮蒸熟制成的盖饭，萨尔贡部落民餐桌上最常见的食物。移动城市中的居民偶尔也会尝试这道菜，并为萨尔贡帝国的饮食文化而感到自豪。但很少有部落民会认同这一点。"
+msgstr ""
+
+msgid "提取脂凝晶"
+msgstr ""
+
+msgid "食品科技的智慧结晶，食品现代化的代表，营养丰富。短时间内增加进食满足感和提供足量热量都离不开这种食品科技产品。"
+msgstr ""
+
+msgid "浓缩羹原液"
+msgstr ""
+
+msgid "提取肉类鲜味和营养物质后高温浓缩而成的原液，营养丰富。本品为浓缩液，不可直接食用。住所离医院较近的人也不要尝试。"
+msgstr ""
+
+msgid "高压复焗浓汤"
+msgstr ""
+
+msgid "经超长时间高压烹制的极鲜浓汤，被料理机固化重组后制成的汤酥。一口下去，仿佛吃进去了一片云朵，一阵热风。汤鲜浓郁，入口即化。"
+msgstr ""
+
+msgid "生制代餐粗粉"
+msgstr ""
+
+msgid ""
+"为了保证食材中最佳原料风味的体现，制作者只使用了杂粮来搭配它。低纤维、高热量、易饱腹，从不会出现在现代移动城市中的商场的货架上，在荒野的小商店中则十分抢手。"
+msgstr ""
+
+msgid "脆肉薯条转醇"
+msgstr ""
+
+msgid ""
+"选取荒地上随处可见的肉作为原料，和粗细不一的薯条一起在油锅中煎炸而成。移动城市的居民们会抱怨它过于油腻，而需要干体力活的荒地人则十分享受这种美食。"
+msgstr ""
+
+msgid "蟹醇"
+msgstr ""
+
+msgid "为了展现出岩壳蟹的鲜味和营养，其中还加入了很少见的高级肉类。据说它还努力地模仿了岩壳蟹肉的口感，但似乎没人发现。"
+msgstr ""
+
+msgid "鲜味汤凝胶"
+msgstr ""
+
+msgid "可直接食用的凝胶，室温下不会融化，口感软弹，营养丰富。有些科技食物会为了追求高级感而失去食物的本味，它就是一个很好的例子。"
+msgstr ""
+
+msgid "转质壳酯块"
+msgstr ""
+
+msgid ""
+"顶级食材的威力在这里发挥完全，只需小小一块，登山者也可以获得一整天运动的能量。小心区分它和糖块。虽然吃错了不会造成任何危及生命的后果，但毕竟它的热量很高，非常高。"
+msgstr ""
+
+msgid "复合精制肉酱"
+msgstr ""
+
+msgid "将多种肉类复合制成的肉酱，在添加完相应的营养剂后，不论是口感还是色香味，都有了明显的提升。任何时候都能食用，科技使它永远不会过期。"
+msgstr ""
+
+msgid "碳水脂肪聚块"
+msgstr ""
+
+msgid "将人体所需的蛋白质、脂肪、碳水按照比例调配而成，也可以根据食用者所需自由搭配，制作简单，方便易携。探险者的背包中常见的食物。"
+msgstr ""
+
+msgid "味纯聚素粒"
+msgstr ""
+
+msgid ""
+"研究者在食品科技中剑走偏锋，做出了外形异常好看的素粒，据说是为了食用者心情愉悦。但面对饥饿和快速补充能量的需求，似乎很少有食用者真的注意到了这一点。"
+msgstr ""
+
+msgid "莱塔尼亚浓汤鲜萃"
+msgstr ""
+
+msgid "由当下最时兴的鲜萃技术制作而成，只有小小一口，但浓香醉人。莱塔尼亚人执着于为不同口味的浓汤搭配不同的音乐，据说曾有诗人专门为此创作诗歌。"
+msgstr ""
+
+msgid "鲜能剂"
+msgstr ""
+
+msgid ""
+"做出鲜能剂的老先生是一位味觉失灵的大厨，他说自己幸福的秘诀是观察食客的微笑，从而确认自己的食物能够满足他们。温暖的故事。但他新品研究所的学生们不这么觉得。"
+msgstr ""
+
+msgid "极温速烹兽肉"
+msgstr ""
+
+msgid "刚刚做好就会被送入机器迅速降温，表皮结满冰晶，内里仍旧炙热，带来极限口感体验。似乎不降温直接吃也是一种美妙的体验。"
+msgstr ""
+
+msgid "东国纳米割烹"
+msgstr ""
+
+msgid "选用当季的新鲜食材，配合季节变换，通过菜肴传达禅意，给人绝对的视觉享受。如果制作这席菜肴的是专业东国厨师的话，或许美丽和美味还是可以兼得的。"
+msgstr ""
+
+msgid "维多利亚皇家凝方"
+msgstr ""
+
+msgid "食用时请遵守绅士淑女进餐礼仪，好保证你在此刻对于食物的享受。维多利亚人为他们的文化而自豪，任何时候都不愿低头。"
+msgstr ""
+
+msgid "炎国山水原液"
+msgstr ""
+
+msgid "云山衔一梦。呼......酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+msgid "卡西米尔骑士补充剂"
+msgstr ""
+
+msgid "喝下去以后感觉精神百倍。之前有商家说这就是耀骑士赛前喝的东西，人们蜂拥而上。酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
+msgstr ""
+
+msgid "哥伦比亚分子胶囊"
+msgstr ""
+
+msgid ""
+"莱茵生命产品，改变食材分子结构再重新组合而成，外壳滋味丰富，食用后可获得极强的饱腹感，在获得满足的同时降低食物的摄取量。非常利于身体健康，但不利于心灵健康。"
+msgstr ""
+
+msgid "拉特兰圣音汤醇"
+msgstr ""
+
+msgid "纯净的外表让人安静下来，但里面的味道让人脑袋在一瞬间出现了有些奇怪的画面——是爆炸？！而且很甜，非常甜！不应该是汤吗？"
+msgstr ""
+
+msgid "低压干制精肉"
+msgstr ""
+
+msgid "撕开包装，里面就是咸香适口的干肉。肉干制作的工艺十分复杂，合适的温度湿度缺一不可，制作成功后能保存数年之久。就是……有点太硬了！"
+msgstr ""
+
+msgid "米诺斯诗歌凝胶"
+msgstr ""
+
+msgid "据说最开始是某位祭司在听完一首长篇叙事诗后突发灵感所作，品尝后让人能够真切感悟到她当时的心情。不好，里面似乎加了酒，已经开始头晕了！"
+msgstr ""
+
+msgid "固态源溏心蛋补剂"
+msgstr ""
+
+msgid ""
+"从混杂着胡椒、肉糜还有酒的溏心蛋中萃取的液体，是当地最常见菜肴的便携版。在野外，这道菜都是在被太阳直射的固态源上烹制的。为了还原这一工艺，移动城市的许多店家配备了专业的阳光聚焦设备。"
+msgstr ""
+
+msgid "河鳞水果凝胶"
+msgstr ""
+
+msgid "烟熏的河鳞和清爽的水果在这里相逢，简简单单。对于移动城市的居民来说，无论新鲜的河鳞还是清爽的水果都是昂贵的食材。"
+msgstr ""
+
+msgid "炎国荒地菜肉酮"
+msgstr ""
+
+msgid ""
+"切成薄片的兽肉与各种生长在荒地上的野菜一起翻炒，是炎国人家中常见的菜肴。菜肉酮是从中提取的精华。这道菜里应该用什么样的肉、什么样的菜，甜的还是咸的，在炎国都是极具争议性的话题。"
+msgstr ""
+
+msgid "音乐速烤萃取酯"
+msgstr ""
+
+msgid ""
+"使用音乐源石技艺对肉类进行烹饪而得到的酯类。在紧急状态下，驱动源石技艺处理食材也是一种可行的方法。但精益求精的莱塔尼亚人把烹饪过程发展成了一门表演艺术。"
+msgstr ""
+
+msgid "哥伦比亚炮灰羽"
+msgstr ""
+
+msgid ""
+"哥伦比亚雇佣兵中流传的菜肴，制作方式非常粗暴——将羽兽肉塞进“安全”的源石堆里炙烤而成。刚入口时有些微妙，但羽兽肉的味道会在喉舌之间久久萦绕。"
+msgstr ""
+
+msgid "香肠豆泥聚块"
+msgstr ""
+
+msgid "丝滑的豆泥和香气四溢的香肠在口味上相得益彰，让人百吃不厌，美中不足的是，这只是聚块。因为便于携带和贮藏，广受荒地旅者好评。"
+msgstr ""
+
+msgid "部族狂欢晚宴"
+msgstr ""
+
+msgid "篝火！舞蹈！烤得金黄渗出油脂的整只猎物！雨林部族最高级别的款待！一人吃完一整头，你就是今天的部族英雄！"
+msgstr ""
+
+msgid "中央谷地混合烤肉"
+msgstr ""
+
+msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制后在专门的塔中晾干，不同部位分开处理，经过多次刷油烧烤而成，入口毫无焦煳味，平时也难得一见。"
+msgstr ""
+
+msgid "约翰老妈汉堡店"
+msgstr ""
+
+msgid "干员做饭"
+msgstr ""
+
+msgid "结束无意识H"
+msgstr ""
+
+msgid "继续享受"
+msgstr ""
+
+msgid "自慰(女)"
+msgstr ""
+
+msgid "脱到只穿内衣(即只脱上下外衣)"
+msgstr ""
+
+msgid "脱到只穿袜子手套等(即再脱掉内衣)"
+msgstr ""
+
+msgid "脱到全裸(即身上没有任何衣物)"
+msgstr ""
+
+msgid "收起内裤"
+msgstr ""
+
+msgid "结算N小绝顶"
+msgstr ""
+
+msgid "结算N普绝顶"
+msgstr ""
+
+msgid "结算N强绝顶"
+msgstr ""
+
+msgid "结算B小绝顶"
+msgstr ""
+
+msgid "结算B普绝顶"
+msgstr ""
+
+msgid "结算B强绝顶"
+msgstr ""
+
+msgid "结算C小绝顶"
+msgstr ""
+
+msgid "结算C普绝顶"
+msgstr ""
+
+msgid "结算C强绝顶"
+msgstr ""
+
+msgid "结算射精"
+msgstr ""
+
+msgid "结算大量射精"
+msgstr ""
+
+msgid "结算超大量射精"
+msgstr ""
+
+msgid "结算V小绝顶"
+msgstr ""
+
+msgid "结算V普绝顶"
+msgstr ""
+
+msgid "结算V强绝顶"
+msgstr ""
+
+msgid "结算A小绝顶"
+msgstr ""
+
+msgid "结算A普绝顶"
+msgstr ""
+
+msgid "结算A强绝顶"
+msgstr ""
+
+msgid "结算U小绝顶"
+msgstr ""
+
+msgid "结算U普绝顶"
+msgstr ""
+
+msgid "结算U强绝顶"
+msgstr ""
+
+msgid "结算W小绝顶"
+msgstr ""
+
+msgid "结算W普绝顶"
+msgstr ""
+
+msgid "结算W强绝顶"
+msgstr ""
+
+msgid "结算额外绝顶"
+msgstr ""
+
+msgid "结算快乐刻印1"
+msgstr ""
+
+msgid "结算快乐刻印2"
+msgstr ""
+
+msgid "结算快乐刻印3"
+msgstr ""
+
+msgid "结算屈服刻印1"
+msgstr ""
+
+msgid "结算屈服刻印2"
+msgstr ""
+
+msgid "结算屈服刻印3"
+msgstr ""
+
+msgid "结算苦痛刻印1"
+msgstr ""
+
+msgid "结算苦痛刻印2"
+msgstr ""
+
+msgid "结算苦痛刻印3"
+msgstr ""
+
+msgid "结算时姦刻印1"
+msgstr ""
+
+msgid "结算时姦刻印2"
+msgstr ""
+
+msgid "结算时姦刻印3"
+msgstr ""
+
+msgid "结算恐怖刻印1"
+msgstr ""
+
+msgid "结算恐怖刻印2"
+msgstr ""
+
+msgid "结算恐怖刻印3"
+msgstr ""
+
+msgid "结算反发刻印1"
+msgstr ""
+
+msgid "结算反发刻印2"
+msgstr ""
+
+msgid "结算反发刻印3"
+msgstr ""
+
+msgid "结算初吻"
+msgstr ""
+
+msgid "结算处女"
+msgstr ""
+
+msgid "结算A处女"
+msgstr ""
+
+msgid "结算无觉刻印1"
+msgstr ""
+
+msgid "结算无觉刻印2"
+msgstr ""
+
+msgid "结算无觉刻印3"
+msgstr ""
+
+msgid "结算无觉刻印4"
+msgstr ""
+
+msgid "结算无觉刻印5"
+msgstr ""
+
+msgid "结算无觉刻印6"
+msgstr ""
+
+msgid "结算因B绝顶而被迫喷乳"
+msgstr ""
+
+msgid "结算因U绝顶而被迫漏尿"
+msgstr ""
+
+msgid "结算双重绝顶"
+msgstr ""
+
+msgid "结算三重绝顶"
+msgstr ""
+
+msgid "结算四重绝顶"
+msgstr ""
+
+msgid "结算五重绝顶"
+msgstr ""
+
+msgid "结算六重绝顶"
+msgstr ""
+
+msgid "结算七重绝顶"
+msgstr ""
+
+msgid "结算乳头夹"
+msgstr ""
+
+msgid "结算阴蒂夹"
+msgstr ""
+
+msgid "结算震动棒"
+msgstr ""
+
+msgid "结算肛门振动棒"
+msgstr ""
+
+msgid "结算搾乳机"
+msgstr ""
+
+msgid "结算采尿器"
+msgstr ""
+
+msgid "结算眼罩"
+msgstr ""
+
+msgid "结算肛门拉珠"
+msgstr ""
+
+msgid "结算利尿剂"
+msgstr ""
+
+msgid "结算安眠药"
+msgstr ""
+
+msgid "结算排卵促进药"
+msgstr ""
+
+msgid "结算事前避孕药"
+msgstr ""
+
+msgid "结算事后避孕药"
+msgstr ""
+
+msgid "结算发交中"
+msgstr ""
+
+msgid "结算阴茎蹭脸中"
+msgstr ""
+
+msgid "结算口交中"
+msgstr ""
+
+msgid "结算乳交中"
+msgstr ""
+
+msgid "结算腋交中"
+msgstr ""
+
+msgid "结算手交中"
+msgstr ""
+
+msgid "结算V插入中"
+msgstr ""
+
+msgid "结算W插入中"
+msgstr ""
+
+msgid "结算A插入中"
+msgstr ""
+
+msgid "结算U插入中"
+msgstr ""
+
+msgid "结算腿交中"
+msgstr ""
+
+msgid "结算足交中"
+msgstr ""
+
+msgid "结算尾交中"
+msgstr ""
+
+msgid "结算阴茎蹭角中"
+msgstr ""
+
+msgid "结算阴茎蹭耳朵中"
+msgstr ""
+
+msgid "结算素股中"
+msgstr ""
+
+msgid "结算获得思慕"
+msgstr ""
+
+msgid "结算获得恋慕"
+msgstr ""
+
+msgid "结算获得恋人(含赠予信物)"
+msgstr ""
+
+msgid "结算获得爱侣"
+msgstr ""
+
+msgid "结算获得屈从"
+msgstr ""
+
+msgid "结算获得驯服"
+msgstr ""
+
+msgid "结算获得宠物(含赠予信物)"
+msgstr ""
+
+msgid "结算获得奴隶"
+msgstr ""
+
+msgid "结算获得受精"
+msgstr ""
+
+msgid "结算受精失败"
+msgstr ""
+
+msgid "结算获得妊娠"
+msgstr ""
+
+msgid "结算获得临盆"
+msgstr ""
+
+msgid "生产前的对话"
+msgstr ""
+
+msgid "生产后的对话+获得产后"
+msgstr ""
+
+msgid "结算获得育儿"
+msgstr ""
+
+msgid "结算育儿完成"
+msgstr ""
+
+msgid "结算幼女长成萝莉"
+msgstr ""
+
+msgid "结算萝莉长成少女"
+msgstr ""
+
+msgid "初次见面"
+msgstr ""
+
+msgid "每日打招呼"
+msgstr ""
+
+msgid "被选为助理"
+msgstr ""
+
+msgid "不再为助理"
+msgstr ""
+
+msgid "关闭智能跟随"
+msgstr ""
+
+msgid "开启智能跟随"
+msgstr ""
+
+msgid "要求前往办公室"
+msgstr ""
+
+msgid "关闭辅佐服务"
+msgstr ""
+
+msgid "开启辅佐服务"
+msgstr ""
+
+msgid "关闭送饭服务"
+msgstr ""
+
+msgid "开启帮忙买午饭服务"
+msgstr ""
+
+msgid "开启亲手做午饭服务"
+msgstr ""
+
+msgid "开启亲手做三餐服务"
+msgstr ""
+
+msgid "关闭早安服务"
+msgstr ""
+
+msgid "开启早上叫起床服务"
+msgstr ""
+
+msgid "开启早安吻服务"
+msgstr ""
+
+msgid "开启早安咬服务"
+msgstr ""
+
+msgid "关闭晚安服务"
+msgstr ""
+
+msgid "开启晚安吻服务"
+msgstr ""
+
+msgid "开启晚安咬服务"
+msgstr ""
+
+msgid "关闭同居服务"
+msgstr ""
+
+msgid "开启同居服务"
+msgstr ""
+
+msgid "关闭助攻服务"
+msgstr ""
+
+msgid "开启助攻服务"
+msgstr ""
+
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+msgid "获得被深层催眠素质"
+msgstr ""
+
+msgid "获得被完全催眠素质"
+msgstr ""
+
+msgid "#dfe86c"
+msgstr ""
+
+msgid "巴别塔的创立者，特蕾西娅。一段来自过去的回响，承载着通往未来的爱与希望。"
+msgstr ""
+
+msgid ""
+"特蕾西娅，卡兹戴尔移动城市的建立者，卡兹戴尔军事委员会创始人之一，巴别塔组织的创立者，曾是卡兹戴尔的最高领袖。执政期间，她致力于推进医疗、教育、城市基础建设等事业，多次带领萨卡兹击退了外敌的入侵，并且在外交工作中颇有建树。"
+msgstr ""
+
+msgid "#FBCED7"
+msgstr ""
+
+msgid "文明的存续"
+msgstr ""
+
+msgid "#CE0000"
+msgstr ""
+
+msgid "黑色皮外套"
+msgstr ""
+
+msgid "銀白色羊絨衫"
+msgstr ""
+
+msgid "露指黑色皮手套"
+msgstr ""
+
+msgid "黑色百褶短裙配红衬底"
+msgstr ""
+
+msgid "黑色油光厚连裤袜"
+msgstr ""
+
+msgid "富有米诺斯古典时代气息的双耳花瓶。需赠送者本人定期更换新鲜花卉。"
+msgstr ""
+
+msgid "#e3b9a1"
+msgstr ""
+
+msgid "#556971"
+msgstr ""
+
+msgid "#6B6B6B"
+msgstr ""
+
+msgid "Lancet-2"
+msgstr ""
+
+msgid "一盒治療噴霧。外盒上标注着“一喷起效”的医疗喷雾套组。可以插入医用器械，也可以直接使用。"
+msgstr ""
+
+msgid ""
+"Lancet-2是可露希尔客制化后的雷神存在者™S Typer 62六轮作业平台， 圆形的外观让人觉得很可爱所以成为了某种意义上的吉祥物。虽然她说话有时候很消极，但是大家都很喜欢她。\n"
+"\n"
+"Lancet-2在经过可露希尔的改造后，得以满足更多罗德岛内的医疗需求，其器械设备也更注重于消毒和应对源石污染。"
+msgstr ""
+
+msgid "#99988f"
+msgstr ""
+
+msgid "白色塑鋼外殼"
+msgstr ""
+
+msgid "六連橡膠動輪"
+msgstr ""
+
+msgid "急救噴霧噴嘴"
+msgstr ""
+
+msgid "置物架"
+msgstr ""
+
+msgid "浊心斯卡蒂，一位让你熟悉又陌生的访客。——你愿意接纳她吗？"
+msgstr ""
+
+msgid "#C70C0C"
+msgstr ""
+
+msgid "青绿色尖顶猎人帽"
+msgstr ""
+
+msgid "红色颈带与黑色蓬松领结"
+msgstr ""
+
+msgid "暗红色连衣裙"
+msgstr ""
+
+msgid "青绿色吃豆人手套"
+msgstr ""
+
+msgid "黑色蕾丝边内裤"
+msgstr ""
+
+msgid "白色防水短袜"
+msgstr ""
+
+msgid "高筒高跟鞋"
+msgstr ""
+
+msgid "升华法杖"
+msgstr ""
+
+msgid "固定用黑色背带"
+msgstr ""
+
+msgid "后腰装饰蝴蝶结"
+msgstr ""
+
+msgid "绑扣式黑色腿带"
+msgstr ""
+
+msgid "鱼形装饰发带"
+msgstr ""
+
+msgid ""
+"流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
+msgstr ""
+
+msgid "战术冲锋衣"
+msgstr ""
+
+msgid "高领战术直筒连衣短裙"
+msgstr ""
+
+msgid "超高筒系带运动靴"
+msgstr ""
+
+msgid "很重的枪"
+msgstr ""
+
+msgid "裝滿武器的帆布包"
+msgstr ""
+
+msgid "{Name}最近有些欲求不满，看到房间里四下无人，终于抑制不住自己的冲动，一边解开衣服一边向{PlayerName}扑了过来"
+msgstr ""
+
+msgid "逆来顺受|毫不反抗的{PlayerName}被{Name}推倒了"
+msgstr ""
+
+msgid "反身欺上|经过一番激烈的博弈，终于反过来将{Name}推倒了"
+msgstr ""
+
+msgid "正事要紧|因为还有其他正事要做，在苦口婆心的劝说后，{Name}终于放弃了这次袭击，{PlayerName}暂时安全了"
+msgstr ""
+
+msgid "在门外听到{TargetSceneName}里传来了努力压抑着的呻吟声，而且门好像也没有锁，要怎么做呢？"
+msgstr ""
+
+msgid "转身离开|虽然大概猜得到里面是谁，但为了保全对方的形象，决定还是不打扰了"
+msgstr ""
+
+msgid ""
+"拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一道小缝，里面的景象一览无余。\n"
+"{TargetName}背对着门，但仍能看到她的衣服解开着，手放在自己的某些部位做着什么。\n"
+"就这样，{PlayerName}看完了这场有些特殊的表演，趁演出者还停留在绝顶的余韵时掩上门悄悄地离开了。"
+msgstr ""
+
+msgid ""
+"推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
+msgstr ""
+
+msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
+msgstr ""
+
+msgid "压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁"
+msgstr ""
+
+msgid "放任不管|{PlayerName}留在原地，看着{TargetName}胸内的乳汁喷出来"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一点"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变平了"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了一些"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了点"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大了好多"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了些"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了\n"
+"貌似有些乳汁被吸收掉了，{TargetName}的胸部大得内衣快容不下了"
+msgstr ""
+
+msgid ""
+"压挤胸部|{PlayerName}用双手挤着{TargetName}的胸部，顿时乳汁涡涌而出，喷得整个地上都是乳汁\n"
+"貌似是用力过猛，{TargetName}的胸部变小了许多"
+msgstr ""
+
+msgid ""
+"堵住乳头|{PlayerName}用双手遮住了{TargetName}的乳头，乳汁被堵在里面出不来\n"
+"一会后，胸部像加农炮一般射出了大量乳汁，把{PlayerName}射飞了"
+msgstr ""
+
+msgid "在一天的激战后，{Name}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
+msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""

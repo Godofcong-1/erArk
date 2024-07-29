@@ -139,6 +139,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             # 结算玩家在移动时同场景里的NPC的跟随情况
             if character_data.state == constant.CharacterStatus.STATUS_MOVE:
                 judge_same_position_npc_follow()
+            # 在玩家行动前的前置结算
+            judge_before_pl_behavior()
+            # 结算状态与事件
             judge_character_status(character_id)
             # 刷新会根据时间即时增加的角色数值
             character_aotu_change_value(character_id, now_time, pl_start_time)
@@ -770,7 +773,7 @@ def judge_character_cant_move(character_id: int) -> int:
 
 def judge_character_follow(character_id: int) -> int:
     """
-    维持强制跟随状态
+    处理跟随模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -778,7 +781,12 @@ def judge_character_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
-    # 维持跟随的状态
+    # 智能跟随
+    if character_data.sp_flag.is_follow == 1:
+        # 取消所有工作和娱乐状态
+        default.handle_cancel_all_work_and_entertainment_flag(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
+
+    # 维持强制跟随的状态
     if character_data.sp_flag.is_follow == 2:
         character.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
@@ -871,6 +879,24 @@ def judge_pl_real_time_data() -> int:
             # 结算
             cache.rhodes_island.love_hotel_room_lv = 0
             pl_character_data.action_info.check_out_time = datetime.datetime(1, 1, 1)
+
+
+def judge_before_pl_behavior():
+    """
+    玩家角色行动前的判断\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    if pl_character_data.target_character_id != 0:
+        target_character_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        # 重置交互对象的射精部位
+        if target_character_data.h_state.shoot_position_body != -1:
+            target_character_data.h_state.shoot_position_body = -1
+        if target_character_data.h_state.shoot_position_cloth != -1:
+            target_character_data.h_state.shoot_position_cloth = -1
 
 
 def update_sleep():
@@ -1109,31 +1135,34 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
-        # 激素系，改为不消耗理智
-        # if now_character_data.pl_ability.hormone:
-        #     down_sp = max(int(true_add_time / 6),1)
-        #     now_character_data.sanity_point -= down_sp
-        #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
-        # 视觉系
-        if now_character_data.pl_ability.visual:
-            down_sp = max(int(true_add_time / 12),1)
-            # 倍率计算
-            multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
-            down_sp *= max(multiple, 1)
-            now_character_data.sanity_point -= down_sp
-            now_character_data.pl_ability.today_sanity_point_cost += down_sp
-        # 理智值不足则归零并中断所有开启中的源石技艺
-        if now_character_data.sanity_point < 0:
-            now_character_data.sanity_point = 0
-            now_character_data.pl_ability.visual = False
-            # 解除目标的催眠
-            if target_data.sp_flag.unconscious_h >= 4:
-                default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
-            # 输出提示信息
-            now_draw = draw.WaitDraw()
-            now_draw.width = window_width
-            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
-            now_draw.draw()
+        if now_character_data.sanity_point > 0:
+            # 激素系，改为不消耗理智
+            # if now_character_data.pl_ability.hormone:
+            #     down_sp = max(int(true_add_time / 6),1)
+            #     now_character_data.sanity_point -= down_sp
+            #     now_character_data.pl_ability.today_sanity_point_cost += down_sp
+            # 视觉系
+            if now_character_data.pl_ability.visual:
+                down_sp = max(int(true_add_time / 12),1)
+                # 倍率计算
+                multiple = now_character_data.talent[307] + now_character_data.talent[308] + now_character_data.talent[309]
+                down_sp *= max(multiple, 1)
+                # 用于消耗的理智值不得超过当前理智值
+                down_sp = min(down_sp, now_character_data.sanity_point)
+                now_character_data.sanity_point -= down_sp
+                now_character_data.pl_ability.today_sanity_point_cost += down_sp
+            # 理智值不足则归零并中断所有开启中的源石技艺
+            if now_character_data.sanity_point <= 0:
+                now_character_data.sanity_point = 0
+                now_character_data.pl_ability.visual = False
+                # 解除目标的催眠
+                if target_data.sp_flag.unconscious_h >= 4:
+                    default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
+                # 输出提示信息
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
+                now_draw.draw()
 
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:
@@ -1176,11 +1205,32 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         target_data.sp_flag.is_h = False
                         # 对方获得睡奸醒来状态
                         target_data.sp_flag.sleep_h_awake = True
-                        # 玩家的行动设为H失败
-                        now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-                        now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+                        # 检测是否满足高级性骚扰的实行值需求
+                        if handle_premise.handle_instruct_judge_high_obscenity(0):
+                            # 如果已经陷落的话
+                            if handle_premise.handle_target_fall(character_id):
+                            # 爱情线会变成轻度性骚扰
+                                if handle_premise.handle_target_love_ge_1(character_id):
+                                    now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+                                    now_character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+                                # 隶属线会愤怒生气
+                                elif handle_premise.handle_target_obey_ge_1(character_id):
+                                    target_data.angry_point += 100
+                                    target_data.sp_flag.angry_with_player = True
+                                # 如果没有陷落的话，会变成高级性骚扰
+                                else:
+                                    now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                                    now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                            # 如果没有陷落的话，会变成高级性骚扰
+                            else:
+                                now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                                now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+                        # 不满足的话，设为H失败
+                        else:
+                            now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+                            now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
                         now_character_data.behavior.duration = 10
-                        # TODO 测试惊醒是否正常运作，是否需要时间推进十分钟
+                        # 为了让惊醒正常运作，需要时间推进十分钟
                         update.game_update_flow(10)
 
     # 结算非玩家部分
@@ -1290,19 +1340,25 @@ def get_chara_entertainment(character_id: int):
                 while 1:
                     # 开始随机
                     choice_entertainment_id = random.choice(entertainment_list)
+                    entertainment_data = game_config.config_entertainment[choice_entertainment_id]
                     # if choice_entertainment_id in {92, 151}:
                     #     print(f"debug {character_data.name}: {choice_entertainment_id}")
                     # 检查该娱乐活动是否需要特定的条件
-                    if game_config.config_entertainment[choice_entertainment_id].need == "无":
+                    if entertainment_data.need == "无":
                         break
                     else:
-                        need_data_all = game_config.config_entertainment[choice_entertainment_id].need
+                        need_data_all = entertainment_data.need
                         # 整理需要的条件
                         if "&" not in need_data_all:
                             need_data_list = [need_data_all]
                         else:
                             need_data_list = need_data_all.split('&')
                         judge, reason = attr_calculation.judge_require(need_data_list, character_id)
+                        # 需要娱乐地点的场所是开放的
+                        if entertainment_data.palce in game_config.config_facility_open_name_set:
+                            facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.palce]
+                            if cache.rhodes_island.facility_open[facility_open_cid] == 0:
+                                judge = False
                         # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
                         if judge:
                             break

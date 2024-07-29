@@ -217,19 +217,19 @@ msgid "无"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:7
-msgid "宁静时光"
+msgid "林间夜话"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:7
-msgid "放松身心，舒缓紧张，能够将体力与气力全部回满"
+msgid "提炼十五种植物成分，尝试一百七十二种组合。风踏进山林，万物低语，人可好眠。能够将体力与气力全部回满"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:8
-msgid "灵感烛光"
+msgid "迷梦香精"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:8
-msgid "提高认知功能与精神专注，今日习得的获得速度+1倍"
+msgid "据说女妖们制作的香氛只会送给心上之人，只需一滴，就能令人如痴如醉，而艺术家们的灵感与创意也随之而来。今日习得的获得速度+1倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:9
@@ -237,7 +237,7 @@ msgid "橙色心灵"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:9
-msgid "振奋精神，积极向上，今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
+msgid "自嘲弄的橙色转化成青色，感到安心，得到治愈。今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:10
@@ -245,7 +245,7 @@ msgid "迷乱情梦"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:10
-msgid "提升感官敏感度，促进荷尔蒙分泌，今日全部位快感与欲情的获得速度+1倍"
+msgid "蔷薇啊，你的笑靥倾倒芸芸众生，你的藤蔓将散落的诗句拾捡，似不从大地中来，却漫出院墙，摇曳芬芳。今日全部位快感与欲情的获得速度+1倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:11
@@ -253,7 +253,7 @@ msgid "情感共鸣"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:11
-msgid "打开心扉，增进情感交流，今日好感与信赖的获得速度变为+0.5倍"
+msgid "隐藏于内心深处，潜伏于恐惧之下，与我共鸣，打开心扉，感受他人。今日好感与信赖的获得速度变为+0.5倍"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:12
@@ -261,7 +261,7 @@ msgid "下坠天空"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:12
-msgid "意识陷入深渊，思维迟缓，催眠进度的增长速度+5倍"
+msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。催眠进度的增长速度+5倍"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:6
@@ -3545,26 +3545,30 @@ msgid "背面立位绝顶经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:98
-msgid "睡姦经验"
-msgstr ""
-
-#: .\data\csv\Experience.csv:99
-msgid "被睡姦经验"
+msgid "饮精绝顶经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:100
-msgid "催眠经验"
+msgid "睡姦经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:101
-msgid "被催眠经验"
+msgid "被睡姦经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:102
-msgid "时姦经验"
+msgid "催眠经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:103
+msgid "被催眠经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:104
+msgid "时姦经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:105
 msgid "被时姦经验"
 msgstr ""
 
@@ -3981,23 +3985,23 @@ msgid "学习效率加成提升至100%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:73
-msgid "可修建三个商店（未实装）"
+msgid "可修建三个商店，开放餐馆的修建，开放基础设施:【成人用品店】"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:74
-msgid "商店的修建上限提升至六个，价格优惠提升至5%，开放新设施:【对外贸易站】（未实装）"
+msgid "商店的修建上限提升至六个，开放新设施:【资源交易所】"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:75
-msgid "商店的修建上限提升至九个，价格优惠提升至10%，开放新设施:【流动小摊】（未实装）"
+msgid "商店的修建上限提升至九个，开放娱乐设施的修建"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:76
-msgid "商店的修建上限提升至十二个，价格优惠提升至20%（未实装）"
+msgid "商店的修建上限提升至十二个，开放酒店的修建"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:77
-msgid "商店的修建数量不设上限，价格优惠提升至30%（未实装）"
+msgid "商店的修建数量不设上限"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:80
@@ -4221,814 +4225,898 @@ msgid "影像厅"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:20
-msgid "对外贸易站"
+msgid "资源交易所"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:21
-msgid "流动小摊"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:22
 msgid "游戏室"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:23
+#: .\data\csv\Facility_open.csv:22
 msgid "乌萨斯学生活动室"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:24
+#: .\data\csv\Facility_open.csv:23
 msgid "香熏治疗室"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:25
+#: .\data\csv\Facility_open.csv:23
+msgid "调香师解锁"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:24
 msgid "莱娜的憩所"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:26
+#: .\data\csv\Facility_open.csv:25
 msgid "温室"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:28
+#: .\data\csv\Facility_open.csv:27
 msgid "磐蟹养殖场"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:29
+#: .\data\csv\Facility_open.csv:28
 msgid "小树林"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:31
+#: .\data\csv\Facility_open.csv:30
 msgid "秘密通道"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:32
+#: .\data\csv\Facility_open.csv:31
 msgid "温泉"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:33
+#: .\data\csv\Facility_open.csv:32
 msgid "桑拿房"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:34
+#: .\data\csv\Facility_open.csv:33
 msgid "多索雷斯私人水疗室"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:35
+#: .\data\csv\Facility_open.csv:34
 msgid "生产车间2"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:36
+#: .\data\csv\Facility_open.csv:35
 msgid "生产车间3"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:37
+#: .\data\csv\Facility_open.csv:36
 msgid "生产车间4"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:38
+#: .\data\csv\Facility_open.csv:37
 msgid "生产车间5"
 msgstr ""
 
-#: .\data\csv\Facility_open.csv:39
+#: .\data\csv\Facility_open.csv:38
 msgid "外交办公室"
 msgstr ""
 
+#: .\data\csv\Facility_open.csv:39
+msgid "部落风情旅舍"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:39
+msgid "酒店"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:40
+msgid "地摊小贩"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:40
+msgid "餐馆"
+msgstr ""
+
 #: .\data\csv\Facility_open.csv:41
-msgid "宿舍107房"
+msgid "哥伦比亚酒店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:42
-msgid "宿舍108房"
+msgid "哥伦比亚咖啡馆"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:43
-msgid "宿舍109房"
+msgid "花草灯艺屋"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:43
+msgid "娱乐设施"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:44
-msgid "宿舍110房"
+msgid "健康快餐店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:45
-msgid "宿舍111房"
+msgid "快捷连锁披萨店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:46
-msgid "宿舍112房"
+msgid "乐器维修工坊"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:47
-msgid "宿舍113房"
+msgid "理发店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:48
-msgid "宿舍114房"
+msgid "龙门食坊"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:49
-msgid "宿舍115房"
+msgid "造型工作室"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:50
-msgid "宿舍116房"
+msgid "七城风情餐厅"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:51
-msgid "宿舍117房"
+msgid "前卫街机厅"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:52
-msgid "宿舍118房"
+msgid "山城茶馆"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:53
-msgid "宿舍119房"
+msgid "瓦莱丽蛋糕店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:54
-msgid "宿舍120房"
+msgid "谢拉格风情旅店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:55
-msgid "宿舍121房"
+msgid "伊比利亚度假村"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:56
-msgid "宿舍122房"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:57
-msgid "宿舍123房"
+msgid "约翰老妈汉堡店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:58
-msgid "宿舍124房"
+msgid "宿舍107房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:59
-msgid "宿舍125房"
+msgid "宿舍108房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:60
-msgid "宿舍126房"
+msgid "宿舍109房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:61
-msgid "宿舍127房"
+msgid "宿舍110房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:62
-msgid "宿舍128房"
+msgid "宿舍111房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:63
-msgid "宿舍201房"
+msgid "宿舍112房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:64
-msgid "宿舍202房"
+msgid "宿舍113房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:65
-msgid "宿舍203房"
+msgid "宿舍114房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:66
-msgid "宿舍204房"
+msgid "宿舍115房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:67
-msgid "宿舍205房"
+msgid "宿舍116房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:68
-msgid "宿舍206房"
+msgid "宿舍117房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:69
-msgid "宿舍207房"
+msgid "宿舍118房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:70
-msgid "宿舍208房"
+msgid "宿舍119房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:71
-msgid "宿舍209房"
+msgid "宿舍120房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:72
-msgid "宿舍210房"
+msgid "宿舍121房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:73
-msgid "宿舍211房"
+msgid "宿舍122房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:74
-msgid "宿舍212房"
+msgid "宿舍123房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:75
-msgid "宿舍213房"
+msgid "宿舍124房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:76
-msgid "宿舍214房"
+msgid "宿舍125房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:77
-msgid "宿舍215房"
+msgid "宿舍126房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:78
-msgid "宿舍216房"
+msgid "宿舍127房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:79
-msgid "宿舍217房"
+msgid "宿舍128房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:80
-msgid "宿舍218房"
+msgid "宿舍201房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:81
-msgid "宿舍219房"
+msgid "宿舍202房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:82
-msgid "宿舍220房"
+msgid "宿舍203房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:83
-msgid "宿舍221房"
+msgid "宿舍204房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:84
-msgid "宿舍222房"
+msgid "宿舍205房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:85
-msgid "宿舍223房"
+msgid "宿舍206房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:86
-msgid "宿舍224房"
+msgid "宿舍207房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:87
-msgid "宿舍225房"
+msgid "宿舍208房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:88
-msgid "宿舍226房"
+msgid "宿舍209房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:89
-msgid "宿舍227房"
+msgid "宿舍210房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:90
-msgid "宿舍228房"
+msgid "宿舍211房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:91
-msgid "宿舍229房"
+msgid "宿舍212房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:92
-msgid "宿舍301房"
+msgid "宿舍213房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:93
-msgid "宿舍302房"
+msgid "宿舍214房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:94
-msgid "宿舍303房"
+msgid "宿舍215房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:95
-msgid "宿舍304房"
+msgid "宿舍216房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:96
-msgid "宿舍305房"
+msgid "宿舍217房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:97
-msgid "宿舍306房"
+msgid "宿舍218房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:98
-msgid "宿舍307房"
+msgid "宿舍219房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:99
-msgid "宿舍308房"
+msgid "宿舍220房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:100
-msgid "宿舍309房"
+msgid "宿舍221房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:101
-msgid "宿舍310房"
+msgid "宿舍222房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:102
-msgid "宿舍311房"
+msgid "宿舍223房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:103
-msgid "宿舍312房"
+msgid "宿舍224房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:104
-msgid "宿舍313房"
+msgid "宿舍225房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:105
-msgid "宿舍314房"
+msgid "宿舍226房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:106
-msgid "宿舍315房"
+msgid "宿舍227房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:107
-msgid "宿舍316房"
+msgid "宿舍228房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:108
-msgid "宿舍317房"
+msgid "宿舍229房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:109
-msgid "宿舍318房"
+msgid "宿舍301房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:110
-msgid "宿舍319房"
+msgid "宿舍302房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:111
-msgid "宿舍320房"
+msgid "宿舍303房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:112
-msgid "宿舍321房"
+msgid "宿舍304房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:113
-msgid "宿舍322房"
+msgid "宿舍305房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:114
-msgid "宿舍323房"
+msgid "宿舍306房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:115
-msgid "宿舍324房"
+msgid "宿舍307房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:116
-msgid "宿舍325房"
+msgid "宿舍308房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:117
-msgid "宿舍326房"
+msgid "宿舍309房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:118
-msgid "宿舍327房"
+msgid "宿舍310房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:119
-msgid "宿舍328房"
+msgid "宿舍311房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:120
-msgid "宿舍329房"
+msgid "宿舍312房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:121
-msgid "宿舍401房"
+msgid "宿舍313房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:122
-msgid "宿舍402房"
+msgid "宿舍314房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:123
-msgid "宿舍403房"
+msgid "宿舍315房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:124
-msgid "宿舍404房"
+msgid "宿舍316房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:125
-msgid "宿舍405房"
+msgid "宿舍317房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:126
-msgid "宿舍406房"
+msgid "宿舍318房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:127
-msgid "宿舍407房"
+msgid "宿舍319房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:128
-msgid "宿舍408房"
+msgid "宿舍320房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:129
-msgid "宿舍409房"
+msgid "宿舍321房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:130
-msgid "宿舍410房"
+msgid "宿舍322房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:131
-msgid "宿舍411房"
+msgid "宿舍323房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:132
-msgid "宿舍412房"
+msgid "宿舍324房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:133
-msgid "宿舍413房"
+msgid "宿舍325房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:134
-msgid "宿舍414房"
+msgid "宿舍326房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:135
-msgid "宿舍415房"
+msgid "宿舍327房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:136
-msgid "宿舍416房"
+msgid "宿舍328房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:137
-msgid "宿舍417房"
+msgid "宿舍329房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:138
-msgid "宿舍418房"
+msgid "宿舍401房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:139
-msgid "宿舍419房"
+msgid "宿舍402房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:140
-msgid "宿舍420房"
+msgid "宿舍403房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:141
-msgid "宿舍421房"
+msgid "宿舍404房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:142
-msgid "宿舍422房"
+msgid "宿舍405房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:143
-msgid "宿舍423房"
+msgid "宿舍406房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:144
-msgid "宿舍424房"
+msgid "宿舍407房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:145
-msgid "宿舍425房"
+msgid "宿舍408房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:146
-msgid "宿舍426房"
+msgid "宿舍409房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:147
-msgid "宿舍427房"
+msgid "宿舍410房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:148
-msgid "宿舍428房"
+msgid "宿舍411房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:149
-msgid "宿舍429房"
+msgid "宿舍412房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:150
+msgid "宿舍413房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:151
-msgid "宿舍502房"
+msgid "宿舍414房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:152
-msgid "宿舍503房"
+msgid "宿舍415房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:153
-msgid "宿舍504房"
+msgid "宿舍416房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:154
-msgid "宿舍505房"
+msgid "宿舍417房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:155
-msgid "宿舍506房"
+msgid "宿舍418房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:156
-msgid "宿舍507房"
+msgid "宿舍419房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:157
-msgid "宿舍508房"
+msgid "宿舍420房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:158
-msgid "宿舍509房"
+msgid "宿舍421房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:159
-msgid "宿舍510房"
+msgid "宿舍422房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:160
-msgid "宿舍511房"
+msgid "宿舍423房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:161
-msgid "宿舍512房"
+msgid "宿舍424房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:162
-msgid "宿舍513房"
+msgid "宿舍425房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:163
-msgid "宿舍601房"
+msgid "宿舍426房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:164
-msgid "宿舍602房"
+msgid "宿舍427房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:165
-msgid "宿舍603房"
+msgid "宿舍428房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:166
-msgid "宿舍604房"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:167
-msgid "宿舍605房"
+msgid "宿舍429房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:168
-msgid "宿舍606房"
+msgid "宿舍502房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:169
-msgid "宿舍607房"
+msgid "宿舍503房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:170
-msgid "宿舍608房"
+msgid "宿舍504房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:171
-msgid "宿舍609房"
+msgid "宿舍505房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:172
-msgid "宿舍610房"
+msgid "宿舍506房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:173
-msgid "宿舍611房"
+msgid "宿舍507房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:174
-msgid "宿舍612房"
+msgid "宿舍508房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:175
-msgid "宿舍613房"
+msgid "宿舍509房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:176
-msgid "宿舍701房"
+msgid "宿舍510房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:177
-msgid "宿舍702房"
+msgid "宿舍511房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:178
-msgid "宿舍703房"
+msgid "宿舍512房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:179
-msgid "宿舍704房"
+msgid "宿舍513房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:180
-msgid "宿舍705房"
+msgid "宿舍601房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:181
-msgid "宿舍706房"
+msgid "宿舍602房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:182
-msgid "宿舍707房"
+msgid "宿舍603房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:183
-msgid "宿舍708房"
+msgid "宿舍604房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:184
-msgid "宿舍709房"
+msgid "宿舍605房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:185
-msgid "宿舍710房"
+msgid "宿舍606房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:186
-msgid "宿舍711房"
+msgid "宿舍607房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:187
-msgid "宿舍712房"
+msgid "宿舍608房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:188
-msgid "宿舍713房"
+msgid "宿舍609房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:189
-msgid "宿舍801房"
+msgid "宿舍610房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:190
-msgid "宿舍802房"
+msgid "宿舍611房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:191
-msgid "宿舍803房"
+msgid "宿舍612房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:192
-msgid "宿舍804房"
+msgid "宿舍613房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:193
-msgid "宿舍805房"
+msgid "宿舍701房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:194
-msgid "宿舍806房"
+msgid "宿舍702房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:195
-msgid "宿舍807房"
+msgid "宿舍703房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:196
-msgid "宿舍808房"
+msgid "宿舍704房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:197
-msgid "宿舍809房"
+msgid "宿舍705房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:198
-msgid "宿舍810房"
+msgid "宿舍706房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:199
-msgid "宿舍811房"
+msgid "宿舍707房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:200
-msgid "宿舍812房"
+msgid "宿舍708房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:201
-msgid "宿舍813房"
+msgid "宿舍709房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:202
-msgid "宿舍901房"
+msgid "宿舍710房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:203
-msgid "宿舍902房"
+msgid "宿舍711房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:204
-msgid "宿舍903房"
+msgid "宿舍712房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:205
-msgid "宿舍904房"
+msgid "宿舍713房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:206
-msgid "宿舍905房"
+msgid "宿舍801房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:207
-msgid "宿舍906房"
+msgid "宿舍802房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:208
-msgid "宿舍907房"
+msgid "宿舍803房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:209
-msgid "宿舍908房"
+msgid "宿舍804房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:210
-msgid "宿舍909房"
+msgid "宿舍805房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:211
-msgid "宿舍910房"
+msgid "宿舍806房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:212
-msgid "宿舍911房"
+msgid "宿舍807房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:213
-msgid "宿舍912房"
+msgid "宿舍808房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:214
-msgid "宿舍913房"
+msgid "宿舍809房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:215
+msgid "宿舍810房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:216
-msgid "客房1"
+msgid "宿舍811房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:217
-msgid "客房2"
+msgid "宿舍812房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:218
-msgid "客房3"
+msgid "宿舍813房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:219
-msgid "客房4"
+msgid "宿舍901房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:220
-msgid "客房5"
+msgid "宿舍902房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:221
-msgid "客房6"
+msgid "宿舍903房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:222
-msgid "客房7"
+msgid "宿舍904房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:223
-msgid "客房8"
+msgid "宿舍905房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:224
-msgid "客房9"
+msgid "宿舍906房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:225
-msgid "客房10"
+msgid "宿舍907房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:226
-msgid "客房11"
+msgid "宿舍908房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:227
+msgid "宿舍909房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:228
+msgid "宿舍910房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:229
+msgid "宿舍911房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:230
+msgid "宿舍912房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:231
+msgid "宿舍913房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:233
+msgid "客房1"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:234
+msgid "客房2"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:235
+msgid "客房3"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:236
+msgid "客房4"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:237
+msgid "客房5"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:238
+msgid "客房6"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:239
+msgid "客房7"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:240
+msgid "客房8"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:241
+msgid "客房9"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:242
+msgid "客房10"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:243
+msgid "客房11"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:244
 msgid "客房12"
 msgstr ""
 
@@ -5265,7 +5353,7 @@ msgid "春天的绿色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:52
-msgid "	猩红"
+msgid "猩红"
 msgstr ""
 
 #: .\data\csv\Food_Quality.csv:6
@@ -6145,7 +6233,7 @@ msgid "干员会怀孕吗？可以真的生出小孩吗？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:38
-msgid "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\n\n干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n\n在[受精]后，过一个月左右的时间会变成[妊娠]状态，获得[孕肚]和[泌乳]\n再过两个月左右，会[临盆]，接着过不了几天就会[生产]\n生出孩子后，母亲会进入[育儿]状态，养育需要一个月左右，孩子就会从[婴儿]成长为可以初步自理的[幼女]\n结束了[育儿]后，母亲会恢复孕前状态，也会失去[泌乳]，而孩子还会依次成长为[萝莉]再到[少女]，每次成长会耗时两个月左右\n\n孩子的性别仅为女性，在成长到[少女]后即完全成为一名正常的干员\n女儿会继承母亲包括种族在内大部分生理特征，也会在[育儿]期间学到部分来自母亲的后天知识和技能"
+msgid "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\n\n在【受精】后，过一个月左右的时间会变成【妊娠】状态，获得【孕肚】和【泌乳】\n再过两个月左右，会【临盆】，接着过不了几天就会【生产】\n生出孩子后，母亲会进入【育儿】状态，养育需要一个月左右，孩子就会从【婴儿】成长为可以初步自理的【幼女】\n结束了【育儿】后，母亲会恢复孕前状态，也会失去【泌乳】，而孩子还会依次成长为【萝莉】再到【少女】，每次成长会耗时两个月左右\n\n孩子的性别仅为女性，在成长到【少女】后即完全成为一名正常的干员\n女儿会继承母亲包括种族在内大部分生理特征，也会在【育儿】期间学到部分来自母亲的后天知识和技能"
 msgstr ""
 
 #: .\data\csv\Prts.csv:39
@@ -6161,62 +6249,78 @@ msgid "在H中该如何让干员获得更多的快感和快乐，并减少苦痛
 msgstr ""
 
 #: .\data\csv\Prts.csv:42
-msgid "在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\n在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\n在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\n\n在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
+msgid "①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\n②在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\n  在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\n\n③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
+msgstr ""
+
+#: .\data\csv\Prts.csv:43
+msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:44
-msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
+msgid "干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\n\n\n目前已实装的提高概率的手段有（可叠加）：\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\n③在干员的排卵日里，如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\n\n\n其他相关功能：\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\n在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
 msgstr ""
 
 #: .\data\csv\Prts.csv:45
-msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
+msgid "该如何让拥有【未初潮】素质的干员怀孕？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:46
-msgid "如何招募新的干员？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:47
-msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
+msgid "【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\n需要先对阴道和子宫进行一段时间的开发，让【V感度】和【W感度】升级到足够的等级后，即可提前迎来性成熟，失去该素质\n\n除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
 msgstr ""
 
 #: .\data\csv\Prts.csv:48
-msgid "如何建造/升级设施？"
+msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:49
-msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
+msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
 msgstr ""
 
 #: .\data\csv\Prts.csv:50
-msgid "都有哪些获得龙门币的方法？"
+msgid "如何招募新的干员？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:51
-msgid "目前主要的获取途径有两个。\n①，医疗部每天治疗病人，能够获得稳定的龙门币收入\n②，将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润"
+msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
 msgstr ""
 
 #: .\data\csv\Prts.csv:52
-msgid "都有哪些获得粉红凭证的方法？"
+msgid "如何建造/升级设施？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:53
-msgid "①，每日的干员好感度提升会换算为一定的粉红凭证\n②，已攻略的干员会根据攻略程度每日提供固定的粉红凭证"
+msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
 msgstr ""
 
 #: .\data\csv\Prts.csv:54
-msgid "都有哪些获得至纯源石的方法？"
+msgid "都有哪些获得龙门币的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:55
-msgid "目前的主要获得办法是在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励"
+msgid "目前主要的获取途径有两个。\n①，医疗部每天治疗病人，能够获得稳定的龙门币收入\n②，将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润"
 msgstr ""
 
 #: .\data\csv\Prts.csv:56
-msgid "种植相关的基建系统是如何运作的？"
+msgid "都有哪些获得粉红凭证的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:57
+msgid "①，每日的干员好感度提升会换算为一定的粉红凭证\n②，已攻略的干员会根据攻略程度每日提供固定的粉红凭证"
+msgstr ""
+
+#: .\data\csv\Prts.csv:58
+msgid "都有哪些获得至纯源石的方法？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:59
+msgid "目前的主要获得办法是在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励"
+msgstr ""
+
+#: .\data\csv\Prts.csv:60
+msgid "种植相关的基建系统是如何运作的？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:61
 msgid "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
 msgstr ""
 
@@ -6241,7 +6345,7 @@ msgid "麒麟"
 msgstr ""
 
 #: .\data\csv\Race.csv:13
-msgid "阿达纳克斯"
+msgid "阿达克利斯"
 msgstr ""
 
 #: .\data\csv\Race.csv:14
@@ -7768,38 +7872,6 @@ msgstr ""
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
 msgstr ""
 
-#: .\data\csv\Restaurant.csv:6
-msgid "瓦莱丽蛋糕店"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:7
-msgid "山城茶馆"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:8
-msgid "哥伦比亚咖啡馆"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:9
-msgid "七城风情餐厅"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:10
-msgid "约翰老妈汉堡店"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:11
-msgid "健康快餐店"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:12
-msgid "龙门食坊"
-msgstr ""
-
-#: .\data\csv\Restaurant.csv:13
-msgid "快捷连锁披萨店"
-msgstr ""
-
 #: .\data\csv\Roleplay.csv:7
 msgid "0"
 msgstr ""
@@ -9321,102 +9393,106 @@ msgid "每日打招呼"
 msgstr ""
 
 #: .\data\csv\Status.csv:380
-msgid "被选为助理"
-msgstr ""
-
-#: .\data\csv\Status.csv:381
-msgid "不再为助理"
+msgid "新周目告别"
 msgstr ""
 
 #: .\data\csv\Status.csv:382
-msgid "关闭智能跟随"
+msgid "被选为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:383
-msgid "开启智能跟随"
+msgid "不再为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:384
-msgid "要求前往办公室"
+msgid "关闭智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:385
-msgid "关闭辅佐服务"
+msgid "开启智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:386
-msgid "开启辅佐服务"
+msgid "要求前往办公室"
 msgstr ""
 
 #: .\data\csv\Status.csv:387
-msgid "关闭送饭服务"
+msgid "关闭辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:388
-msgid "开启帮忙买午饭服务"
+msgid "开启辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:389
-msgid "开启亲手做午饭服务"
+msgid "关闭送饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:390
-msgid "开启亲手做三餐服务"
+msgid "开启帮忙买午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:391
-msgid "关闭早安服务"
+msgid "开启亲手做午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:392
-msgid "开启早上叫起床服务"
+msgid "开启亲手做三餐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:393
-msgid "开启早安吻服务"
+msgid "关闭早安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:394
-msgid "开启早安咬服务"
+msgid "开启早上叫起床服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:395
-msgid "关闭晚安服务"
+msgid "开启早安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:396
-msgid "开启晚安吻服务"
+msgid "开启早安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:397
-msgid "开启晚安咬服务"
+msgid "关闭晚安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:398
-msgid "关闭同居服务"
+msgid "开启晚安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:399
-msgid "开启同居服务"
+msgid "开启晚安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:400
-msgid "关闭助攻服务"
+msgid "关闭同居服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:401
-msgid "开启助攻服务"
+msgid "开启同居服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:402
+msgid "关闭助攻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:403
-msgid "获得被浅层催眠素质"
-msgstr ""
-
-#: .\data\csv\Status.csv:404
-msgid "获得被深层催眠素质"
+msgid "开启助攻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:405
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:406
+msgid "获得被深层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:407
 msgid "获得被完全催眠素质"
 msgstr ""
 
@@ -16540,28 +16616,8 @@ msgstr ""
 msgid "贸易区入口"
 msgstr ""
 
-#: /'data\map\贸易\乐器维修工坊\Scene.json:2
-msgid "乐器维修工坊"
-msgstr ""
-
-#: /'data\map\贸易\伊比利亚度假村\Scene.json:2
-msgid "伊比利亚度假村"
-msgstr ""
-
-#: /'data\map\贸易\前卫街机厅\Scene.json:2
-msgid "前卫街机厅"
-msgstr ""
-
-#: /'data\map\贸易\哥伦比亚酒店\Scene.json:2
-msgid "哥伦比亚酒店"
-msgstr ""
-
 #: /'data\map\贸易\商店街\Scene.json:2
 msgid "商店街"
-msgstr ""
-
-#: /'data\map\贸易\地摊小贩\Scene.json:2
-msgid "地摊小贩"
 msgstr ""
 
 #: /'data\map\贸易\小广场\Scene.json:2
@@ -16572,31 +16628,7 @@ msgstr ""
 msgid "成人用品店"
 msgstr ""
 
-#: /'data\map\贸易\理发店\Scene.json:2
-msgid "理发店"
-msgstr ""
-
 #: /'data\map\贸易\美食街\Scene.json:2
 msgid "美食街"
-msgstr ""
-
-#: /'data\map\贸易\花草灯艺屋\Scene.json:2
-msgid "花草灯艺屋"
-msgstr ""
-
-#: /'data\map\贸易\谢拉格风情旅店\Scene.json:2
-msgid "谢拉格风情旅店"
-msgstr ""
-
-#: /'data\map\贸易\资源交易所\Scene.json:2
-msgid "资源交易所"
-msgstr ""
-
-#: /'data\map\贸易\造型工作室\Scene.json:2
-msgid "造型工作室"
-msgstr ""
-
-#: /'data\map\贸易\部落风情旅舍\Scene.json:2
-msgid "部落风情旅舍"
 msgstr ""
 

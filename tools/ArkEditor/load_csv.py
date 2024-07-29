@@ -16,6 +16,7 @@ nation_path = "csv/Nation.csv"
 profession_path = "csv/Profession.csv"
 race_path = "csv/Race.csv"
 clothing_path = "csv/ClothingType.csv"
+organ_path = "csv/Organ.csv"
 
 
 def load_config():
@@ -158,3 +159,14 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.clothing_data[i["cid"]] = i["name"]
+    with open(organ_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "器官对应性别限定和文字描述":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.organ_data[i["cid"]] = i["name"]
