@@ -150,7 +150,6 @@ class Debug_Panel:
                 draw_text_list.append(f"[013]:重置全角色位置至宿舍")
                 draw_text_list.append(f"[014]:重置文职部的招募数据")
                 draw_text_list.append(f"[015]:交互对象全部位快感增加")
-                draw_text_list.append(f"[016]:(口上作者用)快速测试口上触发情况")
 
 
                 for i in range(len(draw_text_list)):
@@ -589,131 +588,6 @@ class Debug_Panel:
                     target_character_data = cache.character_data[target_id]
                     for i in range(8):
                         target_character_data.status_data[i] += new_value
-                # (口上作者用)快速测试口上触发情况
-                elif key_index == 16:
-                    from Script.Design import talk
-                    info_text = "本功能用于快速测试当前数据情况下，指定角色的指定id口上的触发情况，包括触发者与交互对象、是否能够触发、每个前提是否满足、最终输出文本等\n\n"
-                    info_draw.text = info_text
-                    info_draw.draw()
-
-                    # 获取角色id
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("请输入角色id"), 100)
-                    chara_adv_id = int(change_value_panel.draw())
-                    pl_character_data = cache.character_data[0]
-                    target_chara_id = 0
-                    for tem_chara_id in cache.character_data:
-                        tem_character_data = cache.character_data[tem_chara_id]
-                        if tem_character_data.adv == chara_adv_id:
-                            target_chara_id = tem_chara_id
-                            break
-                    target_character_data = cache.character_data[target_chara_id]
-                    line_feed.draw()
-                    # 获取口上id
-                    change_value_panel = panel.AskForOneMessage()
-                    change_value_panel.set(_("请输入口上id"), 100)
-                    talk_id = int(change_value_panel.draw())
-                    # 在chara_adv_id在前面补零为4位数
-                    full_adv_id = str(chara_adv_id).rjust(4, '0')
-                    chara_name = target_character_data.name
-                    full_talk_id = f"chara_{full_adv_id}_{chara_name}{talk_id}"
-                    # 获取口上数据
-                    find_talk_flag = False
-                    if full_talk_id in game_config.config_talk:
-                        find_talk_flag = True
-
-                    # 开始打印测试结果
-                    line_feed.draw()
-                    line_draw = draw.LineDraw("-", self.width)
-                    line_draw.draw()
-                    draw_text = "\n"
-                    if target_chara_id == 0:
-                        draw_text += "未找到该角色，请确认是否输入正确\n"
-                    elif not find_talk_flag:
-                        draw_text += "未找到该口上，请确认是否输入正确\n"
-                    else:
-                        pass_flag = True
-                        # 输出角色信息
-                        draw_text += f"测试角色：{target_character_data.name}\n"
-                        # 是否已获得该角色
-                        if target_chara_id not in cache.npc_id_got:
-                            draw_text += "  博士未获得该角色(X)\n"
-                            pass_flag = False
-                        else:
-                            draw_text += "  博士已获得该角色(√)\n"
-                        # 当前交互对象是否是该角色
-                        if pl_character_data.target_character_id != target_chara_id:
-                            draw_text += "  博士当前交互对象不是该角色(X)\n"
-                            pass_flag = False
-                        else:
-                            draw_text += "  博士当前交互对象是该角色(√)\n"
-                        # 指令状态
-                        now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
-                        draw_text += f"\n指令状态：{game_config.config_status[now_behavior_id].name}\n"
-                        # 判断触发人与交互对象
-                        draw_text += "\n触发人与交互对象：\n"
-                        if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
-                            draw_text += "  触发人：博士\n"
-                            start_chara_id = 0
-                        elif "sys_1" in game_config.config_talk_premise_data[full_talk_id]:
-                            draw_text += "  触发人：NPC\n"
-                            start_chara_id = target_chara_id
-                        else:
-                            if game_config.config_status[now_behavior_id].trigger == "npc":
-                                draw_text += "  触发人：未填写，本测试中默认选择为NPC\n"
-                                start_chara_id = target_chara_id
-                            else:
-                                draw_text += "  触发人：未填写，本测试中默认选择为博士\n"
-                                start_chara_id = 0
-                        if "sys_4" in game_config.config_talk_premise_data[full_talk_id]:
-                            draw_text += "  交互对象：博士\n"
-                            end_chara_id = 0
-                        elif "sys_5" in game_config.config_talk_premise_data[full_talk_id]:
-                            draw_text += "  交互对象：NPC\n"
-                            end_chara_id = target_chara_id
-                        else:
-                            if start_chara_id == 0:
-                                draw_text += "  交互对象：未填写，本测试中默认选择为NPC\n"
-                                end_chara_id = target_chara_id
-                            else:
-                                draw_text += "  交互对象：未填写，本测试中默认选择为博士\n"
-                                end_chara_id = 0
-                        # 设置交互对象
-                        cache.character_data[start_chara_id].target_character_id = end_chara_id
-
-                        # 输出口上文本
-                        talk_context = game_config.config_talk[full_talk_id].context
-                        draw_text += f"\n口上原文本：\n  {talk_context}\n"
-                        draw_text += f"口上输出文本：\n  {talk.code_text_to_draw_text(talk_context, start_chara_id)}\n"
-                        # 遍历前提条件
-                        draw_text += "\n前提条件：\n"
-                        for premise in game_config.config_talk_premise_data[full_talk_id]:
-                            # 综合数值前提判定
-                            if "CVP" in premise:
-                                premise_all_value_list = premise.split("_")[1:]
-                                now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
-                            # 其他正常口上判定
-                            else:
-                                now_add_weight = constant.handle_premise_data[premise](start_chara_id)
-                            if now_add_weight:
-                                draw_text += f"  {premise}：满足(√)\n"
-                            else:
-                                draw_text += f"  {premise}：不满足(X)\n"
-                                pass_flag = False
-
-                        # 输出测试结果
-                        if pass_flag:
-                            draw_text += "\n最终结果：\n  测试通过，该口上可以触发\n"
-                        else:
-                            draw_text += "\n最终结果：\n  测试未通过，该口上无法触发\n"
-                    now_draw = draw.WaitDraw()
-                    now_draw.text = draw_text
-                    now_draw.draw()
-                    # 进行一个暂停
-                    # wait_draw = draw.LineFeedWaitDraw()
-                    # wait_draw.text = "\n"
-                    # wait_draw.width = normal_config.config_normal.text_width
-                    # wait_draw.draw()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

@@ -1720,6 +1720,8 @@ class Instruct:
     """ 取消收藏地点 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
+    TALK_QUICK_TEST = 0
+    """ 快速测试口上 """
 
     #日常#
     WAIT = 0

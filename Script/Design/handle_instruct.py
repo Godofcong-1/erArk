@@ -367,6 +367,18 @@ def handle_system_setting():
 
 
 @add_instruct(
+    constant.Instruct.TALK_QUICK_TEST,
+    constant.InstructType.SYSTEM,
+    _("快速测试口上"),
+    {
+    })
+def handle_talk_quick_test():
+    """快速测试口上"""
+    now_draw = normal_panel.TALK_QUICK_TEST(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.COLLECTION_NOW_PLACE,
     constant.InstructType.SYSTEM,
     _("收藏该地点"),

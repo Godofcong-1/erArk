@@ -10,7 +10,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character, game_time, cooking
+from Script.Design import update, map_handle, character, game_time, cooking, handle_premise
 import math
 
 panel_info_data = {}
@@ -725,3 +725,165 @@ class Order_Hotel_Room_Panel:
         draw_text = _("\n成功预订了{0}，退房时间为{1}\n").format(room_name[room_id], pl_character_data.action_info.check_out_time)
         now_draw.text = draw_text
         now_draw.draw()
+
+
+class TALK_QUICK_TEST:
+    """
+    用于快速测试口上的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.now_panel = _("快速测试口上")
+        """ 当前绘制的页面 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("快速测试口上")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+        from Script.Design import talk
+
+        while 1:
+            return_list = []
+            title_draw.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+
+            info_text = _("本功能用于快速测试当前数据情况下，指定角色的指定id口上的触发情况，包括触发者与交互对象、是否能够触发、每个前提是否满足、最终输出文本等\n\n")
+            info_draw.text = info_text
+            info_draw.draw()
+
+            # 获取角色id
+            change_value_panel = panel.AskForOneMessage()
+            change_value_panel.set(_("请输入角色id"), 100)
+            chara_adv_id = int(change_value_panel.draw())
+            pl_character_data = cache.character_data[0]
+            target_chara_id = 0
+            for tem_chara_id in cache.character_data:
+                tem_character_data = cache.character_data[tem_chara_id]
+                if tem_character_data.adv == chara_adv_id:
+                    target_chara_id = tem_chara_id
+                    break
+            target_character_data = cache.character_data[target_chara_id]
+            line_feed.draw()
+            # 获取口上id
+            change_value_panel = panel.AskForOneMessage()
+            change_value_panel.set(_("请输入口上id"), 100)
+            talk_id = int(change_value_panel.draw())
+            # 在chara_adv_id在前面补零为4位数
+            full_adv_id = str(chara_adv_id).rjust(4, '0')
+            chara_name = target_character_data.name
+            full_talk_id = f"chara_{full_adv_id}_{chara_name}{talk_id}"
+            # 获取口上数据
+            find_talk_flag = False
+            if full_talk_id in game_config.config_talk:
+                find_talk_flag = True
+
+            # 开始打印测试结果
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            draw_text = "\n"
+            if target_chara_id == 0:
+                draw_text += _("未找到该角色，请确认是否输入正确\n")
+            elif not find_talk_flag:
+                draw_text += _("未找到该口上，请确认是否输入正确\n")
+            else:
+                pass_flag = True
+                # 输出角色信息
+                draw_text += _(f"测试角色：{target_character_data.name}\n")
+                # 是否已获得该角色
+                if target_chara_id not in cache.npc_id_got:
+                    draw_text += _("  博士未获得该角色(X)\n")
+                    pass_flag = False
+                else:
+                    draw_text += _("  博士已获得该角色(√)\n")
+                # 当前交互对象是否是该角色
+                if pl_character_data.target_character_id != target_chara_id:
+                    draw_text += _("  博士当前交互对象不是该角色(X)\n")
+                    pass_flag = False
+                else:
+                    draw_text += _("  博士当前交互对象是该角色(√)\n")
+                # 指令状态
+                now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
+                draw_text += _(f"\n指令状态：{game_config.config_status[now_behavior_id].name}\n")
+                # 判断触发人与交互对象
+                draw_text += _("\n触发人与交互对象：\n")
+                if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
+                    draw_text += _("  触发人：博士\n")
+                    start_chara_id = 0
+                elif "sys_1" in game_config.config_talk_premise_data[full_talk_id]:
+                    draw_text += _("  触发人：NPC\n")
+                    start_chara_id = target_chara_id
+                else:
+                    if game_config.config_status[now_behavior_id].trigger == "npc":
+                        draw_text += _("  触发人：未填写，本测试中默认选择为NPC\n")
+                        start_chara_id = target_chara_id
+                    else:
+                        draw_text += _("  触发人：未填写，本测试中默认选择为博士\n")
+                        start_chara_id = 0
+                if "二段结算" in game_config.config_status[now_behavior_id].tag:
+                    draw_text += _("  交互对象：同触发人，二段结算的交互对象只能是触发人自己\n")
+                    end_chara_id = start_chara_id
+                elif "sys_4" in game_config.config_talk_premise_data[full_talk_id]:
+                    draw_text += _("  交互对象：博士\n")
+                    end_chara_id = 0
+                elif "sys_5" in game_config.config_talk_premise_data[full_talk_id]:
+                    draw_text += _("  交互对象：NPC\n")
+                    end_chara_id = target_chara_id
+                else:
+                    if start_chara_id == 0:
+                        draw_text += _("  交互对象：未填写，本测试中默认选择为NPC\n")
+                        end_chara_id = target_chara_id
+                    else:
+                        draw_text += _("  交互对象：未填写，本测试中默认选择为博士\n")
+                        end_chara_id = 0
+                # 设置交互对象
+                cache.character_data[start_chara_id].target_character_id = end_chara_id
+
+                # 输出口上文本
+                talk_context = game_config.config_talk[full_talk_id].context
+                draw_text += _(f"\n口上原文本：\n  {talk_context}\n")
+                draw_text += _(f"口上输出文本：\n  {talk.code_text_to_draw_text(talk_context, start_chara_id)}\n")
+                # 遍历前提条件
+                draw_text += _("\n前提条件：\n")
+                for premise in game_config.config_talk_premise_data[full_talk_id]:
+                    # 综合数值前提判定
+                    if "CVP" in premise:
+                        premise_all_value_list = premise.split("_")[1:]
+                        now_add_weight = handle_premise.handle_comprehensive_value_premise(start_chara_id, premise_all_value_list)
+                    # 其他正常口上判定
+                    else:
+                        now_add_weight = constant.handle_premise_data[premise](start_chara_id)
+                    if now_add_weight:
+                        draw_text += _(f"  {premise}：满足(√)\n")
+                    else:
+                        draw_text += _(f"  {premise}：不满足(X)\n")
+                        pass_flag = False
+
+                # 输出测试结果
+                if pass_flag:
+                    draw_text += _("\n最终结果：\n  测试通过，该口上可以触发\n")
+                else:
+                    draw_text += _("\n最终结果：\n  测试未通过，该口上无法触发\n")
+            now_draw = draw.WaitDraw()
+            now_draw.text = draw_text
+            now_draw.draw()
+
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
