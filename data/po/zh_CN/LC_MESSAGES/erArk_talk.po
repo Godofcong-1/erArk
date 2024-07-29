@@ -2805,7 +2805,7 @@ msgid "你尝试与{TargetName}聊上几句\n“...我不知道该如何回应�
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:8
-msgid "你试探性的向{TargetName}抛去了些轻松的问题\n“我...不知道自己是否能回答的上来...或许会让您失望也说不定。”\n{TargetName}抱着自己的法杖，就好像那是大潮中最后的浮木。\n...看来问问题还是有些唐突"
+msgid "你试探性的向{TargetName}抛去了些轻松的问题\n“我...不知道自己是否能回答的上来...或许会让您失望也说不定。”\n{TargetName}抱着自己的法杖，就好像那是大潮中最后的浮木。\n...看来刚刚的问题还是有些唐突"
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:9
@@ -2817,7 +2817,7 @@ msgid "你向{TargetName}搭话，并寻找着合适的话题\n但你最后发�
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:11
-msgid "你和{TargetName}闲聊了两句\n说是闲聊，但其实大多数时候都是你在唱独角戏而已...{TargetName}除了点头与偶尔说出一两个单字外再没有任何反应。"
+msgid "你和{TargetName}闲聊了两句\n说是闲聊，但其实大多数时候都是你在唱独角戏而已...{TargetName}除了偶尔点头外，大多数时候都只是在静静的倾听你的发言。"
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:12
@@ -2833,7 +2833,7 @@ msgid "你尝试向那孑然一人的纯白色身影搭话。\n“......”\n可
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:15
-msgid "你尝试和{TargetName}聊上几句\n“啊……是，那样啊。”\n被白垩色白净连衣裙包裹住的{TargetName}默默的倾听着你的发言，只是偶尔点点头。"
+msgid "你尝试和{TargetName}聊上几句\n“啊……是，那样啊。”\n被白垩色白净连衣裙包裹住的{TargetName}默默的倾听着你的发言。\n总感觉她比之前话稍微多了点。"
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:16
@@ -2905,7 +2905,7 @@ msgid "“自由……呢。”\n虽然你只是说了句自由活动而已，�
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:33
-msgid "你与{TargetName}一起呆了一会儿，因为没有任何说话的氛围，所以两个人都没有说话。\n旁人大概不会将这样沉默的相处称之为对话吧，但你知道这样的相处对于现在的{TargetName}而言刚刚好。"
+msgid "你与{TargetName}一起呆了一会儿，因为没有任何说话的氛围，所以两个人都没有说话。\n旁人大概不会将这样沉默的相处称之为对话吧，但你知道这样的相处方式对于现在的{TargetName}而言刚刚好。"
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:34
@@ -3181,7 +3181,7 @@ msgid "“我能够帮助他们，所以，我在这里。”\n“您也是来�
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:102
-msgid "“治疗的方法吗？其实，我也不是很清楚。”\n“但无论来源或者形式，它都能用来疗愈他人。”\n“这就足够了……”"
+msgid "“我所使用的治疗的方法？……其实，我也不是很清楚。”\n“但无论来源或者形式，它都能用来疗愈他人。”\n“只要能够帮到那些痛苦的人，这就足够了。”"
 msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:103
@@ -3198,6 +3198,282 @@ msgstr ""
 
 #: .\data\talk\chara\0179_夜莺.csv:106
 msgid "你开始诊治那些等待着治疗的病人们。\n罗德岛作为医药集团的名声在外，来接受诊疗的人非常多，你一个人有些忙不过来。\n“请问您是觉得哪里不适呢？”\n但有了{TargetName}的帮助，这一切都不是问题。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:107
+msgid "“您也会有迷茫的时候吗，{PlayerName}博士。”\n“是吗…谁都会有那样的时候…吗。”\n“放空自己是有益的？……原来也能这样理解。”\n不知道是不是错觉，你总感觉{TargetName}的表情放松下来了。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:108
+msgid "“虽然世上仍然有不平之事，但时代已经不同了呢。”\n“残忍的事情也好，痛苦的事情也罢，都已经不像之前那样随处可见了。”\n“对于医生来说没有比这更好的事情了。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:109
+msgid "“罗德岛是个会让人感到安定的地方。”\n“大家，都各司其职、其乐融融的样子。”\n“而且……不，没什么，{PlayerName}博士。”\n{TargetName}垂下睫毛，一副欲言又止的模样。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:110
+msgid "“您今天也有很多事务要处理吗，{PlayerName}博士。”\n“……不，我没什么紧急的事情要向您汇报。”\n“请注意休息。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:111
+msgid "“烦恼也是生活的证明……这是{PlayerName}博士您以前告诉我的。”\n“所以，请将这些细碎的琐事也当做是人生的一部分吧。”\n“不过，如果您不介意的话，我愿意倾听您的烦恼。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:112
+msgid "“……您说我最近不怎么发呆了？”\n“……”\n“……不，我也不知道为什么呢。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:113
+msgid "“您知道青鸟的寓意吗？”\n“对梦想的追求和……”\n“对幸福的渴望。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:114
+msgid "“那孩子从不愿意在我的指尖逗留太久。”\n{TargetName}眺望着半空中虚幻的青之鸟。\n“曾经，我觉得哪怕是幻影也好，只要它愿意多停留哪怕一刹，我也愿意去奉献自己的一切……”\n“现在？”\n“……不知道，呢。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:115
+msgid "“果然，自己将自己比作笼中鸟的行为还是会让人觉得有些矫情，吧？”\n“虽然那种心情并不是虚假的，但是顾影自怜果然还是……”\n“您，不那么认为吗？”\n“……呼。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:116
+msgid "“……很像是您会遇上的事情呢。”\n你和{TargetName}闲聊着，{TargetName}的表情看起来很是放松。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:117
+msgid "“如果我在场就好了呢…稍微，有点兴趣。”\n你随意的和{TargetName}聊着之前的趣事。\n{TargetName}抱着自己的法杖，好像有些憧憬的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:118
+msgid "“……嗯。”\n听着你的话语，{TargetName}的脸上露出了自然的微笑。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:119
+msgid "“最近吗？因为空余的时间很多，所以最近……在尝试学习新的知识。”\n“有关医疗的？不，因为我的治疗方法和一般人不一样，所以那样的知识……”\n“是关于亲密关系的研究报告。为什么？”\n“……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:120
+msgid "“我以前从来没有仔细关心过人际关系这样的事情。”\n“因为，一直有闪灵她们帮忙处理这方面问题的原因？”\n“不过现在，有些她们绝对帮不上忙的……问题呢。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:121
+msgid "“期望是件残酷的事情，明明已经竭力伸出手去却仍然无法触及的愿望一定会带来剧烈的痛苦。”\n“但如果因此而不再做出行动的话，就什么也不会发生了。”\n“……您认为，我能做到吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:122
+msgid "“恕我冒昧……{PlayerName}博士。”\n“这个问题可能有些私人，但我想知道，您对我是怎么看的？”\n“……知道了，谢谢您。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:123
+msgid "最近感觉和{TargetName}聊天的机会变多了。\n“在那样的情况下，原来您会这样思考吗……受教了。”\n而且不知为何，你总能在对话的中途察觉到{TargetName}投来的视线。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:124
+msgid "“……{PlayerName}博士。”\n最近，只要稍微主动挑起话题，就能和{TargetName}聊上不少话。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:125
+msgid "“…………”\n最近，好像和{TargetName}谈论别的干员的时候会让聊天的气氛变得有些沉闷。\n这难道是……"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:126
+msgid "“{PlayerName}博士。”\n话题的中途，{TargetName}贴到了你的身后。\n“……没什么，请继续吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:127
+msgid "“您今天什么时候才能结束公务呢。”\n“我知道您担负着罗德岛最重要的那些事项，但我还是……”\n“……知道了，我会等您的。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:128
+msgid "你挑起了一缕{TargetName}的浅金色长发。\n丝绸般的触感在你的指缝间流淌，闪着粼粼光泽的发丝令你流连忘返。\n“漂亮、吗？谢谢您，平时整理的时候需要耗费些时间。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:129
+msgid "你将手放在了{TargetName}肩上。\n透过肌肤，你感受到了纯白色萨卡兹那微热的体温。\n“怎么了？{PlayerName}博士，是有什么事情吗。”\n{TargetName}歪着头，并没有试着摆脱你的接触。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:130
+msgid "你将自己的身体贴在了{TargetName}身上。\n“……{PlayerName}博士，这样子的亲密接触，是否有些超出了正常人际关系的范畴？”\n{TargetName}纤细的身躯扭动了一下。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:131
+msgid "“如果这样做的话，您会感到开心吗？”\n“……是吗，那就，随您喜欢吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:132
+msgid "“对于亲密接触的定义是因人而异的。”\n“如果您不在意的话，那我也……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:133
+msgid "“他人的温暖是一种可遇不可求的东西，一旦得到后，就会害怕失去。”\n“……我只是在自言自语而已。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:134
+msgid "“……”\n{TargetName}的指尖不知何时搭上了你伸来的手，像是在确认你手臂的形状似的勾画着轮廓。\n“您的身体很健康呢，{PlayerName}博士。真难想象是一位指挥家的手臂。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:135
+msgid "你用指腹摩挲起{TargetName}的面庞。\n{TargetName}那纤长的睫毛轻轻颤抖着，无言的感受着你的触碰。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:136
+msgid "“如果您的每一个行动都有着其中的深意的话。”\n“那现在这样的行为是为了什么呢？”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:137
+msgid "“您也会对其他的罗德岛干员进行这样的…触碰吗？”\n“……我没有那样的意思，如果没有被对方拒绝的话，您的意志是自由的。”\n“但是……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:138
+msgid "你的手指划过{TargetName}的嘴唇。\n“……”\n萨卡兹少女没有言语，反而像是回味般的抿起了嘴唇。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:139
+msgid "你握住了{TargetName}的手，那纤柔的触感让你不由得多用上了几分力气。\n“您要带我去往哪里吗？如果是的话就拜托您了。”\n“不论是哪里……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:140
+msgid "“我并不抗拒您这样的举动，{PlayerName}博士。”\n“因为我知道您没有任何恶意。”\n“而且，我也……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:141
+msgid "“如果您愿意的话，还请倾听我的不情之请……”\n“请，更多的，触摸，我……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:142
+msgid "“请万分保重身体。”\n“如果有什么是我也能够帮上忙的，请尽管开口。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:143
+msgid "“累了吗，请多休息一下吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:144
+msgid "“需要我使用一次源石技艺吗？”\n“……太大惊小怪了、吗。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:145
+msgid "“请好好休息吧，{PlayerName}博士。”\n“偶尔的小憩对精神管理有益，我会帮您在凯尔希医生面前辩护的。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:146
+msgid "“……”\n看到你的疲惫的样子，{TargetName}一言不发的注视着你所在的方向，似乎是不看到你休息就无法安心的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:147
+msgid "“愿您有个好梦，{PlayerName}博士。”\n“再怎么重要的工作都比不上您的健康。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:148
+msgid "“是工作太累了吗？”{TargetName}向你靠近了过来。“如果是那样的话，之后就让我来协助您吧，请随时来找我。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:149
+msgid "“我明白了。”\n{TargetName}的回答没有踌躇。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:150
+msgid "“是，{PlayerName}博士。”\n“悉听尊便。”\n{TargetName}完全相信你的领导。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:151
+msgid "“我可以扶着您吗？”\n“这样的话，我更能跟上您的步伐。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:152
+msgid "“当然，{TargetName}博士。请您带路吧。”\n“去哪里都，随您喜欢。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:153
+msgid "“好的。”\n{TargetName}点了点头，向你微微颔首。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:154
+msgid "“要做的事情已经结束了吗，我明白了。”\n“如果还有需要我的场合的话，请尽管通知我。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:155
+msgid "“是、这样啊。”\n“我明白了，那么我就就此告辞了。”\n“下次的任务，也请务必……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:156
+msgid "“…………”\n{TargetName}虽然顺从的向你颔首告辞，但目光却长久的注视着你这边。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:157
+msgid "“就这样结束了吗，博士。”\n“是吗，我知道了。”\n“下次也请务必……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:158
+msgid "“我能理解您在平时的工作中所面临的压力。”\n“不过，照顾他人的感情也是工作中重要的一环。”\n“原谅……当然，我也希望您能吸取这次教训。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:159
+msgid "“……”\n{TargetName}有些悲伤的垂着眼帘。\n“希望您真的能够理解到自己的错误，{PlayerName}博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:160
+msgid "“……我当然会原谅您的。”\n“因为，您都已经这样子道过歉了……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:161
+msgid "“您能看到我身边的鸟笼吗？”\n“虽然人们看似是自由的，可最终却又无法逃脱那些从过去追赶而来的亡灵与从心底浮现的阴影。”\n“如果是您的话，应该能够理解的吧……我是这样相信的。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:162
+msgid "“您能握住我的手吗，{PlayerName}博士。”\n“我希望能感受到您身上的力量，我希望他能帮助我从现在这令人讨厌的情绪中抽身。”\n“……谢谢您。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:163
+msgid "“带有刺激成分的饮品最好少喝一点，{PlayerName}博士。”\n“就算很好喝也不要对它产生依赖为好。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:164
+msgid "“您的咖啡，让我想到久病成医这个词语。”\n“不，没有任何讽刺您的意思。您泡的咖啡非常美味，美味到大概只有咖啡因成瘾的人才能泡出来。”\n“……我有些担心您的身体。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:165
+msgid "“如果需要帮忙的话，请直接告诉我吧。”\n{TargetName}在一旁旁观着你的工作。\n“不过，您好像很清楚您自己的实力。那么，我就再打扰您了。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:166
+msgid "“…………”\n在工作的中途，好像能够感受到{TargetName}温和的视线。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:167
+msgid "“……”\n在工作的中途，总感觉能够察觉到{TargetName}的视线。\n那视线并不尖锐，反而像是午后的阳光一样让人觉得暖洋洋的。\n不过这样一来就总感觉有点困了。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:168
+msgid "你摸了摸{TargetName}的头。\n柔顺的金毛的触感令人爱不释手。\n“……谢谢，您？”\n“因为摸头这样的行为，一般是对年纪小的孩子……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:169
+msgid "你摸了摸{TargetName}的头。\n{TargetName}的脑袋圆圆润润的，总觉得有些可爱。\n“这也是信任的一种表现形式吗。”\n“……是吗，对我来说，也是、的。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:170
+msgid "你摸了摸{TargetName}的头。\n“……”\n{TargetName}好像没什么反应的样子，看不出是抗拒还是认可。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:171
+msgid "你伸手摸了摸{TargetName}的头顶。\n“……”\n你能感受到{TargetName}用脑袋蹭了蹭你的手掌。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:172
+msgid "你伸手摸了摸{TargetName}的脑袋。\n“讨厌，不，我现在完全没有体会到那种感情。”\n“倒不如说，只有一种安心感在心底蔓延……”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:173
+msgid "你从背后偷袭了{TargetName}的胸部。\n像是绒絮又像是布丁的、绵软又滑嫩的手感填进了你的掌心。\n“这个，应该是性骚扰吧。{PlayerName}博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:174
+msgid "你从背后偷袭了{TargetName}的胸部。\n大小正好的柔软在你的触摸下稍稍改变了形状。\n“……”\n{TargetName}沉默的看着你。"
+msgstr ""
+
+#: .\data\talk\chara\0179_夜莺.csv:175
+msgid "“……这种行为能够为您带来些什么吗，{PlayerName}博士。”\n“据我所知，就算揉，也不会变大的。"
 msgstr ""
 
 #: .\data\talk\chara\0181_调香师.csv:6
