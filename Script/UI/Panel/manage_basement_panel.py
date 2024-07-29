@@ -35,7 +35,10 @@ def change_npc_work_out(width):
         # 遍历创建全部门的面板
         department_panels = []
         for department_name in range(len(department_names)+1):
-            department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 8, width, 1, 0, 0))
+            if normal_config.config_normal.language == "zh_CN":
+                department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 8, width, 1, 0, 0))
+            else:
+                department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 6, width, 1, 0, 0))
 
         line = draw.LineDraw("-", width)
         line.draw()
@@ -505,12 +508,12 @@ class ChangeWorkButtonList:
         """ 按钮返回值 """
 
         target_data: game_type.Character = cache.character_data[NPC_id]
-        button_text = f"[{target_data.adv}：{target_data.name}]"
+        button_text = f"[{target_data.adv}]：{target_data.name}"
         self.button_return = str(NPC_id)
 
         # 按钮绘制
 
-        name_draw = draw.CenterButton(
+        name_draw = draw.LeftButton(
             button_text, self.button_return, self.width, cmd_func=self.button_0
         )
         self.now_draw = name_draw
