@@ -254,6 +254,7 @@ class Building_Panel:
                 info_draw.draw()
 
             # 区块子建筑建设
+            button_draw = draw.CenterButton(_("【修建】"), _("\n【修建】"), self.width / 5)
             # 贸易区
             if facility_cid in [111, 112, 113, 114, 115]:
                 trade_draw = draw.NormalDraw()
@@ -297,7 +298,7 @@ class Building_Panel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list and yrn != button_draw.return_text:
                 break
 
 
