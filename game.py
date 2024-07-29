@@ -44,6 +44,9 @@ if __name__ == "__main__":
     import Script.UI.Flow
     from Script.Core import main_frame
     import multiprocessing
+    from Script.Design import handle_instruct
+
+    handle_instruct.init_instruct_check_data()
 
     character_handle.init_character_tem()
 

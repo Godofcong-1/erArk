@@ -37,10 +37,16 @@ class Instruct_filter_Panel:
         self.handle_panel = panel.PageHandlePanel([], HandleFilterButtonList, 999, 8, self.width, 1, 1, 0)
 
         instruct_index_list = []
-        
+
         for now_type in cache.instruct_type_filter:
             if now_type != constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
+                    if instruct in constant.instruct_check_target_hpmp_set:
+                        player_data: game_type.Character = cache.character_data[0]
+                        if player_data.target_character_id != 0:
+                            target_data: game_type.Character = cache.character_data[player_data.target_character_id]
+                            if target_data.hit_point == 1:
+                                continue
                     instruct_index_list.append(instruct)
 
 

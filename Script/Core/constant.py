@@ -2241,6 +2241,10 @@ instruct_type_data: Dict[int, Set] = {}
 """ 指令类型拥有的指令集合 """
 instruct_premise_data: Dict[int, Set] = {}
 """ 指令显示的所需前提集合 """
+instruct_status_data: Dict[str, Set] = {}
+""" 执行对应状态机的指令集合 {状态机id:指令集合} """
+instruct_check_target_hpmp_set: Set = set()
+""" 需要验证交互对象的hp和mp的指令集合 """
 handle_state_machine_data: Dict[int, FunctionType] = {}
 """ 角色状态机函数 """
 family_region_list: Dict[int, str] = {}

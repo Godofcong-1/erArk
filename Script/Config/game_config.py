@@ -1,7 +1,7 @@
 import os
 from typing import Dict, List, Set
 from Script.Config import config_def
-from Script.Core import json_handle, get_text, game_type
+from Script.Core import json_handle, get_text, game_type, constant
 
 
 
@@ -226,11 +226,6 @@ config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
 config_event: Dict[str, game_type.Event] = {}
 """ 事件配置数据 """
-config_event_status_data: Dict[int, Set] = {}
-"""
-各个状态下事件列表
-状态id:口上id集合
-"""
 config_event_target: Dict[int, game_type.Target] = {}
 """ 目标配置数据 """
 config_event_effect_target_data: Dict[int, Set] = {}
@@ -1025,8 +1020,6 @@ def load_event():
         now_tem = game_type.Event()
         now_tem.__dict__ = tem_data
         config_event[now_tem.uid] = now_tem
-        config_event_status_data.setdefault(int(now_tem.status_id), set())
-        config_event_status_data[int(now_tem.status_id)].add(now_tem.uid)
 
 
 def load_event_target():

@@ -6,6 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
+from Script.Core.constant_effect import BehaviorEffect
 from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
 from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts, diary_panel
 from Script.Config import normal_config, game_config
@@ -30,6 +31,16 @@ def init_instruct_handle_thread():
             # save_handle.establish_save("auto")
         time.sleep(1)
 
+def init_instruct_check_data():
+    """部分指令有额外的使用要求，例如需要交互对象体力满足一定前提，在这里进行额外处理记录"""
+    for event_id in game_config.config_event:
+        event_data: game_type.Event = game_config.config_event[event_id]
+        if BehaviorEffect.DOWN_BOTH_SMALL_HIT_POINT in event_data.effect or BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT in event_data.effect:
+            if event_data.status_id in constant.instruct_status_data:
+                for instruct_id in constant.instruct_status_data[now_tem.status_id]:
+                    if instruct_id in constant.instruct_type_data[constant.InstructType.WORK]:
+                        constant.instruct_check_target_hpmp_set.add(instruct_id)
+
 
 instruct_handle_thread = Thread(target=init_instruct_handle_thread)
 """ 指令处理线程 """
@@ -47,7 +58,7 @@ def handle_instruct(instruct: int):
         constant.handle_instruct_data[instruct]()
 
 
-def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: Set):
+def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: Set, status_id: str = ""):
     """
     添加指令处理
     Keyword arguments:
@@ -55,6 +66,7 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
     instruct_type -- 指令类型
     name -- 指令绘制文本
     premise_set -- 指令所需前提集合
+    status_id -- 指令要进行的状态机数据
     """
 
     def decorator(func: FunctionType):
@@ -67,6 +79,8 @@ def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: S
         constant.instruct_type_data.setdefault(instruct_type, set())
         constant.instruct_type_data[instruct_type].add(instruct_id)
         constant.handle_instruct_name_data[instruct_id] = name
+        constant.instruct_status_data.setdefault(status_id, set())
+        constant.instruct_status_data[status_id].add(instruct_id)
         return return_wrapper
 
     return decorator
@@ -194,7 +208,8 @@ def handle_comprehensive_state_effect(
               {constant_promise.Premise.NOT_H,
                constant_promise.Premise.HP_OR_MP_GE_80,
                constant_promise.Premise.PLACE_FURNITURE_GE_1,
-               constant_promise.Premise.TIRED_LE_84}
+               constant_promise.Premise.TIRED_LE_84},
+              constant.CharacterStatus.STATUS_REST
               )
 def handle_rest():
     """处理休息指令"""
@@ -249,7 +264,8 @@ def handle_see_attr():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.T_ACTION_NOT_SLEEP,
-     constant_promise.Premise.T_NORMAL_6,}
+     constant_promise.Premise.T_NORMAL_6,},
+    constant.CharacterStatus.STATUS_CHAT
 )
 def handle_chat():
     """处理聊天指令"""
@@ -423,7 +439,8 @@ def handle_see_fridge():
     {constant_promise.Premise.STUDENT_NOT_STUDY_IN_CLASSROOM,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLASS_ROOM,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_ATTENT_CLASS
 )
 def handle_teach():
     """处理授课指令"""
@@ -582,7 +599,8 @@ def handle_manage_basement():
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_ONE
 )
 def handle_hypnosis_one():
     """处理单人催眠"""
@@ -599,7 +617,8 @@ def handle_hypnosis_one():
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_ALL
 )
 def handle_hypnosis_all():
     """处理集体催眠"""
@@ -709,7 +728,8 @@ def handle_hypnosis_heart():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TARGET_IN_HYPNOSIS,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_CANCEL
 )
 def handle_hypnosis_cancel():
     """处理解除催眠"""
@@ -725,7 +745,8 @@ def handle_hypnosis_cancel():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_20,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_INCREASE_BODY_SENSITIVITY
 )
 def handle_hypnosis_increase_body_sensitivity():
     """处理体控-敏感度提升"""
@@ -740,7 +761,8 @@ def handle_hypnosis_increase_body_sensitivity():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_CLIMAX
 )
 def handle_hypnosis_force_climax():
     """处理体控-强制高潮"""
@@ -757,7 +779,8 @@ def handle_hypnosis_force_climax():
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_FORCE_OVULATION
 )
 def handle_hypnosis_force_ovulation():
     """处理体控-强制排卵"""
@@ -773,7 +796,8 @@ def handle_hypnosis_force_ovulation():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_BLOCKHEAD
 )
 def handle_hypnosis_blockhead():
     """处理体控-木头人"""
@@ -790,7 +814,8 @@ def handle_hypnosis_blockhead():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_ACTIVE_H
 )
 def handle_hypnosis_active_h():
     """处理体控-逆推"""
@@ -806,7 +831,8 @@ def handle_hypnosis_active_h():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY
 )
 def handle_hypnosis_roleplay():
     """处理心控-角色扮演"""
@@ -826,7 +852,8 @@ def handle_hypnosis_roleplay():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PENETRATING_VISION_OFF,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_PENETRATING_VISION_ON
 )
 def handle_penetrating_vision_on():
     """处理开启透视"""
@@ -840,7 +867,8 @@ def handle_penetrating_vision_on():
     {constant_promise.Premise.PRIMARY_PENETRATING_VISION,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PENETRATING_VISION_ON,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_PENETRATING_VISION_OFF
 )
 def handle_penetrating_vision_off():
     """处理关闭透视"""
@@ -854,7 +882,8 @@ def handle_penetrating_vision_off():
     {constant_promise.Premise.PRIMARY_HORMONE,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HORMONE_OFF,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HORMONE_ON
 )
 def handle_hormone_on():
     """处理开启信息素"""
@@ -868,7 +897,8 @@ def handle_hormone_on():
     {constant_promise.Premise.PRIMARY_HORMONE,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HORMONE_ON,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HORMONE_OFF
 )
 def handle_hormone_off():
     """处理关闭信息素"""
@@ -905,7 +935,8 @@ def handle_sleep():
     _("淋浴"),
     {constant_promise.Premise.IN_BATHROOM,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TAKE_SHOWER
 )
 def handle_take_shower():
     """处理淋浴指令"""
@@ -919,7 +950,8 @@ def handle_take_shower():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_STROKE
 )
 def handle_stroke():
     """处理身体接触指令"""
@@ -934,7 +966,8 @@ def handle_stroke():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TECHNIQUE_GE_3,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_MASSAGE
 )
 def handle_massage():
     """处理按摩指令"""
@@ -1130,6 +1163,7 @@ def handle_massage():
     constant.InstructType.DAILY,
     _("等待五分钟"),
     {constant_promise.Premise.NOT_H},
+    constant.CharacterStatus.STATUS_WAIT
 )
 def handle_wait():
     """处理等待五分钟指令"""
@@ -1146,6 +1180,7 @@ def handle_wait():
     constant.InstructType.DAILY,
     _("等待一个小时"),
     {constant_promise.Premise.DEBUG_MODE_ON},
+    constant.CharacterStatus.STATUS_WAIT
 )
 def handle_wait_1_hour():
     """处理等待一个小时指令"""
@@ -1163,6 +1198,7 @@ def handle_wait_1_hour():
     constant.InstructType.DAILY,
     _("等待六个小时"),
     {constant_promise.Premise.DEBUG_MODE_ON},
+    constant.CharacterStatus.STATUS_WAIT
 )
 def handle_wait_6_hour():
     """处理等待六个小时指令"""
@@ -1184,7 +1220,8 @@ def handle_wait_6_hour():
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.TARGET_URINATE_LE_49,
-     constant_promise.Premise.T_NORMAL_24567,}
+     constant_promise.Premise.T_NORMAL_24567,},
+    constant.CharacterStatus.STATUS_MAKE_COFFEE
 )
 def handle_make_coffee():
     """处理泡咖啡指令"""
@@ -1216,7 +1253,8 @@ def handle_make_coffee_add():
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.URINATE_LE_49,
-     constant_promise.Premise.T_NORMAL_24567,}
+     constant_promise.Premise.T_NORMAL_24567,},
+    constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE
 )
 def handle_ask_make_coffee():
     """处理让对方泡咖啡指令"""
@@ -1253,6 +1291,7 @@ def handle_all_npc_position():
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_HP_NE_1,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
+    constant.CharacterStatus.STATUS_FOLLOW
 )
 def handle_followed():
     """处理邀请同行指令"""
@@ -1291,6 +1330,7 @@ def handle_followed():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_2467,
      constant_promise.Premise.TARGET_IS_FOLLOW},
+    constant.CharacterStatus.STATUS_END_FOLLOW
 )
 def handle_end_followed():
     """处理结束同行指令"""
@@ -1313,6 +1353,7 @@ def handle_end_followed():
      constant_promise.Premise.TARGET_ANGRY_WITH_PLAYER,
      constant_promise.Premise.T_NORMAL_24567,
      constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_APOLOGIZE
 )
 def handle_apologize():
     """处理道歉指令"""
@@ -1342,6 +1383,7 @@ def handle_apologize():
      constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,
      constant_promise.Premise.T_NORMAL_24567,
      constant_promise.Premise.TIRED_LE_84, },
+    constant.CharacterStatus.STATUS_LISTEN_COMPLAINT
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
@@ -1377,7 +1419,8 @@ def handle_originium_arts():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_INFLATION_1,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_LISTEN_INFLATION
 )
 def handle_listen_inflation():
     """处理听肚子里的动静指令"""
@@ -1392,7 +1435,8 @@ def handle_listen_inflation():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_CHILD_OR_LOLI_1,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_PLAY_WITH_CHILD
 )
 def handle_play_with_child():
     """处理一起玩耍指令"""
@@ -1495,7 +1539,8 @@ def handle_ask_date():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_LOVE_2,
      constant_promise.Premise.HAVE_RING,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_CONFESSION
 )
 def handle_confession():
     """处理告白指令"""
@@ -1535,7 +1580,8 @@ def handle_confession():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_OBEY_2,
      constant_promise.Premise.HAVE_COLLAR,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_GIVE_NECKLACE
 )
 def handle_give_necklace():
     """处理戴上项圈指令"""
@@ -1591,6 +1637,7 @@ def handle_drink_alcohol():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.URINATE_GE_80,
      constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_PEE
 )
 def handle_pee():
     """处理解手指令"""
@@ -1678,7 +1725,8 @@ def handle_collect():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.TARGET_HP_NE_1,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_H
 )
 def handle_do_h():
     """处理邀请H指令"""
@@ -1773,7 +1821,8 @@ def handle_stop_sleep_obscenity():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_H
 )
 def handle_unconscious_h():
     """处理无意识奸指令"""
@@ -1825,6 +1874,7 @@ def handle_do_h_in_love_hotel():
     _("等待五分钟"),
     {constant_promise.Premise.IS_H,
      constant_promise.Premise.T_ACTION_SLEEP,},
+    constant.CharacterStatus.STATUS_WAIT
 )
 def handle_wait_5_min_in_h():
     """处理等待五分钟指令"""
@@ -1843,6 +1893,7 @@ def handle_wait_5_min_in_h():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_END_H
 )
 def handle_end_h():
     """处理H结束指令"""
@@ -1891,7 +1942,8 @@ def handle_end_h():
     _("唱歌"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_SINGING
 )
 def handle_singing():
     """处理唱歌指令"""
@@ -1926,7 +1978,8 @@ def handle_singing():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_INSTRUMENT,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 )
 def handle_play_instrument():
     """处理演奏乐器指令"""
@@ -1961,7 +2014,8 @@ def handle_play_instrument():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_MULTIMEDIA_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_WATCH_MOVIE
 )
 def handle_watch_movie():
     """处理看电影指令"""
@@ -1975,7 +2029,8 @@ def handle_watch_movie():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_PHOTOGRAPHY_STUDIO,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PHOTOGRAPHY
 )
 def handle_photography():
     """处理摄影指令"""
@@ -1989,7 +2044,8 @@ def handle_photography():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_AQUAPIT_EXPERIENTORIUM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_WATER
 )
 def handle_play_water():
     """处理玩水指令"""
@@ -2004,7 +2060,8 @@ def handle_play_water():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_CHESS
 )
 def handle_play_chess():
     """处理下棋指令"""
@@ -2019,7 +2076,8 @@ def handle_play_chess():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_MAHJONG
 )
 def handle_play_mahjong():
     """处理打麻将指令"""
@@ -2034,7 +2092,8 @@ def handle_play_mahjong():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_CARDS
 )
 def handle_play_cards():
     """处理打牌指令"""
@@ -2048,7 +2107,8 @@ def handle_play_cards():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_FAIRY_BANQUET,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_REHEARSE_DANCE
 )
 def handle_rehearse_dance():
     """处理排演舞剧指令"""
@@ -2062,7 +2122,8 @@ def handle_rehearse_dance():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_AVANT_GARDE_ARCADE,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME
 )
 def handle_play_arcade_game():
     """处理玩街机游戏指令"""
@@ -2076,7 +2137,8 @@ def handle_play_arcade_game():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_SWIMMING_POOL,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_SWIMMING
 )
 def handle_swimming():
     """处理游泳指令"""
@@ -2089,7 +2151,8 @@ def handle_swimming():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_BAR,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TASTE_WINE
 )
 def handle_taste_wine():
     """处理品酒指令"""
@@ -2103,7 +2166,8 @@ def handle_taste_wine():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_TEAHOUSE,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TASTE_TEA
 )
 def handle_taste_tea():
     """处理品茶指令"""
@@ -2117,7 +2181,8 @@ def handle_taste_tea():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_CAFÉ,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TASTE_COFFEE
 )
 def handle_taste_coffee():
     """处理品咖啡指令"""
@@ -2131,7 +2196,8 @@ def handle_taste_coffee():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_WALYRIA_CAKE_SHOP,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TASTE_DESSERT
 )
 def handle_taste_dessert():
     """处理品尝点心指令"""
@@ -2147,7 +2213,8 @@ def handle_taste_dessert():
         constant_promise.Premise.IN_RESTAURANT,
         constant_promise.Premise.EAT_TIME,
         constant_promise.Premise.HUNGER_GE_80,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TASTE_FOOD
 )
 def handle_taste_food():
     """处理品尝美食指令"""
@@ -2161,7 +2228,8 @@ def handle_taste_food():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_GOLDEN_GAME_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PLAY_HOUSE
 )
 def handle_play_house():
     """处理过家家指令"""
@@ -2175,7 +2243,8 @@ def handle_play_house():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_HAIR_SALON,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_STYLE_HAIR
 )
 def handle_style_hair():
     """处理修整发型指令"""
@@ -2189,7 +2258,8 @@ def handle_style_hair():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_STYLING_STUDIO,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_FULL_BODY_STYLING
 )
 def handle_full_body_styling():
     """处理全身造型服务指令"""
@@ -2203,7 +2273,8 @@ def handle_full_body_styling():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_FOOT_BATH,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_SOAK_FEET
 )
 def handle_soak_feet():
     """处理泡脚指令"""
@@ -2217,7 +2288,8 @@ def handle_soak_feet():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_SAUNA,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_STEAM_SAUNA
 )
 def handle_steam_sauna():
     """处理蒸桑拿指令"""
@@ -2231,7 +2303,8 @@ def handle_steam_sauna():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_SPA_ROOM,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_HYDROTHERAPY_TREATMENT
 )
 def handle_hydrotherapy_treatment():
     """处理水疗护理指令"""
@@ -2245,7 +2318,8 @@ def handle_hydrotherapy_treatment():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_ONSEN,
-        constant_promise.Premise.TIRED_LE_74}
+        constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_ONSEN_BATH
 )
 def handle_onsen_bath():
     """处理泡温泉指令"""
@@ -2274,7 +2348,8 @@ def handle_aromatherapy():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
      constant_promise.Premise.HAVE_OFFICE_WORK_NEED_TO_DO,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_OFFICIAL_WORK
 )
 def handle_official_work():
     """处理处理公务指令"""
@@ -2331,7 +2406,7 @@ def handle_recruiment():
 @add_instruct(
     constant.Instruct.VISITOR_SYSTEM, constant.InstructType.WORK, _("访客系统"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE,
      constant_promise.Premise.VISITOR_ZONE_GE_2, }
 )
 def handle_visitor_system():
@@ -2342,8 +2417,9 @@ def handle_visitor_system():
 @add_instruct(
     constant.Instruct.INVITE_VISITOR, constant.InstructType.WORK, _("邀请访客"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
-     constant_promise.Premise.VISITOR_ZONE_GE_2, }
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE,
+     constant_promise.Premise.VISITOR_ZONE_GE_2, },
+    constant.CharacterStatus.STATUS_INVITE_VISITOR
 )
 def handle_invite_visitor():
     """处理邀请访客指令"""
@@ -2366,7 +2442,8 @@ def handle_prts():
     _("战斗训练"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_TRAINING_ROOM,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_TRAINING
 )
 def handle_training():
     """处理战斗训练指令"""
@@ -2379,7 +2456,8 @@ def handle_training():
     _("锻炼身体"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_GYM_ROOM,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_EXERCISE
 )
 def handle_exercise():
     """处理锻炼身体指令"""
@@ -2393,7 +2471,8 @@ def handle_exercise():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
      constant_promise.Premise.PATIENT_WAIT,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_CURE_PATIENT
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
@@ -2406,7 +2485,8 @@ def handle_cure_patient():
     _("招募干员"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_HR_OFFICE,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_RECRUIT
 )
 def handle_recruit():
     """处理招募干员指令"""
@@ -2420,7 +2500,8 @@ def handle_recruit():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
      constant_promise.Premise.NEW_NPC_WAIT,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_WAIT
 )
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
@@ -2452,7 +2533,8 @@ def handle_confim_recruit():
     _("维护设施"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_ANY_MAINTENANCE_PLACE,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
 )
 def handle_maintenance_facilities():
     """处理维护设施指令"""
@@ -2465,7 +2547,8 @@ def handle_maintenance_facilities():
     _("维修装备"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_BLACKSMITH_SHOP,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT
 )
 def handle_repair_equipment():
     """处理维修装备指令"""
@@ -2480,7 +2563,8 @@ def handle_repair_equipment():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_EMBRACE
 )
 def handle_embrace():
     """处理拥抱指令"""
@@ -2494,7 +2578,8 @@ def handle_embrace():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_KISS
 )
 def handle_kiss():
     """处理亲吻指令"""
@@ -2508,7 +2593,8 @@ def handle_kiss():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_HEAD
 )
 def handle_touch_head():
     """处理摸头指令"""
@@ -2522,7 +2608,8 @@ def handle_touch_head():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_BREAST
 )
 def handle_touch_breast():
     """处理摸胸指令"""
@@ -2536,7 +2623,8 @@ def handle_touch_breast():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_BUTTOCKS
 )
 def handle_touch_buttocks():
     """处理摸屁股指令"""
@@ -2551,6 +2639,7 @@ def handle_touch_buttocks():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84, },
+    constant.CharacterStatus.STATUS_TOUCH_EARS
 )
 def handle_touch_ears():
     """处理摸耳朵指令"""
@@ -2566,6 +2655,7 @@ def handle_touch_ears():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_HORN,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_HORN
 )
 def handle_touch_horn():
     """处理摸角指令"""
@@ -2581,6 +2671,7 @@ def handle_touch_horn():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TAIL,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_TAIL
 )
 def handle_touch_tail():
     """处理摸尾巴指令"""
@@ -2596,6 +2687,7 @@ def handle_touch_tail():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_RING,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_RING
 )
 def handle_touch_ring():
     """处理摸光环指令"""
@@ -2611,6 +2703,7 @@ def handle_touch_ring():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_WING,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_WING
 )
 def handle_touch_wing():
     """处理摸光翼指令"""
@@ -2626,6 +2719,7 @@ def handle_touch_wing():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TENTACLE,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_TENTACLE
 )
 def handle_touch_tentacle():
     """处理摸触手指令"""
@@ -2641,6 +2735,7 @@ def handle_touch_tentacle():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_CAR,
      constant_promise.Premise.TIRED_LE_84,},
+    constant.CharacterStatus.STATUS_TOUCH_CAR
 )
 def handle_touch_car():
     """处理摸小车指令"""
@@ -2654,7 +2749,8 @@ def handle_touch_car():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_HAND_IN_HAND
 )
 def handle_handle_in_handle():
     """处理牵手指令"""
@@ -2669,7 +2765,8 @@ def handle_handle_in_handle():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.PLACE_FURNITURE_GE_1,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_LAP_PILLOW
 )
 def handle_lap_pillow():
     """处理膝枕指令"""
@@ -2684,7 +2781,8 @@ def handle_lap_pillow():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SKIRT,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_RAISE_SKIRT
 )
 def handle_raise_skirt():
     """处理掀起裙子指令"""
@@ -2700,7 +2798,8 @@ def handle_raise_skirt():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_PAN,
      constant_promise.Premise.COLLECT_BONUS_102,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_ASK_FOR_PAN
 )
 def handle_ask_for_pan():
     """处理索要内裤指令"""
@@ -2716,7 +2815,8 @@ def handle_ask_for_pan():
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
      constant_promise.Premise.COLLECT_BONUS_202,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_ASK_FOR_SOCKS
 )
 def handle_ask_for_socks():
     """处理索要袜子指令"""
@@ -2731,7 +2831,8 @@ def handle_ask_for_socks():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.TARGET_WEAR_PAN,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_STEAL_PAN
 )
 def handle_steal_pan():
     """处理偷走内裤指令"""
@@ -2746,7 +2847,8 @@ def handle_steal_pan():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_STEAL_SOCKS
 )
 def handle_steal_socks():
     """处理偷走袜子指令"""
@@ -2760,7 +2862,8 @@ def handle_steal_socks():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_CLITORIS
 )
 def handle_touch_clitoris():
     """处理阴蒂爱抚指令"""
@@ -2774,7 +2877,8 @@ def handle_touch_clitoris():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_VAGINA
 )
 def handle_touch_vagina():
     """处理手指插入（V）指令"""
@@ -2788,7 +2892,8 @@ def handle_touch_vagina():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_TOUCH_ANUS
 )
 def handle_touch_anus():
     """处理手指插入（A）指令"""
@@ -2803,7 +2908,8 @@ def handle_touch_anus():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_MILK_GE_30,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_MILK
 )
 def handle_milk():
     """处理挤奶指令"""
@@ -2822,7 +2928,8 @@ def handle_milk():
     #  constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.PL_NOT_BAGGING_CHARA,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_BAGGING_AND_MOVING
 )
 def handle_bagging_and_moving():
     """处理装袋搬走指令"""
@@ -2837,7 +2944,8 @@ def handle_bagging_and_moving():
      constant_promise.Premise.IN_PRISON,
      constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.PL_BAGGING_CHARA,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_PUT_INTO_PRISON
 )
 def handle_put_into_prision():
     """处理投入监牢指令"""
@@ -2853,7 +2961,8 @@ def handle_put_into_prision():
      constant_promise.Premise.IN_PRISON,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.T_IMPRISONMENT_1,
-     constant_promise.Premise.TIRED_LE_74}
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_SET_FREE
 )
 def handle_set_free():
     """处理解除囚禁指令"""
@@ -2870,6 +2979,7 @@ def handle_set_free():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_MAKING_OUT
 )
 def handle_making_out():
     """处理身体爱抚指令"""
@@ -2883,6 +2993,7 @@ def handle_making_out():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_KISS_H
 )
 def handle_kiss_h():
     """处理接吻指令"""
@@ -2896,6 +3007,7 @@ def handle_kiss_h():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_BREAST_CARESS
 )
 def handle_breast_caress():
     """处理胸爱抚指令"""
@@ -2909,6 +3021,7 @@ def handle_breast_caress():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_TWIDDLE_NIPPLES
 )
 def handle_twiddle_nipples():
     """处理玩弄乳头指令"""
@@ -2922,6 +3035,7 @@ def handle_twiddle_nipples():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_BREAST_SUCKING
 )
 def handle_breast_sucking():
     """处理舔吸乳头指令"""
@@ -2935,6 +3049,7 @@ def handle_breast_sucking():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_CLIT_CARESS
 )
 def handle_cilt_caress():
     """处理阴蒂爱抚指令"""
@@ -2948,6 +3063,7 @@ def handle_cilt_caress():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_OPEN_LABIA
 )
 def handle_open_labia():
     """处理掰开阴唇观察指令"""
@@ -2961,6 +3077,7 @@ def handle_open_labia():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_OPEN_ANUS
 )
 def handle_open_anus():
     """处理掰开肛门观察指令"""
@@ -2974,6 +3091,7 @@ def handle_open_anus():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_CUNNILINGUS
 )
 def handle_cunnilingus():
     """处理舔阴指令"""
@@ -2987,6 +3105,7 @@ def handle_cunnilingus():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_LICK_ANAL
 )
 def handle_lict_anal():
     """处理舔肛指令"""
@@ -3000,6 +3119,7 @@ def handle_lict_anal():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_FINGER_INSERTION
 )
 def handle_finger_insertion():
     """处理手指插入(V)指令"""
@@ -3013,6 +3133,7 @@ def handle_finger_insertion():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_ANAL_CARESS
 )
 def handle_anal_caress():
     """处理手指插入(A)指令"""
@@ -3026,6 +3147,7 @@ def handle_anal_caress():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_MAKE_MASTUREBATE
 )
 def handle_make_masturebate():
     """处理命令对方自慰指令"""
@@ -3039,6 +3161,7 @@ def handle_make_masturebate():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_MAKE_LICK_ANAL
 )
 def handle_make_lick_anal():
     """处理命令对方舔自己肛门指令"""
@@ -3111,6 +3234,7 @@ def handle_sedecu():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_HANDJOB
 )
 def handle_handjob():
     """处理手交指令"""
@@ -3124,6 +3248,7 @@ def handle_handjob():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_BLOWJOB
 )
 def handle_blowjob():
     """处理口交指令"""
@@ -3137,6 +3262,7 @@ def handle_blowjob():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_PAIZURI
 )
 def handle_paizuri():
     """处理乳交指令"""
@@ -3151,6 +3277,7 @@ def handle_paizuri():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_FOOTJOB
 )
 def handle_footjob():
     """处理足交指令"""
@@ -3165,6 +3292,7 @@ def handle_footjob():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_HAIRJOB
 )
 def handle_hairjob():
     """处理发交指令"""
@@ -3179,6 +3307,7 @@ def handle_hairjob():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_5},
+    constant.CharacterStatus.STATUS_AXILLAJOB
 )
 def handle_axillajob():
     """处理腋交指令"""
@@ -3192,6 +3321,7 @@ def handle_axillajob():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_RUB_BUTTOCK
 )
 def handle_rub_buttock():
     """处理素股指令"""
@@ -3207,6 +3337,7 @@ def handle_rub_buttock():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_HAND_BLOWJOB
 )
 def handle_hand_blowjob():
     """处理手交口交指令"""
@@ -3222,6 +3353,7 @@ def handle_hand_blowjob():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_PAIZURI,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_TITS_BLOWJOB
 )
 def handle_tits_blowjob():
     """处理乳交口交指令"""
@@ -3237,6 +3369,7 @@ def handle_tits_blowjob():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_FOCUS_BLOWJOB
 )
 def handle_focus_blowjob():
     """处理真空口交指令"""
@@ -3252,6 +3385,7 @@ def handle_focus_blowjob():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.LAST_CMD_BLOWJOB,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_DEEP_THROAT
 )
 def handle_deep_throat():
     """处理深喉插入指令"""
@@ -3269,6 +3403,7 @@ def handle_deep_throat():
      constant_promise.Premise.LAST_CMD_BLOWJOB_OR_CUNNILINGUS,
      constant_promise.Premise.TECHNIQUE_GE_3,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_SIXTY_NINE
 )
 def handle_sixty_nine():
     """处理六九式指令"""
@@ -3282,6 +3417,7 @@ def handle_sixty_nine():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_LEGJOB
 )
 def handle_legjob():
     """处理腿交指令"""
@@ -3296,6 +3432,7 @@ def handle_legjob():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_HAVE_TAIL},
+    constant.CharacterStatus.STATUS_TAILJOB
 )
 def handle_tailjob():
     """处理尾交指令"""
@@ -3309,6 +3446,7 @@ def handle_tailjob():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_FACE_RUB
 )
 def handle_face_rub():
     """处理阴茎蹭脸指令"""
@@ -3323,6 +3461,7 @@ def handle_face_rub():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_HAVE_HORN},
+    constant.CharacterStatus.STATUS_HORN_RUB
 )
 def handle_horn_rub():
     """处理阴茎蹭角指令"""
@@ -3337,6 +3476,7 @@ def handle_horn_rub():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_HAVE_EARS},
+    constant.CharacterStatus.STATUS_EARS_RUB
 )
 def handle_eras_rub():
     """处理阴茎蹭耳朵指令"""
@@ -3352,6 +3492,7 @@ def handle_eras_rub():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_NIPPLE_CLAMP,
      constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP},
+    constant.CharacterStatus.STATUS_NIPPLE_CLAMP_ON
 )
 def handle_nipple_clamp_on():
     """处理戴上乳头夹指令"""
@@ -3367,6 +3508,7 @@ def handle_nipple_clamp_on():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_NIPPLE_CLAMP,
      constant_promise.Premise.TARGET_NOW_NIPPLE_CLAMP},
+    constant.CharacterStatus.STATUS_NIPPLE_CLAMP_OFF
 )
 def handle_nipple_clamp_off():
     """处理取下乳头夹指令"""
@@ -3381,6 +3523,7 @@ def handle_nipple_clamp_off():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_LOVE_EGG},
+    constant.CharacterStatus.STATUS_NIPPLES_LOVE_EGG
 )
 def handle_nipples_love_egg():
     """处理乳头跳蛋指令"""
@@ -3396,6 +3539,7 @@ def handle_nipples_love_egg():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLIT_CLAMP,
      constant_promise.Premise.TARGET_NOT_CLIT_CLAMP},
+    constant.CharacterStatus.STATUS_CLIT_CLAMP_ON
 )
 def handle_clit_clamp_on():
     """处理戴上阴蒂夹指令"""
@@ -3411,6 +3555,7 @@ def handle_clit_clamp_on():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLIT_CLAMP,
      constant_promise.Premise.TARGET_NOW_CLIT_CLAMP},
+    constant.CharacterStatus.STATUS_CLIT_CLAMP_OFF
 )
 def handle_clit_clamp_off():
     """处理取下阴蒂夹指令"""
@@ -3425,6 +3570,7 @@ def handle_clit_clamp_off():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_LOVE_EGG},
+    constant.CharacterStatus.STATUS_CLIT_LOVE_EGG
 )
 def handle_clit_love_egg():
     """处理阴蒂跳蛋指令"""
@@ -3439,6 +3585,7 @@ def handle_clit_love_egg():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ELECTRIC_MESSAGE_STICK},
+    constant.CharacterStatus.STATUS_ELECTRIC_MESSAGE_STICK
 )
 def handle_electric_message_stick():
     """处理电动按摩棒指令"""
@@ -3454,6 +3601,7 @@ def handle_electric_message_stick():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_VIBRATOR_INSERTION
 )
 def handle_vibrator_insertion():
     """处理插入震动棒指令"""
@@ -3469,6 +3617,7 @@ def handle_vibrator_insertion():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL
 )
 def handle_vibrator_insertion_anal():
     """处理肛门插入震动棒指令"""
@@ -3484,6 +3633,7 @@ def handle_vibrator_insertion_anal():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_OFF
 )
 def handle_vibrator_insertion_off():
     """处理拔出震动棒指令"""
@@ -3499,6 +3649,7 @@ def handle_vibrator_insertion_off():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
      constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL_OFF
 )
 def handle_vibrator_insertion_anal_off():
     """处理拔出肛门震动棒指令"""
@@ -3515,6 +3666,7 @@ def handle_vibrator_insertion_anal_off():
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
      constant_promise.Premise.T_NOT_ENEMA,
      constant_promise.Premise.HAVE_ENEMAS},
+    constant.CharacterStatus.STATUS_CLYSTER
 )
 def handle_clyster():
     """处理灌肠指令"""
@@ -3531,6 +3683,7 @@ def handle_clyster():
      constant_promise.Premise.HAVE_CLYSTER_TOOLS,
      constant_promise.Premise.T_ENEMA,
      },
+    constant.CharacterStatus.STATUS_CLYSTER_END
 )
 def handle_clyster_end():
     """处理拔出肛塞指令"""
@@ -3546,6 +3699,7 @@ def handle_clyster_end():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_PLUG,
      constant_promise.Premise.TO_DO},
+    constant.CharacterStatus.STATUS_ANAL_PLUG
 )
 def handle_anal_plug():
     """处理肛塞指令"""
@@ -3561,6 +3715,7 @@ def handle_anal_plug():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_BEADS,
      constant_promise.Premise.TARGET_NOT_ANAL_BEADS},
+    constant.CharacterStatus.STATUS_ANAL_BEADS
 )
 def handle_anal_beads():
     """处理塞入肛门拉珠指令"""
@@ -3576,6 +3731,7 @@ def handle_anal_beads():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_BEADS,
      constant_promise.Premise.TARGET_NOW_ANAL_BEADS},
+    constant.CharacterStatus.STATUS_ANAL_BEADS_OFF
 )
 def handle_anal_beads_off():
     """处理拔出肛门拉珠指令"""
@@ -3593,6 +3749,7 @@ def handle_anal_beads_off():
      constant_promise.Premise.TARGET_MILK_GE_30,
      constant_promise.Premise.TARGET_NOT_MILKING_MACHINE,
      constant_promise.Premise.HAVE_MILKING_MACHINE},
+    constant.CharacterStatus.STATUS_MILKING_MACHINE_ON
 )
 def handle_milking_machine_on():
     """处理装上搾乳机指令"""
@@ -3609,6 +3766,7 @@ def handle_milking_machine_on():
      constant_promise.Premise.T_LACTATION_1,
      constant_promise.Premise.TARGET_NOW_MILKING_MACHINE,
      constant_promise.Premise.HAVE_MILKING_MACHINE},
+    constant.CharacterStatus.STATUS_MILKING_MACHINE_OFF
 )
 def handle_milking_machine_off():
     """处理取下搾乳机指令"""
@@ -3625,6 +3783,7 @@ def handle_milking_machine_off():
      constant_promise.Premise.T_U_DILATE_GE_3,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
      constant_promise.Premise.HAVE_URINE_COLLECTOR},
+    constant.CharacterStatus.STATUS_URINE_COLLECTOR
 )
 def handle_urine_collector_on():
     """处理装上采尿器指令"""
@@ -3641,6 +3800,7 @@ def handle_urine_collector_on():
      constant_promise.Premise.T_U_DILATE_GE_3,
      constant_promise.Premise.TARGET_NOW_URINE_COLLECTOR,
      constant_promise.Premise.HAVE_URINE_COLLECTOR},
+    constant.CharacterStatus.STATUS_URINE_COLLECTOR_OFF
 )
 def handle_urine_collector_off():
     """处理取下采尿器指令"""
@@ -3656,6 +3816,7 @@ def handle_urine_collector_off():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_BONDAGE},
+    constant.CharacterStatus.STATUS_BONDAGE
 )
 def handle_bondage():
     """处理绳子指令"""
@@ -3671,6 +3832,7 @@ def handle_bondage():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_PATCH},
+    constant.CharacterStatus.STATUS_PATCH
 )
 def handle_patch():
     """处理眼罩指令"""
@@ -3686,6 +3848,7 @@ def handle_patch():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_WHIP},
+    constant.CharacterStatus.STATUS_WHIP
 )
 def handle_whip():
     """处理鞭子指令"""
@@ -3701,6 +3864,7 @@ def handle_whip():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_NEEDLE},
+    constant.CharacterStatus.STATUS_NEEDLE
 )
 def handle_neddle():
     """处理针指令"""
@@ -3715,6 +3879,7 @@ def handle_neddle():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.NOW_NOT_CONDOM,
      constant_promise.Premise.HAVE_CONDOM},
+    constant.CharacterStatus.STATUS_PUT_CONDOM
 )
 def handle_put_condom():
     """处理戴上避孕套指令"""
@@ -3729,6 +3894,7 @@ def handle_put_condom():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.NOW_CONDOM,
     },
+    constant.CharacterStatus.STATUS_TAKE_CONDOM_OUT
 )
 def handle_take_condom_out():
     """处理摘掉避孕套指令"""
@@ -3744,6 +3910,7 @@ def handle_take_condom_out():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_SAFE_CANDLES},
+    constant.CharacterStatus.STATUS_SAFE_CANDLES
 )
 def handle_safe_candles():
     """处理滴蜡指令"""
@@ -3758,6 +3925,7 @@ def handle_safe_candles():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BODY_LUBRICANT},
+    constant.CharacterStatus.STATUS_BODY_LUBRICANT
 )
 def handle_body_lubricant():
     """处理润滑液指令"""
@@ -3772,6 +3940,7 @@ def handle_body_lubricant():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_PHILTER},
+    constant.CharacterStatus.STATUS_PHILTER
 )
 def handle_philter():
     """处理媚药指令"""
@@ -3787,6 +3956,7 @@ def handle_philter():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ENEMAS,
      constant_promise.Premise.TO_DO},
+    constant.CharacterStatus.STATUS_ENEMAS
 )
 def handle_enemas():
     """处理灌肠液指令"""
@@ -3804,6 +3974,7 @@ def handle_enemas():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_DIURETICS_ONCE},
+    constant.CharacterStatus.STATUS_DIURETICS_ONCE
 )
 def handle_diuretics_once():
     """处理一次性利尿剂指令"""
@@ -3818,6 +3989,7 @@ def handle_diuretics_once():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_DIURETICS_PERSISTENT},
+    constant.CharacterStatus.STATUS_DIURETICS_PERSISTENT
 )
 def handle_diuretics_persistent():
     """处理持续性利尿剂指令"""
@@ -3832,6 +4004,7 @@ def handle_diuretics_persistent():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_SLEEPING_PILLS},
+    constant.CharacterStatus.STATUS_SLEEPING_PILLS
 )
 def handle_sleeping_pills():
     """处理安眠药指令"""
@@ -3846,6 +4019,7 @@ def handle_sleeping_pills():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_CLOMID},
+    constant.CharacterStatus.STATUS_CLOMID
 )
 def handle_clomid():
     """处理排卵促进药指令"""
@@ -3860,6 +4034,7 @@ def handle_clomid():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_BEFORE},
+    constant.CharacterStatus.STATUS_BIRTH_CONTROL_PILLS_BEFORE
 )
 def handle_birth_control_pills_before():
     """处理事前避孕药指令"""
@@ -3874,6 +4049,7 @@ def handle_birth_control_pills_before():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_BIRTH_CONTROL_PILLS_AFTER},
+    constant.CharacterStatus.STATUS_BIRTH_CONTROL_PILLS_AFTER
 )
 def handle_birth_control_pills_after():
     """处理事后避孕药指令"""
@@ -3889,6 +4065,7 @@ def handle_birth_control_pills_after():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_NORMAL_SEX
 )
 def handle_normal_sex():
     """处理正常位指令"""
@@ -3904,6 +4081,7 @@ def handle_normal_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_SEX
 )
 def handle_back_sex():
     """处理背后位指令"""
@@ -3933,6 +4111,7 @@ def handle_back_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_RIDING_SEX
 )
 def handle_riding_sex():
     """处理骑乘位指令"""
@@ -3962,6 +4141,7 @@ def handle_riding_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_FACE_SEAT_SEX
 )
 def handle_face_seat_sex():
     """处理对面座位指令"""
@@ -3991,6 +4171,7 @@ def handle_face_seat_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_SEAT_SEX
 )
 def handle_back_seat_sex():
     """处理背面座位指令"""
@@ -4019,6 +4200,7 @@ def handle_back_seat_sex():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_FACE_STAND_SEX
 )
 def handle_face_stand_sex():
     """处理对面立位指令"""
@@ -4047,6 +4229,7 @@ def handle_face_stand_sex():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_STAND_SEX
 )
 def handle_back_stand_sex():
     """处理背面立位指令"""
@@ -4077,6 +4260,7 @@ def handle_back_stand_sex():
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_STIMULATE_G_POINT
 )
 def handle_stimulate_g_point():
     """处理刺激G点指令"""
@@ -4107,6 +4291,7 @@ def handle_stimulate_g_point():
      constant_promise.Premise.LAST_CMD_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_WOMB_OS_CARESS
 )
 def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
@@ -4139,6 +4324,7 @@ def handle_womb_os_caress():
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.T_W_DILATE_GE_3,
      constant_promise.Premise.TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_WOMB_INSERTION
 )
 def handle_womb_insertion():
     """处理插入子宫口指令"""
@@ -4170,6 +4356,7 @@ def handle_womb_insertion():
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.T_W_DILATE_GE_5,
      constant_promise.Premise.TECHNIQUE_GE_5},
+    constant.CharacterStatus.STATUS_WOMB_INSERTION
 )
 def handle_womb_insertion():
     """处理子宫姦指令"""
@@ -4199,6 +4386,7 @@ def handle_womb_insertion():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_NORMAL_ANAL_SEX
 )
 def handle_normal_anal_sex():
     """处理正常位肛交指令"""
@@ -4226,6 +4414,7 @@ def handle_normal_anal_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_BACK_ANAL_SEX
 )
 def handle_back_anal_sex():
     """处理后背位肛交指令"""
@@ -4253,6 +4442,7 @@ def handle_back_anal_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_RIDING_ANAL_SEX
 )
 def handle_riding_anal_sex():
     """处理骑乘位肛交指令"""
@@ -4280,6 +4470,7 @@ def handle_riding_anal_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.PLACE_FURNITURE_2},
+    constant.CharacterStatus.STATUS_FACE_SEAT_ANAL_SEX
 )
 def handle_face_seat_anal_sex():
     """处理对面座位肛交指令"""
@@ -4307,6 +4498,7 @@ def handle_face_seat_anal_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_2,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_BACK_SEAT_ANAL_SEX
 )
 def handle_back_seat_anal_sex():
     """处理背面座位肛交指令"""
@@ -4333,6 +4525,7 @@ def handle_back_seat_anal_sex():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_FACE_STAND_ANAL_SEX
 )
 def handle_face_stand_anal_sex():
     """处理对面立位肛交指令"""
@@ -4359,6 +4552,7 @@ def handle_face_stand_anal_sex():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+    constant.CharacterStatus.STATUS_BACK_STAND_ANAL_SEX
 )
 def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
@@ -4387,6 +4581,7 @@ def handle_back_stand_anal_sex():
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.LAST_CMD_A_SEX,
      constant_promise.Premise.TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_STIMULATE_SIGMOID_COLON
 )
 def handle_stimulate_sigmoid_colon():
     """处理玩弄s状结肠指令"""
@@ -4415,6 +4610,7 @@ def handle_stimulate_sigmoid_colon():
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.LAST_CMD_A_SEX,
      constant_promise.Premise.TECHNIQUE_GE_3},
+    constant.CharacterStatus.STATUS_STIMULATE_VAGINA
 )
 def handle_stimulate_vagina():
     """处理隔着刺激阴道指令"""
@@ -4463,6 +4659,7 @@ def handle_double_penetration():
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.TECHNIQUE_GE_5,
     },
+    constant.CharacterStatus.STATUS_URETHRAL_SWAB
 )
 def handle_urethral_swab():
     """处理尿道棉棒指令"""
@@ -4493,6 +4690,7 @@ def handle_urethral_swab():
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.T_U_DILATE_GE_2,
     },
+    constant.CharacterStatus.STATUS_URETHRAL_FINGER_INSERTION
 )
 def handle_urethral_finger_insertion():
     """处理尿道指姦指令"""
@@ -4523,6 +4721,7 @@ def handle_urethral_finger_insertion():
     constant_promise.Premise.TECHNIQUE_GE_5,
     constant_promise.Premise.T_U_DILATE_GE_5,
     },
+    constant.CharacterStatus.STATUS_URETHRAL_SEX
 )
 def handle_urethral_sex():
     """处理尿道姦指令"""
@@ -4551,6 +4750,7 @@ def handle_urethral_sex():
      constant_promise.Premise.TARGET_URINATE_GE_80,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     },
+    constant.CharacterStatus.STATUS_ASK_PEE
 )
 def handle_ask_pee():
     """处理命令对方小便指令"""
