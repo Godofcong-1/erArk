@@ -216,7 +216,6 @@ def build_ui_text(file_path:str,file_name:str):
         ui_text_data[file_id] = now_data
 
 def build_po_text(po):
-    global built
     po = "\n"
     po += '# SOME DESCRIPTIVE TITLE.\n'
     po += '# Copyright (C) YEAR Free Software Foundation, Inc.\n'

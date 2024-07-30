@@ -93,9 +93,9 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 if k == "talk_id" and talk:
                     row[k] = file_id.split("-")[0] + row[k]
                 if k == "cid" and target:
-                    row[k] = row[k]
+                    row[k] = path_list[-2] + row[k]
                 elif k == "target_id" and target:
-                    row[k] = row[k]
+                    row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
                     build_config_po(row[k], file_path, now_index, talk)
             config_data[type_text]["data"].append(row)
