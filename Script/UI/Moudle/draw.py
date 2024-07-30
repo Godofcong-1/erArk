@@ -49,7 +49,8 @@ class NormalDraw:
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
             io_init.era_print(now_text, self.style)
         else:
@@ -67,7 +68,8 @@ class WaitDraw(NormalDraw):
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
             io_init.era_print(now_text, self.style)
         else:
@@ -92,7 +94,8 @@ class LineFeedWaitDraw(NormalDraw):
                     for i in text:
                         if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < now_width:
                             now_text += i
-                        break
+                        else:
+                            break
                     now_text = now_text[:-2] + "~"
                 io_init.era_print(now_text, self.style)
             else:
@@ -397,7 +400,8 @@ class Button:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
                         continue
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
             py_cmd.pcmd(
                 now_text,
@@ -529,7 +533,8 @@ class CenterButton:
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
         else:
             now_text = text_handle.align(self.text, "center", 0, 1, self.width)
@@ -567,7 +572,8 @@ class LeftButton(CenterButton):
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
         else:
             now_text = text_handle.align(self.text, "left", 0, 1, self.width)
@@ -756,7 +762,8 @@ class CenterDraw(NormalDraw):
                         # print("now_text（中间的第一次） :",now_text)
                         now_text += i
                         # print("now_text（中间的第二次） :",now_text)
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
             # print("now_text（第一次） :",now_text)
             io_init.era_print(now_text, self.style)
@@ -784,13 +791,14 @@ class CenterDrawImage(NormalDraw):
         print("int(len(self)) :", int(len(self)))
         print("int(self.width) :", int(self.width))
         if int(len(self)) > int(self.width):
-            print("第一个分支")
+            # print("第一个分支")
             now_image = ""
             if self.width > 0:
                 for i in self.text:
                     if text_handle.get_text_index(now_image) + text_handle.get_text_index(i) < self.width:
                         now_image += i
-                    break
+                    else:
+                        break
                 now_image = now_image[:-2] + "~"
             io_init.era_print(now_image)
         elif int(len(self)) > int(self.width) - 1:
@@ -897,7 +905,8 @@ class RightDraw(NormalDraw):
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
         elif int(len(self)) > int(self.width) - 2:
             now_text = " " + self.text
@@ -917,7 +926,8 @@ class LeftDraw(NormalDraw):
                 for i in self.text:
                     if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
                         now_text += i
-                    break
+                    else:
+                        break
                 now_text = now_text[:-2] + "~"
         else:
             now_text = text_handle.align(self.text, "left", 0, 1, self.width)
