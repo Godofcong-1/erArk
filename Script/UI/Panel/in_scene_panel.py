@@ -12,7 +12,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image
+from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image, character_image
 from Script.Config import game_config
 import logging, time
 
@@ -638,11 +638,8 @@ class CharacterImageButton:
         """绘制图片对象"""
         character_data: game_type.Character = cache.character_data[self.character_id]
         # print(f"debug {character_data.name} = {character_data.relationship.father_id}")
-        if character_data.relationship.father_id == 0:
-            # print(f"debug 打印女儿头像")
-            now_draw = draw.ImageButton("女儿_1", character_data.name + "头像", self.width, self.change_target)
-        else:
-            now_draw = draw.ImageButton(_(character_data.name, revert_translation=True), character_data.name + "头像", self.width, self.change_target)
+        image_name = character_image.find_character_image_name(self.character_id)
+        now_draw = draw.ImageButton(image_name, character_data.name + "头像", self.width, self.change_target)
         now_draw.draw()
         self.return_text = character_data.name + "头像"
 

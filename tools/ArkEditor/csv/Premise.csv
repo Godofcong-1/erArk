@@ -961,8 +961,11 @@ t_not_wear_glass,TARGET_NOT_WEAR_GLASS,属性_服装,交互对象没有戴着眼
 t_not_wear_in_ear,TARGET_NOT_WEAR_IN_EAR,属性_服装,交互对象没有戴耳饰
 t_not_wear_in_neck,TARGET_NOT_WEAR_IN_NECK,属性_服装,交互对象没有戴脖饰
 t_not_wear_in_mouse,TARGET_NOT_WEAR_IN_MOUSE,属性_服装,交互对象没有戴口饰
+wear_in_up,WEAR_IN_UP,属性_服装,穿着上衣
+not_wear_in_up,NOT_WEAR_IN_UP,属性_服装,没有穿着上衣
 t_not_wear_in_up,TARGET_NOT_WEAR_IN_UP,属性_服装,交互对象没有穿着上衣
 wear_bra,WEAR_BRA,属性_服装,穿着胸衣
+not_wear_bra,NOT_WEAR_BRA,属性_服装,没有穿着胸衣
 t_wear_bra,TARGET_WEAR_BRA,属性_服装,交互对象穿着胸衣
 t_not_wear_bra,TARGET_NOT_WEAR_BRA,属性_服装,交互对象没有穿着胸衣
 t_wear_gloves,TARGET_WEAR_GLOVES,属性_服装,交互对象戴着手套

@@ -14930,6 +14930,35 @@ def handle_t_not_wear_in_mouse(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.WEAR_IN_UP)
+def handle_wear_in_up(character_id: int) -> int:
+    """
+    穿着上衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if len(character_data.cloth.cloth_wear[5]):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_WEAR_IN_UP)
+def handle_not_wear_in_up(character_id: int) -> int:
+    """
+    没有穿着上衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_wear_in_up(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.TARGET_NOT_WEAR_IN_UP)
 def handle_t_not_wear_in_up(character_id: int) -> int:
     """
@@ -14940,8 +14969,7 @@ def handle_t_not_wear_in_up(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if len(target_data.cloth.cloth_wear[5]):
+    if handle_wear_in_up(character_data.target_character_id):
         return 0
     return 1
 
@@ -14960,6 +14988,21 @@ def handle_wear_bra(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.NOT_WEAR_BRA)
+def handle_not_wear_bra(character_id: int) -> int:
+    """
+    没有穿着胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_wear_bra(character_id):
+        return 0
+    else:
+        return 1
 
 
 @add_premise(constant_promise.Premise.TARGET_WEAR_BRA)

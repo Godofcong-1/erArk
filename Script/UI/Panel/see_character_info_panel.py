@@ -10,10 +10,9 @@ from Script.Core import (
     py_cmd,
     flow_handle,
     constant,
-    rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, map_handle, attr_calculation, game_time, character
+from Script.Design import attr_text, map_handle, attr_calculation, game_time, character, character_image
 
 panel_info_data = {}
 
@@ -977,8 +976,6 @@ class CharacterImage:
         """ 当前最大可绘制宽度 """
         # self.type = type
         # """ 当前绘制类型 """
-        character_data = cache.character_data[self.character_id]
-        """ 角色属性 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制对象列表 """
         self.title_list: List[draw.NormalDraw] = []
@@ -987,10 +984,7 @@ class CharacterImage:
         type_line = draw.LittleTitleLineDraw(title_text, width, ":")
         self.title_list.append(type_line)
 
-        # 正常的立绘图片名为角色名，但女儿的情况下单独使用女儿图片
-        self.image_name = _(character_data.name, revert_translation=True)
-        if character_data.relationship.father_id == 0:
-            self.image_name = "女儿_1"
+        self.image_name = character_image.find_character_image_name(character_id)
 
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = "  "
