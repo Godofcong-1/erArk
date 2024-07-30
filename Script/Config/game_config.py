@@ -299,6 +299,11 @@ def load_data_json():
     character_data = json_handle.load_json(character_path)
     ui_text_data = json_handle.load_json(ui_text_path)
 
+def reload_talk_data():
+    """重新载入口上配置数据"""
+    global config_data, config_talk, config_talk_data, config_talk_premise_data
+    config_data = json_handle.load_json(data_path)
+    load_talk()
 
 def translate_data(data: dict):
     """

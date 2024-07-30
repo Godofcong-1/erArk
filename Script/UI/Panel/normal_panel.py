@@ -8,6 +8,7 @@ from Script.Core import (
     game_type,
     flow_handle,
     constant,
+    py_cmd
 )
 from Script.Config import game_config, normal_config
 from Script.Design import update, map_handle, character, game_time, cooking, handle_premise
@@ -757,35 +758,43 @@ class TALK_QUICK_TEST:
             info_draw.width = self.width
 
             info_text = _("本功能用于快速测试当前数据情况下，指定角色的指定id口上的触发情况，包括触发者与交互对象、是否能够触发、每个前提是否满足、最终输出文本等\n\n")
+            info_text += _("刷新口上文件，用于在不重启游戏的情况，重新刷新并读取发生了变更的口上文件。即可以在编辑器中写完新的条目、保存，然后在游戏中点击该刷新按钮，读取刚写好的条目并进行测试\n\n\n")
             info_draw.text = info_text
             info_draw.draw()
 
-            button_text = _("[001]刷新口上文件")
+            button_text = _("[001]刷新口上文件后测试")
             button1_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.refresh_talk_file)
             button1_draw.draw()
             return_list.append(button1_draw.return_text)
             line_feed.draw()
 
-            button_text = _("[002]开始测试")
-            button2_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.refresh_talk_file)
+            button_text = _("[002]直接开始测试")
+            button2_draw = draw.LeftButton(button_text, button_text, len(button_text)*2, cmd_func=self.nothing)
             button2_draw.draw()
             return_list.append(button2_draw.return_text)
             line_feed.draw()
 
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 4)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or yrn == button2_draw.return_text:
+            if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
-                break
-            elif yrn == button2_draw.return_text:
+                return
+            elif yrn == button1_draw.return_text or yrn == button2_draw.return_text:
                 break
 
         while 1:
+            py_cmd.clr_cmd()
             return_list = []
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n\n测试开始\n\n")
+            info_draw.draw()
             # 获取角色id
             change_value_panel = panel.AskForOneMessage()
             change_value_panel.set(_("请输入角色id"), 100)
@@ -917,9 +926,46 @@ class TALK_QUICK_TEST:
 
     def refresh_talk_file(self):
         """刷新口上文件"""
-        import auto_build_config
-        game_config.init()
-        now_draw = draw.WaitDraw()
-        draw_text = _("\n口上文件刷新完毕\n")
+
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n\n开始刷新口上文件，请稍等\n")
         now_draw.text = draw_text
         now_draw.draw()
+        for i in range(5):
+            line_feed.draw()
+
+        draw_text = _("\n开始加载数据读取模块，该部分耗时较长\n")
+        now_draw.text = draw_text
+        now_draw.draw()
+
+        import importlib
+        import auto_build_config
+        # 重新加载模块
+        importlib.reload(auto_build_config)
+
+        draw_text = _("\n整体数据读取完成，开始处理口上数据\n")
+        now_draw.text = draw_text
+        now_draw.draw()
+
+        # 旧的口上数据计数
+        all_count_old = 0
+        for i in game_config.config_talk_data:
+            all_count_old += len(game_config.config_talk_data[i])
+
+        game_config.reload_talk_data()
+
+        # 新的口上数据计数
+        all_count_new = 0
+        for i in game_config.config_talk_data:
+            all_count_new += len(game_config.config_talk_data[i])
+
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n口上文件刷新完毕\n")
+        draw_text += _("原数据总数为{0}，新数据总数为{1}，新增数据总数为{2}\n\n").format(all_count_old, all_count_new, all_count_new - all_count_old)
+        now_draw.text = draw_text
+        now_draw.draw()
+
+    def nothing(self):
+        pass

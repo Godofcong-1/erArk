@@ -6424,3 +6424,148 @@ msgid ""
 "报错数据文件已保存至99号档位，请将error.log和存档发送给游戏作者以帮助解决问题\n"
 "\n"
 msgstr ""
+
+msgid "快速测试口上"
+msgstr ""
+
+msgid ""
+"本功能用于快速测试当前数据情况下，指定角色的指定id口上的触发情况，包括触发者与交互对象、是否能够触发、每个前提是否满足、最终输出文本等\n"
+"\n"
+msgstr ""
+
+msgid ""
+"刷新口上文件，用于在不重启游戏的情况，重新刷新并读取发生了变更的口上文件。即可以在编辑器中写完新的条目、保存，然后在游戏中点击该刷新按钮，读取刚写好的条目并进行测试\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "[001]刷新口上文件后测试"
+msgstr ""
+
+msgid "[002]直接开始测试"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"测试开始\n"
+"\n"
+msgstr ""
+
+msgid "未找到该角色，请确认是否输入正确\n"
+msgstr ""
+
+msgid "未找到该口上，请确认是否输入正确\n"
+msgstr ""
+
+msgid "测试角色：{target_character_data.name}\n"
+msgstr ""
+
+msgid "  博士未获得该角色(X)\n"
+msgstr ""
+
+msgid "  博士已获得该角色(√)\n"
+msgstr ""
+
+msgid "  博士当前交互对象不是该角色(X)\n"
+msgstr ""
+
+msgid "  博士当前交互对象是该角色(√)\n"
+msgstr ""
+
+msgid ""
+"\n"
+"指令状态：{game_config.config_status[now_behavior_id].name}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"触发人与交互对象：\n"
+msgstr ""
+
+msgid "  触发人：博士\n"
+msgstr ""
+
+msgid "  触发人：NPC\n"
+msgstr ""
+
+msgid "  触发人：未填写，本测试中默认选择为NPC\n"
+msgstr ""
+
+msgid "  触发人：未填写，本测试中默认选择为博士\n"
+msgstr ""
+
+msgid "  交互对象：同触发人，二段结算的交互对象只能是触发人自己\n"
+msgstr ""
+
+msgid "  交互对象：博士\n"
+msgstr ""
+
+msgid "  交互对象：NPC\n"
+msgstr ""
+
+msgid "  交互对象：未填写，本测试中默认选择为NPC\n"
+msgstr ""
+
+msgid "  交互对象：未填写，本测试中默认选择为博士\n"
+msgstr ""
+
+msgid ""
+"\n"
+"口上原文本：\n"
+"  {talk_context}\n"
+msgstr ""
+
+msgid ""
+"口上输出文本：\n"
+"  {talk.code_text_to_draw_text(talk_context, start_chara_id)}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"前提条件：\n"
+msgstr ""
+
+msgid "  {premise}：满足(√)\n"
+msgstr ""
+
+msgid "  {premise}：不满足(X)\n"
+msgstr ""
+
+msgid ""
+"\n"
+"最终结果：\n"
+"  测试通过，该口上可以触发\n"
+msgstr ""
+
+msgid ""
+"\n"
+"最终结果：\n"
+"  测试未通过，该口上无法触发\n"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"开始刷新口上文件，请稍等\n"
+msgstr ""
+
+msgid ""
+"\n"
+"开始加载数据读取模块，该部分耗时较长\n"
+msgstr ""
+
+msgid ""
+"\n"
+"整体数据读取完成，开始处理口上数据\n"
+msgstr ""
+
+msgid ""
+"\n"
+"口上文件刷新完毕\n"
+msgstr ""
+
+msgid ""
+"原数据总数为{0}，新数据总数为{1}，新增数据总数为{2}\n"
+"\n"
+msgstr ""
