@@ -128,7 +128,7 @@ def get_base_updata():
         # 初始化患者人数上限，并刷新当天患者人数
         elif facility_name == _("医疗部"):
             cache.rhodes_island.patient_max = game_config.config_facility_effect[facility_cid].effect
-            cache.rhodes_island.patient_now = random.randint(cache.rhodes_island.patient_max / 2,cache.rhodes_island.patient_max)
+            cache.rhodes_island.patient_now = random.randint(int(cache.rhodes_island.patient_max / 2),cache.rhodes_island.patient_max)
         # 初始化科研区设施数量上限
         elif facility_name == _("科研部"):
             cache.rhodes_island.research_zone_max = game_config.config_facility_effect[facility_cid].effect
