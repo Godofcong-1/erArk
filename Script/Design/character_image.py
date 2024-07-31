@@ -3,11 +3,9 @@ from Script.Core import (
     cache_control,
     game_type,
     get_text,
+    era_image
 )
-from Script.Design import (
-    handle_premise
-)
-
+from Script.Design import handle_premise
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -27,7 +25,8 @@ def find_character_image_name(character_id: int) -> str:
 
     # 如果是女儿的话
     if character_data.relationship.father_id == 0:
-        image_name = "女儿_1"
+        character_image_name = "女儿_1"
+        image_name = character_image_name
     # 非女儿的正常干员角色
     else:
         character_image_name = _(character_data.name, revert_translation=True)
@@ -46,6 +45,7 @@ def find_character_image_name(character_id: int) -> str:
                     image_name += "_巨乳"
                 elif character_data.talent[125]:
                     image_name += "_爆乳"
-                else:
-                    image_name = character_image_name
+    # 如果目标图片不存在，则使用角色原始图片
+    if image_name not in era_image.image_data:
+        image_name = character_image_name
     return image_name
