@@ -33,7 +33,7 @@ def handle_talk(character_id: int):
     if (
         character_id != 0 and
         character_data.sp_flag.is_follow == 1 and
-        character_data.behavior.behavior_id == constant.Behavior.MOVE and
+        behavior_id == constant.Behavior.MOVE and
         (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(character_id))
     ):
         # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
@@ -42,7 +42,7 @@ def handle_talk(character_id: int):
     if (
         character_id == 0 and
         target_data.sp_flag.is_follow == 1 and
-        character_data.behavior.behavior_id == constant.Behavior.MOVE and
+        behavior_id == constant.Behavior.MOVE and
         (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(0))
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
@@ -50,6 +50,14 @@ def handle_talk(character_id: int):
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
     handle_talk_draw(character_id, now_talk_data)
+
+    # 玩家移动到NPC位置时，NPC的打招呼文本
+    if character_id == 0 and behavior_id == constant.Behavior.MOVE:
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        for chara_id in cache.scene_data[scene_path_str].character_list:
+            if chara_id > 0:
+                now_talk_data = handle_talk_sub(chara_id, behavior_id)
+                handle_talk_draw(chara_id, now_talk_data)
 
 
     # 第二段行为结算的口上
