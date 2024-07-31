@@ -8881,9 +8881,7 @@ def handle_player_come_scene(character_id: int) -> int:
     ):
         scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        for chara_id in scene_data.character_list:
-            if chara_id == 0:
-                continue
+        if character_id > 0 and character_id in scene_data.character_list:
             return 1
     return 0
 
