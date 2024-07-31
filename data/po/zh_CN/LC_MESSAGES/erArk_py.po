@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-31 10:28+0800\n"
+"POT-Creation-Date: 2024-07-31 18:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,128 +17,128 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: .\Script\Core\constant.py:2274
+#: .\Script\Core\constant.py:2276
 msgid "阿米娅"
 msgstr ""
 
-#: .\Script\Core\constant.py:2274 .\Script\UI\Panel\sp_event_panel.py:68
+#: .\Script\Core\constant.py:2276 .\Script\UI\Panel\sp_event_panel.py:68
 #: .\Script\UI\Panel\sp_event_panel.py:70
 msgid "凯尔希"
 msgstr ""
 
-#: .\Script\Core\constant.py:2274
+#: .\Script\Core\constant.py:2276
 msgid "可露希尔"
 msgstr ""
 
-#: .\Script\Core\constant.py:2274
+#: .\Script\Core\constant.py:2276
 msgid "特蕾西娅"
 msgstr ""
 
-#: .\Script\Core\constant.py:2274
+#: .\Script\Core\constant.py:2276
 msgid "华法琳"
 msgstr ""
 
-#: .\Script\Core\constant.py:2274
+#: .\Script\Core\constant.py:2276
 msgid "杜宾"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277
+#: .\Script\Core\constant.py:2279
 msgid "震动棒"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277
+#: .\Script\Core\constant.py:2279
 msgid "肛门震动棒"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3906
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3906
 msgid "正常位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3921
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3921
 msgid "背后位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3950
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3950
 msgid "骑乘位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3979
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3979
 msgid "对面座位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4008
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4008
 msgid "背面座位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4037
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4037
 msgid "对面立位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4065
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4065
 msgid "背面立位"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4093
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4093
 msgid "刺激G点"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4123
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4123
 msgid "玩弄子宫口"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4154
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4154
 msgid "插入子宫口"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4185
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4185
 msgid "子宫姦"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4216
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4216
 msgid "正常位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4243
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4243
 msgid "后背位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4270
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4270
 msgid "骑乘位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4297
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4297
 msgid "对面座位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4324
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4324
 msgid "背面座位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4351
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4351
 msgid "对面立位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4377
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4377
 msgid "背面立位肛交"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4403
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4403
 msgid "玩弄s状结肠"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:4431
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:4431
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277
+#: .\Script\Core\constant.py:2279
 msgid "二穴插入"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3088
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3088
 msgid "继续享受"
 msgstr ""
 
-#: .\Script\Core\constant.py:2277 .\Script\Design\handle_instruct.py:3071
+#: .\Script\Core\constant.py:2279 .\Script\Design\handle_instruct.py:3071
 msgid "交给对方"
 msgstr ""
 
@@ -752,18 +752,18 @@ msgstr ""
 msgid "[确定]"
 msgstr ""
 
-#: .\Script\Design\character.py:602 .\Script\Design\handle_premise.py:11539
-#: .\Script\Design\handle_premise.py:11558
-#: .\Script\Design\handle_premise.py:11577
-#: .\Script\Design\handle_premise.py:11596
-#: .\Script\Design\handle_premise.py:11615
-#: .\Script\Design\handle_premise.py:11634
-#: .\Script\Design\handle_premise.py:11653
-#: .\Script\Design\handle_premise.py:11730
-#: .\Script\Design\handle_premise.py:11811
-#: .\Script\Design\handle_premise.py:11833
-#: .\Script\Design\handle_premise.py:11860
-#: .\Script\Design\handle_premise.py:11883 .\Script\Settle\default.py:1219
+#: .\Script\Design\character.py:602 .\Script\Design\handle_premise.py:11537
+#: .\Script\Design\handle_premise.py:11556
+#: .\Script\Design\handle_premise.py:11575
+#: .\Script\Design\handle_premise.py:11594
+#: .\Script\Design\handle_premise.py:11613
+#: .\Script\Design\handle_premise.py:11632
+#: .\Script\Design\handle_premise.py:11651
+#: .\Script\Design\handle_premise.py:11728
+#: .\Script\Design\handle_premise.py:11809
+#: .\Script\Design\handle_premise.py:11831
+#: .\Script\Design\handle_premise.py:11858
+#: .\Script\Design\handle_premise.py:11881 .\Script\Settle\default.py:1219
 #: .\Script\Settle\default.py:1329 .\Script\UI\Panel\ability_up_panel.py:197
 #: .\Script\UI\Panel\ability_up_panel.py:435
 #: .\Script\UI\Panel\aromatherapy.py:104
@@ -2858,6 +2858,108 @@ msgstr ""
 msgid "在苦痛刻印的影响下，{0}的受虐提升至5级\n"
 msgstr ""
 
+#: .\Script\Design\talk.py:234
+msgid "射精"
+msgstr ""
+
+#: .\Script\Design\talk.py:234
+msgid "大量射精"
+msgstr ""
+
+#: .\Script\Design\talk.py:234
+msgid "超大量射精"
+msgstr ""
+
+#: .\Script\Design\talk.py:251
+msgid "小"
+msgstr ""
+
+#: .\Script\Design\talk.py:251
+msgid "普"
+msgstr ""
+
+#: .\Script\Design\talk.py:251
+msgid "强"
+msgstr ""
+
+#: .\Script\Design\talk.py:256
+#, python-brace-format
+msgid ""
+"\n"
+"{0}{1}{2}绝顶\n"
+msgstr ""
+
+#: .\Script\Design\talk.py:259
+#, python-brace-format
+msgid ""
+"\n"
+"{0}饮精绝顶\n"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "双重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "三重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "四重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "五重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "六重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "七重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "八重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "九重"
+msgstr ""
+
+#: .\Script\Design\talk.py:262
+msgid "十重"
+msgstr ""
+
+#: .\Script\Design\talk.py:264
+#, python-brace-format
+msgid ""
+"\n"
+"{0}{1}绝顶\n"
+msgstr ""
+
+#: .\Script\Design\talk.py:278
+#, python-brace-format
+msgid ""
+"\n"
+"{0}获得了{1}刻印{2}\n"
+msgstr ""
+
+#: .\Script\Design\talk.py:284
+#, python-brace-format
+msgid ""
+"\n"
+"{0}因B绝顶而被迫喷乳\n"
+msgstr ""
+
+#: .\Script\Design\talk.py:288
+#, python-brace-format
+msgid ""
+"\n"
+"{0}因U绝顶而被迫漏尿\n"
+msgstr ""
+
 #: .\Script\Settle\default.py:523 .\Script\Settle\default.py:552
 #: .\Script\Settle\default.py:600 .\Script\Settle\default.py:631
 #: .\Script\Settle\default.py:672 .\Script\Settle\default.py:714
@@ -3957,11 +4059,6 @@ msgid ""
 "  当前选择的调香配方  ："
 msgstr ""
 
-#: .\Script\UI\Panel\aromatherapy.py:86
-#, python-brace-format
-msgid "  {0}"
-msgstr ""
-
 #: .\Script\UI\Panel\aromatherapy.py:92
 msgid " [001]选择配方 "
 msgstr ""
@@ -4350,13 +4447,6 @@ msgid ""
 "{0}提升到{1}级了！\n"
 msgstr ""
 
-#: .\Script\UI\Panel\building_panel.py:361
-#, python-brace-format
-msgid ""
-"\n"
-"{0}"
-msgstr ""
-
 #: .\Script\UI\Panel\building_panel.py:394
 #, python-brace-format
 msgid ""
@@ -4628,13 +4718,6 @@ msgstr ""
 
 #: .\Script\UI\Panel\debug_panel.py:1361
 msgid "继续修改"
-msgstr ""
-
-#: .\Script\UI\Panel\diary_panel.py:54 .\Script\UI\Panel\diary_panel.py:59
-#, python-brace-format
-msgid ""
-"{0}\n"
-"\n"
 msgstr ""
 
 #: .\Script\UI\Panel\diary_panel.py:108
@@ -5223,13 +5306,6 @@ msgstr ""
 msgid ""
 "\n"
 "    当前生产：{0}(1/h)      "
-msgstr ""
-
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:104
-#: .\Script\UI\Panel\manage_assembly_line_panel.py:361
-#: .\Script\UI\Panel\recruit_panel.py:78 .\Script\UI\Panel\recruit_panel.py:268
-#, python-brace-format
-msgid "{0}_{1}"
 msgstr ""
 
 #: .\Script\UI\Panel\manage_assembly_line_panel.py:124
@@ -6010,11 +6086,6 @@ msgid ""
 "    当前冰箱里没有母乳\n"
 msgstr ""
 
-#: .\Script\UI\Panel\normal_panel.py:561
-#, python-brace-format
-msgid "  [{0}]{1}：{2}ml"
-msgstr ""
-
 #: .\Script\UI\Panel\normal_panel.py:566
 msgid "  [带走]  "
 msgstr ""
@@ -6705,6 +6776,11 @@ msgstr ""
 
 #: .\Script\UI\Panel\recruit_panel.py:75
 msgid " [调整策略] "
+msgstr ""
+
+#: .\Script\UI\Panel\recruit_panel.py:78 .\Script\UI\Panel\recruit_panel.py:268
+#, python-brace-format
+msgid "{0}_{1}"
 msgstr ""
 
 #: .\Script\UI\Panel\recruit_panel.py:91

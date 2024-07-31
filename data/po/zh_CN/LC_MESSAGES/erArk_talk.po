@@ -20661,546 +20661,550 @@ msgid "触发读写存档指令的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:7
-msgid "\n{Name}触发了N小绝顶的地文"
+msgid "{Name}触发了N小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:8
-msgid "\n{Name}触发了N普绝顶的地文"
+msgid "{Name}触发了N普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:9
-msgid "\n{Name}触发了N强绝顶的地文"
+msgid "{Name}触发了N强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:10
-msgid "\n{Name}触发了B小绝顶的地文"
+msgid "{Name}触发了B小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:11
-msgid "\n{Name}触发了B普绝顶的地文"
+msgid "{Name}触发了B普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:12
-msgid "\n{Name}触发了B强绝顶的地文"
+msgid "{Name}触发了B强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:13
-msgid "\n{Name}触发了C小绝顶的地文"
+msgid "{Name}触发了C小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:14
-msgid "\n{Name}触发了C普绝顶的地文"
+msgid "{Name}触发了C普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:15
-msgid "\n{Name}触发了C强绝顶的地文"
+msgid "{Name}触发了C强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:16
-msgid "\n{Name}触发了射精的地文"
+msgid "{Name}触发了射精的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:17
-msgid "\n{Name}触发了大量射精的地文"
+msgid "{Name}触发了大量射精的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:18
-msgid "\n{Name}触发了超大量射精的地文"
+msgid "{Name}触发了超大量射精的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:19
-msgid "\n{Name}触发了V小绝顶的地文"
+msgid "{Name}触发了V小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:20
-msgid "\n{Name}触发了V普绝顶的地文"
+msgid "{Name}触发了V普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:21
-msgid "\n{Name}触发了V强绝顶的地文"
+msgid "{Name}触发了V强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:22
-msgid "\n{Name}触发了A小绝顶的地文"
+msgid "{Name}触发了A小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:23
-msgid "\n{Name}触发了A普绝顶的地文"
+msgid "{Name}触发了A普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:24
-msgid "\n{Name}触发了A强绝顶的地文"
+msgid "{Name}触发了A强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:25
-msgid "\n{Name}触发了U小绝顶的地文"
+msgid "{Name}触发了U小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:26
-msgid "\n{Name}触发了U普绝顶的地文"
+msgid "{Name}触发了U普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:27
-msgid "\n{Name}触发了U强绝顶的地文"
+msgid "{Name}触发了U强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:28
-msgid "\n{Name}触发了W小绝顶的地文"
+msgid "{Name}触发了W小绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:29
-msgid "\n{Name}触发了W普绝顶的地文"
+msgid "{Name}触发了W普绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:30
-msgid "\n{Name}触发了W强绝顶的地文"
+msgid "{Name}触发了W强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:31
-msgid "\n{Name}触发了额外绝顶的地文"
+msgid "{Name}触发了额外绝顶的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:33
-msgid "\n{Name}触发了快乐刻印1的地文"
+#: .\data\talk\system\second.csv:32
+msgid "{Name}触发了饮精绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:34
-msgid "\n{Name}触发了快乐刻印2的地文"
+msgid "{Name}触发了快乐刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:35
-msgid "\n{Name}触发了快乐刻印3的地文"
+msgid "{Name}触发了快乐刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:36
-msgid "\n{Name}触发了屈服刻印1的地文"
+msgid "{Name}触发了快乐刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:37
-msgid "\n{Name}触发了屈服刻印2的地文"
+msgid "{Name}触发了屈服刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:38
-msgid "\n{Name}触发了屈服刻印3的地文"
+msgid "{Name}触发了屈服刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:39
-msgid "\n{Name}触发了苦痛刻印1的地文"
+msgid "{Name}触发了屈服刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:40
-msgid "\n{Name}触发了苦痛刻印2的地文"
+msgid "{Name}触发了苦痛刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:41
-msgid "\n{Name}触发了苦痛刻印3的地文"
+msgid "{Name}触发了苦痛刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:42
-msgid "\n{Name}触发了时姦刻印1的地文"
+msgid "{Name}触发了苦痛刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:43
-msgid "\n{Name}触发了时姦刻印2的地文"
+msgid "{Name}触发了时姦刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:44
-msgid "\n{Name}触发了时姦刻印3的地文"
+msgid "{Name}触发了时姦刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:45
-msgid "\n{Name}触发了恐怖刻印1的地文"
+msgid "{Name}触发了时姦刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:46
-msgid "\n{Name}触发了恐怖刻印2的地文"
+msgid "{Name}触发了恐怖刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:47
-msgid "\n{Name}触发了恐怖刻印3的地文"
+msgid "{Name}触发了恐怖刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:48
-msgid "\n{Name}触发了反发刻印1的地文"
+msgid "{Name}触发了恐怖刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:49
-msgid "\n{Name}触发了反发刻印2的地文"
+msgid "{Name}触发了反发刻印1的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:50
-msgid "\n{Name}触发了反发刻印3的地文"
+msgid "{Name}触发了反发刻印2的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:51
-msgid "\n{Name}触发了失去初吻的地文"
+msgid "{Name}触发了反发刻印3的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:52
-msgid "\n{Name}触发了失去处女的地文"
+msgid "{Name}触发了失去初吻的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:53
-msgid "\n{Name}触发了失去A处女的地文"
+msgid "{Name}触发了失去处女的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:54
-msgid "干员{TargetName}获得无觉刻印1的口上"
+msgid "{Name}触发了失去A处女的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:55
-msgid "干员{TargetName}获得无觉刻印2的口上"
+msgid "干员{TargetName}获得无觉刻印1的口上"
 msgstr ""
 
 #: .\data\talk\system\second.csv:56
-msgid "干员{TargetName}获得无觉刻印3的口上"
+msgid "干员{TargetName}获得无觉刻印2的口上"
 msgstr ""
 
 #: .\data\talk\system\second.csv:57
-msgid "干员{TargetName}获得无觉刻印4的口上"
+msgid "干员{TargetName}获得无觉刻印3的口上"
 msgstr ""
 
 #: .\data\talk\system\second.csv:58
-msgid "干员{TargetName}获得无觉刻印5的口上"
+msgid "干员{TargetName}获得无觉刻印4的口上"
 msgstr ""
 
 #: .\data\talk\system\second.csv:59
+msgid "干员{TargetName}获得无觉刻印5的口上"
+msgstr ""
+
+#: .\data\talk\system\second.csv:60
 msgid "干员{TargetName}获得无觉刻印6的口上"
 msgstr ""
 
-#: .\data\talk\system\second.csv:61
-msgid "\n{Name}触发了因B绝顶而被迫喷乳的地文"
-msgstr ""
-
 #: .\data\talk\system\second.csv:62
-msgid "\n{Name}触发了因U绝顶而被迫漏尿的地文"
+msgid "{Name}触发了因B绝顶而被迫喷乳的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:64
-msgid "\n{Name}触发了双重绝顶的地文"
+#: .\data\talk\system\second.csv:63
+msgid "{Name}触发了因U绝顶而被迫漏尿的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:65
-msgid "\n{Name}触发了三重绝顶的地文"
+msgid "{Name}触发了双重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:66
-msgid "\n{Name}触发了四重绝顶的地文"
+msgid "{Name}触发了三重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:67
-msgid "\n{Name}触发了五重绝顶的地文"
+msgid "{Name}触发了四重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:68
-msgid "\n{Name}触发了六重绝顶的地文"
+msgid "{Name}触发了五重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:69
-msgid "\n{Name}触发了七重绝顶的地文"
+msgid "{Name}触发了六重绝顶的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:71
-msgid "\n{Name}触发了乳头夹持续使用中的地文"
+#: .\data\talk\system\second.csv:70
+msgid "{Name}触发了七重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:72
-msgid "\n{Name}触发了阴蒂夹持续使用中的地文"
+msgid "\n{Name}触发了乳头夹持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:73
-msgid "\n{Name}触发了震动棒持续使用中的地文"
+msgid "\n{Name}触发了阴蒂夹持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:74
-msgid "\n{Name}触发了肛门振动棒持续使用中的地文"
+msgid "\n{Name}触发了震动棒持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:75
-msgid "\n{Name}触发了搾乳机持续使用中的地文，共榨出了{MilkMl}毫升母乳"
+msgid "\n{Name}触发了肛门振动棒持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:76
-msgid "\n{Name}触发了采尿器持续使用中的地文"
+msgid "\n{Name}触发了搾乳机持续使用中的地文，共榨出了{MilkMl}毫升母乳"
 msgstr ""
 
 #: .\data\talk\system\second.csv:77
-msgid "\n{Name}触发了眼罩持续使用中的地文"
+msgid "\n{Name}触发了采尿器持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:78
-msgid "\n{Name}触发了肛门拉珠持续使用中的地文"
+msgid "\n{Name}触发了眼罩持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:79
-msgid "\n{Name}触发了利尿剂持续使用中的地文"
+msgid "\n{Name}触发了肛门拉珠持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:80
-msgid "\n{Name}触发了安眠药持续使用中的地文"
+msgid "\n{Name}触发了利尿剂持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:81
-msgid "\n{Name}触发了排卵促进药持续使用中的地文"
+msgid "\n{Name}触发了安眠药持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:82
-msgid "\n{Name}触发了事前避孕药持续使用中的地文"
+msgid "\n{Name}触发了排卵促进药持续使用中的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:83
+msgid "\n{Name}触发了事前避孕药持续使用中的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:84
 msgid "\n{Name}触发了事后避孕药持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:85
+#: .\data\talk\system\second.csv:86
 msgid "\n{Name}触发了发交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:86
+#: .\data\talk\system\second.csv:87
 msgid "\n{Name}触发了阴茎蹭脸中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:87
+#: .\data\talk\system\second.csv:88
 msgid "\n{Name}触发了口交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:88
+#: .\data\talk\system\second.csv:89
 msgid "\n{Name}触发了乳交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:89
+#: .\data\talk\system\second.csv:90
 msgid "\n{Name}触发了腋交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:90
+#: .\data\talk\system\second.csv:91
 msgid "\n{Name}触发了手交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:91
+#: .\data\talk\system\second.csv:92
 msgid "\n{Name}触发了抽插阴道中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:92
+#: .\data\talk\system\second.csv:93
 msgid "\n{Name}触发了抽插子宫中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:93
+#: .\data\talk\system\second.csv:94
 msgid "\n{Name}触发了抽插后穴中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:94
+#: .\data\talk\system\second.csv:95
 msgid "\n{Name}触发了抽插尿道中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:95
+#: .\data\talk\system\second.csv:96
 msgid "\n{Name}触发了腿交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:96
+#: .\data\talk\system\second.csv:97
 msgid "\n{Name}触发了足交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:97
+#: .\data\talk\system\second.csv:98
 msgid "\n{Name}触发了尾交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:98
+#: .\data\talk\system\second.csv:99
 msgid "\n{Name}触发了阴茎蹭角中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:99
+#: .\data\talk\system\second.csv:100
 msgid "\n{Name}触发了阴茎蹭耳朵中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:100
+#: .\data\talk\system\second.csv:101
 msgid "\n{Name}触发了素股中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:102
+#: .\data\talk\system\second.csv:103
 msgid "\n{Name}触发了获得[思慕]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:103
+#: .\data\talk\system\second.csv:104
 msgid "\n{Name}触发了获得[恋慕]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:104
+#: .\data\talk\system\second.csv:105
 msgid "\n{Name}触发了获得[恋人]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:105
+#: .\data\talk\system\second.csv:106
 msgid "\n{Name}触发了获得[爱侣]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:106
+#: .\data\talk\system\second.csv:107
 msgid "\n{Name}触发了获得[屈从]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:107
+#: .\data\talk\system\second.csv:108
 msgid "\n{Name}触发了获得[驯服]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:108
+#: .\data\talk\system\second.csv:109
 msgid "\n{Name}触发了获得[宠物]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:109
+#: .\data\talk\system\second.csv:110
 msgid "\n{Name}触发了获得[奴隶]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:111
+#: .\data\talk\system\second.csv:112
 msgid "\n{Name}触发了获得[受精]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:112
+#: .\data\talk\system\second.csv:113
 msgid "\n{Name}触发了受精失败的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:113
+#: .\data\talk\system\second.csv:114
 msgid "\n{Name}触发了获得[妊娠]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:114
+#: .\data\talk\system\second.csv:115
 msgid "\n{Name}触发了获得[临盆]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:115
+#: .\data\talk\system\second.csv:116
 msgid "\n{Name}触发了生产前的对话的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:116
+#: .\data\talk\system\second.csv:117
 msgid "\n{Name}触发了生产后的对话的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:117
+#: .\data\talk\system\second.csv:118
 msgid "\n{Name}触发了生产后的对话+获得[产后]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:118
+#: .\data\talk\system\second.csv:119
 msgid "\n{Name}触发了获得[育儿]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:119
+#: .\data\talk\system\second.csv:120
 msgid "\n{Name}触发了育儿完成的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:120
+#: .\data\talk\system\second.csv:121
 msgid "\n{Name}触发了幼女长成萝莉的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:121
+#: .\data\talk\system\second.csv:122
 msgid "\n{Name}触发了萝莉长成少女的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:123
+#: .\data\talk\system\second.csv:124
 msgid "\n{Name}触发了初次见面的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:124
+#: .\data\talk\system\second.csv:125
 msgid "\n{Name}触发了每日打招呼的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:126
+#: .\data\talk\system\second.csv:127
 msgid "\n{Name}触发了新周目告别的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:128
+#: .\data\talk\system\second.csv:129
 msgid "\n{Name}触发了被选为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:129
+#: .\data\talk\system\second.csv:130
 msgid "\n{Name}触发了不再为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:130
+#: .\data\talk\system\second.csv:131
 msgid "\n{Name}触发了关闭智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:131
+#: .\data\talk\system\second.csv:132
 msgid "\n{Name}触发了开启智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:132
+#: .\data\talk\system\second.csv:133
 msgid "\n{Name}触发了要求前往办公室的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:133
+#: .\data\talk\system\second.csv:134
 msgid "\n{Name}触发了关闭辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:134
+#: .\data\talk\system\second.csv:135
 msgid "\n{Name}触发了开启辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:135
+#: .\data\talk\system\second.csv:136
 msgid "\n{Name}触发了关闭送饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:136
+#: .\data\talk\system\second.csv:137
 msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:137
+#: .\data\talk\system\second.csv:138
 msgid "\n{Name}触发了开启亲手做午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:138
+#: .\data\talk\system\second.csv:139
 msgid "\n{Name}触发了开启亲手做三餐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:139
+#: .\data\talk\system\second.csv:140
 msgid "\n{Name}触发了关闭早安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:140
+#: .\data\talk\system\second.csv:141
 msgid "\n{Name}触发了开启早上叫起床服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:141
+#: .\data\talk\system\second.csv:142
 msgid "\n{Name}触发了开启早安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:142
+#: .\data\talk\system\second.csv:143
 msgid "\n{Name}触发了开启早安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:143
+#: .\data\talk\system\second.csv:144
 msgid "\n{Name}触发了关闭晚安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:144
+#: .\data\talk\system\second.csv:145
 msgid "\n{Name}触发了开启晚安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:145
+#: .\data\talk\system\second.csv:146
 msgid "\n{Name}触发了开启晚安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:146
+#: .\data\talk\system\second.csv:147
 msgid "\n{Name}触发了关闭同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:147
+#: .\data\talk\system\second.csv:148
 msgid "\n{Name}触发了开启同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:148
+#: .\data\talk\system\second.csv:149
 msgid "\n{Name}触发了关闭助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:149
+#: .\data\talk\system\second.csv:150
 msgid "\n{Name}触发了开启助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:151
+#: .\data\talk\system\second.csv:152
 msgid "\n{Name}触发了获得[已催眠·浅]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:152
+#: .\data\talk\system\second.csv:153
 msgid "\n{Name}触发了获得[已催眠·深]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:153
+#: .\data\talk\system\second.csv:154
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
 msgstr ""
 

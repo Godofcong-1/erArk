@@ -1,11 +1,14 @@
 import random
-from Script.Core import cache_control, game_type, value_handle, constant
+from types import FunctionType
+from Script.Core import cache_control, game_type, value_handle, get_text, constant
 from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 def handle_talk(character_id: int):
@@ -68,7 +71,7 @@ def handle_talk(character_id: int):
             now_talk_data = handle_talk_sub(character_id, second_behavior_id)
             # 触发后该行为值归零
             character_data.second_behavior[second_behavior_id] = 0
-            handle_talk_draw(character_id, now_talk_data)
+            handle_talk_draw(character_id, now_talk_data, second_behavior_id)
 
     # 交互对象
     if character_id == 0 and character_data.target_character_id:
@@ -79,7 +82,7 @@ def handle_talk(character_id: int):
                 now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
                 # 触发后该行为值归零
                 target_character_data.second_behavior[second_behavior_id] = 0
-                handle_talk_draw(target_character_id, now_talk_data)
+                handle_talk_draw(target_character_id, now_talk_data, second_behavior_id)
 
 
 def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
@@ -159,12 +162,13 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
     return now_talk_data
 
 
-def handle_talk_draw(character_id: int, now_talk_data: dict):
+def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id = 0):
     """
     处理行为结算对话的输出
     Keyword arguments:
     character_id -- 角色id
     now_talk_data -- 口上数据
+    second_behavior_id -- 二段行为id，默认为0
     """
     now_talk = ""
     if len(now_talk_data):
@@ -172,6 +176,9 @@ def handle_talk_draw(character_id: int, now_talk_data: dict):
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         now_talk = game_config.config_talk[now_talk_id].context
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
+    # 二段结算前会单独绘制一个信息文本
+    if second_behavior_id > 0:
+        second_behavior_info_text(character_id, second_behavior_id)
     if now_talk != "":
         now_talk_text = code_text_to_draw_text(now_talk, character_id)
         now_draw = draw.LineFeedWaitDraw()
@@ -205,7 +212,91 @@ def must_show_talk_check(character_id: int):
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
-                handle_talk_draw(character_id, now_talk_data)
+                handle_talk_draw(character_id, now_talk_data, second_behavior_id)
+
+
+def second_behavior_info_text(character_id: int, second_behavior_id: int):
+    """
+    二段行为结算的信息文本
+    Keyword arguments:
+    character_id -- 角色id
+    second_behavior_id -- 二段行为id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    chara_name = character_data.name
+    info_draw = draw.WaitDraw()
+    info_text = ""
+    info_draw.style = "standard"
+    # 部位绝顶
+    if 1000 <= second_behavior_id < 1030:
+        # 玩家
+        if character_id == 0:
+            orgasm_degree_list = [_("射精"), _("大量射精"), _("超大量射精")]
+            orgasm_degree = _(orgasm_degree_list[second_behavior_id % 3 - 1])
+            info_text = "\n{0}{1}\n".format(chara_name, orgasm_degree)
+            info_draw.style = "semen"
+        # NPC
+        else:
+            # 定义映射字典和列表
+            orgasm_name_map = {
+                range(1000, 1003): "N",
+                range(1003, 1006): "B",
+                range(1006, 1009): "C",
+                range(1009, 1012): "P",
+                range(1012, 1015): "V",
+                range(1015, 1018): "A",
+                range(1018, 1021): "U",
+                range(1021, 1024): "W"
+            }
+            orgasm_degree_list = [_("小"), _("普"), _("强")]
+            # 查找对应的部位名与绝顶程度名
+            orgasm_name = next((name for key, name in orgasm_name_map.items() if second_behavior_id in key), None)
+            orgasm_degree = _(orgasm_degree_list[second_behavior_id % 3 - 1])
+            # 最后文本
+            info_text = _("\n{0}{1}{2}绝顶\n").format(chara_name, orgasm_name, orgasm_degree)
+    # 饮精绝顶
+    elif second_behavior_id == 1027:
+        info_text = _("\n{0}饮精绝顶\n").format(chara_name, count_name)
+    # 多重绝顶
+    elif 1081 <= second_behavior_id < 1090:
+        count_name_list = [_("双重"), _("三重"), _("四重"), _("五重"), _("六重"), _("七重"), _("八重"), _("九重"), _("十重")]
+        count_name = count_name_list[second_behavior_id - 1081]
+        info_text = _("\n{0}{1}绝顶\n").format(chara_name, count_name)
+    # 一般刻印
+    elif 1030 <= second_behavior_id < 1050:
+        # 定义映射字典和列表
+        mark_name_map = {
+            range(1030, 1033): "快乐",
+            range(1033, 1036): "屈服",
+            range(1036, 1039): "苦痛",
+            range(1039, 1042): "时姦",
+            range(1042, 1045): "恐怖",
+            range(1045, 1048): "反发",
+        }
+        mark_name = next((name for key, name in mark_name_map.items() if second_behavior_id in key), None)
+        mark_degree = (second_behavior_id % 3)
+        info_text = _("\n{0}获得了{1}刻印{2}\n").format(chara_name, mark_name, mark_degree)
+        # 如果是恐怖和反发刻印，则将绘制变成猩红
+        if second_behavior_id in range(1042, 1048):
+            info_draw.style = "crimson"
+    # B绝顶喷乳
+    elif second_behavior_id == 1071:
+        info_text = _("\n{0}因B绝顶而被迫喷乳\n").format(chara_name)
+        info_draw.style = "semen"
+    # U绝顶漏尿
+    elif second_behavior_id == 1072:
+        info_text = _("\n{0}因U绝顶而被迫漏尿\n").format(chara_name)
+        info_draw.style = "khaki"
+
+    # 最后补一个换行
+    if info_text != "":
+        info_text += "\n"
+        if info_draw.style == "standard":
+            info_draw.style = "gold_enrod"
+        info_draw.text = info_text
+        info_draw.draw()
+
+    return info_text
 
 
 def code_text_to_draw_text(now_talk:str, character_id: int):

@@ -6569,3 +6569,81 @@ msgid ""
 "原数据总数为{0}，新数据总数为{1}，新增数据总数为{2}\n"
 "\n"
 msgstr ""
+
+msgid "射精"
+msgstr ""
+
+msgid "大量射精"
+msgstr ""
+
+msgid "超大量射精"
+msgstr ""
+
+msgid "小"
+msgstr ""
+
+msgid "普"
+msgstr ""
+
+msgid "强"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}{1}{2}绝顶\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}饮精绝顶\n"
+msgstr ""
+
+msgid "双重"
+msgstr ""
+
+msgid "三重"
+msgstr ""
+
+msgid "四重"
+msgstr ""
+
+msgid "五重"
+msgstr ""
+
+msgid "六重"
+msgstr ""
+
+msgid "七重"
+msgstr ""
+
+msgid "八重"
+msgstr ""
+
+msgid "九重"
+msgstr ""
+
+msgid "十重"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}{1}绝顶\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}获得了{1}刻印{2}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}因B绝顶而被迫喷乳\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}因U绝顶而被迫漏尿\n"
+msgstr ""
+
+msgid "凭证"
+msgstr ""
