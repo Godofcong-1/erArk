@@ -88,10 +88,10 @@ def init_attr(character_id: int):
         character_data.dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]) # 此处不可使用翻译
         character_data.pre_dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"])
         # 初始收藏地点
-        cache.collect_position_list.append([_('中枢'), _('博士房间')])
-        cache.collect_position_list.append([_('中枢'), _('博士办公室')])
-        cache.collect_position_list.append([_('贸易'), _('成人用品店')])
-        cache.collect_position_list.append([_('书'), _('藏品馆')])
+        cache.collect_position_list.append(['中枢', '博士房间'])
+        cache.collect_position_list.append(['中枢', '博士办公室'])
+        cache.collect_position_list.append(['贸易', '成人用品店'])
+        cache.collect_position_list.append(['书', '藏品馆'])
 
     # 一系列初始化函数
     init_character_behavior_start_time(character_id,cache.game_time)

@@ -155,7 +155,8 @@ class BuyItemByItemNameDraw:
         # 可购买：1消耗品且数量小于99，2非消耗品且未持有
         if (flag_consumables and flag_not_max) or (not flag_consumables and not flag_have):
             if num_button:
-                button_text = f"{index_text}{item_config.name}：{item_config.price}凭证"
+                button_text = f"{index_text}{item_config.name}：{item_config.price}"
+                button_text += _("凭证")
                 draw_style = "standard"
                 if flag_consumables:
                     button_text += _("(持有：") + str(self.character_data.item[self.text]) + ")"
@@ -169,7 +170,8 @@ class BuyItemByItemNameDraw:
             self.draw_text = button_text
         else:
             name_draw = draw.LeftDraw()
-            name_draw.text = f"{index_text}{item_config.name}：{item_config.price}凭证"
+            name_draw.text = f"{index_text}{item_config.name}：{item_config.price}"
+            name_draw.text += _("凭证")
             if flag_consumables:
                 name_draw.text += _("(持有：") + str(self.character_data.item[self.text]) + ")"
             else:
