@@ -51,12 +51,12 @@ class Diary_Panel:
             return_list = []
 
             info_text = ""
-            info_text += _("{0}\n\n").format(self.time_text)
+            info_text += "{0}\n\n".format(self.time_text)
             for i in cache.daily_intsruce:
                 info_text += i
             info_text += "\n\n"
             if len(self.all_insert_text) > 0:
-                info_text += _("{0}\n\n").format(self.all_insert_text)
+                info_text += "{0}\n\n".format(self.all_insert_text)
             info_draw.text = info_text
             info_draw.draw()
 

@@ -83,7 +83,7 @@ class Aromatherapy_Panel:
             # 当前配方
             now_text = ""
             now_text += _("\n  当前选择的调香配方  ：")
-            now_text += _("  {0}").format(game_config.config_aromatherapy_recipes[self.now_choice_recipe_id].name)
+            now_text += "  {0}".format(game_config.config_aromatherapy_recipes[self.now_choice_recipe_id].name)
             all_info_draw.text = now_text
             all_info_draw.draw()
             line_feed.draw()

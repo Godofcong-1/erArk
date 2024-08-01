@@ -101,7 +101,7 @@ class Manage_Assembly_Line_Panel:
                 button_text = _(" [生产调整] ")
                 button_draw = draw.CenterButton(
                     _(button_text),
-                    _("{0}_{1}").format(button_text, assembly_line_id),
+                    "{0}_{1}".format(button_text, assembly_line_id),
                     len(button_text) * 2,
                     cmd_func=self.select_assembly_line_produce,
                     args=assembly_line_id,
@@ -358,7 +358,7 @@ class Manage_Assembly_Line_Panel:
                 button_text = _(" [将选择工人调整至该流水线] ")
                 button_draw = draw.CenterButton(
                 _(button_text),
-                _("{0}_{1}").format(button_text, assembly_line_id),
+                "{0}_{1}".format(button_text, assembly_line_id),
                 int(len(button_text)*2),
                 cmd_func=self.settle_assembly_line_id,
                 args=assembly_line_id,

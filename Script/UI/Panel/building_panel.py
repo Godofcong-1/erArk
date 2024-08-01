@@ -358,7 +358,7 @@ class Building_Panel:
                     draw_text = f"[{facility_cid}]{open_data.name}"
                     now_draw = draw.LeftButton(
                         draw_text,
-                        _("\n{0}").format(open_data.name),
+                        "\n{0}".format(open_data.name),
                         self.width / 6,
                         cmd_func=self.sure_build_trade,
                         args=(facility_open_cid),

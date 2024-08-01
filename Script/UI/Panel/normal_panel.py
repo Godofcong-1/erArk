@@ -558,7 +558,7 @@ class Fridge_Panel:
                 character_data = cache.character_data[character_id]
                 character_name = character_data.name
                 character_milk = cache.rhodes_island.milk_in_fridge[character_id]
-                draw_text = _("  [{0}]{1}：{2}ml").format(str(character_data.adv).rjust(4,'0'), character_name, character_milk)
+                draw_text = ("  [{0}]{1}：{2}ml").format(str(character_data.adv).rjust(4,'0'), character_name, character_milk)
                 draw_text = draw_text.ljust(20, "　")
                 now_draw.text = draw_text
                 now_draw.draw()

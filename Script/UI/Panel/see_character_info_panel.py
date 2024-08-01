@@ -96,10 +96,10 @@ class SeeCharacterInfoPanel:
 
     def draw(self):
         """绘制面板"""
-        if self.now_panel == "玩家能力" and "玩家能力" not in self.draw_data:
-            self.now_panel = "肉体情况"
-        elif self.now_panel == "肉体情况" and "肉体情况" not in self.draw_data:
-            self.now_panel = "玩家能力"
+        if self.now_panel == _("玩家能力") and _("玩家能力") not in self.draw_data:
+            self.now_panel = _("肉体情况")
+        elif self.now_panel == _("肉体情况") and _("肉体情况") not in self.draw_data:
+            self.now_panel = _("玩家能力")
         self.draw_data[self.now_panel].draw()
         self.return_list = []
         self.return_list.extend(self.draw_data[self.now_panel].return_list)
