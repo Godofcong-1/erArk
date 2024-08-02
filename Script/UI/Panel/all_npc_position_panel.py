@@ -95,8 +95,9 @@ class All_Npc_Position_Panel:
                     now_draw.draw()
                 else:
                     draw_text = f"  {select_type_list[select_type_id]}     "
+                    now_draw_width = min(len(draw_text) * 2, self.width / 2.5)
                     now_draw = draw.LeftButton(
-                        draw_text, select_type_list[select_type_id], len(draw_text) * 2, cmd_func=self.select_type_change, args=(select_type_id,)
+                        draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=self.select_type_change, args=(select_type_id,)
                     )
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
@@ -122,8 +123,9 @@ class All_Npc_Position_Panel:
                     now_draw.draw()
                 else:
                     draw_text = f"  {move_type_text}     "
+                    now_draw_width = min(len(draw_text) * 2, self.width / 3)
                     now_draw = draw.LeftButton(
-                        draw_text, move_type_text, len(draw_text) * 2, cmd_func=self.move_type_change, args=(move_type_id,)
+                        draw_text, move_type_text, now_draw_width, cmd_func=self.move_type_change, args=(move_type_id,)
                     )
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
