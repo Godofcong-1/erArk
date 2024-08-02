@@ -180,10 +180,18 @@ class All_Npc_Position_Panel:
                     else:
                         now_draw_text += _("正在：{0}").format(status_text)
 
+                    # 如果有口上颜色的话，使用口上颜色
+                    if character_data.text_color:
+                        now_style = character_data.name
+                    # 否则使用标准颜色
+                    else:
+                        now_style = "standard"
+
                     # 输出按钮
                     name_draw = draw.LeftButton(
                         now_draw_text, name, draw_width, cmd_func=self.move, args=(npc_id,)
                     )
+                    name_draw.normal_style = now_style
                     name_draw.draw()
                     return_list.append(name_draw.return_text)
 
