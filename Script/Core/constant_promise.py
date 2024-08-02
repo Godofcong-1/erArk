@@ -1471,6 +1471,8 @@ class Premise:
 
     SELF_FALL = "self_fall"
     """ 属性_素质 自己有陷落素质 """
+    SELF_NOT_FALL = "self_not_fall"
+    """ 属性_素质 自己无陷落素质 """
     TARGET_NOT_FALL = "not_fall"
     """ 属性_素质 交互对象无陷落素质 """
     TARGET_FALL = "target_fall"

@@ -111,9 +111,11 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if judge_value > 0:
             all_talent_list = [201,202,203,204]
             talent_id_index = 200 + judge_value
-        else:
+        elif judge_value < 0:
             all_talent_list = [211,212,213,214]
             talent_id_index = 210 - judge_value
+        else:
+            return 0
         # 攻略程度的运算符判定
         if premise_all_value_list[2] == "G":
            # 获取all_talent_list中所有比talent_id_index大的作为一个新列表
@@ -7729,6 +7731,20 @@ def handle_self_fall(character_id: int) -> int:
         if character_data.talent[i]:
             return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_FALL)
+def handle_self_not_fall(character_id: int) -> int:
+    """
+    自己无陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_self_fall(character_id):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_FALL)

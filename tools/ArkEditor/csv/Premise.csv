@@ -736,6 +736,7 @@ t_kiss_0,TARGET_KISS_0,属性_经验,交互对象亲吻经验==0
 t_kiss_ge_10,TARGET_KISS_GE_10,属性_经验,交互对象亲吻经验>=10
 
 self_fall,SELF_FALL,属性_素质,自己有陷落素质
+self_not_fall,SELF_NOT_FALL,属性_素质,自己无陷落素质
 not_fall,TARGET_NOT_FALL,属性_素质,交互对象无陷落素质
 target_fall,TARGET_FALL,属性_素质,交互对象有陷落素质
 love_1,TARGET_LOVE_1,属性_素质,交互对象拥有思慕（爱情系第一阶段）
