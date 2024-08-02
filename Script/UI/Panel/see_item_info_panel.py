@@ -231,7 +231,7 @@ class ItemInfoDraw:
         """绘制道具信息"""
         py_cmd.clr_cmd()
         item_config = game_config.config_item[self.cid]
-        item_draw = draw.WaitDraw()
+        item_draw = draw.NormalDraw()
         item_draw.text = f"{item_config.name}:{item_config.info}"
         item_draw.width = self.width
         item_draw.draw()

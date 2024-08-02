@@ -147,7 +147,7 @@ class BuyItemByItemNameDraw:
 
         # 判断是否是消耗品、是否已达99个堆叠上限，是否已拥有
         flag_consumables = item_config.tag in ["Drug","H_Drug","Consumables"]
-        flag_not_max = self.character_data.item[self.text] <= 99
+        flag_not_max = self.character_data.item[self.text] < 99
         flag_have = self.character_data.item[self.text] > 0
 
         # print("debug flag_consumables = ",flag_consumables,"  flag_not_max = ",flag_not_max,"  flag_have = ",flag_have)
@@ -174,6 +174,8 @@ class BuyItemByItemNameDraw:
             name_draw.text += _("凭证")
             if flag_consumables:
                 name_draw.text += _("(持有：") + str(self.character_data.item[self.text]) + ")"
+                if not flag_not_max:
+                    name_draw.text += _("(已达上限)")
             else:
                 name_draw.text += _("(已持有)")
             name_draw.style = "gold_enrod"
@@ -195,31 +197,69 @@ class BuyItemByItemNameDraw:
         line_draw.draw()
         now_draw = see_item_info_panel.ItemInfoDraw(self.text, window_width)
         now_draw.draw()
+        item_config = game_config.config_item[self.text]
         while 1:
+            return_list = []
             line_feed.draw()
-            yes_draw = draw.CenterButton(_("[购买]"), _("[购买]"), window_width / 2)
-            yes_draw.draw()
-            return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
-            return_draw.draw()
-            line_feed.draw()
-            yrn = flow_handle.askfor_all([yes_draw.return_text, return_draw.return_text])
-            if yrn == yes_draw.return_text:
-                self.buy_item()
-                break
-            elif yrn == return_draw.return_text:
+            if item_config.tag in ["Drug","H_Drug","Consumables"]:
+                buy_one_draw = draw.CenterButton(_("[购买一个]"), _("[购买一个]"), window_width / 3, cmd_func=self.buy_item)
+                buy_one_draw.draw()
+                return_list.append(buy_one_draw.return_text)
+                buy_many_draw = draw.CenterButton(_("[购买多个]"), _("[购买多个]"), window_width / 3, cmd_func=self.buy_many)
+                buy_many_draw.draw()
+                return_list.append(buy_many_draw.return_text)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 3)
+                return_draw.draw()
+                return_list.append(return_draw.return_text)
+                line_feed.draw()
+            else:
+                yes_draw = draw.CenterButton(_("[购买]"), _("[购买]"), window_width / 2, cmd_func=self.buy_item)
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
+                return_draw.draw()
+                return_list.append(return_draw.return_text)
+                line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
                 break
 
-    def buy_item(self):
+    def buy_many(self):
+        """购买多个道具"""
+        while True:
+            line_feed.draw()
+            ask_number_panel = panel.AskForOneMessage()
+            ask_number_panel.set(_("请输入要购买多少个"), 10)
+            now_number = ask_number_panel.draw()
+            # 如果可以的话，将输入的文本转换为数字
+            try:
+                now_number = int(now_number)
+            except ValueError:
+                now_number = 0
+
+            # 检查 now_number 是否为大于0的正整数
+            if isinstance(now_number, int) and now_number > 0:
+                now_number = min(now_number, 99 - self.character_data.item[self.text])
+                break
+            else:
+                info_draw = draw.LeftDraw()
+                info_draw.text = _("请输入一个大于0的正整数")
+                info_draw.width = window_width
+                info_draw.draw()
+        self.buy_item(now_number)
+
+    def buy_item(self, number: int = 1):
+        """购买道具"""
         py_cmd.clr_cmd()
         line = draw.LineDraw("-", window_width)
         line.draw()
         item_config = game_config.config_item[self.text]
-        if cache.rhodes_island.materials_resouce[4] >= item_config.price or cache.debug_mode:
-            self.character_data.item[self.text] += 1
-            cache.rhodes_island.materials_resouce[4] -= item_config.price
-            now_text = _("{nickname}购买了{item_name}").format(
-                nickname=self.character_data.nick_name, item_name=item_config.name
-            )
+        now_price = item_config.price * number
+        if cache.rhodes_island.materials_resouce[4] >= now_price or cache.debug_mode:
+            self.character_data.item[self.text] += number
+            self.character_data.item[self.text] = min(self.character_data.item[self.text], 99)
+            cache.rhodes_island.materials_resouce[4] -= now_price
+            now_text = _("{0}花费了{1}粉红凭证，购买了{2}个{3}").format(self.character_data.nick_name, now_price, number, item_config.name)
         elif self.character_data.item[self.text] == 99:
             now_text = _("已达到最高堆叠上限")
         else:
