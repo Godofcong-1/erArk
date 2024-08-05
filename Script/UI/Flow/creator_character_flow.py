@@ -553,9 +553,9 @@ class Character_FirstNPC:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
             button_text = _(" [随机选择] ")
-            button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.random_select)
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+            random_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.random_select)
+            random_draw.draw()
+            return_list.append(random_draw.return_text)
             if len(self.talk_character_list) <= 0:
                 button_text = _(" [口上筛选] ")
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.talk_filter)
@@ -642,7 +642,7 @@ class Character_FirstNPC:
             line_feed_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == random_draw.return_text or yrn == back_draw.return_text:
                 break
 
     def show_handle_panel(self, panel_id):
