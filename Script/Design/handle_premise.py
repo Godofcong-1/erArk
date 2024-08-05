@@ -523,6 +523,9 @@ def handle_morning_salutation_time(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     now_time = character_data.behavior.start_time
     now_time_hour, now_time_minute = now_time.hour, now_time.minute
+    # 中午12点后不再进行早安问候
+    if now_time_hour >= 12:
+        return 0
     # 玩家的醒来时间
     pl_character_data = cache.character_data[0]
     plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
