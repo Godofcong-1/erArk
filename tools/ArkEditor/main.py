@@ -362,6 +362,8 @@ def change_status_menu(action: QWidgetAction):
         # 根据文字长度设置菜单栏宽度
         status_menu_width = data_list.status_menu.fontMetrics().boundingRect(cache_control.status_data[cache_control.now_status]).width()
         status_menu_width = max(status_menu_width * 1.5, 100)
+        if cache_control.now_edit_type_flag == 1:
+            status_menu_width = max(status_menu_width * 1.5, 160)
         data_list.menu_bar.setFixedWidth(status_menu_width)
 
 

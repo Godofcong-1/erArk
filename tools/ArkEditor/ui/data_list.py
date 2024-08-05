@@ -254,6 +254,7 @@ class DataList(QWidget):
         elif cache_control.now_type == "指令后置":
             event.type = 2
         event.text = item.text()
+        event.effect["9999"] = 1
         cache_control.now_event_data[event.uid] = event
         self.list_widget.addItem(item)
         cache_control.now_select_id = event.uid

@@ -295,14 +295,18 @@ def base_chara_climix_common_settle(
     # 只能选择正确部位
     if part_id < 0 or part_id > 7:
         return
+    # 只有玩家有P部位
+    if character_id != 0 and part_id == 3:
+        return
 
     # 部位快感
-    random_adjust = random.uniform(0.8, 1.2)
-    if adjust >= 0:
-        adjust *= random_adjust
-    else:
-        adjust = random_adjust
-    base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+    if part_id != 3:
+        random_adjust = random.uniform(0.8, 1.2)
+        if adjust >= 0:
+            adjust *= random_adjust
+        else:
+            adjust = random_adjust
+        base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
     # 触发绝顶
     num = part_id * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
@@ -320,6 +324,13 @@ def base_chara_climix_common_settle(
             character_data.second_behavior[num + 2] = 1
     character_data.h_state.orgasm_level[4] += 1
 
+    # 触发射精面板
+    if part_id == 3:
+        character_data.eja_point = 0
+        now_draw = ejaculation_panel.Ejaculation_Panel(width)
+        now_draw.draw()
+        line = draw.LineDraw("-", width)
+        line.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOTHING)
 def handle_nothing(
