@@ -14688,6 +14688,174 @@ msgstr "\\n{Name} triggered the event of Hatred Engraving 2"
 msgid "\\n{Name}触发了反发刻印3的地文"
 msgstr "\\n{Name} triggered the event of Hatred Engraving 3"
 
+#: .\data\talk\system\second.csv:7
+msgid "{Name}触发了N小绝顶的地文"
+msgstr "{Name} triggered the event of small N climax"
+
+#: .\data\talk\system\second.csv:8
+msgid "{Name}触发了N普绝顶的地文"
+msgstr "{Name} triggered the event of medium N climax"
+
+#: .\data\talk\system\second.csv:9
+msgid "{Name}触发了N强绝顶的地文"
+msgstr "{Name} triggered the event of strong N climax"
+
+#: .\data\talk\system\second.csv:10
+msgid "{Name}触发了B小绝顶的地文"
+msgstr "{Name} triggered the event of small B climax"
+
+#: .\data\talk\system\second.csv:11
+msgid "{Name}触发了B普绝顶的地文"
+msgstr "{Name} triggered the event of medium B climax"
+
+#: .\data\talk\system\second.csv:12
+msgid "{Name}触发了B绝顶的地文"
+msgstr "{Name} triggered the event of strong B climax"
+
+#: .\data\talk\system\second.csv:13
+msgid "{Name}触发了C小绝顶的地文"
+msgstr "{Name} triggered the event of small C climax"
+
+#: .\data\talk\system\second.csv:14
+msgid "{Name}触发了C普绝顶的地文"
+msgstr "{Name} triggered the event of medium C climax"
+
+#: .\data\talk\system\second.csv:15
+msgid "{Name}触发了C强绝顶的地文"
+msgstr "{Name} triggered the event of strong C climax"
+
+#: .\data\talk\system\second.csv:16
+msgid "{Name}触发了射精的地文"
+msgstr "{Name} triggered the event of ejaculation"
+
+#: .\data\talk\system\second.csv:17
+msgid "{Name}触发了大量射精的地文"
+msgstr "{Name} triggered the event of big ejaculation"
+
+#: .\data\talk\system\second.csv:18
+msgid "{Name}触发了超大量射精的地文"
+msgstr "{Name} triggered the event of huge ejaculation"
+
+#: .\data\talk\system\second.csv:19
+msgid "{Name}触发了V小绝顶的地文"
+msgstr "{Name} triggered the event of small V climax"
+
+#: .\data\talk\system\second.csv:20
+msgid "{Name}触发了V普绝顶的地文"
+msgstr "{Name} triggered the event of medium V climax"
+
+#: .\data\talk\system\second.csv:21
+msgid "{Name}触发了V强绝顶的地文"
+msgstr "{Name} triggered the event of strong V climax"
+
+#: .\data\talk\system\second.csv:22
+msgid "{Name}触发了A小绝顶的地文"
+msgstr "{Name} triggered the event of small A climax"
+
+#: .\data\talk\system\second.csv:23
+msgid "{Name}触发了A普绝顶的地文"
+msgstr "{Name} triggered the event of medium A climax"
+
+#: .\data\talk\system\second.csv:24
+msgid "{Name}触发了A强绝顶的地文"
+msgstr "{Name} triggered the event of strong A climax"
+
+#: .\data\talk\system\second.csv:25
+msgid "{Name}触发了U小绝顶的地文"
+msgstr "{Name} triggered the event of small U climax"
+
+#: .\data\talk\system\second.csv:26
+msgid "{Name}触发了U普绝顶的地文"
+msgstr "{Name} triggered the event of medium U climax"
+
+#: .\data\talk\system\second.csv:27
+msgid "{Name}触发了U强绝顶的地文"
+msgstr "{Name} triggered the event of strong U climax"
+
+#: .\data\talk\system\second.csv:28
+msgid "{Name}触发了W小绝顶的地文"
+msgstr "{Name} triggered the event of small W climax"
+
+#: .\data\talk\system\second.csv:29
+msgid "{Name}触发了W普绝顶的地文"
+msgstr "{Name} triggered the event of medium W climax"
+
+#: .\data\talk\system\second.csv:30
+msgid "{Name}触发了W强绝顶的地文"
+msgstr "{Name} triggered the event of strong W climax"
+
+#: .\data\talk\system\second.csv:31
+msgid "{Name}触发了快乐刻印1的地文"
+msgstr "{Name} triggered the event of Happy Engraving 1"
+
+#: .\data\talk\system\second.csv:32
+msgid "{Name}触发了快乐刻印2的地文"
+msgstr "{Name} triggered the event of Happy Engraving 2"
+
+#: .\data\talk\system\second.csv:33
+msgid "{Name}触发了快乐刻印3的地文"
+msgstr "{Name} triggered the event of Happy Engraving 3"
+
+#: .\data\talk\system\second.csv:34
+msgid "{Name}触发了屈服刻印1的地文"
+msgstr "{Name} triggered the event of Yield Engraving 1"
+
+#: .\data\talk\system\second.csv:35
+msgid "{Name}触发了屈服刻印2的地文"
+msgstr "{Name} triggered the event of Yield Engraving 2"
+
+#: .\data\talk\system\second.csv:36
+msgid "{Name}触发了屈服刻印3的地文"
+msgstr "{Name} triggered the event of Yield Engraving 3"
+
+#: .\data\talk\system\second.csv:37
+msgid "{Name}触发了苦痛刻印1的地文"
+msgstr "{Name} triggered the event of Pain Engraving 1"
+
+#: .\data\talk\system\second.csv:38
+msgid "{Name}触发了苦痛刻印2的地文"
+msgstr "{Name} triggered the event of Pain Engraving 2"
+
+#: .\data\talk\system\second.csv:39
+msgid "{Name}触发了苦痛刻印3的地文"
+msgstr "{Name} triggered the event of Pain Engraving 3"
+
+#: .\data\talk\system\second.csv:40
+msgid "{Name}触发了时姦刻印1的地文"
+msgstr "{Name} triggered the event of Rape Engraving 1"
+
+#: .\data\talk\system\second.csv:41
+msgid "{Name}触发了时姦刻印2的地文"
+msgstr "{Name} triggered the event of Rape Engraving 2"
+
+#: .\data\talk\system\second.csv:42
+msgid "{Name}触发了时姦刻印3的地文"
+msgstr "{Name} triggered the event of Rape Engraving 3"
+
+#: .\data\talk\system\second.csv:43
+msgid "{Name}触发了恐怖刻印1的地文"
+msgstr "{Name} triggered the event of Fear Engraving 1"
+
+#: .\data\talk\system\second.csv:44
+msgid "{Name}触发了恐怖刻印2的地文"
+msgstr "{Name} triggered the event of Fear Engraving 2"
+
+#: .\data\talk\system\second.csv:45
+msgid "{Name}触发了恐怖刻印3的地文"
+msgstr "{Name} triggered the event of Fear Engraving 3"
+
+#: .\data\talk\system\second.csv:46
+msgid "{Name}触发了反发刻印1的地文"
+msgstr "{Name} triggered the event of Hatred Engraving 1"
+
+#: .\data\talk\system\second.csv:47
+msgid "{Name}触发了反发刻印2的地文"
+msgstr "{Name} triggered the event of Hatred Engraving 2"
+
+#: .\data\talk\system\second.csv:48
+msgid "{Name}触发了反发刻印3的地文"
+msgstr "{Name} triggered the event of Hatred Engraving 3"
+
 #: .\data\talk\system\second.csv:49
 msgid "\\n{Name}触发了失去初吻的地文"
 msgstr "\\n{Name} triggered the event of losing first kiss"
