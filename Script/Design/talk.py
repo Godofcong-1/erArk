@@ -275,6 +275,8 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
         }
         mark_name = next((name for key, name in mark_name_map.items() if second_behavior_id in key), None)
         mark_degree = (second_behavior_id % 3)
+        if mark_degree == 0:
+            mark_degree = 3
         info_text = _("\n{0}获得了{1}刻印{2}\n").format(chara_name, mark_name, mark_degree)
         # 如果是恐怖和反发刻印，则将绘制变成猩红
         if second_behavior_id in range(1042, 1048):
