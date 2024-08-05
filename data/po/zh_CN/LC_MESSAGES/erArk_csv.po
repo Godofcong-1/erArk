@@ -15884,6 +15884,38 @@ msgstr ""
 msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
 msgstr ""
 
+#: Event:0155ea5d-8c7c-4717-bdc2-0d0f86a956ad
+msgid "{TargetName}把博士的把柄摆在面前，{PlayerName}害怕会影响名誉，只能作罢"
+msgstr ""
+
+#: Event:b92fdc62-39d1-4533-8b53-435526828a75
+msgid "{TargetName}不打算接受你的邀请，要使用杀手锏吗"
+msgstr ""
+
+#: Event:9a082bbe-67fc-483e-92ee-ca9e17e8385a
+msgid "放弃|看在{TargetName}的坚持，{PlayerName}放弃了打算"
+msgstr ""
+
+#: Event:4cc1e31d-f1f6-4053-91c0-58846f0dea31
+msgid "强逼|{PlayerName}把{TargetName}的把柄摆在面前，{TargetName}害怕会影响名誉，只能妥协"
+msgstr ""
+
+#: Event:906b9588-616a-420c-9ae2-072794e6edab
+msgid "趁着{TargetName}在兴头上，要谈判吗"
+msgstr ""
+
+#: Event:c8c3434d-8fd3-4df0-a823-12371f3d195a
+msgid "放弃|看着{TargetName}疲惫的样子，{PlayerName}放弃了打算"
+msgstr ""
+
+#: Event:0397037e-f6f0-45cb-aef2-65163c9b73cb
+msgid "谈判|在双方的友好交流后，决定一笔勾销，不再用此事威胁对方"
+msgstr ""
+
+#: Event:69748d98-6600-4898-a657-2d82c370d675
+msgid "{PlayerName}本想邀请{TargetName}，但看着{TargetName}生气的样子，还是算了"
+msgstr ""
+
 #: Event:e7deb39e-4384-4a46-a3fe-dec9bb162b20
 msgid "{TargetName}的乳汁貌似快喷出来了，该怎么做"
 msgstr ""
