@@ -34,6 +34,8 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         """ 事件的类型 """
         self.text: str = ""
         """ 当前绘制的文本 """
+        self.style: str = "standard"
+        """ 绘制文本的样式 """
         player_data: game_type.Character = cache.character_data[0]
         if cache.is_collection:
             if character_id and character_id not in player_data.collection_character:
@@ -51,3 +53,13 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         # 代码词语
         now_event_text = talk.code_text_to_draw_text(now_event_text, character_id)
         self.text = now_event_text
+
+        # 口上颜色
+        character_data: game_type.Character = cache.character_data[character_id]
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        text_color = character_data.text_color
+        tar_text_color = target_character_data.text_color
+        if text_color:
+            self.style = character_data.name
+        elif tar_text_color:
+            self.style = target_character_data.name
