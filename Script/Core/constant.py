@@ -638,8 +638,6 @@ class Behavior:
     """ 处理公务 """
     BATTLE_COMMAND = 202
     """ 指挥作战 """
-    LISTEN_MISSION = 203
-    """ 听取委托 """
     ASSISTANT_ADJUSTMENTS = 204
     """ 助理相关调整 """
     TRAINING = 205
@@ -1850,8 +1848,8 @@ class Instruct:
     """ 处理公务 """
     BATTLE_COMMAND = 0
     """ 指挥作战 """
-    LISTEN_MISSION = 0
-    """ 听取委托 """
+    FIELD_COMMISSION = 0
+    """ 外勤委托 """
     TRAINING = 0
     """ 战斗训练 """
     CURE_PATIENT = 0

@@ -21232,10 +21232,6 @@ msgstr ""
 msgid "{Name}触发了锻炼身体指令的地文"
 msgstr ""
 
-#: .\data\talk\work\listen_mission.csv:6
-msgid "{Name}触发了听取委托指令的地文"
-msgstr ""
-
 #: .\data\talk\work\maintenance_facilities.csv:6
 msgid "{Name}触发了维护设施的地文"
 msgstr ""

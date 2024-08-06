@@ -290,7 +290,7 @@ msgstr "Play together"
 msgid "照顾婴儿"
 msgstr "Take care of baby"
 
-msgid "听取委托_未实装"
+msgid "外勤委托_未实装"
 msgstr "Listen to commissions (not implemented)"
 
 msgid "检查衣柜"

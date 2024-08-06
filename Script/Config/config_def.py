@@ -241,6 +241,33 @@ class Collection_bouns:
     """ 奖励信息 """
 
 
+class Commission:
+    """ 委托任务表 """
+
+    cid: int
+    """ 委托id """
+    name: str
+    """ 委托名字 """
+    country_id: int
+    """ 国家id(-1为通用) """
+    level: int
+    """ 委托等级 """
+    people: int
+    """ 派遣人数 """
+    time: int
+    """ 耗时天数 """
+    demand: str
+    """ 具体需求 """
+    reward: str
+    """ 具体奖励 """
+    related_id: str
+    """ 关联的委托id """
+    special: int
+    """ 特殊委托 """
+    description: str
+    """ 委托介绍 """
+
+
 class Entertainment:
     """ 娱乐模板 """
 
@@ -932,7 +959,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 
 
 class TargetEffect:

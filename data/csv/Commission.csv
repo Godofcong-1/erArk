@@ -1,0 +1,6 @@
+cid,name,country_id,level,people,time,demand,reward,related_id,special,description
+委托id,委托名字,国家id(-1为通用),委托等级,派遣人数,耗时天数,具体需求,具体奖励,关联的委托id,特殊委托,委托介绍
+int,str,int,int,int,int,str,str,str,int,str
+0,1,0,0,0,0,0,0,0,0,1
+委托任务表,,,,,,,,,,
+0,给感染者送抑制剂,-1,1,1,2,r_22_2,r_2_5,-1,0,当地有一个隐蔽的感染者小聚落，需要将2份感染抑制剂小样送到那里。

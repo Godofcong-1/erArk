@@ -15225,7 +15225,7 @@ msgid "{Name}触发了锻炼身体指令的地文"
 msgstr "{Name} triggered the event of exercising"
 
 #: .\data\talk\work\listen_mission.csv:6
-msgid "{Name}触发了听取委托指令的地文"
+msgid "{Name}触发了外勤委托指令的地文"
 msgstr ""
 
 #: .\data\talk\work\maintenance_facilities.csv:6

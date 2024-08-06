@@ -291,6 +291,10 @@ config_new_round_inherit: Dict[int, config_def.New_Round_Inherit] = {}
 """ 新周目继承 """
 config_new_round_inherit_type_data: Dict[int, Dict] = {}
 """ 新周目继承按类型和等级划分的数据 """
+config_commission: Dict[int, config_def.Commission] = {}
+""" 委托数据 """
+config_commission_id_by_country: Dict[int, List] = {}
+""" 按国家划分的委托id """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1323,6 +1327,19 @@ def load_new_round_inherit():
         config_new_round_inherit_type_data[now_tem.inherit_type][now_tem.inherit_lv] = now_tem.cid
 
 
+def load_commission():
+    """载入委托数据"""
+    now_data = config_data["Commission"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Commission()
+        now_tem.__dict__ = tem_data
+        config_commission[now_tem.cid] = now_tem
+        # 按国家划分
+        config_commission_id_by_country.setdefault(now_tem.country_id, [])
+        config_commission_id_by_country[now_tem.country_id].append(now_tem.cid)
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1417,3 +1434,4 @@ def init():
     load_talent_of_arts()
     load_roleplay()
     load_new_round_inherit()
+    load_commission()

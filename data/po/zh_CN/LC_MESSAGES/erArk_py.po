@@ -1567,7 +1567,7 @@ msgid "预定房间"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1446
-msgid "听取委托_未实装"
+msgid "外勤委托_未实装"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1462

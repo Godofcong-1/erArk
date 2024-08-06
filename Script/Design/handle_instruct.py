@@ -7,7 +7,7 @@ from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
 from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
-from Script.UI.Panel import manage_assembly_line_panel, normal_panel, see_character_info_panel, see_save_info_panel, resource_exchange_panel, navigation_panel, ability_up_panel, agriculture_production_panel, originium_arts, diary_panel
+from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -236,6 +236,7 @@ def handle_move():
 )
 def handle_see_attr():
     """查看属性"""
+    from Script.UI.Panel import see_character_info_panel
     see_character_info_panel.line_feed.draw()
     now_draw = see_character_info_panel.SeeCharacterInfoInScenePanel(
         cache.character_data[0].target_character_id, width
@@ -287,6 +288,7 @@ def handle_item():
               {constant_promise.Premise.NOT_H})
 def handle_save():
     """处理读写存档指令"""
+    from Script.UI.Panel import see_save_info_panel
     now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
     now_panel.draw()
 
@@ -298,6 +300,7 @@ def handle_save():
 )
 def handle_abl_up():
     """处理属性上升"""
+    from Script.UI.Panel import see_character_info_panel, ability_up_panel
     see_character_info_panel.line_feed.draw()
     now_draw = ability_up_panel.Character_abi_up_main_Handle(
         cache.character_data[0].target_character_id, width
@@ -311,6 +314,7 @@ def handle_abl_up():
 )
 def handle_owner_abl_up():
     """处理自身属性上升"""
+    from Script.UI.Panel import see_character_info_panel, ability_up_panel
     see_character_info_panel.line_feed.draw()
     now_draw = ability_up_panel.Character_abi_up_main_Handle(
         0, width
@@ -523,6 +527,7 @@ def handle_manage_library():
     })
 def handle_manage_library():
     """处理管理流水线指令"""
+    from Script.UI.Panel import manage_assembly_line_panel
     now_draw = manage_assembly_line_panel.Manage_Assembly_Line_Panel(width)
     now_draw.draw()
 
@@ -538,6 +543,7 @@ def handle_manage_library():
     })
 def handle_manage_agriculture():
     """处理管理农业生产指令"""
+    from Script.UI.Panel import agriculture_production_panel
     now_draw = agriculture_production_panel.Agriculture_Production_Panel(width)
     now_draw.draw()
 
@@ -553,6 +559,7 @@ def handle_manage_agriculture():
     })
 def handle_manage_library():
     """处理资源交易指令"""
+    from Script.UI.Panel import resource_exchange_panel
     now_draw = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
     now_draw.draw()
 
@@ -567,6 +574,7 @@ def handle_manage_library():
     })
 def handle_navigation():
     """处理导航指令"""
+    from Script.UI.Panel import navigation_panel
     now_draw = navigation_panel.Navigation_Panel(width)
     now_draw.draw()
 
@@ -660,6 +668,7 @@ def handle_hypnosis_normal():
 )
 def handle_hypnosis_air():
     """处理空气催眠"""
+    from Script.UI.Panel import originium_arts
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     character_data.pl_ability.hypnosis_type = 2
@@ -824,6 +833,7 @@ def handle_hypnosis_active_h():
 )
 def handle_hypnosis_roleplay():
     """处理心控-角色扮演"""
+    from Script.UI.Panel import originium_arts
     now_draw = originium_arts.Chose_Roleplay_Type_Panel(width)
     now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
@@ -896,9 +906,9 @@ def handle_hormone_off():
 )
 def handle_diary():
     """处理日记指令"""
+    from Script.UI.Panel import diary_panel
     now_draw = diary_panel.Diary_Panel(width)
     now_draw.draw()
-
 
 @add_instruct(
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
@@ -1441,19 +1451,18 @@ def handle_order_hotel_room():
 
 
 @add_instruct(
-    constant.Instruct.LISTEN_MISSION,
+    constant.Instruct.FIELD_COMMISSION,
     constant.InstructType.WORK,
-    _("听取委托_未实装"),
+    _("外勤委托_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TO_DO},
 )
-def handle_listen_mission():
-    """处理听取委托指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+def handle_field_commission():
+    """处理外勤委托指令"""
+    from Script.UI.Panel import field_commission_panel
+    now_draw = field_commission_panel.Field_Commission_Panel(width)
+    now_draw.draw()
 
 
 @add_instruct(

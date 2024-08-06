@@ -5235,7 +5235,7 @@ msgstr "Taking clothes and changing from closet"
 msgid "指挥作战"
 msgstr "Commanding"
 
-msgid "听取委托"
+msgid "外勤委托"
 msgstr "Listening to commissions"
 
 msgid "上学"
