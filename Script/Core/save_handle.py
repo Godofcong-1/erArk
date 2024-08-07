@@ -201,6 +201,14 @@ def input_load_save(save_id: str):
         # 没有记录的设施改为初始关闭
         if all_cid not in loaded_dict["rhodes_island"].facility_open:
             loaded_dict["rhodes_island"].facility_open[all_cid] = False
+        # 已关闭的查询是否可以被已有角色开启
+        if loaded_dict["rhodes_island"].facility_open[all_cid] == False:
+            if game_config.config_facility_open[all_cid].NPC_id != 0:
+                for chara_cid in loaded_dict["npc_id_got"]:
+                    character_data = loaded_dict["character_data"][chara_cid]
+                    if character_data.adv == game_config.config_facility_open[all_cid].NPC_id:
+                        loaded_dict["rhodes_island"].facility_open[all_cid] = True
+                        break
     # 更新食谱
     loaded_dict["recipe_data"] = cooking.init_recipes()
 

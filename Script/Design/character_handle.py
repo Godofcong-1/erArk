@@ -372,6 +372,8 @@ def init_character_entertainment():
 def init_character_facility_open():
     """初始化角色开放设施"""
     for open_cid in game_config.config_facility_open:
+        if game_config.config_facility_open[open_cid].NPC_id == 0:
+            continue
         for character_id in cache.npc_id_got:
             # 跳过玩家id
             if character_id == 0:
