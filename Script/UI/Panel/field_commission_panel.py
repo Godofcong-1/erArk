@@ -1,11 +1,10 @@
-from turtle import position
 from typing import Tuple, List
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,attr_text,attr_calculation
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+from Script.Design import game_time
+from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -73,6 +72,24 @@ def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool 
 
     return_list = [satify_flag, type_text, full_text]
     return return_list
+
+
+def judge_field_commission_finish():
+    """
+    判断外勤委托是否完成
+    """
+    now_time = cache.game_time
+    for commision_id in cache.rhodes_island.ongoing_field_commissions:
+        end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
+        if game_time.judge_date_big_or_small(now_time, end_time):
+            # 获取奖励
+            # 派遣人员上线
+            send_npc_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
+            for character_id in send_npc_list:
+                cache.character_data[character_id].sp_flag.field_commission = 0
+                default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+            # 移除委托
+            cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
 
 
 class Field_Commission_Panel:
@@ -383,12 +400,10 @@ class Field_Commission_Panel:
         commision_people = commision_data.people
         if len(self.send_npc_list) < commision_people:
             return
-        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, 0]
-        # 消耗资源
-        get_commission_demand_and_reward(commision_id, False, True)
+
         # 绘制委托信息
         draw_text = ""
-        draw_text += _("\n已派遣")
+        draw_text += _("\n\n已派遣")
         for character_id in self.send_npc_list:
             character_data = cache.character_data[character_id]
             character_name = character_data.name
@@ -400,8 +415,21 @@ class Field_Commission_Panel:
         commision_time = commision_data.time
         draw_text += str(commision_time)
         draw_text += _("天，将在 ")
-        draw_text += _(" 返回\n")
-        info_draw = draw.NormalDraw()
+        new_time = game_time.get_sub_date(cache.game_time, day=commision_time)
+        new_time_text = game_time.get_date_until_day(new_time)
+        draw_text += new_time_text
+        draw_text += _(" 返回\n\n")
+        info_draw = draw.WaitDraw()
         info_draw.text = draw_text
+        info_draw.style = "gold_enrod"
         info_draw.width = window_width
         info_draw.draw()
+
+        # 添加到进行中的委托
+        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time]
+        # 消耗资源
+        get_commission_demand_and_reward(commision_id, False, True)
+        # 遍历派遣人员，设为派遣状态，并离线
+        for character_id in self.send_npc_list:
+            cache.character_data[character_id].sp_flag.field_commission = commision_id
+            default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)

@@ -11,7 +11,6 @@ from Script.Core import (
     constant,
     value_handle,
     get_text,
-    save_handle,
 )
 from Script.Design import (
     settle_behavior,
@@ -25,7 +24,6 @@ from Script.Design import (
     attr_calculation,
     character_move,
     pregnancy,
-    basement,
     handle_talent,
     handle_ability,
     update,
@@ -974,6 +972,7 @@ def update_new_day():
     Return arguments:
     无
     """
+    from Script.Design import basement
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -1018,6 +1017,8 @@ def update_save():
     Return arguments:
     无
     """
+    from Script.Core import save_handle
+
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
     now_draw.text = _("\n全部结算完毕，开始自动保存\n")

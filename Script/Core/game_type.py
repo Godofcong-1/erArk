@@ -589,6 +589,8 @@ class SPECIAL_FLAG:
         """ 访客状态，int [0无,1访问中,2访问过] """
         self.aromatherapy: int = 0
         """ 香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感,6催眠] """
+        self.field_commission: int = 0
+        """ 外勤委托状态，0为未外勤，否则为对应外勤委托编号 """
 
 
 class CHARA_WORK:

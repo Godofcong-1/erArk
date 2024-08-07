@@ -3852,7 +3852,7 @@ def handle_normal_all(character_id: int) -> int:
 def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n包括2:临盆、产后、婴儿
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -3896,7 +3896,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
 def handle_normal_1(character_id: int) -> int:
     """
     1正常的普通状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3919,8 +3919,8 @@ def handle_normal_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_2)
 def handle_normal_2(character_id: int) -> int:
     """
-    \n2:妊娠限制：临盆、产后、婴儿
-    \n包括2:临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
+    \n包括2:临盆、产后、监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -3929,7 +3929,7 @@ def handle_normal_2(character_id: int) -> int:
     if(
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
-        or handle_t_baby_1(character_id)
+        or handle_imprisonment_1(character_id)
     ):
         return 0
     else:
@@ -3940,7 +3940,7 @@ def handle_normal_2(character_id: int) -> int:
 def handle_normal_3(character_id: int) -> int:
     """
     3正常的普通状态
-    \n3:AI行动受限：助理、跟随模式下
+    \n3:助理或跟随：助理、跟随模式下
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4014,6 +4014,26 @@ def handle_normal_6(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.NORMAL_7)
+def handle_normal_7(character_id: int) -> int:
+    """
+    7正常的普通状态
+    \n7:角色离线：装袋搬走、外勤、婴儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if(
+        handle_be_bagged_1(character_id)
+        or handle_field_commission_1(character_id)
+        or handle_t_baby_1(character_id)
+    ):
+        return 0
+    else:
+        return 1
+
+
 @add_premise(constant_promise.Premise.T_NORMAL_6)
 def handle_t_normal_6(character_id: int) -> int:
     """
@@ -4030,25 +4050,6 @@ def handle_t_normal_6(character_id: int) -> int:
         return 1
     else:
         return 0
-
-
-@add_premise(constant_promise.Premise.NORMAL_7)
-def handle_normal_7(character_id: int) -> int:
-    """
-    7正常的普通状态
-    \n7:监禁：装袋搬走、监禁
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    if(
-        handle_be_bagged_1(character_id)
-        or handle_imprisonment_1(character_id)
-    ):
-        return 0
-    else:
-        return 1
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_4)
@@ -4075,9 +4076,9 @@ def handle_normal_2_4(character_id: int) -> int:
 def handle_normal_267(character_id: int) -> int:
     """
     267正常（可能基础异常、AI跟随、服装异常或意识模糊）
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4097,10 +4098,10 @@ def handle_normal_267(character_id: int) -> int:
 def handle_normal_2467(character_id: int) -> int:
     """
     2467正常（可能基础异常、AI跟随或意识模糊）
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4121,10 +4122,10 @@ def handle_normal_2467(character_id: int) -> int:
 def handle_t_normal_2467(character_id: int) -> int:
     """
     交互对象2467正常（可能基础异常、AI跟随或意识模糊）
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4147,11 +4148,11 @@ def handle_t_normal_2467(character_id: int) -> int:
 def handle_normal_23467(character_id: int) -> int:
     """
     23467正常（可能基础异常或意识模糊）
-    \n2:妊娠限制：临盆、产后、婴儿
-    \n3:AI行动受限：助理、跟随模式下
+    \n2:AI行动基本停止：临盆、产后、监禁
+    \n3:助理或跟随：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4173,11 +4174,11 @@ def handle_normal_23467(character_id: int) -> int:
 def handle_normal_24567(character_id: int) -> int:
     """
     24567正常（可能基础异常、AI跟随）
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4199,11 +4200,11 @@ def handle_normal_24567(character_id: int) -> int:
 def handle_t_normal_24567(character_id: int) -> int:
     """
     交互对象24567正常（可能基础异常、AI跟随）
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4227,12 +4228,12 @@ def handle_t_normal_24567(character_id: int) -> int:
 def handle_normal_124567(character_id: int) -> int:
     """
     124567正常（可能基础异常、AI跟随）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4255,10 +4256,10 @@ def handle_normal_124567(character_id: int) -> int:
 def handle_normal_1267(character_id: int) -> int:
     """
     1267正常（可能AI跟随、服装异常或意识模糊）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
-    \n2:妊娠限制：临盆、产后、婴儿
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4279,12 +4280,12 @@ def handle_normal_1267(character_id: int) -> int:
 def handle_normal_123467(character_id: int) -> int:
     """
     123467正常（可能意识模糊）
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
-    \n2:妊娠限制：临盆、产后、婴儿
-    \n3:AI行动受限：助理、跟随模式下
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    \n2:AI行动基本停止：临盆、产后、监禁
+    \n3:助理或跟随：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4324,12 +4325,7 @@ def handle_t_normal_2(character_id: int) -> int:
 def handle_unnormal(character_id: int) -> int:
     """
     有特殊需求的异常状态
-    \n1:基础行动flag：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
-    \n包括2:临盆、产后、婴儿
-    \n包括3:助理、跟随模式下
-    \n包括4:大致全裸、全裸
-    \n包括5:睡眠（全程度），安眠药
-    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    \n包括1~7
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4341,7 +4337,26 @@ def handle_unnormal(character_id: int) -> int:
         handle_normal_3(character_id) and 
         handle_normal_4(character_id) and 
         handle_normal_5(character_id) and 
-        handle_normal_6(character_id)
+        handle_normal_6(character_id) and
+        handle_normal_7(character_id)
+        ):
+        return 0
+    else:
+        return 1
+
+
+@add_premise(constant_promise.Premise.UNNORMAL_2)
+def handle_unnormal_2(character_id: int) -> int:
+    """
+    2异常
+    \n2:AI行动基本停止：临盆、产后、监禁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if (
+        handle_normal_2(character_id)
         ):
         return 0
     else:
@@ -4351,9 +4366,9 @@ def handle_unnormal(character_id: int) -> int:
 @add_premise(constant_promise.Premise.UNNORMAL_27)
 def handle_unnormal_27(character_id: int) -> int:
     """
-    27异常（妊娠限制或监禁）
-    \n2:妊娠限制：临盆、产后、婴儿
-    \n7:监禁：装袋搬走、监禁
+    27异常（AI停止或离线）
+    \n2:AI行动基本停止：临盆、产后、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4436,7 +4451,7 @@ def handle_unnormal_567(character_id: int) -> int:
     自身5或6或7异常
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4484,7 +4499,7 @@ def handle_t_unnormal_567(character_id: int) -> int:
     交互对象5或6或7异常
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:监禁：装袋搬走、监禁
+    \n7:角色离线：装袋搬走、外勤、婴儿
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -6048,6 +6063,35 @@ def handle_t_sleep_h_awake_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
     if handle_sleep_h_awake_0(target_chara_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.FIELD_COMMISSION_0)
+def handle_field_commission_0(character_id: int) -> int:
+    """
+    自身没有在出外勤委托
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.sp_flag.field_commission == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FIELD_COMMISSION_1)
+def handle_field_commission_1(character_id: int) -> int:
+    """
+    自身正在出外勤委托
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_field_commission_0(character_id):
         return 0
     return 1
 

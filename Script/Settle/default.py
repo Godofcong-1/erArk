@@ -3960,6 +3960,30 @@ def handle_dirty_reset(
     character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASSISTANT_RESET)
+def handle_assistant_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    助理数据归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.assistant_services = attr_calculation.get_assistant_services_zero()
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.assistant_character_id == character_id:
+        pl_character_data.assistant_character_id = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOOR_CLOSE)
 def handle_door_close(
         character_id: int,
@@ -4093,6 +4117,67 @@ def handle_update_orgasm_level(
         character_data.h_state.orgasm_level[orgasm] = now_data
         now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
         target_data.h_state.orgasm_level[orgasm] = now_data
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHARA_OFF_LINE)
+def handle_chara_off_line(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    角色离线，归零若干数据结构体，从当前干员列表中移除，离开地图
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 清零助理、污浊、H状态数据
+    handle_assistant_reset(character_id, add_time, change_data, now_time)
+    handle_dirty_reset(character_id, add_time, change_data, now_time)
+    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+    # 清零跟随数据
+    character_data.sp_flag.is_follow = 0
+    # 从当前干员列表中移除
+    if character_id in cache.npc_id_got:
+        cache.npc_id_got.remove(character_id)
+    # 离开地图
+    old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if character_id in cache.scene_data[old_scene_path_str].character_list:
+        cache.scene_data[old_scene_path_str].character_list.remove(character_id)
+    character_data.position = ["0", "0"]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHARA_ON_LINE)
+def handle_chara_on_line(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    角色上线，加入从当前干员列表，进入地图
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 加入当前干员列表
+    if character_id not in cache.npc_id_got:
+        cache.npc_id_got.add(character_id)
+    # 进入地图
+    now_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if character_id not in cache.scene_data[now_scene_path_str].character_list:
+        cache.scene_data[now_scene_path_str].character_list.add(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_BAGGED)
@@ -5599,7 +5684,7 @@ def handle_bagging_and_moving_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （装袋搬走用）交互对象获得装袋搬走flag，清除跟随和助理状态。并从当前场景移除角色id，玩家增加搬运人id
+    （装袋搬走用）交互对象获得装袋搬走flag，玩家增加搬运人id，对方离线
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -5613,17 +5698,9 @@ def handle_bagging_and_moving_add_just(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 玩家数据结算
     character_data.sp_flag.bagging_chara_id = character_data.target_character_id
-    if character_data.assistant_character_id == character_data.target_character_id:
-        character_data.assistant_character_id = 0
     # 对方数据结算
     target_data.sp_flag.be_bagged = 1
-    target_data.sp_flag.is_follow = 0
-    cache.npc_id_got.remove(character_data.target_character_id)
-    # 地图数据结算
-    old_scene_path_str = map_handle.get_map_system_path_str_for_list(target_data.position)
-    if character_data.target_character_id in cache.scene_data[old_scene_path_str].character_list:
-        cache.scene_data[old_scene_path_str].character_list.remove(character_data.target_character_id)
-    target_data.position = ["0", "0"]
+    handle_chara_off_line(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PUT_INTO_PRISON_ADD_ADJUST)

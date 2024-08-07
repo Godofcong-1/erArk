@@ -1215,13 +1215,13 @@ class Debug_Panel:
             # 特殊flag数据
             elif key_index == 20:
                 info_text = f"1~7异常状态：，正常为1"
-                info_text += f"    \n1:基础行动flag：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰：{handle_premise.handle_normal_1(self.target_character_id)}"
-                info_text += f"    \n2:妊娠限制：临盆、产后、婴儿：{handle_premise.handle_normal_2(self.target_character_id)}"
-                info_text += f"    \n3:AI行动受限：助理、跟随模式下：{handle_premise.handle_normal_3(self.target_character_id)}"
+                info_text += f"    \n1:基础生理需求：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰：{handle_premise.handle_normal_1(self.target_character_id)}"
+                info_text += f"    \n2:AI行动基本停止：临盆、产后、监禁：{handle_premise.handle_normal_2(self.target_character_id)}"
+                info_text += f"    \n3:助理或跟随：助理、跟随模式下：{handle_premise.handle_normal_3(self.target_character_id)}"
                 info_text += f"    \n4:服装异常：大致全裸、全裸：{handle_premise.handle_normal_4(self.target_character_id)}"
                 info_text += f"    \n5:意识模糊，或弱交互：醉酒，平然：{handle_premise.handle_normal_5(self.target_character_id)}"
                 info_text += f"    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气：{handle_premise.handle_normal_6(self.target_character_id)}"
-                info_text += f"    \n7:监禁：装袋搬走、监禁：{handle_premise.handle_normal_7(self.target_character_id)}"
+                info_text += f"    \n7:角色离线：装袋搬走、外勤、婴儿：{handle_premise.handle_normal_7(self.target_character_id)}"
                 info_text += f"\n\n"
                 info_text += f"[000]:在H模式中：{target_data.sp_flag.is_h}\n"
                 info_text += f"[001]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}\n"

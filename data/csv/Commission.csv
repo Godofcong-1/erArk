@@ -3,4 +3,4 @@ cid,name,country_id,level,people,time,demand,reward,related_id,special,descripti
 int,str,int,int,int,int,str,str,str,int,str
 0,1,0,0,0,0,0,0,0,0,1
 委托任务表,,,,,,,,,,
-0,给感染者送抑制剂,-1,1,1,2,r_22_2,r_2_5,-1,0,当地有一个隐蔽的感染者小聚落，需要将2份感染抑制剂小样送到那里。
+1,给感染者送抑制剂,-1,1,1,2,r_22_2,r_2_5,-1,0,当地有一个隐蔽的感染者小聚落，需要将2份感染抑制剂小样送到那里。

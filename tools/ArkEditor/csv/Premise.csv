@@ -311,13 +311,13 @@ time_over_a_year,TIME_OVER_A_YEAR,时间_当前,游戏时间超过一年
 
 
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态
-normal_1,NORMAL_1,属性_异常状态,1正常
-normal_2,NORMAL_2,属性_异常状态,2正常
-normal_3,NORMAL_3,属性_异常状态,3正常
-normal_4,NORMAL_4,属性_异常状态,4正常
-normal_5,NORMAL_5,属性_异常状态,5正常
-normal_6,NORMAL_6,属性_异常状态,6正常
-normal_7,NORMAL_7,属性_异常状态,7正常
+normal_1,NORMAL_1,属性_异常状态,1正常(基础生理需求)
+normal_2,NORMAL_2,属性_异常状态,2正常(AI行动基本停止)
+normal_3,NORMAL_3,属性_异常状态,3正常(助理或跟随)
+normal_4,NORMAL_4,属性_异常状态,4正常(服装异常)
+normal_5,NORMAL_5,属性_异常状态,5正常(意识模糊)
+normal_6,NORMAL_6,属性_异常状态,6正常(完全意识不清醒)
+normal_7,NORMAL_7,属性_异常状态,7正常(角色离线)
 t_normal_2,T_NORMAL_2,属性_异常状态,交互对象2正常
 t_normal_6,T_NORMAL_6,属性_异常状态,交互对象6正常
 normal_2_4,NORMAL_2_4,属性_异常状态,24正常的普通状态
@@ -333,7 +333,8 @@ normal_123467,NORMAL_123467,属性_异常状态,123467正常（可能意识模�
 normal_1_2_4,NORMAL_1_2_4,属性_异常状态,124正常的普通状态
 normal_2_3_4,NORMAL_2_3_4,属性_异常状态,234正常的普通状态
 unnormal,UNNORMAL,属性_异常状态,有特殊需求的异常状态
-unnormal_27,UNNORMAL_27,属性_异常状态,27异常（妊娠限制或监禁）
+unnormal_2,UNNORMAL_2,属性_异常状态,2异常
+unnormal_27,UNNORMAL_27,属性_异常状态,27异常（AI停止或离线）
 t_normal_5_6,T_NORMAL_5_6,属性_异常状态,交互对象56正常
 t_unnormal_5_6,T_UNNORMAL_5_6,属性_异常状态,交互对象5异常或6异常
 t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
@@ -545,6 +546,8 @@ sleep_h_awake_0,SLEEP_H_AWAKE_0,属性_特殊flag,自身没有睡奸中醒来状
 sleep_h_awake_1,SLEEP_H_AWAKE_1,属性_特殊flag,自身睡奸中醒来状态
 t_sleep_h_awake_0,TARGET_SLEEP_H_AWAKE_0,属性_特殊flag,交互对象没有睡奸中醒来状态
 t_sleep_h_awake_1,TARGET_SLEEP_H_AWAKE_1,属性_特殊flag,交互对象睡奸中醒来状态
+field_commission_0,FIELD_COMMISSION_0,属性_特殊flag,自身没有在出外勤委托
+field_commission_1,FIELD_COMMISSION_1,属性_特殊flag,自身正在出外勤委托
 
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
