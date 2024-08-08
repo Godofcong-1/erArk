@@ -4171,6 +4171,12 @@ def handle_chara_on_line(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 基础属性回满
+    character_data.hit_point = character_data.hit_point_max
+    character_data.mana_point = character_data.mana_point_max
+    character_data.hunger_point = 0
+    character_data.tired_point = 0
+    character_data.sleep_point = 0
     # 加入当前干员列表
     if character_id not in cache.npc_id_got:
         cache.npc_id_got.add(character_id)

@@ -17,13 +17,13 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool = False, deduction: bool = False) -> List:
+def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List:
     """
     获取委托需求或奖励\n
     Keyword arguments:\n
     commission_id -- 委托编号\n
     demand_or_reward -- False为需求，True为奖励，默认为False\n
-    deduction -- 是否扣除资源，默认为False\n
+    deduction -- 是否扣除或增加资源，默认为False\n
     Return arguments:\n
     return_list -- [是否满足, 需求类型文本, 需求全文]
     """
@@ -52,14 +52,20 @@ def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool 
             resouce_name = game_config.config_resouce[resouce_id].name
             resouce_type = game_config.config_resouce[resouce_id].type
             resouce_num = int(resouce_text_list[2])
+            # 需求
             if demand_or_reward == False:
                 # 如果资源不足，设为不满足
                 if cache.rhodes_island.materials_resouce[resouce_id] < resouce_num:
                     satify_flag = False
                 else:
                     # 扣除资源
-                    if deduction:
+                    if deduction_or_increase:
                         cache.rhodes_island.materials_resouce[resouce_id] -= resouce_num
+            # 奖励
+            else:
+                # 增加资源
+                if deduction_or_increase:
+                    cache.rhodes_island.materials_resouce[resouce_id] += resouce_num
             # 添加类型文本
             if resouce_type not in type_text:
                 type_text += f"{resouce_type} "
@@ -79,17 +85,34 @@ def judge_field_commission_finish():
     判断外勤委托是否完成
     """
     now_time = cache.game_time
-    for commision_id in cache.rhodes_island.ongoing_field_commissions:
+    now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
+    draw_text = ""
+    for commision_id in now_ongoing_field_commissions:
         end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-        if game_time.judge_date_big_or_small(now_time, end_time):
+        if game_time.judge_date_big_or_small(now_time, end_time) or game_time.count_day_for_datetime(now_time, end_time) == 0:
             # 获取奖励
+            reward_return_list = get_commission_demand_and_reward(commision_id, True, True)
+            reward_text = reward_return_list[2]
+            # 奖励信息
+            commision_name = game_config.config_commission[commision_id].name
+            draw_text += "\n"
             # 派遣人员上线
             send_npc_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
             for character_id in send_npc_list:
                 cache.character_data[character_id].sp_flag.field_commission = 0
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+                draw_text += f"{cache.character_data[character_id].name} "
+            draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
+
+    # 绘制完成委托
+    if len(draw_text):
+        info_draw = draw.WaitDraw()
+        info_draw.text = draw_text
+        info_draw.style = "gold_enrod"
+        info_draw.width = window_width
+        info_draw.draw()
 
 
 class Field_Commission_Panel:
@@ -412,10 +435,10 @@ class Field_Commission_Panel:
         commision_name = commision_data.name
         draw_text += commision_name
         draw_text += _("，耗时：")
-        commision_time = commision_data.time
+        commision_time = int(commision_data.time)
         draw_text += str(commision_time)
         draw_text += _("天，将在 ")
-        new_time = game_time.get_sub_date(cache.game_time, day=commision_time)
+        new_time = game_time.get_sub_date(day=commision_time)
         new_time_text = game_time.get_date_until_day(new_time)
         draw_text += new_time_text
         draw_text += _(" 返回\n\n")

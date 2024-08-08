@@ -1453,7 +1453,7 @@ def handle_order_hotel_room():
 @add_instruct(
     constant.Instruct.FIELD_COMMISSION,
     constant.InstructType.WORK,
-    _("外勤委托_未实装"),
+    _("外勤委托"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TO_DO},

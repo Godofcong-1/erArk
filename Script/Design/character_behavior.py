@@ -973,6 +973,7 @@ def update_new_day():
     无
     """
     from Script.Design import basement
+    from Script.UI.Panel import field_commission_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -1003,6 +1004,7 @@ def update_new_day():
 
     # 非角色部分
     basement.update_base_resouce_newday()
+    field_commission_panel.judge_field_commission_finish()
     cooking.init_food_shop_data() # 初始化餐厅数据
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
