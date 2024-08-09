@@ -500,9 +500,9 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 judge -= 300
                 calculation_text += _("+排卵期(-300)")
 
-    # 催眠系能力的最后补正，仅在平然/空气催眠、性爱判定、且实行值不足时生效
+    # 催眠系能力的最后补正，仅在催眠、性爱判定、且实行值不足时生效
     judge_hypnosis = 0 # 初始为零，方便其他修正判断是否进行了催眠
-    if target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
+    if target_data.sp_flag.unconscious_h in [4,5,6,7] and judge_data_type == "S" and judge < judge_data_value:
         # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
         if (
             ((_("骚扰") in instruct_name or _("亲吻") in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
