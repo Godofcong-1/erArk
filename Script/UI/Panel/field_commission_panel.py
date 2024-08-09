@@ -17,11 +17,12 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List:
+def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List:
     """
     获取委托需求或奖励\n
     Keyword arguments:\n
     commission_id -- 委托编号\n
+    send_npc_list -- 派遣人员列表，默认为空\n
     demand_or_reward -- False为需求，True为奖励，默认为False\n
     deduction -- 是否扣除或增加资源，默认为False\n
     Return arguments:\n
@@ -45,39 +46,80 @@ def get_commission_demand_and_reward(commission_id: int, demand_or_reward: bool 
 
     # 遍历文本列表
     for now_text in text_list:
-        # 资源类
-        if now_text[0] == "r":
-            resouce_text_list = now_text.split("_")
-            resouce_id = int(resouce_text_list[1])
-            resouce_name = game_config.config_resouce[resouce_id].name
-            resouce_type = game_config.config_resouce[resouce_id].type
-            resouce_num = int(resouce_text_list[2])
-            # 需求
-            if demand_or_reward == False:
-                # 如果资源不足，设为不满足
-                if cache.rhodes_island.materials_resouce[resouce_id] < resouce_num:
-                    satify_flag = False
-                else:
-                    # 扣除资源
-                    if deduction_or_increase:
-                        cache.rhodes_island.materials_resouce[resouce_id] -= resouce_num
-            # 奖励
-            else:
-                # 增加资源
-                if deduction_or_increase:
-                    cache.rhodes_island.materials_resouce[resouce_id] += resouce_num
-            # 添加类型文本
-            if resouce_type not in type_text:
-                type_text += f"{resouce_type} "
-            # 添加全文
-            if demand_or_reward == False:
-                now_have_resouce_num = cache.rhodes_island.materials_resouce[resouce_id]
-                full_text += f"{resouce_name}:{now_have_resouce_num}/{resouce_num} "
-            else:
-                full_text += f"{resouce_name}:{resouce_num} "
+        type_text, full_text, satify_flag = process_commission_text(now_text, demand_or_reward, deduction_or_increase, send_npc_list, type_text, full_text, satify_flag)
 
     return_list = [satify_flag, type_text, full_text]
     return return_list
+
+
+def process_commission_text(now_text, demand_or_reward, deduction_or_increase, send_npc_list, type_text, full_text, satify_flag):
+    """
+    处理委托文本\n
+    Keyword arguments:\n
+    now_text -- 当前文本\n
+    demand_or_reward -- False为需求，True为奖励\n
+    deduction_or_increase -- 是否扣除或增加资源\n
+    send_npc_list -- 派遣人员列表\n
+    type_text -- 类型文本\n
+    full_text -- 全文\n
+    satify_flag -- 是否满足\n
+    Return arguments:\n
+    type_text -- 类型文本\n
+    full_text -- 全文\n
+    satify_flag -- 是否满足
+    """
+
+    # 处理文本
+    text_list = now_text.split("_")
+    item_id = int(text_list[1])
+    item_num = int(text_list[2])
+
+    # 资源
+    if now_text[0] == "r":
+        item_name = game_config.config_resouce[item_id].name
+        item_type = game_config.config_resouce[item_id].type
+        now_have_item_num = cache.rhodes_island.materials_resouce[item_id]
+    # 能力
+    elif now_text[0] == "a":
+        item_name = game_config.config_ability[item_id].name
+        item_type = item_name
+        now_have_item_num = sum(cache.character_data[character_id].ability[item_id] for character_id in send_npc_list)
+    # 经验
+    elif now_text[0] == "e":
+        item_name = game_config.config_experience[item_id].name
+        item_type = item_name
+        now_have_item_num = sum(cache.character_data[character_id].experience[item_id] for character_id in send_npc_list)
+    
+    # 需求
+    if not demand_or_reward:
+        # 如果不够数量，设为不满足
+        if now_have_item_num < item_num:
+            satify_flag = False
+        else:
+            # 扣除资源
+            if deduction_or_increase and now_text[0] == "r":
+                cache.rhodes_island.materials_resouce[item_id] -= item_num
+    # 奖励
+    else:
+        # 增加资源
+        if deduction_or_increase:
+            if now_text[0] == "r":
+                cache.rhodes_island.materials_resouce[item_id] += item_num
+            elif now_text[0] == "e":
+                for character_id in send_npc_list:
+                    cache.character_data[character_id].experience[item_id] += item_num
+
+    # 添加类型文本
+    if item_type not in type_text:
+        type_text += f"{item_type} "
+
+    # 添加全文
+    if not demand_or_reward:
+        full_text += f"{item_name}:{now_have_item_num}/{item_num} "
+    else:
+        full_text += f"{item_name}:{item_num} "
+    
+    return type_text, full_text, satify_flag
 
 
 def judge_field_commission_finish():
@@ -91,7 +133,7 @@ def judge_field_commission_finish():
         end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
         if game_time.judge_date_big_or_small(now_time, end_time) or game_time.count_day_for_datetime(now_time, end_time) == 0:
             # 获取奖励
-            reward_return_list = get_commission_demand_and_reward(commision_id, True, True)
+            reward_return_list = get_commission_demand_and_reward(commision_id, [], True, True)
             reward_text = reward_return_list[2]
             # 奖励信息
             commision_name = game_config.config_commission[commision_id].name
@@ -197,9 +239,9 @@ class Field_Commission_Panel:
                 commision_level = str(commision_data.level)
                 commision_people = str(commision_data.people) + _("人")
                 commision_time = str(commision_data.time) + _("天")
-                demand_return_list = get_commission_demand_and_reward(commision_id)
+                demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
                 commision_demand = demand_return_list[1]
-                reward_return_list = get_commission_demand_and_reward(commision_id, True)
+                reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
                 commision_reward = reward_return_list[1]
                 text_width = int(self.width / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
@@ -257,12 +299,12 @@ class Field_Commission_Panel:
         commision_level = str(commision_data.level)
         commision_people = str(commision_data.people) + _("人")
         commision_time = str(commision_data.time) + _("天")
-        demand_return_list = get_commission_demand_and_reward(commision_id)
-        commision_demand = demand_return_list[2]
-        deman_satify = demand_return_list[0]
-        reward_return_list = get_commission_demand_and_reward(commision_id, True)
+        reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
         commision_reward = reward_return_list[1]
         commision_description = commision_data.description
+        # 将\n替换为换行符
+        if "\\n" in commision_description:
+            commision_description = commision_description.replace("\\n", "\n      ")
 
         # 派遣人员
         self.send_npc_list = []
@@ -270,6 +312,9 @@ class Field_Commission_Panel:
         while 1:
             # 是否满足条件
             is_satisfy = False
+            demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
+            commision_demand = demand_return_list[2]
+            deman_satify = demand_return_list[0]
 
             return_list = []
             line = draw.LineDraw("-", self.width)
@@ -293,7 +338,7 @@ class Field_Commission_Panel:
                 chara_data = cache.character_data[chara_id]
                 chara_name = chara_data.name
                 info_draw_2_text += f"  {chara_name}"
-            info_draw_2_text += _("\n是否满足需求：")
+            info_draw_2_text += _("\n\n是否满足需求：")
             if len(self.send_npc_list) >= commision_data.people and deman_satify:
                 info_draw_2_text += _("是")
                 is_satisfy = True
@@ -307,15 +352,15 @@ class Field_Commission_Panel:
             # 调整派遣人员
             line_feed.draw()
             line_feed.draw()
-            button_draw = draw.CenterButton(
+            adjust_button_draw = draw.CenterButton(
                 _("【调整派遣人员】"),
                 _("\n【调整派遣人员】"),
                 self.width / 5,
                 cmd_func=self.adjust_send_npc,
                 args=(commision_id,),
             )
-            button_draw.draw()
-            return_list.append(button_draw.return_text)
+            adjust_button_draw.draw()
+            return_list.append(adjust_button_draw.return_text)
             line_feed.draw()
 
             line_feed.draw()
@@ -451,7 +496,7 @@ class Field_Commission_Panel:
         # 添加到进行中的委托
         cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time]
         # 消耗资源
-        get_commission_demand_and_reward(commision_id, False, True)
+        get_commission_demand_and_reward(commision_id, self.send_npc_list, False, True)
         # 遍历派遣人员，设为派遣状态，并离线
         for character_id in self.send_npc_list:
             cache.character_data[character_id].sp_flag.field_commission = commision_id
