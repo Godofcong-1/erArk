@@ -233,7 +233,7 @@ class Field_Commission_Panel:
                 commision_data = game_config.config_commission[commision_id]
                 if self.now_panel == _("常规外勤") and commision_data.special != 0:
                     continue
-                if self.now_panel == _("特殊外勤") and commision_data.special == 1:
+                if self.now_panel == _("特殊外勤") and commision_data.special == 0:
                     continue
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
