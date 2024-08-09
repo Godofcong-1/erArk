@@ -612,6 +612,23 @@ def handle_hypnosis_one():
 
 
 @add_instruct(
+    constant.Instruct.DEEPENING_HYPNOSIS,
+    constant.InstructType.ARTS,
+    _("加深催眠"),
+    {constant_promise.Premise.PRIMARY_HYPNOSIS,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.T_UNCONSCIOUS_HYPNOSIS_FLAG,
+     constant_promise.Premise.SANITY_POINT_GE_5,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_deepening_hypnosis():
+    """处理加深催眠"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ONE)
+
+
+@add_instruct(
     constant.Instruct.HYPNOSIS_ALL,
     constant.InstructType.ARTS,
     _("集体催眠"),

@@ -1896,6 +1896,8 @@ class Instruct:
     #源石技艺#
     HYPNOSIS_ONE = 0
     """ 单人催眠 """
+    DEEPENING_HYPNOSIS = 0
+    """ 加深催眠 """
     HYPNOSIS_ALL = 0
     """ 集体催眠 """
     HYPNOSIS_NORMAL = 0

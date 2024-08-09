@@ -1012,6 +1012,8 @@ class Premise:
     """ 属性_特殊flag 对方没有无意识状态 """
     T_UNCONSCIOUS_FLAG = "t_unconscious_flag"
     """ 属性_特殊flag 对方有无意识状态 """
+    T_UNCONSCIOUS_HYPNOSIS_FLAG = "t_unconscious_hypnosis_flag"
+    """ 属性_特殊flag 对方有无意识_任意一种催眠状态 """
     T_UNCONSCIOUS_FLAG_1 = "t_unconscious_flag_1"
     """ 属性_特殊flag 对方有无意识_睡眠状态 """
     T_UNCONSCIOUS_FLAG_2 = "t_unconscious_flag_2"
