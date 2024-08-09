@@ -1471,9 +1471,11 @@ def handle_order_hotel_room():
     constant.Instruct.FIELD_COMMISSION,
     constant.InstructType.WORK,
     _("外勤委托"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO},
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.IN_FIELD_ASSEMBLY_POINT
+    },
 )
 def handle_field_commission():
     """处理外勤委托指令"""

@@ -4161,7 +4161,23 @@ msgid "访客数量上限提升为12名，访客停留时长延长至一个月"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:91
-msgid "载具相关设施，未实装"
+msgid "开放基础设施:【外勤集合点】、【出击通道】"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:92
+msgid "开放新设施:【格纳库】，最多可以拥有2辆载具"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:93
+msgid "开放新设施:【物流仓】（未实装），载具上限提升至5辆"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:94
+msgid "开放新设施:【整修区】（未实装），载具上限提升至10辆"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:95
+msgid "载具上限提升至99辆"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:97
@@ -4417,826 +4433,838 @@ msgid "外交办公室"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:39
-msgid "部落风情旅舍"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:39
-msgid "酒店"
+msgid "格纳库"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:40
-msgid "地摊小贩"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:40
-msgid "餐馆"
+msgid "物流仓"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:41
-msgid "哥伦比亚酒店"
+msgid "整修区"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:42
-msgid "哥伦比亚咖啡馆"
+msgid "部落风情旅舍"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:42
+msgid "酒店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:43
-msgid "花草灯艺屋"
+msgid "地摊小贩"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:43
-msgid "娱乐设施"
+msgid "餐馆"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:44
-msgid "健康快餐店"
+msgid "哥伦比亚酒店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:45
-msgid "快捷连锁披萨店"
+msgid "哥伦比亚咖啡馆"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:46
-msgid "乐器维修工坊"
+msgid "花草灯艺屋"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:46
+msgid "娱乐设施"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:47
-msgid "理发店"
+msgid "健康快餐店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:48
-msgid "龙门食坊"
+msgid "快捷连锁披萨店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:49
-msgid "造型工作室"
+msgid "乐器维修工坊"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:50
-msgid "七城风情餐厅"
+msgid "理发店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:51
-msgid "前卫街机厅"
+msgid "龙门食坊"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:52
-msgid "山城茶馆"
+msgid "造型工作室"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:53
-msgid "瓦莱丽蛋糕店"
+msgid "七城风情餐厅"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:54
-msgid "谢拉格风情旅店"
+msgid "前卫街机厅"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:55
-msgid "伊比利亚度假村"
+msgid "山城茶馆"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:56
-msgid "约翰老妈汉堡店"
+msgid "瓦莱丽蛋糕店"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:57
+msgid "谢拉格风情旅店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:58
-msgid "宿舍107房"
+msgid "伊比利亚度假村"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:59
-msgid "宿舍108房"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:60
-msgid "宿舍109房"
+msgid "约翰老妈汉堡店"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:61
-msgid "宿舍110房"
+msgid "宿舍107房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:62
-msgid "宿舍111房"
+msgid "宿舍108房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:63
-msgid "宿舍112房"
+msgid "宿舍109房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:64
-msgid "宿舍113房"
+msgid "宿舍110房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:65
-msgid "宿舍114房"
+msgid "宿舍111房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:66
-msgid "宿舍115房"
+msgid "宿舍112房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:67
-msgid "宿舍116房"
+msgid "宿舍113房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:68
-msgid "宿舍117房"
+msgid "宿舍114房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:69
-msgid "宿舍118房"
+msgid "宿舍115房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:70
-msgid "宿舍119房"
+msgid "宿舍116房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:71
-msgid "宿舍120房"
+msgid "宿舍117房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:72
-msgid "宿舍121房"
+msgid "宿舍118房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:73
-msgid "宿舍122房"
+msgid "宿舍119房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:74
-msgid "宿舍123房"
+msgid "宿舍120房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:75
-msgid "宿舍124房"
+msgid "宿舍121房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:76
-msgid "宿舍125房"
+msgid "宿舍122房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:77
-msgid "宿舍126房"
+msgid "宿舍123房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:78
-msgid "宿舍127房"
+msgid "宿舍124房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:79
-msgid "宿舍128房"
+msgid "宿舍125房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:80
-msgid "宿舍201房"
+msgid "宿舍126房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:81
-msgid "宿舍202房"
+msgid "宿舍127房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:82
-msgid "宿舍203房"
+msgid "宿舍128房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:83
-msgid "宿舍204房"
+msgid "宿舍201房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:84
-msgid "宿舍205房"
+msgid "宿舍202房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:85
-msgid "宿舍206房"
+msgid "宿舍203房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:86
-msgid "宿舍207房"
+msgid "宿舍204房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:87
-msgid "宿舍208房"
+msgid "宿舍205房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:88
-msgid "宿舍209房"
+msgid "宿舍206房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:89
-msgid "宿舍210房"
+msgid "宿舍207房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:90
-msgid "宿舍211房"
+msgid "宿舍208房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:91
-msgid "宿舍212房"
+msgid "宿舍209房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:92
-msgid "宿舍213房"
+msgid "宿舍210房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:93
-msgid "宿舍214房"
+msgid "宿舍211房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:94
-msgid "宿舍215房"
+msgid "宿舍212房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:95
-msgid "宿舍216房"
+msgid "宿舍213房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:96
-msgid "宿舍217房"
+msgid "宿舍214房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:97
-msgid "宿舍218房"
+msgid "宿舍215房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:98
-msgid "宿舍219房"
+msgid "宿舍216房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:99
-msgid "宿舍220房"
+msgid "宿舍217房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:100
-msgid "宿舍221房"
+msgid "宿舍218房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:101
-msgid "宿舍222房"
+msgid "宿舍219房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:102
-msgid "宿舍223房"
+msgid "宿舍220房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:103
-msgid "宿舍224房"
+msgid "宿舍221房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:104
-msgid "宿舍225房"
+msgid "宿舍222房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:105
-msgid "宿舍226房"
+msgid "宿舍223房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:106
-msgid "宿舍227房"
+msgid "宿舍224房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:107
-msgid "宿舍228房"
+msgid "宿舍225房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:108
-msgid "宿舍229房"
+msgid "宿舍226房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:109
-msgid "宿舍301房"
+msgid "宿舍227房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:110
-msgid "宿舍302房"
+msgid "宿舍228房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:111
-msgid "宿舍303房"
+msgid "宿舍229房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:112
-msgid "宿舍304房"
+msgid "宿舍301房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:113
-msgid "宿舍305房"
+msgid "宿舍302房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:114
-msgid "宿舍306房"
+msgid "宿舍303房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:115
-msgid "宿舍307房"
+msgid "宿舍304房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:116
-msgid "宿舍308房"
+msgid "宿舍305房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:117
-msgid "宿舍309房"
+msgid "宿舍306房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:118
-msgid "宿舍310房"
+msgid "宿舍307房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:119
-msgid "宿舍311房"
+msgid "宿舍308房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:120
-msgid "宿舍312房"
+msgid "宿舍309房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:121
-msgid "宿舍313房"
+msgid "宿舍310房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:122
-msgid "宿舍314房"
+msgid "宿舍311房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:123
-msgid "宿舍315房"
+msgid "宿舍312房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:124
-msgid "宿舍316房"
+msgid "宿舍313房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:125
-msgid "宿舍317房"
+msgid "宿舍314房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:126
-msgid "宿舍318房"
+msgid "宿舍315房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:127
-msgid "宿舍319房"
+msgid "宿舍316房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:128
-msgid "宿舍320房"
+msgid "宿舍317房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:129
-msgid "宿舍321房"
+msgid "宿舍318房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:130
-msgid "宿舍322房"
+msgid "宿舍319房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:131
-msgid "宿舍323房"
+msgid "宿舍320房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:132
-msgid "宿舍324房"
+msgid "宿舍321房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:133
-msgid "宿舍325房"
+msgid "宿舍322房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:134
-msgid "宿舍326房"
+msgid "宿舍323房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:135
-msgid "宿舍327房"
+msgid "宿舍324房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:136
-msgid "宿舍328房"
+msgid "宿舍325房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:137
-msgid "宿舍329房"
+msgid "宿舍326房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:138
-msgid "宿舍401房"
+msgid "宿舍327房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:139
-msgid "宿舍402房"
+msgid "宿舍328房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:140
-msgid "宿舍403房"
+msgid "宿舍329房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:141
-msgid "宿舍404房"
+msgid "宿舍401房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:142
-msgid "宿舍405房"
+msgid "宿舍402房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:143
-msgid "宿舍406房"
+msgid "宿舍403房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:144
-msgid "宿舍407房"
+msgid "宿舍404房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:145
-msgid "宿舍408房"
+msgid "宿舍405房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:146
-msgid "宿舍409房"
+msgid "宿舍406房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:147
-msgid "宿舍410房"
+msgid "宿舍407房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:148
-msgid "宿舍411房"
+msgid "宿舍408房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:149
-msgid "宿舍412房"
+msgid "宿舍409房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:150
-msgid "宿舍413房"
+msgid "宿舍410房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:151
-msgid "宿舍414房"
+msgid "宿舍411房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:152
-msgid "宿舍415房"
+msgid "宿舍412房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:153
-msgid "宿舍416房"
+msgid "宿舍413房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:154
-msgid "宿舍417房"
+msgid "宿舍414房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:155
-msgid "宿舍418房"
+msgid "宿舍415房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:156
-msgid "宿舍419房"
+msgid "宿舍416房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:157
-msgid "宿舍420房"
+msgid "宿舍417房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:158
-msgid "宿舍421房"
+msgid "宿舍418房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:159
-msgid "宿舍422房"
+msgid "宿舍419房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:160
-msgid "宿舍423房"
+msgid "宿舍420房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:161
-msgid "宿舍424房"
+msgid "宿舍421房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:162
-msgid "宿舍425房"
+msgid "宿舍422房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:163
-msgid "宿舍426房"
+msgid "宿舍423房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:164
-msgid "宿舍427房"
+msgid "宿舍424房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:165
-msgid "宿舍428房"
+msgid "宿舍425房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:166
-msgid "宿舍429房"
+msgid "宿舍426房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:167
+msgid "宿舍427房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:168
-msgid "宿舍502房"
+msgid "宿舍428房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:169
-msgid "宿舍503房"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:170
-msgid "宿舍504房"
+msgid "宿舍429房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:171
-msgid "宿舍505房"
+msgid "宿舍502房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:172
-msgid "宿舍506房"
+msgid "宿舍503房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:173
-msgid "宿舍507房"
+msgid "宿舍504房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:174
-msgid "宿舍508房"
+msgid "宿舍505房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:175
-msgid "宿舍509房"
+msgid "宿舍506房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:176
-msgid "宿舍510房"
+msgid "宿舍507房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:177
-msgid "宿舍511房"
+msgid "宿舍508房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:178
-msgid "宿舍512房"
+msgid "宿舍509房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:179
-msgid "宿舍513房"
+msgid "宿舍510房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:180
-msgid "宿舍601房"
+msgid "宿舍511房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:181
-msgid "宿舍602房"
+msgid "宿舍512房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:182
-msgid "宿舍603房"
+msgid "宿舍513房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:183
-msgid "宿舍604房"
+msgid "宿舍601房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:184
-msgid "宿舍605房"
+msgid "宿舍602房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:185
-msgid "宿舍606房"
+msgid "宿舍603房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:186
-msgid "宿舍607房"
+msgid "宿舍604房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:187
-msgid "宿舍608房"
+msgid "宿舍605房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:188
-msgid "宿舍609房"
+msgid "宿舍606房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:189
-msgid "宿舍610房"
+msgid "宿舍607房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:190
-msgid "宿舍611房"
+msgid "宿舍608房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:191
-msgid "宿舍612房"
+msgid "宿舍609房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:192
-msgid "宿舍613房"
+msgid "宿舍610房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:193
-msgid "宿舍701房"
+msgid "宿舍611房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:194
-msgid "宿舍702房"
+msgid "宿舍612房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:195
-msgid "宿舍703房"
+msgid "宿舍613房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:196
-msgid "宿舍704房"
+msgid "宿舍701房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:197
-msgid "宿舍705房"
+msgid "宿舍702房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:198
-msgid "宿舍706房"
+msgid "宿舍703房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:199
-msgid "宿舍707房"
+msgid "宿舍704房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:200
-msgid "宿舍708房"
+msgid "宿舍705房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:201
-msgid "宿舍709房"
+msgid "宿舍706房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:202
-msgid "宿舍710房"
+msgid "宿舍707房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:203
-msgid "宿舍711房"
+msgid "宿舍708房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:204
-msgid "宿舍712房"
+msgid "宿舍709房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:205
-msgid "宿舍713房"
+msgid "宿舍710房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:206
-msgid "宿舍801房"
+msgid "宿舍711房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:207
-msgid "宿舍802房"
+msgid "宿舍712房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:208
-msgid "宿舍803房"
+msgid "宿舍713房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:209
-msgid "宿舍804房"
+msgid "宿舍801房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:210
-msgid "宿舍805房"
+msgid "宿舍802房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:211
-msgid "宿舍806房"
+msgid "宿舍803房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:212
-msgid "宿舍807房"
+msgid "宿舍804房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:213
-msgid "宿舍808房"
+msgid "宿舍805房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:214
-msgid "宿舍809房"
+msgid "宿舍806房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:215
-msgid "宿舍810房"
+msgid "宿舍807房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:216
-msgid "宿舍811房"
+msgid "宿舍808房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:217
-msgid "宿舍812房"
+msgid "宿舍809房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:218
-msgid "宿舍813房"
+msgid "宿舍810房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:219
-msgid "宿舍901房"
+msgid "宿舍811房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:220
-msgid "宿舍902房"
+msgid "宿舍812房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:221
-msgid "宿舍903房"
+msgid "宿舍813房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:222
-msgid "宿舍904房"
+msgid "宿舍901房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:223
-msgid "宿舍905房"
+msgid "宿舍902房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:224
-msgid "宿舍906房"
+msgid "宿舍903房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:225
-msgid "宿舍907房"
+msgid "宿舍904房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:226
-msgid "宿舍908房"
+msgid "宿舍905房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:227
-msgid "宿舍909房"
+msgid "宿舍906房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:228
-msgid "宿舍910房"
+msgid "宿舍907房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:229
-msgid "宿舍911房"
+msgid "宿舍908房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:230
-msgid "宿舍912房"
+msgid "宿舍909房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:231
-msgid "宿舍913房"
+msgid "宿舍910房"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:232
+msgid "宿舍911房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:233
-msgid "客房1"
+msgid "宿舍912房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:234
-msgid "客房2"
-msgstr ""
-
-#: .\data\csv\Facility_open.csv:235
-msgid "客房3"
+msgid "宿舍913房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:236
-msgid "客房4"
+msgid "客房1"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:237
-msgid "客房5"
+msgid "客房2"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:238
-msgid "客房6"
+msgid "客房3"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:239
-msgid "客房7"
+msgid "客房4"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:240
-msgid "客房8"
+msgid "客房5"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:241
-msgid "客房9"
+msgid "客房6"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:242
-msgid "客房10"
+msgid "客房7"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:243
-msgid "客房11"
+msgid "客房8"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:244
+msgid "客房9"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:245
+msgid "客房10"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:246
+msgid "客房11"
+msgstr ""
+
+#: .\data\csv\Facility_open.csv:247
 msgid "客房12"
 msgstr ""
 
@@ -16560,16 +16588,8 @@ msgstr ""
 msgid "出击通道"
 msgstr ""
 
-#: /'data\map\机库\整修区\Scene.json:2
-msgid "整修区"
-msgstr ""
-
-#: /'data\map\机库\格纳库\Scene.json:2
-msgid "格纳库"
-msgstr ""
-
-#: /'data\map\机库\物流仓\Scene.json:2
-msgid "物流仓"
+#: /'data\map\机库\外勤集合点\Scene.json:2
+msgid "外勤集合点"
 msgstr ""
 
 #: /'data\map\泰拉\Map.json:2

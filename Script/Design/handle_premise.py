@@ -3062,11 +3062,39 @@ def handle_not_in_diplomatic_office(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if handle_in_diplomatic_office(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_FIELD_ASSEMBLY_POINT)
+def handle_in_field_assembly_point(character_id: int) -> int:
+    """
+    校验角色是否在外勤集合点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
-    if "Diplomatic_Office" in now_scene_data.scene_tag:
+    if "Field_Assembly_Point" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_FIELD_ASSEMBLY_POINT)
+def handle_not_in_field_assembly_point(character_id: int) -> int:
+    """
+    校验角色是否不在外勤集合点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_field_assembly_point(character_id):
         return 0
     return 1
 
@@ -3098,11 +3126,7 @@ def handle_not_in_class_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Class_Room" in now_scene_data.scene_tag:
+    if handle_in_class_room(character_id):
         return 0
     return 1
 
@@ -3134,11 +3158,7 @@ def handle_not_in_herb_garden(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Herb_Garden" in now_scene_data.scene_tag:
+    if handle_in_herb_garden(character_id):
         return 0
     return 1
 
@@ -3170,11 +3190,7 @@ def handle_not_in_greenhouse(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Greenhouse" in now_scene_data.scene_tag:
+    if handle_in_greenhouse(character_id):
         return 0
     return 1
 
@@ -3206,11 +3222,7 @@ def handle_not_in_aromatherapy_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Aromatherapy_Room" in now_scene_data.scene_tag:
+    if handle_in_aromatherapy_room(character_id):
         return 0
     return 1
 
@@ -3242,11 +3254,7 @@ def handle_not_in_breeding_farm(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Breeding_Farm" in now_scene_data.scene_tag:
+    if handle_in_breeding_farm(character_id):
         return 0
     return 1
 
@@ -3296,11 +3304,7 @@ def handle_not_in_prison(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Prison" in now_scene_data.scene_tag:
+    if handle_in_prison(character_id):
         return 0
     return 1
 
@@ -3332,11 +3336,7 @@ def handle_not_in_deck(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Deck" in now_scene_data.scene_tag:
+    if handle_in_deck(character_id):
         return 0
     return 1
 
@@ -3402,9 +3402,7 @@ def handle_place_not_in_collection_list(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    if now_position in cache.collect_position_list:
+    if handle_place_in_collection_list(character_id):
         return 0
     return 1
 
@@ -3436,11 +3434,7 @@ def handle_not_in_bathroom(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Bathroom" in now_scene_data.scene_tag:
+    if handle_in_bathroom(character_id):
         return 0
     return 1
 
@@ -3472,11 +3466,7 @@ def handle_not_in_foot_bath(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Foot_Bath" in now_scene_data.scene_tag:
+    if handle_in_foot_bath(character_id):
         return 0
     return 1
 
@@ -3508,11 +3498,7 @@ def handle_not_in_sauna(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Sauna" in now_scene_data.scene_tag:
+    if handle_in_sauna(character_id):
         return 0
     return 1
 
@@ -3544,11 +3530,7 @@ def handle_not_in_spa_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Spa_Room" in now_scene_data.scene_tag:
+    if handle_in_spa_room(character_id):
         return 0
     return 1
 
@@ -3580,11 +3562,7 @@ def handle_not_in_onsen(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Onsen" in now_scene_data.scene_tag:
+    if handle_in_onsen(character_id):
         return 0
     return 1
 
