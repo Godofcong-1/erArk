@@ -6176,36 +6176,44 @@ msgstr ""
 msgid "临光家族"
 msgstr ""
 
-#: .\data\csv\Nation.csv:31
+#: .\data\csv\Nation.csv:30
+msgid "无胄盟"
+msgstr ""
+
+#: .\data\csv\Nation.csv:32
 msgid "喀兰贸易"
 msgstr ""
 
-#: .\data\csv\Nation.csv:39
+#: .\data\csv\Nation.csv:40
 msgid "乌萨斯学生自治团"
 msgstr ""
 
-#: .\data\csv\Nation.csv:42
+#: .\data\csv\Nation.csv:43
 msgid "格拉斯哥帮"
 msgstr ""
 
-#: .\data\csv\Nation.csv:43
+#: .\data\csv\Nation.csv:44
 msgid "深池"
 msgstr ""
 
-#: .\data\csv\Nation.csv:46
+#: .\data\csv\Nation.csv:48
 msgid "黑钢国际"
 msgstr ""
 
-#: .\data\csv\Nation.csv:47
+#: .\data\csv\Nation.csv:49
 msgid "彩虹小队"
 msgstr ""
 
-#: .\data\csv\Nation.csv:49
+#: .\data\csv\Nation.csv:51
 msgid "使徒"
 msgstr ""
 
-#: .\data\csv\Nation.csv:50
+#: .\data\csv\Nation.csv:52
 msgid "整合运动"
+msgstr ""
+
+#: .\data\csv\Nation.csv:53
+msgid "深海教会"
 msgstr ""
 
 #: .\data\csv\Organ.csv:7
@@ -12648,6 +12656,42 @@ msgstr ""
 msgid "天火，隶属民间源石技艺研究会“狐尾”的核心团体“王者之杖”。拥有地质学与源石地质学双学位，维多利亚高等职业术师，在源石技艺及理论研究方面皆有杰出造诣。现任王者之杖驻罗德岛首席术师，与罗德岛签署合作协议，并为罗德岛的源石理论研究，歼灭战作战等多项任务提供协助。"
 msgstr ""
 
+#: .\data\character\0168_莉莉娅.csv:4
+msgid "莉莉娅"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:13
+msgid "一張陳舊的全家福。即使邊緣破損，畫面泛黃，依舊被持有者細心珍藏著。"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:14
+msgid "前切爾諾柏格研究所之研究員，在石棺事件後叛逃了所屬勢力。主導了對烏薩斯所屬的萬尼亞大公的刺殺，最後遭皇帝的內衛追緝，消失於薩米的雪原之中。\n.....她的故事本因就此終結，但出於未知原因，莉莉婭小姐暫且逃離了烏薩斯了追捕，現加入了羅德島"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:31
+msgid "淡青色領巾"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:32
+msgid "研究所外衣"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:33
+msgid "白色長袖襯衫"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:34
+msgid "陳舊的婚戒"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:35
+msgid "研究所连衣裙"
+msgstr ""
+
+#: .\data\character\0168_莉莉娅.csv:36
+msgid "厚黑色连裤袜"
+msgstr ""
+
 #: .\data\character\0171_华法琳.csv:4
 msgid "华法琳"
 msgstr ""
@@ -12880,6 +12924,42 @@ msgstr ""
 msgid "早露，切尔诺伯格事变前于切城某中学就读，并担任学生会长。事变后加入罗德岛，隶属后勤部门，工作期间风评极佳。现经本人申请，作为狙击干员转入前线。"
 msgstr ""
 
+#: .\data\character\0198_坎黛拉.csv:4
+msgid "坎黛拉"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:13
+msgid "一張多索雷斯的邀請函。這座繁華的城市是她的精心雕琢的作品，可她的目光顯然不只如此"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:14
+msgid "多索雷斯的現任市長，在玻利瓦爾混亂的環境中維持著這座城市的中立性，依託城市發達的旅遊業吸納來自泰拉各處的外匯。現因商業合作事宜暫且停留與羅德島"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:28
+msgid "靛藍色領帶"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:29
+msgid "白色修身西裝上衣"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:31
+msgid "白手套"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:32
+msgid "白色西裝裤"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:33
+msgid "低丹數膚色丝袜"
+msgstr ""
+
+#: .\data\character\0198_坎黛拉.csv:34
+msgid "亮面黑中筒靴"
+msgstr ""
+
 #: .\data\character\0201_可颂.csv:4
 msgid "可颂"
 msgstr ""
@@ -12938,6 +13018,50 @@ msgstr ""
 
 #: .\data\character\0209_卡缇.csv:14
 msgid "卡缇，行动预备组A4组员，莱塔尼亚公民，正式任职前为雪橇巡逻队队员。于多项测试中获得优异成绩，遂获准加入罗德岛。"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:4
+msgid "莫妮克"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:13
+msgid "一個射箭用指套。上頭無數磨損痕跡與汗漬無不表明其主人在射術這件事上付出了多少的努力"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:14
+msgid "莫尼克，前無冑盟青金大位。於1097年騎士特錦賽\n後藉由偽造死亡現場脫離無冑盟。現化名為唐娜·泰勒，因不明原因停留於我艦"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:28
+msgid "藍色半側套頭斗篷"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:30
+msgid "側開黑色無冑盟制服"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:31
+msgid "弓術護指手套"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:33
+msgid "黑色皮裤"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:34
+msgid "紫色蕾絲內裤"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:35
+msgid "亮黑色長筒靴"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:36
+msgid "箭袋"
+msgstr ""
+
+#: .\data\character\0210_莫妮克.csv:37
+msgid "現代維多利亞式直弓"
 msgstr ""
 
 #: .\data\character\0213_莫斯提马.csv:4
@@ -14214,6 +14338,46 @@ msgstr ""
 
 #: .\data\character\0449_蜜莓.csv:14
 msgid "雷姆必拓出身的草药医生，兼修心理学。罗德岛医疗部成员。在利用丰富的草药学知识对抗生理疾病的同时，也在努力维护各位干员的心理健康。"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:4
+msgid "阿玛雅"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:13
+msgid "一本筆記本。裏頭整潔的字跡控訴著人類的劣根性與低效，自裡行間無不展露出筆者對一個人們之間毫無隔閡的大同社會的嚮往"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:14
+msgid "深海教会主教之一，早年幽灵鲨实验的实验员之一和实验记录者，被格兰法洛的教徒称为“先知”，公开身份为翻译家。於愚人號事件中被代號為“屠諭者”的海嗣變體吞食。\n.....出於不明原因，本應消亡的她在本艦上被觀測到並重新開始活動"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:25
+msgid "黑色寬簷禮帽"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:26
+msgid "華麗的伊比利亞式披肩"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:27
+msgid "長版白色襯衫"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:28
+msgid "純白馬甲式內衣"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:29
+msgid "黑色鏤空剪裁裙"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:30
+msgid "貴族手杖"
+msgstr ""
+
+#: .\data\character\0450_阿玛雅.csv:31
+msgid "高跟涼鞋"
 msgstr ""
 
 #: .\data\character\0451_罗宾.csv:4
