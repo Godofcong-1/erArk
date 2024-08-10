@@ -10,6 +10,9 @@ example/口上测试.csv
 */*/*/*/*.pyc
 */*/*/*/*/*.pyc
 
+# 临时文件
+tem
+
 # 打包相关文件
 build
 dist
