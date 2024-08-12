@@ -692,12 +692,12 @@ def get_tired_level(value: int) -> int:
 
 def get_sleep_level(value: int):
     """
-    按当前熟睡值返回当前睡眠等级的str
-    Keyword arguments:
-    value -- 熟睡值
-    Return arguments:
-    int -- 睡眠等级,0~3
-    str -- 睡眠等级名,半梦半醒~完全深眠
+    按当前熟睡值返回当前睡眠等级的str\n
+    Keyword arguments:\n
+    value -- 熟睡值\n
+    Return arguments:\n
+    int -- 睡眠等级,0-3\n
+    str -- 睡眠等级名,半梦半醒-完全深眠
     """
     for now_cid in game_config.config_sleep_level:
         now_data = game_config.config_sleep_level[now_cid]
