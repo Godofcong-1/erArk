@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct
+from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel, originium_arts
@@ -33,6 +33,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     if instruct_flag > 0:
         # 进行一段结算
         if behavior_id in game_config.config_behavior_effect_data:
+            # 先结算口上
+            talk.handle_talk(character_id)
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
         # 进行二段结算
@@ -532,7 +534,7 @@ def second_behavior_effect(
         second_behavior_list: list = None,
         ):
     """
-    触发二段行为效果
+    触发二段行为的口上与效果
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -545,10 +547,14 @@ def second_behavior_effect(
         if behavior_data != 0:
             if second_behavior_list and behavior_id not in second_behavior_list:
                 continue
+            # 触发二段行为的口上
+            talk.handle_second_talk(character_id)
             # 遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
             # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
+            # 触发后该行为值归零
+            character_data.second_behavior[behavior_id] = 0
 
 
 def check_unconscious_effect(

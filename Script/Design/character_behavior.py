@@ -415,13 +415,12 @@ def judge_character_status(character_id: int) -> int:
         character_data.event.event_id = event_id
         event_config = game_config.config_event[event_id]
         event_type_now = event_config.type
-        # 如果是父事件的话，则先输出文本
-        if "10001" in event_config.effect:
-            start_event_draw.draw()
-            # now_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
+        # 事件绘制
+        start_event_draw.draw()
 
     # if not character_id:
     #     print(f"debug 1 move_src = {character_data.behavior.move_src},position = {character_data.position}")
+    # 指令与指令前事件的数值结算
     first_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, event_type_now)
     second_settle_panel = None
     # if not character_id:
@@ -436,39 +435,22 @@ def judge_character_status(character_id: int) -> int:
         if end_event_type == 1:
             # print(f"debug 指令前置类型的事件触发")
             character_data.event.event_id = end_event_id
-
-            # 先绘制指令文本
-            talk.handle_talk(character_id)
-
-            # 如果是父事件的话，则先结算父事件
-            if "10001" in event_config.effect:
-                end_event_draw.draw()
+            # 事件绘制
+            end_event_draw.draw()
+            # 事件的数值结算
             second_settle_panel = settle_behavior.handle_settle_behavior(character_id, end_time, 0)
 
     # if not character_id:
     #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
-    # 如果触发了子事件的话则把文本替换为子事件文本
+    # 如果触发了子事件的话则绘制子事件
     if character_data.event.son_event_id != "":
         son_event_id = character_data.event.son_event_id
         event_config = game_config.config_event[son_event_id]
         son_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
-        if start_event_draw != None:
-            start_event_draw = son_event_draw
-        else:
-            end_event_draw = son_event_draw
+        son_event_draw.draw()
 
-    # 如果有事件则显示事件，否则显示口上
-    if start_event_draw != None:
-        start_event_draw.draw()
-    # 防止父事件二次绘制
-    elif end_event_draw != None and "10001" not in event_config.effect:
-        end_event_draw.draw()
-    else:
-        talk.handle_talk(character_id)
-    # 指令后置类型的事件，在最后输出指令的口上
-    if event_type_now == 2:
-        talk.handle_talk(character_id)
+    # 绘制数值变化
     if first_settle_panel != None:
         first_settle_panel.draw()
         if second_settle_panel != None:

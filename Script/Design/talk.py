@@ -13,9 +13,9 @@ _: FunctionType = get_text._
 
 def handle_talk(character_id: int):
     """
-    处理行为结算对话
-    Keyword arguments:
-    character_id -- 角色id
+    处理行为结算对话\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -25,13 +25,6 @@ def handle_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         if character_id not in player_data.collection_character:
             return
-    # 检测是否与玩家处于同一位置#
-    if (
-            character_data.position != cache.character_data[0].position
-            and character_data.behavior.move_src != cache.character_data[0].position
-    ):
-        must_show_talk_check(character_id)
-        return
     # 智能跟随模式下，跟随博士性质的移动不显示移动文本
     if (
         character_id != 0 and
@@ -50,6 +43,10 @@ def handle_talk(character_id: int):
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
+    # 和玩家不在同一位置的NPC不显示文本
+    if character_id != 0 and character_data.position != cache.character_data[0].position:
+        # print(f"debug {character_data.name}和玩家不在同一位置，不显示文本")
+        return
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
     handle_talk_draw(character_id, now_talk_data)
@@ -63,14 +60,30 @@ def handle_talk(character_id: int):
                 handle_talk_draw(chara_id, now_talk_data)
 
 
-    # 第二段行为结算的口上
+def handle_second_talk(character_id: int):
+    """
+    处理二段行为结算对话\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 检测是否是收藏模式#
+    if cache.is_collection and character_id:
+        player_data: game_type.Character = cache.character_data[0]
+        if character_id not in player_data.collection_character:
+            return
+    # 检测是否与玩家处于同一位置#
+    if (
+            character_data.position != cache.character_data[0].position
+            and character_data.behavior.move_src != cache.character_data[0].position
+    ):
+        must_show_talk_check(character_id)
+        return
 
     # 自己
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
             now_talk_data = handle_talk_sub(character_id, second_behavior_id)
-            # 触发后该行为值归零
-            character_data.second_behavior[second_behavior_id] = 0
             handle_talk_draw(character_id, now_talk_data, second_behavior_id)
 
     # 交互对象
@@ -80,8 +93,6 @@ def handle_talk(character_id: int):
         for second_behavior_id, behavior_data in target_character_data.second_behavior.items():
             if behavior_data != 0:
                 now_talk_data = handle_talk_sub(target_character_id, second_behavior_id)
-                # 触发后该行为值归零
-                target_character_data.second_behavior[second_behavior_id] = 0
                 handle_talk_draw(target_character_id, now_talk_data, second_behavior_id)
 
 
@@ -209,10 +220,15 @@ def must_show_talk_check(character_id: int):
             # print(f"debug 检测到{second_behavior_id}可能需要显示")
             # 需要有必须显示
             if 998 in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                # 进行绘制
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
+                handle_talk_draw(character_id, now_talk_data, second_behavior_id)
+                # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
+                change_data = game_type.CharacterStatusChange
+                for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
-                handle_talk_draw(character_id, now_talk_data, second_behavior_id)
 
 
 def second_behavior_info_text(character_id: int, second_behavior_id: int):
