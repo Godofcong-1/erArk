@@ -98,6 +98,7 @@ def chara_handle_instruct_common_settle(
         duration: int = 0,
         judge: str = "",
         game_update_flag: bool = False,
+        force_taget_wait: bool = False,
 ):
     """
     角色处理指令通用结算函数\n
@@ -108,7 +109,8 @@ def chara_handle_instruct_common_settle(
     behevior_id -- 行动id，默认=0时为同状态id\n
     duration -- 行动持续时间，默认=0时进行查表获得\n
     judge -- 进行指令判断，默认为空\n
-    game_update_flag -- 是否更新游戏流程，默认=False\n
+    game_update_flag -- 是否强制更新游戏流程，默认=False\n
+    force_taget_wait -- 是否强制目标等待，默认=False\n
     """
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
     character.init_character_behavior_start_time(character_id, cache.game_time)
@@ -144,6 +146,13 @@ def chara_handle_instruct_common_settle(
         if duration <= 0:
             duration = 1
     character_data.behavior.duration = duration
+    # 如果强制目标等待，则将目标角色状态设置为等待
+    if target_character_id != character_id and force_taget_wait:
+        character.init_character_behavior_start_time(target_character_id, cache.game_time)
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        target_character_data.state = constant.CharacterStatus.STATUS_WAIT
+        target_character_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_character_data.behavior.duration = duration
     # 仅在玩家指令时更新游戏流程
     if character_id == 0 or game_update_flag:
         update.game_update_flow(duration)
@@ -198,7 +207,7 @@ def handle_comprehensive_state_effect(
               )
 def handle_rest():
     """处理休息指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REST)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REST, force_taget_wait = True)
 
 @add_instruct(
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
@@ -1368,9 +1377,9 @@ def handle_apologize():
     target_data.angry_point -= value
     # 判定是否不生气了
     if target_data.angry_point <= 30:
-        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE, force_taget_wait = True)
     else:
-        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE_FAILED)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_APOLOGIZE_FAILED, force_taget_wait = True)
 
 
 @add_instruct(
@@ -1395,7 +1404,7 @@ def handle_listen_complaint():
     value = 10 + adjust * 10
     # 减愤怒值
     target_data.angry_point -= value
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LISTEN_COMPLAINT)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LISTEN_COMPLAINT, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2007,7 +2016,7 @@ def handle_play_instrument():
 )
 def handle_watch_movie():
     """处理看电影指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WATCH_MOVIE)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WATCH_MOVIE, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2021,7 +2030,7 @@ def handle_watch_movie():
 )
 def handle_photography():
     """处理摄影指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PHOTOGRAPHY)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PHOTOGRAPHY, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2035,7 +2044,7 @@ def handle_photography():
 )
 def handle_play_water():
     """处理玩水指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_WATER)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_WATER, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2050,7 +2059,7 @@ def handle_play_water():
 )
 def handle_play_chess():
     """处理下棋指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CHESS)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CHESS, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2065,7 +2074,7 @@ def handle_play_chess():
 )
 def handle_play_mahjong():
     """处理打麻将指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_MAHJONG)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_MAHJONG, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2080,7 +2089,7 @@ def handle_play_mahjong():
 )
 def handle_play_cards():
     """处理打牌指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CARDS)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_CARDS, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2094,7 +2103,7 @@ def handle_play_cards():
 )
 def handle_rehearse_dance():
     """处理排演舞剧指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REHEARSE_DANCE)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REHEARSE_DANCE, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2108,7 +2117,7 @@ def handle_rehearse_dance():
 )
 def handle_play_arcade_game():
     """处理玩街机游戏指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_ARCADE_GAME, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2122,7 +2131,7 @@ def handle_play_arcade_game():
 )
 def handle_swimming():
     """处理游泳指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SWIMMING)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SWIMMING, force_taget_wait = True)
 
 @add_instruct(
     constant.Instruct.TASTE_WINE,
@@ -2207,7 +2216,7 @@ def handle_taste_food():
 )
 def handle_play_house():
     """处理过家家指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_HOUSE)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PLAY_HOUSE, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2321,7 +2330,7 @@ def handle_aromatherapy():
 )
 def handle_official_work():
     """处理处理公务指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_OFFICIAL_WORK)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_OFFICIAL_WORK, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2390,7 +2399,7 @@ def handle_visitor_system():
 )
 def handle_invite_visitor():
     """处理邀请访客指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_INVITE_VISITOR)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_INVITE_VISITOR, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2413,7 +2422,7 @@ def handle_prts():
 )
 def handle_training():
     """处理战斗训练指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TRAINING)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TRAINING, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2427,7 +2436,7 @@ def handle_training():
 )
 def handle_exercise():
     """处理锻炼身体指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EXERCISE)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EXERCISE, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2442,7 +2451,7 @@ def handle_exercise():
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CURE_PATIENT)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CURE_PATIENT, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2456,7 +2465,7 @@ def handle_cure_patient():
 )
 def handle_recruit():
     """处理招募干员指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_RECRUIT)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_RECRUIT, force_taget_wait = True)
 
 
 @add_instruct(
@@ -2532,7 +2541,7 @@ def handle_repair_equipment():
 )
 def handle_embrace():
     """处理拥抱指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EMBRACE, judge = _("初级骚扰"))
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EMBRACE, judge = _("初级骚扰"), force_taget_wait = True)
 
 
 @add_instruct(
