@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import map_handle, handle_premise, character_move
+from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -136,16 +136,16 @@ class All_Npc_Position_Panel:
             for npc_id in npc_id_got_list:
                 if npc_id != 0:
                     character_data = cache.character_data[npc_id]
-                    # 收藏筛选
-                    if self.select_type == 1 and character_data.chara_setting[2] != 1:
-                        continue
-                    # 访客筛选
-                    if self.select_type == 2 and npc_id not in cache.rhodes_island.visitor_info:
-                        continue
-                    # 姓名筛选
-                    if self.select_type == 3 and self.name_search not in character_data.name:
-                        continue
-                    # npc_list.append(npc_id)
+                    if self.select_type > 0:
+                        # 收藏筛选
+                        if self.select_type == 1 and character_data.chara_setting[2] != 1:
+                            continue
+                        # 访客筛选
+                        elif self.select_type == 2 and npc_id not in cache.rhodes_island.visitor_info:
+                            continue
+                        # 姓名筛选
+                        elif self.select_type == 3 and self.name_search not in character_data.name:
+                            continue
 
                     # 角色属性与信息
                     name = character_data.name
@@ -239,6 +239,7 @@ class All_Npc_Position_Panel:
 
     def move(self, character_id: int):
         """移动"""
+        from Script.Design import character_move
 
         line = draw.LineDraw("-", window_width)
         line.draw()
